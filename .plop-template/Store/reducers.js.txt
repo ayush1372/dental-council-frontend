@@ -1,0 +1,19 @@
+import { createSlice } from '@reduxjs/toolkit';
+
+const initialState = {
+  
+};
+
+const {{kebabCase actionName}} = createSlice({
+  name: '{{kebabCase actionName}}-reducer',
+  initialState,
+  reducers: {
+    defaultAction : () => {
+    
+    }
+  },
+});
+
+export const { defaultAction } = {{kebabCase actionName}}.actions;
+
+export default {{kebabCase actionName}}.reducer;

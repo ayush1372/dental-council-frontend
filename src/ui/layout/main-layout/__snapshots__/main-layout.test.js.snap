@@ -1,0 +1,698 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainLayout component snapshot 1`] = `
+<div>
+   
+  <div
+    style="font-size: 20px;"
+  >
+    <main>
+      <div
+        class="MuiBox-root css-0"
+      >
+        <div
+          class="topBarWrapper MuiBox-root css-0"
+        >
+          <div
+            class="MuiContainer-root MuiContainer-maxWidthLg css-1oqqzyl-MuiContainer-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container css-8qwpet-MuiGrid-root"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-7 MuiGrid-grid-md-6 css-1w65gxq-MuiGrid-root"
+              >
+                <svg
+                  class=""
+                  fill="currentColor"
+                  height="14px"
+                  width="14px"
+                >
+                  call_black_48dp.svg
+                </svg>
+                <p
+                  class="MuiTypography-root MuiTypography-body2 css-4002zd-MuiTypography-root"
+                >
+                  Our Toll Free Number
+                  : 14477
+                </p>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-5 MuiGrid-grid-md-6 css-1uvoj4m-MuiGrid-root"
+              >
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium topBarIcon css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  <span
+                    class="MuiButton-endIcon MuiButton-iconSizeMedium css-9tj150-MuiButton-endIcon"
+                  >
+                    <svg
+                      class=""
+                      fill="currentColor"
+                      height="20px"
+                      width="20px"
+                    >
+                      visibility_black_48dp.svg
+                    </svg>
+                  </span>
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium topBarIcon css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  <div>
+                    <button
+                      aria-controls="menu-appbar"
+                      aria-haspopup="true"
+                      aria-label="language-options"
+                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium fontZoomSmall css-mgcv3e-MuiButtonBase-root-MuiIconButton-root"
+                      tabindex="0"
+                      type="button"
+                    >
+                      <span
+                        class="fontSmall"
+                      >
+                        A
+                      </span>
+                       
+                    </button>
+                  </div>
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium topBarIcon css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  <div>
+                    <button
+                      aria-controls="menu-appbar"
+                      aria-haspopup="true"
+                      aria-label="fontSize-options"
+                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium fontZoomMedium css-mgcv3e-MuiButtonBase-root-MuiIconButton-root"
+                      tabindex="0"
+                      type="button"
+                    >
+                      <span
+                        class="fontMedium"
+                      >
+                        A
+                      </span>
+                       
+                    </button>
+                  </div>
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium topBarIcon css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  <div>
+                    <button
+                      aria-controls="menu-appbar"
+                      aria-haspopup="true"
+                      aria-label="fontSize-options"
+                      class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium fontZoomLarge css-mgcv3e-MuiButtonBase-root-MuiIconButton-root"
+                      tabindex="0"
+                      type="button"
+                    >
+                      <span
+                        class="fontLarge"
+                      >
+                        A
+                      </span>
+                       
+                    </button>
+                  </div>
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium topBarIcon css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  <button
+                    aria-controls="menu-appbar"
+                    aria-haspopup="true"
+                    aria-label="language-options"
+                    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium languageIcon css-mgcv3e-MuiButtonBase-root-MuiIconButton-root"
+                    tabindex="0"
+                    type="button"
+                  >
+                    <svg
+                      class=""
+                      fill="currentColor"
+                      height="20px"
+                      width="20px"
+                    >
+                      ico-language.svg
+                    </svg>
+                  </button>
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium topBarIcon css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  <span
+                    class="MuiButton-endIcon MuiButton-iconSizeMedium css-9tj150-MuiButton-endIcon"
+                  >
+                    <svg
+                      class=""
+                      fill="currentColor"
+                      height="20px"
+                      width="20px"
+                    >
+                      help_outline_black_24dp.svg
+                    </svg>
+                  </span>
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+                <button
+                  class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium topBarIcon css-1e6y48t-MuiButtonBase-root-MuiButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  <span
+                    class="MuiButton-endIcon MuiButton-iconSizeMedium css-9tj150-MuiButton-endIcon"
+                  >
+                    <svg
+                      class=""
+                      fill="currentColor"
+                      height="20px"
+                      width="20px"
+                    >
+                      ico-notification.svg
+                    </svg>
+                  </span>
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+                <button
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeMedium css-whjmaz-MuiButtonBase-root-MuiIconButton-root"
+                  tabindex="0"
+                  type="button"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                    data-testid="Brightness4Icon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69zM12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6c3.31 0 6 2.69 6 6s-2.69 6-6 6z"
+                    />
+                  </svg>
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="MuiContainer-root MuiContainer-maxWidthLg css-1oqqzyl-MuiContainer-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container css-8qwpet-MuiGrid-root"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 css-1kbptzk-MuiGrid-root"
+            >
+              <div
+                class="logoWrapper MuiBox-root css-0"
+              >
+                <a
+                  class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-1ps4owl-MuiTypography-root-MuiLink-root"
+                  href="/"
+                >
+                  <img
+                    alt="NHA logo"
+                    class="logoImage"
+                    src="nha-logo.png"
+                  />
+                </a>
+              </div>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 css-k22mtw-MuiGrid-root"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container css-gbj4yw-MuiGrid-root"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-9 css-4um21y-MuiGrid-root"
+                >
+                  <div
+                    class="MuiBox-root css-1djk842"
+                  >
+                    <button
+                      class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium css-zcbmsk-MuiButtonBase-root-MuiButton-root"
+                      tabindex="0"
+                      type="button"
+                    >
+                      Create your ABHA Number
+                      <span
+                        class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                      />
+                    </button>
+                  </div>
+                  <div
+                    class="authBlock MuiBox-root css-unpvr7"
+                  >
+                    <h6
+                      class="MuiTypography-root MuiTypography-subtitle2 css-23bz3x-MuiTypography-root"
+                    >
+                      Already have a ABHA Number?
+                    </h6>
+                    <a
+                      class="MuiTypography-root MuiTypography-body1 MuiLink-root MuiLink-underlineAlways css-1pe1wbp-MuiTypography-root-MuiLink-root"
+                      href="/login"
+                    >
+                      login
+                    </a>
+                  </div>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-2 css-1o7apob-MuiGrid-root"
+                >
+                  <img
+                    alt="Abha number"
+                    src="abha-number.svg"
+                    width="96px"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="MuiBox-root css-0"
+        >
+          <div
+            class="menuBar MuiBox-root css-0"
+          >
+            <span />
+            <span />
+            <span />
+          </div>
+          <div
+            class="navBarWrapper MuiBox-root css-0"
+          >
+            <div
+              class="MuiContainer-root MuiContainer-maxWidthLg MuiContainer-disableGutters menuBlock css-1p4tas-MuiContainer-root"
+            >
+              <div
+                class="menuWrapper MuiBox-root css-0"
+              >
+                <button
+                  aria-haspopup="true"
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium menuButton css-sghohy-MuiButtonBase-root-MuiButton-root"
+                  id="basic-button"
+                  tabindex="0"
+                  type="button"
+                >
+                  Home
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+                <button
+                  aria-haspopup="true"
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium menuButton css-sghohy-MuiButtonBase-root-MuiButton-root"
+                  id="basic-button"
+                  tabindex="0"
+                  type="button"
+                >
+                  About ABDM
+                  <span
+                    class="MuiButton-endIcon MuiButton-iconSizeMedium css-9tj150-MuiButton-endIcon"
+                  >
+                    <svg
+                      class=""
+                      fill="currentColor"
+                      height="24px"
+                      width="24px"
+                    >
+                      keyboard_arrow_down_black_48dp.svg
+                    </svg>
+                  </span>
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+                <button
+                  aria-haspopup="true"
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium menuButton css-sghohy-MuiButtonBase-root-MuiButton-root"
+                  id="basic-button"
+                  tabindex="0"
+                  type="button"
+                >
+                  FAQ
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+                <button
+                  aria-haspopup="true"
+                  class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium menuButton css-sghohy-MuiButtonBase-root-MuiButton-root"
+                  id="basic-button"
+                  tabindex="0"
+                  type="button"
+                >
+                  Contact Us
+                  <span
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                  />
+                </button>
+              </div>
+            </div>
+            <div
+              class="MuiBox-root css-1srvgqb"
+            >
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeSmall MuiButton-containedSizeSmall css-ryyx5b-MuiButtonBase-root-MuiButton-root"
+                tabindex="0"
+                type="button"
+              >
+                Facility Login
+                <span
+                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+        <div
+          class="main"
+        />
+      </div>
+      <section
+        class="main"
+      />
+    </main>
+    <div
+      class="footerWrapper MuiBox-root css-0"
+    >
+      <div
+        class="MuiContainer-root MuiContainer-maxWidthLg css-1oqqzyl-MuiContainer-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container css-1heimol-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3 css-10voxkt-MuiGrid-root"
+          >
+            <div
+              class="MuiTypography-root MuiTypography-subtitle1 footerTitle css-10wpov9-MuiTypography-root"
+            >
+              Address
+            </div>
+            <ul
+              class="MuiList-root MuiList-padding css-h4y409-MuiList-root"
+            >
+              <li
+                class="MuiListItem-root css-1nxmd3h-MuiListItem-root"
+              >
+                <div
+                  class="MuiListItemText-root css-uwvb64-MuiListItemText-root"
+                >
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                  >
+                    National Health Authority 9th Floor, Tower-l, Jeevan Bharati Building, Connaught Place, New Delhi - 110 001
+                  </p>
+                </div>
+              </li>
+              <li
+                class="MuiListItem-root css-1nxmd3h-MuiListItem-root"
+              >
+                <div
+                  class="MuiListItemText-root css-uwvb64-MuiListItemText-root"
+                >
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                  >
+                    E-mail :
+                     
+                    <a
+                      class="emailLink"
+                      href="mailto: ndhm@nha.gov.in"
+                    >
+                      ndhm@nha.gov.in
+                    </a>
+                  </p>
+                </div>
+              </li>
+              <li
+                class="MuiListItem-root css-1nxmd3h-MuiListItem-root"
+              >
+                <div
+                  class="MuiListItemText-root css-uwvb64-MuiListItemText-root"
+                >
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                  >
+                    Toll-Free Number : 1800-11-4477
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3 css-10voxkt-MuiGrid-root"
+          >
+            <div
+              class="MuiTypography-root MuiTypography-subtitle1 footerTitle css-10wpov9-MuiTypography-root"
+            >
+              Important Links
+            </div>
+            <ul
+              class="MuiList-root MuiList-padding css-h4y409-MuiList-root"
+            >
+              <li
+                class="MuiListItem-root css-1nxmd3h-MuiListItem-root"
+              >
+                <div
+                  class="MuiListItemText-root css-uwvb64-MuiListItemText-root"
+                >
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                  >
+                    <a
+                      href="/"
+                    >
+                      Ayushman Bharat Digital Mission
+                    </a>
+                  </p>
+                </div>
+              </li>
+              <li
+                class="MuiListItem-root css-1nxmd3h-MuiListItem-root"
+              >
+                <div
+                  class="MuiListItemText-root css-uwvb64-MuiListItemText-root"
+                >
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                  >
+                    <a
+                      href="/"
+                    >
+                      Health ID Healthcare Professionals Registry
+                    </a>
+                  </p>
+                </div>
+              </li>
+              <li
+                class="MuiListItem-root css-1nxmd3h-MuiListItem-root"
+              >
+                <div
+                  class="MuiListItemText-root css-uwvb64-MuiListItemText-root"
+                >
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                  >
+                    <a
+                      href="/"
+                    >
+                      Health Facility Registry
+                    </a>
+                  </p>
+                </div>
+              </li>
+              <li
+                class="MuiListItem-root css-1nxmd3h-MuiListItem-root"
+              >
+                <div
+                  class="MuiListItemText-root css-uwvb64-MuiListItemText-root"
+                >
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                  >
+                    <a
+                      href="/"
+                    >
+                      Grievance Portal
+                    </a>
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3 css-10voxkt-MuiGrid-root"
+          >
+            <div
+              class="MuiTypography-root MuiTypography-subtitle1 footerTitle css-10wpov9-MuiTypography-root"
+            >
+              Policies
+            </div>
+            <ul
+              class="MuiList-root MuiList-padding css-h4y409-MuiList-root"
+            >
+              <li
+                class="MuiListItem-root css-1nxmd3h-MuiListItem-root"
+              >
+                <div
+                  class="MuiListItemText-root css-uwvb64-MuiListItemText-root"
+                >
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                  >
+                    <a
+                      href="/"
+                    >
+                      Terms and Conditions
+                    </a>
+                  </p>
+                </div>
+              </li>
+              <li
+                class="MuiListItem-root css-1nxmd3h-MuiListItem-root"
+              >
+                <div
+                  class="MuiListItemText-root css-uwvb64-MuiListItemText-root"
+                >
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                  >
+                    <a
+                      href="/"
+                    >
+                      Website Policies
+                    </a>
+                  </p>
+                </div>
+              </li>
+              <li
+                class="MuiListItem-root css-1nxmd3h-MuiListItem-root"
+              >
+                <div
+                  class="MuiListItemText-root css-uwvb64-MuiListItemText-root"
+                >
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                  >
+                    <a
+                      href="/"
+                    >
+                      Health Data Management Policy
+                    </a>
+                  </p>
+                </div>
+              </li>
+              <li
+                class="MuiListItem-root css-1nxmd3h-MuiListItem-root"
+              >
+                <div
+                  class="MuiListItemText-root css-uwvb64-MuiListItemText-root"
+                >
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+                  >
+                    <a
+                      href="/"
+                    >
+                      Data Privacy Policy
+                    </a>
+                  </p>
+                </div>
+              </li>
+            </ul>
+             
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 MuiGrid-grid-md-3 css-10voxkt-MuiGrid-root"
+          >
+            <div
+              class="MuiTypography-root MuiTypography-subtitle1 footerTitle css-11j0rze-MuiTypography-root"
+            >
+              Important Links
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-17wqeb1-MuiGrid-root"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-auto css-1wrgmsj-MuiGrid-root"
+              >
+                <img
+                  alt="Mobile App Scan"
+                  src="mobileAppScan.png"
+                />
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-auto css-1wrgmsj-MuiGrid-root"
+              >
+                <img
+                  alt="Android Icon"
+                  src="androidIcon.png"
+                />
+                <div
+                  class="MuiTypography-root MuiTypography-body1 css-i8u4ae-MuiTypography-root"
+                >
+                  App for Android
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-1hxutbw-MuiGrid-root"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 copyright css-dh02zu-MuiGrid-root"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+        >
+          copyright
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;

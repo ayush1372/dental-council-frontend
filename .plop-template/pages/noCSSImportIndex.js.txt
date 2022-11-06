@@ -1,0 +1,15 @@
+export function {{pascalCase componentName}}() {
+
+  return (
+    <div
+      className={''}
+      data-testid="{{kebabCase componentName}}"
+    >
+      <header>
+        <h1>{'Welcome to {{kebabCase componentName}} Page'}</h1>
+      </header>
+    </div>
+  );
+}
+
+export default {{pascalCase componentName}}

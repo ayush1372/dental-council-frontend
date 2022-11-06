@@ -1,0 +1,21 @@
+.main {
+  .mobileField {
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    /* Firefox */
+    input[type='number'] {
+      -moz-appearance: textfield;
+    }
+    .countryCode {
+      background: #e9ecf3;
+      width: 30%;
+      text-align-last: center;
+      height: 3.5em;
+      max-height: 4em;
+    }
+  }
+}

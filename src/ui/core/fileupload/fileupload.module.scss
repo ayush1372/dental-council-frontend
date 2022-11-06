@@ -1,0 +1,96 @@
+.inputDiv {
+  input {
+    cursor: pointer;
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+  .fileError {
+    color: red;
+    font-size: 10px;
+  }
+  .fileUploadArea {
+    position: relative;
+    border: 1px dashed #808080;
+    border-radius: 5px;
+    color: white;
+    text-align: center;
+    padding: 8px;
+    .dragDropFiles {
+      color: #7687af;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .browseFiles {
+      color: #264488;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .fileFormat {
+      font-size: 12px;
+    }
+    .uploadIconBlack {
+      color: #264488;
+    }
+  }
+  .browseFileArea {
+    margin-top: 8px;
+  }
+  .browseFileContainer {
+    position: relative;
+    border: 1px solid #a9a9a9;
+    height: 30px;
+    .browseArea {
+      color: #808080;
+      display: inline-block;
+      width: 70%;
+    }
+    .uploadIconWhite {
+      color: white;
+    }
+    button {
+      width: 30%;
+      height: 31px;
+      border-radius: 2px;
+    }
+  }
+  .uploadFileArea {
+    margin: 11px 0px;
+
+    .timeInfo {
+      color: #a9a9a9;
+      font-size: 12px;
+      margin: 4px 0px;
+    }
+    table,
+    th,
+    td {
+      border: 1px solid #a9a9a9;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    .uploadIconBlack {
+      color: #264488;
+      font-size: 30px;
+    }
+    .fileDetailsContainer {
+      display: flex;
+    }
+    .fileDetailsArea {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .actionArea {
+      align-self: center;
+      cursor: pointer;
+    }
+    .tryAgainIcon {
+      margin-right: 10px;
+      vertical-align: sub;
+    }
+  }
+}

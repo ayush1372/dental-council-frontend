@@ -1,0 +1,7 @@
+import { render } from '@testing-library/react';
+
+import {{pascalCase componentName}} from './{{kebabCase componentName}}';
+
+test('renders', () => {
+  render(<{{pascalCase componentName}} />);
+});

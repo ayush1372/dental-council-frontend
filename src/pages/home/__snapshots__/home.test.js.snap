@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`About component snapshot 1`] = `
+<div>
+  <div
+    class="main"
+    data-testid="homepage"
+  >
+    <header>
+      <h1>
+        Welcome to ReactJS boilerplate
+      </h1>
+      <p>
+        <b>
+          Author: Chetan Bura
+        </b>
+      </p>
+    </header>
+  </div>
+</div>
+`;

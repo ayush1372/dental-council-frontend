@@ -1,0 +1,70 @@
+{
+  "plugins": ["filename-rules", "lodash", "simple-import-sort"],
+  "extends": [
+    "react-app",
+    // "react-app/jest",
+    "plugin:react/recommended",
+    "eslint:recommended",
+    "plugin:react/jsx-runtime",
+    "prettier"
+  ],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {
+        // ------------------------------------------------------------------------------
+        // TODO: Update this rule while starting the project use prop-type or Typescript
+        "react/prop-types": "off",
+        // ------------------------------------------------------------------------------
+        "filename-rules/match": [2, "kebabcase"],
+        "no-console": ["error"],
+        "lodash/import-scope": [2, "method"],
+        "no-self-assign": ["error", { "props": false }],
+        "template-curly-spacing": "off",
+        "quotes": ["error", "single", { "allowTemplateLiterals": true }],
+        "react/jsx-no-useless-fragment": ["error", { "allowExpressions": true }],
+        "react/jsx-indent": [2, 2],
+        "react/no-danger": "error",
+        "react/jsx-key": "error",
+        "jsx-a11y/accessible-emoji": "off",
+        "no-process-env": "off",
+        "eqeqeq": ["error", "always"],
+        "no-unused-vars": [
+          "error",
+          { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }
+        ],
+
+        "simple-import-sort/imports": [
+          2,
+          {
+            "groups": [
+              // Side effect imports.
+              // Imports without declaration are prepended with null char.
+              ["^\\u0000"],
+              // React imports.
+              ["^react$"],
+              // Packages.
+              ["^@?\\w"],
+              // Absolute imports.
+              ["^\\/"],
+              // Relative imports.
+              ["^\\."],
+              // Style imports
+              // anything that ends in css and has a declaration
+              ["^[^\\u0000].*css$"],
+              // Anything not matched in another group.
+              ["^"]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["**/*.stories.*"],
+
+      "rules": {
+        "import/no-anonymous-default-export": "off"
+      }
+    }
+  ]
+}

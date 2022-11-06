@@ -1,0 +1,47 @@
+.userRelation {
+  .cardContainer {
+    display: flex;
+    flex-direction: row;
+    padding: 24px 24px 0px 24px;
+  }
+  .userName {
+    display: block;
+    align-self: center;
+  }
+  .abhaHeading {
+    display: block;
+    margin-top: 10px;
+  }
+  .abhaValue {
+    display: block;
+  }
+  .addRelationToggleTrue {
+    background: #f7f7f7 0% 0% no-repeat padding-box;
+    border: 1px solid #ededf6;
+    width: 100%;
+    cursor: pointer;
+    font-size: 15px;
+    padding: 10px;
+    text-align: center;
+    opacity: 0.5;
+  }
+  .addRelationToggle {
+    background: #f7f7f7 0% 0% no-repeat padding-box;
+    border: 1px solid #ededf6;
+    width: 100%;
+    cursor: pointer;
+    font-size: 15px;
+    padding: 10px;
+    text-align: center;
+  }
+  .addRelationToggleFalse {
+    width: 100%;
+    cursor: pointer;
+    font-size: 15px;
+    padding: 10px;
+    text-align: center;
+  }
+  .nameContainer {
+    display: flex;
+  }
+}

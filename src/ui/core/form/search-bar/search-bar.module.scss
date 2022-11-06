@@ -1,0 +1,30 @@
+@use '../../../../assets/styles/variables' as v;
+
+.searchIconBtn {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.searchInput {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+.small {
+  position: relative;
+}
+.medium {
+  position: relative;
+}
+.large {
+  position: relative;
+}
+.transparent {
+  border: 2px solid map-get(v.$border-colors, 'primary');
+  border-left: none;
+}
+.basic {
+  fieldset {
+    border: 2px solid map-get(v.$border-colors, 'primary');
+    border-right: none;
+  }
+}

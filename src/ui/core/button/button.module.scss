@@ -1,0 +1,18 @@
+@use '../../../assets/styles/variables' as v;
+
+.menuButton {
+  border-radius: 0;
+  padding: 20px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.22px;
+  border-bottom: 4px solid map-get(v.$palette, 'primary');
+  &:hover,
+  &.active {
+    border-bottom: 4px solid map-get(v.$palette, 'secondary');
+  }
+}
+
+.iconBtn {
+  margin: 0 5px;
+}

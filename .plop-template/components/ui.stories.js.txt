@@ -1,0 +1,13 @@
+import { {{pascalCase componentName}} } from './{{kebabCase componentName}}';
+
+export default {
+  title: '{{pascalCase componentName}}',
+  component: {{pascalCase componentName}}
+};
+
+const Template = (args) => <{{pascalCase componentName}} {...args}></{{pascalCase componentName}}>;
+
+export const Playground = Template.bind({});
+Playground.args = {
+    
+};

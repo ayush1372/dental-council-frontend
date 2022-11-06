@@ -1,0 +1,21 @@
+@use '../../../assets/styles/variables' as v;
+
+.menuList {
+  background-color: map-get(v.$palette, 'primary');
+  min-width: 200px;
+  width: 100%;
+  @media screen and (max-width: 991px) {
+    display: block;
+    position: relative;
+  }
+  .submenu {
+    width: 100%;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: map-get(v.$palette, 'white');
+    &.active {
+      background-color: lighten(map-get(v.$palette, 'primary'), 10%);
+    }
+  }
+}

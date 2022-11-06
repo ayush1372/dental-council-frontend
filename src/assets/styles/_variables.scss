@@ -1,0 +1,394 @@
+//////////////////////////////////////////
+// Global Configurations
+//////////////////////////////////////////
+
+// --- Color scheme --- //
+$palette: (
+  'primary': #264488,
+  'secondary': #d66025,
+  'grey': #e9ecf3,
+  'white': #fff,
+  'black': #000,
+  'light': #e6e8ec,
+  'dark': #171e34,
+  'error': #443535,
+  'warning': #ff9f40,
+  'info': #0066ff,
+  'success': #54ca62,
+  'messageBlue': #6554c0,
+);
+
+// --- Background and foregrounds --- //
+$primary-background-color: #e6e8ec;
+$secondary-background-color: #ffffff;
+$header-background-color: #fff;
+
+$background-colors: (
+  'primary': #e6e8ec,
+  'secondary': #252525,
+  'header': #ffffff,
+);
+
+// --- Typography --- //
+$heading-font-family: 'Open Sans', sans-serif;
+$title-font-family: 'Open Sans', sans-serif;
+
+$text-font-family: 'Lato', sans-serif;
+$default-text-size: 16px;
+
+$text-colors: $palette; //Inheriting base pallete for text highlighting colors
+$primary-text-color: #3f3d56; // body text for lighter background
+$secondary-text-color: #5d5d6d;
+$primary-text-inverse: #ffffff; // Inverse mode for darker background
+$primary-text-highlight-color: #59388b;
+$link-color: #0066ff;
+
+$heading-sizes: (
+  'h1': 2.25rem,
+  'h2': 2rem,
+  'h3': 1.75rem,
+  'h4': 1.5rem,
+  'h5': 1.25rem,
+  'h6': 1rem,
+);
+$title-text-sizes: (
+  'extra-large': 3rem,
+  'large': 2.75rem,
+  'medium': 2.5rem,
+  'regula': 1.625rem,
+  'small': 1.375rem,
+  'extra-small': 1.125rem,
+);
+$text-sizes: (
+  'extra-large': 20px,
+  'large': 18px,
+  'medium': 16px,
+  'small': 14px,
+);
+$text-weights: (
+  'thin': 200,
+  'light': 300,
+  'normal': 400,
+  'strong': 500,
+  'bold': 600,
+  'bolder': 700,
+);
+
+// --- Borders --- //
+$border-color: #ededf6;
+$border-radius: 0.25rem;
+$border-radius-capsule: 100px;
+$border-radius-rectangle: 0;
+$border-style: solid;
+$border-size: 1px;
+
+$border-colors: (
+  'primary': #ededf6,
+  'secondary': #252525,
+  'inverse': #ffffff,
+);
+
+$border-sides: ('top', 'right', 'bottom', 'left');
+
+$border-styles: (
+  'solid': solid,
+  'dotted': dotted,
+  'dashed': dashed,
+);
+
+$border-sizes: (
+  'thin': 1px,
+  'normal': 2px,
+  'fat': 4px,
+);
+
+$border-radiuses: (
+  'rectangle': 0,
+  'rounded': 0.25rem,
+  'capsule': 100px,
+);
+
+// --- Shadows --- //
+$box-shadow-color: rgba(0, 0, 0, 0.1);
+$box-shadow-sizes: (
+  'extra-small': 2px,
+  'small': 4px,
+  'medium': 6px,
+  'large': 8px,
+  'extra-large': 10px,
+);
+
+// --- global spacing for padding and margin --- //
+$global-inner-spacing-x: 2rem;
+$global-inner-spacing-y: 2rem;
+$global-outer-spacing-x: 2rem;
+$global-outer-spacing-y: 2rem;
+
+// --- Margin and padding for various sizes --- //
+$spaceamountunit: rem;
+$spaceamounts: (
+  0,
+  5,
+  10,
+  15,
+  20,
+  25,
+  30,
+  35,
+  40,
+  45,
+  50
+); // Adjust this to include the rem amounts you need.
+$sides: (top, bottom, left, right); // Leave this variable alone
+
+// --- Vertical and horizontal sizes ---//
+$box-size-space-unit: px;
+$height-width-sizes: (50, 80, 100, 120, 150, 200, 250);
+$width-sizes: (10, 20, 25, 30, 40, 50, 60, 70, 80, 90, 100);
+
+$display-properties: (
+  'grid': grid,
+  'block': block,
+  'flex': flex,
+  'inline-block': inline-block,
+  'inline': inline,
+  'none': none,
+);
+
+///////////////////////////////////////////////////////////////////////////////
+// UI Elements and Components Configurations
+///////////////////////////////////////////////////////////////////////////////
+
+// --- Customize Accordions by changing below values --- //
+$accordion-colors: $palette; //Inheriting base pallete for alert colors
+
+$accordion-inner-spacing-x: 0.75rem;
+$accordion-inner-spacing-y: 0.75rem;
+$accordion-outer-spacing-x: 0.75rem;
+$accordion-outer-spacing-y: 0.75rem;
+
+$accordion-text-size: 1rem;
+$accordion-text-color: $primary-text-color;
+$accordion-icon-size: 1rem;
+$accordion-icon-color: $secondary-text-color;
+
+$accordion-background-color: $primary-background-color;
+$accordion-light-background-color: $secondary-background-color;
+
+$accordion-border-radius: $border-radius-rectangle;
+$acccordion-shadow: none;
+
+// Customize Alerts by changing below values
+$alert-colors: $palette; //Inheriting base pallete for alert colors
+$alert-inner-spacing-y: 0.75rem;
+$alert-inner-spacing-x: 1.25rem;
+$alert-outer-spacing-y: 0.75rem;
+$alert-outer-spacing-x: 0.75rem;
+$alert-border-radius: $border-radius;
+$alert-sizes: (
+  'small': $alert-inner-spacing-y/2 $alert-inner-spacing-x/2,
+  'large': $alert-inner-spacing-y * 2 $alert-inner-spacing-x * 2,
+);
+
+// Customize Badges by changing below values
+$badge-colors: $palette; //Inheriting base pallete for alert colors
+$badge-inner-spacing-y: 0.25em;
+$badge-inner-spacing-x: 0.5em;
+$badge-outer-spacing-y: 0.25em;
+$badge-outer-spacing-x: 0.5em;
+$badge-border-radius: $border-radius;
+$badge-sizes: (
+  'xs': $badge-inner-spacing-y/2 $badge-inner-spacing-x,
+  'sm': $badge-inner-spacing-y $badge-inner-spacing-x,
+  'md': $badge-inner-spacing-y * 1.5 $badge-inner-spacing-x * 1.5,
+  'lg': $badge-inner-spacing-y * 2 $badge-inner-spacing-x * 2,
+  'xl': $badge-inner-spacing-y * 2.5 $badge-inner-spacing-x * 2.5,
+);
+$badge-border-radiuses: (
+  'rectangle': $border-radius-rectangle,
+  'rounded': $border-radius,
+  'capsule': $border-radius-capsule,
+);
+
+// Customize Buttons by changing below values
+$button-palette: (
+  'danger': map-get($palette, 'error'),
+  'primary': map-get($palette, 'primary'),
+);
+$button-colors: map-merge($button-palette, ($palette)); //Inheriting base pallete for alert colors
+$button-brand-gradient-from-color: #5688ec;
+$button-brand-gradient-to-color: #a649e0;
+$button-inverse-background-color: #fff;
+$button-inner-spacing-y: 0.5rem;
+$button-inner-spacing-x: 1rem;
+$button-outer-spacing-y: 0.375rem;
+$button-outer-spacing-x: 0.75rem;
+$button-icon-inner-spacing-y: 0.75rem;
+$button-icon-inner-spacing-x: 0.75rem;
+$button-icon-outer-spacing-y: 0.75rem;
+$button-icon-outer-spacing-x: 0.75rem;
+$button-font-size: 1rem;
+$button-line-height: 1.5rem;
+$button-icon-line-height: 1.75rem;
+$button-text-color: $primary-text-inverse;
+$button-inverse-text-color: $primary-text-color;
+$button-border-radiuses: (
+  'rectangle': $border-radius-rectangle,
+  'rounded': $border-radius,
+  'capsule': $border-radius-capsule,
+);
+$button-sizes: (
+  'sm': $button-inner-spacing-y/1.5 $button-inner-spacing-x/1.5,
+  'small': $button-inner-spacing-y/1.5 $button-inner-spacing-x/1.5,
+  'lg': $button-inner-spacing-y * 1.75 $button-inner-spacing-x * 1.75,
+  'large': $button-inner-spacing-y * 1.75 $button-inner-spacing-x * 1.75,
+  'extra-large': $button-inner-spacing-y * 2.5 $button-inner-spacing-x * 2.5,
+);
+$button-icon-sizes: (
+  'sm': $button-icon-inner-spacing-y/1.5 $button-icon-inner-spacing-x/1.5,
+  'small': $button-icon-inner-spacing-y/1.5 $button-icon-inner-spacing-x/1.5,
+  'lg': $button-icon-inner-spacing-y * 1.75 $button-icon-inner-spacing-x * 1.75,
+  'large': $button-icon-inner-spacing-y * 1.75 $button-icon-inner-spacing-x * 1.75,
+  'extra-large': $button-icon-inner-spacing-y * 2.5 $button-icon-inner-spacing-x * 2.5,
+);
+
+// Customize Cards by changing below values
+$card-colors: $palette; //Inheriting base pallete for alert colors
+$card-default-background: $secondary-background-color;
+$card-light-background: $secondary-background-color;
+$card-dark-background: map-get($card-colors, 'dark');
+$card-inner-spacing-x: 2rem;
+$card-inner-spacing-y: 2rem;
+$card-outer-spacing-x: 2rem;
+$card-outer-spacing-y: 2rem;
+$card-border-radiuses: (
+  'rectangle': $border-radius-rectangle,
+  'rounded': $border-radius,
+  'capsule': $border-radius-capsule,
+);
+$card-shadow: 0 0 6px 0 $box-shadow-color;
+$card-border: none;
+
+// Customize Icons by changing below values
+$icon-colors: $palette; //Inheriting base pallete for alert colors
+$material-icon-colors: $icon-colors;
+$material-icon-sizes: (
+  'small': 0.75rem,
+  'medium': 1.5rem,
+  'large': 2.5rem,
+);
+
+$fontAwesome-icon-sizes: (
+  'small': 0.75rem,
+  'medium': 1.5rem,
+  'large': 2.5rem,
+);
+
+// Customize Lists by changing below values
+$list-inner-space-x: 1rem;
+$list-inner-space-y: 1rem;
+$list-outer-space-x: 1rem;
+$list-outer-space-y: 1rem;
+$list-border-radius: $border-radius;
+
+// Customize side navigation by changind below values
+$navigation-link-color: #93939a;
+$navigation-section-heading-color: #c9c9d0;
+$navigation-highlight-color: #06b9d4;
+$navigation-gradient-from-color: #1a2841;
+$navigation-gradient-to-color: #311a41;
+
+// Customize media images by changing below values
+$media-image-sizes: (
+  'full-width': (
+    'height': auto,
+    'width': 100%,
+  ),
+);
+$media-border-radiuses: (
+  'rectangle': $border-radius-rectangle,
+  'rounded-corner': $border-radius,
+  'round': $border-radius-capsule,
+);
+
+// Customize Progress bar by changing below values
+$progressbar-colors: $palette;
+$progressbar-sizes: (
+  'small': 2px,
+  'medium': 5px,
+  'large': 10px,
+  'extra-large': 20px,
+);
+
+// Customize Tables by changing below values
+$table-colors: $palette; //Inheriting base pallete for alert colors
+$table-inner-spacing-x: 1rem;
+$table-inner-spacing-y: 1rem;
+$table-outer-spacing-x: 0.5rem;
+$table-outer-spacing-y: 0.5rem;
+$table-border-color: $border-color;
+$table-border-size: $border-size;
+$table-border-style: $border-style;
+$table-border-radius: $border-radius;
+$table-radiuses: (
+  'rectangle': $border-radius-rectangle,
+  'rounded': $border-radius,
+  'capsule': $border-radius-capsule,
+);
+
+// Customize Tables by changing below values
+$tabs-colors: $palette; //Inheriting base pallete for alert colors
+$tabs-background-color: $secondary-background-color;
+$tabs-content-background-color: $secondary-background-color;
+$tabs-border-color: $border-color;
+$tabs-border-size: $border-size;
+$tabs-border-style: $border-style;
+$tabs-inner-spacing-x: 2rem;
+$tabs-inner-spacing-y: 2rem;
+
+// Customize Tables by changing below values
+$toast-colors: $palette; //Inheriting base pallete for alert colors
+
+// Customize Tooltip by changing below values
+$tooltip-colors: $palette; //Inheriting base pallete for alert colors
+$tooltip-sides: ('top', 'right', 'bottom', 'left');
+
+// Customize Form by changing below values
+$form-colors: $palette;
+$form-control-bg-color: #fff;
+$form-control-disabbled-bg-color: $primary-background-color;
+$form-border-color: $border-color;
+$form-placeholder-prefix: ('::-webkit-input-', '::-moz-', ':-ms-input-', ':-moz-');
+$form-control-radiuses: (
+  'rectangle': $border-radius-rectangle,
+  'rounded': $border-radius,
+  'capsule': $border-radius-capsule,
+);
+$form-control-sizes: (
+  'sm': $button-inner-spacing-y/1.5 $button-inner-spacing-x/1.5,
+  'small': $button-inner-spacing-y/1.5 $button-inner-spacing-x/1.5,
+  'lg': $button-inner-spacing-y * 1.75 $button-inner-spacing-x * 1.75,
+  'large': $button-inner-spacing-y * 1.75 $button-inner-spacing-x * 1.75,
+  'extra-large': $button-inner-spacing-y * 2.5 $button-inner-spacing-x * 2.5,
+);
+
+//--- Navbar ---//
+$navbar-inner-spacing-x: 2rem;
+$navbar-inner-spacing-y: 2rem;
+$navbar-outer-spacing-x: 2rem;
+$navbar-outer-spacing-y: 2rem;
+
+//---  pagination  --//
+$pagination-background-colors: (
+  'default': #0066ff,
+  'active': #0043a7,
+  'disabled': #7688aa,
+  'transparent': transparent,
+);
+
+$list-styles: (
+  'none': none,
+);
+
+// --- Code highliter --//
+$code-highlighter-background-color: $primary-background-color;

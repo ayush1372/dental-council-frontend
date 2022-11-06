@@ -1,0 +1,167 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AadhaarOtpForm  snapshot 1`] = `
+<div>
+  <div
+    class="MuiBox-root css-0"
+  >
+    <div
+      class="MuiBox-root css-0"
+    >
+      <p
+        class="MuiTypography-root MuiTypography-body1 css-uf0xlz-MuiTypography-root"
+        data-testid="header"
+      >
+        Confirm OTP
+      </p>
+    </div>
+    <div
+      class="MuiBox-root css-d2znx6"
+    >
+      <p
+        class="MuiTypography-root MuiTypography-body1 css-1xx97y3-MuiTypography-root"
+        data-testid="OTP_text"
+      >
+        OTP_on_mobile_number
+      </p>
+    </div>
+    <div
+      class="MuiBox-root css-0"
+    >
+      <div
+        class="Toastify"
+      />
+      <div
+        class="MuiBox-root css-h5fkc8"
+      >
+        <div
+          style="display: flex;"
+        >
+          <div
+            style="display: flex; align-items: center;"
+          >
+            <input
+              aria-label="Please enter verification code. Digit 1"
+              autocomplete="off"
+              class=""
+              maxlength="1"
+              style="width: 56px; text-align: center; height: 56px; margin-right: 12px; font-size: 18px; border-radius: 5px; border: 1px solid #d8dcde; color: rgb(216, 220, 222); box-shadow: 0 1px 3px #00000029; background-color: rgb(250, 250, 250); outline: 2px solid #264488;"
+              type="tel"
+              value=""
+            />
+          </div>
+          <div
+            style="display: flex; align-items: center;"
+          >
+            <input
+              aria-label="Digit 2"
+              autocomplete="off"
+              class=""
+              maxlength="1"
+              style="width: 56px; text-align: center; height: 56px; margin-right: 12px; font-size: 18px; border-radius: 5px; border: 1px solid #d8dcde; color: rgb(216, 220, 222); box-shadow: 0 1px 3px #00000029; background-color: rgb(250, 250, 250);"
+              type="tel"
+              value=""
+            />
+          </div>
+          <div
+            style="display: flex; align-items: center;"
+          >
+            <input
+              aria-label="Digit 3"
+              autocomplete="off"
+              class=""
+              maxlength="1"
+              style="width: 56px; text-align: center; height: 56px; margin-right: 12px; font-size: 18px; border-radius: 5px; border: 1px solid #d8dcde; color: rgb(216, 220, 222); box-shadow: 0 1px 3px #00000029; background-color: rgb(250, 250, 250);"
+              type="tel"
+              value=""
+            />
+          </div>
+          <div
+            style="display: flex; align-items: center;"
+          >
+            <input
+              aria-label="Digit 4"
+              autocomplete="off"
+              class=""
+              maxlength="1"
+              style="width: 56px; text-align: center; height: 56px; margin-right: 12px; font-size: 18px; border-radius: 5px; border: 1px solid #d8dcde; color: rgb(216, 220, 222); box-shadow: 0 1px 3px #00000029; background-color: rgb(250, 250, 250);"
+              type="tel"
+              value=""
+            />
+          </div>
+          <div
+            style="display: flex; align-items: center;"
+          >
+            <input
+              aria-label="Digit 5"
+              autocomplete="off"
+              class=""
+              maxlength="1"
+              style="width: 56px; text-align: center; height: 56px; margin-right: 12px; font-size: 18px; border-radius: 5px; border: 1px solid #d8dcde; color: rgb(216, 220, 222); box-shadow: 0 1px 3px #00000029; background-color: rgb(250, 250, 250);"
+              type="tel"
+              value=""
+            />
+          </div>
+          <div
+            style="display: flex; align-items: center;"
+          >
+            <input
+              aria-label="Digit 6"
+              autocomplete="off"
+              class=""
+              maxlength="1"
+              style="width: 56px; text-align: center; height: 56px; margin-right: 12px; font-size: 18px; border-radius: 5px; border: 1px solid #d8dcde; color: rgb(216, 220, 222); box-shadow: 0 1px 3px #00000029; background-color: rgb(250, 250, 250);"
+              type="tel"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiBox-root css-1jcfcth"
+      >
+        <div
+          class="MuiBox-root css-0"
+        >
+          <span
+            class="MuiTypography-root MuiTypography-body3 MuiTypography-alignCenter css-lo9m2m-MuiTypography-root"
+          >
+            Didn't recieve code? 
+          </span>
+          <button
+            class="MuiButtonBase-root Mui-disabled MuiButton-root MuiButton-text MuiButton-textInherit MuiButton-sizeMedium MuiButton-textSizeMedium MuiButton-colorInherit css-12mazgg-MuiButtonBase-root-MuiButton-root"
+            disabled=""
+            tabindex="-1"
+            type="button"
+          >
+            Resend_OTP
+          </button>
+          <span
+            class="MuiBox-root css-sg0891"
+          >
+            01:30
+             remaining
+          </span>
+        </div>
+      </div>
+    </div>
+    <div
+      class="MuiBox-root css-zfe5sp"
+    >
+      <div
+        class="MuiBox-root css-11qjisw"
+      />
+      <button
+        class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium css-zcbmsk-MuiButtonBase-root-MuiButton-root"
+        tabindex="0"
+        type="button"
+      >
+        Next:Step 3
+        <span
+          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+        />
+      </button>
+    </div>
+  </div>
+</div>
+`;

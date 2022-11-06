@@ -1,0 +1,57 @@
+@use '../../../assets/styles/variables' as v;
+
+.navBarWrapper {
+  background-color: map-get(v.$palette, 'primary');
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
+}
+.menuWrapper {
+  position: relative;
+  display: flex;
+  @media screen and (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+.menuBlock {
+  @media screen and (max-width: 600px) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+.menuBar {
+  display: none;
+  position: absolute;
+  width: 42px;
+  height: 39px;
+  padding: 8px;
+  right: 16px;
+  top: 70px;
+  background-color: map-get(v.$palette, 'primary');
+  cursor: pointer;
+  @media screen and (max-width: 768px) {
+    display: block;
+  }
+  span {
+    position: absolute;
+    content: '';
+    z-index: 9;
+    width: 25px;
+    height: 3px;
+    background-color: map-get(v.$palette, 'white');
+
+    &:nth-child(2) {
+      transform: translateY(10px);
+    }
+    &:nth-child(3) {
+      transform: translateY(20px);
+    }
+  }
+}
+
+.show {
+  display: block;
+}

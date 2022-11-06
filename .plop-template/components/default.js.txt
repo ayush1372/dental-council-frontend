@@ -1,0 +1,18 @@
+import styles from './{{kebabCase componentName}}.module.scss';
+
+//file name can be renamed
+export function {{pascalCase componentName}}() {
+  
+  return (
+    <div
+      className={styles.main}
+      data-testid="{{kebabCase componentName}}"
+    >
+      <header>
+        <h1>{'Welcome to {{kebabCase componentName}} Page'}</h1>
+      </header>
+    </div>
+  );
+}
+
+export default {{pascalCase componentName}}

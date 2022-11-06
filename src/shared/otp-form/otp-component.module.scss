@@ -1,0 +1,21 @@
+.otpInput {
+  width: 56px !important;
+  text-align: center !important;
+  height: 56px !important;
+  margin-right: 12px !important;
+  font-size: 18px !important;
+  border-radius: 5px !important;
+  border: 1px solid #d8dcde !important;
+  color: #d8dcde !important;
+  box-shadow: #00000029 0px 1px 3px !important;
+  background-color: #fafafa !important;
+  &:focus-visible {
+    outline: none;
+  }
+}
+.invalid {
+  display: flex;
+  align-items: center;
+  color: #ff5630;
+  padding: 8px 0px 0px 0px;
+}

@@ -1,0 +1,16 @@
+.heroBannerBox {
+  background-repeat: no-repeat;
+  background-size: 400px;
+  background-position: top left;
+  .bannerWrapper {
+    position: relative;
+    .bannerImage {
+      @media screen and (max-width: 1200px) {
+        max-width: 500px;
+      }
+      @media screen and (max-width: 991px) {
+        display: none;
+      }
+    }
+  }
+}

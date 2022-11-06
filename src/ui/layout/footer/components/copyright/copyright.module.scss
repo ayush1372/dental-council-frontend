@@ -1,0 +1,9 @@
+@use '../../../../../assets/styles/variables' as v;
+
+.copyright {
+  background-color: #1b346e;
+  padding: 0;
+  text-align: center;
+  margin: 0;
+  color: map-get(v.$palette, 'white');
+}

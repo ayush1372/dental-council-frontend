@@ -1,0 +1,15 @@
+.logoWrapper {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  @media screen and (max-width: 767px) {
+    padding: 16px 0;
+  }
+  .logoImage {
+    height: 90px;
+  }
+}
+
+.authBlock {
+  display: flex;
+  justify-content: flex-end;
+}

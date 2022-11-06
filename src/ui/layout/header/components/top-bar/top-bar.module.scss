@@ -1,0 +1,45 @@
+@use '../../../../../assets/styles/variables' as v;
+
+.topBarWrapper {
+  background-color: map-get(v.$palette, 'grey');
+  min-height: 40px;
+  color: map-get(v.$palette, 'primary');
+  display: flex;
+  align-items: center;
+}
+
+.topBarIcon {
+  padding: 0;
+  min-width: auto;
+  margin-left: 16px;
+  font-size: 12px;
+  font-weight: 500;
+  position: relative;
+  @media screen and (max-width: 991px) {
+    margin-left: 8px;
+  }
+  &:hover,
+  &:focus {
+    background-color: transparent;
+  }
+}
+
+.select {
+  position: relative;
+}
+
+.languageIcon {
+  padding: 0;
+}
+
+.topBarLanguageMenu {
+  max-width: 160px;
+  color: v.$primary-text-color;
+}
+
+// FONT ZOOM CSS
+.fontZoomSmall,
+.fontZoomMedium,
+.fontZoomLarge {
+  padding: 0;
+}

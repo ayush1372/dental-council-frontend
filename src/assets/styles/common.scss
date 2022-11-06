@@ -1,0 +1,19 @@
+@use './variables' as v;
+
+a {
+  color: map-get(v.$palette, 'white');
+  text-decoration: none;
+}
+.footerTitle {
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 31px;
+    height: 2px;
+    background-color: map-get(v.$palette, 'white');
+    word-break: break-all;
+  }
+}
