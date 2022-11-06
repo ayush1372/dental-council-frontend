@@ -1,5 +1,5 @@
 ---
-title: 'React JS application boilerplate'
+title: 'React JS application for council software'
 author:
   - name: 'Sneha Gosewade'
 ---
