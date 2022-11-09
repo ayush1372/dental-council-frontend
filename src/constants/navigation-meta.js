@@ -74,6 +74,11 @@ const NAV_META = [
     title: 'register/aadhaar',
     component: 'register/sub-pages/register-aadhaar/register-aadhaar',
   },
+  {
+    path: 'dashboard',
+    title: 'dashboard',
+    component: 'dashboard',
+  },
 ];
 
 export const LOGGED_IN = true;
