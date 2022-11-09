@@ -1,15 +1,29 @@
+import { useState } from 'react';
+
 import { Container, Grid, Link } from '@mui/material';
 // import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import NHALOGO from '../../../../../assets/images/logo-slider/nha-english-logo.png';
 import { Button } from '../../../../core';
+import { LoginRegisterPopover } from './login-register-popover/login-register-popover';
 
 import styles from './logo-wrapper.module.scss';
 
 export const LogoWrapper = () => {
   const navigate = useNavigate();
   // const { t } = useTranslation();
+
+  /** Login Register */
+
+  const [regType, setRegType] = useState('');
+  const [anchorLRLoginRgister, setAnchorLRLoginRegister] = useState(null);
+  const openLoginRegisterPopover = Boolean(anchorLRLoginRgister);
+
+  const handleClickLoginRegister = (event) => {
+    setRegType('');
+    setAnchorLRLoginRegister(event.currentTarget);
+  };
 
   return (
     <Container className={styles.logoWrapper}>
@@ -20,18 +34,21 @@ export const LogoWrapper = () => {
           </Link>
         </Grid>
 
-        <Grid xs={12} sm={6} alignItems="center" textAlign="right">
+        <Grid xs={12} sm={6} item alignItems="center" textAlign="right">
           <Button
+            className={styles.loginRegisterText}
             variant="contained"
-            color="secondary"
-            sx={{ marginRight: '8px' }}
-            onClick={() => navigate('/login')}
+            color="grey"
+            onClick={handleClickLoginRegister}
           >
-            Login
+            {'Login/Registration'}
           </Button>
-          <Button variant="outlined" color="secondary" onClick={() => navigate('/facility')}>
-            Facility Login
-          </Button>
+          <LoginRegisterPopover
+            regType={regType}
+            openLoginRegisterPopover={openLoginRegisterPopover}
+            anchorLRLoginRgister={anchorLRLoginRgister}
+            setAnchorLRLoginRegister={setAnchorLRLoginRegister}
+          />
         </Grid>
       </Grid>
     </Container>
