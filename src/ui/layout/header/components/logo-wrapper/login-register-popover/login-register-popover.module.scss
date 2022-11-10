@@ -6,22 +6,11 @@
 .lrPopover {
   padding: 20px;
   width: 300px;
+  border: 1px solid #e9ecf3;
+  border-radius: 5px;
+
   .rlButttonContainer {
     display: flex;
     padding-top: 10px;
-    .loginButton {
-      margin-left: 10px;
-      color: #264488;
-      background-color: transparent;
-      border: solid 1px #264488;
-    }
-    .registerButton {
-      color: #ffffff;
-      background-color: #ff8b00;
-    }
-  }
-  .errorMsg {
-    color: red;
-    font-size: 12px;
   }
 }

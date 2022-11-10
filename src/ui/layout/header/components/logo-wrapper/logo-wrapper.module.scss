@@ -7,9 +7,12 @@
   .logoImage {
     height: 90px;
   }
-  .loginRegisterText {
-    color: #3f3d56;
-    font-size: 14px;
+  .logoHeaderText {
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.26px;
   }
 }
 

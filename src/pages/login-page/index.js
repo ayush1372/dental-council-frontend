@@ -56,7 +56,7 @@ export function LoginPage() {
           {t('Login')}
         </Typography>
         <Box>
-          <Box sx={{ mt: 2 }}>
+          <Box sx={{ mt: 1 }}>
             <Typography variant="body4">
               <b>
                 {' '}
@@ -77,14 +77,14 @@ export function LoginPage() {
               error={errors.nmrID?.message}
               {...register('nmrID', {
                 required: 'Provide  valid  NMR ID',
-                pattern: {
-                  value: /^(\d{12})$/i,
-                  message: 'Provide  valid  NMR ID',
-                },
+                // pattern: {
+                //   value: /^(\d{12})$/i,
+                //   message: 'Provide  valid  NMR ID',
+                // },
               })}
             />
           </Box>
-          <Box sx={{ mt: 2 }}>
+          <Box sx={{ mt: 1 }}>
             <Typography variant="body4">
               <b>{t('Password')}</b>
             </Typography>
@@ -102,7 +102,7 @@ export function LoginPage() {
               {...register('password', PasswordRegexValidation)}
             />
           </Box>
-          <Box sx={{ mt: 3 }}>
+          <Box align="center" sx={{ mt: 3 }}>
             <CaptchaComponent />
           </Box>
 
@@ -110,8 +110,12 @@ export function LoginPage() {
             <Button
               size="medium"
               variant="contained"
-              color="secondary"
-              className={styles.LoginButton}
+              sx={{
+                backgroundColor: 'orangeBackgroundColor.main',
+                '&:hover': {
+                  backgroundColor: 'orangeBackgroundColor.main',
+                },
+              }}
               onClick={handleSubmit(onSubmit)}
               // loading={isLoading}
             >

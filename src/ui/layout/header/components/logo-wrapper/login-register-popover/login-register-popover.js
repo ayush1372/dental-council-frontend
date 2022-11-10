@@ -166,21 +166,41 @@ export const LoginRegisterPopover = ({
               </Grid>
             </Grid>
             <Grid item container>
-              {regTypeError && <Box className={styles.errorMsg}>{'Please select one option'}</Box>}
+              {regTypeError && (
+                <Box color="error.main" fontSize={'small'}>
+                  {'Please select one option'}
+                </Box>
+              )}
             </Grid>
             <Grid item container className={styles.rlButttonContainer}>
               {/* //  recruiter-Reg-Log-Btn"> */}
               <Grid item xs={12}>
                 <Button
                   size="small"
-                  className={styles.registerButton}
+                  variant="contained"
+                  sx={{
+                    backgroundColor: 'orangeBackgroundColor.main',
+                    '&:hover': {
+                      backgroundColor: 'orangeBackgroundColor.main',
+                    },
+                  }}
+                  // className={styles.registerButton}
                   onClick={() => onClickRecruitingAgentHandler()}
+                  disabled={regType === 'SMC' || regType === 'NMC'}
                 >
                   Register
                 </Button>
                 <Button
                   size="small"
-                  className={styles.loginButton}
+                  variant="outlined"
+                  sx={{
+                    backgroundColor: 'white.main',
+                    ml: 2,
+                    '&:hover': {
+                      color: 'primary.main',
+                      backgroundColor: 'white.main',
+                    },
+                  }}
                   onClick={() => {
                     onClickLoginHandler();
                   }}

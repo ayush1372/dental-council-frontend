@@ -29,16 +29,32 @@ export const LogoWrapper = () => {
     <Container className={styles.logoWrapper}>
       <Grid container justifyContent="space-between" alignItems="center">
         <Grid item xs={12} sm={6}>
-          <Link onClick={() => navigate('/')} sx={{ cursor: 'pointer' }}>
-            <img className={styles.logoImage} src={NHALOGO} alt="NHA logo" />
-          </Link>
+          <Grid container>
+            <Grid item xs={4}>
+              <Grid item xs={12}>
+                <Link onClick={() => navigate('/')} className={styles.logoHeaderText}>
+                  {'राष्ट्रीय आयुर्विज्ञान आयोग'}
+                </Link>
+              </Grid>
+              <Grid item xs={12}>
+                <Link onClick={() => navigate('/')} className={styles.logoHeaderText}>
+                  {'NATIONAL MEDICAL COMMISSION'}
+                </Link>
+              </Grid>
+            </Grid>
+            <Grid item xs={8}>
+              <Link onClick={() => navigate('/')} sx={{ cursor: 'pointer' }}>
+                <img className={styles.logoImage} src={NHALOGO} alt="NHA logo" />
+              </Link>
+            </Grid>
+          </Grid>
         </Grid>
 
         <Grid xs={12} sm={6} item alignItems="center" textAlign="right">
           <Button
-            className={styles.loginRegisterText}
             variant="contained"
             color="grey"
+            sx={{ fontSize: 'small' }}
             onClick={handleClickLoginRegister}
           >
             {'Login/Registration'}
