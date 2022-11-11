@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { Box, Container, Link, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -10,7 +9,6 @@ import { Button, TextField } from '../../ui/core';
 import { PasswordRegexValidation } from '../../utilities/common-validations';
 
 import styles from './login-page.module.scss';
-console.log('styles', styles);
 export function LoginPage() {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -33,7 +31,7 @@ export function LoginPage() {
       let req = { mobile: data.nmrID };
       if (req) {
         verboseLog('usersListData', req);
-        navigate(`/NMR-generate`);
+        navigate(`/user-profile`);
       }
     } catch (err) {
       verboseLog('usersListData', err);
