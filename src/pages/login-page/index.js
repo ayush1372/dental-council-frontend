@@ -71,12 +71,12 @@ export function LoginPage() {
               type="text"
               name="nmrID"
               required="true"
-              placeholder={t('NMR ID')}
+              placeholder={t('ID')}
               margin="dense"
               defaultValue={getValues().nmrID}
               error={errors.nmrID?.message}
               {...register('nmrID', {
-                required: 'Provide  valid  NMR ID',
+                required: 'Provide  valid ID',
                 // pattern: {
                 //   value: /^(\d{12})$/i,
                 //   message: 'Provide  valid  NMR ID',
