@@ -10,19 +10,13 @@ import { Menu } from '../menu/menu';
 
 import styles from './navigation.module.scss';
 
-// const pages = [
-//   { title: 'Home', url: '/' },
-//   { title: 'Contact', url: '/Contact' },
-//   { title: 'Signup', url: '/signup' },
-// ];
-
 export const Navbar = () => {
   const { t } = useTranslation();
   const [show, setShow] = useState(false);
-  const aboutUsOptions = [
-    { title: 'ABDM', url: 'https://abdm.gov.in/abdm', redirect: true },
-    { title: 'NHA', url: 'https://abdm.gov.in/nha', redirect: true },
-  ];
+  // const aboutUsOptions = [
+  //   { title: 'ABDM', url: 'https://abdm.gov.in/abdm', redirect: true },
+  //   { title: 'NHA', url: 'https://abdm.gov.in/nha', redirect: true },
+  // ];
   const toggleMenu = () => {
     setShow(!show);
   };
@@ -42,22 +36,28 @@ export const Navbar = () => {
         <Container className={styles.menuBlock}>
           <Box className={styles.menuWrapper}>
             <Menu dropdown={false} url="/">
-              {t('Home')}
-            </Menu>
-            {/* <Menu dropdown={false} url="/">
-              {t('Recruiters Directory')}
+              {t('About NMR')}
             </Menu>
             <Menu dropdown={false} url="/">
-              {t('Employers Directory')}
-            </Menu> */}
-            <Menu dropdown={true} url="" options={aboutUsOptions}>
+              {t('NMR Act')}
+            </Menu>
+            <Menu dropdown={false} url="/">
+              {t('Rules & Regulations')}
+            </Menu>
+            {/* <Menu dropdown={true} url="" options={aboutUsOptions}>
               {t('About ABDM')}
+            </Menu> */}
+            <Menu dropdown={false} url="/">
+              {t('Information Desk')}
             </Menu>
             <Menu dropdown={false} url="/">
-              {t('FAQ')}
+              {t('Media Room')}
             </Menu>
-            <Menu dropdown={false} url="/support">
-              {t('Support')}
+            <Menu dropdown={false} url="/">
+              {t('E-Gazette')}
+            </Menu>
+            <Menu dropdown={false} url="/">
+              {t('Photo Gallery')}
             </Menu>
             {/* <Button
               sx={{ p: '8px 24px' }}

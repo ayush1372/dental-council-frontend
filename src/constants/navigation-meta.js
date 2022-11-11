@@ -89,6 +89,11 @@ const NAV_META = [
     title: 'Doctor-Registration',
     component: 'register/doctor-registration/form-verification',
   },
+  {
+    path: 'login-page',
+    title: 'Login',
+    component: 'login-page',
+  },
 ];
 
 export const LOGGED_IN = true;
