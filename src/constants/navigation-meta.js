@@ -74,6 +74,21 @@ const NAV_META = [
     title: 'register/aadhaar',
     component: 'register/sub-pages/register-aadhaar/register-aadhaar',
   },
+  {
+    path: 'register/college-registration',
+    title: 'collegeRegistration',
+    component: 'register/college-registration/college-registration',
+  },
+  {
+    path: 'register/doctor-registration',
+    title: 'DoctorRegistration',
+    component: 'register/doctor-registration/doctor-registration',
+  },
+  {
+    path: 'register/doctor-registration-verification',
+    title: 'Doctor-Registration',
+    component: 'register/doctor-registration/form-verification',
+  },
 ];
 
 export const LOGGED_IN = true;
