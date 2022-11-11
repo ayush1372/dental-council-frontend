@@ -97,4 +97,7 @@ export const Palette = {
   profileCardBorder: {
     main: '#BFBFBF8C',
   },
+  orangeBackgroundColor: {
+    main: '#FF8B00',
+  },
 };
