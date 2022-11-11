@@ -1,9 +1,6 @@
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { Typography } from '@mui/material';
-import { StyledEngineProvider } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
+import { Box, IconButton, InputAdornment, StyledEngineProvider, Typography } from '@mui/material';
 
 import { Button } from '../button/button';
 import { TextField } from '../form/textfield/textfield';
@@ -11,7 +8,17 @@ import { TextField } from '../form/textfield/textfield';
 import styles from './mobile-number.module.scss';
 
 export function MobileNumber(props) {
-  const { register, getValues, errors, showVerify, verifyOnClick, label } = props;
+  const {
+    register,
+    getValues,
+    errors,
+    showVerify,
+    verifyOnClick,
+    disabled,
+    label,
+    showhint = true,
+    required,
+  } = props;
   const handleInput = (e) => {
     e.preventDefault();
     if (e.target.value.length > 0) {
@@ -28,7 +35,21 @@ export function MobileNumber(props) {
             id="outlined-adornment-password"
             type={'number'}
             name={'mobileNo'}
-            label={label ? label : ''}
+            disabled={disabled}
+            label={
+              label ? (
+                <Box>
+                  <Typography variant="subtitle2" component={'span'}>
+                    {label}
+                  </Typography>
+                  <Typography variant="body2" color="error">
+                    {required ? ' *' : ''}
+                  </Typography>
+                </Box>
+              ) : (
+                ''
+              )
+            }
             defaultValue={getValues().mobileNo}
             sx={{
               '& .MuiInputBase-root.MuiOutlinedInput-root': {
@@ -77,12 +98,14 @@ export function MobileNumber(props) {
             </Button>
           )}
           <div>
-            <Typography variant="caption" color="primary">
-              <InfoOutlinedIcon
-                sx={{ fontSize: '15px', verticalAlign: 'middle', marginRight: '5px' }}
-              />
-              Enter Mobile Number linked with your Aadhaar.
-            </Typography>
+            {showhint && (
+              <Typography variant="caption" color="primary">
+                <InfoOutlinedIcon
+                  sx={{ fontSize: '15px', verticalAlign: 'middle', marginRight: '5px' }}
+                />
+                Enter Mobile Number linked with your Aadhaar.
+              </Typography>
+            )}
           </div>
         </div>
       </div>

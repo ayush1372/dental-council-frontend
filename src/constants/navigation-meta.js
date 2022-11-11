@@ -94,6 +94,11 @@ const NAV_META = [
     title: 'Login',
     component: 'login-page',
   },
+  {
+    path: 'user-profile',
+    title: 'user-profile',
+    component: 'user-profile',
+  },
 ];
 
 export const LOGGED_IN = true;
