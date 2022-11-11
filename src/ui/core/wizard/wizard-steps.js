@@ -65,12 +65,13 @@ const WizardSteps = ({ activeStep, steps, progress }) => {
                 padding: '12px',
                 border: '1px solid',
                 borderColor: 'inputBorderColor.main',
-                borderBottom:
+                borderBottomColor:
                   index === activeStep
-                    ? '4px solid stepIconActive.main'
+                    ? 'inputFocusColor.main'
                     : index < activeStep
-                    ? '4px solid success.main'
-                    : '4px solid inputBorderColor.main',
+                    ? 'success.main'
+                    : 'inputBorderColor.main',
+                borderBottomWidth: '4px',
                 borderRadius: '0px',
                 '&:focus': {
                   backgroundColor: 'white.main',
