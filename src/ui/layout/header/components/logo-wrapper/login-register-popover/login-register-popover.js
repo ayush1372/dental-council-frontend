@@ -42,7 +42,7 @@ export const LoginRegisterPopover = ({
       if (regType === 'Doctor') {
         navigate('/register/doctor');
       } else if (regType === 'College') {
-        navigate('/register/college');
+        navigate('/register/college-registration');
       }
       // else if (regType === 'SMC') {
       //   navigate('/register/smc');
