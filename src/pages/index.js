@@ -11,8 +11,9 @@ export { FacilityGenerate } from './facility-login/sub-pages/facility-generate/f
 export { LoginAbhaNumber } from './login/sub-pages/login-abha-number/login-abha-number';
 export { LoginMobileOtpForm } from './login/components/login-via-mobile/mobile-otp-form';
 export { Login } from './login';
-export { ProfileDrawer } from './profile/components/profile-drawer/profile-drawer';
-export { Profile } from './profile/profile';
+// export { ProfileDrawer } from './profile/components/profile-drawer/profile-drawer';
+export { Profile } from './profile';
+export { UserProfile } from './user-profile';
 export { LinkAbhaAddress } from './register/components/link-abha-address/link-abha-address';
 export { RegisterDrivingLicence } from './register/sub-pages/register-driving-licence/register-driving-licence';
 export { Register } from './register';

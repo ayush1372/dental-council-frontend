@@ -17,9 +17,11 @@ export const Palette = {
     dark: '#BBBBC2',
     context: '#595959',
     contrastText: '#fff',
+    label: '#656565',
   },
   grey1: {
     main: '#bfbfbf',
+    light: '#F8F7FA',
   },
   grey2: {
     main: '#F0F0F0',
@@ -60,6 +62,7 @@ export const Palette = {
   },
   inputTextColor: {
     main: '#3F3D56',
+    light: '#3F3D5699',
   },
   otpTextColor: {
     main: '#D8DCDE',
@@ -96,5 +99,8 @@ export const Palette = {
   },
   profileCardBorder: {
     main: '#BFBFBF8C',
+  },
+  orangeBackgroundColor: {
+    main: '#FF8B00',
   },
 };

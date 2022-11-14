@@ -2,10 +2,10 @@ import Divider from '@mui/material/Divider';
 import { ToastContainer } from 'react-toastify';
 
 import LogoSlider from '../../shared/logo-slider/logo-slider';
-import BenefitsOfAbha from './components/benefits-of-abha/benefits-of-abha';
-import FundamentalsOfAbha from './components/fundamentals-of-abha/fundamentals-of-abha';
-import HeroBanner from './components/hero-banner/hero-banner';
 
+// import BenefitsOfAbha from './components/benefits-of-abha/benefits-of-abha';
+// import FundamentalsOfAbha from './components/fundamentals-of-abha/fundamentals-of-abha';
+// import HeroBanner from './components/hero-banner/hero-banner';
 import styles from './home.module.scss';
 // import { useTranslation } from 'react-i18next';
 
@@ -15,9 +15,9 @@ export function Home() {
 
   return (
     <div className={styles.main} data-testid="homepage">
-      <HeroBanner />
+      {/* <HeroBanner />
       <BenefitsOfAbha />
-      <FundamentalsOfAbha />
+      <FundamentalsOfAbha /> */}
       <Divider
         variant="fullWidth"
         component="div"

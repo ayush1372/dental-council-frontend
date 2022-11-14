@@ -12,7 +12,7 @@ const NAV_META = [
   {
     path: 'profile',
     title: 'Profile',
-    component: 'profile/profile.js',
+    component: 'profile',
   },
   {
     path: '*',
@@ -73,6 +73,31 @@ const NAV_META = [
     path: 'register/aadhaar',
     title: 'register/aadhaar',
     component: 'register/sub-pages/register-aadhaar/register-aadhaar',
+  },
+  {
+    path: 'register/college-registration',
+    title: 'collegeRegistration',
+    component: 'register/college-registration/college-registration',
+  },
+  {
+    path: 'register/doctor-registration',
+    title: 'DoctorRegistration',
+    component: 'register/doctor-registration/doctor-registration',
+  },
+  {
+    path: 'register/doctor-registration-verification',
+    title: 'Doctor-Registration',
+    component: 'register/doctor-registration/form-verification',
+  },
+  {
+    path: 'login-page',
+    title: 'Login',
+    component: 'login-page',
+  },
+  {
+    path: 'user-profile',
+    title: 'user-profile',
+    component: 'user-profile',
   },
 ];
 

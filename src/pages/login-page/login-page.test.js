@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 
-import ProfileNew from './index';
+import LoginPage from '.';
 
 test('renders', () => {
-  render(<ProfileNew />);
+  render(<LoginPage />);
 });
