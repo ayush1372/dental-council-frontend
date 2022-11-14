@@ -40,7 +40,7 @@ export const LoginRegisterPopover = ({
     if (regType !== '') {
       setRegTypeError(false);
       if (regType === 'Doctor') {
-        navigate('/register/doctor');
+        navigate('/register/doctor-registration');
       } else if (regType === 'College') {
         navigate('/register/college-registration');
       }
