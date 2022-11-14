@@ -1,15 +1,19 @@
 import { Box, Container, Link, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { verboseLog } from '../../config/debug';
 import CaptchaComponent from '../../shared/captcha-component/captcha-component';
+import { login, userLoggedInType } from '../../store/reducers/common-reducers';
 import { Button, TextField } from '../../ui/core';
 import { PasswordRegexValidation } from '../../utilities/common-validations';
 
 import styles from './login-page.module.scss';
+
 export function LoginPage() {
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -31,7 +35,13 @@ export function LoginPage() {
       let req = { mobile: data.nmrID };
       if (req) {
         verboseLog('usersListData', req);
-        navigate(`/user-profile`);
+        dispatch(login());
+        dispatch(userLoggedInType(loginFormname));
+        navigate(`/profile`);
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
       }
     } catch (err) {
       verboseLog('usersListData', err);
@@ -41,7 +51,7 @@ export function LoginPage() {
   //   navigate(`/NMR/NMR-generate`);
   // };
   return (
-    <Container maxWidth="md" sx={{ mt: 10, mb: 10 }}>
+    <Container maxWidth="md" sx={{ mt: 5, mb: 5 }}>
       <Box p={4} className={styles.loginContainerBox}>
         <Typography variant="h2" className={styles.headingText}>
           {loginFormname === 'Doctor'
@@ -58,11 +68,12 @@ export function LoginPage() {
             <Typography variant="body4">
               <b>
                 {' '}
-                {loginFormname === 'Doctor' ? 'NMR ' : 'User '}
+                {loginFormname === 'Doctor' ? 'NMR/USER ' : 'User '}
                 {t('ID')}
               </b>
             </Typography>
             <TextField
+              inputProps={{ maxLength: 100 }}
               fullWidth={true}
               id="outlined-basic"
               variant="outlined"

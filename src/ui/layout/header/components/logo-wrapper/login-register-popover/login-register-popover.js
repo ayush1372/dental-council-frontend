@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useState } from 'react';
 
 import { Box, Checkbox, Container, FormControlLabel, Grid, Popover } from '@mui/material';
@@ -9,8 +8,6 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '../../../../../core';
 
 import styles from '../login-register-popover/login-register-popover.module.scss';
-
-console.log('syle', styles);
 
 export const LoginRegisterPopover = ({
   openLoginRegisterPopover,

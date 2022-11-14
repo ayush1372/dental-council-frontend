@@ -1,14 +1,19 @@
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Box, Grid, IconButton, InputAdornment, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import SearchableDropdown from '../../../../components/autocomplete/searchable-dropdown';
 import { RadioGroup, Select, TextField } from '../../../../ui/core';
 import MobileNumber from '../../../../ui/core/mobile-number/mobile-number';
-const EditDetails = () => {
+import ButtonGroupWizard from '../../../../ui/core/wizard/button-group-wizard';
+
+const EditDetails = ({ handleNext }) => {
+  const { t } = useTranslation();
   const {
     formState: { errors },
     getValues,
+    handleSubmit,
     register,
     setValue,
   } = useForm({
@@ -43,6 +48,10 @@ const EditDetails = () => {
       EmailAddress: 'aarushi.sharma309@gmail.com',
     },
   });
+  const onHandleOptionNext = () => {
+    getValues();
+    handleNext();
+  };
   const handleSalutationChange = (event) => {
     setValue(event.target.name, event.target.value, true);
   };
@@ -51,7 +60,7 @@ const EditDetails = () => {
   };
 
   return (
-    <Box boxShadow="0px 1px 3px #00000029" pl={'41px'} pr={'91px'}>
+    <Box boxShadow="0px 1px 3px #00000029" pl={'41px'} pr={'91px'} pb={'44px'}>
       <Grid container spacing={2} mt={2}>
         {/* layer 1 */}
         <Grid container item spacing={2}>
@@ -617,6 +626,13 @@ const EditDetails = () => {
           </Grid>
         </Grid>
       </Grid>
+      <Box>
+        <ButtonGroupWizard
+          handleNext={handleSubmit(onHandleOptionNext)}
+          labelNext={t('Save & Next')}
+          hidePrevious={true}
+        />
+      </Box>
     </Box>
   );
 };
