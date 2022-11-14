@@ -1,10 +1,12 @@
 import { useState } from 'react';
 
 import { Container, Grid, Link } from '@mui/material';
-// import { useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import NHALOGO from '../../../../../assets/images/logo-slider/nha-english-logo.png';
+import { logout, resetLoginReducer } from '../../../../../store/reducers/common-reducers';
 import { Button } from '../../../../core';
 import { LoginRegisterPopover } from './login-register-popover/login-register-popover';
 
@@ -12,7 +14,9 @@ import styles from './logo-wrapper.module.scss';
 
 export const LogoWrapper = () => {
   const navigate = useNavigate();
-  // const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const loggedIn = useSelector((state) => state.login.isloggedIn);
+  const { t } = useTranslation();
 
   /** Login Register */
 
@@ -23,6 +27,12 @@ export const LogoWrapper = () => {
   const handleClickLoginRegister = (event) => {
     setRegType('');
     setAnchorLRLoginRegister(event.currentTarget);
+  };
+
+  const handleClickedLogout = () => {
+    dispatch(logout());
+    dispatch(resetLoginReducer());
+    navigate('/');
   };
 
   return (
@@ -51,20 +61,34 @@ export const LogoWrapper = () => {
         </Grid>
 
         <Grid xs={12} sm={6} item alignItems="center" textAlign="right">
-          <Button
-            variant="contained"
-            color="grey"
-            sx={{ fontSize: 'small' }}
-            onClick={handleClickLoginRegister}
-          >
-            {'Login/Registration'}
-          </Button>
-          <LoginRegisterPopover
-            regType={regType}
-            openLoginRegisterPopover={openLoginRegisterPopover}
-            anchorLRLoginRgister={anchorLRLoginRgister}
-            setAnchorLRLoginRegister={setAnchorLRLoginRegister}
-          />
+          {loggedIn ? (
+            <Button
+              variant="contained"
+              color="grey"
+              data-testid="logoutbtn"
+              sx={{ fontSize: 'small' }}
+              onClick={handleClickedLogout}
+            >
+              {t('Logout')}
+            </Button>
+          ) : (
+            <>
+              <Button
+                variant="contained"
+                color="grey"
+                sx={{ fontSize: 'small' }}
+                onClick={handleClickLoginRegister}
+              >
+                {'Login/Registration'}
+              </Button>
+              <LoginRegisterPopover
+                regType={regType}
+                openLoginRegisterPopover={openLoginRegisterPopover}
+                anchorLRLoginRgister={anchorLRLoginRgister}
+                setAnchorLRLoginRegister={setAnchorLRLoginRegister}
+              />
+            </>
+          )}
         </Grid>
       </Grid>
     </Container>

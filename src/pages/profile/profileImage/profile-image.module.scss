@@ -1,0 +1,21 @@
+.profileImageDetailsContainer {
+  .profileImage {
+    border-radius: 50%;
+    width: 110px;
+    margin: auto;
+  }
+
+  .imageContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding-top: 5%;
+  }
+  .profileImageName {
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .profileImageId {
+    font-size: 13px;
+  }
+}

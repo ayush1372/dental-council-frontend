@@ -12,7 +12,7 @@ const NAV_META = [
   {
     path: 'profile',
     title: 'Profile',
-    component: 'profile/profile.js',
+    component: 'profile',
   },
   {
     path: '*',
