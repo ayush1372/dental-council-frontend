@@ -8,6 +8,7 @@ import contactReducer from './reducers/contact-reducer';
 import appFontSizeActivity from './reducers/app-font-size';
 import RegisterDrivingLicenceReducer from './reducers/register-driving-licence-reducers';
 import captchaReducer from './reducers/captcha-reducers';
+import uiReducer from './reducers/ui-reducers';
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
     appFontSize: appFontSizeActivity,
     getRegisterDrivingLicence: RegisterDrivingLicenceReducer,
     getCaptchaData: captchaReducer,
+    ui: uiReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(thunk).concat(logger),
   devTools: true,

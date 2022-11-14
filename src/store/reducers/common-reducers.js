@@ -8,6 +8,7 @@ const initialState = {
   isloggedIn: false,
   timer: 0,
   mobileNumber: undefined,
+  loggedInUserType: '',
 };
 
 export const LoginActivity = createSlice({
@@ -28,9 +29,14 @@ export const LoginActivity = createSlice({
     setMobileNumber: (state, action) => {
       state.mobileNumber = action.payload;
     },
+    userLoggedInType: (state, action) => {
+      state.loggedInUserType = action.payload;
+    },
+    resetLoginReducer: () => initialState,
   },
 });
 
-export const { login, logout, fontsizes, setMobileNumber } = LoginActivity.actions;
+export const { login, logout, fontsizes, setMobileNumber, userLoggedInType, resetLoginReducer } =
+  LoginActivity.actions;
 
 export default LoginActivity.reducer;
