@@ -4,6 +4,8 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
 
+import CommunicationAddress from '../communication-details/communication-details';
+import IMRDetails from '../imr-details/imr-details';
 import PersonalDetails from '../personal-details/personal-details';
 const ReadOnlyDetails = () => {
   const [accordionKey, setAccordionKey] = useState(null);
@@ -14,11 +16,11 @@ const ReadOnlyDetails = () => {
     },
     {
       title: 'Communication Address',
-      body: () => <div>something</div>,
+      body: CommunicationAddress,
     },
     {
       title: 'IMR Details',
-      body: () => <div>something</div>,
+      body: IMRDetails,
     },
   ];
   const handleChange = (accordionValue) => (_event, isExpanded) => {
