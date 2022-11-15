@@ -518,7 +518,7 @@ const EditDetails = ({ handleNext }) => {
           <Grid item xs={4}>
             <Box variant="subtitle2" color="inputTextColor.main">
               <TextField
-                sx={{ width: '384px', height: '48px' }}
+                sx={{ width: '100%', height: '48px' }}
                 label="Email Address"
                 type="text"
                 name="EmailAddress"
