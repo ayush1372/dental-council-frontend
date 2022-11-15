@@ -11,7 +11,6 @@ VerticalTab.propTypes = {
 };
 
 export function VerticalTab(props) {
-  console.log('prosp', props);
   return (
     <Grid container className={styles.verticalTabContainer}>
       {props.dataTabs.map((item, index) => {
