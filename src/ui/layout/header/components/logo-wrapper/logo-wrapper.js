@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import NHALOGO from '../../../../../assets/images/logo-slider/nha-english-logo.png';
+// import NHALOGO from '../../../../../assets/images/logo-slider/nha-english-logo.png';
+import DigitalIndia from '../../../../../assets/images/logo-slider/digital-India.png';
 import { logout, resetLoginReducer } from '../../../../../store/reducers/common-reducers';
 import { Button } from '../../../../core';
 import { LoginRegisterPopover } from './login-register-popover/login-register-popover';
@@ -54,7 +55,7 @@ export const LogoWrapper = () => {
             </Grid>
             <Grid item xs={8}>
               <Link onClick={() => navigate('/')} sx={{ cursor: 'pointer' }}>
-                <img className={styles.logoImage} src={NHALOGO} alt="NHA logo" />
+                <img className={styles.logoImage} src={DigitalIndia} alt="NHA logo" />
               </Link>
             </Grid>
           </Grid>

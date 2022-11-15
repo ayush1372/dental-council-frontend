@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { Grid } from '@mui/material';
 import propTypes from 'prop-types';
 
@@ -11,7 +10,6 @@ VerticalTab.propTypes = {
 };
 
 export function VerticalTab(props) {
-  console.log('prosp', props);
   return (
     <Grid container className={styles.verticalTabContainer}>
       {props.dataTabs.map((item, index) => {

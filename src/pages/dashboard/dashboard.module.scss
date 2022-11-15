@@ -1,10 +1,22 @@
 .dashboardContainerComponent {
   .itemMainContainer {
-    .itemContainer {
-      border-radius: 5px !important;
+    // .itemContainer {
+    //   border-radius: 5px !important;
+    //   // border-top: 5px solid #1b346e;
+    //   border-top-width: thick;
+    //   cursor: pointer;
+    // }
+    .borderBlue {
       border-top: 5px solid #1b346e;
-      border-top-width: thick;
-      cursor: pointer;
+    }
+    .borderOrange {
+      border-top: 5px solid #ffa334;
+    }
+    .borderGreen {
+      border-top: 5px solid #36b37e;
+    }
+    .borderRed {
+      border-top: 5px solid #e02900;
     }
     .itemHeading {
       font-size: 14px;
