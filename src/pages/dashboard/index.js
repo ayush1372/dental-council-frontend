@@ -12,7 +12,11 @@ export default function Dashboard() {
   const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(1),
     textAlign: 'center',
+    borderRadius: '5px !important',
+    borderTopWidth: 'thick',
+    cursor: 'pointer',
   }));
+
   const blankDashboard = [
     {
       name: 'Pending',
@@ -35,8 +39,23 @@ export default function Dashboard() {
       value: 0,
     },
     {
-      name: 'Update Request Approved',
+      name: 'Update Request Received',
       id: 5,
+      value: 0,
+    },
+    {
+      name: 'Update Request Approved',
+      id: 6,
+      value: 0,
+    },
+    {
+      name: 'Update Request Raised',
+      id: 7,
+      value: 0,
+    },
+    {
+      name: 'Update Request Rejected',
+      id: 8,
       value: 0,
     },
   ];
