@@ -1,5 +1,5 @@
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { Box, Container, Grid, IconButton, InputAdornment, Paper, Typography } from '@mui/material';
+// import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { Box, Container, Grid, InputAdornment, Paper, Typography } from '@mui/material';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 
@@ -111,13 +111,13 @@ export function CollegeRegistration() {
                       *
                     </Typography>
                     <Typography component="span">
-                      <IconButton aria-label="toggle password visibility" edge="end">
+                      {/* <IconButton aria-label="toggle password visibility" edge="end">
                         {getValues()?.CollegePhoneNumber?.length === 10 ? (
                           <CheckCircleIcon color="success" />
                         ) : (
                           <CheckCircleIcon />
                         )}
-                      </IconButton>
+                      </IconButton> */}
                     </Typography>
                   </Typography>
 
@@ -162,13 +162,13 @@ export function CollegeRegistration() {
                       *
                     </Typography>
                     <Typography component="span">
-                      <IconButton aria-label="toggle password visibility" edge="end">
+                      {/* <IconButton aria-label="toggle password visibility" edge="end">
                         {!errors.email?.message && getValues().email.length !== 0 ? (
                           <CheckCircleIcon color="success" />
                         ) : (
                           <CheckCircleIcon />
                         )}
-                      </IconButton>
+                      </IconButton> */}
                     </Typography>
                   </Typography>
                   <TextField
