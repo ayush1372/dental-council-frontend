@@ -5,10 +5,11 @@ import { useTranslation } from 'react-i18next';
 import OtpInput from 'react-otp-input';
 import { ToastContainer } from 'react-toastify';
 
+import { SessionTimer } from '../../constants/session-timer';
 import { Button } from '../../ui/core';
 import { SvgImageComponent } from '../../ui/core/svg-icons';
-import useCountdown from './use-countdown';
 
+// import useCountdown from './use-countdown';
 import styles from './otp-component.module.scss';
 
 const otpInputStyle = {
@@ -29,7 +30,8 @@ export const OtpForm = ({ otpInvalidError = false, resendAction = undefined, res
   const [otp, setOtp] = useState('');
   const [isOtpValid, setOtpValid] = useState(false);
   const [isOtpInvalid, setOtpInvalid] = useState(false);
-  const { countdownDisplay, countdownActive, handleCountdownRestart } = useCountdown(resendTime);
+  const [isResendEnabled, setResetEnabled] = useState(false);
+  // const { countdownDisplay, countdownActive, handleCountdownRestart } = useCountdown(resendTime);
 
   const onChange = (value) => {
     setOtp(value);
@@ -41,12 +43,23 @@ export const OtpForm = ({ otpInvalidError = false, resendAction = undefined, res
     }
   };
 
+  // const handleResend = () => {
+  //   setOtp('');
+  //   setOtpValid(false);
+  //   setOtpInvalid(false);
+  //   resendAction();
+  //   // handleCountdownRestart();
+  // };
+
   const handleResend = () => {
     setOtp('');
     setOtpValid(false);
     setOtpInvalid(false);
-    resendAction();
-    handleCountdownRestart();
+    setResetEnabled(true);
+  };
+
+  const handleClear = () => {
+    setOtp('');
   };
 
   const getOtpValidation = () => {
@@ -94,8 +107,11 @@ export const OtpForm = ({ otpInvalidError = false, resendAction = undefined, res
           </Typography>
           <Button
             color="secondary"
-            disabled={countdownActive}
-            onClick={handleResend}
+            disabled={!isResendEnabled}
+            onClick={() => {
+              setResetEnabled(!isResendEnabled);
+              resendAction();
+            }}
             sx={{
               fontSize: '16px',
               textDecoration: 'underline',
@@ -109,7 +125,14 @@ export const OtpForm = ({ otpInvalidError = false, resendAction = undefined, res
           >
             {t('Resend_OTP')}
           </Button>
-          <Typography variant="body1">{`${countdownDisplay} remaining`}</Typography>
+          <Typography variant="body1" color="textPrimary.main">
+            {!isResendEnabled ? (
+              <SessionTimer valSeconds={resendTime} expireFunction={handleResend} />
+            ) : (
+              '00:00'
+            )}{' '}
+            remaining
+          </Typography>
         </Box>
       </Box>
     </Box>
@@ -120,7 +143,9 @@ export const OtpForm = ({ otpInvalidError = false, resendAction = undefined, res
     otpValue: otp,
     validationOtp: isOtpValid,
     validationOtpInvalid: isOtpInvalid,
+    handleClear,
     getOtpValidation,
+    // handleCountdownRestart,
   };
 };
 
