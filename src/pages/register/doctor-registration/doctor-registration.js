@@ -96,7 +96,7 @@ const DoctorRegistrationWelcomePage = () => {
                     backgroundColor: 'secondary.main',
                   }}
                 >
-                  submit
+                  Submit
                 </Button>
                 <Button
                   variant="outlined"
