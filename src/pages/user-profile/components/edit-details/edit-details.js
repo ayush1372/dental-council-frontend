@@ -111,6 +111,12 @@ const EditDetails = ({ handleNext }) => {
               {...register('AadhaarNumber', {
                 required: 'Aadhaar Number is Required',
               })}
+              sx={{
+                input: {
+                  backgroundColor: 'grey2.main',
+                },
+              }}
+              InputProps={{ readOnly: true }}
             />
           </Grid>
         </Grid>
@@ -160,18 +166,18 @@ const EditDetails = ({ handleNext }) => {
               name={'LastName'}
               placeholder="Your last name"
               label={'Last Name'}
-              required={true}
+              required={false}
               fullWidth
               defaultValue={getValues().LastName}
               {...register('LastName', {
                 required: 'Last Name is Required',
               })}
-              sx={{
-                input: {
-                  backgroundColor: 'grey2.main',
-                },
-              }}
-              InputProps={{ readOnly: true }}
+              // sx={{
+              //   input: {
+              //     backgroundColor: 'grey2.main',
+              //   },
+              // }}
+              // InputProps={{ readOnly: true }}
             />
           </Grid>
         </Grid>

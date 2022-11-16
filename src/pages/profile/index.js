@@ -91,7 +91,11 @@ export function Profile() {
   const wizardSteps = ['Personal Details', 'Registartion & Academic Details', 'Work Details'];
   const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
   const [isActiveTab, setIsActiveTab] = useState(
-    loggedInUserType === 'Doctor' ? { ...doctorTabs[0] } : { ...colgTabs[0] }
+    loggedInUserType === 'Doctor'
+      ? { ...doctorTabs[0] }
+      : loggedInUserType === 'College' || loggedInUserType === 'SMC' || loggedInUserType === 'NMC'
+      ? { ...colgTabs[0] }
+      : { ...dataTabs[0] }
   );
   const setActiveTab = (activeTab) => {
     setIsActiveTab(activeTab);
@@ -100,8 +104,14 @@ export function Profile() {
   useEffect(() => {
     if (loggedInUserType === 'Doctor') {
       dispatch(changeUserActiveTab(doctorTabs[0].tabName));
-    } else {
+    } else if (
+      loggedInUserType === 'College' ||
+      loggedInUserType === 'SMC' ||
+      loggedInUserType === 'NMC'
+    ) {
       dispatch(changeUserActiveTab(colgTabs[0].tabName));
+    } else {
+      dispatch(changeUserActiveTab(dataTabs[0].tabName));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
