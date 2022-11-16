@@ -166,7 +166,6 @@ export function Profile() {
             loggedInUserType !== 'College' &&
             loggedInUserType !== 'SMC' &&
             loggedInUserType !== 'NMC' ? (
-            // eslint-disable-next-line react/jsx-indent
             <Wizard
               activeStep={activeStep}
               handleBack={handleBack}
