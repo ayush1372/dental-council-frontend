@@ -172,7 +172,6 @@ export function Profile() {
               handleNext={handleNext}
               steps={wizardSteps}
               progress={false}
-              // enableNaviagation={true}
             >
               <EditDetails />
             </Wizard>
