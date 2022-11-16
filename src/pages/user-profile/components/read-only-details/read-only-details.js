@@ -2,13 +2,22 @@ import { useState } from 'react';
 
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Grid,
+  Typography,
+} from '@mui/material';
 
+import ButtonGroupWizard from '../../../../ui/core/wizard/button-group-wizard';
 import CommunicationAddress from '../communication-details/communication-details';
 import IMRDetails from '../imr-details/imr-details';
 import PersonalDetails from '../personal-details/personal-details';
+
 const ReadOnlyDetails = () => {
-  const [accordionKey, setAccordionKey] = useState(null);
+  const [accordionKey, setAccordionKey] = useState('accordion-0');
   const accordions = [
     {
       title: 'Personal Details',
@@ -65,6 +74,13 @@ const ReadOnlyDetails = () => {
           </Accordion>
         );
       })}
+      <Grid sx={{ mb: 2 }}>
+        <ButtonGroupWizard
+          // handleNext={handleSubmit(onSubmit)}
+          // loading={isLoading}
+          labelNext="Next"
+        />
+      </Grid>
     </Box>
   );
 };
