@@ -1,5 +1,5 @@
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { Box, Container, Grid, IconButton, InputAdornment, Paper, Typography } from '@mui/material';
+// import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { Box, Container, Grid, InputAdornment, Paper, Typography } from '@mui/material';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 
@@ -44,7 +44,7 @@ export function CollegeRegistration() {
   return (
     <Container sx={{ paddingTop: '40px' }}>
       <Paper square elevation={1}>
-        <Box width="1281" height="800px" pl="43px" pr="43px">
+        <Box sx={{ width: '1281', height: '800px', paddingLeft: '43px', paddingRight: '43px' }}>
           <Box pt="20px">
             <Typography variant="h1" mt="40px" color="primary.dark">
               College Registration
@@ -111,41 +111,16 @@ export function CollegeRegistration() {
                       *
                     </Typography>
                     <Typography component="span">
-                      <IconButton aria-label="toggle password visibility" edge="end">
+                      {/* <IconButton aria-label="toggle password visibility" edge="end">
                         {getValues()?.CollegePhoneNumber?.length === 10 ? (
                           <CheckCircleIcon color="success" />
                         ) : (
                           <CheckCircleIcon />
                         )}
-                      </IconButton>
+                      </IconButton> */}
                     </Typography>
                   </Typography>
-                  {/* <TextField
-                    sx={{ paddingTop: '6px', marginTop: '-2px' }}
-                    fullWidth={true}
-                    type="number"
-                    name="CollegePhoneNumber"
-                    size="large"
-                    required
-                    defaultValue={getValues().CollegePhoneNumber}
-                    error={errors.CollegePhoneNumber?.message}
-                    {...register('CollegePhoneNumber', {
-                      required: 'Mobile Number is required',
-                      pattern: {
-                        value: /^\d{10}$/i,
-                        message: 'Provide a Valid Phone Number',
-                      },
-                    })}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <Button variant="contained" sx={{ marginRight: '-13px', height: '57px' }}>
-                            Get OTP
-                          </Button>
-                        </InputAdornment>
-                      ),
-                    }}
-                  /> */}
+
                   <TextField
                     sx={{ paddingTop: '5px', marginTop: '-2px' }}
                     fullWidth={true}
@@ -187,13 +162,13 @@ export function CollegeRegistration() {
                       *
                     </Typography>
                     <Typography component="span">
-                      <IconButton aria-label="toggle password visibility" edge="end">
+                      {/* <IconButton aria-label="toggle password visibility" edge="end">
                         {!errors.email?.message && getValues().email.length !== 0 ? (
                           <CheckCircleIcon color="success" />
                         ) : (
                           <CheckCircleIcon />
                         )}
-                      </IconButton>
+                      </IconButton> */}
                     </Typography>
                   </Typography>
                   <TextField
@@ -307,13 +282,13 @@ export function CollegeRegistration() {
             <Button
               onClick={handleSubmit(onsubmit)}
               variant="contained"
-              color="secondary"
               sx={{
                 width: '96px',
                 height: '51px',
+                backgroundColor: 'orangeBackgroundColor.main',
               }}
             >
-              submit
+              Submit
             </Button>
           </Box>
           {/* <UploadFile /> */}

@@ -1,6 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-import { sessionTimer } from '../../constants/session-timer';
+import { SessionTimer } from '../../constants/session-timer';
+
+// import { sessionTimer } from '../../constants/session-timer';
 
 const sessionTiming = 0.5;
 
@@ -17,7 +19,7 @@ export const LoginActivity = createSlice({
   reducers: {
     login: (state) => {
       state.isloggedIn = true;
-      state.timer = sessionTimer(sessionTiming * 60);
+      state.timer = SessionTimer(sessionTiming * 60);
     },
     logout: (state) => {
       state.isloggedIn = false;

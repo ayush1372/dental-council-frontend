@@ -59,6 +59,9 @@ export const Navbar = () => {
             <Menu dropdown={false} url="/">
               {t('Photo Gallery')}
             </Menu>
+            <Menu dropdown={false} url="/">
+              {t('Search Doctor')}
+            </Menu>
             {/* <Button
               sx={{ p: '8px 24px' }}
               size="small"

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { Grid } from '@mui/material';
 import propTypes from 'prop-types';
 

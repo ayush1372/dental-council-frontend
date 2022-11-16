@@ -21,7 +21,60 @@ const dataTabs = [
   //   tabName: 'my-profile',
   // },
 ];
-
+const nmcTabs = [
+  {
+    title: 'Dashboard',
+    tabName: 'dashboard',
+  },
+  {
+    title: 'My Profile',
+    tabName: 'my-profile',
+  },
+  {
+    title: 'Track Status',
+    tabName: 'track-status',
+  },
+];
+const colgTabs = [
+  {
+    title: 'Dashboard',
+    tabName: 'dashboard',
+  },
+  {
+    title: 'My Profile',
+    tabName: 'my-profile',
+  },
+  {
+    title: 'Track Status',
+    tabName: 'track-status',
+  },
+  {
+    title: 'College Registrar',
+    tabName: 'college-registrar',
+  },
+  {
+    title: 'College Dean',
+    tabName: 'college-dean',
+  },
+];
+const smcTabs = [
+  {
+    title: 'Dashboard',
+    tabName: 'dashboard',
+  },
+  {
+    title: 'My Profile',
+    tabName: 'my-profile',
+  },
+  {
+    title: 'Track Status',
+    tabName: 'track-status',
+  },
+  {
+    title: 'New Doctor Registration',
+    tabName: 'New-doctor-registration',
+  },
+];
 const doctorTabs = [
   {
     title: 'My Profile',
@@ -47,18 +100,36 @@ export function Profile() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  // eslint-disable-next-line no-console
+  console.log('loggedInUserType', loggedInUserType);
   return (
     <section className={styles.profilePage}>
       <Grid container className={styles.profilePageContainer} justifyContent={'space-between'}>
         <Grid item className={styles.profileContainer}>
           <Grid item xs={12} className={styles.profileImgBackground}>
             <Grid item xs={12}>
-              <ProfileImage name="Maharashtra Medical Council" />
+              <ProfileImage
+                name={
+                  loggedInUserType === 'Doctor'
+                    ? 'Dr. ABC'
+                    : loggedInUserType === 'College'
+                    ? 'All India Institute of Medical Sciences'
+                    : loggedInUserType === 'NMC'
+                    ? 'National Medical Commission'
+                    : 'Maharashtra Medical Council'
+                }
+              />
             </Grid>
           </Grid>
           <Grid item xs={12}>
             {loggedInUserType === 'Doctor' ? (
               <VerticalTab dataTabs={doctorTabs} activeTab={isActiveTab} changeTab={setActiveTab} />
+            ) : loggedInUserType === 'NMC' ? (
+              <VerticalTab dataTabs={nmcTabs} activeTab={isActiveTab} changeTab={setActiveTab} />
+            ) : loggedInUserType === 'SMC' ? (
+              <VerticalTab dataTabs={smcTabs} activeTab={isActiveTab} changeTab={setActiveTab} />
+            ) : loggedInUserType === 'College' ? (
+              <VerticalTab dataTabs={colgTabs} activeTab={isActiveTab} changeTab={setActiveTab} />
             ) : (
               <VerticalTab dataTabs={dataTabs} activeTab={isActiveTab} changeTab={setActiveTab} />
             )}
@@ -67,7 +138,7 @@ export function Profile() {
         <Grid item className={styles.tabDetailsContainer}>
           {isActiveTab.tabName === 'dashboard' ? (
             <Dashboard tabName={isActiveTab.tabName} />
-          ) : isActiveTab.tabName === 'my-profile' ? (
+          ) : isActiveTab.tabName === 'my-profile' && loggedInUserType === 'Doctor' ? (
             <UserProfile tabName={isActiveTab.tabName} />
           ) : (
             <Grid
