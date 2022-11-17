@@ -1,46 +1,34 @@
 import React from 'react';
 
-import { Grid, TablePagination } from '@mui/material';
-// import { TablePagination } from '@mui/material';
-import Moment from 'moment';
+import { Grid, TablePagination, Typography } from '@mui/material';
 
-import GenericTable from '../../../generic-table';
+import { applications } from '../../../../constants/utils';
+import GenericTable from '../../../../shared/generic-table';
+import SearchFilter from '../../../../shared/search-filter';
 
 function createData(
-  ticketNo,
-  recruiterType,
-  recruiterName,
-  connectDate,
-  description,
-  status,
-  from,
-  followUpHistory,
-  followUp,
-  history,
-  toId,
-  fromId,
-  read,
-  dataIndex,
-  userType,
-  withdraw
+  SNo,
+  registrationNo,
+  nameofApplicant,
+  nameofStateCouncil,
+  councilVerificationStatus,
+  collegeVerificationStatus,
+  NMCVerificationStatus,
+  dateofSubmission,
+  pendency,
+  view
 ) {
   return {
-    ticketNo,
-    recruiterType,
-    recruiterName,
-    connectDate,
-    description,
-    status,
-    from,
-    followUpHistory,
-    followUp,
-    history,
-    toId,
-    fromId,
-    read,
-    dataIndex,
-    userType,
-    withdraw,
+    SNo,
+    registrationNo,
+    nameofApplicant,
+    nameofStateCouncil,
+    councilVerificationStatus,
+    collegeVerificationStatus,
+    NMCVerificationStatus,
+    dateofSubmission,
+    pendency,
+    view,
   };
 }
 function DashboardControlledTable(props) {
@@ -48,138 +36,61 @@ function DashboardControlledTable(props) {
   const [orderBy, setOrderBy] = React.useState({});
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
+  const [selectedRowData, setRowData] = React.useState({});
   // const { isLoggedInUserType } = useSelector((state) => state.recruiter);
+  // eslint-disable-next-line no-console
+  console.log('selectedRowData', selectedRowData);
+  const [searchQuery, setSearchQuery] = React.useState({ value: '' });
 
   const dataHeader = [
-    { title: 'Ticket No', name: 'ticketNo', sorting: true, type: 'string' },
+    { title: 'S.No.', name: 'SNo', sorting: true, type: 'string' },
     {
-      title: 'Professional ID',
-      name: 'recruiterType',
+      title: 'IMR ID/ Registration No.',
+      name: 'registrationNo',
       sorting: true,
       type: 'string',
     },
     {
-      title: 'Professional Name',
-
-      name: 'recruiterName',
+      title: 'Name of Applicant',
+      name: 'nameofApplicant',
       sorting: true,
       type: 'string',
     },
-    { title: 'Last Connect Date', name: 'connectDate', sorting: true, type: 'date' },
-    { title: 'Description', name: 'description', sorting: false, type: 'string' },
-    { title: 'Status', name: 'status', sorting: false, type: 'string' },
-    props?.showTable?.value !== 8 && {
-      title: 'Action',
-      name: 'followUp',
-      sorting: false,
-      type: 'string',
-    },
-    { title: 'History', name: 'history', sorting: false, type: 'string' },
+    { title: 'Name of State Council', name: 'nameofStateCouncil', sorting: true, type: 'date' },
     {
-      title: 'Withdraw',
-      name: 'withdraw',
-      sorting: false,
+      title: 'Council Verification Status',
+      name: 'councilVerificationStatus',
+      sorting: true,
       type: 'string',
     },
+    {
+      title: 'College Verification Status',
+      name: 'collegeVerificationStatus',
+      sorting: true,
+      type: 'string',
+    },
+    {
+      title: 'NMC Verification Status',
+      name: 'NMCVerificationStatus',
+      sorting: true,
+      type: 'string',
+    },
+    { title: 'Date of Submission', name: 'dateofSubmission', sorting: true, type: 'string' },
+    { title: 'Pendency', name: 'pendency', sorting: true, type: 'string' },
+    { title: 'View', name: 'view', sorting: true, type: 'string' },
   ];
 
-  const applications = {
-    message: [
-      {
-        id: 55,
-        description:
-          'Hello, I am looking for job opportunity in Canada. Can we please connect if you have any suitable opportunities.',
-        last_message_date: '2022-07-23 14:18:51.0',
-        status: 5,
-        health_professional_name: 'Chaitali Chandrakant Sakhale',
-        health_professional_id: '71-0060-2712-0303',
-        read_status: true,
-        from_user: '285',
-        to_user: '283',
-        recruiter_employer_name: 'Global Healthcare career services ',
-        type: 'Recruiting Agent',
-        recruiter_employer_id: '283',
-      },
-      {
-        id: 138,
-        description: 'employment started',
-        last_message_date: '2022-07-28 14:33:16.0',
-        status: 5,
-        health_professional_name: 'Satish Udhavrao Chonde',
-        health_professional_id: '71-4075-7823-5179',
-        read_status: true,
-        from_user: '269',
-        to_user: '296',
-        recruiter_employer_name: 'Avinash  R  Eklurr',
-        type: 'Recruiting Agent',
-        recruiter_employer_id: '269',
-      },
-      {
-        id: 648,
-        description: 'RA TO HP',
-        last_message_date: '2022-10-19 18:19:22.0',
-        status: 5,
-        health_professional_name: 'Satish Udhavrao Chonde',
-        health_professional_id: '71-4875-8731-6251',
-        read_status: true,
-        from_user: '369',
-        to_user: '335',
-        recruiter_employer_name: 'Sunlight Recruiters',
-        type: 'Recruiting Agent',
-        recruiter_employer_id: '369',
-      },
-      {
-        id: 135,
-        description: 'hi',
-        last_message_date: '2022-07-28 12:29:55.0',
-        status: 5,
-        health_professional_name: 'Satish Udhavrao Chonde',
-        health_professional_id: '71-4075-7823-5179',
-        read_status: true,
-        from_user: '296',
-        to_user: '287',
-        recruiter_employer_name: 'Global Employer Services',
-        type: 'Foreign Employer',
-        recruiter_employer_id: '287',
-      },
-      {
-        id: 627,
-        description: 'test',
-        last_message_date: '2022-10-18 18:39:02.0',
-        status: 5,
-        health_professional_name: 'Ashvini Sunil Deshmukh',
-        health_professional_id: '37-0512-0077-5138',
-        read_status: true,
-        from_user: '278',
-        to_user: '266',
-        recruiter_employer_name: 'Jyoti',
-        type: 'Foreign Employer',
-        recruiter_employer_id: '278',
-      },
-    ],
-    count: 5,
-  };
-  // const [selectedRowData, setRowData] = useState({});
-
   const handleDataRowClick = (dataRow) => {
-    // eslint-disable-next-line no-console
-    console.log('dataRow', dataRow);
-    // setRowData(dataRow);
-    // setShowHPProfileDetailsDialog(true);
+    setRowData(dataRow);
   };
 
-  const followCallback = (event) => {
+  const viewCallback = (event, row) => {
     event.preventDefault();
     event.stopPropagation();
-  };
-  const historyCallback = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-  };
-
-  const WithdrawnCallback = (event) => {
-    event.preventDefault();
-    event.stopPropagation();
+    setRowData(row);
+    props.setShowViewPorfile(true);
+    props.setShowDashboard(false);
+    props.setShowTable(false);
   };
 
   const handleRequestSort = (event, property) => {
@@ -187,52 +98,32 @@ function DashboardControlledTable(props) {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
-  const newRowsData = applications.message
-    ?.map((application, index) => {
-      return createData(
-        { type: 'ticketNo', value: application.id },
-        {
-          type: 'recruiterType',
-          value: application?.from_user_id ? application?.to_id : application?.from_id,
-        },
-        {
-          type: 'recruiterName',
-          value: application.to ? application.from : application.to,
-        },
-        {
-          type: 'connectDate',
-          value: Moment(application?.last_message_date).format('DD-MM-YYYY HH:mm:ss'),
-        },
-        { type: 'description', value: application.description },
-        {
-          type: 'status',
-          value: application.status,
-        },
-        { type: 'from', value: application.from },
-        { type: 'followUpHistory', value: application.follow_ups },
-        { type: 'action', value: 'Follow-up', onClickCallback: followCallback },
-        { type: 'action', value: 'History', onClickCallback: historyCallback },
-        { type: 'toId', value: application.to_user_id },
-        { type: 'fromId', value: application.from_user_id },
-        { type: 'read', value: application.read_status },
-        { type: 'dataIndex', value: index },
-        { type: 'userType', value: application.type },
-        {
-          type: 'withdraw',
-          value: 'Withdraw',
-          onClickCallback: WithdrawnCallback,
-        }
-      );
-    })
-    .sort((a, b) => {
-      const dateB = new Date(
-        Moment(b.connectDate.value, 'DD-MM-YYYY HH:mm:ss').format('MM/DD/YYYY HH:mm:ss')
-      );
-      const dateA = new Date(
-        Moment(a.connectDate.value, 'DD-MM-YYYY HH:mm:ss').format('MM/DD/YYYY HH:mm:ss')
-      );
-      return dateB.getTime() - dateA.getTime();
-    });
+  const newRowsData = applications.message?.map((application) => {
+    return createData(
+      { type: 'SNo', value: application.SNo },
+      {
+        type: 'registrationNo',
+        value: application?.registrationNo,
+      },
+      {
+        type: 'nameofApplicant',
+        value: application.nameofApplicant,
+      },
+      {
+        type: 'nameofStateCouncil',
+        value: application.nameofStateCouncil,
+      },
+      { type: 'councilVerificationStatus', value: application.councilVerificationStatus },
+      {
+        type: 'collegeVerificationStatus',
+        value: application.collegeVerificationStatus,
+      },
+      { type: 'NMCVerificationStatus', value: application.NMCVerificationStatus },
+      { type: 'dateofSubmission', value: application.dateofSubmission },
+      { type: 'pendency', value: application.pendency },
+      { type: 'view', value: application.view, onClickCallback: viewCallback }
+    );
+  });
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -249,6 +140,10 @@ function DashboardControlledTable(props) {
 
   return (
     <Grid sx={{ m: 2 }}>
+      <Typography variant="h2" pt={2} pb={2}>
+        Application List
+      </Typography>
+      <SearchFilter searchQuery={searchQuery} changeSearchQuery={setSearchQuery} />
       <GenericTable
         order={order}
         orderBy={orderBy}

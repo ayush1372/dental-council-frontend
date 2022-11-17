@@ -13,6 +13,9 @@ import Tooltip from '@mui/material/Tooltip';
 import { visuallyHidden } from '@mui/utils';
 import Moment from 'moment';
 import propTypes from 'prop-types';
+
+import styles from './generic-table.module.scss';
+
 // import { useSelector } from 'react-redux';
 
 GenericTable.propTypes = {
@@ -80,10 +83,10 @@ export default function GenericTable(props) {
   // eslint-disable-next-line no-console
   console.log('props in table', props);
   return (
-    <TableContainer className="generic-table-container" component={Paper}>
+    <TableContainer className={styles.genericTableContainer} component={Paper}>
       <Table sx={{ minWidth: '650px' }} aria-label="table">
         <TableHead>
-          <TableRow>
+          <TableRow sx={{ backgroundColor: 'primary.main' }}>
             {props.tableHeader.map((item, index) => {
               // if (item.title === 'action') {
               //   return <TableCell key={index} align="left" />;
@@ -91,6 +94,7 @@ export default function GenericTable(props) {
               if (item.sorting) {
                 return (
                   <TableCell
+                    sx={{ fontSize: '13px', color: 'white.main' }}
                     key={index}
                     align="left"
                     sortDirection={orderBy.name === item.name ? order : false}
@@ -111,7 +115,11 @@ export default function GenericTable(props) {
                 );
               } else {
                 return (
-                  <TableCell key={index} align="left">
+                  <TableCell
+                    key={index}
+                    align="left"
+                    sx={{ fontSize: '13px', color: 'white.main' }}
+                  >
                     {item.title}
                   </TableCell>
                 );
@@ -128,21 +136,24 @@ export default function GenericTable(props) {
                 key={rowIndex}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 // className={!row.read.value ? 'style-bold' : ''}
-                onClick={() => props.handleRowClick(row)}
+                // onClick={() => props.handleRowClick(row)}
               >
                 {props.tableHeader.map((item, index) => {
-                  if (
-                    item.title === 'Action' ||
-                    item.title === 'History' ||
-                    item.title === 'Withdraw'
-                  ) {
+                  if (item.title === 'View') {
                     return (
-                      <TableCell maxWidth={`${tableCellWidth}%`} key={index} align="left">
+                      <TableCell
+                        sx={{ fontSize: '13px' }}
+                        maxWidth={`${tableCellWidth}%`}
+                        key={index}
+                        align="left"
+                      >
                         <Button
-                          onClick={(event) =>
-                            row[item.name]?.onClickCallback(event, row, row.dataIndex.value)
-                          }
-                          className="btn"
+                          onClick={(event) => row[item.name]?.onClickCallback(event, row)}
+                          variant="contained"
+                          size="small"
+                          sx={{
+                            backgroundColor: 'secondary.main',
+                          }}
                         >
                           {row[item.name]?.value}
                         </Button>
@@ -161,6 +172,8 @@ export default function GenericTable(props) {
                           textOverflow: 'ellipsis',
                           maxWidth: '112px',
                           overflow: 'hidden',
+                          fontSize: '13px',
+                          //fontWeight: '500'
                         }}
                         align="left"
                       >

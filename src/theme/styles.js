@@ -12,6 +12,7 @@ import { CardHeader } from './card-header';
 import { FormHelperText } from './form-helper-text';
 import { InputLabel } from './input-label';
 import { Palette } from './palette';
+import { TableSortLabel } from './table-head';
 import { TextField } from './textfield';
 import { Typography } from './typography';
 
@@ -61,6 +62,8 @@ const themeWrapper = (mode) => {
       MuiAccordionSummary: AccordionSummary,
 
       MuiAccordionDetails: AccordionDetails,
+
+      MuiTableSortLabel: TableSortLabel,
     },
 
     // STYLE FOR BORDER RADIUS

@@ -15,12 +15,20 @@ export default function BreadcrumbsCompnent(props) {
         <Typography id="1" variant="body1" color="primary.main">
           Dashboard
         </Typography>
-        <Typography id="2" variant="body1" color="primary.main">
-          Application List
-        </Typography>
-        <Typography id="3" variant="body1" color="breadCrumbActiveColor.main">
-          View Profile
-        </Typography>
+        {(props.showTable || props.showViewProfile) && (
+          <Typography
+            id="2"
+            variant="body1"
+            color={props.showViewProfile ? 'primary.main' : 'black.main'}
+          >
+            Application List
+          </Typography>
+        )}
+        {props.showViewProfile && (
+          <Typography id="3" variant="body1" color="breadCrumbActiveColor.main">
+            View Profile
+          </Typography>
+        )}
       </Breadcrumbs>
     </Grid>
   );
