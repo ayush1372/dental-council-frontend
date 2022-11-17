@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 import { verboseLog } from '../../../config/debug';
 import OtpForm from '../../../shared/otp-form/otp-component';
 import { Button, TextField } from '../../../ui/core';
-// import EditDetails from '../../user-profile/components/edit-details/edit-details';
+// import EditPersonalDetails from '../../user-profile/components/edit-personal-details/edit-personal-details';
 
 function FetchDoctorDetails() {
   const navigate = useNavigate();

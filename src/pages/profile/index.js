@@ -8,7 +8,7 @@ import { changeUserActiveTab } from '../../store/reducers/ui-reducers';
 import Wizard from '../../ui/core/wizard';
 import Dashboard from '../dashboard';
 import UserProfile from '../user-profile';
-import EditDetails from '../user-profile/components/edit-details/edit-details';
+import EditPersonalDetails from '../user-profile/components/edit-personal-details/edit-personal-details';
 import ProfileImage from './profileImage';
 import { VerticalTab } from './vertical-tab';
 
@@ -174,7 +174,7 @@ export function Profile() {
               steps={wizardSteps}
               progress={false}
             >
-              <EditDetails />
+              <EditPersonalDetails />
             </Wizard>
           ) : (
             <Grid
