@@ -9,7 +9,7 @@ import { useForm } from 'react-hook-form';
 import { verboseLog } from '../../../config/debug';
 import OtpForm from '../../../shared/otp-form/otp-component';
 import { Button, TextField } from '../../../ui/core';
-import EditDetails from '../../user-profile/components/edit-details/edit-details';
+import EditPersonalDetails from '../../user-profile/components/edit-personal-details/edit-personal-details';
 
 function FetchDoctorDetails() {
   const [showEditScreen, setShowEditScreen] = useState(false);
@@ -82,7 +82,7 @@ function FetchDoctorDetails() {
     <>
       {' '}
       {showEditScreen ? (
-        <EditDetails />
+        <EditPersonalDetails />
       ) : (
         <Container sx={{ width: '712px' }}>
           <Box sx={{ width: '712px', height: '53px', marginBottom: '30px', marginTop: '32px ' }}>

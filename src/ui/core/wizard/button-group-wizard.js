@@ -18,7 +18,7 @@ const ButtonGroupWizard = ({
   return (
     <Box
       mt={2}
-      p="0px 24px"
+      // p="0px 24px"
       sx={{ display: 'flex', justifyContent: !hidePrevious ? 'space-between' : 'right' }}
     >
       {!hidePrevious && (

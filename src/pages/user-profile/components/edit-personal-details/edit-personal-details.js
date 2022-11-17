@@ -8,7 +8,7 @@ import { RadioGroup, Select, TextField } from '../../../../ui/core';
 import MobileNumber from '../../../../ui/core/mobile-number/mobile-number';
 import ButtonGroupWizard from '../../../../ui/core/wizard/button-group-wizard';
 
-const EditDetails = ({ handleNext }) => {
+const EditPersonalDetails = ({ handleNext }) => {
   const { t } = useTranslation();
   const {
     formState: { errors },
@@ -48,8 +48,8 @@ const EditDetails = ({ handleNext }) => {
       EmailAddress: 'aarushi.sharma309@gmail.com',
     },
   });
+
   const onHandleOptionNext = () => {
-    getValues();
     handleNext();
   };
   const handleSalutationChange = (event) => {
@@ -74,7 +74,7 @@ const EditDetails = ({ handleNext }) => {
           <Grid item xs={8} md={4}>
             <RadioGroup
               onChange={handleSalutationChange}
-              name={'salutation'}
+              name={'fdhb'}
               size="small"
               defaultValue={getValues().salutation}
               items={[
@@ -97,7 +97,7 @@ const EditDetails = ({ handleNext }) => {
               ]}
               label="Salutation"
               required={true}
-              error={errors.salutation}
+              error={errors.salutation?.message}
             />
           </Grid>
           <Grid item xs={8} md={4}>
@@ -143,9 +143,7 @@ const EditDetails = ({ handleNext }) => {
               label={'Middle Name'}
               fullWidth
               defaultValue={getValues().MiddleName}
-              {...register('MiddleName', {
-                required: 'Middle Name is Required',
-              })}
+              {...register('MiddleName')}
               sx={{
                 input: {
                   backgroundColor: 'grey2.main',
@@ -267,7 +265,7 @@ const EditDetails = ({ handleNext }) => {
             <Grid container item spacing={2}>
               <Grid item xs={8} md={3}>
                 <Select
-                  error={errors.Day}
+                  error={errors.Day?.message}
                   name="Day"
                   defaultValue={getValues().Day}
                   required={true}
@@ -284,7 +282,7 @@ const EditDetails = ({ handleNext }) => {
               </Grid>
               <Grid item xs={8} md={5}>
                 <Select
-                  error={errors.Month}
+                  error={errors.Month?.message}
                   name="Month"
                   defaultValue={getValues().Month}
                   required={true}
@@ -301,7 +299,7 @@ const EditDetails = ({ handleNext }) => {
               </Grid>
               <Grid item xs={8} md={4}>
                 <Select
-                  error={errors.Year}
+                  error={errors.Year?.message}
                   name="Year"
                   defaultValue={getValues().Year}
                   required={true}
@@ -340,13 +338,13 @@ const EditDetails = ({ handleNext }) => {
               ]}
               label="Gender"
               required={true}
-              error={errors.Gender}
+              error={errors.Gender?.message}
             />
           </Grid>
           <Grid item xs={8} md={4}>
             <Select
               fullWidth
-              error={errors.Schedule}
+              error={errors.Schedule?.message}
               name="Schedule"
               label="Schedule"
               defaultValue={getValues().Schedule}
@@ -391,7 +389,7 @@ const EditDetails = ({ handleNext }) => {
               variant="outlined"
               name={'Address'}
               placeholder="Your address"
-              label={'Your Address*'}
+              label={'Your Address'}
               required={true}
               fullWidth
               defaultValue={getValues().Address}
@@ -405,7 +403,7 @@ const EditDetails = ({ handleNext }) => {
           <Grid item xs={4}>
             <Select
               fullWidth
-              error={errors.Area}
+              error={errors.Area?.message}
               name="Area"
               label="City/Town/Village"
               defaultValue={getValues().Area}
@@ -424,7 +422,7 @@ const EditDetails = ({ handleNext }) => {
           <Grid item xs={4}>
             <Select
               fullWidth
-              error={errors.District}
+              error={errors.District?.message}
               name="District"
               label="District"
               defaultValue={getValues().District}
@@ -464,7 +462,7 @@ const EditDetails = ({ handleNext }) => {
           <Grid item xs={4}>
             <Select
               fullWidth
-              error={errors.State}
+              error={errors.State?.message}
               name="State"
               label="State/Union Territory"
               defaultValue={getValues().State}
@@ -483,7 +481,7 @@ const EditDetails = ({ handleNext }) => {
           <Grid item xs={4}>
             <Select
               fullWidth
-              error={errors.Country}
+              error={errors.Country?.message}
               name="Country"
               label="Country"
               defaultValue={getValues().Country}
@@ -593,7 +591,7 @@ const EditDetails = ({ handleNext }) => {
           <Grid item xs={8} md={4}>
             <Select
               fullWidth
-              error={errors.YearOfInfo}
+              error={errors.YearOfInfo?.message}
               name="YearOfInfo"
               label="Year of info"
               placeholder="Select year of info"
@@ -637,4 +635,4 @@ const EditDetails = ({ handleNext }) => {
   );
 };
 
-export default EditDetails;
+export default EditPersonalDetails;
