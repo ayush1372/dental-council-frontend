@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeUserActiveTab } from '../../store/reducers/ui-reducers';
 import Dashboard from '../dashboard';
 import UserProfile from '../user-profile';
+import CollegeMyProfile from './college-my-profile/college-my-profile';
 import ProfileImage from './profileImage';
 import { VerticalTab } from './vertical-tab';
 
@@ -100,8 +101,6 @@ export function Profile() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  // eslint-disable-next-line no-console
-  console.log('loggedInUserType', loggedInUserType);
   return (
     <section className={styles.profilePage}>
       <Grid container className={styles.profilePageContainer} justifyContent={'space-between'}>
@@ -150,7 +149,7 @@ export function Profile() {
               justifyContent={'center'}
             >
               <Typography variant="h4" component={'p'}>
-                {isActiveTab.title}
+                {isActiveTab.title === 'My Profile' && <CollegeMyProfile />}
               </Typography>
             </Grid>
           )}
