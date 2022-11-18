@@ -1,17 +1,5 @@
 .genericTableContainer {
-  // tr:nth-child(even) {
-  //   background-color: #e9ecf3;
-  // }
-  // th span:hover {
-  //   color: #fff;
-  // }
-  // th span svg:hover {
-  //   color: #fff;
-  // }
-  // th span:active {
-  //   color: #fff;
-  // }
-  // th span svg:active {
-  //   color: #fff;
-  // }
+  tr:nth-child(even) {
+    background-color: 'grey.main';
+  }
 }

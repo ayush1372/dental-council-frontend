@@ -13,6 +13,7 @@ import { FormHelperText } from './form-helper-text';
 import { InputLabel } from './input-label';
 import { Palette } from './palette';
 import { TableSortLabel } from './table-head';
+import { TableRow } from './table-row';
 import { TextField } from './textfield';
 import { Typography } from './typography';
 
@@ -64,6 +65,8 @@ const themeWrapper = (mode) => {
       MuiAccordionDetails: AccordionDetails,
 
       MuiTableSortLabel: TableSortLabel,
+
+      MuiTableRow: TableRow,
     },
 
     // STYLE FOR BORDER RADIUS
