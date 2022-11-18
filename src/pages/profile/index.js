@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Grid, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
+import TrackStatus from '../../shared/track-status/index';
 import { changeUserActiveTab } from '../../store/reducers/ui-reducers';
 import Dashboard from '../dashboard';
 import UserProfile from '../user-profile';
@@ -45,7 +46,7 @@ const colgTabs = [
     tabName: 'my-profile',
   },
   {
-    title: 'Track Status',
+    title: 'TrackStatus',
     tabName: 'track-status',
   },
   {
@@ -138,7 +139,9 @@ export function Profile() {
         <Grid item className={styles.tabDetailsContainer}>
           {isActiveTab.tabName === 'dashboard' ? (
             <Dashboard tabName={isActiveTab.tabName} />
-          ) : isActiveTab.tabName === 'my-profile' && loggedInUserType === 'Doctor' ? (
+          ) : isActiveTab.tabName === 'track-status' ? (
+            <TrackStatus tabName={isActiveTab.tabName} />
+          ) : isActiveTab.tabName === 'my-profile' && loggedInUserType === 'College' ? (
             <UserProfile tabName={isActiveTab.tabName} />
           ) : (
             <Grid

@@ -99,6 +99,11 @@ const NAV_META = [
     title: 'user-profile',
     component: 'user-profile',
   },
+  {
+    path: 'pages/track-status',
+    title: 'track-status',
+    component: 'pages/track-status/TrackStatus',
+  },
 ];
 
 export const LOGGED_IN = true;
