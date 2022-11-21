@@ -43,8 +43,12 @@ const DoctorRegistrationWelcomePage = () => {
           >
             <Box>
               <Box sx={{ paddingTop: '15px', paddingBottom: '32px' }}>
-                <Typography variant="h2" color="primary" width="110px">
-                  Welcome!
+                <Typography variant="h2" color="primary">
+                  Doctor Registration
+                </Typography>
+                <Typography variant="body3" color="primary.main">
+                  To proceed with your registration confirm your Medical council and Registration
+                  Number.
                 </Typography>
               </Box>
 

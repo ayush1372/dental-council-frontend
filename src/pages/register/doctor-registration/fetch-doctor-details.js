@@ -5,13 +5,15 @@ import { Alert, Container, Divider, IconButton, InputAdornment, Typography } fro
 import { Box } from '@mui/system';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 import { verboseLog } from '../../../config/debug';
 import OtpForm from '../../../shared/otp-form/otp-component';
 import { Button, TextField } from '../../../ui/core';
-import EditPersonalDetails from '../../user-profile/components/edit-personal-details/edit-personal-details';
+// import EditPersonalDetails from '../../user-profile/components/edit-personal-details/edit-personal-details';
 
 function FetchDoctorDetails() {
+  const navigate = useNavigate();
   const [showEditScreen, setShowEditScreen] = useState(false);
   const [showOtpEmail, setShowOtpEmail] = useState(false);
   const [showOtpMobile, setShowOtpMobile] = useState(false);
@@ -83,7 +85,7 @@ function FetchDoctorDetails() {
   return (
     <>
       {showEditScreen ? (
-        <EditPersonalDetails />
+        navigate('/profile')
       ) : (
         <Container sx={{ width: '712px' }}>
           <Box sx={{ width: '712px', height: '53px', marginBottom: '30px', marginTop: '32px ' }}>
