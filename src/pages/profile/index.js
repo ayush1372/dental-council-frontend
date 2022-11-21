@@ -139,6 +139,8 @@ export function Profile() {
             <Dashboard tabName={isActiveTab.tabName} />
           ) : isActiveTab.tabName === 'my-profile' && loggedInUserType === 'Doctor' ? (
             <UserProfile tabName={isActiveTab.tabName} />
+          ) : isActiveTab.tabName === 'my-profile' && loggedInUserType === 'College' ? (
+            <CollegeMyProfile />
           ) : (
             <Grid
               item
@@ -149,7 +151,7 @@ export function Profile() {
               justifyContent={'center'}
             >
               <Typography variant="h4" component={'p'}>
-                {isActiveTab.title === 'My Profile' && <CollegeMyProfile />}
+                {isActiveTab.title}
               </Typography>
             </Grid>
           )}
