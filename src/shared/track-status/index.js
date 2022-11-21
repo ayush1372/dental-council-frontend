@@ -7,11 +7,13 @@ import {
 // import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 
+import { verboseLog } from '../../config/debug';
 import { RegistrationCouncilNames } from '../../constants/utils';
 import { Button, Select, TextField } from '../../ui/core';
 
 export default function TrackStatus() {
   const {
+    handleSubmit,
     register,
     getValues,
     formState: { errors },
@@ -23,6 +25,10 @@ export default function TrackStatus() {
       RegistrationNumber: '',
     },
   });
+
+  const onSubmit = () => {
+    verboseLog('');
+  };
 
   return (
     <Grid container spacing={2} mt={2}>
@@ -60,12 +66,15 @@ export default function TrackStatus() {
             required
             placeholder="Select State"
             defaultValue={getValues().RegistrationNumber}
-            {...register('RegistrationNumber')}
+            {...register('RegistrationNumber', {
+              required: 'College Name is required',
+            })}
           />
         </Grid>
         <Grid item xs={6} md={4} mt={4}>
           <Button
             variant="contained"
+            onClick={handleSubmit(onSubmit)}
             sx={{
               marginRight: '25px',
               width: '96px',

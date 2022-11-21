@@ -140,9 +140,9 @@ export function Profile() {
           {isActiveTab.tabName === 'dashboard' ? (
             <Dashboard tabName={isActiveTab.tabName} />
           ) : isActiveTab.tabName === 'track-status' &&
-            loggedInUserType === 'College' &&
-            loggedInUserType === 'NMC' &&
-            loggedInUserType === 'SMC' ? (
+            (loggedInUserType === 'College' ||
+              loggedInUserType === 'NMC' ||
+              loggedInUserType === 'SMC') ? (
             <TrackStatus tabName={isActiveTab.tabName} />
           ) : isActiveTab.tabName === 'my-profile' && loggedInUserType === 'College' ? (
             <UserProfile tabName={isActiveTab.tabName} />
