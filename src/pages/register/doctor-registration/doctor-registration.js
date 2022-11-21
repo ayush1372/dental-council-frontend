@@ -4,9 +4,10 @@ import { Box, Container, Typography } from '@mui/material';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 
+import SearchableDropdown from '../../../components/autocomplete/searchable-dropdown';
 import { verboseLog } from '../../../config/debug';
 import { RegistrationCouncilNames } from '../../../constants/utils';
-import { Button, Select } from '../../../ui/core';
+import { Button } from '../../../ui/core';
 import { TextField } from '../../../ui/core/form/textfield/textfield';
 import FetchDoctorDetails from './fetch-doctor-details';
 const DoctorRegistrationWelcomePage = () => {
@@ -59,16 +60,7 @@ const DoctorRegistrationWelcomePage = () => {
                   </Typography>
                 </Typography>
                 <Box>
-                  <Select
-                    fullWidth={true}
-                    name={'RegistrationCouncil'}
-                    error={errors.RegistrationCouncil?.message}
-                    defaultValue={getValues().RegistrationCouncil}
-                    options={RegistrationCouncilNames}
-                    {...register('RegistrationCouncil', {
-                      required: 'Registration council name is required',
-                    })}
-                  />
+                  <SearchableDropdown name="RegistrationCouncil" items={RegistrationCouncilNames} />
                 </Box>
               </Box>
               <Box sx={{ paddingBottom: '40px' }}>
