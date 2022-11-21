@@ -25,69 +25,6 @@ export default function TrackStatus() {
   });
 
   return (
-    // <Container>
-
-    //   <Box>
-    //     <Typography variant="h2" sx={{ mt: 4 }}>
-    //       Track Status
-    //     </Typography>
-    //   </Box>
-
-    //   <Box>
-    //     <Box sx={{ paddingBottom: '8px' }}>
-    //       <Typography variant="body3" color="textSecondary.main">
-    //         Medical Council Name
-    //         <Typography component="span" sx={{ color: 'error.main' }}>
-    //           *
-    //         </Typography>
-    //       </Typography>
-    //     </Box>
-    //     <Box>
-    //       <Select
-    //               fullWidth={true}
-    //               name={'RegistrationCouncil'}
-    //               error={errors.RegistrationCouncil?.message}
-    //               defaultValue={getValues().RegistrationCouncil}
-    //               options={RegistrationCouncilNames}
-    //               {...register('RegistrationCouncil', {
-    //                 required: 'Registration council name is required',
-    //               })}
-    //             />
-    //     </Box>
-    //   </Box>
-    //   <Box sx={{ paddingBottom: '8px' }}>
-    //     <Typography variant="body3" color="textSecondary.main">
-    //       Registration Number
-    //       <Typography component="span" sx={{ color: 'error.main' }}>
-    //         *
-    //       </Typography>
-    //     </Typography>
-    //   </Box>
-    //   <TextField
-    //             fullWidth={true}
-    //             name={'RegistrationNumber'}
-    //             placeholder={t('Enter Registration Number')}
-    //             defaultValue={getValues().RegistrationNumber}
-    //             error={errors.RegistrationNumber?.message}
-    //             {...register('RegistrationNumber', {
-    //               required: 'Registration Number is required',
-    //             })}
-    //           />
-
-    //   <Button
-    //             variant="contained"
-    //             sx={{
-    //               marginRight: '25px',
-    //               width: '105px',
-    //               height: '45px',
-    //               backgroundColor: 'secondary.main',
-    //             }}
-    //           >
-    //     Submit
-    //   </Button>
-
-    // </Container>
-
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
         <Grid item xs={12}>
@@ -136,7 +73,7 @@ export default function TrackStatus() {
               backgroundColor: 'secondary.main',
             }}
           >
-            Submit
+            Search
           </Button>
         </Grid>
       </Grid>
