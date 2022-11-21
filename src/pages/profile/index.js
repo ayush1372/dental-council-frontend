@@ -9,6 +9,7 @@ import Wizard from '../../ui/core/wizard';
 import Dashboard from '../dashboard';
 import UserProfile from '../user-profile';
 import EditPersonalDetails from '../user-profile/components/edit-personal-details/edit-personal-details';
+import CollegeMyProfile from './college-my-profile/college-my-profile';
 import ProfileImage from './profileImage';
 import { VerticalTab } from './vertical-tab';
 
@@ -161,6 +162,8 @@ export function Profile() {
             <Dashboard tabName={isActiveTab.tabName} />
           ) : isActiveTab.tabName === 'my-profile' && loggedInUserType === 'Doctor' ? (
             <UserProfile tabName={isActiveTab.tabName} />
+          ) : isActiveTab.tabName === 'my-profile' && loggedInUserType === 'College' ? (
+            <CollegeMyProfile />
           ) : isActiveTab.tabName === 'my-profile' &&
             loggedInUserType !== 'Doctor' &&
             loggedInUserType !== 'College' &&

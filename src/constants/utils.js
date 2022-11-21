@@ -25,18 +25,18 @@ export const StateNames = [
   { value: '12', label: 'Uttar Pradesh' },
 ];
 export const RegistrationCouncilNames = [
-  { value: '1', label: 'West Bengal Medical Council' },
-  { value: '2', label: 'Maharastra Medical Council' },
-  { value: '3', label: 'Andhra Pradesh Medical Council' },
-  { value: '4', label: 'Karnataka Medical Council' },
-  { value: '5', label: 'Telangana Medical Council' },
-  { value: '6', label: 'Puducherry Medical Council' },
-  { value: '7', label: 'Kerala Medical Council' },
-  { value: '8', label: 'Tamilnadu Medical Council' },
-  { value: '9', label: 'Madhya Pradesh Medical Council' },
-  { value: '10', label: 'Gujarat Medical Council' },
-  { value: '11', label: 'Rajasthan Medical Council' },
-  { value: '12', label: 'Uttar Pradesh Medical Council' },
+  { id: '1', name: 'West Bengal Medical Council' },
+  { id: '2', name: 'Maharastra Medical Council' },
+  { id: '3', name: 'Andhra Pradesh Medical Council' },
+  { id: '4', name: 'Karnataka Medical Council' },
+  { id: '5', name: 'Telangana Medical Council' },
+  { id: '6', name: 'Puducherry Medical Council' },
+  { id: '7', name: 'Kerala Medical Council' },
+  { id: '8', name: 'Tamilnadu Medical Council' },
+  { id: '9', name: 'Madhya Pradesh Medical Council' },
+  { id: '10', name: 'Gujarat Medical Council' },
+  { id: '11', name: 'Rajasthan Medical Council' },
+  { id: '12', name: 'Uttar Pradesh Medical Council' },
 ];
 
 export const DepartmentNames = [
@@ -230,4 +230,16 @@ export const applications = {
     },
   ],
   count: 5,
+};
+
+export const collegeProfileData = {
+  collegeName: 'Aarnav sharma',
+  collegeId: '132118',
+  collegePhnNumber: '+91 9876565432',
+  collegeEmailId: 'aarnav.singh@ipuni.co.in',
+  DepartmentName: 'Medical Sciences',
+  StateName: 'New delhi',
+  collegeWebsite: 'ipuniversity.co.in',
+  collegeAddress: 'GGSIPU, Golf Course Rd, Sector 16 C, Dwarka, Delhi, 110078',
+  collegePinCode: '110088',
 };

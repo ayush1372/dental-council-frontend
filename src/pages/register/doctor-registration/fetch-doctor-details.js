@@ -24,7 +24,7 @@ function FetchDoctorDetails() {
 
   const {
     register,
-    handleSubmit,
+
     getValues,
     formState: { errors },
   } = useForm({
@@ -49,8 +49,10 @@ function FetchDoctorDetails() {
   };
 
   const handleVerifyMobile = () => {
-    setShowOtpMobile(true);
-    isOtpValidMobile(false);
+    if (isOtpValidEmail === true) {
+      setShowOtpMobile(true);
+      isOtpValidMobile(false);
+    }
   };
   const handleValidateMobile = () => {
     if (otpValue.length === 6) {
@@ -172,16 +174,18 @@ function FetchDoctorDetails() {
                     ),
                   }}
                 />
-                {!showOtpEmail && !isOtpValidEmail && (
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    width="95px"
-                    onClick={handleSubmit(handleVerifyEmail)}
-                  >
-                    Verify
-                  </Button>
-                )}
+                <Box>
+                  {!showOtpEmail && !isOtpValidEmail && (
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      width="95px"
+                      onClick={handleVerifyEmail}
+                    >
+                      Verify
+                    </Button>
+                  )}
+                </Box>
               </Box>
             </Box>
             {showOtpEmail && (
@@ -202,7 +206,7 @@ function FetchDoctorDetails() {
                     component="span"
                     variant="contained"
                     color="secondary"
-                    onClick={handleSubmit(handleValidateEmail)}
+                    onClick={handleValidateEmail}
                   >
                     Validate
                   </Button>
@@ -246,16 +250,18 @@ function FetchDoctorDetails() {
                       ),
                     }}
                   />
-                  {!showOtpMobile && !isOtpValidMobile && (
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      width="95px"
-                      onClick={handleSubmit(handleVerifyMobile)}
-                    >
-                      Verify
-                    </Button>
-                  )}
+                  <Box>
+                    {!showOtpMobile && !isOtpValidMobile && (
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        width="95px"
+                        onClick={handleVerifyMobile}
+                      >
+                        Verify
+                      </Button>
+                    )}
+                  </Box>
                 </Box>
               </Box>
               {showOtpMobile && (
@@ -276,7 +282,7 @@ function FetchDoctorDetails() {
                       component="span"
                       variant="contained"
                       color="secondary"
-                      onClick={handleSubmit(handleValidateMobile)}
+                      onClick={handleValidateMobile}
                     >
                       Validate
                     </Button>
