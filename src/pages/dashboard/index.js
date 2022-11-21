@@ -180,7 +180,7 @@ export default function Dashboard() {
           setShowTable={setShowTable}
         />
       ) : showViewProfile ? (
-        <Box>hi</Box>
+        <Box>View Profile</Box>
       ) : null}
     </>
   );
