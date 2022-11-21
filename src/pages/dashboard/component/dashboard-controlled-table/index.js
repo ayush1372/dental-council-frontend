@@ -4,7 +4,7 @@ import { Grid, TablePagination, Typography } from '@mui/material';
 
 import { applications } from '../../../../constants/utils';
 import GenericTable from '../../../../shared/generic-table';
-import SearchFilter from '../../../../shared/search-filter';
+// import SearchFilter from '../../../../shared/search-filter';
 
 function createData(
   SNo,
@@ -40,7 +40,7 @@ function DashboardControlledTable(props) {
   // const { isLoggedInUserType } = useSelector((state) => state.recruiter);
   // eslint-disable-next-line no-console
   console.log('selectedRowData', selectedRowData);
-  const [searchQuery, setSearchQuery] = React.useState({ value: '' });
+  // const [searchQuery, setSearchQuery] = React.useState({ value: '' });
 
   const dataHeader = [
     { title: 'S.No.', name: 'SNo', sorting: true, type: 'string' },
@@ -143,7 +143,7 @@ function DashboardControlledTable(props) {
       <Typography variant="h2" pt={2} pb={2}>
         Application List
       </Typography>
-      <SearchFilter searchQuery={searchQuery} changeSearchQuery={setSearchQuery} />
+      {/* <SearchFilter searchQuery={searchQuery} changeSearchQuery={setSearchQuery} /> */}
       <GenericTable
         order={order}
         orderBy={orderBy}
