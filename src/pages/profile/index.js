@@ -10,8 +10,8 @@ import Dashboard from '../dashboard';
 import UserProfile from '../user-profile';
 import EditPersonalDetails from '../user-profile/components/edit-personal-details/edit-personal-details';
 import CollegeMyProfile from './college-my-profile/college-my-profile';
-import ProfileImage from './sub-pages/profileImage';
-import { VerticalTab } from './sub-pages/vertical-tab';
+import ProfileImage from './profileImage';
+import { VerticalTab } from './vertical-tab';
 
 import styles from './profile.module.scss';
 
