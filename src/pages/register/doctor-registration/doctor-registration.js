@@ -4,9 +4,10 @@ import { Box, Container, Typography } from '@mui/material';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 
+import SearchableDropdown from '../../../components/autocomplete/searchable-dropdown';
 import { verboseLog } from '../../../config/debug';
 import { RegistrationCouncilNames } from '../../../constants/utils';
-import { Button, Select } from '../../../ui/core';
+import { Button } from '../../../ui/core';
 import { TextField } from '../../../ui/core/form/textfield/textfield';
 import FetchDoctorDetails from './fetch-doctor-details';
 const DoctorRegistrationWelcomePage = () => {
@@ -42,8 +43,12 @@ const DoctorRegistrationWelcomePage = () => {
           >
             <Box>
               <Box sx={{ paddingTop: '15px', paddingBottom: '32px' }}>
-                <Typography variant="h2" color="primary" width="110px">
-                  Welcome!
+                <Typography variant="h2" color="primary">
+                  Doctor Registration
+                </Typography>
+                <Typography variant="body3" color="primary.main">
+                  To proceed with your registration confirm your Medical council and Registration
+                  Number.
                 </Typography>
               </Box>
 
@@ -55,16 +60,7 @@ const DoctorRegistrationWelcomePage = () => {
                   </Typography>
                 </Typography>
                 <Box>
-                  <Select
-                    fullWidth={true}
-                    name={'RegistrationCouncil'}
-                    error={errors.RegistrationCouncil?.message}
-                    defaultValue={getValues().RegistrationCouncil}
-                    options={RegistrationCouncilNames}
-                    {...register('RegistrationCouncil', {
-                      required: 'Registration council name is required',
-                    })}
-                  />
+                  <SearchableDropdown name="RegistrationCouncil" items={RegistrationCouncilNames} />
                 </Box>
               </Box>
               <Box sx={{ paddingBottom: '40px' }}>
