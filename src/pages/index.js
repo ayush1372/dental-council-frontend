@@ -1,6 +1,5 @@
 /* PLOP_INJECT_PAGES_EXPORT */
 import '../i18n';
-export { TableSearch } from './profile/sub-pages/table-search/table-search';
 export { OtpComponentLinkGuardian } from './register/components/link-guardian/otp-component-link-guardian';
 export { RelationProof } from './register/components/link-guardian/relation-proof';
 export { Home } from './home';
