@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Box, Container, Grid, Paper, Typography } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
 
+import { verboseLog } from '../../config/debug';
 import { Button } from '../../ui/core';
 import BreadcrumbsCompnent from './component/breadcrums';
 import DashboardControlledTable from './component/dashboard-controlled-table';
@@ -84,8 +85,7 @@ export default function Dashboard() {
     setShowDashboard(false);
     setShowTable(true);
     setShowViewPorfile(false);
-    // eslint-disable-next-line no-console
-    console.log('item', item);
+    verboseLog('item', item);
     // setShowTable({ show: true, value: item.id, count: item.value })
   };
 

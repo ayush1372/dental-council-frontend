@@ -80,8 +80,6 @@ export default function GenericTable(props) {
     onRequestSort(event, property);
   };
 
-  // eslint-disable-next-line no-console
-  console.log('props in table', props);
   return (
     <TableContainer className={styles.genericTableContainer} component={Paper}>
       <Table sx={{ minWidth: '650px' }} aria-label="table">

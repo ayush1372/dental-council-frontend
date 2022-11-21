@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Grid, TablePagination, Typography } from '@mui/material';
 
+import { verboseLog } from '../../../../config/debug';
 import { applications } from '../../../../constants/utils';
 import GenericTable from '../../../../shared/generic-table';
 // import SearchFilter from '../../../../shared/search-filter';
@@ -37,11 +38,8 @@ function DashboardControlledTable(props) {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
   const [selectedRowData, setRowData] = React.useState({});
-  // const { isLoggedInUserType } = useSelector((state) => state.recruiter);
-  // eslint-disable-next-line no-console
-  console.log('selectedRowData', selectedRowData);
   // const [searchQuery, setSearchQuery] = React.useState({ value: '' });
-
+  verboseLog('selectedRowData', selectedRowData);
   const dataHeader = [
     { title: 'S.No.', name: 'SNo', sorting: true, type: 'string' },
     {
