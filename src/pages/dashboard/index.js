@@ -1,12 +1,5 @@
-import { useState } from 'react';
-
 import { Box, Container, Grid, Paper, Typography } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
-
-import { verboseLog } from '../../config/debug';
-import { Button } from '../../ui/core';
-import BreadcrumbsCompnent from './component/breadcrums';
-import DashboardControlledTable from './component/dashboard-controlled-table';
 
 import styles from './dashboard.module.scss';
 
@@ -61,127 +54,67 @@ export default function Dashboard() {
       value: 0,
     },
   ];
+  // if (data?.length > 0) {
+  //   for (let i = 0; i < data.length; i++) {
+  //     for (let j = 0; j < blankDashboard.length; j++) {
+  //       if (
+  //         data[i].name === 'Withdrawn/Rejected' &&
+  //         blankDashboard[j].name === 'Withdrawn / Rejected'
+  //       ) {
+  //         blankDashboard[j].value = data[i].count;
+  //       } else if (data[i].name === blankDashboard[j].name) {
+  //         blankDashboard[j].value = data[i].count;
+  //       }
+  //     }
+  //   }
+  // }
 
   const cardData = blankDashboard;
 
-  const [showDashboard, setShowDashboard] = useState(true);
-  const [showTable, setShowTable] = useState(false);
-  const [showViewProfile, setShowViewPorfile] = useState(false);
-
-  function handleBreadCrumClick(event) {
-    event.preventDefault();
-    if (event.target.id === '1') {
-      setShowDashboard(true);
-      setShowTable(false);
-      setShowViewPorfile(false);
-    } else if (event.target.id === '2') {
-      setShowDashboard(false);
-      setShowTable(true);
-      setShowViewPorfile(false);
-    }
-  }
-
-  const showTableFun = (item) => {
-    setShowDashboard(false);
-    setShowTable(true);
-    setShowViewPorfile(false);
-    verboseLog('item', item);
-    // setShowTable({ show: true, value: item.id, count: item.value })
-  };
-
-  const onClickBackButtonHandler = () => {
-    if (showViewProfile) {
-      setShowDashboard(false);
-      setShowTable(true);
-      setShowViewPorfile(false);
-    } else if (showTable) {
-      setShowDashboard(true);
-      setShowTable(false);
-      setShowViewPorfile(false);
-    }
-  };
-
   return (
-    <>
-      {!showDashboard && (
-        <Grid container>
-          <Grid item xs={6}>
-            <BreadcrumbsCompnent
-              showTable={showTable}
-              showViewProfile={showViewProfile}
-              handleBreadCrumClick={handleBreadCrumClick}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <Box align="right" mt={2} mr={2}>
-              <Button
-                size="small"
-                variant="outlined"
-                sx={{
-                  backgroundColor: 'white.main',
-                  ml: 2,
-                  '&:hover': {
-                    color: 'primary.main',
-                    backgroundColor: 'white.main',
-                  },
-                }}
-                onClick={onClickBackButtonHandler}
-              >
-                Back
-              </Button>
-            </Box>
+    <div className={styles.dashboardContainerComponent}>
+      <Container>
+        <Grid className="mt-4">
+          <Typography variant="h2" sx={{ mt: 4 }}>
+            Dashboard
+          </Typography>
+          <Grid item xs={12} className={styles.itemMainContainer}>
+            <Grid>
+              <Box sx={{ width: '100%' }}>
+                <Grid container spacing={2} mt={0.5}>
+                  {cardData.map((item) => {
+                    return (
+                      <Grid item xs={3} key={item.name}>
+                        <Item
+                          id={item.id}
+                          className={
+                            item.id === 1 || item.id === 5
+                              ? styles.borderOrange
+                              : item.id === 2 || item.id === 6
+                              ? styles.borderGreen
+                              : item.id === 3 || item.id === 7
+                              ? styles.borderBlue
+                              : styles.borderRed
+                          }
+                          // onClick={() =>
+                          //   setShowTable({ show: true, value: item.id, count: item.value })
+                          // }
+                        >
+                          <div className={styles.itemHeading}>{item.name}</div>
+                          <div className={styles.itemSubHeading}>{item.value}</div>
+                        </Item>
+                      </Grid>
+                    );
+                  })}
+                </Grid>
+              </Box>
+            </Grid>
+            {/* <Grid className="mb-4">            
+                <DashboardControlledTable showTable={showTable} />              
+            </Grid> */}
           </Grid>
         </Grid>
-      )}
-      {showDashboard ? (
-        <div className={styles.dashboardContainerComponent}>
-          <Container>
-            <Grid className="mt-4">
-              <Typography variant="h2" sx={{ mt: 4 }}>
-                Dashboard
-              </Typography>
-              <Grid item xs={12} className={styles.itemMainContainer}>
-                <Grid>
-                  <Box sx={{ width: '100%' }}>
-                    <Grid container spacing={2} mt={0.5}>
-                      {cardData.map((item) => {
-                        return (
-                          <Grid item xs={3} key={item.name}>
-                            <Item
-                              id={item.id}
-                              className={
-                                item.id === 1 || item.id === 5
-                                  ? styles.borderOrange
-                                  : item.id === 2 || item.id === 6
-                                  ? styles.borderGreen
-                                  : item.id === 3 || item.id === 7
-                                  ? styles.borderBlue
-                                  : styles.borderRed
-                              }
-                              onClick={() => showTableFun(item)}
-                            >
-                              <div className={styles.itemHeading}>{item.name}</div>
-                              <div className={styles.itemSubHeading}>{item.value}</div>
-                            </Item>
-                          </Grid>
-                        );
-                      })}
-                    </Grid>
-                  </Box>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Container>
-        </div>
-      ) : showTable ? (
-        <DashboardControlledTable
-          setShowViewPorfile={setShowViewPorfile}
-          setShowDashboard={setShowDashboard}
-          setShowTable={setShowTable}
-        />
-      ) : showViewProfile ? (
-        <Box>View Profile</Box>
-      ) : null}
-    </>
+      </Container>
+    </div>
   );
 }
