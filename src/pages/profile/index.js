@@ -7,12 +7,12 @@ import useWizard from '../../hooks/use-wizard';
 import TrackStatus from '../../shared/track-status/index';
 import { changeUserActiveTab } from '../../store/reducers/ui-reducers';
 import Wizard from '../../ui/core/wizard';
-import Dashboard from '../dashboard';
 import UserProfile from '../user-profile';
 import EditPersonalDetails from '../user-profile/components/edit-personal-details/edit-personal-details';
 import CollegeMyProfile from './college-my-profile/college-my-profile';
-import ProfileImage from './profileImage';
-import { VerticalTab } from './vertical-tab';
+import Dashboard from './components/dashboard-cards/dashboard-cards';
+import ProfileImage from './components/profile-image/profile-image';
+import { VerticalTab } from './components/vertical-tab/vertical-tab';
 
 import styles from './profile.module.scss';
 
