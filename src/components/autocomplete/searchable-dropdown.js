@@ -1,6 +1,15 @@
 import { Autocomplete, TextField } from '@mui/material';
 import { Box } from '@mui/system';
-const SearchableDropdown = ({ id, name, items, label, onChange, value, multiple = false }) => {
+const SearchableDropdown = ({
+  id,
+  name,
+  items,
+  label,
+  onChange,
+  placeholder,
+  value,
+  multiple = false,
+}) => {
   return (
     <Autocomplete
       limitTags={1}
@@ -22,7 +31,9 @@ const SearchableDropdown = ({ id, name, items, label, onChange, value, multiple 
           {item.name}
         </Box>
       )}
-      renderInput={(params) => <TextField {...params} name={name} label={label} />}
+      renderInput={(params) => (
+        <TextField {...params} name={name} label={label} placeholder={placeholder} />
+      )}
     />
   );
 };
