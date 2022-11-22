@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { Grid, TablePagination, Typography } from '@mui/material';
+import { Box, Grid, TablePagination, Typography } from '@mui/material';
 
 import { verboseLog } from '../../../../config/debug';
 import { applications } from '../../../../constants/utils';
 import GenericTable from '../../../../shared/generic-table';
+import TableSearch from '../table-search/table-search';
 // import SearchFilter from '../../../../shared/search-filter';
 
 function createData(
@@ -138,10 +139,10 @@ function DashboardControlledTable(props) {
 
   return (
     <Grid sx={{ m: 2 }}>
-      <Typography variant="h2" pt={2} pb={2}>
-        Application List
+      <Typography variant="h2" py={2}>
+        Applications Pending List
       </Typography>
-      {/* <SearchFilter searchQuery={searchQuery} changeSearchQuery={setSearchQuery} /> */}
+      <TableSearch />
       <GenericTable
         order={order}
         orderBy={orderBy}
@@ -153,7 +154,7 @@ function DashboardControlledTable(props) {
         page={page}
       />
 
-      <div>
+      <Box>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
@@ -163,7 +164,7 @@ function DashboardControlledTable(props) {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
-      </div>
+      </Box>
     </Grid>
   );
 }

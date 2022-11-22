@@ -3,12 +3,11 @@ import { useState } from 'react';
 import { Box, Container, Grid, Paper, Typography } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
 
-import { verboseLog } from '../../config/debug';
-import { Button } from '../../ui/core';
-import BreadcrumbsCompnent from './component/breadcrums';
-import DashboardControlledTable from './component/dashboard-controlled-table';
-
-import styles from './dashboard.module.scss';
+import { verboseLog } from '../../../../config/debug';
+import { Palette } from '../../../../theme/palette';
+import { Button } from '../../../../ui/core';
+import BreadcrumbsCompnent from '../breadcrums';
+import DashboardControlledTable from '../dashboard-controlled-table/dashboard-controlled-table';
 
 export default function Dashboard() {
   const Item = styled(Paper)(({ theme }) => ({
@@ -124,6 +123,7 @@ export default function Dashboard() {
                     color: 'primary.main',
                     backgroundColor: 'white.main',
                   },
+                  height: '48px',
                 }}
                 onClick={onClickBackButtonHandler}
               >
@@ -134,45 +134,55 @@ export default function Dashboard() {
         </Grid>
       )}
       {showDashboard ? (
-        <div className={styles.dashboardContainerComponent}>
+        <Box>
           <Container>
-            <Grid className="mt-4">
-              <Typography variant="h2" sx={{ mt: 4 }}>
-                Dashboard
-              </Typography>
-              <Grid item xs={12} className={styles.itemMainContainer}>
-                <Grid>
-                  <Box sx={{ width: '100%' }}>
-                    <Grid container spacing={2} mt={0.5}>
-                      {cardData.map((item) => {
-                        return (
-                          <Grid item xs={3} key={item.name}>
-                            <Item
-                              id={item.id}
-                              className={
-                                item.id === 1 || item.id === 5
-                                  ? styles.borderOrange
-                                  : item.id === 2 || item.id === 6
-                                  ? styles.borderGreen
-                                  : item.id === 3 || item.id === 7
-                                  ? styles.borderBlue
-                                  : styles.borderRed
-                              }
-                              onClick={() => showTableFun(item)}
+            <Typography variant="h2" mt={3} mb={5}>
+              Dashboard
+            </Typography>
+            <Grid item xs={12}>
+              <Grid>
+                <Box sx={{ width: '100%' }}>
+                  <Grid container spacing={2}>
+                    {cardData.map((item) => {
+                      return (
+                        <Grid item xs={3} key={item.name}>
+                          <Item
+                            id={item.id}
+                            sx={
+                              item.id === 1 || item.id === 5
+                                ? { borderTop: `5px solid ${Palette.secondary.warningYellow}` }
+                                : item.id === 2 || item.id === 6
+                                ? { borderTop: `5px solid ${Palette.success.main}` }
+                                : item.id === 3 || item.id === 7
+                                ? { borderTop: `5px solid ${Palette.primary.main}` }
+                                : { borderTop: `5px solid ${Palette.error.main}` }
+                            }
+                            onClick={() => showTableFun(item)}
+                          >
+                            <Box
+                              color={Palette.secondary.contrastText}
+                              fontSize={14}
+                              sx={{ minHeight: '60px', wordBreak: 'break-word' }}
                             >
-                              <div className={styles.itemHeading}>{item.name}</div>
-                              <div className={styles.itemSubHeading}>{item.value}</div>
-                            </Item>
-                          </Grid>
-                        );
-                      })}
-                    </Grid>
-                  </Box>
-                </Grid>
+                              {item.name}
+                            </Box>
+                            <Box
+                              color={Palette.tabHighlightedBackgroundColor.main}
+                              fontSize={20}
+                              fontWeight={600}
+                            >
+                              {item.value}
+                            </Box>
+                          </Item>
+                        </Grid>
+                      );
+                    })}
+                  </Grid>
+                </Box>
               </Grid>
             </Grid>
           </Container>
-        </div>
+        </Box>
       ) : showTable ? (
         <DashboardControlledTable
           setShowViewPorfile={setShowViewPorfile}

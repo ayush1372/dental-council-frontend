@@ -21,7 +21,7 @@ export default function BreadcrumbsCompnent(props) {
             variant="body1"
             color={props.showViewProfile ? 'primary.main' : 'black.main'}
           >
-            Application List
+            Applications Pending List
           </Typography>
         )}
         {props.showViewProfile && (
