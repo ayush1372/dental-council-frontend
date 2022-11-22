@@ -26,7 +26,7 @@ export default function TrackStatus() {
         <Grid container item spacing={2}>
           <Grid item xs={12}>
             <Box p={1}>
-              <Typography color="black" variant="h1">
+              <Typography color="textPrimary.main" variant="h1">
                 Track Status
               </Typography>
             </Box>
