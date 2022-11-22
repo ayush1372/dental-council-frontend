@@ -1,0 +1,35 @@
+.dashboardContainerComponent {
+  .itemMainContainer {
+    // .itemContainer {
+    //   border-radius: 5px !important;
+    //   // border-top: 5px solid #1b346e;
+    //   border-top-width: thick;
+    //   cursor: pointer;
+    // }
+    .borderBlue {
+      border-top: 5px solid #1b346e;
+    }
+    .borderOrange {
+      border-top: 5px solid #ffa334;
+    }
+    .borderGreen {
+      border-top: 5px solid #36b37e;
+    }
+    .borderRed {
+      border-top: 5px solid #e02900;
+    }
+    .itemHeading {
+      font-size: 14px;
+      color: #282a2c;
+      opacity: 1;
+      min-height: 60px;
+      word-break: break-word;
+    }
+    .itemSubHeading {
+      color: #1b346e;
+      opacity: 1;
+      font-weight: bold;
+      font-size: 20px;
+    }
+  }
+}

@@ -12,8 +12,8 @@ import { CardHeader } from './card-header';
 import { FormHelperText } from './form-helper-text';
 import { InputLabel } from './input-label';
 import { Palette } from './palette';
-import { TableSortLabel } from './table-head';
 import { TableRow } from './table-row';
+import { TableSortLabel } from './table-sort-label';
 import { TextField } from './textfield';
 import { Typography } from './typography';
 

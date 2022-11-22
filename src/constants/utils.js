@@ -165,6 +165,17 @@ export const validateAadharNumber = (aadhaarNumber) => {
   });
   return c === 0;
 };
+export const collegeProfileData = {
+  collegeName: 'Aarnav sharma',
+  collegeId: '132118',
+  collegePhnNumber: '+91 9876565432',
+  collegeEmailId: 'aarnav.singh@ipuni.co.in',
+  DepartmentName: 'Medical Sciences',
+  StateName: 'New delhi',
+  collegeWebsite: 'ipuniversity.co.in',
+  collegeAddress: 'GGSIPU, Golf Course Rd, Sector 16 C, Dwarka, Delhi, 110078',
+  collegePinCode: '110088',
+};
 
 export const applications = {
   message: [
@@ -230,16 +241,4 @@ export const applications = {
     },
   ],
   count: 5,
-};
-
-export const collegeProfileData = {
-  collegeName: 'Aarnav sharma',
-  collegeId: '132118',
-  collegePhnNumber: '+91 9876565432',
-  collegeEmailId: 'aarnav.singh@ipuni.co.in',
-  DepartmentName: 'Medical Sciences',
-  StateName: 'New delhi',
-  collegeWebsite: 'ipuniversity.co.in',
-  collegeAddress: 'GGSIPU, Golf Course Rd, Sector 16 C, Dwarka, Delhi, 110078',
-  collegePinCode: '110088',
 };

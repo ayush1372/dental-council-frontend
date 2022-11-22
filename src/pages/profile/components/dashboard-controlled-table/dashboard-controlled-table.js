@@ -4,7 +4,7 @@ import { Box, Grid, TablePagination, Typography } from '@mui/material';
 
 import { verboseLog } from '../../../../config/debug';
 import { applications } from '../../../../constants/utils';
-import GenericTable from '../../../../shared/generic-table';
+import GenericTable from '../../../../shared/generic-component/generic-component';
 import TableSearch from '../table-search/table-search';
 // import SearchFilter from '../../../../shared/search-filter';
 

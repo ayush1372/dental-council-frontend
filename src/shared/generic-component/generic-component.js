@@ -1,5 +1,3 @@
-import './generic-table.module.scss';
-
 import { Box, TableSortLabel } from '@mui/material';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
@@ -13,8 +11,6 @@ import Tooltip from '@mui/material/Tooltip';
 import { visuallyHidden } from '@mui/utils';
 import Moment from 'moment';
 import propTypes from 'prop-types';
-
-import styles from './generic-table.module.scss';
 
 // import { useSelector } from 'react-redux';
 
@@ -81,7 +77,7 @@ export default function GenericTable(props) {
   };
 
   return (
-    <TableContainer className={styles.genericTableContainer} component={Paper}>
+    <TableContainer component={Paper}>
       <Table sx={{ minWidth: '650px' }} aria-label="table">
         <TableHead>
           <TableRow sx={{ backgroundColor: 'primary.main' }}>
