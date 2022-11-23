@@ -8,10 +8,11 @@ import { Button } from '../../ui/core/button/button';
 import Wizard from '../../ui/core/wizard';
 import PersonalDetails from './components/personal-details/personal-details';
 import RegisterAndAcademicDetails from './components/register-and-academic-details/register-and-academic-details';
+import WorkDetails from './components/work-details/work-details';
 export const UserProfile = () => {
   const [isReadMode, setIsReadMode] = useState(true);
   const { activeStep, handleNext, handleBack } = useWizard(0, []);
-  const wizardSteps = ['Personal Details', 'Registartion & Academic Details', 'Work Details'];
+  const wizardSteps = ['Personal Details', 'Registration & Academic Details', 'Work Details'];
 
   return (
     <Container maxWidth="lg" sx={{ marginTop: '30px' }}>
@@ -47,6 +48,7 @@ export const UserProfile = () => {
         {activeStep === 0 && (
           <PersonalDetails
             isReadMode={isReadMode}
+            setIsReadMode={setIsReadMode}
             handleNext={handleNext}
             handleBack={handleBack}
           />
@@ -54,6 +56,15 @@ export const UserProfile = () => {
         {activeStep === 1 && (
           <RegisterAndAcademicDetails
             isReadMode={isReadMode}
+            setIsReadMode={setIsReadMode}
+            handleNext={handleNext}
+            handleBack={handleBack}
+          />
+        )}
+        {activeStep === 2 && (
+          <WorkDetails
+            isReadMode={isReadMode}
+            setIsReadMode={setIsReadMode}
             handleNext={handleNext}
             handleBack={handleBack}
           />

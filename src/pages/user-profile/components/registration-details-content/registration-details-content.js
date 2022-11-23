@@ -5,31 +5,31 @@ const RegistrationDetailsContent = () => {
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
         <Grid item xs={8} md={4}>
-          <Typography variant="body3" color="grey.label">
+          <Typography variant="subtitle2" color="inputTextColor">
             Registered with council
           </Typography>
           <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor">
+            <Typography variant="subtitle2" color="inputTextColor.light">
               West Bengal Medical Council
             </Typography>
           </Box>
         </Grid>
         <Grid item xs={8} md={4}>
-          <Typography variant="body3" color="grey.label">
+          <Typography variant="subtitle2" color="inputTextColor">
             Registration Number
           </Typography>
           <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor">
+            <Typography variant="subtitle2" color="inputTextColor.light">
               7991749871719
             </Typography>
           </Box>
         </Grid>
         <Grid item xs={8} md={4}>
-          <Typography variant="body3" color="grey.label">
+          <Typography variant="subtitle2" color="inputTextColor">
             Registration Date
           </Typography>
           <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor">
+            <Typography variant="subtitle2" color="inputTextColor.light">
               30-10-2021
             </Typography>
           </Box>
@@ -59,7 +59,7 @@ const RegistrationDetailsContent = () => {
             Registration Certificate
           </Typography>
           <Typography variant="subtitle2" color="primary.main">
-            yes
+            Yes
           </Typography>
         </Grid>
       </Grid>

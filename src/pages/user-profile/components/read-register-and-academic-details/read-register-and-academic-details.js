@@ -12,11 +12,11 @@ const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   const [accordionKey, setAccordionKey] = useState('accordion-0');
   const accordions = [
     {
-      title: '*Registration Details',
+      title: 'Registration Details',
       body: RegistrationDetailsContent,
     },
     {
-      title: '*Qualification Details',
+      title: 'Qualification Details',
       body: QualificationDetailsContent,
     },
   ];

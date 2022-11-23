@@ -13,12 +13,12 @@ const PersonalDetails = () => {
           </Typography>
         </Grid>
         <Grid item xs={8} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="inputTextColor.main">
             Aadhaar Number
           </Typography>
           <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor">
-              8904-2728-4688
+            <Typography variant="subtitle2" color="inputTextColor.light">
+              xxxx-xxxx-4688
             </Typography>
           </Box>
         </Grid>
@@ -59,7 +59,7 @@ const PersonalDetails = () => {
             Last Name
           </Typography>
           <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor">
+            <Typography variant="subtitle2" color="inputTextColor.light">
               Sharma
             </Typography>
           </Box>
@@ -71,7 +71,7 @@ const PersonalDetails = () => {
             Fathers Name
           </Typography>
           <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor">
+            <Typography variant="subtitle2" color="inputTextColor.light">
               Praveen Sharma
             </Typography>
           </Box>
@@ -81,7 +81,7 @@ const PersonalDetails = () => {
             Mothers Name
           </Typography>
           <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor">
+            <Typography variant="subtitle2" color="inputTextColor.light">
               Savita Sharma
             </Typography>
           </Box>
@@ -91,7 +91,7 @@ const PersonalDetails = () => {
             Spouce Name
           </Typography>
           <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor.main">
+            <Typography variant="subtitle2" color="inputTextColor.light">
               Poonam Bala
             </Typography>
           </Box>
@@ -103,7 +103,7 @@ const PersonalDetails = () => {
             Nationality
           </Typography>
           <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor.main">
+            <Typography variant="subtitle2" color="inputTextColor.light">
               Indian
             </Typography>
           </Box>

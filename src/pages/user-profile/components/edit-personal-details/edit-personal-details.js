@@ -1,15 +1,19 @@
+import { useState } from 'react';
+
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { Box, Grid, IconButton, InputAdornment, Typography } from '@mui/material';
+import { Box, Button, Grid, IconButton, InputAdornment, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import SearchableDropdown from '../../../../components/autocomplete/searchable-dropdown';
+import { AutoComplete } from '../../../../components/autocomplete/searchable-autocomplete';
+import { get_year_data } from '../../../../constants/utils';
+import { ModalOTP } from '../../../../shared/otp-modal/otp-modal';
 import { RadioGroup, Select, TextField } from '../../../../ui/core';
 import MobileNumber from '../../../../ui/core/mobile-number/mobile-number';
-import ButtonGroupWizard from '../../../../ui/core/wizard/button-group-wizard';
 
-const EditPersonalDetails = ({ handleNext }) => {
+const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const { t } = useTranslation();
+  const [languages, setLanguages] = useState([]);
   const {
     formState: { errors },
     getValues,
@@ -46,8 +50,15 @@ const EditPersonalDetails = ({ handleNext }) => {
       RegistrationNumber: '672929',
       mobileNo: '9988334355',
       EmailAddress: 'aarushi.sharma309@gmail.com',
+      LanguageSpoken: [],
     },
   });
+
+  const { otpPopup, handleClickOpen, otpVerified } = ModalOTP({ afterConfirm: () => {} });
+
+  const handleBackButton = () => {
+    setIsReadMode(true);
+  };
 
   const onHandleOptionNext = () => {
     handleNext();
@@ -59,6 +70,11 @@ const EditPersonalDetails = ({ handleNext }) => {
     setValue(event.target.name, event.target.value, true);
   };
 
+  const handleLanguageSpokenChange = (name, value) => {
+    setValue(name, value, true);
+    setLanguages([...value]);
+  };
+
   return (
     <Box boxShadow="0px 1px 3px #00000029" pl={'41px'} pr={'91px'} pb={'44px'}>
       <Grid container spacing={2} mt={2}>
@@ -67,14 +83,14 @@ const EditPersonalDetails = ({ handleNext }) => {
           <Grid item xs={12}>
             <Box bgcolor="grey1.light" p={1}>
               <Typography color="tabHighlightedBackgroundColor.main" variant="h3">
-                *Personal Details
+                Personal Details*
               </Typography>
             </Box>
           </Grid>
           <Grid item xs={8} md={4}>
             <RadioGroup
               onChange={handleSalutationChange}
-              name={'fdhb'}
+              name={'salutation'}
               size="small"
               defaultValue={getValues().salutation}
               items={[
@@ -110,7 +126,12 @@ const EditPersonalDetails = ({ handleNext }) => {
               defaultValue={getValues().AadhaarNumber}
               {...register('AadhaarNumber', {
                 required: 'Aadhaar Number is Required',
+                pattern: {
+                  value: /^[0-9]{4}-[0-9]{4}-[0-9]{4}$/,
+                  message: 'Should only contain hyphen and numbers',
+                },
               })}
+              error={errors.AadhaarNumber?.message}
             />
           </Grid>
         </Grid>
@@ -126,6 +147,10 @@ const EditPersonalDetails = ({ handleNext }) => {
               defaultValue={getValues().FirstName}
               {...register('FirstName', {
                 required: 'First Name is Required',
+                maxLength: {
+                  value: 100,
+                  message: 'Length should be less than 100.',
+                },
               })}
               sx={{
                 input: {
@@ -133,6 +158,7 @@ const EditPersonalDetails = ({ handleNext }) => {
                 },
               }}
               InputProps={{ readOnly: true }}
+              error={errors.FirstName?.message}
             />
           </Grid>
           <Grid item xs={8} md={4}>
@@ -143,7 +169,12 @@ const EditPersonalDetails = ({ handleNext }) => {
               label={'Middle Name'}
               fullWidth
               defaultValue={getValues().MiddleName}
-              {...register('MiddleName')}
+              {...register('MiddleName', {
+                maxLength: {
+                  value: 100,
+                  message: 'Length should be less than 100.',
+                },
+              })}
               sx={{
                 input: {
                   backgroundColor: 'grey2.main',
@@ -163,6 +194,10 @@ const EditPersonalDetails = ({ handleNext }) => {
               defaultValue={getValues().LastName}
               {...register('LastName', {
                 required: 'Last Name is Required',
+                maxLength: {
+                  value: 100,
+                  message: 'Length should be less than 100.',
+                },
               })}
               sx={{
                 input: {
@@ -184,7 +219,12 @@ const EditPersonalDetails = ({ handleNext }) => {
               defaultValue={getValues().FatherName}
               {...register('FatherName', {
                 required: 'Father Name is Required',
+                maxLength: {
+                  value: 100,
+                  message: 'Length should be less than 100.',
+                },
               })}
+              error={errors.FatherName?.message}
             />
           </Grid>
           <Grid item xs={8} md={4}>
@@ -197,7 +237,12 @@ const EditPersonalDetails = ({ handleNext }) => {
               defaultValue={getValues().MotherName}
               {...register('MotherName', {
                 required: 'Mother Name is Required',
+                maxLength: {
+                  value: 100,
+                  message: 'Length should be less than 100.',
+                },
               })}
+              error={errors.MotherName?.message}
             />
           </Grid>
           <Grid item xs={8} md={4}>
@@ -210,7 +255,12 @@ const EditPersonalDetails = ({ handleNext }) => {
               defaultValue={getValues().SpouseName}
               {...register('SpouseName', {
                 required: 'Spouse Name is Required',
+                maxLength: {
+                  value: 100,
+                  message: 'Length should be less than 100.',
+                },
               })}
+              error={errors.SpouseName?.message}
             />
           </Grid>
         </Grid>
@@ -246,7 +296,22 @@ const EditPersonalDetails = ({ handleNext }) => {
                 *
               </Typography>
             </Typography>
-            <SearchableDropdown name="LanguageSpoken" items={[{ id: 1, name: 'first' }]} />
+            <AutoComplete
+              name="LanguageSpoken"
+              options={[
+                { id: 1, name: 'telugu' },
+                { id: 2, name: 'hindi' },
+              ]}
+              value={getValues().LanguageSpoken || languages}
+              error={errors.LanguageSpoken?.message}
+              multiple={true}
+              {...register('LanguageSpoken', {
+                required: 'Languages Are Required',
+              })}
+              onChange={(value) => {
+                handleLanguageSpokenChange('LanguageSpoken', value);
+              }}
+            />
           </Grid>
         </Grid>
         <Grid container item spacing={2}>
@@ -366,7 +431,7 @@ const EditPersonalDetails = ({ handleNext }) => {
           <Grid item xs={12}>
             <Box bgcolor="grey1.light" p={1}>
               <Typography color="tabHighlightedBackgroundColor.main" variant="h3">
-                *Communication Address
+                Communication Address*
               </Typography>
             </Box>
           </Grid>
@@ -381,7 +446,12 @@ const EditPersonalDetails = ({ handleNext }) => {
               defaultValue={getValues().Name}
               {...register('Name', {
                 required: 'Name is Required',
+                maxLength: {
+                  value: 100,
+                  message: 'Length should be less than 100.',
+                },
               })}
+              error={errors.Name?.message}
             />
           </Grid>
           <Grid item xs={8} md={8}>
@@ -395,7 +465,12 @@ const EditPersonalDetails = ({ handleNext }) => {
               defaultValue={getValues().Address}
               {...register('Address', {
                 required: 'Address is Required',
+                maxLength: {
+                  value: 300,
+                  message: 'Length should be less than 300.',
+                },
               })}
+              error={errors.Address?.message}
             />
           </Grid>
         </Grid>
@@ -446,9 +521,7 @@ const EditPersonalDetails = ({ handleNext }) => {
               label="Sub District"
               placeholder="Sub District"
               defaultValue={getValues().SubDistrict}
-              {...register('SubDistrict', {
-                required: 'Sub District is required',
-              })}
+              {...register('SubDistrict')}
               options={[
                 {
                   label: '-',
@@ -508,60 +581,88 @@ const EditPersonalDetails = ({ handleNext }) => {
               defaultValue={getValues().PostalCode}
               {...register('PostalCode', {
                 required: 'PostalCode is Required',
+                pattern: {
+                  value: /^[0-9]{6}$/,
+                  message: 'Should only contains 6 digits',
+                },
               })}
+              error={errors.PostalCode?.message}
             />
           </Grid>
         </Grid>
         <Grid container item spacing={2}>
           <Grid item xs={4}>
-            <Box variant="subtitle2" color="inputTextColor.main">
-              <TextField
-                sx={{ width: '100%', height: '48px' }}
-                label="Email Address"
-                type="text"
-                name="EmailAddress"
-                required
-                defaultValue={getValues().EmailAddress}
-                error={errors.EmailAddress?.message}
-                {...register('EmailAddress', {
-                  required: {
-                    value: true,
-                    message: 'Provide a Valid Email ID',
-                  },
-                  pattern: {
-                    value:
-                      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-                    message: 'Provide a Valid Email ID',
-                  },
-                })}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="end">
-                      <IconButton aria-label="toggle password visibility" edge="end">
-                        {!errors.EmailAddress?.message && getValues().EmailAddress.length !== 0 ? (
-                          <CheckCircleIcon color="success" />
-                        ) : (
-                          ''
-                        )}
-                      </IconButton>
-                    </InputAdornment>
-                  ),
-                }}
-              />
+            <Box display="flex" alignItems="end">
+              <Box width="100%">
+                <TextField
+                  sx={{ width: '100%' }}
+                  label="Email Address"
+                  type="text"
+                  name="EmailAddress"
+                  required
+                  defaultValue={getValues().EmailAddress}
+                  error={errors.EmailAddress?.message}
+                  {...register('EmailAddress', {
+                    required: {
+                      value: true,
+                      message: 'Provide a Valid Email ID',
+                    },
+                    pattern: {
+                      value:
+                        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
+                      message: 'Provide a Valid Email ID',
+                    },
+                  })}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <IconButton aria-label="toggle password visibility" edge="end">
+                          {!errors.EmailAddress?.message &&
+                          getValues().EmailAddress.length !== 0 &&
+                          otpVerified ? (
+                            <CheckCircleIcon color="success" />
+                          ) : (
+                            ''
+                          )}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </Box>
+              <Box>
+                <Button onClick={handleClickOpen} variant="contained" color="primary">
+                  {t('GetOTP')}{' '}
+                </Button>
+              </Box>
+              {otpPopup}
             </Box>
           </Grid>
-          <Grid item xs={8}>
+        </Grid>
+        <Grid container item spacing={2}>
+          <Grid item xs={6}>
             <MobileNumber
-              fullWidth={true}
               register={register}
               getValues={getValues}
               required
+              fullWidth
               errors={errors}
               data-testid={'Mobile-No'}
               label={'Mobile Number'}
               showhint={false}
               defaultValue={getValues().mobileNo}
               {...register('mobileNo')}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <Button variant="contained" sx={{ marginRight: '-13px', height: '57px' }}>
+                      GetOTP
+                    </Button>
+                  </InputAdornment>
+                ),
+              }}
+              showVerify
+              verifyOnClick={handleClickOpen}
             />
           </Grid>
         </Grid>
@@ -570,7 +671,7 @@ const EditPersonalDetails = ({ handleNext }) => {
           <Grid item xs={12}>
             <Box bgcolor="grey1.light" p={1}>
               <Typography color="tabHighlightedBackgroundColor.main" variant="h3">
-                *IMR Details
+                IMR Details*
               </Typography>
             </Box>
           </Grid>
@@ -585,6 +686,10 @@ const EditPersonalDetails = ({ handleNext }) => {
               defaultValue={getValues().IMRID}
               {...register('IMRID', {
                 required: 'IMR ID is Required',
+                // pattern: {
+                //   value: /^\d{10}$/i,
+                //   message: 'Please enter a valid 10 digit mobile no',
+                // },
               })}
             />
           </Grid>
@@ -600,12 +705,7 @@ const EditPersonalDetails = ({ handleNext }) => {
               {...register('YearOfInfo', {
                 required: 'Year Of Info is required',
               })}
-              options={[
-                {
-                  label: '-',
-                  value: '-',
-                },
-              ]}
+              options={get_year_data(1930)}
             />
           </Grid>
           <Grid item xs={8} md={4}>
@@ -624,12 +724,27 @@ const EditPersonalDetails = ({ handleNext }) => {
           </Grid>
         </Grid>
       </Grid>
-      <Box>
-        <ButtonGroupWizard
-          handleNext={handleSubmit(onHandleOptionNext)}
-          labelNext={t('Save & Next')}
-          hidePrevious={true}
-        />
+      <Box display="flex" justifyContent="space-between" alignItems="center" py={2}>
+        <Box>
+          <Button onClick={handleBackButton} color="grey" variant="contained">
+            {t('Back')}
+          </Button>
+        </Box>
+        <Box>
+          <Button
+            onClick={handleSubmit}
+            variant="outlined"
+            color="secondary"
+            sx={{
+              marginRight: '10px',
+            }}
+          >
+            {t('Save')}
+          </Button>
+          <Button onClick={handleSubmit(onHandleOptionNext)} variant="contained" color="secondary">
+            {t('Save & Next')}
+          </Button>
+        </Box>
       </Box>
     </Box>
   );

@@ -46,7 +46,7 @@ const WizardSteps = ({ activeStep, steps, progress }) => {
   verboseLog('steps', steps);
 
   return (
-    <Container spacing={4} disableGutters backgroundColor="white.main">
+    <Container spacing={4} disableGutters backgroundColor="white.main !important">
       {progress !== false ? (
         <Box mb={1} sx={{ width: '100%' }}>
           <LinearProgressWithLabel activeStep={activeStep} value={progress} pb={2} />

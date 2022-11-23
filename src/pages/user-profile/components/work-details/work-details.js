@@ -1,19 +1,19 @@
 import { Box } from '@mui/material';
 
-import EditPersonalDetails from '../edit-personal-details/edit-personal-details';
-import ReadPersonalDetails from '../read-personal-details/read-personal-details';
-const PersonalDetails = ({ isReadMode, setIsReadMode, handleNext, handleBack }) => {
+import EditWorkDetails from '../edit-work-details/edit-work-details';
+import ReadWorkDetails from '../read-work-details/read-work-details';
+const WorkDetails = ({ isReadMode, setIsReadMode, handleNext, handleBack }) => {
   return (
-    <Box mt={1} py={4}>
+    <Box mt={1}>
       {isReadMode && (
-        <ReadPersonalDetails
+        <ReadWorkDetails
           handleNext={handleNext}
           handleBack={handleBack}
           setIsReadMode={setIsReadMode}
         />
       )}
       {!isReadMode && (
-        <EditPersonalDetails
+        <EditWorkDetails
           handleNext={handleNext}
           handleBack={handleBack}
           setIsReadMode={setIsReadMode}
@@ -23,4 +23,4 @@ const PersonalDetails = ({ isReadMode, setIsReadMode, handleNext, handleBack }) 
   );
 };
 
-export default PersonalDetails;
+export default WorkDetails;

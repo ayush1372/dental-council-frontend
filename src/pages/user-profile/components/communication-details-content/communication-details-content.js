@@ -9,7 +9,7 @@ const CommunicationAddress = () => {
             Your Name
           </Typography>
           <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor">
+            <Typography variant="subtitle2" color="inputTextColor.light">
               Aarnav Sharma
             </Typography>
           </Box>
@@ -20,7 +20,7 @@ const CommunicationAddress = () => {
             Your Address
           </Typography>
           <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor">
+            <Typography variant="subtitle2" color="inputTextColor.light">
               Hno. 560 Row 3 Sadar Bazar, New Delhi
             </Typography>
           </Box>

@@ -1,7 +1,8 @@
 import { useState } from 'react';
 
+import CancelIcon from '@mui/icons-material/Cancel';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Divider, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
@@ -10,9 +11,29 @@ import { Button, RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
 import ButtonGroupWizard from '../../../../ui/core/wizard/button-group-wizard';
 
+const createQualificationObject = (index) => {
+  return [
+    `qualification-${index}-Qualification`,
+    `qualification-${index}-country`,
+    `qualification-${index}-state`,
+    `qualification-${index}-college`,
+    `qualification-${index}-University`,
+    `qualification-${index}-Month`,
+    `qualification-${index}-Year`,
+    `qualification-${index}-nameinDegree`,
+    `qualification-${index}-files`,
+  ];
+};
+
 const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   const [registrationFileData, setRegistrationFileData] = useState([]);
-  const [qualificationFileData, setQualificationFileData] = useState([]);
+  const [qualificationFilesData, setQualificationFilesData] = useState({
+    'qualification.1.files': [],
+  });
+  const [qualificationCount, setQualificationCount] = useState(1);
+  const [qualificationArray, setQualificationArray] = useState([
+    createQualificationObject(qualificationCount),
+  ]);
   const { t } = useTranslation();
   const {
     formState: { errors },
@@ -29,25 +50,44 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
       registration: 'permanent',
       RenewalDate: '30-10-2022',
       registrationCertificate: 'yes',
-      Qualification: 'bachelor of dental surgery',
-      country: 'India',
-      state: 'New Delhi',
-      college: 'Care Dental College',
-      University: 'Dr. NTR University of Health sciences',
-      Month: 'November',
-      Year: '2016',
-      nameinDegree: 'no',
+      // Qualification: 'bachelor of dental surgery',
+      // country: 'India',
+      // state: 'New Delhi',
+      // college: 'Care Dental College',
+      // University: 'Dr. NTR University of Health sciences',
+      // Month: 'November',
+      // Year: '2016',
+      // nameinDegree: 'no',
     },
   });
 
   const onHandleOptionNext = () => {
     handleNext();
   };
+  const handleQualificationFilesData = (fileName, files) => {
+    qualificationFilesData[fileName] = files;
+    setQualificationFilesData({ ...qualificationFilesData });
+  };
+
   const onHandleOptionBack = () => {
     handleBack();
   };
   const handleRegistration = (event) => {
     setValue(event.target.name, event.target.value, true);
+  };
+  const handleAddQualification = () => {
+    if (qualificationArray.length >= 6) return;
+    const count = qualificationCount + 1;
+    const newQualificationArray = [...qualificationArray, createQualificationObject(count)];
+    setQualificationArray(newQualificationArray);
+    setQualificationCount(count);
+  };
+
+  const handleRemoveQualification = (index) => {
+    if (qualificationCount === 0) return;
+    const newQualificationArray = [...qualificationArray];
+    newQualificationArray.splice(index, 1);
+    setQualificationArray([...newQualificationArray]);
   };
 
   return (
@@ -58,7 +98,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           <Grid item xs={12}>
             <Box bgcolor="grey1.light" p={1}>
               <Typography color="tabHighlightedBackgroundColor.main" variant="h3">
-                *Registration Details
+                Registration Details*
               </Typography>
             </Box>
           </Grid>
@@ -106,6 +146,12 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               {...register('RegistrationDate', {
                 required: 'Registration Date is Required',
               })}
+              sx={{
+                input: {
+                  backgroundColor: 'grey2.main',
+                },
+              }}
+              InputProps={{ readOnly: true }}
             />
           </Grid>
         </Grid>
@@ -168,7 +214,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                   label: 'No',
                 },
               ]}
-              label="Is your name in registration certificate, different from your name in Aadhaar?*"
+              label="Is your name in registration certificate, different from your name in Aadhaar?"
               required={true}
               error={errors.registrationCertificate?.message}
             />
@@ -198,176 +244,205 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           <Grid item xs={12}>
             <Box bgcolor="grey1.light" p={1}>
               <Typography color="tabHighlightedBackgroundColor.main" variant="h3">
-                *Qualification Details
+                Qualification Details*
               </Typography>
             </Box>
           </Grid>
         </Grid>
-        <Grid container item spacing={2}>
-          <Grid item xs={4}>
-            <Select
-              fullWidth
-              error={errors.Qualification?.message}
-              name="Qualification"
-              label="Name of the degree or diploma obtained*"
-              defaultValue={getValues().Qualification}
-              required={true}
-              {...register('Qualification', {
-                required: 'degree or diploma is required',
-              })}
-              options={[
-                {
-                  label: 'Bachelor of Dental surgery',
-                  value: 'bachelor of dental surgery',
-                },
-              ]}
-            />
-          </Grid>
-          <Grid item xs={8} md={4}>
-            <TextField
-              variant="outlined"
-              name={'country'}
-              label={'Country name'}
-              required={true}
-              fullWidth
-              error={errors.country?.message}
-              defaultValue={getValues().country}
-              {...register('country', {
-                required: 'country is Required',
-              })}
-            />
-          </Grid>
-          <Grid item xs={8} md={4}>
-            <TextField
-              variant="outlined"
-              name={'state'}
-              // placeholder="Your state"
-              label={'State (in which college is located)'}
-              fullWidth
-              required={true}
-              defaultValue={getValues().state}
-              {...register('state')}
-            />
-          </Grid>
-        </Grid>
-        <Grid container item spacing={2}>
-          <Grid item xs={4}>
-            <Select
-              fullWidth
-              error={errors.college?.message}
-              name="college"
-              label="Name of the college"
-              defaultValue={getValues().college}
-              required={true}
-              {...register('college', {
-                required: 'college is required',
-              })}
-              options={[
-                {
-                  label: 'Care Dental Collegey',
-                  value: 'care Dental College',
-                },
-              ]}
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <Select
-              fullWidth
-              error={errors.University?.message}
-              name="University"
-              label="University"
-              defaultValue={getValues().University}
-              required={true}
-              {...register('University', {
-                required: 'University is required',
-              })}
-              options={[
-                {
-                  label: 'Dr. NTR University of Health sciences',
-                  value: 'Dr. NTR University of Health sciences',
-                },
-              ]}
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <Select
-              fullWidth
-              error={errors.Month?.message}
-              name="Month"
-              label="Month of awarding Degree/Diploma"
-              defaultValue={getValues().Month}
-              {...register('Month', {
-                required: 'awarding is required',
-              })}
-              options={[
-                {
-                  label: 'november',
-                  value: 'November',
-                },
-              ]}
-            />
-          </Grid>
-        </Grid>
-        <Grid container item spacing={2}>
-          <Grid item xs={8} md={4}>
-            <TextField
-              variant="outlined"
-              name={'Year'}
-              label={'Year of awarding Degree/Diploma*'}
-              required={true}
-              placeHolder={'Year of awarding'}
-              fullWidth
-              error={errors.Year?.message}
-              defaultValue={getValues().Year}
-              {...register('Year', {
-                required: 'awarding is Required',
-              })}
-            />
-          </Grid>
-        </Grid>
-        <Grid container item spacing={2}>
-          <Grid item xs={6}>
-            <UploadFile
-              uploadFiles="single"
-              sizeAllowed={1}
-              fileTypes={['image/jpg', 'image/jpeg', 'image/png']}
-              fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
-               Maximum size allowed for the attachment is 5MB.`}
-              label={
-                <>
-                  <Typography color="text.primary">{t('Upload the Degree')}</Typography>
-                  <Typography color="error"> *</Typography>
-                </>
-              }
-              fileData={qualificationFileData}
-              setFileData={setQualificationFileData}
-            />
-          </Grid>
-          <Grid item xs={8} md={4}>
-            <RadioGroup
-              onChange={handleRegistration}
-              name={'nameinDegree'}
-              size="small"
-              defaultValue={getValues().nameinDegree}
-              items={[
-                {
-                  value: 'yes',
-                  label: 'Yes',
-                },
-                {
-                  value: 'no',
-                  label: 'No',
-                },
-              ]}
-              label="Is your name in degree, different from your name in Aadhaar?"
-              required={true}
-              error={errors.nameinDegree?.message}
-            />
-          </Grid>
-        </Grid>
+        {qualificationArray.map((qualification, index) => {
+          const showDeleteIcon = index > 0;
+          return (
+            <>
+              {showDeleteIcon && (
+                <Grid container item spacing={2} display="flex" alignItems="center">
+                  <Divider width="97%" />
+                  <CancelIcon
+                    color="secondary"
+                    fontSize="large"
+                    onClick={() => {
+                      handleRemoveQualification(index);
+                    }}
+                  />
+                </Grid>
+              )}
+              <Grid container item spacing={2}>
+                <Grid item xs={4}>
+                  <Select
+                    fullWidth
+                    error={errors[qualification[0]]?.message}
+                    name="Qualification"
+                    label="Name of the degree or diploma obtained"
+                    defaultValue={getValues()[qualification[0]]}
+                    required={true}
+                    {...register(qualification[0], {
+                      required: 'degree or diploma is required',
+                    })}
+                    options={[
+                      {
+                        label: 'Bachelor of Dental surgery',
+                        value: 'bachelor of dental surgery',
+                      },
+                    ]}
+                  />
+                </Grid>
+                <Grid item xs={8} md={4}>
+                  <TextField
+                    variant="outlined"
+                    name={'country'}
+                    label={'Country name'}
+                    required={true}
+                    fullWidth
+                    error={errors[qualification[1]]?.message}
+                    defaultValue={getValues()[qualification[1]]}
+                    {...register(qualification[1], {
+                      required: 'country is Required',
+                    })}
+                  />
+                </Grid>
+                <Grid item xs={8} md={4}>
+                  <TextField
+                    variant="outlined"
+                    name={'state'}
+                    // placeholder="Your state"
+                    label={'State (in which college is located)'}
+                    fullWidth
+                    required={true}
+                    defaultValue={getValues()[qualification[2]]}
+                    {...register(qualification[2], {
+                      required: 'State is Required',
+                    })}
+                    error={errors[qualification[2]]?.message}
+                  />
+                </Grid>
+              </Grid>
+              <Grid container item spacing={2}>
+                <Grid item xs={4}>
+                  <Select
+                    fullWidth
+                    error={errors[qualification[3]]?.message}
+                    name="College"
+                    label="Name of the college"
+                    defaultValue={getValues()[qualification[3]]}
+                    required={true}
+                    {...register(qualification[3], {
+                      required: 'college is required',
+                    })}
+                    options={[
+                      {
+                        label: 'Care Dental Collegey',
+                        value: 'care Dental College',
+                      },
+                    ]}
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <Select
+                    fullWidth
+                    error={errors[qualification[4]]?.message}
+                    name="University"
+                    label="University"
+                    defaultValue={getValues()[qualification[4]]}
+                    required={true}
+                    {...register(qualification[4], {
+                      required: 'University is required',
+                    })}
+                    options={[
+                      {
+                        label: 'Dr. NTR University of Health sciences',
+                        value: 'Dr. NTR University of Health sciences',
+                      },
+                    ]}
+                  />
+                </Grid>
+                <Grid item xs={4}>
+                  <Select
+                    fullWidth
+                    error={errors[qualification[5]]?.message}
+                    name="Month"
+                    label="Month of awarding Degree/Diploma"
+                    defaultValue={getValues()[qualification[5]]}
+                    {...register(qualification[5], {
+                      required: 'awarding is required',
+                    })}
+                    options={[
+                      {
+                        label: 'november',
+                        value: 'November',
+                      },
+                    ]}
+                  />
+                </Grid>
+              </Grid>
+              <Grid container item spacing={2}>
+                <Grid item xs={8} md={4}>
+                  <TextField
+                    variant="outlined"
+                    name={'Year'}
+                    label={'Year of awarding Degree/Diploma'}
+                    required={true}
+                    placeHolder={'Year of awarding'}
+                    fullWidth
+                    error={errors[qualification[6]]?.message}
+                    defaultValue={getValues()[qualification[6]]}
+                    {...register(qualification[6], {
+                      required: 'awarding is Required',
+                    })}
+                  />
+                </Grid>
+              </Grid>
+              <Grid container item spacing={2}>
+                <Grid item xs={6}>
+                  <UploadFile
+                    uploadFiles="single"
+                    sizeAllowed={1}
+                    fileTypes={['image/jpg', 'image/jpeg', 'image/png']}
+                    fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
+                 Maximum size allowed for the attachment is 5MB.`}
+                    label={
+                      <>
+                        <Typography color="text.primary">{t('Upload the Degree')}</Typography>
+                        <Typography color="error"> *</Typography>
+                      </>
+                    }
+                    fileData={qualificationFilesData[qualification[8]] || []}
+                    setFileData={(files) => {
+                      handleQualificationFilesData(qualification[8], files);
+                    }}
+                  />
+                </Grid>
+                <Grid item xs={8} md={4}>
+                  <RadioGroup
+                    onChange={handleRegistration}
+                    name={qualification[7]}
+                    size="small"
+                    defaultValue={getValues()[qualification[7]]}
+                    items={[
+                      {
+                        value: 'yes',
+                        label: 'Yes',
+                      },
+                      {
+                        value: 'no',
+                        label: 'No',
+                      },
+                    ]}
+                    label="Is your name in degree, different from your name in Aadhaar?"
+                    required={true}
+                    error={errors[qualification[7]]?.message}
+                  />
+                </Grid>
+              </Grid>
+            </>
+          );
+        })}
       </Grid>
       <Box>
-        <Button variant="outlined" color="primary">
+        <Button
+          variant="outlined"
+          color="primary"
+          onClick={handleAddQualification}
+          disabled={qualificationArray.length >= 6}
+        >
           Add Additional Qualification
         </Button>
         <br />
