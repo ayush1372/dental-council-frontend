@@ -1,6 +1,6 @@
 import { Grid, Typography } from '@mui/material';
 
-import avtarImg from '../../../assets/images/user.png';
+import avtarImg from '../../../../assets/images/user.png';
 
 import styles from './profile-image.module.scss';
 

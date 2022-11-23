@@ -3,23 +3,27 @@ import { useEffect, useState } from 'react';
 import { Grid, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
+import useWizard from '../../hooks/use-wizard';
 import { changeUserActiveTab } from '../../store/reducers/ui-reducers';
-import Dashboard from '../dashboard';
+import Wizard from '../../ui/core/wizard';
 import UserProfile from '../user-profile';
-import ProfileImage from './profileImage';
-import { VerticalTab } from './vertical-tab';
+import EditPersonalDetails from '../user-profile/components/edit-personal-details/edit-personal-details';
+import CollegeMyProfile from './college-my-profile/college-my-profile';
+import Dashboard from './components/dashboard-cards/dashboard-cards';
+import ProfileImage from './components/profile-image/profile-image';
+import { VerticalTab } from './components/vertical-tab/vertical-tab';
 
 import styles from './profile.module.scss';
 
 const dataTabs = [
-  {
-    title: 'Dashboard',
-    tabName: 'dashboard',
-  },
   // {
-  //   title: 'My Profile',
-  //   tabName: 'my-profile',
+  //   title: 'Dashboard',
+  //   tabName: 'dashboard',
   // },
+  {
+    title: 'My Profile',
+    tabName: 'my-profile',
+  },
 ];
 const nmcTabs = [
   {
@@ -84,9 +88,15 @@ const doctorTabs = [
 
 export function Profile() {
   const dispatch = useDispatch();
+  const { activeStep, handleNext, handleBack } = useWizard(0, []);
+  const wizardSteps = ['Personal Details', 'Registartion & Academic Details', 'Work Details'];
   const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
   const [isActiveTab, setIsActiveTab] = useState(
-    loggedInUserType === 'Doctor' ? { ...doctorTabs[0] } : { ...dataTabs[0] }
+    loggedInUserType === 'Doctor'
+      ? { ...doctorTabs[0] }
+      : loggedInUserType === 'College' || loggedInUserType === 'SMC' || loggedInUserType === 'NMC'
+      ? { ...colgTabs[0] }
+      : { ...dataTabs[0] }
   );
   const setActiveTab = (activeTab) => {
     setIsActiveTab(activeTab);
@@ -95,13 +105,18 @@ export function Profile() {
   useEffect(() => {
     if (loggedInUserType === 'Doctor') {
       dispatch(changeUserActiveTab(doctorTabs[0].tabName));
+    } else if (
+      loggedInUserType === 'College' ||
+      loggedInUserType === 'SMC' ||
+      loggedInUserType === 'NMC'
+    ) {
+      dispatch(changeUserActiveTab(colgTabs[0].tabName));
     } else {
       dispatch(changeUserActiveTab(dataTabs[0].tabName));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  // eslint-disable-next-line no-console
-  console.log('loggedInUserType', loggedInUserType);
+
   return (
     <section className={styles.profilePage}>
       <Grid container className={styles.profilePageContainer} justifyContent={'space-between'}>
@@ -113,10 +128,17 @@ export function Profile() {
                   loggedInUserType === 'Doctor'
                     ? 'Dr. ABC'
                     : loggedInUserType === 'College'
-                    ? 'All India Institute of Medical Sciences'
+                    ? 'IP University'
                     : loggedInUserType === 'NMC'
                     ? 'National Medical Commission'
-                    : 'Maharashtra Medical Council'
+                    : loggedInUserType === 'SMC'
+                    ? 'Maharashtra Medical Council'
+                    : loggedInUserType !== 'Doctor' &&
+                      loggedInUserType !== 'College' &&
+                      loggedInUserType !== 'SMC' &&
+                      loggedInUserType !== 'NMC'
+                    ? 'Dr. ABC'
+                    : null
                 }
               />
             </Grid>
@@ -140,6 +162,23 @@ export function Profile() {
             <Dashboard tabName={isActiveTab.tabName} />
           ) : isActiveTab.tabName === 'my-profile' && loggedInUserType === 'Doctor' ? (
             <UserProfile tabName={isActiveTab.tabName} />
+          ) : isActiveTab.tabName === 'my-profile' && loggedInUserType === 'College' ? (
+            <CollegeMyProfile />
+          ) : isActiveTab.tabName === 'my-profile' &&
+            loggedInUserType !== 'Doctor' &&
+            loggedInUserType !== 'College' &&
+            loggedInUserType !== 'SMC' &&
+            loggedInUserType !== 'NMC' ? (
+            // eslint-disable-next-line react/jsx-indent
+            <Wizard
+              activeStep={activeStep}
+              handleBack={handleBack}
+              handleNext={handleNext}
+              steps={wizardSteps}
+              progress={false}
+            >
+              <EditPersonalDetails />
+            </Wizard>
           ) : (
             <Grid
               item

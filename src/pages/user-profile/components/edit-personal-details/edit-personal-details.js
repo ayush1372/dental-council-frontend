@@ -189,7 +189,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               name={'LastName'}
               placeholder="Your last name"
               label={'Last Name'}
-              required={true}
+              required={false}
               fullWidth
               defaultValue={getValues().LastName}
               {...register('LastName', {
@@ -199,12 +199,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                   message: 'Length should be less than 100.',
                 },
               })}
-              sx={{
-                input: {
-                  backgroundColor: 'grey2.main',
-                },
-              }}
-              InputProps={{ readOnly: true }}
+              // sx={{
+              //   input: {
+              //     backgroundColor: 'grey2.main',
+              //   },
+              // }}
+              // InputProps={{ readOnly: true }}
             />
           </Grid>
         </Grid>
