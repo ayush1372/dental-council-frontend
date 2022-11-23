@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, Checkbox, RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
 
-const EditWorkDetails = ({ handleNext, handleBack }) => {
+const EditWorkProfile = ({ handleNext, handleBack }) => {
   const { t } = useTranslation();
   const [workProof, setWorkProof] = useState([]);
   const {
@@ -387,4 +387,4 @@ const EditWorkDetails = ({ handleNext, handleBack }) => {
   );
 };
 
-export default EditWorkDetails;
+export default EditWorkProfile;

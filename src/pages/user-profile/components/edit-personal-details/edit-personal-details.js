@@ -299,8 +299,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             <AutoComplete
               name="LanguageSpoken"
               options={[
-                { id: 1, name: 'telugu' },
-                { id: 2, name: 'hindi' },
+                { id: 1, name: 'Telugu' },
+                { id: 2, name: 'Hindi' },
+                { id: 3, name: 'English' },
+                { id: 4, name: 'Marathi' },
+                { id: 5, name: 'Kannada' },
               ]}
               value={getValues().LanguageSpoken || languages}
               error={errors.LanguageSpoken?.message}

@@ -3,27 +3,25 @@ import { useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
-import { useTranslation } from 'react-i18next';
 
 import ButtonGroupWizard from '../../../../ui/core/wizard/button-group-wizard';
-import CommunicationAddressContent from '../communication-details-content/communication-details-content';
-import IMRDetailsContent from '../imr-details-content/imr-details-content';
-import PersonalDetailsContent from '../personal-details-content/personal-details-content';
-const ReadPersonalDetails = ({ handleNext }) => {
-  const { t } = useTranslation();
+import CurrentWorkDetails from '../current-work-details/current-work-details';
+import SpecialDetailsContent from '../special-details-content/special-details-content';
+import WorkDetails from '../work-details/work-details';
+const ReadWorkProfile = ({ handleBack }) => {
   const [accordionKey, setAccordionKey] = useState('accordion-0');
   const accordions = [
     {
-      title: 'Personal Details',
-      body: PersonalDetailsContent,
+      title: 'Special Details',
+      body: SpecialDetailsContent,
     },
     {
-      title: 'Communication Address',
-      body: CommunicationAddressContent,
+      title: 'Work Details',
+      body: WorkDetails,
     },
     {
-      title: 'IMR Details',
-      body: IMRDetailsContent,
+      title: 'Current Work Details',
+      body: CurrentWorkDetails,
     },
   ];
   const handleChange = (accordionValue) => (_event, isExpanded) => {
@@ -70,11 +68,11 @@ const ReadPersonalDetails = ({ handleNext }) => {
           );
         })}
       </Box>
-      <Box>
-        <ButtonGroupWizard handleNext={handleNext} labelNext={t('Next')} hidePrevious={true} />
+      <Box paddingBottom={'30px'}>
+        <ButtonGroupWizard handlePrevious={handleBack} />
       </Box>
     </Box>
   );
 };
 
-export default ReadPersonalDetails;
+export default ReadWorkProfile;
