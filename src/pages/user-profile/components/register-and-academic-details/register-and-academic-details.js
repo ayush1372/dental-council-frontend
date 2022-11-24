@@ -4,7 +4,7 @@ import EditRegisterAndAcademicDetails from '../edit-register-and-academic-detail
 import ReadRegisterAndAcademicDetails from '../read-register-and-academic-details/read-register-and-academic-details';
 const RegisterAndAcademicDetails = ({ isReadMode, handleNext, handleBack }) => {
   return (
-    <Box mt={1}>
+    <Box mt={1} py={4}>
       {isReadMode && (
         <ReadRegisterAndAcademicDetails handleNext={handleNext} handleBack={handleBack} />
       )}
