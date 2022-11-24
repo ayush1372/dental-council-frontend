@@ -103,13 +103,7 @@ function FetchDoctorDetails() {
               Record fetched successfully.
             </Alert>
           </Box>
-          <Box
-            sx={{
-              padding: '30px 32px 0px 32px',
-              width: '679px',
-              boxShadow: '2',
-            }}
-          >
+          <Box p="30px 32px 0px 32px" width="679px" boxShadow={2}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
               <Box>
                 <Typography variant="body3" component="div" color="grey.label">

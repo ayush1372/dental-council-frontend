@@ -26,12 +26,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName }) {
         </Typography>
         <Typography variant="subtitle2">
           {'Add Timeline'}
-          <Typography
-            variant="body4"
-            sx={{
-              color: 'error.main',
-            }}
-          >
+          <Typography variant="body4" color="error.main">
             *
           </Typography>
         </Typography>
@@ -57,7 +52,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName }) {
               })}
             />
           </Grid>
-          <Grid item xs={12} md={6} lg={6}>
+          <Grid item xs={12} md={6}>
             <Typography component={'p'} variant="body1">
               Select To Date
             </Typography>
@@ -83,16 +78,11 @@ export function SuspendLicenseVoluntaryRetirement({ tabName }) {
         <Box mt={4}>
           <Typography variant="subtitle2">
             {'Remarks'}
-            <Typography
-              variant="body4"
-              sx={{
-                color: 'error.main',
-              }}
-            >
+            <Typography variant="body4" color="error.main">
               *
             </Typography>
           </Typography>
-          <Grid item xs={12} md={12} lg={12}>
+          <Grid item xs={12}>
             <TextField
               data-testid="remark"
               id="remark"
@@ -127,16 +117,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName }) {
           <Button variant="contained" color="secondary" onClick={handleSubmit(onSubmit)}>
             {'Submit'}
           </Button>
-          <Button
-            variant="outlined"
-            sx={{
-              backgroundColor: 'grey.main',
-              color: 'black.textBlack',
-              width: '105px',
-              height: '48px',
-              marginLeft: 2,
-            }}
-          >
+          <Button color="grey" variant="outlined" sx={{ height: '48px', marginLeft: 2 }}>
             Cancel
           </Button>
         </Box>
