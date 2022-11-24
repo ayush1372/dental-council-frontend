@@ -117,7 +117,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName }) {
           <Button variant="contained" color="secondary" onClick={handleSubmit(onSubmit)}>
             {'Submit'}
           </Button>
-          <Button color="grey" variant="outlined" sx={{ height: '48px', marginLeft: 2 }}>
+          <Button color="grey" variant="contained" sx={{ marginLeft: 2 }}>
             Cancel
           </Button>
         </Box>
