@@ -89,12 +89,12 @@ export function MobileNumber(props) {
           />
           {showVerify && (
             <Button
-              variant="outlined"
-              color="secondary"
-              sx={{ marginLeft: '20px' }}
+              variant="contained"
+              color="primary"
+              // sx={{ marginLeft: '20px' }}
               onClick={verifyOnClick}
             >
-              Verify
+              GetOTP
             </Button>
           )}
           <div>
