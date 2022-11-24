@@ -90,12 +90,7 @@ const InputField = (
     <StyledEngineProvider injectFirst>
       {label && (
         <Box>
-          <Typography
-            variant="subtitle2"
-            component={'span'}
-            color="inputTextColor.main"
-            fontWeight="500"
-          >
+          <Typography variant="subtitle2" component={'span'} color="primary">
             {label}
           </Typography>
           <Typography variant="body2" color="error">
