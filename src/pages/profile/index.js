@@ -10,6 +10,7 @@ import Dashboard from '../dashboard';
 import UserProfile from '../user-profile';
 import EditPersonalDetails from '../user-profile/components/edit-personal-details/edit-personal-details';
 import CollegeMyProfile from './college-my-profile/college-my-profile';
+import CollegeRegistrar from './college-registrar/college-registrar';
 import ProfileImage from './profileImage';
 import { VerticalTab } from './vertical-tab';
 
@@ -164,7 +165,10 @@ export function Profile() {
             <UserProfile tabName={isActiveTab.tabName} />
           ) : isActiveTab.tabName === 'my-profile' && loggedInUserType === 'College' ? (
             <CollegeMyProfile />
-          ) : isActiveTab.tabName === 'my-profile' &&
+          ) : isActiveTab.tabName === 'college-registrar' ? (
+            <CollegeRegistrar />
+          ) : // 'tabName={isActiveTab.tabName}'
+          isActiveTab.tabName === 'my-profile' &&
             loggedInUserType !== 'Doctor' &&
             loggedInUserType !== 'College' &&
             loggedInUserType !== 'SMC' &&
@@ -189,7 +193,7 @@ export function Profile() {
               justifyContent={'center'}
             >
               <Typography variant="h4" component={'p'}>
-                {isActiveTab.title}
+                {isActiveTab.tabName}
               </Typography>
             </Grid>
           )}
