@@ -7,6 +7,7 @@ import { changeUserActiveTab } from '../../store/reducers/ui-reducers';
 import SuspendLicenseVoluntaryRetirement from '../suspend-license-voluntary-retirement';
 import UserProfile from '../user-profile';
 import CollegeMyProfile from './college-my-profile/college-my-profile';
+import CollegeRegistrar from './college-registrar/college-registrar';
 import Dashboard from './components/dashboard-cards/dashboard-cards';
 import ProfileImage from './components/profile-image/profile-image';
 import { VerticalTab } from './components/vertical-tab/vertical-tab';
@@ -168,9 +169,12 @@ export function Profile() {
             <UserProfile tabName={isActiveTab.tabName} />
           ) : isActiveTab.tabName === 'my-profile' && loggedInUserType === 'College' ? (
             <CollegeMyProfile />
+          ) : isActiveTab.tabName === 'college-registrar' ? (
+            <CollegeRegistrar />
           ) : (isActiveTab.tabName === 'suspend-license' ||
               isActiveTab.tabName === 'voluntary-retirement') &&
             loggedInUserType === 'Doctor' ? (
+            // eslint-disable-next-line react/jsx-indent
             <SuspendLicenseVoluntaryRetirement tabName={isActiveTab.tabName} />
           ) : (
             <Grid
@@ -182,7 +186,7 @@ export function Profile() {
               justifyContent={'center'}
             >
               <Typography variant="h4" component={'p'}>
-                {isActiveTab.title}
+                {isActiveTab.tabName}
               </Typography>
             </Grid>
           )}
