@@ -85,7 +85,7 @@ function FetchDoctorDetails() {
   return (
     <>
       {showEditScreen ? (
-        navigate('/profile')
+        navigate('/login-page', { state: { loginFormname: 'Doctor' } })
       ) : (
         <Container sx={{ width: '712px' }}>
           <Box sx={{ width: '712px', height: '53px', marginBottom: '30px', marginTop: '32px ' }}>
