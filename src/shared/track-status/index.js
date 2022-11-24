@@ -5,7 +5,6 @@ import SearchableDropdown from '../../components/autocomplete/searchable-dropdow
 import { verboseLog } from '../../config/debug';
 import { RegistrationCouncilNames } from '../../constants/utils';
 import { Button, TextField } from '../../ui/core';
-
 export default function TrackStatus() {
   const { handleSubmit, register, getValues } = useForm({
     mode: 'onChange',
