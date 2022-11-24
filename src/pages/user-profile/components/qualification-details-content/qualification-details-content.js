@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 
 const QualificationDetailsContent = () => {
   return (
@@ -8,31 +8,43 @@ const QualificationDetailsContent = () => {
           <Typography variant="subtitle2" color="inputTextColor">
             Name of the degree or diploma obtained
           </Typography>
-          <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor.light">
-              bachelor of dental surgery
-            </Typography>
-          </Box>
+
+          <Typography
+            bgcolor="grey2.main"
+            padding="10px"
+            variant="subtitle2"
+            color="inputTextColor.light"
+          >
+            bachelor of dental surgery
+          </Typography>
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Country Name
           </Typography>
-          <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor.light">
-              India
-            </Typography>
-          </Box>
+
+          <Typography
+            bgcolor="grey2.main"
+            padding="10px"
+            variant="subtitle2"
+            color="inputTextColor.light"
+          >
+            India
+          </Typography>
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             State
           </Typography>
-          <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor.light">
-              New Delhi
-            </Typography>
-          </Box>
+
+          <Typography
+            bgcolor="grey2.main"
+            padding="10px"
+            variant="subtitle2"
+            color="inputTextColor.light"
+          >
+            New Delhi
+          </Typography>
         </Grid>
       </Grid>
       <Grid container item spacing={2}>
@@ -40,31 +52,43 @@ const QualificationDetailsContent = () => {
           <Typography variant="subtitle2" color="inputTextColor">
             Name of the college
           </Typography>
-          <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor.light">
-              Care Dental College
-            </Typography>
-          </Box>
+
+          <Typography
+            bgcolor="grey2.main"
+            padding="10px"
+            variant="subtitle2"
+            color="inputTextColor.light"
+          >
+            Care Dental College
+          </Typography>
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             University
           </Typography>
-          <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor.light">
-              Dr. NTR University of Health sciences
-            </Typography>
-          </Box>
+
+          <Typography
+            bgcolor="grey2.main"
+            padding="10px"
+            variant="subtitle2"
+            color="inputTextColor.light"
+          >
+            Dr. NTR University of Health sciences
+          </Typography>
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Month of awarding Degree/Diploma
           </Typography>
-          <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor.light">
-              November
-            </Typography>
-          </Box>
+
+          <Typography
+            bgcolor="grey2.main"
+            padding="10px"
+            variant="subtitle2"
+            color="inputTextColor.light"
+          >
+            November
+          </Typography>
         </Grid>
       </Grid>
       <Grid container item spacing={2}>
@@ -72,11 +96,15 @@ const QualificationDetailsContent = () => {
           <Typography variant="subtitle2" color="inputTextColor">
             Year of awarding Degree/Diploma
           </Typography>
-          <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor.light">
-              2016
-            </Typography>
-          </Box>
+
+          <Typography
+            bgcolor="grey2.main"
+            padding="10px"
+            variant="subtitle2"
+            color="inputTextColor.light"
+          >
+            2016
+          </Typography>
         </Grid>
         <Grid item xs={8} md={6}>
           <Typography variant="subtitle2" color="inputTextColor">

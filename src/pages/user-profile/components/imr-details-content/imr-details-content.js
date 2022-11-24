@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 
 const IMRDetails = () => {
   return (
@@ -8,31 +8,43 @@ const IMRDetails = () => {
           <Typography variant="subtitle2" color="inputTextColor">
             IMR ID
           </Typography>
-          <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor.light">
-              9598237230192838
-            </Typography>
-          </Box>
+
+          <Typography
+            bgcolor="grey2.main"
+            padding="10px"
+            variant="subtitle2"
+            color="inputTextColor.light"
+          >
+            9598237230192838
+          </Typography>
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Year of info
           </Typography>
-          <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor.light">
-              Select Year of info
-            </Typography>
-          </Box>
+
+          <Typography
+            bgcolor="grey2.main"
+            padding="10px"
+            variant="subtitle2"
+            color="inputTextColor.light"
+          >
+            Select Year of info
+          </Typography>
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Registration Number*
           </Typography>
-          <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor.light">
-              672929
-            </Typography>
-          </Box>
+
+          <Typography
+            bgcolor="grey2.main"
+            padding="10px"
+            variant="subtitle2"
+            color="inputTextColor.light"
+          >
+            672929
+          </Typography>
         </Grid>
       </Grid>
     </Grid>

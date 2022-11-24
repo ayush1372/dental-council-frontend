@@ -52,11 +52,7 @@ const ReadWorkProfile = ({ handleBack }) => {
                 },
               }}
             >
-              <AccordionSummary
-                expandIcon={accordionKey === key ? <RemoveIcon /> : <AddIcon />}
-                // aria-controls={`${panelValue}bh-content`}
-                // id={`${panelValue}bh-header`}
-              >
+              <AccordionSummary expandIcon={accordionKey === key ? <RemoveIcon /> : <AddIcon />}>
                 <Typography variant="body1" color="primary">
                   {accordion.title}
                 </Typography>

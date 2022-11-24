@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 
 const RegistrationDetailsContent = () => {
   return (
@@ -8,31 +8,43 @@ const RegistrationDetailsContent = () => {
           <Typography variant="subtitle2" color="inputTextColor">
             Registered with council
           </Typography>
-          <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor.light">
-              West Bengal Medical Council
-            </Typography>
-          </Box>
+
+          <Typography
+            bgcolor="grey2.main"
+            padding="10px"
+            variant="subtitle2"
+            color="inputTextColor.light"
+          >
+            West Bengal Medical Council
+          </Typography>
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Registration Number
           </Typography>
-          <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor.light">
-              7991749871719
-            </Typography>
-          </Box>
+
+          <Typography
+            bgcolor="grey2.main"
+            padding="10px"
+            variant="subtitle2"
+            color="inputTextColor.light"
+          >
+            7991749871719
+          </Typography>
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Registration Date
           </Typography>
-          <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor.light">
-              30-10-2021
-            </Typography>
-          </Box>
+
+          <Typography
+            bgcolor="grey2.main"
+            padding="10px"
+            variant="subtitle2"
+            color="inputTextColor.light"
+          >
+            30-10-2021
+          </Typography>
         </Grid>
       </Grid>
       <Grid container item spacing={2}>
@@ -48,11 +60,15 @@ const RegistrationDetailsContent = () => {
           <Typography variant="subtitle2" color="inputTextColor">
             Due Date of Renewal
           </Typography>
-          <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor.light">
-              30-10-2022
-            </Typography>
-          </Box>
+
+          <Typography
+            bgcolor="grey2.main"
+            padding="10px"
+            variant="subtitle2"
+            color="inputTextColor.light"
+          >
+            30-10-2022
+          </Typography>
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">

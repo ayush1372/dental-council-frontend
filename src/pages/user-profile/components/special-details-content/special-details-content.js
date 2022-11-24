@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 
 const SpecialDetails = () => {
   return (
@@ -8,21 +8,29 @@ const SpecialDetails = () => {
           <Typography variant="subtitle2" color="inputTextColor">
             Speciality
           </Typography>
-          <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor.light">
-              Doctor
-            </Typography>
-          </Box>
+
+          <Typography
+            bgcolor="grey2.main"
+            padding="10px"
+            variant="subtitle2"
+            color="inputTextColor.light"
+          >
+            Doctor
+          </Typography>
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Sub Speciality
           </Typography>
-          <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor.light">
-              Your Sub Speciality
-            </Typography>
-          </Box>
+
+          <Typography
+            bgcolor="grey2.main"
+            padding="10px"
+            variant="subtitle2"
+            color="inputTextColor.light"
+          >
+            Your Sub Speciality
+          </Typography>
         </Grid>
       </Grid>
     </Grid>

@@ -17,11 +17,9 @@ export const UserProfile = () => {
   return (
     <Container maxWidth="lg" sx={{ marginTop: '30px' }}>
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Box>
-          <Typography variant="h2" color="primary.main" py={2}>
-            {isReadMode ? 'User Profile' : 'Edit User Profile'}
-          </Typography>
-        </Box>
+        <Typography component="div" variant="h2" color="primary.main" py={2}>
+          {isReadMode ? 'User Profile' : 'Edit User Profile'}
+        </Typography>
         <Box>
           {isReadMode && (
             <Button
@@ -30,6 +28,9 @@ export const UserProfile = () => {
               color="secondary"
               onClick={() => {
                 setIsReadMode(false);
+              }}
+              sx={{
+                width: 'max-content',
               }}
             >
               Edit Profile

@@ -76,16 +76,22 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   };
 
   return (
-    <Box boxShadow="0px 1px 3px #00000029" pl={'41px'} pr={'91px'} pb={'44px'}>
+    <Box boxShadow={1} padding="0px 91px 44px 41px">
       <Grid container spacing={2} mt={2}>
         {/* layer 1 */}
         <Grid container item spacing={2}>
           <Grid item xs={12}>
-            <Box bgcolor="grey1.light" p={1}>
-              <Typography color="tabHighlightedBackgroundColor.main" variant="h3">
-                Personal Details*
-              </Typography>
-            </Box>
+            {/* <Box bgcolor="grey1.light" p={1}> */}
+            <Typography
+              bgcolor="grey1.light"
+              p={1}
+              component="div"
+              color="tabHighlightedBackgroundColor.main"
+              variant="h3"
+            >
+              Personal Details*
+            </Typography>
+            {/* </Box> */}
           </Grid>
           <Grid item xs={8} md={4}>
             <RadioGroup
@@ -199,12 +205,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                   message: 'Length should be less than 100.',
                 },
               })}
-              // sx={{
-              //   input: {
-              //     backgroundColor: 'grey2.main',
-              //   },
-              // }}
-              // InputProps={{ readOnly: true }}
             />
           </Grid>
         </Grid>
@@ -425,6 +425,14 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                   label: 'Schedule 1',
                   value: 'schedule1',
                 },
+                {
+                  label: 'Schedule 2',
+                  value: 'schedule2',
+                },
+                {
+                  label: 'Schedule 3',
+                  value: 'schedule3',
+                },
               ]}
             />
           </Grid>
@@ -432,11 +440,15 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
         {/* layer 2 */}
         <Grid container item spacing={2}>
           <Grid item xs={12}>
-            <Box bgcolor="grey1.light" p={1}>
-              <Typography color="tabHighlightedBackgroundColor.main" variant="h3">
-                Communication Address*
-              </Typography>
-            </Box>
+            <Typography
+              bgcolor="grey1.light"
+              p={1}
+              component="div"
+              color="tabHighlightedBackgroundColor.main"
+              variant="h3"
+            >
+              Communication Address*
+            </Typography>
           </Grid>
           <Grid item xs={8} md={4}>
             <TextField
@@ -672,11 +684,15 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
         {/* layer 3 */}
         <Grid container item spacing={2}>
           <Grid item xs={12}>
-            <Box bgcolor="grey1.light" p={1}>
-              <Typography color="tabHighlightedBackgroundColor.main" variant="h3">
-                IMR Details*
-              </Typography>
-            </Box>
+            <Typography
+              bgcolor="grey1.light"
+              p={1}
+              component="div"
+              color="tabHighlightedBackgroundColor.main"
+              variant="h3"
+            >
+              IMR Details*
+            </Typography>
           </Grid>
           <Grid item xs={8} md={4}>
             <TextField
@@ -689,10 +705,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               defaultValue={getValues().IMRID}
               {...register('IMRID', {
                 required: 'IMR ID is Required',
-                // pattern: {
-                //   value: /^\d{10}$/i,
-                //   message: 'Please enter a valid 10 digit mobile no',
-                // },
               })}
             />
           </Grid>

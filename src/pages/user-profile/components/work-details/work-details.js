@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 
 const WorkDetails = () => {
   return (
@@ -8,21 +8,29 @@ const WorkDetails = () => {
           <Typography variant="subtitle2" color="inputTextColor">
             Are you currently working
           </Typography>
-          <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor.light">
-              No
-            </Typography>
-          </Box>
+
+          <Typography
+            bgcolor="grey2.main"
+            padding="10px"
+            variant="subtitle2"
+            color="inputTextColor.light"
+          >
+            No
+          </Typography>
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Nature of work
           </Typography>
-          <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor.light">
-              Nature of work
-            </Typography>
-          </Box>
+
+          <Typography
+            bgcolor="grey2.main"
+            padding="10px"
+            variant="subtitle2"
+            color="inputTextColor.light"
+          >
+            Nature of work
+          </Typography>
         </Grid>
       </Grid>
       <Grid container item spacing={2}>
@@ -30,11 +38,15 @@ const WorkDetails = () => {
           <Typography variant="subtitle2" color="inputTextColor">
             Choose work status
           </Typography>
-          <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor.light">
-              Government only
-            </Typography>
-          </Box>
+
+          <Typography
+            bgcolor="grey2.main"
+            padding="10px"
+            variant="subtitle2"
+            color="inputTextColor.light"
+          >
+            Government only
+          </Typography>
         </Grid>
       </Grid>
       <Grid container item spacing={2}>

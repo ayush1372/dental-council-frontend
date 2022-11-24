@@ -40,16 +40,20 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
   };
 
   return (
-    <Box boxShadow="0px 1px 3px #00000029" pl={'41px'} pr={'91px'} pb={'44px'}>
+    <Box boxShadow={1} padding="0px 91px 44px 41px">
       <Grid container spacing={2} mt={2}>
         {/* layer 1 */}
         <Grid container item spacing={2}>
           <Grid item xs={12}>
-            <Box bgcolor="grey1.light" p={1}>
-              <Typography color="tabHighlightedBackgroundColor.main" variant="h3">
-                Speciality Details*
-              </Typography>
-            </Box>
+            <Typography
+              bgcolor="grey1.light"
+              p={1}
+              component="div"
+              color="tabHighlightedBackgroundColor.main"
+              variant="h3"
+            >
+              Speciality Details*
+            </Typography>
           </Grid>
           <Grid item xs={8} md={4}>
             <Select
@@ -85,11 +89,15 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
         {/* layer 2 */}
         <Grid container item spacing={2}>
           <Grid item xs={12}>
-            <Box bgcolor="grey1.light" p={1}>
-              <Typography color="tabHighlightedBackgroundColor.main" variant="h3">
-                Work Details*
-              </Typography>
-            </Box>
+            <Typography
+              bgcolor="grey1.light"
+              p={1}
+              component="div"
+              color="tabHighlightedBackgroundColor.main"
+              variant="h3"
+            >
+              Work Details*
+            </Typography>
           </Grid>
           <Grid item xs={8} md={4}>
             <RadioGroup
@@ -196,11 +204,15 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
         {/* layer 3 */}
         <Grid container item spacing={2}>
           <Grid item xs={12}>
-            <Box bgcolor="grey1.light" p={1}>
-              <Typography color="tabHighlightedBackgroundColor.main" variant="h3">
-                Current Work Details*
-              </Typography>
-            </Box>
+            <Typography
+              bgcolor="grey1.light"
+              p={1}
+              component="div"
+              color="tabHighlightedBackgroundColor.main"
+              variant="h3"
+            >
+              Current Work Details*
+            </Typography>
           </Grid>
           <Grid item xs={8} md={4}>
             <Box>
@@ -289,23 +301,24 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               error={errors.organizationType?.message}
             />
           </Grid>
-          <Grid item xs={6} md={4}>
-            <TextField
-              variant="outlined"
-              name={'Department'}
-              label={'Department'}
-              fullWidth
-              placeholder="Department"
-              defaultValue={getValues().Department}
-              {...register('Department', {
-                maxLength: {
-                  value: 300,
-                  message: 'Department Is Reuired.',
-                },
-              })}
-              error={errors.Department?.message}
-            />
-          </Grid>
+
+          {/* <Grid item xs={6} md={4}>
+              <TextField
+                variant="outlined"
+                name={'Department'}
+                label={'Department'}
+                fullWidth
+                placeholder="Department"
+                defaultValue={getValues().Department}
+                {...register('Department', {
+                  maxLength: {
+                    value: 300,
+                    message: 'Department Is Reuired.',
+                  },
+                })}
+                error={errors.Department?.message}
+              />
+            </Grid> */}
           <Grid item xs={6} md={4}>
             <TextField
               variant="outlined"
@@ -320,8 +333,6 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               })}
             />
           </Grid>
-        </Grid>
-        <Grid container item spacing={2}>
           <Grid item xs={6} md={4}>
             <TextField
               variant="outlined"
@@ -340,6 +351,8 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               error={errors.Address?.message}
             />
           </Grid>
+        </Grid>
+        <Grid container item spacing={2}>
           <Grid item xs={6} md={4}>
             <TextField
               variant="outlined"

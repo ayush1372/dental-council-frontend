@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 
 const PersonalDetails = () => {
   return (
@@ -16,11 +16,10 @@ const PersonalDetails = () => {
           <Typography variant="subtitle2" color="inputTextColor.main">
             Aadhaar Number
           </Typography>
-          <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor.light">
-              xxxx-xxxx-4688
-            </Typography>
-          </Box>
+
+          <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
+            xxxx-xxxx-4688
+          </Typography>
         </Grid>
         {false && (
           <Grid item xs={8} md={4}>
@@ -38,31 +37,28 @@ const PersonalDetails = () => {
           <Typography variant="subtitle2" color="inputTextColor">
             First Name
           </Typography>
-          <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor.light">
-              Aarnav
-            </Typography>
-          </Box>
+
+          <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
+            Aarnav
+          </Typography>
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Middle Name
           </Typography>
-          <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor.light">
-              Your middle name
-            </Typography>
-          </Box>
+
+          <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
+            Your middle name
+          </Typography>
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Last Name
           </Typography>
-          <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor.light">
-              Sharma
-            </Typography>
-          </Box>
+
+          <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
+            Sharma
+          </Typography>
         </Grid>
       </Grid>
       <Grid container item spacing={2}>
@@ -70,31 +66,28 @@ const PersonalDetails = () => {
           <Typography variant="subtitle2" color="inputTextColor">
             Fathers Name
           </Typography>
-          <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor.light">
-              Praveen Sharma
-            </Typography>
-          </Box>
+
+          <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
+            Praveen Sharma
+          </Typography>
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Mothers Name
           </Typography>
-          <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor.light">
-              Savita Sharma
-            </Typography>
-          </Box>
+
+          <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
+            Savita Sharma
+          </Typography>
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Spouce Name
           </Typography>
-          <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor.light">
-              Poonam Bala
-            </Typography>
-          </Box>
+
+          <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
+            Poonam Bala
+          </Typography>
         </Grid>
       </Grid>
       <Grid container item spacing={2}>
@@ -102,11 +95,9 @@ const PersonalDetails = () => {
           <Typography variant="subtitle2" color="inputTextColor">
             Nationality
           </Typography>
-          <Box bgcolor="grey2.main" lineHeight="2" padding="10px">
-            <Typography variant="subtitle2" color="inputTextColor.light">
-              Indian
-            </Typography>
-          </Box>
+          <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
+            Indian
+          </Typography>
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="body3" color="grey.label">

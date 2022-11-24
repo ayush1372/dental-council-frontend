@@ -91,16 +91,20 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   };
 
   return (
-    <Box boxShadow="0px 1px 3px #00000029" pl={'41px'} pr={'91px'} pb={'44px'}>
+    <Box boxShadow={1} padding="0px 91px 44px 41px">
       <Grid container spacing={2} mt={2}>
         {/* layer 1 */}
         <Grid container item spacing={2}>
           <Grid item xs={12}>
-            <Box bgcolor="grey1.light" p={1}>
-              <Typography color="tabHighlightedBackgroundColor.main" variant="h3">
-                Registration Details*
-              </Typography>
-            </Box>
+            <Typography
+              bgcolor="grey1.light"
+              p={1}
+              component="div"
+              color="tabHighlightedBackgroundColor.main"
+              variant="h3"
+            >
+              Registration Details*
+            </Typography>
           </Grid>
           <Grid item xs={8} md={4}>
             <TextField
@@ -242,11 +246,15 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
         {/*layer 2*/}
         <Grid container item spacing={2}>
           <Grid item xs={12}>
-            <Box bgcolor="grey1.light" p={1}>
-              <Typography color="tabHighlightedBackgroundColor.main" variant="h3">
-                Qualification Details*
-              </Typography>
-            </Box>
+            <Typography
+              bgcolor="grey1.light"
+              p={1}
+              component="div"
+              color="tabHighlightedBackgroundColor.main"
+              variant="h3"
+            >
+              Qualification Details*
+            </Typography>
           </Grid>
         </Grid>
         {qualificationArray.map((qualification, index) => {
