@@ -176,6 +176,22 @@ export const collegeProfileData = {
   collegeAddress: 'GGSIPU, Golf Course Rd, Sector 16 C, Dwarka, Delhi, 110078',
   collegePinCode: '110088',
 };
+export const trackstatusData = {
+  message: [
+    {
+      SNo: 1,
+      registrationNo: '71-1567-8728-1025',
+      nameofApplicant: 'Basavaraj S Harihar',
+      nameofStateCouncil: 'West Bengal Medical Council',
+      councilVerificationStatus: 'Submitted',
+      collegeVerificationStatus: 'Submitted',
+      NMCVerificationStatus: 'Submitted',
+      dateofSubmission: '31-Oct-2022',
+      pendency: '25',
+      requestNMC: 'view',
+    },
+  ],
+};
 
 export const applications = {
   message: [

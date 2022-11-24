@@ -1,12 +1,17 @@
+import { useState } from 'react';
+
 import { Box, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
 import SearchableDropdown from '../../components/autocomplete/searchable-dropdown';
 import { verboseLog } from '../../config/debug';
 import { RegistrationCouncilNames } from '../../constants/utils';
+import TrackStatusTable from '../../shared/track-status/track-status-table';
 import { Button, TextField } from '../../ui/core';
 
 export default function TrackStatus() {
+  const [showTable, setShowTable] = useState(false);
+
   const { handleSubmit, register, getValues } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -18,6 +23,7 @@ export default function TrackStatus() {
 
   const onSubmit = () => {
     verboseLog('');
+    setShowTable(true);
   };
 
   return (
@@ -66,6 +72,11 @@ export default function TrackStatus() {
             <Button variant="contained" onClick={handleSubmit(onSubmit)} color="secondary">
               Search
             </Button>
+          </Grid>
+        </Grid>
+        <Grid container item spacing={2}>
+          <Grid item xs={12}>
+            {showTable && <TrackStatusTable />}
           </Grid>
         </Grid>
       </Grid>

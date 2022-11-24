@@ -1,4 +1,4 @@
-import { Box, TableSortLabel } from '@mui/material';
+import { Box, Link, TableSortLabel } from '@mui/material';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -11,6 +11,7 @@ import Tooltip from '@mui/material/Tooltip';
 import { visuallyHidden } from '@mui/utils';
 import Moment from 'moment';
 import propTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 // import { useSelector } from 'react-redux';
 
@@ -27,7 +28,7 @@ GenericTable.propTypes = {
 };
 
 export default function GenericTable(props) {
-  // const { userActiveTab } = useSelector((state) => state.ui);
+  const { userActiveTab } = useSelector((state) => state.ui);
   // const { isLoggedInUserType } = useSelector((state) => state.recruiter);
   const tableCellWidth = Math.floor(window.innerWidth / props.tableHeader.length) + 'px';
   const { order, orderBy, onRequestSort, page, rowsPerPage } = props;
@@ -153,28 +154,58 @@ export default function GenericTable(props) {
                         </Button>
                       </TableCell>
                     );
-                  }
-
-                  return (
-                    <Tooltip key={index} title={row[item.name]?.value}>
+                  } else if (
+                    item.title === 'Name of Applicant' &&
+                    userActiveTab === 'track-status'
+                  ) {
+                    return (
                       <TableCell
+                        sx={{ fontSize: '13px' }}
+                        maxWidth={`${tableCellWidth}%`}
                         key={index}
-                        // title={row[item.name]?.value}
-                        className={row.read?.value === false ? 'style-bold' : ''}
-                        sx={{
-                          whiteSpace: 'nowrap',
-                          textOverflow: 'ellipsis',
-                          maxWidth: '112px',
-                          overflow: 'hidden',
-                          fontSize: '13px',
-                          //fontWeight: '500'
-                        }}
                         align="left"
                       >
-                        {row[item.name]?.value}
+                        <Link
+                          href="/profile"
+                          onClick={(event) => row[item.name]?.callbackNameOfApplicant(event, row)}
+                        >
+                          {row[item.name]?.value}
+                        </Link>
+
+                        {/* <Button
+                          onClick={(event) => row[item.name]?.callbackNameOfApplicant(event, row)}
+                          variant="contained"
+                          size="small"
+                          sx={{
+                            backgroundColor: 'secondary.main',
+                          }}
+                        >
+                          {row[item.name]?.value}
+                        </Button> */}
                       </TableCell>
-                    </Tooltip>
-                  );
+                    );
+                  } else {
+                    return (
+                      <Tooltip key={index} title={row[item.name]?.value}>
+                        <TableCell
+                          key={index}
+                          // title={row[item.name]?.value}
+                          className={row.read?.value === false ? 'style-bold' : ''}
+                          sx={{
+                            whiteSpace: 'nowrap',
+                            textOverflow: 'ellipsis',
+                            maxWidth: '112px',
+                            overflow: 'hidden',
+                            fontSize: '13px',
+                            //fontWeight: '500'
+                          }}
+                          align="left"
+                        >
+                          {row[item.name]?.value}
+                        </TableCell>
+                      </Tooltip>
+                    );
+                  }
                 })}
               </TableRow>
             ))}
