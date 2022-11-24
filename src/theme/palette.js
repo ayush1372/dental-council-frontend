@@ -10,6 +10,7 @@ export const Palette = {
     light: '#BD5521',
     dark: '#A3491C',
     contrastText: '#000',
+    warningYellow: '#FFA334',
   },
   grey: {
     main: '#E9ECF3',

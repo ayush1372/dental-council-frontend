@@ -106,7 +106,15 @@ const InputField = (
 
       <MuiTextField
         {...props}
-        type={showPassword ? 'text' : type === 'Password' ? 'Password' : 'text'}
+        type={
+          showPassword
+            ? 'text'
+            : type === 'Password'
+            ? 'Password'
+            : type === 'date'
+            ? 'date'
+            : 'text'
+        }
         autoComplete={'off'}
         ref={ref}
         error={error ? true : false}
