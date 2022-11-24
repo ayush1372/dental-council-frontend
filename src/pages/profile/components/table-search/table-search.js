@@ -1,13 +1,39 @@
+import React from 'react';
+
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { Box, Grid } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+import {
+  Box,
+  Grid,
+  InputAdornment,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Popover,
+} from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
+import EXPORTICON from '../../../../assets/images/ico-logout.svg';
 import SearchableDropdown from '../../../../components/autocomplete/searchable-dropdown';
 import { verboseLog } from '../../../../config/debug';
 import { Button, TextField } from '../../../../ui/core';
 
 export function TableSearch() {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+
   const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
   const {
     register,
@@ -31,7 +57,7 @@ export function TableSearch() {
   return (
     <Box data-testid="table-search">
       <Grid container sx={{ p: 0 }}>
-        <Grid item md={4} xs={4} mb={1}>
+        <Grid item md={4} xs={12} mb={1}>
           <Grid item md={8} xs={8}>
             <TextField
               inputProps={{ maxLength: 100, sx: { height: 12 } }}
@@ -46,13 +72,20 @@ export function TableSearch() {
               defaultValue={getValues().search}
               error={errors.search?.message}
               {...register('search')}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <SearchIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
           </Grid>
         </Grid>
-        <Grid item md={8} xs={8} mb={1}>
-          <Box sx={{ display: 'flex' }} justifyContent="flex-end">
+        <Grid item md={8} xs={12} mb={1}>
+          <Box sx={{ display: 'flex' }}>
             <TextField
-              inputProps={{ maxLength: 100, sx: { height: 12 } }}
+              inputProps={{ maxLength: 100 }}
               fullWidth={true}
               id="outlined-basic"
               variant="outlined"
@@ -82,7 +115,11 @@ export function TableSearch() {
             />
             {(loggedInUserType === 'College' || loggedInUserType === 'NMC') && (
               <Box sx={{ ml: 1 }}>
-                <SearchableDropdown name="RegistrationCouncil" items={[{ id: 1, name: 'first' }]} />
+                <SearchableDropdown
+                  sx={{ height: 8 }}
+                  name="RegistrationCouncil"
+                  items={[{ id: 1, name: 'first' }]}
+                />
               </Box>
             )}
             <Button
@@ -96,10 +133,36 @@ export function TableSearch() {
             <Button
               size="small"
               variant="contained"
-              sx={{ ml: 1, height: '48px' }}
+              sx={{ ml: 1 }}
               endIcon={<KeyboardArrowDownIcon />}
-              // onClick={onClickBackButtonHandler}
-            ></Button>
+              onClick={handleClick}
+            >
+              {' '}
+              <img src={EXPORTICON} alt="NHA English Logo" />
+            </Button>
+            <Popover
+              id={id}
+              open={open}
+              anchorEl={anchorEl}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+            >
+              <List>
+                <ListItem disablePadding>
+                  <ListItemButton disablePadding>
+                    <ListItemText primary="Export as xlsx" />
+                  </ListItemButton>
+                </ListItem>
+                <ListItem disablePadding>
+                  <ListItemButton onClick={handleClose}>
+                    <ListItemText primary="Export as csv" />
+                  </ListItemButton>
+                </ListItem>
+              </List>
+            </Popover>
           </Box>
         </Grid>
       </Grid>
