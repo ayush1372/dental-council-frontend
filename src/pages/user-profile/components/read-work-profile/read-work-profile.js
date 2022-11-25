@@ -5,19 +5,23 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
 
 import ButtonGroupWizard from '../../../../ui/core/wizard/button-group-wizard';
-import QualificationDetailsContent from '../qualification-details-content/qualification-details-content';
-import RegistrationDetailsContent from '../registration-details-content/registration-details-content';
-
-const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
+import CurrentWorkDetails from '../current-work-details/current-work-details';
+import SpecialDetailsContent from '../special-details-content/special-details-content';
+import WorkDetails from '../work-details/work-details';
+const ReadWorkProfile = ({ handleBack }) => {
   const [accordionKey, setAccordionKey] = useState('accordion-0');
   const accordions = [
     {
-      title: 'Registration Details',
-      body: RegistrationDetailsContent,
+      title: 'Special Details',
+      body: SpecialDetailsContent,
     },
     {
-      title: 'Qualification Details',
-      body: QualificationDetailsContent,
+      title: 'Work Details',
+      body: WorkDetails,
+    },
+    {
+      title: 'Current Work Details',
+      body: CurrentWorkDetails,
     },
   ];
   const handleChange = (accordionValue) => (_event, isExpanded) => {
@@ -60,11 +64,11 @@ const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           );
         })}
       </Box>
-      <Box>
-        <ButtonGroupWizard handleNext={handleNext} handlePrevious={handleBack} />
+      <Box paddingBottom={'30px'}>
+        <ButtonGroupWizard handlePrevious={handleBack} />
       </Box>
     </Box>
   );
 };
 
-export default ReadRegisterAndAcademicDetails;
+export default ReadWorkProfile;

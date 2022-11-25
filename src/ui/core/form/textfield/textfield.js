@@ -90,7 +90,7 @@ const InputField = (
     <StyledEngineProvider injectFirst>
       {label && (
         <Box>
-          <Typography variant="subtitle2" component={'span'}>
+          <Typography variant="subtitle2" component={'span'} color="primary">
             {label}
           </Typography>
           <Typography variant="body2" color="error">
@@ -101,7 +101,15 @@ const InputField = (
 
       <MuiTextField
         {...props}
-        type={showPassword ? 'text' : type === 'Password' ? 'Password' : 'text'}
+        type={
+          showPassword
+            ? 'text'
+            : type === 'Password'
+            ? 'Password'
+            : type === 'date'
+            ? 'date'
+            : 'text'
+        }
         autoComplete={'off'}
         ref={ref}
         error={error ? true : false}

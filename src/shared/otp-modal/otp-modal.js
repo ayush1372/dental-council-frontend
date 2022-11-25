@@ -98,11 +98,9 @@ export function ModalOTP({
               display: 'flex',
               alignItems: 'flex-start',
               maxWidth: '600px',
-              // paddingLeft: '48px',
             },
           }}
         >
-          {/* <img className={'OTPImage'} src={OtpIcon} alt="OTP" /> */}
           <CustomDialogTitle
             id="customized-dialog-title"
             onClose={handleClose}
@@ -125,7 +123,6 @@ export function ModalOTP({
             sx={{ marginTop: '16px' }}
             variant="contained"
             color="secondary"
-            // fullWidth
             onClick={handleConfirm}
             autoFocus
           >

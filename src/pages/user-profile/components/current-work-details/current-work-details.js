@@ -1,37 +1,19 @@
 import { Grid, Typography } from '@mui/material';
 
-const QualificationDetailsContent = () => {
+const CurrentWorkDetails = () => {
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
-            Name of the degree or diploma obtained
+            Choose facility
           </Typography>
-
-          <Typography
-            bgcolor="grey2.main"
-            padding="10px"
-            variant="subtitle2"
-            color="inputTextColor.light"
-          >
-            bachelor of dental surgery
+          <Typography variant="subtitle2" color="primary.main">
+            Facility
           </Typography>
         </Grid>
-        <Grid item xs={8} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
-            Country Name
-          </Typography>
-
-          <Typography
-            bgcolor="grey2.main"
-            padding="10px"
-            variant="subtitle2"
-            color="inputTextColor.light"
-          >
-            India
-          </Typography>
-        </Grid>
+      </Grid>
+      <Grid container item spacing={2}>
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             State
@@ -43,14 +25,42 @@ const QualificationDetailsContent = () => {
             variant="subtitle2"
             color="inputTextColor.light"
           >
-            New Delhi
+            Select State
+          </Typography>
+        </Grid>
+        <Grid item xs={8} md={4}>
+          <Typography variant="subtitle2" color="inputTextColor">
+            District
+          </Typography>
+
+          <Typography
+            bgcolor="grey2.main"
+            padding="10px"
+            variant="subtitle2"
+            color="inputTextColor.light"
+          >
+            Select District
+          </Typography>
+        </Grid>
+        <Grid item xs={8} md={4}>
+          <Typography variant="subtitle2" color="inputTextColor">
+            Name of the Organization where you work
+          </Typography>
+
+          <Typography
+            bgcolor="grey2.main"
+            padding="10px"
+            variant="subtitle2"
+            color="inputTextColor.light"
+          >
+            Name of the Organization
           </Typography>
         </Grid>
       </Grid>
       <Grid container item spacing={2}>
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
-            Name of the college
+            Organization Type
           </Typography>
 
           <Typography
@@ -59,12 +69,12 @@ const QualificationDetailsContent = () => {
             variant="subtitle2"
             color="inputTextColor.light"
           >
-            Care Dental College
+            Select Organization Type
           </Typography>
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
-            University
+            Department
           </Typography>
 
           <Typography
@@ -73,12 +83,12 @@ const QualificationDetailsContent = () => {
             variant="subtitle2"
             color="inputTextColor.light"
           >
-            Dr. NTR University of Health sciences
+            Department
           </Typography>
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
-            Month of awarding Degree/Diploma
+            Telecommunication URL
           </Typography>
 
           <Typography
@@ -87,14 +97,14 @@ const QualificationDetailsContent = () => {
             variant="subtitle2"
             color="inputTextColor.light"
           >
-            November
+            Telecommunication URL
           </Typography>
         </Grid>
       </Grid>
       <Grid container item spacing={2}>
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
-            Year of awarding Degree/Diploma
+            Address
           </Typography>
 
           <Typography
@@ -103,15 +113,21 @@ const QualificationDetailsContent = () => {
             variant="subtitle2"
             color="inputTextColor.light"
           >
-            2016
+            Address
           </Typography>
         </Grid>
-        <Grid item xs={8} md={6}>
+        <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
-            Is your name in degree, different from your name in Aadhaar?
+            Pincode
           </Typography>
-          <Typography variant="subtitle2" color="primary.main">
-            No
+
+          <Typography
+            bgcolor="grey2.main"
+            padding="10px"
+            variant="subtitle2"
+            color="inputTextColor.light"
+          >
+            Pincode
           </Typography>
         </Grid>
       </Grid>
@@ -119,4 +135,4 @@ const QualificationDetailsContent = () => {
   );
 };
 
-export default QualificationDetailsContent;
+export default CurrentWorkDetails;

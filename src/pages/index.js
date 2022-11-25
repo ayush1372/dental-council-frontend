@@ -1,5 +1,6 @@
 /* PLOP_INJECT_PAGES_EXPORT */
 import '../i18n';
+export { SuspendLicenseVoluntaryRetirement } from './suspend-license-voluntary-retirement';
 export { OtpComponentLinkGuardian } from './register/components/link-guardian/otp-component-link-guardian';
 export { RelationProof } from './register/components/link-guardian/relation-proof';
 export { Home } from './home';

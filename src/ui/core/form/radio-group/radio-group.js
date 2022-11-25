@@ -29,7 +29,7 @@ const RadioField = (
     <FormControl component="fieldset">
       {label && (
         <Box>
-          <Typography variant="subtitle2" component={'span'}>
+          <Typography variant="subtitle2" component={'span'} color="primary">
             {label}
           </Typography>
           <Typography variant="body2" color="error">
@@ -51,6 +51,11 @@ const RadioField = (
             key={o.label}
             control={<Radio data-testid={dataTestid} size={size} />}
             label={o.label}
+            sx={{
+              span: {
+                color: 'inputTextColor.main',
+              },
+            }}
           />
         ))}
       </MuiRadioGroup>

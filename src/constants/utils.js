@@ -1,8 +1,8 @@
-function get_year_data() {
+export function get_year_data(startYear = 1900) {
   var ans = [];
   var date = new Date();
   var presentYear = date.getFullYear();
-  for (var i = 1900; i <= presentYear; i++) {
+  for (var i = startYear; i <= presentYear; i++) {
     var entry_struct = {};
     entry_struct['value'] = i.toString();
     entry_struct['label'] = i;
@@ -173,4 +173,70 @@ export const collegeProfileData = {
   collegeAddress: { id: '1', name: 'GGSIPU, Golf Course Rd, Sector 16 C, Dwarka, Delhi, 110078' },
   collegePinCode: { id: '1', name: '110088' },
   collegeUniversityName: { id: '1', name: 'Delhi University' },
+};
+
+export const applications = {
+  message: [
+    {
+      SNo: 1,
+      registrationNo: '71-1567-8728-1025',
+      nameofApplicant: 'Basavaraj S Harihar',
+      nameofStateCouncil: 'West Bengal Medical Council',
+      councilVerificationStatus: 'Submitted',
+      collegeVerificationStatus: 'Submitted',
+      NMCVerificationStatus: 'Submitted',
+      dateofSubmission: '31-Oct-2022',
+      pendency: '25',
+      view: 'view',
+    },
+    {
+      SNo: 2,
+      registrationNo: '71-1567-8728-1025',
+      nameofApplicant: 'Basavaraj S Harihar',
+      nameofStateCouncil: 'West Bengal Medical Council',
+      councilVerificationStatus: 'Submitted',
+      collegeVerificationStatus: 'Submitted',
+      NMCVerificationStatus: 'Submitted',
+      dateofSubmission: '31-Oct-2022',
+      pendency: '25',
+      view: 'view',
+    },
+    {
+      SNo: 3,
+      registrationNo: '71-1567-8728-1025',
+      nameofApplicant: 'Basavaraj S Harihar',
+      nameofStateCouncil: 'West Bengal Medical Council',
+      councilVerificationStatus: 'Submitted',
+      collegeVerificationStatus: 'Submitted',
+      NMCVerificationStatus: 'Submitted',
+      dateofSubmission: '31-Oct-2022',
+      pendency: '25',
+      view: 'view',
+    },
+    {
+      SNo: 4,
+      registrationNo: '71-1567-8728-1025',
+      nameofApplicant: 'Basavaraj S Harihar',
+      nameofStateCouncil: 'West Bengal Medical Council',
+      councilVerificationStatus: 'Submitted',
+      collegeVerificationStatus: 'Submitted',
+      NMCVerificationStatus: 'Submitted',
+      dateofSubmission: '31-Oct-2022',
+      pendency: '25',
+      view: 'view',
+    },
+    {
+      SNo: 5,
+      registrationNo: '71-1567-8728-1025',
+      nameofApplicant: 'Basavaraj S Harihar',
+      nameofStateCouncil: 'West Bengal Medical Council',
+      councilVerificationStatus: 'Submitted',
+      collegeVerificationStatus: 'Submitted',
+      NMCVerificationStatus: 'Submitted',
+      dateofSubmission: '31-Oct-2022',
+      pendency: '25',
+      view: 'view',
+    },
+  ],
+  count: 5,
 };

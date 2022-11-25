@@ -3,16 +3,15 @@ import { useEffect, useState } from 'react';
 import { Grid, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
-import useWizard from '../../hooks/use-wizard';
 import { changeUserActiveTab } from '../../store/reducers/ui-reducers';
-import Wizard from '../../ui/core/wizard';
-import Dashboard from '../dashboard';
+import SuspendLicenseVoluntaryRetirement from '../suspend-license-voluntary-retirement';
 import UserProfile from '../user-profile';
-import EditPersonalDetails from '../user-profile/components/edit-personal-details/edit-personal-details';
 import CollegeMyProfile from './college-my-profile/college-my-profile';
-import ProfileImage from './profileImage';
+import CollegeRegistrar from './college-registrar/college-registrar';
+import Dashboard from './components/dashboard-cards/dashboard-cards';
+import ProfileImage from './components/profile-image/profile-image';
+import { VerticalTab } from './components/vertical-tab/vertical-tab';
 import MyProfile from './smc-nmc-profile/my-profile';
-import { VerticalTab } from './vertical-tab';
 
 import styles from './profile.module.scss';
 
@@ -81,12 +80,18 @@ const doctorTabs = [
     title: 'My Profile',
     tabName: 'my-profile',
   },
+  {
+    title: 'Suspend License',
+    tabName: 'suspend-license',
+  },
+  {
+    title: 'Voluntary Retirement',
+    tabName: 'voluntary-retirement',
+  },
 ];
 
 export function Profile() {
   const dispatch = useDispatch();
-  const { activeStep, handleNext, handleBack } = useWizard(0, []);
-  const wizardSteps = ['Personal Details', 'Registartion & Academic Details', 'Work Details'];
   const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
   const [isActiveTab, setIsActiveTab] = useState(
     loggedInUserType === 'Doctor'
@@ -170,16 +175,14 @@ export function Profile() {
             loggedInUserType !== 'College' &&
             loggedInUserType !== 'SMC' &&
             loggedInUserType !== 'NMC' ? (
+            ''
+          ) : isActiveTab.tabName === 'college-registrar' ? (
+            <CollegeRegistrar />
+          ) : (isActiveTab.tabName === 'suspend-license' ||
+              isActiveTab.tabName === 'voluntary-retirement') &&
+            loggedInUserType === 'Doctor' ? (
             // eslint-disable-next-line react/jsx-indent
-            <Wizard
-              activeStep={activeStep}
-              handleBack={handleBack}
-              handleNext={handleNext}
-              steps={wizardSteps}
-              progress={false}
-            >
-              <EditPersonalDetails />
-            </Wizard>
+            <SuspendLicenseVoluntaryRetirement tabName={isActiveTab.tabName} />
           ) : (
             <Grid
               item
@@ -190,7 +193,7 @@ export function Profile() {
               justifyContent={'center'}
             >
               <Typography variant="h4" component={'p'}>
-                {isActiveTab.title}
+                {isActiveTab.tabName}
               </Typography>
             </Grid>
           )}
