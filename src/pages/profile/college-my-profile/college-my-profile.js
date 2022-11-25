@@ -13,26 +13,24 @@ const CollegeMyProfile = () => {
     <Box boxShadow={2} p="0px 91px 44px 41px">
       {!showEdit ? (
         <Grid>
-          <Grid container spacing={2} mt={2}>
-            <Grid container item spacing={2}>
-              <Grid item xs={12}>
-                <Box display="flex" justifyContent="space-between" alignItems="center">
-                  <Typography variant="h2" color="textPrimary.main">
-                    My Profile
-                  </Typography>
-                  <Button
-                    sx={{ width: '165px', padding: '10px', height: '48px' }}
-                    startIcon={<EditIcon />}
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => {
-                      setShowEdit(true);
-                    }}
-                  >
-                    Edit Profile
-                  </Button>
-                </Box>
-              </Grid>
+          <Grid container item spacing={2}>
+            <Grid item xs={12}>
+              <Box display="flex" justifyContent="space-between" alignItems="center">
+                <Typography variant="h2" color="textPrimary.main">
+                  My Profile
+                </Typography>
+                <Button
+                  sx={{ width: '165px', p: '10px', height: '48px' }}
+                  startIcon={<EditIcon />}
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => {
+                    setShowEdit(true);
+                  }}
+                >
+                  Edit Profile
+                </Button>
+              </Box>
             </Grid>
           </Grid>
 
@@ -110,23 +108,21 @@ const CollegeMyProfile = () => {
           </Grid>
 
           <Grid container item spacing={2} mt={3}>
-            <Grid container item spacing={2}>
-              <Grid item xs={4} md={3}>
-                <Typography variant="body3" color="grey.label">
-                  College Pincode
-                </Typography>
-                <Typography variant="subtitle2" color="primary.main">
-                  {collegeProfileData.collegePinCode.name}
-                </Typography>
-              </Grid>
-              <Grid item xs={4} md={3}>
-                <Typography variant="body3" color="grey.label">
-                  College University Name
-                </Typography>
-                <Typography variant="subtitle2" color="primary.main">
-                  {collegeProfileData.collegeUniversityName.name}
-                </Typography>
-              </Grid>
+            <Grid item xs={4} md={3}>
+              <Typography variant="body3" color="grey.label">
+                College Pincode
+              </Typography>
+              <Typography variant="subtitle2" color="primary.main">
+                {collegeProfileData.collegePinCode.name}
+              </Typography>
+            </Grid>
+            <Grid item xs={4} md={3}>
+              <Typography variant="body3" color="grey.label">
+                College University Name
+              </Typography>
+              <Typography variant="subtitle2" color="primary.main">
+                {collegeProfileData.collegeUniversityName.name}
+              </Typography>
             </Grid>
           </Grid>
         </Grid>

@@ -125,7 +125,7 @@ const CollegeEditProfile = () => {
                   <Button
                     variant="contained"
                     sx={{
-                      padding: '15px 10px 12px 10px',
+                      p: '15px 10px 12px 10px',
                     }}
                   >
                     Get OTP
@@ -173,7 +173,7 @@ const CollegeEditProfile = () => {
                   <Button
                     variant="contained"
                     sx={{
-                      padding: '15px 10px 12px 10px',
+                      p: '15px 10px 12px 10px',
                     }}
                   >
                     Get OTP

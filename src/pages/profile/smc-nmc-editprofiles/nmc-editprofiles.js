@@ -45,14 +45,12 @@ const NmcEditProfile = () => {
   return (
     <Box>
       <Grid container spacing={2} mt={2}>
-        <Grid container item spacing={2}>
-          <Grid item xs={12}>
-            <Box display="flex" justifyContent="space-between" alignItems="center">
-              <Typography variant="h2" color="textPrimary.main">
-                Edit Profile
-              </Typography>
-            </Box>
-          </Grid>
+        <Grid item xs={12}>
+          <Box display="flex" justifyContent="space-between" alignItems="center">
+            <Typography variant="h2" color="textPrimary.main">
+              Edit Profile
+            </Typography>
+          </Box>
         </Grid>
       </Grid>
 
@@ -185,7 +183,7 @@ const NmcEditProfile = () => {
         <Button
           variant="contained"
           color="secondary"
-          sx={{ marginRight: '16px' }}
+          sx={{ mr: 2 }}
           onClick={handleSubmit(onsubmit)}
         >
           Submit

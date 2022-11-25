@@ -37,12 +37,12 @@ const DoctorRegistrationWelcomePage = () => {
           <Container
             sx={{
               boxShadow: '1',
-              paddingTop: '30px',
+              pt: 4,
               width: '679px',
             }}
           >
             <Box>
-              <Box sx={{ paddingTop: '15px', paddingBottom: '32px' }}>
+              <Box pt={2} pb={4}>
                 <Typography variant="h2" color="primary">
                   Doctor Registration
                 </Typography>
@@ -56,7 +56,7 @@ const DoctorRegistrationWelcomePage = () => {
               <Box pb={4}>
                 <Typography variant="body3" color="textSecondary.main">
                   Select Your Registration Council
-                  <Typography component="span" sx={{ color: 'error.main' }}>
+                  <Typography component="span" color="error.main">
                     *
                   </Typography>
                 </Typography>
@@ -79,7 +79,7 @@ const DoctorRegistrationWelcomePage = () => {
               <Box pb={5}>
                 <Typography variant="body3" color="textSecondary.main">
                   Enter Registration Number
-                  <Typography component="span" sx={{ color: 'error.main' }}>
+                  <Typography component="span" color="error.main">
                     *
                   </Typography>
                 </Typography>
@@ -94,12 +94,12 @@ const DoctorRegistrationWelcomePage = () => {
                   })}
                 />
               </Box>
-              <Box sx={{ display: 'flex', paddingBottom: '43px' }}>
+              <Box display="flex" pb={6}>
                 <Button
                   onClick={handleSubmit(onSubmit)}
                   variant="contained"
                   sx={{
-                    marginRight: '25px',
+                    mr: 3,
                     width: '105px',
                     height: '45px',
                     backgroundColor: 'secondary.main',

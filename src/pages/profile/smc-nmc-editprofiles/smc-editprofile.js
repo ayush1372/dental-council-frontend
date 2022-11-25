@@ -46,11 +46,9 @@ const SmcEditProfile = () => {
     <Box>
       <Grid container spacing={2} mt={2}>
         <Grid item xs={12}>
-          <Box display="flex" justifyContent="space-between" alignItems="center">
-            <Typography variant="h2" color="textPrimary.main">
-              Edit Profile
-            </Typography>
-          </Box>
+          <Typography variant="h2" color="textPrimary.main">
+            Edit Profile
+          </Typography>
         </Grid>
       </Grid>
 
@@ -59,7 +57,7 @@ const SmcEditProfile = () => {
           <Typography variant="body3" color="grey.label">
             Name
           </Typography>
-          <Typography component="span" sx={{ color: 'error.main' }}>
+          <Typography component="span" color="error.main">
             *
           </Typography>
           <TextField
@@ -81,7 +79,7 @@ const SmcEditProfile = () => {
           <Typography variant="body3" color="grey.label">
             Phone Number
           </Typography>
-          <Typography component="span" sx={{ color: 'error.main' }}>
+          <Typography component="span" color="error.main">
             *
           </Typography>
           <TextField
@@ -103,7 +101,7 @@ const SmcEditProfile = () => {
           <Typography variant="body3" color="grey.label">
             Email Id
           </Typography>
-          <Typography component="span" sx={{ color: 'error.main' }}>
+          <Typography component="span" color="error.main">
             *
           </Typography>
           <TextField
@@ -133,7 +131,7 @@ const SmcEditProfile = () => {
           <Typography variant="body3" color="grey.label">
             User ID
           </Typography>
-          <Typography component="span" sx={{ color: 'error.main' }}>
+          <Typography component="span" color="error.main">
             *
           </Typography>
           <TextField
@@ -159,7 +157,7 @@ const SmcEditProfile = () => {
           <Typography variant="body3" color="grey.label">
             Council
           </Typography>
-          <Typography component="span" sx={{ color: 'error.main' }}>
+          <Typography component="span" color="error.main">
             *
           </Typography>
           <TextField
@@ -179,11 +177,11 @@ const SmcEditProfile = () => {
         </Grid>
       </Grid>
 
-      <Box display="flex" marginTop="37px">
+      <Box display="flex" mt={4}>
         <Button
           variant="contained"
           color="secondary"
-          sx={{ marginRight: '16px' }}
+          sx={{ mr: 2 }}
           onClick={handleSubmit(onsubmit)}
         >
           Submit

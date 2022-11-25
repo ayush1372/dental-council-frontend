@@ -153,7 +153,7 @@ export function CollegeRegistration() {
                   <Button
                     variant="contained"
                     sx={{
-                      padding: '15px 10px 12px 10px',
+                      p: '15px 10px 12px 10px',
                     }}
                     onClick={() => getOtp('phone')}
                   >
@@ -186,7 +186,7 @@ export function CollegeRegistration() {
 
           <TextField
             sx={{
-              paddingRight: '0px',
+              pr: 0,
             }}
             fullWidth
             type="text"
@@ -209,7 +209,7 @@ export function CollegeRegistration() {
                     onClick={() => getOtp('email')}
                     variant="contained"
                     sx={{
-                      padding: '15px 10px 12px 10px',
+                      p: '15px 10px 12px 10px',
                     }}
                   >
                     Get OTP
