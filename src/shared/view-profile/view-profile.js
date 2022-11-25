@@ -2,12 +2,17 @@ import { Box, Grid, Typography } from '@mui/material';
 
 export function ViewProfile() {
   return (
-    <Box boxShadow={1} p={3}>
+    <Box
+      p={2}
+      sx={{
+        boxShadow: '1',
+      }}
+    >
       <Grid container spacing={2} mt={2}>
         <Grid container item spacing={6}>
           <Grid item xs={8} md={4}>
             <Typography variant="body3" color="grey.label">
-              Healthcare Professional ID
+              NMR ID
             </Typography>
             <Typography variant="subtitle2" color="primary.main">
               71-1567-8728-1025
