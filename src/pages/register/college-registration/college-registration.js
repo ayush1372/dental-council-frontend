@@ -66,21 +66,17 @@ export function CollegeRegistration() {
     alert(getValues().UniversityName);
   };
   return (
-    <Container sx={{ marginTop: '37px' }}>
+    <Container sx={{ mt: 5 }}>
       <Grid container item spacing={2}>
         <Grid item xs={12}>
-          <Box display="flex">
-            <Typography variant="h2" color="textPrimary.main">
-              College Registration
-            </Typography>
-          </Box>
+          <Typography variant="h2" color="textPrimary.main">
+            College Registration
+          </Typography>
         </Grid>
-        <Grid item xs={12} marginTop="40px">
-          <Box display="flex">
-            <Typography variant="h2" color="textPrimary.main">
-              College Details
-            </Typography>
-          </Box>
+        <Grid item xs={12} mt={5}>
+          <Typography variant="h2" color="textPrimary.main">
+            College Details
+          </Typography>
         </Grid>
       </Grid>
 
@@ -89,11 +85,11 @@ export function CollegeRegistration() {
           <Typography variant="body3" color="inputTextColor.main">
             College Name
           </Typography>
-          <Typography component="span" sx={{ color: 'error.main' }}>
+          <Typography component="span" color="error.main">
             *
           </Typography>
           <TextField
-            fullWidth={true}
+            fullWidth
             required
             name={'CollegeName'}
             placeholder={'Enter College Name'}
@@ -109,11 +105,11 @@ export function CollegeRegistration() {
           <Typography variant="body3" color="inputTextColor.main">
             College ID
           </Typography>
-          <Typography component="span" sx={{ color: 'error.main' }}>
+          <Typography component="span" color="error.main">
             *
           </Typography>
           <TextField
-            fullWidth={true}
+            fullWidth
             required
             name={'CollegeId'}
             placeholder={'Enter College Id'}
@@ -127,7 +123,7 @@ export function CollegeRegistration() {
         <Grid item xs={8} md={4}>
           <Typography variant="body3" color="inputTextColor.main">
             College Phone Number
-            <Typography component="span" sx={{ color: 'error.main' }}>
+            <Typography component="span" color="error.main">
               *
             </Typography>
             <Typography component="span">
@@ -138,7 +134,7 @@ export function CollegeRegistration() {
           </Typography>
 
           <TextField
-            fullWidth={true}
+            fullWidth
             name="CollegePhoneNumber"
             required
             placeholder={t('Phone number')}
@@ -174,7 +170,7 @@ export function CollegeRegistration() {
         <Grid item xs={8} md={4}>
           <Typography variant="body3" color="inputTextColor.main">
             College Email ID
-            <Typography component="span" sx={{ color: 'error.main' }}>
+            <Typography component="span" color="error.main">
               *
             </Typography>
             <Typography component="span">
@@ -192,7 +188,7 @@ export function CollegeRegistration() {
             sx={{
               paddingRight: '0px',
             }}
-            fullWidth={true}
+            fullWidth
             type="text"
             name="email"
             required
@@ -225,26 +221,17 @@ export function CollegeRegistration() {
         </Grid>
 
         <Grid item xs={8} md={4}>
-          {' '}
           <Typography variant="body3" color="inputTextColor.main">
             Select University Name
           </Typography>
-          <Typography component="span" sx={{ color: 'error.main' }}>
+          <Typography component="span" color="error.main">
             *
           </Typography>
           <SearchableDropdown
             name="UniversityName"
             onChange={onHandleChange}
             clearErrors={clearErrors}
-            // defaultValue={
-            //   showEdit
-            //     ? collegeData.collegeUniversityName
-            //     : { id: '3', name: getValues().UniversityName }
-            // }
             items={UniversityNames}
-            // onChange={(newValue) => {
-            //   verboseLog(newValue);
-            // }}
             placeholder="Select University Name"
             error={errors.UniversityName?.message}
             {...register('UniversityName', {
@@ -258,11 +245,7 @@ export function CollegeRegistration() {
             College Website
           </Typography>
 
-          <TextField
-            fullWidth={true}
-            name={'CollegeWebsite'}
-            placeholder={'Enter College Website'}
-          />
+          <TextField fullWidth name={'CollegeWebsite'} placeholder={'Enter College Website'} />
         </Grid>
       </Grid>
       <Grid container item spacing={2} mt={2}>
@@ -272,7 +255,7 @@ export function CollegeRegistration() {
           </Typography>
 
           <TextField
-            fullWidth={true}
+            fullWidth
             name={'CollegeAddress'}
             placeholder={'Enter College Address'}
             error={errors.CollegeAddress?.message}
@@ -284,7 +267,7 @@ export function CollegeRegistration() {
             College Pin Code
           </Typography>
           <TextField
-            fullWidth={true}
+            fullWidth
             required
             name={'CollegePincode'}
             placeholder={'Enter College Pin Code'}
@@ -295,7 +278,7 @@ export function CollegeRegistration() {
           <Typography variant="body3" color="inputTextColor.main">
             State Name
           </Typography>
-          <Typography component="span" sx={{ color: 'error.main' }}>
+          <Typography component="span" color="error.main">
             *
           </Typography>
 
@@ -315,16 +298,16 @@ export function CollegeRegistration() {
         </Grid>
       </Grid>
 
-      <Box display="flex" marginTop="57px">
+      <Box display="flex" mt={7}>
         <Button
           variant="contained"
           color="secondary"
-          sx={{ marginRight: '16px', marginBottom: '48px' }}
+          sx={{ mr: 2, mb: 6 }}
           onClick={handleSubmit(onsubmit)}
         >
           Submit
         </Button>
-        <Button variant="contained" color="grey" sx={{ marginBottom: '48px' }}>
+        <Button variant="contained" color="grey" sx={{ mb: 6 }}>
           Cancel
         </Button>
       </Box>

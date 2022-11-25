@@ -61,11 +61,11 @@ const NmcEditProfile = () => {
           <Typography variant="body3" color="grey.label">
             Name
           </Typography>
-          <Typography component="span" sx={{ color: 'error.main' }}>
+          <Typography component="span" color="error.main">
             *
           </Typography>
           <TextField
-            fullWidth={true}
+            fullWidth
             required
             name={'Name'}
             placeholder={'Enter Name'}
@@ -83,11 +83,11 @@ const NmcEditProfile = () => {
           <Typography variant="body3" color="grey.label">
             Phone Number
           </Typography>
-          <Typography component="span" sx={{ color: 'error.main' }}>
+          <Typography component="span" color="error.main">
             *
           </Typography>
           <TextField
-            fullWidth={true}
+            fullWidth
             required
             name={'PhoneNumber'}
             placeholder={'Enter Phone Number '}
@@ -105,12 +105,12 @@ const NmcEditProfile = () => {
           <Typography variant="body3" color="grey.label">
             Email Id
           </Typography>
-          <Typography component="span" sx={{ color: 'error.main' }}>
+          <Typography component="span" color="error.main">
             *
           </Typography>
           <TextField
             type="text"
-            fullWidth={true}
+            fullWidth
             required
             name={'EmalId'}
             placeholder={'Enter EmalId'}
@@ -135,11 +135,11 @@ const NmcEditProfile = () => {
           <Typography variant="body3" color="grey.label">
             User ID
           </Typography>
-          <Typography component="span" sx={{ color: 'error.main' }}>
+          <Typography component="span" color="error.main">
             *
           </Typography>
           <TextField
-            fullWidth={true}
+            fullWidth
             required
             name={'UserId'}
             placeholder={'Enter UserId'}
@@ -161,11 +161,11 @@ const NmcEditProfile = () => {
           <Typography variant="body3" color="grey.label">
             Council
           </Typography>
-          <Typography component="span" sx={{ color: 'error.main' }}>
+          <Typography component="span" color="error.main">
             *
           </Typography>
           <TextField
-            fullWidth={true}
+            fullWidth
             required
             type="password"
             name={'Password'}

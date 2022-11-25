@@ -39,14 +39,10 @@ const CollegeEditProfile = () => {
   return (
     <Grid>
       <Grid container spacing={2} mt={2}>
-        <Grid container item spacing={2}>
-          <Grid item xs={12}>
-            <Box display="flex" justifyContent="space-between" alignItems="center">
-              <Typography variant="h2" color="textPrimary.main">
-                Edit Profile
-              </Typography>
-            </Box>
-          </Grid>
+        <Grid item xs={12}>
+          <Typography variant="h2" color="textPrimary.main">
+            Edit Profile
+          </Typography>
         </Grid>
       </Grid>
 
@@ -59,7 +55,7 @@ const CollegeEditProfile = () => {
             *
           </Typography>
           <TextField
-            fullWidth={true}
+            fullWidth
             required
             name={'CollegeName'}
             placeholder={'Enter College Name'}
@@ -79,7 +75,7 @@ const CollegeEditProfile = () => {
             *
           </Typography>
           <TextField
-            fullWidth={true}
+            fullWidth
             required
             name={'CollegeId'}
             placeholder={'Enter College Id'}
@@ -110,7 +106,7 @@ const CollegeEditProfile = () => {
           <TextField
             type="number"
             onInput={(e) => handleInput(e)}
-            fullWidth={true}
+            fullWidth
             required
             name={'CollegePhoneNumber'}
             placeholder={'Enter College Phone Number'}
@@ -157,7 +153,7 @@ const CollegeEditProfile = () => {
             </Typography>
           </Typography>
           <TextField
-            fullWidth={true}
+            fullWidth
             required
             name={'CollegeEmailId'}
             placeholder={'Enter College Email ID'}
@@ -200,6 +196,7 @@ const CollegeEditProfile = () => {
             clearErrors={clearErrors}
             defaultValue={getValues().UniversityName}
             items={UniversityNames}
+            // TO DO:UniversityName default value to be shown on UI for future ref
             // value={UniversityNames[0].name}
             placeholder="Select University Name"
             error={errors.UniversityName?.message}
@@ -215,7 +212,7 @@ const CollegeEditProfile = () => {
           </Typography>
 
           <TextField
-            fullWidth={true}
+            fullWidth
             name={'CollegeWebsite'}
             placeholder={'Enter College Website'}
             defaultValue={getValues().CollegeWebsite}
@@ -229,7 +226,7 @@ const CollegeEditProfile = () => {
           </Typography>
 
           <TextField
-            fullWidth={true}
+            fullWidth
             name={'CollegeAddress'}
             placeholder={'Enter College Address'}
             defaultValue={getValues().CollegeAddress}
@@ -245,7 +242,7 @@ const CollegeEditProfile = () => {
             *
           </Typography>
           <TextField
-            fullWidth={true}
+            fullWidth
             name={'CollegePincode'}
             placeholder={'Enter Pin Code'}
             defaultValue={getValues().CollegePincode}

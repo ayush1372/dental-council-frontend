@@ -24,27 +24,25 @@ const MyProfile = (props) => {
   verboseLog(showSmcEditProfile);
   verboseLog(setData);
   return (
-    <Box p={'0px 91px 44px 41px'}>
+    <Box p={3}>
       {!showEdit ? (
-        <Grid>
-          <Grid container spacing={2} mt={2}>
-            <Grid container item spacing={2}>
-              <Grid item xs={12}>
-                <Box display="flex" justifyContent="space-between" alignItems="center">
-                  <Typography variant="h2" color="textPrimary.main">
-                    My Profile
-                  </Typography>
-                  <Button
-                    sx={{ width: '165px', padding: '10px', height: '48px' }}
-                    startIcon={<EditIcon />}
-                    variant="contained"
-                    color="secondary"
-                    onClick={sentDetails}
-                  >
-                    Edit Profile
-                  </Button>
-                </Box>
-              </Grid>
+        <>
+          <Grid container spacing={2}>
+            <Grid item xs={8}>
+              <Typography variant="h2" color="textPrimary.main">
+                My Profile
+              </Typography>
+            </Grid>
+            <Grid item xs={4} textAlign="right">
+              <Button
+                sx={{ width: 'auto' }}
+                startIcon={<EditIcon sx={{ mr: 1 }} />}
+                variant="contained"
+                color="secondary"
+                onClick={sentDetails}
+              >
+                Edit Profile
+              </Button>
             </Grid>
           </Grid>
           <Grid container item spacing={2} mt={3}>
@@ -63,7 +61,7 @@ const MyProfile = (props) => {
               );
             })}
           </Grid>
-        </Grid>
+        </>
       ) : (
         <Box>
           {props.userType === 'SMC' ? (

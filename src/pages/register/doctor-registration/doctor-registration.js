@@ -84,7 +84,7 @@ const DoctorRegistrationWelcomePage = () => {
                   </Typography>
                 </Typography>
                 <TextField
-                  fullWidth={true}
+                  fullWidth
                   name={'RegistrationNumber'}
                   placeholder={t('Enter Registration Number')}
                   defaultValue={getValues().RegistrationNumber}

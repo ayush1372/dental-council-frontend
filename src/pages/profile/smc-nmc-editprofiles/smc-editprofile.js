@@ -63,7 +63,7 @@ const SmcEditProfile = () => {
             *
           </Typography>
           <TextField
-            fullWidth={true}
+            fullWidth
             required
             name={'Name'}
             placeholder={'Enter Name'}
@@ -85,7 +85,7 @@ const SmcEditProfile = () => {
             *
           </Typography>
           <TextField
-            fullWidth={true}
+            fullWidth
             required
             name={'PhoneNumber'}
             placeholder={'Enter Phone Number '}
@@ -108,7 +108,7 @@ const SmcEditProfile = () => {
           </Typography>
           <TextField
             type="text"
-            fullWidth={true}
+            fullWidth
             required
             name={'EmalId'}
             placeholder={'Enter EmalId'}
@@ -137,7 +137,7 @@ const SmcEditProfile = () => {
             *
           </Typography>
           <TextField
-            fullWidth={true}
+            fullWidth
             required
             name={'UserId'}
             placeholder={'Enter UserId'}
@@ -163,7 +163,7 @@ const SmcEditProfile = () => {
             *
           </Typography>
           <TextField
-            fullWidth={true}
+            fullWidth
             required
             type="password"
             name={'Password'}
