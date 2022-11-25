@@ -84,10 +84,10 @@ function TrackStatusTable(props) {
     {
       title:
         loggedInUserType === 'NMC'
-          ? 'Request NMC'
+          ? 'Action'
           : loggedInUserType === 'SMC'
-          ? 'Request SMC'
-          : 'college',
+          ? 'Request NMC'
+          : 'Request NMC',
       name: 'requestNMC',
       sorting: true,
       type: 'string',
