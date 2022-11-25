@@ -193,7 +193,7 @@ export function Profile() {
               justifyContent={'center'}
             >
               <Typography variant="h4" component={'p'}>
-                {isActiveTab.tabName}
+                {isActiveTab.title}
               </Typography>
             </Grid>
           )}
