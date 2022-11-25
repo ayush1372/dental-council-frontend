@@ -3,7 +3,7 @@ import { Box, Grid, IconButton, InputAdornment, Typography } from '@mui/material
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import SearchableDropdown from '../../../../components/autocomplete/searchable-dropdown';
+import { SearchableDropdown } from '../../../../components/autocomplete/searchable-dropdown';
 import { RadioGroup, Select, TextField } from '../../../../ui/core';
 import MobileNumber from '../../../../ui/core/mobile-number/mobile-number';
 import ButtonGroupWizard from '../../../../ui/core/wizard/button-group-wizard';
@@ -170,12 +170,6 @@ const EditPersonalDetails = ({ handleNext }) => {
               {...register('LastName', {
                 required: 'Last Name is Required',
               })}
-              // sx={{
-              //   input: {
-              //     backgroundColor: 'grey2.main',
-              //   },
-              // }}
-              // InputProps={{ readOnly: true }}
             />
           </Grid>
         </Grid>

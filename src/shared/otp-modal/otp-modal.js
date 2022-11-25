@@ -10,12 +10,10 @@ import {
   DialogContentText,
   DialogTitle,
   IconButton,
-  Typography,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import { ToastContainer } from 'react-toastify';
 
-import OtpIcon from '../../assets/images/otp-popup.png';
 import { Button } from '../../ui/core';
 import successToast from '../../ui/core/toaster';
 import OtpForm from '../otp-form/otp-component';
@@ -51,10 +49,11 @@ CustomDialogTitle.propTypes = {
 
 export function ModalOTP({
   afterConfirm = undefined,
-  headerText = 'We have sent the OTP on Your Mobile device.',
+  headerText = 'We just sent an OTP on your registered Mobile Number  XXXXXX2182 linked with your Aadhaar.',
 }) {
   const [open, setOpen] = useState(false);
-  const [otpVerified, setOtpVerified] = useState(false);
+  const [otpEmailVerify, setOtpEmailVerify] = useState(false);
+  const [otpMobileVerify, setOtpMobileVerify] = useState(false);
 
   const otpResend = () => {
     successToast('OTP Resent Successfully', 'otp-resent', 'success', 'top-center');
@@ -76,7 +75,8 @@ export function ModalOTP({
   const handleConfirm = () => {
     if (getOtpValidation()) {
       setOpen(false);
-      setOtpVerified(true);
+      setOtpMobileVerify(true);
+      setOtpEmailVerify(true);
       handleClear();
       afterConfirm();
     }
@@ -94,38 +94,49 @@ export function ModalOTP({
           aria-describedby="alert-dialog-description"
           sx={{
             '.MuiPaper-root': {
-              padding: '40px',
+              padding: '42px 48px',
+              display: 'flex',
+              alignItems: 'flex-start',
+              maxWidth: '600px',
+              // paddingLeft: '48px',
             },
           }}
         >
-          <img className={'OTPImage'} src={OtpIcon} alt="OTP" />
-          <CustomDialogTitle id="customized-dialog-title" textAlign="center" onClose={handleClose}>
-            {'OTP Authentication'}
+          {/* <img className={'OTPImage'} src={OtpIcon} alt="OTP" /> */}
+          <CustomDialogTitle
+            id="customized-dialog-title"
+            onClose={handleClose}
+            sx={{
+              paddingLeft: '0px',
+            }}
+          >
+            {'Confirm OTP'}
           </CustomDialogTitle>
-          <DialogContent>
-            <DialogContentText textAlign="center" id="alert-dialog-description">
-              {headerText}
-            </DialogContentText>
+          <DialogContent
+            sx={{
+              paddingLeft: '0px',
+            }}
+          >
+            <DialogContentText id="alert-dialog-description">{headerText}</DialogContentText>
           </DialogContent>
-          <Typography variant="body1" color="grey.context">
-            Verification Code
-          </Typography>
+
           {otpform}
           <Button
             sx={{ marginTop: '16px' }}
             variant="contained"
             color="secondary"
-            fullWidth
+            // fullWidth
             onClick={handleConfirm}
             autoFocus
           >
-            Confirm
+            Continue
           </Button>
         </Dialog>
       </Box>
     ),
     handleClickOpen: handleClickOpen,
-    otpVerified,
+    otpEmailVerify,
+    otpMobileVerify,
   };
 }
 export default ModalOTP;

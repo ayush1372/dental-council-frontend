@@ -11,15 +11,12 @@ import UserProfile from '../user-profile';
 import EditPersonalDetails from '../user-profile/components/edit-personal-details/edit-personal-details';
 import CollegeMyProfile from './college-my-profile/college-my-profile';
 import ProfileImage from './profileImage';
+import MyProfile from './smc-nmc-profile/my-profile';
 import { VerticalTab } from './vertical-tab';
 
 import styles from './profile.module.scss';
 
 const dataTabs = [
-  // {
-  //   title: 'Dashboard',
-  //   tabName: 'dashboard',
-  // },
   {
     title: 'My Profile',
     tabName: 'my-profile',
@@ -164,6 +161,10 @@ export function Profile() {
             <UserProfile tabName={isActiveTab.tabName} />
           ) : isActiveTab.tabName === 'my-profile' && loggedInUserType === 'College' ? (
             <CollegeMyProfile />
+          ) : isActiveTab.tabName === 'my-profile' && loggedInUserType === 'SMC' ? (
+            <MyProfile userType={'SMC'} />
+          ) : isActiveTab.tabName === 'my-profile' && loggedInUserType === 'NMC' ? (
+            <MyProfile userType={'NMC'} />
           ) : isActiveTab.tabName === 'my-profile' &&
             loggedInUserType !== 'Doctor' &&
             loggedInUserType !== 'College' &&

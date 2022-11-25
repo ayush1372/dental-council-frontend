@@ -4,7 +4,7 @@ import { Box, Container, Typography } from '@mui/material';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 
-import SearchableDropdown from '../../../components/autocomplete/searchable-dropdown';
+import { SearchableDropdown } from '../../../components/autocomplete/searchable-dropdown';
 import { verboseLog } from '../../../config/debug';
 import { RegistrationCouncilNames } from '../../../constants/utils';
 import { Button } from '../../../ui/core';
@@ -31,7 +31,7 @@ const DoctorRegistrationWelcomePage = () => {
   verboseLog(isNext);
 
   return (
-    <div>
+    <Box>
       {isNext === false ? (
         <Box sx={{ marginTop: '73px', marginBottom: '77px' }}>
           <Container
@@ -47,20 +47,33 @@ const DoctorRegistrationWelcomePage = () => {
                   Doctor Registration
                 </Typography>
                 <Typography variant="body3" color="primary.main">
-                  To proceed with your registration confirm your Medical council and Registration
-                  Number.
+                  You can select your registration council first from the dropdown and then enter
+                  your Registration number. This will fetch your records from your registered
+                  council.
                 </Typography>
               </Box>
 
               <Box sx={{ paddingBottom: '32px' }}>
                 <Typography variant="body3" color="textSecondary.main">
-                  Select your registration council
+                  Select Your Registration Council
                   <Typography component="span" sx={{ color: 'error.main' }}>
                     *
                   </Typography>
                 </Typography>
                 <Box>
-                  <SearchableDropdown name="RegistrationCouncil" items={RegistrationCouncilNames} />
+                  <SearchableDropdown
+                    name="RegistrationCouncil"
+                    items={RegistrationCouncilNames}
+                    placeholder="Select your registration Council"
+                    onChange={(newValue) => {
+                      verboseLog(newValue);
+                    }}
+                    defaultValue={getValues().RegistrationCouncil}
+                    error={errors.RegistrationCouncil?.message}
+                    {...register('RegistrationCouncil', {
+                      required: 'Registration Council is required',
+                    })}
+                  />
                 </Box>
               </Box>
               <Box sx={{ paddingBottom: '40px' }}>
@@ -112,7 +125,7 @@ const DoctorRegistrationWelcomePage = () => {
       ) : (
         <FetchDoctorDetails />
       )}
-    </div>
+    </Box>
   );
 };
 

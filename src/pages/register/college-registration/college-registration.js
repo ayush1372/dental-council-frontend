@@ -1,17 +1,38 @@
-import { Box, Container, Grid, InputAdornment, Typography } from '@mui/material';
+import { useState } from 'react';
+
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { Box, Container, Grid, IconButton, InputAdornment, Typography } from '@mui/material';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 
 import { TextField } from '../../../../src/ui/core/form/textfield/textfield';
-import { DepartmentNames } from '../../../constants/utils';
-import { StateNames } from '../../../constants/utils';
-import { Button, Select } from '../../../ui/core';
+import { SearchableDropdown } from '../../../components/autocomplete/searchable-dropdown';
+import { verboseLog } from '../../../config/debug';
+import { StateNames, UniversityNames } from '../../../constants/utils';
+import ModalOTP from '../../../shared/otp-modal/otp-modal';
+import { Button } from '../../../ui/core';
 
 export function CollegeRegistration() {
+  const { otpPopup, handleClickOpen, otpMobileVerify, otpEmailVerify } = ModalOTP({
+    afterConfirm: () => {},
+    headerText:
+      'We just sent an OTP on your registered Mobile Number XXXXXX2182 linked with your Aadhaar.',
+  });
+  const [verifyEmail, setVerifyEmail] = useState(false);
+  const [verifyMobile, setVerifyMobile] = useState(false);
+  const getOtp = (type) => {
+    if (type === 'phone' && otpMobileVerify) {
+      setVerifyMobile(true);
+    } else if (type === 'email' && otpEmailVerify) {
+      setVerifyEmail(true);
+    }
+    handleClickOpen();
+  };
   const {
     register,
     handleSubmit,
     getValues,
+    clearErrors,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
@@ -23,14 +44,15 @@ export function CollegeRegistration() {
       CollegeAddress: '',
       CollegePincode: '',
       CollegeWebsite: '',
-      DeparmentName: '',
+      DepartmentName: '',
       StateName: '',
-      LastName: '',
-      Day: '',
-      Month: '',
-      Year: '',
+      UniversityName: '',
     },
   });
+  const onHandleChange = (data) => {
+    alert(data);
+  };
+
   const handleInput = (e) => {
     e.preventDefault();
     if (e.target.value.length > 0) {
@@ -39,250 +61,273 @@ export function CollegeRegistration() {
         : Math.max(0, parseInt(e.target.value)).toString().slice(0, 10);
     }
   };
-  return (
-    <Container sx={{ paddingTop: '40px', boxShadow: '1' }}>
-      {/* <Paper square elevation={1}> */}
-      <Box sx={{ width: '1281', height: '800px', paddingLeft: '43px', paddingRight: '43px' }}>
-        <Box pt="20px">
-          <Typography variant="h1" mt="40px" color="primary.dark">
-            College Registration
-          </Typography>
-          <Typography variant="subtitle1" mt="40px" color="primary.dark">
-            College Details
-          </Typography>
-        </Box>
-        <Grid item container xs={12}>
-          {/* parent grid */}
-          <Grid container columnSpacing={'109px'} sx={{ pt: '30px' }}>
-            {/* //child grid 1 */}
-            <Grid item xs={8} xl={4}>
-              <Box>
-                <Typography variant="body3" color="textSecondary.main">
-                  College Name
-                  <Typography component="span" sx={{ color: 'error.main' }}>
-                    *
-                  </Typography>
-                </Typography>
-                <TextField
-                  sx={{ paddingTop: '10px' }}
-                  fullWidth={true}
-                  required
-                  data-testid={'login-recovery-collegename-id'}
-                  name={'CollegeName'}
-                  placeholder={t('Enter College Name')}
-                  defaultValue={getValues().CollegeName}
-                  error={errors.CollegeName?.message}
-                  {...register('CollegeName', {
-                    required: 'College Name is required',
-                  })}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={8} xl={4}>
-              <Box>
-                <Typography variant="body3" color="textSecondary.main">
-                  College ID
-                  <Typography component="span" sx={{ color: 'error.main' }}>
-                    *
-                  </Typography>
-                </Typography>
-                <TextField
-                  sx={{ paddingTop: '10px' }}
-                  fullWidth={true}
-                  required
-                  data-testid={'login-recovery-middlename-id'}
-                  name={'CollegeId'}
-                  placeholder={t('Enter College ID')}
-                  defaultValue={getValues().CollegeId}
-                  error={errors.CollegeId?.message}
-                  {...register('CollegeId', {
-                    required: 'College ID is required',
-                  })}
-                />
-              </Box>
-            </Grid>
-            <Grid item xs={8} xl={4}>
-              <Box>
-                <Typography variant="body3" color="textSecondary.main">
-                  College Phone Number
-                  <Typography component="span" sx={{ color: 'error.main' }}>
-                    *
-                  </Typography>
-                  <Typography component="span"></Typography>
-                </Typography>
-              </Box>
-              <Box marginTop={'8px'}>
-                <TextField
-                  sx={{ marginTop: '3px' }}
-                  fullWidth={true}
-                  type="text"
-                  name="CollegePhoneNumber"
-                  size="large"
-                  required
-                  placeholder={t('Phone Number')}
-                  defaultValue={getValues().CollegePhoneNumber}
-                  onInput={(e) => handleInput(e)}
-                  error={errors.CollegePhoneNumber?.message}
-                  {...register('CollegePhoneNumber', {
-                    required: 'Mobile Number is required',
-                    pattern: {
-                      value: /^\d{10}$/i,
-                      message: 'Provide a Valid Phone Number',
-                    },
-                  })}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <Button variant="contained" sx={{ marginRight: '-13px', height: '57px' }}>
-                          Get OTP
-                        </Button>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </Box>
-            </Grid>
-          </Grid>
-          <Grid container columnSpacing={'109px'} sx={{ pt: '35px' }}>
-            {/* // child grid-2 */}
-            <Grid item xs={8} xl={4}>
-              <Box>
-                <Box>
-                  <Typography variant="body3" color="textSecondary.main">
-                    College Email ID
-                    <Typography component="span" sx={{ color: 'error.main' }}>
-                      *
-                    </Typography>
-                    <Typography component="span"></Typography>
-                  </Typography>
-                </Box>
-                <Box marginTop={'8px'}>
-                  <TextField
-                    sx={{ paddingTop: '5px', marginTop: '-10px' }}
-                    fullWidth={true}
-                    type="text"
-                    name="email"
-                    size="large"
-                    required
-                    placeholder={t('Email')}
-                    defaultValue={getValues().email}
-                    error={errors.email?.message}
-                    {...register('email', {
-                      required: 'Email ID is required',
-                      pattern: {
-                        value:
-                          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-                        message: 'Provide a Valid Email ID',
-                      },
-                    })}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <Button variant="contained" sx={{ marginRight: '-13px', height: '57px' }}>
-                            Get OTP
-                          </Button>
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                </Box>
-              </Box>
-            </Grid>
-            <Grid item xs={8} xl={4}>
-              <Box>
-                <Box>
-                  <Typography variant="body3" color="textSecondary.main">
-                    Department name
-                    <Typography component="span" sx={{ color: 'error.main' }}>
-                      *
-                    </Typography>
-                  </Typography>
-                </Box>
-                <Box marginTop={'5px'}>
-                  <Select
-                    placeholder={'select department name'}
-                    fullWidth
-                    error={errors.DepartmentName?.message}
-                    defaultValue={getValues().DepartmentName}
-                    name="DepartmentName"
-                    {...register('DepartmentName', {
-                      required: 'Department name is required',
-                    })}
-                    options={DepartmentNames}
-                  />
-                </Box>
-              </Box>
-            </Grid>
-            <Grid item xs={8} xl={4}>
-              <Box>
-                <Box>
-                  <Typography variant="body3" color="textSecondary.main">
-                    State Name
-                    <Typography component="span" sx={{ color: 'error.main' }}>
-                      *
-                    </Typography>
-                  </Typography>
-                </Box>
-                <Box marginTop={'5px'}>
-                  <Select
-                    // sx={{ paddingTop: '19px' }}
-                    fullWidth
-                    error={errors.StateName?.message}
-                    defaultValue={getValues().StateName}
-                    name="StateName"
-                    {...register('StateName', {
-                      required: 'state name is required',
-                    })}
-                    options={StateNames}
-                  />
-                </Box>
-              </Box>
-            </Grid>
-          </Grid>
 
-          <Grid container spacing={'109px'} sx={{ pt: '35px' }}>
-            <Grid item xs={4} mt={0}>
-              <Box>
-                <Typography variant="body3" color="textSecondary.main">
-                  College Website
-                </Typography>
-                <TextField sx={{ paddingTop: '10px' }} fullWidth={true} />
-              </Box>
-            </Grid>
-            <Grid item xs={4} mt={0}>
-              <Box>
-                <Typography variant="body3" color="textSecondary.main">
-                  College Address
-                </Typography>
-                <TextField fullWidth={true} sx={{ paddingTop: '10px' }} />
-              </Box>
-            </Grid>
-            <Grid item xs={4} mt={0}>
-              <Box>
-                <Typography variant="body3" color="textSecondary.main">
-                  College Pin Code
-                </Typography>
-                <TextField
-                  sx={{ paddingTop: '10px' }}
-                  fullWidth={true}
-                  data-testid={'login-recovery-middlename-id'}
-                  defaultValue={getValues().MiddleName}
-                />
-              </Box>
-            </Grid>
+  const onsubmit = () => {
+    alert(getValues().UniversityName);
+  };
+  return (
+    <Container sx={{ marginTop: '37px' }}>
+      <Grid container spacing={2} mt={2}>
+        <Grid container item spacing={2}>
+          <Grid item xs={12}>
+            <Box display="flex">
+              <Typography variant="h2" color="textPrimary.main">
+                College Registration
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={12} marginTop="40px">
+            <Box display="flex">
+              <Typography variant="h2" color="textPrimary.main">
+                College Details
+              </Typography>
+            </Box>
           </Grid>
         </Grid>
+      </Grid>
+
+      <Grid container item spacing={2} mt={1}>
+        <Grid item xs={8} md={4}>
+          <Typography variant="body3" color="inputTextColor.main">
+            College Name
+          </Typography>
+          <Typography component="span" sx={{ color: 'error.main' }}>
+            *
+          </Typography>
+          <TextField
+            fullWidth={true}
+            required
+            name={'CollegeName'}
+            placeholder={'Enter College Name'}
+            defaultValue={getValues().CollegeName}
+            error={errors.CollegeName?.message}
+            {...register('CollegeName', {
+              required: 'College Name is required',
+            })}
+          />
+        </Grid>
+
+        <Grid item xs={8} md={4}>
+          <Typography variant="body3" color="inputTextColor.main">
+            College ID
+          </Typography>
+          <Typography component="span" sx={{ color: 'error.main' }}>
+            *
+          </Typography>
+          <TextField
+            fullWidth={true}
+            required
+            name={'CollegeId'}
+            placeholder={'Enter College Id'}
+            error={errors.CollegeId?.message}
+            {...register('CollegeId', {
+              required: 'College ID is required',
+            })}
+          />
+        </Grid>
+
+        <Grid item xs={8} md={4}>
+          <Typography variant="body3" color="inputTextColor.main">
+            College Phone Number
+            <Typography component="span" sx={{ color: 'error.main' }}>
+              *
+            </Typography>
+            <Typography component="span">
+              <IconButton aria-label="toggle password visibility" edge="end">
+                {verifyMobile && <CheckCircleIcon color="success" />}
+              </IconButton>
+            </Typography>
+          </Typography>
+
+          <TextField
+            fullWidth={true}
+            name="CollegePhoneNumber"
+            required
+            placeholder={t('Phone number')}
+            onInput={(e) => handleInput(e)}
+            error={errors.CollegePhoneNumber?.message}
+            {...register('CollegePhoneNumber', {
+              required: 'Phone number is required',
+              pattern: {
+                value: /^\d{10}$/i,
+                message: 'Provide a Valid Phone number',
+              },
+            })}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Button
+                    variant="contained"
+                    sx={{
+                      padding: '15px 10px 12px 10px',
+                    }}
+                    onClick={() => getOtp('phone')}
+                  >
+                    Get OTP
+                  </Button>
+                </InputAdornment>
+              ),
+            }}
+          />
+          {otpPopup}
+        </Grid>
+      </Grid>
+      <Grid container item spacing={2} mt={2}>
+        <Grid item xs={8} md={4}>
+          <Typography variant="body3" color="inputTextColor.main">
+            College Email ID
+            <Typography component="span" sx={{ color: 'error.main' }}>
+              *
+            </Typography>
+            <Typography component="span">
+              <IconButton aria-label="toggle password visibility" edge="end">
+                {verifyEmail && !errors.email?.message && getValues().email.length !== 0 ? (
+                  <CheckCircleIcon color="success" />
+                ) : (
+                  ''
+                )}
+              </IconButton>
+            </Typography>
+          </Typography>
+
+          <TextField
+            sx={{
+              paddingRight: '0px',
+            }}
+            fullWidth={true}
+            type="text"
+            name="email"
+            required
+            placeholder={t('Email')}
+            error={errors.email?.message}
+            {...register('email', {
+              required: 'Email ID is required',
+              pattern: {
+                value:
+                  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
+                message: 'Provide a Valid Email ID',
+              },
+            })}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Button
+                    onClick={() => getOtp('email')}
+                    variant="contained"
+                    sx={{
+                      padding: '15px 10px 12px 10px',
+                    }}
+                  >
+                    Get OTP
+                  </Button>
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Grid>
+
+        <Grid item xs={8} md={4}>
+          {' '}
+          <Typography variant="body3" color="inputTextColor.main">
+            Select University Name
+          </Typography>
+          <Typography component="span" sx={{ color: 'error.main' }}>
+            *
+          </Typography>
+          <SearchableDropdown
+            name="UniversityName"
+            onChange={onHandleChange}
+            clearErrors={clearErrors}
+            // defaultValue={
+            //   showEdit
+            //     ? collegeData.collegeUniversityName
+            //     : { id: '3', name: getValues().UniversityName }
+            // }
+            items={UniversityNames}
+            // onChange={(newValue) => {
+            //   verboseLog(newValue);
+            // }}
+            placeholder="Select University Name"
+            error={errors.UniversityName?.message}
+            {...register('UniversityName', {
+              required: 'University Name is required',
+            })}
+          />
+        </Grid>
+
+        <Grid item xs={8} md={4}>
+          <Typography variant="body3" color="inputTextColor.main">
+            College Website
+          </Typography>
+
+          <TextField
+            fullWidth={true}
+            name={'CollegeWebsite'}
+            placeholder={'Enter College Website'}
+          />
+        </Grid>
+      </Grid>
+      <Grid container item spacing={2} mt={2}>
+        <Grid item xs={8} md={4}>
+          <Typography variant="body3" color="inputTextColor.main">
+            College Address
+          </Typography>
+
+          <TextField
+            fullWidth={true}
+            name={'CollegeAddress'}
+            placeholder={'Enter College Address'}
+            error={errors.CollegeAddress?.message}
+          />
+        </Grid>
+
+        <Grid item xs={8} md={4}>
+          <Typography variant="body3" color="inputTextColor.main">
+            College Pin Code
+          </Typography>
+          <TextField
+            fullWidth={true}
+            required
+            name={'CollegePincode'}
+            placeholder={'Enter College Pin Code'}
+          />
+        </Grid>
+
+        <Grid item xs={8} md={4}>
+          <Typography variant="body3" color="inputTextColor.main">
+            State Name
+          </Typography>
+          <Typography component="span" sx={{ color: 'error.main' }}>
+            *
+          </Typography>
+
+          <SearchableDropdown
+            name="StateName"
+            items={StateNames}
+            clearErrors={clearErrors}
+            onChange={(newValue) => {
+              verboseLog(newValue);
+            }}
+            placeholder={'West Bengal'}
+            error={errors.StateName?.message}
+            {...register('StateName', {
+              required: 'State Name is required',
+            })}
+          />
+        </Grid>
+      </Grid>
+
+      <Box display="flex" marginTop="57px">
         <Button
-          onClick={handleSubmit(onsubmit)}
           variant="contained"
-          sx={{
-            width: '96px',
-            height: '51px',
-            backgroundColor: 'orangeBackgroundColor.main',
-            marginTop: '55px',
-          }}
+          color="secondary"
+          sx={{ marginRight: '16px', marginBottom: '48px' }}
+          onClick={handleSubmit(onsubmit)}
         >
           Submit
+        </Button>
+        <Button variant="contained" color="grey" sx={{ marginBottom: '48px' }}>
+          Cancel
         </Button>
       </Box>
     </Container>
