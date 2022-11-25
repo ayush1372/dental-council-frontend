@@ -67,22 +67,20 @@ export function CollegeRegistration() {
   };
   return (
     <Container sx={{ marginTop: '37px' }}>
-      <Grid container spacing={2} mt={2}>
-        <Grid container item spacing={2}>
-          <Grid item xs={12}>
-            <Box display="flex">
-              <Typography variant="h2" color="textPrimary.main">
-                College Registration
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12} marginTop="40px">
-            <Box display="flex">
-              <Typography variant="h2" color="textPrimary.main">
-                College Details
-              </Typography>
-            </Box>
-          </Grid>
+      <Grid container item spacing={2}>
+        <Grid item xs={12}>
+          <Box display="flex">
+            <Typography variant="h2" color="textPrimary.main">
+              College Registration
+            </Typography>
+          </Box>
+        </Grid>
+        <Grid item xs={12} marginTop="40px">
+          <Box display="flex">
+            <Typography variant="h2" color="textPrimary.main">
+              College Details
+            </Typography>
+          </Box>
         </Grid>
       </Grid>
 

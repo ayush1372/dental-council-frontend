@@ -33,10 +33,10 @@ const DoctorRegistrationWelcomePage = () => {
   return (
     <Box>
       {isNext === false ? (
-        <Box sx={{ marginTop: '73px', marginBottom: '77px' }}>
+        <Box my={9}>
           <Container
             sx={{
-              boxShadow: '2',
+              boxShadow: '1',
               paddingTop: '30px',
               width: '679px',
             }}
@@ -53,7 +53,7 @@ const DoctorRegistrationWelcomePage = () => {
                 </Typography>
               </Box>
 
-              <Box sx={{ paddingBottom: '32px' }}>
+              <Box pb={4}>
                 <Typography variant="body3" color="textSecondary.main">
                   Select Your Registration Council
                   <Typography component="span" sx={{ color: 'error.main' }}>
@@ -76,7 +76,7 @@ const DoctorRegistrationWelcomePage = () => {
                   />
                 </Box>
               </Box>
-              <Box sx={{ paddingBottom: '40px' }}>
+              <Box pb={5}>
                 <Typography variant="body3" color="textSecondary.main">
                   Enter Registration Number
                   <Typography component="span" sx={{ color: 'error.main' }}>

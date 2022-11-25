@@ -1,37 +1,28 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable no-console */
 import { useState } from 'react';
 
-import { Box } from '@material-ui/core';
 import EditIcon from '@mui/icons-material/Edit';
-import { Grid, Typography } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 
-import { collegeProfileData, nmcProfileDetails, smcProfileDetails } from '../../../constants/utils';
+import { verboseLog } from '../../../config/debug';
+import { nmcProfileDetails, smcProfileDetails } from '../../../constants/utils';
 import { Button } from '../../../ui/core';
 import NmcEditProfile from '../smc-nmc-editprofiles/nmc-editprofiles';
 import SmcEditProfile from '../smc-nmc-editprofiles/smc-editprofile';
+
 const MyProfile = (props) => {
   const [showEdit, setShowEdit] = useState(false);
-  const [myProfileDetails, setmyProfileDetails] = useState([]);
   const [data, setData] = useState(
     props.userType === 'SMC' ? smcProfileDetails : nmcProfileDetails
   );
   const [showSmcEditProfile, setShowSmcEditProfile] = useState(false);
-  // function NavigateBack() {
-  //   return setShowEdit(false);
-  // }
 
   const sentDetails = () => {
-    // data.map((field, i) => {
-    //   return myProfileDetails.push(field.value);
-    // });
-    // if (myProfileDetails.length > 0) {
     setShowSmcEditProfile(true);
     setShowEdit(true);
-    // }
-    console.log(myProfileDetails);
   };
-  console.log(props.userType, data, '==smc, nmc profile');
+  verboseLog(props.userType, data, '==smc, nmc profile');
+  verboseLog(showSmcEditProfile);
+  verboseLog(setData);
   return (
     <Box p={'0px 91px 44px 41px'}>
       {!showEdit ? (
@@ -57,7 +48,7 @@ const MyProfile = (props) => {
             </Grid>
           </Grid>
           <Grid container item spacing={2} mt={3}>
-            {data.map((field, key) => {
+            {data.map((field) => {
               return (
                 <Grid item xs={4} md={3} key={field.id}>
                   <Typography variant="body3" color="grey.label">
@@ -76,7 +67,7 @@ const MyProfile = (props) => {
       ) : (
         <Box>
           {props.userType === 'SMC' ? (
-            <SmcEditProfile myProfileDetails={myProfileDetails} sentDetails={sentDetails} />
+            <SmcEditProfile sentDetails={sentDetails} />
           ) : (
             <NmcEditProfile />
           )}

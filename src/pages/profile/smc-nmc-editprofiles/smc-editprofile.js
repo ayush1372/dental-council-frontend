@@ -45,14 +45,12 @@ const SmcEditProfile = () => {
   return (
     <Box>
       <Grid container spacing={2} mt={2}>
-        <Grid container item spacing={2}>
-          <Grid item xs={12}>
-            <Box display="flex" justifyContent="space-between" alignItems="center">
-              <Typography variant="h2" color="textPrimary.main">
-                Edit Profile
-              </Typography>
-            </Box>
-          </Grid>
+        <Grid item xs={12}>
+          <Box display="flex" justifyContent="space-between" alignItems="center">
+            <Typography variant="h2" color="textPrimary.main">
+              Edit Profile
+            </Typography>
+          </Box>
         </Grid>
       </Grid>
 

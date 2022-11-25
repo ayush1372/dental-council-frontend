@@ -1,7 +1,7 @@
 import { forwardRef } from 'react';
 
 import { Autocomplete } from '@mui/material';
-import { Box } from '@mui/system';
+import { Box } from '@mui/material';
 
 import { TextField } from '../../ui/core';
 

@@ -37,7 +37,7 @@ const CollegeEditProfile = () => {
     }
   };
   return (
-    <Box>
+    <Grid>
       <Grid container spacing={2} mt={2}>
         <Grid container item spacing={2}>
           <Grid item xs={12}>
@@ -55,7 +55,7 @@ const CollegeEditProfile = () => {
           <Typography variant="body3" color="grey.label">
             College Name
           </Typography>
-          <Typography component="span" sx={{ color: 'error.main' }}>
+          <Typography component="span" color="error.main">
             *
           </Typography>
           <TextField
@@ -75,7 +75,7 @@ const CollegeEditProfile = () => {
           <Typography variant="body3" color="grey.label">
             College ID
           </Typography>
-          <Typography component="span" sx={{ color: 'error.main' }}>
+          <Typography component="span" color="error.main">
             *
           </Typography>
           <TextField
@@ -94,12 +94,12 @@ const CollegeEditProfile = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="body3" color="inputTextColor.main">
             College Phone Number
-            <Typography component="span" sx={{ color: 'error.main' }}>
+            <Typography component="span" color="error.main">
               *
             </Typography>
             <Typography component="span">
               <IconButton aria-label="toggle password visibility" edge="end">
-                {getValues()?.CollegePhoneNumber?.length === 10 ? (
+                {getValues()?.CollegePhoneNumber?.length === 11 ? (
                   <CheckCircleIcon color="success" />
                 ) : (
                   ''
@@ -144,16 +144,15 @@ const CollegeEditProfile = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="body3" color="inputTextColor.main">
             College Email ID
-            <Typography component="span" sx={{ color: 'error.main' }}>
+            <Typography component="span" color="error.main">
               *
             </Typography>
             <Typography component="span">
               <IconButton aria-label="toggle password visibility" edge="end">
-                {!errors.CollegeEmailId?.message && getValues().CollegeEmailId.length !== 0 ? (
-                  <CheckCircleIcon color="success" />
-                ) : (
-                  ''
-                )}
+                {!errors.CollegeEmailId?.message && getValues().CollegeEmailId.length !== 0
+                  ? // <CheckCircleIcon color="success" />
+                    ''
+                  : ''}
               </IconButton>
             </Typography>
           </Typography>
@@ -193,7 +192,7 @@ const CollegeEditProfile = () => {
           <Typography variant="body3" color="grey.label">
             Select University Name
           </Typography>
-          <Typography component="span" sx={{ color: 'error.main' }}>
+          <Typography component="span" color="error.main">
             *
           </Typography>
           <SearchableDropdown
@@ -242,7 +241,7 @@ const CollegeEditProfile = () => {
           <Typography variant="body3" color="grey.label">
             College Pin Code
           </Typography>
-          <Typography component="span" sx={{ color: 'error.main' }}>
+          <Typography component="span" color="error.main">
             *
           </Typography>
           <TextField
@@ -257,7 +256,7 @@ const CollegeEditProfile = () => {
           <Typography variant="body3" color="grey.label">
             State Name
           </Typography>
-          <Typography component="span" sx={{ color: 'error.main' }}>
+          <Typography component="span" color="error.main">
             *
           </Typography>
 
@@ -273,11 +272,11 @@ const CollegeEditProfile = () => {
           />
         </Grid>
       </Grid>
-      <Box display="flex" marginTop="37px">
+      <Box display="flex" mt={5}>
         <Button
           variant="contained"
           color="secondary"
-          sx={{ marginRight: '16px' }}
+          sx={{ mr: 2 }}
           onClick={handleSubmit(onsubmit)}
         >
           Submit
@@ -286,7 +285,7 @@ const CollegeEditProfile = () => {
           Cancel
         </Button>
       </Box>
-    </Box>
+    </Grid>
   );
 };
 

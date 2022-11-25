@@ -181,7 +181,7 @@ const NmcEditProfile = () => {
         </Grid>
       </Grid>
 
-      <Box display="flex" marginTop="37px">
+      <Box display="flex" mt={5}>
         <Button
           variant="contained"
           color="secondary"
