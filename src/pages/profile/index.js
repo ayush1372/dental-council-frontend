@@ -170,6 +170,7 @@ export function Profile() {
             (loggedInUserType === 'College' ||
               loggedInUserType === 'NMC' ||
               loggedInUserType === 'SMC') ? (
+            // eslint-disable-next-line react/jsx-indent
             <TrackStatus tabName={isActiveTab.tabName} />
           ) : isActiveTab.tabName === 'my-profile' && loggedInUserType === 'Doctor' ? (
             <UserProfile tabName={isActiveTab.tabName} />
