@@ -3,7 +3,7 @@ import { Box, Grid, IconButton, InputAdornment, Typography } from '@mui/material
 import { useForm } from 'react-hook-form';
 
 import { SearchableDropdown } from '../../../components/autocomplete/searchable-dropdown';
-import { StateNames, UniversityNames } from '../../../constants/utils';
+import { StateNames, UniversityNames } from '../../../constants/common-data';
 import { Button, TextField } from '../../../ui/core';
 
 const CollegeEditProfile = () => {

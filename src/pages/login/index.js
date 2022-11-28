@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-// import { yearsData } from '../../constants/utils';
+// import { yearsData } from '../../constants/common-data';
 import CaptchaComponent from '../../shared/captcha-component/captcha-component';
 import { setMobileNumber } from '../../store/reducers/common-reducers';
 import { Button, TextField } from '../../ui/core';

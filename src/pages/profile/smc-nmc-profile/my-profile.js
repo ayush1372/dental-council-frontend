@@ -4,7 +4,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Box, Grid, Typography } from '@mui/material';
 
 import { verboseLog } from '../../../config/debug';
-import { nmcProfileDetails, smcProfileDetails } from '../../../constants/utils';
+import { nmcProfileDetails, smcProfileDetails } from '../../../constants/common-data';
 import { Button } from '../../../ui/core';
 import NmcEditProfile from '../smc-nmc-editprofiles/nmc-editprofiles';
 import SmcEditProfile from '../smc-nmc-editprofiles/smc-editprofile';

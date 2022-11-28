@@ -7,7 +7,7 @@ import OtpInput from 'react-otp-input';
 import { useNavigate } from 'react-router-dom';
 
 import { verboseLog } from '../../../../config/debug';
-import { daysData, monthsData, yearsData } from '../../../../constants/utils';
+import { daysData, monthsData, yearsData } from '../../../../constants/common-data';
 // import useCountdown from '../../../../shared/InputOtp/use-countdown';
 import { Button, RadioGroup, Select, TextField } from '../../../../ui/core';
 

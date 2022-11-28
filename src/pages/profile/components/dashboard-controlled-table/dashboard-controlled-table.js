@@ -3,7 +3,7 @@ import React from 'react';
 import { Box, Grid, TablePagination, Typography } from '@mui/material';
 
 import { verboseLog } from '../../../../config/debug';
-import { applications } from '../../../../constants/utils';
+import { applications } from '../../../../constants/common-data';
 import GenericTable from '../../../../shared/generic-component/generic-table';
 import TableSearch from '../table-search/table-search';
 // import SearchFilter from '../../../../shared/search-filter';

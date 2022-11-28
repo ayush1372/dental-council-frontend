@@ -1,4 +1,10 @@
+// Format for API endpoints according to modules
 export const API = {
-  contactUs: 'users',
+  registration:{
   createUser: 'posts',
+  },
+  login:{
+  },
+  editProfile:{
+  }
 };

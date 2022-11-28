@@ -3,7 +3,7 @@ import { useState } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, Grid, Typography } from '@mui/material';
 
-import { collegeProfileData } from '../../../constants/utils';
+import { collegeProfileData } from '../../../constants/common-data';
 import { Button } from '../../../ui/core';
 import CollegeEditProfile from './college-edit-profile';
 const CollegeMyProfile = () => {

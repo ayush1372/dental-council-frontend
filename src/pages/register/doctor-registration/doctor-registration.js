@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 
 import { SearchableDropdown } from '../../../components/autocomplete/searchable-dropdown';
 import { verboseLog } from '../../../config/debug';
-import { RegistrationCouncilNames } from '../../../constants/utils';
+import { RegistrationCouncilNames } from '../../../constants/common-data';
 import { Button } from '../../../ui/core';
 import { TextField } from '../../../ui/core/form/textfield/textfield';
 import FetchDoctorDetails from './fetch-doctor-details';
