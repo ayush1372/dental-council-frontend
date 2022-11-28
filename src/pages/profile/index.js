@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Grid, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
+import TrackStatus from '../../shared/track-status/index';
 import { changeUserActiveTab } from '../../store/reducers/ui-reducers';
 import SuspendLicenseVoluntaryRetirement from '../suspend-license-voluntary-retirement';
 import UserProfile from '../user-profile';
@@ -117,7 +118,6 @@ export function Profile() {
     } else {
       dispatch(changeUserActiveTab(dataTabs[0].tabName));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -163,6 +163,12 @@ export function Profile() {
         <Grid item className={styles.tabDetailsContainer}>
           {isActiveTab.tabName === 'dashboard' ? (
             <Dashboard tabName={isActiveTab.tabName} />
+          ) : isActiveTab.tabName === 'track-status' &&
+            (loggedInUserType === 'College' ||
+              loggedInUserType === 'NMC' ||
+              loggedInUserType === 'SMC') ? (
+            // eslint-disable-next-line react/jsx-indent
+            <TrackStatus tabName={isActiveTab.tabName} />
           ) : isActiveTab.tabName === 'my-profile' && loggedInUserType === 'Doctor' ? (
             <UserProfile tabName={isActiveTab.tabName} />
           ) : isActiveTab.tabName === 'my-profile' && loggedInUserType === 'College' ? (
