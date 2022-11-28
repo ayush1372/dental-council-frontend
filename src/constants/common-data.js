@@ -164,6 +164,22 @@ export const collegeProfileData = {
   collegePinCode: { id: '1', name: '110088' },
   collegeUniversityName: { id: '1', name: 'Delhi University' },
 };
+export const trackstatusData = {
+  message: [
+    {
+      SNo: 1,
+      registrationNo: '71-1567-8728-1025',
+      nameofApplicant: 'Basavaraj S Harihar',
+      nameofStateCouncil: 'West Bengal Medical Council',
+      councilVerificationStatus: 'Submitted',
+      collegeVerificationStatus: 'Submitted',
+      NMCVerificationStatus: 'Submitted',
+      dateofSubmission: '31-Oct-2022',
+      pendency: '25',
+      requestNMC: 'view',
+    },
+  ],
+};
 
 export const applications = {
   message: [
