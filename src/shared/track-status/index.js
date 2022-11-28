@@ -27,7 +27,7 @@ export default function TrackStatus() {
   };
 
   return (
-    <Box pb={4}>
+    <Box p={3}>
       <Grid container spacing={2} mt={2}>
         <Grid container item spacing={2}>
           <Grid item xs={12}>
