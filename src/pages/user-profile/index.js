@@ -18,7 +18,7 @@ const readWizardSteps = ['Personal Details', 'Registration & Academic Details', 
 export const UserProfile = () => {
   const [isReadMode, setIsReadMode] = useState(true);
   const [wizardSteps, setWizardSteps] = useState(readWizardSteps);
-  const { activeStep, handleNext, handleBack } = useWizard(0, []);
+  const { activeStep, handleNext, handleBack, resetStep } = useWizard(0, []);
 
   useEffect(() => {
     if (!isReadMode) {
@@ -101,7 +101,13 @@ export const UserProfile = () => {
           )}
         </Wizard>
       </Box>
-      {!isReadMode && activeStep === 3 && <ProfileConsent />}
+      {!isReadMode && activeStep === 3 && (
+        <ProfileConsent
+          handleBack={handleBack}
+          resetStep={resetStep}
+          setIsReadMode={setIsReadMode}
+        />
+      )}
     </Container>
   );
 };

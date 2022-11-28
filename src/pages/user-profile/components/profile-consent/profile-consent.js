@@ -1,19 +1,27 @@
-// import { useState } from 'react';
-import { Box, Typography } from '@mui/material';
+import { useState } from 'react';
+
+import { Box, Dialog, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
 import { Button, Checkbox } from '../../../../ui/core';
 
-const ProfileConsent = () => {
+const ProfileConsent = ({ handleBack, setIsReadMode, resetStep }) => {
+  const [confirmationModal, setConfirmationModal] = useState(false);
   const {
     formState: { errors },
     register,
+    getValues,
+    handleSubmit,
   } = useForm({
     mode: 'onChange',
     defaultValues: {
-      consent: '',
+      consent: false,
     },
   });
+  const handleSubmitDetails = () => {
+    const { consent } = getValues();
+    if (consent) setConfirmationModal(true);
+  };
   return (
     <Box bgcolor="white.main" py={2} px={4} mt={2} boxShadow={1}>
       <Typography component="div" color="primary.main" variant="body1">
@@ -42,35 +50,89 @@ const ProfileConsent = () => {
           at any point of time, subject to applicable laws, rules and regulations.
         </Typography>
       </Box>
-      <Box display="flex" justifyContent="flex-end" mt={2}>
-        <Button
-          variant="outlined"
-          color="secondary"
-          sx={{
-            margin: '0 5px',
-          }}
-        >
-          Print & Save as PDF
-        </Button>
-        <Button
-          color="secondary"
-          variant="contained"
-          sx={{
-            margin: '0 5px',
-          }}
-        >
-          E-sign Profile
-        </Button>
-        <Button
-          color="secondary"
-          variant="contained"
-          sx={{
-            margin: '0 5px',
-          }}
-        >
-          Submit
-        </Button>
+      <Box mt={2} display="flex">
+        <Box>
+          <Button
+            variant="contained"
+            color="grey"
+            sx={{
+              margin: '0 5px',
+            }}
+            onClick={handleBack}
+          >
+            Back
+          </Button>
+        </Box>
+        <Box display="flex" justifyContent="flex-end" width="100%">
+          <Button
+            variant="outlined"
+            color="secondary"
+            sx={{
+              margin: '0 5px',
+            }}
+          >
+            Print & Save as PDF
+          </Button>
+          <Button
+            color="secondary"
+            variant="contained"
+            sx={{
+              margin: '0 5px',
+            }}
+          >
+            E-sign Profile
+          </Button>
+          <Button
+            color="secondary"
+            variant="contained"
+            sx={{
+              margin: '0 5px',
+            }}
+            onClick={handleSubmit(handleSubmitDetails)}
+          >
+            Submit
+          </Button>
+        </Box>
       </Box>
+
+      <Dialog
+        open={confirmationModal}
+        onClose={() => {
+          setConfirmationModal(false);
+        }}
+      >
+        <Box p={2} width="450px">
+          <Typography>Do you want to proceed ?</Typography>
+          <Box display={'flex'} justifyContent={'flex-end'}>
+            <Button
+              onClick={() => {
+                setConfirmationModal(false);
+              }}
+              color="grey"
+              variant="contained"
+              sx={{
+                margin: '0 5px',
+              }}
+            >
+              No
+            </Button>
+            <Button
+              onClick={() => {
+                setConfirmationModal(false);
+                setIsReadMode(true);
+                resetStep(0);
+              }}
+              color="secondary"
+              variant="contained"
+              sx={{
+                margin: '0 5px',
+              }}
+            >
+              Yes
+            </Button>
+          </Box>
+        </Box>
+      </Dialog>
     </Box>
   );
 };
