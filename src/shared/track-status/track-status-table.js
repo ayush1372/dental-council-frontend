@@ -4,7 +4,7 @@ import { Box, Grid, TablePagination } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 import { verboseLog } from '../../config/debug';
-import { trackstatusData } from '../../constants/utils';
+import { trackstatusData } from '../../constants/common-data';
 import GenericTable from '../../shared/generic-component/generic-table';
 
 function createData(

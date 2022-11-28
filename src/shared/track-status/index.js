@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 
 import { SearchableDropdown } from '../../components/autocomplete/searchable-dropdown';
 import { verboseLog } from '../../config/debug';
-import { RegistrationCouncilNames } from '../../constants/utils';
+import { RegistrationCouncilNames } from '../../constants/common-data';
 import TrackStatusTable from '../../shared/track-status/track-status-table';
 import { Button, TextField } from '../../ui/core';
 
