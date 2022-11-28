@@ -194,7 +194,7 @@ export default function Dashboard() {
       ) : showViewProfile ? (
         <Box>
           <ViewProfile />
-          <UserProfile />
+          <UserProfile showViewProfile={showViewProfile} />
         </Box>
       ) : null}
     </>
