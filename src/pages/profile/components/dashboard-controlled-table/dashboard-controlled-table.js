@@ -6,7 +6,6 @@ import { verboseLog } from '../../../../config/debug';
 import { applications } from '../../../../constants/common-data';
 import GenericTable from '../../../../shared/generic-component/generic-table';
 import TableSearch from '../table-search/table-search';
-// import SearchFilter from '../../../../shared/search-filter';
 
 function createData(
   SNo,
@@ -39,7 +38,6 @@ function DashboardControlledTable(props) {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
   const [selectedRowData, setRowData] = React.useState({});
-  // const [searchQuery, setSearchQuery] = React.useState({ value: '' });
   verboseLog('selectedRowData', selectedRowData);
   const dataHeader = [
     { title: 'S.No.', name: 'SNo', sorting: true, type: 'string' },
@@ -55,7 +53,7 @@ function DashboardControlledTable(props) {
       sorting: true,
       type: 'string',
     },
-    { title: 'Name of State Council', name: 'nameofStateCouncil', sorting: true, type: 'date' },
+    { title: 'Name of State Council', name: 'nameofStateCouncil', sorting: true, type: 'string' },
     {
       title: 'Council Verification Status',
       name: 'councilVerificationStatus',
@@ -74,7 +72,7 @@ function DashboardControlledTable(props) {
       sorting: true,
       type: 'string',
     },
-    { title: 'Date of Submission', name: 'dateofSubmission', sorting: true, type: 'string' },
+    { title: 'Date of Submission', name: 'dateofSubmission', sorting: true, type: 'date' },
     { title: 'Pendency', name: 'pendency', sorting: true, type: 'string' },
     { title: 'View', name: 'view', sorting: true, type: 'string' },
   ];
