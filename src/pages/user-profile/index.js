@@ -9,35 +9,38 @@ import Wizard from '../../ui/core/wizard';
 import PersonalDetails from './components/personal-details/personal-details';
 import RegisterAndAcademicDetails from './components/register-and-academic-details/register-and-academic-details';
 import WorkProfile from './components/work-profile/work-profile';
-export const UserProfile = () => {
+
+export const UserProfile = (props) => {
   const [isReadMode, setIsReadMode] = useState(true);
   const { activeStep, handleNext, handleBack } = useWizard(0, []);
   const wizardSteps = ['Personal Details', 'Registration & Academic Details', 'Work Profile'];
 
   return (
     <Container maxWidth="lg" sx={{ marginTop: '30px' }}>
-      <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Typography component="div" variant="h2" color="primary.main" py={2}>
-          {isReadMode ? 'User Profile' : 'Edit User Profile'}
-        </Typography>
-        <Box>
-          {isReadMode && (
-            <Button
-              endIcon={<EditIcon />}
-              variant="contained"
-              color="secondary"
-              onClick={() => {
-                setIsReadMode(false);
-              }}
-              sx={{
-                width: 'max-content',
-              }}
-            >
-              Edit Profile
-            </Button>
-          )}
+      {!props.showViewProfile ? (
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Typography component="div" variant="h2" color="primary.main" py={2}>
+            {isReadMode ? 'User Profile' : 'Edit User Profile'}
+          </Typography>
+          <Box>
+            {isReadMode && (
+              <Button
+                endIcon={<EditIcon />}
+                variant="contained"
+                color="secondary"
+                onClick={() => {
+                  setIsReadMode(false);
+                }}
+                sx={{
+                  width: 'max-content',
+                }}
+              >
+                Edit Profile
+              </Button>
+            )}
+          </Box>
         </Box>
-      </Box>
+      ) : null}
       <Wizard
         activeStep={activeStep}
         handleBack={handleBack}

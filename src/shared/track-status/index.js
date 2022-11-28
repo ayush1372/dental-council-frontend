@@ -8,7 +8,6 @@ import { verboseLog } from '../../config/debug';
 import { RegistrationCouncilNames } from '../../constants/common-data';
 import TrackStatusTable from '../../shared/track-status/track-status-table';
 import { Button, TextField } from '../../ui/core';
-
 export default function TrackStatus() {
   const [showTable, setShowTable] = useState(false);
 
