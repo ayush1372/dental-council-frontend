@@ -3,23 +3,21 @@ import { useEffect, useState } from 'react';
 import { Grid, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
-import TrackStatus from '../../shared/track-status';
+import TrackStatus from '../../shared/track-status/index';
 import { changeUserActiveTab } from '../../store/reducers/ui-reducers';
 import SuspendLicenseVoluntaryRetirement from '../suspend-license-voluntary-retirement';
 import UserProfile from '../user-profile';
+import CollegeDean from './college-dean/college-dean';
 import CollegeMyProfile from './college-my-profile/college-my-profile';
 import CollegeRegistrar from './college-registrar/college-registrar';
 import Dashboard from './components/dashboard-cards/dashboard-cards';
 import ProfileImage from './components/profile-image/profile-image';
 import { VerticalTab } from './components/vertical-tab/vertical-tab';
+import MyProfile from './smc-nmc-profile/my-profile';
 
 import styles from './profile.module.scss';
 
 const dataTabs = [
-  // {
-  //   title: 'Dashboard',
-  //   tabName: 'dashboard',
-  // },
   {
     title: 'My Profile',
     tabName: 'my-profile',
@@ -120,7 +118,6 @@ export function Profile() {
     } else {
       dispatch(changeUserActiveTab(dataTabs[0].tabName));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -176,8 +173,20 @@ export function Profile() {
             <UserProfile tabName={isActiveTab.tabName} />
           ) : isActiveTab.tabName === 'my-profile' && loggedInUserType === 'College' ? (
             <CollegeMyProfile />
+          ) : isActiveTab.tabName === 'my-profile' && loggedInUserType === 'SMC' ? (
+            <MyProfile userType={'SMC'} />
+          ) : isActiveTab.tabName === 'my-profile' && loggedInUserType === 'NMC' ? (
+            <MyProfile userType={'NMC'} />
+          ) : isActiveTab.tabName === 'my-profile' &&
+            loggedInUserType !== 'Doctor' &&
+            loggedInUserType !== 'College' &&
+            loggedInUserType !== 'SMC' &&
+            loggedInUserType !== 'NMC' ? (
+            ''
           ) : isActiveTab.tabName === 'college-registrar' ? (
             <CollegeRegistrar />
+          ) : isActiveTab.tabName === 'college-dean' ? (
+            <CollegeDean />
           ) : (isActiveTab.tabName === 'suspend-license' ||
               isActiveTab.tabName === 'voluntary-retirement') &&
             loggedInUserType === 'Doctor' ? (
@@ -193,7 +202,7 @@ export function Profile() {
               justifyContent={'center'}
             >
               <Typography variant="h4" component={'p'}>
-                {isActiveTab.tabName}
+                {isActiveTab.title}
               </Typography>
             </Grid>
           )}

@@ -1,15 +1,27 @@
-import { Autocomplete, TextField } from '@mui/material';
-import { Box } from '@mui/system';
-const SearchableDropdown = ({
-  id,
-  name,
-  items,
-  label,
-  onChange,
-  placeholder,
-  value,
-  multiple = false,
-}) => {
+import { forwardRef } from 'react';
+
+import { Autocomplete, Box } from '@mui/material';
+
+import { TextField } from '../../ui/core';
+
+const AutoCompleteField = (
+  {
+    id,
+    name,
+    items,
+    label,
+    placeholder,
+    onChange,
+    value,
+    required,
+    error,
+    multiple = false,
+    clearErrors,
+
+    ...props
+  },
+  ref
+) => {
   return (
     <Autocomplete
       limitTags={1}
@@ -17,6 +29,7 @@ const SearchableDropdown = ({
       multiple={multiple}
       value={value}
       onChange={(event, newValue) => {
+        clearErrors(name);
         onChange(newValue);
       }}
       id={id}
@@ -32,10 +45,19 @@ const SearchableDropdown = ({
         </Box>
       )}
       renderInput={(params) => (
-        <TextField {...params} name={name} label={label} placeholder={placeholder} />
+        <TextField
+          {...props}
+          ref={ref}
+          {...params}
+          name={name}
+          label={label}
+          placeholder={placeholder}
+          required={required}
+          error={error}
+        />
       )}
     />
   );
 };
 
-export default SearchableDropdown;
+export const SearchableDropdown = forwardRef(AutoCompleteField);

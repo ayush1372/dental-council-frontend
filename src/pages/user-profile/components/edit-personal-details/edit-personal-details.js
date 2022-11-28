@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
 import { AutoComplete } from '../../../../components/autocomplete/searchable-autocomplete';
-import { get_year_data } from '../../../../constants/utils';
+import { get_year_data } from '../../../../helpers/functions/common-functions';
 import { ModalOTP } from '../../../../shared/otp-modal/otp-modal';
 import { RadioGroup, Select, TextField } from '../../../../ui/core';
 import MobileNumber from '../../../../ui/core/mobile-number/mobile-number';

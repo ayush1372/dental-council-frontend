@@ -4,9 +4,9 @@ import { Box, Container, Typography } from '@mui/material';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 
-import SearchableDropdown from '../../../components/autocomplete/searchable-dropdown';
+import { SearchableDropdown } from '../../../components/autocomplete/searchable-dropdown';
 import { verboseLog } from '../../../config/debug';
-import { RegistrationCouncilNames } from '../../../constants/utils';
+import { RegistrationCouncilNames } from '../../../constants/common-data';
 import { Button } from '../../../ui/core';
 import { TextField } from '../../../ui/core/form/textfield/textfield';
 import FetchDoctorDetails from './fetch-doctor-details';
@@ -31,47 +31,60 @@ const DoctorRegistrationWelcomePage = () => {
   verboseLog(isNext);
 
   return (
-    <div>
+    <Box>
       {isNext === false ? (
-        <Box sx={{ marginTop: '73px', marginBottom: '77px' }}>
+        <Box my={9}>
           <Container
             sx={{
-              boxShadow: '2',
-              paddingTop: '30px',
+              boxShadow: '1',
+              pt: 4,
               width: '679px',
             }}
           >
             <Box>
-              <Box sx={{ paddingTop: '15px', paddingBottom: '32px' }}>
+              <Box pt={2} pb={4}>
                 <Typography variant="h2" color="primary">
                   Doctor Registration
                 </Typography>
                 <Typography variant="body3" color="primary.main">
-                  To proceed with your registration confirm your Medical council and Registration
-                  Number.
+                  You can select your registration council first from the dropdown and then enter
+                  your Registration number. This will fetch your records from your registered
+                  council.
                 </Typography>
               </Box>
 
-              <Box sx={{ paddingBottom: '32px' }}>
+              <Box pb={4}>
                 <Typography variant="body3" color="textSecondary.main">
-                  Select your registration council
-                  <Typography component="span" sx={{ color: 'error.main' }}>
+                  Select Your Registration Council
+                  <Typography component="span" color="error.main">
                     *
                   </Typography>
                 </Typography>
                 <Box>
-                  <SearchableDropdown name="RegistrationCouncil" items={RegistrationCouncilNames} />
+                  <SearchableDropdown
+                    name="RegistrationCouncil"
+                    items={RegistrationCouncilNames}
+                    placeholder="Select your registration Council"
+                    onChange={(newValue) => {
+                      verboseLog(newValue);
+                    }}
+                    defaultValue={getValues().RegistrationCouncil}
+                    error={errors.RegistrationCouncil?.message}
+                    {...register('RegistrationCouncil', {
+                      required: 'Registration Council is required',
+                    })}
+                  />
                 </Box>
               </Box>
-              <Box sx={{ paddingBottom: '40px' }}>
+              <Box pb={5}>
                 <Typography variant="body3" color="textSecondary.main">
                   Enter Registration Number
-                  <Typography component="span" sx={{ color: 'error.main' }}>
+                  <Typography component="span" color="error.main">
                     *
                   </Typography>
                 </Typography>
                 <TextField
-                  fullWidth={true}
+                  fullWidth
                   name={'RegistrationNumber'}
                   placeholder={t('Enter Registration Number')}
                   defaultValue={getValues().RegistrationNumber}
@@ -81,12 +94,12 @@ const DoctorRegistrationWelcomePage = () => {
                   })}
                 />
               </Box>
-              <Box sx={{ display: 'flex', paddingBottom: '43px' }}>
+              <Box display="flex" pb={6}>
                 <Button
                   onClick={handleSubmit(onSubmit)}
                   variant="contained"
                   sx={{
-                    marginRight: '25px',
+                    mr: 3,
                     width: '105px',
                     height: '45px',
                     backgroundColor: 'secondary.main',
@@ -112,7 +125,7 @@ const DoctorRegistrationWelcomePage = () => {
       ) : (
         <FetchDoctorDetails />
       )}
-    </div>
+    </Box>
   );
 };
 

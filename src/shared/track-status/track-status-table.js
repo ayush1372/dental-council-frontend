@@ -1,11 +1,11 @@
 import React from 'react';
 
-import { Box, Grid, TablePagination, Typography } from '@mui/material';
+import { Box, Grid, TablePagination } from '@mui/material';
+import { useSelector } from 'react-redux';
 
-import { verboseLog } from '../../../../config/debug';
-import { applications } from '../../../../constants/common-data';
-import GenericTable from '../../../../shared/generic-component/generic-table';
-import TableSearch from '../table-search/table-search';
+import { verboseLog } from '../../config/debug';
+import { trackstatusData } from '../../constants/common-data';
+import GenericTable from '../../shared/generic-component/generic-table';
 
 function createData(
   SNo,
@@ -32,12 +32,18 @@ function createData(
     view,
   };
 }
-function DashboardControlledTable(props) {
+function TrackStatusTable(props) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState({});
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
   const [selectedRowData, setRowData] = React.useState({});
+  const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
+
+  const viewNameOfApplicant = (event, row) => {
+    verboseLog('called', event, row);
+  };
+
   verboseLog('selectedRowData', selectedRowData);
   const dataHeader = [
     { title: 'S.No.', name: 'SNo', sorting: true, type: 'string' },
@@ -53,7 +59,7 @@ function DashboardControlledTable(props) {
       sorting: true,
       type: 'string',
     },
-    { title: 'Name of State Council', name: 'nameofStateCouncil', sorting: true, type: 'string' },
+    { title: 'Name of State Council', name: 'nameofStateCouncil', sorting: true, type: 'date' },
     {
       title: 'Council Verification Status',
       name: 'councilVerificationStatus',
@@ -72,22 +78,23 @@ function DashboardControlledTable(props) {
       sorting: true,
       type: 'string',
     },
-    { title: 'Date of Submission', name: 'dateofSubmission', sorting: true, type: 'date' },
+    { title: 'Date of Submission', name: 'dateofSubmission', sorting: true, type: 'string' },
     { title: 'Pendency', name: 'pendency', sorting: true, type: 'string' },
-    { title: 'View', name: 'view', sorting: true, type: 'string' },
+    {
+      title:
+        loggedInUserType === 'NMC'
+          ? 'Action'
+          : loggedInUserType === 'SMC'
+          ? 'Request NMC'
+          : 'Request NMC',
+      name: 'requestNMC',
+      sorting: true,
+      type: 'string',
+    },
   ];
 
   const handleDataRowClick = (dataRow) => {
     setRowData(dataRow);
-  };
-
-  const viewCallback = (event, row) => {
-    event.preventDefault();
-    event.stopPropagation();
-    setRowData(row);
-    props.setShowViewPorfile(true);
-    props.setShowDashboard(false);
-    props.setShowTable(false);
   };
 
   const handleRequestSort = (event, property) => {
@@ -95,7 +102,7 @@ function DashboardControlledTable(props) {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
-  const newRowsData = applications.message?.map((application) => {
+  const newRowsData = trackstatusData.message?.map((application) => {
     return createData(
       { type: 'SNo', value: application.SNo },
       {
@@ -105,6 +112,7 @@ function DashboardControlledTable(props) {
       {
         type: 'nameofApplicant',
         value: application.nameofApplicant,
+        callbackNameOfApplicant: viewNameOfApplicant,
       },
       {
         type: 'nameofStateCouncil',
@@ -118,7 +126,15 @@ function DashboardControlledTable(props) {
       { type: 'NMCVerificationStatus', value: application.NMCVerificationStatus },
       { type: 'dateofSubmission', value: application.dateofSubmission },
       { type: 'pendency', value: application.pendency },
-      { type: 'view', value: application.view, onClickCallback: viewCallback }
+      {
+        type:
+          loggedInUserType === 'NMC'
+            ? 'requestNMC'
+            : loggedInUserType === 'SMC'
+            ? 'requestSMC'
+            : 'college',
+        value: application.view,
+      }
     );
   });
 
@@ -137,10 +153,6 @@ function DashboardControlledTable(props) {
 
   return (
     <Grid sx={{ m: 2 }}>
-      <Typography variant="h2" py={2}>
-        Applications Pending List
-      </Typography>
-      <TableSearch />
       <GenericTable
         order={order}
         orderBy={orderBy}
@@ -167,4 +179,4 @@ function DashboardControlledTable(props) {
   );
 }
 
-export default React.memo(DashboardControlledTable);
+export default React.memo(TrackStatusTable);
