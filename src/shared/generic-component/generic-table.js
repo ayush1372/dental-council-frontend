@@ -10,7 +10,7 @@ import Moment from 'moment';
 import propTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
-import Button from '../../ui/core';
+import { Button } from '../../ui/core';
 
 GenericTable.propTypes = {
   tableHeader: propTypes.array.isRequired,

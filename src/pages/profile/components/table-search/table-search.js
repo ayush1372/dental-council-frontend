@@ -3,7 +3,7 @@ import { Box, Grid } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
-import SearchableDropdown from '../../../../components/autocomplete/searchable-dropdown';
+import { SearchableDropdown } from '../../../../components/autocomplete/searchable-dropdown';
 import { verboseLog } from '../../../../config/debug';
 import { Button, TextField } from '../../../../ui/core';
 

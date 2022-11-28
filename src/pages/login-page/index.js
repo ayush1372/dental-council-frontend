@@ -74,7 +74,7 @@ export function LoginPage() {
             </Typography>
             <TextField
               inputProps={{ maxLength: 100 }}
-              fullWidth={true}
+              fullWidth
               id="outlined-basic"
               variant="outlined"
               type="text"
@@ -98,7 +98,7 @@ export function LoginPage() {
               <b>{t('Password')}</b>
             </Typography>
             <TextField
-              fullWidth={true}
+              fullWidth
               id="outlined-basic"
               variant="outlined"
               type="Password"

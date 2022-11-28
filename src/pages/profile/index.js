@@ -13,6 +13,7 @@ import CollegeRegistrar from './college-registrar/college-registrar';
 import Dashboard from './components/dashboard-cards/dashboard-cards';
 import ProfileImage from './components/profile-image/profile-image';
 import { VerticalTab } from './components/vertical-tab/vertical-tab';
+import MyProfile from './smc-nmc-profile/my-profile';
 
 import styles from './profile.module.scss';
 
@@ -166,11 +167,22 @@ export function Profile() {
             (loggedInUserType === 'College' ||
               loggedInUserType === 'NMC' ||
               loggedInUserType === 'SMC') ? (
+            // eslint-disable-next-line react/jsx-indent
             <TrackStatus tabName={isActiveTab.tabName} />
           ) : isActiveTab.tabName === 'my-profile' && loggedInUserType === 'Doctor' ? (
             <UserProfile tabName={isActiveTab.tabName} />
           ) : isActiveTab.tabName === 'my-profile' && loggedInUserType === 'College' ? (
             <CollegeMyProfile />
+          ) : isActiveTab.tabName === 'my-profile' && loggedInUserType === 'SMC' ? (
+            <MyProfile userType={'SMC'} />
+          ) : isActiveTab.tabName === 'my-profile' && loggedInUserType === 'NMC' ? (
+            <MyProfile userType={'NMC'} />
+          ) : isActiveTab.tabName === 'my-profile' &&
+            loggedInUserType !== 'Doctor' &&
+            loggedInUserType !== 'College' &&
+            loggedInUserType !== 'SMC' &&
+            loggedInUserType !== 'NMC' ? (
+            ''
           ) : isActiveTab.tabName === 'college-registrar' ? (
             <CollegeRegistrar />
           ) : isActiveTab.tabName === 'college-dean' ? (
