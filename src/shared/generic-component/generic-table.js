@@ -1,7 +1,4 @@
-import { Box, Link, TableSortLabel } from '@mui/material';
-import Button from '@mui/material/Button';
-import Paper from '@mui/material/Paper';
-import Table from '@mui/material/Table';
+import { Box, Link, Paper, Table, TableSortLabel } from '@mui/material';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
@@ -13,7 +10,7 @@ import Moment from 'moment';
 import propTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
-// import { useSelector } from 'react-redux';
+import Button from '../../ui/core';
 
 GenericTable.propTypes = {
   tableHeader: propTypes.array.isRequired,
@@ -29,7 +26,6 @@ GenericTable.propTypes = {
 
 export default function GenericTable(props) {
   const { userActiveTab } = useSelector((state) => state.ui);
-  // const { isLoggedInUserType } = useSelector((state) => state.recruiter);
   const tableCellWidth = Math.floor(window.innerWidth / props.tableHeader.length) + 'px';
   const { order, orderBy, onRequestSort, page, rowsPerPage } = props;
   function stableSort(array, comparator) {
@@ -83,9 +79,6 @@ export default function GenericTable(props) {
         <TableHead>
           <TableRow sx={{ backgroundColor: 'primary.main' }}>
             {props.tableHeader.map((item, index) => {
-              // if (item.title === 'action') {
-              //   return <TableCell key={index} align="left" />;
-              // } else
               if (item.sorting) {
                 return (
                   <TableCell
@@ -130,8 +123,6 @@ export default function GenericTable(props) {
                 maxWidth={'100px'}
                 key={rowIndex}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                // className={!row.read.value ? 'style-bold' : ''}
-                // onClick={() => props.handleRowClick(row)}
               >
                 {props.tableHeader.map((item, index) => {
                   if (item.title === 'View') {
@@ -171,17 +162,6 @@ export default function GenericTable(props) {
                         >
                           {row[item.name]?.value}
                         </Link>
-
-                        {/* <Button
-                          onClick={(event) => row[item.name]?.callbackNameOfApplicant(event, row)}
-                          variant="contained"
-                          size="small"
-                          sx={{
-                            backgroundColor: 'secondary.main',
-                          }}
-                        >
-                          {row[item.name]?.value}
-                        </Button> */}
                       </TableCell>
                     );
                   } else {
@@ -189,7 +169,6 @@ export default function GenericTable(props) {
                       <Tooltip key={index} title={row[item.name]?.value}>
                         <TableCell
                           key={index}
-                          // title={row[item.name]?.value}
                           className={row.read?.value === false ? 'style-bold' : ''}
                           sx={{
                             whiteSpace: 'nowrap',
@@ -197,7 +176,6 @@ export default function GenericTable(props) {
                             maxWidth: '112px',
                             overflow: 'hidden',
                             fontSize: '13px',
-                            //fontWeight: '500'
                           }}
                           align="left"
                         >

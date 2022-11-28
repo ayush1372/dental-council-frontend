@@ -27,15 +27,13 @@ export default function TrackStatus() {
   };
 
   return (
-    <Box p={3}>
+    <Box pb={4}>
       <Grid container spacing={2} mt={2}>
         <Grid container item spacing={2}>
           <Grid item xs={12}>
-            <Box p={1}>
-              <Typography color="textPrimary.main" variant="h1">
-                Track Status
-              </Typography>
-            </Box>
+            <Typography component="div" color="textPrimary.main" variant="h1" p={1}>
+              Track Status
+            </Typography>
           </Grid>
         </Grid>
         <Grid container item spacing={2}>
@@ -43,7 +41,7 @@ export default function TrackStatus() {
             <Box sx={{ paddingBottom: '32px' }}>
               <Typography color="inputTextColor.main">
                 Medical Council Name
-                <Typography component="span" sx={{ color: 'error.main' }}>
+                <Typography component="span" color="error.main">
                   *
                 </Typography>
               </Typography>

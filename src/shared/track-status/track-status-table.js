@@ -41,8 +41,7 @@ function TrackStatusTable(props) {
   const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
 
   const viewNameOfApplicant = (event, row) => {
-    // eslint-disable-next-line no-console
-    console.log('called', event, row);
+    verboseLog('called', event, row);
   };
 
   verboseLog('selectedRowData', selectedRowData);
