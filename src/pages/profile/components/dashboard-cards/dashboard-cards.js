@@ -4,8 +4,10 @@ import { Box, Container, Grid, Paper, Typography } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
 
 import { verboseLog } from '../../../../config/debug';
+import ViewProfile from '../../../../shared/view-profile/view-profile';
 import { Palette } from '../../../../theme/palette';
 import { Button } from '../../../../ui/core';
+import UserProfile from '../../../user-profile/index';
 import BreadcrumbsCompnent from '../breadcrums';
 import DashboardControlledTable from '../dashboard-controlled-table/dashboard-controlled-table';
 
@@ -190,7 +192,10 @@ export default function Dashboard() {
           setShowTable={setShowTable}
         />
       ) : showViewProfile ? (
-        <Box>View Profile</Box>
+        <Box>
+          <ViewProfile />
+          <UserProfile showViewProfile={showViewProfile} />
+        </Box>
       ) : null}
     </>
   );

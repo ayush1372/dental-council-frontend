@@ -9,7 +9,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import { useForm } from 'react-hook-form';
 
-import { validateAadharNumber } from '../../../../constants/utils';
+import { validateAadharNumber } from '../../../../constants/common-data';
 import { Button, TextField } from '../../../../ui/core';
 import { RadioGroup } from '../../../../ui/core/form/radio-group/radio-group';
 import MobileNumber from '../../../../ui/core/mobile-number/mobile-number';

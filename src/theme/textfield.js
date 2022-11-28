@@ -55,6 +55,9 @@ export const TextField = {
         opacity: '0.4',
         pointerEvents: 'none',
       },
+      '&.MuiInputBase-adornedEnd': {
+        paddingRight: '0',
+      },
     },
 
     colorSuccess: {

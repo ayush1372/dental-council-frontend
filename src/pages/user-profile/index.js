@@ -15,7 +15,7 @@ import WorkProfile from './components/work-profile/work-profile';
 
 const readWizardSteps = ['Personal Details', 'Registration & Academic Details', 'Work Profile'];
 
-export const UserProfile = () => {
+export const UserProfile = (props) => {
   const [isReadMode, setIsReadMode] = useState(true);
   const [wizardSteps, setWizardSteps] = useState(readWizardSteps);
   const { activeStep, handleNext, handleBack, resetStep } = useWizard(0, []);
@@ -29,34 +29,36 @@ export const UserProfile = () => {
   }, [isReadMode]);
   return (
     <Container maxWidth="lg" sx={{ marginTop: '30px' }}>
-      <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Typography component="div" variant="h2" color="primary.main" py={2}>
-          {isReadMode ? 'User Profile' : 'Edit Profile'}
-          {!isReadMode && (
-            <Typography component="div" variant="body3" color="inputTextColor.main">
-              Update all your details correctly so that it could be verified by NMR verifiers.
-            </Typography>
-          )}
-        </Typography>
+      {!props.showViewProfile ? (
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Typography component="div" variant="h2" color="primary.main" py={2}>
+            {isReadMode ? 'User Profile' : 'Edit Profile'}
+            {!isReadMode && (
+              <Typography component="div" variant="body3" color="inputTextColor.main">
+                Update all your details correctly so that it could be verified by NMR verifiers.
+              </Typography>
+            )}
+          </Typography>
 
-        <Box>
-          {isReadMode && (
-            <Button
-              endIcon={<EditIcon />}
-              variant="contained"
-              color="secondary"
-              onClick={() => {
-                setIsReadMode(false);
-              }}
-              sx={{
-                width: 'max-content',
-              }}
-            >
-              Edit Profile
-            </Button>
-          )}
+          <Box>
+            {isReadMode && (
+              <Button
+                endIcon={<EditIcon />}
+                variant="contained"
+                color="secondary"
+                onClick={() => {
+                  setIsReadMode(false);
+                }}
+                sx={{
+                  width: 'max-content',
+                }}
+              >
+                Edit Profile
+              </Button>
+            )}
+          </Box>
         </Box>
-      </Box>
+      ) : null}
       {!isReadMode && <ConstantDetails />}
       <Box bgcolor="white.main">
         <Wizard

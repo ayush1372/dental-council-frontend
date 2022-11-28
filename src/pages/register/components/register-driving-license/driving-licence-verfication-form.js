@@ -4,7 +4,7 @@ import { Box, Divider, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { daysData, monthsData, yearsData } from '../../../../constants/utils';
+import { daysData, monthsData, yearsData } from '../../../../constants/common-data';
 import { Button, Checkbox, RadioGroup, Select, TextField } from '../../../../ui/core';
 // import DialogBox from '../../../../ui/core/dialog-box/dialog-box';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
