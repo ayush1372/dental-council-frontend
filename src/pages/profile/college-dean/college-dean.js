@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button, TextField } from '../../../ui/core';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
-export function CollegeRegistrar() {
+export function CollegeDean() {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const {
@@ -17,11 +17,11 @@ export function CollegeRegistrar() {
   } = useForm({
     mode: 'onChange',
     defaultValues: {
-      registrarName: '',
-      registrarPhoneNumber: '',
-      registrarEmail: '',
-      registrarUserId: '',
-      registrarPassword: '',
+      deanName: '',
+      deanPhoneNumber: '',
+      deanEmail: '',
+      deanUserId: '',
+      deanPassword: '',
     },
   });
   const onSubmit = () => {
@@ -41,7 +41,7 @@ export function CollegeRegistrar() {
       <Grid container item p={2} spacing={2}>
         <Grid item xs={8} md={4}>
           <Typography variant="body1" color="inputTextColor.main">
-            <b>{t('College Registrar Name')}</b>{' '}
+            <b>{t('College Dean Name')}</b>{' '}
           </Typography>
           <TextField
             fullWidth
@@ -49,20 +49,20 @@ export function CollegeRegistrar() {
             id="outlined-basic"
             variant="outlined"
             type="text"
-            name="registrarName"
+            name="deanName"
             required="true"
-            placeholder={t('College Registrar Name')}
+            placeholder={t('College Dean Name')}
             margin="dense"
-            defaultValue={getValues().registrarName}
-            error={errors.registrarName?.message}
-            {...register('registrarName', {
-              required: 'Provide Registrar Name',
+            defaultValue={getValues().deanName}
+            error={errors.deanName?.message}
+            {...register('deanName', {
+              required: 'Provide Dean Name',
             })}
           />
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="body1" color="inputTextColor.main">
-            <b>{t('College Registrar Phone Number')}</b>{' '}
+            <b>{t('College Dean Phone Number')}</b>{' '}
           </Typography>
           <TextField
             fullWidth
@@ -70,13 +70,13 @@ export function CollegeRegistrar() {
             id="outlined-basic"
             variant="outlined"
             type="text"
-            name="registrarPhoneNumber"
+            name="deanPhoneNumber"
             required="true"
-            placeholder={t('College Registrar Phone Number')}
+            placeholder={t('College Dean Phone Number')}
             margin="dense"
-            defaultValue={getValues().registrarPhoneNumber}
-            error={errors.registrarPhoneNumber?.message}
-            {...register('registrarPhoneNumber', {
+            defaultValue={getValues().deanPhoneNumber}
+            error={errors.deanPhoneNumber?.message}
+            {...register('deanPhoneNumber', {
               required: 'Provide Phone Number',
               pattern: {
                 value: /^(\d{13})$/i,
@@ -87,7 +87,7 @@ export function CollegeRegistrar() {
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="body1" color="inputTextColor.main">
-            <b>{t('College Registrar Email Address')}</b>{' '}
+            <b>{t('College Dean Email Address')}</b>{' '}
           </Typography>
           <TextField
             fullWidth
@@ -95,13 +95,13 @@ export function CollegeRegistrar() {
             id="outlined-basic"
             variant="outlined"
             type="email"
-            name="registrarEmail"
+            name="deanEmail"
             required="true"
-            placeholder={t('College Registrar Email Address')}
+            placeholder={t('College Dean Email Address')}
             margin="dense"
-            defaultValue={getValues().registrarEmail}
-            error={errors.registrarEmail?.message}
-            {...register('registrarEmail', {
+            defaultValue={getValues().deanEmail}
+            error={errors.deanEmail?.message}
+            {...register('deanEmail', {
               required: 'Provide Email ID',
               pattern: {
                 value:
@@ -115,7 +115,7 @@ export function CollegeRegistrar() {
       <Grid container item spacing={2} p={2}>
         <Grid item xs={8} md={4}>
           <Typography variant="body1" color="inputTextColor.main">
-            <b>{t('College Registrar User ID')}</b>{' '}
+            <b>{t('College Dean User ID')}</b>{' '}
           </Typography>
           <TextField
             fullWidth
@@ -123,34 +123,34 @@ export function CollegeRegistrar() {
             id="outlined-basic"
             variant="outlined"
             type="text"
-            name="registrarUserId"
+            name="deanUserId"
             required="true"
-            placeholder={t('College Registrar User ID')}
+            placeholder={t('College Dean User ID')}
             margin="dense"
-            defaultValue={getValues().registrarUserId}
-            error={errors.registrarUserId?.message}
-            {...register('registrarUserId', {
-              required: 'Provide Registrar User ID',
+            defaultValue={getValues().deanUserId}
+            error={errors.deanUserId?.message}
+            {...register('deanUserId', {
+              required: 'Provide Dean User ID',
             })}
           />
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="body1" color="inputTextColor.main">
-            <b>{t('College Registrar Password')}</b>{' '}
+            <b>{t('College Dean Password')}</b>{' '}
           </Typography>
           <TextField
             fullWidth
             inputProps={{ maxLength: 100 }}
             variant="outlined"
             type="password"
-            name="registrarPassword"
+            name="deanPassword"
             required="true"
-            placeholder={t('College Registrar Password')}
+            placeholder={t('College Dean Password')}
             margin="dense"
-            defaultValue={getValues().registrarPassword}
-            error={errors.registrarPassword?.message}
-            {...register('registrarPassword', PasswordRegexValidation, {
-              required: 'Provide registrar Password',
+            defaultValue={getValues().deanPassword}
+            error={errors.deanPassword?.message}
+            {...register('deanPassword', PasswordRegexValidation, {
+              required: 'Provide Dean Password',
             })}
           />
         </Grid>
@@ -182,4 +182,4 @@ export function CollegeRegistrar() {
   );
 }
 
-export default CollegeRegistrar;
+export default CollegeDean;

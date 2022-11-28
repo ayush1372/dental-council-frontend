@@ -21,7 +21,7 @@ export function VerticalTab(props) {
                 props.activeTab.tabName === item.tabName ? styles.activeTab : styles.buttonTabs
               }
             >
-              {item.tabName}
+              {item.title}
             </div>
           </Grid>
         );
