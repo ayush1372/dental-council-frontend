@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { changeUserActiveTab } from '../../store/reducers/ui-reducers';
 import SuspendLicenseVoluntaryRetirement from '../suspend-license-voluntary-retirement';
 import UserProfile from '../user-profile';
+import CollegeDean from './college-dean/college-dean';
 import CollegeMyProfile from './college-my-profile/college-my-profile';
 import CollegeRegistrar from './college-registrar/college-registrar';
 import Dashboard from './components/dashboard-cards/dashboard-cards';
@@ -178,6 +179,8 @@ export function Profile() {
             ''
           ) : isActiveTab.tabName === 'college-registrar' ? (
             <CollegeRegistrar />
+          ) : isActiveTab.tabName === 'college-dean' ? (
+            <CollegeDean />
           ) : (isActiveTab.tabName === 'suspend-license' ||
               isActiveTab.tabName === 'voluntary-retirement') &&
             loggedInUserType === 'Doctor' ? (
