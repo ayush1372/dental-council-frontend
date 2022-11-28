@@ -56,7 +56,7 @@ export function TableSearch() {
 
   return (
     <Box data-testid="table-search">
-      <Grid container sx={{ p: 0 }}>
+      <Grid container>
         <Grid item md={2} xs={12} mb={1}>
           <Grid item md={12} xs={12}>
             <TextField
@@ -69,7 +69,6 @@ export function TableSearch() {
               name="search"
               required="false"
               placeholder={'You can search anything here'}
-              // margin="dense"
               defaultValue={getValues().search}
               error={errors.search?.message}
               {...register('search')}
@@ -96,7 +95,6 @@ export function TableSearch() {
                 name="filterByName"
                 required="false"
                 placeholder={'Filyer by Name'}
-                // margin="dense"
                 defaultValue={getValues().filterByName}
                 error={errors.filterByName?.message}
                 {...register('filterByName')}
@@ -105,7 +103,6 @@ export function TableSearch() {
             <Grid item md={3} xs={12}>
               <TextField
                 data-testid="filterByRegNo"
-                // sx={{ ml: 1 }}
                 inputProps={{ maxLength: 100 }}
                 fullWidth={true}
                 id="outlined-basic"
@@ -114,7 +111,6 @@ export function TableSearch() {
                 name="filterByRegNo"
                 required="false"
                 placeholder={'Filyer by Registration No.'}
-                // margin="dense"
                 defaultValue={getValues().filterByRegNo}
                 error={errors.filterByRegNo?.message}
                 {...register('filterByRegNo')}

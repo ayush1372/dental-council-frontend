@@ -6,7 +6,6 @@ import { verboseLog } from '../../../../config/debug';
 import { applications } from '../../../../constants/utils';
 import GenericTable from '../../../../shared/generic-component/generic-table';
 import TableSearch from '../table-search/table-search';
-// import SearchFilter from '../../../../shared/search-filter';
 
 function createData(
   SNo,
@@ -39,7 +38,6 @@ function DashboardControlledTable(props) {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
   const [selectedRowData, setRowData] = React.useState({});
-  // const [searchQuery, setSearchQuery] = React.useState({ value: '' });
   verboseLog('selectedRowData', selectedRowData);
   const dataHeader = [
     { title: 'S.No.', name: 'SNo', sorting: true, type: 'string' },
