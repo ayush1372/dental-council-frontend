@@ -6,7 +6,6 @@ import { Box, Divider, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-// import SearchableDropdown from '../../../../components/autocomplete/searchable-dropdown';
 import { Button, RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
 import ButtonGroupWizard from '../../../../ui/core/wizard/button-group-wizard';
@@ -49,7 +48,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
       RegistrationDate: '30-10-2021',
       registration: 'permanent',
       RenewalDate: '30-10-2022',
-      registrationCertificate: 'yes',
+      registrationCertificate: 'No',
       // Qualification: 'bachelor of dental surgery',
       // country: 'India',
       // state: 'New Delhi',

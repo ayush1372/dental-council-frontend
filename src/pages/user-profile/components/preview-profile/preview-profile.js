@@ -1,8 +1,8 @@
 import { Box } from '@mui/material';
 
-import EditWorkProfile from '../editable-profile/edit-work-profile';
 import ReadWorkProfile from '../read-work-profile/read-work-profile';
-const WorkProfile = ({ isReadMode, setIsReadMode, handleNext, handleBack }) => {
+import ReviewAllForms from '../review-all-forms/review-all-forms';
+const PreviewProfile = ({ isReadMode, setIsReadMode, handleNext, handleBack }) => {
   return (
     <Box mt={1}>
       {isReadMode && (
@@ -13,7 +13,7 @@ const WorkProfile = ({ isReadMode, setIsReadMode, handleNext, handleBack }) => {
         />
       )}
       {!isReadMode && (
-        <EditWorkProfile
+        <ReviewAllForms
           handleNext={handleNext}
           handleBack={handleBack}
           setIsReadMode={setIsReadMode}
@@ -23,4 +23,4 @@ const WorkProfile = ({ isReadMode, setIsReadMode, handleNext, handleBack }) => {
   );
 };
 
-export default WorkProfile;
+export default PreviewProfile;

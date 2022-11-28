@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Box, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -196,8 +195,8 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
             </Typography>
           </Grid>
           <Grid item xs={8} md={4} display="flex" alignItems="center">
-            <Button color="primary" variant="outlined" startIcon={<InfoOutlinedIcon />}>
-              Pull from Digilocker
+            <Button color="secondary" variant="outlined">
+              View Application
             </Button>
           </Grid>
         </Grid>
@@ -240,9 +239,13 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               name={'state'}
               label={'State'}
               fullWidth
+              required={true}
               placeholder="Select State"
               defaultValue={getValues().state}
-              {...register('state')}
+              {...register('state', {
+                required: 'State is required',
+              })}
+              error={errors.state?.message}
             />
           </Grid>
           <Grid item xs={6} md={4}>
@@ -327,6 +330,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               required={true}
               placeholder="Telecommunication URL"
               fullWidth
+              error={errors.telecommunicationURL?.message}
               defaultValue={getValues().telecommunicationURL}
               {...register('telecommunicationURL', {
                 required: 'Telecommunication URL is required',
@@ -361,6 +365,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               required={true}
               placeholder="Pincode"
               fullWidth
+              error={errors.PinCode?.message}
               defaultValue={getValues().Pincode}
               {...register('Pincode', {
                 required: 'PinCode is Required',
@@ -369,7 +374,6 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
                   message: 'Should only contains 6 digits',
                 },
               })}
-              error={errors.PinCode?.message}
             />
           </Grid>
         </Grid>

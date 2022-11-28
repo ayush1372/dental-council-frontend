@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 
-import EditPersonalDetails from '../edit-personal-details/edit-personal-details';
+import EditPersonalDetails from '../editable-profile/edit-personal-details';
 import ReadPersonalDetails from '../read-personal-details/read-personal-details';
 const PersonalDetails = ({ isReadMode, setIsReadMode, handleNext, handleBack }) => {
   return (

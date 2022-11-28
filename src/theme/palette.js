@@ -30,6 +30,7 @@ export const Palette = {
   backgroundColor: {
     main: '#E9ECF3',
     dark: '#000',
+    light: '#FAFAFA',
   },
   error: {
     main: '#FF5630',
