@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { Grid, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
-// import useWizard from '../../hooks/use-wizard';
 import TrackStatus from '../../shared/track-status/index';
 import { changeUserActiveTab } from '../../store/reducers/ui-reducers';
 import SuspendLicenseVoluntaryRetirement from '../suspend-license-voluntary-retirement';
@@ -18,10 +17,6 @@ import { VerticalTab } from './components/vertical-tab/vertical-tab';
 import styles from './profile.module.scss';
 
 const dataTabs = [
-  // {
-  //   title: 'Dashboard',
-  //   tabName: 'dashboard',
-  // },
   {
     title: 'My Profile',
     tabName: 'my-profile',
@@ -122,7 +117,6 @@ export function Profile() {
     } else {
       dispatch(changeUserActiveTab(dataTabs[0].tabName));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
