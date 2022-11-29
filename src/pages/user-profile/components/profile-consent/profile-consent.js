@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CloseIcon from '@mui/icons-material/Close';
 import { Box, Dialog, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
@@ -18,6 +20,9 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep }) => {
       consent: false,
     },
   });
+  const handleClose = () => {
+    setConfirmationModal(false);
+  };
   const handleSubmitDetails = () => {
     const { consent } = getValues();
     if (consent) setConfirmationModal(true);
@@ -101,9 +106,21 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep }) => {
           setConfirmationModal(false);
         }}
       >
-        <Box p={2} width="450px">
-          <Typography>Do you want to proceed ?</Typography>
-          <Box display={'flex'} justifyContent={'flex-end'}>
+        <Box p={2} width="616px" height="200">
+          <Box display={'flex'} justifyContent={'flex-start'} alignItems={'center'}>
+            <CheckCircleIcon color="success" />
+            <Typography color="textPrimary.main" variant="h3">
+              Success!
+            </Typography>
+            <CloseIcon onClick={handleClose} />
+          </Box>
+          <Box mt={4}>
+            <Typography color="textPrimary.main">
+              Your profile details have been updated. Do you want your profile to be submitted for
+              Verification ?
+            </Typography>
+          </Box>
+          <Box display={'flex'} justifyContent={'flex-end'} mt={1}>
             <Button
               onClick={() => {
                 setConfirmationModal(false);
@@ -111,7 +128,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep }) => {
               color="grey"
               variant="contained"
               sx={{
-                margin: '0 5px',
+                margin: '0 4px',
               }}
             >
               No
@@ -125,7 +142,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep }) => {
               color="secondary"
               variant="contained"
               sx={{
-                margin: '0 5px',
+                margin: '0 4px',
               }}
             >
               Yes

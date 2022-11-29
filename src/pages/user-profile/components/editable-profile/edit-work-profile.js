@@ -67,8 +67,8 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               })}
               options={[
                 {
-                  label: 'Docter',
-                  value: 'docter',
+                  label: 'Doctor',
+                  value: 'doctor',
                 },
               ]}
             />
@@ -133,7 +133,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               })}
               options={[
                 {
-                  label: 'NatureOfWork',
+                  label: 'Nature Of work',
                   value: 'NatureOfWork',
                 },
               ]}
