@@ -59,7 +59,7 @@ export const Navbar = () => {
             <Menu dropdown={false} url="/">
               {t('Photo Gallery')}
             </Menu>
-            <Menu dropdown={false} url="/">
+            <Menu dropdown={false} url="/search-doctor">
               {t('Search Doctor')}
             </Menu>
             {/* <Button
