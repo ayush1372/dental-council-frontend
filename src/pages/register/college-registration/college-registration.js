@@ -6,9 +6,9 @@ import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 
 import { TextField } from '../../../../src/ui/core/form/textfield/textfield';
-import { SearchableDropdown } from '../../../components/autocomplete/searchable-dropdown';
 import { verboseLog } from '../../../config/debug';
 import { StateNames, UniversityNames } from '../../../constants/common-data';
+import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
 import ModalOTP from '../../../shared/otp-modal/otp-modal';
 import { Button } from '../../../ui/core';
 

@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 
-import EditRegisterAndAcademicDetails from '../edit-register-and-academic-details/edit-register-and-academic-details';
+import EditRegisterAndAcademicDetails from '../editable-profile/edit-register-and-academic-details';
 import ReadRegisterAndAcademicDetails from '../read-register-and-academic-details/read-register-and-academic-details';
 const RegisterAndAcademicDetails = ({ isReadMode, handleNext, handleBack }) => {
   return (

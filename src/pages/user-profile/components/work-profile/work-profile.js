@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 
-import EditWorkProfile from '../edit-work-profile/edit-work-profile';
+import EditWorkProfile from '../editable-profile/edit-work-profile';
 import ReadWorkProfile from '../read-work-profile/read-work-profile';
 const WorkProfile = ({ isReadMode, setIsReadMode, handleNext, handleBack }) => {
   return (

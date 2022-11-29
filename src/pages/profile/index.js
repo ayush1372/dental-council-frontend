@@ -160,7 +160,16 @@ export function Profile() {
             )}
           </Grid>
         </Grid>
-        <Grid item className={styles.tabDetailsContainer}>
+        <Grid
+          item
+          className={styles.tabDetailsContainer}
+          sx={{
+            backgroundColor:
+              isActiveTab.tabName === 'my-profile' && loggedInUserType === 'Doctor'
+                ? 'none'
+                : 'white.main',
+          }}
+        >
           {isActiveTab.tabName === 'dashboard' ? (
             <Dashboard tabName={isActiveTab.tabName} />
           ) : isActiveTab.tabName === 'track-status' &&

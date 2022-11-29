@@ -10,11 +10,13 @@ const ButtonGroupWizard = ({
   disabledNext,
   disabledPrevious,
   hidePrevious = true,
+  hideNext = true,
   loading,
   dataTestidNext,
 }) => {
   // if we've passed handlePrevious function then we will show back button
   hidePrevious = !(typeof handlePrevious === 'function');
+  hideNext = !(typeof handleNext === 'function');
   return (
     <Box
       mt={2}
@@ -31,15 +33,17 @@ const ButtonGroupWizard = ({
           {labelPrevioius}
         </Button>
       )}
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={handleNext}
-        data-testid={dataTestidNext}
-        disabled={loading || disabledNext}
-      >
-        {labelNext}
-      </Button>
+      {!hideNext && (
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={handleNext}
+          data-testid={dataTestidNext}
+          disabled={loading || disabledNext}
+        >
+          {labelNext}
+        </Button>
+      )}
     </Box>
   );
 };

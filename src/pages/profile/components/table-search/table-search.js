@@ -16,8 +16,8 @@ import {
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
-import { SearchableDropdown } from '../../../../components/autocomplete/searchable-dropdown';
 import { verboseLog } from '../../../../config/debug';
+import { SearchableDropdown } from '../../../../shared/autocomplete/searchable-dropdown';
 import { Button, TextField } from '../../../../ui/core';
 
 export function TableSearch() {

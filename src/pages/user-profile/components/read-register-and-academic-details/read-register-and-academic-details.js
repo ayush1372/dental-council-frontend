@@ -5,10 +5,10 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
 
 import ButtonGroupWizard from '../../../../ui/core/wizard/button-group-wizard';
-import QualificationDetailsContent from '../qualification-details-content/qualification-details-content';
-import RegistrationDetailsContent from '../registration-details-content/registration-details-content';
+import QualificationDetailsContent from '../readable-content/qualification-details-content';
+import RegistrationDetailsContent from '../readable-content/registration-details-content';
 
-const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
+const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack, showActions = true }) => {
   const [accordionKey, setAccordionKey] = useState('accordion-0');
   const accordions = [
     {
@@ -60,9 +60,11 @@ const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           );
         })}
       </Box>
-      <Box>
-        <ButtonGroupWizard handleNext={handleNext} handlePrevious={handleBack} />
-      </Box>
+      {showActions && (
+        <Box px={3}>
+          <ButtonGroupWizard handleNext={handleNext} handlePrevious={handleBack} />
+        </Box>
+      )}
     </Box>
   );
 };

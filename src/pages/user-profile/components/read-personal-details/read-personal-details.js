@@ -6,10 +6,10 @@ import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '
 import { useTranslation } from 'react-i18next';
 
 import ButtonGroupWizard from '../../../../ui/core/wizard/button-group-wizard';
-import CommunicationAddressContent from '../communication-details-content/communication-details-content';
-import IMRDetailsContent from '../imr-details-content/imr-details-content';
-import PersonalDetailsContent from '../personal-details-content/personal-details-content';
-const ReadPersonalDetails = ({ handleNext }) => {
+import CommunicationAddressContent from '../readable-content/communication-details-content';
+import IMRDetailsContent from '../readable-content/imr-details-content';
+import PersonalDetailsContent from '../readable-content/personal-details-content';
+const ReadPersonalDetails = ({ handleNext, showActions = true }) => {
   const { t } = useTranslation();
   const [accordionKey, setAccordionKey] = useState('accordion-0');
   const accordions = [
@@ -66,9 +66,11 @@ const ReadPersonalDetails = ({ handleNext }) => {
           );
         })}
       </Box>
-      <Box>
-        <ButtonGroupWizard handleNext={handleNext} labelNext={t('Next')} hidePrevious={true} />
-      </Box>
+      {showActions && (
+        <Box px={3}>
+          <ButtonGroupWizard handleNext={handleNext} labelNext={t('Next')} hidePrevious={true} />
+        </Box>
+      )}
     </Box>
   );
 };

@@ -4,9 +4,9 @@ import { Box, Container, Typography } from '@mui/material';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 
-import { SearchableDropdown } from '../../../components/autocomplete/searchable-dropdown';
 import { verboseLog } from '../../../config/debug';
 import { RegistrationCouncilNames } from '../../../constants/common-data';
+import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
 import { Button } from '../../../ui/core';
 import { TextField } from '../../../ui/core/form/textfield/textfield';
 import FetchDoctorDetails from './fetch-doctor-details';
