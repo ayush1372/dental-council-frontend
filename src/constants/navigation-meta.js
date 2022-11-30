@@ -104,6 +104,11 @@ const NAV_META = [
     title: 'track-status',
     component: 'pages/track-status/TrackStatus',
   },
+  {
+    path: 'search-doctor',
+    title: 'search-doctor',
+    component: 'search-doctor',
+  },
 ];
 
 export const LOGGED_IN = true;
