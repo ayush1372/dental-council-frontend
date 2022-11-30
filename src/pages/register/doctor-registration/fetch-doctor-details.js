@@ -100,10 +100,16 @@ function FetchDoctorDetails() {
                 backgroundColor: 'inputSuccessBackgroundColor.main',
               }}
             >
-              Record fetched successfully.
+              Record fetched successfully. Please verify your details to proceed further.
             </Alert>
           </Box>
-          <Box p="30px 32px 0px 32px" width="679px" boxShadow={2}>
+
+          <Box p="30px 32px 0px 32px" width="679px" sx={{ boxShadow: '2' }}>
+            <Box mb={4}>
+              <Typography variant="h2" color="primary">
+                Verify Registration Details
+              </Typography>
+            </Box>
             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
               <Box>
                 <Typography variant="body3" component="div" color="grey.label">
@@ -160,7 +166,7 @@ function FetchDoctorDetails() {
                   })}
                   InputProps={{
                     endAdornment: (
-                      <InputAdornment position="end">
+                      <InputAdornment position="end" sx={{ pr: 1 }}>
                         <IconButton aria-label="toggle password visibility" edge="end">
                           {isOtpValidEmail ? <CheckCircleIcon color="success" /> : ''}
                         </IconButton>
@@ -236,7 +242,7 @@ function FetchDoctorDetails() {
                     })}
                     InputProps={{
                       endAdornment: (
-                        <InputAdornment position="end">
+                        <InputAdornment position="end" sx={{ pr: 1 }}>
                           <IconButton aria-label="toggle password visibility" edge="end">
                             {isOtpValidMobile ? <CheckCircleIcon color="success" /> : ''}
                           </IconButton>

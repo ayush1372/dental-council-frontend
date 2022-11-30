@@ -37,7 +37,7 @@ export const smcProfileDetails = [
 ];
 export const nmcProfileDetails = [
   { label: 'Name', value: 'Aarnav Sharma', id: '1' },
-  { label: 'PhoneNumber', value: '8765678876', id: '2' },
+  { label: 'Phone Number', value: '8765678876', id: '2' },
   { label: 'Email Address', value: 'Arnav.123@abdm.com', id: '3' },
   { label: 'User ID', value: 'Arnav.Sharma', id: '4' },
   { label: 'Password', value: 'Arnav@1234', id: '5' },
