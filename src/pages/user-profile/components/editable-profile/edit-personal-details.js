@@ -5,8 +5,8 @@ import { Box, Button, Grid, IconButton, InputAdornment, Typography } from '@mui/
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { AutoComplete } from '../../../../components/autocomplete/searchable-autocomplete';
 import { get_year_data } from '../../../../helpers/functions/common-functions';
+import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
 import { ModalOTP } from '../../../../shared/otp-modal/otp-modal';
 import { RadioGroup, Select, TextField } from '../../../../ui/core';
 import MobileNumber from '../../../../ui/core/mobile-number/mobile-number';
@@ -81,7 +81,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
         {/* layer 1 */}
         <Grid container item spacing={2}>
           <Grid item xs={12}>
-            {/* <Box bgcolor="grey1.light" p={1}> */}
             <Typography
               bgcolor="grey1.light"
               p={1}
@@ -91,7 +90,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             >
               Personal Details*
             </Typography>
-            {/* </Box> */}
           </Grid>
           <Grid item xs={8} md={4}>
             <RadioGroup
@@ -305,8 +303,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 { id: 4, name: 'Marathi' },
                 { id: 5, name: 'Kannada' },
               ]}
-              value={getValues().LanguageSpoken || languages}
-              error={errors.LanguageSpoken?.message}
+              value={getValues().LanguageSpoken}
+              error={languages.length === 0 && errors.LanguageSpoken?.message}
               multiple={true}
               {...register('LanguageSpoken', {
                 required: 'Languages Are Required',
@@ -660,7 +658,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               register={register}
               getValues={getValues}
               required
-              fullWidth
               errors={errors}
               data-testid={'Mobile-No'}
               label={'Mobile Number'}

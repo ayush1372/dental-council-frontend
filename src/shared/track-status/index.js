@@ -3,9 +3,9 @@ import { useState } from 'react';
 import { Box, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
-import { SearchableDropdown } from '../../components/autocomplete/searchable-dropdown';
 import { verboseLog } from '../../config/debug';
 import { RegistrationCouncilNames } from '../../constants/common-data';
+import { SearchableDropdown } from '../../shared/autocomplete/searchable-dropdown';
 import TrackStatusTable from '../../shared/track-status/track-status-table';
 import { Button, TextField } from '../../ui/core';
 export default function TrackStatus() {
