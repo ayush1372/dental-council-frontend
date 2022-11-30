@@ -1,10 +1,9 @@
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
 import { Button, TextField } from '../../../ui/core';
 
-const Name = () => {
+const RegistrationNumber = () => {
   // const [Value, setValue] = useState([]);
   const {
     formState: { errors },
@@ -15,7 +14,7 @@ const Name = () => {
   } = useForm({
     mode: 'onChange',
     defaultValues: {
-      EnterDoctorName: '',
+      RegistrationNumber: '',
     },
   });
   return (
@@ -28,38 +27,28 @@ const Name = () => {
           color="tabHighlightedBackgroundColor.main"
           variant="h3"
         >
-          Browse by doctor&apos;s name*
+          Browse by Registration Number*
         </Typography>
       </Grid>
       <Grid item xs={8}>
-        <Grid>
-          <Typography color="inputTextColor.main">
-            Enter Doctor Name{' '}
-            <ErrorOutlineIcon
-              sx={{
-                color: 'textPrimary.secondary',
-                fontSize: '12px',
-              }}
-            />
-          </Typography>
-        </Grid>
         <TextField
           sx={{
             color: 'inputTextColor.main',
           }}
           variant="outlined"
-          name={'EnterDoctorName'}
-          placeholder="Enter Doctor Name"
+          name={'RegistrationNumber'}
+          placeholder="Enter Registration Name"
+          label={'Registration Number'}
           fullWidth
-          defaultValue={getValues().EnterDoctorName}
-          {...register('EnterDoctorName', {
+          defaultValue={getValues().RegistrationNumber}
+          {...register('RegistrationNumber', {
             required: 'Doctor Name is Required',
             maxLength: {
               value: 100,
               message: 'Length should be less than 100.',
             },
           })}
-          error={errors.EnterDoctorName?.message}
+          error={errors.RegistrationNumber?.message}
         />
       </Grid>
       <Grid item xs={12}>
@@ -71,4 +60,4 @@ const Name = () => {
   );
 };
 
-export default Name;
+export default RegistrationNumber;
