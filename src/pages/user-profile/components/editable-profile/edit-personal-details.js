@@ -4,6 +4,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Box, Button, Grid, IconButton, InputAdornment, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
 import { get_year_data } from '../../../../helpers/functions/common-functions';
 import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
@@ -13,6 +14,8 @@ import MobileNumber from '../../../../ui/core/mobile-number/mobile-number';
 
 const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const { t } = useTranslation();
+  const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
+
   const [languages, setLanguages] = useState([]);
   const {
     formState: { errors },
@@ -23,33 +26,33 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   } = useForm({
     mode: 'onChange',
     defaultValues: {
-      salutation: 'dr',
-      AadhaarNumber: '8904-2728-4688',
-      FirstName: 'Aarnav',
+      salutation: loggedInUserType === 'SMC' ? '' : 'dr',
+      AadhaarNumber: loggedInUserType === 'SMC' ? '' : '8904-2728-4688',
+      FirstName: loggedInUserType === 'SMC' ? '' : 'Aarnav',
       MiddleName: '',
-      LastName: 'Sharma',
-      FatherName: 'Parveen Sharma',
-      MotherName: 'Savita Sharma',
-      SpouseName: 'Poonam Bala',
-      Nationality: 'indian',
-      Day: '18',
-      Month: 'september',
-      Year: '1998',
-      Gender: 'male',
-      Schedule: 'schedule1',
-      Name: 'Aarnav Sharma',
-      Address: 'Hno. 560 Row 3 Sadar Bazar, New Delhi',
-      Area: 'new delhi',
-      District: 'new delhi',
+      LastName: loggedInUserType === 'SMC' ? '' : 'Sharma',
+      FatherName: loggedInUserType === 'SMC' ? '' : 'Parveen Sharma',
+      MotherName: loggedInUserType === 'SMC' ? '' : 'Savita Sharma',
+      SpouseName: loggedInUserType === 'SMC' ? '' : 'Poonam Bala',
+      Nationality: loggedInUserType === 'SMC' ? '' : 'indian',
+      Day: loggedInUserType === 'SMC' ? '' : '18',
+      Month: loggedInUserType === 'SMC' ? '' : 'september',
+      Year: loggedInUserType === 'SMC' ? '' : '1998',
+      Gender: loggedInUserType === 'SMC' ? '' : 'male',
+      Schedule: loggedInUserType === 'SMC' ? '' : 'schedule1',
+      Name: loggedInUserType === 'SMC' ? '' : 'Aarnav Sharma',
+      Address: loggedInUserType === 'SMC' ? '' : 'Hno. 560 Row 3 Sadar Bazar, New Delhi',
+      Area: loggedInUserType === 'SMC' ? '' : 'new delhi',
+      District: loggedInUserType === 'SMC' ? '' : 'new delhi',
       SubDistrict: '',
-      State: 'new delhi',
-      Country: 'india',
-      PostalCode: '120018',
-      IMRID: '9598237230192838',
+      State: loggedInUserType === 'SMC' ? '' : 'new delhi',
+      Country: loggedInUserType === 'SMC' ? '' : 'india',
+      PostalCode: loggedInUserType === 'SMC' ? '' : '120018',
+      IMRID: loggedInUserType === 'SMC' ? '' : '9598237230192838',
       YearOfInfo: '',
-      RegistrationNumber: '672929',
-      mobileNo: '9988334355',
-      EmailAddress: 'aarushi.sharma309@gmail.com',
+      RegistrationNumber: loggedInUserType === 'SMC' ? '' : '672929',
+      mobileNo: loggedInUserType === 'SMC' ? '' : '9988334355',
+      EmailAddress: loggedInUserType === 'SMC' ? '' : 'aarushi.sharma309@gmail.com',
       LanguageSpoken: [],
     },
   });
@@ -158,10 +161,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               })}
               sx={{
                 input: {
-                  backgroundColor: 'grey2.main',
+                  backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
                 },
               }}
-              InputProps={{ readOnly: true }}
+              InputProps={{ readOnly: loggedInUserType === 'SMC' ? false : true }}
               error={errors.FirstName?.message}
             />
           </Grid>
@@ -181,10 +184,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               })}
               sx={{
                 input: {
-                  backgroundColor: 'grey2.main',
+                  backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
                 },
               }}
-              InputProps={{ readOnly: true }}
+              InputProps={{ readOnly: loggedInUserType === 'SMC' ? false : true }}
             />
           </Grid>
           <Grid item xs={8} md={4}>
