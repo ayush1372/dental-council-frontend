@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, Container, Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 import useWizard from '../../hooks/use-wizard';
 import { Button } from '../../ui/core/button/button';
@@ -14,6 +15,7 @@ export const UserProfile = (props) => {
   const [isReadMode, setIsReadMode] = useState(true);
   const { activeStep, handleNext, handleBack } = useWizard(0, []);
   const wizardSteps = ['Personal Details', 'Registration & Academic Details', 'Work Profile'];
+  const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
 
   return (
     <Container maxWidth="lg" sx={{ marginTop: '30px' }}>
@@ -42,7 +44,7 @@ export const UserProfile = (props) => {
         </Box>
       ) : null}
       <Wizard
-        activeStep={activeStep}
+        activeStep={loggedInUserType === 'College' ? activeStep + 1 : activeStep}
         handleBack={handleBack}
         handleNext={handleNext}
         steps={wizardSteps}
