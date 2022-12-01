@@ -168,11 +168,15 @@ function TrackStatusTable(props) {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={props.showTable?.count}
+          count={props.showTable?.count || newRowsData.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+          }}
         />
       </Box>
     </Grid>
