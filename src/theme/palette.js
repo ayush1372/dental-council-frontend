@@ -11,6 +11,7 @@ export const Palette = {
     dark: '#A3491C',
     contrastText: '#000',
     warningYellow: '#FFA334',
+    lightOrange: '#FF8B00',
   },
   grey: {
     main: '#E9ECF3',
@@ -102,8 +103,5 @@ export const Palette = {
   },
   profileCardBorder: {
     main: '#BFBFBF8C',
-  },
-  orangeBackgroundColor: {
-    main: '#FF8B00',
   },
 };
