@@ -16,6 +16,7 @@ const DoctorRegistrationWelcomePage = () => {
     register,
     handleSubmit,
     getValues,
+    clearErrors,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
@@ -65,10 +66,7 @@ const DoctorRegistrationWelcomePage = () => {
                     name="RegistrationCouncil"
                     items={RegistrationCouncilNames}
                     placeholder="Select your registration Council"
-                    onChange={(newValue) => {
-                      verboseLog(newValue);
-                    }}
-                    defaultValue={getValues().RegistrationCouncil}
+                    clearErrors={clearErrors}
                     error={errors.RegistrationCouncil?.message}
                     {...register('RegistrationCouncil', {
                       required: 'Registration Council is required',

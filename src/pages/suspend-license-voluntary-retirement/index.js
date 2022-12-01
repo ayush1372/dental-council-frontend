@@ -40,7 +40,14 @@ export function SuspendLicenseVoluntaryRetirement({ tabName }) {
               id="fromDate"
               type="date"
               name="fromDate"
-              sx={{ width: '60%', height: '48px' }}
+              sx={{
+                width: '60%',
+                height: '48px',
+                input: {
+                  color: 'grey1.dark',
+                  textTransform: 'uppercase',
+                },
+              }}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -61,7 +68,13 @@ export function SuspendLicenseVoluntaryRetirement({ tabName }) {
               id="toDate"
               type="date"
               name="toDate"
-              sx={{ width: '60%' }}
+              sx={{
+                width: '60%',
+                input: {
+                  color: 'grey1.dark',
+                  textTransform: 'uppercase',
+                },
+              }}
               InputLabelProps={{
                 shrink: true,
                 sx: { height: '40px' },
@@ -92,6 +105,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName }) {
               name="remark"
               sx={{ width: '80%' }}
               required={true}
+              placeholder="Add a reason"
               defaultValue={getValues().remark}
               error={errors.remark?.message}
               {...register('remark', {

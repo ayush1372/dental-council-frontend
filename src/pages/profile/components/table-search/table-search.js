@@ -74,7 +74,7 @@ export function TableSearch() {
               {...register('search')}
               InputProps={{
                 endAdornment: (
-                  <InputAdornment position="end">
+                  <InputAdornment position="end" sx={{ paddingRight: '3px' }}>
                     <SearchIcon />
                   </InputAdornment>
                 ),
@@ -94,7 +94,7 @@ export function TableSearch() {
                 type="text"
                 name="filterByName"
                 required="false"
-                placeholder={'Filyer by Name'}
+                placeholder={'Filter by Name'}
                 defaultValue={getValues().filterByName}
                 error={errors.filterByName?.message}
                 {...register('filterByName')}
@@ -110,7 +110,7 @@ export function TableSearch() {
                 type="text"
                 name="filterByRegNo"
                 required="false"
-                placeholder={'Filyer by Registration No.'}
+                placeholder={'Filter by Registration No.'}
                 defaultValue={getValues().filterByRegNo}
                 error={errors.filterByRegNo?.message}
                 {...register('filterByRegNo')}
@@ -122,13 +122,14 @@ export function TableSearch() {
                   <SearchableDropdown
                     sx={{ height: 8 }}
                     name="RegistrationCouncil"
+                    placeholder="Filter by Council"
                     items={[{ id: 1, name: 'first' }]}
                   />
                 </Box>
               </Grid>
             )}
 
-            <Grid item md={1} xs={12}>
+            <Grid item md={1} xs={12} mr={1}>
               <Button
                 data-testid="filterButton"
                 sx={{ padding: '13px 10px' }}
