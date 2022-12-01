@@ -1,22 +1,3 @@
-.logoWrapper {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  @media screen and (max-width: 767px) {
-    padding: 16px 0;
-  }
-  .logoImage {
-    height: 90px;
-  }
-  .logoHeaderText {
-    cursor: pointer;
-    text-decoration: none;
-    font-size: 16px;
-    font-weight: 600;
-    letter-spacing: 0.26px;
-  }
-}
-
-.authBlock {
-  display: flex;
-  justify-content: flex-end;
+.logoImage {
+  height: 80px;
 }
