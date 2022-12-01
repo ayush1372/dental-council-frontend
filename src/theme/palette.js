@@ -23,6 +23,7 @@ export const Palette = {
   grey1: {
     main: '#bfbfbf',
     light: '#F8F7FA',
+    dark: '#3F3D565E',
   },
   grey2: {
     main: '#F0F0F0',
