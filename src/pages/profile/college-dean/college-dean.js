@@ -33,7 +33,7 @@ export function CollegeDean() {
         <Grid item xs={12}>
           <Box>
             <Typography color="textPrimary.main" variant="h2">
-              College Registrar
+              College Dean
             </Typography>
           </Box>
         </Grid>
@@ -41,7 +41,10 @@ export function CollegeDean() {
       <Grid container item p={2} spacing={2}>
         <Grid item xs={8} md={4}>
           <Typography variant="body1" color="inputTextColor.main">
-            <b>{t('College Dean Name')}</b>{' '}
+            <b>{t('College Dean Name')}</b>
+          </Typography>
+          <Typography component="span" color="error.main">
+            *
           </Typography>
           <TextField
             fullWidth
@@ -62,7 +65,10 @@ export function CollegeDean() {
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="body1" color="inputTextColor.main">
-            <b>{t('College Dean Phone Number')}</b>{' '}
+            <b>{t('College Dean Phone Number')}</b>
+          </Typography>
+          <Typography component="span" color="error.main">
+            *
           </Typography>
           <TextField
             fullWidth
@@ -87,7 +93,10 @@ export function CollegeDean() {
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="body1" color="inputTextColor.main">
-            <b>{t('College Dean Email Address')}</b>{' '}
+            <b>{t('College Dean Email Address')}</b>
+          </Typography>
+          <Typography component="span" color="error.main">
+            *
           </Typography>
           <TextField
             fullWidth
@@ -115,7 +124,10 @@ export function CollegeDean() {
       <Grid container item spacing={2} p={2}>
         <Grid item xs={8} md={4}>
           <Typography variant="body1" color="inputTextColor.main">
-            <b>{t('College Dean User ID')}</b>{' '}
+            <b>{t('College Dean User ID')}</b>
+          </Typography>
+          <Typography component="span" color="error.main">
+            *
           </Typography>
           <TextField
             fullWidth
@@ -136,7 +148,10 @@ export function CollegeDean() {
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="body1" color="inputTextColor.main">
-            <b>{t('College Dean Password')}</b>{' '}
+            <b>{t('College Dean Password')}</b>
+          </Typography>
+          <Typography component="span" color="error.main">
+            *
           </Typography>
           <TextField
             fullWidth
