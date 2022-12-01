@@ -1,11 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import EditIcon from '@mui/icons-material/Edit';
 import { Box, Container, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 import useWizard from '../../../hooks/use-wizard';
-import { Button } from '../../../ui/core/button/button';
 import Wizard from '../../../ui/core/wizard';
 import ConstantDetails from '../../user-profile/components/constant-details/constant-details';
 import PersonalDetails from '../../user-profile/components/personal-details/personal-details';
@@ -40,35 +38,9 @@ export const UserProfile = (props) => {
         <Box>
           <Box>
             <Typography component="div" variant="h2" color="primary.main" py={2}>
-              {isReadMode && loggedInUserType !== 'SMC'
-                ? 'User Profile'
-                : loggedInUserType === 'SMC'
-                ? 'New User Registration'
-                : 'Edit Profile'}
-              {!isReadMode && loggedInUserType !== 'SMC' && (
-                <Typography component="div" variant="body3" color="inputTextColor.main">
-                  Update all your details correctly so that it could be verified by NMR verifiers.
-                </Typography>
-              )}
+              New User Registration
             </Typography>
             {loggedInUserType === 'SMC' && <ConstantDetails />}
-          </Box>
-          <Box>
-            {isReadMode && loggedInUserType !== 'SMC' && (
-              <Button
-                endIcon={<EditIcon />}
-                variant="contained"
-                color="secondary"
-                onClick={() => {
-                  setIsReadMode(false);
-                }}
-                sx={{
-                  width: 'max-content',
-                }}
-              >
-                Edit Profile
-              </Button>
-            )}
           </Box>
         </Box>
       ) : null}
