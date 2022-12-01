@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import TrackStatus from '../../shared/track-status/index';
 import { changeUserActiveTab } from '../../store/reducers/ui-reducers';
+import NewDoctorRegistration from '../profile/new-doctor-registration/new-doctor-registration';
 import SuspendLicenseVoluntaryRetirement from '../suspend-license-voluntary-retirement';
 import UserProfile from '../user-profile';
 import CollegeDean from './college-dean/college-dean';
@@ -165,7 +166,8 @@ export function Profile() {
           className={styles.tabDetailsContainer}
           sx={{
             backgroundColor:
-              isActiveTab.tabName === 'my-profile' && loggedInUserType === 'Doctor'
+              (isActiveTab.tabName === 'my-profile' && loggedInUserType === 'Doctor') ||
+              (isActiveTab.tabName === 'New-doctor-registration' && loggedInUserType === 'SMC')
                 ? 'none'
                 : 'white.main',
           }}
@@ -201,6 +203,8 @@ export function Profile() {
             loggedInUserType === 'Doctor' ? (
             // eslint-disable-next-line react/jsx-indent
             <SuspendLicenseVoluntaryRetirement tabName={isActiveTab.tabName} />
+          ) : isActiveTab.tabName === 'New-doctor-registration' && loggedInUserType === 'SMC' ? (
+            <NewDoctorRegistration userType={'SMC'} />
           ) : (
             <Grid
               item

@@ -2,12 +2,13 @@ import { useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloseIcon from '@mui/icons-material/Close';
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import { Box, Dialog, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
 import { Button, Checkbox } from '../../../../ui/core';
 
-const ProfileConsent = ({ handleBack, setIsReadMode, resetStep }) => {
+const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType }) => {
   const [confirmationModal, setConfirmationModal] = useState(false);
   const {
     formState: { errors },
@@ -78,15 +79,19 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep }) => {
           >
             Print & Save as PDF
           </Button>
-          <Button
-            color="secondary"
-            variant="contained"
-            sx={{
-              margin: '0 5px',
-            }}
-          >
-            E-sign Profile
-          </Button>
+
+          {loggedInUserType !== 'SMC' && (
+            <Button
+              color="secondary"
+              variant="contained"
+              sx={{
+                margin: '0 5px',
+              }}
+            >
+              E-sign Profile
+            </Button>
+          )}
+
           <Button
             color="secondary"
             variant="contained"
@@ -106,49 +111,109 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep }) => {
           setConfirmationModal(false);
         }}
       >
-        <Box p={2} width="616px" height="200">
-          <Box display={'flex'} justifyContent={'flex-start'} alignItems={'center'}>
-            <CheckCircleIcon color="success" />
-            <Typography color="textPrimary.main" variant="h3">
-              Success!
-            </Typography>
-            <CloseIcon onClick={handleClose} />
-          </Box>
-          <Box mt={4}>
-            <Typography color="textPrimary.main">
-              Your profile details have been updated. Do you want your profile to be submitted for
-              Verification ?
-            </Typography>
-          </Box>
-          <Box display={'flex'} justifyContent={'flex-end'} mt={1}>
-            <Button
-              onClick={() => {
-                setConfirmationModal(false);
-              }}
-              color="grey"
-              variant="contained"
-              sx={{
-                margin: '0 4px',
-              }}
+        {loggedInUserType === 'SMC' ? (
+          <Box
+            p={2}
+            width="350px"
+            height="320px"
+            sx={{
+              borderRadius: '40px',
+            }}
+          >
+            <Box
+              display={'flex'}
+              flexDirection={'column'}
+              justifyContent={'flex-start'}
+              alignItems={'center'}
             >
-              No
-            </Button>
-            <Button
-              onClick={() => {
-                setConfirmationModal(false);
-                setIsReadMode(true);
-                resetStep(0);
-              }}
-              color="secondary"
-              variant="contained"
-              sx={{
-                margin: '0 4px',
-              }}
-            >
-              Yes
-            </Button>
+              <TaskAltIcon color="success" sx={{ fontSize: '70px' }} />
+              <Typography color="success.dark" variant="h2" textAlign={'center'}>
+                SUCCESS!
+              </Typography>
+              <Typography
+                mt={4}
+                color="textPrimary.main"
+                textAlign={'center'}
+                variant="h2"
+                width="320px"
+              >
+                Your Profile has been successfully created.
+              </Typography>
+            </Box>
+            <Box display={'flex'} justifyContent={'center'} mt={4} alignItems={'center'}>
+              <Button
+                onClick={() => {
+                  setConfirmationModal(false);
+                }}
+                color="grey"
+                variant="contained"
+                sx={{
+                  margin: '0 4px',
+                }}
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={() => {
+                  setConfirmationModal(false);
+                  setIsReadMode(true);
+                  resetStep(0);
+                }}
+                color="secondary"
+                variant="contained"
+                sx={{
+                  margin: '0 4px',
+                }}
+              >
+                Submit
+              </Button>
+            </Box>
           </Box>
-        </Box>
+        ) : (
+          <Box p={2} width="616px" height="200">
+            <Box display={'flex'} justifyContent={'flex-start'} alignItems={'center'}>
+              <CheckCircleIcon color="success" />
+              <Typography color="textPrimary.main" variant="h3">
+                Success!
+              </Typography>
+              <CloseIcon onClick={handleClose} />
+            </Box>
+            <Box mt={4}>
+              <Typography color="textPrimary.main">
+                Your profile details have been updated. Do you want your profile to be submitted for
+                Verification ?
+              </Typography>
+            </Box>
+            <Box display={'flex'} justifyContent={'flex-end'} mt={1}>
+              <Button
+                onClick={() => {
+                  setConfirmationModal(false);
+                }}
+                color="grey"
+                variant="contained"
+                sx={{
+                  margin: '0 4px',
+                }}
+              >
+                No
+              </Button>
+              <Button
+                onClick={() => {
+                  setConfirmationModal(false);
+                  setIsReadMode(true);
+                  resetStep(0);
+                }}
+                color="secondary"
+                variant="contained"
+                sx={{
+                  margin: '0 4px',
+                }}
+              >
+                Yes
+              </Button>
+            </Box>
+          </Box>
+        )}
       </Dialog>
     </Box>
   );
