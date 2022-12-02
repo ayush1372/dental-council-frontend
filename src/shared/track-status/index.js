@@ -11,7 +11,13 @@ import { Button, TextField } from '../../ui/core';
 export default function TrackStatus() {
   const [showTable, setShowTable] = useState(false);
 
-  const { handleSubmit, register, getValues } = useForm({
+  const {
+    handleSubmit,
+    register,
+    getValues,
+    clearErrors,
+    formState: { errors },
+  } = useForm({
     mode: 'onChange',
     defaultValues: {
       options: '',
@@ -48,6 +54,11 @@ export default function TrackStatus() {
                 name="RegistrationCouncil"
                 items={RegistrationCouncilNames}
                 placeholder="Select Medical Council Name"
+                clearErrors={clearErrors}
+                error={errors.RegistrationCouncil?.message}
+                {...register('RegistrationCouncil', {
+                  required: 'Medical Council is required',
+                })}
               />
             </Box>
           </Grid>

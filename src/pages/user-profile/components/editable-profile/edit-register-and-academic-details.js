@@ -24,7 +24,7 @@ const createQualificationObject = (index) => {
   ];
 };
 
-const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
+const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserType }) => {
   const [registrationFileData, setRegistrationFileData] = useState([]);
   const [qualificationFilesData, setQualificationFilesData] = useState({
     'qualification.1.files': [],
@@ -43,11 +43,11 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   } = useForm({
     mode: 'onChange',
     defaultValues: {
-      RegisteredWithCouncil: 'West Bengal Medical Council',
-      RegistrationNumber: '7991749871719',
-      RegistrationDate: '30-10-2021',
-      registration: 'permanent',
-      RenewalDate: '30-10-2022',
+      RegisteredWithCouncil: loggedInUserType === 'SMC' ? '' : 'West Bengal Medical Council',
+      RegistrationNumber: loggedInUserType === 'SMC' ? '' : '7991749871719',
+      RegistrationDate: loggedInUserType === 'SMC' ? '' : '30-10-2021',
+      registration: loggedInUserType === 'SMC' ? '' : 'permanent',
+      RenewalDate: loggedInUserType === 'SMC' ? '' : '30-10-2022',
       registrationCertificate: 'No',
       // Qualification: 'bachelor of dental surgery',
       // country: 'India',
@@ -119,10 +119,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               error={errors?.RegisteredWithCouncil?.message}
               sx={{
                 input: {
-                  backgroundColor: 'grey2.main',
+                  backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
                 },
               }}
-              InputProps={{ readOnly: true }}
+              InputProps={{ readOnly: loggedInUserType === 'SMC' ? false : true }}
             />
           </Grid>
           <Grid item xs={8} md={4}>
@@ -151,10 +151,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               })}
               sx={{
                 input: {
-                  backgroundColor: 'grey2.main',
+                  backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
                 },
               }}
-              InputProps={{ readOnly: true }}
+              InputProps={{ readOnly: loggedInUserType === 'SMC' ? false : true }}
             />
           </Grid>
         </Grid>
@@ -193,10 +193,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               })}
               sx={{
                 input: {
-                  backgroundColor: 'grey2.main',
+                  backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
                 },
               }}
-              InputProps={{ readOnly: true }}
+              InputProps={{ readOnly: loggedInUserType === 'SMC' ? false : true }}
             />
           </Grid>
         </Grid>

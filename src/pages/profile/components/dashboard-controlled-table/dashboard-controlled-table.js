@@ -38,6 +38,7 @@ function DashboardControlledTable(props) {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
   const [selectedRowData, setRowData] = React.useState({});
+
   verboseLog('selectedRowData', selectedRowData);
   const dataHeader = [
     { title: 'S.No.', name: 'SNo', sorting: true, type: 'string' },
@@ -156,11 +157,15 @@ function DashboardControlledTable(props) {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={props.showTable?.count}
+          count={props.showTable?.count || newRowsData.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+          }}
         />
       </Box>
     </Grid>

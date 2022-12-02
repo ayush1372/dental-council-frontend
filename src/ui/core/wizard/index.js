@@ -14,7 +14,7 @@ export default function Wizard({
   steps,
 }) {
   return (
-    <Box sx={{ width: '100%', backgroundColor: 'grey' }}>
+    <Box width="100%" bgcolor={'white'}>
       <WizardSteps
         steps={steps}
         activeStep={activeStep}
@@ -22,7 +22,7 @@ export default function Wizard({
         completed={completed}
       />
       {children}
-      <Box sx={{ px: 4 }}>
+      <Box px={4}>
         {enableNaviagation && (
           <ButtonGroupWizard
             activeStep={activeStep}

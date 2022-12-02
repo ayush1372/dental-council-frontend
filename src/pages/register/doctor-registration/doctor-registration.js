@@ -16,6 +16,7 @@ const DoctorRegistrationWelcomePage = () => {
     register,
     handleSubmit,
     getValues,
+    clearErrors,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
@@ -55,7 +56,7 @@ const DoctorRegistrationWelcomePage = () => {
 
               <Box pb={4}>
                 <Typography variant="body3" color="textSecondary.main">
-                  Select Your Registration Council
+                  Select your Registration Council
                   <Typography component="span" color="error.main">
                     *
                   </Typography>
@@ -64,11 +65,8 @@ const DoctorRegistrationWelcomePage = () => {
                   <SearchableDropdown
                     name="RegistrationCouncil"
                     items={RegistrationCouncilNames}
-                    placeholder="Select your registration Council"
-                    onChange={(newValue) => {
-                      verboseLog(newValue);
-                    }}
-                    defaultValue={getValues().RegistrationCouncil}
+                    placeholder="Select your Registration Council"
+                    clearErrors={clearErrors}
                     error={errors.RegistrationCouncil?.message}
                     {...register('RegistrationCouncil', {
                       required: 'Registration Council is required',

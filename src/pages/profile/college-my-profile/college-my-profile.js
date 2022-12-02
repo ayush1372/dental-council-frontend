@@ -55,7 +55,7 @@ const CollegeMyProfile = () => {
             </Grid>
             <Grid item xs={4} md={3}>
               <Typography variant="body3" color="grey.label">
-                College Phone number
+                College Phone Number
               </Typography>
 
               <Typography variant="subtitle2" color="primary.main">
@@ -110,7 +110,7 @@ const CollegeMyProfile = () => {
           <Grid container item spacing={2} mt={3}>
             <Grid item xs={4} md={3}>
               <Typography variant="body3" color="grey.label">
-                College Pincode
+                College PIN Code
               </Typography>
               <Typography variant="subtitle2" color="primary.main">
                 {collegeProfileData.collegePinCode.name}

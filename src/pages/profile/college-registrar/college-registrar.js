@@ -41,7 +41,10 @@ export function CollegeRegistrar() {
       <Grid container item p={2} spacing={2}>
         <Grid item xs={8} md={4}>
           <Typography variant="body1" color="inputTextColor.main">
-            <b>{t('College Registrar Name')}</b>{' '}
+            <b>{t('College Registrar Name')}</b>
+          </Typography>
+          <Typography component="span" color="error.main">
+            *
           </Typography>
           <TextField
             fullWidth
@@ -62,7 +65,10 @@ export function CollegeRegistrar() {
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="body1" color="inputTextColor.main">
-            <b>{t('College Registrar Phone Number')}</b>{' '}
+            <b>{t('College Registrar Phone Number')}</b>
+          </Typography>
+          <Typography component="span" color="error.main">
+            *
           </Typography>
           <TextField
             fullWidth
@@ -87,7 +93,10 @@ export function CollegeRegistrar() {
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="body1" color="inputTextColor.main">
-            <b>{t('College Registrar Email Address')}</b>{' '}
+            <b>{t('College Registrar Email Address')}</b>
+          </Typography>
+          <Typography component="span" color="error.main">
+            *
           </Typography>
           <TextField
             fullWidth
@@ -115,7 +124,10 @@ export function CollegeRegistrar() {
       <Grid container item spacing={2} p={2}>
         <Grid item xs={8} md={4}>
           <Typography variant="body1" color="inputTextColor.main">
-            <b>{t('College Registrar User ID')}</b>{' '}
+            <b>{t('College Registrar User ID')}</b>
+          </Typography>
+          <Typography component="span" color="error.main">
+            *
           </Typography>
           <TextField
             fullWidth
@@ -136,7 +148,10 @@ export function CollegeRegistrar() {
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="body1" color="inputTextColor.main">
-            <b>{t('College Registrar Password')}</b>{' '}
+            <b>{t('College Registrar Password')}</b>
+          </Typography>
+          <Typography component="span" color="error.main">
+            *
           </Typography>
           <TextField
             fullWidth
