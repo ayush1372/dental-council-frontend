@@ -5,7 +5,7 @@ const PersonalDetails = () => {
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
         <Grid item xs={8} md={4}>
-          <Typography variant="body3" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             Salutation
           </Typography>
           <Typography variant="subtitle2" color="primary.main">
@@ -23,7 +23,7 @@ const PersonalDetails = () => {
         </Grid>
         {false && (
           <Grid item xs={8} md={4}>
-            <Typography variant="body3" color="grey.label">
+            <Typography variant="subtitle2" color="grey.label">
               Salutation
             </Typography>
             <Typography variant="subtitle2" color="primary.main">
@@ -100,7 +100,7 @@ const PersonalDetails = () => {
           </Typography>
         </Grid>
         <Grid item xs={8} md={4}>
-          <Typography variant="body3" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             Languages
           </Typography>
           <Typography variant="subtitle2" color="primary.main">
@@ -108,7 +108,7 @@ const PersonalDetails = () => {
           </Typography>
         </Grid>
         <Grid item xs={8} md={4}>
-          <Typography variant="body3" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             Date Of Birth
           </Typography>
           <Typography variant="subtitle2" color="primary.main">
@@ -118,7 +118,7 @@ const PersonalDetails = () => {
       </Grid>
       <Grid container item spacing={2}>
         <Grid item xs={8} md={4}>
-          <Typography variant="body3" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             Gender
           </Typography>
           <Typography variant="subtitle2" color="primary.main">
@@ -126,7 +126,7 @@ const PersonalDetails = () => {
           </Typography>
         </Grid>
         <Grid item xs={8} md={4}>
-          <Typography variant="body3" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             Schedule
           </Typography>
           <Typography variant="subtitle2" color="primary.main">

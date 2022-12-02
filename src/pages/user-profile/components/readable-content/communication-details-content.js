@@ -135,7 +135,7 @@ const CommunicationAddress = () => {
           </Typography>
         </Grid>
         <Grid item xs={8} md={4}>
-          <Typography variant="body3" color="inputTextColor">
+          <Typography variant="subtitle2" color="inputTextColor">
             Mobile Number
           </Typography>
 
