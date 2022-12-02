@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, Container, Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 import useWizard from '../../hooks/use-wizard';
 import { Button } from '../../ui/core/button/button';
@@ -18,8 +19,11 @@ const readWizardSteps = ['Personal Details', 'Registration & Academic Details', 
 export const UserProfile = (props) => {
   const [isReadMode, setIsReadMode] = useState(true);
   const [wizardSteps, setWizardSteps] = useState(readWizardSteps);
-  const { activeStep, handleNext, handleBack, resetStep } = useWizard(0, []);
-
+  const userType = useSelector((state) => state.login.loggedInUserType);
+  const { activeStep, handleNext, handleBack, resetStep } = useWizard(
+    userType === 'Doctor' ? 0 : 1,
+    []
+  );
   useEffect(() => {
     if (!isReadMode) {
       setWizardSteps([...readWizardSteps, 'Preview Profile']);
