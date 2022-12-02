@@ -46,7 +46,7 @@ export default function RaiseQueryPopup(props) {
             >
               Raise a Query
             </Typography>
-            <Box p={3}>
+            <Box>
               <Box>
                 <Typography variant="body3" color="inputTextColor.main" component="span">
                   Details of Query
@@ -55,19 +55,13 @@ export default function RaiseQueryPopup(props) {
                   *
                 </Typography>
               </Box>
-              <TextField
-                multiline
-                rows={4}
-                fullWidth
-                placeholder="Write a reason here . . ."
-                sx={{ height: '200px' }}
-              />
-              <Box display="flex" textAlign="right">
-                <Typography color="inputFocusColor.main">150 words only</Typography>
-              </Box>
+              <TextField multiline rows={4} fullWidth placeholder="Write a reason here . . ." />
+            </Box>
+            <Box display="flex" textAlign="right">
+              <Typography color="inputFocusColor.main">150 words only</Typography>
             </Box>
 
-            <Box display="flex" justifyContent="flex-end" mt="5px">
+            <Box display="flex" justifyContent="flex-end" mt={16}>
               <Button
                 onClose={handleClose}
                 variant="contained"
