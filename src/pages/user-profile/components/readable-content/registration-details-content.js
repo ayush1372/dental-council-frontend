@@ -79,6 +79,13 @@ const RegistrationDetailsContent = () => {
           </Typography>
         </Grid>
       </Grid>
+      <Grid container item spacing={2}>
+        <Grid item xs={8} md={4}>
+          <Typography variant="subtitle2" color="inputTextColor">
+            upload proof of relationship
+          </Typography>
+        </Grid>
+      </Grid>
     </Grid>
   );
 };

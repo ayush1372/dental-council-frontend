@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 
 import { Button, Select, TextField } from '../../../ui/core';
 
-const BlacklistedDoctor = () => {
+const BlacklistedDoctor = ({ setDoSearch }) => {
   const {
     formState: { errors },
     getValues,
@@ -119,7 +119,7 @@ const BlacklistedDoctor = () => {
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <Button variant="contained" color="secondary">
+        <Button variant="contained" color="secondary" onClick={() => setDoSearch(true)}>
           Search
         </Button>
       </Grid>

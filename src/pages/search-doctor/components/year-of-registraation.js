@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 
 import { Button, Select } from '../../../ui/core';
 
-const YearOfRegistration = () => {
+const YearOfRegistration = ({ setDoSearch }) => {
   // const [Value, setValue] = useState([]);
   const {
     formState: { errors },
@@ -53,7 +53,7 @@ const YearOfRegistration = () => {
         />
       </Grid>
       <Grid item xs={12}>
-        <Button variant="contained" color="secondary">
+        <Button variant="contained" color="secondary" onClick={() => setDoSearch(true)}>
           Search
         </Button>
       </Grid>

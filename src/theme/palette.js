@@ -28,6 +28,8 @@ export const Palette = {
   },
   grey2: {
     main: '#F0F0F0',
+    light: '#C1BDD5',
+    dark: '#C1BDD591',
   },
   backgroundColor: {
     main: '#E9ECF3',
