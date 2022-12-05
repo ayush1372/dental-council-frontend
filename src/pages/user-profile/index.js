@@ -16,7 +16,12 @@ import WorkProfile from './components/work-profile/work-profile';
 
 const readWizardSteps = ['Personal Details', 'Registration & Academic Details', 'Work Profile'];
 
-export const UserProfile = (props) => {
+export const UserProfile = ({
+  showViewProfile,
+  setShowDashboard,
+  setShowTable,
+  setShowViewPorfile,
+}) => {
   const [isReadMode, setIsReadMode] = useState(true);
 
   const [wizardSteps, setWizardSteps] = useState(readWizardSteps);
@@ -35,7 +40,7 @@ export const UserProfile = (props) => {
   }, [isReadMode]);
   return (
     <Container maxWidth="lg" sx={{ marginTop: '30px' }}>
-      {!props.showViewProfile ? (
+      {!showViewProfile ? (
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Typography component="div" variant="h2" color="primary.main" py={2}>
             {isReadMode ? 'User Profile' : 'Edit Profile'}
@@ -97,6 +102,10 @@ export const UserProfile = (props) => {
               setIsReadMode={setIsReadMode}
               handleNext={handleNext}
               handleBack={handleBack}
+              setShowDashboard={setShowDashboard}
+              setShowTable={setShowTable}
+              setShowViewPorfile={setShowViewPorfile}
+              activeStep={activeStep}
             />
           )}
           {activeStep === 3 && (
