@@ -152,7 +152,6 @@ function DashboardControlledTable(props) {
         rowsPerPage={rowsPerPage}
         page={page}
       />
-
       <Box>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
