@@ -6,7 +6,7 @@ const SpecialDetails = () => {
       <Grid container item spacing={2}>
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
-            Speciality
+            Broad Speciality
           </Typography>
 
           <Typography
@@ -20,7 +20,7 @@ const SpecialDetails = () => {
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
-            Sub Speciality
+            Super Speciality
           </Typography>
 
           <Typography

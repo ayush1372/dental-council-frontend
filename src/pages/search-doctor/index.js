@@ -21,6 +21,7 @@ const tabNames = {
 };
 
 const SearchDoctor = () => {
+  const [doSearch, setDoSearch] = useState(false);
   const [tabValue, setTabValue] = useState('Advance Search');
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
@@ -29,35 +30,41 @@ const SearchDoctor = () => {
   const Component = tabNames[tabValue];
   return (
     <Container maxWidth="lg">
-      <Box sx={{ boxShadow: '0px 3px 6px #00000014;' }} mt={6}>
-        <Tabs
-          value={tabValue}
-          onChange={handleTabChange}
-          sx={{
-            '.MuiTabs-flexContainer': {
-              button: {
-                borderBottom: '5px solid',
-                borderBottomColor: 'grey1.main',
-                backgroundColor: 'backgroundColor.light',
-              },
-              'button.Mui-selected': {
-                backgroundColor: 'white.main',
-              },
-            },
-            '.MuiTabs-indicator': {
-              borderBottom: '4px solid',
-              borderBottomColor: 'inputFocusColor.main',
-            },
-          }}
-        >
-          {Object.keys(tabNames).map((tabName) => (
-            <Tab value={tabName} label={tabName} key={tabName}></Tab>
-          ))}
-        </Tabs>
-      </Box>
-      <Box sx={{ boxShadow: '0px 3px 6px #00000014;' }} p={2}>
-        <Component />
-      </Box>
+      {!doSearch ? (
+        <Box>
+          <Box sx={{ boxShadow: '0px 3px 6px #00000014;' }} mt={6}>
+            <Tabs
+              value={tabValue}
+              onChange={handleTabChange}
+              sx={{
+                '.MuiTabs-flexContainer': {
+                  button: {
+                    borderBottom: '5px solid',
+                    borderBottomColor: 'grey1.main',
+                    backgroundColor: 'backgroundColor.light',
+                  },
+                  'button.Mui-selected': {
+                    backgroundColor: 'white.main',
+                  },
+                },
+                '.MuiTabs-indicator': {
+                  borderBottom: '4px solid',
+                  borderBottomColor: 'inputFocusColor.main',
+                },
+              }}
+            >
+              {Object.keys(tabNames).map((tabName) => (
+                <Tab value={tabName} label={tabName} key={tabName}></Tab>
+              ))}
+            </Tabs>
+          </Box>
+          <Box sx={{ boxShadow: '0px 3px 6px #00000014;' }} p={2}>
+            <Component setDoSearch={setDoSearch} />
+          </Box>
+        </Box>
+      ) : (
+        <div>search Results</div>
+      )}
     </Container>
   );
 };

@@ -176,9 +176,9 @@ export const LoginRegisterPopover = ({
                   size="small"
                   variant="contained"
                   sx={{
-                    backgroundColor: 'orangeBackgroundColor.main',
+                    backgroundColor: 'secondary.lightOrange',
                     '&:hover': {
-                      backgroundColor: 'orangeBackgroundColor.main',
+                      backgroundColor: 'secondary.lightOrange',
                     },
                   }}
                   // className={styles.registerButton}

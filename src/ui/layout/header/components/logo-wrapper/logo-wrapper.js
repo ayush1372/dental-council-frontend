@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
-import { Container, Grid, Link } from '@mui/material';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { Container, Grid, Link, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-// import NHALOGO from '../../../../../assets/images/logo-slider/nha-english-logo.png';
 import DigitalIndia from '../../../../../assets/images/logo-slider/digital-India.png';
 import { logout, resetLoginReducer } from '../../../../../store/reducers/common-reducers';
 import { Button } from '../../../../core';
@@ -33,29 +33,34 @@ export const LogoWrapper = () => {
   const handleClickedLogout = () => {
     dispatch(logout());
     dispatch(resetLoginReducer());
+    localStorage.clear();
     navigate('/');
   };
 
   return (
-    <Container className={styles.logoWrapper}>
-      <Grid container justifyContent="space-between" alignItems="center">
-        <Grid item xs={12} sm={6}>
+    <Container>
+      <Grid container alignItems="center">
+        <Grid item xs={12} sm={6} my={1}>
           <Grid container>
             <Grid item xs={4}>
               <Grid item xs={12}>
-                <Link onClick={() => navigate('/')} className={styles.logoHeaderText}>
-                  {'राष्ट्रीय आयुर्विज्ञान आयोग'}
+                <Link onClick={() => navigate('/')}>
+                  <Typography variant="subtitle2" sx={{ cursor: 'pointer' }}>
+                    {'राष्ट्रीय आयुर्विज्ञान आयोग'}
+                  </Typography>
                 </Link>
               </Grid>
               <Grid item xs={12}>
-                <Link onClick={() => navigate('/')} className={styles.logoHeaderText}>
-                  {'NATIONAL MEDICAL COMMISSION'}
+                <Link onClick={() => navigate('/')}>
+                  <Typography variant="subtitle2" sx={{ cursor: 'pointer' }}>
+                    {'NATIONAL MEDICAL COMMISSION'}
+                  </Typography>
                 </Link>
               </Grid>
             </Grid>
             <Grid item xs={8}>
               <Link onClick={() => navigate('/')} sx={{ cursor: 'pointer' }}>
-                <img className={styles.logoImage} src={DigitalIndia} alt="NHA logo" />
+                <img className={styles.logoImage} src={DigitalIndia} alt="Digital logo" />
               </Link>
             </Grid>
           </Grid>
@@ -79,6 +84,7 @@ export const LogoWrapper = () => {
                 color="grey"
                 sx={{ fontSize: 'small' }}
                 onClick={handleClickLoginRegister}
+                endIcon={<KeyboardArrowDownIcon />}
               >
                 {'Login/Registration'}
               </Button>

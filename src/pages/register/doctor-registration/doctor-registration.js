@@ -56,7 +56,7 @@ const DoctorRegistrationWelcomePage = () => {
 
               <Box pb={4}>
                 <Typography variant="body3" color="textSecondary.main">
-                  Select Your Registration Council
+                  Select your Registration Council
                   <Typography component="span" color="error.main">
                     *
                   </Typography>
@@ -65,7 +65,7 @@ const DoctorRegistrationWelcomePage = () => {
                   <SearchableDropdown
                     name="RegistrationCouncil"
                     items={RegistrationCouncilNames}
-                    placeholder="Select your registration Council"
+                    placeholder="Select your Registration Council"
                     clearErrors={clearErrors}
                     error={errors.RegistrationCouncil?.message}
                     {...register('RegistrationCouncil', {

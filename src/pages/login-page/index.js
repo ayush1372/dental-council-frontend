@@ -47,9 +47,7 @@ export function LoginPage() {
       verboseLog('usersListData', err);
     }
   };
-  // const handleSubmit = () => {
-  //   navigate(`/NMR/NMR-generate`);
-  // };
+
   return (
     <Container maxWidth="md" sx={{ mt: 5, mb: 5 }}>
       <Box p={4} className={styles.loginContainerBox}>
@@ -64,13 +62,13 @@ export function LoginPage() {
           {t('Login')}
         </Typography>
         <Box>
-          <Box sx={{ mt: 1 }}>
-            <Typography variant="body4">
-              <b>
-                {' '}
-                {loginFormname === 'Doctor' ? 'NMR/USER ' : 'User '}
-                {t('ID')}
-              </b>
+          <Box sx={{ mt: 2 }}>
+            <Typography variant="body3">
+              {loginFormname === 'Doctor' ? 'NMR/USER ' : 'User '}
+              {t('ID')}
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
             </Typography>
             <TextField
               inputProps={{ maxLength: 100 }}
@@ -86,16 +84,15 @@ export function LoginPage() {
               error={errors.nmrID?.message}
               {...register('nmrID', {
                 required: 'Provide  valid ID',
-                // pattern: {
-                //   value: /^(\d{12})$/i,
-                //   message: 'Provide  valid  NMR ID',
-                // },
               })}
             />
           </Box>
           <Box sx={{ mt: 1 }}>
-            <Typography variant="body4">
-              <b>{t('Password')}</b>
+            <Typography variant="body3">
+              {t('Password')}
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
             </Typography>
             <TextField
               fullWidth
@@ -120,13 +117,12 @@ export function LoginPage() {
               size="medium"
               variant="contained"
               sx={{
-                backgroundColor: 'orangeBackgroundColor.main',
+                backgroundColor: 'secondary.lightOrange',
                 '&:hover': {
-                  backgroundColor: 'orangeBackgroundColor.main',
+                  backgroundColor: 'secondary.lightOrange',
                 },
               }}
               onClick={handleSubmit(onSubmit)}
-              // loading={isLoading}
             >
               {t('Login')}
             </Button>
