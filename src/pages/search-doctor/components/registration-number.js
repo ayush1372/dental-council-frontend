@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 
 import { Button, TextField } from '../../../ui/core';
 
-const RegistrationNumber = () => {
+const RegistrationNumber = ({ setDoSearch }) => {
   // const [Value, setValue] = useState([]);
   const {
     formState: { errors },
@@ -52,7 +52,7 @@ const RegistrationNumber = () => {
         />
       </Grid>
       <Grid item xs={12}>
-        <Button variant="contained" color="secondary">
+        <Button variant="contained" color="secondary" onClick={() => setDoSearch(true)}>
           Search
         </Button>
       </Grid>
