@@ -107,19 +107,6 @@ export function Profile() {
     setIsActiveTab(activeTab);
     dispatch(changeUserActiveTab(activeTab.tabName));
   };
-  // useEffect(() => {
-  //   if (loggedInUserType === 'Doctor') {
-  //     dispatch(changeUserActiveTab(doctorTabs[0].tabName));
-  //   } else if (
-  //     loggedInUserType === 'College' ||
-  //     loggedInUserType === 'SMC' ||
-  //     loggedInUserType === 'NMC'
-  //   ) {
-  //     dispatch(changeUserActiveTab(colgTabs[0].tabName));
-  //   } else {
-  //     dispatch(changeUserActiveTab(dataTabs[0].tabName));
-  //   }
-  // }, []);
 
   return (
     <section className={styles.profilePage}>
