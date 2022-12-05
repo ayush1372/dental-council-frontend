@@ -1,3 +1,4 @@
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Box, Grid, Typography } from '@mui/material';
 
 const ConstantDetails = () => {
@@ -35,16 +36,19 @@ const ConstantDetails = () => {
             <Typography variant="body3" color="grey.label">
               Email
             </Typography>
-            <Typography variant="subtitle2" color="primary.main">
-              aarnav.sharma@gmail.com
-            </Typography>
+            <Grid>
+              <Typography variant="subtitle2" color="primary.main">
+                aarnav.sharma@gmail.com
+                <CheckCircleIcon color="success" sx={{ fontSize: '13px', ml: 1 }} />
+              </Typography>
+            </Grid>
           </Grid>
           <Grid item xs={8} md={4}>
             <Typography variant="body3" color="grey.label">
               Mobile Number
             </Typography>
             <Typography variant="subtitle2" color="primary.main">
-              9967453678
+              9967453678 <CheckCircleIcon color="success" sx={{ fontSize: '13px', ml: 1 }} />
             </Typography>
           </Grid>
           <Grid item xs={8} md={4}>
@@ -52,7 +56,7 @@ const ConstantDetails = () => {
               Aadhaar
             </Typography>
             <Typography variant="subtitle2" color="primary.main">
-              Verified
+              Verified <CheckCircleIcon color="success" sx={{ fontSize: '13px', ml: 1 }} />
             </Typography>
           </Grid>
         </Grid>

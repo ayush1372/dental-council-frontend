@@ -18,9 +18,13 @@ const readWizardSteps = ['Personal Details', 'Registration & Academic Details', 
 
 export const UserProfile = (props) => {
   const [isReadMode, setIsReadMode] = useState(true);
-  const { activeStep, handleNext, handleBack, resetStep } = useWizard(0, []);
-  const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
+
   const [wizardSteps, setWizardSteps] = useState(readWizardSteps);
+  const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
+  const { activeStep, handleNext, handleBack, resetStep } = useWizard(
+    loggedInUserType === 'Doctor' ? 0 : 1,
+    []
+  );
 
   useEffect(() => {
     if (!isReadMode) {

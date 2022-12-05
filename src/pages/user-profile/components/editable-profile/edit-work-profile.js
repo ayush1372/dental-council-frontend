@@ -4,7 +4,7 @@ import { Box, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 
-import { Button, Checkbox, RadioGroup, Select, TextField } from '../../../../ui/core';
+import { Button, RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
 
 const EditWorkProfile = ({ handleNext, handleBack }) => {
@@ -30,7 +30,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
   const onHandleOptionNext = () => {
     handleNext();
   };
-  const handleCurrentlyWorking = (event) => {
+  const handleselection = (event) => {
     setValue(event.target.name, event.target.value, true);
   };
 
@@ -59,7 +59,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               fullWidth
               error={errors.Speciality?.message}
               name="Speciality"
-              label="Speciality"
+              label="Broad Speciality"
               defaultValue={getValues().Speciality}
               required={true}
               {...register('Speciality', {
@@ -77,7 +77,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
             <TextField
               variant="outlined"
               name={'subSpeciality'}
-              label={'Sub Speciality'}
+              label={'Super Speciality'}
               required={true}
               fullWidth
               defaultValue={getValues().subSpeciality}
@@ -100,10 +100,10 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
           </Grid>
           <Grid item xs={8} md={4}>
             <RadioGroup
-              onChange={handleCurrentlyWorking}
-              name={'currentlyWorking'}
+              onChange={handleselection}
+              name={'selection'}
               size="small"
-              defaultValue={getValues().currentlyWorking}
+              defaultValue={getValues().selection}
               items={[
                 {
                   value: 'yes',
@@ -116,7 +116,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               ]}
               label="Are you currently working"
               required={true}
-              error={errors.currentlyWorking?.message}
+              error={errors.selection?.message}
             />
           </Grid>
           <Grid item xs={8} md={4}>
@@ -214,21 +214,23 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
             </Typography>
           </Grid>
           <Grid item xs={8} md={4}>
-            <Box>
-              <Typography variant="body1" color="primary">
-                Choose facility{' '}
-                <Typography variant="body1" color="error">
-                  *
-                </Typography>
-              </Typography>
-            </Box>
-            <Checkbox
-              name={'facility'}
-              {...register('facility', {
-                required: 'Facility is required',
-              })}
-              label={'Facility'}
-              error={errors.facility?.message}
+            <RadioGroup
+              onChange={handleselection}
+              name={'selection'}
+              size="small"
+              defaultValue={getValues().selection}
+              items={[
+                {
+                  value: 'facility',
+                  label: 'Facility',
+                },
+                {
+                  value: 'organization',
+                  label: 'Organization',
+                },
+              ]}
+              required={true}
+              error={errors.selection?.message}
             />
           </Grid>
         </Grid>
@@ -272,7 +274,6 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               variant="outlined"
               name={'workingOrganizationName'}
               label={'Name of the Organization where you work'}
-              required={true}
               placeholder="Name of the organization"
               fullWidth
               defaultValue={getValues().workingOrganizationName}
@@ -322,21 +323,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
                 error={errors.Department?.message}
               />
             </Grid> */}
-          <Grid item xs={6} md={4}>
-            <TextField
-              variant="outlined"
-              name={'telecommunicationURL'}
-              label={'Telecommunication URL'}
-              required={true}
-              placeholder="Telecommunication URL"
-              fullWidth
-              error={errors.telecommunicationURL?.message}
-              defaultValue={getValues().telecommunicationURL}
-              {...register('telecommunicationURL', {
-                required: 'Telecommunication URL is required',
-              })}
-            />
-          </Grid>
+
           <Grid item xs={6} md={4}>
             <TextField
               variant="outlined"
@@ -355,8 +342,6 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               error={errors.Address?.message}
             />
           </Grid>
-        </Grid>
-        <Grid container item spacing={2}>
           <Grid item xs={6} md={4}>
             <TextField
               variant="outlined"
@@ -373,6 +358,23 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
                   value: /^[0-9]{6}$/,
                   message: 'Should only contains 6 digits',
                 },
+              })}
+            />
+          </Grid>
+        </Grid>
+        <Grid container item spacing={2}>
+          <Grid item xs={6} md={4}>
+            <TextField
+              variant="outlined"
+              name={'telecommunicationURL'}
+              label={'Telecommunication URL'}
+              required={true}
+              placeholder="Telecommunication URL"
+              fullWidth
+              error={errors.telecommunicationURL?.message}
+              defaultValue={getValues().telecommunicationURL}
+              {...register('telecommunicationURL', {
+                required: 'Telecommunication URL is required',
               })}
             />
           </Grid>
