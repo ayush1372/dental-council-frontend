@@ -194,7 +194,12 @@ export default function Dashboard() {
       ) : showViewProfile ? (
         <Box>
           <ViewProfile />
-          <UserProfile showViewProfile={showViewProfile} />
+          <UserProfile
+            setShowDashboard={setShowDashboard}
+            setShowTable={setShowTable}
+            setShowViewPorfile={setShowViewPorfile}
+            showViewProfile={showViewProfile}
+          />
         </Box>
       ) : null}
     </>
