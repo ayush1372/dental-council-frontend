@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { Grid, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
@@ -107,19 +107,19 @@ export function Profile() {
     setIsActiveTab(activeTab);
     dispatch(changeUserActiveTab(activeTab.tabName));
   };
-  useEffect(() => {
-    if (loggedInUserType === 'Doctor') {
-      dispatch(changeUserActiveTab(doctorTabs[0].tabName));
-    } else if (
-      loggedInUserType === 'College' ||
-      loggedInUserType === 'SMC' ||
-      loggedInUserType === 'NMC'
-    ) {
-      dispatch(changeUserActiveTab(colgTabs[0].tabName));
-    } else {
-      dispatch(changeUserActiveTab(dataTabs[0].tabName));
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (loggedInUserType === 'Doctor') {
+  //     dispatch(changeUserActiveTab(doctorTabs[0].tabName));
+  //   } else if (
+  //     loggedInUserType === 'College' ||
+  //     loggedInUserType === 'SMC' ||
+  //     loggedInUserType === 'NMC'
+  //   ) {
+  //     dispatch(changeUserActiveTab(colgTabs[0].tabName));
+  //   } else {
+  //     dispatch(changeUserActiveTab(dataTabs[0].tabName));
+  //   }
+  // }, []);
 
   return (
     <section className={styles.profilePage}>

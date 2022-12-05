@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Box, Container, Grid, Paper, Typography } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
 
 import { verboseLog } from '../../../../config/debug';
 import ViewProfile from '../../../../shared/view-profile/view-profile';
+import { userLoggedInType } from '../../../../store/reducers/common-reducers';
 import { Palette } from '../../../../theme/palette';
 import { Button } from '../../../../ui/core';
 import UserProfile from '../../../user-profile/index';
@@ -64,6 +65,15 @@ export default function Dashboard() {
   ];
 
   const cardData = blankDashboard;
+  useEffect(() => {
+    if (userLoggedInType !== 'College' || userLoggedInType !== 'Doctor') {
+      blankDashboard.push({
+        name: 'Blacklist Request Received',
+        id: 9,
+        value: 0,
+      });
+    }
+  }, []);
 
   const [showDashboard, setShowDashboard] = useState(true);
   const [showTable, setShowTable] = useState(false);
