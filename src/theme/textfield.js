@@ -1,6 +1,4 @@
-import { palette } from './palette';
-
-export const TextField = {
+export const TextField = (palette) => ({
   variants: [
     {
       props: { size: 'large' },
@@ -81,4 +79,4 @@ export const TextField = {
       color: palette.success.main,
     },
   },
-};
+});

@@ -1,6 +1,4 @@
-import { palette } from './palette';
-
-export const TableRow = {
+export const TableRow = (palette) => ({
   styleOverrides: {
     root: {
       '&:nth-child(even)': {
@@ -8,4 +6,4 @@ export const TableRow = {
       },
     },
   },
-};
+});

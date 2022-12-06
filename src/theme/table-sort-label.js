@@ -1,6 +1,4 @@
-import { palette } from './palette';
-
-export const TableSortLabel = {
+export const TableSortLabel = (palette) => ({
   styleOverrides: {
     root: {
       '&:hover': {
@@ -16,4 +14,4 @@ export const TableSortLabel = {
       },
     },
   },
-};
+});

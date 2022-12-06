@@ -4,9 +4,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import '@fontsource/roboto/900.css';
 
-import { palette } from './palette';
-
-export const Typography = {
+export const Typography = (palette) => ({
   fontSize: '16px',
   color: palette.textPrimary.main,
   fontWeight: '400',
@@ -77,4 +75,4 @@ export const Typography = {
       fontWeight: '400',
     },
   },
-};
+});

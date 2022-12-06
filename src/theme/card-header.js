@@ -1,6 +1,4 @@
-import { palette } from './palette';
-
-export const CardHeader = {
+export const CardHeader = (palette) => ({
   styleOverrides: {
     root: {
       padding: '0',
@@ -21,4 +19,4 @@ export const CardHeader = {
       lineHeight: '24px',
     },
   },
-};
+});

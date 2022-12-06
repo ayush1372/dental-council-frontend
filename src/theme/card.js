@@ -1,4 +1,4 @@
-export const Card = {
+export const Card = () => ({
   styleOverrides: {
     root: {
       borderRadius: '10px',
@@ -6,4 +6,4 @@ export const Card = {
       padding: '24px',
     },
   },
-};
+});
