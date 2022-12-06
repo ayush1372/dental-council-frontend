@@ -131,6 +131,7 @@ export function Profile() {
     dispatch(changeUserActiveTab(activeTab.tabName));
   };
   const theme = useTheme();
+
   return (
     <section className={styles.profilePage}>
       <Grid container className={styles.profilePageContainer} justifyContent={'space-between'}>
