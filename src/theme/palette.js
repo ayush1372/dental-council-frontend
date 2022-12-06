@@ -59,6 +59,7 @@ export const Palette = {
   textPrimary: {
     main: '#1C1B1B',
     secondary: '#7687AF',
+    dark: '#152C69',
   },
   textSecondary: {
     main: '#1C1B1BCC',

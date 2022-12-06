@@ -6,9 +6,9 @@ import { Box, Container, Tab, Tabs } from '@mui/material';
 
 import AdvanceSearch from './components/advance-search';
 import BlacklistedDoctor from './components/blacklisted-doctor';
+import SearchResults from './components/doctor-search-results';
 import Name from './components/name';
 import RegistrationNumber from './components/registration-number';
-import SearchResults from './components/search-results';
 import StateMedicalCouncil from './components/state-medical-council';
 import SuspendedDoctor from './components/suspended-doctor';
 import YearOfRegistration from './components/year-of-registraation';
