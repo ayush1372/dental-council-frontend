@@ -4,12 +4,12 @@
 
 import { useState } from 'react';
 
-import AssignmentIndOutlinedIcon from '@mui/icons-material/AssignmentIndOutlined';
+// import AssignmentIndOutlinedIcon from '@mui/icons-material/AssignmentIndOutlined';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp';
+// import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+// import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
-import { Collapse, Container, Divider, Grid, Typography } from '@mui/material';
+import { Divider, Grid } from '@mui/material';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -106,7 +106,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function MiniDrawer({ DrawerOptions = [], handleSwitch, ActiveOption = 0 }) {
   const [open, setOpen] = useState(true);
-  const [openOptions, setOpenOptions] = useState(true);
+  // const [openOptions, setOpenOptions] = useState(true);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -163,7 +163,7 @@ export default function MiniDrawer({ DrawerOptions = [], handleSwitch, ActiveOpt
             </IconButton>
           </DrawerHeader>
           <Divider />
-          {open ? (
+          {/* {open ? (
             <Typography
               vairant="body1"
               color="primary.main"
@@ -187,70 +187,70 @@ export default function MiniDrawer({ DrawerOptions = [], handleSwitch, ActiveOpt
                 onClick={() => setOpenOptions(!openOptions)}
               />
             </Box>
-          )}
-          <Collapse
+          )} */}
+          {/* <Collapse
             in={openOptions}
             // timeout={800}
             easing={{
               enter: 'linear',
               exit: 'linear',
             }}
-          >
-            <List sx={{ p: 0 }}>
-              {DrawerOptions.map((item, index) => (
-                <ListItem
-                  key={`profileOption_${index}`}
-                  id={`profileOption_${index}`}
-                  disablePadding
+          > */}
+          <List sx={{ p: 0 }}>
+            {DrawerOptions.map((item, index) => (
+              <ListItem
+                key={`profileOption_${index}`}
+                id={`profileOption_${index}`}
+                disablePadding
+                sx={{
+                  display: 'block',
+                  bgcolor: index === ActiveOption ? theme.palette.white.main : null,
+                  border: '1px solid #EDEDF6',
+                }}
+              >
+                <ListItemButton
                   sx={{
-                    display: 'block',
-                    bgcolor: index === ActiveOption ? theme.palette.white.main : null,
-                    border: '1px solid #EDEDF6',
+                    minHeight: 48,
+                    justifyContent: open ? 'initial' : 'center',
+                    px: 2.5,
+                  }}
+                  onClick={() => {
+                    handleSwitch(index);
                   }}
                 >
-                  <ListItemButton
+                  <ListItemIcon
                     sx={{
-                      minHeight: 48,
-                      justifyContent: open ? 'initial' : 'center',
-                      px: 2.5,
-                    }}
-                    onClick={() => {
-                      handleSwitch(index);
+                      minWidth: 0,
+                      mr: open ? 3 : 'auto',
+                      justifyContent: 'center',
+                      color:
+                        index === ActiveOption
+                          ? theme.palette.primary.main
+                          : theme.palette.grey1.main,
                     }}
                   >
-                    <ListItemIcon
-                      sx={{
-                        minWidth: 0,
-                        mr: open ? 3 : 'auto',
-                        justifyContent: 'center',
-                        color:
-                          index === ActiveOption
-                            ? theme.palette.primary.main
-                            : theme.palette.grey1.main,
-                      }}
-                    >
-                      {!open ? item.icon : null}
-                      {/* {item.icon} */}
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={item.name}
-                      primaryTypographyProps={{ fontSize: '16px' }}
-                      sx={{
-                        opacity: open ? 1 : 0,
-                        color:
-                          index === ActiveOption
-                            ? theme.palette.primary.main
-                            : theme.palette.textPrimary.main,
-                      }}
-                    />
-                  </ListItemButton>
-                </ListItem>
-              ))}
-            </List>
-          </Collapse>
+                    {!open ? item.icon : null}
+                    {/* {item.icon} */}
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={item.name}
+                    primaryTypographyProps={{ fontSize: '16px' }}
+                    sx={{
+                      opacity: open ? 1 : 0,
+                      color:
+                        index === ActiveOption
+                          ? theme.palette.primary.main
+                          : theme.palette.textPrimary.main,
+                    }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+          {/* </Collapse> */}
         </Drawer>
       </Box>
-      <Container sx={{ flexGrow: 1, px: 3, bgcolor: 'white.main' }}>
+      {/* <Container sx={{ flexGrow: 1, px: 3, bgcolor: 'white.main' }}>
         {DrawerOptions.map((item, index) =>
           item.option === ActiveOption ? (
             <Box mt={8} key={index}>
@@ -260,7 +260,7 @@ export default function MiniDrawer({ DrawerOptions = [], handleSwitch, ActiveOpt
             ''
           )
         )}
-      </Container>
+      </Container> */}
     </Box>
   );
 }
