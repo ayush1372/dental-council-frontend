@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import CloseIcon from '@mui/icons-material/Close';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import SearchIcon from '@mui/icons-material/Search';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import {
@@ -147,7 +148,7 @@ const SearchResults = () => {
                           marginTop: '10px',
                         }}
                       >
-                        <VisibilityIcon /> View my Profile
+                        <VisibilityIcon sx={{ pr: '6px' }} /> View my Profile
                       </Button>
                     </Box>
                   </Grid>
@@ -175,9 +176,11 @@ const SearchResults = () => {
         </Box>
       </Box>
       <Dialog
+        maxWidth="sm"
         sx={{
           '.MuiPaper-root': {
             borderRadius: '10px',
+            width: '100%',
           },
         }}
         open={confirmationModal}
@@ -185,12 +188,12 @@ const SearchResults = () => {
           setConfirmationModal(false);
         }}
       >
-        <Box width="707px" height="900px">
-          <Box bgcolor="grey2.dark" p={4} display="flex" justifyContent="flex-end">
+        <Box width="100%">
+          <Box bgcolor="grey2.dark" p={3} display="flex" justifyContent="flex-end">
             <CloseIcon color="white" onClick={handleClose} />
           </Box>
-          <Box className="docter-details" p="8px 8px 8px 16px">
-            <Box className="info" display="flex" pb={2}>
+          <Box className="docter-details" px={6}>
+            <Box className="info" display="flex" py={1}>
               <Box className="icon" width="30%" position="relative">
                 <Box className="outer-image">
                   <img src={doctorImage} alt="doctor Image" />
@@ -206,187 +209,179 @@ const SearchResults = () => {
               </Box>
             </Box>
             <Divider />
-            <Typography
-              variant="subtitle1"
-              color="textPrimary.main"
-              component="div"
-              mt={2}
-              mb={1}
-              ml={1}
-            >
+            <Typography variant="subtitle1" color="textPrimary.main" component="div" mt={2} mb={1}>
               View IMR Details
             </Typography>
-            <Box display="flex" width="100%" ml={1}>
-              <Box width="60%">
-                <Box className="detail" display="flex">
+            <Box display="flex" width="100%">
+              <Box width="62%">
+                <Box className="detail" display="flex" mb={1}>
                   <Typography
                     component="div"
                     width="45%"
                     color="inputTextColor.main"
-                    variant="subtitle1"
+                    variant="body1"
                   >
                     Father/Husband Name
                   </Typography>
-                  <Typography component="div" width="55%" color="textPrimary.main">
+                  <Typography component="div" width="55%" color="textPrimary.main" variant="body1">
                     N/A
                   </Typography>
                 </Box>
-                <Box className="detail" display="flex">
+                <Box className="detail" display="flex" mb={1}>
                   <Typography
                     component="div"
                     width="45%"
                     color="inputTextColor.main"
-                    variant="subtitle1"
+                    variant="body1"
                   >
                     Date of Birth
                   </Typography>
-                  <Typography component="div" width="55%" color="textPrimary.main">
+                  <Typography component="div" width="55%" color="textPrimary.main" variant="body1">
                     N/A
                   </Typography>
                 </Box>
-                <Box className="detail" display="flex">
+                <Box className="detail" display="flex" mb={1}>
                   <Typography
                     component="div"
                     width="45%"
                     color="inputTextColor.main"
-                    variant="subtitle1"
+                    variant="body1"
                   >
                     Mobile number
                   </Typography>
-                  <Typography component="div" width="55%" color="textPrimary.main">
-                    XXXXXX2137
+                  <Typography component="div" width="55%" color="textPrimary.main" variant="body1">
+                    XXXXXX2137 <ContentCopyIcon fontSize="10px" color="primary" />
                   </Typography>
                 </Box>
-                <Box className="detail" display="flex">
+                <Box className="detail" display="flex" mb={1}>
                   <Typography
                     component="div"
                     width="45%"
                     color="inputTextColor.main"
-                    variant="subtitle1"
+                    variant="body1"
                   >
                     Email address
                   </Typography>
-                  <Typography component="div" width="55%" color="textPrimary.main">
-                    adxxx.xxxxx@gmail.com
+                  <Typography component="div" width="55%" color="textPrimary.main" variant="body1">
+                    adxxx.xxxxx@gmail.com <ContentCopyIcon fontSize="10px" color="primary" />
                   </Typography>
                 </Box>
-                <Box className="detail" display="flex">
+                <Box className="detail" display="flex" mb={1}>
                   <Typography
                     component="div"
                     width="45%"
                     color="inputTextColor.main"
-                    variant="subtitle1"
+                    variant="body1"
                   >
                     Qualification
                   </Typography>
-                  <Typography component="div" width="55%" color="textPrimary.main">
+                  <Typography component="div" width="55%" color="textPrimary.main" variant="body1">
                     MBBS
                   </Typography>
                 </Box>
-                <Box className="detail" display="flex">
+                <Box className="detail" display="flex" mb={1}>
                   <Typography
                     component="div"
                     width="45%"
                     color="inputTextColor.main"
-                    variant="subtitle1"
+                    variant="body1"
                   >
                     Qualification year
                   </Typography>
-                  <Typography component="div" width="55%" color="textPrimary.main">
+                  <Typography component="div" width="55%" color="textPrimary.main" variant="body1">
                     1994
                   </Typography>
                 </Box>
-                <Box className="detail" display="flex">
+                <Box className="detail" display="flex" mb={1}>
                   <Typography
                     component="div"
                     width="45%"
                     color="inputTextColor.main"
-                    variant="subtitle1"
+                    variant="body1"
                   >
                     University Name
                   </Typography>
-                  <Typography component="div" width="55%" color="textPrimary.main">
+                  <Typography component="div" width="55%" color="textPrimary.main" variant="body1">
                     U.Calcutta
                   </Typography>
                 </Box>
               </Box>
-              <Box width="40%">
-                <Box
+              <Box width="38%" borderLeft="1px solid" borderColor="grey.main" pl={3}>
+                {/* <Box
                   sx={{
                     borderLeft: '1px solid',
                     borderLeftColor: 'grey.main',
                     padding: '0 10px',
                   }}
-                >
-                  <Box className="detail" display="flex">
-                    <Typography
-                      component="div"
-                      width="55%"
-                      color="inputTextColor.main"
-                      variant="subtitle1"
-                    >
-                      Year of Info
-                    </Typography>
-                    <Typography component="div" width="45%" color="textPrimary.main">
-                      1960
-                    </Typography>
-                  </Box>
-                  <Box className="detail" display="flex">
-                    <Typography
-                      component="div"
-                      width="55%"
-                      color="inputTextColor.main"
-                      variant="subtitle1"
-                    >
-                      Registration No.
-                    </Typography>
-                    <Typography component="div" width="45%" color="textPrimary.main">
-                      15580
-                    </Typography>
-                  </Box>
-                  <Box className="detail" display="flex">
-                    <Typography
-                      component="div"
-                      width="55%"
-                      color="inputTextColor.main"
-                      variant="subtitle1"
-                    >
-                      Date of Reg.
-                    </Typography>
-                    <Typography component="div" width="45%" color="textPrimary.main">
-                      19/08/1944
-                    </Typography>
-                  </Box>
-                  <Box className="detail" display="flex">
-                    <Typography
-                      component="div"
-                      width="55%"
-                      color="inputTextColor.main"
-                      variant="subtitle1"
-                    >
-                      UPRN No.
-                    </Typography>
-                    <Typography component="div" width="45%" color="textPrimary.main">
-                      N/A
-                    </Typography>
-                  </Box>
-                  <Box className="detail" display="flex">
-                    <Typography
-                      component="div"
-                      width="55%"
-                      color="inputTextColor.main"
-                      variant="subtitle1"
-                    >
-                      NMR ID
-                    </Typography>
-                    <Typography component="div" width="45%" color="textPrimary.main">
-                      7676372736
-                    </Typography>
-                  </Box>
+                > */}
+                <Box className="detail" display="flex" mb={1}>
+                  <Typography
+                    component="div"
+                    width="55%"
+                    color="inputTextColor.main"
+                    variant="body1"
+                  >
+                    Year of Info
+                  </Typography>
+                  <Typography component="div" width="45%" color="textPrimary.main" variant="body1">
+                    1960
+                  </Typography>
+                </Box>
+                <Box className="detail" display="flex" mb={1}>
+                  <Typography
+                    component="div"
+                    width="55%"
+                    color="inputTextColor.main"
+                    variant="body1"
+                  >
+                    Registration No.
+                  </Typography>
+                  <Typography component="div" width="45%" color="textPrimary.main" variant="body1">
+                    15580
+                  </Typography>
+                </Box>
+                <Box className="detail" display="flex" mb={1}>
+                  <Typography
+                    component="div"
+                    width="55%"
+                    color="inputTextColor.main"
+                    variant="body1"
+                  >
+                    Date of Reg.
+                  </Typography>
+                  <Typography component="div" width="45%" color="textPrimary.main" variant="body1">
+                    19/08/1944
+                  </Typography>
+                </Box>
+                <Box className="detail" display="flex" mb={1}>
+                  <Typography
+                    component="div"
+                    width="55%"
+                    color="inputTextColor.main"
+                    variant="body1"
+                  >
+                    UPRN No.
+                  </Typography>
+                  <Typography component="div" width="45%" color="textPrimary.main" variant="body1">
+                    N/A
+                  </Typography>
+                </Box>
+                <Box className="detail" display="flex" mb={1}>
+                  <Typography
+                    component="div"
+                    width="55%"
+                    color="inputTextColor.main"
+                    variant="body1"
+                  >
+                    NMR ID
+                  </Typography>
+                  <Typography component="div" width="45%" color="textPrimary.main" variant="body1">
+                    7676372736
+                  </Typography>
                 </Box>
               </Box>
             </Box>
-            <Box className="options" display="flex" justifyContent="flex-end" pr={2}>
+            <Box className="options" display="flex" justifyContent="flex-end" mb={2}>
               <Button
                 sx={{
                   marginRight: '10px',
