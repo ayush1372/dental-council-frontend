@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Box, Container, Grid, Paper, Typography } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
 import { useTheme } from '@mui/material/styles';
+import { useSelector } from 'react-redux';
 
 import { verboseLog } from '../../../../config/debug';
 import ViewProfile from '../../../../shared/view-profile/view-profile';
@@ -13,6 +14,7 @@ import DashboardControlledTable from '../dashboard-controlled-table/dashboard-co
 
 export default function Dashboard() {
   const theme = useTheme();
+  const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
   const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(1),
     textAlign: 'center',
@@ -65,6 +67,30 @@ export default function Dashboard() {
   ];
 
   const cardData = blankDashboard;
+  if (loggedInUserType === 'NMC' || loggedInUserType === 'SMC') {
+    cardData.push(
+      {
+        name: 'Blacklist Request Received',
+        id: 9,
+        value: 0,
+      },
+      {
+        name: 'Blacklisted',
+        id: 9,
+        value: 0,
+      },
+      {
+        name: 'Suspend Request Raised',
+        id: 9,
+        value: 0,
+      },
+      {
+        name: 'Suspend Request Approved',
+        id: 9,
+        value: 0,
+      }
+    );
+  }
 
   const [showDashboard, setShowDashboard] = useState(true);
   const [showTable, setShowTable] = useState(false);
@@ -152,15 +178,18 @@ export default function Dashboard() {
                           <Item
                             id={item.id}
                             sx={
-                              item.id === 1 || item.id === 5
+                              item.name.includes('Pending') || item.name.includes('Received')
                                 ? {
                                     borderTop: `5px solid ${theme.palette.secondary.warningYellow}`,
                                   }
-                                : item.id === 2 || item.id === 6
+                                : item.name.includes('Verified') || item.name.includes('Approved')
                                 ? { borderTop: `5px solid ${theme.palette.success.main}` }
-                                : item.id === 3 || item.id === 7
+                                : item.name.includes('Raised')
                                 ? { borderTop: `5px solid ${theme.palette.primary.main}` }
-                                : { borderTop: `5px solid ${theme.palette.error.main}` }
+                                : item.name.includes('Rejected') ||
+                                  item.name.includes('Blacklisted')
+                                ? { borderTop: `5px solid ${theme.palette.error.main}` }
+                                : ''
                             }
                             onClick={() => showTableFun(item)}
                           >
