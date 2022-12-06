@@ -4,11 +4,11 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import '@fontsource/roboto/900.css';
 
-import { Palette } from './palette';
+import { palette } from './palette';
 
 export const Typography = {
   fontSize: '16px',
-  color: Palette.textPrimary.main,
+  color: palette.textPrimary.main,
   fontWeight: '400',
 
   defaultProps: {

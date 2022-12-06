@@ -16,7 +16,6 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { verboseLog } from '../../../../config/debug';
-import { Palette } from '../../../../theme/palette';
 import { Button } from '../../../../ui/core';
 import { SvgImageComponent } from '../../../../ui/core/svg-icons';
 
@@ -77,7 +76,7 @@ export function SelectAbhaId() {
                         width="16px"
                         height="16px"
                         icon="checkCircle"
-                        fill={Palette.success.main}
+                        fill="success.main"
                       />
                     </span>
                   ) : (
@@ -103,7 +102,7 @@ export function SelectAbhaId() {
                         width="16px"
                         height="16px"
                         icon="checkCircle"
-                        fill={Palette.success.main}
+                        fill="success.main"
                       />
                     </span>
                   ) : (

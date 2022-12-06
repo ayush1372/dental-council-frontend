@@ -2,16 +2,17 @@ import { useState } from 'react';
 
 import { Box, Container, Grid, Paper, Typography } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 
 import { verboseLog } from '../../../../config/debug';
 import ViewProfile from '../../../../shared/view-profile/view-profile';
-import { Palette } from '../../../../theme/palette';
 import { Button } from '../../../../ui/core';
 import UserProfile from '../../../user-profile/index';
 import BreadcrumbsCompnent from '../breadcrums';
 import DashboardControlledTable from '../dashboard-controlled-table/dashboard-controlled-table';
 
 export default function Dashboard() {
+  const theme = useTheme();
   const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(1),
     textAlign: 'center',
@@ -152,24 +153,26 @@ export default function Dashboard() {
                             id={item.id}
                             sx={
                               item.id === 1 || item.id === 5
-                                ? { borderTop: `5px solid ${Palette.secondary.warningYellow}` }
+                                ? {
+                                    borderTop: `5px solid ${theme.palette.secondary.warningYellow}`,
+                                  }
                                 : item.id === 2 || item.id === 6
-                                ? { borderTop: `5px solid ${Palette.success.main}` }
+                                ? { borderTop: `5px solid ${theme.palette.success.main}` }
                                 : item.id === 3 || item.id === 7
-                                ? { borderTop: `5px solid ${Palette.primary.main}` }
-                                : { borderTop: `5px solid ${Palette.error.main}` }
+                                ? { borderTop: `5px solid ${theme.palette.primary.main}` }
+                                : { borderTop: `5px solid ${theme.palette.error.main}` }
                             }
                             onClick={() => showTableFun(item)}
                           >
                             <Box
-                              color={Palette.secondary.contrastText}
+                              color="secondary.contrastText"
                               fontSize={14}
                               sx={{ minHeight: '60px', wordBreak: 'break-word' }}
                             >
                               {item.name}
                             </Box>
                             <Box
-                              color={Palette.tabHighlightedBackgroundColor.main}
+                              color="tabHighlightedBackgroundColor.main"
                               fontSize={20}
                               fontWeight={600}
                             >

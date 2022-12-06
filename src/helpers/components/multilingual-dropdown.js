@@ -41,6 +41,7 @@ export const MultilingualDropdown = () => {
           onClick={handleChange}
           MenuListProps={{
             disablePadding: true,
+            color: 'inputTextColor.main',
           }}
         >
           {item.title}

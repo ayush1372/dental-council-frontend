@@ -1,4 +1,4 @@
-import { Palette } from './palette';
+import { palette } from './palette';
 
 export const CardHeader = {
   styleOverrides: {
@@ -6,7 +6,7 @@ export const CardHeader = {
       padding: '0',
     },
     title: {
-      color: Palette.primary.main,
+      color: palette.primary.main,
       fontSize: '18px',
       fontWeight: 'bold',
       lineHeight: '28px',
@@ -16,7 +16,7 @@ export const CardHeader = {
       lineHeight: '20px',
     },
     content: {
-      color: Palette.textPrimary.main,
+      color: palette.textPrimary.main,
       fontSize: '16px',
       lineHeight: '24px',
     },
