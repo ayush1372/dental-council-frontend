@@ -1,6 +1,11 @@
 import { useState } from 'react';
 
-import { Grid, Typography } from '@mui/material';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
+import BadgeIcon from '@mui/icons-material/Badge';
+import CreditCardOffIcon from '@mui/icons-material/CreditCardOff';
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import { Grid } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import TrackStatus from '../../shared/track-status/index';
@@ -12,203 +17,164 @@ import CollegeDean from './college-dean/college-dean';
 import CollegeMyProfile from './college-my-profile/college-my-profile';
 import CollegeRegistrar from './college-registrar/college-registrar';
 import Dashboard from './components/dashboard-cards/dashboard-cards';
-import ProfileImage from './components/profile-image/profile-image';
-import { VerticalTab } from './components/vertical-tab/vertical-tab';
+import MiniDrawer from './components/profile-sidebar/profile-sidebar';
 import MyProfile from './smc-nmc-profile/my-profile';
-
-import styles from './profile.module.scss';
-
-const dataTabs = [
-  {
-    title: 'My Profile',
-    tabName: 'my-profile',
-  },
-];
-const nmcTabs = [
-  {
-    title: 'Dashboard',
-    tabName: 'dashboard',
-  },
-  {
-    title: 'My Profile',
-    tabName: 'my-profile',
-  },
-  {
-    title: 'Track Status',
-    tabName: 'track-status',
-  },
-];
-const colgTabs = [
-  {
-    title: 'Dashboard',
-    tabName: 'dashboard',
-  },
-  {
-    title: 'My Profile',
-    tabName: 'my-profile',
-  },
-  {
-    title: 'Track Status',
-    tabName: 'track-status',
-  },
-  {
-    title: 'College Registrar',
-    tabName: 'college-registrar',
-  },
-  {
-    title: 'College Dean',
-    tabName: 'college-dean',
-  },
-];
-const smcTabs = [
-  {
-    title: 'Dashboard',
-    tabName: 'dashboard',
-  },
-  {
-    title: 'My Profile',
-    tabName: 'my-profile',
-  },
-  {
-    title: 'Track Status',
-    tabName: 'track-status',
-  },
-  {
-    title: 'New Doctor Registration',
-    tabName: 'New-doctor-registration',
-  },
-];
-const doctorTabs = [
-  {
-    title: 'My Profile',
-    tabName: 'my-profile',
-  },
-  {
-    title: 'Suspend License',
-    tabName: 'suspend-license',
-  },
-  {
-    title: 'Voluntary Retirement',
-    tabName: 'voluntary-retirement',
-  },
-];
 
 export function Profile() {
   const dispatch = useDispatch();
   const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
+  const { userActiveTab } = useSelector((state) => state.ui);
+
+  const doctorTabs = [
+    {
+      option: 0,
+      name: 'My Profile',
+      tabName: 'my-profile',
+      icon: <AccountCircleIcon />,
+      element: <UserProfile tabName={userActiveTab} />,
+    },
+    {
+      option: 1,
+      name: 'Suspend License',
+      tabName: 'suspend-license',
+      icon: <CreditCardOffIcon />,
+      element: <SuspendLicenseVoluntaryRetirement tabName={userActiveTab} />,
+    },
+    {
+      option: 2,
+      name: 'Voluntary Retirement',
+      tabName: 'voluntary-retirement',
+      icon: <CreditCardOffIcon />,
+      element: <SuspendLicenseVoluntaryRetirement tabName={userActiveTab} />,
+    },
+  ];
+
+  const smcTabs = [
+    {
+      option: 0,
+      name: 'Dashboard',
+      tabName: 'dashboard',
+      icon: <DashboardIcon />,
+      element: <Dashboard tabName={userActiveTab} />,
+    },
+    {
+      option: 1,
+      name: 'My Profile',
+      tabName: 'my-profile',
+      icon: <AccountCircleIcon />,
+      element: <MyProfile userType={'SMC'} />,
+    },
+    {
+      option: 2,
+      name: 'Track Status',
+      tabName: 'track-status',
+      icon: <BadgeIcon />,
+      element: <TrackStatus tabName={userActiveTab} />,
+    },
+    {
+      option: 3,
+      name: 'New Doctor Registration',
+      tabName: 'New-doctor-registration',
+      icon: <AppRegistrationIcon />,
+      element: <NewDoctorRegistration userType={'SMC'} />,
+    },
+  ];
+
+  const nmcTabs = [
+    {
+      option: 0,
+      name: 'Dashboard',
+      tabName: 'dashboard',
+      icon: <DashboardIcon />,
+      element: <Dashboard tabName={userActiveTab} />,
+    },
+    {
+      option: 1,
+      name: 'My Profile',
+      tabName: 'my-profile',
+      icon: <AccountCircleIcon />,
+      element: <MyProfile userType={'NMC'} />,
+    },
+    {
+      option: 2,
+      name: 'Track Status',
+      tabName: 'track-status',
+      icon: <BadgeIcon />,
+      element: <TrackStatus tabName={userActiveTab} />,
+    },
+  ];
+
+  const colgTabs = [
+    {
+      option: 0,
+      name: 'Dashboard',
+      tabName: 'dashboard',
+      icon: <DashboardIcon />,
+      element: <Dashboard tabName={userActiveTab} />,
+    },
+    {
+      option: 1,
+      name: 'My Profile',
+      tabName: 'my-profile',
+      icon: <AccountCircleIcon />,
+      element: <CollegeMyProfile />,
+    },
+    {
+      option: 2,
+      name: 'Track Status',
+      tabName: 'track-status',
+      icon: <BadgeIcon />,
+      element: <TrackStatus tabName={userActiveTab} />,
+    },
+    {
+      option: 3,
+      name: 'College Registrar',
+      tabName: 'college-registrar',
+      icon: <AppRegistrationIcon />,
+      element: <CollegeRegistrar />,
+    },
+    {
+      option: 4,
+      name: 'College Dean',
+      tabName: 'college-dean',
+      icon: <AppRegistrationIcon />,
+      element: <CollegeDean />,
+    },
+  ];
+
   const [isActiveTab, setIsActiveTab] = useState(
     loggedInUserType === 'Doctor'
-      ? { ...doctorTabs[0] }
+      ? doctorTabs[0].tabName
       : loggedInUserType === 'College' || loggedInUserType === 'SMC' || loggedInUserType === 'NMC'
-      ? { ...colgTabs[0] }
-      : { ...dataTabs[0] }
+      ? colgTabs[0].tabName
+      : ''
   );
+
   const setActiveTab = (activeTab) => {
     setIsActiveTab(activeTab);
-    dispatch(changeUserActiveTab(activeTab.tabName));
+    dispatch(changeUserActiveTab(activeTab));
   };
 
   return (
-    <section className={styles.profilePage}>
-      <Grid container className={styles.profilePageContainer} justifyContent={'space-between'}>
-        <Grid item className={styles.profileContainer}>
-          <Grid item xs={12} className={styles.profileImgBackground}>
-            <Grid item xs={12}>
-              <ProfileImage
-                name={
-                  loggedInUserType === 'Doctor'
-                    ? 'Dr. ABC'
-                    : loggedInUserType === 'College'
-                    ? 'IP University'
-                    : loggedInUserType === 'NMC'
-                    ? 'National Medical Commission'
-                    : loggedInUserType === 'SMC'
-                    ? 'Maharashtra Medical Council'
-                    : loggedInUserType !== 'Doctor' &&
-                      loggedInUserType !== 'College' &&
-                      loggedInUserType !== 'SMC' &&
-                      loggedInUserType !== 'NMC'
-                    ? 'Dr. ABC'
-                    : null
-                }
-              />
-            </Grid>
-          </Grid>
-          <Grid item xs={12}>
-            {loggedInUserType === 'Doctor' ? (
-              <VerticalTab dataTabs={doctorTabs} activeTab={isActiveTab} changeTab={setActiveTab} />
-            ) : loggedInUserType === 'NMC' ? (
-              <VerticalTab dataTabs={nmcTabs} activeTab={isActiveTab} changeTab={setActiveTab} />
-            ) : loggedInUserType === 'SMC' ? (
-              <VerticalTab dataTabs={smcTabs} activeTab={isActiveTab} changeTab={setActiveTab} />
-            ) : loggedInUserType === 'College' ? (
-              <VerticalTab dataTabs={colgTabs} activeTab={isActiveTab} changeTab={setActiveTab} />
-            ) : (
-              <VerticalTab dataTabs={dataTabs} activeTab={isActiveTab} changeTab={setActiveTab} />
-            )}
-          </Grid>
-        </Grid>
-        <Grid
-          item
-          className={styles.tabDetailsContainer}
-          sx={{
-            backgroundColor:
-              (isActiveTab.tabName === 'my-profile' && loggedInUserType === 'Doctor') ||
-              (isActiveTab.tabName === 'New-doctor-registration' && loggedInUserType === 'SMC')
-                ? 'none'
-                : 'white.main',
-          }}
-        >
-          {isActiveTab.tabName === 'dashboard' ? (
-            <Dashboard tabName={isActiveTab.tabName} />
-          ) : isActiveTab.tabName === 'track-status' &&
-            (loggedInUserType === 'College' ||
-              loggedInUserType === 'NMC' ||
-              loggedInUserType === 'SMC') ? (
-            // eslint-disable-next-line react/jsx-indent
-            <TrackStatus tabName={isActiveTab.tabName} />
-          ) : isActiveTab.tabName === 'my-profile' && loggedInUserType === 'Doctor' ? (
-            <UserProfile tabName={isActiveTab.tabName} />
-          ) : isActiveTab.tabName === 'my-profile' && loggedInUserType === 'College' ? (
-            <CollegeMyProfile />
-          ) : isActiveTab.tabName === 'my-profile' && loggedInUserType === 'SMC' ? (
-            <MyProfile userType={'SMC'} />
-          ) : isActiveTab.tabName === 'my-profile' && loggedInUserType === 'NMC' ? (
-            <MyProfile userType={'NMC'} />
-          ) : isActiveTab.tabName === 'my-profile' &&
-            loggedInUserType !== 'Doctor' &&
-            loggedInUserType !== 'College' &&
-            loggedInUserType !== 'SMC' &&
-            loggedInUserType !== 'NMC' ? (
-            ''
-          ) : isActiveTab.tabName === 'college-registrar' ? (
-            <CollegeRegistrar />
-          ) : isActiveTab.tabName === 'college-dean' ? (
-            <CollegeDean />
-          ) : (isActiveTab.tabName === 'suspend-license' ||
-              isActiveTab.tabName === 'voluntary-retirement') &&
-            loggedInUserType === 'Doctor' ? (
-            // eslint-disable-next-line react/jsx-indent
-            <SuspendLicenseVoluntaryRetirement tabName={isActiveTab.tabName} />
-          ) : isActiveTab.tabName === 'New-doctor-registration' && loggedInUserType === 'SMC' ? (
-            <NewDoctorRegistration userType={'SMC'} />
-          ) : (
-            <Grid
-              item
-              xs={12}
-              minHeight={500}
-              display="flex"
-              alignItems="center"
-              justifyContent={'center'}
-            >
-              <Typography variant="h4" component={'p'}>
-                {isActiveTab.title}
-              </Typography>
-            </Grid>
-          )}
-        </Grid>
+    <Grid container>
+      <Grid item xs={12}>
+        <MiniDrawer
+          DrawerOptions={
+            loggedInUserType === 'Doctor'
+              ? doctorTabs
+              : loggedInUserType === 'NMC'
+              ? nmcTabs
+              : loggedInUserType === 'SMC'
+              ? smcTabs
+              : loggedInUserType === 'College'
+              ? colgTabs
+              : ''
+          }
+          handleSwitch={setActiveTab}
+          ActiveOption={isActiveTab}
+        />
       </Grid>
-    </section>
+    </Grid>
   );
 }
 
