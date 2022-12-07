@@ -28,7 +28,6 @@ const CollegeMyProfile = () => {
             </Grid>
             <Grid item xs={3}>
               <Button
-                sx={{ width: 'auto' }}
                 startIcon={<EditIcon sx={{ mr: 1 }} />}
                 variant="contained"
                 color="secondary"

@@ -100,7 +100,6 @@ export const UserProfile = ({
               handleNext={handleNext}
               steps={wizardSteps}
               progress={false}
-              // enableNaviagation={true}
             >
               {activeStep === 0 && (
                 <PersonalDetails
