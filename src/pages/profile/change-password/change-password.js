@@ -90,7 +90,7 @@ const ChangePassword = () => {
                 fullWidth
                 id="outlined-basic"
                 variant="outlined"
-                type="assword"
+                type="Password"
                 name="confirmPassword"
                 required="true"
                 placeholder={t('Confirm Password')}
