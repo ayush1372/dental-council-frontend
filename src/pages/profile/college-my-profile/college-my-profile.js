@@ -10,7 +10,7 @@ const CollegeMyProfile = () => {
   const [showEdit, setShowEdit] = useState(false);
 
   return (
-    <Box boxShadow={2} p="0px 91px 44px 41px">
+    <Box boxShadow={2} p="0px 91px 44px 41px" pt={2}>
       {!showEdit ? (
         <Grid>
           <Grid container item spacing={2}>

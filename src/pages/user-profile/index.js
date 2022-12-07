@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import EditIcon from '@mui/icons-material/Edit';
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 import useWizard from '../../hooks/use-wizard';
@@ -39,7 +39,8 @@ export const UserProfile = ({
     }
   }, [isReadMode]);
   return (
-    <Container maxWidth="lg" sx={{ marginTop: '30px' }}>
+    // <Container maxWidth="lg" sx={{ marginTop: '30px' }}>
+    <>
       {!showViewProfile ? (
         <Box display="flex" justifyContent="space-between" alignItems="center">
           <Typography component="div" variant="h2" color="primary.main" py={2}>
@@ -125,7 +126,7 @@ export const UserProfile = ({
           setIsReadMode={setIsReadMode}
         />
       )}
-    </Container>
+    </>
   );
 };
 

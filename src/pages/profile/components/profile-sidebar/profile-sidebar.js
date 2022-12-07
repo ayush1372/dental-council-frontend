@@ -1,17 +1,9 @@
-// import MuiAppBar from '@mui/material/AppBar';
-// import Toolbar from '@mui/material/Toolbar';
-// import { Button } from '../../../../ui/core';
-
 import { useState } from 'react';
 
-// import AssignmentIndOutlinedIcon from '@mui/icons-material/AssignmentIndOutlined';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-// import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-// import KeyboardArrowUp from '@mui/icons-material/KeyboardArrowUp';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
-import { Divider, Grid } from '@mui/material';
+import { CssBaseline, Grid } from '@mui/material';
 import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
@@ -31,7 +23,7 @@ const openedMixin = (theme) => ({
   [theme.breakpoints.up('lg')]: {
     width: 320,
   },
-  backgroundColor: '#F8F7FA',
+  backgroundColor: `${theme.palette.white.main}`,
 
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
@@ -47,7 +39,7 @@ const closedMixin = (theme) => ({
   }),
   overflowX: 'hidden',
   width: `calc(${theme.spacing(7)} + 1px)`,
-  backgroundColor: '#F8F7FA',
+  backgroundColor: `${theme.palette.white.main}`,
 
   [theme.breakpoints.up('sm')]: {
     width: `calc(${theme.spacing(8)} + 1px)`,
@@ -59,28 +51,10 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'flex-end',
   padding: theme.spacing(0, 2.1),
-  backgroundColor: '#F8F7FA',
+  backgroundColor: `${theme.palette.white.main}`,
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
-
-// const AppBar = styled(MuiAppBar, {
-//   shouldForwardProp: (prop) => prop !== 'open',
-// })(({ theme, open }) => ({
-//   zIndex: theme.zIndex.drawer + 1,
-//   transition: theme.transitions.create(['width', 'margin'], {
-//     easing: theme.transitions.easing.sharp,
-//     duration: theme.transitions.duration.leavingScreen,
-//   }),
-//   ...(open && {
-//     marginLeft: drawerWidth,
-//     width: `calc(100% - ${drawerWidth}px)`,
-//     transition: theme.transitions.create(['width', 'margin'], {
-//       easing: theme.transitions.easing.sharp,
-//       duration: theme.transitions.duration.enteringScreen,
-//     }),
-//   }),
-// }));
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -88,10 +62,9 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     [theme.breakpoints.up('lg')]: {
       width: 320,
     },
-    // position: 'relative',
     flexShrink: 0,
     whiteSpace: 'nowrap',
-    backgroundColor: '#F8F7FA',
+    backgroundColor: theme.palette.grey1.light,
     boxSizing: 'border-box',
     ...(open && {
       ...openedMixin(theme),
@@ -104,9 +77,12 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   })
 );
 
-export default function MiniDrawer({ DrawerOptions = [], handleSwitch, ActiveOption = 0 }) {
+export default function MiniDrawer({
+  DrawerOptions = [],
+  handleSwitch,
+  ActiveOption = 'dashboard',
+}) {
   const [open, setOpen] = useState(true);
-  // const [openOptions, setOpenOptions] = useState(true);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -118,18 +94,35 @@ export default function MiniDrawer({ DrawerOptions = [], handleSwitch, ActiveOpt
 
   const theme = useTheme();
   const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
+  const { userActiveTab } = useSelector((state) => state.ui);
   return (
-    <Box display="flex" width="100%">
-      <Box
-        position="relative"
-        bgcolor="white.main"
-        borderRight={`2px solid ${theme.palette.inputBorderColor.main}`}
-      >
+    <Box
+      display="flex"
+      width="100%"
+      borderRadius="8px"
+      p={4}
+      bgcolor={theme.palette.grey1.lighter}
+      gap={4}
+      justifyContent="space-between"
+      minHeight={'550px'}
+    >
+      <Box bgcolor={theme.palette.white.main} borderRadius="8px">
         <CssBaseline />
-        <Drawer variant="permanent" open={open} PaperProps={{ sx: { position: 'relative' } }}>
+        <Drawer
+          variant="permanent"
+          open={open}
+          PaperProps={{ sx: { position: 'relative', border: 'none' } }}
+        >
           <DrawerHeader
             sx={
-              !open && { flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }
+              !open
+                ? { flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }
+                : {
+                    background: `linear-gradient(to bottom, ${theme.palette.grey.main} 0%,  ${theme.palette.grey.main} 50%, ${theme.palette.white.main} 20%,  ${theme.palette.white.main} 100%)`,
+                    mb: 4,
+                    borderTopLeftRadius: '8px',
+                    borderTopRightRadius: '8px',
+                  }
             }
           >
             {open ? (
@@ -158,44 +151,15 @@ export default function MiniDrawer({ DrawerOptions = [], handleSwitch, ActiveOpt
             ) : (
               ''
             )}
-            <IconButton onClick={open ? handleDrawerClose : handleDrawerOpen}>
+            <IconButton
+              onClick={open ? handleDrawerClose : handleDrawerOpen}
+              sx={{ position: 'absolute', top: '2px' }}
+            >
               {open ? <MenuOpenIcon /> : <ChevronRightIcon />}
             </IconButton>
           </DrawerHeader>
-          <Divider />
-          {/* {open ? (
-            <Typography
-              vairant="body1"
-              color="primary.main"
-              bgcolor="white.main"
-              p="10px 0px 10px 24px"
-              sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
-            >
-              My Account
-              <IconButton sx={{ mr: 2.5 }} onClick={() => setOpenOptions(!openOptions)}>
-                {openOptions ? <KeyboardArrowUp /> : <KeyboardArrowDownIcon />}
-              </IconButton>
-            </Typography>
-          ) : (
-            <Box display="flex" flexDirection="column" alignItems="center" py={1.2}>
-              <AssignmentIndOutlinedIcon
-                sx={{ color: theme.palette.primary.main }}
-                onClick={() => setOpenOptions(!openOptions)}
-              />
-              <KeyboardArrowDownIcon
-                sx={{ fontSize: '12px', color: theme.palette.primary.main }}
-                onClick={() => setOpenOptions(!openOptions)}
-              />
-            </Box>
-          )} */}
-          {/* <Collapse
-            in={openOptions}
-            // timeout={800}
-            easing={{
-              enter: 'linear',
-              exit: 'linear',
-            }}
-          > */}
+          {/* <Divider /> */}
+
           <List sx={{ p: 0 }}>
             {DrawerOptions.map((item, index) => (
               <ListItem
@@ -204,8 +168,14 @@ export default function MiniDrawer({ DrawerOptions = [], handleSwitch, ActiveOpt
                 disablePadding
                 sx={{
                   display: 'block',
-                  bgcolor: index === ActiveOption ? theme.palette.white.main : null,
-                  border: '1px solid #EDEDF6',
+                  borderLeft:
+                    item.tabName === ActiveOption
+                      ? `5px solid ${theme.palette.secondary.lightOrange}`
+                      : null,
+                  borderBottom: `1px solid ${theme.palette.inputBorderColor.main}`,
+                  '&:first-child': {
+                    borderTop: `1px solid ${theme.palette.inputBorderColor.main}`,
+                  },
                 }}
               >
                 <ListItemButton
@@ -215,7 +185,7 @@ export default function MiniDrawer({ DrawerOptions = [], handleSwitch, ActiveOpt
                     px: 2.5,
                   }}
                   onClick={() => {
-                    handleSwitch(index);
+                    handleSwitch(item.tabName);
                   }}
                 >
                   <ListItemIcon
@@ -224,22 +194,21 @@ export default function MiniDrawer({ DrawerOptions = [], handleSwitch, ActiveOpt
                       mr: open ? 3 : 'auto',
                       justifyContent: 'center',
                       color:
-                        index === ActiveOption
-                          ? theme.palette.primary.main
+                        item.tabName === ActiveOption
+                          ? theme.palette.secondary.lightOrange
                           : theme.palette.grey1.main,
                     }}
                   >
                     {!open ? item.icon : null}
-                    {/* {item.icon} */}
                   </ListItemIcon>
                   <ListItemText
                     primary={item.name}
-                    primaryTypographyProps={{ fontSize: '16px' }}
+                    primaryTypographyProps={{ fontSize: '14px' }}
                     sx={{
                       opacity: open ? 1 : 0,
                       color:
-                        index === ActiveOption
-                          ? theme.palette.primary.main
+                        item.tabName === ActiveOption
+                          ? theme.palette.secondary.lightOrange
                           : theme.palette.textPrimary.main,
                     }}
                   />
@@ -247,20 +216,24 @@ export default function MiniDrawer({ DrawerOptions = [], handleSwitch, ActiveOpt
               </ListItem>
             ))}
           </List>
-          {/* </Collapse> */}
         </Drawer>
       </Box>
-      {/* <Container sx={{ flexGrow: 1, px: 3, bgcolor: 'white.main' }}>
+      <Box
+        sx={{
+          width: '69%',
+          bgcolor:
+            (userActiveTab === 'my-profile' && loggedInUserType === 'Doctor') ||
+            (userActiveTab === 'New-doctor-registration' && loggedInUserType === 'SMC')
+              ? 'none'
+              : `${theme.palette.white.main}`,
+          flex: 1,
+          borderRadius: '8px',
+        }}
+      >
         {DrawerOptions.map((item, index) =>
-          item.option === ActiveOption ? (
-            <Box mt={8} key={index}>
-              {item.element}
-            </Box>
-          ) : (
-            ''
-          )
+          item.tabName === ActiveOption ? <Box key={index}>{item.element}</Box> : ''
         )}
-      </Container> */}
+      </Box>
     </Box>
   );
 }
