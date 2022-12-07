@@ -5,32 +5,49 @@ import { Box, Grid, Typography } from '@mui/material';
 
 import { collegeProfileData } from '../../../constants/common-data';
 import { Button } from '../../../ui/core';
+import ChangePassword from '../change-password/change-password';
 import CollegeEditProfile from './college-edit-profile';
 const CollegeMyProfile = () => {
-  const [showEdit, setShowEdit] = useState(false);
+  const [showPage, setShowpage] = useState('Profile');
 
   return (
-    <Box boxShadow={2} p="0px 91px 44px 41px" pt={2}>
-      {!showEdit ? (
+    <Box boxShadow={2} p="0px 91px 44px 41px" mt={2}>
+      {showPage === 'Profile' && (
         <Grid>
-          <Grid container item spacing={2}>
-            <Grid item xs={12}>
-              <Box display="flex" justifyContent="space-between" alignItems="center">
-                <Typography variant="h2" color="textPrimary.main">
-                  My Profile
-                </Typography>
-                <Button
-                  sx={{ width: '165px', p: '10px', height: '48px' }}
-                  startIcon={<EditIcon />}
-                  variant="contained"
-                  color="secondary"
-                  onClick={() => {
-                    setShowEdit(true);
-                  }}
-                >
-                  Edit Profile
-                </Button>
-              </Box>
+          <Grid container spacing={6}>
+            <Grid item xs={6}>
+              <Typography variant="h2" color="textPrimary.main">
+                My Profile
+              </Typography>
+            </Grid>
+
+            <Grid item xs={3}>
+              <Button
+                variant="contained"
+                onClick={() => setShowpage('ChangePassword')}
+                size="small"
+                sx={{
+                  width: 'max-content',
+                }}
+              >
+                Change Password
+              </Button>
+            </Grid>
+            <Grid item xs={3}>
+              <Button
+                startIcon={<EditIcon sx={{ mr: 1 }} />}
+                variant="contained"
+                color="secondary"
+                onClick={() => {
+                  setShowpage('Edit');
+                }}
+                size="small"
+                sx={{
+                  width: 'max-content',
+                }}
+              >
+                Edit Profile
+              </Button>
             </Grid>
           </Grid>
 
@@ -126,9 +143,9 @@ const CollegeMyProfile = () => {
             </Grid>
           </Grid>
         </Grid>
-      ) : (
-        <CollegeEditProfile />
       )}
+      {showPage === 'Edit' && <CollegeEditProfile />}
+      {showPage === 'ChangePassword' && <ChangePassword />}
     </Box>
   );
 };
