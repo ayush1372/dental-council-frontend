@@ -1,3 +1,4 @@
+import AttachFileIcon from '@mui/icons-material/AttachFile';
 import { Grid, Typography } from '@mui/material';
 
 const WorkDetails = () => {
@@ -54,6 +55,10 @@ const WorkDetails = () => {
           <Typography variant="subtitle2" color="inputTextColor">
             Upload the Proof of work for govt. such as Appointment letter, Last pay slip, recent
             transfer order etc.
+          </Typography>
+          <Typography variant="subtitle2" color="primary.main">
+            <AttachFileIcon fontSize="10px" />
+            View attachment
           </Typography>
         </Grid>
       </Grid>

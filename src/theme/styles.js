@@ -12,6 +12,7 @@ import { CardHeader } from './card-header';
 import { FormHelperText } from './form-helper-text';
 import { InputLabel } from './input-label';
 import { Palette } from './palette';
+import { StepLabel } from './step-label';
 import { TableRow } from './table-row';
 import { TableSortLabel } from './table-sort-label';
 import { TextField } from './textfield';
@@ -67,6 +68,8 @@ const themeWrapper = (mode) => {
       MuiTableSortLabel: TableSortLabel,
 
       MuiTableRow: TableRow,
+
+      MuiStepLabel: StepLabel,
     },
 
     // STYLE FOR BORDER RADIUS
