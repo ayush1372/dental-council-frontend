@@ -28,8 +28,14 @@ const NewPasswordSetup = ({ handlePasswordSetup }) => {
     handlePasswordSetup();
   };
   return (
-    <Box p={4} className={styles.loginContainerBox}>
-      <Typography variant="h2" component="div" textAlign="center">
+    <Box data-testid="new-password-setup" p={4} className={styles.loginContainerBox}>
+      <Typography
+        sx={{ mt: 2 }}
+        variant="h2"
+        component="div"
+        textAlign="center"
+        data-testid="Password"
+      >
         Enter New Password
       </Typography>
       <Box>
@@ -58,7 +64,7 @@ const NewPasswordSetup = ({ handlePasswordSetup }) => {
           />
         </Box>
         <Box sx={{ mt: 2 }}>
-          <Typography variant="body1">
+          <Typography variant="body1" data-testid="confirmPassword">
             Confirm Password
             <Typography component="span" color="error.main">
               *

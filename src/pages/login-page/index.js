@@ -22,7 +22,7 @@ const LoginWrapper = () => {
     resetStep();
   }, [location.state.loginFormname]);
   return (
-    <Container maxWidth="md" sx={{ mt: 5, mb: 5 }}>
+    <Container sx={{ mt: 5, mb: 5, maxWidth: '600px' }}>
       {activeStep === 0 && <LoginPage handleForgotPassword={handleNext} />}
       {activeStep === 1 && <ForgotPassword handleConfirmPassword={handleNext} />}
       {activeStep === 2 && <ConfirmOTP handleConfirmOTP={handleNext} />}

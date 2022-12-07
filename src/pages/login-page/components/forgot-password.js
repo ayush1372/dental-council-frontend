@@ -14,7 +14,6 @@ const ForgotPassword = ({ handleConfirmPassword }) => {
     register,
     handleSubmit,
     getValues,
-    // setValue,
     formState: { errors },
     watch,
   } = useForm({
@@ -42,74 +41,72 @@ const ForgotPassword = ({ handleConfirmPassword }) => {
       <Typography variant="h2" component="div" textAlign="center">
         Forgot Password
       </Typography>
-      <Box>
-        <Box sx={{ mt: 2 }}>
-          <Typography variant="body1">
-            Enter NMR ID/Reg ID/Email ID
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
+
+      <Box mt={2}>
+        <Typography variant="body1">
+          Enter NMR ID/Reg ID/Email ID
+          <Typography component="span" color="error.main">
+            *
           </Typography>
-          <TextField
-            inputProps={{ maxLength: 100 }}
-            fullWidth
-            id="outlined-basic"
-            variant="outlined"
-            type="text"
-            name="Id"
-            required="true"
-            placeholder={t('Enter NMR ID/Reg ID/Email ID')}
-            margin="dense"
-            defaultValue={getValues().Id}
-            error={isIdActive && errors.Id?.message}
-            {...register('Id', {
-              required: 'Provide valid ID',
-            })}
-            disabled={!isIdActive}
-          />
-        </Box>
-        <Divider
+        </Typography>
+        <TextField
+          inputProps={{ maxLength: 100 }}
+          fullWidth
+          id="outlined-basic"
+          variant="outlined"
+          type="text"
+          name="Id"
+          required="true"
+          placeholder={t('Enter NMR ID/Reg ID/Email ID')}
+          margin="dense"
+          defaultValue={getValues().Id}
+          error={isIdActive && errors.Id?.message}
+          {...register('Id', {
+            required: 'Provide valid ID',
+          })}
+          disabled={!isIdActive}
+        />
+      </Box>
+      <Divider
+        sx={{
+          fontSize: '16px',
+          paddingTop: '15px',
+        }}
+      >
+        <Typography variant="body1" color="inputTextColor.main">
+          OR
+        </Typography>
+      </Divider>
+      <Box sx={{ mt: 2 }}>
+        <Typography variant="body1">
+          Enter your Mobile Number
+          <Typography component="span" color="error.main">
+            *
+          </Typography>
+        </Typography>
+        <MobileNumber
+          register={register}
+          getValues={getValues}
+          errors={isMobileNumActive ? errors : {}}
+          showCircleCheckIcon={false}
+          showhint={false}
+          showVerify={false}
+          disabled={!isMobileNumActive}
+        />
+      </Box>
+      <Box align="end" sx={{ mt: 3 }}>
+        <Button
+          variant="contained"
           sx={{
-            fontSize: '16px',
-            paddingTop: '15px',
-          }}
-        >
-          <Typography variant="body1" color="inputTextColor.main">
-            OR
-          </Typography>
-        </Divider>
-        <Box sx={{ mt: 2 }}>
-          <Typography variant="body1">
-            Enter your Mobile Number
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
-          </Typography>
-          <MobileNumber
-            register={register}
-            getValues={getValues}
-            errors={isMobileNumActive ? errors : {}}
-            showCircleCheckIcon={false}
-            showhint={false}
-            showVerify={false}
-            disabled={!isMobileNumActive}
-          />
-        </Box>
-        <Box align="end" sx={{ mt: 3 }}>
-          <Button
-            size="medium"
-            variant="contained"
-            sx={{
+            backgroundColor: 'secondary.lightOrange',
+            '&:hover': {
               backgroundColor: 'secondary.lightOrange',
-              '&:hover': {
-                backgroundColor: 'secondary.lightOrange',
-              },
-            }}
-            onClick={onSubmit}
-          >
-            {t('Submit')}
-          </Button>
-        </Box>
+            },
+          }}
+          onClick={onSubmit}
+        >
+          {t('Submit')}
+        </Button>
       </Box>
     </Box>
   );
