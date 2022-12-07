@@ -42,12 +42,12 @@ export const UserProfile = ({
   }, [isReadMode]);
 
   return (
-    <Container>
+    <>
       {!showChangepassword ? (
-        <Container maxWidth="lg" sx={{ marginTop: '30px' }}>
+        <Box maxWidth="lg">
           {!showViewProfile ? (
             <Box display="flex" justifyContent="space-between" mb={3}>
-              <Typography component="div" variant="h2" color="primary.main" py={2}>
+              <Typography component="div" variant="h2" color="primary.main">
                 {isReadMode ? 'User Profile' : 'Edit Profile'}
                 {!isReadMode && (
                   <Typography component="div" variant="body3" color="inputTextColor.main">
@@ -57,13 +57,14 @@ export const UserProfile = ({
               </Typography>
 
               <Box display={'flex'}>
-                {loggedInUserType === 'Doctor' && (
+                {isReadMode && (
                   <Button
                     variant="contained"
                     color="primary"
                     onClick={() => {
                       setShowChangepassword(true);
                     }}
+                    size="small"
                     sx={{
                       width: 'max-content',
                     }}
@@ -80,6 +81,7 @@ export const UserProfile = ({
                       onClick={() => {
                         setIsReadMode(false);
                       }}
+                      size="small"
                       sx={{
                         width: 'max-content',
                         ml: '25px',
@@ -146,13 +148,13 @@ export const UserProfile = ({
               setIsReadMode={setIsReadMode}
             />
           )}
-        </Container>
+        </Box>
       ) : (
         <Container>
           <ChangePassword />
         </Container>
       )}
-    </Container>
+    </>
   );
 };
 
