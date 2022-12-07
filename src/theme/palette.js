@@ -106,4 +106,9 @@ export const Palette = {
   profileCardBorder: {
     main: '#BFBFBF8C',
   },
+  suspendAlert: {
+    main: '##E33D19',
+    secondary: '#FF7557',
+    light: '#FFE0D9',
+  },
 };

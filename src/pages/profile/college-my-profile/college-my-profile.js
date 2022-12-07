@@ -6,6 +6,7 @@ import { Box, Grid, Typography } from '@mui/material';
 import { collegeProfileData } from '../../../constants/common-data';
 import { Button } from '../../../ui/core';
 import ChangePassword from '../change-password/change-password';
+// import ChangePassword from '../../change-password/change-password';
 import CollegeEditProfile from './college-edit-profile';
 const CollegeMyProfile = () => {
   const [showPage, setShowpage] = useState('Profile');

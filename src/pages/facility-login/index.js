@@ -9,8 +9,6 @@ import { TextField } from '../../ui/core';
 import ButtonGroupWizard from '../../ui/core/wizard/button-group-wizard';
 import { PasswordRegexValidation } from '../../utilities/common-validations';
 
-// import styles from './facility.login.module.scss';
-
 export function FacilityLogin() {
   const { t } = useTranslation();
   const navigate = useNavigate();

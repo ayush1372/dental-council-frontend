@@ -1,10 +1,14 @@
+/* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 
 import EditIcon from '@mui/icons-material/Edit';
-import { Box, Container, Typography } from '@mui/material';
+import TuneIcon from '@mui/icons-material/Tune';
+import { Alert, Box, Container, Link, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 import useWizard from '../../hooks/use-wizard';
+import BasicModal from '../../shared/popup';
+import ReactivateLicencePopup from '../../shared/reactivate-licence-popup/reactivate-licence-popup';
 import { Button } from '../../ui/core/button/button';
 import Wizard from '../../ui/core/wizard';
 import ChangePassword from '../profile/change-password/change-password';
@@ -25,6 +29,8 @@ export const UserProfile = ({
 }) => {
   const [isReadMode, setIsReadMode] = useState(true);
   const [showChangepassword, setShowChangepassword] = useState(false);
+  const [showReactivateLicense, setShowReactivateLicense] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   const [wizardSteps, setWizardSteps] = useState(readWizardSteps);
   const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
@@ -32,6 +38,11 @@ export const UserProfile = ({
     loggedInUserType === 'Doctor' ? 0 : 1,
     []
   );
+
+  const renderSuccess = () => {
+    setShowReactivateLicense(false);
+    setShowSuccessPopup(true);
+  };
 
   useEffect(() => {
     if (!isReadMode) {
@@ -43,6 +54,39 @@ export const UserProfile = ({
 
   return (
     <Container>
+      {loggedInUserType === 'Doctor' && (
+        <Alert severity="error" sx={{ color: 'suspendAlert.main' }}>
+          Your Profile is set to suspend mode. You will not be able to perform actions on the
+          profile.{' '}
+          <Typography component="span" sx={{ color: 'suspendAlert.main' }}>
+            <TuneIcon
+              sx={{
+                color: 'suspendAlert.main',
+                width: '18px',
+                height: '18px',
+                ml: 3,
+                // mt: 1,
+              }}
+            />
+            <Link
+              sx={{
+                color: 'suspendAlert.secondary',
+              }}
+            >
+              <Button
+                sx={{
+                  color: 'suspendAlert.secondary',
+                }}
+                onClick={() => setShowReactivateLicense(true)}
+              >
+                Change Settings
+              </Button>
+            </Link>
+          </Typography>
+        </Alert>
+      )}
+      {showReactivateLicense && <ReactivateLicencePopup renderSuccess={renderSuccess} />}
+      {showSuccessPopup && <BasicModal />}
       {!showChangepassword ? (
         <Container maxWidth="lg" sx={{ marginTop: '30px' }}>
           {!showViewProfile ? (
@@ -100,6 +144,7 @@ export const UserProfile = ({
               handleNext={handleNext}
               steps={wizardSteps}
               progress={false}
+              // enableNaviagation={true}
             >
               {activeStep === 0 && (
                 <PersonalDetails

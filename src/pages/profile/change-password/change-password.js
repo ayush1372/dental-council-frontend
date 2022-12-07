@@ -4,6 +4,10 @@ import { useForm } from 'react-hook-form';
 
 import { TextField } from '../../../ui/core';
 
+// import { TextField } from '../../ui/core';
+
+// import { TextField } from '../../../ui/core';
+
 const ChangePassword = () => {
   const {
     register,
@@ -22,7 +26,7 @@ const ChangePassword = () => {
   });
   return (
     <Container>
-      <Typography color="primary" variant="h2" textAlign="center" mt={2}>
+      <Typography color="primary" variant="h2" textAlign="center" mt={3}>
         Change Password
       </Typography>
       <Container
@@ -33,9 +37,9 @@ const ChangePassword = () => {
           boxShadow: 4,
         }}
       >
-        <Box p={3} boxShadow="4">
+        <Box p={4} boxShadow="4">
           <Box>
-            <Box mt={1}>
+            <Box mt={2}>
               <Typography variant="body3" color="primary">
                 {t('Old Password')}
                 <Typography component="span" color="error.main">
@@ -43,6 +47,7 @@ const ChangePassword = () => {
                 </Typography>
               </Typography>
               <TextField
+                inputProps={{ maxLength: 100 }}
                 fullWidth
                 id="outlined-basic"
                 variant="outlined"
@@ -65,6 +70,7 @@ const ChangePassword = () => {
                 </Typography>
               </Typography>
               <TextField
+                inputProps={{ maxLength: 100 }}
                 fullWidth
                 id="outlined-basic"
                 variant="outlined"
@@ -87,6 +93,7 @@ const ChangePassword = () => {
                 </Typography>
               </Typography>
               <TextField
+                inputProps={{ maxLength: 100 }}
                 fullWidth
                 id="outlined-basic"
                 variant="outlined"
