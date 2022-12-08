@@ -18,9 +18,9 @@ import { useSelector } from 'react-redux';
 
 import { verboseLog } from '../../../../config/debug';
 import { SearchableDropdown } from '../../../../shared/autocomplete/searchable-dropdown';
-import { Button, TextField } from '../../../../ui/core';
+import { Button, Select, TextField } from '../../../../ui/core';
 
-export function TableSearch() {
+export function TableSearch({ trackApplication }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event) => {
@@ -56,8 +56,8 @@ export function TableSearch() {
 
   return (
     <Box data-testid="table-search">
-      <Grid container>
-        <Grid item md={2} xs={12} mb={1}>
+      <Grid container sx={{ alignItems: 'flex-end' }}>
+        <Grid item md={trackApplication ? 5 : 2} xs={12} mb={1}>
           <Grid item md={12} xs={12}>
             <TextField
               data-testid="freesearch"
@@ -82,97 +82,155 @@ export function TableSearch() {
             />
           </Grid>
         </Grid>
-        <Grid item md={10} xs={12} mb={1}>
-          <Grid container item spacing={1} justifyContent="flex-end">
-            <Grid item md={3} xs={12}>
-              <TextField
-                data-testid="filterByName"
-                inputProps={{ maxLength: 100 }}
-                fullWidth={true}
-                id="outlined-basic"
-                variant="outlined"
-                type="text"
-                name="filterByName"
-                required="false"
-                placeholder={'Filter by Name'}
-                defaultValue={getValues().filterByName}
-                error={errors.filterByName?.message}
-                {...register('filterByName')}
-              />
-            </Grid>
-            <Grid item md={3} xs={12}>
-              <TextField
-                data-testid="filterByRegNo"
-                inputProps={{ maxLength: 100 }}
-                fullWidth={true}
-                id="outlined-basic"
-                variant="outlined"
-                type="text"
-                name="filterByRegNo"
-                required="false"
-                placeholder={'Filter by Registration No.'}
-                defaultValue={getValues().filterByRegNo}
-                error={errors.filterByRegNo?.message}
-                {...register('filterByRegNo')}
-              />
-            </Grid>
-            {(loggedInUserType === 'College' || loggedInUserType === 'NMC') && (
-              <Grid item md={3} xs={12}>
-                <Box>
-                  <SearchableDropdown
-                    sx={{ height: 8 }}
-                    name="RegistrationCouncil"
-                    placeholder="Filter by Council"
-                    items={[{ id: 1, name: 'first' }]}
-                  />
-                </Box>
-              </Grid>
-            )}
 
-            <Grid item md={1} xs={12} mr={1}>
-              <Button
-                data-testid="filterButton"
-                sx={{ padding: '13px 10px' }}
-                variant="contained"
-                onClick={handleSubmit(onClickFilterButtonHandler)}
-              >
-                Filter
-              </Button>
-            </Grid>
-            <Grid item md={1} xs={12}>
-              <Button
-                data-testid="exportButton"
-                sx={{ padding: '17px 10px' }}
-                variant="contained"
-                endIcon={<KeyboardArrowDownIcon />}
-                onClick={handleClick}
-                startIcon={
-                  <FileUploadOutlinedIcon sx={{ fontSize: '26px', transform: 'rotate(90deg)' }} />
-                }
-              ></Button>
-              <Popover
-                id={id}
-                open={open}
-                anchorEl={anchorEl}
-                onClose={handleClose}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-              >
-                <List>
-                  <ListItem disablePadding>
-                    <ListItemButton disablePadding>
-                      <ListItemText primary="Export as xlsx" />
-                    </ListItemButton>
-                  </ListItem>
-                  <ListItem disablePadding>
-                    <ListItemButton onClick={handleClose}>
-                      <ListItemText primary="Export as csv" />
-                    </ListItemButton>
-                  </ListItem>
-                </List>
-              </Popover>
+        <Grid item md={trackApplication ? 7 : 10} xs={12} mb={1}>
+          <Grid
+            container
+            item
+            spacing={1}
+            justifyContent={trackApplication ? 'flex-start' : 'flex-end'}
+          >
+            <Grid item container xs={12} sx={{ alignItems: 'flex-end' }} gap={2}>
+              {trackApplication === true && (
+                <>
+                  <Grid item md={4} xs={12} ml="auto">
+                    {/* <Grid item md={12} xs={12}> */}
+                    <Select
+                      error={errors.Filter?.message}
+                      name="Filter"
+                      label="Filter"
+                      defaultValue={getValues().Filter}
+                      placeholder={'All Applications'}
+                      required={true}
+                      {...register('Filter', {
+                        required: 'Application is required',
+                      })}
+                      options={[
+                        {
+                          label: 'Application',
+                          value: 'Application',
+                        },
+                      ]}
+                    />
+                    {/* </Grid> */}
+                  </Grid>
+                  <Grid item md={4} xs={12}>
+                    {/* <Grid item md={12} xs={12}> */}
+                    <Select
+                      error={errors.Date?.message}
+                      name="Date"
+                      label="Sort by"
+                      defaultValue={getValues().Date}
+                      required={true}
+                      {...register('Date', {
+                        required: 'Date is required',
+                      })}
+                      options={[
+                        {
+                          label: '01-01-0001',
+                          value: '01-01-0001',
+                        },
+                      ]}
+                    />
+                    {/* </Grid> */}
+                  </Grid>
+                </>
+              )}
+              {trackApplication !== true && (
+                <Grid item md={3} xs={12}>
+                  <TextField
+                    data-testid="filterByName"
+                    inputProps={{ maxLength: 100 }}
+                    fullWidth={true}
+                    id="outlined-basic"
+                    variant="outlined"
+                    type="text"
+                    name="filterByName"
+                    required="false"
+                    placeholder={'Filter by Name'}
+                    defaultValue={getValues().filterByName}
+                    error={errors.filterByName?.message}
+                    {...register('filterByName')}
+                  />
+                </Grid>
+              )}
+              {trackApplication !== true && (
+                <Grid item md={3} xs={12}>
+                  <TextField
+                    data-testid="filterByRegNo"
+                    inputProps={{ maxLength: 100 }}
+                    fullWidth={true}
+                    id="outlined-basic"
+                    variant="outlined"
+                    type="text"
+                    name="filterByRegNo"
+                    required="false"
+                    placeholder={'Filter by Registration No.'}
+                    defaultValue={getValues().filterByRegNo}
+                    error={errors.filterByRegNo?.message}
+                    {...register('filterByRegNo')}
+                  />
+                </Grid>
+              )}
+              {(loggedInUserType === 'College' || loggedInUserType === 'NMC') && (
+                <Grid item md={3} xs={12}>
+                  <Box>
+                    <SearchableDropdown
+                      sx={{ height: 8 }}
+                      name="RegistrationCouncil"
+                      placeholder="Filter by Council"
+                      items={[{ id: 1, name: 'first' }]}
+                    />
+                  </Box>
+                </Grid>
+              )}
+              {trackApplication !== true && (
+                <Grid item md="auto" xs={12}>
+                  <Button
+                    data-testid="filterButton"
+                    sx={{ padding: '13px 10px' }}
+                    variant="contained"
+                    onClick={handleSubmit(onClickFilterButtonHandler)}
+                  >
+                    Filter
+                  </Button>
+                </Grid>
+              )}
+              <Grid item md={1} xs={12}>
+                <Button
+                  data-testid="exportButton"
+                  sx={trackApplication ? { padding: '19px 10px' } : { padding: '17px 10px' }}
+                  variant="contained"
+                  endIcon={<KeyboardArrowDownIcon />}
+                  onClick={handleClick}
+                  startIcon={
+                    <FileUploadOutlinedIcon sx={{ fontSize: '26px', transform: 'rotate(90deg)' }} />
+                  }
+                ></Button>
+                <Popover
+                  id={id}
+                  open={open}
+                  anchorEl={anchorEl}
+                  onClose={handleClose}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                  }}
+                >
+                  <List>
+                    <ListItem disablePadding>
+                      <ListItemButton disablePadding>
+                        <ListItemText primary="Export as xlsx" />
+                      </ListItemButton>
+                    </ListItem>
+                    <ListItem disablePadding>
+                      <ListItemButton onClick={handleClose}>
+                        <ListItemText primary="Export as csv" />
+                      </ListItemButton>
+                    </ListItem>
+                  </List>
+                </Popover>
+              </Grid>
             </Grid>
           </Grid>
         </Grid>

@@ -40,10 +40,11 @@ function DashboardControlledTable(props) {
   const [selectedRowData, setRowData] = React.useState({});
 
   verboseLog('selectedRowData', selectedRowData);
+  verboseLog('propDash', props);
   const dataHeader = [
     { title: 'S.No.', name: 'SNo', sorting: true, type: 'string' },
     {
-      title: 'IMR ID/ Registration No.',
+      title: props.userType ? 'Request ID' : 'IMR ID/ Registration No.',
       name: 'registrationNo',
       sorting: true,
       type: 'string',
@@ -54,28 +55,39 @@ function DashboardControlledTable(props) {
       sorting: true,
       type: 'string',
     },
-    { title: 'Name of State Council', name: 'nameofStateCouncil', sorting: true, type: 'string' },
-    {
+    props.userType !== true && {
+      title: 'Name of State Council',
+      name: 'nameofStateCouncil',
+      sorting: true,
+      type: 'string',
+    },
+    props.userType !== true && {
       title: 'Council Verification Status',
       name: 'councilVerificationStatus',
       sorting: true,
       type: 'string',
     },
-    {
+    props.userType !== true && {
       title: 'College Verification Status',
       name: 'collegeVerificationStatus',
       sorting: true,
       type: 'string',
     },
-    {
+    props.userType !== true && {
       title: 'NMC Verification Status',
       name: 'NMCVerificationStatus',
       sorting: true,
       type: 'string',
     },
     { title: 'Date of Submission', name: 'dateofSubmission', sorting: true, type: 'date' },
+    props.userType === true && {
+      title: 'Current Status',
+      name: 'councilVerificationStatus',
+      sorting: true,
+      type: 'date',
+    },
     { title: 'Pendency', name: 'pendency', sorting: true, type: 'string' },
-    { title: 'View', name: 'view', sorting: true, type: 'string' },
+    { title: props.userType ? 'Action' : 'View', name: 'view', sorting: true, type: 'string' },
   ];
 
   const handleDataRowClick = (dataRow) => {
@@ -141,7 +153,7 @@ function DashboardControlledTable(props) {
       <Typography variant="h2" py={2}>
         Applications Pending List
       </Typography>
-      <TableSearch />
+      <TableSearch trackApplication={props.userType} />
       <GenericTable
         order={order}
         orderBy={orderBy}

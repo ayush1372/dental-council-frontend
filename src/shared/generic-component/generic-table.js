@@ -164,6 +164,17 @@ export default function GenericTable(props) {
                         </Link>
                       </TableCell>
                     );
+                  } else if (item.title === 'Current Status') {
+                    return (
+                      <TableCell
+                        sx={{ fontSize: '13px', bgcolor: 'red' }}
+                        maxWidth={`${tableCellWidth}%`}
+                        key={index}
+                        align="left"
+                      >
+                        {row[item.name]?.value}
+                      </TableCell>
+                    );
                   } else {
                     return (
                       <Tooltip key={index} title={row[item.name]?.value}>
