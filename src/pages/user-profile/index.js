@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import useWizard from '../../hooks/use-wizard';
 import ReactivateLicencePopup from '../../shared/reactivate-licence-popup/re-activate-licence-popup';
 import SuccessPopup from '../../shared/reactivate-licence-popup/success-popup';
-import { Button } from '../../ui/core/button/button';
+import { Button } from '../../ui/core';
 import Wizard from '../../ui/core/wizard';
 import ChangePassword from '../profile/change-password/change-password';
 import ConstantDetails from './components/constant-details/constant-details';
@@ -76,13 +76,13 @@ export const UserProfile = ({
               }}
             />
             <Link
+              color="suspendAlert.secondary"
+              ml={1}
+              height="20px"
+              width="103px"
               onClick={() => setShowReactivateLicense(true)}
               sx={{
-                color: 'suspendAlert.secondary',
                 cursor: 'pointer',
-                heigth: '20px',
-                width: '103px',
-                ml: 1,
               }}
             >
               Change Settings
@@ -149,7 +149,6 @@ export const UserProfile = ({
               handleNext={handleNext}
               steps={wizardSteps}
               progress={false}
-              // enableNaviagation={true}
             >
               {activeStep === 0 && (
                 <PersonalDetails
