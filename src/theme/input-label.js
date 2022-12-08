@@ -1,6 +1,6 @@
 import { spacing } from '@mui/system';
 
-export const InputLabel = {
+export const InputLabel = () => ({
   defaultProps: {
     shrink: true,
   },
@@ -12,4 +12,4 @@ export const InputLabel = {
       top: spacing(2),
     },
   },
-};
+});

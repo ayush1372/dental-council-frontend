@@ -12,7 +12,7 @@ const CollegeMyProfile = () => {
   const [showPage, setShowpage] = useState('Profile');
 
   return (
-    <Box boxShadow={2} p="0px 91px 44px 41px">
+    <Box boxShadow={2} p="0px 91px 44px 41px" mt={2}>
       {showPage === 'Profile' && (
         <Grid>
           <Grid container spacing={6}>
@@ -23,7 +23,14 @@ const CollegeMyProfile = () => {
             </Grid>
 
             <Grid item xs={3}>
-              <Button variant="contained" onClick={() => setShowpage('ChangePassword')}>
+              <Button
+                variant="contained"
+                onClick={() => setShowpage('ChangePassword')}
+                size="small"
+                sx={{
+                  width: 'max-content',
+                }}
+              >
                 Change Password
               </Button>
             </Grid>
@@ -34,6 +41,10 @@ const CollegeMyProfile = () => {
                 color="secondary"
                 onClick={() => {
                   setShowpage('Edit');
+                }}
+                size="small"
+                sx={{
+                  width: 'max-content',
                 }}
               >
                 Edit Profile
