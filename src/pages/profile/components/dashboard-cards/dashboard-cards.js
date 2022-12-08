@@ -226,12 +226,14 @@ export default function Dashboard() {
       ) : showViewProfile ? (
         <Box>
           <ViewProfile />
-          <UserProfile
-            setShowDashboard={setShowDashboard}
-            setShowTable={setShowTable}
-            setShowViewPorfile={setShowViewPorfile}
-            showViewProfile={showViewProfile}
-          />
+          <Container sx={{ marginTop: 2 }}>
+            <UserProfile
+              setShowDashboard={setShowDashboard}
+              setShowTable={setShowTable}
+              setShowViewPorfile={setShowViewPorfile}
+              showViewProfile={showViewProfile}
+            />
+          </Container>
         </Box>
       ) : null}
     </>

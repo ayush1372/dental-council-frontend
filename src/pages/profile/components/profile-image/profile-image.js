@@ -6,15 +6,17 @@ import styles from './profile-image.module.scss';
 
 export default function ProfileImage(props) {
   return (
-    <Grid container mt={0} spacing={1} className={styles.profileImageDetailsContainer}>
-      <Grid item xs={12} display="flex" justifyContent="center" className={styles.imageContainer}>
-        <img alt="avtarImg" className={styles.profileImage} src={avtarImg} />
+    <Grid container className={styles.profileImageDetailsContainer}>
+      <Grid item xs={12} display="flex" justifyContent="center" mt={2}>
+        <img
+          alt="avtarImg"
+          className={styles.profileImage}
+          src={avtarImg}
+          data-testid="profileImg"
+        />
       </Grid>
       <Grid textAlign="center" item xs={12}>
-        <Typography className={styles.profileImageName}>
-          {props.userType === 'professional' ? 'Dr.' : ''}
-          {` ${props.name}`}
-        </Typography>
+        <Typography variant="subtitle2">{props.name}</Typography>
       </Grid>
     </Grid>
   );

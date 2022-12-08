@@ -26,6 +26,7 @@ export const palette = (mode) => {
       main: '#bfbfbf',
       light: '#F8F7FA',
       dark: '#3F3D565E',
+      lighter: '#F6F8F9',
     },
     grey2: {
       main: '#F0F0F0',
