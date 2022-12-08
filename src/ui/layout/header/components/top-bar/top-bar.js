@@ -20,13 +20,13 @@ export const TopBar = () => {
   const { t } = useTranslation();
   const { palette } = useTheme(); //getting this from material-ui
   return (
-    <Box className={styles.topBarWrapper}>
+    <Box className={styles.topBarWrapper} bgcolor="backgroundColor.main" color="primary">
       <Container>
         <Grid container justifyContent="space-between" alignItems="end">
           <Grid alignSelf="center" item xs={12} md={6}>
             <Box display="flex" alignItems="center">
-              <LocalPhoneOutlinedIcon sx={{ width: '16px', height: '16px' }} />
-              <Typography variant="body4" m="0 0 0 5px">
+              <LocalPhoneOutlinedIcon sx={{ width: '16px', height: '16px' }} color="primary" />
+              <Typography variant="body4" m="0 0 0 5px" color="primary">
                 {t('Our Toll Free Number')}: 1800-11-4477 / 14477
               </Typography>
             </Box>

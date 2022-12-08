@@ -1,4 +1,4 @@
-export const FormHelperText = {
+export const FormHelperText = () => ({
   styleOverrides: {
     root: {
       marginLeft: '0',
@@ -8,4 +8,4 @@ export const FormHelperText = {
       },
     },
   },
-};
+});

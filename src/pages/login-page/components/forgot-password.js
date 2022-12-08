@@ -5,8 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { Button, TextField } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 
-import styles from '../login-page.module.scss';
-
 const ForgotPassword = ({ handleConfirmPassword }) => {
   const { t } = useTranslation();
 
@@ -37,7 +35,7 @@ const ForgotPassword = ({ handleConfirmPassword }) => {
     }
   };
   return (
-    <Box p={4} className={styles.loginContainerBox}>
+    <Box p={4} bgcolor="white.main" boxShadow="4">
       <Typography variant="h2" component="div" textAlign="center">
         Forgot Password
       </Typography>

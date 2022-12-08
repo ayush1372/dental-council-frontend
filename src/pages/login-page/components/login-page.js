@@ -12,8 +12,6 @@ import { login, userLoggedInType } from '../../../store/reducers/common-reducers
 import { Button, TextField } from '../../../ui/core';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
-import styles from '../login-page.module.scss';
-
 export function LoginPage({ handleForgotPassword }) {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -60,8 +58,8 @@ export function LoginPage({ handleForgotPassword }) {
   };
 
   return (
-    <Box p={4} className={styles.loginContainerBox}>
-      <Typography variant="h2" className={styles.headingText}>
+    <Box p={4} bgcolor="white.main" boxShadow="4">
+      <Typography variant="h2" color="primary.dark">
         {loginFormNames[loginFormname]} {t('Login')}
       </Typography>
       <Box>

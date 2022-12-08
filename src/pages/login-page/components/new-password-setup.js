@@ -5,8 +5,6 @@ import { useTranslation } from 'react-i18next';
 import { Button, TextField } from '../../../ui/core';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
-import styles from '../login-page.module.scss';
-
 const NewPasswordSetup = ({ handlePasswordSetup }) => {
   const { t } = useTranslation();
 
@@ -28,7 +26,7 @@ const NewPasswordSetup = ({ handlePasswordSetup }) => {
     handlePasswordSetup();
   };
   return (
-    <Box data-testid="new-password-setup" p={4} className={styles.loginContainerBox}>
+    <Box data-testid="new-password-setup" p={4} bgcolor="white.main" boxShadow="4">
       <Typography mt={2} variant="h2" component="div" textAlign="center" data-testid="Password">
         Enter New Password
       </Typography>
