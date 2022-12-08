@@ -13,6 +13,7 @@ export function MobileNumber(props) {
     getValues,
     errors,
     showVerify,
+    showCircleCheckIcon = true,
     verifyOnClick,
     disabled,
     label,
@@ -52,6 +53,9 @@ export function MobileNumber(props) {
             }
             defaultValue={getValues().mobileNo}
             sx={{
+              ...(showVerify === false && {
+                width: '100%',
+              }),
               '& .MuiInputBase-root.MuiOutlinedInput-root': {
                 paddingLeft: 0,
               },
@@ -77,11 +81,12 @@ export function MobileNumber(props) {
               endAdornment: (
                 <InputAdornment position="end">
                   <IconButton aria-label="toggle password visibility" edge="end">
-                    {getValues()?.mobileNo?.length === 10 ? (
-                      <CheckCircleIcon color="success" />
-                    ) : (
-                      <CheckCircleIcon />
-                    )}
+                    {showCircleCheckIcon &&
+                      (getValues()?.mobileNo?.length === 10 ? (
+                        <CheckCircleIcon color="success" />
+                      ) : (
+                        <CheckCircleIcon />
+                      ))}
                   </IconButton>
                 </InputAdornment>
               ),

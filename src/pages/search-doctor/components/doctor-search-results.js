@@ -3,7 +3,7 @@ import { useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 import SearchIcon from '@mui/icons-material/Search';
-import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import {
   Box,
   Container,
@@ -148,7 +148,7 @@ const SearchResults = () => {
                           marginTop: '10px',
                         }}
                       >
-                        <VisibilityIcon sx={{ pr: '6px' }} /> View my Profile
+                        <VisibilityOutlinedIcon sx={{ pr: '6px' }} /> View my Profile
                       </Button>
                     </Box>
                   </Grid>

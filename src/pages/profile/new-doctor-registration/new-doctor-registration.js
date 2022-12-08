@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Box, Container, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 import useWizard from '../../../hooks/use-wizard';
@@ -19,7 +19,7 @@ const readWizardSteps = [
   'Preview Profile',
 ];
 
-export const UserProfile = (props) => {
+export const NewDoctorRegistration = (props) => {
   const [isReadMode, setIsReadMode] = useState(true);
   const { activeStep, handleNext, handleBack, resetStep } = useWizard(0, []);
   const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
@@ -33,11 +33,11 @@ export const UserProfile = (props) => {
     }
   }, [isReadMode]);
   return (
-    <Container maxWidth="lg" sx={{ marginTop: '30px' }}>
+    <>
       {!props.showViewProfile ? (
         <Box>
           <Box>
-            <Typography component="div" variant="h2" color="primary.main" py={2}>
+            <Typography component="div" variant="h2" color="primary.main" pb={2}>
               New User Registration
             </Typography>
             {loggedInUserType === 'SMC' && <ConstantDetails />}
@@ -100,8 +100,8 @@ export const UserProfile = (props) => {
           loggedInUserType={loggedInUserType}
         />
       )}
-    </Container>
+    </>
   );
 };
 
-export default UserProfile;
+export default NewDoctorRegistration;
