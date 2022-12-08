@@ -110,5 +110,6 @@ export const Palette = {
     main: '##E33D19',
     secondary: '#FF7557',
     light: '#FFE0D9',
+    dark: '#FF512B',
   },
 };

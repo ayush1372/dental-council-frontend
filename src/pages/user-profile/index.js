@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 
 import EditIcon from '@mui/icons-material/Edit';
@@ -7,8 +6,8 @@ import { Alert, Box, Container, Link, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 import useWizard from '../../hooks/use-wizard';
-import BasicModal from '../../shared/popup';
-import ReactivateLicencePopup from '../../shared/reactivate-licence-popup/reactivate-licence-popup';
+import ReactivateLicencePopup from '../../shared/reactivate-licence-popup/re-activate-licence-popup';
+import SuccessPopup from '../../shared/reactivate-licence-popup/success-popup';
 import { Button } from '../../ui/core/button/button';
 import Wizard from '../../ui/core/wizard';
 import ChangePassword from '../profile/change-password/change-password';
@@ -54,41 +53,47 @@ export const UserProfile = ({
 
   return (
     <Container>
-      {loggedInUserType === 'Doctor' && (
-        <Alert severity="error" sx={{ color: 'suspendAlert.main' }}>
-          Your Profile is set to suspend mode. You will not be able to perform actions on the
-          profile.{' '}
-          <Typography component="span" sx={{ color: 'suspendAlert.main' }}>
+      <Box display="flex" justifyContent="start">
+        {loggedInUserType === 'Doctor' && (
+          <Alert
+            severity="error"
+            sx={{
+              color: 'suspendAlert.light',
+              width: '1479px',
+              height: '56px',
+            }}
+          >
+            <Typography width="667px" height="19px" color="suspendAlert.dark">
+              Your Profile is set to suspend mode. You will not be able to perform actions on the
+              profile.
+            </Typography>
             <TuneIcon
               sx={{
-                color: 'suspendAlert.main',
+                color: 'suspendAlert.dark',
                 width: '18px',
-                height: '18px',
+                height: '16px',
                 ml: 3,
-                // mt: 1,
               }}
             />
             <Link
+              onClick={() => setShowReactivateLicense(true)}
               sx={{
                 color: 'suspendAlert.secondary',
+                cursor: 'pointer',
+                heigth: '20px',
+                width: '103px',
+                ml: 1,
               }}
             >
-              <Button
-                sx={{
-                  color: 'suspendAlert.secondary',
-                }}
-                onClick={() => setShowReactivateLicense(true)}
-              >
-                Change Settings
-              </Button>
+              Change Settings
             </Link>
-          </Typography>
-        </Alert>
-      )}
+          </Alert>
+        )}
+      </Box>
       {showReactivateLicense && <ReactivateLicencePopup renderSuccess={renderSuccess} />}
-      {showSuccessPopup && <BasicModal />}
+      {showSuccessPopup && <SuccessPopup />}
       {!showChangepassword ? (
-        <Container maxWidth="lg" sx={{ marginTop: '30px' }}>
+        <Container sx={{ marginTop: '30px' }}>
           {!showViewProfile ? (
             <Box display="flex" justifyContent="space-between" mb={3}>
               <Typography component="div" variant="h2" color="primary.main" py={2}>
