@@ -32,6 +32,7 @@ const themeWrapper = (mode) => {
       1: '0px 1px 3px #26262666',
       2: '0px 3px 5px #26262666',
       3: '0px 2px 10px #26262666',
+      4: '0px 3px 25px #00000038',
     },
 
     components: {

@@ -7,8 +7,6 @@ import { OtpForm } from '../../../shared/otp-form/otp-component';
 import { Button } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
 
-import styles from '../login-page.module.scss';
-
 const ConfirmOTP = ({ handleConfirmOTP }) => {
   const { t } = useTranslation();
   const [isOtpValid, setIsOtpValid] = useState(true);
@@ -29,7 +27,7 @@ const ConfirmOTP = ({ handleConfirmOTP }) => {
     otpInvalidError: !isOtpValid,
   });
   return (
-    <Box p={4} className={styles.loginContainerBox}>
+    <Box p={4} bgcolor="white.main" boxShadow="4">
       <Typography variant="h2" component="div">
         Confirm OTP
       </Typography>
