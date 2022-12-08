@@ -90,11 +90,10 @@ export function TableSearch({ trackApplication }) {
             spacing={1}
             justifyContent={trackApplication ? 'flex-start' : 'flex-end'}
           >
-            <Grid item container xs={12} sx={{ alignItems: 'flex-end' }} gap={2}>
+            <Grid item container xs={12} sx={{ alignItems: 'flex-end' }} gap={1}>
               {trackApplication === true && (
                 <>
                   <Grid item md={4} xs={12} ml="auto">
-                    {/* <Grid item md={12} xs={12}> */}
                     <Select
                       error={errors.Filter?.message}
                       name="Filter"
@@ -112,10 +111,8 @@ export function TableSearch({ trackApplication }) {
                         },
                       ]}
                     />
-                    {/* </Grid> */}
                   </Grid>
                   <Grid item md={4} xs={12}>
-                    {/* <Grid item md={12} xs={12}> */}
                     <Select
                       error={errors.Date?.message}
                       name="Date"
@@ -132,16 +129,15 @@ export function TableSearch({ trackApplication }) {
                         },
                       ]}
                     />
-                    {/* </Grid> */}
                   </Grid>
                 </>
               )}
               {trackApplication !== true && (
-                <Grid item md={3} xs={12}>
+                <Grid item md={3} xs={12} ml="auto">
                   <TextField
                     data-testid="filterByName"
                     inputProps={{ maxLength: 100 }}
-                    fullWidth={true}
+                    fullWidth
                     id="outlined-basic"
                     variant="outlined"
                     type="text"
@@ -159,7 +155,7 @@ export function TableSearch({ trackApplication }) {
                   <TextField
                     data-testid="filterByRegNo"
                     inputProps={{ maxLength: 100 }}
-                    fullWidth={true}
+                    fullWidth
                     id="outlined-basic"
                     variant="outlined"
                     type="text"
@@ -174,18 +170,15 @@ export function TableSearch({ trackApplication }) {
               )}
               {(loggedInUserType === 'College' || loggedInUserType === 'NMC') && (
                 <Grid item md={3} xs={12}>
-                  <Box>
-                    <SearchableDropdown
-                      sx={{ height: 8 }}
-                      name="RegistrationCouncil"
-                      placeholder="Filter by Council"
-                      items={[{ id: 1, name: 'first' }]}
-                    />
-                  </Box>
+                  <SearchableDropdown
+                    name="RegistrationCouncil"
+                    placeholder="Filter by Council"
+                    items={[{ id: 1, name: 'first' }]}
+                  />
                 </Grid>
               )}
               {trackApplication !== true && (
-                <Grid item md="auto" xs={12}>
+                <Grid item md={1} xs={12}>
                   <Button
                     data-testid="filterButton"
                     sx={{ padding: '13px 10px' }}
