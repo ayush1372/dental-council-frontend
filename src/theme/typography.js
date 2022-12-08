@@ -76,5 +76,10 @@ export const Typography = {
       lineHeight: '17px',
       fontWeight: '400',
     },
+    body6: {
+      fontSize: '30px',
+      lineHeight: '26px',
+      fontWeight: '500',
+    },
   },
 };

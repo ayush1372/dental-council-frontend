@@ -1,141 +1,83 @@
-import { Box, Container, Link, Typography } from '@mui/material';
-import { useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
-import { verboseLog } from '../../config/debug';
-import CaptchaComponent from '../../shared/captcha-component/captcha-component';
-import { login, userLoggedInType } from '../../store/reducers/common-reducers';
-import { Button, TextField } from '../../ui/core';
-import { PasswordRegexValidation } from '../../utilities/common-validations';
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
+import { Box, Container, Dialog, Typography } from '@mui/material';
+import { useLocation } from 'react-router-dom';
 
-import styles from './login-page.module.scss';
+import useWizard from '../../hooks/use-wizard';
+import { Button } from '../../ui/core';
+import ConfirmOTP from './components/confirm-otp';
+import ForgotPassword from './components/forgot-password';
+import LoginPage from './components/login-page';
+import NewPasswordSetup from './components/new-password-setup';
 
-export function LoginPage() {
-  const dispatch = useDispatch();
-  const { t } = useTranslation();
-  const navigate = useNavigate();
-  const { state } = useLocation();
-  const { loginFormname } = state;
-  const {
-    register,
-    handleSubmit,
-    getValues,
-    formState: { errors },
-  } = useForm({
-    mode: 'onChange',
-    defaultValues: {
-      nmrID: '',
-      password: '',
-    },
-  });
-  const onSubmit = (data) => {
-    try {
-      let req = { mobile: data.nmrID };
-      if (req) {
-        verboseLog('usersListData', req);
-        dispatch(login());
-        dispatch(userLoggedInType(loginFormname));
-        navigate(`/profile`);
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth',
-        });
-      }
-    } catch (err) {
-      verboseLog('usersListData', err);
-    }
+const LoginWrapper = () => {
+  const location = useLocation();
+  const { activeStep, handleNext, resetStep } = useWizard(0, []);
+  const [showPopup, setShowPopup] = useState(false);
+  const handlePasswordSetup = () => {
+    setShowPopup(true);
   };
-
+  useEffect(() => {
+    resetStep();
+  }, [location.state.loginFormname]);
   return (
-    <Container maxWidth="md" sx={{ mt: 5, mb: 5 }}>
-      <Box p={4} className={styles.loginContainerBox}>
-        <Typography variant="h2" className={styles.headingText}>
-          {loginFormname === 'Doctor'
-            ? 'Doctor '
-            : loginFormname === 'College'
-            ? 'College '
-            : loginFormname === 'SMC'
-            ? 'SMC '
-            : 'NMC '}
-          {t('Login')}
-        </Typography>
-        <Box>
-          <Box sx={{ mt: 2 }}>
-            <Typography variant="body3">
-              {loginFormname === 'Doctor' ? 'NMR/USER ' : 'User '}
-              {t('ID')}
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
+    <Container sx={{ mt: 5, mb: 5, maxWidth: '600px' }}>
+      {activeStep === 0 && <LoginPage handleForgotPassword={handleNext} />}
+      {activeStep === 1 && <ForgotPassword handleConfirmPassword={handleNext} />}
+      {activeStep === 2 && <ConfirmOTP handleConfirmOTP={handleNext} />}
+      {activeStep === 3 && <NewPasswordSetup handlePasswordSetup={handlePasswordSetup} />}
+      <Dialog
+        sx={{
+          '.MuiPaper-root': {
+            borderRadius: '10px',
+          },
+        }}
+        open={showPopup}
+        onClose={() => {
+          setShowPopup(false);
+        }}
+      >
+        <Box p={2} width="504px" height="400">
+          <Box display={'flex'} flexDirection="column" width="100%">
+            <Box display={'flex'} justifyContent="center">
+              <TaskAltIcon color="success" sx={{ fontSize: '80px' }} />
+            </Box>
+            <Typography
+              color="success.main"
+              variant="h3"
+              component="div"
+              display={'flex'}
+              justifyContent="center"
+            >
+              Success!
             </Typography>
-            <TextField
-              inputProps={{ maxLength: 100 }}
-              fullWidth
-              id="outlined-basic"
-              variant="outlined"
-              type="text"
-              name="nmrID"
-              required="true"
-              placeholder={t('ID')}
-              margin="dense"
-              defaultValue={getValues().nmrID}
-              error={errors.nmrID?.message}
-              {...register('nmrID', {
-                required: 'Provide  valid ID',
-              })}
-            />
           </Box>
-          <Box sx={{ mt: 1 }}>
-            <Typography variant="body3">
-              {t('Password')}
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
+          <Box mt={2} textAlign="center">
+            <Typography color="grey.context" variant="h3">
+              Your Password has been <br />
+              successfully Changed.
             </Typography>
-            <TextField
-              fullWidth
-              id="outlined-basic"
-              variant="outlined"
-              type="Password"
-              name="password"
-              required="true"
-              placeholder={t('Password')}
-              margin="dense"
-              defaultValue={getValues().password}
-              error={errors.password?.message}
-              {...register('password', PasswordRegexValidation)}
-            />
           </Box>
-          <Box align="center" sx={{ mt: 3 }}>
-            <CaptchaComponent />
-          </Box>
-
-          <Box align="center" sx={{ mt: 3 }}>
+          <Box display={'flex'} mt={1} justifyContent="center">
             <Button
-              size="medium"
+              onClick={() => {
+                resetStep();
+                setShowPopup(false);
+              }}
+              color="secondary"
               variant="contained"
               sx={{
-                backgroundColor: 'secondary.lightOrange',
-                '&:hover': {
-                  backgroundColor: 'secondary.lightOrange',
-                },
+                margin: '0 4px',
               }}
-              onClick={handleSubmit(onSubmit)}
             >
-              {t('Login')}
+              Login with New Password
             </Button>
           </Box>
-          <Box sx={{ mt: 3 }} textAlign={'center'}>
-            <Link href="#" target="_blank" ml="5px" fontSize="16px">
-              {t('Forgot your password?')}
-            </Link>
-          </Box>
         </Box>
-      </Box>
+      </Dialog>
     </Container>
   );
-}
+};
 
-export default LoginPage;
+export default LoginWrapper;
