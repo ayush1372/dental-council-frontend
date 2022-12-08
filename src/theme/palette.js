@@ -49,7 +49,7 @@ export const palette = (mode) => {
       main: '#6554c0',
     },
     white: {
-      main: '#ffff',
+      main: mode === 'dark' ? '#000' : '#fff',
     },
     black: {
       main: '#000',
