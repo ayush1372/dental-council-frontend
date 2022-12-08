@@ -5,12 +5,12 @@ const CurrentWorkDetails = () => {
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
         <Grid item xs={8} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
-            Choose facility
-          </Typography>
           <Typography variant="subtitle2" color="primary.main">
             Facility
           </Typography>
+          {/*<Typography component={'span'} variant="subtitle2" color="primary.main">
+            Organization
+  </Typography>*/}
         </Grid>
       </Grid>
       <Grid container item spacing={2}>
@@ -74,7 +74,7 @@ const CurrentWorkDetails = () => {
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
-            Department
+            Address
           </Typography>
 
           <Typography
@@ -83,12 +83,12 @@ const CurrentWorkDetails = () => {
             variant="subtitle2"
             color="inputTextColor.light"
           >
-            Department
+            Address
           </Typography>
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
-            Telecommunication URL
+            Pincode
           </Typography>
 
           <Typography
@@ -97,14 +97,14 @@ const CurrentWorkDetails = () => {
             variant="subtitle2"
             color="inputTextColor.light"
           >
-            Telecommunication URL
+            Pincode
           </Typography>
         </Grid>
       </Grid>
       <Grid container item spacing={2}>
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
-            Address
+            Telecommunication URL
           </Typography>
 
           <Typography
@@ -113,12 +113,12 @@ const CurrentWorkDetails = () => {
             variant="subtitle2"
             color="inputTextColor.light"
           >
-            Address
+            Telecommunication URL
           </Typography>
         </Grid>
-        <Grid item xs={8} md={4}>
+        {/*<Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
-            Pincode
+            Department
           </Typography>
 
           <Typography
@@ -127,9 +127,9 @@ const CurrentWorkDetails = () => {
             variant="subtitle2"
             color="inputTextColor.light"
           >
-            Pincode
+            Department
           </Typography>
-        </Grid>
+  </Grid>*/}
       </Grid>
     </Grid>
   );

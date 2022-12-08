@@ -1,9 +1,5 @@
-@use '../../../../../assets/styles/variables' as v;
-
 .topBarWrapper {
-  background-color: map-get(v.$palette, 'grey');
   min-height: 40px;
-  color: map-get(v.$palette, 'primary');
   display: flex;
   align-items: center;
 }
@@ -34,7 +30,6 @@
 
 .topBarLanguageMenu {
   max-width: 160px;
-  color: v.$primary-text-color;
 }
 
 // FONT ZOOM CSS

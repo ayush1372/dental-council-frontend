@@ -1,4 +1,4 @@
-export const CardContent = {
+export const CardContent = () => ({
   styleOverrides: {
     root: {
       padding: '0',
@@ -8,4 +8,4 @@ export const CardContent = {
       },
     },
   },
-};
+});

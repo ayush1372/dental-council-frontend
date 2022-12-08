@@ -2,17 +2,18 @@ import { useState } from 'react';
 
 import { Box, Container, Grid, Paper, Typography } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
 
 import { verboseLog } from '../../../../config/debug';
 import ViewProfile from '../../../../shared/view-profile/view-profile';
-import { Palette } from '../../../../theme/palette';
 import { Button } from '../../../../ui/core';
 import UserProfile from '../../../user-profile/index';
 import BreadcrumbsCompnent from '../breadcrums';
 import DashboardControlledTable from '../dashboard-controlled-table/dashboard-controlled-table';
 
 export default function Dashboard() {
+  const theme = useTheme();
   const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
   const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(1),
@@ -178,27 +179,29 @@ export default function Dashboard() {
                             id={item.id}
                             sx={
                               item.name.includes('Pending') || item.name.includes('Received')
-                                ? { borderTop: `5px solid ${Palette.secondary.warningYellow}` }
+                                ? {
+                                    borderTop: `5px solid ${theme.palette.secondary.warningYellow}`,
+                                  }
                                 : item.name.includes('Verified') || item.name.includes('Approved')
-                                ? { borderTop: `5px solid ${Palette.success.main}` }
+                                ? { borderTop: `5px solid ${theme.palette.success.main}` }
                                 : item.name.includes('Raised')
-                                ? { borderTop: `5px solid ${Palette.primary.main}` }
+                                ? { borderTop: `5px solid ${theme.palette.primary.main}` }
                                 : item.name.includes('Rejected') ||
                                   item.name.includes('Blacklisted')
-                                ? { borderTop: `5px solid ${Palette.error.main}` }
+                                ? { borderTop: `5px solid ${theme.palette.error.main}` }
                                 : ''
                             }
                             onClick={() => showTableFun(item)}
                           >
                             <Box
-                              color={Palette.secondary.contrastText}
+                              color="secondary.contrastText"
                               fontSize={14}
                               sx={{ minHeight: '60px', wordBreak: 'break-word' }}
                             >
                               {item.name}
                             </Box>
                             <Box
-                              color={Palette.tabHighlightedBackgroundColor.main}
+                              color="tabHighlightedBackgroundColor.main"
                               fontSize={20}
                               fontWeight={600}
                             >
@@ -223,12 +226,14 @@ export default function Dashboard() {
       ) : showViewProfile ? (
         <Box>
           <ViewProfile />
-          <UserProfile
-            setShowDashboard={setShowDashboard}
-            setShowTable={setShowTable}
-            setShowViewPorfile={setShowViewPorfile}
-            showViewProfile={showViewProfile}
-          />
+          <Container sx={{ marginTop: 2 }}>
+            <UserProfile
+              setShowDashboard={setShowDashboard}
+              setShowTable={setShowTable}
+              setShowViewPorfile={setShowViewPorfile}
+              showViewProfile={showViewProfile}
+            />
+          </Container>
         </Box>
       ) : null}
     </>

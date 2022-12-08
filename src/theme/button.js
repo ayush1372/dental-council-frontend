@@ -1,6 +1,4 @@
-import { Palette } from './palette';
-
-export const Button = {
+export const Button = (palette) => ({
   defaultProps: {
     disableRipple: true,
   },
@@ -50,81 +48,81 @@ export const Button = {
       borderWidth: '2px',
     },
     outlinedPrimary: {
-      color: Palette.primary.main,
+      color: palette.primary.main,
       '&.Mui-disabled': {
         borderWidth: '2px',
-        color: Palette.primary.main,
-        borderColor: Palette.primary.main,
+        color: palette.primary.main,
+        borderColor: palette.primary.main,
         opacity: '0.4',
       },
       '&:hover': {
         borderWidth: '2px',
-        backgroundColor: Palette.primary.main,
-        color: Palette.white.main,
+        backgroundColor: palette.primary.main,
+        color: palette.white.main,
       },
     },
     outlinedSecondary: {
-      color: Palette.secondary.main,
+      color: palette.secondary.main,
 
       '&.Mui-disabled': {
-        color: Palette.secondary.main,
-        borderColor: Palette.secondary.main,
+        color: palette.secondary.main,
+        borderColor: palette.secondary.main,
         opacity: '0.4',
         borderWidth: '2px',
       },
       '&:hover': {
-        backgroundColor: Palette.secondary.main,
-        color: Palette.white.main,
+        backgroundColor: palette.secondary.main,
+        color: palette.white.main,
         borderWidth: '2px',
       },
     },
     outlinedGrey: {
-      color: Palette.black.main,
+      color: palette.black.main,
       '&.Mui-disabled': {
-        color: Palette.black.main,
-        borderColor: Palette.grey.light,
+        color: palette.black.main,
+        borderColor: palette.grey.light,
         opacity: '0.4',
         borderWidth: '2px',
       },
       '&:hover': {
         borderWidth: '2px',
-        borderColor: Palette.grey.light,
-        backgroundColor: Palette.grey.light,
-        color: Palette.black.main,
+        borderColor: palette.grey.light,
+        backgroundColor: palette.grey.light,
+        color: palette.black.main,
       },
     },
     containedPrimary: {
-      color: Palette.white.main,
+      color: palette.white.main,
       '&.Mui-disabled': {
-        color: Palette.white.main,
+        color: palette.white.main,
         opacity: '0.4',
-        backgroundColor: Palette.primary.main,
+        backgroundColor: palette.primary.main,
       },
     },
     containedSecondary: {
       color: 'white',
-      backgroundColor: Palette.secondary.main,
+      backgroundColor: palette.secondary.main,
 
       '&.Mui-disabled': {
-        color: Palette.white.main,
+        color: palette.white.main,
         opacity: '0.4',
-        backgroundColor: Palette.secondary.main,
+        backgroundColor: palette.secondary.main,
       },
     },
     containedGrey: {
-      color: Palette.black.main,
+      color: palette.black.main,
       '&.Mui-disabled': {
         opacity: '0.4',
-        color: Palette.black.main,
-        backgroundColor: Palette.grey.light,
+        color: palette.black.main,
+        backgroundColor: palette.grey.light,
       },
     },
     textPrimary: {
-      color: Palette.primary.main,
+      color: palette.primary.main,
       backgroundColor: 'transparent',
       '&:focus': {
-        backgroundColor: Palette.grey.dark,
+        backgroundColor: palette.grey.dark,
       },
     },
   },
-};
+});

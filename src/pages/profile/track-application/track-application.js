@@ -1,11 +1,15 @@
 import { Box } from '@mui/material';
+import { useSelector } from 'react-redux';
 
-import DashboardControlledTable from '../components/dashboard-controlled-table/dashboard-controlled-table';
-export function TrackApplication({ userType }) {
+///import DashboardControlledTable from '../components/dashboard-controlled-table/dashboard-controlled-table';
+import TrackApplicationTable from './track-application-table';
+export function TrackApplication() {
+  const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
+
   return (
     <Box>
-      <Box ml={'50px'} mt={'70px'}>
-        <DashboardControlledTable userType={userType === 'Doctor' ? true : false} />
+      <Box>
+        <TrackApplicationTable userType={loggedInUserType === 'Doctor' ? true : false} />
       </Box>
     </Box>
   );

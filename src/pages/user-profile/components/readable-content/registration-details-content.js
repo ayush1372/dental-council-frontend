@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import AttachFileIcon from '@mui/icons-material/AttachFile';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Grid, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
@@ -152,6 +153,10 @@ const RegistrationDetailsContent = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             upload proof of relationship
+          </Typography>
+          <Typography variant="subtitle2" color="primary.main">
+            <AttachFileIcon fontSize="10px" />
+            View attachment
           </Typography>
         </Grid>
       </Grid>
