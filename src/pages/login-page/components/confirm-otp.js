@@ -40,7 +40,7 @@ const ConfirmOTP = ({ handleConfirmOTP }) => {
           </Typography>
           {otpform}
         </Box>
-        <Box align="end" sx={{ mt: 3 }}>
+        <Box align="end" mt={3}>
           <Button
             size="medium"
             variant="contained"

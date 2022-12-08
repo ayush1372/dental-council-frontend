@@ -77,7 +77,7 @@ const ForgotPassword = ({ handleConfirmPassword }) => {
           OR
         </Typography>
       </Divider>
-      <Box sx={{ mt: 2 }}>
+      <Box mt={2}>
         <Typography variant="body1">
           Enter your Mobile Number
           <Typography component="span" color="error.main">
@@ -94,7 +94,7 @@ const ForgotPassword = ({ handleConfirmPassword }) => {
           disabled={!isMobileNumActive}
         />
       </Box>
-      <Box align="end" sx={{ mt: 3 }}>
+      <Box align="end" mt={3}>
         <Button
           variant="contained"
           sx={{

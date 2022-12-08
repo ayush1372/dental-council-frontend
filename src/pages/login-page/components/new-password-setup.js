@@ -29,17 +29,11 @@ const NewPasswordSetup = ({ handlePasswordSetup }) => {
   };
   return (
     <Box data-testid="new-password-setup" p={4} className={styles.loginContainerBox}>
-      <Typography
-        sx={{ mt: 2 }}
-        variant="h2"
-        component="div"
-        textAlign="center"
-        data-testid="Password"
-      >
+      <Typography mt={2} variant="h2" component="div" textAlign="center" data-testid="Password">
         Enter New Password
       </Typography>
       <Box>
-        <Box sx={{ mt: 2 }}>
+        <Box mt={2}>
           <Typography variant="body1">
             New Password
             <Typography component="span" color="error.main">
@@ -63,7 +57,7 @@ const NewPasswordSetup = ({ handlePasswordSetup }) => {
             })}
           />
         </Box>
-        <Box sx={{ mt: 2 }}>
+        <Box mt={2}>
           <Typography variant="body1" data-testid="confirmPassword">
             Confirm Password
             <Typography component="span" color="error.main">
@@ -93,7 +87,7 @@ const NewPasswordSetup = ({ handlePasswordSetup }) => {
           />
         </Box>
 
-        <Box align="end" sx={{ mt: 3 }}>
+        <Box align="end" mt={3}>
           <Button
             size="medium"
             variant="contained"

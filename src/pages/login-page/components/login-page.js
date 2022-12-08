@@ -65,7 +65,7 @@ export function LoginPage({ handleForgotPassword }) {
         {loginFormNames[loginFormname]} {t('Login')}
       </Typography>
       <Box>
-        <Box sx={{ mt: 2 }}>
+        <Box mt={2}>
           <Typography variant="body3">
             {loginFormname === 'Doctor' ? 'NMR/USER ' : 'User '}
             {t('ID')}
@@ -90,7 +90,7 @@ export function LoginPage({ handleForgotPassword }) {
             })}
           />
         </Box>
-        <Box sx={{ mt: 1 }}>
+        <Box mt={1}>
           <Typography variant="body3">
             {t('Password')}
             <Typography component="span" color="error.main">
@@ -111,11 +111,11 @@ export function LoginPage({ handleForgotPassword }) {
             {...register('password', PasswordRegexValidation)}
           />
         </Box>
-        <Box align="center" sx={{ mt: 3 }}>
+        <Box align="center" mt={3}>
           <CaptchaComponent />
         </Box>
 
-        <Box align="center" sx={{ mt: 3 }}>
+        <Box align="center" mt={3}>
           <Button
             size="medium"
             variant="contained"
@@ -130,7 +130,7 @@ export function LoginPage({ handleForgotPassword }) {
             {t('Login')}
           </Button>
         </Box>
-        <Box sx={{ mt: 3 }} textAlign={'center'}>
+        <Box mt={3} textAlign={'center'}>
           <Typography
             variant="body1"
             color="textPrimary.dark"
