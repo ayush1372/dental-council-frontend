@@ -3,21 +3,9 @@ import { ToastContainer } from 'react-toastify';
 
 import LogoSlider from '../../shared/logo-slider/logo-slider';
 
-// import BenefitsOfAbha from './components/benefits-of-abha/benefits-of-abha';
-// import FundamentalsOfAbha from './components/fundamentals-of-abha/fundamentals-of-abha';
-// import HeroBanner from './components/hero-banner/hero-banner';
-import styles from './home.module.scss';
-// import { useTranslation } from 'react-i18next';
-
 export function Home() {
-  // const { data } = useGet(ApiUrl.contactUs);
-  // const { t } = useTranslation();
-
   return (
-    <div className={styles.main} data-testid="homepage">
-      {/* <HeroBanner />
-      <BenefitsOfAbha />
-      <FundamentalsOfAbha /> */}
+    <div data-testid="homepage">
       <Divider
         variant="fullWidth"
         component="div"
@@ -28,5 +16,3 @@ export function Home() {
     </div>
   );
 }
-
-// export default Home;
