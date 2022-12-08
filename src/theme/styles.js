@@ -11,18 +11,19 @@ import { CardContent } from './card-content';
 import { CardHeader } from './card-header';
 import { FormHelperText } from './form-helper-text';
 import { InputLabel } from './input-label';
-import { Palette } from './palette';
+import { palette } from './palette';
 import { TableRow } from './table-row';
 import { TableSortLabel } from './table-sort-label';
 import { TextField } from './textfield';
 import { Typography } from './typography';
 
 const themeWrapper = (mode) => {
+  const palettes = palette(mode);
   return createTheme({
     // STYLE FOR COLOR OVERRIDE
     palette: {
       mode: mode,
-      ...Palette,
+      ...palettes,
     },
 
     breakpoints: breakpoints,
@@ -31,42 +32,43 @@ const themeWrapper = (mode) => {
       1: '0px 1px 3px #26262666',
       2: '0px 3px 5px #26262666',
       3: '0px 2px 10px #26262666',
+      4: '0px 3px 25px #00000038',
     },
 
     components: {
       // STYLE FOR BUTTON COMPONENT
-      MuiButton: Button,
+      MuiButton: Button(palettes),
 
       // STYLE FOR CARD COMPONENT
-      MuiCard: Card,
+      MuiCard: Card(palettes),
 
-      MuiCardHeader: CardHeader,
+      MuiCardHeader: CardHeader(palettes),
 
-      MuiCardContent: CardContent,
+      MuiCardContent: CardContent(palettes),
 
-      MuiCardActions: CardActions,
+      MuiCardActions: CardActions(palettes),
 
       // STYLE FOR TYPOGRAPHY COMPONENT
-      MuiTypography: Typography,
+      MuiTypography: Typography(palettes),
 
       // STYLE FOR TEXTFIELD COMPONENT
-      MuiOutlinedInput: TextField,
+      MuiOutlinedInput: TextField(palettes),
 
       // STYLE FOR INPUT LABEL COMPONENT
-      MuiInputLabel: InputLabel,
+      MuiInputLabel: InputLabel(palettes),
 
       // STYLE FOR INPUT FormHelperText COMPONENT
-      MuiFormHelperText: FormHelperText,
+      MuiFormHelperText: FormHelperText(palettes),
 
-      MuiAccordion: Accordion,
+      MuiAccordion: Accordion(palettes),
 
-      MuiAccordionSummary: AccordionSummary,
+      MuiAccordionSummary: AccordionSummary(palettes),
 
-      MuiAccordionDetails: AccordionDetails,
+      MuiAccordionDetails: AccordionDetails(palettes),
 
-      MuiTableSortLabel: TableSortLabel,
+      MuiTableSortLabel: TableSortLabel(palettes),
 
-      MuiTableRow: TableRow,
+      MuiTableRow: TableRow(palettes),
     },
 
     // STYLE FOR BORDER RADIUS

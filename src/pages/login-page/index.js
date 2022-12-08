@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
-import { Box, Container, Dialog, Typography } from '@mui/material';
+import { Box, Dialog, Typography } from '@mui/material';
 import { useLocation } from 'react-router-dom';
 
 import useWizard from '../../hooks/use-wizard';
@@ -22,7 +22,7 @@ const LoginWrapper = () => {
     resetStep();
   }, [location.state.loginFormname]);
   return (
-    <Container sx={{ mt: 5, mb: 5, maxWidth: '600px' }}>
+    <Box sx={{ mt: 5, mb: 5, maxWidth: '600px', margin: '40px auto' }}>
       {activeStep === 0 && <LoginPage handleForgotPassword={handleNext} />}
       {activeStep === 1 && <ForgotPassword handleConfirmPassword={handleNext} />}
       {activeStep === 2 && <ConfirmOTP handleConfirmOTP={handleNext} />}
@@ -76,7 +76,7 @@ const LoginWrapper = () => {
           </Box>
         </Box>
       </Dialog>
-    </Container>
+    </Box>
   );
 };
 

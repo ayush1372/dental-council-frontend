@@ -1,4 +1,4 @@
-export const AccordionDetails = {
+export const AccordionDetails = () => ({
   styleOverrides: {
     root: {
       paddingLeft: '24px',
@@ -6,4 +6,4 @@ export const AccordionDetails = {
       paddingTop: '0',
     },
   },
-};
+});

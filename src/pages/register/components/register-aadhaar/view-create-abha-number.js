@@ -7,17 +7,18 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import { Box, InputAdornment, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { useTranslation } from 'react-i18next';
 
-import { Palette } from '../../../../theme/palette';
 import { TextField } from '../../../../ui/core';
 import ButtonGroupWizard from '../../../../ui/core/wizard/button-group-wizard';
 
 const AbhaAddressTextFieldStyled = ({ start, isVerified = false }) => {
+  const theme = useTheme();
   return start ? (
     <InputAdornment>
       <MailOutlineIcon
-        sx={{ m: '0 14px 0 0', fill: Palette.breadCrumbActiveColor.main }}
+        sx={{ m: '0 14px 0 0', fill: theme.palette.breadCrumbActiveColor.main }}
       ></MailOutlineIcon>
     </InputAdornment>
   ) : (

@@ -1,11 +1,9 @@
-import { Palette } from './palette';
-
-export const TableRow = {
+export const TableRow = (palette) => ({
   styleOverrides: {
     root: {
       '&:nth-child(even)': {
-        backgroundColor: Palette.grey.main,
+        backgroundColor: palette.grey.main,
       },
     },
   },
-};
+});

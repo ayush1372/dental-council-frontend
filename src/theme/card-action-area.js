@@ -1,4 +1,4 @@
-export const CardActionArea = {
+export const CardActionArea = () => ({
   styleOverrides: {
     root: {
       '&:hover': {
@@ -6,4 +6,4 @@ export const CardActionArea = {
       },
     },
   },
-};
+});
