@@ -32,7 +32,7 @@ function createData(
     view,
   };
 }
-function TrackStatusTable(props) {
+function TrackStatusTable({ showTable, setShowTrackApplication, setShowTrackApplicationTable }) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState({});
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -42,6 +42,8 @@ function TrackStatusTable(props) {
 
   const viewNameOfApplicant = (event, row) => {
     verboseLog('called', event, row);
+    setShowTrackApplication(true);
+    setShowTrackApplicationTable(false);
   };
 
   verboseLog('selectedRowData', selectedRowData);
@@ -168,7 +170,7 @@ function TrackStatusTable(props) {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={props.showTable?.count || newRowsData.length}
+          count={showTable?.count || newRowsData.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

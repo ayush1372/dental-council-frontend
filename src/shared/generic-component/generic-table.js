@@ -10,6 +10,7 @@ import Moment from 'moment';
 import propTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
+import { verboseLog } from '../../config/debug';
 import { Button, Chip } from '../../ui/core';
 
 GenericTable.propTypes = {
@@ -72,7 +73,7 @@ export default function GenericTable(props) {
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
-
+  verboseLog('userActiveTab', userActiveTab);
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: '650px' }} aria-label="table">
@@ -143,6 +144,19 @@ export default function GenericTable(props) {
                         >
                           {row[item.name]?.value}
                         </Button>
+                      </TableCell>
+                    );
+                  } else if (item.title === 'Action') {
+                    return (
+                      <TableCell
+                        sx={{ fontSize: '13px' }}
+                        maxWidth={`${tableCellWidth}%`}
+                        key={index}
+                        align="left"
+                      >
+                        <Link onClick={(event) => row[item.name]?.onClickCallback(event, row)}>
+                          {row[item.name]?.value}
+                        </Link>
                       </TableCell>
                     );
                   } else if (

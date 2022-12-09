@@ -32,12 +32,16 @@ function createData(
     view,
   };
 }
-function TrackAppicationTable(props) {
+function TrackAppicationTable({ userType, setShowTrackApplication, setShowTrackApplicationTable }) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState({});
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
   const [selectedRowData, setRowData] = React.useState({});
+
+  const viewNameOfApplicant = (event, row) => {
+    verboseLog('called', event, row);
+  };
 
   verboseLog('selectedRowData', selectedRowData);
   const dataHeader = [
@@ -71,12 +75,11 @@ function TrackAppicationTable(props) {
   };
 
   const viewCallback = (event, row) => {
+    setShowTrackApplication(true);
+    setShowTrackApplicationTable(false);
     event.preventDefault();
     event.stopPropagation();
     setRowData(row);
-    // setShowViewPorfile(true);
-    // setShowDashboard(false);
-    // setShowTable(false);
   };
 
   const handleRequestSort = (event, property) => {
@@ -94,6 +97,7 @@ function TrackAppicationTable(props) {
       {
         type: 'nameofApplicant',
         value: application.nameofApplicant,
+        callbackNameOfApplicant: viewNameOfApplicant,
       },
       {
         type: 'nameofStateCouncil',
@@ -129,7 +133,7 @@ function TrackAppicationTable(props) {
       <Typography variant="h2" py={2}>
         Applications Pending List
       </Typography>
-      <TableSearch trackApplication={props.userType} />
+      <TableSearch trackApplication={userType} />
       <GenericTable
         order={order}
         orderBy={orderBy}
