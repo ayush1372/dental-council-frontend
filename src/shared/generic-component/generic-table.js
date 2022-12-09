@@ -10,7 +10,7 @@ import Moment from 'moment';
 import propTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
-import { Button } from '../../ui/core';
+import { Button, Chip } from '../../ui/core';
 
 GenericTable.propTypes = {
   tableHeader: propTypes.array.isRequired,
@@ -167,12 +167,12 @@ export default function GenericTable(props) {
                   } else if (item.title === 'Current Status') {
                     return (
                       <TableCell
-                        sx={{ fontSize: '13px', bgcolor: 'red' }}
+                        sx={{ fontSize: '13px' }}
                         maxWidth={`${tableCellWidth}%`}
                         key={index}
                         align="left"
                       >
-                        {row[item.name]?.value}
+                        <Chip submitted label={row[item.name]?.value} />
                       </TableCell>
                     );
                   } else {

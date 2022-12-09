@@ -3,6 +3,7 @@ export const palette = (mode) => {
     primary: {
       main: '#264488',
       light: '#415D94',
+      lighter: '#DAE2F6',
       dark: '#162A61',
       contrastText: '#fff',
     },
@@ -13,6 +14,8 @@ export const palette = (mode) => {
       contrastText: '#000',
       warningYellow: '#FFA334',
       lightOrange: '#FF8B00',
+      pendingBg: '#FFB05245',
+      pendingText: '#995C13',
     },
     grey: {
       main: mode === 'dark' ? '#000' : '#E9ECF3',
@@ -40,9 +43,11 @@ export const palette = (mode) => {
     },
     error: {
       main: '#FF5630',
+      light: '#FF674542',
     },
     success: {
       main: '#36B37E',
+      light: '#53CB9863',
       dark: '#2B8D63',
     },
     messageBlue: {
