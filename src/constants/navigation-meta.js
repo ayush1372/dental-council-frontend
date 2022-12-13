@@ -109,6 +109,11 @@ const NAV_META = [
     title: 'search-doctor',
     component: 'search-doctor',
   },
+  {
+    path: 'screen-reader',
+    title: 'ScreenReader',
+    component: 'screen-reader',
+  },
 ];
 
 export const LOGGED_IN = true;
