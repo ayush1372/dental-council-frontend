@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, Container, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import useWizard from '../../hooks/use-wizard';
+import { fetchCountries, fetchStates } from '../../store/userProfileSlice/user-profile-slice';
 import { Button } from '../../ui/core/button/button';
 import Wizard from '../../ui/core/wizard';
 import ChangePassword from '../profile/change-password/change-password';
@@ -14,7 +15,6 @@ import PreviewProfile from './components/preview-profile/preview-profile';
 import ProfileConsent from './components/profile-consent/profile-consent';
 import RegisterAndAcademicDetails from './components/register-and-academic-details/register-and-academic-details';
 import WorkProfile from './components/work-profile/work-profile';
-
 const readWizardSteps = ['Personal Details', 'Registration & Academic Details', 'Work Profile'];
 
 export const UserProfile = ({
@@ -23,15 +23,23 @@ export const UserProfile = ({
   setShowTable,
   setShowViewPorfile,
 }) => {
+  const dispatch = useDispatch();
   const [isReadMode, setIsReadMode] = useState(true);
   const [showChangepassword, setShowChangepassword] = useState(false);
 
   const [wizardSteps, setWizardSteps] = useState(readWizardSteps);
   const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
+  const countries = useSelector((state) => state.userProfile.countries);
+  const states = useSelector((state) => state.userProfile.states);
   const { activeStep, handleNext, handleBack, resetStep } = useWizard(
     loggedInUserType === 'Doctor' ? 0 : 1,
     []
   );
+
+  useEffect(() => {
+    if (countries.data.length === 0) dispatch(fetchCountries());
+    if (states.data.length === 0) dispatch(fetchStates());
+  }, [countries, states]);
 
   useEffect(() => {
     if (!isReadMode) {

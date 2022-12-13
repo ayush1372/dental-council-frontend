@@ -10,3 +10,14 @@ export function get_year_data(startYear = 1900) {
   }
   return ans;
 }
+
+export const createSelectFieldData = (arrayOfStrings, valueKey = 'id') => {
+  if (arrayOfStrings && arrayOfStrings.length > 0) {
+    return arrayOfStrings.map((item) => ({
+      label: item.name,
+      value: item[valueKey],
+    }));
+  } else {
+    return [];
+  }
+};

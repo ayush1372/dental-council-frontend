@@ -4,20 +4,18 @@ import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 
 import loginActivity from './reducers/common-reducers';
-import contactReducer from './reducers/contact-reducer';
 import appFontSizeActivity from './reducers/app-font-size';
-import RegisterDrivingLicenceReducer from './reducers/register-driving-licence-reducers';
 import captchaReducer from './reducers/captcha-reducers';
 import uiReducer from './reducers/ui-reducers';
+import userProfileReducer from './userProfileSlice/user-profile-slice';
 
 const store = configureStore({
   reducer: {
     login: loginActivity,
-    getUserList: contactReducer,
     appFontSize: appFontSizeActivity,
-    getRegisterDrivingLicence: RegisterDrivingLicenceReducer,
     getCaptchaData: captchaReducer,
     ui: uiReducer,
+    userProfile: userProfileReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(thunk).concat(logger),
   devTools: true,
