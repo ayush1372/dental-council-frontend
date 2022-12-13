@@ -1,19 +1,17 @@
-import { Palette } from './palette';
-
-export const TableSortLabel = {
+export const TableSortLabel = (palette) => ({
   styleOverrides: {
     root: {
       '&:hover': {
-        color: Palette.white.main,
+        color: palette.white.main,
       },
       '&.Mui-active': {
-        color: Palette.white.main,
+        color: palette.white.main,
         '&.MuiButtonBase-root': {
           '.MuiTableSortLabel-icon': {
-            color: Palette.white.main,
+            color: palette.white.main,
           },
         },
       },
     },
   },
-};
+});

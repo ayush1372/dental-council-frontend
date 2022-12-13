@@ -64,7 +64,7 @@ const PersonalDetails = () => {
       <Grid container item spacing={2}>
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
-            Fathers Name
+            Father&apos;s Name
           </Typography>
 
           <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
@@ -73,7 +73,7 @@ const PersonalDetails = () => {
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
-            Mothers Name
+            Mother&apos;s Name
           </Typography>
 
           <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">

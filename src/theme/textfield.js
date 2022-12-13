@@ -1,6 +1,4 @@
-import { Palette } from './palette';
-
-export const TextField = {
+export const TextField = (palette) => ({
   variants: [
     {
       props: { size: 'large' },
@@ -12,13 +10,13 @@ export const TextField = {
     {
       props: { success: 'success' },
       style: {
-        color: Palette.success.main,
+        color: palette.success.main,
       },
     },
     {
       props: { messageBlue: 'messageBlue' },
       style: {
-        color: Palette.messageBlue.main,
+        color: palette.messageBlue.main,
       },
     },
   ],
@@ -29,27 +27,27 @@ export const TextField = {
     root: {
       fontSize: '16px',
       lineHeight: '24px',
-      color: Palette.inputTextColor.main,
-      borderColor: Palette.inputBorderColor.main,
+      color: palette.inputTextColor.main,
+      borderColor: palette.inputBorderColor.main,
       borderRadius: '5px',
       outline: 'none',
       '&:hover .MuiOutlinedInput-notchedOutline': {
-        border: `2px solid ${Palette.inputHoverColor.main}`,
+        border: `2px solid ${palette.inputHoverColor.main}`,
       },
       '&:focus .MuiOutlinedInput-notchedOutline': {
-        border: `2px solid ${Palette.inputFocusColor.main}`,
+        border: `2px solid ${palette.inputFocusColor.main}`,
       },
       '&:focus-visible .MuiOutlinedInput-notchedOutline': {
-        border: `2px solid ${Palette.inputFocusColor.main}`,
+        border: `2px solid ${palette.inputFocusColor.main}`,
       },
       '&:focus-within .MuiOutlinedInput-notchedOutline': {
-        border: `2px solid ${Palette.inputFocusColor.main}`,
+        border: `2px solid ${palette.inputFocusColor.main}`,
       },
       '&.Mui-error .MuiOutlinedInput-notchedOutline': {
-        border: `2px solid ${Palette.error.main}`,
+        border: `2px solid ${palette.error.main}`,
       },
       '&.Mui-error .MuiOutlinedInput-input': {
-        color: Palette.error.main,
+        color: palette.error.main,
       },
       '&.Mui-disabled': {
         opacity: '0.4',
@@ -62,14 +60,14 @@ export const TextField = {
 
     colorSuccess: {
       '&:hover .MuiOutlinedInput-notchedOutline': {
-        border: `2px solid ${Palette.success.main}`,
+        border: `2px solid ${palette.success.main}`,
       },
       '.MuiOutlinedInput-notchedOutline': {
-        border: `2px solid ${Palette.success.main}`,
-        color: Palette.success.main,
+        border: `2px solid ${palette.success.main}`,
+        color: palette.success.main,
       },
       '.MuiOutlinedInput-input': {
-        color: Palette.success.main,
+        color: palette.success.main,
       },
     },
     inputSizeSmall: {
@@ -78,7 +76,7 @@ export const TextField = {
       padding: '9px 16px',
     },
     success: {
-      color: Palette.success.main,
+      color: palette.success.main,
     },
   },
-};
+});

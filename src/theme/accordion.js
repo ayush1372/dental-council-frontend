@@ -1,4 +1,4 @@
-export const Accordion = {
+export const Accordion = () => ({
   styleOverrides: {
     root: {
       '&.MuiPaper-root': {
@@ -20,4 +20,4 @@ export const Accordion = {
       },
     },
   },
-};
+});
