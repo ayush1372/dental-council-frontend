@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
-import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
+// import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
 import { get_year_data } from '../../../../helpers/functions/common-functions';
 import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
 import { ModalOTP } from '../../../../shared/otp-modal/otp-modal';
@@ -16,8 +16,8 @@ import MobileNumber from '../../../../ui/core/mobile-number/mobile-number';
 const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const { t } = useTranslation();
   const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
-  const countries = useSelector((state) => state.userProfile.countries);
-  const states = useSelector((state) => state.userProfile.states);
+  // const countries = useSelector((state) => state.userProfile.countries);
+  //const states = useSelector((state) => state.menuLists.states);
 
   const [languages, setLanguages] = useState([]);
   const {
@@ -48,8 +48,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       Area: loggedInUserType === 'SMC' ? '' : 'new delhi',
       District: loggedInUserType === 'SMC' ? '' : 'new delhi',
       SubDistrict: '',
-      State: loggedInUserType === 'SMC' ? '' : 8,
-      Country: loggedInUserType === 'SMC' ? '' : 356,
+      State: loggedInUserType === 'SMC' ? '' : 'NewDelhi',
+      Country: loggedInUserType === 'SMC' ? '' : 'India',
       PostalCode: loggedInUserType === 'SMC' ? '' : '120018',
       IMRID: loggedInUserType === 'SMC' ? '' : '9598237230192838',
       YearOfInfo: '',
@@ -562,7 +562,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               {...register('State', {
                 required: 'State/Union Territory is required',
               })}
-              options={createSelectFieldData(states.data)}
+              options={[
+                {
+                  label: 'New Delhi',
+                  value: 'New Delhi',
+                },
+              ]}
               MenuProps={{
                 style: {
                   maxHeight: 250,
@@ -582,7 +587,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               {...register('Country', {
                 required: 'Country is required',
               })}
-              options={createSelectFieldData(countries.data)}
+              disabled
+              options={[
+                {
+                  label: 'India',
+                  value: 'India',
+                },
+              ]}
               MenuProps={{
                 style: {
                   maxHeight: 250,

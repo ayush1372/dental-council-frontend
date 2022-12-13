@@ -5,7 +5,7 @@ import { Box, Container, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import useWizard from '../../hooks/use-wizard';
-import { fetchCountries, fetchStates } from '../../store/userProfileSlice/user-profile-slice';
+import { fetchStates } from '../../store/reducers/menu-lists-reducer';
 import { Button } from '../../ui/core/button/button';
 import Wizard from '../../ui/core/wizard';
 import ChangePassword from '../profile/change-password/change-password';
@@ -29,17 +29,17 @@ export const UserProfile = ({
 
   const [wizardSteps, setWizardSteps] = useState(readWizardSteps);
   const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
-  const countries = useSelector((state) => state.userProfile.countries);
-  const states = useSelector((state) => state.userProfile.states);
+  // const countries = useSelector((state) => state.userProfile.countries);
+  const statesList = useSelector((state) => state.userProfile.statesList);
   const { activeStep, handleNext, handleBack, resetStep } = useWizard(
     loggedInUserType === 'Doctor' ? 0 : 1,
     []
   );
 
   useEffect(() => {
-    if (countries.data.length === 0) dispatch(fetchCountries());
-    if (states.data.length === 0) dispatch(fetchStates());
-  }, [countries, states]);
+    // if (countries.data.length === 0) dispatch(fetchCountries());
+    if (statesList.data.length === 0) dispatch(fetchStates());
+  }, [statesList]);
 
   useEffect(() => {
     if (!isReadMode) {

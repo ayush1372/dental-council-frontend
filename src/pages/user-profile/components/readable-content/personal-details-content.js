@@ -82,7 +82,7 @@ const PersonalDetails = () => {
         </Grid>
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
-            Spouce Name
+            Spouse Name
           </Typography>
 
           <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
