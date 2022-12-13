@@ -4,6 +4,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Box, Container, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
+import { verboseLog } from '../../config/debug';
 import useWizard from '../../hooks/use-wizard';
 import { Button } from '../../ui/core/button/button';
 import Wizard from '../../ui/core/wizard';
@@ -23,7 +24,7 @@ export const UserProfile = ({
   setShowViewPorfile,
 }) => {
   const [isReadMode, setIsReadMode] = useState(true);
-
+  verboseLog('test', showViewProfile);
   const [wizardSteps, setWizardSteps] = useState(readWizardSteps);
   const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
   const { activeStep, handleNext, handleBack, resetStep } = useWizard(

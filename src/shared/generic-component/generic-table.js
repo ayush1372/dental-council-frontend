@@ -1,4 +1,11 @@
-import { Box, Link, Paper, Table, TableSortLabel } from '@mui/material';
+import * as React from 'react';
+import { useState } from 'react';
+
+import CloseIcon from '@mui/icons-material/Close';
+import MoreVertSharpIcon from '@mui/icons-material/MoreVertSharp';
+import { Box, Dialog, Link, Paper, Table, TableSortLabel } from '@mui/material';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
@@ -6,10 +13,13 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Tooltip from '@mui/material/Tooltip';
 import { visuallyHidden } from '@mui/utils';
+import PopupState, { bindMenu, bindTrigger } from 'material-ui-popup-state';
 import Moment from 'moment';
 import propTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
+import { verboseLog } from '../../config/debug';
+import SuspendLicenseVoluntaryRetirement from '../../pages/suspend-license-voluntary-retirement';
 import { Button } from '../../ui/core';
 
 GenericTable.propTypes = {
@@ -28,6 +38,9 @@ export default function GenericTable(props) {
   const { userActiveTab } = useSelector((state) => state.ui);
   const tableCellWidth = Math.floor(window.innerWidth / props.tableHeader.length) + 'px';
   const { order, orderBy, onRequestSort, page, rowsPerPage } = props;
+  const [selected, setSelected] = useState('');
+  const [confirmationModal, setConfirmationModal] = useState(false);
+  verboseLog('data', props);
   function stableSort(array, comparator) {
     const stabilizedThis = array.map((el, index) => [el, index]);
     stabilizedThis.sort((a, b) => {
@@ -72,9 +85,58 @@ export default function GenericTable(props) {
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
+  const handleClose = () => {
+    setConfirmationModal(false);
+  };
+
+  const selectionChangeHandler = (event) => {
+    const { myValue } = event.currentTarget.dataset;
+    setSelected(myValue);
+    setConfirmationModal(true);
+  };
 
   return (
     <TableContainer component={Paper}>
+      <Dialog
+        open={confirmationModal}
+        onClose={() => {
+          setConfirmationModal(false);
+        }}
+        sx={{
+          '.MuiPaper-root': {
+            borderRadius: '10px',
+          },
+        }}
+      >
+        <Box
+          p={2}
+          width={selected === 'verify' ? '500px' : selected === 'forward' ? '700px' : '630px'}
+          height={
+            selected === 'reject'
+              ? '500px'
+              : selected === 'verify'
+              ? '380px'
+              : selected === 'forward'
+              ? '300px'
+              : selected === 'raise'
+              ? '650px'
+              : '720px'
+          }
+          borderRadius={'40px'}
+        >
+          <Box align="right">
+            <CloseIcon onClick={handleClose} />
+          </Box>
+          <Box
+            display={'flex'}
+            flexDirection={'column'}
+            justifyContent={'flex-start'}
+            alignItems={'center'}
+          >
+            <SuspendLicenseVoluntaryRetirement selectedValue={selected} />
+          </Box>
+        </Box>
+      </Dialog>
       <Table sx={{ minWidth: '650px' }} aria-label="table">
         <TableHead>
           <TableRow sx={{ backgroundColor: 'primary.main' }}>
@@ -115,7 +177,7 @@ export default function GenericTable(props) {
             })}
           </TableRow>
         </TableHead>
-        <TableBody>
+        <TableBody sx={{ backgroundColor: '#E9ECF3' }}>
           {stableSort(props.data, getComparator(order, orderBy))
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((row, rowIndex) => (
@@ -162,6 +224,49 @@ export default function GenericTable(props) {
                         >
                           {row[item.name]?.value}
                         </Link>
+                      </TableCell>
+                    );
+                  } else if (
+                    (item.title === 'Action' || item.title === 'Request NMC') &&
+                    userActiveTab === 'track-status'
+                  ) {
+                    return (
+                      <TableCell
+                        sx={{ fontSize: '13px' }}
+                        maxWidth={`${tableCellWidth}%`}
+                        key={index}
+                        align="left"
+                      >
+                        <PopupState variant="popover" popupId="demo-popup-menu">
+                          {(popupState) => (
+                            <React.Fragment>
+                              <Button
+                                style={{ backgroundColor: '#E9ECF3' }}
+                                endIcon={<MoreVertSharpIcon />}
+                                variant="contained"
+                                color="white"
+                                {...bindTrigger(popupState)}
+                                sx={{
+                                  width: 'max-content',
+                                }}
+                              ></Button>
+                              <Menu {...bindMenu(popupState)}>
+                                <MenuItem
+                                  data-my-value={'suspend'}
+                                  onClick={selectionChangeHandler}
+                                >
+                                  Suspend
+                                </MenuItem>
+                                <MenuItem
+                                  data-my-value={'blacklist'}
+                                  onClick={selectionChangeHandler}
+                                >
+                                  Blacklist
+                                </MenuItem>
+                              </Menu>
+                            </React.Fragment>
+                          )}
+                        </PopupState>
                       </TableCell>
                     );
                   } else {
