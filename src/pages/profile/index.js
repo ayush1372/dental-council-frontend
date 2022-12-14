@@ -15,6 +15,7 @@ import UserProfile from '../user-profile';
 import CollegeDean from './college-dean/college-dean';
 import CollegeMyProfile from './college-my-profile/college-my-profile';
 import CollegeRegistrar from './college-registrar/college-registrar';
+import CollegeApproval from './components/college-approval-cards/college-approval-cards';
 import Dashboard from './components/dashboard-cards/dashboard-cards';
 import MiniDrawer from './components/profile-sidebar/profile-sidebar';
 import MyProfile from './smc-nmc-profile/my-profile';
@@ -102,6 +103,13 @@ export function Profile() {
       tabName: 'track-status',
       icon: <BadgeIcon />,
       element: <TrackStatus tabName={userActiveTab} />,
+    },
+    {
+      option: 3,
+      name: 'College Approval',
+      tabName: 'college-approval',
+      icon: <BadgeIcon />,
+      element: <CollegeApproval />,
     },
   ];
 
