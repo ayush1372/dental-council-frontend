@@ -14,7 +14,7 @@ export default function ApproveLicenseModal() {
     <Modal open={open} onClose={handleClose} sx={{ mt: 15 }}>
       <Container
         maxWidth="xs"
-        sx={{ backgroundColor: 'white.main', borderRadius: '10px', height: '450px', p: '30px' }}
+        sx={{ backgroundColor: 'white.main', borderRadius: '10px', height: '350px' }}
       >
         <Box mb={1} display="flex" justifyContent="center">
           <TaskAltOutlinedIcon
@@ -48,39 +48,37 @@ export default function ApproveLicenseModal() {
           >
             Application Approved Successfully
           </Typography>
-          <Grid container>
-            <Grid container item spacing={1}>
-              <Grid item xs={6} md={4}>
-                <Typography variant="" color="grey.label">
-                  IMG/ Reg No.
-                </Typography>
+          <Grid container item spacing={1} mt={1}>
+            <Grid item xs={6} md={4}>
+              <Typography component="div" color="grey.label">
+                IMG/ Reg No.
+              </Typography>
 
-                <Typography variant="" color="primary.main">
-                  {/* {collegeProfileData.collegename.name} */}177255
-                </Typography>
-              </Grid>
-              <Grid item xs={6} md={4}>
-                <Typography variant="" color="grey.label">
-                  Applicant Name
-                </Typography>
+              <Typography component="div" color="primary.main">
+                {/* {collegeProfileData.collegename.name} */}177255
+              </Typography>
+            </Grid>
+            <Grid item xs={6} md={4}>
+              <Typography component="div" color="grey.label">
+                Applicant Name
+              </Typography>
 
-                <Typography variant="" color="primary.main">
-                  {/* {collegeProfileData.collegeId.name} */}Basavaraj Harihar
-                </Typography>
-              </Grid>
-              <Grid item xs={6} md={4}>
-                <Typography variant="" color="grey.label">
-                  Suspension Type
-                </Typography>
+              <Typography component="div" color="primary.main">
+                {/* {collegeProfileData.collegeId.name} */}Basavaraj Harihar
+              </Typography>
+            </Grid>
+            <Grid item xs={6} md={4}>
+              <Typography component="div" color="grey.label">
+                Suspension Type
+              </Typography>
 
-                <Typography variant="" color="primary.main">
-                  {/* {collegeProfileData.collegePhnNumber.name} */}Temporary
-                </Typography>
-              </Grid>
+              <Typography component="div" color="primary.main">
+                {/* {collegeProfileData.collegePhnNumber.name} */}Temporary
+              </Typography>
             </Grid>
           </Grid>
           <Button
-            sx={{ width: '408px', mt: 5 }}
+            sx={{ width: '408px', mt: 2 }}
             variant="contained"
             color="warning"
             onClick={handleClose}
