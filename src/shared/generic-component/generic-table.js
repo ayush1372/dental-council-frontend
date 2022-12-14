@@ -2,9 +2,11 @@
 import * as React from 'react';
 import { useState } from 'react';
 
-import CloseIcon from '@mui/icons-material/Close';
+// import CloseIcon from '@mui/icons-material/Close';
 import MoreVertSharpIcon from '@mui/icons-material/MoreVertSharp';
-import { Box, Dialog, Link, Paper, Table, TableSortLabel } from '@mui/material';
+import { Box, Link, Paper, Table, TableSortLabel, Tooltip } from '@mui/material';
+// import MoreVertSharpIcon from '@mui/icons-material/MoreVertSharp';
+// import { Box, Link, Paper, Table, TableSortLabel } from '@mui/material';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import TableBody from '@mui/material/TableBody';
@@ -12,14 +14,14 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Tooltip from '@mui/material/Tooltip';
+// import Tooltip from '@mui/material/Tooltip';
 import { visuallyHidden } from '@mui/utils';
 import PopupState, { bindMenu, bindTrigger } from 'material-ui-popup-state';
 import Moment from 'moment';
 import propTypes from 'prop-types';
 
-// import { useSelector } from 'react-redux';
-import SuspendLicenseVoluntaryRetirement from '../../pages/suspend-license-voluntary-retirement';
+import { verboseLog } from '../../config/debug';
+import SuspendValuntaryPopup from '../../pages/suspend-valuntary-popup';
 import { Button } from '../../ui/core';
 import RaiseQueryPopup from '../query-modal-popup/raise-query-popup';
 import SuccessPopup from '../reactivate-licence-popup/success-popup';
@@ -42,6 +44,7 @@ export default function GenericTable(props) {
   const { order, orderBy, onRequestSort, page, rowsPerPage } = props;
   const [selected, setSelected] = useState('');
   const [confirmationModal, setConfirmationModal] = useState(false);
+  verboseLog('data', props);
   function stableSort(array, comparator) {
     const stabilizedThis = array.map((el, index) => [el, index]);
     stabilizedThis.sort((a, b) => {
@@ -91,7 +94,6 @@ export default function GenericTable(props) {
   };
 
   const selectionChangeHandler = (event) => {
-    console.log('event dataset', event.currentTarget.dataset);
     const { myValue } = event.currentTarget.dataset;
     setSelected(myValue);
     setConfirmationModal(true);
@@ -106,47 +108,11 @@ export default function GenericTable(props) {
           <RaiseQueryPopup />
         )
       ) : (
-        <Dialog
-          open={confirmationModal}
-          onClose={() => {
-            setConfirmationModal(false);
-          }}
-          sx={{
-            '.MuiPaper-root': {
-              borderRadius: '10px',
-            },
-          }}
-        >
-          <Box
-            p={2}
-            width={selected === 'verify' ? '500px' : selected === 'forward' ? '700px' : '630px'}
-            height={
-              selected === 'reject'
-                ? '500px'
-                : selected === 'verify'
-                ? '380px'
-                : selected === 'forward'
-                ? '300px'
-                : selected === 'raise'
-                ? '650px'
-                : '720px'
-            }
-            borderRadius={'40px'}
-          >
-            <Box align="right">
-              <CloseIcon onClick={handleClose} />
-            </Box>
-
-            <Box
-              display={'flex'}
-              flexDirection={'column'}
-              justifyContent={'flex-start'}
-              alignItems={'center'}
-            >
-              <SuspendLicenseVoluntaryRetirement selectedValue={selected} />
-            </Box>
-          </Box>
-        </Dialog>
+        <SuspendValuntaryPopup
+          selected={selected}
+          confirmationModal={confirmationModal}
+          handleClose={handleClose}
+        />
       )}
       <Table sx={{ minWidth: '650px' }} aria-label="table">
         <TableHead>
@@ -268,13 +234,17 @@ export default function GenericTable(props) {
                                   data-my-value={'suspend'}
                                   onClick={selectionChangeHandler}
                                 >
-                                  {props.tableName === 'ActiveLicense' ? 'Approve' : 'Suspend'}
+                                  {props.tableName === 'ActiveLicense'
+                                    ? 'Approve'
+                                    : 'Permanent suspend'}
                                 </MenuItem>
                                 <MenuItem
                                   data-my-value={'blacklist'}
                                   onClick={selectionChangeHandler}
                                 >
-                                  {props.tableName === 'ActiveLicense' ? 'Reject' : 'Blacklist'}
+                                  {props.tableName === 'ActiveLicense'
+                                    ? 'Reject'
+                                    : 'Temporary suspend'}
                                 </MenuItem>
                               </Menu>
                             </React.Fragment>

@@ -66,7 +66,7 @@ export function LoginPage({ handleForgotPassword }) {
         <Box mt={2}>
           <Typography variant="body3">
             {loginFormname === 'Doctor' ? 'NMR/USER ' : 'User '}
-            {t('ID')}
+            {t('name')}
             <Typography component="span" color="error.main">
               *
             </Typography>

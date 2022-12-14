@@ -3,12 +3,14 @@ import { useEffect, useState } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import TuneIcon from '@mui/icons-material/Tune';
 import { Alert, Box, Container, Link, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { verboseLog } from '../../config/debug';
 import useWizard from '../../hooks/use-wizard';
 import ReactivateLicencePopup from '../../shared/reactivate-licence-popup/re-activate-licence-popup';
 import SuccessPopup from '../../shared/reactivate-licence-popup/success-popup';
-import { Button } from '../../ui/core';
+import { getStatesList } from '../../store/actions/menu-list-actions';
+import { Button } from '../../ui/core/button/button';
 import Wizard from '../../ui/core/wizard';
 import ChangePassword from '../profile/change-password/change-password';
 import ConstantDetails from './components/constant-details/constant-details';
@@ -26,6 +28,7 @@ export const UserProfile = ({
   setShowTable,
   setShowViewPorfile,
 }) => {
+  const dispatch = useDispatch();
   const [isReadMode, setIsReadMode] = useState(true);
   const [showChangepassword, setShowChangepassword] = useState(false);
   const [showReactivateLicense, setShowReactivateLicense] = useState(false);
@@ -33,6 +36,7 @@ export const UserProfile = ({
 
   const [wizardSteps, setWizardSteps] = useState(readWizardSteps);
   const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
+
   const { activeStep, handleNext, handleBack, resetStep } = useWizard(
     loggedInUserType === 'Doctor' ? 0 : 1,
     []
@@ -41,6 +45,25 @@ export const UserProfile = ({
   const renderSuccess = () => {
     setShowReactivateLicense(false);
     setShowSuccessPopup(true);
+  };
+
+  const fetchStates = () => {
+    try {
+      dispatch(getStatesList())
+        .then((dataResponse) => {
+          verboseLog('dataResponse', dataResponse);
+        })
+        .catch((error) => {
+          verboseLog('error occured', error);
+        });
+    } catch (err) {
+      verboseLog('error', err);
+    }
+  };
+
+  const openDoctorEditProfile = () => {
+    setIsReadMode(false);
+    fetchStates();
   };
 
   useEffect(() => {
@@ -52,7 +75,7 @@ export const UserProfile = ({
   }, [isReadMode]);
 
   return (
-    <Container>
+    <>
       <Box display="flex" justifyContent="start">
         {loggedInUserType === 'Doctor' && (
           <Alert
@@ -126,9 +149,7 @@ export const UserProfile = ({
                       startIcon={<EditIcon sx={{ mr: 1 }} />}
                       variant="contained"
                       color="secondary"
-                      onClick={() => {
-                        setIsReadMode(false);
-                      }}
+                      onClick={openDoctorEditProfile}
                       sx={{
                         width: 'max-content',
                         ml: '25px',
@@ -201,7 +222,7 @@ export const UserProfile = ({
           <ChangePassword />
         </Container>
       )}
-    </Container>
+    </>
   );
 };
 

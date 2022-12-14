@@ -1,12 +1,15 @@
 import React from 'react';
+import { useState } from 'react';
 
 import { Box, Grid, TablePagination } from '@mui/material';
 import { useSelector } from 'react-redux';
 
+import UserProfile from '../../../src/pages/user-profile';
 import { verboseLog } from '../../config/debug';
 import { trackstatusData } from '../../constants/common-data';
-import TableSearch from '../../pages/profile/components/table-search/table-search';
 import GenericTable from '../../shared/generic-component/generic-table';
+import ViewProfile from '../../shared/view-profile/view-profile';
+import { Button } from '../../ui/core';
 
 function createData(
   SNo,
@@ -18,6 +21,7 @@ function createData(
   NMCVerificationStatus,
   dateofSubmission,
   pendency,
+  pending,
   view
 ) {
   return {
@@ -30,6 +34,7 @@ function createData(
     NMCVerificationStatus,
     dateofSubmission,
     pendency,
+    pending,
     view,
   };
 }
@@ -40,12 +45,16 @@ function TrackStatusTable(props) {
   const [page, setPage] = React.useState(0);
   const [selectedRowData, setRowData] = React.useState({});
   const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
-
+  const [showViewProfile, setShowViewPorfile] = useState(false);
   const viewNameOfApplicant = (event, row) => {
-    verboseLog('called', event, row);
+    event.preventDefault();
+    event.stopPropagation();
+    setRowData(row);
+    setShowViewPorfile(true);
+    props.setShowHeader(false);
   };
 
-  verboseLog('selectedRowData', selectedRowData);
+  verboseLog('selectedRowData', selectedRowData, props);
   const dataHeader = [
     { title: 'S.No.', name: 'SNo', sorting: true, type: 'string' },
     {
@@ -81,6 +90,7 @@ function TrackStatusTable(props) {
     },
     { title: 'Date of Submission', name: 'dateofSubmission', sorting: true, type: 'string' },
     { title: 'Pendency', name: 'pendency', sorting: true, type: 'string' },
+    { title: 'Pending with user', name: 'pending', sorting: true, type: 'string' },
     {
       title:
         loggedInUserType === 'NMC'
@@ -127,6 +137,7 @@ function TrackStatusTable(props) {
       { type: 'NMCVerificationStatus', value: application.NMCVerificationStatus },
       { type: 'dateofSubmission', value: application.dateofSubmission },
       { type: 'pendency', value: application.pendency },
+      { type: 'pending', value: 'N/A' },
       {
         type:
           loggedInUserType === 'NMC'
@@ -151,12 +162,38 @@ function TrackStatusTable(props) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+  const onClickBackButtonHandler = () => {
+    setShowViewPorfile(false);
+    props.setShowHeader(true);
+  };
 
-  return (
-    <Grid sx={{ m: 2 }}>
-      <Grid>
-        <TableSearch />
-      </Grid>
+  return showViewProfile ? (
+    <Grid>
+      <Box align="right" mt={2} mr={2}>
+        <Button
+          size="small"
+          variant="outlined"
+          sx={{
+            backgroundColor: 'white.main',
+            ml: 2,
+            '&:hover': {
+              color: 'primary.main',
+              backgroundColor: 'white.main',
+            },
+            height: '48px',
+          }}
+          onClick={onClickBackButtonHandler}
+        >
+          Back
+        </Button>
+      </Box>
+      <Box>
+        <ViewProfile />
+        <UserProfile showViewProfile={true} />
+      </Box>
+    </Grid>
+  ) : (
+    <Grid sx={{ m: 2 }} p={'0px'}>
       <GenericTable
         order={order}
         orderBy={orderBy}
