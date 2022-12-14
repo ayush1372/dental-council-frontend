@@ -1,4 +1,10 @@
+import * as React from 'react';
+import { useState } from 'react';
+
+import MoreVertSharpIcon from '@mui/icons-material/MoreVertSharp';
 import { Box, Link, Paper, Table, TableSortLabel } from '@mui/material';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
@@ -6,10 +12,13 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Tooltip from '@mui/material/Tooltip';
 import { visuallyHidden } from '@mui/utils';
+import PopupState, { bindMenu, bindTrigger } from 'material-ui-popup-state';
 import Moment from 'moment';
 import propTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
+import { verboseLog } from '../../config/debug';
+import SuspendValuntaryPopup from '../../pages/suspend-valuntary-popup';
 import { Button } from '../../ui/core';
 
 GenericTable.propTypes = {
@@ -28,6 +37,9 @@ export default function GenericTable(props) {
   const { userActiveTab } = useSelector((state) => state.ui);
   const tableCellWidth = Math.floor(window.innerWidth / props.tableHeader.length) + 'px';
   const { order, orderBy, onRequestSort, page, rowsPerPage } = props;
+  const [selected, setSelected] = useState('');
+  const [confirmationModal, setConfirmationModal] = useState(false);
+  verboseLog('data', props);
   function stableSort(array, comparator) {
     const stabilizedThis = array.map((el, index) => [el, index]);
     stabilizedThis.sort((a, b) => {
@@ -72,9 +84,23 @@ export default function GenericTable(props) {
   const createSortHandler = (property) => (event) => {
     onRequestSort(event, property);
   };
+  const handleClose = () => {
+    setConfirmationModal(false);
+  };
+
+  const selectionChangeHandler = (event) => {
+    const { myValue } = event.currentTarget.dataset;
+    setSelected(myValue);
+    setConfirmationModal(true);
+  };
 
   return (
     <TableContainer component={Paper}>
+      <SuspendValuntaryPopup
+        selected={selected}
+        confirmationModal={confirmationModal}
+        handleClose={handleClose}
+      />
       <Table sx={{ minWidth: '650px' }} aria-label="table">
         <TableHead>
           <TableRow sx={{ backgroundColor: 'primary.main' }}>
@@ -162,6 +188,48 @@ export default function GenericTable(props) {
                         >
                           {row[item.name]?.value}
                         </Link>
+                      </TableCell>
+                    );
+                  } else if (
+                    (item.title === 'Action' || item.title === 'Request NMC') &&
+                    userActiveTab === 'track-status'
+                  ) {
+                    return (
+                      <TableCell
+                        sx={{ fontSize: '13px' }}
+                        maxWidth={`${tableCellWidth}%`}
+                        key={index}
+                        align="left"
+                      >
+                        <PopupState variant="popover" popupId="demo-popup-menu">
+                          {(popupState) => (
+                            <React.Fragment>
+                              <Button
+                                endIcon={<MoreVertSharpIcon />}
+                                variant="contained"
+                                color="white"
+                                {...bindTrigger(popupState)}
+                                sx={{
+                                  width: 'max-content',
+                                }}
+                              ></Button>
+                              <Menu {...bindMenu(popupState)}>
+                                <MenuItem
+                                  data-my-value={'suspend'}
+                                  onClick={selectionChangeHandler}
+                                >
+                                  Permanent suspend
+                                </MenuItem>
+                                <MenuItem
+                                  data-my-value={'blacklist'}
+                                  onClick={selectionChangeHandler}
+                                >
+                                  Temporary suspend
+                                </MenuItem>
+                              </Menu>
+                            </React.Fragment>
+                          )}
+                        </PopupState>
                       </TableCell>
                     );
                   } else {

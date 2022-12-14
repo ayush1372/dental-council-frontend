@@ -176,6 +176,7 @@ export const trackstatusData = {
       NMCVerificationStatus: 'Submitted',
       dateofSubmission: '31-Oct-2022',
       pendency: '25',
+      pending: 'N/A',
       requestNMC: 'view',
     },
   ],
