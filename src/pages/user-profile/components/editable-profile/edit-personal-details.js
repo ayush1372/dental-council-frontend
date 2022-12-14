@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
+import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
 import { get_year_data } from '../../../../helpers/functions/common-functions';
 import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
 import { ModalOTP } from '../../../../shared/otp-modal/otp-modal';
@@ -14,7 +15,8 @@ import MobileNumber from '../../../../ui/core/mobile-number/mobile-number';
 
 const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const { t } = useTranslation();
-  const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
+  const loggedInUserType = useSelector((state) => state?.login?.loggedInUserType);
+  const { statesList } = useSelector((state) => state?.menuLists);
 
   const [languages, setLanguages] = useState([]);
   const {
@@ -45,8 +47,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       Area: loggedInUserType === 'SMC' ? '' : 'new delhi',
       District: loggedInUserType === 'SMC' ? '' : 'new delhi',
       SubDistrict: '',
-      State: loggedInUserType === 'SMC' ? '' : 'new delhi',
-      Country: loggedInUserType === 'SMC' ? '' : 'india',
+      State: loggedInUserType === 'SMC' ? '' : '',
+      Country: loggedInUserType === 'SMC' ? '' : 'India',
       PostalCode: loggedInUserType === 'SMC' ? '' : '120018',
       IMRID: loggedInUserType === 'SMC' ? '' : '9598237230192838',
       YearOfInfo: '',
@@ -559,12 +561,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               {...register('State', {
                 required: 'State/Union Territory is required',
               })}
-              options={[
-                {
-                  label: 'New Delhi',
-                  value: 'new delhi',
+              options={createSelectFieldData(statesList)}
+              MenuProps={{
+                style: {
+                  maxHeight: 250,
+                  maxWidth: 130,
                 },
-              ]}
+              }}
             />
           </Grid>
           <Grid item xs={4}>
@@ -578,12 +581,19 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               {...register('Country', {
                 required: 'Country is required',
               })}
+              disabled
               options={[
                 {
                   label: 'India',
-                  value: 'india',
+                  value: 'India',
                 },
               ]}
+              MenuProps={{
+                style: {
+                  maxHeight: 250,
+                  maxWidth: 130,
+                },
+              }}
             />
           </Grid>
           <Grid item xs={4}>
@@ -607,7 +617,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
           </Grid>
         </Grid>
         <Grid container item spacing={2}>
-          <Grid item xs={4}>
+          <Grid item xs={6}>
             <Box display="flex" alignItems="end">
               <Box width="100%">
                 <TextField
