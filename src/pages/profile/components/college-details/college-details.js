@@ -17,104 +17,102 @@ const CollegeDetails = ({ collegeDetails, setShowTable }) => {
     setConfirmationModal(true);
   };
   return (
-    <Box boxShadow={2} p="0px 91px 44px 41px" mt={2} data-testid="College Details">
-      <Grid>
-        <Grid container spacing={6}>
-          <Grid item xs={6}>
-            <Typography variant="h2" color="textPrimary.main" data-testid="collegeDetails">
-              College Details
-            </Typography>
-          </Grid>
+    <Box boxShadow={2} p={5} data-testid="College Details">
+      <Grid container>
+        <Grid container item xs={12}>
+          <Typography variant="h2" color="textPrimary.main" data-testid="collegeDetails">
+            College Details
+          </Typography>
         </Grid>
 
-        <Grid container item spacing={2} mt={3}>
-          <Grid item xs={4} md={4}>
-            <Typography variant="body3" color="grey.label" data-testid="CollegeName">
+        <Grid container item spacing={2} mt={1}>
+          <Grid item xs={12} sm={6} md={4}>
+            <Typography variant="subtitle2" color="grey.label" data-testid="CollegeName">
               College Name
             </Typography>
 
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="body1" color="primary.main">
               {collegeDetails?.collegeName}
             </Typography>
           </Grid>
-          <Grid item xs={4} md={4}>
-            <Typography variant="body3" color="grey.label">
+          <Grid item xs={12} sm={6} md={4}>
+            <Typography variant="subtitle2" color="grey.label">
               College ID
             </Typography>
 
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="body1" color="primary.main">
               {collegeDetails?.collegeId}
             </Typography>
           </Grid>
-          <Grid item xs={4} md={4}>
-            <Typography variant="body3" color="grey.label">
+          <Grid item xs={12} sm={6} md={4}>
+            <Typography variant="subtitle2" color="grey.label">
               College Phone Number
             </Typography>
 
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="body1" color="primary.main">
               {collegeDetails?.collegePhnNumber}
             </Typography>
           </Grid>
-          <Grid item xs={4} md={4}>
-            <Typography variant="body3" color="grey.label">
+          <Grid item xs={12} sm={6} md={4}>
+            <Typography variant="subtitle2" color="grey.label">
               College Email ID
             </Typography>
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="body1" color="primary.main">
               {collegeDetails?.collegeEmailId}
             </Typography>
           </Grid>
-          <Grid item xs={4} md={4}>
-            <Typography variant="body3" color="grey.label">
+          <Grid item xs={12} sm={6} md={4}>
+            <Typography variant="subtitle2" color="grey.label">
               Select Council
             </Typography>
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="body1" color="primary.main">
               {collegeDetails?.nameofStateCouncil}
             </Typography>
           </Grid>
-          <Grid item xs={4} md={4}>
-            <Typography variant="body3" color="grey.label">
+          <Grid item xs={12} sm={6} md={4}>
+            <Typography variant="subtitle2" color="grey.label">
               Select University name
             </Typography>
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="body1" color="primary.main">
               {collegeDetails?.universityName}
             </Typography>
           </Grid>
-          <Grid item xs={4} md={4}>
-            <Typography variant="body3" color="grey.label">
+          <Grid item xs={12} sm={6} md={4}>
+            <Typography variant="subtitle2" color="grey.label">
               College Website
             </Typography>
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="body1" color="primary.main">
               {collegeDetails?.collegeWebsite}
             </Typography>
           </Grid>
-          <Grid item xs={4} md={4}>
-            <Typography variant="body3" color="grey.label">
+          <Grid item xs={12} sm={6} md={4}>
+            <Typography variant="subtitle2" color="grey.label">
               State Name
             </Typography>
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="body1" color="primary.main">
               {collegeDetails?.state}
             </Typography>
           </Grid>
 
-          <Grid item xs={4} md={4}>
-            <Typography variant="body3" color="grey.label">
+          <Grid item xs={12} sm={6} md={4}>
+            <Typography variant="subtitle2" color="grey.label">
               College Address
             </Typography>
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="body1" color="primary.main">
               {collegeDetails?.collegeAddress}
             </Typography>
           </Grid>
-          <Grid item xs={4} md={4}>
-            <Typography variant="body3" color="grey.label">
+          <Grid item xs={12} sm={6} md={4}>
+            <Typography variant="subtitle2" color="grey.label">
               College Pin Code
             </Typography>
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="body1" color="primary.main">
               {collegeDetails?.collegePinCode}
             </Typography>
           </Grid>
         </Grid>
       </Grid>
-      <Box display="flex" justifyContent="space-between" my={2}>
+      <Box display="flex" justifyContent="space-between" mt={6}>
         <Box>
           <Button
             variant="outlined"
