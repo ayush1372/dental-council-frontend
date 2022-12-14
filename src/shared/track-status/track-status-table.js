@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Box, Grid, TablePagination } from '@mui/material';
 import { useSelector } from 'react-redux';
 
-import UserProfile from '../../../src/pages/user-profile/index';
+import UserProfile from '../../../src/pages/user-profile';
 import { verboseLog } from '../../config/debug';
 import { trackstatusData } from '../../constants/common-data';
 import GenericTable from '../../shared/generic-component/generic-table';
