@@ -1,12 +1,8 @@
-/* eslint-disable no-console */
 import * as React from 'react';
 import { useState } from 'react';
 
-// import CloseIcon from '@mui/icons-material/Close';
 import MoreVertSharpIcon from '@mui/icons-material/MoreVertSharp';
 import { Box, Link, Paper, Table, TableSortLabel, Tooltip } from '@mui/material';
-// import MoreVertSharpIcon from '@mui/icons-material/MoreVertSharp';
-// import { Box, Link, Paper, Table, TableSortLabel } from '@mui/material';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import TableBody from '@mui/material/TableBody';
@@ -14,7 +10,6 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-// import Tooltip from '@mui/material/Tooltip';
 import { visuallyHidden } from '@mui/utils';
 import PopupState, { bindMenu, bindTrigger } from 'material-ui-popup-state';
 import Moment from 'moment';
@@ -23,8 +18,8 @@ import propTypes from 'prop-types';
 import { verboseLog } from '../../config/debug';
 import SuspendValuntaryPopup from '../../pages/suspend-valuntary-popup';
 import { Button } from '../../ui/core';
-import RaiseQueryPopup from '../query-modal-popup/raise-query-popup';
-import SuccessPopup from '../reactivate-licence-popup/success-popup';
+import ApproveLicenseModal from '../activate-licence-modals/approve-modal';
+import RejectLicenseModal from '../activate-licence-modals/reject-modal';
 
 GenericTable.propTypes = {
   tableHeader: propTypes.array.isRequired,
@@ -39,7 +34,6 @@ GenericTable.propTypes = {
 };
 
 export default function GenericTable(props) {
-  // const { userActiveTab } = useSelector((state) => state.ui);
   const tableCellWidth = Math.floor(window.innerWidth / props.tableHeader.length) + 'px';
   const { order, orderBy, onRequestSort, page, rowsPerPage } = props;
   const [selected, setSelected] = useState('');
@@ -103,9 +97,9 @@ export default function GenericTable(props) {
     <TableContainer component={Paper}>
       {confirmationModal && props.tableName === 'ActiveLicense' ? (
         selected === 'suspend' ? (
-          <SuccessPopup />
+          <ApproveLicenseModal />
         ) : (
-          <RaiseQueryPopup />
+          <RejectLicenseModal />
         )
       ) : (
         <SuspendValuntaryPopup
