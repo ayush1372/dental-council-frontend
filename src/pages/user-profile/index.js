@@ -1,10 +1,15 @@
 import { useEffect, useState } from 'react';
 
 import EditIcon from '@mui/icons-material/Edit';
-import { Box, Container, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
+import TuneIcon from '@mui/icons-material/Tune';
+import { Alert, Box, Container, Link, Typography } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { verboseLog } from '../../config/debug';
 import useWizard from '../../hooks/use-wizard';
+import ReactivateLicencePopup from '../../shared/reactivate-licence-popup/re-activate-licence-popup';
+import SuccessPopup from '../../shared/reactivate-licence-popup/success-popup';
+import { getStatesList } from '../../store/actions/menu-list-actions';
 import { Button } from '../../ui/core/button/button';
 import Wizard from '../../ui/core/wizard';
 import ChangePassword from '../profile/change-password/change-password';
@@ -23,15 +28,43 @@ export const UserProfile = ({
   setShowTable,
   setShowViewPorfile,
 }) => {
+  const dispatch = useDispatch();
   const [isReadMode, setIsReadMode] = useState(true);
   const [showChangepassword, setShowChangepassword] = useState(false);
+  const [showReactivateLicense, setShowReactivateLicense] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   const [wizardSteps, setWizardSteps] = useState(readWizardSteps);
   const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
+
   const { activeStep, handleNext, handleBack, resetStep } = useWizard(
     loggedInUserType === 'Doctor' ? 0 : 1,
     []
   );
+
+  const renderSuccess = () => {
+    setShowReactivateLicense(false);
+    setShowSuccessPopup(true);
+  };
+
+  const fetchStates = () => {
+    try {
+      dispatch(getStatesList())
+        .then((dataResponse) => {
+          verboseLog('dataResponse', dataResponse);
+        })
+        .catch((error) => {
+          verboseLog('error occured', error);
+        });
+    } catch (err) {
+      verboseLog('error', err);
+    }
+  };
+
+  const openDoctorEditProfile = () => {
+    setIsReadMode(false);
+    fetchStates();
+  };
 
   useEffect(() => {
     if (!isReadMode) {
@@ -43,11 +76,50 @@ export const UserProfile = ({
 
   return (
     <>
+      <Box display="flex" justifyContent="start">
+        {loggedInUserType === 'Doctor' && (
+          <Alert
+            severity="error"
+            sx={{
+              color: 'suspendAlert.light',
+              width: '1479px',
+              height: '56px',
+            }}
+          >
+            <Typography width="667px" height="19px" color="suspendAlert.dark">
+              Your Profile is set to suspend mode. You will not be able to perform actions on the
+              profile.
+            </Typography>
+            <TuneIcon
+              sx={{
+                color: 'suspendAlert.dark',
+                width: '18px',
+                height: '16px',
+                ml: 3,
+              }}
+            />
+            <Link
+              color="suspendAlert.secondary"
+              ml={1}
+              height="20px"
+              width="103px"
+              onClick={() => setShowReactivateLicense(true)}
+              sx={{
+                cursor: 'pointer',
+              }}
+            >
+              Change Settings
+            </Link>
+          </Alert>
+        )}
+      </Box>
+      {showReactivateLicense && <ReactivateLicencePopup renderSuccess={renderSuccess} />}
+      {showSuccessPopup && <SuccessPopup />}
       {!showChangepassword ? (
-        <Box maxWidth="lg">
+        <Container sx={{ marginTop: '30px' }}>
           {!showViewProfile ? (
             <Box display="flex" justifyContent="space-between" mb={3}>
-              <Typography component="div" variant="h2" color="primary.main">
+              <Typography component="div" variant="h2" color="primary.main" py={2}>
                 {isReadMode ? 'User Profile' : 'Edit Profile'}
                 {!isReadMode && (
                   <Typography component="div" variant="body3" color="inputTextColor.main">
@@ -57,14 +129,13 @@ export const UserProfile = ({
               </Typography>
 
               <Box display={'flex'}>
-                {isReadMode && (
+                {loggedInUserType === 'Doctor' && (
                   <Button
                     variant="contained"
                     color="primary"
                     onClick={() => {
                       setShowChangepassword(true);
                     }}
-                    size="small"
                     sx={{
                       width: 'max-content',
                     }}
@@ -78,10 +149,7 @@ export const UserProfile = ({
                       startIcon={<EditIcon sx={{ mr: 1 }} />}
                       variant="contained"
                       color="secondary"
-                      onClick={() => {
-                        setIsReadMode(false);
-                      }}
-                      size="small"
+                      onClick={openDoctorEditProfile}
                       sx={{
                         width: 'max-content',
                         ml: '25px',
@@ -148,7 +216,7 @@ export const UserProfile = ({
               setIsReadMode={setIsReadMode}
             />
           )}
-        </Box>
+        </Container>
       ) : (
         <Container>
           <ChangePassword />
