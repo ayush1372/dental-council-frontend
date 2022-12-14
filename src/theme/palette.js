@@ -102,6 +102,12 @@ export const palette = (mode) => {
     youTubeColor: {
       main: '#FF0000',
     },
+    suspendAlert: {
+      main: '##E33D19',
+      secondary: '#FF7557',
+      light: '#FFE0D9',
+      dark: '#FF512B',
+    },
     stepIconActive: {
       main: '#4D70CB',
     },
