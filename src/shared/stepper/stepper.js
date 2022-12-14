@@ -23,7 +23,7 @@ const QontoConnector = styled(StepConnector)(({ theme }) => ({
   },
   [`&.${stepConnectorClasses.completed}`]: {
     [`& .${stepConnectorClasses.line}`]: {
-      borderColor: '#36B37E',
+      borderColor: 'success.main',
     },
   },
   [`& .${stepConnectorClasses.line}`]: {
@@ -102,7 +102,7 @@ export default function ApplicationStepper({ activeStep = 1, steps }) {
           <Typography variant="body3" color="grey.label">
             SMC will verify the applcation and take action
           </Typography>
-          <Chip type="approved" label="Completed" />
+          <Chip type="submitted" label="In Progress" />
         </Grid>
         <Grid item xs={8} md={3}>
           <Typography variant="body3" color="grey.label">

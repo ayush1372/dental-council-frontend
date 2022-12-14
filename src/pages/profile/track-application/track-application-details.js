@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Typography } from '@mui/material';
+import { Box, Button, Divider, Grid, Typography } from '@mui/material';
 
 import Stepper from '../../../shared/stepper/stepper';
 const wizardSteps = [
@@ -70,15 +70,17 @@ export function TrackApplicationDetails({
           </Grid>
         </Grid>
       </Box>
+      <Divider sx={{ mt: 2 }} />
       <Grid container>
         <Grid container item xs={12} mt={8}>
           <Stepper steps={wizardSteps} />
         </Grid>
-        <Grid mt={6}>
-          <Button color="grey" variant="contained" onClick={showTrackApplicationTable}>
-            Back
-          </Button>
-        </Grid>
+      </Grid>
+      <Divider fullWidth sx={{ mt: 6 }} />
+      <Grid mt={2}>
+        <Button color="grey" variant="contained" onClick={showTrackApplicationTable}>
+          Back
+        </Button>
       </Grid>
     </>
   );
