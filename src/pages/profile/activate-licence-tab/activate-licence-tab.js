@@ -142,6 +142,7 @@ const ActivateLicence = (props) => {
         handleRowClick={handleDataRowClick}
         rowsPerPage={rowsPerPage}
         page={page}
+        tableName="ActiveLicense"
       />
 
       <Box>

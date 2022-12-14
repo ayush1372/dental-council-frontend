@@ -50,7 +50,7 @@ const ChangePassword = () => {
                 type="Password"
                 name="oldPassword"
                 required="true"
-                placeholder={t('Old password')}
+                placeholder={t('Old Password')}
                 defaultValue={getValues().oldPassword}
                 error={errors.oldPassword?.message}
                 {...register('oldPassword', {
@@ -73,7 +73,7 @@ const ChangePassword = () => {
                 type="Password"
                 name="newPassword"
                 required="true"
-                placeholder={t('New password')}
+                placeholder={t('New Password')}
                 defaultValue={getValues().newPassword}
                 error={errors.newPassword?.message}
                 {...register('newPassword', {
