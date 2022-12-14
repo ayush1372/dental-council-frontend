@@ -137,12 +137,12 @@ const ReadWorkProfile = ({
                       </MenuItem>
                       {loggedInUserType === 'NMC' && (
                         <MenuItem onClick={selectionChangeHandler} data-my-value={'suspend'}>
-                          Suspend
+                          Permanent suspend
                         </MenuItem>
                       )}
                       {loggedInUserType === 'NMC' && (
                         <MenuItem onClick={selectionChangeHandler} data-my-value={'blacklist'}>
-                          Blacklist
+                          Temporary suspend
                         </MenuItem>
                       )}
                     </Menu>

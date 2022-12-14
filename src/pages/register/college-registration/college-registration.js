@@ -7,7 +7,11 @@ import { useForm } from 'react-hook-form';
 
 import { TextField } from '../../../../src/ui/core/form/textfield/textfield';
 import { verboseLog } from '../../../config/debug';
-import { StateNames, UniversityNames } from '../../../constants/common-data';
+import {
+  RegistrationCouncilNames,
+  StateNames,
+  UniversityNames,
+} from '../../../constants/common-data';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
 import ModalOTP from '../../../shared/otp-modal/otp-modal';
 import { Button } from '../../../ui/core';
@@ -254,12 +258,7 @@ export function CollegeRegistration() {
             College Address
           </Typography>
 
-          <TextField
-            fullWidth
-            name={'CollegeAddress'}
-            placeholder={'Enter College Address'}
-            error={errors.CollegeAddress?.message}
-          />
+          <TextField multiline rows={1} fullWidth placeholder="Write a reason here . . ." />
         </Grid>
 
         <Grid item xs={8} md={4}>
@@ -295,6 +294,30 @@ export function CollegeRegistration() {
               required: 'State Name is required',
             })}
           />
+        </Grid>
+      </Grid>
+      <Grid container item spacing={2} mt={3}>
+        <Grid item xs={8} md={4}>
+          <Typography variant="body3" color="textSecondary.main">
+            Select your Registration Council
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
+          </Typography>
+          <Box>
+            <SearchableDropdown
+              name="RegistrationCouncil"
+              items={RegistrationCouncilNames}
+              placeholder="Select your Registration Council"
+              clearErrors={clearErrors}
+              error={errors.RegistrationCouncil?.message}
+              {...register('RegistrationCouncil', {
+                required: 'Registration Council is required',
+              })}
+            />
+          </Box>
+          <Grid />
+          <Grid />
         </Grid>
       </Grid>
 

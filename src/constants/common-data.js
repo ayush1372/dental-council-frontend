@@ -176,6 +176,7 @@ export const trackstatusData = {
       NMCVerificationStatus: 'Submitted',
       dateofSubmission: '31-Oct-2022',
       pendency: '25',
+      pending: 'N/A',
       requestNMC: 'view',
     },
   ],
@@ -245,4 +246,73 @@ export const applications = {
     },
   ],
   count: 5,
+};
+
+export const dashboardCountData = {
+  'Registration Rrequest': [
+    {
+      count: 0,
+      name: 'Total Registration Request',
+    },
+    {
+      count: 0,
+      name: 'Pending',
+    },
+    {
+      count: 0,
+      name: 'Verified',
+    },
+    {
+      count: 0,
+      name: 'Query Raised',
+    },
+    {
+      count: 0,
+      name: 'Rejected',
+    },
+  ],
+  'Updation Request': [
+    {
+      count: 0,
+      name: 'Total Updation Request',
+    },
+    {
+      count: 0,
+      name: 'Update Request Received',
+    },
+    {
+      count: 0,
+      name: 'Update Request Approved',
+    },
+    {
+      count: 0,
+      name: 'Query Raised on Update Request',
+    },
+    {
+      count: 0,
+      name: 'Update Request Rejected',
+    },
+  ],
+  'Suspension Request': [
+    {
+      count: 0,
+      name: 'Total Suspension Request',
+    },
+    {
+      count: 0,
+      name: 'Temporary Suspension Request Received',
+    },
+    {
+      count: 0,
+      name: 'Temporary Suspension Approved',
+    },
+    {
+      count: 0,
+      name: 'Permanent Suspension Request Received',
+    },
+    {
+      count: 0,
+      name: 'Permanent Suspension Request Approved',
+    },
+  ],
 };

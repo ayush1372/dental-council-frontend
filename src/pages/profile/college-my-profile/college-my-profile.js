@@ -9,7 +9,6 @@ import ChangePassword from '../change-password/change-password';
 import CollegeEditProfile from './college-edit-profile';
 const CollegeMyProfile = () => {
   const [showPage, setShowpage] = useState('Profile');
-
   return (
     <Box boxShadow={2} p="0px 91px 44px 41px" mt={2}>
       {showPage === 'Profile' && (

@@ -5,4 +5,7 @@ export const API = {
   },
   login: {},
   editProfile: {},
+  menuLists: {
+    states: 'api/v1/md/country/356/states',
+  },
 };

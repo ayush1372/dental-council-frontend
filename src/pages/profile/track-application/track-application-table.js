@@ -129,9 +129,9 @@ function TrackAppicationTable({ userType, setShowTrackApplication, setShowTrackA
   };
 
   return (
-    <Grid sx={{ m: 2 }}>
+    <Grid>
       <Typography variant="h2" py={2}>
-        Applications Pending List
+        Track Application
       </Typography>
       <TableSearch trackApplication={userType} />
       <GenericTable
