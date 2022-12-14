@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
@@ -147,6 +147,14 @@ export function Profile() {
     setIsActiveTab(activeTab);
     dispatch(changeUserActiveTab(activeTab));
   };
+
+  useEffect(() => {
+    dispatch(
+      changeUserActiveTab(
+        loggedInUserType === 'Doctor' ? doctorTabs[0].tabName : colgTabs[0].tabName
+      )
+    );
+  }, []);
 
   return (
     <Grid container>

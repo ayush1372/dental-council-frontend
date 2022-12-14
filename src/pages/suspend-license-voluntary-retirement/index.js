@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import BlockIcon from '@mui/icons-material/Block';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -22,23 +22,16 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
       voluntarySuspendLicense: 'voluntary-suspension-check',
     },
   });
-  const [showToDateField, setShowToDateField] = useState(true);
+  const [selectedSuspension, setSelectedSuspension] = useState(true);
 
   const onSubmit = () => {
     handleSubmitDetails();
   };
 
   const handlevoluntarySuspendLicenseChange = (event) => {
+    setSelectedSuspension(event.target.value);
     setValue(event.target.name, event.target.value);
   };
-
-  useEffect(() => {
-    if (getValues().voluntarySuspendLicense === 'permanent-suspension-check') {
-      setShowToDateField(false);
-    } else {
-      setShowToDateField(true);
-    }
-  }, [getValues().voluntarySuspendLicense]);
 
   return (
     <Box data-testid="suspend-license-voluntary-retirement" width="100%">
@@ -157,7 +150,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
                 })}
               />
             </Grid>
-            {!showToDateField && (
+            {selectedSuspension === 'voluntary-suspension-check' && (
               <Grid item xs={12} md={6}>
                 <Typography component={'p'} variant="body1">
                   Select To Date
