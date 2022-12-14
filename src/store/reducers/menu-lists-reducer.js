@@ -1,27 +1,19 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-
-import { API } from '../../api/api-endpoints';
-import { GET } from '../../constants/requests';
-import { useAxiosCall } from '../../hooks/use-axios';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  statesList: [],
+  statesList: { data: [], isLoading: Boolean(true), isError: false },
 };
-
-export const fetchStates = createAsyncThunk(API.menuLists.states, async () => {
-  const response = await useAxiosCall(GET, API.menuLists.states)();
-  return response;
-});
 
 const menuLists = createSlice({
   name: 'menuLists',
   initialState,
-  reducers: {},
-  extraReducers: {
-    [fetchStates.fulfilled]: (state, action) => {
+  reducers: {
+    getStates: (state, action) => {
       state.statesList = action.payload;
     },
   },
 });
+
+export const { getStates } = menuLists.actions;
 
 export default menuLists.reducer;

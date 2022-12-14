@@ -34,11 +34,21 @@ export const LoginActivity = createSlice({
     userLoggedInType: (state, action) => {
       state.loggedInUserType = action.payload;
     },
+    setApiLoading: (state, action) => {
+      state.apiLoading = action.payload;
+    },
     resetLoginReducer: () => initialState,
   },
 });
 
-export const { login, logout, fontsizes, setMobileNumber, userLoggedInType, resetLoginReducer } =
-  LoginActivity.actions;
+export const {
+  login,
+  logout,
+  fontsizes,
+  setMobileNumber,
+  userLoggedInType,
+  resetLoginReducer,
+  setApiLoading,
+} = LoginActivity.actions;
 
 export default LoginActivity.reducer;

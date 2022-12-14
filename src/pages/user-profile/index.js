@@ -3,17 +3,14 @@ import { useEffect, useState } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import TuneIcon from '@mui/icons-material/Tune';
 import { Alert, Box, Container, Link, Typography } from '@mui/material';
-// import { Box, Container, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { verboseLog } from '../../config/debug';
 import useWizard from '../../hooks/use-wizard';
-// import { useSelector } from 'react-redux';
-// import useWizard from '../../hooks/use-wizard';
 import ReactivateLicencePopup from '../../shared/reactivate-licence-popup/re-activate-licence-popup';
 import SuccessPopup from '../../shared/reactivate-licence-popup/success-popup';
-import { fetchStates } from '../../store/reducers/menu-lists-reducer';
+import { getStatesList } from '../../store/actions/menu-list-actions';
 import { Button } from '../../ui/core/button/button';
-// import { Button } from '../../ui/core';
 import Wizard from '../../ui/core/wizard';
 import ChangePassword from '../profile/change-password/change-password';
 import ConstantDetails from './components/constant-details/constant-details';
@@ -22,6 +19,7 @@ import PreviewProfile from './components/preview-profile/preview-profile';
 import ProfileConsent from './components/profile-consent/profile-consent';
 import RegisterAndAcademicDetails from './components/register-and-academic-details/register-and-academic-details';
 import WorkProfile from './components/work-profile/work-profile';
+
 const readWizardSteps = ['Personal Details', 'Registration & Academic Details', 'Work Profile'];
 
 export const UserProfile = ({
@@ -38,8 +36,7 @@ export const UserProfile = ({
 
   const [wizardSteps, setWizardSteps] = useState(readWizardSteps);
   const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
-  // const countries = useSelector((state) => state.userProfile.countries);
-  const statesList = useSelector((state) => state.userProfile.statesList);
+
   const { activeStep, handleNext, handleBack, resetStep } = useWizard(
     loggedInUserType === 'Doctor' ? 0 : 1,
     []
@@ -50,10 +47,24 @@ export const UserProfile = ({
     setShowSuccessPopup(true);
   };
 
-  useEffect(() => {
-    // if (countries.data.length === 0) dispatch(fetchCountries());
-    if (statesList.data.length === 0) dispatch(fetchStates());
-  }, [statesList]);
+  const fetchStates = () => {
+    try {
+      dispatch(getStatesList())
+        .then((dataResponse) => {
+          verboseLog('dataResponse', dataResponse);
+        })
+        .catch((error) => {
+          verboseLog('error occured', error);
+        });
+    } catch (err) {
+      verboseLog('error', err);
+    }
+  };
+
+  const openDoctorEditProfile = () => {
+    setIsReadMode(false);
+    fetchStates();
+  };
 
   useEffect(() => {
     if (!isReadMode) {
@@ -138,9 +149,7 @@ export const UserProfile = ({
                       startIcon={<EditIcon sx={{ mr: 1 }} />}
                       variant="contained"
                       color="secondary"
-                      onClick={() => {
-                        setIsReadMode(false);
-                      }}
+                      onClick={openDoctorEditProfile}
                       sx={{
                         width: 'max-content',
                         ml: '25px',
