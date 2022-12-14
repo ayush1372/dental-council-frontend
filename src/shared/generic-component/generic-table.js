@@ -177,7 +177,7 @@ export default function GenericTable(props) {
             })}
           </TableRow>
         </TableHead>
-        <TableBody sx={{ backgroundColor: '#E9ECF3' }}>
+        <TableBody>
           {stableSort(props.data, getComparator(order, orderBy))
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map((row, rowIndex) => (
@@ -241,7 +241,6 @@ export default function GenericTable(props) {
                           {(popupState) => (
                             <React.Fragment>
                               <Button
-                                style={{ backgroundColor: '#E9ECF3' }}
                                 endIcon={<MoreVertSharpIcon />}
                                 variant="contained"
                                 color="white"
@@ -255,13 +254,13 @@ export default function GenericTable(props) {
                                   data-my-value={'suspend'}
                                   onClick={selectionChangeHandler}
                                 >
-                                  Suspend
+                                  Permanent suspend
                                 </MenuItem>
                                 <MenuItem
                                   data-my-value={'blacklist'}
                                   onClick={selectionChangeHandler}
                                 >
-                                  Blacklist
+                                  Temporary suspend
                                 </MenuItem>
                               </Menu>
                             </React.Fragment>

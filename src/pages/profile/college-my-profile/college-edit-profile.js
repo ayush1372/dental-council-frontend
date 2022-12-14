@@ -2,7 +2,11 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Box, Grid, IconButton, InputAdornment, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
-import { StateNames, UniversityNames } from '../../../constants/common-data';
+import {
+  RegistrationCouncilNames,
+  StateNames,
+  UniversityNames,
+} from '../../../constants/common-data';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
 import { Button, TextField } from '../../../ui/core';
 
@@ -226,9 +230,10 @@ const CollegeEditProfile = () => {
           </Typography>
 
           <TextField
+            multiline
+            rows={1}
             fullWidth
             name={'CollegeAddress'}
-            placeholder={'Enter College Address'}
             defaultValue={getValues().CollegeAddress}
             error={errors.CollegeAddress?.message}
           />
@@ -267,6 +272,30 @@ const CollegeEditProfile = () => {
               required: 'StateName Name is required',
             })}
           />
+        </Grid>
+      </Grid>
+      <Grid container item spacing={2} mt={3}>
+        <Grid item xs={8} md={4}>
+          <Typography variant="body3" color="textSecondary.main">
+            Select your Registration Council
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
+          </Typography>
+          <Box>
+            <SearchableDropdown
+              name="RegistrationCouncil"
+              items={RegistrationCouncilNames}
+              placeholder="Select your Registration Council"
+              clearErrors={clearErrors}
+              error={errors.RegistrationCouncil?.message}
+              {...register('RegistrationCouncil', {
+                required: 'Registration Council is required',
+              })}
+            />
+          </Box>
+          <Grid />
+          <Grid />
         </Grid>
       </Grid>
       <Box display="flex" mt={5}>

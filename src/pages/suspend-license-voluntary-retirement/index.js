@@ -279,7 +279,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
               sx={{ marginLeft: 2 }}
               onClick={handleSubmit(onSubmit)}
             >
-              Blacklist
+              Temporary suspend
             </Button>
           ) : selectedValue === 'suspend' ? (
             <Button
@@ -288,7 +288,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
               sx={{ marginLeft: 2 }}
               onClick={handleSubmit(onSubmit)}
             >
-              Suspend
+              Peermanent suspend
             </Button>
           ) : selectedValue === 'reject' || selectedValue === 'raise' ? (
             <Button

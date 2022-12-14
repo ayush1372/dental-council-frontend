@@ -6,7 +6,7 @@ export function ViewProfile(props) {
     <Container>
       <Box display={'flex'}>
         <Typography
-          style={{ marginBottom: '0px' }}
+          sx={{ marginBottom: '0px' }}
           id="2"
           variant="h2"
           mb={3}
@@ -16,14 +16,14 @@ export function ViewProfile(props) {
         </Typography>
         <Box align="right" display={'flex'}>
           <FormControlLabel
-            style={{ width: '250px' }}
+            sx={{ width: '250px' }}
             value="email"
             control={<Switch color="primary" defaultChecked />}
             label="Email Notifications"
             labelPlacement="start"
           />
           <FormControlLabel
-            style={{ width: '250px' }}
+            sx={{ width: '250px' }}
             value="mobile"
             control={<Switch color="primary" defaultChecked />}
             label="Mobile Notifications"

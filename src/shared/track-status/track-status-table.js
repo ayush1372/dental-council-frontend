@@ -193,7 +193,7 @@ function TrackStatusTable(props) {
       </Box>
     </Grid>
   ) : (
-    <Grid sx={{ m: 2 }} style={{ padding: '0px', margin: '0px' }}>
+    <Grid sx={{ m: 2 }} p={'0px'}>
       <GenericTable
         order={order}
         orderBy={orderBy}

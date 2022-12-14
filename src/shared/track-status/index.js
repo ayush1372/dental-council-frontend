@@ -82,7 +82,7 @@ export default function TrackStatus() {
                 })}
               />
             </Grid>
-            <Grid item xs={6} md={4} mt={4}>
+            <Grid item xs={6} md={4}>
               <Button
                 style={{ marginTop: '30px' }}
                 variant="contained"

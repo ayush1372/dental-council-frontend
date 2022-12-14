@@ -5,7 +5,6 @@ import TuneIcon from '@mui/icons-material/Tune';
 import { Alert, Box, Container, Link, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
-import { verboseLog } from '../../config/debug';
 import useWizard from '../../hooks/use-wizard';
 import ReactivateLicencePopup from '../../shared/reactivate-licence-popup/re-activate-licence-popup';
 import SuccessPopup from '../../shared/reactivate-licence-popup/success-popup';
@@ -28,7 +27,6 @@ export const UserProfile = ({
   setShowViewPorfile,
 }) => {
   const [isReadMode, setIsReadMode] = useState(true);
-  verboseLog('test', showViewProfile);
   const [showChangepassword, setShowChangepassword] = useState(false);
   const [showReactivateLicense, setShowReactivateLicense] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
