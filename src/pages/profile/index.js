@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import TrackStatus from '../../shared/track-status/index';
 import { changeUserActiveTab } from '../../store/reducers/ui-reducers';
 import NewDoctorRegistration from '../profile/new-doctor-registration/new-doctor-registration';
-import SuspendLicenseVoluntaryRetirement from '../suspend-license-voluntary-retirement';
 import UserProfile from '../user-profile';
 import CollegeDean from './college-dean/college-dean';
 import CollegeMyProfile from './college-my-profile/college-my-profile';
@@ -19,6 +18,7 @@ import CollegeRegistrar from './college-registrar/college-registrar';
 import Dashboard from './components/dashboard-cards/dashboard-cards';
 import MiniDrawer from './components/profile-sidebar/profile-sidebar';
 import MyProfile from './smc-nmc-profile/my-profile';
+import VoluntarySuspendLicense from './sub-pages/voluntary-suspend-license/voluntary-suspend-license';
 
 export function Profile() {
   const dispatch = useDispatch();
@@ -35,17 +35,10 @@ export function Profile() {
     },
     {
       option: 1,
-      name: 'Suspend License',
-      tabName: 'suspend-license',
+      name: 'Voluntary Suspend License',
+      tabName: 'voluntary-suspend-license',
       icon: <CreditCardOffIcon />,
-      element: <SuspendLicenseVoluntaryRetirement tabName={userActiveTab} />,
-    },
-    {
-      option: 2,
-      name: 'Voluntary Retirement',
-      tabName: 'voluntary-retirement',
-      icon: <CreditCardOffIcon />,
-      element: <SuspendLicenseVoluntaryRetirement tabName={userActiveTab} />,
+      element: <VoluntarySuspendLicense tabName={userActiveTab} />,
     },
   ];
 

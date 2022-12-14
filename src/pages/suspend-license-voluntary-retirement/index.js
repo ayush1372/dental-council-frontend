@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 import BlockIcon from '@mui/icons-material/Block';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
@@ -5,20 +7,38 @@ import HelpIcon from '@mui/icons-material/Help';
 import { Box, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
-import { Button, Checkbox, TextField } from '../../ui/core';
+import { Button, Checkbox, RadioGroup, TextField } from '../../ui/core';
+
 export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, handleSubmitDetails }) {
   const {
     register,
     handleSubmit,
     getValues,
+    setValue,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
+    defaultValues: {
+      voluntarySuspendLicense: 'voluntary-suspension-check',
+    },
   });
+  const [showToDateField, setShowToDateField] = useState(true);
 
   const onSubmit = () => {
     handleSubmitDetails();
   };
+
+  const handlevoluntarySuspendLicenseChange = (event) => {
+    setValue(event.target.name, event.target.value);
+  };
+
+  useEffect(() => {
+    if (getValues().voluntarySuspendLicense === 'permanent-suspension-check') {
+      setShowToDateField(false);
+    } else {
+      setShowToDateField(true);
+    }
+  }, [getValues().voluntarySuspendLicense]);
 
   return (
     <Box data-testid="suspend-license-voluntary-retirement" width="100%">
@@ -46,11 +66,13 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
         </Box>
       )}
       {tabName && (
-        <Typography variant="h2" my={4}>
+        <Typography variant="h2">
           {tabName === 'voluntary-retirement'
             ? 'Voluntary Retirement'
             : tabName === 'suspend-license'
             ? 'Suspend License'
+            : tabName === 'voluntary-suspend-license'
+            ? 'Voluntary Suspend License'
             : ''}
         </Typography>
       )}
@@ -75,6 +97,31 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
         ''
       ) : (
         <Box>
+          {tabName === 'voluntary-suspend-license' && (
+            <Grid item xs={12} md={12} mb={2}>
+              <RadioGroup
+                row
+                onChange={handlevoluntarySuspendLicenseChange}
+                name={'voluntarySuspendLicense'}
+                size="small"
+                defaultValue={getValues().voluntarySuspendLicense}
+                items={[
+                  {
+                    value: 'voluntary-suspension-check',
+                    label: 'Voluntary Suspension',
+                  },
+                  {
+                    value: 'permanent-suspension-check',
+                    label: 'Permanent Suspension',
+                  },
+                ]}
+                label="Select suspension"
+                required={true}
+                error={errors.voluntarySuspendLicense?.message}
+              />
+            </Grid>
+          )}
+
           <Typography variant="subtitle2">
             {'Add Timeline'}
             <Typography variant="body4" color="error.main">
@@ -110,34 +157,36 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
                 })}
               />
             </Grid>
-            <Grid item xs={12} md={6}>
-              <Typography component={'p'} variant="body1">
-                Select To Date
-              </Typography>
-              <TextField
-                fullWidth
-                data-testid="toDate"
-                id="toDate"
-                type="date"
-                name="toDate"
-                sx={{
-                  input: {
-                    color: 'grey1.dark',
-                    textTransform: 'uppercase',
-                  },
-                }}
-                InputLabelProps={{
-                  shrink: true,
-                  sx: { height: '40px' },
-                }}
-                required={true}
-                defaultValue={getValues().toDate}
-                error={errors.toDate?.message}
-                {...register('toDate', {
-                  required: 'This field is required',
-                })}
-              />
-            </Grid>
+            {!showToDateField && (
+              <Grid item xs={12} md={6}>
+                <Typography component={'p'} variant="body1">
+                  Select To Date
+                </Typography>
+                <TextField
+                  fullWidth
+                  data-testid="toDate"
+                  id="toDate"
+                  type="date"
+                  name="toDate"
+                  sx={{
+                    input: {
+                      color: 'grey1.dark',
+                      textTransform: 'uppercase',
+                    },
+                  }}
+                  InputLabelProps={{
+                    shrink: true,
+                    sx: { height: '40px' },
+                  }}
+                  required={true}
+                  defaultValue={getValues().toDate}
+                  error={errors.toDate?.message}
+                  {...register('toDate', {
+                    required: 'This field is required',
+                  })}
+                />
+              </Grid>
+            )}
           </Grid>
         </Box>
       )}

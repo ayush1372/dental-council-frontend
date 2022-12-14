@@ -6,6 +6,7 @@ import { useTheme } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
 
 import { verboseLog } from '../../../../config/debug';
+import { dashboardCountData } from '../../../../constants/common-data';
 import ViewProfile from '../../../../shared/view-profile/view-profile';
 import { Button } from '../../../../ui/core';
 import UserProfile from '../../../user-profile/index';
@@ -23,78 +24,105 @@ export default function Dashboard() {
     cursor: 'pointer',
   }));
 
-  const blankDashboard = [
-    {
-      name: 'Pending',
-      id: 1,
-      value: 0,
-    },
-    {
-      name: 'Verified',
-      id: 2,
-      value: 0,
-    },
-    {
-      name: 'Query Raised',
-      id: 3,
-      value: 0,
-    },
-    {
-      name: 'Rejected',
-      id: 4,
-      value: 0,
-    },
-    {
-      name: 'Update Request Received',
-      id: 5,
-      value: 0,
-    },
-    {
-      name: 'Update Request Approved',
-      id: 6,
-      value: 0,
-    },
-    {
-      name: 'Update Request Raised',
-      id: 7,
-      value: 0,
-    },
-    {
-      name: 'Update Request Rejected',
-      id: 8,
-      value: 0,
-    },
-  ];
+  let blankDashboard = {
+    'Registration Rrequest': [
+      {
+        name: 'Total Registration Request',
+        value: 0,
+      },
+      {
+        name: 'Pending',
+        value: 0,
+      },
+      {
+        name: 'Verified',
+        value: 0,
+      },
+      {
+        name: 'Query Raised',
+        value: 0,
+      },
+      {
+        name: 'Rejected',
+        value: 0,
+      },
+    ],
+    'Updation Request': [
+      {
+        name: 'Total Updation Request',
+        value: 0,
+      },
+      {
+        name: 'Update Request Received',
+        value: 0,
+      },
+      {
+        name: 'Update Request Approved',
+        value: 0,
+      },
+      {
+        name: 'Query Raised on Update Request',
+        value: 0,
+      },
+      {
+        name: 'Update Request Rejected',
+        value: 0,
+      },
+    ],
+  };
 
-  const cardData = blankDashboard;
   if (loggedInUserType === 'NMC' || loggedInUserType === 'SMC') {
-    cardData.push(
-      {
-        name: 'Blacklist Request Received',
-        id: 9,
-        value: 0,
-      },
-      {
-        name: 'Blacklisted',
-        id: 9,
-        value: 0,
-      },
-      {
-        name: 'Suspend Request Raised',
-        id: 9,
-        value: 0,
-      },
-      {
-        name: 'Suspend Request Approved',
-        id: 9,
-        value: 0,
-      }
-    );
+    blankDashboard = Object.assign(blankDashboard, {
+      'Suspension Request': [
+        {
+          name: 'Total Suspension Request',
+          value: 0,
+        },
+        {
+          name: 'Temporary Suspension Request Received',
+          value: 0,
+        },
+        {
+          name: 'Temporary Suspension Approved',
+          value: 0,
+        },
+        {
+          name: 'Permanent Suspension Request Received',
+          value: 0,
+        },
+        {
+          name: 'Permanent Suspension Request Approved',
+          value: 0,
+        },
+      ],
+    });
   }
 
   const [showDashboard, setShowDashboard] = useState(true);
   const [showTable, setShowTable] = useState(false);
   const [showViewProfile, setShowViewPorfile] = useState(false);
+
+  const countResp = Object.values(dashboardCountData);
+  const blankResp = Object.values(blankDashboard);
+
+  const resultCountResp =
+    loggedInUserType === 'NMC' || loggedInUserType === 'SMC'
+      ? countResp[0].concat(countResp[1]).concat(countResp[2])
+      : countResp[0].concat(countResp[1]);
+  const resultblankResp =
+    loggedInUserType === 'NMC' || loggedInUserType === 'SMC'
+      ? blankResp[0].concat(blankResp[1]).concat(blankResp[2])
+      : blankResp[0].concat(blankResp[1]);
+
+  if (resultCountResp?.length > 0) {
+    for (let i = 0; i < resultCountResp?.length; i++) {
+      for (let j = 0; j < resultblankResp?.length; j++) {
+        if (resultCountResp[i].name === resultblankResp[j].name) {
+          resultblankResp[j].value = resultCountResp[i].count;
+        }
+      }
+    }
+  }
 
   function handleBreadCrumClick(event) {
     event.preventDefault();
@@ -163,18 +191,23 @@ export default function Dashboard() {
         </Grid>
       )}
       {showDashboard ? (
-        <Box>
-          <Container>
-            <Typography variant="h2" mt={3} mb={5}>
-              Dashboard
-            </Typography>
-            <Grid item xs={12}>
-              <Grid>
-                <Box sx={{ width: '100%' }}>
-                  <Grid container spacing={2}>
-                    {cardData.map((item) => {
+        <Container>
+          <Typography variant="h2" mt={3} mb={4}>
+            Dashboard
+          </Typography>
+          <Box sx={{ width: '100%' }}>
+            <Box display="flex" flexWrap="wrap" gap={1}>
+              {Object.entries(blankDashboard).map((element) => {
+                return (
+                  <>
+                    <Typography flex="1 0 100%">{element[0]}</Typography>
+                    {element[1].map((item) => {
                       return (
-                        <Grid item xs={3} key={item.name}>
+                        <Box
+                          mb={{ xs: 2, md: 4 }}
+                          flex={{ xs: '1 0 100%', sm: '1 0 32%', md: '1 0 19%' }}
+                          key={item.name}
+                        >
                           <Item
                             id={item.id}
                             sx={
@@ -189,6 +222,8 @@ export default function Dashboard() {
                                 : item.name.includes('Rejected') ||
                                   item.name.includes('Blacklisted')
                                 ? { borderTop: `5px solid ${theme.palette.error.main}` }
+                                : item.name.includes('Total')
+                                ? { borderTop: `5px solid ${theme.palette.black.main}` }
                                 : ''
                             }
                             onClick={() => showTableFun(item)}
@@ -208,15 +243,15 @@ export default function Dashboard() {
                               {item.value}
                             </Box>
                           </Item>
-                        </Grid>
+                        </Box>
                       );
                     })}
-                  </Grid>
-                </Box>
-              </Grid>
-            </Grid>
-          </Container>
-        </Box>
+                  </>
+                );
+              })}
+            </Box>
+          </Box>
+        </Container>
       ) : showTable ? (
         <DashboardControlledTable
           setShowViewPorfile={setShowViewPorfile}
