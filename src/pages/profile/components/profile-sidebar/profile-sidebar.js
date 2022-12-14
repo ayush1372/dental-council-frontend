@@ -21,7 +21,7 @@ const drawerWidth = 240;
 const openedMixin = (theme) => ({
   width: drawerWidth,
   [theme.breakpoints.up('lg')]: {
-    width: 320,
+    width: 255,
   },
   backgroundColor: `${theme.palette.white.main}`,
 
