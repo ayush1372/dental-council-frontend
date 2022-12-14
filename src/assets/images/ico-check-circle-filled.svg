@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="34" height="36" viewBox="0 0 34 36">
+  <defs>
+    <filter id="Ellipse_92" x="0" y="2" width="34" height="34" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-color="#091a40"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="ico-check-circle-filled" transform="translate(1)">
+    <path id="Path_26592" data-name="Path 26592" d="M0,0H32V32H0Z" fill="#fff"/>
+    <g id="Group_32557" data-name="Group 32557" transform="translate(-34)">
+      <circle id="Ellipse_91" data-name="Ellipse 91" cx="14" cy="14" r="14" transform="translate(36 2)" fill="#4870cc"/>
+      <g transform="matrix(1, 0, 0, 1, 33, 0)" filter="url(#Ellipse_92)">
+        <g id="Ellipse_92-2" data-name="Ellipse 92" transform="translate(9 8)" fill="#fff" stroke="#fff" stroke-width="1" opacity="0.2">
+          <circle cx="8" cy="8" r="8" stroke="none"/>
+          <circle cx="8" cy="8" r="7.5" fill="none"/>
+        </g>
+      </g>
+      <circle id="Ellipse_93" data-name="Ellipse 93" cx="4" cy="4" r="4" transform="translate(46 12)" fill="#fff"/>
+    </g>
+  </g>
+</svg>

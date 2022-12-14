@@ -236,7 +236,7 @@ export default function Dashboard() {
           </Container>
         </Box>
       ) : (
-        <h1>hgfgf</h1>
+        ''
       )}
     </>
   );

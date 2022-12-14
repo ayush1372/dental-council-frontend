@@ -3,8 +3,7 @@ import React from 'react';
 import { Box } from '@mui/material';
 import { useSelector } from 'react-redux';
 
-import ApplicationDetails from '../../../shared/application-details/application-details';
-///import DashboardControlledTable from '../components/dashboard-controlled-table/dashboard-controlled-table';
+import ApplicationDetails from './track-application-details';
 import TrackApplicationTable from './track-application-table';
 export function TrackApplication() {
   const [showTrackApplication, setShowTrackApplication] = React.useState(false);
@@ -13,7 +12,7 @@ export function TrackApplication() {
   const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
 
   return (
-    <Box>
+    <Box p={3}>
       {showTrackApplicationTable ? (
         <Box>
           <TrackApplicationTable
@@ -23,7 +22,12 @@ export function TrackApplication() {
           />
         </Box>
       ) : (
-        showTrackApplication && <ApplicationDetails />
+        showTrackApplication && (
+          <ApplicationDetails
+            setShowTrackApplication={setShowTrackApplication}
+            setShowTrackApplicationTable={setShowTrackApplicationTable}
+          />
+        )
       )}
     </Box>
   );

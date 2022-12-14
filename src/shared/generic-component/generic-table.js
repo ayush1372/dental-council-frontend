@@ -186,7 +186,18 @@ export default function GenericTable(props) {
                         key={index}
                         align="left"
                       >
-                        <Chip submitted label={row[item.name]?.value} />
+                        <Chip
+                          type={
+                            row[item.name]?.value === 'Submitted'
+                              ? 'submitted'
+                              : row[item.name]?.value === 'Pending'
+                              ? 'pending'
+                              : row[item.name]?.value === 'Reject'
+                              ? 'reject'
+                              : 'approved'
+                          }
+                          label={row[item.name]?.value}
+                        />
                       </TableCell>
                     );
                   } else {
