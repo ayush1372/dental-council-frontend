@@ -1,39 +1,14 @@
-import React from 'react';
-
-import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import SearchIcon from '@mui/icons-material/Search';
-import {
-  Box,
-  Grid,
-  InputAdornment,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  Popover,
-} from '@mui/material';
+import { Box, Grid, InputAdornment } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
 import { verboseLog } from '../../../../config/debug';
 import { SearchableDropdown } from '../../../../shared/autocomplete/searchable-dropdown';
+import ExportFiles from '../../../../shared/export-component/export-file';
 import { Button, TextField } from '../../../../ui/core';
 
 export function TableSearch() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-  const id = open ? 'table-search-popover' : undefined;
-
   const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
   const {
     register,
@@ -140,39 +115,7 @@ export function TableSearch() {
               </Button>
             </Grid>
             <Grid item md={1} xs={12}>
-              <Button
-                data-testid="exportButton"
-                sx={{ padding: '17px 10px' }}
-                variant="contained"
-                endIcon={<KeyboardArrowDownIcon />}
-                onClick={handleClick}
-                startIcon={
-                  <FileUploadOutlinedIcon sx={{ fontSize: '26px', transform: 'rotate(90deg)' }} />
-                }
-              ></Button>
-              <Popover
-                id={id}
-                open={open}
-                anchorEl={anchorEl}
-                onClose={handleClose}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'left',
-                }}
-              >
-                <List>
-                  <ListItem disablePadding>
-                    <ListItemButton disablePadding>
-                      <ListItemText primary="Export as xlsx" />
-                    </ListItemButton>
-                  </ListItem>
-                  <ListItem disablePadding>
-                    <ListItemButton onClick={handleClose}>
-                      <ListItemText primary="Export as csv" />
-                    </ListItemButton>
-                  </ListItem>
-                </List>
-              </Popover>
+              <ExportFiles />
             </Grid>
           </Grid>
         </Grid>

@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 
 import { verboseLog } from '../../config/debug';
 import { trackstatusData } from '../../constants/common-data';
+import TableSearch from '../../pages/profile/components/table-search/table-search';
 import GenericTable from '../../shared/generic-component/generic-table';
 
 function createData(
@@ -153,6 +154,9 @@ function TrackStatusTable(props) {
 
   return (
     <Grid sx={{ m: 2 }}>
+      <Grid>
+        <TableSearch />
+      </Grid>
       <GenericTable
         order={order}
         orderBy={orderBy}

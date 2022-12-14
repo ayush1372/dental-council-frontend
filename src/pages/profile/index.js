@@ -13,6 +13,7 @@ import { changeUserActiveTab } from '../../store/reducers/ui-reducers';
 import NewDoctorRegistration from '../profile/new-doctor-registration/new-doctor-registration';
 import SuspendLicenseVoluntaryRetirement from '../suspend-license-voluntary-retirement';
 import UserProfile from '../user-profile';
+import ActivateLicence from './activate-licence-tab/activate-licence-tab';
 import CollegeDean from './college-dean/college-dean';
 import CollegeMyProfile from './college-my-profile/college-my-profile';
 import CollegeRegistrar from './college-registrar/college-registrar';
@@ -78,6 +79,13 @@ export function Profile() {
       icon: <AppRegistrationIcon />,
       element: <NewDoctorRegistration userType={'SMC'} />,
     },
+    {
+      option: 4,
+      name: 'Activate Licence',
+      tabName: 'Activate Licence',
+      icon: <AppRegistrationIcon />,
+      element: <ActivateLicence />,
+    },
   ];
 
   const nmcTabs = [
@@ -101,6 +109,13 @@ export function Profile() {
       tabName: 'track-status',
       icon: <BadgeIcon />,
       element: <TrackStatus tabName={userActiveTab} />,
+    },
+    {
+      option: 3,
+      name: 'Activate Licence',
+      tabName: 'Activate Licence',
+      icon: <AppRegistrationIcon />,
+      element: <ActivateLicence />,
     },
   ];
 
