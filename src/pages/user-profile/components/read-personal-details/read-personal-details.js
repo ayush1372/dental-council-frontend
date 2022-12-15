@@ -2,14 +2,23 @@ import { useState } from 'react';
 
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Button,
+  Typography,
+} from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
 import ButtonGroupWizard from '../../../../ui/core/wizard/button-group-wizard';
 import CommunicationAddressContent from '../readable-content/communication-details-content';
 import IMRDetailsContent from '../readable-content/imr-details-content';
 import PersonalDetailsContent from '../readable-content/personal-details-content';
 const ReadPersonalDetails = ({ handleNext, showActions = true }) => {
+  const userType = useSelector((state) => state.login.loggedInUserType);
   const { t } = useTranslation();
   const [accordionKey, setAccordionKey] = useState('accordion-0');
   const accordions = [
@@ -67,7 +76,17 @@ const ReadPersonalDetails = ({ handleNext, showActions = true }) => {
         })}
       </Box>
       {showActions && (
-        <Box px={3}>
+        <Box px={3} display="flex" justifyContent="flex-end">
+          {userType !== 'Doctor' && (
+            <Button
+              variant="contained"
+              color="secondary"
+              disabled
+              sx={{ margin: '16px 20px 0px 0px' }}
+            >
+              Action...
+            </Button>
+          )}
           <ButtonGroupWizard handleNext={handleNext} labelNext={t('Next')} hidePrevious={true} />
         </Box>
       )}

@@ -2,7 +2,15 @@ import { useState } from 'react';
 
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Button,
+  Typography,
+} from '@mui/material';
+import { useSelector } from 'react-redux';
 
 import ButtonGroupWizard from '../../../../ui/core/wizard/button-group-wizard';
 import QualificationDetailsContent from '../readable-content/qualification-details-content';
@@ -10,6 +18,8 @@ import RegistrationDetailsContent from '../readable-content/registration-details
 
 const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack, showActions = true }) => {
   const [accordionKey, setAccordionKey] = useState('accordion-0');
+  const userType = useSelector((state) => state.login.loggedInUserType);
+
   const accordions = [
     {
       title: 'Registration Details',
@@ -61,8 +71,22 @@ const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack, showActions = 
         })}
       </Box>
       {showActions && (
-        <Box px={3}>
-          <ButtonGroupWizard handleNext={handleNext} handlePrevious={handleBack} />
+        <Box px={3} display="flex" justifyContent="space-between">
+          <ButtonGroupWizard handlePrevious={handleBack} />
+
+          <Box display="flex" justifyContent="flex-end">
+            {userType !== 'Doctor' && (
+              <Button
+                variant="contained"
+                color="secondary"
+                disabled
+                sx={{ margin: '16px 20px 0px 0px' }}
+              >
+                Action...
+              </Button>
+            )}
+            <ButtonGroupWizard handleNext={handleNext} />
+          </Box>
         </Box>
       )}
     </Box>
