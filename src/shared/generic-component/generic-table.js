@@ -19,7 +19,7 @@ import { useSelector } from 'react-redux';
 
 import { verboseLog } from '../../config/debug';
 import SuspendValuntaryPopup from '../../pages/suspend-valuntary-popup';
-import { Button } from '../../ui/core';
+import { Button, Chip } from '../../ui/core';
 
 GenericTable.propTypes = {
   tableHeader: propTypes.array.isRequired,
@@ -230,6 +230,41 @@ export default function GenericTable(props) {
                             </React.Fragment>
                           )}
                         </PopupState>
+                      </TableCell>
+                    );
+                  } else if (item.title === 'Current Status') {
+                    return (
+                      <TableCell
+                        sx={{ fontSize: '13px' }}
+                        maxWidth={`${tableCellWidth}%`}
+                        key={index}
+                        align="left"
+                      >
+                        <Chip
+                          type={
+                            row[item.name]?.value === 'Submitted'
+                              ? 'submitted'
+                              : row[item.name]?.value === 'Pending'
+                              ? 'pending'
+                              : row[item.name]?.value === 'Reject'
+                              ? 'reject'
+                              : 'approved'
+                          }
+                          label={row[item.name]?.value}
+                        />
+                      </TableCell>
+                    );
+                  } else if (item.title === 'Action' && userActiveTab === 'track-application') {
+                    return (
+                      <TableCell
+                        sx={{ fontSize: '13px' }}
+                        maxWidth={`${tableCellWidth}%`}
+                        key={index}
+                        align="left"
+                      >
+                        <Link onClick={(event) => row[item.name]?.onClickCallback(event, row)}>
+                          {row[item.name]?.value}
+                        </Link>
                       </TableCell>
                     );
                   } else {
