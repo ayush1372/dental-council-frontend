@@ -11,7 +11,7 @@ const QualificationDetailsContent = () => {
   const ClosePopup = () => {
     setOpenModal(false);
   };
-  const userType = useSelector((state) => state.login.loggedInUserType);
+  const { userActiveTab } = useSelector((state) => state.ui);
 
   return (
     <Grid container spacing={2} mt={2}>
@@ -29,7 +29,7 @@ const QualificationDetailsContent = () => {
             >
               bachelor of dental surgery
             </Typography>
-            {userType !== 'Doctor' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -54,7 +54,7 @@ const QualificationDetailsContent = () => {
             >
               India
             </Typography>
-            {userType !== 'Doctor' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -77,7 +77,7 @@ const QualificationDetailsContent = () => {
             >
               New Delhi
             </Typography>
-            {userType !== 'Doctor' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -102,7 +102,7 @@ const QualificationDetailsContent = () => {
               Care Dental College
             </Typography>
 
-            {userType !== 'Doctor' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -125,7 +125,7 @@ const QualificationDetailsContent = () => {
             >
               Dr. NTR University of Health sciences
             </Typography>{' '}
-            {userType !== 'Doctor' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -148,7 +148,7 @@ const QualificationDetailsContent = () => {
             >
               November
             </Typography>{' '}
-            {userType !== 'Doctor' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -172,7 +172,7 @@ const QualificationDetailsContent = () => {
             >
               2016
             </Typography>{' '}
-            {userType !== 'Doctor' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -189,7 +189,7 @@ const QualificationDetailsContent = () => {
             <Typography variant="subtitle2" color="primary.main">
               No
             </Typography>
-            {userType !== 'Doctor' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}

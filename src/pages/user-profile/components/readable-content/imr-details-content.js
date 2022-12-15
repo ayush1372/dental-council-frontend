@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
 const IMRDetails = () => {
-  const userType = useSelector((state) => state.login.loggedInUserType);
+  const { userActiveTab } = useSelector((state) => state.ui);
 
   const [openModal, setOpenModal] = useState(false);
   const ClosePopup = () => {
@@ -29,7 +29,7 @@ const IMRDetails = () => {
             >
               9598237230192838
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -52,7 +52,7 @@ const IMRDetails = () => {
             >
               Select Year of info
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -75,7 +75,7 @@ const IMRDetails = () => {
             >
               672929
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}

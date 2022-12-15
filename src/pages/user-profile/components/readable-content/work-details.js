@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
 const WorkDetails = () => {
-  const userType = useSelector((state) => state.login.loggedInUserType);
+  const { userActiveTab } = useSelector((state) => state.ui);
 
   const [openModal, setOpenModal] = useState(false);
   const ClosePopup = () => {
@@ -30,7 +30,7 @@ const WorkDetails = () => {
             >
               No
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -53,7 +53,7 @@ const WorkDetails = () => {
             >
               Nature of work
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -78,7 +78,7 @@ const WorkDetails = () => {
             >
               Government only
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -100,7 +100,7 @@ const WorkDetails = () => {
               <AttachFileIcon fontSize="10px" />
               View attachment
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}

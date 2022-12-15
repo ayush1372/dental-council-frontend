@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
 const PersonalDetails = () => {
-  const userType = useSelector((state) => state.login.loggedInUserType);
+  const { userActiveTab } = useSelector((state) => state.ui);
 
   const [openModal, setOpenModal] = useState(false);
   const ClosePopup = () => {
@@ -24,7 +24,7 @@ const PersonalDetails = () => {
             <Typography variant="subtitle2" color="primary.main">
               Dr.
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -43,7 +43,7 @@ const PersonalDetails = () => {
             <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
               xxxx-xxxx-4688
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -73,7 +73,7 @@ const PersonalDetails = () => {
             <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
               Aarnav
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -91,7 +91,7 @@ const PersonalDetails = () => {
             <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
               Your middle name
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -109,7 +109,7 @@ const PersonalDetails = () => {
             <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
               Sharma
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -129,7 +129,7 @@ const PersonalDetails = () => {
             <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
               Praveen Sharma
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -147,7 +147,7 @@ const PersonalDetails = () => {
             <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
               Savita Sharma
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -165,7 +165,7 @@ const PersonalDetails = () => {
             <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
               Poonam Bala
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -185,7 +185,7 @@ const PersonalDetails = () => {
             <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
               Indian
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -203,7 +203,7 @@ const PersonalDetails = () => {
             <Typography variant="subtitle2" color="primary.main">
               Hindi,English
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -221,7 +221,7 @@ const PersonalDetails = () => {
             <Typography variant="subtitle2" color="primary.main">
               09-18-1989
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -241,7 +241,7 @@ const PersonalDetails = () => {
             <Typography variant="subtitle2" color="primary.main">
               Male
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -259,7 +259,7 @@ const PersonalDetails = () => {
             <Typography variant="subtitle2" color="primary.main">
               Schedule 1
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}

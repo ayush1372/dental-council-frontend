@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
 const SpecialDetails = () => {
-  const userType = useSelector((state) => state.login.loggedInUserType);
+  const { userActiveTab } = useSelector((state) => state.ui);
 
   const [openModal, setOpenModal] = useState(false);
   const ClosePopup = () => {
@@ -29,7 +29,7 @@ const SpecialDetails = () => {
             >
               Doctor
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -52,7 +52,7 @@ const SpecialDetails = () => {
             >
               Your Sub Speciality
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}

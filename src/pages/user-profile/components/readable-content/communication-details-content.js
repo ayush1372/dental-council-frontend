@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
 const CommunicationAddress = () => {
-  const userType = useSelector((state) => state.login.loggedInUserType);
+  const { userActiveTab } = useSelector((state) => state.ui);
 
   const [openModal, setOpenModal] = useState(false);
   const ClosePopup = () => {
@@ -29,7 +29,7 @@ const CommunicationAddress = () => {
             >
               Aarnav Sharma
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -52,7 +52,7 @@ const CommunicationAddress = () => {
             >
               Hno. 560 Row 3 Sadar Bazar, New Delhi
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -77,7 +77,7 @@ const CommunicationAddress = () => {
             >
               New Delhi
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -100,7 +100,7 @@ const CommunicationAddress = () => {
             >
               New Delhi
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -123,7 +123,7 @@ const CommunicationAddress = () => {
             >
               Sub District
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -148,7 +148,7 @@ const CommunicationAddress = () => {
             >
               New Delhi
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -171,7 +171,7 @@ const CommunicationAddress = () => {
             >
               India
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -194,7 +194,7 @@ const CommunicationAddress = () => {
             >
               120018
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -219,7 +219,7 @@ const CommunicationAddress = () => {
             >
               aarushi.sharma309@gmail.com
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -242,7 +242,7 @@ const CommunicationAddress = () => {
             >
               9988334355
             </Typography>
-            {userType !== 'Doctor' && userType !== 'College' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
