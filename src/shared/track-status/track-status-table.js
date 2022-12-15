@@ -170,8 +170,8 @@ function TrackStatusTable(props) {
   };
 
   return showViewProfile ? (
-    <Grid>
-      <Box align="right" mt={2} mr={2}>
+    <Box bgcolor="grey1.lighter">
+      <Box align="right" pt={2} pr={2}>
         <Button
           size="small"
           variant="outlined"
@@ -193,7 +193,7 @@ function TrackStatusTable(props) {
         <ViewProfile />
         <UserProfile showViewProfile={true} />
       </Box>
-    </Grid>
+    </Box>
   ) : (
     <Grid sx={{ m: 2 }} p={'0px'}>
       <GenericTable
