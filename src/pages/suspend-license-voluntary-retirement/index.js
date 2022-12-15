@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import BlockIcon from '@mui/icons-material/Block';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
@@ -22,14 +20,12 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
       voluntarySuspendLicense: 'voluntary-suspension-check',
     },
   });
-  const [selectedSuspension, setSelectedSuspension] = useState(true);
 
   const onSubmit = () => {
     handleSubmitDetails();
   };
 
   const handlevoluntarySuspendLicenseChange = (event) => {
-    setSelectedSuspension(event.target.value);
     setValue(event.target.name, event.target.value);
   };
 
@@ -150,36 +146,34 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
                 })}
               />
             </Grid>
-            {selectedSuspension === 'voluntary-suspension-check' && (
-              <Grid item xs={12} md={6}>
-                <Typography component={'p'} variant="body1">
-                  Select To Date
-                </Typography>
-                <TextField
-                  fullWidth
-                  data-testid="toDate"
-                  id="toDate"
-                  type="date"
-                  name="toDate"
-                  sx={{
-                    input: {
-                      color: 'grey1.dark',
-                      textTransform: 'uppercase',
-                    },
-                  }}
-                  InputLabelProps={{
-                    shrink: true,
-                    sx: { height: '40px' },
-                  }}
-                  required={true}
-                  defaultValue={getValues().toDate}
-                  error={errors.toDate?.message}
-                  {...register('toDate', {
-                    required: 'This field is required',
-                  })}
-                />
-              </Grid>
-            )}
+            <Grid item xs={12} md={6}>
+              <Typography component={'p'} variant="body1">
+                Select To Date
+              </Typography>
+              <TextField
+                fullWidth
+                data-testid="toDate"
+                id="toDate"
+                type="date"
+                name="toDate"
+                sx={{
+                  input: {
+                    color: 'grey1.dark',
+                    textTransform: 'uppercase',
+                  },
+                }}
+                InputLabelProps={{
+                  shrink: true,
+                  sx: { height: '40px' },
+                }}
+                required={true}
+                defaultValue={getValues().toDate}
+                error={errors.toDate?.message}
+                {...register('toDate', {
+                  required: 'This field is required',
+                })}
+              />
+            </Grid>
           </Grid>
         </Box>
       )}
@@ -245,7 +239,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
       </Box>
 
       {tabName || selectedValue === 'blacklist' || selectedValue === 'suspend' ? (
-        <Box my={4}>
+        <Box my={4} ml={1}>
           <Checkbox
             name="notification"
             {...register('notification', {
