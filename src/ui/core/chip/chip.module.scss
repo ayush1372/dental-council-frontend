@@ -1,0 +1,38 @@
+@use '../../../assets/styles/variables' as v;
+
+.wrapper {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.submitted {
+  color: map-get(v.$palette, 'primary');
+  background-color: map-get(v.$palette, 'submittedBg');
+}
+.dotSubmitted {
+  fill: map-get(v.$palette, 'primary');
+}
+
+.approved {
+  color: map-get(v.$palette, 'approvedText');
+  background-color: map-get(v.$palette, 'approvedBg');
+}
+.dotApproved {
+  fill: map-get(v.$palette, 'approvedText');
+}
+
+.reject {
+  color: map-get(v.$palette, 'error');
+  background-color: map-get(v.$palette, 'rejectBg');
+}
+.dotReject {
+  fill: map-get(v.$palette, 'error');
+}
+
+.pending {
+  color: map-get(v.$palette, 'pendingText');
+  background-color: map-get(v.$palette, 'pendingBg');
+}
+.dotPending {
+  fill: map-get(v.$palette, 'pendingText');
+}

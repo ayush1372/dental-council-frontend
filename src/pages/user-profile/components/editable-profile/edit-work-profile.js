@@ -78,6 +78,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               variant="outlined"
               name={'subSpeciality'}
               label={'Super Speciality'}
+              placeholder="Enter Super Speciality"
               required={true}
               fullWidth
               defaultValue={getValues().subSpeciality}

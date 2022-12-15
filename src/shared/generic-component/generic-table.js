@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { useState } from 'react';
 
-import CloseIcon from '@mui/icons-material/Close';
 import MoreVertSharpIcon from '@mui/icons-material/MoreVertSharp';
-import { Box, Dialog, Link, Paper, Table, TableSortLabel } from '@mui/material';
+import { Box, Link, Paper, Table, TableSortLabel } from '@mui/material';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import TableBody from '@mui/material/TableBody';
@@ -19,8 +18,8 @@ import propTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
 import { verboseLog } from '../../config/debug';
-import SuspendLicenseVoluntaryRetirement from '../../pages/suspend-license-voluntary-retirement';
-import { Button } from '../../ui/core';
+import SuspendValuntaryPopup from '../../pages/suspend-valuntary-popup';
+import { Button, Chip } from '../../ui/core';
 
 GenericTable.propTypes = {
   tableHeader: propTypes.array.isRequired,
@@ -97,46 +96,11 @@ export default function GenericTable(props) {
 
   return (
     <TableContainer component={Paper}>
-      <Dialog
-        open={confirmationModal}
-        onClose={() => {
-          setConfirmationModal(false);
-        }}
-        sx={{
-          '.MuiPaper-root': {
-            borderRadius: '10px',
-          },
-        }}
-      >
-        <Box
-          p={2}
-          width={selected === 'verify' ? '500px' : selected === 'forward' ? '700px' : '630px'}
-          height={
-            selected === 'reject'
-              ? '500px'
-              : selected === 'verify'
-              ? '380px'
-              : selected === 'forward'
-              ? '300px'
-              : selected === 'raise'
-              ? '650px'
-              : '720px'
-          }
-          borderRadius={'40px'}
-        >
-          <Box align="right">
-            <CloseIcon onClick={handleClose} />
-          </Box>
-          <Box
-            display={'flex'}
-            flexDirection={'column'}
-            justifyContent={'flex-start'}
-            alignItems={'center'}
-          >
-            <SuspendLicenseVoluntaryRetirement selectedValue={selected} />
-          </Box>
-        </Box>
-      </Dialog>
+      <SuspendValuntaryPopup
+        selected={selected}
+        confirmationModal={confirmationModal}
+        handleClose={handleClose}
+      />
       <Table sx={{ minWidth: '650px' }} aria-label="table">
         <TableHead>
           <TableRow sx={{ backgroundColor: 'primary.main' }}>
@@ -266,6 +230,41 @@ export default function GenericTable(props) {
                             </React.Fragment>
                           )}
                         </PopupState>
+                      </TableCell>
+                    );
+                  } else if (item.title === 'Current Status') {
+                    return (
+                      <TableCell
+                        sx={{ fontSize: '13px' }}
+                        maxWidth={`${tableCellWidth}%`}
+                        key={index}
+                        align="left"
+                      >
+                        <Chip
+                          type={
+                            row[item.name]?.value === 'Submitted'
+                              ? 'submitted'
+                              : row[item.name]?.value === 'Pending'
+                              ? 'pending'
+                              : row[item.name]?.value === 'Reject'
+                              ? 'reject'
+                              : 'approved'
+                          }
+                          label={row[item.name]?.value}
+                        />
+                      </TableCell>
+                    );
+                  } else if (item.title === 'Action' && userActiveTab === 'track-application') {
+                    return (
+                      <TableCell
+                        sx={{ fontSize: '13px' }}
+                        maxWidth={`${tableCellWidth}%`}
+                        key={index}
+                        align="left"
+                      >
+                        <Link onClick={(event) => row[item.name]?.onClickCallback(event, row)}>
+                          {row[item.name]?.value}
+                        </Link>
                       </TableCell>
                     );
                   } else {

@@ -75,7 +75,7 @@ export const UserProfile = ({
   }, [isReadMode]);
 
   return (
-    <Container>
+    <>
       <Box display="flex" justifyContent="start">
         {loggedInUserType === 'Doctor' && (
           <Alert
@@ -222,7 +222,7 @@ export const UserProfile = ({
           <ChangePassword />
         </Container>
       )}
-    </Container>
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
@@ -11,14 +11,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import TrackStatus from '../../shared/track-status/index';
 import { changeUserActiveTab } from '../../store/reducers/ui-reducers';
 import NewDoctorRegistration from '../profile/new-doctor-registration/new-doctor-registration';
-import SuspendLicenseVoluntaryRetirement from '../suspend-license-voluntary-retirement';
 import UserProfile from '../user-profile';
 import CollegeDean from './college-dean/college-dean';
 import CollegeMyProfile from './college-my-profile/college-my-profile';
 import CollegeRegistrar from './college-registrar/college-registrar';
+import CollegeApproval from './components/college-approval-cards/college-approval-cards';
 import Dashboard from './components/dashboard-cards/dashboard-cards';
 import MiniDrawer from './components/profile-sidebar/profile-sidebar';
 import MyProfile from './smc-nmc-profile/my-profile';
+import VoluntarySuspendLicense from './sub-pages/voluntary-suspend-license/voluntary-suspend-license';
+import TrackApplication from './track-application/track-application';
 
 export function Profile() {
   const dispatch = useDispatch();
@@ -35,17 +37,17 @@ export function Profile() {
     },
     {
       option: 1,
-      name: 'Suspend License',
-      tabName: 'suspend-license',
+      name: 'Voluntary Suspend License',
+      tabName: 'voluntary-suspend-license',
       icon: <CreditCardOffIcon />,
-      element: <SuspendLicenseVoluntaryRetirement tabName={userActiveTab} />,
+      element: <VoluntarySuspendLicense tabName={userActiveTab} />,
     },
     {
       option: 2,
-      name: 'Voluntary Retirement',
-      tabName: 'voluntary-retirement',
+      name: 'Track Application',
+      tabName: 'track-application',
       icon: <CreditCardOffIcon />,
-      element: <SuspendLicenseVoluntaryRetirement tabName={userActiveTab} />,
+      element: <TrackApplication />,
     },
   ];
 
@@ -102,6 +104,13 @@ export function Profile() {
       icon: <BadgeIcon />,
       element: <TrackStatus tabName={userActiveTab} />,
     },
+    {
+      option: 3,
+      name: 'College Approval',
+      tabName: 'college-approval',
+      icon: <BadgeIcon />,
+      element: <CollegeApproval />,
+    },
   ];
 
   const colgTabs = [
@@ -154,6 +163,14 @@ export function Profile() {
     setIsActiveTab(activeTab);
     dispatch(changeUserActiveTab(activeTab));
   };
+
+  useEffect(() => {
+    dispatch(
+      changeUserActiveTab(
+        loggedInUserType === 'Doctor' ? doctorTabs[0].tabName : colgTabs[0].tabName
+      )
+    );
+  }, []);
 
   return (
     <Grid container>

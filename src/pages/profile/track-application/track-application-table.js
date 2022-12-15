@@ -1,15 +1,11 @@
 import React from 'react';
-import { useState } from 'react';
 
-import { Box, Grid, TablePagination } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { Box, Grid, TablePagination, Typography } from '@mui/material';
 
-import UserProfile from '../../../src/pages/user-profile';
-import { verboseLog } from '../../config/debug';
-import { trackstatusData } from '../../constants/common-data';
-import GenericTable from '../../shared/generic-component/generic-table';
-import ViewProfile from '../../shared/view-profile/view-profile';
-import { Button } from '../../ui/core';
+import { verboseLog } from '../../../config/debug';
+import { applications } from '../../../constants/common-data';
+import GenericTable from '../../../shared/generic-component/generic-table';
+import TableSearch from '../components/table-search/table-search';
 
 function createData(
   SNo,
@@ -21,7 +17,6 @@ function createData(
   NMCVerificationStatus,
   dateofSubmission,
   pendency,
-  pending,
   view
 ) {
   return {
@@ -34,33 +29,25 @@ function createData(
     NMCVerificationStatus,
     dateofSubmission,
     pendency,
-    pending,
     view,
   };
 }
-function TrackStatusTable(props) {
+function TrackAppicationTable({ userType, setShowTrackApplication, setShowTrackApplicationTable }) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState({});
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
   const [selectedRowData, setRowData] = React.useState({});
-  const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
-  const [showViewProfile, setShowViewPorfile] = useState(false);
+
   const viewNameOfApplicant = (event, row) => {
-    event.preventDefault();
-    event.stopPropagation();
-    setRowData(row);
-    setShowViewPorfile(true);
-    props.setShowHeader(false);
-    props.setShowTrackApplication(true);
-    props.setShowTrackApplicationTable(false);
+    verboseLog('called', event, row);
   };
 
-  verboseLog('selectedRowData', selectedRowData, props);
+  verboseLog('selectedRowData', selectedRowData);
   const dataHeader = [
     { title: 'S.No.', name: 'SNo', sorting: true, type: 'string' },
     {
-      title: 'IMR ID/ Registration No.',
+      title: 'Request ID',
       name: 'registrationNo',
       sorting: true,
       type: 'string',
@@ -71,43 +58,28 @@ function TrackStatusTable(props) {
       sorting: true,
       type: 'string',
     },
-    { title: 'Name of State Council', name: 'nameofStateCouncil', sorting: true, type: 'date' },
+
+    { title: 'Date of Submission', name: 'dateofSubmission', sorting: true, type: 'date' },
     {
-      title: 'Council Verification Status',
+      title: 'Current Status',
       name: 'councilVerificationStatus',
       sorting: true,
-      type: 'string',
+      type: 'date',
     },
-    {
-      title: 'College Verification Status',
-      name: 'collegeVerificationStatus',
-      sorting: true,
-      type: 'string',
-    },
-    {
-      title: 'NMC Verification Status',
-      name: 'NMCVerificationStatus',
-      sorting: true,
-      type: 'string',
-    },
-    { title: 'Date of Submission', name: 'dateofSubmission', sorting: true, type: 'string' },
     { title: 'Pendency', name: 'pendency', sorting: true, type: 'string' },
-    { title: 'Pending with user', name: 'pending', sorting: true, type: 'string' },
-    {
-      title:
-        loggedInUserType === 'NMC'
-          ? 'Action'
-          : loggedInUserType === 'SMC'
-          ? 'Request NMC'
-          : 'Request NMC',
-      name: 'requestNMC',
-      sorting: true,
-      type: 'string',
-    },
+    { title: 'Action', name: 'view', sorting: true, type: 'string' },
   ];
 
   const handleDataRowClick = (dataRow) => {
     setRowData(dataRow);
+  };
+
+  const viewCallback = (event, row) => {
+    setShowTrackApplication(true);
+    setShowTrackApplicationTable(false);
+    event.preventDefault();
+    event.stopPropagation();
+    setRowData(row);
   };
 
   const handleRequestSort = (event, property) => {
@@ -115,7 +87,7 @@ function TrackStatusTable(props) {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
-  const newRowsData = trackstatusData.message?.map((application) => {
+  const newRowsData = applications.message?.map((application) => {
     return createData(
       { type: 'SNo', value: application.SNo },
       {
@@ -139,16 +111,7 @@ function TrackStatusTable(props) {
       { type: 'NMCVerificationStatus', value: application.NMCVerificationStatus },
       { type: 'dateofSubmission', value: application.dateofSubmission },
       { type: 'pendency', value: application.pendency },
-      { type: 'pending', value: 'N/A' },
-      {
-        type:
-          loggedInUserType === 'NMC'
-            ? 'requestNMC'
-            : loggedInUserType === 'SMC'
-            ? 'requestSMC'
-            : 'college',
-        value: application.view,
-      }
+      { type: 'view', value: application.view, onClickCallback: viewCallback }
     );
   });
 
@@ -164,38 +127,13 @@ function TrackStatusTable(props) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  const onClickBackButtonHandler = () => {
-    setShowViewPorfile(false);
-    props.setShowHeader(true);
-  };
 
-  return showViewProfile ? (
-    <Box bgcolor="grey1.lighter">
-      <Box align="right" pt={2} pr={2}>
-        <Button
-          size="small"
-          variant="outlined"
-          sx={{
-            backgroundColor: 'white.main',
-            ml: 2,
-            '&:hover': {
-              color: 'primary.main',
-              backgroundColor: 'white.main',
-            },
-            height: '48px',
-          }}
-          onClick={onClickBackButtonHandler}
-        >
-          Back
-        </Button>
-      </Box>
-      <Box>
-        <ViewProfile />
-        <UserProfile showViewProfile={true} />
-      </Box>
-    </Box>
-  ) : (
-    <Grid sx={{ m: 2 }} p={'0px'}>
+  return (
+    <Grid>
+      <Typography variant="h2" py={2}>
+        Track Application
+      </Typography>
+      <TableSearch trackApplication={userType} />
       <GenericTable
         order={order}
         orderBy={orderBy}
@@ -206,12 +144,11 @@ function TrackStatusTable(props) {
         rowsPerPage={rowsPerPage}
         page={page}
       />
-
       <Box>
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={props.showTable?.count || newRowsData.length}
+          count={newRowsData.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -226,4 +163,4 @@ function TrackStatusTable(props) {
   );
 }
 
-export default React.memo(TrackStatusTable);
+export default React.memo(TrackAppicationTable);

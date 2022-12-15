@@ -5,19 +5,28 @@ import HelpIcon from '@mui/icons-material/Help';
 import { Box, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
-import { Button, Checkbox, TextField } from '../../ui/core';
+import { Button, Checkbox, RadioGroup, TextField } from '../../ui/core';
+
 export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, handleSubmitDetails }) {
   const {
     register,
     handleSubmit,
     getValues,
+    setValue,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
+    defaultValues: {
+      voluntarySuspendLicense: 'voluntary-suspension-check',
+    },
   });
 
   const onSubmit = () => {
     handleSubmitDetails();
+  };
+
+  const handlevoluntarySuspendLicenseChange = (event) => {
+    setValue(event.target.name, event.target.value);
   };
 
   return (
@@ -46,11 +55,13 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
         </Box>
       )}
       {tabName && (
-        <Typography variant="h2" my={4}>
+        <Typography variant="h2">
           {tabName === 'voluntary-retirement'
             ? 'Voluntary Retirement'
             : tabName === 'suspend-license'
             ? 'Suspend License'
+            : tabName === 'voluntary-suspend-license'
+            ? 'Voluntary Suspend License'
             : ''}
         </Typography>
       )}
@@ -75,6 +86,31 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
         ''
       ) : (
         <Box>
+          {tabName === 'voluntary-suspend-license' && (
+            <Grid item xs={12} md={12} mb={2}>
+              <RadioGroup
+                row
+                onChange={handlevoluntarySuspendLicenseChange}
+                name={'voluntarySuspendLicense'}
+                size="small"
+                defaultValue={getValues().voluntarySuspendLicense}
+                items={[
+                  {
+                    value: 'voluntary-suspension-check',
+                    label: 'Voluntary Suspension',
+                  },
+                  {
+                    value: 'permanent-suspension-check',
+                    label: 'Permanent Suspension',
+                  },
+                ]}
+                label="Select suspension"
+                required={true}
+                error={errors.voluntarySuspendLicense?.message}
+              />
+            </Grid>
+          )}
+
           <Typography variant="subtitle2">
             {'Add Timeline'}
             <Typography variant="body4" color="error.main">
@@ -203,7 +239,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
       </Box>
 
       {tabName || selectedValue === 'blacklist' || selectedValue === 'suspend' ? (
-        <Box my={4}>
+        <Box my={4} ml={1}>
           <Checkbox
             name="notification"
             {...register('notification', {
