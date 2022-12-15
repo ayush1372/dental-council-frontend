@@ -35,6 +35,7 @@ export function ViewProfile(props) {
         sx={{
           boxShadow: '1',
         }}
+        bgcolor="white.main"
       >
         <Grid container spacing={2} mt={2} p={3}>
           <Grid container item spacing={6}>

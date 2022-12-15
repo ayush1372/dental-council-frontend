@@ -22,7 +22,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
       voluntarySuspendLicense: 'voluntary-suspension-check',
     },
   });
-  const [selectedSuspension, setSelectedSuspension] = useState(true);
+  const [selectedSuspension, setSelectedSuspension] = useState('voluntary-suspension-check');
 
   const onSubmit = () => {
     handleSubmitDetails();
@@ -245,7 +245,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
       </Box>
 
       {tabName || selectedValue === 'blacklist' || selectedValue === 'suspend' ? (
-        <Box my={4}>
+        <Box my={4} ml={1}>
           <Checkbox
             name="notification"
             {...register('notification', {

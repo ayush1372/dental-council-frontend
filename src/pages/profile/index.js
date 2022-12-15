@@ -21,6 +21,7 @@ import Dashboard from './components/dashboard-cards/dashboard-cards';
 import MiniDrawer from './components/profile-sidebar/profile-sidebar';
 import MyProfile from './smc-nmc-profile/my-profile';
 import VoluntarySuspendLicense from './sub-pages/voluntary-suspend-license/voluntary-suspend-license';
+import TrackApplication from './track-application/track-application';
 
 export function Profile() {
   const dispatch = useDispatch();
@@ -41,6 +42,13 @@ export function Profile() {
       tabName: 'voluntary-suspend-license',
       icon: <CreditCardOffIcon />,
       element: <VoluntarySuspendLicense tabName={userActiveTab} />,
+    },
+    {
+      option: 2,
+      name: 'Track Application',
+      tabName: 'track-application',
+      icon: <CreditCardOffIcon />,
+      element: <TrackApplication />,
     },
   ];
 

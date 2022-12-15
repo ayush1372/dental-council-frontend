@@ -11,11 +11,17 @@ $palette: (
   'black': #000,
   'light': #e6e8ec,
   'dark': #171e34,
-  'error': #443535,
+  'error': #e31818,
   'warning': #ff9f40,
   'info': #0066ff,
   'success': #54ca62,
   'messageBlue': #6554c0,
+  'submittedBg': #dae2f6,
+  'pendingText': #995c13,
+  'pendingBg': #ffb05245,
+  'rejectBg': #ff674542,
+  'approvedBg': #53cb9863,
+  'approvedText': #265b45,
 );
 
 // --- Background and foregrounds --- //
@@ -27,6 +33,9 @@ $background-colors: (
   'primary': #e6e8ec,
   'secondary': #252525,
   'header': #ffffff,
+);
+$border-colors: (
+  'primary': #3f3d56,
 );
 
 // --- Typography --- //

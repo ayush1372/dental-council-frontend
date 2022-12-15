@@ -1,8 +1,8 @@
-/* eslint-disable no-console */
-import React, { useState } from 'react';
+import * as React from 'react';
+import { useState } from 'react';
 
 import MoreVertSharpIcon from '@mui/icons-material/MoreVertSharp';
-import { Box, Link, Paper, Table, TableSortLabel, Tooltip } from '@mui/material';
+import { Box, Link, Paper, Table, TableSortLabel } from '@mui/material';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import TableBody from '@mui/material/TableBody';
@@ -10,6 +10,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import Tooltip from '@mui/material/Tooltip';
 import { visuallyHidden } from '@mui/utils';
 import PopupState, { bindMenu, bindTrigger } from 'material-ui-popup-state';
 import Moment from 'moment';
@@ -18,11 +19,7 @@ import { useSelector } from 'react-redux';
 
 import { verboseLog } from '../../config/debug';
 import SuspendValuntaryPopup from '../../pages/suspend-valuntary-popup';
-// import { userLoggedInType } from '../../store/reducers/common-reducers';
-import { Button } from '../../ui/core';
-import ApproveLicenseModal from '../activate-licence-modals/approve-modal';
-import RejectLicenseModal from '../activate-licence-modals/reject-modal';
-// eslint-disable-next-line no-unused-vars
+import { Button, Chip } from '../../ui/core';
 
 GenericTable.propTypes = {
   tableHeader: propTypes.array.isRequired,
@@ -37,11 +34,7 @@ GenericTable.propTypes = {
 };
 
 export default function GenericTable(props) {
-  const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
-
   const { userActiveTab } = useSelector((state) => state.ui);
-  console.log('userActiveTab==>', userActiveTab);
-
   const tableCellWidth = Math.floor(window.innerWidth / props.tableHeader.length) + 'px';
   const { order, orderBy, onRequestSort, page, rowsPerPage } = props;
   const [selected, setSelected] = useState('');
@@ -103,19 +96,11 @@ export default function GenericTable(props) {
 
   return (
     <TableContainer component={Paper}>
-      {confirmationModal && userActiveTab === 'Activate Licence' ? (
-        selected === 'suspend' ? (
-          <ApproveLicenseModal />
-        ) : (
-          <RejectLicenseModal />
-        )
-      ) : (
-        <SuspendValuntaryPopup
-          selected={selected}
-          confirmationModal={confirmationModal}
-          handleClose={handleClose}
-        />
-      )}
+      <SuspendValuntaryPopup
+        selected={selected}
+        confirmationModal={confirmationModal}
+        handleClose={handleClose}
+      />
       <Table sx={{ minWidth: '650px' }} aria-label="table">
         <TableHead>
           <TableRow sx={{ backgroundColor: 'primary.main' }}>
@@ -206,8 +191,8 @@ export default function GenericTable(props) {
                       </TableCell>
                     );
                   } else if (
-                    item.title === 'Action' ||
-                    (item.title === 'Request NMC' && userActiveTab === 'Activate Licence')
+                    (item.title === 'Action' || item.title === 'Request NMC') &&
+                    (userActiveTab === 'track-status' || userActiveTab === 'Activate Licence')
                   ) {
                     return (
                       <TableCell
@@ -222,7 +207,6 @@ export default function GenericTable(props) {
                               <Button
                                 endIcon={<MoreVertSharpIcon />}
                                 variant="contained"
-                                backgroundColor="white"
                                 color="white"
                                 {...bindTrigger(popupState)}
                                 sx={{
@@ -234,23 +218,53 @@ export default function GenericTable(props) {
                                   data-my-value={'suspend'}
                                   onClick={selectionChangeHandler}
                                 >
-                                  {(loggedInUserType === 'NMC' || loggedInUserType === 'SMC') &&
-                                  userActiveTab === 'Activate Licence'
-                                    ? 'Approve'
-                                    : 'Permanent suspend'}
+                                  Permanent suspend
                                 </MenuItem>
                                 <MenuItem
                                   data-my-value={'blacklist'}
                                   onClick={selectionChangeHandler}
                                 >
-                                  {userActiveTab === 'Activate Licence'
-                                    ? 'Reject'
-                                    : 'Temporary suspend'}
+                                  Temporary suspend
                                 </MenuItem>
                               </Menu>
                             </React.Fragment>
                           )}
                         </PopupState>
+                      </TableCell>
+                    );
+                  } else if (item.title === 'Current Status') {
+                    return (
+                      <TableCell
+                        sx={{ fontSize: '13px' }}
+                        maxWidth={`${tableCellWidth}%`}
+                        key={index}
+                        align="left"
+                      >
+                        <Chip
+                          type={
+                            row[item.name]?.value === 'Submitted'
+                              ? 'submitted'
+                              : row[item.name]?.value === 'Pending'
+                              ? 'pending'
+                              : row[item.name]?.value === 'Reject'
+                              ? 'reject'
+                              : 'approved'
+                          }
+                          label={row[item.name]?.value}
+                        />
+                      </TableCell>
+                    );
+                  } else if (item.title === 'Action' && userActiveTab === 'track-application') {
+                    return (
+                      <TableCell
+                        sx={{ fontSize: '13px' }}
+                        maxWidth={`${tableCellWidth}%`}
+                        key={index}
+                        align="left"
+                      >
+                        <Link onClick={(event) => row[item.name]?.onClickCallback(event, row)}>
+                          {row[item.name]?.value}
+                        </Link>
                       </TableCell>
                     );
                   } else {
