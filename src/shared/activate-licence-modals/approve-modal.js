@@ -2,18 +2,25 @@ import { useState } from 'react';
 
 import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined';
 import { Box, Container, Grid, Modal, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 import { Button } from '../../ui/core';
 
 export default function ApproveLicenseModal() {
   const [open, setOpen] = useState(true);
   const handleClose = () => setOpen(false);
+  const theme = useTheme();
 
   return (
     <Modal open={open} onClose={handleClose} sx={{ mt: 15, p: 5 }}>
       <Container
         maxWidth="xs"
-        sx={{ backgroundColor: 'white.main', borderRadius: '10px', height: '450px', p: 5 }}
+        sx={{
+          backgroundColor: `${theme.palette.white.main}`,
+          borderRadius: '10px',
+          height: '450px',
+          p: 5,
+        }}
       >
         <Box mb={1} display="flex" justifyContent="center">
           <TaskAltOutlinedIcon

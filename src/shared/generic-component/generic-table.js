@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { useState } from 'react';
+/* eslint-disable no-console */
+import React, { useState } from 'react';
 
 import MoreVertSharpIcon from '@mui/icons-material/MoreVertSharp';
 import { Box, Link, Paper, Table, TableSortLabel, Tooltip } from '@mui/material';
@@ -14,12 +14,15 @@ import { visuallyHidden } from '@mui/utils';
 import PopupState, { bindMenu, bindTrigger } from 'material-ui-popup-state';
 import Moment from 'moment';
 import propTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import { verboseLog } from '../../config/debug';
 import SuspendValuntaryPopup from '../../pages/suspend-valuntary-popup';
+// import { userLoggedInType } from '../../store/reducers/common-reducers';
 import { Button } from '../../ui/core';
 import ApproveLicenseModal from '../activate-licence-modals/approve-modal';
 import RejectLicenseModal from '../activate-licence-modals/reject-modal';
+// eslint-disable-next-line no-unused-vars
 
 GenericTable.propTypes = {
   tableHeader: propTypes.array.isRequired,
@@ -34,6 +37,11 @@ GenericTable.propTypes = {
 };
 
 export default function GenericTable(props) {
+  const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
+
+  const { userActiveTab } = useSelector((state) => state.ui);
+  console.log('userActiveTab==>', userActiveTab);
+
   const tableCellWidth = Math.floor(window.innerWidth / props.tableHeader.length) + 'px';
   const { order, orderBy, onRequestSort, page, rowsPerPage } = props;
   const [selected, setSelected] = useState('');
@@ -95,7 +103,7 @@ export default function GenericTable(props) {
 
   return (
     <TableContainer component={Paper}>
-      {confirmationModal && props.tableName === 'ActiveLicense' ? (
+      {confirmationModal && userActiveTab === 'Activate Licence' ? (
         selected === 'suspend' ? (
           <ApproveLicenseModal />
         ) : (
@@ -181,7 +189,6 @@ export default function GenericTable(props) {
                   } else if (
                     item.title === 'Name of Applicant' ||
                     item.title === 'Applicant Name'
-                    // userActiveTab === 'track-status'[ this commented code  for future reference]
                   ) {
                     return (
                       <TableCell
@@ -200,8 +207,7 @@ export default function GenericTable(props) {
                     );
                   } else if (
                     item.title === 'Action' ||
-                    item.title === 'Request NMC'
-                    // userActiveTab === 'track-status'
+                    (item.title === 'Request NMC' && userActiveTab === 'Activate Licence')
                   ) {
                     return (
                       <TableCell
@@ -228,7 +234,8 @@ export default function GenericTable(props) {
                                   data-my-value={'suspend'}
                                   onClick={selectionChangeHandler}
                                 >
-                                  {props.tableName === 'ActiveLicense'
+                                  {(loggedInUserType === 'NMC' || loggedInUserType === 'SMC') &&
+                                  userActiveTab === 'Activate Licence'
                                     ? 'Approve'
                                     : 'Permanent suspend'}
                                 </MenuItem>
@@ -236,7 +243,7 @@ export default function GenericTable(props) {
                                   data-my-value={'blacklist'}
                                   onClick={selectionChangeHandler}
                                 >
-                                  {props.tableName === 'ActiveLicense'
+                                  {userActiveTab === 'Activate Licence'
                                     ? 'Reject'
                                     : 'Temporary suspend'}
                                 </MenuItem>

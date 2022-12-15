@@ -5,10 +5,13 @@ import { Box, Grid, TablePagination, Typography } from '@mui/material';
 import { verboseLog } from '../../../config/debug';
 import { ActivateLicenceData } from '../../../constants/common-data';
 import GenericTable from '../../../shared/generic-component/generic-table';
+import UserProfile from '../../user-profile';
 import TableSearch from '../components/table-search/table-search';
 const ActivateLicence = (props) => {
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState({});
+  const [showViewProfile, setShowViewPorfile] = useState(false);
+
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
   const [selectedRowData, setRowData] = useState({});
@@ -73,8 +76,13 @@ const ActivateLicence = (props) => {
     },
   ];
   const viewNameOfApplicant = (event, row) => {
-    verboseLog('called', event, row);
+    event.preventDefault();
+    event.stopPropagation();
+    setRowData(row);
+    setShowViewPorfile(true);
+    props.setShowHeader(false);
   };
+
   const handleDataRowClick = (dataRow) => {
     setRowData(dataRow);
   };
@@ -126,43 +134,48 @@ const ActivateLicence = (props) => {
   };
 
   return (
-    <Grid sx={{ m: 2 }}>
-      <Grid item>
-        <Typography variant="h2" data-testid="tab-heading">
-          Application Requests
-        </Typography>
-      </Grid>
-      <Grid mt={3}>
-        <TableSearch />
-      </Grid>
-      <GenericTable
-        order={order}
-        orderBy={orderBy}
-        onRequestSort={handleRequestSort}
-        tableHeader={dataHeader}
-        data={newRowsData}
-        handleRowClick={handleDataRowClick}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        tableName="ActiveLicense"
-      />
+    <>
+      {showViewProfile ? (
+        <UserProfile />
+      ) : (
+        <Grid sx={{ m: 2 }}>
+          <Grid item>
+            <Typography variant="h2" data-testid="tab-heading">
+              Application Requests
+            </Typography>
+          </Grid>
+          <Grid mt={3}>
+            <TableSearch />
+          </Grid>
+          <GenericTable
+            order={order}
+            orderBy={orderBy}
+            onRequestSort={handleRequestSort}
+            tableHeader={dataHeader}
+            data={newRowsData}
+            handleRowClick={handleDataRowClick}
+            rowsPerPage={rowsPerPage}
+            page={page}
+          />
 
-      <Box>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={props.showTable?.count || newRowsData.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        />
-      </Box>
-    </Grid>
+          <Box>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={props.showTable?.count || newRowsData.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            />
+          </Box>
+        </Grid>
+      )}
+    </>
   );
 };
 
