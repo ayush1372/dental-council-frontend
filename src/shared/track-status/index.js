@@ -33,21 +33,13 @@ export default function TrackStatus() {
   };
 
   return (
-    <Box p={3}>
-      <Grid container mt={2}>
-        {showHeader ? (
-          <Grid container item>
-            <Grid item xs={12}>
-              <Typography variant="h2" color="textPrimary.main">
-                Track Status
-              </Typography>
-            </Grid>
-          </Grid>
-        ) : (
-          ''
-        )}
-        {showHeader ? (
-          <Grid container item spacing={2}>
+    <Box>
+      {showHeader && (
+        <Box p={3}>
+          <Typography variant="h2" color="textPrimary.main" component="div">
+            Track Status
+          </Typography>
+          <Grid container spacing={2}>
             <Grid item xs={6} md={4}>
               <Box sx={{ paddingBottom: '32px' }}>
                 <Typography color="inputTextColor.main">
@@ -93,15 +85,10 @@ export default function TrackStatus() {
               </Button>
             </Grid>
           </Grid>
-        ) : (
-          ''
-        )}
-        <Grid container item spacing={2}>
-          <Grid item xs={12} style={{ margin: '0px' }}>
-            {showTable && <TrackStatusTable setShowHeader={setShowHeader} />}
-          </Grid>
-        </Grid>
-      </Grid>
+        </Box>
+      )}
+
+      {showTable && <TrackStatusTable setShowHeader={setShowHeader} />}
     </Box>
   );
 }
