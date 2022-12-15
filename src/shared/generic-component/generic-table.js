@@ -181,7 +181,7 @@ export default function GenericTable(props) {
                   } else if (
                     item.title === 'Name of Applicant' ||
                     item.title === 'Applicant Name'
-                    // userActiveTab === 'track-status'
+                    // userActiveTab === 'track-status'[ this commented code  for future reference]
                   ) {
                     return (
                       <TableCell

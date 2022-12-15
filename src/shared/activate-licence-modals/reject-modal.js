@@ -2,9 +2,9 @@ import { useState } from 'react';
 
 import CloseIcon from '@mui/icons-material/Close';
 import ErrorIcon from '@mui/icons-material/Error';
-import { Box, Button, Container, Modal, Typography } from '@mui/material';
+import { Box, Container, Modal, Typography } from '@mui/material';
 
-import { TextField } from '../../ui/core';
+import { Button, TextField } from '../../ui/core';
 
 export default function RejectLicenseModal(props) {
   const [open, setOpen] = useState(true);
@@ -35,14 +35,11 @@ export default function RejectLicenseModal(props) {
             <Typography
               variant="h2"
               mt="18px"
-              sx={{
-                color: 'primary.main',
-                fontSize: '24px',
-                display: 'flex',
-                flexFlow: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
+              color={'primary.main'}
+              fontSize={'24px'}
+              display={'flex'}
+              alignItems={'center'}
+              justifyContent={'center'}
             >
               Reason to Reject application
             </Typography>
