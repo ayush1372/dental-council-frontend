@@ -172,8 +172,8 @@ export default function GenericTable(props) {
                       </TableCell>
                     );
                   } else if (
-                    item.title === 'Name of Applicant' &&
-                    userActiveTab === 'track-status'
+                    item.title === 'Name of Applicant' ||
+                    item.title === 'Applicant Name'
                   ) {
                     return (
                       <TableCell
@@ -192,7 +192,7 @@ export default function GenericTable(props) {
                     );
                   } else if (
                     (item.title === 'Action' || item.title === 'Request NMC') &&
-                    userActiveTab === 'track-status'
+                    (userActiveTab === 'track-status' || userActiveTab === 'Activate Licence')
                   ) {
                     return (
                       <TableCell

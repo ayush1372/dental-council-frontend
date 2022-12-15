@@ -247,6 +247,37 @@ export const applications = {
   ],
   count: 5,
 };
+export const ActivateLicenceData = {
+  message: [
+    {
+      SNo: 1,
+      registrationNo: '1772666',
+      ApplicantName: 'Basavaraj Harihar',
+      DateOfSubmission: '31-oct-2022',
+      DateOfReactivation: '26-Sep-2022',
+      TypeOfsuspension: 'Temporary',
+      Remark: 'Came back from Russia and i want resume my service in india',
+    },
+    {
+      SNo: 2,
+      registrationNo: '4772562',
+      ApplicantName: 'Harihar',
+      DateOfSubmission: '01-oct-2022',
+      DateOfReactivation: '21-Dec-2022',
+      TypeOfsuspension: 'Permanent',
+      Remark: 'Came back from Russia and i want resume my service in india',
+    },
+    {
+      SNo: 3,
+      registrationNo: '1772562',
+      ApplicantName: 'Shreyas Harihar',
+      DateOfSubmission: '03-July-2022',
+      DateOfReactivation: '06-Nov-2022',
+      TypeOfsuspension: 'Temporary',
+      Remark: 'Came back from Russia and i want resume my service in india',
+    },
+  ],
+};
 
 export const collegeApprovalsList = {
   message: [
