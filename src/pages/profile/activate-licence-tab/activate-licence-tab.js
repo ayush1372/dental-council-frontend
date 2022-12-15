@@ -128,7 +128,9 @@ const ActivateLicence = (props) => {
   return (
     <Grid sx={{ m: 2 }}>
       <Grid item>
-        <Typography data-testid="tab-heading">Application Requests </Typography>
+        <Typography variant="h2" data-testid="tab-heading">
+          Application Requests
+        </Typography>
       </Grid>
       <Grid mt={3}>
         <TableSearch />

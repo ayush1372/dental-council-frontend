@@ -3,7 +3,6 @@ import { useState } from 'react';
 import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined';
 import { Box, Container, Grid, Modal, Typography } from '@mui/material';
 
-// import { collegeProfileData } from '../../constants/common-data';
 import { Button } from '../../ui/core';
 
 export default function ApproveLicenseModal() {
@@ -11,10 +10,10 @@ export default function ApproveLicenseModal() {
   const handleClose = () => setOpen(false);
 
   return (
-    <Modal open={open} onClose={handleClose} sx={{ mt: 15 }}>
+    <Modal open={open} onClose={handleClose} sx={{ mt: 15, p: 5 }}>
       <Container
         maxWidth="xs"
-        sx={{ backgroundColor: 'white.main', borderRadius: '10px', height: '350px' }}
+        sx={{ backgroundColor: 'white.main', borderRadius: '10px', height: '450px', p: 5 }}
       >
         <Box mb={1} display="flex" justifyContent="center">
           <TaskAltOutlinedIcon
@@ -48,37 +47,39 @@ export default function ApproveLicenseModal() {
           >
             Application Approved Successfully
           </Typography>
-          <Grid container item spacing={1} mt={1}>
-            <Grid item xs={6} md={4}>
-              <Typography component="div" color="grey.label">
-                IMG/ Reg No.
-              </Typography>
+        </Box>
+        <Grid container item spacing={1} mt={3}>
+          <Grid item xs={6} md={4}>
+            <Typography component="div" color="grey.label">
+              IMG/ Reg No.
+            </Typography>
 
-              <Typography component="div" color="primary.main">
-                {/* {collegeProfileData.collegename.name} */}177255
-              </Typography>
-            </Grid>
-            <Grid item xs={6} md={4}>
-              <Typography component="div" color="grey.label">
-                Applicant Name
-              </Typography>
-
-              <Typography component="div" color="primary.main">
-                {/* {collegeProfileData.collegeId.name} */}Basavaraj Harihar
-              </Typography>
-            </Grid>
-            <Grid item xs={6} md={4}>
-              <Typography component="div" color="grey.label">
-                Suspension Type
-              </Typography>
-
-              <Typography component="div" color="primary.main">
-                {/* {collegeProfileData.collegePhnNumber.name} */}Temporary
-              </Typography>
-            </Grid>
+            <Typography component="div" color="primary.main">
+              177255
+            </Typography>
           </Grid>
+          <Grid item xs={6} md={4}>
+            <Typography component="div" color="grey.label">
+              Applicant Name
+            </Typography>
+
+            <Typography component="div" color="primary.main">
+              Basavaraj Harihar
+            </Typography>
+          </Grid>
+          <Grid item xs={6} md={4}>
+            <Typography component="div" color="grey.label">
+              Suspension Type
+            </Typography>
+
+            <Typography component="div" color="primary.main">
+              Temporary
+            </Typography>
+          </Grid>
+        </Grid>
+        <Box>
           <Button
-            sx={{ width: '408px', mt: 2 }}
+            sx={{ width: '408px', mt: 4 }}
             variant="contained"
             color="warning"
             onClick={handleClose}
