@@ -9,7 +9,6 @@ import { Card } from './card';
 import { CardActions } from './card-actions';
 import { CardContent } from './card-content';
 import { CardHeader } from './card-header';
-import { Chip } from './chip';
 import { FormHelperText } from './form-helper-text';
 import { InputLabel } from './input-label';
 import { palette } from './palette';
@@ -73,8 +72,6 @@ const themeWrapper = (mode) => {
       MuiTableRow: TableRow,
 
       MuiStepLabel: StepLabel,
-
-      MuiChip: Chip,
     },
 
     // STYLE FOR BORDER RADIUS
