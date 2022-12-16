@@ -1,6 +1,7 @@
 import { createContext, useMemo, useState } from 'react';
 
 import { ThemeProvider } from '@mui/material/styles';
+import { useSelector } from 'react-redux';
 
 import themeWrapper from './styles';
 
@@ -19,9 +20,13 @@ const ThemeProviderWrapper = ({ children }) => {
     []
   );
 
+  const { appFontSize, appFontType } = useSelector((state) => state.appFontSize);
+  // eslint-disable-next-line no-console
+  console.log('fd', appFontSize);
+
   return (
     <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={themeWrapper(mode)}>{children}</ThemeProvider>
+      <ThemeProvider theme={themeWrapper(mode, appFontSize, appFontType)}>{children}</ThemeProvider>
     </ColorModeContext.Provider>
   );
 };
