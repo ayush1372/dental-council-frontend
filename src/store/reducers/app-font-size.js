@@ -2,8 +2,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  appFontSize: 20,
-  appFontType: 'small',
+  appFontSize: '',
+  appFontType: '',
 };
 
 export const AppFontSizeActivity = createSlice({

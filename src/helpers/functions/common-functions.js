@@ -21,3 +21,11 @@ export const createSelectFieldData = (arrayOfStrings, valueKey = 'id') => {
     return [];
   }
 };
+
+export const changeAppFontSize = (size, appFontType) => {
+  // eslint-disable-next-line no-console
+  console.log('size in commom', appFontType, size, `${size - 2}`, `${size + 2}`);
+  const fontSize =
+    appFontType === 'small' ? `${size - 2}` : appFontType === 'large' ? `${size + 2}` : `${size}`;
+  return `${fontSize}px`;
+};
