@@ -5,21 +5,24 @@ import { Alert, Container, Divider, IconButton, InputAdornment, Typography } fro
 import { Box } from '@mui/system';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 
+// import { useNavigate } from 'react-router-dom';
 import { verboseLog } from '../../../config/debug';
 import OtpForm from '../../../shared/otp-form/otp-component';
 import { Button, TextField } from '../../../ui/core';
 // import EditPersonalDetails from '../../user-profile/components/edit-personal-details/edit-personal-details';
+import AadhaarInputField from '../doctor-registration/aadhaar-input-field';
+import UniqueUserNameForDoctorRegistration from './unique-username';
 
 function FetchDoctorDetails() {
-  const navigate = useNavigate();
   const [showEditScreen, setShowEditScreen] = useState(false);
   const [showOtpEmail, setShowOtpEmail] = useState(false);
   const [showOtpMobile, setShowOtpMobile] = useState(false);
+  const [showOtpAadhar, setshowOtpAadhar] = useState(false);
 
   const [isOtpValidEmail, setisOtpValidEmail] = useState(false);
   const [isOtpValidMobile, setisOtpValidMobile] = useState(false);
+  const [isOtpValidAadhar, setisOtpValidAadhar] = useState(false);
   const [enableSubmit, setEnableSubmit] = useState(false);
 
   const {
@@ -32,6 +35,7 @@ function FetchDoctorDetails() {
     defaultValues: {
       MobileNumber: '',
       email: '',
+      AadhaarNumber: '',
     },
   });
   const handleVerifyEmail = () => {
@@ -65,6 +69,25 @@ function FetchDoctorDetails() {
       }
     }
   };
+  const handleVerifyAadhar = () => {
+    if (isOtpValidEmail === true && isOtpValidMobile === true) {
+      setshowOtpAadhar(true);
+      isOtpValidMobile(false);
+      isOtpValidEmail(false);
+    }
+  };
+
+  const handleValidateAadhar = () => {
+    if (otpValue.length === 6) {
+      setisOtpValidAadhar(true);
+      setshowOtpAadhar(false);
+      handleClear();
+
+      if (isOtpValidAadhar === true && isOtpValidMobile === true) {
+        setEnableSubmit(true);
+      }
+    }
+  };
 
   const otpResend = () => {
     verboseLog('OTP FORM - ', 'OTP Resent Succussfully');
@@ -85,7 +108,8 @@ function FetchDoctorDetails() {
   return (
     <>
       {showEditScreen ? (
-        navigate('/login-page', { state: { loginFormname: 'Doctor' } })
+        // navigate('/login-page', { state: { loginFormname: 'Doctor' } })
+        <UniqueUserNameForDoctorRegistration />
       ) : (
         <Container sx={{ width: '712px' }}>
           <Box sx={{ width: '712px', height: '53px', marginBottom: '30px', marginTop: '32px ' }}>
@@ -289,7 +313,63 @@ function FetchDoctorDetails() {
                   </Box>
                 </Box>
               )}
+              <Divider sx={{ mb: 4, mt: 4 }} variant="fullWidth" />
+              <Box display="flex" justifyContent="space-between">
+                <Box>
+                  <AadhaarInputField
+                    defaultValue={getValues().AadhaarNumber}
+                    name="AadhaarNumber"
+                    {...register('AadhaarNumber', {})}
+                    register={register}
+                    getValues={getValues}
+                    required={true}
+                    errors={errors}
+                  />
+                </Box>
+                <Box sx={{ p: 5 }}>
+                  {isOtpValidAadhar ? <CheckCircleIcon color="success" /> : ''}
+                </Box>
+
+                {!showOtpAadhar && !isOtpValidAadhar && (
+                  <Box mt={3}>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      width="95px"
+                      onClick={handleVerifyAadhar}
+                    >
+                      Verify
+                    </Button>
+                  </Box>
+                )}
+              </Box>
             </Box>
+            {showOtpAadhar && (
+              <Box
+                sx={{
+                  display: 'flex',
+                }}
+              >
+                <Box>
+                  <Typography variant="body1">
+                    We just sent an OTP on your Mobile Number.
+                  </Typography>
+                  {otpform}
+                </Box>
+                <Box>
+                  <Button
+                    sx={{ width: '114px', height: '53px', marginTop: '47px' }}
+                    component="span"
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleValidateAadhar}
+                  >
+                    Validate
+                  </Button>
+                </Box>
+              </Box>
+            )}
+
             <Box sx={{ paddingBottom: '40px' }}>
               <Button
                 variant="contained"
