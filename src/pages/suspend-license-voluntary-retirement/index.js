@@ -183,7 +183,8 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
           </Grid>
         </Box>
       )}
-      {selectedValue === 'raise' ||
+      {tabName === 'voluntary-suspend-license' ||
+      selectedValue === 'raise' ||
       selectedValue === 'reject' ||
       selectedValue === 'suspend' ||
       selectedValue === 'blacklist' ? (
