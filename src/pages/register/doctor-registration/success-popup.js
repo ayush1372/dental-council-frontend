@@ -2,25 +2,30 @@ import { useState } from 'react';
 
 import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined';
 import { Box, Container, Modal, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 
 import { Button } from '../../../ui/core';
-
-// import { Button } from '../../ui/core';
 
 export default function SuccessModal() {
   const [open, setOpen] = useState(true);
   const handleClose = () => setOpen(false);
+  const theme = useTheme();
 
   return (
     <Modal open={open} onClose={handleClose} sx={{ mt: 15 }}>
       <Container
         maxWidth="xs"
-        sx={{ backgroundColor: 'white.main', borderRadius: '10px', height: '350px', p: '30px' }}
+        sx={{
+          backgroundColor: theme.palette.white.main,
+          borderRadius: '10px',
+          height: '350px',
+          p: '30px',
+        }}
       >
         <Box mb={1} display="flex" justifyContent="center">
           <TaskAltOutlinedIcon
             sx={{
-              color: 'success.dark',
+              color: theme.palette.success.dark,
               width: '80px',
               height: '80px',
             }}

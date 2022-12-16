@@ -3,7 +3,6 @@ import { useState } from 'react';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Box, Container, InputAdornment, Link, TextField, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-// import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 
 import { verboseLog } from '../../../config/debug';
@@ -109,21 +108,19 @@ const UniqueUserNameForDoctorRegistration = () => {
               <Button
                 onClick={handleSubmit(onSubmit)}
                 variant="contained"
+                size="medium"
                 sx={{
                   mr: 3,
-                  width: '105px',
-                  height: '45px',
-                  backgroundColor: 'secondary.main',
+                  backgroundColor: theme.palette.secondary.main,
                 }}
               >
                 Create
               </Button>
               <Button
                 variant="outlined"
+                size="medium"
                 sx={{
-                  width: '105px',
-                  height: '45px',
-                  backgroundColor: 'grey.main',
+                  backgroundColor: theme.palette.grey.main,
                   color: 'black',
                 }}
               >

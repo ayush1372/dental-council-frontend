@@ -6,11 +6,9 @@ import { Box } from '@mui/system';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 
-// import { useNavigate } from 'react-router-dom';
 import { verboseLog } from '../../../config/debug';
 import OtpForm from '../../../shared/otp-form/otp-component';
 import { Button, TextField } from '../../../ui/core';
-// import EditPersonalDetails from '../../user-profile/components/edit-personal-details/edit-personal-details';
 import AadhaarInputField from '../doctor-registration/aadhaar-input-field';
 import UniqueUserNameForDoctorRegistration from './unique-username';
 
@@ -108,7 +106,6 @@ function FetchDoctorDetails() {
   return (
     <>
       {showEditScreen ? (
-        // navigate('/login-page', { state: { loginFormname: 'Doctor' } })
         <UniqueUserNameForDoctorRegistration />
       ) : (
         <Container sx={{ width: '712px' }}>
@@ -313,7 +310,7 @@ function FetchDoctorDetails() {
                   </Box>
                 </Box>
               )}
-              <Divider sx={{ mb: 4, mt: 4 }} variant="fullWidth" />
+              <Divider sx={{ my: 4 }} variant="fullWidth" />
               <Box display="flex" justifyContent="space-between">
                 <Box>
                   <AadhaarInputField
@@ -326,7 +323,7 @@ function FetchDoctorDetails() {
                     errors={errors}
                   />
                 </Box>
-                <Box sx={{ p: 5 }}>
+                <Box p="35px 32px 0px 32px">
                   {isOtpValidAadhar ? <CheckCircleIcon color="success" /> : ''}
                 </Box>
 
