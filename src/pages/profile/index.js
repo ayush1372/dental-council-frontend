@@ -38,17 +38,17 @@ export function Profile() {
     },
     {
       option: 1,
-      name: 'Voluntary Suspend License',
-      tabName: 'voluntary-suspend-license',
-      icon: <CreditCardOffIcon />,
-      element: <VoluntarySuspendLicense tabName={userActiveTab} />,
-    },
-    {
-      option: 2,
       name: 'Track Application',
       tabName: 'track-application',
       icon: <CreditCardOffIcon />,
       element: <TrackApplication />,
+    },
+    {
+      option: 2,
+      name: 'Voluntary Suspend License',
+      tabName: 'voluntary-suspend-license',
+      icon: <CreditCardOffIcon />,
+      element: <VoluntarySuspendLicense tabName={userActiveTab} />,
     },
   ];
 
