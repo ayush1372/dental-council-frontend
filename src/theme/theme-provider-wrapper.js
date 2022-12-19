@@ -20,13 +20,11 @@ const ThemeProviderWrapper = ({ children }) => {
     []
   );
 
-  const { appFontSize, appFontType } = useSelector((state) => state.appFontSize);
-  // eslint-disable-next-line no-console
-  console.log('fd', appFontSize);
+  const { appFontType } = useSelector((state) => state.appFontSize);
 
   return (
     <ColorModeContext.Provider value={colorMode}>
-      <ThemeProvider theme={themeWrapper(mode, appFontSize, appFontType)}>{children}</ThemeProvider>
+      <ThemeProvider theme={themeWrapper(mode, appFontType)}>{children}</ThemeProvider>
     </ColorModeContext.Provider>
   );
 };

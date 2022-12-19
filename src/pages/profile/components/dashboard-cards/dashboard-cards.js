@@ -15,6 +15,7 @@ import DashboardControlledTable from '../dashboard-controlled-table/dashboard-co
 
 export default function Dashboard() {
   const theme = useTheme();
+
   const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
   const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(1),
@@ -25,7 +26,7 @@ export default function Dashboard() {
   }));
 
   let blankDashboard = {
-    'Registration Rrequest': [
+    'Registration Request': [
       {
         name: 'Total Registration Request',
         value: 0,

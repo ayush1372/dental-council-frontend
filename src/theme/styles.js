@@ -18,10 +18,7 @@ import { TableSortLabel } from './table-sort-label';
 import { TextField } from './textfield';
 import { Typography } from './typography';
 
-const themeWrapper = (mode, appFontSize, appFontType) => {
-  // eslint-disable-next-line no-console
-  console.log('f1234d', appFontSize, appFontType);
-
+const themeWrapper = (mode, appFontType) => {
   const palettes = palette(mode);
   return createTheme({
     // STYLE FOR COLOR OVERRIDE
@@ -53,7 +50,7 @@ const themeWrapper = (mode, appFontSize, appFontType) => {
       MuiCardActions: CardActions(palettes),
 
       // STYLE FOR TYPOGRAPHY COMPONENT
-      MuiTypography: Typography(palettes, appFontSize, appFontType),
+      MuiTypography: Typography(palettes, appFontType),
 
       // STYLE FOR TEXTFIELD COMPONENT
       MuiOutlinedInput: TextField(palettes),

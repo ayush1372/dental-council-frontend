@@ -6,7 +6,7 @@ import '@fontsource/roboto/900.css';
 
 import { changeAppFontSize } from '../helpers/functions/common-functions';
 
-export const Typography = (palette, appFontSize, appFontType) => ({
+export const Typography = (palette, appFontType) => ({
   fontSize: changeAppFontSize(16, appFontType),
   color: palette.textPrimary.main,
   fontWeight: '400',
@@ -52,7 +52,7 @@ export const Typography = (palette, appFontSize, appFontType) => ({
       fontWeight: '600',
     },
     body1: {
-      fontSize: '16px',
+      fontSize: changeAppFontSize(16, appFontType),
       lineHeight: '24px',
       fontWeight: '500',
     },
@@ -72,7 +72,7 @@ export const Typography = (palette, appFontSize, appFontType) => ({
       fontWeight: '500',
     },
     body5: {
-      fontSize: '14px',
+      fontSize: changeAppFontSize(14, appFontType),
       lineHeight: '17px',
       fontWeight: '400',
     },
