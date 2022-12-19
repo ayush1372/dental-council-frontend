@@ -5,6 +5,7 @@ import { Box, Grid, TablePagination, Typography } from '@mui/material';
 import { verboseLog } from '../../../config/debug';
 import { ActivateLicenceData } from '../../../constants/common-data';
 import GenericTable from '../../../shared/generic-component/generic-table';
+import ViewProfile from '../../../shared/view-profile/view-profile';
 import UserProfile from '../../user-profile';
 import TableSearch from '../components/table-search/table-search';
 const ActivateLicence = (props) => {
@@ -132,11 +133,28 @@ const ActivateLicence = (props) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+  const customPopupOptions = ['NMC', 'SMC'].includes(props.loggedInUserType)
+    ? [
+        {
+          keyName: 'Approve',
+          dataValue: 'approve',
+          onClick: undefined,
+        },
+        {
+          keyName: 'Reject',
+          dataValue: 'reject',
+          onClick: undefined,
+        },
+      ]
+    : undefined;
 
   return (
     <>
       {showViewProfile ? (
-        <UserProfile />
+        <Box bgcolor="grey1.lighter">
+          <ViewProfile />
+          <UserProfile showViewProfile={true} />
+        </Box>
       ) : (
         <Grid sx={{ m: 2 }}>
           <Grid item>
@@ -156,6 +174,7 @@ const ActivateLicence = (props) => {
             handleRowClick={handleDataRowClick}
             rowsPerPage={rowsPerPage}
             page={page}
+            customPopupOptions={customPopupOptions}
           />
 
           <Box>

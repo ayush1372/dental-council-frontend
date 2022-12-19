@@ -36,9 +36,26 @@ GenericTable.propTypes = {
 export default function GenericTable(props) {
   const { userActiveTab } = useSelector((state) => state.ui);
   const tableCellWidth = Math.floor(window.innerWidth / props.tableHeader.length) + 'px';
-  const { order, orderBy, onRequestSort, page, rowsPerPage } = props;
+  const { order, orderBy, onRequestSort, page, rowsPerPage, customPopupOptions } = props;
   const [selected, setSelected] = useState('');
   const [confirmationModal, setConfirmationModal] = useState(false);
+  const selectionChangeHandler = (event) => {
+    const { myValue } = event.currentTarget.dataset;
+    setSelected(myValue);
+    setConfirmationModal(true);
+  };
+  const [popUpOptions] = useState([
+    {
+      keyName: 'Permanent suspend',
+      dataValue: 'suspend',
+      onClick: selectionChangeHandler,
+    },
+    {
+      keyName: ' Temporary suspend',
+      dataValue: 'blacklist',
+      onClick: selectionChangeHandler,
+    },
+  ]);
   verboseLog('data', props);
   function stableSort(array, comparator) {
     const stabilizedThis = array.map((el, index) => [el, index]);
@@ -86,12 +103,6 @@ export default function GenericTable(props) {
   };
   const handleClose = () => {
     setConfirmationModal(false);
-  };
-
-  const selectionChangeHandler = (event) => {
-    const { myValue } = event.currentTarget.dataset;
-    setSelected(myValue);
-    setConfirmationModal(true);
   };
 
   return (
@@ -214,7 +225,18 @@ export default function GenericTable(props) {
                                 }}
                               ></Button>
                               <Menu {...bindMenu(popupState)}>
-                                <MenuItem
+                                {(customPopupOptions || popUpOptions).map((option) => {
+                                  return (
+                                    <MenuItem
+                                      key={option.dataValue}
+                                      data-my-value={option.dataValue}
+                                      onClick={selectionChangeHandler}
+                                    >
+                                      {option.keyName}
+                                    </MenuItem>
+                                  );
+                                })}
+                                {/* <MenuItem
                                   data-my-value={'suspend'}
                                   onClick={selectionChangeHandler}
                                 >
@@ -225,7 +247,7 @@ export default function GenericTable(props) {
                                   onClick={selectionChangeHandler}
                                 >
                                   Temporary suspend
-                                </MenuItem>
+                                </MenuItem> */}
                               </Menu>
                             </React.Fragment>
                           )}
