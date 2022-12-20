@@ -27,27 +27,27 @@ export const Typography = (palette, appFontType) => ({
     },
 
     h1: {
-      fontSize: '36px',
+      fontSize: changeAppFontSize(36, appFontType),
       lineHeight: '44px',
       fontWeight: '700',
     },
     h2: {
-      fontSize: '24px',
+      fontSize: changeAppFontSize(24, appFontType),
       lineHeight: '32px',
       fontWeight: '700',
     },
     h3: {
-      fontSize: '18px',
+      fontSize: changeAppFontSize(18, appFontType),
       lineHeight: '28px',
       fontWeight: '700',
     },
     subtitle1: {
-      fontSize: '18px',
+      fontSize: changeAppFontSize(18, appFontType),
       lineHeight: '28px',
       fontWeight: '500',
     },
     subtitle2: {
-      fontSize: '16px',
+      fontSize: changeAppFontSize(16, appFontType),
       lineHeight: '24px',
       fontWeight: '600',
     },
@@ -57,7 +57,7 @@ export const Typography = (palette, appFontType) => ({
       fontWeight: '500',
     },
     body2: {
-      fontSize: '12px',
+      fontSize: changeAppFontSize(12, appFontType),
       lineHeight: '22px',
       fontWeight: '600',
     },
@@ -67,7 +67,7 @@ export const Typography = (palette, appFontType) => ({
       fontWeight: '500',
     },
     body4: {
-      fontSize: '12px',
+      fontSize: changeAppFontSize(12, appFontType),
       lineHeight: '22px',
       fontWeight: '500',
     },
@@ -77,7 +77,7 @@ export const Typography = (palette, appFontType) => ({
       fontWeight: '400',
     },
     body6: {
-      fontSize: '30px',
+      fontSize: changeAppFontSize(30, appFontType),
       lineHeight: '26px',
       fontWeight: '500',
     },

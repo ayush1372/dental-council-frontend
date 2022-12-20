@@ -15,7 +15,6 @@ import DashboardControlledTable from '../dashboard-controlled-table/dashboard-co
 
 export default function Dashboard() {
   const theme = useTheme();
-
   const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
   const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(1),
@@ -231,14 +230,14 @@ export default function Dashboard() {
                           >
                             <Box
                               color="secondary.contrastText"
-                              fontSize={14}
+                              fontSize="14px"
                               sx={{ minHeight: '60px', wordBreak: 'break-word' }}
                             >
                               {item.name}
                             </Box>
                             <Box
                               color="tabHighlightedBackgroundColor.main"
-                              fontSize={20}
+                              fontSize="20px"
                               fontWeight={600}
                             >
                               {item.value}

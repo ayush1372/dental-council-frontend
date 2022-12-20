@@ -13,6 +13,7 @@ import { FormHelperText } from './form-helper-text';
 import { InputLabel } from './input-label';
 import { palette } from './palette';
 import { StepLabel } from './step-label';
+import { TableCell } from './table-cell';
 import { TableRow } from './table-row';
 import { TableSortLabel } from './table-sort-label';
 import { TextField } from './textfield';
@@ -38,40 +39,42 @@ const themeWrapper = (mode, appFontType) => {
 
     components: {
       // STYLE FOR BUTTON COMPONENT
-      MuiButton: Button(palettes),
+      MuiButton: Button(palettes, appFontType),
 
       // STYLE FOR CARD COMPONENT
-      MuiCard: Card(palettes),
+      MuiCard: Card(palettes, appFontType),
 
-      MuiCardHeader: CardHeader(palettes),
+      MuiCardHeader: CardHeader(palettes, appFontType),
 
-      MuiCardContent: CardContent(palettes),
+      MuiCardContent: CardContent(palettes, appFontType),
 
-      MuiCardActions: CardActions(palettes),
+      MuiCardActions: CardActions(palettes, appFontType),
 
       // STYLE FOR TYPOGRAPHY COMPONENT
       MuiTypography: Typography(palettes, appFontType),
 
       // STYLE FOR TEXTFIELD COMPONENT
-      MuiOutlinedInput: TextField(palettes),
+      MuiOutlinedInput: TextField(palettes, appFontType),
 
       // STYLE FOR INPUT LABEL COMPONENT
-      MuiInputLabel: InputLabel(palettes),
+      MuiInputLabel: InputLabel(palettes, appFontType),
 
       // STYLE FOR INPUT FormHelperText COMPONENT
-      MuiFormHelperText: FormHelperText(palettes),
+      MuiFormHelperText: FormHelperText(palettes, appFontType),
 
-      MuiAccordion: Accordion(palettes),
+      MuiAccordion: Accordion(palettes, appFontType),
 
-      MuiAccordionSummary: AccordionSummary(palettes),
+      MuiAccordionSummary: AccordionSummary(palettes, appFontType),
 
-      MuiAccordionDetails: AccordionDetails(palettes),
+      MuiAccordionDetails: AccordionDetails(palettes, appFontType),
 
-      MuiTableSortLabel: TableSortLabel(palettes),
+      MuiTableSortLabel: TableSortLabel(palettes, appFontType),
 
-      MuiTableRow: TableRow,
+      MuiTableRow: TableRow(palettes, appFontType),
 
-      MuiStepLabel: StepLabel,
+      MuiStepLabel: StepLabel(palettes, appFontType),
+
+      MuiTableCell: TableCell(palettes, appFontType),
     },
 
     // STYLE FOR BORDER RADIUS

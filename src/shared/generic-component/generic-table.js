@@ -108,7 +108,7 @@ export default function GenericTable(props) {
               if (item.sorting) {
                 return (
                   <TableCell
-                    sx={{ fontSize: '13px', color: 'white.main' }}
+                    sx={{ color: 'white.main' }}
                     key={index}
                     align="left"
                     sortDirection={orderBy.name === item.name ? order : false}
@@ -129,11 +129,7 @@ export default function GenericTable(props) {
                 );
               } else {
                 return (
-                  <TableCell
-                    key={index}
-                    align="left"
-                    sx={{ fontSize: '13px', color: 'white.main' }}
-                  >
+                  <TableCell key={index} align="left" sx={{ color: 'white.main' }}>
                     {item.title}
                   </TableCell>
                 );
@@ -153,12 +149,7 @@ export default function GenericTable(props) {
                 {props.tableHeader.map((item, index) => {
                   if (item.title === 'View') {
                     return (
-                      <TableCell
-                        sx={{ fontSize: '13px' }}
-                        maxWidth={`${tableCellWidth}%`}
-                        key={index}
-                        align="left"
-                      >
+                      <TableCell maxWidth={`${tableCellWidth}%`} key={index} align="left">
                         <Button
                           onClick={(event) => row[item.name]?.onClickCallback(event, row)}
                           variant="contained"
@@ -176,12 +167,7 @@ export default function GenericTable(props) {
                     item.title === 'Applicant Name'
                   ) {
                     return (
-                      <TableCell
-                        sx={{ fontSize: '13px' }}
-                        maxWidth={`${tableCellWidth}%`}
-                        key={index}
-                        align="left"
-                      >
+                      <TableCell maxWidth={`${tableCellWidth}%`} key={index} align="left">
                         <Link
                           href="/profile"
                           onClick={(event) => row[item.name]?.callbackNameOfApplicant(event, row)}
@@ -195,12 +181,7 @@ export default function GenericTable(props) {
                     (userActiveTab === 'track-status' || userActiveTab === 'Activate Licence')
                   ) {
                     return (
-                      <TableCell
-                        sx={{ fontSize: '13px' }}
-                        maxWidth={`${tableCellWidth}%`}
-                        key={index}
-                        align="left"
-                      >
+                      <TableCell maxWidth={`${tableCellWidth}%`} key={index} align="left">
                         <PopupState variant="popover" popupId="demo-popup-menu">
                           {(popupState) => (
                             <React.Fragment>
@@ -234,12 +215,7 @@ export default function GenericTable(props) {
                     );
                   } else if (item.title === 'Current Status') {
                     return (
-                      <TableCell
-                        sx={{ fontSize: '13px' }}
-                        maxWidth={`${tableCellWidth}%`}
-                        key={index}
-                        align="left"
-                      >
+                      <TableCell maxWidth={`${tableCellWidth}%`} key={index} align="left">
                         <Chip
                           type={
                             row[item.name]?.value === 'Submitted'
@@ -256,12 +232,7 @@ export default function GenericTable(props) {
                     );
                   } else if (item.title === 'Action' && userActiveTab === 'track-application') {
                     return (
-                      <TableCell
-                        sx={{ fontSize: '13px' }}
-                        maxWidth={`${tableCellWidth}%`}
-                        key={index}
-                        align="left"
-                      >
+                      <TableCell maxWidth={`${tableCellWidth}%`} key={index} align="left">
                         <Link onClick={(event) => row[item.name]?.onClickCallback(event, row)}>
                           {row[item.name]?.value}
                         </Link>
@@ -278,7 +249,6 @@ export default function GenericTable(props) {
                             textOverflow: 'ellipsis',
                             maxWidth: '112px',
                             overflow: 'hidden',
-                            fontSize: '13px',
                           }}
                           align="left"
                         >

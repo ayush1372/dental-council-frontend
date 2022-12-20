@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form';
 import { Button, Select, TextField } from '../../../ui/core';
 
 const AdvanceSearch = ({ setDoSearch }) => {
-  // const [Value, setValue] = useState([]);
   const {
     formState: { errors },
     getValues,
