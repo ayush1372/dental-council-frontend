@@ -1,19 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  countries: { data: [] },
+  citiesList: { data: [], isLoading: Boolean(true), isError: false },
 };
 
-const personalDetailsReducer = createSlice({
-  name: 'personalDetailsReducer',
+const cityList = createSlice({
+  name: 'cityList',
   initialState,
   reducers: {
-    updateCities: (state, action) => {
-      state.cities = action.payload;
+    getCities: (state, action) => {
+      state.citiesList = action.payload;
     },
   },
 });
 
-export const { updateCities } = personalDetailsReducer.actions;
+export const { getCities } = cityList.actions;
 
-export default personalDetailsReducer.reducer;
+export default cityList.reducer;
