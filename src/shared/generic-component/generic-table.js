@@ -163,8 +163,8 @@ export default function GenericTable(props) {
                       </TableCell>
                     );
                   } else if (
-                    item.title === 'Name of Applicant' ||
-                    item.title === 'Applicant Name'
+                    (item.title === 'Name of Applicant' || item.title === 'Applicant Name') &&
+                    userActiveTab !== 'dashboard'
                   ) {
                     return (
                       <TableCell maxWidth={`${tableCellWidth}%`} key={index} align="left">
