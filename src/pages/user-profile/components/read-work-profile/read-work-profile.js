@@ -117,7 +117,7 @@ const ReadWorkProfile = ({
                       {...bindTrigger(popupState)}
                       sx={{ mr: 2 }}
                     >
-                      Actions
+                      Action...
                     </Button>
 
                     <Menu {...bindMenu(popupState)}>

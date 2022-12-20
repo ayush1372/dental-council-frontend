@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
 const RegistrationDetailsContent = () => {
-  const userType = useSelector((state) => state.login.loggedInUserType);
+  const { userActiveTab } = useSelector((state) => state.ui);
 
   const [openModal, setOpenModal] = useState(false);
   const ClosePopup = () => {
@@ -31,7 +31,7 @@ const RegistrationDetailsContent = () => {
               West Bengal Medical Council
             </Typography>
 
-            {userType !== 'Doctor' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -54,7 +54,7 @@ const RegistrationDetailsContent = () => {
             >
               7991749871719
             </Typography>
-            {userType !== 'Doctor' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -76,7 +76,7 @@ const RegistrationDetailsContent = () => {
             >
               30-10-2021
             </Typography>
-            {userType !== 'Doctor' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -95,7 +95,7 @@ const RegistrationDetailsContent = () => {
             <Typography variant="subtitle2" color="primary.main">
               permanent
             </Typography>
-            {userType !== 'Doctor' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -117,7 +117,7 @@ const RegistrationDetailsContent = () => {
             >
               30-10-2022
             </Typography>
-            {userType !== 'Doctor' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
@@ -134,7 +134,7 @@ const RegistrationDetailsContent = () => {
             <Typography variant="subtitle2" color="primary.main">
               Yes
             </Typography>
-            {userType !== 'Doctor' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
