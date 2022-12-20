@@ -51,7 +51,7 @@ function CollegeApprovalTable(props) {
     { title: 'Name of State Council', name: 'nameofStateCouncil', sorting: true, type: 'string' },
     { title: 'Date of Submission', name: 'dateofSubmission', sorting: true, type: 'date' },
     { title: 'Pendency', name: 'pendency', sorting: true, type: 'string' },
-    { title: 'View', name: 'view', sorting: true, type: 'string' },
+    { title: 'View', name: 'view', sorting: false, type: 'string' },
   ];
 
   const handleDataRowClick = (dataRow) => {

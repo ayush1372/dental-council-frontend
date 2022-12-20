@@ -25,7 +25,7 @@ export default function Dashboard() {
   }));
 
   let blankDashboard = {
-    'Registration Rrequest': [
+    'Registration Request': [
       {
         name: 'Total Registration Request',
         value: 0,
