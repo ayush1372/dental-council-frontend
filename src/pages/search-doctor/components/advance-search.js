@@ -59,9 +59,9 @@ const AdvanceSearch = ({ setDoSearch }) => {
           <Typography color="inputTextColor.main">
             Registration Number{' '}
             <ErrorOutlineIcon
+              fontSize="width12"
               sx={{
                 color: 'textPrimary.secondary',
-                fontSize: '12px',
               }}
             />
           </Typography>

@@ -13,6 +13,7 @@ import { FormHelperText } from './form-helper-text';
 import { InputLabel } from './input-label';
 import { palette } from './palette';
 import { StepLabel } from './step-label';
+import { SvgIcon } from './svg-icon';
 import { TableCell } from './table-cell';
 import { TableRow } from './table-row';
 import { TableSortLabel } from './table-sort-label';
@@ -75,6 +76,8 @@ const themeWrapper = (mode, appFontType) => {
       MuiStepLabel: StepLabel(palettes, appFontType),
 
       MuiTableCell: TableCell(palettes, appFontType),
+
+      MuiSvgIcon: SvgIcon(palettes, appFontType),
     },
 
     // STYLE FOR BORDER RADIUS
