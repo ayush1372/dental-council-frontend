@@ -1,30 +1,35 @@
-import { Grid, Typography } from '@mui/material';
+import { Box, Grid, Link, Typography } from '@mui/material';
 
-import ANDROIDICON from '../../../../../assets/images/androidIcon.png';
+import appStore from '../../../../../assets/images/app-store-logo.svg';
+import gPlayStoreWhite from '../../../../../assets/images/google-play-white-logo.svg';
 import MOBILEAAPSCAN from '../../../../../assets/images/mobileAppScan.png';
-
-import styles from './abdm-health-records.module.scss';
 
 export const AbdmHealthRecords = () => {
   return (
     <>
-      <Typography sx={{ mb: 2 }} variant="subtitle1" component="div" className={styles.footerTitle}>
-        Important Links
+      <Typography variant="subtitle1" component="div" mb={{ xs: 0, md: 3 }}>
+        ABHA App
       </Typography>
 
       <Grid container spacing={1} justifyContent="flex-start">
         <Grid item xs="auto">
+          <Typography variant="subtitle1" component="div" fontWeight="500" mb={0.5}>
+            Scan this
+          </Typography>
           <img src={MOBILEAAPSCAN} alt="Mobile App Scan" />
         </Grid>
         <Grid item xs="auto">
-          <img src={ANDROIDICON} alt="Android Icon" />
-          <Typography
-            sx={{ lineHeight: 'normal', paddingLeft: '10px' }}
-            variant="body1"
-            component="div"
-          >
-            App for Android
+          <Typography variant="subtitle1" component="div" fontWeight="500" mb={0.5}>
+            Download App
           </Typography>
+          <Box display="flex" flexDirection="column">
+            <Link href="https://apps.apple.com/in/app/abha-abdm/id1630917266" target="_blank">
+              <img src={appStore} alt="Android Icon" />
+            </Link>
+            <Link href="https://play.google.com/store/apps/details?id=in.ndhm.phr" target="_blank">
+              <img src={gPlayStoreWhite} alt="Android Icon" />
+            </Link>
+          </Box>
         </Grid>
       </Grid>
     </>
