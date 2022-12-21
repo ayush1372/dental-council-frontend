@@ -49,7 +49,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       District: loggedInUserType === 'SMC' ? '' : 'new delhi',
       SubDistrict: '',
       State: loggedInUserType === 'SMC' ? '' : '',
-      Country: loggedInUserType === 'SMC' ? '' : 'India',
+      Country: loggedInUserType === 'SMC' ? '' : 356,
       PostalCode: loggedInUserType === 'SMC' ? '' : '120018',
       IMRID: loggedInUserType === 'SMC' ? '' : '9598237230192838',
       YearOfInfo: '',
@@ -79,6 +79,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     setValue(name, value, true);
     setLanguages([...value]);
   };
+
+  const countryIndia = countriesList.filter(function (item) {
+    return item.name === 'India';
+  });
 
   return (
     <Box boxShadow={1} padding="0px 91px 44px 41px">
@@ -581,7 +585,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               {...register('Country', {
                 required: 'Country is required',
               })}
-              options={createSelectFieldData(countriesList)}
+              disabled
+              options={createSelectFieldData(countryIndia)}
               MenuProps={{
                 style: {
                   maxHeight: 250,

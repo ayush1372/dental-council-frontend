@@ -50,7 +50,7 @@ export const TextField = (palette) => ({
         color: palette.error.main,
       },
       '&.Mui-disabled': {
-        opacity: '0.4',
+        // opacity: '0.4',
         pointerEvents: 'none',
       },
       '&.MuiInputBase-adornedEnd': {
