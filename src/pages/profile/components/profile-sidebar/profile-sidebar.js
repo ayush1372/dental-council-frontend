@@ -14,7 +14,7 @@ import ListItemText from '@mui/material/ListItemText';
 import { styled, useTheme } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
 
-import { changeAppFontSize } from '../../../../helpers/functions/common-functions';
+// import { changeAppFontSize } from '../../../../helpers/functions/common-functions';
 import ProfileImage from '../profile-image/profile-image';
 
 const drawerWidth = 240;
@@ -96,7 +96,7 @@ export default function MiniDrawer({
   const theme = useTheme();
   const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
   const { userActiveTab } = useSelector((state) => state.ui);
-  const { appFontType } = useSelector((state) => state.appFontSize);
+  // const { appFontType } = useSelector((state) => state.appFontSize);
 
   return (
     <Box
@@ -206,7 +206,7 @@ export default function MiniDrawer({
                   </ListItemIcon>
                   <ListItemText
                     primary={item.name}
-                    primaryTypographyProps={{ fontSize: changeAppFontSize(14, appFontType) }}
+                    primaryTypographyProps={{ variant: 'body3' }}
                     sx={{
                       opacity: open ? 1 : 0,
                       color:
