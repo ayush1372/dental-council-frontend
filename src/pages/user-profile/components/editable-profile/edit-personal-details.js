@@ -17,6 +17,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const { t } = useTranslation();
   const loggedInUserType = useSelector((state) => state?.login?.loggedInUserType);
   const { statesList } = useSelector((state) => state?.menuLists);
+  const { countriesList } = useSelector((state) => state?.menuLists);
 
   const [languages, setLanguages] = useState([]);
   const {
@@ -58,7 +59,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       LanguageSpoken: [],
     },
   });
-
   const { otpPopup, handleClickOpen, otpVerified } = ModalOTP({ afterConfirm: () => {} });
 
   const handleBackButton = () => {
@@ -581,13 +581,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               {...register('Country', {
                 required: 'Country is required',
               })}
-              disabled
-              options={[
-                {
-                  label: 'India',
-                  value: 'India',
-                },
-              ]}
+              options={createSelectFieldData(countriesList)}
               MenuProps={{
                 style: {
                   maxHeight: 250,
