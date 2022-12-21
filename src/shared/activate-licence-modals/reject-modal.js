@@ -25,12 +25,7 @@ export default function RejectLicenseModal(props) {
               <CloseIcon color="grey.context" onClick={handleClose} />
             </Box>
             <Box mb={1} width="100%" textAlign="center">
-              <ErrorIcon
-                sx={{
-                  fontSize: '48px',
-                }}
-                color="warning"
-              />
+              <ErrorIcon fontSize="width48" color="warning" />
             </Box>
             <Typography
               variant="h2"

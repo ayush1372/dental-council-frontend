@@ -39,7 +39,7 @@ const ConstantDetails = () => {
             <Grid>
               <Typography variant="subtitle2" color="primary.main">
                 aarnav.sharma@gmail.com
-                <CheckCircleIcon color="success" sx={{ fontSize: '13px', ml: 1 }} />
+                <CheckCircleIcon color="success" fontSize="width12" sx={{ ml: 1 }} />
               </Typography>
             </Grid>
           </Grid>
@@ -48,7 +48,7 @@ const ConstantDetails = () => {
               Mobile Number
             </Typography>
             <Typography variant="subtitle2" color="primary.main">
-              9967453678 <CheckCircleIcon color="success" sx={{ fontSize: '13px', ml: 1 }} />
+              9967453678 <CheckCircleIcon color="success" fontSize="width12" sx={{ ml: 1 }} />
             </Typography>
           </Grid>
           <Grid item xs={8} md={4}>
@@ -56,7 +56,7 @@ const ConstantDetails = () => {
               Aadhaar
             </Typography>
             <Typography variant="subtitle2" color="primary.main">
-              Verified <CheckCircleIcon color="success" sx={{ fontSize: '13px', ml: 1 }} />
+              Verified <CheckCircleIcon color="success" fontSize="width12" sx={{ ml: 1 }} />
             </Typography>
           </Grid>
         </Grid>

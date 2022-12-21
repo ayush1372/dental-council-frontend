@@ -1,9 +1,11 @@
-export const TextField = (palette) => ({
+import { changeAppFontSize } from '../helpers/functions/common-functions';
+
+export const TextField = (palette, appFontType) => ({
   variants: [
     {
       props: { size: 'large' },
       style: {
-        fontSize: '18px',
+        fontSize: changeAppFontSize(18, appFontType),
         lineHeight: '28px',
       },
     },
@@ -25,7 +27,7 @@ export const TextField = (palette) => ({
   },
   styleOverrides: {
     root: {
-      fontSize: '16px',
+      fontSize: changeAppFontSize(16, appFontType),
       lineHeight: '24px',
       color: palette.inputTextColor.main,
       borderColor: palette.inputBorderColor.main,
@@ -71,7 +73,7 @@ export const TextField = (palette) => ({
       },
     },
     inputSizeSmall: {
-      fontSize: '14px',
+      fontSize: changeAppFontSize(14, appFontType),
       lineHeight: '22px',
       padding: '9px 16px',
     },
