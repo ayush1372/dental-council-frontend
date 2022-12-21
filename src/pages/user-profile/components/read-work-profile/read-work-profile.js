@@ -106,7 +106,7 @@ const ReadWorkProfile = ({
       {showActions && (
         <Box paddingBottom={'30px'} pl={3} display="flex" justifyContent="space-between">
           <ButtonGroupWizard handlePrevious={handleBack} />
-          {showActions && loggedInUserType !== 'Doctor' && (
+          {showActions && loggedInUserType === 'College' && (
             <Box mt={2}>
               <PopupState>
                 {(popupState) => (
@@ -151,6 +151,23 @@ const ReadWorkProfile = ({
               </PopupState>
               <Button color="secondary" variant="contained" onClick={handleSubmitDetails}>
                 Submit
+              </Button>
+            </Box>
+          )}
+          {showActions && ['SMC', 'NMC'].includes(loggedInUserType) && (
+            <Box pl={3} display="flex" justifyContent="space-between" pt={2}>
+              <Button
+                sx={{
+                  marginRight: '10px',
+                }}
+                color="secondary"
+                variant="contained"
+                onClick={() => {}}
+              >
+                Approve
+              </Button>
+              <Button color="secondary" variant="contained" onClick={() => {}}>
+                Reject
               </Button>
             </Box>
           )}
