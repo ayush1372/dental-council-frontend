@@ -251,6 +251,10 @@ const CollegeEditProfile = () => {
             name={'CollegePincode'}
             placeholder={'Enter Pin Code'}
             defaultValue={getValues().CollegePincode}
+            error={errors.CollegePincode?.message}
+            {...register('CollegePincode', {
+              required: 'College Pin Code Name is required',
+            })}
           />
         </Grid>
 
@@ -266,10 +270,10 @@ const CollegeEditProfile = () => {
             name="StateName"
             clearErrors={clearErrors}
             items={StateNames}
-            placeholder="Select StateName Name"
+            placeholder="Select State Name"
             error={errors.StateName?.message}
             {...register('StateName', {
-              required: 'StateName Name is required',
+              required: 'State Name is required',
             })}
           />
         </Grid>
