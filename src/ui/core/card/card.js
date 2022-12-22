@@ -71,7 +71,7 @@ export const Card = ({
                     },
                   }}
                 >
-                  <Typography sx={{ fontSize: '14px' }}>Status: open</Typography>
+                  <Typography variant="body3">Status: open</Typography>
                 </Button>
               </Grid>
             </Grid>

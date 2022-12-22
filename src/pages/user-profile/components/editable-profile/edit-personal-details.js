@@ -17,6 +17,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const { t } = useTranslation();
   const loggedInUserType = useSelector((state) => state?.login?.loggedInUserType);
   const { statesList } = useSelector((state) => state?.menuLists);
+  const { districtsList } = useSelector((state) => state?.menuLists);
 
   const [languages, setLanguages] = useState([]);
   const {
@@ -523,12 +524,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               {...register('District', {
                 required: 'District is required',
               })}
-              options={[
-                {
-                  label: 'New Delhi',
-                  value: 'new delhi',
+              options={createSelectFieldData(districtsList)}
+              MenuProps={{
+                style: {
+                  maxHeight: 250,
+                  maxWidth: 130,
                 },
-              ]}
+              }}
             />
           </Grid>
           <Grid item xs={4}>
