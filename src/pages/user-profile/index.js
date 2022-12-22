@@ -155,7 +155,7 @@ export const UserProfile = ({
                       width: 'max-content',
                     }}
                   >
-                    Change password
+                    Change Password
                   </Button>
                 )}
                 {isReadMode && (

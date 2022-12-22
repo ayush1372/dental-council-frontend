@@ -92,6 +92,12 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
         <Box>
           {tabName === 'voluntary-suspend-license' && (
             <Grid item xs={12} md={12} mb={2}>
+              <Typography variant="subtitle2" color="textPrimary.main">
+                {'Select suspension'}
+                <Typography variant="body4" color="error.main">
+                  *
+                </Typography>
+              </Typography>
               <RadioGroup
                 row
                 onChange={handlevoluntarySuspendLicenseChange}
@@ -108,8 +114,6 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
                     label: 'Permanent Suspension',
                   },
                 ]}
-                label="Select suspension"
-                required={true}
                 error={errors.voluntarySuspendLicense?.message}
               />
             </Grid>
