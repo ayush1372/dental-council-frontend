@@ -32,7 +32,12 @@ function createData(
     view,
   };
 }
-function TrackAppicationTable({ userType, setShowTrackApplication, setShowTrackApplicationTable }) {
+function TrackAppicationTable({
+  userType,
+  setShowTrackApplication,
+  setShowTrackApplicationTable,
+  setShowUserProfile,
+}) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState({});
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -40,7 +45,11 @@ function TrackAppicationTable({ userType, setShowTrackApplication, setShowTrackA
   const [selectedRowData, setRowData] = React.useState({});
 
   const viewNameOfApplicant = (event, row) => {
-    verboseLog('called', event, row);
+    event.preventDefault();
+    event.stopPropagation();
+    setRowData(row);
+    setShowUserProfile(true);
+    setShowTrackApplicationTable(false);
   };
 
   verboseLog('selectedRowData', selectedRowData);
