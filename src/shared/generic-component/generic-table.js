@@ -228,7 +228,7 @@ export default function GenericTable(props) {
                                     <MenuItem
                                       key={option.dataValue}
                                       data-my-value={option.dataValue}
-                                      onClick={selectionChangeHandler}
+                                      onClick={option?.onClick || selectionChangeHandler}
                                     >
                                       {option.keyName}
                                     </MenuItem>

@@ -6,13 +6,16 @@ import { useTheme } from '@mui/material/styles';
 
 import { Button } from '../../ui/core';
 
-export default function ApproveLicenseModal() {
+export default function ApproveLicenseModal(props) {
   const [open, setOpen] = useState(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    props.ClosePopup();
+  };
   const theme = useTheme();
 
   return (
-    <Modal open={open} onClose={handleClose} sx={{ mt: 15, p: 5 }}>
+    <Modal open={open} onClose={handleClose} sx={{ p: 5 }}>
       <Container
         maxWidth="xs"
         sx={{

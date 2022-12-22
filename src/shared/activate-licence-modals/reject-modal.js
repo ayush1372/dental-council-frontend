@@ -15,10 +15,10 @@ export default function RejectLicenseModal(props) {
 
   return (
     <Box>
-      <Modal open={open} onClose={handleClose} sx={{ mt: 15 }}>
+      <Modal open={open} onClose={handleClose} sx={{ mt: 5 }}>
         <Container
           maxWidth="sm"
-          sx={{ backgroundColor: 'white.main', borderRadius: '10px', height: '544px' }}
+          sx={{ backgroundColor: 'white.main', borderRadius: '10px', height: '454px' }}
         >
           <Box py={3}>
             <Box display="flex" justifyContent="flex-end">
@@ -58,7 +58,7 @@ export default function RejectLicenseModal(props) {
               <Typography color="inputFocusColor.main">150 words only</Typography>
             </Box>
 
-            <Box display="flex" justifyContent="flex-end" mt={16}>
+            <Box display="flex" justifyContent="flex-end" mt={5}>
               <Button
                 onClose={handleClose}
                 variant="contained"

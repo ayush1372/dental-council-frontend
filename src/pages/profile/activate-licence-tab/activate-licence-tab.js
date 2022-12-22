@@ -5,15 +5,20 @@ import { useSelector } from 'react-redux';
 
 import { verboseLog } from '../../../config/debug';
 import { ActivateLicenceData } from '../../../constants/common-data';
+import ApproveLicenseModal from '../../../shared/activate-licence-modals/approve-modal';
+import RejectLicenseModal from '../../../shared/activate-licence-modals/reject-modal';
 import GenericTable from '../../../shared/generic-component/generic-table';
 import ViewProfile from '../../../shared/view-profile/view-profile';
 import UserProfile from '../../user-profile';
 import TableSearch from '../components/table-search/table-search';
+
 const ActivateLicence = (props) => {
   const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState({});
   const [showViewProfile, setShowViewPorfile] = useState(false);
+  const [isApproveModalOpen, setIsApproveModalOpen] = useState(false);
+  const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
 
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
@@ -140,12 +145,16 @@ const ActivateLicence = (props) => {
         {
           keyName: 'Approve',
           dataValue: 'approve',
-          onClick: undefined,
+          onClick: () => {
+            setIsApproveModalOpen(true);
+          },
         },
         {
           keyName: 'Reject',
           dataValue: 'reject',
-          onClick: undefined,
+          onClick: () => {
+            setIsRejectModalOpen(true);
+          },
         },
       ]
     : undefined;
@@ -195,6 +204,20 @@ const ActivateLicence = (props) => {
             />
           </Box>
         </Grid>
+      )}
+      {isApproveModalOpen && (
+        <ApproveLicenseModal
+          ClosePopup={() => {
+            setIsApproveModalOpen(false);
+          }}
+        />
+      )}
+      {isRejectModalOpen && (
+        <RejectLicenseModal
+          ClosePopup={() => {
+            setIsRejectModalOpen(false);
+          }}
+        />
       )}
     </>
   );
