@@ -38,20 +38,20 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
       {!tabName && selectedValue !== 'forward' && (
         <Box align={'center'}>
           {selectedValue === 'raise' ? (
-            <HelpIcon sx={{ fontSize: '40px', color: 'secondary.warningYellow' }} />
+            <HelpIcon fontSize="width40" sx={{ color: 'secondary.warningYellow' }} />
           ) : selectedValue === 'reject' ? (
-            <ErrorIcon color="error" sx={{ fontSize: '40px' }} />
+            <ErrorIcon color="error" fontSize="width40" />
           ) : selectedValue === 'verify' ? (
-            <CheckCircleIcon color="success" sx={{ fontSize: '50px' }} />
+            <CheckCircleIcon color="success" fontSize="width48" />
           ) : (
-            <BlockIcon color="error" sx={{ fontSize: '40px' }} />
+            <BlockIcon color="error" fontSize="width40" />
           )}
         </Box>
       )}
       {selectedValue === 'forward' && (
         <Box display={'flex'} alignItems="flex-start">
           <Box>
-            <ErrorIcon color="error" sx={{ fontSize: '25px' }} />
+            <ErrorIcon color="error" fontSize="width24" />
           </Box>
           <Box>
             <Typography variant="h3">ALERT!</Typography>

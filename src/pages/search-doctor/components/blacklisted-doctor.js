@@ -49,9 +49,9 @@ const BlacklistedDoctor = ({ setDoSearch }) => {
           <Typography color="inputTextColor.main">
             Enter Registration Number{' '}
             <ErrorOutlineIcon
+              fontSize="width12"
               sx={{
                 color: 'textPrimary.secondary',
-                fontSize: '12px',
               }}
             />
           </Typography>
