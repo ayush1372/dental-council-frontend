@@ -28,6 +28,13 @@ export const RegistrationCouncilNames = [
   { id: '11', name: 'Rajasthan Medical Council' },
   { id: '12', name: 'Uttar Pradesh Medical Council' },
 ];
+export const UniqueUserNameForDoctor = [
+  { id: '1', name: 'aarushi.sharma3' },
+  { id: '1', name: 'aarushisharma390' },
+  { id: '1', name: 'sharmaaarushi090' },
+  { id: '1', name: 'aarushi.sharma309' },
+];
+
 export const smcProfileDetails = [
   { label: 'Name', value: 'Aarnav Sharma', id: '1' },
   { label: 'Enrolment Number NDHM', value: 'No', id: '2' },
