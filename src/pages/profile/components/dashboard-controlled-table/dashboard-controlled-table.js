@@ -75,7 +75,7 @@ function DashboardControlledTable(props) {
     },
     { title: 'Date of Submission', name: 'dateofSubmission', sorting: true, type: 'date' },
     { title: 'Pendency', name: 'pendency', sorting: true, type: 'string' },
-    { title: 'View', name: 'view', sorting: true, type: 'string' },
+    { title: 'View', name: 'view', sorting: false, type: 'string' },
   ];
 
   const handleDataRowClick = (dataRow) => {

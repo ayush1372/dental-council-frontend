@@ -217,8 +217,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             <TextField
               variant="outlined"
               name={'FatherName'}
-              placeholder="Your father name"
-              label={'Father Name'}
+              placeholder="Your father's name"
+              label="Father's Name"
               fullWidth
               defaultValue={getValues().FatherName}
               {...register('FatherName', {
@@ -235,8 +235,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             <TextField
               variant="outlined"
               name={'MotherName'}
-              placeholder="Your mother name"
-              label={'Mother Name'}
+              placeholder="Your mother's name"
+              label="Mother's Name"
               fullWidth
               defaultValue={getValues().MotherName}
               {...register('MotherName', {
@@ -619,11 +619,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
           </Grid>
         </Grid>
         <Grid container item spacing={2}>
-          <Grid item xs={6}>
-            <Box display="flex" alignItems="end">
+          <Grid item xs={5}>
+            <Box display="flex" alignItems="end" justifyContent="flex-start">
               <Box width="100%">
                 <TextField
-                  sx={{ width: '100%' }}
+                  sx={{ minWidth: '265px' }}
                   label="Email Address"
                   type="text"
                   name="EmailAddress"
