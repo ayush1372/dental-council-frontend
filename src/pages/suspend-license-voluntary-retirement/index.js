@@ -114,8 +114,6 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
                     label: 'Permanent Suspension',
                   },
                 ]}
-                // label="Select suspension"
-                // required={true}
                 error={errors.voluntarySuspendLicense?.message}
               />
             </Grid>
