@@ -126,7 +126,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
               justifyContent={'flex-start'}
               alignItems={'center'}
             >
-              <TaskAltIcon color="success" sx={{ fontSize: '70px' }} />
+              <TaskAltIcon color="success" fontSize="width80" />
               <Typography color="success.dark" variant="h2" textAlign={'center'}>
                 SUCCESS!
               </Typography>

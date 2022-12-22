@@ -41,7 +41,7 @@ const LoginWrapper = () => {
         <Box p={2} width="504px" height="400">
           <Box display={'flex'} flexDirection="column" width="100%">
             <Box display={'flex'} justifyContent="center">
-              <TaskAltIcon color="success" sx={{ fontSize: '80px' }} />
+              <TaskAltIcon color="success" fontSize="width80" />
             </Box>
             <Typography
               color="success.main"

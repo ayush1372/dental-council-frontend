@@ -80,7 +80,13 @@ export function MobileNumber(props) {
               ),
               endAdornment: (
                 <InputAdornment position="end">
-                  <IconButton aria-label="toggle password visibility" edge="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    edge="end"
+                    sx={{
+                      marginRight: 0,
+                    }}
+                  >
                     {showCircleCheckIcon &&
                       (getValues()?.mobileNo?.length === 10 ? (
                         <CheckCircleIcon color="success" />

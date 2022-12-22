@@ -29,7 +29,7 @@ const ExportFiles = () => {
           endIcon={<KeyboardArrowDownIcon />}
           onClick={handleClick}
           startIcon={
-            <FileUploadOutlinedIcon sx={{ fontSize: '26px', transform: 'rotate(90deg)' }} />
+            <FileUploadOutlinedIcon fontSize="width24" sx={{ transform: 'rotate(90deg)' }} />
           }
         ></Button>
         <Popover
