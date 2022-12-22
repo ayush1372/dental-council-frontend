@@ -33,7 +33,7 @@ const CommunicationAddress = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>
@@ -56,7 +56,7 @@ const CommunicationAddress = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>
@@ -81,7 +81,7 @@ const CommunicationAddress = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>
@@ -104,7 +104,7 @@ const CommunicationAddress = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>
@@ -127,7 +127,7 @@ const CommunicationAddress = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>
@@ -152,7 +152,7 @@ const CommunicationAddress = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>
@@ -175,7 +175,7 @@ const CommunicationAddress = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>
@@ -198,7 +198,7 @@ const CommunicationAddress = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>
@@ -223,7 +223,7 @@ const CommunicationAddress = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>
@@ -246,7 +246,7 @@ const CommunicationAddress = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>

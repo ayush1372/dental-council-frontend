@@ -18,6 +18,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const loggedInUserType = useSelector((state) => state?.login?.loggedInUserType);
   const { statesList } = useSelector((state) => state?.menuLists);
   const { countriesList } = useSelector((state) => state?.menuLists);
+  const { districtsList } = useSelector((state) => state?.menuLists);
 
   const [languages, setLanguages] = useState([]);
   const {
@@ -80,7 +81,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     setLanguages([...value]);
   };
 
-  const countryIndia = countriesList.filter(function (item) {
+  const countryIndia = countriesList?.filter(function (item) {
     return item.name === 'India';
   });
 
@@ -220,8 +221,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             <TextField
               variant="outlined"
               name={'FatherName'}
-              placeholder="Your father name"
-              label={'Father Name'}
+              placeholder="Your father's name"
+              label="Father's Name"
               fullWidth
               defaultValue={getValues().FatherName}
               {...register('FatherName', {
@@ -238,8 +239,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             <TextField
               variant="outlined"
               name={'MotherName'}
-              placeholder="Your mother name"
-              label={'Mother Name'}
+              placeholder="Your mother's name"
+              label="Mother's Name"
               fullWidth
               defaultValue={getValues().MotherName}
               {...register('MotherName', {
@@ -527,12 +528,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               {...register('District', {
                 required: 'District is required',
               })}
-              options={[
-                {
-                  label: 'New Delhi',
-                  value: 'new delhi',
+              options={createSelectFieldData(districtsList)}
+              MenuProps={{
+                style: {
+                  maxHeight: 250,
+                  maxWidth: 130,
                 },
-              ]}
+              }}
             />
           </Grid>
           <Grid item xs={4}>
@@ -616,11 +618,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
           </Grid>
         </Grid>
         <Grid container item spacing={2}>
-          <Grid item xs={6}>
-            <Box display="flex" alignItems="end">
+          <Grid item xs={5}>
+            <Box display="flex" alignItems="end" justifyContent="flex-start">
               <Box width="100%">
                 <TextField
-                  sx={{ width: '100%' }}
+                  sx={{ minWidth: '265px' }}
                   label="Email Address"
                   type="text"
                   name="EmailAddress"

@@ -9,7 +9,11 @@ import { verboseLog } from '../../config/debug';
 import useWizard from '../../hooks/use-wizard';
 import ReactivateLicencePopup from '../../shared/reactivate-licence-popup/re-activate-licence-popup';
 import SuccessPopup from '../../shared/reactivate-licence-popup/success-popup';
-import { getCountriesList, getStatesList } from '../../store/actions/menu-list-actions';
+import {
+  getCountriesList,
+  getDistrictList,
+  getStatesList,
+} from '../../store/actions/menu-list-actions';
 import { Button } from '../../ui/core/button/button';
 import Wizard from '../../ui/core/wizard';
 import ChangePassword from '../profile/change-password/change-password';
@@ -27,6 +31,7 @@ export const UserProfile = ({
   setShowDashboard,
   setShowTable,
   setShowViewPorfile,
+  showUserProfile,
 }) => {
   const dispatch = useDispatch();
   const [isReadMode, setIsReadMode] = useState(true);
@@ -60,6 +65,20 @@ export const UserProfile = ({
       verboseLog('error', err);
     }
   };
+
+  const fetchDistricts = () => {
+    try {
+      dispatch(getDistrictList())
+        .then((dataResponse) => {
+          verboseLog('dataResponse', dataResponse);
+        })
+        .catch((error) => {
+          verboseLog('error occured', error);
+        });
+    } catch (err) {
+      verboseLog('error', err);
+    }
+  };
   const fetchCountries = () => {
     try {
       dispatch(getCountriesList())
@@ -77,6 +96,7 @@ export const UserProfile = ({
   const openDoctorEditProfile = () => {
     setIsReadMode(false);
     fetchStates();
+    fetchDistricts();
     fetchCountries();
   };
 
@@ -91,7 +111,7 @@ export const UserProfile = ({
   return (
     <>
       <Box display="flex" justifyContent="start">
-        {loggedInUserType === 'Doctor' && (
+        {loggedInUserType === 'Doctor' && showUserProfile !== true && (
           <Alert
             severity="error"
             sx={{
@@ -131,7 +151,7 @@ export const UserProfile = ({
       {showSuccessPopup && <SuccessPopup />}
       {!showChangepassword ? (
         <Box sx={{ marginTop: '30px' }}>
-          {!showViewProfile ? (
+          {!showViewProfile && showUserProfile !== true ? (
             <Box display="flex" justifyContent="space-between" mb={3}>
               <Typography component="div" variant="h2" color="primary.main" py={2}>
                 {isReadMode ? 'User Profile' : 'Edit Profile'}

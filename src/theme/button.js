@@ -1,4 +1,6 @@
-export const Button = (palette) => ({
+import { changeAppFontSize } from '../helpers/functions/common-functions';
+
+export const Button = (palette, appFontType) => ({
   defaultProps: {
     disableRipple: true,
   },
@@ -24,23 +26,23 @@ export const Button = (palette) => ({
     },
     sizeSmall: {
       borderRadius: '3px',
-      fontSize: '14px',
+      fontSize: changeAppFontSize(14, appFontType),
       lineHeight: '22px',
       padding: '8px 16px',
     },
     sizeMedium: {
       borderRadius: '5px',
-      fontSize: '18px',
+      fontSize: changeAppFontSize(18, appFontType),
       lineHeight: '28px',
       padding: '12px 24px',
     },
     sizeLarge: {
       borderRadius: '8px',
-      fontSize: '18px',
+      fontSize: changeAppFontSize(18, appFontType),
       lineHeight: '28px',
       padding: '16px 32px',
       '@media (max-width: 600px)': {
-        fontSize: '16px',
+        fontSize: changeAppFontSize(16, appFontType),
         padding: '12px 24px',
       },
     },
