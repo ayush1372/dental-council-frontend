@@ -2,7 +2,6 @@ import { Box, TextField, Typography } from '@mui/material';
 
 import { validateAadharNumber } from '../../../constants/common-data';
 import { SvgImageComponent } from '../../../ui/core/svg-icons';
-import { AadharRegexValidation } from '../../../utilities/common-validations';
 
 export const FIELD = 'field';
 export const FIRST_FIELD_NAME = `${FIELD}_1`;
@@ -34,9 +33,19 @@ export const AadhaarInputField = (props) => {
   const renderError = () => {
     if (errors[FIRST_FIELD_NAME] || errors[SECOND_FIELD_NAME] || errors[THIRD_FIELD_NAME]) {
       return (
-        <Typography style={{ display: 'flex', alignItems: 'center' }} variant="body2" color="error">
+        <Typography
+          style={{ display: 'flex', alignItems: 'center' }}
+          variant="body2"
+          color="error"
+          {...register('aadhar number', {
+            required: 'Provide a valid aadhaar number',
+            pattern: {
+              value: /^[0-9]{4}$/,
+              message: 'Provide a valid aadhaar number',
+            },
+          })}
+        >
           <SvgImageComponent color={'error'} icon={'error'} height={'16px'} />
-          {AadharRegexValidation.required}
         </Typography>
       );
     } else if (

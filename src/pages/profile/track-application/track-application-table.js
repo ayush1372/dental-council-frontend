@@ -67,7 +67,7 @@ function TrackAppicationTable({ userType, setShowTrackApplication, setShowTrackA
       type: 'date',
     },
     { title: 'Pendency', name: 'pendency', sorting: true, type: 'string' },
-    { title: 'Action', name: 'view', sorting: true, type: 'string' },
+    { title: 'Action', name: 'view', sorting: false, type: 'string' },
   ];
 
   const handleDataRowClick = (dataRow) => {
