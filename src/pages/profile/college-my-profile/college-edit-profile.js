@@ -253,7 +253,7 @@ const CollegeEditProfile = () => {
             defaultValue={getValues().CollegePincode}
             error={errors.CollegePincode?.message}
             {...register('CollegePincode', {
-              required: 'College Pin Code Name is required',
+              required: 'College Pin Code is required',
             })}
           />
         </Grid>
