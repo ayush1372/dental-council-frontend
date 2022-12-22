@@ -1,10 +1,12 @@
 import { Box, Button, Container, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 
 import { TextField } from '../../../ui/core';
 
 const ChangePassword = () => {
+  const theme = useTheme();
   const {
     register,
     handleSubmit,
@@ -25,15 +27,21 @@ const ChangePassword = () => {
       <Typography color="primary" variant="h2" textAlign="center" mt={3}>
         Change Password
       </Typography>
-      <Container
+      <Box
         sx={{
-          width: '70%',
-          margin: '10px auto',
-          backgroundColor: 'white.main',
+          width: {
+            xs: '100%',
+            md: '60%',
+          },
+          margin: {
+            xs: 0,
+            md: '10px auto',
+          },
+          backgroundColor: `${theme.palette.white.main}`,
           boxShadow: 4,
         }}
       >
-        <Box p={4} boxShadow="4">
+        <Box p={2} boxShadow="2">
           <Box>
             <Box mt={2}>
               <Typography variant="body3" color="primary">
@@ -118,6 +126,10 @@ const ChangePassword = () => {
                   '&:hover': {
                     backgroundColor: 'secondary.lightOrange',
                   },
+                  width: {
+                    xs: '100%',
+                    md: 'fit-content',
+                  },
                 }}
                 onClick={handleSubmit(onSubmit)}
               >
@@ -126,7 +138,7 @@ const ChangePassword = () => {
             </Box>
           </Box>
         </Box>
-      </Container>
+      </Box>
     </Container>
   );
 };

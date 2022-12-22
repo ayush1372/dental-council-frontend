@@ -1,4 +1,4 @@
-import Box from '@mui/material/Box';
+import { Grid } from '@mui/material';
 
 import { Button } from '../button/button';
 
@@ -18,33 +18,47 @@ const ButtonGroupWizard = ({
   hidePrevious = !(typeof handlePrevious === 'function');
   hideNext = !(typeof handleNext === 'function');
   return (
-    <Box
-      mt={2}
-      // p="0px 24px"
-      sx={{ display: 'flex', justifyContent: !hidePrevious ? 'space-between' : 'right' }}
-    >
+    <Grid container mt={2} display="flex" justifyContent={hidePrevious ? 'end' : 'space-between'}>
       {!hidePrevious && (
-        <Button
-          disabled={disabledPrevious}
-          color="grey"
-          variant="contained"
-          onClick={handlePrevious}
-        >
-          {labelPrevioius}
-        </Button>
+        <Grid item xs={12} md={1}>
+          <Button
+            disabled={disabledPrevious}
+            color="grey"
+            variant="contained"
+            onClick={handlePrevious}
+            sx={{
+              width: '100%',
+              margin: {
+                xs: '5px 0',
+                md: '0',
+              },
+            }}
+          >
+            {labelPrevioius}
+          </Button>
+        </Grid>
       )}
       {!hideNext && (
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={handleNext}
-          data-testid={dataTestidNext}
-          disabled={loading || disabledNext}
-        >
-          {labelNext}
-        </Button>
+        <Grid item xs={12} md={2}>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={handleNext}
+            data-testid={dataTestidNext}
+            disabled={loading || disabledNext}
+            sx={{
+              width: '100%',
+              margin: {
+                xs: '5px 0',
+                md: '0',
+              },
+            }}
+          >
+            {labelNext}
+          </Button>
+        </Grid>
       )}
-    </Box>
+    </Grid>
   );
 };
 

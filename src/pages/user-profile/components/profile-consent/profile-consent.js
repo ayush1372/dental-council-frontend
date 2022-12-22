@@ -3,7 +3,7 @@ import { useState } from 'react';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloseIcon from '@mui/icons-material/Close';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
-import { Box, Dialog, Typography } from '@mui/material';
+import { Box, Dialog, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 
 import { Button, Checkbox } from '../../../../ui/core';
@@ -29,7 +29,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
     if (consent) setConfirmationModal(true);
   };
   return (
-    <Box bgcolor="white.main" py={2} px={4} mt={2} boxShadow={1}>
+    <Box bgcolor="white.main" py={2} px={{ xs: 1, md: 4 }} mt={2} boxShadow={1}>
       <Typography component="div" color="primary.main" variant="body1">
         Consent
       </Typography>
@@ -56,54 +56,84 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
           at any point of time, subject to applicable laws, rules and regulations.
         </Typography>
       </Box>
-      <Box mt={2} display="flex">
-        <Box>
+      <Grid container>
+        <Grid item xs={12} md>
           <Button
             variant="contained"
             color="grey"
             sx={{
-              margin: '0 5px',
+              margin: {
+                xs: '5px 0',
+                md: '0',
+              },
+              width: {
+                xs: '100%',
+                md: 'fit-content',
+              },
             }}
             onClick={handleBack}
           >
             Back
           </Button>
-        </Box>
-        <Box display="flex" justifyContent="flex-end" width="100%">
+        </Grid>
+        <Grid item xs={12} md={3} display="flex" justifyContent="flex-end">
           <Button
             variant="outlined"
             color="secondary"
             sx={{
-              margin: '0 5px',
+              margin: {
+                xs: '5px 0',
+                md: '0',
+              },
+              width: {
+                xs: '100%',
+                md: 'fit-content',
+              },
             }}
           >
             Print & Save as PDF
           </Button>
-
-          {loggedInUserType !== 'SMC' && (
+        </Grid>
+        {loggedInUserType !== 'SMC' && (
+          <Grid item xs={12} md={2} display="flex" justifyContent="flex-end">
             <Button
               color="secondary"
               variant="contained"
               sx={{
-                margin: '0 5px',
+                margin: {
+                  xs: '5px 0',
+                  md: '0',
+                },
+                width: {
+                  xs: '100%',
+                  md: 'fit-content',
+                },
               }}
             >
               E-sign Profile
             </Button>
-          )}
-
+          </Grid>
+        )}
+        <Grid item xs={12} md={1} ml={{ xs: 0, md: 1 }} display="flex" justifyContent="flex-end">
           <Button
             color="secondary"
             variant="contained"
             sx={{
-              margin: '0 5px',
+              margin: {
+                xs: '5px 0',
+                md: '0',
+              },
+              width: {
+                xs: '100%',
+                md: 'fit-content',
+              },
             }}
             onClick={handleSubmit(handleSubmitDetails)}
           >
             Submit
           </Button>
-        </Box>
-      </Box>
+        </Grid>
+      </Grid>
 
       <Dialog
         open={confirmationModal}

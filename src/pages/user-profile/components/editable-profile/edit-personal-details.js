@@ -81,7 +81,15 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   };
 
   return (
-    <Box boxShadow={1} padding="0px 91px 44px 41px">
+    <Box
+      boxShadow={1}
+      sx={{
+        padding: {
+          xs: '0px 10px 10px 10px',
+          md: '0px 91px 44px 41px',
+        },
+      }}
+    >
       <Grid container spacing={2} mt={2}>
         {/* layer 1 */}
         <Grid container item spacing={2}>
@@ -96,7 +104,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               Personal Details*
             </Typography>
           </Grid>
-          <Grid item xs={8} md={4}>
+          <Grid item xs={12} md={4}>
             <RadioGroup
               onChange={handleSalutationChange}
               name={'salutation'}
@@ -125,7 +133,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               error={errors.salutation?.message}
             />
           </Grid>
-          <Grid item xs={8} md={4}>
+          <Grid item xs={12} md={4}>
             <TextField
               variant="outlined"
               name={'AadhaarNumber'}
@@ -145,7 +153,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
           </Grid>
         </Grid>
         <Grid container item spacing={2}>
-          <Grid item xs={8} md={4}>
+          <Grid item xs={12} md={4}>
             <TextField
               variant="outlined"
               name={'FirstName'}
@@ -170,7 +178,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               error={errors.FirstName?.message}
             />
           </Grid>
-          <Grid item xs={8} md={4}>
+          <Grid item xs={12} md={4}>
             <TextField
               variant="outlined"
               name={'MiddleName'}
@@ -192,7 +200,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               InputProps={{ readOnly: loggedInUserType === 'SMC' ? false : true }}
             />
           </Grid>
-          <Grid item xs={8} md={4}>
+          <Grid item xs={12} md={4}>
             <TextField
               variant="outlined"
               name={'LastName'}
@@ -212,7 +220,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
           </Grid>
         </Grid>
         <Grid container item spacing={2}>
-          <Grid item xs={8} md={4}>
+          <Grid item xs={12} md={4}>
             <TextField
               variant="outlined"
               name={'FatherName'}
@@ -230,7 +238,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               error={errors.FatherName?.message}
             />
           </Grid>
-          <Grid item xs={8} md={4}>
+          <Grid item xs={12} md={4}>
             <TextField
               variant="outlined"
               name={'MotherName'}
@@ -248,7 +256,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               error={errors.MotherName?.message}
             />
           </Grid>
-          <Grid item xs={8} md={4}>
+          <Grid item xs={12} md={4}>
             <TextField
               variant="outlined"
               name={'SpouseName'}
@@ -268,7 +276,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
           </Grid>
         </Grid>
         <Grid container item spacing={2}>
-          <Grid item xs={8} md={4}>
+          <Grid item xs={12} md={4}>
             <Select
               fullWidth
               error={errors.Nationality?.message}
@@ -287,7 +295,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               ]}
             />
           </Grid>
-          <Grid item xs={8} md={8}>
+          <Grid item xs={12} md={8}>
             <Typography variant="body1">
               Language Spoken{' '}
               <Typography
@@ -321,7 +329,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
           </Grid>
         </Grid>
         <Grid container item spacing={2}>
-          <Grid item xs={8} md={4}>
+          <Grid item xs={12} md={4}>
             <Typography variant="body1">
               Date of Birth
               <Typography
@@ -387,7 +395,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={8} md={4}>
+          <Grid item xs={12} md={4}>
             <RadioGroup
               onChange={handleGender}
               name={'Gender'}
@@ -412,7 +420,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               error={errors.Gender?.message}
             />
           </Grid>
-          <Grid item xs={8} md={4}>
+          <Grid item xs={12} md={4}>
             <Select
               fullWidth
               error={errors.Schedule?.message}
@@ -453,7 +461,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               Communication Address*
             </Typography>
           </Grid>
-          <Grid item xs={8} md={4}>
+          <Grid item xs={12} md={4}>
             <TextField
               variant="outlined"
               name={'Name'}
@@ -472,7 +480,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               error={errors.Name?.message}
             />
           </Grid>
-          <Grid item xs={8} md={8}>
+          <Grid item xs={12} md={8}>
             <TextField
               variant="outlined"
               name={'Address'}
@@ -493,7 +501,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
           </Grid>
         </Grid>
         <Grid container item spacing={2}>
-          <Grid item xs={4}>
+          <Grid item xs={12} md={4}>
             <Select
               fullWidth
               error={errors.Area?.message}
@@ -512,7 +520,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               ]}
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} md={4}>
             <Select
               fullWidth
               error={errors.District?.message}
@@ -531,7 +539,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               ]}
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} md={4}>
             <Select
               fullWidth
               error={errors.Nationality?.message}
@@ -550,7 +558,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
           </Grid>
         </Grid>
         <Grid container item spacing={2}>
-          <Grid item xs={4}>
+          <Grid item xs={12} md={4}>
             <Select
               fullWidth
               error={errors.State?.message}
@@ -570,7 +578,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               }}
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} md={4}>
             <Select
               fullWidth
               error={errors.Country?.message}
@@ -596,7 +604,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               }}
             />
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={12} md={4}>
             <TextField
               variant="outlined"
               name={'PostalCode'}
@@ -617,7 +625,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
           </Grid>
         </Grid>
         <Grid container item spacing={2}>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <Box display="flex" alignItems="end">
               <Box width="100%">
                 <TextField
@@ -666,7 +674,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
           </Grid>
         </Grid>
         <Grid container item spacing={2}>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <MobileNumber
               register={register}
               getValues={getValues}
@@ -704,7 +712,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               IMR Details*
             </Typography>
           </Grid>
-          <Grid item xs={8} md={4}>
+          <Grid item xs={12} md={4}>
             <TextField
               variant="outlined"
               name={'IMRID'}
@@ -718,7 +726,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               })}
             />
           </Grid>
-          <Grid item xs={8} md={4}>
+          <Grid item xs={12} md={4}>
             <Select
               fullWidth
               error={errors.YearOfInfo?.message}
@@ -733,7 +741,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               options={get_year_data(1930)}
             />
           </Grid>
-          <Grid item xs={8} md={4}>
+          <Grid item xs={12} md={4}>
             <TextField
               variant="outlined"
               name={'RegistrationNumber'}
@@ -749,28 +757,65 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
           </Grid>
         </Grid>
       </Grid>
-      <Box display="flex" justifyContent="space-between" alignItems="center" py={2}>
-        <Box>
-          <Button onClick={handleBackButton} color="grey" variant="contained">
+      <Grid container display="flex" justifyContent="space-between" alignItems="center" mt={5}>
+        <Grid item xs={12} md={8}>
+          <Button
+            onClick={handleBackButton}
+            color="grey"
+            variant="contained"
+            sx={{
+              margin: {
+                xs: '5px 0',
+                md: '0',
+              },
+              width: {
+                xs: '100%',
+                md: 'fit-content',
+              },
+            }}
+          >
             {t('Back')}
           </Button>
-        </Box>
-        <Box>
+        </Grid>
+        <Grid item xs={12} md="auto" display="flex" justifyContent="end">
           <Button
             onClick={handleSubmit}
             variant="outlined"
             color="secondary"
             sx={{
-              marginRight: '10px',
+              margin: {
+                xs: '5px 0',
+                md: '0',
+              },
+              width: {
+                xs: '100%',
+                md: 'fit-content',
+              },
             }}
           >
             {t('Save')}
           </Button>
-          <Button onClick={handleSubmit(onHandleOptionNext)} variant="contained" color="secondary">
+        </Grid>
+        <Grid item xs={12} md="auto" display="flex" justifyContent="end">
+          <Button
+            onClick={handleSubmit(onHandleOptionNext)}
+            variant="contained"
+            color="secondary"
+            sx={{
+              margin: {
+                xs: '5px 0',
+                md: '0',
+              },
+              width: {
+                xs: '100%',
+                md: 'fit-content',
+              },
+            }}
+          >
             {t('Save & Next')}
           </Button>
-        </Box>
-      </Box>
+        </Grid>
+      </Grid>
     </Box>
   );
 };
