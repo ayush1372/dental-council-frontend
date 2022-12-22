@@ -621,7 +621,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             <Box display="flex" alignItems="end" justifyContent="flex-start">
               <Box width="100%">
                 <TextField
-                  sx={{ width: '265px' }}
+                  sx={{ minWidth: '265px' }}
                   label="Email Address"
                   type="text"
                   name="EmailAddress"
