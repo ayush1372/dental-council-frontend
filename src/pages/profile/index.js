@@ -86,7 +86,7 @@ export function Profile() {
       name: 'Activate Licence',
       tabName: 'Activate Licence',
       icon: <AppRegistrationIcon />,
-      element: <ActivateLicence loggedInUserType={'SMC'} />,
+      element: <ActivateLicence />,
     },
   ];
 
@@ -117,7 +117,7 @@ export function Profile() {
       name: 'Activate Licence',
       tabName: 'Activate Licence',
       icon: <AppRegistrationIcon />,
-      element: <ActivateLicence loggedInUserType={'NMC'} />,
+      element: <ActivateLicence />,
     },
     {
       option: 4,

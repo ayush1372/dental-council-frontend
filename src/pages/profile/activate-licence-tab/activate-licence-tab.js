@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { Box, Grid, TablePagination, Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 import { verboseLog } from '../../../config/debug';
 import { ActivateLicenceData } from '../../../constants/common-data';
@@ -9,6 +10,7 @@ import ViewProfile from '../../../shared/view-profile/view-profile';
 import UserProfile from '../../user-profile';
 import TableSearch from '../components/table-search/table-search';
 const ActivateLicence = (props) => {
+  const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState({});
   const [showViewProfile, setShowViewPorfile] = useState(false);
@@ -133,7 +135,7 @@ const ActivateLicence = (props) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-  const customPopupOptions = ['NMC', 'SMC'].includes(props.loggedInUserType)
+  const customPopupOptions = ['NMC', 'SMC'].includes(loggedInUserType)
     ? [
         {
           keyName: 'Approve',

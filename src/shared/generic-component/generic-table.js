@@ -17,7 +17,6 @@ import Moment from 'moment';
 import propTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
-import { verboseLog } from '../../config/debug';
 import SuspendValuntaryPopup from '../../pages/suspend-valuntary-popup';
 import { Button, Chip } from '../../ui/core';
 
@@ -56,7 +55,6 @@ export default function GenericTable(props) {
       onClick: selectionChangeHandler,
     },
   ]);
-  verboseLog('data', props);
   function stableSort(array, comparator) {
     const stabilizedThis = array.map((el, index) => [el, index]);
     stabilizedThis.sort((a, b) => {
@@ -236,18 +234,6 @@ export default function GenericTable(props) {
                                     </MenuItem>
                                   );
                                 })}
-                                {/* <MenuItem
-                                  data-my-value={'suspend'}
-                                  onClick={selectionChangeHandler}
-                                >
-                                  Permanent suspend
-                                </MenuItem>
-                                <MenuItem
-                                  data-my-value={'blacklist'}
-                                  onClick={selectionChangeHandler}
-                                >
-                                  Temporary suspend
-                                </MenuItem> */}
                               </Menu>
                             </React.Fragment>
                           )}
