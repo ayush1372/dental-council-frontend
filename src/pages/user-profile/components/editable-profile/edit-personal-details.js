@@ -17,7 +17,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const { t } = useTranslation();
   const loggedInUserType = useSelector((state) => state?.login?.loggedInUserType);
   const { statesList } = useSelector((state) => state?.menuLists);
-  const { citiesList } = useSelector((state) => state?.cityList);
+  const { citiesList } = useSelector((state) => state?.menuLists);
   const { districtsList } = useSelector((state) => state?.menuLists);
 
   const [languages, setLanguages] = useState([]);
