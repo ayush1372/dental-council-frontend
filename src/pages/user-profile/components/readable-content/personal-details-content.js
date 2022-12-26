@@ -19,6 +19,9 @@ const PersonalDetails = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="grey.label">
             Salutation
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
@@ -38,6 +41,9 @@ const PersonalDetails = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor.main">
             Aadhaar Number
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
@@ -57,6 +63,9 @@ const PersonalDetails = () => {
           <Grid item xs={8} md={4}>
             <Typography variant="subtitle2" color="grey.label">
               Salutation
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
             </Typography>
             <Typography variant="subtitle2" color="primary.main">
               Dr.
@@ -68,7 +77,11 @@ const PersonalDetails = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             First Name
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
+
           <Grid display="flex" alignItems="center">
             <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
               Aarnav
@@ -104,6 +117,9 @@ const PersonalDetails = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Last Name
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
@@ -124,6 +140,9 @@ const PersonalDetails = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Father&apos;s Name
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
@@ -180,7 +199,11 @@ const PersonalDetails = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Nationality
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
+
           <Grid display="flex" alignItems="center">
             <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
               Indian
@@ -198,6 +221,9 @@ const PersonalDetails = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="grey.label">
             Languages
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
@@ -216,6 +242,9 @@ const PersonalDetails = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="grey.label">
             Date Of Birth
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
@@ -236,6 +265,9 @@ const PersonalDetails = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="grey.label">
             Gender
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
@@ -254,6 +286,9 @@ const PersonalDetails = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="grey.label">
             Schedule
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
