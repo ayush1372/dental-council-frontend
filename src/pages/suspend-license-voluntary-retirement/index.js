@@ -78,7 +78,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
           : selectedValue === 'reject'
           ? 'Reason to Reject application'
           : selectedValue === 'suspend'
-          ? 'Want to Suspend?'
+          ? 'Want to Permanent Suspend?'
           : selectedValue === 'blacklist'
           ? 'Want to Blacklist?'
           : ''}
@@ -335,7 +335,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
               sx={{ marginLeft: 2 }}
               onClick={handleSubmit(onSubmit)}
             >
-              Peermanent suspend
+              Permanent suspend
             </Button>
           ) : selectedValue === 'reject' || selectedValue === 'raise' ? (
             <Button
