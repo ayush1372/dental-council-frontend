@@ -1,4 +1,4 @@
-export const StepLabel = {
+export const StepLabel = () => ({
   styleOverrides: {
     root: {
       '& .MuiStepLabel-label': {
@@ -6,4 +6,4 @@ export const StepLabel = {
       },
     },
   },
-};
+});

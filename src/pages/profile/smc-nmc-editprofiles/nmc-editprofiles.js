@@ -21,7 +21,7 @@ const NmcEditProfile = () => {
       Name: 'Aarnav Sharma',
       PhoneNumber: '7547448483',
       UserId: 'aarnav.sharma',
-      EmalId: 'aarnav@gmail.com.com',
+      EmailId: 'aarnav@gmail.com.com',
       Council: 'West Bengal',
     },
   });
@@ -110,13 +110,13 @@ const NmcEditProfile = () => {
             type="text"
             fullWidth
             required
-            name={'EmalId'}
-            placeholder={'Enter EmalId'}
+            name={'EmailId'}
+            placeholder={'Enter Email Id'}
             value={email}
-            defaultValue={getValues().EmalId}
-            error={errors.EmalId?.message}
-            {...register('EmalId', {
-              required: 'EmalId required',
+            defaultValue={getValues().EmailId}
+            error={errors.EmailId?.message}
+            {...register('EmailId', {
+              required: 'Email Id required',
               onChange: (e) => handleEmailId(e),
 
               pattern: {

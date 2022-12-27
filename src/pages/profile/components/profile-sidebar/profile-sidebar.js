@@ -91,7 +91,6 @@ export default function MiniDrawer({
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  // console.log(DrawerOptions, DrawerOptions.length);
 
   const theme = useTheme();
   const loggedInUserType = useSelector((state) => state.login.loggedInUserType);

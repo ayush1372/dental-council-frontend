@@ -36,9 +36,9 @@ const Name = ({ setDoSearch }) => {
           <Typography color="inputTextColor.main">
             Enter Doctor Name{' '}
             <ErrorOutlineIcon
+              fontSize="width12"
               sx={{
                 color: 'textPrimary.secondary',
-                fontSize: '12px',
               }}
             />
           </Typography>

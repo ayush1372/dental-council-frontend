@@ -67,7 +67,6 @@ const ForgotPassword = ({ handleConfirmPassword }) => {
       </Box>
       <Divider
         sx={{
-          fontSize: '16px',
           paddingTop: '15px',
         }}
       >

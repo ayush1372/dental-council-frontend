@@ -38,20 +38,20 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
       {!tabName && selectedValue !== 'forward' && (
         <Box align={'center'}>
           {selectedValue === 'raise' ? (
-            <HelpIcon sx={{ fontSize: '40px', color: 'secondary.warningYellow' }} />
+            <HelpIcon fontSize="width40" sx={{ color: 'secondary.warningYellow' }} />
           ) : selectedValue === 'reject' ? (
-            <ErrorIcon color="error" sx={{ fontSize: '40px' }} />
+            <ErrorIcon color="error" fontSize="width40" />
           ) : selectedValue === 'verify' ? (
-            <CheckCircleIcon color="success" sx={{ fontSize: '50px' }} />
+            <CheckCircleIcon color="success" fontSize="width48" />
           ) : (
-            <BlockIcon color="error" sx={{ fontSize: '40px' }} />
+            <BlockIcon color="error" fontSize="width40" />
           )}
         </Box>
       )}
       {selectedValue === 'forward' && (
         <Box display={'flex'} alignItems="flex-start">
           <Box>
-            <ErrorIcon color="error" sx={{ fontSize: '25px' }} />
+            <ErrorIcon color="error" fontSize="width24" />
           </Box>
           <Box>
             <Typography variant="h3">ALERT!</Typography>
@@ -78,9 +78,9 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
           : selectedValue === 'reject'
           ? 'Reason to Reject application'
           : selectedValue === 'suspend'
-          ? 'Want to Suspend?'
+          ? 'Want to Permanent Suspend?'
           : selectedValue === 'blacklist'
-          ? 'Want to Blacklist?'
+          ? 'Request NMC to Blacklist??'
           : ''}
       </Typography>
       {selectedValue === 'raise' ||
@@ -92,6 +92,12 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
         <Box>
           {tabName === 'voluntary-suspend-license' && (
             <Grid item xs={12} md={12} mb={2}>
+              <Typography variant="subtitle2" color="textPrimary.main">
+                {'Select suspension'}
+                <Typography variant="body4" color="error.main">
+                  *
+                </Typography>
+              </Typography>
               <RadioGroup
                 row
                 onChange={handlevoluntarySuspendLicenseChange}
@@ -108,8 +114,6 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
                     label: 'Permanent Suspension',
                   },
                 ]}
-                label="Select suspension"
-                required={true}
                 error={errors.voluntarySuspendLicense?.message}
               />
             </Grid>
@@ -183,7 +187,8 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
           </Grid>
         </Box>
       )}
-      {selectedValue === 'raise' ||
+      {tabName === 'voluntary-suspend-license' ||
+      selectedValue === 'raise' ||
       selectedValue === 'reject' ||
       selectedValue === 'suspend' ||
       selectedValue === 'blacklist' ? (
@@ -357,7 +362,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
               sx={{ marginLeft: 2 }}
               onClick={handleSubmit(onSubmit)}
             >
-              Peermanent suspend
+              Permanent suspend
             </Button>
           ) : selectedValue === 'reject' || selectedValue === 'raise' ? (
             <Button

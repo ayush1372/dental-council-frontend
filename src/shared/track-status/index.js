@@ -69,8 +69,9 @@ export default function TrackStatus() {
                 required
                 placeholder="Enter Registration Number"
                 defaultValue={getValues().RegistrationNumber}
+                error={errors.RegistrationNumber?.message}
                 {...register('RegistrationNumber', {
-                  required: 'College Name is required',
+                  required: 'Registration Number is required',
                 })}
               />
             </Grid>
