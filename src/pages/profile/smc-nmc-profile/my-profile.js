@@ -29,19 +29,19 @@ const MyProfile = (props) => {
     <Box p={3}>
       {showPage === 'Profile' && (
         <Grid>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
+          <Grid container spacing={1}>
+            <Grid item xs={12} lg={8}>
               <Typography variant="h2" color="textPrimary.main">
                 My Profile
               </Typography>
             </Grid>
 
-            <Grid item xs={6} md={3} sm={3}>
+            <Grid item xs={6} md={6} sm={6} lg={2}>
               <Button size="small" variant="contained" onClick={() => setShowpage('Password')}>
                 Change Password
               </Button>
             </Grid>
-            <Grid item xs={6} md={3} sm={3}>
+            <Grid item xs={6} md={6} sm={6} lg={2}>
               <Button
                 size="small"
                 startIcon={<EditIcon sx={{ mr: 1 }} />}

@@ -41,8 +41,7 @@ const CollegeEditProfile = () => {
     }
   };
   return (
-    <Grid container>
-      {/* edit profile */}
+    <Grid>
       <Grid container spacing={2} mt={2}>
         <Grid container item xs={12}>
           <Typography variant="h2" color="textPrimary.main">
@@ -51,9 +50,8 @@ const CollegeEditProfile = () => {
         </Grid>
       </Grid>
 
-      {/* 1s row */}
       <Grid container item spacing={2} mt={3}>
-        <Grid item xs={12} md={12} lg={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
             College Name
           </Typography>
@@ -61,10 +59,7 @@ const CollegeEditProfile = () => {
             *
           </Typography>
           <TextField
-            sx={{
-              width: { xs: '100%', md: '100%', sm: '100%', lg: '100%' },
-              backgroundColor: 'red',
-            }}
+            fullWidth
             required
             name={'CollegeName'}
             placeholder={'Enter College Name'}
@@ -76,7 +71,7 @@ const CollegeEditProfile = () => {
           />
         </Grid>
 
-        <Grid item xs={12} md={12} lg={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
             College ID
           </Typography>
@@ -96,7 +91,7 @@ const CollegeEditProfile = () => {
           />
         </Grid>
 
-        <Grid item xs={12} md={12} lg={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="body3" color="inputTextColor.main">
             College Phone Number
             <Typography component="span" color="error.main">
@@ -146,9 +141,8 @@ const CollegeEditProfile = () => {
         </Grid>
       </Grid>
 
-      {/* 2nd row */}
       <Grid container item spacing={2} mt={3}>
-        <Grid item xs={12} md={12} lg={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="body3" color="inputTextColor.main">
             College Email ID
             <Typography component="span" color="error.main">
@@ -195,7 +189,7 @@ const CollegeEditProfile = () => {
           />
         </Grid>
 
-        <Grid xs={12} md={12} lg={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
             Select University Name
           </Typography>
@@ -217,7 +211,7 @@ const CollegeEditProfile = () => {
           />
         </Grid>
 
-        <Grid item xs={12} md={12} lg={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
             College Website
           </Typography>
@@ -231,10 +225,8 @@ const CollegeEditProfile = () => {
         </Grid>
       </Grid>
 
-      {/* 3rd row */}
-
       <Grid container item spacing={2} mt={3}>
-        <Grid item xs={12} md={12} lg={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
             College Address
           </Typography>
@@ -249,7 +241,7 @@ const CollegeEditProfile = () => {
           />
         </Grid>
 
-        <Grid item xs={12} md={12} lg={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
             College Pin Code
           </Typography>
@@ -264,7 +256,7 @@ const CollegeEditProfile = () => {
           />
         </Grid>
 
-        <Grid item xs={12} md={12} lg={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
             State Name
           </Typography>
@@ -286,7 +278,7 @@ const CollegeEditProfile = () => {
       </Grid>
 
       <Grid container item spacing={2} mt={3}>
-        <Grid item xs={12} md={12} lg={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="body3" color="textSecondary.main">
             Select your Registration Council
             <Typography component="span" color="error.main">
@@ -310,18 +302,44 @@ const CollegeEditProfile = () => {
         </Grid>
       </Grid>
 
-      <Grid mt={5}>
-        <Button
-          variant="contained"
-          color="secondary"
-          sx={{ mr: 2 }}
-          onClick={handleSubmit(onsubmit)}
-        >
-          Submit
-        </Button>
-        <Button variant="contained" color="grey">
-          Cancel
-        </Button>
+      <Grid container display="flex" alignItems="center" mt={3}>
+        <Grid item xs={12} md={8}>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={handleSubmit(onsubmit)}
+            sx={{
+              m: {
+                xs: '5px 0px',
+                md: '0px',
+              },
+              width: {
+                xs: '100%',
+                md: 'fit-content',
+              },
+            }}
+          >
+            Submit
+          </Button>
+        </Grid>
+        <Grid item xs={12} md="auto" display="flex" alignItems="start">
+          <Button
+            variant="contained"
+            color="grey"
+            sx={{
+              m: {
+                xs: '5px 0px',
+                md: '0px',
+              },
+              width: {
+                xs: '100%',
+                md: 'fit-content',
+              },
+            }}
+          >
+            Cancel
+          </Button>
+        </Grid>
       </Grid>
     </Grid>
   );

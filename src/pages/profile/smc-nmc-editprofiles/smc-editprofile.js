@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
-import { Box, Grid, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
+import { Box } from '@mui/system';
 import { useForm } from 'react-hook-form';
 
 import { Button, TextField } from '../../../ui/core';
@@ -43,7 +44,7 @@ const SmcEditProfile = () => {
   };
 
   return (
-    <Box>
+    <Grid>
       <Grid container spacing={2} mt={2}>
         <Grid item xs={12}>
           <Typography variant="h2" color="textPrimary.main">
@@ -53,7 +54,7 @@ const SmcEditProfile = () => {
       </Grid>
 
       <Grid container item spacing={2} mt={3}>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
             Name
           </Typography>
@@ -75,7 +76,7 @@ const SmcEditProfile = () => {
           />
         </Grid>
 
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
             Phone Number
           </Typography>
@@ -97,7 +98,7 @@ const SmcEditProfile = () => {
           />
         </Grid>
 
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
             Email Id
           </Typography>
@@ -126,8 +127,9 @@ const SmcEditProfile = () => {
           />
         </Grid>
       </Grid>
+
       <Grid container item spacing={2} mt={3}>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
             User ID
           </Typography>
@@ -153,7 +155,7 @@ const SmcEditProfile = () => {
           />
         </Grid>
 
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
             Council
           </Typography>
@@ -176,21 +178,39 @@ const SmcEditProfile = () => {
           />
         </Grid>
       </Grid>
-
-      <Box display="flex" mt={4}>
+      <Box display="flex" mt={5} md="auto">
         <Button
           variant="contained"
           color="secondary"
-          sx={{ mr: 2 }}
+          sx={{
+            mr: 2,
+
+            width: {
+              xs: '100%',
+
+              md: 'fit-content',
+            },
+          }}
           onClick={handleSubmit(onsubmit)}
         >
           Submit
         </Button>
-        <Button variant="contained" color="grey">
+
+        <Button
+          variant="contained"
+          color="grey"
+          sx={{
+            width: {
+              xs: '100%',
+
+              md: 'fit-content',
+            },
+          }}
+        >
           Cancel
         </Button>
       </Box>
-    </Box>
+    </Grid>
   );
 };
 
