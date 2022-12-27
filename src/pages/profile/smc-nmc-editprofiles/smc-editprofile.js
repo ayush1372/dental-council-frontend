@@ -22,7 +22,7 @@ const SmcEditProfile = () => {
       Name: 'Aarnav Sharma',
       PhoneNumber: '7547448483',
       UserId: 'aarnav.sharma',
-      EmalId: 'aarnav@gmail.com.com',
+      EmailId: 'aarnav@gmail.com.com',
       Password: 'Arnav@124',
     },
   });
@@ -109,13 +109,13 @@ const SmcEditProfile = () => {
             type="text"
             fullWidth
             required
-            name={'EmalId'}
-            placeholder={'Enter EmalId'}
+            name={'EmailId'}
+            placeholder={'Enter Email Id'}
             value={email}
-            defaultValue={getValues().EmalId}
-            error={errors.EmalId?.message}
-            {...register('EmalId', {
-              required: 'EmalId required',
+            defaultValue={getValues().EmailId}
+            error={errors.EmailId?.message}
+            {...register('EmailId', {
+              required: 'Email Id required',
               onChange: (e) => handleEmailId(e),
 
               pattern: {
@@ -140,12 +140,12 @@ const SmcEditProfile = () => {
             fullWidth
             required
             name={'UserId'}
-            placeholder={'Enter UserId'}
+            placeholder={'Enter User Id'}
             value={userId}
             defaultValue={getValues().UserId}
             error={errors.UserId?.message}
             {...register('UserId', {
-              required: 'UserId is required',
+              required: 'User Id is required',
               onChange: (e) => handleUserid(e),
 
               pattern: {

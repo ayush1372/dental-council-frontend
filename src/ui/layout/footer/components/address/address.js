@@ -1,23 +1,18 @@
+import CallOutlinedIcon from '@mui/icons-material/CallOutlined';
+import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import { List, ListItem, ListItemText, Typography } from '@mui/material';
-
-import styles from './address.module.scss';
 
 export const Address = () => {
   return (
     <>
-      <Typography
-        // sx={{ mt: 4, mb: 2 }}
-        variant="subtitle1"
-        component="div"
-        className={styles.footerTitle}
-      >
+      <Typography variant="subtitle1" component="div">
         Address
       </Typography>
 
-      <List>
+      <List sx={{ paddingTop: { xs: 0, md: 3 } }}>
         <ListItem disableGutters disablePadding={true}>
           <ListItemText sx={{ margin: '0' }}>
-            <Typography variant="body1">
+            <Typography variant="body1" fontWeight="400" lineHeight="28px" component="div" mb={2}>
               National Health Authority 9th Floor, Tower-l, Jeevan Bharati Building, Connaught
               Place, New Delhi - 110 001
             </Typography>
@@ -25,17 +20,32 @@ export const Address = () => {
         </ListItem>
         <ListItem disableGutters disablePadding={true}>
           <ListItemText sx={{ margin: '0' }}>
-            <Typography variant="body1">
-              E-mail :{' '}
-              <a className={styles.emailLink} href="mailto: ndhm@nha.gov.in">
-                ndhm@nha.gov.in
-              </a>
+            <Typography
+              variant="body1"
+              fontWeight="400"
+              component="div"
+              mb={2}
+              display="flex"
+              alignItems="flex-start"
+              lineHeight="1"
+            >
+              <EmailOutlinedIcon sx={{ mr: 1, fontSize: '16px' }} />
+              E-mail:<a href="mailto: ndhm@nha.gov.in"> abdm[@]nha[dot]gov[dot]in</a>
             </Typography>
           </ListItemText>
         </ListItem>
         <ListItem disableGutters disablePadding={true}>
           <ListItemText sx={{ margin: '0' }}>
-            <Typography variant="body1">Toll-Free Number : 1800-11-4477</Typography>
+            <Typography
+              variant="body1"
+              fontWeight="400"
+              component="div"
+              display="flex"
+              alignItems="flex-start"
+            >
+              <CallOutlinedIcon sx={{ mr: 1, fontSize: '16px' }} />
+              Toll-Free Number : 1800-11-4477 / 14477
+            </Typography>
           </ListItemText>
         </ListItem>
       </List>

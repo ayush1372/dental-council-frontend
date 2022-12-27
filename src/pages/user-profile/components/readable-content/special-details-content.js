@@ -19,6 +19,9 @@ const SpecialDetails = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Broad Speciality
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography
@@ -33,7 +36,7 @@ const SpecialDetails = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>
@@ -56,7 +59,7 @@ const SpecialDetails = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>

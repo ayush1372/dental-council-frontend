@@ -20,6 +20,9 @@ const WorkDetails = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Are you currently working
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography
@@ -34,7 +37,7 @@ const WorkDetails = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>
@@ -43,6 +46,9 @@ const WorkDetails = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Nature of work
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography
@@ -57,7 +63,7 @@ const WorkDetails = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>
@@ -68,6 +74,9 @@ const WorkDetails = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Choose work status
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography
@@ -82,7 +91,7 @@ const WorkDetails = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>
@@ -94,6 +103,9 @@ const WorkDetails = () => {
           <Typography variant="subtitle2" color="inputTextColor">
             Upload the Proof of work for govt. such as Appointment letter, Last pay slip, recent
             transfer order etc.
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
@@ -104,7 +116,7 @@ const WorkDetails = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>

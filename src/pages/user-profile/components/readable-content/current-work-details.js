@@ -29,6 +29,9 @@ const CurrentWorkDetails = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             State
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography
@@ -43,7 +46,7 @@ const CurrentWorkDetails = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>
@@ -52,6 +55,9 @@ const CurrentWorkDetails = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             District
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography
@@ -66,7 +72,7 @@ const CurrentWorkDetails = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>
@@ -89,7 +95,7 @@ const CurrentWorkDetails = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>
@@ -114,7 +120,7 @@ const CurrentWorkDetails = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>
@@ -123,6 +129,9 @@ const CurrentWorkDetails = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Address
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography
@@ -137,7 +146,7 @@ const CurrentWorkDetails = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>
@@ -146,6 +155,9 @@ const CurrentWorkDetails = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Pincode
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography
@@ -160,7 +172,7 @@ const CurrentWorkDetails = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>
@@ -185,7 +197,7 @@ const CurrentWorkDetails = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>

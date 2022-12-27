@@ -32,6 +32,9 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
     <Box bgcolor="white.main" py={2} px={4} mt={2} boxShadow={1}>
       <Typography component="div" color="primary.main" variant="body1">
         Consent
+        <Typography component="span" color="error.main">
+          *
+        </Typography>
       </Typography>
       <Box bgcolor="backgroundColor.light" p={2} display="flex">
         <Checkbox
@@ -126,7 +129,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
               justifyContent={'flex-start'}
               alignItems={'center'}
             >
-              <TaskAltIcon color="success" sx={{ fontSize: '70px' }} />
+              <TaskAltIcon color="success" fontSize="width80" />
               <Typography color="success.dark" variant="h2" textAlign={'center'}>
                 SUCCESS!
               </Typography>

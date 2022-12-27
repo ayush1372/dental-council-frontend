@@ -19,6 +19,9 @@ const CommunicationAddress = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Your Name
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography
@@ -33,7 +36,7 @@ const CommunicationAddress = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>
@@ -42,6 +45,9 @@ const CommunicationAddress = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Your Address
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography
@@ -56,7 +62,7 @@ const CommunicationAddress = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>
@@ -67,6 +73,9 @@ const CommunicationAddress = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             City/Town/Village
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography
@@ -81,7 +90,7 @@ const CommunicationAddress = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>
@@ -90,6 +99,9 @@ const CommunicationAddress = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             District
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography
@@ -104,7 +116,7 @@ const CommunicationAddress = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>
@@ -127,7 +139,7 @@ const CommunicationAddress = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>
@@ -138,6 +150,9 @@ const CommunicationAddress = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             State/Union Territory
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography
@@ -152,7 +167,7 @@ const CommunicationAddress = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>
@@ -161,6 +176,9 @@ const CommunicationAddress = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Country
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography
@@ -175,7 +193,7 @@ const CommunicationAddress = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>
@@ -184,6 +202,9 @@ const CommunicationAddress = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Postal code
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography
@@ -198,7 +219,7 @@ const CommunicationAddress = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>
@@ -209,6 +230,9 @@ const CommunicationAddress = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Email Address
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography
@@ -223,7 +247,7 @@ const CommunicationAddress = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>
@@ -232,6 +256,9 @@ const CommunicationAddress = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Mobile Number
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography
@@ -246,7 +273,7 @@ const CommunicationAddress = () => {
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}{' '}
           </Grid>

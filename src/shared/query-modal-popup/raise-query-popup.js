@@ -25,19 +25,13 @@ export default function RaiseQueryPopup(props) {
               <CloseIcon color="grey.context" onClick={handleClose} />
             </Box>
             <Box mb={1} width="100%" textAlign="center">
-              <HelpIcon
-                sx={{
-                  fontSize: '48px',
-                }}
-                color="warning"
-              />
+              <HelpIcon fontSize="width48" color="warning" />
             </Box>
             <Typography
               variant="h2"
               mt="18px"
               sx={{
                 color: 'primary.main',
-                fontSize: '24px',
                 display: 'flex',
                 flexFlow: 'column',
                 alignItems: 'center',
