@@ -165,43 +165,17 @@ export function CollegeRegistrar() {
         />
       </Grid>
       <Grid container item spacing={2} mt={{ lg: 1 }}>
-        <Box item xs={12} md="auto" display="flex">
-          <Button
-            sx={{
-              m: {
-                xs: '35px 15px',
-                lg: '10px 10px 0px 12px',
-              },
-              width: {
-                xs: '100%',
-                md: 'fit-content',
-              },
-            }}
-            variant="contained"
-            color="secondary"
-            onClick={handleSubmit(onSubmit)}
-          >
+        <Grid item xs={12} sm="auto">
+          <Button fullWidth variant="contained" color="secondary" onClick={handleSubmit(onSubmit)}>
             {t('SUBMIT')}
           </Button>
+        </Grid>
 
-          <Button
-            sx={{
-              m: {
-                xs: '35px 0px',
-                lg: '10px 10px 0px 12px',
-              },
-              width: {
-                xs: '100%',
-                md: 'fit-content',
-              },
-            }}
-            variant="contained"
-            color="grey"
-            onClick={handleSubmit(onSubmit)}
-          >
+        <Grid item xs={12} sm="auto">
+          <Button fullWidth variant="contained" color="grey" onClick={handleSubmit(onSubmit)}>
             {t('Cancel')}
           </Button>
-        </Box>
+        </Grid>
       </Grid>
     </Grid>
   );

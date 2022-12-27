@@ -26,23 +26,29 @@ const MyProfile = (props) => {
   verboseLog(showSmcEditProfile);
   verboseLog(setData);
   return (
-    <Box p={3}>
+    <Grid boxShadow={2} mt={2} p={3}>
       {showPage === 'Profile' && (
         <Grid>
-          <Grid container spacing={1}>
-            <Grid item xs={12} lg={8}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm="auto" sx={{ mr: { xs: 0, sm: 'auto' } }}>
               <Typography variant="h2" color="textPrimary.main">
                 My Profile
               </Typography>
             </Grid>
 
-            <Grid item xs={6} md={6} sm={6} lg={2}>
-              <Button size="small" variant="contained" onClick={() => setShowpage('Password')}>
+            <Grid item xs={12} sm="auto">
+              <Button
+                fullWidth
+                size="small"
+                variant="contained"
+                onClick={() => setShowpage('Password')}
+              >
                 Change Password
               </Button>
             </Grid>
-            <Grid item xs={6} md={6} sm={6} lg={2}>
+            <Grid item xs={12} sm="auto">
               <Button
+                fullWidth
                 size="small"
                 startIcon={<EditIcon sx={{ mr: 1 }} />}
                 variant="contained"
@@ -57,10 +63,10 @@ const MyProfile = (props) => {
             </Grid>
           </Grid>
 
-          <Grid container item spacing={2} mt={3}>
+          <Grid container spacing={2} mt={3}>
             {data.map((field) => {
               return (
-                <Grid item xs={12} md={6} sm={6} key={field.id}>
+                <Grid item xs={12} md={6} sm={6} lg={3} key={field.id}>
                   <Typography variant="body3" color="grey.label">
                     {field.label}
                   </Typography>
@@ -85,7 +91,7 @@ const MyProfile = (props) => {
         </Box>
       )}
       {showPage === 'Password' && <ChangePassword />}
-    </Box>
+    </Grid>
   );
 };
 

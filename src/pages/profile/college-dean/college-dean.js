@@ -1,5 +1,4 @@
 import { Grid, Typography } from '@mui/material';
-import { Box } from '@mui/system';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
@@ -164,48 +163,18 @@ export function CollegeDean() {
         />
       </Grid>
 
-      <Grid container xs={12}>
-        <Box display="flex" mt={1} pl={2}>
-          <Button
-            sx={{
-              m: {
-                xs: '30px 10px',
-                md: '10px 0px',
-                lg: '10px 10px 0px 12px',
-              },
-              width: {
-                xs: '100%',
-                md: 'fit-content',
-              },
-            }}
-            size="medium"
-            variant="contained"
-            color="secondary"
-            onClick={handleSubmit(onSubmit)}
-          >
+      <Grid container item spacing={2} mt={{ lg: 1 }}>
+        <Grid item xs={12} sm="auto">
+          <Button fullWidth variant="contained" color="secondary" onClick={handleSubmit(onSubmit)}>
             {t('SUBMIT')}
           </Button>
+        </Grid>
 
-          <Button
-            sx={{
-              m: {
-                xs: '30px 10px',
-                md: '10px 15px',
-                lg: '10px 10px 0px 12px',
-              },
-              width: {
-                xs: '100%',
-                md: 'fit-content',
-              },
-            }}
-            size="medium"
-            variant="contained"
-            color="grey"
-            onClick={handleSubmit(onSubmit)}
-          >
+        <Grid item xs={12} sm="auto">
+          <Button fullWidth variant="contained" color="grey" onClick={handleSubmit(onSubmit)}>
             {t('Cancel')}
           </Button>
-        </Box>
+        </Grid>
       </Grid>
     </Grid>
   );

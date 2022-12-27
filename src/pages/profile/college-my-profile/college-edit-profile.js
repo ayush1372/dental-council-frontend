@@ -306,12 +306,9 @@ const CollegeEditProfile = () => {
         </Grid>
       </Grid>
 
-      <Grid container display="flex" alignItems="center" mt={3}>
-        <Grid item xs={12} md={8}>
+      <Grid container alignItems="center" mt={3}>
+        <Grid item xs={12} sm="auto" alignItems="flex-start" mr={{ lg: 2, md: 2, sm: 2 }}>
           <Button
-            variant="contained"
-            color="secondary"
-            onClick={handleSubmit(onsubmit)}
             sx={{
               m: {
                 xs: '5px 0px',
@@ -322,22 +319,25 @@ const CollegeEditProfile = () => {
                 md: 'fit-content',
               },
             }}
+            variant="contained"
+            color="secondary"
+            onClick={handleSubmit(onsubmit)}
           >
             Submit
           </Button>
         </Grid>
-        <Grid item xs={12} md="auto" display="flex" alignItems="start">
+        <Grid item xs={12} sm="auto" alignItems="flex-start">
           <Button
             variant="contained"
             color="grey"
             sx={{
               m: {
                 xs: '5px 0px',
-                md: '0px',
+                // md: '0px',
               },
               width: {
                 xs: '100%',
-                md: 'fit-content',
+                // md: 'fit-content',
               },
             }}
           >
