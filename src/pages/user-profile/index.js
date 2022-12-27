@@ -131,7 +131,7 @@ export const UserProfile = ({
       {showReactivateLicense && <ReactivateLicencePopup renderSuccess={renderSuccess} />}
       {showSuccessPopup && <SuccessPopup />}
       {!showChangepassword ? (
-        <Container sx={{ mt: '30px' }}>
+        <Box mt={3}>
           {!showViewProfile ? (
             <Box display="flex" justifyContent="space-between" mb={3}>
               <Typography component="div" variant="h2" color="primary.main" py={2}>
@@ -231,7 +231,7 @@ export const UserProfile = ({
               setIsReadMode={setIsReadMode}
             />
           )}
-        </Container>
+        </Box>
       ) : (
         <Container>
           <ChangePassword />
