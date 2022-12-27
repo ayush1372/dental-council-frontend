@@ -1,4 +1,4 @@
-import { Box, Button, Container, Typography } from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
@@ -23,7 +23,7 @@ const ChangePassword = () => {
     },
   });
   return (
-    <Container>
+    <>
       <Typography color="primary" variant="h2" textAlign="center" mt={3}>
         Change Password
       </Typography>
@@ -41,7 +41,7 @@ const ChangePassword = () => {
           boxShadow: 4,
         }}
       >
-        <Box p={2} boxShadow="2">
+        <Box p={2} boxShadow="1">
           <Box>
             <Box mt={2}>
               <Typography variant="body3" color="primary">
@@ -139,7 +139,7 @@ const ChangePassword = () => {
           </Box>
         </Box>
       </Box>
-    </Container>
+    </>
   );
 };
 

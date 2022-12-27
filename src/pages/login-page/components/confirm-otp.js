@@ -32,7 +32,14 @@ const ConfirmOTP = ({ handleConfirmOTP }) => {
         Confirm OTP
       </Typography>
       <Box>
-        <Box>
+        <Box
+          sx={{
+            width: {
+              xs: '100%',
+              md: 'fit-content',
+            },
+          }}
+        >
           <Typography variant="body1">
             {`We just sent an OTP on your registered Mobile Number XXXXXX2182 linked with your Aadhaar.`}
           </Typography>

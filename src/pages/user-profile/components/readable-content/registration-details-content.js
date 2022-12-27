@@ -17,7 +17,7 @@ const RegistrationDetailsContent = () => {
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Registered with council
           </Typography>
@@ -41,7 +41,7 @@ const RegistrationDetailsContent = () => {
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Registration Number
           </Typography>
@@ -63,7 +63,7 @@ const RegistrationDetailsContent = () => {
             )}
           </Grid>
         </Grid>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Registration Date
           </Typography>
@@ -87,7 +87,7 @@ const RegistrationDetailsContent = () => {
         </Grid>
       </Grid>
       <Grid container item spacing={2}>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Registration
           </Typography>
@@ -104,7 +104,7 @@ const RegistrationDetailsContent = () => {
             )}
           </Grid>
         </Grid>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Due Date of Renewal
           </Typography>
@@ -126,7 +126,7 @@ const RegistrationDetailsContent = () => {
             )}
           </Grid>
         </Grid>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Registration Certificate
           </Typography>
@@ -145,12 +145,12 @@ const RegistrationDetailsContent = () => {
         </Grid>
       </Grid>
       <Grid container item spacing={2}>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor"></Typography>
         </Grid>
       </Grid>
       <Grid container item spacing={2}>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             upload proof of relationship
           </Typography>

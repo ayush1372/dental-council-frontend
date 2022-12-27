@@ -40,8 +40,8 @@ export default function TrackStatus() {
             Track Status
           </Typography>
           <Grid container spacing={2}>
-            <Grid item xs={6} md={4}>
-              <Box sx={{ paddingBottom: '32px' }}>
+            <Grid item xs={12} md={4}>
+              <Box pb={{ xs: 2, md: 4 }}>
                 <Typography color="inputTextColor.main">
                   Medical Council Name
                   <Typography component="span" color="error.main">
@@ -61,7 +61,7 @@ export default function TrackStatus() {
               </Box>
             </Grid>
 
-            <Grid item xs={6} md={4}>
+            <Grid item xs={12} md={4}>
               <TextField
                 name={'RegistrationNumber'}
                 label={'Registration Number'}
@@ -74,9 +74,15 @@ export default function TrackStatus() {
                 })}
               />
             </Grid>
-            <Grid item xs={6} md={4}>
+            <Grid item xs={12} md={4}>
               <Button
-                style={{ marginTop: '30px' }}
+                sx={{
+                  marginTop: '30px',
+                  width: {
+                    xs: '100%',
+                    md: 'fit-content',
+                  },
+                }}
                 variant="contained"
                 onClick={handleSubmit(onSubmit)}
                 color="secondary"

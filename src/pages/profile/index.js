@@ -200,7 +200,7 @@ export function Profile() {
               ? smcTabs
               : loggedInUserType === 'College'
               ? colgTabs
-              : ''
+              : []
           }
           handleSwitch={setActiveTab}
           ActiveOption={isActiveTab}

@@ -4,7 +4,7 @@ const CurrentWorkDetails = () => {
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="primary.main">
             Facility
           </Typography>
@@ -14,7 +14,7 @@ const CurrentWorkDetails = () => {
         </Grid>
       </Grid>
       <Grid container item spacing={2}>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             State
           </Typography>
@@ -28,7 +28,7 @@ const CurrentWorkDetails = () => {
             Select State
           </Typography>
         </Grid>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             District
           </Typography>
@@ -42,7 +42,7 @@ const CurrentWorkDetails = () => {
             Select District
           </Typography>
         </Grid>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Name of the Organization where you work
           </Typography>
@@ -58,7 +58,7 @@ const CurrentWorkDetails = () => {
         </Grid>
       </Grid>
       <Grid container item spacing={2}>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Organization Type
           </Typography>
@@ -72,7 +72,7 @@ const CurrentWorkDetails = () => {
             Select Organization Type
           </Typography>
         </Grid>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Address
           </Typography>
@@ -86,7 +86,7 @@ const CurrentWorkDetails = () => {
             Address
           </Typography>
         </Grid>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Pincode
           </Typography>
@@ -102,7 +102,7 @@ const CurrentWorkDetails = () => {
         </Grid>
       </Grid>
       <Grid container item spacing={2}>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Telecommunication URL
           </Typography>
@@ -116,7 +116,7 @@ const CurrentWorkDetails = () => {
             Telecommunication URL
           </Typography>
         </Grid>
-        {/*<Grid item xs={8} md={4}>
+        {/*<Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Department
           </Typography>

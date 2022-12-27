@@ -151,7 +151,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
               />
             </Grid>
             {selectedSuspension === 'voluntary-suspension-check' && (
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} md={6} my={{ xs: 1, md: 0 }}>
                 <Typography component={'p'} variant="body1">
                   Select To Date
                 </Typography>
@@ -294,10 +294,37 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
       )}
       {tabName && (
         <Box align="left" my={5}>
-          <Button variant="contained" color="secondary" onClick={handleSubmit(onSubmit)}>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={handleSubmit(onSubmit)}
+            sx={{
+              width: {
+                xs: '100%',
+                md: 'fit-content',
+              },
+            }}
+          >
             {'Submit'}
           </Button>
-          <Button color="grey" variant="contained" sx={{ marginLeft: 2 }}>
+          <Button
+            color="grey"
+            variant="contained"
+            sx={{
+              my: {
+                xs: 1,
+                md: 0,
+              },
+              ml: {
+                xs: 0,
+                md: 2,
+              },
+              width: {
+                xs: '100%',
+                md: 'fit-content',
+              },
+            }}
+          >
             Cancel
           </Button>
         </Box>
