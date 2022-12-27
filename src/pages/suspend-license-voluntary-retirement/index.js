@@ -80,9 +80,9 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
           : selectedValue === 'reject'
           ? 'Reason to Reject application'
           : selectedValue === 'suspend'
-          ? 'Want to Suspend?'
+          ? 'Want to Permanent Suspend?'
           : selectedValue === 'blacklist'
-          ? 'Want to Blacklist?'
+          ? 'Request NMC to Blacklist??'
           : ''}
       </Typography>
       {selectedValue === 'raise' ||
@@ -95,6 +95,12 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
         <Box>
           {tabName === 'voluntary-suspend-license' && (
             <Grid item xs={12} md={12} mb={2}>
+              <Typography variant="subtitle2" color="textPrimary.main">
+                {'Select suspension'}
+                <Typography variant="body4" color="error.main">
+                  *
+                </Typography>
+              </Typography>
               <RadioGroup
                 row
                 onChange={handlevoluntarySuspendLicenseChange}
@@ -111,8 +117,6 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
                     label: 'Permanent Suspension',
                   },
                 ]}
-                label="Select suspension"
-                required={true}
                 error={errors.voluntarySuspendLicense?.message}
               />
             </Grid>
@@ -338,7 +342,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
               sx={{ marginLeft: 2 }}
               onClick={handleSubmit(onSubmit)}
             >
-              Peermanent suspend
+              Permanent suspend
             </Button>
           ) : selectedValue === 'reject' ||
             selectedValue === 'approve' ||

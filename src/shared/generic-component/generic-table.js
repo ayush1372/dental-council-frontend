@@ -225,6 +225,7 @@ export default function GenericTable(props) {
                     return (
                       <TableCell maxWidth={`${tableCellWidth}%`} key={index} align="left">
                         <Chip
+                          sx={{ width: '100px' }}
                           type={
                             row[item.name]?.value === 'Submitted'
                               ? 'submitted'
