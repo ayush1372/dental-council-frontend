@@ -22,6 +22,36 @@
     padding-right: 0;
   }
 }
+.menuLeftBar {
+  display: none;
+  position: absolute;
+  width: 42px;
+  height: 39px;
+  padding: 8px;
+  left: 16px;
+  top: 70px;
+  background-color: map-get(v.$palette, 'primary');
+  cursor: pointer;
+  @media screen and (max-width: 768px) {
+    display: block;
+  }
+  span {
+    position: absolute;
+    content: '';
+    z-index: 9;
+    width: 25px;
+    height: 3px;
+    background-color: map-get(v.$palette, 'white');
+
+    &:nth-child(2) {
+      transform: translateY(10px);
+    }
+    &:nth-child(3) {
+      transform: translateY(20px);
+    }
+  }
+}
+
 .menuBar {
   display: none;
   position: absolute;

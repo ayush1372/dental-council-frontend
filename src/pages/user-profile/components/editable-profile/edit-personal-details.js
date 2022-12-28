@@ -81,9 +81,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     setLanguages([...value]);
   };
 
-  const countryIndia = countriesList?.filter(function (item) {
-    return item.name === 'India';
-  });
+  // if(countriesList) {
+
+  // }
+  // const countryIndia = countriesList?.filter(function (item) {
+  //   return item.name === 'India';
+  // });
 
   return (
     <Box boxShadow={1} padding="0px 91px 44px 41px">
@@ -588,7 +591,15 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 required: 'Country is required',
               })}
               disabled
-              options={createSelectFieldData(countryIndia)}
+              options={
+                countriesList.length > 0
+                  ? createSelectFieldData(
+                      countriesList?.filter(function (item) {
+                        return item.name === 'India';
+                      })
+                    )
+                  : []
+              }
               MenuProps={{
                 style: {
                   maxHeight: 250,
