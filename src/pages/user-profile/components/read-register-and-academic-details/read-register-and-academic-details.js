@@ -18,7 +18,7 @@ import RegistrationDetailsContent from '../readable-content/registration-details
 
 const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack, showActions = true }) => {
   const [accordionKey, setAccordionKey] = useState('accordion-0');
-  const userType = useSelector((state) => state.login.loggedInUserType);
+  const userType = useSelector((state) => state.common.loggedInUserType);
 
   const accordions = [
     {

@@ -34,7 +34,7 @@ GenericTable.propTypes = {
 };
 
 export default function GenericTable(props) {
-  const { userActiveTab } = useSelector((state) => state.ui);
+  const { userActiveTab } = useSelector((state) => state.common);
   const tableCellWidth = Math.floor(window.innerWidth / props.tableHeader.length) + 'px';
   const { order, orderBy, onRequestSort, page, rowsPerPage } = props;
   const [selected, setSelected] = useState('');
