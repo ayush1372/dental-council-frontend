@@ -2,19 +2,13 @@ import { useState } from 'react';
 
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
-import { CssBaseline, Grid } from '@mui/material';
-import Box from '@mui/material/Box';
+import { Grid } from '@mui/material';
 import MuiDrawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
 import { styled, useTheme } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
 
-// import { changeAppFontSize } from '../../../../helpers/functions/common-functions';
+import SideDrawerList from '../../../../shared/sidebar-drawer/sidebar-drawer-list';
 import ProfileImage from '../profile-image/profile-image';
 
 const drawerWidth = 240;
@@ -78,11 +72,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   })
 );
 
-export default function MiniDrawer({
-  DrawerOptions = [],
-  handleSwitch,
-  ActiveOption = 'dashboard',
-}) {
+export default function MiniDrawer({ DrawerOptions = [], handleSwitch }) {
   const [open, setOpen] = useState(true);
 
   const handleDrawerOpen = () => {
@@ -98,144 +88,63 @@ export default function MiniDrawer({
   const { userActiveTab } = useSelector((state) => state.common);
 
   return (
-    <Box
-      display="flex"
-      width="100%"
-      borderRadius="8px"
-      p={4}
-      bgcolor={theme.palette.grey1.lighter}
-      gap={4}
-      justifyContent="space-between"
-      minHeight={'550px'}
+    <Drawer
+      variant="permanent"
+      open={open}
+      PaperProps={{ sx: { position: 'relative', border: 'none' } }}
     >
-      <Box bgcolor={theme.palette.white.main} borderRadius="8px">
-        <CssBaseline />
-        <Drawer
-          variant="permanent"
-          open={open}
-          PaperProps={{ sx: { position: 'relative', border: 'none' } }}
-        >
-          <DrawerHeader
-            sx={
-              !open
-                ? { flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }
-                : {
-                    background: `linear-gradient(to bottom, ${theme.palette.grey.main} 0%,  ${theme.palette.grey.main} 50%, ${theme.palette.white.main} 20%,  ${theme.palette.white.main} 100%)`,
-                    mb: 4,
-                    borderTopLeftRadius: '8px',
-                    borderTopRightRadius: '8px',
-                  }
-            }
-          >
-            {open ? (
-              <Grid container>
-                <Grid item xs={12}>
-                  <ProfileImage
-                    name={
-                      loggedInUserType === 'Doctor'
-                        ? 'Dr. ABC'
-                        : loggedInUserType === 'College'
-                        ? 'IP University'
-                        : loggedInUserType === 'NMC'
-                        ? 'National Medical Commission'
-                        : loggedInUserType === 'SMC'
-                        ? 'Maharashtra Medical Council'
-                        : loggedInUserType !== 'Doctor' &&
-                          loggedInUserType !== 'College' &&
-                          loggedInUserType !== 'SMC' &&
-                          loggedInUserType !== 'NMC'
-                        ? 'Dr. ABC'
-                        : null
-                    }
-                  />
-                </Grid>
-              </Grid>
-            ) : (
-              ''
-            )}
-            <IconButton
-              onClick={open ? handleDrawerClose : handleDrawerOpen}
-              sx={{ position: 'absolute', top: '2px' }}
-            >
-              {open ? <MenuOpenIcon /> : <ChevronRightIcon />}
-            </IconButton>
-          </DrawerHeader>
-          {/* <Divider /> */}
-
-          <List sx={{ p: 0 }}>
-            {DrawerOptions.map((item, index) => (
-              <ListItem
-                key={`profileOption_${index}`}
-                id={`profileOption_${index}`}
-                disablePadding
-                sx={{
-                  display: 'block',
-                  borderLeft:
-                    item.tabName === ActiveOption
-                      ? `5px solid ${theme.palette.secondary.lightOrange}`
-                      : null,
-                  borderBottom: `1px solid ${theme.palette.inputBorderColor.main}`,
-                  '&:first-child': {
-                    borderTop: `1px solid ${theme.palette.inputBorderColor.main}`,
-                  },
-                }}
-              >
-                <ListItemButton
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? 'initial' : 'center',
-                    px: 2.5,
-                  }}
-                  onClick={() => {
-                    handleSwitch(item.tabName);
-                  }}
-                >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : 'auto',
-                      justifyContent: 'center',
-                      color:
-                        item.tabName === ActiveOption
-                          ? theme.palette.secondary.lightOrange
-                          : theme.palette.grey1.main,
-                    }}
-                  >
-                    {!open ? item.icon : null}
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={item.name}
-                    primaryTypographyProps={{ variant: 'body3' }}
-                    sx={{
-                      opacity: open ? 1 : 0,
-                      color:
-                        item.tabName === ActiveOption
-                          ? theme.palette.secondary.lightOrange
-                          : theme.palette.textPrimary.main,
-                    }}
-                  />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-        </Drawer>
-      </Box>
-      <Box
-        sx={{
-          width: '69%',
-          bgcolor:
-            (userActiveTab === 'my-profile' && loggedInUserType === 'Doctor') ||
-            (userActiveTab === 'New-doctor-registration' && loggedInUserType === 'SMC')
-              ? 'none'
-              : `${theme.palette.white.main}`,
-          flex: 1,
-          borderRadius: '8px',
-        }}
+      <DrawerHeader
+        sx={
+          !open
+            ? { flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }
+            : {
+                background: `linear-gradient(to bottom, ${theme.palette.grey.main} 0%,  ${theme.palette.grey.main} 50%, ${theme.palette.white.main} 20%,  ${theme.palette.white.main} 100%)`,
+                mb: 4,
+                borderTopLeftRadius: '8px',
+                borderTopRightRadius: '8px',
+              }
+        }
       >
-        {DrawerOptions.map((item, index) =>
-          item.tabName === ActiveOption ? <Box key={index}>{item.element}</Box> : ''
+        {open ? (
+          <Grid container>
+            <Grid item xs={12}>
+              <ProfileImage
+                name={
+                  loggedInUserType === 'Doctor'
+                    ? 'Dr. ABC'
+                    : loggedInUserType === 'College'
+                    ? 'IP University'
+                    : loggedInUserType === 'NMC'
+                    ? 'National Medical Commission'
+                    : loggedInUserType === 'SMC'
+                    ? 'Maharashtra Medical Council'
+                    : loggedInUserType !== 'Doctor' &&
+                      loggedInUserType !== 'College' &&
+                      loggedInUserType !== 'SMC' &&
+                      loggedInUserType !== 'NMC'
+                    ? 'Dr. ABC'
+                    : null
+                }
+              />
+            </Grid>
+          </Grid>
+        ) : (
+          ''
         )}
-      </Box>
-    </Box>
+        <IconButton
+          onClick={open ? handleDrawerClose : handleDrawerOpen}
+          sx={{ position: 'absolute', top: '2px' }}
+        >
+          {open ? <MenuOpenIcon /> : <ChevronRightIcon />}
+        </IconButton>
+      </DrawerHeader>
+
+      <SideDrawerList
+        open={open}
+        handleSwitch={handleSwitch}
+        DrawerOptions={DrawerOptions}
+        ActiveOption={userActiveTab}
+      />
+    </Drawer>
   );
 }
