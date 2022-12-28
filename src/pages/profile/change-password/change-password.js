@@ -27,7 +27,7 @@ const ChangePassword = () => {
       </Typography>
       <Container
         sx={{
-          width: '70%',
+          width: { xs: '90%', sm: '90%', md: '70%' },
           margin: '10px auto',
           backgroundColor: 'white.main',
           boxShadow: 4,
