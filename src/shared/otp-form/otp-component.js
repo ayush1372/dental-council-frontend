@@ -26,8 +26,8 @@ const otpInputStyle = {
 };
 
 const otpMobileInputStyle = {
-  width: '45px',
-  height: '45px',
+  width: '40px',
+  height: '40px',
   marginRight: '12px',
   fontSize: '18px',
   borderRadius: 5,

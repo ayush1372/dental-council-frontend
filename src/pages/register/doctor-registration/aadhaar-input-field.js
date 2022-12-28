@@ -89,10 +89,13 @@ export const AadhaarInputField = (props) => {
             inputProps={{ maxLength: 4 }}
             sx={{
               textAlign: 'center',
-              width: '99px',
+              width: 'fit-content',
               height: '56px',
-              '& input': {
-                textAlign: 'center',
+              '.MuiOutlinedInput-root': {
+                width: { xs: '70px', sm: '99px' },
+                '& input': {
+                  textAlign: 'center',
+                },
               },
             }}
             {...register(FIRST_FIELD_NAME, {
@@ -123,10 +126,13 @@ export const AadhaarInputField = (props) => {
             inputProps={{ maxLength: 4 }}
             sx={{
               textAlign: 'center',
-              width: '99px',
+              width: 'fit-content',
               height: '56px',
-              '& input': {
-                textAlign: 'center',
+              '.MuiOutlinedInput-root': {
+                width: { xs: '70px', sm: '99px' },
+                '& input': {
+                  textAlign: 'center',
+                },
               },
             }}
             {...register(SECOND_FIELD_NAME, {
@@ -157,10 +163,13 @@ export const AadhaarInputField = (props) => {
             inputProps={{ maxLength: 4 }}
             sx={{
               textAlign: 'center',
-              width: '99px',
+              width: 'fit-content',
               height: '56px',
-              '& input': {
-                textAlign: 'center',
+              '.MuiOutlinedInput-root': {
+                width: { xs: '70px', sm: '99px' },
+                '& input': {
+                  textAlign: 'center',
+                },
               },
             }}
             {...register(THIRD_FIELD_NAME, {
