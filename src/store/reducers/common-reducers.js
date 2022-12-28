@@ -25,9 +25,6 @@ export const CommonActivity = createSlice({
       state.isloggedIn = false;
       state.timer = 0;
     },
-    fontsizes: (state) => {
-      state.fontsize = 20;
-    },
     setMobileNumber: (state, action) => {
       state.mobileNumber = action.payload;
     },

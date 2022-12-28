@@ -233,7 +233,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                Maximum size allowed for the attachment is 5MB.`}
               label={
                 <>
-                  <Typography color="text.primary">{t('upload_proof_of_relationship')}</Typography>
+                  <Typography color="text.primary">
+                    {t('upload_the_registration_certificate')}
+                  </Typography>
+
                   <Typography color="error"> *</Typography>
                 </>
               }

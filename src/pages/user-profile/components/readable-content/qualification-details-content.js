@@ -11,7 +11,7 @@ const QualificationDetailsContent = () => {
   const ClosePopup = () => {
     setOpenModal(false);
   };
-  const userType = useSelector((state) => state.common.loggedInUserType);
+  const { userActiveTab } = useSelector((state) => state.common);
 
   return (
     <Grid container spacing={2} mt={2}>
@@ -19,6 +19,9 @@ const QualificationDetailsContent = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Name of the degree or diploma obtained
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography
@@ -29,11 +32,11 @@ const QualificationDetailsContent = () => {
             >
               bachelor of dental surgery
             </Typography>
-            {userType !== 'Doctor' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}
           </Grid>
@@ -44,6 +47,9 @@ const QualificationDetailsContent = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Country Name
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography
@@ -54,11 +60,11 @@ const QualificationDetailsContent = () => {
             >
               India
             </Typography>
-            {userType !== 'Doctor' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}
           </Grid>
@@ -67,6 +73,9 @@ const QualificationDetailsContent = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             State
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography
@@ -77,11 +86,11 @@ const QualificationDetailsContent = () => {
             >
               New Delhi
             </Typography>
-            {userType !== 'Doctor' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}
           </Grid>
@@ -91,6 +100,9 @@ const QualificationDetailsContent = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Name of the college
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography
@@ -102,11 +114,11 @@ const QualificationDetailsContent = () => {
               Care Dental College
             </Typography>
 
-            {userType !== 'Doctor' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}
           </Grid>
@@ -115,6 +127,9 @@ const QualificationDetailsContent = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             University
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography
@@ -125,11 +140,11 @@ const QualificationDetailsContent = () => {
             >
               Dr. NTR University of Health sciences
             </Typography>{' '}
-            {userType !== 'Doctor' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}
           </Grid>
@@ -148,11 +163,11 @@ const QualificationDetailsContent = () => {
             >
               November
             </Typography>{' '}
-            {userType !== 'Doctor' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}
           </Grid>
@@ -162,7 +177,11 @@ const QualificationDetailsContent = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Year of awarding Degree/Diploma
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
+
           <Grid display="flex" alignItems="center">
             <Typography
               bgcolor="grey2.main"
@@ -172,11 +191,11 @@ const QualificationDetailsContent = () => {
             >
               2016
             </Typography>{' '}
-            {userType !== 'Doctor' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}
           </Grid>
@@ -184,16 +203,19 @@ const QualificationDetailsContent = () => {
         <Grid item xs={8} md={6}>
           <Typography variant="subtitle2" color="inputTextColor">
             Is your name in degree, different from your name in Aadhaar?
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
               No
             </Typography>
-            {userType !== 'Doctor' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}
           </Grid>

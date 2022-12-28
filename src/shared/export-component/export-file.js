@@ -20,42 +20,48 @@ const ExportFiles = () => {
   const open = Boolean(anchorEl);
   const id = open ? 'table-search-popover' : undefined;
   return (
-    <Grid container>
-      <Grid item md={1} xs={12} data-testid="exportButton">
-        <Button
-          data-testid="exportButton"
-          sx={{ padding: '17px 10px' }}
-          variant="contained"
-          endIcon={<KeyboardArrowDownIcon />}
-          onClick={handleClick}
-          startIcon={
-            <FileUploadOutlinedIcon sx={{ fontSize: '26px', transform: 'rotate(90deg)' }} />
-          }
-        ></Button>
-        <Popover
-          id={id}
-          open={open}
-          anchorEl={anchorEl}
-          onClose={handleClose}
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
-          }}
-        >
-          <List>
-            <ListItem disablePadding>
-              <ListItemButton disablePadding>
-                <ListItemText primary="Export as xlsx" />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding>
-              <ListItemButton onClick={handleClose}>
-                <ListItemText primary="Export as csv" />
-              </ListItemButton>
-            </ListItem>
-          </List>
-        </Popover>
-      </Grid>
+    <Grid item md={1} xs={12} data-testid="exportButton">
+      <Button
+        data-testid="exportButton"
+        sx={{
+          padding: '17px 10px',
+          m: {
+            xs: '35px 0px',
+            md: '0px',
+          },
+          width: {
+            xs: '100%',
+            md: 'fit-content',
+          },
+        }}
+        variant="contained"
+        endIcon={<KeyboardArrowDownIcon />}
+        onClick={handleClick}
+        startIcon={<FileUploadOutlinedIcon sx={{ fontSize: '26px', transform: 'rotate(90deg)' }} />}
+      ></Button>
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+      >
+        <List>
+          <ListItem disablePadding>
+            <ListItemButton disablePadding>
+              <ListItemText primary="Export as xlsx" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton onClick={handleClose}>
+              <ListItemText primary="Export as csv" />
+            </ListItemButton>
+          </ListItem>
+        </List>
+      </Popover>
     </Grid>
   );
 };

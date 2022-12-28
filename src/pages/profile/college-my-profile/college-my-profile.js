@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import EditIcon from '@mui/icons-material/Edit';
-import { Box, Grid, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 
 import { collegeProfileData } from '../../../constants/common-data';
 import { Button } from '../../../ui/core';
@@ -10,30 +10,28 @@ import CollegeEditProfile from './college-edit-profile';
 const CollegeMyProfile = () => {
   const [showPage, setShowpage] = useState('Profile');
   return (
-    <Box boxShadow={2} p="0px 91px 44px 41px" mt={2}>
+    <Grid boxShadow={2} mt={2} p={3}>
       {showPage === 'Profile' && (
         <Grid>
-          <Grid container spacing={6}>
-            <Grid item xs={6}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm="auto" sx={{ mr: { xs: 0, sm: 'auto' } }}>
               <Typography variant="h2" color="textPrimary.main">
                 My Profile
               </Typography>
             </Grid>
-
-            <Grid item xs={3}>
+            <Grid item xs={12} sm="auto">
               <Button
+                fullWidth
                 variant="contained"
                 onClick={() => setShowpage('ChangePassword')}
                 size="small"
-                sx={{
-                  width: 'max-content',
-                }}
               >
                 Change Password
               </Button>
             </Grid>
-            <Grid item xs={3}>
+            <Grid item xs={12} sm="auto">
               <Button
+                fullWidth
                 startIcon={<EditIcon sx={{ mr: 1 }} />}
                 variant="contained"
                 color="secondary"
@@ -41,17 +39,14 @@ const CollegeMyProfile = () => {
                   setShowpage('Edit');
                 }}
                 size="small"
-                sx={{
-                  width: 'max-content',
-                }}
               >
                 Edit Profile
               </Button>
             </Grid>
           </Grid>
 
-          <Grid container item spacing={2} mt={3}>
-            <Grid item xs={4} md={3}>
+          <Grid container spacing={2} mt={3}>
+            <Grid item xs={12} md={4} sm={6}>
               <Typography variant="body3" color="grey.label">
                 College Name
               </Typography>
@@ -60,16 +55,16 @@ const CollegeMyProfile = () => {
                 {collegeProfileData.collegename.name}
               </Typography>
             </Grid>
-            <Grid item xs={4} md={3}>
+            <Grid item xs={12} md={4} sm={6}>
               <Typography variant="body3" color="grey.label">
-                College ID{' '}
+                College ID
               </Typography>
 
               <Typography variant="subtitle2" color="primary.main">
                 {collegeProfileData.collegeId.name}
               </Typography>
             </Grid>
-            <Grid item xs={4} md={3}>
+            <Grid item xs={12} md={4} sm={6}>
               <Typography variant="body3" color="grey.label">
                 College Phone Number
               </Typography>
@@ -78,7 +73,7 @@ const CollegeMyProfile = () => {
                 {collegeProfileData.collegePhnNumber.name}
               </Typography>
             </Grid>
-            <Grid item xs={4} md={3}>
+            <Grid item xs={12} md={4} sm={6}>
               <Typography variant="body3" color="grey.label">
                 College Email ID
               </Typography>
@@ -86,10 +81,7 @@ const CollegeMyProfile = () => {
                 {collegeProfileData.collegeEmailId.name}
               </Typography>
             </Grid>
-          </Grid>
-
-          <Grid container item spacing={2} mt={3}>
-            <Grid item xs={4} md={3}>
+            <Grid item xs={12} md={4} sm={6}>
               <Typography variant="body3" color="grey.label">
                 Department Name
               </Typography>
@@ -97,7 +89,7 @@ const CollegeMyProfile = () => {
                 {collegeProfileData.DepartmentName.name}
               </Typography>
             </Grid>
-            <Grid item xs={4} md={3}>
+            <Grid item xs={12} md={4} sm={6}>
               <Typography variant="body3" color="grey.label">
                 State Name
               </Typography>
@@ -105,7 +97,7 @@ const CollegeMyProfile = () => {
                 {collegeProfileData.StateName.name}
               </Typography>
             </Grid>
-            <Grid item xs={4} md={3}>
+            <Grid item xs={12} md={4} sm={6}>
               <Typography variant="body3" color="grey.label">
                 College Website
               </Typography>
@@ -113,7 +105,7 @@ const CollegeMyProfile = () => {
                 {collegeProfileData.collegeWebsite.name}
               </Typography>
             </Grid>
-            <Grid item xs={4} md={3}>
+            <Grid item xs={12} md={4} sm={6}>
               <Typography variant="body3" color="grey.label">
                 College Address
               </Typography>
@@ -121,10 +113,7 @@ const CollegeMyProfile = () => {
                 {collegeProfileData.collegeAddress.name}
               </Typography>
             </Grid>
-          </Grid>
-
-          <Grid container item spacing={2} mt={3}>
-            <Grid item xs={4} md={3}>
+            <Grid item xs={12} md={4} sm={6}>
               <Typography variant="body3" color="grey.label">
                 College PIN Code
               </Typography>
@@ -132,7 +121,7 @@ const CollegeMyProfile = () => {
                 {collegeProfileData.collegePinCode.name}
               </Typography>
             </Grid>
-            <Grid item xs={4} md={3}>
+            <Grid item xs={12} md={4} sm={6}>
               <Typography variant="body3" color="grey.label">
                 College University Name
               </Typography>
@@ -145,7 +134,7 @@ const CollegeMyProfile = () => {
       )}
       {showPage === 'Edit' && <CollegeEditProfile />}
       {showPage === 'ChangePassword' && <ChangePassword />}
-    </Box>
+    </Grid>
   );
 };
 

@@ -76,6 +76,14 @@ export const PasswordRegexValidation = {
   },
 };
 
+export const AadharRegexValidation = {
+  required: 'Provide a valid aadhaar number',
+  pattern: {
+    value: /^[0-9]{4}$/,
+    message: 'Provide a valid aadhaar number',
+  },
+};
+
 export const EmailRegexValidation = {
   required: 'Provide a Valid Email ID',
   pattern: {

@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
 const RegistrationDetailsContent = () => {
-  const userType = useSelector((state) => state.common.loggedInUserType);
+  const { userActiveTab } = useSelector((state) => state.common);
 
   const [openModal, setOpenModal] = useState(false);
   const ClosePopup = () => {
@@ -20,6 +20,9 @@ const RegistrationDetailsContent = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Registered with council
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography
@@ -31,11 +34,11 @@ const RegistrationDetailsContent = () => {
               West Bengal Medical Council
             </Typography>
 
-            {userType !== 'Doctor' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}
           </Grid>
@@ -44,6 +47,9 @@ const RegistrationDetailsContent = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Registration Number
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex">
             <Typography
@@ -54,11 +60,11 @@ const RegistrationDetailsContent = () => {
             >
               7991749871719
             </Typography>
-            {userType !== 'Doctor' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}
           </Grid>
@@ -66,6 +72,9 @@ const RegistrationDetailsContent = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Registration Date
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex">
             <Typography
@@ -76,11 +85,11 @@ const RegistrationDetailsContent = () => {
             >
               30-10-2021
             </Typography>
-            {userType !== 'Doctor' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}
           </Grid>
@@ -90,16 +99,19 @@ const RegistrationDetailsContent = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Registration
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex">
             <Typography variant="subtitle2" color="primary.main">
               permanent
             </Typography>
-            {userType !== 'Doctor' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}
           </Grid>
@@ -117,11 +129,11 @@ const RegistrationDetailsContent = () => {
             >
               30-10-2022
             </Typography>
-            {userType !== 'Doctor' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}
           </Grid>
@@ -129,16 +141,19 @@ const RegistrationDetailsContent = () => {
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Registration Certificate
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex">
             <Typography variant="subtitle2" color="primary.main">
               Yes
             </Typography>
-            {userType !== 'Doctor' && (
+            {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
-                sx={{ fontSize: '30px' }}
+                fontSize="width30"
               />
             )}
           </Grid>
@@ -152,7 +167,10 @@ const RegistrationDetailsContent = () => {
       <Grid container item spacing={2}>
         <Grid item xs={8} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
-            upload proof of relationship
+            Upload the registration certificate
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Typography variant="subtitle2" color="primary.main">
             <AttachFileIcon fontSize="10px" />

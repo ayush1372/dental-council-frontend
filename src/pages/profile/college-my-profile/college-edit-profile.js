@@ -43,7 +43,7 @@ const CollegeEditProfile = () => {
   return (
     <Grid>
       <Grid container spacing={2} mt={2}>
-        <Grid item xs={12}>
+        <Grid container item xs={12}>
           <Typography variant="h2" color="textPrimary.main">
             Edit Profile
           </Typography>
@@ -51,7 +51,7 @@ const CollegeEditProfile = () => {
       </Grid>
 
       <Grid container item spacing={2} mt={3}>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
             College Name
           </Typography>
@@ -71,7 +71,7 @@ const CollegeEditProfile = () => {
           />
         </Grid>
 
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
             College ID
           </Typography>
@@ -91,7 +91,7 @@ const CollegeEditProfile = () => {
           />
         </Grid>
 
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="body3" color="inputTextColor.main">
             College Phone Number
             <Typography component="span" color="error.main">
@@ -140,8 +140,9 @@ const CollegeEditProfile = () => {
           />
         </Grid>
       </Grid>
+
       <Grid container item spacing={2} mt={3}>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="body3" color="inputTextColor.main">
             College Email ID
             <Typography component="span" color="error.main">
@@ -188,7 +189,7 @@ const CollegeEditProfile = () => {
           />
         </Grid>
 
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
             Select University Name
           </Typography>
@@ -210,7 +211,7 @@ const CollegeEditProfile = () => {
           />
         </Grid>
 
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
             College Website
           </Typography>
@@ -223,8 +224,9 @@ const CollegeEditProfile = () => {
           />
         </Grid>
       </Grid>
+
       <Grid container item spacing={2} mt={3}>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
             College Address
           </Typography>
@@ -239,7 +241,7 @@ const CollegeEditProfile = () => {
           />
         </Grid>
 
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
             College Pin Code
           </Typography>
@@ -251,10 +253,14 @@ const CollegeEditProfile = () => {
             name={'CollegePincode'}
             placeholder={'Enter Pin Code'}
             defaultValue={getValues().CollegePincode}
+            error={errors.CollegePincode?.message}
+            {...register('CollegePincode', {
+              required: 'College Pin Code is required',
+            })}
           />
         </Grid>
 
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
             State Name
           </Typography>
@@ -266,16 +272,17 @@ const CollegeEditProfile = () => {
             name="StateName"
             clearErrors={clearErrors}
             items={StateNames}
-            placeholder="Select StateName Name"
+            placeholder="Select State Name"
             error={errors.StateName?.message}
             {...register('StateName', {
-              required: 'StateName Name is required',
+              required: 'State Name is required',
             })}
           />
         </Grid>
       </Grid>
+
       <Grid container item spacing={2} mt={3}>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="body3" color="textSecondary.main">
             Select your Registration Council
             <Typography component="span" color="error.main">
@@ -298,19 +305,46 @@ const CollegeEditProfile = () => {
           <Grid />
         </Grid>
       </Grid>
-      <Box display="flex" mt={5}>
-        <Button
-          variant="contained"
-          color="secondary"
-          sx={{ mr: 2 }}
-          onClick={handleSubmit(onsubmit)}
-        >
-          Submit
-        </Button>
-        <Button variant="contained" color="grey">
-          Cancel
-        </Button>
-      </Box>
+
+      <Grid container alignItems="center" mt={3}>
+        <Grid item xs={12} sm="auto" alignItems="flex-start" mr={{ lg: 2, md: 2, sm: 2 }}>
+          <Button
+            sx={{
+              m: {
+                xs: '5px 0px',
+                md: '0px',
+              },
+              width: {
+                xs: '100%',
+                md: 'fit-content',
+              },
+            }}
+            variant="contained"
+            color="secondary"
+            onClick={handleSubmit(onsubmit)}
+          >
+            Submit
+          </Button>
+        </Grid>
+        <Grid item xs={12} sm="auto" alignItems="flex-start">
+          <Button
+            variant="contained"
+            color="grey"
+            sx={{
+              m: {
+                xs: '5px 0px',
+                // md: '0px',
+              },
+              width: {
+                xs: '100%',
+                // md: 'fit-content',
+              },
+            }}
+          >
+            Cancel
+          </Button>
+        </Grid>
+      </Grid>
     </Grid>
   );
 };

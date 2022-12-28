@@ -72,7 +72,7 @@ export const LogoWrapper = () => {
               variant="contained"
               color="grey"
               data-testid="logoutbtn"
-              sx={{ fontSize: 'small' }}
+              size="medium"
               onClick={handleClickedLogout}
             >
               {t('Logout')}
@@ -82,7 +82,7 @@ export const LogoWrapper = () => {
               <Button
                 variant="contained"
                 color="grey"
-                sx={{ fontSize: 'small' }}
+                size="medium"
                 onClick={handleClickLoginRegister}
                 endIcon={<KeyboardArrowDownIcon />}
               >

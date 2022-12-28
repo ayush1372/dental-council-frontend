@@ -21,3 +21,9 @@ export const createSelectFieldData = (arrayOfStrings, valueKey = 'id') => {
     return [];
   }
 };
+
+export const changeAppFontSize = (size, appFontType) => {
+  const fontSize =
+    appFontType === 'small' ? `${size - 2}` : appFontType === 'large' ? `${size + 2}` : `${size}`;
+  return `${fontSize}px`;
+};
