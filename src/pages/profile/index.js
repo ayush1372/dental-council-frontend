@@ -9,13 +9,13 @@ import {
   nmcTabs,
   smcTabs,
 } from '../../shared/sidebar-drawer/sidebar-drawer-list-item';
-import { changeUserActiveTab } from '../../store/reducers/ui-reducers';
+import { changeUserActiveTab } from '../../store/reducers/common-reducers';
 import MiniDrawer from './components/profile-sidebar/profile-sidebar';
 import ProfileTabContainer from './components/profile-sidebar/profile-tab-container';
 
 export function Profile() {
   const dispatch = useDispatch();
-  const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
 
   const [isActiveTab, setIsActiveTab] = useState(
     loggedInUserType === 'Doctor'

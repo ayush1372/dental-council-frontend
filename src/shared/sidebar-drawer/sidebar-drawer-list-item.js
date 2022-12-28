@@ -19,7 +19,7 @@ import UserProfile from '../../pages/user-profile';
 import TrackStatus from '../track-status';
 
 function SideDrawerListItem() {
-  const { userActiveTab } = useSelector((state) => state.ui);
+  const { userActiveTab } = useSelector((state) => state.common);
   return userActiveTab;
 }
 export const doctorTabs = [

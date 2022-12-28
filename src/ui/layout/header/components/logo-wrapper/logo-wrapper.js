@@ -7,8 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import DigitalIndia from '../../../../../assets/images/logo-slider/digital-India.png';
-import { logout, resetLoginReducer } from '../../../../../store/reducers/common-reducers';
-import resetUiSlice from '../../../../../store/reducers/ui-reducers';
+import { logout, resetCommonReducer } from '../../../../../store/reducers/common-reducers';
 import { Button } from '../../../../core';
 import { LoginRegisterPopover } from './login-register-popover/login-register-popover';
 
@@ -17,7 +16,7 @@ import styles from './logo-wrapper.module.scss';
 export const LogoWrapper = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const loggedIn = useSelector((state) => state.login.isloggedIn);
+  const loggedIn = useSelector((state) => state.common.isloggedIn);
   const { t } = useTranslation();
 
   /** Login Register */
@@ -33,10 +32,9 @@ export const LogoWrapper = () => {
 
   const handleClickedLogout = () => {
     dispatch(logout());
-    dispatch(resetLoginReducer());
+    dispatch(resetCommonReducer());
     localStorage.clear();
     navigate('/');
-    dispatchEvent(resetUiSlice());
   };
 
   return (

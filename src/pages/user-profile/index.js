@@ -40,7 +40,7 @@ export const UserProfile = ({
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   const [wizardSteps, setWizardSteps] = useState(readWizardSteps);
-  const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
 
   const { activeStep, handleNext, handleBack, resetStep } = useWizard(
     loggedInUserType === 'Doctor' ? 0 : 1,

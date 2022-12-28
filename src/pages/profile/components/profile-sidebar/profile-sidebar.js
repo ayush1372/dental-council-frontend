@@ -84,9 +84,8 @@ export default function MiniDrawer({ DrawerOptions = [], handleSwitch }) {
   };
 
   const theme = useTheme();
-
-  const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
-  const { userActiveTab } = useSelector((state) => state.ui);
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  const { userActiveTab } = useSelector((state) => state.common);
 
   return (
     <Drawer

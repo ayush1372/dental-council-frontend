@@ -3,8 +3,8 @@ import { Box } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 export default function ProfileTabContainer({ DrawerOptions }) {
-  const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
-  const { userActiveTab } = useSelector((state) => state.ui);
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  const { userActiveTab } = useSelector((state) => state.common);
   const theme = useTheme();
 
   return (

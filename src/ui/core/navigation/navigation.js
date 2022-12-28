@@ -14,7 +14,7 @@ import {
   nmcTabs,
   smcTabs,
 } from '../../../shared/sidebar-drawer/sidebar-drawer-list-item';
-import { changeUserActiveTab } from '../../../store/reducers/ui-reducers';
+import { changeUserActiveTab } from '../../../store/reducers/common-reducers';
 import { Menu } from '../menu/menu';
 
 import styles from './navigation.module.scss';
@@ -37,8 +37,8 @@ export const Navbar = () => {
     setState({ ...state, [anchor]: open });
   };
 
-  const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
-  const loggedIn = useSelector((state) => state.login.isloggedIn);
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  const loggedIn = useSelector((state) => state.common.isloggedIn);
   const dispatch = useDispatch();
 
   const [isActiveTab, setIsActiveTab] = useState(
