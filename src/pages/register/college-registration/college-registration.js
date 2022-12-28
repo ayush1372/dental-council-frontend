@@ -77,15 +77,14 @@ export function CollegeRegistration() {
             College Registration
           </Typography>
         </Grid>
-        <Grid item xs={12} mt={5}>
+
+        <Grid item xs={12} mt={{ lg: 1 }}>
           <Typography variant="h2" color="textPrimary.main">
             College Details
           </Typography>
         </Grid>
-      </Grid>
 
-      <Grid container item spacing={2} mt={1}>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={6} lg={4}>
           <Typography variant="body3" color="inputTextColor.main">
             College Name
           </Typography>
@@ -105,7 +104,7 @@ export function CollegeRegistration() {
           />
         </Grid>
 
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={6} lg={4}>
           <Typography variant="body3" color="inputTextColor.main">
             College ID
           </Typography>
@@ -116,7 +115,7 @@ export function CollegeRegistration() {
             fullWidth
             required
             name={'CollegeId'}
-            placeholder={'Enter College Id'}
+            placeholder={'Enter College ID'}
             error={errors.CollegeId?.message}
             {...register('CollegeId', {
               required: 'College ID is required',
@@ -124,7 +123,7 @@ export function CollegeRegistration() {
           />
         </Grid>
 
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={6} lg={4}>
           <Typography variant="body3" color="inputTextColor.main">
             College Phone Number
             <Typography component="span" color="error.main">
@@ -141,7 +140,7 @@ export function CollegeRegistration() {
             fullWidth
             name="CollegePhoneNumber"
             required
-            placeholder={t('Phone number')}
+            placeholder={t('Phone Number')}
             onInput={(e) => handleInput(e)}
             error={errors.CollegePhoneNumber?.message}
             {...register('CollegePhoneNumber', {
@@ -169,9 +168,8 @@ export function CollegeRegistration() {
           />
           {otpPopup}
         </Grid>
-      </Grid>
-      <Grid container item spacing={2} mt={2}>
-        <Grid item xs={8} md={4}>
+
+        <Grid item xs={12} md={6} lg={4}>
           <Typography variant="body3" color="inputTextColor.main">
             College Email ID
             <Typography component="span" color="error.main">
@@ -223,8 +221,30 @@ export function CollegeRegistration() {
             }}
           />
         </Grid>
-
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={6} lg={4}>
+          <Typography variant="body3" color="textSecondary.main">
+            Select Council
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
+          </Typography>
+          <Box>
+            <SearchableDropdown
+              fullWidth
+              name="RegistrationCouncil"
+              items={RegistrationCouncilNames}
+              placeholder="Select your Registration Council"
+              clearErrors={clearErrors}
+              error={errors.RegistrationCouncil?.message}
+              {...register('RegistrationCouncil', {
+                required: 'Registration Council is required',
+              })}
+            />
+          </Box>
+          <Grid />
+          <Grid />
+        </Grid>
+        <Grid item xs={12} md={6} lg={4}>
           <Typography variant="body3" color="inputTextColor.main">
             Select University Name
           </Typography>
@@ -232,6 +252,7 @@ export function CollegeRegistration() {
             *
           </Typography>
           <SearchableDropdown
+            fullWidth
             name="UniversityName"
             onChange={onHandleChange}
             clearErrors={clearErrors}
@@ -244,24 +265,23 @@ export function CollegeRegistration() {
           />
         </Grid>
 
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={6} lg={4}>
           <Typography variant="body3" color="inputTextColor.main">
             College Website
           </Typography>
 
           <TextField fullWidth name={'CollegeWebsite'} placeholder={'Enter College Website'} />
         </Grid>
-      </Grid>
-      <Grid container item spacing={2} mt={2}>
-        <Grid item xs={8} md={4}>
+
+        <Grid item xs={12} md={6} lg={4}>
           <Typography variant="body3" color="inputTextColor.main">
             College Address
           </Typography>
 
-          <TextField multiline rows={1} fullWidth placeholder="Write a reason here . . ." />
+          <TextField multiline rows={1} fullWidth placeholder="Enter College Address" />
         </Grid>
 
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={6} lg={4}>
           <Typography variant="body3" color="inputTextColor.main">
             College Pin Code
           </Typography>
@@ -273,7 +293,7 @@ export function CollegeRegistration() {
           />
         </Grid>
 
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={6} lg={4}>
           <Typography variant="body3" color="inputTextColor.main">
             State Name
           </Typography>
@@ -282,6 +302,7 @@ export function CollegeRegistration() {
           </Typography>
 
           <SearchableDropdown
+            fullWidth
             name="StateName"
             items={StateNames}
             clearErrors={clearErrors}
@@ -296,32 +317,8 @@ export function CollegeRegistration() {
           />
         </Grid>
       </Grid>
-      <Grid container item spacing={2} mt={3}>
-        <Grid item xs={8} md={4}>
-          <Typography variant="body3" color="textSecondary.main">
-            Select your Registration Council
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
-          </Typography>
-          <Box>
-            <SearchableDropdown
-              name="RegistrationCouncil"
-              items={RegistrationCouncilNames}
-              placeholder="Select your Registration Council"
-              clearErrors={clearErrors}
-              error={errors.RegistrationCouncil?.message}
-              {...register('RegistrationCouncil', {
-                required: 'Registration Council is required',
-              })}
-            />
-          </Box>
-          <Grid />
-          <Grid />
-        </Grid>
-      </Grid>
 
-      <Box display="flex" mt={7}>
+      <Box display="flex" justifyContent="flex-start" mt={3}>
         <Button
           variant="contained"
           color="secondary"
