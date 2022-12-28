@@ -40,7 +40,7 @@ export const UserProfile = ({
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   const [wizardSteps, setWizardSteps] = useState(readWizardSteps);
-  const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
 
   const { activeStep, handleNext, handleBack, resetStep } = useWizard(
     loggedInUserType === 'Doctor' ? 0 : 1,
@@ -121,7 +121,7 @@ export const UserProfile = ({
             }}
           >
             <Typography width="667px" height="19px" color="suspendAlert.dark">
-              Your Profile is set to suspend mode. You will not be able to perform actions on the
+              Your profile is set to suspend mode. You will not be able to perform actions on the
               profile.
             </Typography>
             <TuneIcon

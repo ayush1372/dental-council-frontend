@@ -17,8 +17,6 @@ import MenuItem from '@mui/material/MenuItem';
 import PopupState, { bindMenu, bindTrigger } from 'material-ui-popup-state';
 import { useSelector } from 'react-redux';
 
-import ApproveLicenseModal from '../../../../shared/activate-licence-modals/approve-modal';
-import RejectLicenseModal from '../../../../shared/activate-licence-modals/reject-modal';
 import ButtonGroupWizard from '../../../../ui/core/wizard/button-group-wizard';
 import SuspendLicenseVoluntaryRetirement from '../../../suspend-license-voluntary-retirement';
 import CurrentWorkDetails from '../readable-content/current-work-details';
@@ -32,12 +30,9 @@ const ReadWorkProfile = ({
   setShowViewPorfile,
   activeStep,
 }) => {
-  const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
-  const userActiveTab = useSelector((state) => state.ui.userActiveTab);
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const [selected, setSelected] = useState('');
   const [confirmationModal, setConfirmationModal] = useState(false);
-  const [isApproveModalOpen, setIsApproveModalOpen] = useState(false);
-  const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
 
   const [accordionKey, setAccordionKey] = useState('accordion-0');
   const accordions = [
@@ -111,7 +106,7 @@ const ReadWorkProfile = ({
       {showActions && (
         <Box paddingBottom={'30px'} pl={3} display="flex" justifyContent="space-between">
           <ButtonGroupWizard handlePrevious={handleBack} />
-          {showActions && loggedInUserType === 'College' && (
+          {showActions && loggedInUserType !== 'Doctor' && (
             <Box mt={2}>
               <PopupState>
                 {(popupState) => (
@@ -159,33 +154,6 @@ const ReadWorkProfile = ({
               </Button>
             </Box>
           )}
-          {showActions &&
-            ['SMC', 'NMC'].includes(loggedInUserType) &&
-            userActiveTab !== 'track-status' && (
-              <Box pl={3} display="flex" justifyContent="space-between" pt={2}>
-                <Button
-                  sx={{
-                    marginRight: '10px',
-                  }}
-                  color="secondary"
-                  variant="contained"
-                  onClick={() => {
-                    setIsApproveModalOpen(true);
-                  }}
-                >
-                  Approve
-                </Button>
-                <Button
-                  color="secondary"
-                  variant="contained"
-                  onClick={() => {
-                    setIsRejectModalOpen(true);
-                  }}
-                >
-                  Reject
-                </Button>
-              </Box>
-            )}
         </Box>
       )}
       <Dialog
@@ -238,20 +206,6 @@ const ReadWorkProfile = ({
           )}
         </Box>
       </Dialog>
-      {isApproveModalOpen && (
-        <ApproveLicenseModal
-          ClosePopup={() => {
-            setIsApproveModalOpen(false);
-          }}
-        />
-      )}
-      {isRejectModalOpen && (
-        <RejectLicenseModal
-          ClosePopup={() => {
-            setIsRejectModalOpen(false);
-          }}
-        />
-      )}
     </Box>
   );
 };

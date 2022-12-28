@@ -167,7 +167,7 @@ const ActivateLicence = (props) => {
           <UserProfile showViewProfile={true} />
         </Box>
       ) : (
-        <Grid sx={{ m: 2 }}>
+        <Grid sx={{ m: 2 }} lg={12} md={10}>
           <Grid item>
             <Typography variant="h2" data-testid="tab-heading">
               Application Requests

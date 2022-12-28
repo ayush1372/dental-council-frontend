@@ -153,7 +153,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
                 defaultValue={getValues().fromDate}
                 error={errors.fromDate?.message}
                 {...register('fromDate', {
-                  required: 'This field is required',
+                  required: 'Enter from date',
                 })}
               />
             </Grid>
@@ -182,7 +182,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
                   defaultValue={getValues().toDate}
                   error={errors.toDate?.message}
                   {...register('toDate', {
-                    required: 'This field is required',
+                    required: 'Enter to date',
                   })}
                 />
               </Grid>
@@ -228,7 +228,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
               defaultValue={getValues().remark}
               error={errors.remark?.message}
               {...register('remark', {
-                required: 'This field is required',
+                required: 'Enter remarks',
               })}
             />
           </Grid>
@@ -260,14 +260,14 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
           <Checkbox
             name="notification"
             {...register('notification', {
-              required: 'This field is required',
+              required: 'Please indicate that you accept the Terms and Conditions',
             })}
             sx={{ padding: '0 8px 0 0' }}
             label={
               tabName
-                ? 'You will no longer be able to receive notifications, or perform actions on your profile.'
+                ? 'You will no longer be able to receive notifications or perform actions on your profile.'
                 : selectedValue === 'blacklist' || selectedValue === 'suspend'
-                ? 'Doctor will no longer be able to receive notifications, or perform actions on his/her profile.'
+                ? 'Doctor will no longer be able to receive notifications or perform actions on his/her profile.'
                 : ''
             }
             error={errors.notification?.message}

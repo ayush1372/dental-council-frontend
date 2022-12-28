@@ -7,18 +7,18 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
-  // Button,
+  Button,
   Typography,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
-// import { useSelector } from 'react-redux';
 import ButtonGroupWizard from '../../../../ui/core/wizard/button-group-wizard';
 import CommunicationAddressContent from '../readable-content/communication-details-content';
 import IMRDetailsContent from '../readable-content/imr-details-content';
 import PersonalDetailsContent from '../readable-content/personal-details-content';
-const ReadPersonalDetails = ({ handleNext }) => {
-  // const userType = useSelector((state) => state.login.loggedInUserType);
+const ReadPersonalDetails = ({ handleNext, showActions = true }) => {
+  const userType = useSelector((state) => state.common.loggedInUserType);
   const { t } = useTranslation();
   const [accordionKey, setAccordionKey] = useState('accordion-0');
   const accordions = [
@@ -75,8 +75,9 @@ const ReadPersonalDetails = ({ handleNext }) => {
           );
         })}
       </Box>
-      <Box px={3} display="flex" justifyContent="flex-end">
-        {/* {userType !== 'Doctor' && (
+      {showActions && (
+        <Box px={3} display="flex" justifyContent="flex-end">
+          {userType !== 'Doctor' && (
             <Button
               variant="contained"
               color="secondary"
@@ -85,9 +86,10 @@ const ReadPersonalDetails = ({ handleNext }) => {
             >
               Action...
             </Button>
-          )} */}
-        <ButtonGroupWizard handleNext={handleNext} labelNext={t('Next')} hidePrevious={true} />
-      </Box>
+          )}
+          <ButtonGroupWizard handleNext={handleNext} labelNext={t('Next')} hidePrevious={true} />
+        </Box>
+      )}
     </Box>
   );
 };

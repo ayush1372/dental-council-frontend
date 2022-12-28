@@ -44,7 +44,7 @@ function TrackStatusTable(props) {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
   const [selectedRowData, setRowData] = React.useState({});
-  const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const [showViewProfile, setShowViewPorfile] = useState(false);
   const viewNameOfApplicant = (event, row) => {
     event.preventDefault();

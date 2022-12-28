@@ -22,7 +22,7 @@ const readWizardSteps = [
 export const NewDoctorRegistration = (props) => {
   const [isReadMode, setIsReadMode] = useState(true);
   const { activeStep, handleNext, handleBack, resetStep } = useWizard(0, []);
-  const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const [wizardSteps, setWizardSteps] = useState(readWizardSteps);
 
   useEffect(() => {
