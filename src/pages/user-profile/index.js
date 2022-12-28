@@ -121,7 +121,7 @@ export const UserProfile = ({
             }}
           >
             <Typography width="667px" height="19px" color="suspendAlert.dark">
-              Your Profile is set to suspend mode. You will not be able to perform actions on the
+              Your profile is set to suspend mode. You will not be able to perform actions on the
               profile.
             </Typography>
             <TuneIcon
