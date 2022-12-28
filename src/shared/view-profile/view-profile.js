@@ -42,6 +42,9 @@ export function ViewProfile(props) {
             <Grid item xs={8} md={4}>
               <Typography variant="body3" color="grey.label">
                 NMR ID
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
               </Typography>
               <Typography variant="subtitle2" color="primary.main">
                 71-1567-8728-1025
@@ -50,6 +53,9 @@ export function ViewProfile(props) {
             <Grid item xs={8} md={4}>
               <Typography variant="body3" color="grey.label">
                 Council verification status
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
               </Typography>
               <Typography variant="subtitle2" color="primary.main">
                 Submitted
@@ -58,6 +64,9 @@ export function ViewProfile(props) {
             <Grid item xs={8} md={4}>
               <Typography variant="body3" color="grey.label">
                 Work Detail Verification Status
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
               </Typography>
               <Typography variant="subtitle2" color="primary.main">
                 Submitted
@@ -71,6 +80,9 @@ export function ViewProfile(props) {
             <Grid item xs={8} md={4}>
               <Typography variant="body3" color="grey.label">
                 Email
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
               </Typography>
               <Typography variant="subtitle2" color="primary.main">
                 madhura638@gmail.com
