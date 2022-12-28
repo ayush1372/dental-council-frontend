@@ -94,7 +94,7 @@ export default function MiniDrawer({
 
   const theme = useTheme();
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
-  const { userActiveTab } = useSelector((state) => state.ui);
+  const { userActiveTab } = useSelector((state) => state.common);
   return (
     <Box
       display="flex"

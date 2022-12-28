@@ -8,7 +8,6 @@ import { useNavigate } from 'react-router-dom';
 
 import DigitalIndia from '../../../../../assets/images/logo-slider/digital-India.png';
 import { logout, resetCommonReducer } from '../../../../../store/reducers/common-reducers';
-import resetUiSlice from '../../../../../store/reducers/ui-reducers';
 import { Button } from '../../../../core';
 import { LoginRegisterPopover } from './login-register-popover/login-register-popover';
 
@@ -36,7 +35,6 @@ export const LogoWrapper = () => {
     dispatch(resetCommonReducer());
     localStorage.clear();
     navigate('/');
-    dispatchEvent(resetUiSlice());
   };
 
   return (

@@ -9,7 +9,7 @@ import { Grid } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import TrackStatus from '../../shared/track-status/index';
-import { changeUserActiveTab } from '../../store/reducers/ui-reducers';
+import { changeUserActiveTab } from '../../store/reducers/common-reducers';
 import NewDoctorRegistration from '../profile/new-doctor-registration/new-doctor-registration';
 import UserProfile from '../user-profile';
 import ActivateLicence from './activate-licence-tab/activate-licence-tab';
@@ -26,7 +26,7 @@ import TrackApplication from './track-application/track-application';
 export function Profile() {
   const dispatch = useDispatch();
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
-  const { userActiveTab } = useSelector((state) => state.ui);
+  const { userActiveTab } = useSelector((state) => state.common);
 
   const doctorTabs = [
     {
