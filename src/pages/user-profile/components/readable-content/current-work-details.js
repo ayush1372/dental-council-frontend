@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
 const CurrentWorkDetails = () => {
-  const { userActiveTab } = useSelector((state) => state.ui);
+  const { userActiveTab } = useSelector((state) => state.common);
 
   const [openModal, setOpenModal] = useState(false);
   const ClosePopup = () => {

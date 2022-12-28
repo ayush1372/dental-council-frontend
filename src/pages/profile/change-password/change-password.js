@@ -91,7 +91,7 @@ const ChangePassword = () => {
             </Box>
             <Box mt={2}>
               <Typography variant="body3" color="primary">
-                {t('Confirm password')}
+                {t('Confirm Password')}
                 <Typography component="span" color="error.main">
                   *
                 </Typography>
@@ -108,7 +108,7 @@ const ChangePassword = () => {
                 defaultValue={getValues().confirmPassword}
                 error={errors.confirmPassword?.message}
                 {...register('confirmPassword', {
-                  required: 'Confirm Password is required',
+                  required: 'Enter confirm password',
                   validate: (val) => {
                     if (watch('newPassword') !== val) {
                       return 'Password does not match';

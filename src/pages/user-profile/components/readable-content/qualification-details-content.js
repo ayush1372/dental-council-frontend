@@ -11,7 +11,7 @@ const QualificationDetailsContent = () => {
   const ClosePopup = () => {
     setOpenModal(false);
   };
-  const { userActiveTab } = useSelector((state) => state.ui);
+  const { userActiveTab } = useSelector((state) => state.common);
 
   return (
     <Grid container spacing={2} mt={2}>
