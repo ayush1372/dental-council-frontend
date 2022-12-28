@@ -3,7 +3,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 
-import loginActivity from './reducers/common-reducers';
+import commonActivity from './reducers/common-reducers';
 import appFontSizeActivity from './reducers/app-font-size';
 import captchaReducer from './reducers/captcha-reducers';
 import uiReducer from './reducers/ui-reducers';
@@ -11,7 +11,7 @@ import menuListsReducer from './reducers/menu-lists-reducer';
 
 const store = configureStore({
   reducer: {
-    login: loginActivity,
+    common: commonActivity,
     appFontSize: appFontSizeActivity,
     getCaptchaData: captchaReducer,
     ui: uiReducer,

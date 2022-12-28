@@ -13,8 +13,8 @@ const initialState = {
   loggedInUserType: '',
 };
 
-export const LoginActivity = createSlice({
-  name: 'Login',
+export const CommonActivity = createSlice({
+  name: 'common',
   initialState,
   reducers: {
     login: (state) => {
@@ -37,7 +37,7 @@ export const LoginActivity = createSlice({
     setApiLoading: (state, action) => {
       state.apiLoading = action.payload;
     },
-    resetLoginReducer: () => initialState,
+    resetCommonReducer: () => initialState,
   },
 });
 
@@ -47,8 +47,8 @@ export const {
   fontsizes,
   setMobileNumber,
   userLoggedInType,
-  resetLoginReducer,
+  resetCommonReducer,
   setApiLoading,
-} = LoginActivity.actions;
+} = CommonActivity.actions;
 
-export default LoginActivity.reducer;
+export default CommonActivity.reducer;

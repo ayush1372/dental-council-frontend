@@ -30,7 +30,7 @@ const ReadWorkProfile = ({
   setShowViewPorfile,
   activeStep,
 }) => {
-  const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const [selected, setSelected] = useState('');
   const [confirmationModal, setConfirmationModal] = useState(false);
 

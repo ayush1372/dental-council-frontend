@@ -25,7 +25,7 @@ import TrackApplication from './track-application/track-application';
 
 export function Profile() {
   const dispatch = useDispatch();
-  const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const { userActiveTab } = useSelector((state) => state.ui);
 
   const doctorTabs = [

@@ -11,7 +11,7 @@ const QualificationDetailsContent = () => {
   const ClosePopup = () => {
     setOpenModal(false);
   };
-  const userType = useSelector((state) => state.login.loggedInUserType);
+  const userType = useSelector((state) => state.common.loggedInUserType);
 
   return (
     <Grid container spacing={2} mt={2}>

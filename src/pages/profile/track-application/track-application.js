@@ -9,7 +9,7 @@ export function TrackApplication() {
   const [showTrackApplication, setShowTrackApplication] = React.useState(false);
   const [showTrackApplicationTable, setShowTrackApplicationTable] = React.useState(true);
 
-  const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
 
   return (
     <Box p={3}>

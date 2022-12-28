@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
 const RegistrationDetailsContent = () => {
-  const userType = useSelector((state) => state.login.loggedInUserType);
+  const userType = useSelector((state) => state.common.loggedInUserType);
 
   const [openModal, setOpenModal] = useState(false);
   const ClosePopup = () => {

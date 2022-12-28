@@ -34,7 +34,7 @@ export function TableSearch({ trackApplication }) {
   const open = Boolean(anchorEl);
   const id = open ? 'table-search-popover' : undefined;
 
-  const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const {
     register,
     handleSubmit,
