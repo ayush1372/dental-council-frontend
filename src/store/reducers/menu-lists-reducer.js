@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   statesList: { data: [], isLoading: Boolean(true), isError: false },
+  countriesList: { data: [], isLoading: Boolean(true), isError: false },
   districtsList: { data: [], isLoading: Boolean(true), isError: false },
   citiesList: { data: [], isLoading: Boolean(true), isError: false },
 };
@@ -13,6 +14,9 @@ const menuLists = createSlice({
     getStates: (state, action) => {
       state.statesList = action.payload;
     },
+    getCountries: (state, action) => {
+      state.countriesList = action.payload;
+    },
     getDistricts: (state, action) => {
       state.districtsList = action.payload;
     },
@@ -22,6 +26,6 @@ const menuLists = createSlice({
   },
 });
 
-export const { getStates, getDistricts, getCities } = menuLists.actions;
+export const { getStates, getDistricts, getCities, getCountries } = menuLists.actions;
 
 export default menuLists.reducer;
