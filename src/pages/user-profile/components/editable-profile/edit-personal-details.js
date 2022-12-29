@@ -11,7 +11,7 @@ import { createSelectFieldData } from '../../../../helpers/functions/common-func
 import { get_year_data } from '../../../../helpers/functions/common-functions';
 import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
 import { ModalOTP } from '../../../../shared/otp-modal/otp-modal';
-import { getDistrictList } from '../../../../store/actions/menu-list-actions';
+import { getCitiesList, getDistrictList } from '../../../../store/actions/menu-list-actions';
 import { RadioGroup, Select, TextField } from '../../../../ui/core';
 import MobileNumber from '../../../../ui/core/mobile-number/mobile-number';
 
@@ -78,9 +78,24 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     }
   };
 
+  const fetchCities = () => {
+    try {
+      dispatch(getCitiesList())
+        .then((dataResponse) => {
+          verboseLog('dataResponse', dataResponse);
+        })
+        .catch((error) => {
+          verboseLog('error occured', error);
+        });
+    } catch (err) {
+      verboseLog('error', err);
+    }
+  };
+
   const selectedState = watch('State');
   useEffect(() => {
     fetchDistricts(selectedState);
+    fetchCities();
   }, [selectedState]);
   const { otpPopup, handleClickOpen, otpVerified } = ModalOTP({ afterConfirm: () => {} });
 

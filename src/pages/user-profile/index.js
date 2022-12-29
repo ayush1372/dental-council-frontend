@@ -10,7 +10,6 @@ import useWizard from '../../hooks/use-wizard';
 import ReactivateLicencePopup from '../../shared/reactivate-licence-popup/re-activate-licence-popup';
 import SuccessPopup from '../../shared/reactivate-licence-popup/success-popup';
 import { getCountriesList, getStatesList } from '../../store/actions/menu-list-actions';
-import { getCities } from '../../store/reducers/menu-lists-reducer';
 import { Button } from '../../ui/core/button/button';
 import Wizard from '../../ui/core/wizard';
 import ChangePassword from '../profile/change-password/change-password';
@@ -77,24 +76,9 @@ export const UserProfile = ({
     }
   };
 
-  const fetchCities = () => {
-    try {
-      dispatch(getCities())
-        .then((dataResponse) => {
-          verboseLog('dataResponse', dataResponse);
-        })
-        .catch((error) => {
-          verboseLog('error occured', error);
-        });
-    } catch (err) {
-      verboseLog('error', err);
-    }
-  };
-
   const openDoctorEditProfile = () => {
     setIsReadMode(false);
     fetchStates();
-    fetchCities();
     fetchCountries();
   };
 
