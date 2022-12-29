@@ -924,7 +924,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       Name: loggedInUserType === 'SMC' ? '' : 'Aarnav Sharma',
       Address: loggedInUserType === 'SMC' ? '' : 'Hno. 560 Row 3 Sadar Bazar, New Delhi',
       Area: loggedInUserType === 'SMC' ? '' : 'new delhi',
-      District: loggedInUserType === 'SMC' ? '' : 'new delhi',
+      District: loggedInUserType === 'SMC' ? '' : '',
       SubDistrict: '',
       State: loggedInUserType === 'SMC' ? '' : '',
       Country: loggedInUserType === 'SMC' ? '' : 356,
@@ -1464,13 +1464,19 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
           <Grid item xs={12} md={4}>
             <Select
               fullWidth
-              error={errors.Nationality?.message}
+              error={errors.SubDistrict?.message}
               name="SubDistrict"
               label="Sub District"
               placeholder="Sub District"
               defaultValue={getValues().SubDistrict}
               {...register('SubDistrict')}
               options={createSelectFieldData(subDistrictList)}
+              MenuProps={{
+                style: {
+                  maxHeight: 250,
+                  maxWidth: 130,
+                },
+              }}
             />
           </Grid>
         </Grid>
