@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
 const PersonalDetails = () => {
-  const { userActiveTab } = useSelector((state) => state.ui);
+  const { userActiveTab } = useSelector((state) => state.common);
 
   const [openModal, setOpenModal] = useState(false);
   const ClosePopup = () => {
@@ -16,7 +16,7 @@ const PersonalDetails = () => {
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
             Salutation
             <Typography component="span" color="error.main">
@@ -38,7 +38,7 @@ const PersonalDetails = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
 
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor.main">
             Aadhaar Number
             <Typography component="span" color="error.main">
@@ -60,7 +60,7 @@ const PersonalDetails = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         {false && (
-          <Grid item xs={8} md={4}>
+          <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="grey.label">
               Salutation
               <Typography component="span" color="error.main">
@@ -74,7 +74,7 @@ const PersonalDetails = () => {
         )}
       </Grid>
       <Grid container item spacing={2}>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             First Name
             <Typography component="span" color="error.main">
@@ -96,7 +96,7 @@ const PersonalDetails = () => {
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Middle Name
           </Typography>
@@ -114,7 +114,7 @@ const PersonalDetails = () => {
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Last Name
             <Typography component="span" color="error.main">
@@ -137,7 +137,7 @@ const PersonalDetails = () => {
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
       </Grid>
       <Grid container item spacing={2}>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Father&apos;s Name
             <Typography component="span" color="error.main">
@@ -158,7 +158,7 @@ const PersonalDetails = () => {
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Mother&apos;s Name
           </Typography>
@@ -176,7 +176,7 @@ const PersonalDetails = () => {
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Spouse Name
           </Typography>
@@ -196,7 +196,7 @@ const PersonalDetails = () => {
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
       </Grid>
       <Grid container item spacing={2}>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Nationality
             <Typography component="span" color="error.main">
@@ -218,7 +218,7 @@ const PersonalDetails = () => {
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
             Languages
             <Typography component="span" color="error.main">
@@ -239,7 +239,7 @@ const PersonalDetails = () => {
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
             Date Of Birth
             <Typography component="span" color="error.main">
@@ -262,7 +262,7 @@ const PersonalDetails = () => {
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
       </Grid>
       <Grid container item spacing={2}>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
             Gender
             <Typography component="span" color="error.main">
@@ -283,7 +283,7 @@ const PersonalDetails = () => {
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
             Schedule
             <Typography component="span" color="error.main">

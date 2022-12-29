@@ -39,7 +39,15 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
   };
 
   return (
-    <Box boxShadow={1} padding="0px 91px 44px 41px">
+    <Box
+      boxShadow={1}
+      sx={{
+        padding: {
+          xs: '0px 10px 10px 10px',
+          md: '0px 91px 44px 41px',
+        },
+      }}
+    >
       <Grid container spacing={2} mt={2}>
         {/* layer 1 */}
         <Grid container item spacing={2}>
@@ -54,7 +62,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               Speciality Details*
             </Typography>
           </Grid>
-          <Grid item xs={8} md={4}>
+          <Grid item xs={12} md={4}>
             <Select
               fullWidth
               error={errors.Speciality?.message}
@@ -73,7 +81,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               ]}
             />
           </Grid>
-          <Grid item xs={8} md={4}>
+          <Grid item xs={12} md={4}>
             <TextField
               variant="outlined"
               name={'subSpeciality'}
@@ -99,7 +107,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               Work Details*
             </Typography>
           </Grid>
-          <Grid item xs={8} md={4}>
+          <Grid item xs={12} md={4}>
             <RadioGroup
               onChange={handleselection}
               name={'selection'}
@@ -120,7 +128,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               error={errors.selection?.message}
             />
           </Grid>
-          <Grid item xs={8} md={4}>
+          <Grid item xs={12} md={4}>
             <Select
               fullWidth
               error={errors.NatureOfWork?.message}
@@ -142,7 +150,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
           </Grid>
         </Grid>
         <Grid container item spacing={2}>
-          <Grid item xs={8} md={8}>
+          <Grid item xs={12} md={4}>
             <RadioGroup
               onChange={handleWorkStatus}
               name={'workStatus'}
@@ -169,7 +177,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
           </Grid>
         </Grid>
         <Grid container item spacing={2}>
-          <Grid item xs={8} md={6}>
+          <Grid item xs={12} md={6}>
             <UploadFile
               uploadFiles="single"
               sizeAllowed={1}
@@ -195,7 +203,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               OR
             </Typography>
           </Grid>
-          <Grid item xs={8} md={4} display="flex" alignItems="center">
+          <Grid item xs={12} md={4} display="flex" alignItems="center">
             <Button color="secondary" variant="outlined">
               View Application
             </Button>
@@ -214,7 +222,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               Current Work Details*
             </Typography>
           </Grid>
-          <Grid item xs={8} md={4}>
+          <Grid item xs={12} md={4}>
             <RadioGroup
               onChange={handleselection}
               name={'selection'}
@@ -236,7 +244,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
           </Grid>
         </Grid>
         <Grid container item spacing={2}>
-          <Grid item xs={6} md={4}>
+          <Grid item xs={12} md={4}>
             <TextField
               variant="outlined"
               name={'state'}
@@ -251,7 +259,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               error={errors.state?.message}
             />
           </Grid>
-          <Grid item xs={6} md={4}>
+          <Grid item xs={12} md={4}>
             <Select
               fullWidth
               error={errors.District?.message}
@@ -270,7 +278,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               ]}
             />
           </Grid>
-          <Grid item xs={6} md={4}>
+          <Grid item xs={12} md={4}>
             <TextField
               variant="outlined"
               name={'workingOrganizationName'}
@@ -289,7 +297,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
           </Grid>
         </Grid>
         <Grid container item spacing={2}>
-          <Grid item xs={6} md={4}>
+          <Grid item xs={12} md={4}>
             <TextField
               variant="outlined"
               name={'organizationType'}
@@ -325,7 +333,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               />
             </Grid> */}
 
-          <Grid item xs={6} md={4}>
+          <Grid item xs={12} md={4}>
             <TextField
               variant="outlined"
               name={'Address'}
@@ -343,7 +351,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               error={errors.Address?.message}
             />
           </Grid>
-          <Grid item xs={6} md={4}>
+          <Grid item xs={12} md={4}>
             <TextField
               variant="outlined"
               name={'Pincode'}
@@ -364,7 +372,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
           </Grid>
         </Grid>
         <Grid container item spacing={2}>
-          <Grid item xs={6} md={4}>
+          <Grid item xs={12} md={4}>
             <TextField
               variant="outlined"
               name={'telecommunicationURL'}
@@ -381,28 +389,65 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
           </Grid>
         </Grid>
       </Grid>
-      <Box display="flex" justifyContent="space-between" alignItems="center" py={2}>
-        <Box>
-          <Button onClick={handleBackButton} color="grey" variant="contained">
+      <Grid container display="flex" justifyContent="space-between" alignItems="center" mt={5}>
+        <Grid item xs={12} md={8}>
+          <Button
+            onClick={handleBackButton}
+            color="grey"
+            variant="contained"
+            sx={{
+              margin: {
+                xs: '5px 0',
+                md: '0',
+              },
+              width: {
+                xs: '100%',
+                md: 'fit-content',
+              },
+            }}
+          >
             {t('Back')}
           </Button>
-        </Box>
-        <Box>
+        </Grid>
+        <Grid item xs={12} md="auto" display="flex" justifyContent="end">
           <Button
             onClick={handleSubmit}
             variant="outlined"
             color="secondary"
             sx={{
-              marginRight: '10px',
+              margin: {
+                xs: '5px 0',
+                md: '0',
+              },
+              width: {
+                xs: '100%',
+                md: 'fit-content',
+              },
             }}
           >
             {t('Save')}
           </Button>
-          <Button onClick={handleSubmit(onHandleOptionNext)} variant="contained" color="secondary">
+        </Grid>
+        <Grid item xs={12} md="auto" display="flex" justifyContent="end">
+          <Button
+            onClick={handleSubmit(onHandleOptionNext)}
+            variant="contained"
+            color="secondary"
+            sx={{
+              margin: {
+                xs: '5px 0',
+                md: '0',
+              },
+              width: {
+                xs: '100%',
+                md: 'fit-content',
+              },
+            }}
+          >
             {t('Save & Next')}
           </Button>
-        </Box>
-      </Box>
+        </Grid>
+      </Grid>
     </Box>
   );
 };

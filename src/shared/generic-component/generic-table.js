@@ -17,7 +17,6 @@ import Moment from 'moment';
 import propTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
-import { verboseLog } from '../../config/debug';
 import SuspendValuntaryPopup from '../../pages/suspend-valuntary-popup';
 import { Button, Chip } from '../../ui/core';
 
@@ -34,12 +33,28 @@ GenericTable.propTypes = {
 };
 
 export default function GenericTable(props) {
-  const { userActiveTab } = useSelector((state) => state.ui);
+  const { userActiveTab } = useSelector((state) => state.common);
   const tableCellWidth = Math.floor(window.innerWidth / props.tableHeader.length) + 'px';
-  const { order, orderBy, onRequestSort, page, rowsPerPage } = props;
+  const { order, orderBy, onRequestSort, page, rowsPerPage, customPopupOptions } = props;
   const [selected, setSelected] = useState('');
   const [confirmationModal, setConfirmationModal] = useState(false);
-  verboseLog('data', props);
+  const selectionChangeHandler = (event) => {
+    const { myValue } = event.currentTarget.dataset;
+    setSelected(myValue);
+    setConfirmationModal(true);
+  };
+  const [popUpOptions] = useState([
+    {
+      keyName: 'Permanent suspend',
+      dataValue: 'suspend',
+      onClick: selectionChangeHandler,
+    },
+    {
+      keyName: ' Temporary suspend',
+      dataValue: 'blacklist',
+      onClick: selectionChangeHandler,
+    },
+  ]);
   function stableSort(array, comparator) {
     const stabilizedThis = array.map((el, index) => [el, index]);
     stabilizedThis.sort((a, b) => {
@@ -86,12 +101,6 @@ export default function GenericTable(props) {
   };
   const handleClose = () => {
     setConfirmationModal(false);
-  };
-
-  const selectionChangeHandler = (event) => {
-    const { myValue } = event.currentTarget.dataset;
-    setSelected(myValue);
-    setConfirmationModal(true);
   };
 
   return (
@@ -195,18 +204,17 @@ export default function GenericTable(props) {
                                 }}
                               ></Button>
                               <Menu {...bindMenu(popupState)}>
-                                <MenuItem
-                                  data-my-value={'suspend'}
-                                  onClick={selectionChangeHandler}
-                                >
-                                  Permanent suspend
-                                </MenuItem>
-                                <MenuItem
-                                  data-my-value={'blacklist'}
-                                  onClick={selectionChangeHandler}
-                                >
-                                  Temporary suspend
-                                </MenuItem>
+                                {(customPopupOptions || popUpOptions).map((option) => {
+                                  return (
+                                    <MenuItem
+                                      key={option.dataValue}
+                                      data-my-value={option.dataValue}
+                                      onClick={option?.onClick || selectionChangeHandler}
+                                    >
+                                      {option.keyName}
+                                    </MenuItem>
+                                  );
+                                })}
                               </Menu>
                             </React.Fragment>
                           )}

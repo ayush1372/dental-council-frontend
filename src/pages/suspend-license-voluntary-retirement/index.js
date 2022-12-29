@@ -40,9 +40,9 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
           {selectedValue === 'raise' ? (
             <HelpIcon fontSize="width40" sx={{ color: 'secondary.warningYellow' }} />
           ) : selectedValue === 'reject' ? (
-            <ErrorIcon color="error" fontSize="width40" />
-          ) : selectedValue === 'verify' ? (
-            <CheckCircleIcon color="success" fontSize="width48" />
+            <ErrorIcon color="error" sx={{ fontSize: '40px' }} />
+          ) : selectedValue === 'verify' || selectedValue === 'approve' ? (
+            <CheckCircleIcon color="success" sx={{ fontSize: '50px' }} />
           ) : (
             <BlockIcon color="error" fontSize="width40" />
           )}
@@ -75,17 +75,20 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
           ? 'VERIFY!'
           : selectedValue === 'raise'
           ? 'Raise a Query for all'
+          : selectedValue === 'approve'
+          ? 'Reason to Approve application'
           : selectedValue === 'reject'
           ? 'Reason to Reject application'
           : selectedValue === 'suspend'
-          ? 'Want to Permanent Suspend?'
+          ? 'Request NMC to permanent suspension?'
           : selectedValue === 'blacklist'
-          ? 'Request NMC to Blacklist??'
+          ? 'Request NMC to temporary suspension?'
           : ''}
       </Typography>
       {selectedValue === 'raise' ||
       selectedValue === 'verify' ||
       selectedValue === 'forward' ||
+      selectedValue === 'approve' ||
       selectedValue === 'reject' ? (
         ''
       ) : (
@@ -150,12 +153,12 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
                 defaultValue={getValues().fromDate}
                 error={errors.fromDate?.message}
                 {...register('fromDate', {
-                  required: 'This field is required',
+                  required: 'Enter from date',
                 })}
               />
             </Grid>
             {selectedSuspension === 'voluntary-suspension-check' && (
-              <Grid item xs={12} md={6}>
+              <Grid item xs={12} md={6} my={{ xs: 1, md: 0 }}>
                 <Typography component={'p'} variant="body1">
                   Select To Date
                 </Typography>
@@ -179,7 +182,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
                   defaultValue={getValues().toDate}
                   error={errors.toDate?.message}
                   {...register('toDate', {
-                    required: 'This field is required',
+                    required: 'Enter to date',
                   })}
                 />
               </Grid>
@@ -189,12 +192,15 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
       )}
       {tabName === 'voluntary-suspend-license' ||
       selectedValue === 'raise' ||
+      selectedValue === 'approve' ||
       selectedValue === 'reject' ||
       selectedValue === 'suspend' ||
       selectedValue === 'blacklist' ? (
         <Box mt={4}>
           <Typography variant="subtitle2">
-            {selectedValue === 'raise' || selectedValue === 'reject' ? 'Add Reason' : 'Remarks'}
+            {selectedValue === 'raise' || selectedValue === 'reject' || selectedValue === 'approve'
+              ? 'Add Reason'
+              : 'Remarks'}
             <Typography variant="body4" color="error.main">
               *
             </Typography>
@@ -215,14 +221,14 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
                   ? 'Add a reason'
                   : selectedValue === 'raise'
                   ? 'Write something here . . .'
-                  : selectedValue === 'reject'
+                  : selectedValue === 'reject' || selectedValue === 'approve'
                   ? 'Add your reason here . . .'
                   : ''
               }
               defaultValue={getValues().remark}
               error={errors.remark?.message}
               {...register('remark', {
-                required: 'This field is required',
+                required: 'Enter remarks',
               })}
             />
           </Grid>
@@ -254,14 +260,14 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
           <Checkbox
             name="notification"
             {...register('notification', {
-              required: 'This field is required',
+              required: 'Please indicate that you accept the Terms and Conditions',
             })}
             sx={{ padding: '0 8px 0 0' }}
             label={
               tabName
-                ? 'You will no longer be able to receive notifications, or perform actions on your profile.'
+                ? 'You will no longer be able to receive notifications or perform actions on your profile.'
                 : selectedValue === 'blacklist' || selectedValue === 'suspend'
-                ? 'Doctor will no longer be able to receive notifications, or perform actions on his/her profile.'
+                ? 'Doctor will no longer be able to receive notifications or perform actions on his/her profile.'
                 : ''
             }
             error={errors.notification?.message}
@@ -299,10 +305,37 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
       )}
       {tabName && (
         <Box align="left" my={5}>
-          <Button variant="contained" color="secondary" onClick={handleSubmit(onSubmit)}>
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={handleSubmit(onSubmit)}
+            sx={{
+              width: {
+                xs: '100%',
+                md: 'fit-content',
+              },
+            }}
+          >
             {'Submit'}
           </Button>
-          <Button color="grey" variant="contained" sx={{ marginLeft: 2 }}>
+          <Button
+            color="grey"
+            variant="contained"
+            sx={{
+              my: {
+                xs: 1,
+                md: 0,
+              },
+              ml: {
+                xs: 0,
+                md: 2,
+              },
+              width: {
+                xs: '100%',
+                md: 'fit-content',
+              },
+            }}
+          >
             Cancel
           </Button>
         </Box>
@@ -312,6 +345,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
           {selectedValue === 'raise' ||
           selectedValue === 'reject' ||
           selectedValue === 'suspend' ||
+          selectedValue === 'approve' ||
           selectedValue === 'blacklist' ? (
             <Button variant="contained" color="grey">
               Cancel
@@ -337,7 +371,10 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
             >
               Permanent suspend
             </Button>
-          ) : selectedValue === 'reject' || selectedValue === 'raise' ? (
+          ) : selectedValue === 'reject' ||
+            selectedValue === 'approve' ||
+            selectedValue === 'raise' ? (
+            // eslint-disable-next-line
             <Button
               color="secondary"
               variant="contained"

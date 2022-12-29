@@ -12,7 +12,7 @@ export function TrackApplication() {
   const [showTrackApplicationTable, setShowTrackApplicationTable] = React.useState(true);
   const [showUserProfile, setShowUserProfile] = React.useState(false);
 
-  const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const onClickBackButtonHandler = () => {
     setShowUserProfile(false);
     setShowTrackApplicationTable(true);

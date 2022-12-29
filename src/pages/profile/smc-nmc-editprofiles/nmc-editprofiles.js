@@ -55,7 +55,7 @@ const NmcEditProfile = () => {
       </Grid>
 
       <Grid container item spacing={2} mt={3}>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
             Name
           </Typography>
@@ -77,7 +77,7 @@ const NmcEditProfile = () => {
           />
         </Grid>
 
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
             Phone Number
           </Typography>
@@ -99,7 +99,7 @@ const NmcEditProfile = () => {
           />
         </Grid>
 
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
             Email Id
           </Typography>
@@ -129,7 +129,7 @@ const NmcEditProfile = () => {
         </Grid>
       </Grid>
       <Grid container item spacing={2} mt={3}>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
             User ID
           </Typography>
@@ -155,7 +155,7 @@ const NmcEditProfile = () => {
           />
         </Grid>
 
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
             Council
           </Typography>
@@ -179,16 +179,31 @@ const NmcEditProfile = () => {
         </Grid>
       </Grid>
 
-      <Box display="flex" mt={5}>
+      <Box display="flex" mt={5} md="auto">
         <Button
           variant="contained"
           color="secondary"
-          sx={{ mr: 2 }}
+          sx={{
+            mr: 2,
+            width: {
+              xs: '100%',
+              md: 'fit-content',
+            },
+          }}
           onClick={handleSubmit(onsubmit)}
         >
           Submit
         </Button>
-        <Button variant="contained" color="grey">
+        <Button
+          variant="contained"
+          color="grey"
+          sx={{
+            width: {
+              xs: '100%',
+              md: 'fit-content',
+            },
+          }}
+        >
           Cancel
         </Button>
       </Box>

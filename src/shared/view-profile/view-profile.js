@@ -4,7 +4,7 @@ import Switch from '@mui/material/Switch';
 export function ViewProfile(props) {
   return (
     <Container>
-      <Box display={'flex'}>
+      <Box display={'flex'} flexDirection={{ xs: 'column', md: 'row' }}>
         <Typography
           sx={{ marginBottom: '0px' }}
           id="2"
@@ -14,16 +14,35 @@ export function ViewProfile(props) {
         >
           View Profile
         </Typography>
-        <Box align="right" display={'flex'}>
+        <Box
+          align="right"
+          // align={{ xs: 'none', md: 'right' }}
+          display={'flex'}
+          flexDirection={{ xs: 'column', md: 'row' }}
+        >
           <FormControlLabel
-            sx={{ width: '250px' }}
+            sx={{
+              width: {
+                xs: 'fit-content',
+                md: '250px',
+              },
+              marginLeft: 0,
+              marginRight: -3,
+            }}
             value="email"
             control={<Switch color="primary" defaultChecked />}
             label="Email Notifications"
             labelPlacement="start"
           />
           <FormControlLabel
-            sx={{ width: '250px' }}
+            sx={{
+              width: {
+                xs: 'fit-content',
+                md: '250px',
+              },
+              marginLeft: 0,
+              marginRight: -3,
+            }}
             value="mobile"
             control={<Switch color="primary" defaultChecked />}
             label="Mobile Notifications"
@@ -42,6 +61,9 @@ export function ViewProfile(props) {
             <Grid item xs={8} md={4}>
               <Typography variant="body3" color="grey.label">
                 NMR ID
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
               </Typography>
               <Typography variant="subtitle2" color="primary.main">
                 71-1567-8728-1025
@@ -50,6 +72,9 @@ export function ViewProfile(props) {
             <Grid item xs={8} md={4}>
               <Typography variant="body3" color="grey.label">
                 Council verification status
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
               </Typography>
               <Typography variant="subtitle2" color="primary.main">
                 Submitted
@@ -58,6 +83,9 @@ export function ViewProfile(props) {
             <Grid item xs={8} md={4}>
               <Typography variant="body3" color="grey.label">
                 Work Detail Verification Status
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
               </Typography>
               <Typography variant="subtitle2" color="primary.main">
                 Submitted
@@ -71,6 +99,9 @@ export function ViewProfile(props) {
             <Grid item xs={8} md={4}>
               <Typography variant="body3" color="grey.label">
                 Email
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
               </Typography>
               <Typography variant="subtitle2" color="primary.main">
                 madhura638@gmail.com

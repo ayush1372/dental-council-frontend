@@ -14,7 +14,7 @@ export const Copyright = () => {
             </Typography>
           </Grid>
           <Grid item xs={12} lg={4}>
-            <Typography color="white.main" variant="body3" fontWeight="400">
+            <Typography color="white.main" variant="body3" fontWeight="400" component={'div'}>
               {t('Page last updated on: 12-10-2022 | No. of Visitors: 1,08,82,332')}
             </Typography>
           </Grid>

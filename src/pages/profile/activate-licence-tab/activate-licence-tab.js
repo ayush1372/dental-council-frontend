@@ -1,16 +1,24 @@
 import { useState } from 'react';
 
 import { Box, Grid, TablePagination, Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 import { verboseLog } from '../../../config/debug';
 import { ActivateLicenceData } from '../../../constants/common-data';
+import ApproveLicenseModal from '../../../shared/activate-licence-modals/approve-modal';
+import RejectLicenseModal from '../../../shared/activate-licence-modals/reject-modal';
 import GenericTable from '../../../shared/generic-component/generic-table';
+import ViewProfile from '../../../shared/view-profile/view-profile';
 import UserProfile from '../../user-profile';
 import TableSearch from '../components/table-search/table-search';
+
 const ActivateLicence = (props) => {
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState({});
   const [showViewProfile, setShowViewPorfile] = useState(false);
+  const [isApproveModalOpen, setIsApproveModalOpen] = useState(false);
+  const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
 
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
@@ -132,11 +140,32 @@ const ActivateLicence = (props) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+  const customPopupOptions = ['NMC', 'SMC'].includes(loggedInUserType)
+    ? [
+        {
+          keyName: 'Approve',
+          dataValue: 'approve',
+          onClick: () => {
+            setIsApproveModalOpen(true);
+          },
+        },
+        {
+          keyName: 'Reject',
+          dataValue: 'reject',
+          onClick: () => {
+            setIsRejectModalOpen(true);
+          },
+        },
+      ]
+    : undefined;
 
   return (
     <>
       {showViewProfile ? (
-        <UserProfile />
+        <Box bgcolor="grey1.lighter">
+          <ViewProfile />
+          <UserProfile showViewProfile={true} />
+        </Box>
       ) : (
         <Grid sx={{ m: 2 }} lg={12} md={10}>
           <Grid item>
@@ -156,6 +185,7 @@ const ActivateLicence = (props) => {
             handleRowClick={handleDataRowClick}
             rowsPerPage={rowsPerPage}
             page={page}
+            customPopupOptions={customPopupOptions}
           />
 
           <Box>
@@ -174,6 +204,20 @@ const ActivateLicence = (props) => {
             />
           </Box>
         </Grid>
+      )}
+      {isApproveModalOpen && (
+        <ApproveLicenseModal
+          ClosePopup={() => {
+            setIsApproveModalOpen(false);
+          }}
+        />
+      )}
+      {isRejectModalOpen && (
+        <RejectLicenseModal
+          ClosePopup={() => {
+            setIsRejectModalOpen(false);
+          }}
+        />
       )}
     </>
   );

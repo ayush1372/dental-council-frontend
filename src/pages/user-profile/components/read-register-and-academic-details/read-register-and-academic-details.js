@@ -18,7 +18,7 @@ import RegistrationDetailsContent from '../readable-content/registration-details
 
 const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack, showActions = true }) => {
   const [accordionKey, setAccordionKey] = useState('accordion-0');
-  const userType = useSelector((state) => state.login.loggedInUserType);
+  const userType = useSelector((state) => state.common.loggedInUserType);
 
   const accordions = [
     {
@@ -71,7 +71,12 @@ const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack, showActions = 
         })}
       </Box>
       {showActions && (
-        <Box px={3} display="flex" justifyContent="space-between">
+        <Box
+          px={3}
+          display="flex"
+          justifyContent="space-between"
+          flexDirection={{ xs: 'column', md: 'row' }}
+        >
           <ButtonGroupWizard handlePrevious={handleBack} />
 
           <Box display="flex" justifyContent="flex-end">

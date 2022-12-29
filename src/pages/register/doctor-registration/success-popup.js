@@ -32,7 +32,7 @@ export default function SuccessModal() {
           />
         </Box>
 
-        <Box>
+        <Box display="flex" flexDirection="column">
           <Typography
             data-testid="popup-input-success-text"
             variant="h2"
@@ -49,8 +49,10 @@ export default function SuccessModal() {
             alignItems="center"
             textAlign="center"
             mt={2}
-            ml={10}
+            // ml={10}
             data-testid="popup-input-text"
+            component="div"
+            flexDirection="column"
           >
             Your password has been
             <br />
@@ -58,7 +60,7 @@ export default function SuccessModal() {
             You need to login with new password.
           </Typography>
           <Button
-            sx={{ width: '408px', mt: 5 }}
+            sx={{ width: { xs: '100%', sm: '408px' }, mt: 5 }}
             variant="contained"
             color="warning"
             onClick={handleClose}
