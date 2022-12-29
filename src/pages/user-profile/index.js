@@ -51,7 +51,6 @@ export const UserProfile = ({
     setShowReactivateLicense(false);
     setShowSuccessPopup(true);
   };
-
   const fetchStates = () => {
     try {
       dispatch(getStatesList())
