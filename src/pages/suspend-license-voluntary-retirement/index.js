@@ -80,9 +80,9 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
           : selectedValue === 'reject'
           ? 'Reason to Reject application'
           : selectedValue === 'suspend'
-          ? 'Want to Permanent Suspend?'
+          ? 'Request NMC to permanent suspension?'
           : selectedValue === 'blacklist'
-          ? 'Request NMC to Blacklist??'
+          ? 'Request NMC to temporary suspension?'
           : ''}
       </Typography>
       {selectedValue === 'raise' ||

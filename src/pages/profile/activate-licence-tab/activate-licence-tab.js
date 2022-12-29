@@ -13,7 +13,7 @@ import UserProfile from '../../user-profile';
 import TableSearch from '../components/table-search/table-search';
 
 const ActivateLicence = (props) => {
-  const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState({});
   const [showViewProfile, setShowViewPorfile] = useState(false);
