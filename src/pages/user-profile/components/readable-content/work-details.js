@@ -17,7 +17,7 @@ const WorkDetails = () => {
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Are you currently working
             <Typography component="span" color="error.main">
@@ -43,7 +43,7 @@ const WorkDetails = () => {
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Nature of work
             <Typography component="span" color="error.main">
@@ -71,7 +71,7 @@ const WorkDetails = () => {
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
       </Grid>
       <Grid container item spacing={2}>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Choose work status
             <Typography component="span" color="error.main">
@@ -99,7 +99,7 @@ const WorkDetails = () => {
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
       </Grid>
       <Grid container item spacing={2}>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Upload the Proof of work for govt. such as Appointment letter, Last pay slip, recent
             transfer order etc.

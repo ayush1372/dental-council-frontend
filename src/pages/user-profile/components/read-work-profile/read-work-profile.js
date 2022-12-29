@@ -17,7 +17,6 @@ import MenuItem from '@mui/material/MenuItem';
 import PopupState, { bindMenu, bindTrigger } from 'material-ui-popup-state';
 import { useSelector } from 'react-redux';
 
-import ButtonGroupWizard from '../../../../ui/core/wizard/button-group-wizard';
 import SuspendLicenseVoluntaryRetirement from '../../../suspend-license-voluntary-retirement';
 import CurrentWorkDetails from '../readable-content/current-work-details';
 import SpecialDetailsContent from '../readable-content/special-details-content';
@@ -104,8 +103,29 @@ const ReadWorkProfile = ({
         })}
       </Box>
       {showActions && (
-        <Box paddingBottom={'30px'} pl={3} display="flex" justifyContent="space-between">
-          <ButtonGroupWizard handlePrevious={handleBack} />
+        <Box
+          paddingBottom={'30px'}
+          pl={3}
+          display="flex"
+          justifyContent="space-between"
+          flexDirection={{ xs: 'column', md: 'row' }}
+        >
+          <Button
+            color="grey"
+            variant="contained"
+            onClick={handleBack}
+            sx={{
+              width: {
+                xs: '100%',
+                md: 'fit-content',
+              },
+              margin: {
+                xs: '10px 0',
+              },
+            }}
+          >
+            Back
+          </Button>
           {showActions && loggedInUserType !== 'Doctor' && (
             <Box mt={2}>
               <PopupState>
@@ -115,7 +135,17 @@ const ReadWorkProfile = ({
                       variant="contained"
                       color="secondary"
                       {...bindTrigger(popupState)}
-                      sx={{ mr: 2 }}
+                      sx={{
+                        mr: 2,
+                        mb: {
+                          xs: 1,
+                          md: 0,
+                        },
+                        width: {
+                          xs: '100%',
+                          md: 'fit-content',
+                        },
+                      }}
                     >
                       Action...
                     </Button>
@@ -149,7 +179,17 @@ const ReadWorkProfile = ({
                   </React.Fragment>
                 )}
               </PopupState>
-              <Button color="secondary" variant="contained" onClick={handleSubmitDetails}>
+              <Button
+                color="secondary"
+                variant="contained"
+                onClick={handleSubmitDetails}
+                sx={{
+                  width: {
+                    xs: '100%',
+                    md: 'fit-content',
+                  },
+                }}
+              >
                 Submit
               </Button>
             </Box>

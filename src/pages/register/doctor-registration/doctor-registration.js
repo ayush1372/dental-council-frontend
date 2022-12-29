@@ -39,7 +39,10 @@ const DoctorRegistrationWelcomePage = () => {
             sx={{
               boxShadow: '1',
               pt: 4,
-              width: '679px',
+              width: {
+                xs: '100%',
+                md: '679px',
+              },
             }}
           >
             <Box>

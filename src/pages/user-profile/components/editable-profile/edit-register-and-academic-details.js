@@ -90,7 +90,15 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
   };
 
   return (
-    <Box boxShadow={1} padding="0px 91px 44px 41px">
+    <Box
+      boxShadow={1}
+      sx={{
+        padding: {
+          xs: '0px 10px 10px 10px',
+          md: '0px 91px 44px 41px',
+        },
+      }}
+    >
       <Grid container spacing={2} mt={2}>
         {/* layer 1 */}
         <Grid container item spacing={2}>
@@ -105,7 +113,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
               Registration Details*
             </Typography>
           </Grid>
-          <Grid item xs={8} md={4}>
+          <Grid item xs={12} md={4}>
             <TextField
               variant="outlined"
               name={'RegisteredWithCouncil'}
@@ -125,7 +133,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
               InputProps={{ readOnly: loggedInUserType === 'SMC' ? false : true }}
             />
           </Grid>
-          <Grid item xs={8} md={4}>
+          <Grid item xs={12} md={4}>
             <TextField
               variant="outlined"
               name={'RegistrationNumber'}
@@ -138,7 +146,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
               })}
             />
           </Grid>
-          <Grid item xs={8} md={4}>
+          <Grid item xs={12} md={4}>
             <TextField
               variant="outlined"
               name={'RegistrationDate'}
@@ -159,7 +167,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
           </Grid>
         </Grid>
         <Grid container item spacing={2}>
-          <Grid item xs={8} md={4}>
+          <Grid item xs={12} md={4}>
             <RadioGroup
               onChange={handleRegistration}
               name={'registration'}
@@ -180,7 +188,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
               error={errors.registration?.message}
             />
           </Grid>
-          <Grid item xs={8} md={4}>
+          <Grid item xs={12} md={4}>
             <TextField
               variant="outlined"
               name={'RenewalDate'}
@@ -201,7 +209,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
           </Grid>
         </Grid>
         <Grid container item spacing={2}>
-          <Grid item xs={8} md={4}>
+          <Grid item xs={12} md={4}>
             <RadioGroup
               onChange={handleRegistration}
               name={'registrationCertificate'}
@@ -224,7 +232,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
           </Grid>
         </Grid>
         <Grid container item spacing={2}>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <UploadFile
               uploadFiles="single"
               sizeAllowed={1}
@@ -276,7 +284,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                 </Grid>
               )}
               <Grid container item spacing={2}>
-                <Grid item xs={4}>
+                <Grid item xs={12} md={4}>
                   <Select
                     fullWidth
                     error={errors[qualification[0]]?.message}
@@ -295,7 +303,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                     ]}
                   />
                 </Grid>
-                <Grid item xs={8} md={4}>
+                <Grid item xs={12} md={4}>
                   <TextField
                     variant="outlined"
                     name={'country'}
@@ -309,7 +317,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                     })}
                   />
                 </Grid>
-                <Grid item xs={8} md={4}>
+                <Grid item xs={12} md={4}>
                   <TextField
                     variant="outlined"
                     name={'state'}
@@ -326,7 +334,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                 </Grid>
               </Grid>
               <Grid container item spacing={2}>
-                <Grid item xs={4}>
+                <Grid item xs={12} md={4}>
                   <Select
                     fullWidth
                     error={errors[qualification[3]]?.message}
@@ -345,7 +353,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                     ]}
                   />
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={12} md={4}>
                   <Select
                     fullWidth
                     error={errors[qualification[4]]?.message}
@@ -364,7 +372,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                     ]}
                   />
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={12} md={4}>
                   <Select
                     fullWidth
                     error={errors[qualification[5]]?.message}
@@ -384,7 +392,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                 </Grid>
               </Grid>
               <Grid container item spacing={2}>
-                <Grid item xs={8} md={4}>
+                <Grid item xs={12} md={4}>
                   <TextField
                     variant="outlined"
                     name={'Year'}
@@ -401,7 +409,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                 </Grid>
               </Grid>
               <Grid container item spacing={2}>
-                <Grid item xs={6}>
+                <Grid item xs={12} md={6}>
                   <UploadFile
                     uploadFiles="single"
                     sizeAllowed={1}
@@ -420,7 +428,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                     }}
                   />
                 </Grid>
-                <Grid item xs={8} md={4}>
+                <Grid item xs={12} md={6}>
                   <RadioGroup
                     onChange={handleRegistration}
                     name={qualification[7]}
@@ -446,7 +454,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
           );
         })}
       </Grid>
-      <Box>
+      <Box width="100%">
         <Button
           variant="outlined"
           color="primary"
@@ -461,7 +469,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
           Add upto 6 qualification
         </Typography>
       </Box>
-      <Box>
+      <Box width="100%">
         <ButtonGroupWizard
           handleNext={handleSubmit(onHandleOptionNext)}
           handlePrevious={onHandleOptionBack}

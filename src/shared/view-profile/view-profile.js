@@ -4,7 +4,7 @@ import Switch from '@mui/material/Switch';
 export function ViewProfile(props) {
   return (
     <Container>
-      <Box display={'flex'}>
+      <Box display={'flex'} flexDirection={{ xs: 'column', md: 'row' }}>
         <Typography
           sx={{ marginBottom: '0px' }}
           id="2"
@@ -14,16 +14,35 @@ export function ViewProfile(props) {
         >
           View Profile
         </Typography>
-        <Box align="right" display={'flex'}>
+        <Box
+          align="right"
+          // align={{ xs: 'none', md: 'right' }}
+          display={'flex'}
+          flexDirection={{ xs: 'column', md: 'row' }}
+        >
           <FormControlLabel
-            sx={{ width: '250px' }}
+            sx={{
+              width: {
+                xs: 'fit-content',
+                md: '250px',
+              },
+              marginLeft: 0,
+              marginRight: -3,
+            }}
             value="email"
             control={<Switch color="primary" defaultChecked />}
             label="Email Notifications"
             labelPlacement="start"
           />
           <FormControlLabel
-            sx={{ width: '250px' }}
+            sx={{
+              width: {
+                xs: 'fit-content',
+                md: '250px',
+              },
+              marginLeft: 0,
+              marginRight: -3,
+            }}
             value="mobile"
             control={<Switch color="primary" defaultChecked />}
             label="Mobile Notifications"

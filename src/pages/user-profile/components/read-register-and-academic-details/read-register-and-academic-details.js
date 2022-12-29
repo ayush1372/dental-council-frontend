@@ -71,7 +71,12 @@ const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack, showActions = 
         })}
       </Box>
       {showActions && (
-        <Box px={3} display="flex" justifyContent="space-between">
+        <Box
+          px={3}
+          display="flex"
+          justifyContent="space-between"
+          flexDirection={{ xs: 'column', md: 'row' }}
+        >
           <ButtonGroupWizard handlePrevious={handleBack} />
 
           <Box display="flex" justifyContent="flex-end">

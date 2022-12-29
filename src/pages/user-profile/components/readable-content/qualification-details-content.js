@@ -16,7 +16,7 @@ const QualificationDetailsContent = () => {
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Name of the degree or diploma obtained
             <Typography component="span" color="error.main">
@@ -44,7 +44,7 @@ const QualificationDetailsContent = () => {
 
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
 
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Country Name
             <Typography component="span" color="error.main">
@@ -70,7 +70,7 @@ const QualificationDetailsContent = () => {
           </Grid>
         </Grid>
 
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             State
             <Typography component="span" color="error.main">
@@ -97,7 +97,7 @@ const QualificationDetailsContent = () => {
         </Grid>
       </Grid>
       <Grid container item spacing={2}>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Name of the college
             <Typography component="span" color="error.main">
@@ -124,7 +124,7 @@ const QualificationDetailsContent = () => {
           </Grid>
         </Grid>
 
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             University
             <Typography component="span" color="error.main">
@@ -150,7 +150,7 @@ const QualificationDetailsContent = () => {
           </Grid>
         </Grid>
 
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Month of awarding Degree/Diploma
           </Typography>
@@ -174,7 +174,7 @@ const QualificationDetailsContent = () => {
         </Grid>
       </Grid>
       <Grid container item spacing={2}>
-        <Grid item xs={8} md={4}>
+        <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
             Year of awarding Degree/Diploma
             <Typography component="span" color="error.main">
@@ -200,7 +200,7 @@ const QualificationDetailsContent = () => {
             )}
           </Grid>
         </Grid>
-        <Grid item xs={8} md={6}>
+        <Grid item xs={12} md={6}>
           <Typography variant="subtitle2" color="inputTextColor">
             Is your name in degree, different from your name in Aadhaar?
             <Typography component="span" color="error.main">

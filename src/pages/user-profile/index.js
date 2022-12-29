@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import EditIcon from '@mui/icons-material/Edit';
 import TuneIcon from '@mui/icons-material/Tune';
-import { Alert, Box, Container, Link, Typography } from '@mui/material';
+import { Alert, Box, Container, Grid, Link, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { verboseLog } from '../../config/debug';
@@ -134,19 +134,42 @@ export const UserProfile = ({
       {showSuccessPopup && <SuccessPopup />}
       {!showChangepassword ? (
         <Box mt={3}>
-          {!showViewProfile && showUserProfile !== true ? (
-            <Box display="flex" justifyContent="space-between" mb={3}>
-              <Typography component="div" variant="h2" color="primary.main" py={2}>
-                {isReadMode ? 'User Profile' : 'Edit Profile'}
-                {!isReadMode && (
-                  <Typography component="div" variant="body3" color="inputTextColor.main">
-                    Update all your details correctly so that it could be verified by NMR verifiers.
-                  </Typography>
-                )}
-              </Typography>
-
-              <Box display={'flex'}>
-                {loggedInUserType === 'Doctor' && (
+          {!showViewProfile ? (
+            <Grid container display="flex" justifyContent="space-between">
+              <Grid item xs={12} md={6}>
+                <Typography
+                  component="div"
+                  variant="h2"
+                  color="primary.main"
+                  py={2}
+                  sx={{
+                    textAlign: {
+                      xs: 'center',
+                      md: 'start',
+                    },
+                  }}
+                >
+                  {isReadMode ? 'User Profile' : 'Edit Profile'}
+                  {!isReadMode && (
+                    <Typography component="div" variant="body3" color="inputTextColor.main">
+                      Update all your details correctly so that it could be verified by NMR
+                      verifiers.
+                    </Typography>
+                  )}
+                </Typography>
+              </Grid>
+              {loggedInUserType === 'Doctor' && (
+                <Grid
+                  item
+                  xs={12}
+                  md={3}
+                  sx={{
+                    padding: {
+                      xs: '5px 0 5px 0',
+                      md: '0 10px 0 0 ',
+                    },
+                  }}
+                >
                   <Button
                     variant="contained"
                     color="primary"
@@ -154,30 +177,39 @@ export const UserProfile = ({
                       setShowChangepassword(true);
                     }}
                     sx={{
-                      width: 'max-content',
+                      width: '100%',
                     }}
                   >
                     Change Password
                   </Button>
-                )}
-                {isReadMode && (
-                  <Box display={'flex'}>
-                    <Button
-                      startIcon={<EditIcon sx={{ mr: 1 }} />}
-                      variant="contained"
-                      color="secondary"
-                      onClick={openDoctorEditProfile}
-                      sx={{
-                        width: 'max-content',
-                        ml: '25px',
-                      }}
-                    >
-                      Edit Profile
-                    </Button>
-                  </Box>
-                )}
-              </Box>
-            </Box>
+                </Grid>
+              )}
+              {isReadMode && (
+                <Grid
+                  item
+                  xs={12}
+                  md={3}
+                  sx={{
+                    marginBottom: {
+                      xs: '10px',
+                      md: '0',
+                    },
+                  }}
+                >
+                  <Button
+                    startIcon={<EditIcon sx={{ mr: 1 }} />}
+                    variant="contained"
+                    color="secondary"
+                    onClick={openDoctorEditProfile}
+                    sx={{
+                      width: '100%',
+                    }}
+                  >
+                    Edit Profile
+                  </Button>
+                </Grid>
+              )}
+            </Grid>
           ) : null}
           {!isReadMode && <ConstantDetails />}
           <Box bgcolor="white.main">
