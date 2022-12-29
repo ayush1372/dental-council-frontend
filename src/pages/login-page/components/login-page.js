@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import { Box, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
@@ -8,6 +8,10 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import { verboseLog } from '../../../config/debug';
 import CaptchaComponent from '../../../shared/captcha-component/captcha-component';
+import {
+  generateCaptchaImage,
+  getCaptchaEnabledFlagValue,
+} from '../../../store/actions/login-action';
 import { login, userLoggedInType } from '../../../store/reducers/common-reducers';
 import { Button, TextField } from '../../../ui/core';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
@@ -56,6 +60,24 @@ export function LoginPage({ handleForgotPassword }) {
       verboseLog('usersListData', err);
     }
   };
+
+  useEffect(() => {
+    dispatch(getCaptchaEnabledFlagValue())
+      .then((response) => {
+        if (response?.data) {
+          dispatch(generateCaptchaImage())
+            .then((response) => {
+              verboseLog('response', response);
+            })
+            .catch((error) => {
+              verboseLog('error occured', error);
+            });
+        }
+      })
+      .catch((error) => {
+        verboseLog('error occured', error);
+      });
+  }, []);
 
   return (
     <Box p={4} bgcolor="white.main" boxShadow="4">

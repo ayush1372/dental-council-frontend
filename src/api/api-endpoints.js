@@ -3,8 +3,9 @@ export const API = {
   registration: {
     createUser: 'posts',
   },
-  loginUser: {
-    userType: '/login',
+  login: {
+    getCaptchaEnabledFlag: 'api/v1/getCaptchaEnabledFlag',
+    generateCaptcha: 'api/v1/generateCaptcha',
   },
   editProfile: {},
   menuLists: {
