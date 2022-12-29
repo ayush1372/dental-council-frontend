@@ -73,11 +73,11 @@ export const getDistrictList = (stateId) => async (dispatch) => {
   });
 };
 
-export const getCitiesList = () => async (dispatch) => {
+export const getCitiesList = (sub_district_id) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,
-      url: API.menuLists.cities,
+      url: API.menuLists.cities.replace('{sub_district_id}', sub_district_id),
     })
       .then((response) => {
         dispatch(getCities(response.data));

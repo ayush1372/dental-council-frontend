@@ -81,26 +81,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     }
   };
 
-  const fetchCities = () => {
-    try {
-      dispatch(getCitiesList())
-        .then((dataResponse) => {
-          verboseLog('dataResponse', dataResponse);
-        })
-        .catch((error) => {
-          verboseLog('error occured', error);
-        });
-    } catch (err) {
-      verboseLog('error', err);
-    }
-  };
-
-  const selectedState = watch('State');
-  useEffect(() => {
-    fetchDistricts(selectedState);
-    fetchCities();
-  }, [selectedState]);
-
   const fetchSubDistricts = (districtId) => {
     if (districtId) {
       dispatch(getSubDistrictsList(districtId))
@@ -113,11 +93,35 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     }
   };
 
+  const fetchCities = (subDistrictId) => {
+    try {
+      dispatch(getCitiesList(subDistrictId))
+        .then((dataResponse) => {
+          verboseLog('dataResponse', dataResponse);
+        })
+        .catch((error) => {
+          verboseLog('error occured', error);
+        });
+    } catch (err) {
+      verboseLog('error', err);
+    }
+  };
+
+  const selectedState = watch('State');
   const selectedDistrict = watch('District');
+  const selectedSubDistrict = watch('SubDistrict');
+
+  useEffect(() => {
+    fetchDistricts(selectedState);
+  }, [selectedState]);
 
   useEffect(() => {
     fetchSubDistricts(selectedDistrict);
   }, [selectedDistrict]);
+
+  useEffect(() => {
+    fetchCities(selectedSubDistrict);
+  }, [selectedSubDistrict]);
 
   const { otpPopup, handleClickOpen, otpVerified } = ModalOTP({ afterConfirm: () => {} });
 
