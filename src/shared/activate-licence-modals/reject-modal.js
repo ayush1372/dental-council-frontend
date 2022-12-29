@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import CloseIcon from '@mui/icons-material/Close';
 import ErrorIcon from '@mui/icons-material/Error';
-import { Box, Container, Modal, Typography } from '@mui/material';
+import { Box, Container, Modal, Typography, useTheme } from '@mui/material';
 
 import { Button, TextField } from '../../ui/core';
 
@@ -13,12 +13,14 @@ export default function RejectLicenseModal(props) {
     props.ClosePopup();
   };
 
+  const theme = useTheme();
+
   return (
     <Box>
       <Modal open={open} onClose={handleClose} sx={{ mt: 5 }}>
         <Container
           maxWidth="sm"
-          sx={{ backgroundColor: 'white.main', borderRadius: '10px', height: '454px' }}
+          sx={{ backgroundColor: theme.palette.white.main, borderRadius: '10px', height: '454px' }}
         >
           <Box py={3}>
             <Box display="flex" justifyContent="flex-end">
