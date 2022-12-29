@@ -1,20 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Box, Button, Grid, IconButton, InputAdornment, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { verboseLog } from '../../../../config/debug';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
 import { get_year_data } from '../../../../helpers/functions/common-functions';
 import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
 import { ModalOTP } from '../../../../shared/otp-modal/otp-modal';
+import { getDistrictList } from '../../../../store/actions/menu-list-actions';
 import { RadioGroup, Select, TextField } from '../../../../ui/core';
 import MobileNumber from '../../../../ui/core/mobile-number/mobile-number';
 
 const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const loggedInUserType = useSelector((state) => state?.login?.loggedInUserType);
   const { statesList } = useSelector((state) => state?.menuLists);
   const { countriesList } = useSelector((state) => state?.menuLists);
@@ -27,6 +30,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     handleSubmit,
     register,
     setValue,
+    watch,
   } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -60,6 +64,23 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       LanguageSpoken: [],
     },
   });
+
+  const fetchDistricts = (stateId) => {
+    if (stateId) {
+      dispatch(getDistrictList(stateId))
+        .then((dataResponse) => {
+          verboseLog('dataResponse', dataResponse);
+        })
+        .catch((error) => {
+          verboseLog('error occured', error);
+        });
+    }
+  };
+
+  const selectedState = watch('State');
+  useEffect(() => {
+    fetchDistricts(selectedState);
+  }, [selectedState]);
   const { otpPopup, handleClickOpen, otpVerified } = ModalOTP({ afterConfirm: () => {} });
 
   const handleBackButton = () => {

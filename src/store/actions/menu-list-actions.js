@@ -35,11 +35,11 @@ export const getCountriesList = () => async (dispatch) => {
   });
 };
 
-export const getDistrictList = () => async (dispatch) => {
+export const getDistrictList = (stateId) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,
-      url: API.menuLists.districts,
+      url: API.menuLists.districts.replace('{state_id}', stateId),
     })
       .then((response) => {
         dispatch(getDistricts(response.data));

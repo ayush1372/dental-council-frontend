@@ -9,11 +9,7 @@ import { verboseLog } from '../../config/debug';
 import useWizard from '../../hooks/use-wizard';
 import ReactivateLicencePopup from '../../shared/reactivate-licence-popup/re-activate-licence-popup';
 import SuccessPopup from '../../shared/reactivate-licence-popup/success-popup';
-import {
-  getCountriesList,
-  getDistrictList,
-  getStatesList,
-} from '../../store/actions/menu-list-actions';
+import { getCountriesList, getStatesList } from '../../store/actions/menu-list-actions';
 import { Button } from '../../ui/core/button/button';
 import Wizard from '../../ui/core/wizard';
 import ChangePassword from '../profile/change-password/change-password';
@@ -66,19 +62,6 @@ export const UserProfile = ({
     }
   };
 
-  const fetchDistricts = () => {
-    try {
-      dispatch(getDistrictList())
-        .then((dataResponse) => {
-          verboseLog('dataResponse', dataResponse);
-        })
-        .catch((error) => {
-          verboseLog('error occured', error);
-        });
-    } catch (err) {
-      verboseLog('error', err);
-    }
-  };
   const fetchCountries = () => {
     try {
       dispatch(getCountriesList())
@@ -96,7 +79,7 @@ export const UserProfile = ({
   const openDoctorEditProfile = () => {
     setIsReadMode(false);
     fetchStates();
-    fetchDistricts();
+    // fetchDistricts(stateId);
     fetchCountries();
   };
 
