@@ -5,6 +5,7 @@ const initialState = {
   countriesList: { data: [], isLoading: Boolean(true), isError: false },
   districtsList: { data: [], isLoading: Boolean(true), isError: false },
   citiesList: { data: [], isLoading: Boolean(true), isError: false },
+  subDistrictList: { data: [], isLoading: Boolean(true), isError: false },
 };
 
 const menuLists = createSlice({
@@ -23,9 +24,13 @@ const menuLists = createSlice({
     getCities: (state, action) => {
       state.citiesList = action.payload;
     },
+    getSubDistricts: (state, action) => {
+      state.subDistrictList = action.payload;
+    },
   },
 });
 
-export const { getStates, getDistricts, getCities, getCountries } = menuLists.actions;
+export const { getStates, getDistricts, getCities, getCountries, getSubDistricts } =
+  menuLists.actions;
 
 export default menuLists.reducer;
