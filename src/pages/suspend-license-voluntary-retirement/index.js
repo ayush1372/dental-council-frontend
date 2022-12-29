@@ -40,9 +40,9 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
           {selectedValue === 'raise' ? (
             <HelpIcon fontSize="width40" sx={{ color: 'secondary.warningYellow' }} />
           ) : selectedValue === 'reject' ? (
-            <ErrorIcon color="error" fontSize="width40" />
-          ) : selectedValue === 'verify' ? (
-            <CheckCircleIcon color="success" fontSize="width48" />
+            <ErrorIcon color="error" sx={{ fontSize: '40px' }} />
+          ) : selectedValue === 'verify' || selectedValue === 'approve' ? (
+            <CheckCircleIcon color="success" sx={{ fontSize: '50px' }} />
           ) : (
             <BlockIcon color="error" fontSize="width40" />
           )}
@@ -75,17 +75,20 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
           ? 'VERIFY!'
           : selectedValue === 'raise'
           ? 'Raise a Query for all'
+          : selectedValue === 'approve'
+          ? 'Reason to Approve application'
           : selectedValue === 'reject'
           ? 'Reason to Reject application'
           : selectedValue === 'suspend'
-          ? 'Want to Permanent Suspend?'
+          ? 'Request NMC to permanent suspension?'
           : selectedValue === 'blacklist'
-          ? 'Request NMC to Blacklist??'
+          ? 'Request NMC to temporary suspension?'
           : ''}
       </Typography>
       {selectedValue === 'raise' ||
       selectedValue === 'verify' ||
       selectedValue === 'forward' ||
+      selectedValue === 'approve' ||
       selectedValue === 'reject' ? (
         ''
       ) : (
@@ -189,12 +192,15 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
       )}
       {tabName === 'voluntary-suspend-license' ||
       selectedValue === 'raise' ||
+      selectedValue === 'approve' ||
       selectedValue === 'reject' ||
       selectedValue === 'suspend' ||
       selectedValue === 'blacklist' ? (
         <Box mt={4}>
           <Typography variant="subtitle2">
-            {selectedValue === 'raise' || selectedValue === 'reject' ? 'Add Reason' : 'Remarks'}
+            {selectedValue === 'raise' || selectedValue === 'reject' || selectedValue === 'approve'
+              ? 'Add Reason'
+              : 'Remarks'}
             <Typography variant="body4" color="error.main">
               *
             </Typography>
@@ -215,7 +221,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
                   ? 'Add a reason'
                   : selectedValue === 'raise'
                   ? 'Write something here . . .'
-                  : selectedValue === 'reject'
+                  : selectedValue === 'reject' || selectedValue === 'approve'
                   ? 'Add your reason here . . .'
                   : ''
               }
@@ -339,6 +345,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
           {selectedValue === 'raise' ||
           selectedValue === 'reject' ||
           selectedValue === 'suspend' ||
+          selectedValue === 'approve' ||
           selectedValue === 'blacklist' ? (
             <Button variant="contained" color="grey">
               Cancel
@@ -364,7 +371,10 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
             >
               Permanent suspend
             </Button>
-          ) : selectedValue === 'reject' || selectedValue === 'raise' ? (
+          ) : selectedValue === 'reject' ||
+            selectedValue === 'approve' ||
+            selectedValue === 'raise' ? (
+            // eslint-disable-next-line
             <Button
               color="secondary"
               variant="contained"

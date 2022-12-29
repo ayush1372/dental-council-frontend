@@ -133,7 +133,7 @@ export const UserProfile = ({
       {showReactivateLicense && <ReactivateLicencePopup renderSuccess={renderSuccess} />}
       {showSuccessPopup && <SuccessPopup />}
       {!showChangepassword ? (
-        <Box sx={{ marginTop: '30px' }}>
+        <Box mt={3}>
           {!showViewProfile ? (
             <Grid container display="flex" justifyContent="space-between">
               <Grid item xs={12} md={6}>
