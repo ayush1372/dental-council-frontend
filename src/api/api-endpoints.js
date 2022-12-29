@@ -9,7 +9,7 @@ export const API = {
   menuLists: {
     states: 'api/v1/md/country/356/states',
     countries: 'api/v1/md/countries',
-    districts: 'api/v1/md/state/20/districts',
     subDistricts: 'api/v1/md/district/{district_id}/sub_districts',
+    districts: 'api/v1/md/state/{state_id}/districts',
   },
 };

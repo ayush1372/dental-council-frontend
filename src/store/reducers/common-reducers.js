@@ -2,8 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { SessionTimer } from '../../constants/session-timer';
 
-// import { sessionTimer } from '../../constants/session-timer';
-
 const sessionTiming = 0.5;
 
 const initialState = {
@@ -11,12 +9,14 @@ const initialState = {
   timer: 0,
   mobileNumber: undefined,
   loggedInUserType: '',
+  userActiveTab: '',
 };
 
-export const LoginActivity = createSlice({
-  name: 'Login',
+export const CommonActivity = createSlice({
+  name: 'common',
   initialState,
   reducers: {
+    resetCommonReducer: () => initialState,
     login: (state) => {
       state.isloggedIn = true;
       state.timer = SessionTimer(sessionTiming * 60);
@@ -34,7 +34,9 @@ export const LoginActivity = createSlice({
     setApiLoading: (state, action) => {
       state.apiLoading = action.payload;
     },
-    resetLoginReducer: () => initialState,
+    changeUserActiveTab: (state, action) => {
+      state.userActiveTab = action.payload;
+    },
   },
 });
 
@@ -44,8 +46,9 @@ export const {
   fontsizes,
   setMobileNumber,
   userLoggedInType,
-  resetLoginReducer,
+  resetCommonReducer,
   setApiLoading,
-} = LoginActivity.actions;
+  changeUserActiveTab,
+} = CommonActivity.actions;
 
-export default LoginActivity.reducer;
+export default CommonActivity.reducer;

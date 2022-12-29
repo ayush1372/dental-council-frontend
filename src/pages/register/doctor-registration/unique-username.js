@@ -40,7 +40,10 @@ const UniqueUserNameForDoctorRegistration = () => {
           sx={{
             boxShadow: '1',
             pt: 4,
-            width: '679px',
+            width: {
+              xs: '100%',
+              sm: '679px',
+            },
           }}
         >
           <Box>

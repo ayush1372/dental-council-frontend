@@ -2,18 +2,14 @@ import { useEffect, useState } from 'react';
 
 import EditIcon from '@mui/icons-material/Edit';
 import TuneIcon from '@mui/icons-material/Tune';
-import { Alert, Box, Container, Link, Typography } from '@mui/material';
+import { Alert, Box, Container, Grid, Link, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { verboseLog } from '../../config/debug';
 import useWizard from '../../hooks/use-wizard';
 import ReactivateLicencePopup from '../../shared/reactivate-licence-popup/re-activate-licence-popup';
 import SuccessPopup from '../../shared/reactivate-licence-popup/success-popup';
-import {
-  getCountriesList,
-  getDistrictList,
-  getStatesList,
-} from '../../store/actions/menu-list-actions';
+import { getCountriesList, getStatesList } from '../../store/actions/menu-list-actions';
 import { Button } from '../../ui/core/button/button';
 import Wizard from '../../ui/core/wizard';
 import ChangePassword from '../profile/change-password/change-password';
@@ -40,7 +36,7 @@ export const UserProfile = ({
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   const [wizardSteps, setWizardSteps] = useState(readWizardSteps);
-  const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
 
   const { activeStep, handleNext, handleBack, resetStep } = useWizard(
     loggedInUserType === 'Doctor' ? 0 : 1,
@@ -65,19 +61,6 @@ export const UserProfile = ({
     }
   };
 
-  const fetchDistricts = () => {
-    try {
-      dispatch(getDistrictList())
-        .then((dataResponse) => {
-          verboseLog('dataResponse', dataResponse);
-        })
-        .catch((error) => {
-          verboseLog('error occured', error);
-        });
-    } catch (err) {
-      verboseLog('error', err);
-    }
-  };
   const fetchCountries = () => {
     try {
       dispatch(getCountriesList())
@@ -95,7 +78,7 @@ export const UserProfile = ({
   const openDoctorEditProfile = () => {
     setIsReadMode(false);
     fetchStates();
-    fetchDistricts();
+    // fetchDistricts(stateId);
     fetchCountries();
   };
 
@@ -120,7 +103,7 @@ export const UserProfile = ({
             }}
           >
             <Typography width="667px" height="19px" color="suspendAlert.dark">
-              Your Profile is set to suspend mode. You will not be able to perform actions on the
+              Your profile is set to suspend mode. You will not be able to perform actions on the
               profile.
             </Typography>
             <TuneIcon
@@ -149,20 +132,43 @@ export const UserProfile = ({
       {showReactivateLicense && <ReactivateLicencePopup renderSuccess={renderSuccess} />}
       {showSuccessPopup && <SuccessPopup />}
       {!showChangepassword ? (
-        <Box sx={{ marginTop: '30px' }}>
-          {!showViewProfile && showUserProfile !== true ? (
-            <Box display="flex" justifyContent="space-between" mb={3}>
-              <Typography component="div" variant="h2" color="primary.main" py={2}>
-                {isReadMode ? 'User Profile' : 'Edit Profile'}
-                {!isReadMode && (
-                  <Typography component="div" variant="body3" color="inputTextColor.main">
-                    Update all your details correctly so that it could be verified by NMR verifiers.
-                  </Typography>
-                )}
-              </Typography>
-
-              <Box display={'flex'}>
-                {loggedInUserType === 'Doctor' && (
+        <Box mt={3}>
+          {!showViewProfile ? (
+            <Grid container display="flex" justifyContent="space-between">
+              <Grid item xs={12} md={6}>
+                <Typography
+                  component="div"
+                  variant="h2"
+                  color="primary.main"
+                  py={2}
+                  sx={{
+                    textAlign: {
+                      xs: 'center',
+                      md: 'start',
+                    },
+                  }}
+                >
+                  {isReadMode ? 'User Profile' : 'Edit Profile'}
+                  {!isReadMode && (
+                    <Typography component="div" variant="body3" color="inputTextColor.main">
+                      Update all your details correctly so that it could be verified by NMR
+                      verifiers.
+                    </Typography>
+                  )}
+                </Typography>
+              </Grid>
+              {loggedInUserType === 'Doctor' && (
+                <Grid
+                  item
+                  xs={12}
+                  md={3}
+                  sx={{
+                    padding: {
+                      xs: '5px 0 5px 0',
+                      md: '0 10px 0 0 ',
+                    },
+                  }}
+                >
                   <Button
                     variant="contained"
                     color="primary"
@@ -170,30 +176,39 @@ export const UserProfile = ({
                       setShowChangepassword(true);
                     }}
                     sx={{
-                      width: 'max-content',
+                      width: '100%',
                     }}
                   >
                     Change Password
                   </Button>
-                )}
-                {isReadMode && (
-                  <Box display={'flex'}>
-                    <Button
-                      startIcon={<EditIcon sx={{ mr: 1 }} />}
-                      variant="contained"
-                      color="secondary"
-                      onClick={openDoctorEditProfile}
-                      sx={{
-                        width: 'max-content',
-                        ml: '25px',
-                      }}
-                    >
-                      Edit Profile
-                    </Button>
-                  </Box>
-                )}
-              </Box>
-            </Box>
+                </Grid>
+              )}
+              {isReadMode && (
+                <Grid
+                  item
+                  xs={12}
+                  md={3}
+                  sx={{
+                    marginBottom: {
+                      xs: '10px',
+                      md: '0',
+                    },
+                  }}
+                >
+                  <Button
+                    startIcon={<EditIcon sx={{ mr: 1 }} />}
+                    variant="contained"
+                    color="secondary"
+                    onClick={openDoctorEditProfile}
+                    sx={{
+                      width: '100%',
+                    }}
+                  >
+                    Edit Profile
+                  </Button>
+                </Grid>
+              )}
+            </Grid>
           ) : null}
           {!isReadMode && <ConstantDetails />}
           <Box bgcolor="white.main">

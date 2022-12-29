@@ -112,38 +112,68 @@ const CollegeDetails = ({ collegeDetails, setShowTable }) => {
           </Grid>
         </Grid>
       </Grid>
-      <Box display="flex" justifyContent="space-between" mt={6}>
-        <Box>
+
+      <Grid container display="flex" justifyContent="space-between" alignItems="center" mt={5}>
+        <Grid item xs={12} md={9}>
           <Button
-            variant="outlined"
-            color="secondary"
             onClick={() => {
               setShowTable(true);
+            }}
+            color="secondary"
+            variant="outlined"
+            sx={{
+              margin: {
+                xs: '5px 0',
+                md: '0',
+              },
+              width: {
+                xs: '100%',
+                md: 'fit-content',
+              },
             }}
           >
             Back
           </Button>
-        </Box>
-        <Box>
+        </Grid>
+        <Grid item xs={12} md="auto" display="flex" justifyContent="end">
           <Button
+            onClick={() => handleSubmitDetails('reject')}
             variant="outlined"
             color="secondary"
             sx={{
-              marginRight: '10px',
+              margin: {
+                xs: '5px 0',
+                md: '0',
+              },
+              width: {
+                xs: '100%',
+                md: 'fit-content',
+              },
             }}
-            onClick={() => handleSubmitDetails('reject')}
           >
             Reject
           </Button>
+        </Grid>
+        <Grid item xs={12} md="auto" display="flex" justifyContent="end">
           <Button
+            onClick={() => handleSubmitDetails('approve')}
             variant="contained"
             color="secondary"
-            onClick={() => handleSubmitDetails('approve')}
+            sx={{
+              margin: {
+                xs: '5px 0',
+                md: '0',
+              },
+              width: {
+                xs: '100%',
+                md: 'fit-content',
+              },
+            }}
           >
             Approve
           </Button>
-        </Box>
-      </Box>
+        </Grid>
+      </Grid>
       <Dialog
         open={confirmationModal}
         onClose={() => {

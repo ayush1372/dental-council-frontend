@@ -44,7 +44,7 @@ function TrackStatusTable(props) {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
   const [selectedRowData, setRowData] = React.useState({});
-  const loggedInUserType = useSelector((state) => state.login.loggedInUserType);
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const [showViewProfile, setShowViewPorfile] = useState(false);
   const viewNameOfApplicant = (event, row) => {
     event.preventDefault();
@@ -93,7 +93,7 @@ function TrackStatusTable(props) {
     { title: 'Date of Submission', name: 'dateofSubmission', sorting: true, type: 'string' },
     { title: 'Pendency', name: 'pendency', sorting: true, type: 'string' },
     { title: 'Pending with user', name: 'pending', sorting: true, type: 'string' },
-    {
+    loggedInUserType !== 'College' && {
       title:
         loggedInUserType === 'NMC'
           ? 'Action'

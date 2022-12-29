@@ -25,6 +25,19 @@ const otpInputStyle = {
   backgroundColor: '#FAFAFA',
 };
 
+const otpMobileInputStyle = {
+  width: '40px',
+  height: '40px',
+  marginRight: '12px',
+  fontSize: '18px',
+  borderRadius: 5,
+  border: '1px solid #D8DCDE',
+  borderColor: 'inputBorderColor.main',
+  color: '#D8DCDE',
+  boxShadow: '0 1px 3px #00000029',
+  backgroundColor: '#FAFAFA',
+};
+
 export const OtpForm = ({ otpInvalidError = false, resendAction = undefined, resendTime = 90 }) => {
   const { t } = useTranslation();
   const [otp, setOtp] = useState('');
@@ -71,16 +84,44 @@ export const OtpForm = ({ otpInvalidError = false, resendAction = undefined, res
     <Box pt={2}>
       <ToastContainer></ToastContainer>
       <Box>
-        <OtpInput
-          // inputStyle={styles.otpInput}
-          inputStyle={otpInputStyle}
-          shouldAutoFocus={true}
-          focusStyle={{ outline: '2px solid #264488' }}
-          isInputNum={true}
-          value={otp}
-          numInputs={6}
-          onChange={onChange}
-        />
+        <Box
+          sx={{
+            display: {
+              xs: 'none',
+              md: 'block',
+            },
+          }}
+        >
+          <OtpInput
+            // inputStyle={styles.otpInput}
+            inputStyle={otpInputStyle}
+            shouldAutoFocus={true}
+            focusStyle={{ outline: '2px solid #264488' }}
+            isInputNum={true}
+            value={otp}
+            numInputs={6}
+            onChange={onChange}
+          />
+        </Box>
+        <Box
+          sx={{
+            display: {
+              xs: 'block',
+              md: 'none',
+            },
+          }}
+        >
+          <OtpInput
+            // inputStyle={styles.otpInput}
+            inputStyle={otpMobileInputStyle}
+            shouldAutoFocus={true}
+            focusStyle={{ outline: '2px solid #264488' }}
+            isInputNum={true}
+            value={otp}
+            numInputs={6}
+            onChange={onChange}
+          />
+        </Box>
         {otpInvalidError ? (
           <Typography className={styles.invalid}>
             <SvgImageComponent icon="error" height="14px" width="16px" />

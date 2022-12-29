@@ -108,14 +108,28 @@ function FetchDoctorDetails() {
       {showEditScreen ? (
         <UniqueUserNameForDoctorRegistration />
       ) : (
-        <Container sx={{ width: '712px' }}>
-          <Box sx={{ width: '712px', height: '53px', marginBottom: '30px', marginTop: '32px ' }}>
+        <Container
+          sx={{
+            width: {
+              xs: '100%',
+              md: '712px',
+            },
+            p: {
+              xs: 0,
+              sm: '0 16px',
+            },
+          }}
+        >
+          <Box sx={{ width: '100%', height: '53px', marginBottom: '30px', marginTop: '32px ' }}>
             <Alert
               sx={{
                 m: 2,
                 marginLeft: '0px',
                 borderRadius: '5px',
-                width: '680px',
+                width: {
+                  xs: '100%',
+                  md: '680px',
+                },
                 boxShadow: '1',
                 color: 'inputSuccessTextColor.main',
                 backgroundColor: 'inputSuccessBackgroundColor.main',
@@ -125,7 +139,7 @@ function FetchDoctorDetails() {
             </Alert>
           </Box>
 
-          <Box p="30px 32px 0px 32px" width="679px" sx={{ boxShadow: '2' }}>
+          <Box p="30px 32px 0px 32px" width={{ xs: '100%', md: '679px' }} sx={{ boxShadow: '2' }}>
             <Box mb={4}>
               <Typography variant="h2" color="primary">
                 Verify Registration Details
@@ -141,7 +155,12 @@ function FetchDoctorDetails() {
                 </Typography>
               </Box>
               <Box>
-                <Typography variant="body3" component="div" paddingRight="169px" color="grey.label">
+                <Typography
+                  variant="body3"
+                  component="div"
+                  paddingRight={{ xs: 0, sm: '169px' }}
+                  color="grey.label"
+                >
                   Registration Number
                 </Typography>
                 <Typography variant="subtitle2" component="div" color="primary">
@@ -170,7 +189,7 @@ function FetchDoctorDetails() {
               </Box>
               <Box sx={{ display: 'flex' }}>
                 <TextField
-                  sx={{ width: '536px', marginRight: '16px' }}
+                  sx={{ width: { xs: '100%', md: '536px' }, marginRight: '16px' }}
                   required
                   type="text"
                   name={'email'}
@@ -213,6 +232,10 @@ function FetchDoctorDetails() {
               <Box
                 sx={{
                   display: 'flex',
+                  flexDirection: {
+                    xs: 'column',
+                    sm: 'row',
+                  },
                 }}
               >
                 <Box>
@@ -223,7 +246,7 @@ function FetchDoctorDetails() {
                 </Box>
                 <Box>
                   <Button
-                    sx={{ width: '114px', height: '53px', marginTop: '47px' }}
+                    sx={{ width: '114px', height: '53px', marginTop: { sm: '47px' } }}
                     component="span"
                     variant="contained"
                     color="secondary"
@@ -244,9 +267,17 @@ function FetchDoctorDetails() {
                     *
                   </Typography>
                 </Typography>
-                <Box sx={{ display: 'flex' }}>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    // flexDirection: {
+                    //   xs: 'column',
+                    //   sm: 'row',
+                    // },
+                  }}
+                >
                   <TextField
-                    sx={{ width: '536px', marginRight: '16px' }}
+                    sx={{ width: { xs: '100%', sm: '536px' }, marginRight: '16px' }}
                     required
                     type="text"
                     onInput={(e) => handleInput(e)}
@@ -289,6 +320,10 @@ function FetchDoctorDetails() {
                 <Box
                   sx={{
                     display: 'flex',
+                    flexDirection: {
+                      xs: 'column',
+                      sm: 'row',
+                    },
                   }}
                 >
                   <Box>
@@ -311,7 +346,11 @@ function FetchDoctorDetails() {
                 </Box>
               )}
               <Divider sx={{ my: 4 }} variant="fullWidth" />
-              <Box display="flex" justifyContent="space-between">
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                flexDirection={{ xs: 'column', sm: 'row' }}
+              >
                 <Box>
                   <AadhaarInputField
                     defaultValue={getValues().AadhaarNumber}
@@ -323,9 +362,9 @@ function FetchDoctorDetails() {
                     errors={errors}
                   />
                 </Box>
-                <Box p="35px 32px 0px 32px">
+                {/* <Box p="35px 32px 0px 32px">
                   {isOtpValidAadhar ? <CheckCircleIcon color="success" /> : ''}
-                </Box>
+                </Box> */}
 
                 {!showOtpAadhar && !isOtpValidAadhar && (
                   <Box mt={3}>
@@ -345,6 +384,10 @@ function FetchDoctorDetails() {
               <Box
                 sx={{
                   display: 'flex',
+                  flexDirection: {
+                    xs: 'column',
+                    sm: 'row',
+                  },
                 }}
               >
                 <Box>
@@ -367,7 +410,7 @@ function FetchDoctorDetails() {
               </Box>
             )}
 
-            <Box sx={{ paddingBottom: '40px' }}>
+            <Box sx={{ paddingBottom: '40px', marginTop: { xs: '10px', sm: 0 } }}>
               <Button
                 variant="contained"
                 color="secondary"
