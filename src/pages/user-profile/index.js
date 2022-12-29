@@ -133,7 +133,7 @@ export const UserProfile = ({
       {showReactivateLicense && <ReactivateLicencePopup renderSuccess={renderSuccess} />}
       {showSuccessPopup && <SuccessPopup />}
       {!showChangepassword ? (
-        <Box sx={{ marginTop: '30px' }}>
+        <Box mt={3}>
           {!showViewProfile && showUserProfile !== true ? (
             <Box display="flex" justifyContent="space-between" mb={3}>
               <Typography component="div" variant="h2" color="primary.main" py={2}>

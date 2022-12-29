@@ -93,7 +93,7 @@ function TrackStatusTable(props) {
     { title: 'Date of Submission', name: 'dateofSubmission', sorting: true, type: 'string' },
     { title: 'Pendency', name: 'pendency', sorting: true, type: 'string' },
     { title: 'Pending with user', name: 'pending', sorting: true, type: 'string' },
-    {
+    loggedInUserType !== 'College' && {
       title:
         loggedInUserType === 'NMC'
           ? 'Action'
