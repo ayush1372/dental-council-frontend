@@ -143,12 +143,12 @@ export function LoginPage({ handleForgotPassword }) {
               type="text"
               name="nmrID"
               required="true"
-              placeholder={t('Enter NMR ID')}
+              placeholder={t(loginFormname === 'Doctor' ? 'Enter NMR ID/User ID' : 'Enter User ID')}
               margin="dense"
               defaultValue={getValues().nmrID}
               error={errors.nmrID?.message}
               {...register('nmrID', {
-                required: 'Provide  valid ID',
+                required: 'Provide valid ID',
               })}
             />
           </Box>
