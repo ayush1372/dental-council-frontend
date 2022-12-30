@@ -6,6 +6,8 @@ export const API = {
   login: {
     getCaptchaEnabledFlag: 'api/v1/getCaptchaEnabledFlag',
     generateCaptcha: 'api/v1/generateCaptcha',
+    validateCaptcha: 'api/v1/validateCaptcha',
+    loginUser: 'api/v1/login',
   },
   editProfile: {},
   menuLists: {

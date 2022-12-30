@@ -1,3 +1,5 @@
+import { JSEncrypt } from 'js-encrypt';
+
 export function get_year_data(startYear = 1900) {
   var ans = [];
   var date = new Date();
@@ -26,4 +28,12 @@ export const changeAppFontSize = (size, appFontType) => {
   const fontSize =
     appFontType === 'small' ? `${size - 2}` : appFontType === 'large' ? `${size + 2}` : `${size}`;
   return `${fontSize}px`;
+};
+
+export const encryption = (value) => {
+  // Encrypt with the public key...
+  const encrypt = new JSEncrypt();
+  encrypt.setPublicKey(process.env.REACT_APP_PASS_SITE_KEY);
+  const encryptedValue = encrypt.encrypt(value);
+  return encryptedValue;
 };

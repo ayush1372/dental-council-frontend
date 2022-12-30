@@ -1,21 +1,35 @@
 import { useState } from 'react';
 
 import RefreshIcon from '@mui/icons-material/Refresh';
+import { Grid, Typography, useTheme } from '@mui/material';
 import { Box } from '@mui/system';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-const CaptchaComponent = () => {
-  const { generateCaptcha } = useSelector((state) => state.login);
-  // eslint-disable-next-line no-console
-  console.log('image', generateCaptcha);
+import { verboseLog } from '../../config/debug';
+import { generateCaptchaImage } from '../../store/actions/login-action';
 
+const CaptchaComponent = ({ captchaResult }) => {
+  const { generateCaptcha, captchaEnabledFlag } = useSelector((state) => state.login);
   const [anwser, setAnwser] = useState();
   const [error, setError] = useState();
+  const dispatch = useDispatch();
+  const theme = useTheme();
 
-  const reloadCaptcha = () => {};
+  const reloadCaptcha = () => {
+    if (captchaEnabledFlag) {
+      dispatch(generateCaptchaImage())
+        .then((response) => {
+          verboseLog('response', response);
+        })
+        .catch((error) => {
+          verboseLog('error occured', error);
+        });
+    }
+  };
 
   const handleChange = (e) => {
     setAnwser(e.target.value);
+    captchaResult(e.target.value);
   };
 
   const onFocusChange = (e) => {
@@ -30,47 +44,48 @@ const CaptchaComponent = () => {
   };
 
   return (
-    <Box className="captcha-parent">
-      <Box className="captcha-child">
-        <Box className="row-captcha">
-          <Box className="column-captcha">
-            {' '}
+    <Box>
+      <Box border={1} borderColor={theme.palette.grey.dark} width={'40%'}>
+        <Grid container>
+          <Grid xs={9}>
             <img
               src={`data:image/png;base64,${generateCaptcha?.image}`}
               alt="captcha"
-              width="150"
-              height="100"
-              className="captcha-image"
+              width="100"
+              height="60"
             />
-            <Box>
-              <Box className="img-refresh">
-                <RefreshIcon onClick={reloadCaptcha} />
-              </Box>
-            </Box>
-          </Box>
-
-          <Box className="column-captcha">
-            <Box className="answer">Type answer-</Box>{' '}
-            <Box>
-              <input
-                className={`${!error ? 'text-captcha' : 'text-captcha-danger'}`}
-                name="anwser"
-                type="text"
-                minLength="1"
-                maxLength="6"
-                size={10}
-                height={4}
-                // disabled={disabled}
-                placeholder="Code"
-                value={anwser}
-                onBlur={onFocusChange}
-                onChange={handleChange}
-              />{' '}
-            </Box>
-          </Box>
-        </Box>
-        <Box className="error-span">{error && error.length > 0 && <span>{error}</span>}</Box>
+          </Grid>
+          <Grid xs={3}>
+            <RefreshIcon color="primary.dark" onClick={reloadCaptcha} />
+          </Grid>
+        </Grid>
+        <Grid container>
+          <Grid md={5} xs={12}>
+            <Typography fontSize={'small'} color="gray.dark">
+              Type answer-
+            </Typography>
+          </Grid>
+          <Grid md={7} xs={12}>
+            <input
+              // className={`${!error ? 'text-captcha' : 'text-captcha-danger'}`}
+              name="anwser"
+              type="text"
+              minLength="1"
+              maxLength="6"
+              size={10}
+              height={4}
+              // disabled={disabled}
+              placeholder="Code"
+              value={anwser}
+              onBlur={onFocusChange}
+              onChange={handleChange}
+            />
+          </Grid>
+        </Grid>
       </Box>
+      <Typography color="error.main">
+        {error && error.length > 0 && <span>{error}</span>}
+      </Typography>
     </Box>
   );
 };

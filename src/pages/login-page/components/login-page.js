@@ -1,22 +1,29 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { Box, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 import { verboseLog } from '../../../config/debug';
+import { encryption } from '../../../helpers/functions/common-functions';
 import CaptchaComponent from '../../../shared/captcha-component/captcha-component';
 import {
   generateCaptchaImage,
   getCaptchaEnabledFlagValue,
+  loginAction,
+  validateCaptchaImage,
 } from '../../../store/actions/login-action';
 import { login, userLoggedInType } from '../../../store/reducers/common-reducers';
 import { Button, TextField } from '../../../ui/core';
+import successToast from '../../../ui/core/toaster';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 export function LoginPage({ handleForgotPassword }) {
+  const [captchaAnswer, setcaptachaAnswer] = useState();
+  const { generateCaptcha } = useSelector((state) => state.login);
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -43,19 +50,57 @@ export function LoginPage({ handleForgotPassword }) {
       password: '',
     },
   });
-  const onSubmit = (data) => {
+  const captchaResult = (num) => {
+    setcaptachaAnswer(num);
+  };
+
+  const onSubmit = (param) => {
     try {
-      let req = { mobile: data.nmrID };
-      if (req) {
-        verboseLog('usersListData', req);
-        dispatch(login());
-        dispatch(userLoggedInType(loginFormname));
-        navigate(`/profile`);
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth',
+      dispatch(
+        validateCaptchaImage({
+          transaction_id: generateCaptcha?.transaction_id,
+          result: parseInt(captchaAnswer),
+        })
+      )
+        .then((response) => {
+          if (response?.data?.validity) {
+            const requestObj = {
+              username: param?.nmrID,
+              password: encryption(param?.password),
+              user_type:
+                loginFormname === 'Doctor'
+                  ? 1
+                  : loginFormname === 'College'
+                  ? 2
+                  : loginFormname === 'SMC'
+                  ? 3
+                  : 4,
+              user_sub_type: loginFormname === 'College' ? 1 : '',
+              captch_trans_id: generateCaptcha?.transaction_id,
+            };
+            dispatch(loginAction(requestObj))
+              .then((response) => {
+                verboseLog('response', response);
+                let req = { mobile: param.nmrID };
+                if (req) {
+                  verboseLog('usersListData', req);
+                  dispatch(login());
+                  dispatch(userLoggedInType(loginFormname));
+                  navigate(`/profile`);
+                  window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth',
+                  });
+                }
+              })
+              .catch((error) => {
+                successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+              });
+          }
+        })
+        .catch((error) => {
+          successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
         });
-      }
     } catch (err) {
       verboseLog('usersListData', err);
     }
@@ -65,107 +110,106 @@ export function LoginPage({ handleForgotPassword }) {
     dispatch(getCaptchaEnabledFlagValue())
       .then((response) => {
         if (response?.data) {
-          dispatch(generateCaptchaImage())
-            .then((response) => {
-              verboseLog('response', response);
-            })
-            .catch((error) => {
-              verboseLog('error occured', error);
-            });
+          dispatch(generateCaptchaImage()).catch((error) => {
+            successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+          });
         }
       })
       .catch((error) => {
-        verboseLog('error occured', error);
+        successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
       });
   }, []);
 
   return (
-    <Box p={4} bgcolor="white.main" boxShadow="4">
-      <Typography variant="h2" color="primary.dark">
-        {loginFormNames[loginFormname]} {t('Login')}
-      </Typography>
-      <Box>
-        <Box mt={2}>
-          <Typography variant="body3">
-            {loginFormname === 'Doctor' ? 'NMR/USER ' : 'User '}
-            {t('NAME')}
-            <Typography component="span" color="error.main">
-              *
+    <>
+      <ToastContainer></ToastContainer>
+      <Box p={4} bgcolor="white.main" boxShadow="4">
+        <Typography variant="h2" color="primary.dark">
+          {loginFormNames[loginFormname]} {t('Login')}
+        </Typography>
+        <Box>
+          <Box mt={2}>
+            <Typography variant="body3">
+              {loginFormname === 'Doctor' ? 'NMR/USER ' : 'User '}
+              {t('NAME')}
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
             </Typography>
-          </Typography>
-          <TextField
-            inputProps={{ maxLength: 100 }}
-            fullWidth
-            id="outlined-basic"
-            variant="outlined"
-            type="text"
-            name="nmrID"
-            required="true"
-            placeholder={t('NMR/USER NAME')}
-            margin="dense"
-            defaultValue={getValues().nmrID}
-            error={errors.nmrID?.message}
-            {...register('nmrID', {
-              required: 'Provide  valid ID',
-            })}
-          />
-        </Box>
-        <Box mt={1}>
-          <Typography variant="body3">
-            {t('Password')}
-            <Typography component="span" color="error.main">
-              *
+            <TextField
+              inputProps={{ maxLength: 100 }}
+              fullWidth
+              id="outlined-basic"
+              variant="outlined"
+              type="text"
+              name="nmrID"
+              required="true"
+              placeholder={t('NMR/USER NAME')}
+              margin="dense"
+              defaultValue={getValues().nmrID}
+              error={errors.nmrID?.message}
+              {...register('nmrID', {
+                required: 'Provide  valid ID',
+              })}
+            />
+          </Box>
+          <Box mt={1}>
+            <Typography variant="body3">
+              {t('Password')}
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
             </Typography>
-          </Typography>
-          <TextField
-            fullWidth
-            id="outlined-basic"
-            variant="outlined"
-            type="Password"
-            name="password"
-            required="true"
-            placeholder={t('Password')}
-            margin="dense"
-            defaultValue={getValues().password}
-            error={errors.password?.message}
-            {...register('password', PasswordRegexValidation)}
-          />
-        </Box>
-        <Box align="center" mt={3}>
-          <CaptchaComponent />
-        </Box>
+            <TextField
+              fullWidth
+              id="outlined-basic"
+              variant="outlined"
+              type="Password"
+              name="password"
+              required="true"
+              placeholder={t('Password')}
+              margin="dense"
+              defaultValue={getValues().password}
+              error={errors.password?.message}
+              {...register('password', PasswordRegexValidation)}
+            />
+          </Box>
+          <Box align="center" mt={3}>
+            <CaptchaComponent captchaResult={captchaResult} />
+          </Box>
 
-        <Box align="center" mt={3}>
-          <Button
-            size="medium"
-            variant="contained"
-            sx={{
-              backgroundColor: 'secondary.lightOrange',
-              '&:hover': {
+          <Box align="center" mt={3}>
+            <Button
+              size="medium"
+              variant="contained"
+              sx={{
                 backgroundColor: 'secondary.lightOrange',
-              },
-            }}
-            onClick={handleSubmit(onSubmit)}
-          >
-            {t('Login')}
-          </Button>
-        </Box>
-        <Box mt={3} textAlign={'center'}>
-          <Typography
-            variant="body1"
-            color="textPrimary.dark"
-            component="div"
-            onClick={handleForgotPassword}
-            sx={{
-              textDecoration: 'underline',
-              cursor: 'pointer',
-            }}
-          >
-            {t('Forgot your password?')}
-          </Typography>
+                '&:hover': {
+                  backgroundColor: 'secondary.lightOrange',
+                },
+              }}
+              onClick={handleSubmit(onSubmit)}
+            >
+              {t('Login')}
+            </Button>
+          </Box>
+          <Box mt={3} textAlign={'center'}>
+            <Typography
+              variant="body1"
+              color="textPrimary.dark"
+              component="div"
+              onClick={handleForgotPassword}
+              sx={{
+                textDecoration: 'underline',
+                cursor: 'pointer',
+              }}
+            >
+              {t('Forgot your password?')}
+            </Typography>
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </>
   );
 }
 

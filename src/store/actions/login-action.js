@@ -1,7 +1,12 @@
 import { API } from '../../api/api-endpoints';
-import { GET } from '../../constants/requests';
+import { GET, POST } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
-import { generateCaptcha, getCaptchaEnabledFlag } from '../reducers/login-reducer';
+import {
+  generateCaptcha,
+  getCaptchaEnabledFlag,
+  loginUser,
+  validateCaptcha,
+} from '../reducers/login-reducer';
 
 export const getCaptchaEnabledFlagValue = () => async (dispatch) => {
   return await new Promise((resolve, reject) => {
@@ -27,6 +32,40 @@ export const generateCaptchaImage = () => async (dispatch) => {
     })
       .then((response) => {
         dispatch(generateCaptcha(response.data));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const validateCaptchaImage = (body) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.login.validateCaptcha,
+      data: body,
+    })
+      .then((response) => {
+        dispatch(validateCaptcha(response.data));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const loginAction = (body) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.login.loginUser,
+      data: body,
+    })
+      .then((response) => {
+        dispatch(loginUser(response.data));
         return resolve(response);
       })
       .catch((error) => {

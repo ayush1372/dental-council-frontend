@@ -6,6 +6,8 @@ const initialState = {
     transaction_id: '',
     image: '',
   },
+  validateCaptchaFlag: {},
+  login: {},
 };
 
 const login = createSlice({
@@ -18,9 +20,15 @@ const login = createSlice({
     generateCaptcha: (state, action) => {
       state.generateCaptcha = action.payload;
     },
+    validateCaptcha: (state, action) => {
+      state.validateCaptchaFlag = action.payload;
+    },
+    loginUser: (state, action) => {
+      state.login = action.payload;
+    },
   },
 });
 
-export const { getCaptchaEnabledFlag, generateCaptcha } = login.actions;
+export const { getCaptchaEnabledFlag, generateCaptcha, validateCaptcha, loginUser } = login.actions;
 
 export default login.reducer;
