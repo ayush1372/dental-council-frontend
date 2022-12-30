@@ -67,10 +67,6 @@ export function TableSearch({ trackApplication }) {
                     label="Filter"
                     defaultValue={getValues().Filter}
                     placeholder={'All Applications'}
-                    required={true}
-                    {...register('Filter', {
-                      required: 'Application is required',
-                    })}
                     options={[
                       {
                         label: 'Application',
@@ -85,10 +81,6 @@ export function TableSearch({ trackApplication }) {
                     name="Date"
                     label="Sort by"
                     defaultValue={getValues().Date}
-                    required={true}
-                    {...register('Date', {
-                      required: 'Date is required',
-                    })}
                     options={[
                       {
                         label: '01-01-0001',
