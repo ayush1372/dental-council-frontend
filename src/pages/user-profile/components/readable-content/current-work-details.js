@@ -6,19 +6,33 @@ import { useSelector } from 'react-redux';
 
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
-const CurrentWorkDetails = () => {
+const CurrentWorkDetails = ({ doctorUserProfile }) => {
   const { userActiveTab } = useSelector((state) => state.common);
 
   const [openModal, setOpenModal] = useState(false);
   const ClosePopup = () => {
     setOpenModal(false);
   };
+  const {
+    current_work_details: {
+      facility,
+      work_organization,
+      url,
+      address: {
+        state: { name: stateName },
+        district: { name: districtName },
+        pincode,
+        address_line1,
+        address_type: { name: addressTypeName },
+      },
+    },
+  } = doctorUserProfile;
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="primary.main">
-            Facility
+            {facility === 0 ? 'Facility' : facility === 1 ? 'Organization' : ''}
           </Typography>
           {/*<Typography component={'span'} variant="subtitle2" color="primary.main">
             Organization
@@ -40,7 +54,7 @@ const CurrentWorkDetails = () => {
               variant="subtitle2"
               color="inputTextColor.light"
             >
-              Select State
+              {stateName ? stateName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -66,7 +80,7 @@ const CurrentWorkDetails = () => {
               variant="subtitle2"
               color="inputTextColor.light"
             >
-              Select District
+              {districtName ? districtName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -89,7 +103,7 @@ const CurrentWorkDetails = () => {
               variant="subtitle2"
               color="inputTextColor.light"
             >
-              Name of the Organization
+              {work_organization ? work_organization : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -114,7 +128,7 @@ const CurrentWorkDetails = () => {
               variant="subtitle2"
               color="inputTextColor.light"
             >
-              Select Organization Type
+              {addressTypeName ? addressTypeName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -140,7 +154,7 @@ const CurrentWorkDetails = () => {
               variant="subtitle2"
               color="inputTextColor.light"
             >
-              Address
+              {address_line1 ? address_line1 : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -166,7 +180,7 @@ const CurrentWorkDetails = () => {
               variant="subtitle2"
               color="inputTextColor.light"
             >
-              Pincode
+              {pincode ? pincode : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -191,7 +205,7 @@ const CurrentWorkDetails = () => {
               variant="subtitle2"
               color="inputTextColor.light"
             >
-              Telecommunication URL
+              {url ? url : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon

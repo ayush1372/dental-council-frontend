@@ -6,13 +6,16 @@ import { useSelector } from 'react-redux';
 
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
-const IMRDetails = () => {
+const IMRDetails = ({ doctorUserProfile }) => {
   const { userActiveTab } = useSelector((state) => state.common);
 
   const [openModal, setOpenModal] = useState(false);
   const ClosePopup = () => {
     setOpenModal(false);
   };
+  const {
+    imr_details: { registration_number, nmr_id, year_of_info },
+  } = doctorUserProfile;
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
@@ -30,7 +33,7 @@ const IMRDetails = () => {
               variant="subtitle2"
               color="inputTextColor.light"
             >
-              9598237230192838
+              {nmr_id ? nmr_id : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -56,7 +59,7 @@ const IMRDetails = () => {
               variant="subtitle2"
               color="inputTextColor.light"
             >
-              Select Year of info
+              {year_of_info ? year_of_info : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -82,7 +85,7 @@ const IMRDetails = () => {
               variant="subtitle2"
               color="inputTextColor.light"
             >
-              672929
+              {registration_number ? registration_number : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon

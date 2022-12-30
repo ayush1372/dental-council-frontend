@@ -30,6 +30,7 @@ const ReadWorkProfile = ({
   activeStep,
 }) => {
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  const { doctorUserProfile } = useSelector((state) => state?.menuLists);
   const [selected, setSelected] = useState('');
   const [confirmationModal, setConfirmationModal] = useState(false);
 
@@ -96,7 +97,7 @@ const ReadWorkProfile = ({
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Component />
+                <Component doctorUserProfile={doctorUserProfile} />
               </AccordionDetails>
             </Accordion>
           );

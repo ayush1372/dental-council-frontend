@@ -19,7 +19,7 @@ import RegistrationDetailsContent from '../readable-content/registration-details
 const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack, showActions = true }) => {
   const [accordionKey, setAccordionKey] = useState('accordion-0');
   const userType = useSelector((state) => state.common.loggedInUserType);
-
+  const { doctorUserProfile } = useSelector((state) => state?.menuLists);
   const accordions = [
     {
       title: 'Registration Details',
@@ -64,7 +64,7 @@ const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack, showActions = 
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Component />
+                <Component doctorUserProfile={doctorUserProfile} />
               </AccordionDetails>
             </Accordion>
           );

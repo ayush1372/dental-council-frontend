@@ -6,13 +6,18 @@ import { useSelector } from 'react-redux';
 
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
-const SpecialDetails = () => {
+const SpecialDetails = ({ doctorUserProfile }) => {
   const { userActiveTab } = useSelector((state) => state.common);
 
   const [openModal, setOpenModal] = useState(false);
   const ClosePopup = () => {
     setOpenModal(false);
   };
+  const {
+    speciality_details: {
+      broad_speciality: { name: broadSpecialityName },
+    },
+  } = doctorUserProfile;
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
@@ -30,7 +35,9 @@ const SpecialDetails = () => {
               variant="subtitle2"
               color="inputTextColor.light"
             >
-              Doctor
+              {doctorUserProfile.speciality_details.super_speciality[0].name
+                ? doctorUserProfile.speciality_details.super_speciality[0].name
+                : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -44,7 +51,7 @@ const SpecialDetails = () => {
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
-            Super Speciality
+            {broadSpecialityName ? broadSpecialityName : ''}
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography

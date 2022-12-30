@@ -6,13 +6,27 @@ import { useSelector } from 'react-redux';
 
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
-const CommunicationAddress = () => {
+const CommunicationAddress = ({ doctorUserProfile }) => {
   const { userActiveTab } = useSelector((state) => state.common);
 
   const [openModal, setOpenModal] = useState(false);
   const ClosePopup = () => {
     setOpenModal(false);
   };
+  const {
+    communication_address: {
+      country: { name: countryName },
+      state: { name: stateName },
+      district: { name: districtName },
+      sub_district: { name: sub_districtName },
+      pincode,
+      address_line1,
+      email,
+      mobile,
+      address_type: { name: addressTypeName },
+      full_name,
+    },
+  } = doctorUserProfile;
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
@@ -30,7 +44,7 @@ const CommunicationAddress = () => {
               variant="subtitle2"
               color="inputTextColor.light"
             >
-              Aarnav Sharma
+              {full_name ? full_name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -56,7 +70,7 @@ const CommunicationAddress = () => {
               variant="subtitle2"
               color="inputTextColor.light"
             >
-              Hno. 560 Row 3 Sadar Bazar, New Delhi
+              {address_line1 ? address_line1 : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -84,7 +98,7 @@ const CommunicationAddress = () => {
               variant="subtitle2"
               color="inputTextColor.light"
             >
-              New Delhi
+              {addressTypeName ? addressTypeName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -110,7 +124,7 @@ const CommunicationAddress = () => {
               variant="subtitle2"
               color="inputTextColor.light"
             >
-              New Delhi
+              {districtName ? districtName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -133,7 +147,7 @@ const CommunicationAddress = () => {
               variant="subtitle2"
               color="inputTextColor.light"
             >
-              Sub District
+              {sub_districtName ? sub_districtName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -161,7 +175,7 @@ const CommunicationAddress = () => {
               variant="subtitle2"
               color="inputTextColor.light"
             >
-              New Delhi
+              {stateName ? stateName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -187,7 +201,7 @@ const CommunicationAddress = () => {
               variant="subtitle2"
               color="inputTextColor.light"
             >
-              India
+              {countryName ? countryName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -213,7 +227,7 @@ const CommunicationAddress = () => {
               variant="subtitle2"
               color="inputTextColor.light"
             >
-              120018
+              {pincode ? pincode : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -241,7 +255,7 @@ const CommunicationAddress = () => {
               variant="subtitle2"
               color="inputTextColor.light"
             >
-              aarushi.sharma309@gmail.com
+              {email ? email : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -267,7 +281,7 @@ const CommunicationAddress = () => {
               variant="subtitle2"
               color="inputTextColor.light"
             >
-              9988334355
+              {mobile ? mobile : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon

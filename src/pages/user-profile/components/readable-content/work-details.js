@@ -7,13 +7,20 @@ import { useSelector } from 'react-redux';
 
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
-const WorkDetails = () => {
+const WorkDetails = ({ doctorUserProfile }) => {
   const { userActiveTab } = useSelector((state) => state.common);
 
   const [openModal, setOpenModal] = useState(false);
   const ClosePopup = () => {
     setOpenModal(false);
   };
+  const {
+    work_details: {
+      is_user_currently_working,
+      work_status: { name: workStatusName },
+      work_nature: { name: workNatureName },
+    },
+  } = doctorUserProfile;
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
@@ -31,7 +38,11 @@ const WorkDetails = () => {
               variant="subtitle2"
               color="inputTextColor.light"
             >
-              No
+              {is_user_currently_working === 0
+                ? 'Yes'
+                : is_user_currently_working === 1
+                ? 'No'
+                : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -57,7 +68,7 @@ const WorkDetails = () => {
               variant="subtitle2"
               color="inputTextColor.light"
             >
-              Nature of work
+              {workNatureName ? workNatureName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -85,7 +96,7 @@ const WorkDetails = () => {
               variant="subtitle2"
               color="inputTextColor.light"
             >
-              Government only
+              {workStatusName ? workStatusName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
