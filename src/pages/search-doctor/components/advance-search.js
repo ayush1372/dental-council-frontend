@@ -83,14 +83,14 @@ const AdvanceSearch = ({ setDoSearch }) => {
         />
       </Grid>
       <Grid item xs={4}>
+        <Typography component="span" color="inputTextColor.main">
+          Select year of Registration
+        </Typography>
+
         <Select
-          sx={{
-            color: 'inputTextColor.main',
-          }}
           fullWidth
           error={errors.yearofRegistration?.message}
           name="yearofRegistration"
-          label="Select year of Registration"
           placeholder="Select year of Registration"
           defaultValue={getValues().yearofRegistration}
           {...register('yearofRegistration', {
@@ -105,6 +105,9 @@ const AdvanceSearch = ({ setDoSearch }) => {
         />
       </Grid>
       <Grid item xs={8}>
+        <Typography component="span" color="inputTextColor.main">
+          State Medical Council
+        </Typography>
         <Select
           sx={{
             color: 'inputTextColor.main',
@@ -112,7 +115,6 @@ const AdvanceSearch = ({ setDoSearch }) => {
           fullWidth
           error={errors.Statemedicalcouncil?.message}
           name="Statemedicalcouncil"
-          label="State Medical Council"
           placeholder="Select State medical council"
           defaultValue={getValues().Statemedicalcouncil}
           {...register('Statemedicalcouncil', {
