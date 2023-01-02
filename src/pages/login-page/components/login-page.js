@@ -75,8 +75,7 @@ export function LoginPage({ handleForgotPassword }) {
                   : loginFormname === 'SMC'
                   ? 3
                   : 4,
-              user_sub_type: loginFormname === 'College' ? 1 : '',
-              captch_trans_id: generateCaptcha?.transaction_id,
+              captcha_trans_id: generateCaptcha?.transaction_id,
             };
             dispatch(loginAction(requestObj))
               .then((response) => {
