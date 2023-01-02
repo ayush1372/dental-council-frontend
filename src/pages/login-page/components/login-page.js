@@ -96,6 +96,13 @@ export function LoginPage({ handleForgotPassword }) {
               .catch((error) => {
                 successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
               });
+          } else {
+            successToast(
+              'ERROR: Invalid captcha, please try with new captcha',
+              'auth-error',
+              'error',
+              'top-center'
+            );
           }
         })
         .catch((error) => {

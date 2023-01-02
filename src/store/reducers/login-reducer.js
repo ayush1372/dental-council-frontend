@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  captchaEnabledFlag: false,
+  captchaEnabledFlag: { data: false, isLoading: Boolean(true), isError: false },
   generateCaptcha: {
     transaction_id: '',
     image: '',
@@ -15,7 +15,7 @@ const login = createSlice({
   initialState,
   reducers: {
     getCaptchaEnabledFlag: (state, action) => {
-      state.captchaEnabledFlag = action.payload;
+      state.captchaEnabledFlag.data = action.payload;
     },
     generateCaptcha: (state, action) => {
       state.generateCaptcha = action.payload;
