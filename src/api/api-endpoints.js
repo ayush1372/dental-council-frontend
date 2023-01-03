@@ -9,7 +9,7 @@ export const API = {
     loginUser: 'api/v1/login',
   },
   editProfile: {},
-  menuLists: {
+  common: {
     states: 'api/v1/md/country/356/states',
     countries: 'api/v1/md/countries',
     subDistricts: 'api/v1/md/district/{district_id}/sub_districts',

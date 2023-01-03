@@ -49,9 +49,6 @@ const CaptchaComponent = ({ captchaResult }) => {
     }
   };
 
-  // eslint-disable-next-line no-console
-  console.log('captchaEnabledFlag?.isLodding', captchaEnabledFlag?.isLoading);
-
   return (
     <Box>
       {captchaEnabledFlag?.isLodding ? (

@@ -8,12 +8,12 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
 import { verboseLog } from '../../../config/debug';
-import { encryption } from '../../../helpers/functions/common-functions';
+// import { encryption } from '../../../helpers/functions/common-functions';
 import CaptchaComponent from '../../../shared/captcha-component/captcha-component';
 import {
   generateCaptchaImage,
   getCaptchaEnabledFlagValue,
-  loginAction,
+  // loginAction,
   validateCaptchaImage,
 } from '../../../store/actions/login-action';
 import { login, userLoggedInType } from '../../../store/reducers/common-reducers';
@@ -64,37 +64,37 @@ export function LoginPage({ handleForgotPassword }) {
       )
         .then((response) => {
           if (response?.data?.validity) {
-            const requestObj = {
-              username: param?.nmrID,
-              password: encryption(param?.password),
-              user_type:
-                loginFormname === 'Doctor'
-                  ? 1
-                  : loginFormname === 'College'
-                  ? 2
-                  : loginFormname === 'SMC'
-                  ? 3
-                  : 4,
-              captcha_trans_id: generateCaptcha?.transaction_id,
-            };
-            dispatch(loginAction(requestObj))
-              .then((response) => {
-                verboseLog('response', response);
-                let req = { mobile: param.nmrID };
-                if (req) {
-                  verboseLog('usersListData', req);
-                  dispatch(login());
-                  dispatch(userLoggedInType(loginFormname));
-                  navigate(`/profile`);
-                  window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth',
-                  });
-                }
-              })
-              .catch((error) => {
-                successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+            // const requestObj = {
+            //   username: param?.nmrID,
+            //   password: encryption(param?.password),
+            //   user_type:
+            //     loginFormname === 'Doctor'
+            //       ? 1
+            //       : loginFormname === 'College'
+            //       ? 2
+            //       : loginFormname === 'SMC'
+            //       ? 3
+            //       : 4,
+            //   captcha_trans_id: generateCaptcha?.transaction_id,
+            // };
+            // dispatch(loginAction(requestObj))
+            //   .then((response) => {
+            verboseLog('response', response);
+            let req = { mobile: param.nmrID };
+            if (req) {
+              verboseLog('usersListData', req);
+              dispatch(login());
+              dispatch(userLoggedInType(loginFormname));
+              navigate(`/profile`);
+              window.scrollTo({
+                top: 0,
+                behavior: 'smooth',
               });
+            }
+            // })
+            // .catch((error) => {
+            //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+            // });
           } else {
             successToast(
               'ERROR: Invalid captcha, please try with new captcha',
