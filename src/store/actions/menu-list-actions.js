@@ -6,6 +6,7 @@ import {
   getDistricts,
   getDoctorUserProfile,
   getStates,
+  getSubDistricts,
 } from '../reducers/menu-lists-reducer';
 
 export const getStatesList = () => async (dispatch) => {
@@ -16,6 +17,22 @@ export const getStatesList = () => async (dispatch) => {
     })
       .then((response) => {
         dispatch(getStates(response.data));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const getSubDistrictsList = (districtId) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: GET,
+      url: API.menuLists.subDistricts.replace('{district_id}', districtId),
+    })
+      .then((response) => {
+        dispatch(getSubDistricts(response.data));
         return resolve(response);
       })
       .catch((error) => {

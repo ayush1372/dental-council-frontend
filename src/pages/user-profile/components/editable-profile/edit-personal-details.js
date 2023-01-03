@@ -11,7 +11,7 @@ import { createSelectFieldData } from '../../../../helpers/functions/common-func
 import { get_year_data } from '../../../../helpers/functions/common-functions';
 import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
 import { ModalOTP } from '../../../../shared/otp-modal/otp-modal';
-import { getDistrictList } from '../../../../store/actions/menu-list-actions';
+import { getDistrictList, getSubDistrictsList } from '../../../../store/actions/menu-list-actions';
 import { RadioGroup, Select, TextField } from '../../../../ui/core';
 import MobileNumber from '../../../../ui/core/mobile-number/mobile-number';
 
@@ -19,9 +19,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const loggedInUserType = useSelector((state) => state?.login?.loggedInUserType);
-  const { statesList } = useSelector((state) => state?.menuLists);
-  const { countriesList } = useSelector((state) => state?.menuLists);
-  const { districtsList } = useSelector((state) => state?.menuLists);
+  const { statesList, countriesList, districtsList, subDistrictList } = useSelector(
+    (state) => state?.menuLists
+  );
 
   const [languages, setLanguages] = useState([]);
   const {
@@ -51,7 +51,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       Name: loggedInUserType === 'SMC' ? '' : 'Aarnav Sharma',
       Address: loggedInUserType === 'SMC' ? '' : 'Hno. 560 Row 3 Sadar Bazar, New Delhi',
       Area: loggedInUserType === 'SMC' ? '' : 'new delhi',
-      District: loggedInUserType === 'SMC' ? '' : 'new delhi',
+      District: loggedInUserType === 'SMC' ? '' : '',
       SubDistrict: '',
       State: loggedInUserType === 'SMC' ? '' : '',
       Country: loggedInUserType === 'SMC' ? '' : 356,
@@ -81,6 +81,25 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   useEffect(() => {
     fetchDistricts(selectedState);
   }, [selectedState]);
+
+  const fetchSubDistricts = (districtId) => {
+    if (districtId) {
+      dispatch(getSubDistrictsList(districtId))
+        .then((dataResponse) => {
+          verboseLog('dataResponse', dataResponse);
+        })
+        .catch((error) => {
+          verboseLog('error occured', error);
+        });
+    }
+  };
+
+  const selectedDistrict = watch('District');
+
+  useEffect(() => {
+    fetchSubDistricts(selectedDistrict);
+  }, [selectedDistrict]);
+
   const { otpPopup, handleClickOpen, otpVerified } = ModalOTP({ afterConfirm: () => {} });
 
   const handleBackButton = () => {
@@ -572,18 +591,19 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
           <Grid item xs={12} md={4}>
             <Select
               fullWidth
-              error={errors.Nationality?.message}
+              error={errors.SubDistrict?.message}
               name="SubDistrict"
               label="Sub District"
               placeholder="Sub District"
               defaultValue={getValues().SubDistrict}
               {...register('SubDistrict')}
-              options={[
-                {
-                  label: '-',
-                  value: '-',
+              options={createSelectFieldData(subDistrictList)}
+              MenuProps={{
+                style: {
+                  maxHeight: 250,
+                  maxWidth: 130,
                 },
-              ]}
+              }}
             />
           </Grid>
         </Grid>
@@ -660,7 +680,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
         <Grid container item spacing={2}>
           <Grid item xs={12} md={6}>
             <Box display="flex" alignItems="end">
-              <Box width="100%">
+              <Box>
                 <TextField
                   sx={{ minWidth: '265px' }}
                   label="Email Address"
