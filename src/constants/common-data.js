@@ -50,8 +50,8 @@ export const encryptData = (data, key) => {
 
 export const smcProfileDetails = [
   { label: 'Name', value: 'Aarnav Sharma', id: '1' },
-  { label: 'Enrolment Number NDHM', value: 'No', id: '2' },
-  { label: 'Enrolment Number', value: '12345', id: '3' },
+  { label: 'Enrollment Number NDHM', value: 'No', id: '2' },
+  { label: 'Enrollment Number', value: '12345', id: '3' },
   { label: 'User Id', value: 'aarnav.sharma', id: '4' },
   { label: 'Council', value: 'West Bengal', id: '5' },
 ];

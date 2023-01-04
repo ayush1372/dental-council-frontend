@@ -61,9 +61,9 @@ const ActivateLicence = (props) => {
       sorting: true,
       type: 'string',
     },
-    { title: 'Date of submission', name: 'dateOfSubmission', sorting: true, type: 'date' },
+    { title: 'Date of Submission', name: 'dateOfSubmission', sorting: true, type: 'date' },
 
-    { title: 'Reactivation from date', name: 'reactivationFromDate', sorting: true, type: 'date' },
+    { title: 'Reactivation from Date', name: 'reactivationFromDate', sorting: true, type: 'date' },
     {
       title: 'Type of Suspension',
       name: 'typeOfSuspension',
