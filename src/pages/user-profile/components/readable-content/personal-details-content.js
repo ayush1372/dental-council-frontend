@@ -38,26 +38,33 @@ const PersonalDetails = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
 
-        <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor.main">
-            Aadhaar Number
-            <Typography component="span" color="error.main">
-              *
+        {false && (
+          <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="inputTextColor.main">
+              Aadhaar Number
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
             </Typography>
-          </Typography>
-          <Grid display="flex" alignItems="center">
-            <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
-              xxxx-xxxx-4688
-            </Typography>
-            {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
-                color="primary"
-                onClick={() => setOpenModal(true)}
-                fontSize="width30"
-              />
-            )}{' '}
+            <Grid display="flex" alignItems="center">
+              <Typography
+                bgcolor="grey2.main"
+                p={1}
+                variant="subtitle2"
+                color="inputTextColor.light"
+              >
+                xxxx-xxxx-4688
+              </Typography>
+              {userActiveTab === 'dashboard' && (
+                <EditOutlinedIcon
+                  color="primary"
+                  onClick={() => setOpenModal(true)}
+                  fontSize="width30"
+                />
+              )}{' '}
+            </Grid>
           </Grid>
-        </Grid>
+        )}
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         {false && (
           <Grid item xs={12} md={4}>
