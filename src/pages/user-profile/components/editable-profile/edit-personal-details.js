@@ -181,24 +181,26 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               error={errors.salutation?.message}
             />
           </Grid>
-          <Grid item xs={12} md={4}>
-            <TextField
-              variant="outlined"
-              name={'AadhaarNumber'}
-              label={'Aadhaar Number'}
-              required={true}
-              fullWidth
-              defaultValue={getValues().AadhaarNumber}
-              {...register('AadhaarNumber', {
-                required: 'Aadhaar Number is Required',
-                pattern: {
-                  value: /^[0-9]{4}-[0-9]{4}-[0-9]{4}$/,
-                  message: 'Should only contain hyphen and numbers',
-                },
-              })}
-              error={errors.AadhaarNumber?.message}
-            />
-          </Grid>
+          {false && (
+            <Grid item xs={12} md={4}>
+              <TextField
+                variant="outlined"
+                name={'AadhaarNumber'}
+                label={'Aadhaar Number'}
+                required={true}
+                fullWidth
+                defaultValue={getValues().AadhaarNumber}
+                {...register('AadhaarNumber', {
+                  required: 'Aadhaar Number is Required',
+                  pattern: {
+                    value: /^[0-9]{4}-[0-9]{4}-[0-9]{4}$/,
+                    message: 'Should only contain hyphen and numbers',
+                  },
+                })}
+                error={errors.AadhaarNumber?.message}
+              />
+            </Grid>
+          )}
         </Grid>
         <Grid container item spacing={2}>
           <Grid item xs={12} md={4}>
@@ -686,6 +688,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                   label="Email Address"
                   type="text"
                   name="EmailAddress"
+                  variant="outlined"
                   required
                   defaultValue={getValues().EmailAddress}
                   error={errors.EmailAddress?.message}
@@ -725,8 +728,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               {otpPopup}
             </Box>
           </Grid>
-        </Grid>
-        <Grid container item spacing={2}>
           <Grid item xs={12} md={6}>
             <MobileNumber
               register={register}
@@ -743,6 +744,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             />
           </Grid>
         </Grid>
+
         {/* layer 3 */}
         <Grid container item spacing={2}>
           <Grid item xs={12}>
@@ -779,6 +781,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               placeholder="Select year of info"
               defaultValue={getValues().YearOfInfo}
               required={true}
+              disabled
               {...register('YearOfInfo', {
                 required: 'Year Of Info is required',
               })}
