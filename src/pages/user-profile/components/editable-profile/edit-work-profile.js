@@ -138,7 +138,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               required={true}
               placeholder={'Nature Of Work'}
               {...register('NatureOfWork', {
-                required: 'Nature Of Work is required',
+                required: 'Select Nature of Work',
               })}
               options={[
                 {
@@ -188,7 +188,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
                 <>
                   <Typography color="text.primary">
                     {t(
-                      'Upload the Proof of work for govt. such as Appointment letter, Last pay slip, recent transfer order etc.*'
+                      'Upload the proof of work for govt. Such as Appointment letter, Last pay slip, recent transfer order etc.*'
                     )}
                   </Typography>
                   <Typography color="error"> *</Typography>
@@ -245,18 +245,22 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
         </Grid>
         <Grid container item spacing={2}>
           <Grid item xs={12} md={4}>
-            <TextField
-              variant="outlined"
+            <Select
+              fullWidth
+              error={errors.state?.message}
               name={'state'}
               label={'State'}
-              fullWidth
-              required={true}
-              placeholder="Select State"
               defaultValue={getValues().state}
+              required={true}
               {...register('state', {
                 required: 'State is required',
               })}
-              error={errors.state?.message}
+              options={[
+                {
+                  label: 'Telangana',
+                  value: 'telangana',
+                },
+              ]}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -268,7 +272,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               defaultValue={getValues().District}
               required={true}
               {...register('District', {
-                required: 'District* is required',
+                required: 'District is required',
               })}
               options={[
                 {
@@ -282,8 +286,8 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
             <TextField
               variant="outlined"
               name={'workingOrganizationName'}
-              label={'Name of the Organization where you work'}
-              placeholder="Name of the organization"
+              label={'Name Of The Organization Where You Work'}
+              placeholder="Name Of The Organization"
               fullWidth
               defaultValue={getValues().workingOrganizationName}
               {...register('workingOrganizationName', {
@@ -303,7 +307,6 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               name={'organizationType'}
               label={'Organization Type'}
               fullWidth
-              placeholder="Select Organization Type"
               defaultValue={getValues().organizationType}
               {...register('organizationType', {
                 maxLength: {
@@ -343,9 +346,10 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               placeholder="Address"
               defaultValue={getValues().Address}
               {...register('Address', {
+                required: 'Address is Required',
                 maxLength: {
                   value: 300,
-                  message: 'Address Is Reuired.',
+                  message: 'Should be less than 300 characters',
                 },
               })}
               error={errors.Address?.message}
@@ -359,7 +363,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               required={true}
               placeholder="Pincode"
               fullWidth
-              error={errors.PinCode?.message}
+              error={errors.Pincode?.message}
               defaultValue={getValues().Pincode}
               {...register('Pincode', {
                 required: 'PinCode is Required',

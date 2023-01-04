@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import RemoveIcon from '@mui/icons-material/Remove';
 import {
   Accordion,
@@ -148,7 +149,7 @@ const ReadWorkProfile = ({
                         },
                       }}
                     >
-                      Action...
+                      Action <MoreHorizIcon />
                     </Button>
 
                     <Menu {...bindMenu(popupState)}>

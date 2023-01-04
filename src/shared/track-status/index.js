@@ -35,11 +35,11 @@ export default function TrackStatus() {
   return (
     <Box>
       {showHeader && (
-        <Box p={3}>
+        <Box px={3}>
           <Typography variant="h2" color="textPrimary.main" component="div">
             Track Status
           </Typography>
-          <Grid container spacing={2}>
+          <Grid container spacing={2} mt={1}>
             <Grid item xs={12} md={4}>
               <Box pb={{ xs: 2, md: 4 }}>
                 <Typography color="inputTextColor.main">

@@ -97,7 +97,7 @@ const CurrentWorkDetails = ({ doctorUserProfile }) => {
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
-            Name of the Organization where you work
+            Name Of The Organization Where You Work
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography

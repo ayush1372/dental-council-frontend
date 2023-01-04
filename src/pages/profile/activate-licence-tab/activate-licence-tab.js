@@ -167,14 +167,14 @@ const ActivateLicence = (props) => {
           <UserProfile showViewProfile={true} />
         </Box>
       ) : (
-        <Grid sx={{ m: 2 }} lg={12} md={10}>
+        <Grid sx={{ m: 2 }} lg={12} md={12}>
           <Grid item>
             <Typography variant="h2" data-testid="tab-heading">
               Application Requests
             </Typography>
           </Grid>
           <Grid mt={3}>
-            <TableSearch />
+            <TableSearch trackApplication />
           </Grid>
           <GenericTable
             order={order}
