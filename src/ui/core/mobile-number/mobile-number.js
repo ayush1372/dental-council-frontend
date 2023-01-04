@@ -104,7 +104,12 @@ export function MobileNumber(props) {
             }}
           />
           {showVerify && (
-            <Button variant="contained" color="primary" onClick={verifyOnClick}>
+            <Button
+              variant="contained"
+              sx={{ height: '56px' }}
+              color="primary"
+              onClick={verifyOnClick}
+            >
               GetOTP
             </Button>
           )}
