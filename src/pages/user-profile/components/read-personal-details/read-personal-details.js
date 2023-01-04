@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
@@ -11,10 +11,8 @@ import {
   Typography,
 } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { verboseLog } from '../../../../config/debug';
-import { getDoctorUserProfileList } from '../../../../store/actions/menu-list-actions';
 import ButtonGroupWizard from '../../../../ui/core/wizard/button-group-wizard';
 import CommunicationAddressContent from '../readable-content/communication-details-content';
 import IMRDetailsContent from '../readable-content/imr-details-content';
@@ -22,7 +20,6 @@ import PersonalDetailsContent from '../readable-content/personal-details-content
 const ReadPersonalDetails = ({ handleNext, showActions = true }) => {
   const userType = useSelector((state) => state.common.loggedInUserType);
   const { doctorUserProfile } = useSelector((state) => state?.menuLists);
-  const dispatch = useDispatch();
   const { t } = useTranslation();
   const [accordionKey, setAccordionKey] = useState('accordion-0');
   const accordions = [
@@ -42,19 +39,6 @@ const ReadPersonalDetails = ({ handleNext, showActions = true }) => {
   const handleChange = (accordionValue) => (_event, isExpanded) => {
     setAccordionKey(isExpanded ? accordionValue : null);
   };
-
-  const fetchDoctorUserProfileList = () => {
-    dispatch(getDoctorUserProfileList())
-      .then((dataResponse) => {
-        verboseLog('dataResponse1', dataResponse);
-      })
-      .catch((error) => {
-        verboseLog('error occured1', error);
-      });
-  };
-  useEffect(() => {
-    fetchDoctorUserProfileList();
-  }, []);
   return (
     <Box>
       <Box>

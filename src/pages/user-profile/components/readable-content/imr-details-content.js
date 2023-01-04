@@ -15,7 +15,10 @@ const IMRDetails = ({ doctorUserProfile }) => {
   };
   const {
     imr_details: { registration_number, nmr_id, year_of_info },
-  } = doctorUserProfile;
+  } =
+    doctorUserProfile && Object.values(doctorUserProfile).length > 3
+      ? doctorUserProfile
+      : { imr_details: {} };
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>

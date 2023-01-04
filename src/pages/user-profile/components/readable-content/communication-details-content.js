@@ -26,7 +26,18 @@ const CommunicationAddress = ({ doctorUserProfile }) => {
       address_type: { name: addressTypeName },
       full_name,
     },
-  } = doctorUserProfile;
+  } =
+    doctorUserProfile && Object.values(doctorUserProfile).length > 3
+      ? doctorUserProfile
+      : {
+          communication_address: {
+            country: {},
+            state: {},
+            district: {},
+            sub_district: {},
+            address_type: {},
+          },
+        };
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>

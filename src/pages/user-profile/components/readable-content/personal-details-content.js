@@ -29,7 +29,10 @@ const PersonalDetails = ({ doctorUserProfile }) => {
       schedule: { name: nameSchedule },
       spouse_name,
     },
-  } = doctorUserProfile;
+  } =
+    doctorUserProfile && Object.values(doctorUserProfile).length > 3
+      ? doctorUserProfile
+      : { personal_details: { country_nationality: {}, schedule: {} } };
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
@@ -244,7 +247,7 @@ const PersonalDetails = ({ doctorUserProfile }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              {language[0].name ? language[0].name : ''}
+              {language && language[0]?.name ? language[0]?.name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon

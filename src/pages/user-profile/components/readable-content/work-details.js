@@ -20,7 +20,15 @@ const WorkDetails = ({ doctorUserProfile }) => {
       work_status: { name: workStatusName },
       work_nature: { name: workNatureName },
     },
-  } = doctorUserProfile;
+  } =
+    doctorUserProfile && Object.values(doctorUserProfile).length > 3
+      ? doctorUserProfile
+      : {
+          work_details: {
+            work_status: {},
+            work_nature: {},
+          },
+        };
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>

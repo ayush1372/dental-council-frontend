@@ -23,7 +23,10 @@ const RegistrationDetailsContent = ({ doctorUserProfile }) => {
       renewable_registration_date,
       is_name_change,
     },
-  } = doctorUserProfile;
+  } =
+    doctorUserProfile && Object.values(doctorUserProfile).length > 3
+      ? doctorUserProfile
+      : { registration_detail: { state_medical_council: {} } };
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>

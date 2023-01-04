@@ -20,7 +20,9 @@ const QualificationDetailsContent = ({ doctorUserProfile }) => {
     course: { name: courseName },
     qualification_year,
     is_name_change,
-  } = doctorUserProfile.qualification_detail[3];
+  } = doctorUserProfile && Object.values(doctorUserProfile).length > 3
+    ? doctorUserProfile.qualification_detail[3]
+    : { country: {}, state: {}, college: {}, university: {}, course: {} };
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>

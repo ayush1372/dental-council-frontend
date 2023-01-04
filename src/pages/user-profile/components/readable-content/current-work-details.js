@@ -26,7 +26,10 @@ const CurrentWorkDetails = ({ doctorUserProfile }) => {
         address_type: { name: addressTypeName },
       },
     },
-  } = doctorUserProfile;
+  } =
+    doctorUserProfile && Object.values(doctorUserProfile).length > 3
+      ? doctorUserProfile
+      : { current_work_details: { address: { state: {}, district: {}, address_type: {} } } };
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>

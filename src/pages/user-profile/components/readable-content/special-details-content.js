@@ -17,7 +17,15 @@ const SpecialDetails = ({ doctorUserProfile }) => {
     speciality_details: {
       broad_speciality: { name: broadSpecialityName },
     },
-  } = doctorUserProfile;
+  } =
+    doctorUserProfile && Object.values(doctorUserProfile).length > 3
+      ? doctorUserProfile
+      : {
+          speciality_details: {
+            broad_speciality: {},
+            super_speciality: [],
+          },
+        };
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
@@ -35,8 +43,8 @@ const SpecialDetails = ({ doctorUserProfile }) => {
               variant="subtitle2"
               color="inputTextColor.light"
             >
-              {doctorUserProfile.speciality_details.super_speciality[0].name
-                ? doctorUserProfile.speciality_details.super_speciality[0].name
+              {doctorUserProfile && doctorUserProfile?.speciality_details?.super_speciality[0]?.name
+                ? doctorUserProfile?.speciality_details?.super_speciality[0]?.name
                 : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -51,7 +59,10 @@ const SpecialDetails = ({ doctorUserProfile }) => {
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
-            {broadSpecialityName ? broadSpecialityName : ''}
+            Super Speciality
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography
@@ -60,7 +71,7 @@ const SpecialDetails = ({ doctorUserProfile }) => {
               variant="subtitle2"
               color="inputTextColor.light"
             >
-              Your Sub Speciality
+              {broadSpecialityName ? broadSpecialityName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
