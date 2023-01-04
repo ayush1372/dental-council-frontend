@@ -140,8 +140,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
               label={'Registration Number'}
               required={true}
               fullWidth
-              disabled
-              readOnly
               defaultValue={getValues().RegistrationNumber}
               {...register('RegistrationNumber', {
                 required: 'Registration Number is Required',
@@ -151,6 +149,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                   backgroundColor: 'grey2.main',
                 },
               }}
+              InputProps={{ readOnly: true }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
