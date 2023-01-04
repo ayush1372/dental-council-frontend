@@ -738,16 +738,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               showhint={false}
               defaultValue={getValues().mobileNo}
               {...register('mobileNo')}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <Button variant="contained" sx={{ marginRight: '-13px', height: '57px' }}>
-                      GetOTP
-                    </Button>
-                  </InputAdornment>
-                ),
-              }}
-              showVerify
+              showVerify={true}
               verifyOnClick={handleClickOpen}
             />
           </Grid>
