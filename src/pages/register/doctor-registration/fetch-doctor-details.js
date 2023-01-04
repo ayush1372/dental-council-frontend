@@ -5,9 +5,13 @@ import { Alert, Container, Divider, IconButton, InputAdornment, Typography } fro
 import { Box } from '@mui/system';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 
 import { verboseLog } from '../../../config/debug';
+import { encryptData } from '../../../constants/common-data';
 import OtpForm from '../../../shared/otp-form/otp-component';
+import { sendAaadharOtp, validateOtpAadhaar } from '../../../store/actions/aadhaar-action';
+import { userAadharNumber } from '../../../store/reducers/common-reducers';
 import { Button, TextField } from '../../../ui/core';
 import AadhaarInputField from '../doctor-registration/aadhaar-input-field';
 import UniqueUserNameForDoctorRegistration from './unique-username';
@@ -22,10 +26,11 @@ function FetchDoctorDetails() {
   const [isOtpValidMobile, setisOtpValidMobile] = useState(false);
   const [isOtpValidAadhar, setisOtpValidAadhar] = useState(false);
   const [enableSubmit, setEnableSubmit] = useState(false);
+  const dispatch = useDispatch();
 
   const {
     register,
-
+    handleSubmit,
     getValues,
     formState: { errors },
   } = useForm({
@@ -67,7 +72,22 @@ function FetchDoctorDetails() {
       }
     }
   };
+
+  const onSubmit = (dataValue) => {
+    verboseLog('adhar datavalue', dataValue);
+    verboseLog(encryptData(dataValue.field_1 + dataValue.field_2 + dataValue.field_3));
+    dispatch(
+      userAadharNumber(
+        encryptData(dataValue.field_1 + dataValue.field_2 + dataValue.field_3, 'aadharNumber')
+      )
+    );
+    handleVerifyAadhar();
+  };
+
   const handleVerifyAadhar = () => {
+    if (localStorage.getItem('aadharNumber').length > 0) {
+      sendAaadharOtp();
+    }
     if (isOtpValidEmail === true && isOtpValidMobile === true) {
       setshowOtpAadhar(true);
       isOtpValidMobile(false);
@@ -76,10 +96,13 @@ function FetchDoctorDetails() {
   };
 
   const handleValidateAadhar = () => {
+    encryptData(otpValue, 'otp');
     if (otpValue.length === 6) {
       setisOtpValidAadhar(true);
+      validateOtpAadhaar();
       setshowOtpAadhar(false);
       handleClear();
+      localStorage.clear();
 
       if (isOtpValidAadhar === true && isOtpValidMobile === true) {
         setEnableSubmit(true);
@@ -353,7 +376,6 @@ function FetchDoctorDetails() {
               >
                 <Box>
                   <AadhaarInputField
-                    defaultValue={getValues().AadhaarNumber}
                     name="AadhaarNumber"
                     {...register('AadhaarNumber', {})}
                     register={register}
@@ -362,9 +384,9 @@ function FetchDoctorDetails() {
                     errors={errors}
                   />
                 </Box>
-                {/* <Box p="35px 32px 0px 32px">
+                <Box p="35px 32px 0px 32px">
                   {isOtpValidAadhar ? <CheckCircleIcon color="success" /> : ''}
-                </Box> */}
+                </Box>
 
                 {!showOtpAadhar && !isOtpValidAadhar && (
                   <Box mt={3}>
@@ -372,7 +394,7 @@ function FetchDoctorDetails() {
                       variant="contained"
                       color="secondary"
                       width="95px"
-                      onClick={handleVerifyAadhar}
+                      onClick={handleSubmit(onSubmit)}
                     >
                       Verify
                     </Button>
@@ -392,7 +414,7 @@ function FetchDoctorDetails() {
               >
                 <Box>
                   <Typography variant="body1">
-                    We just sent an OTP on your Mobile Number.
+                    We just sent an OTP on your mobile number which is registered with Aadhaar.
                   </Typography>
                   {otpform}
                 </Box>

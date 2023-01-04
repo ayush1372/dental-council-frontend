@@ -10,6 +10,7 @@ const initialState = {
   mobileNumber: undefined,
   loggedInUserType: '',
   userActiveTab: '',
+  getUserAadhaarNumber: '',
 };
 
 export const CommonActivity = createSlice({
@@ -37,10 +38,14 @@ export const CommonActivity = createSlice({
     changeUserActiveTab: (state, action) => {
       state.userActiveTab = action.payload;
     },
+    userAadharNumber: (state, action) => {
+      state.getUserAadhaarNumber = action.payload;
+    },
   },
 });
 
 export const {
+  userAadharNumber,
   login,
   logout,
   fontsizes,
