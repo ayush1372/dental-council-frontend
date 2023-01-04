@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import AddIcon from '@mui/icons-material/Add';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import RemoveIcon from '@mui/icons-material/Remove';
 import {
   Accordion,
@@ -87,7 +88,7 @@ const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack, showActions = 
                 disabled
                 sx={{ margin: '16px 20px 0px 0px' }}
               >
-                Action...
+                Action <MoreHorizIcon />
               </Button>
             )}
             <ButtonGroupWizard handleNext={handleNext} />
