@@ -101,7 +101,7 @@ const NmcEditProfile = () => {
 
         <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
-            Email Id
+            Email ID
           </Typography>
           <Typography component="span" color="error.main">
             *
@@ -111,12 +111,12 @@ const NmcEditProfile = () => {
             fullWidth
             required
             name={'EmailId'}
-            placeholder={'Enter Email Id'}
+            placeholder={'Enter Email ID'}
             value={email}
             defaultValue={getValues().EmailId}
             error={errors.EmailId?.message}
             {...register('EmailId', {
-              required: 'Email Id required',
+              required: 'Email ID required',
               onChange: (e) => handleEmailId(e),
 
               pattern: {
@@ -140,16 +140,16 @@ const NmcEditProfile = () => {
             fullWidth
             required
             name={'UserId'}
-            placeholder={'Enter UserId'}
+            placeholder={'Enter User ID'}
             value={userId}
             defaultValue={getValues().UserId}
             error={errors.UserId?.message}
             {...register('UserId', {
-              required: 'UserId is required',
+              required: 'User ID is required',
               onChange: (e) => handleUserid(e),
 
               pattern: {
-                message: 'Provide a Valid UserId',
+                message: 'Provide a Valid User ID',
               },
             })}
           />
