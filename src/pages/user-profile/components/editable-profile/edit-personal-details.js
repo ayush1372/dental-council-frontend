@@ -680,7 +680,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
         <Grid container item spacing={2}>
           <Grid item xs={12} md={6}>
             <Box display="flex" alignItems="end">
-              <Box width="100%">
+              <Box>
                 <TextField
                   sx={{ minWidth: '265px' }}
                   label="Email Address"
