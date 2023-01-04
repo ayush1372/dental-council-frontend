@@ -5,6 +5,7 @@ import { SessionTimer } from '../../constants/session-timer';
 const sessionTiming = 0.5;
 
 const initialState = {
+  apiLoading: false,
   isloggedIn: false,
   timer: 0,
   mobileNumber: undefined,

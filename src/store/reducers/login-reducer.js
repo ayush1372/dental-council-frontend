@@ -15,7 +15,7 @@ const login = createSlice({
   initialState,
   reducers: {
     getCaptchaEnabledFlag: (state, action) => {
-      state.captchaEnabledFlag.data = action.payload;
+      state.captchaEnabledFlag = action.payload;
     },
     generateCaptcha: (state, action) => {
       state.generateCaptcha = action.payload;

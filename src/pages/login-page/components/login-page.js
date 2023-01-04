@@ -55,6 +55,9 @@ export function LoginPage({ handleForgotPassword }) {
   };
 
   const onSubmit = (param) => {
+    //  dispatch(login());
+    //                 dispatch(userLoggedInType(loginFormname));
+    //                 navigate(`/profile`);
     try {
       dispatch(
         validateCaptchaImage({

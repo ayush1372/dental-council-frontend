@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { verboseLog } from '../../config/debug';
 import { generateCaptchaImage } from '../../store/actions/login-action';
-import { Loader } from '../../ui/core';
+import CircularLoader from '../circular-loader/circular-loader';
 
 const CaptchaComponent = ({ captchaResult }) => {
   const { generateCaptcha, captchaEnabledFlag } = useSelector((state) => state.login);
@@ -49,13 +49,18 @@ const CaptchaComponent = ({ captchaResult }) => {
     }
   };
 
+  // eslint-disable-next-line no-console
+  console.log('captchaEnabledFlag', captchaEnabledFlag?.isLoading);
+
   return (
     <Box>
-      {captchaEnabledFlag?.isLodding ? (
-        <Loader />
-      ) : (
-        <>
-          <Box border={1} borderColor={theme.palette.grey.dark} width={'40%'}>
+      <Box border={1} borderColor={theme.palette.grey.dark} width={'40%'}>
+        {captchaEnabledFlag?.isLoading ? (
+          <Box alignItems={'center'}>
+            <CircularLoader />
+          </Box>
+        ) : (
+          <>
             <Grid container>
               <Grid xs={9}>
                 <img
@@ -92,12 +97,12 @@ const CaptchaComponent = ({ captchaResult }) => {
                 />
               </Grid>
             </Grid>
-          </Box>
-          <Typography color="error.main">
-            {error && error.length > 0 && <span>{error}</span>}
-          </Typography>
-        </>
-      )}
+          </>
+        )}
+      </Box>
+      <Typography color="error.main">
+        {error && error.length > 0 && <span>{error}</span>}
+      </Typography>
     </Box>
   );
 };

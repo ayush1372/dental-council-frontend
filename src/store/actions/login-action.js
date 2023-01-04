@@ -15,10 +15,11 @@ export const getCaptchaEnabledFlagValue = () => async (dispatch) => {
       url: API.login.getCaptchaEnabledFlag,
     })
       .then((response) => {
-        dispatch(getCaptchaEnabledFlag(response.data));
+        dispatch(getCaptchaEnabledFlag({ data: response.data, isError: false, isLoading: false }));
         return resolve(response);
       })
       .catch((error) => {
+        dispatch(getCaptchaEnabledFlag({ data: [], isError: true, isLoading: false }));
         return reject(error);
       });
   });
