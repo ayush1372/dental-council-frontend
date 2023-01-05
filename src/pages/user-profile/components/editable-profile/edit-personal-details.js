@@ -57,7 +57,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       Country: loggedInUserType === 'SMC' ? '' : 356,
       PostalCode: loggedInUserType === 'SMC' ? '' : '120018',
       IMRID: loggedInUserType === 'SMC' ? '' : '9598237230192838',
-      YearOfInfo: '',
+      YearOfInfo: '2000',
       RegistrationNumber: loggedInUserType === 'SMC' ? '' : '672929',
       mobileNo: loggedInUserType === 'SMC' ? '' : '9988334355',
       EmailAddress: loggedInUserType === 'SMC' ? '' : 'aarushi.sharma309@gmail.com',
@@ -770,6 +770,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               {...register('IMRID', {
                 required: 'IMR ID is Required',
               })}
+              sx={{
+                input: {
+                  backgroundColor: 'grey2.main',
+                },
+              }}
+              InputProps={{ readOnly: true }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -786,6 +792,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 required: 'Year Of Info is required',
               })}
               options={get_year_data(1930)}
+              sx={{
+                '.MuiSelect-select': {
+                  backgroundColor: 'grey2.main',
+                },
+              }}
+              InputProps={{ readOnly: true }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -800,6 +812,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               {...register('RegistrationNumber', {
                 required: 'Registration Number is Required',
               })}
+              sx={{
+                input: {
+                  backgroundColor: 'grey2.main',
+                },
+              }}
+              InputProps={{ readOnly: true }}
             />
           </Grid>
         </Grid>
