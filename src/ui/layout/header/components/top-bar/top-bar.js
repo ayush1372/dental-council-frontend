@@ -1,13 +1,13 @@
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
-import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
 import { Box, Container, Grid, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import { useTheme } from '@mui/material/styles';
+import CN from 'clsx';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import { FontSize } from '../../../../../helpers/components/fontsize-toggle';
 import { MultilingualDropdown } from '../../../../../helpers/components/multilingual-dropdown';
@@ -17,13 +17,14 @@ import { Button } from '../../../../core/button/button';
 import styles from './top-bar.module.scss';
 
 export const TopBar = () => {
+  const navigate = useNavigate();
   const { t } = useTranslation();
-  const { palette } = useTheme(); //getting this from material-ui
+  const { palette } = useTheme();
   return (
-    <Box className={styles.topBarWrapper} bgcolor="backgroundColor.main" color="primary">
+    <Box className={styles.topBarWrapper} backgroundColor="backgroundColor.main">
       <Container>
-        <Grid container justifyContent="space-between" alignItems="end">
-          <Grid alignSelf="center" item xs={12} md={6}>
+        <Grid container justifyContent="space-between" alignItems="start">
+          <Grid alignSelf="center" item xs={12} sm={5}>
             <Box display="flex" alignItems="center">
               <LocalPhoneOutlinedIcon sx={{ width: '16px', height: '16px' }} color="primary" />
               <Typography variant="body4" m="0 0 0 5px" color="primary">
@@ -31,42 +32,53 @@ export const TopBar = () => {
               </Typography>
             </Box>
           </Grid>
-          <Grid item xs={12} md={6} alignSelf="end" textAlign="end">
+          <Grid
+            item
+            xs={12}
+            sm={7}
+            display="flex"
+            justifyContent={{ xs: 'flex-start', sm: 'flex-end' }}
+            alignItems="center"
+            textAlign={{ xs: 'start', sm: 'end' }}
+          >
             <Button
-              startIcon={<VisibilityOffOutlinedIcon sx={{ marginRight: '4px' }} />}
+              onClick={() => navigate('/screen-reader')}
+              startIcon={
+                <VisibilityOffOutlinedIcon sx={{ marginRight: { xs: '2px', sm: '4px' } }} />
+              }
               className={styles.topBarIcon}
             >
               Screen Reader
             </Button>
-            <Button className={styles.topBarIcon}>
-              <FontSize size="small" />
-            </Button>
-            <Button className={styles.topBarIcon}>
-              <FontSize size="medium" />
-            </Button>
-            <Button className={styles.topBarIcon}>
-              <FontSize size="large" />
-            </Button>
+            <Box mr={{ xs: '12px', md: 2 }} className={styles.fontBlock}>
+              <Button className={styles.fontText}>
+                <FontSize size="small" />
+              </Button>
+              <Button className={styles.fontText}>
+                <FontSize size="medium" />
+              </Button>
+              <Button className={styles.fontText}>
+                <FontSize size="large" />
+              </Button>
+            </Box>
+
             <ColorModeContext.Consumer>
               {({ toggleColorMode }) => (
-                <IconButton sx={{ ml: 1 }} onClick={toggleColorMode} color="inherit" disableRipple>
-                  {palette.mode === 'light' ? <Brightness4Icon /> : <Brightness7Icon />}
+                <IconButton
+                  onClick={toggleColorMode}
+                  disableRipple
+                  className={CN(styles.topBarIcon, styles.themeToggleBtn)}
+                >
+                  {palette.mode === 'light' ? (
+                    <Brightness4Icon fontSize="small" color="primary" />
+                  ) : (
+                    <Brightness7Icon fontSize="small" color="secondary" />
+                  )}
                 </IconButton>
               )}
             </ColorModeContext.Consumer>
-            <Button
-              startIcon={<NotificationsOutlinedIcon sx={{ marginRight: '4px' }} />}
-              className={styles.topBarIcon}
-            >
-              Notification
-            </Button>
-            <Button
-              startIcon={<HelpOutlineOutlinedIcon sx={{ marginRight: '4px' }} />}
-              className={styles.topBarIcon}
-            >
-              Help
-            </Button>
-            <Button className={styles.topBarIcon}>
+
+            <Button sx={{ ml: { xs: '2px' } }} className={styles.multilingualDropdown}>
               <MultilingualDropdown />
             </Button>
           </Grid>
