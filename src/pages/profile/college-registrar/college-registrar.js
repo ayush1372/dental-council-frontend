@@ -1,14 +1,21 @@
+/* eslint-disable no-console */
 import { Box, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
+// import { useNavigate } from 'react-router-dom';
+import { verboseLog } from '../../../config/debug';
+import { sendRegistrarDetails } from '../../../store/actions/college-actions/registrar-actions';
+import { detailsOfRegistrar } from '../../../store/reducers/college-reducer/registrar-reducer';
 import { Button, TextField } from '../../../ui/core';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 export function CollegeRegistrar() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const details = useSelector((state) => state?.collegeData?.registrarDetails);
   const {
     register,
     handleSubmit,
@@ -24,9 +31,15 @@ export function CollegeRegistrar() {
       registrarPassword: '',
     },
   });
-  const onSubmit = () => {
-    navigate(`/NMR/NMR-generate`);
+
+  const onSubmit = (dataValue) => {
+    dispatch(detailsOfRegistrar(dataValue));
+
+    console.log('clicked');
+    // navigate(`/NMR/NMR-generate`);
+    sendRegistrarDetails(dataValue);
   };
+  verboseLog('details==>', details);
   return (
     <Grid container item spacing={2} p={2}>
       <Grid item xs={12}>
@@ -172,7 +185,7 @@ export function CollegeRegistrar() {
         </Grid>
 
         <Grid item xs={12} sm="auto">
-          <Button fullWidth variant="contained" color="grey" onClick={handleSubmit(onSubmit)}>
+          <Button fullWidth variant="contained" color="grey">
             {t('Cancel')}
           </Button>
         </Grid>
