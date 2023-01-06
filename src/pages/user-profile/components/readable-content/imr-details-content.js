@@ -44,7 +44,7 @@ const IMRDetails = () => {
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
-            Year of info
+            Year of Info
             <Typography component="span" color="error.main">
               *
             </Typography>
