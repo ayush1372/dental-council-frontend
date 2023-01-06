@@ -55,64 +55,57 @@ export function LoginPage({ handleForgotPassword }) {
   };
 
   const onSubmit = (param) => {
-    //  dispatch(login());
-    //                 dispatch(userLoggedInType(loginFormname));
-    //                 navigate(`/profile`);
-    try {
-      dispatch(
-        validateCaptchaImage({
-          transaction_id: generateCaptcha?.transaction_id,
-          result: parseInt(captchaAnswer),
-        })
-      )
-        .then((response) => {
-          if (response?.data?.validity) {
-            const requestObj = {
-              username: param?.nmrID,
-              password: encryption(param?.password),
-              user_type:
-                loginFormname === 'Doctor'
-                  ? 1
-                  : loginFormname === 'College'
-                  ? 2
-                  : loginFormname === 'SMC'
-                  ? 3
-                  : 4,
-              captcha_trans_id: generateCaptcha?.transaction_id,
-            };
-            dispatch(loginAction(requestObj))
-              .then((response) => {
-                verboseLog('response', response);
-                let req = { mobile: param.nmrID };
-                if (req) {
-                  verboseLog('usersListData', req);
-                  dispatch(login());
-                  dispatch(userLoggedInType(loginFormname));
-                  navigate(`/profile`);
-                  window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth',
-                  });
-                }
-              })
-              .catch((error) => {
-                successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-              });
-          } else {
-            successToast(
-              'ERROR: Invalid captcha, please try with new captcha',
-              'auth-error',
-              'error',
-              'top-center'
-            );
-          }
-        })
-        .catch((error) => {
-          successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-        });
-    } catch (err) {
-      verboseLog('usersListData', err);
-    }
+    dispatch(
+      validateCaptchaImage({
+        transaction_id: generateCaptcha?.transaction_id,
+        result: parseInt(captchaAnswer),
+      })
+    )
+      .then((response) => {
+        if (response?.data?.validity) {
+          const requestObj = {
+            username: param?.nmrID,
+            password: encryption(param?.password),
+            user_type:
+              loginFormname === 'Doctor'
+                ? 1
+                : loginFormname === 'College'
+                ? 2
+                : loginFormname === 'SMC'
+                ? 3
+                : 4,
+            captcha_trans_id: generateCaptcha?.transaction_id,
+          };
+          dispatch(loginAction(requestObj))
+            .then((response) => {
+              verboseLog('response', response);
+              let req = { mobile: param.nmrID };
+              if (req) {
+                verboseLog('usersListData', req);
+                dispatch(login());
+                dispatch(userLoggedInType(loginFormname));
+                navigate(`/profile`);
+                window.scrollTo({
+                  top: 0,
+                  behavior: 'smooth',
+                });
+              }
+            })
+            .catch((error) => {
+              successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+            });
+        } else {
+          successToast(
+            'ERROR: Invalid captcha, please try with new captcha',
+            'auth-error',
+            'error',
+            'top-center'
+          );
+        }
+      })
+      .catch((error) => {
+        successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+      });
   };
 
   useEffect(() => {
