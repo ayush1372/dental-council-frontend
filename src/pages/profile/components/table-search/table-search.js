@@ -41,10 +41,11 @@ export function TableSearch({ trackApplication }) {
             variant="outlined"
             type="text"
             name="search"
-            required="false"
+            required={false}
             placeholder={'You can search anything here'}
             defaultValue={getValues().search}
             error={errors.search?.message}
+            label="Search by Application Type"
             {...register('search')}
             InputProps={{
               endAdornment: (
@@ -101,11 +102,12 @@ export function TableSearch({ trackApplication }) {
                   variant="outlined"
                   type="text"
                   name="filterByName"
-                  required="false"
+                  required={false}
                   placeholder={'Filter by Name'}
                   defaultValue={getValues().filterByName}
                   error={errors.filterByName?.message}
                   {...register('filterByName')}
+                  label="Filter By Name"
                 />
               </Grid>
             )}
@@ -119,11 +121,12 @@ export function TableSearch({ trackApplication }) {
                   variant="outlined"
                   type="text"
                   name="filterByRegNo"
-                  required="false"
+                  required={false}
                   placeholder={'Filter by Registration No.'}
                   defaultValue={getValues().filterByRegNo}
                   error={errors.filterByRegNo?.message}
                   {...register('filterByRegNo')}
+                  label="Filter by Reg No"
                 />
               </Grid>
             )}

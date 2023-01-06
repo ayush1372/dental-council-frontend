@@ -144,6 +144,12 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
               {...register('RegistrationNumber', {
                 required: 'Registration Number is Required',
               })}
+              sx={{
+                input: {
+                  backgroundColor: 'grey2.main',
+                },
+              }}
+              InputProps={{ readOnly: true }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -347,7 +353,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                     })}
                     options={[
                       {
-                        label: 'Care Dental Collegey',
+                        label: 'Care Dental College',
                         value: 'care Dental College',
                       },
                     ]}
@@ -454,21 +460,23 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
           );
         })}
       </Grid>
-      <Box width="100%">
-        <Button
-          variant="outlined"
-          color="primary"
-          onClick={handleAddQualification}
-          disabled={qualificationArray.length >= 6}
-        >
-          Add Additional Qualification
-        </Button>
-        <br />
-        <Typography variant="body4" color="messageBlue.main" display="flex" alignItems="center">
-          <InfoOutlinedIcon fontSize="18px" />
-          Add upto 6 qualification
-        </Typography>
-      </Box>
+      {false && (
+        <Box width="100%">
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={handleAddQualification}
+            disabled={qualificationArray.length >= 6}
+          >
+            Add Additional Qualification
+          </Button>
+          <br />
+          <Typography variant="body4" color="messageBlue.main" display="flex" alignItems="center">
+            <InfoOutlinedIcon fontSize="18px" />
+            Add upto 6 qualification
+          </Typography>
+        </Box>
+      )}
       <Box width="100%">
         <ButtonGroupWizard
           handleNext={handleSubmit(onHandleOptionNext)}
