@@ -101,7 +101,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
     >
       <Grid container spacing={2} mt={2}>
         {/* layer 1 */}
-        <Grid container item spacing={2}>
+        <Grid container item spacing={2} mt={1}>
           <Grid item xs={12}>
             <Typography
               bgcolor="grey1.light"
@@ -114,10 +114,16 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
             </Typography>
           </Grid>
           <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="inputTextColor.main">
+              Registered With Council
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+            </Typography>
+
             <TextField
               variant="outlined"
               name={'RegisteredWithCouncil'}
-              label={'Registered with council'}
               required={true}
               fullWidth
               defaultValue={getValues().RegisteredWithCouncil}
@@ -134,10 +140,17 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
             />
           </Grid>
           <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="inputTextColor.main">
+              Registration Number
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+            </Typography>
             <TextField
               variant="outlined"
               name={'RegistrationNumber'}
-              label={'Registration Number'}
+              Registration
+              Number
               required={true}
               fullWidth
               defaultValue={getValues().RegistrationNumber}
@@ -153,10 +166,16 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
             />
           </Grid>
           <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="inputTextColor.main">
+              Registration Date(if available)
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+            </Typography>
+
             <TextField
               variant="outlined"
               name={'RegistrationDate'}
-              label={'Registration Date(if available)'}
               required={true}
               fullWidth
               defaultValue={getValues().RegistrationDate}
@@ -172,8 +191,14 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
             />
           </Grid>
         </Grid>
-        <Grid container item spacing={2}>
+        <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="inputTextColor.main">
+              Is registration permanent for renewable?
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+            </Typography>
             <RadioGroup
               onChange={handleRegistration}
               name={'registration'}
@@ -189,16 +214,21 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                   label: 'Renewable',
                 },
               ]}
-              label="Is this registration permanent for renewable?"
               required={true}
               error={errors.registration?.message}
             />
           </Grid>
           <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="inputTextColor.main">
+              Due Date of Renewal
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+            </Typography>
+
             <TextField
               variant="outlined"
               name={'RenewalDate'}
-              label={'Due Date of Renewal'}
               required={true}
               fullWidth
               defaultValue={getValues().RenewalDate}
@@ -214,8 +244,15 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
             />
           </Grid>
         </Grid>
-        <Grid container item spacing={2}>
+        <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="inputTextColor.main">
+              Is your name in registration certificate, different from your name in Aadhaar?
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+            </Typography>
+
             <RadioGroup
               onChange={handleRegistration}
               name={'registrationCertificate'}
@@ -231,36 +268,33 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                   label: 'No',
                 },
               ]}
-              label="Is your name in registration certificate, different from your name in Aadhaar?"
               required={true}
               error={errors.registrationCertificate?.message}
             />
           </Grid>
         </Grid>
-        <Grid container item spacing={2}>
+        <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={6}>
+            <Typography variant="subtitle2" color="inputTextColor.main" mb={1}>
+              Upload the registration certificate
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+            </Typography>
+
             <UploadFile
               uploadFiles="single"
               sizeAllowed={1}
               fileTypes={['image/jpg', 'image/jpeg', 'image/png']}
               fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
                Maximum size allowed for the attachment is 5MB.`}
-              label={
-                <>
-                  <Typography color="text.primary">
-                    {t('upload_the_registration_certificate')}
-                  </Typography>
-
-                  <Typography color="error"> *</Typography>
-                </>
-              }
               fileData={registrationFileData}
               setFileData={setRegistrationFileData}
             />
           </Grid>
         </Grid>
         {/*layer 2*/}
-        <Grid container item spacing={2}>
+        <Grid container item spacing={2} mt={1}>
           <Grid item xs={12}>
             <Typography
               bgcolor="grey1.light"
@@ -289,17 +323,23 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                   />
                 </Grid>
               )}
-              <Grid container item spacing={2}>
+              <Grid container item spacing={2} mt={1}>
                 <Grid item xs={12} md={4}>
+                  <Typography variant="subtitle2" color="inputTextColor.main">
+                    Name of the Degree or Diploma Obtained
+                    <Typography component="span" color="error.main">
+                      *
+                    </Typography>
+                  </Typography>
+
                   <Select
                     fullWidth
                     error={errors[qualification[0]]?.message}
                     name="Qualification"
-                    label="Name of the degree or diploma obtained"
                     defaultValue={getValues()[qualification[0]]}
                     required={true}
                     {...register(qualification[0], {
-                      required: 'degree or diploma is required',
+                      required: 'Degree or Diploma is required',
                     })}
                     options={[
                       {
@@ -310,46 +350,66 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                   />
                 </Grid>
                 <Grid item xs={12} md={4}>
+                  <Typography variant="subtitle2" color="inputTextColor.main">
+                    Country Name
+                    <Typography component="span" color="error.main">
+                      *
+                    </Typography>
+                  </Typography>
+
                   <TextField
                     variant="outlined"
                     name={'country'}
-                    label={'Country name'}
+                    label={''}
                     required={true}
                     fullWidth
                     error={errors[qualification[1]]?.message}
                     defaultValue={getValues()[qualification[1]]}
                     {...register(qualification[1], {
-                      required: 'country is Required',
+                      required: 'Country is required',
                     })}
                   />
                 </Grid>
                 <Grid item xs={12} md={4}>
+                  <Typography variant="subtitle2" color="inputTextColor.main">
+                    State (in which college is located)
+                    <Typography component="span" color="error.main">
+                      *
+                    </Typography>
+                  </Typography>
+
                   <TextField
                     variant="outlined"
                     name={'state'}
                     // placeholder="Your state"
-                    label={'State (in which college is located)'}
+                    label={''}
                     fullWidth
                     required={true}
                     defaultValue={getValues()[qualification[2]]}
                     {...register(qualification[2], {
-                      required: 'State is Required',
+                      required: 'State is required',
                     })}
                     error={errors[qualification[2]]?.message}
                   />
                 </Grid>
               </Grid>
-              <Grid container item spacing={2}>
+              <Grid container item spacing={2} mt={1}>
                 <Grid item xs={12} md={4}>
+                  <Typography variant="subtitle2" color="inputTextColor.main">
+                    Name of the college
+                    <Typography component="span" color="error.main">
+                      *
+                    </Typography>
+                  </Typography>
+
                   <Select
                     fullWidth
                     error={errors[qualification[3]]?.message}
                     name="College"
-                    label="Name of the college"
                     defaultValue={getValues()[qualification[3]]}
                     required={true}
                     {...register(qualification[3], {
-                      required: 'college is required',
+                      required: 'College is required',
                     })}
                     options={[
                       {
@@ -360,11 +420,17 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                   />
                 </Grid>
                 <Grid item xs={12} md={4}>
+                  <Typography variant="subtitle2" color="inputTextColor.main">
+                    University
+                    <Typography component="span" color="error.main">
+                      *
+                    </Typography>
+                  </Typography>
+
                   <Select
                     fullWidth
                     error={errors[qualification[4]]?.message}
                     name="University"
-                    label="University"
                     defaultValue={getValues()[qualification[4]]}
                     required={true}
                     {...register(qualification[4], {
@@ -386,7 +452,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                     label="Month of awarding Degree/Diploma"
                     defaultValue={getValues()[qualification[5]]}
                     {...register(qualification[5], {
-                      required: 'awarding is required',
+                      required: 'Awarding is required',
                     })}
                     options={[
                       {
@@ -397,44 +463,57 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                   />
                 </Grid>
               </Grid>
-              <Grid container item spacing={2}>
+              <Grid container item spacing={2} mt={1}>
                 <Grid item xs={12} md={4}>
+                  <Typography variant="subtitle2" color="inputTextColor.main">
+                    Year of Awarding Degree/Diploma
+                    <Typography component="span" color="error.main">
+                      *
+                    </Typography>
+                  </Typography>
+
                   <TextField
                     variant="outlined"
                     name={'Year'}
-                    label={'Year of awarding Degree/Diploma'}
                     required={true}
                     placeHolder={'Year of awarding'}
                     fullWidth
                     error={errors[qualification[6]]?.message}
                     defaultValue={getValues()[qualification[6]]}
                     {...register(qualification[6], {
-                      required: 'awarding is Required',
+                      required: 'Awarding is required',
                     })}
                   />
                 </Grid>
               </Grid>
               <Grid container item spacing={2}>
                 <Grid item xs={12} md={6}>
+                  <Typography variant="subtitle2" color="inputTextColor.main" mb={1}>
+                    Upload the Degree
+                    <Typography component="span" color="error.main">
+                      *
+                    </Typography>
+                  </Typography>
+
                   <UploadFile
                     uploadFiles="single"
                     sizeAllowed={1}
                     fileTypes={['image/jpg', 'image/jpeg', 'image/png']}
                     fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
                  Maximum size allowed for the attachment is 5MB.`}
-                    label={
-                      <>
-                        <Typography color="text.primary">{t('Upload the Degree')}</Typography>
-                        <Typography color="error"> *</Typography>
-                      </>
-                    }
                     fileData={qualificationFilesData[qualification[8]] || []}
                     setFileData={(files) => {
                       handleQualificationFilesData(qualification[8], files);
                     }}
                   />
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={6} mt={1}>
+                  <Typography variant="subtitle2" color="inputTextColor.main" mb={1}>
+                    Is your name in degree, different from your name in Aadhaar?
+                    <Typography component="span" color="error.main">
+                      *
+                    </Typography>
+                  </Typography>
                   <RadioGroup
                     onChange={handleRegistration}
                     name={qualification[7]}
@@ -450,7 +529,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                         label: 'No',
                       },
                     ]}
-                    label="Is your name in degree, different from your name in Aadhaar?"
                     required={true}
                     error={errors[qualification[7]]?.message}
                   />

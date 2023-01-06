@@ -17,17 +17,7 @@ const CurrentWorkDetails = () => {
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="primary.main">
-            Facility
-          </Typography>
-          {/*<Typography component={'span'} variant="subtitle2" color="primary.main">
-            Organization
-  </Typography>*/}
-        </Grid>
-      </Grid>
-      <Grid container item spacing={2}>
-        <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="inputTextColor.main">
             State
             <Typography component="span" color="error.main">
               *
@@ -53,7 +43,7 @@ const CurrentWorkDetails = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="inputTextColor.main">
             District
             <Typography component="span" color="error.main">
               *
@@ -79,8 +69,8 @@ const CurrentWorkDetails = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
-            Name Of The Organization Where You Work
+          <Typography variant="subtitle2" color="inputTextColor.main">
+            Name of the organization where you work
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography
@@ -89,7 +79,7 @@ const CurrentWorkDetails = () => {
               variant="subtitle2"
               color="inputTextColor.light"
             >
-              Name Of The Organization
+              Name of the organization
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -102,9 +92,9 @@ const CurrentWorkDetails = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
       </Grid>
-      <Grid container item spacing={2}>
+      <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="inputTextColor.main">
             Organization Type
           </Typography>
           <Grid display="flex" alignItems="center">
@@ -127,7 +117,7 @@ const CurrentWorkDetails = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="inputTextColor.main">
             Address
             <Typography component="span" color="error.main">
               *
@@ -153,8 +143,8 @@ const CurrentWorkDetails = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
-            Pincode
+          <Typography variant="subtitle2" color="inputTextColor.main">
+            Pin Code
             <Typography component="span" color="error.main">
               *
             </Typography>
@@ -166,7 +156,7 @@ const CurrentWorkDetails = () => {
               variant="subtitle2"
               color="inputTextColor.light"
             >
-              Pincode
+              Pin Code
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -179,9 +169,9 @@ const CurrentWorkDetails = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
       </Grid>
-      <Grid container item spacing={2}>
+      <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="inputTextColor.main">
             Telecommunication URL
           </Typography>
           <Grid display="flex" alignItems="center">
