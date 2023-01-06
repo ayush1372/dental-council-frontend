@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { Button, TextField } from '../../../ui/core';
-import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 export function CollegeDean() {
   const { t } = useTranslation();
@@ -54,7 +53,7 @@ export function CollegeDean() {
           defaultValue={getValues().deanName}
           error={errors.deanName?.message}
           {...register('deanName', {
-            required: 'Provide Dean Name',
+            required: 'Enter valid college registrar name',
           })}
         />
       </Grid>
@@ -78,10 +77,10 @@ export function CollegeDean() {
           defaultValue={getValues().deanPhoneNumber}
           error={errors.deanPhoneNumber?.message}
           {...register('deanPhoneNumber', {
-            required: 'Provide Phone Number',
+            required: 'Enter valid phone number',
             pattern: {
               value: /^(\d{13})$/i,
-              message: 'Provide Phone Number',
+              message: 'Enter valid phone number',
             },
           })}
         />
@@ -106,11 +105,11 @@ export function CollegeDean() {
           defaultValue={getValues().deanEmail}
           error={errors.deanEmail?.message}
           {...register('deanEmail', {
-            required: 'Provide Email ID',
+            required: 'Enter valid Email address',
             pattern: {
               value:
                 /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-              message: 'Provide Email ID',
+              message: 'Enter valid Email address',
             },
           })}
         />
@@ -135,7 +134,7 @@ export function CollegeDean() {
           defaultValue={getValues().deanUserId}
           error={errors.deanUserId?.message}
           {...register('deanUserId', {
-            required: 'Provide Dean User ID',
+            required: 'Enter valid username',
           })}
         />
       </Grid>
@@ -157,8 +156,9 @@ export function CollegeDean() {
           margin="dense"
           defaultValue={getValues().deanPassword}
           error={errors.deanPassword?.message}
-          {...register('deanPassword', PasswordRegexValidation, {
-            required: 'Provide Dean Password',
+          {...register('deanPassword', {
+            required:
+              'Create valid password including an uppercase, a lowercase, a number and a special character',
           })}
         />
       </Grid>

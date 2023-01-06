@@ -213,7 +213,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               fullWidth
               defaultValue={getValues().FirstName}
               {...register('FirstName', {
-                required: 'First Name is Required',
+                required: 'Missing field',
                 maxLength: {
                   value: 100,
                   message: 'Length should be less than 100.',
@@ -256,11 +256,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               name={'LastName'}
               placeholder="Your last name"
               label={'Last Name'}
-              required={false}
+              required={true}
               fullWidth
               defaultValue={getValues().LastName}
               {...register('LastName', {
-                required: 'Last Name is Required',
+                required: 'Missing field',
                 maxLength: {
                   value: 100,
                   message: 'Length should be less than 100.',
@@ -279,7 +279,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               fullWidth
               defaultValue={getValues().FatherName}
               {...register('FatherName', {
-                required: 'Father Name is Required',
+                required: 'Missing field',
                 maxLength: {
                   value: 100,
                   message: 'Length should be less than 100.',
@@ -297,7 +297,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               fullWidth
               defaultValue={getValues().MotherName}
               {...register('MotherName', {
-                required: 'Mother Name is Required',
+                required: 'Missing field',
                 maxLength: {
                   value: 100,
                   message: 'Length should be less than 100.',
@@ -315,7 +315,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               fullWidth
               defaultValue={getValues().SpouseName}
               {...register('SpouseName', {
-                required: 'Spouse Name is Required',
+                required: 'Missing field',
                 maxLength: {
                   value: 100,
                   message: 'Length should be less than 100.',
@@ -370,7 +370,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               error={languages.length === 0 && errors.LanguageSpoken?.message}
               multiple={true}
               {...register('LanguageSpoken', {
-                required: 'Languages Are Required',
+                required: 'Missing field',
               })}
               onChange={(value) => {
                 handleLanguageSpokenChange('LanguageSpoken', value);

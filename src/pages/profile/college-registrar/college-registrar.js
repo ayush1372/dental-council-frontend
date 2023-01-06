@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { Button, TextField } from '../../../ui/core';
-import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 export function CollegeRegistrar() {
   const { t } = useTranslation();
@@ -56,7 +55,7 @@ export function CollegeRegistrar() {
           defaultValue={getValues().registrarName}
           error={errors.registrarName?.message}
           {...register('registrarName', {
-            required: 'Provide Registrar Name',
+            required: 'Enter valid college registrar name',
           })}
         />
       </Grid>
@@ -80,10 +79,10 @@ export function CollegeRegistrar() {
           defaultValue={getValues().registrarPhoneNumber}
           error={errors.registrarPhoneNumber?.message}
           {...register('registrarPhoneNumber', {
-            required: 'Provide Phone Number',
+            required: 'Enter valid phone number',
             pattern: {
               value: /^(\d{13})$/i,
-              message: 'Provide Phone Number',
+              message: 'Enter valid phone number',
             },
           })}
         />
@@ -108,11 +107,11 @@ export function CollegeRegistrar() {
           defaultValue={getValues().registrarEmail}
           error={errors.registrarEmail?.message}
           {...register('registrarEmail', {
-            required: 'Provide Email ID',
+            required: 'Enter valid Email address',
             pattern: {
               value:
                 /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-              message: 'Provide Email ID',
+              message: 'Enter valid Email address',
             },
           })}
         />
@@ -137,7 +136,7 @@ export function CollegeRegistrar() {
           defaultValue={getValues().registrarUserId}
           error={errors.registrarUserId?.message}
           {...register('registrarUserId', {
-            required: 'Provide Registrar User ID',
+            required: 'Enter valid username',
           })}
         />
       </Grid>
@@ -159,8 +158,9 @@ export function CollegeRegistrar() {
           margin="dense"
           defaultValue={getValues().registrarPassword}
           error={errors.registrarPassword?.message}
-          {...register('registrarPassword', PasswordRegexValidation, {
-            required: 'Provide registrar Password',
+          {...register('registrarPassword', {
+            required:
+              'Create valid password including an uppercase,  a lowercase, a number and a special character',
           })}
         />
       </Grid>
