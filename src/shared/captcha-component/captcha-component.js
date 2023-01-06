@@ -12,7 +12,7 @@ import successToast from '../../ui/core/toaster';
 import CircularLoader from '../circular-loader/circular-loader';
 
 const CaptchaComponent = ({ captchaResult }) => {
-  const { generateCaptcha, captchaEnabledFlag } = useSelector((state) => state.login);
+  const { generateCaptcha, captchaEnabledFlag } = useSelector((state) => state.loginReducer);
   const [anwser, setAnwser] = useState();
   const [error, setError] = useState();
   const dispatch = useDispatch();
@@ -40,7 +40,7 @@ const CaptchaComponent = ({ captchaResult }) => {
     e.preventDefault();
     const userResponse = anwser;
     if (!userResponse) {
-      setError('Invalid code!!');
+      setError('Enter captcha answer');
       return;
     } else {
       setError(null);
@@ -87,7 +87,7 @@ const CaptchaComponent = ({ captchaResult }) => {
                   <TextField
                     // className={`${!error ? 'text-captcha' : 'text-captcha-danger'}`}
                     name="anwser"
-                    placeholder="Code"
+                    placeholder="Enter answer"
                     value={anwser}
                     onBlur={onFocusChange}
                     onChange={handleChange}

@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
-import { verboseLog } from '../../../config/debug';
 import { encryption } from '../../../helpers/functions/common-functions';
 import CaptchaComponent from '../../../shared/captcha-component/captcha-component';
 import {
@@ -23,7 +22,7 @@ import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 export function LoginPage({ handleForgotPassword }) {
   const [captchaAnswer, setcaptachaAnswer] = useState();
-  const { generateCaptcha } = useSelector((state) => state.login);
+  const { generateCaptcha } = useSelector((state) => state.loginReducer);
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -77,11 +76,9 @@ export function LoginPage({ handleForgotPassword }) {
             captcha_trans_id: generateCaptcha?.transaction_id,
           };
           dispatch(loginAction(requestObj))
-            .then((response) => {
-              verboseLog('response', response);
+            .then(() => {
               let req = { mobile: param.nmrID };
               if (req) {
-                verboseLog('usersListData', req);
                 dispatch(login());
                 dispatch(userLoggedInType(loginFormname));
                 navigate(`/profile`);

@@ -13,7 +13,7 @@ const store = configureStore({
     common: commonActivity,
     appFontSize: appFontSizeActivity,
     getCaptchaData: captchaReducer,
-    login: loginReducer,
+    loginReducer: loginReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(thunk).concat(logger),
   devTools: true,

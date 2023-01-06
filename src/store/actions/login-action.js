@@ -66,7 +66,7 @@ export const loginAction = (body) => async (dispatch) => {
       data: body,
     })
       .then((response) => {
-        dispatch(loginUser(response.data));
+        dispatch(loginUser(response));
         return resolve(response);
       })
       .catch((error) => {

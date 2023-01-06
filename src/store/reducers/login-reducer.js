@@ -7,10 +7,14 @@ const initialState = {
     image: '',
   },
   validateCaptchaFlag: {},
-  login: {},
+  loginData: {
+    data: {},
+    accessToken: '',
+    refreshToken: '',
+  },
 };
 
-const login = createSlice({
+const loginReducer = createSlice({
   name: 'login',
   initialState,
   reducers: {
@@ -24,11 +28,14 @@ const login = createSlice({
       state.validateCaptchaFlag = action.payload;
     },
     loginUser: (state, action) => {
-      state.login = action.payload;
+      state.loginData.data = action.payload;
+      state.loginData.accessToken = action.payload.responseHeader['access-token'];
+      state.loginData.refreshToken = action.payload.responseHeader['refresh-token'];
     },
   },
 });
 
-export const { getCaptchaEnabledFlag, generateCaptcha, validateCaptcha, loginUser } = login.actions;
+export const { getCaptchaEnabledFlag, generateCaptcha, validateCaptcha, loginUser } =
+  loginReducer.actions;
 
-export default login.reducer;
+export default loginReducer.reducer;
