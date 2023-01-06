@@ -19,7 +19,7 @@ const RegistrationDetailsContent = () => {
       <Grid container item spacing={2}>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
-            Registered with council
+            Registered with Council
             <Typography component="span" color="error.main">
               *
             </Typography>

@@ -99,7 +99,7 @@ const QualificationDetailsContent = () => {
       <Grid container item spacing={2}>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor">
-            Name of the college
+            Name of the College
             <Typography component="span" color="error.main">
               *
             </Typography>
