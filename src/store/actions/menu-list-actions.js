@@ -4,7 +4,6 @@ import { useAxiosCall } from '../../hooks/use-axios';
 import {
   getCountries,
   getDistricts,
-  getDoctorUserProfile,
   getStates,
   getSubDistricts,
 } from '../reducers/menu-lists-reducer';
@@ -65,21 +64,6 @@ export const getDistrictList = (stateId) => async (dispatch) => {
     })
       .then((response) => {
         dispatch(getDistricts(response.data));
-        return resolve(response);
-      })
-      .catch((error) => {
-        return reject(error);
-      });
-  });
-};
-export const getDoctorUserProfileList = () => async (dispatch) => {
-  return await new Promise((resolve, reject) => {
-    useAxiosCall({
-      method: GET,
-      url: API.menuLists.DoctorUserProfile,
-    })
-      .then((response) => {
-        dispatch(getDoctorUserProfile(response.data));
         return resolve(response);
       })
       .catch((error) => {

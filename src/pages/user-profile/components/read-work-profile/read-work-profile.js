@@ -31,7 +31,7 @@ const ReadWorkProfile = ({
   activeStep,
 }) => {
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
-  const { doctorUserProfile } = useSelector((state) => state?.menuLists);
+  const { doctorUserProfile } = useSelector((state) => state?.doctorUserProfileList);
   const [selected, setSelected] = useState('');
   const [confirmationModal, setConfirmationModal] = useState(false);
 

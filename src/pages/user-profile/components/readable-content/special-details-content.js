@@ -43,9 +43,7 @@ const SpecialDetails = ({ doctorUserProfile }) => {
               variant="subtitle2"
               color="inputTextColor.light"
             >
-              {doctorUserProfile && doctorUserProfile?.speciality_details?.super_speciality[0]?.name
-                ? doctorUserProfile?.speciality_details?.super_speciality[0]?.name
-                : ''}
+              {broadSpecialityName ? broadSpecialityName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -71,7 +69,9 @@ const SpecialDetails = ({ doctorUserProfile }) => {
               variant="subtitle2"
               color="inputTextColor.light"
             >
-              {broadSpecialityName ? broadSpecialityName : ''}
+              {doctorUserProfile && doctorUserProfile?.speciality_details?.super_speciality[0]?.name
+                ? doctorUserProfile?.speciality_details?.super_speciality[0]?.name
+                : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon

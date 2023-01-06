@@ -20,7 +20,7 @@ import IMRDetailsContent from '../readable-content/imr-details-content';
 import PersonalDetailsContent from '../readable-content/personal-details-content';
 const ReadPersonalDetails = ({ handleNext, showActions = true }) => {
   const userType = useSelector((state) => state.common.loggedInUserType);
-  const { doctorUserProfile } = useSelector((state) => state?.menuLists);
+  const { doctorUserProfile } = useSelector((state) => state?.doctorUserProfileList);
   const { t } = useTranslation();
   const [accordionKey, setAccordionKey] = useState('accordion-0');
   const accordions = [
