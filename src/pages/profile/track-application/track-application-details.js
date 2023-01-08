@@ -62,7 +62,7 @@ export function TrackApplicationDetails({
           </Grid>
           <Grid item xs={8} md="auto">
             <Typography variant="body3" color="grey.label">
-              Pendency
+              Pendency (days)
             </Typography>
             <Typography variant="subtitle2" color="textPrimary.main">
               03

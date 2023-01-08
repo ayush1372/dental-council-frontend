@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { Box, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 
 import { verboseLog } from '../../config/debug';
 import { RegistrationCouncilNames } from '../../constants/common-data';
@@ -11,6 +12,7 @@ import { Button, TextField } from '../../ui/core';
 export default function TrackStatus() {
   const [showTable, setShowTable] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
 
   const {
     handleSubmit,
@@ -57,6 +59,7 @@ export default function TrackStatus() {
                   {...register('RegistrationCouncil', {
                     required: 'Medical Council is required',
                   })}
+                  disabled={loggedInUserType === 'SMC'}
                 />
               </Box>
             </Grid>

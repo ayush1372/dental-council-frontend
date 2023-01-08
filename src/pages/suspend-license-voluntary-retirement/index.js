@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import BlockIcon from '@mui/icons-material/Block';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorIcon from '@mui/icons-material/Error';
@@ -22,14 +20,14 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
       voluntarySuspendLicense: 'voluntary-suspension-check',
     },
   });
-  const [selectedSuspension, setSelectedSuspension] = useState('voluntary-suspension-check');
+  // const [selectedSuspension, setSelectedSuspension] = useState('voluntary-suspension-check');
 
   const onSubmit = () => {
     handleSubmitDetails();
   };
 
   const handlevoluntarySuspendLicenseChange = (event) => {
-    setSelectedSuspension(event.target.value);
+    // setSelectedSuspension(event.target.value);
     setValue(event.target.name, event.target.value);
   };
 
@@ -157,36 +155,36 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
                 })}
               />
             </Grid>
-            {selectedSuspension === 'voluntary-suspension-check' && (
-              <Grid item xs={12} md={6} my={{ xs: 1, md: 0 }}>
-                <Typography component={'p'} variant="body1">
-                  Select To Date
-                </Typography>
-                <TextField
-                  fullWidth
-                  data-testid="toDate"
-                  id="toDate"
-                  type="date"
-                  name="toDate"
-                  sx={{
-                    input: {
-                      color: 'grey1.dark',
-                      textTransform: 'uppercase',
-                    },
-                  }}
-                  InputLabelProps={{
-                    shrink: true,
-                    sx: { height: '40px' },
-                  }}
-                  required={true}
-                  defaultValue={getValues().toDate}
-                  error={errors.toDate?.message}
-                  {...register('toDate', {
-                    required: 'Enter to date',
-                  })}
-                />
-              </Grid>
-            )}
+            {/* {selectedSuspension === 'voluntary-suspension-check' && ( */}
+            <Grid item xs={12} md={6} my={{ xs: 1, md: 0 }}>
+              <Typography component={'p'} variant="body1">
+                Select To Date
+              </Typography>
+              <TextField
+                fullWidth
+                data-testid="toDate"
+                id="toDate"
+                type="date"
+                name="toDate"
+                sx={{
+                  input: {
+                    color: 'grey1.dark',
+                    textTransform: 'uppercase',
+                  },
+                }}
+                InputLabelProps={{
+                  shrink: true,
+                  sx: { height: '40px' },
+                }}
+                required={true}
+                defaultValue={getValues().toDate}
+                error={errors.toDate?.message}
+                {...register('toDate', {
+                  required: 'Enter to date',
+                })}
+              />
+            </Grid>
+            {/* )} */}
           </Grid>
         </Box>
       )}

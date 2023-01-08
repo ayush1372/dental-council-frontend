@@ -180,19 +180,6 @@ const ReadWorkProfile = ({
                   </React.Fragment>
                 )}
               </PopupState>
-              <Button
-                color="secondary"
-                variant="contained"
-                onClick={handleSubmitDetails}
-                sx={{
-                  width: {
-                    xs: '100%',
-                    md: 'fit-content',
-                  },
-                }}
-              >
-                Submit
-              </Button>
             </Box>
           )}
         </Box>
