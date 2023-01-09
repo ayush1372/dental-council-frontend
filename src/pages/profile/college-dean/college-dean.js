@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { Button, TextField } from '../../../ui/core';
+import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 export function CollegeDean() {
   const { t } = useTranslation();
@@ -156,9 +157,8 @@ export function CollegeDean() {
           margin="dense"
           defaultValue={getValues().deanPassword}
           error={errors.deanPassword?.message}
-          {...register('deanPassword', {
-            required:
-              'Create valid password including an uppercase, a lowercase, a number and a special character',
+          {...register('deanPassword', PasswordRegexValidation, {
+            required: 'Provide Dean Password',
           })}
         />
       </Grid>

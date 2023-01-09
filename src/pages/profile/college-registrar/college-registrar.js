@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { Button, TextField } from '../../../ui/core';
+import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 export function CollegeRegistrar() {
   const { t } = useTranslation();
@@ -107,11 +108,11 @@ export function CollegeRegistrar() {
           defaultValue={getValues().registrarEmail}
           error={errors.registrarEmail?.message}
           {...register('registrarEmail', {
-            required: 'Enter valid Email address',
+            required: 'Enter Valid Email Address',
             pattern: {
               value:
                 /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-              message: 'Enter valid Email address',
+              message: 'Enter Valid Email Address',
             },
           })}
         />
@@ -158,9 +159,8 @@ export function CollegeRegistrar() {
           margin="dense"
           defaultValue={getValues().registrarPassword}
           error={errors.registrarPassword?.message}
-          {...register('registrarPassword', {
-            required:
-              'Create valid password including an uppercase,  a lowercase, a number and a special character',
+          {...register('registrarPassword', PasswordRegexValidation, {
+            required: 'Provide registrar Password',
           })}
         />
       </Grid>
