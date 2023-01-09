@@ -413,7 +413,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                     })}
                     options={[
                       {
-                        label: 'Care Dental Collegey',
+                        label: 'Care Dental College',
                         value: 'care Dental College',
                       },
                     ]}

@@ -78,6 +78,27 @@ const themeWrapper = (mode, appFontType) => {
       MuiTableCell: TableCell(palettes, appFontType),
 
       MuiSvgIcon: SvgIcon(palettes, appFontType),
+      MuiPaper: {
+        styleOverrides: {
+          root: {
+            '.MuiList-root': {
+              paddingTop: '0',
+              paddingBottom: '0',
+            },
+          },
+        },
+      },
+      MuiSelect: {
+        styleOverrides: {
+          root: {
+            color: palette.primary,
+            '.MuiSvgIcon-root': {
+              color: palette.primary,
+              borderColor: palette.primary,
+            },
+          },
+        },
+      },
     },
 
     // STYLE FOR BORDER RADIUS
