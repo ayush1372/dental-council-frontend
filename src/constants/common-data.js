@@ -44,7 +44,7 @@ export const encryptData = (data, key) => {
   encrypt.setPublicKey(publicKey);
   var encryptedPass = encrypt.encrypt(data);
   verboseLog('encryption pass & key==>', encryptedPass, key);
-  localStorage.setItem(key, encryptedPass);
+  // localStorage.setItem(key, encryptedPass);
   return encryptedPass;
 };
 

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -5,7 +6,7 @@ import { Alert, Container, Divider, IconButton, InputAdornment, Typography } fro
 import { Box } from '@mui/system';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { verboseLog } from '../../../config/debug';
 import { encryptData } from '../../../constants/common-data';
@@ -26,7 +27,10 @@ function FetchDoctorDetails() {
   const [isOtpValidMobile, setisOtpValidMobile] = useState(false);
   const [isOtpValidAadhar, setisOtpValidAadhar] = useState(false);
   const [enableSubmit, setEnableSubmit] = useState(false);
+  const [adhrState, setadhrState] = useState('');
   const dispatch = useDispatch();
+  const finalOtp = useSelector((state) => state);
+  console.log('final otp----', finalOtp);
 
   const {
     register,
@@ -81,22 +85,32 @@ function FetchDoctorDetails() {
         encryptData(dataValue.field_1 + dataValue.field_2 + dataValue.field_3, 'aadharNumber')
       )
     );
-    handleVerifyAadhar();
+    let adhrvalue = encryptData(
+      dataValue.field_1 + dataValue.field_2 + dataValue.field_3,
+      'aadharNumber'
+    );
+    console.log(adhrvalue, 'adhrvalue');
+    handleVerifyAadhar(adhrvalue);
   };
 
-  const handleVerifyAadhar = () => {
-    if (localStorage.getItem('aadharNumber').length > 0) {
-      sendAaadharOtp();
-    }
+  const handleVerifyAadhar = async (value) => {
+    setadhrState(value);
+
+    let transactionId = await sendAaadharOtp(value);
+    console.log('txid---', transactionId);
     if (isOtpValidEmail === true && isOtpValidMobile === true) {
       setshowOtpAadhar(true);
       isOtpValidMobile(false);
       isOtpValidEmail(false);
     }
+    // console.log('api calling', sendAaadharOtp(value))
   };
 
+  console.log('adhr state', adhrState);
+
   const handleValidateAadhar = () => {
-    encryptData(otpValue, 'otp');
+    let userOtp = encryptData(otpValue, 'otp');
+    console.log('userotp', userOtp);
     if (otpValue.length === 6) {
       setisOtpValidAadhar(true);
       validateOtpAadhaar();

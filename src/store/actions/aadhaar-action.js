@@ -2,10 +2,9 @@ import { API } from '../../api/api-endpoints';
 import { verboseLog } from '../../config/debug';
 import { POST } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
+import { userTxId } from '../reducers/aaadhaar-tnxid-reducer';
 
-export const sendAaadharOtp = async () => {
-  let aadhaarNumberValue = localStorage.getItem('aadharNumber');
-
+export const sendAaadharOtp = async (aadhaarNumberValue, dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: POST,
@@ -13,9 +12,10 @@ export const sendAaadharOtp = async () => {
       data: aadhaarNumberValue,
     })
       .then((response) => {
-        verboseLog('otp response===>', response);
-        localStorage.setItem('transid', response.data.DOAuthOTP.uidtkn);
-        return resolve(response);
+        dispatch(userTxId());
+        // verboseLog('otp response===>', response);
+        // localStorage.setItem('transid', response.data.DOAuthOTP.uidtkn);
+        return response.DOAuthOTP.uidtkn;
       })
       .catch((error) => {
         return reject(error);
