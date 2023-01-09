@@ -17,19 +17,14 @@ const CurrentWorkDetails = () => {
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor.main">
+          <Typography variant="subtitle2" color="grey.label">
             State
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography variant="subtitle2" color="primary.main">
               Select State
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -43,19 +38,14 @@ const CurrentWorkDetails = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor.main">
+          <Typography variant="subtitle2" color="grey.label">
             District
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography variant="subtitle2" color="primary.main">
               Select District
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -69,16 +59,11 @@ const CurrentWorkDetails = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor.main">
+          <Typography variant="subtitle2" color="grey.label">
             Name of the organization where you work
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography variant="subtitle2" color="primary.main">
               Name of the organization
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -94,16 +79,11 @@ const CurrentWorkDetails = () => {
       </Grid>
       <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor.main">
+          <Typography variant="subtitle2" color="grey.label">
             Organization Type
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography variant="subtitle2" color="primary.main">
               Select Organization Type
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -117,19 +97,14 @@ const CurrentWorkDetails = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor.main">
+          <Typography variant="subtitle2" color="grey.label">
             Address
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography variant="subtitle2" color="primary.main">
               Address
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -143,19 +118,14 @@ const CurrentWorkDetails = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor.main">
+          <Typography variant="subtitle2" color="grey.label">
             Pin Code
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography variant="subtitle2" color="primary.main">
               Pin Code
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -171,16 +141,11 @@ const CurrentWorkDetails = () => {
       </Grid>
       <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor.main">
+          <Typography variant="subtitle2" color="grey.label">
             Telecommunication URL
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography variant="subtitle2" color="primary.main">
               Telecommunication URL
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -192,20 +157,6 @@ const CurrentWorkDetails = () => {
             )}{' '}
           </Grid>
         </Grid>
-        {/*<Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
-            Department
-          </Typography>
-
-          <Typography
-            bgcolor="grey2.main"
-            padding="10px"
-            variant="subtitle2"
-            color="inputTextColor.light"
-          >
-            Department
-          </Typography>
-  </Grid>*/}
       </Grid>
     </Grid>
   );
