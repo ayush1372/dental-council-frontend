@@ -38,10 +38,10 @@ export const AadhaarInputField = (props) => {
           variant="body2"
           color="error"
           {...register('aadhar number', {
-            required: 'Provide a valid aadhaar number',
+            required: 'Provide a valid Aadhaar number',
             pattern: {
               value: /^[0-9]{4}$/,
-              message: 'Provide a valid aadhaar number',
+              message: 'Provide a valid Aadhaar number',
             },
           })}
         >
@@ -56,7 +56,7 @@ export const AadhaarInputField = (props) => {
       return (
         <Typography style={{ display: 'flex', alignItems: 'center' }} variant="body2" color="error">
           <SvgImageComponent color={'error'} icon={'error'} height={'16px'} />
-          {'Enter valid Aadhaar number'}
+          {'Enter valid Aadhaar Number'}
         </Typography>
       );
     }
@@ -103,7 +103,7 @@ export const AadhaarInputField = (props) => {
               required: 'required',
               pattern: {
                 value: /^[0-9]{4}$/,
-                message: 'Provide a valid aadhaar number',
+                message: 'Provide a valid Aadhaar number',
               },
               onChange: (e) => onHandleAadhaarChange(e),
             })}
@@ -140,7 +140,7 @@ export const AadhaarInputField = (props) => {
               required: 'required',
               pattern: {
                 value: /^[0-9]{4}$/,
-                message: 'Provide a valid aadhaar number',
+                message: 'Provide a valid Aadhaar number',
               },
               onChange: (e) => onHandleAadhaarChange(e),
             })}
@@ -177,7 +177,7 @@ export const AadhaarInputField = (props) => {
               required: 'required',
               pattern: {
                 value: /^[0-9]{4}$/,
-                message: 'Provide a valid aadhaar number',
+                message: 'Provide a valid Aadhaar number',
               },
               onChange: (e) => onHandleAadhaarChange(e),
             })}
