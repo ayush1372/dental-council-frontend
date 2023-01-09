@@ -40,7 +40,7 @@ const ReviewAllForms = () => {
               textTransform: 'capitalize',
               '&.Mui-selected': {
                 color: 'white.main',
-                backgroundColor: 'tabHighlightedBackgroundColor.main',
+                backgroundColor: 'primary.main',
                 borderLeft: '4px solid',
                 borderLeftColor: 'secondary.main',
               },

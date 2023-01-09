@@ -16,21 +16,16 @@ const RegistrationDetailsContent = () => {
   };
   return (
     <Grid container spacing={2} mt={2}>
-      <Grid container item spacing={2}>
+      <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
-            Registered with Council
+          <Typography variant="subtitle2" color="grey.label">
+            Registered with council
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography variant="subtitle2" color="primary.main">
               West Bengal Medical Council
             </Typography>
 
@@ -45,19 +40,14 @@ const RegistrationDetailsContent = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Registration Number
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography color="primary.main" variant="subtitle2">
               7991749871719
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -70,19 +60,14 @@ const RegistrationDetailsContent = () => {
           </Grid>
         </Grid>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Registration Date
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography color="primary.main" variant="subtitle2">
               30-10-2021
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -95,9 +80,9 @@ const RegistrationDetailsContent = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid container item spacing={2}>
+      <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Registration
             <Typography component="span" color="error.main">
               *
@@ -105,7 +90,7 @@ const RegistrationDetailsContent = () => {
           </Typography>
           <Grid display="flex">
             <Typography variant="subtitle2" color="primary.main">
-              permanent
+              Permanent
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -117,16 +102,11 @@ const RegistrationDetailsContent = () => {
           </Grid>
         </Grid>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Due Date of Renewal
           </Typography>
           <Grid display="flex">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography color="primary.main" variant="subtitle2">
               30-10-2022
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -139,7 +119,7 @@ const RegistrationDetailsContent = () => {
           </Grid>
         </Grid>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Registration Certificate
             <Typography component="span" color="error.main">
               *
@@ -159,14 +139,14 @@ const RegistrationDetailsContent = () => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid container item spacing={2}>
+      {/* <Grid container item spacing={2}>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor"></Typography>
         </Grid>
-      </Grid>
-      <Grid container item spacing={2}>
+      </Grid> */}
+      <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Upload the registration certificate
             <Typography component="span" color="error.main">
               *
