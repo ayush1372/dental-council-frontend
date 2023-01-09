@@ -59,7 +59,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
           at any point of time, subject to applicable laws, rules and regulations.
         </Typography>
       </Box>
-      <Grid container>
+      <Grid container mt={3}>
         <Grid item xs={12} md>
           <Button
             variant="contained"

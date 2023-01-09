@@ -44,19 +44,14 @@ const CurrentWorkDetails = ({ doctorUserProfile }) => {
       </Grid>
       <Grid container item spacing={2}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             State
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography variant="subtitle2" color="primary.main">
               {stateName ? stateName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -70,19 +65,14 @@ const CurrentWorkDetails = ({ doctorUserProfile }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             District
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography variant="subtitle2" color="primary.main">
               {districtName ? districtName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -96,16 +86,11 @@ const CurrentWorkDetails = ({ doctorUserProfile }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
-            Name Of The Organization Where You Work
+          <Typography variant="subtitle2" color="grey.label">
+            Name of the organization where you work
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography variant="subtitle2" color="primary.main">
               {work_organization ? work_organization : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -119,18 +104,13 @@ const CurrentWorkDetails = ({ doctorUserProfile }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
       </Grid>
-      <Grid container item spacing={2}>
+      <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Organization Type
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography variant="subtitle2" color="primary.main">
               {addressTypeName ? addressTypeName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -144,19 +124,14 @@ const CurrentWorkDetails = ({ doctorUserProfile }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Address
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography variant="subtitle2" color="primary.main">
               {address_line1 ? address_line1 : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -170,19 +145,14 @@ const CurrentWorkDetails = ({ doctorUserProfile }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
-            Pincode
+          <Typography variant="subtitle2" color="grey.label">
+            Pin Code
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography variant="subtitle2" color="primary.main">
               {pincode ? pincode : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -196,18 +166,13 @@ const CurrentWorkDetails = ({ doctorUserProfile }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
       </Grid>
-      <Grid container item spacing={2}>
+      <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Telecommunication URL
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography variant="subtitle2" color="primary.main">
               {url ? url : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -219,20 +184,6 @@ const CurrentWorkDetails = ({ doctorUserProfile }) => {
             )}{' '}
           </Grid>
         </Grid>
-        {/*<Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
-            Department
-          </Typography>
-
-          <Typography
-            bgcolor="grey2.main"
-            padding="10px"
-            variant="subtitle2"
-            color="inputTextColor.light"
-          >
-            Department
-          </Typography>
-  </Grid>*/}
       </Grid>
     </Grid>
   );

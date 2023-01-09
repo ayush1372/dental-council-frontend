@@ -29,21 +29,16 @@ const RegistrationDetailsContent = ({ doctorUserProfile }) => {
       : { registration_detail: { state_medical_council: {} } };
   return (
     <Grid container spacing={2} mt={2}>
-      <Grid container item spacing={2}>
+      <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Registered with council
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography variant="subtitle2" color="primary.main">
               {smcName ? smcName : ''}
             </Typography>
 
@@ -58,19 +53,14 @@ const RegistrationDetailsContent = ({ doctorUserProfile }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Registration Number
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography color="primary.main" variant="subtitle2">
               {registration_number ? registration_number : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -83,19 +73,14 @@ const RegistrationDetailsContent = ({ doctorUserProfile }) => {
           </Grid>
         </Grid>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Registration Date
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography color="primary.main" variant="subtitle2">
               {registration_date ? registration_date : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -108,9 +93,9 @@ const RegistrationDetailsContent = ({ doctorUserProfile }) => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid container item spacing={2}>
+      <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Registration
             <Typography component="span" color="error.main">
               *
@@ -130,16 +115,11 @@ const RegistrationDetailsContent = ({ doctorUserProfile }) => {
           </Grid>
         </Grid>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Due Date of Renewal
           </Typography>
           <Grid display="flex">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography color="primary.main" variant="subtitle2">
               {renewable_registration_date ? renewable_registration_date : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -152,7 +132,7 @@ const RegistrationDetailsContent = ({ doctorUserProfile }) => {
           </Grid>
         </Grid>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Registration Certificate
             <Typography component="span" color="error.main">
               *
@@ -172,14 +152,14 @@ const RegistrationDetailsContent = ({ doctorUserProfile }) => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid container item spacing={2}>
+      {/* <Grid container item spacing={2}>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor"></Typography>
         </Grid>
-      </Grid>
-      <Grid container item spacing={2}>
+      </Grid> */}
+      <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Upload the registration certificate
             <Typography component="span" color="error.main">
               *

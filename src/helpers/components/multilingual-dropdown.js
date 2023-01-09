@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { MenuItem, Select } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { useTranslation } from 'react-i18next';
 
 import styles from '../../ui/layout/header/components/top-bar/top-bar.module.scss';
@@ -19,19 +20,33 @@ export const MultilingualDropdown = () => {
     setLanguageValue(event.target.value ? event.target.value : languageValue);
     i18n.changeLanguage(event.target.value);
   };
+  const theme = useTheme();
   return (
     <Select
+      className={styles.MultilingualSelect}
       labelId="languageOption-label"
       id="languageOption"
       value={languageValue}
       onChange={handleChange}
+      sx={{
+        '.MuiSelect-select': {
+          paddingTop: '0',
+          paddingBottom: '0',
+        },
+      }}
       inputProps={{
+        className: 'languageSelect',
         '&:focus, &:hover': {
           outline: 'none',
         },
       }}
-      IconComponent={() => <KeyboardArrowDownIcon color="primary" />}
-      sx={{ color: 'primary.main' }}
+      IconComponent={(props) => (
+        <KeyboardArrowDownIcon
+          fontSizeWidth18
+          sx={{ color: theme.palette.textPrimary.main }}
+          {...props}
+        />
+      )}
     >
       {languageOption.map((item, index) => (
         <MenuItem
@@ -39,10 +54,6 @@ export const MultilingualDropdown = () => {
           key={index}
           value={item.value}
           onClick={handleChange}
-          MenuListProps={{
-            disablePadding: true,
-            color: 'inputTextColor.main',
-          }}
         >
           {item.title}
         </MenuItem>

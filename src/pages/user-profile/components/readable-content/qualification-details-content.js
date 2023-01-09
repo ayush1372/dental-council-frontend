@@ -25,21 +25,16 @@ const QualificationDetailsContent = ({ doctorUserProfile }) => {
     : { country: {}, state: {}, college: {}, university: {}, course: {} };
   return (
     <Grid container spacing={2} mt={2}>
-      <Grid container item spacing={2}>
+      <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
-            Name of the degree or diploma obtained
+          <Typography variant="subtitle2" color="grey.label">
+            Name of the Degree or Diploma Obtained
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography color="primary.main" variant="subtitle2">
               {courseName ? courseName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -55,19 +50,14 @@ const QualificationDetailsContent = ({ doctorUserProfile }) => {
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
 
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Country Name
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography variant="subtitle2" color="primary.main">
               {countryName ? countryName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -81,19 +71,14 @@ const QualificationDetailsContent = ({ doctorUserProfile }) => {
         </Grid>
 
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             State
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography color="primary.main" variant="subtitle2">
               {stateName ? stateName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -106,21 +91,16 @@ const QualificationDetailsContent = ({ doctorUserProfile }) => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid container item spacing={2}>
+      <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Name of the college
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography variant="subtitle2" color="primary.main">
               {collegeName ? collegeName : ''}
             </Typography>
 
@@ -135,19 +115,14 @@ const QualificationDetailsContent = ({ doctorUserProfile }) => {
         </Grid>
 
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             University
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography variant="subtitle2" color="primary.main">
               {universityName ? universityName : ''}
             </Typography>{' '}
             {userActiveTab === 'dashboard' && (
@@ -161,16 +136,11 @@ const QualificationDetailsContent = ({ doctorUserProfile }) => {
         </Grid>
 
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
-            Month of awarding Degree/Diploma
+          <Typography variant="subtitle2" color="grey.label">
+            Month of Awarding Degree/Diploma
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography variant="subtitle2" color="primary.main">
               November
             </Typography>{' '}
             {userActiveTab === 'dashboard' && (
@@ -183,9 +153,9 @@ const QualificationDetailsContent = ({ doctorUserProfile }) => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid container item spacing={2}>
+      <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Year of awarding Degree/Diploma
             <Typography component="span" color="error.main">
               *
@@ -193,12 +163,7 @@ const QualificationDetailsContent = ({ doctorUserProfile }) => {
           </Typography>
 
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography variant="subtitle2" color="primary.main">
               {qualification_year ? qualification_year : ''}
             </Typography>{' '}
             {userActiveTab === 'dashboard' && (
@@ -211,8 +176,8 @@ const QualificationDetailsContent = ({ doctorUserProfile }) => {
           </Grid>
         </Grid>
         <Grid item xs={12} md={6}>
-          <Typography variant="subtitle2" color="inputTextColor">
-            Is your name in degree, different from your name in Aadhaar?
+          <Typography variant="subtitle2" color="grey.label">
+            Is your name in registration certificate, different from your name in Aadhaar?
             <Typography component="span" color="error.main">
               *
             </Typography>

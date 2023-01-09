@@ -36,7 +36,7 @@ export default function TrackStatus() {
     <Box>
       {showHeader && (
         <Box px={3}>
-          <Typography variant="h2" color="textPrimary.main" component="div">
+          <Typography variant="h2" color="textPrimary.main" component="div" mt={5}>
             Track Status
           </Typography>
           <Grid container spacing={2} mt={1}>
@@ -49,6 +49,7 @@ export default function TrackStatus() {
                   </Typography>
                 </Typography>
                 <SearchableDropdown
+                  sx={{ mt: 1 }}
                   name="RegistrationCouncil"
                   items={RegistrationCouncilNames}
                   placeholder="Select Medical Council Name"
@@ -60,20 +61,27 @@ export default function TrackStatus() {
                 />
               </Box>
             </Grid>
-
             <Grid item xs={12} md={4}>
-              <TextField
-                name={'RegistrationNumber'}
-                label={'Registration Number'}
-                fullWidth
-                required
-                placeholder="Enter Registration Number"
-                defaultValue={getValues().RegistrationNumber}
-                error={errors.RegistrationNumber?.message}
-                {...register('RegistrationNumber', {
-                  required: 'Registration Number is required',
-                })}
-              />
+              <Box pb={{ xs: 2, md: 4 }}>
+                <Typography color="inputTextColor.main">
+                  Medical Council Name
+                  <Typography component="span" color="error.main">
+                    *
+                  </Typography>
+                </Typography>
+                <TextField
+                  sx={{ mt: 1, mr: 2 }}
+                  name={'RegistrationNumber'}
+                  fullWidth
+                  required
+                  placeholder="Enter Registration Number"
+                  defaultValue={getValues().RegistrationNumber}
+                  error={errors.RegistrationNumber?.message}
+                  {...register('RegistrationNumber', {
+                    required: 'Registration Number is required',
+                  })}
+                />
+              </Box>
             </Grid>
             <Grid item xs={12} md={4}>
               <Button
@@ -87,8 +95,9 @@ export default function TrackStatus() {
                 variant="contained"
                 onClick={handleSubmit(onSubmit)}
                 color="secondary"
+                size="medium"
               >
-                Search
+                Submit
               </Button>
             </Grid>
           </Grid>

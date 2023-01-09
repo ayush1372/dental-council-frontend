@@ -43,7 +43,7 @@ export function MobileNumber(props) {
           width="100%"
           className={styles.mobileField}
           display="flex"
-          gap={{ xs: 1, sm: 2 }}
+          gap={{ xs: 1, sm: 0 }}
           flexWrap={{ xs: 'wrap', sm: 'nowrap' }}
         >
           <TextField

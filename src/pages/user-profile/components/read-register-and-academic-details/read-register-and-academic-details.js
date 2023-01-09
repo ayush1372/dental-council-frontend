@@ -60,7 +60,7 @@ const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack, showActions = 
               }}
             >
               <AccordionSummary expandIcon={accordionKey === key ? <RemoveIcon /> : <AddIcon />}>
-                <Typography variant="body1" color="primary">
+                <Typography variant="body1" color="primary.main">
                   {accordion.title}
                 </Typography>
               </AccordionSummary>
