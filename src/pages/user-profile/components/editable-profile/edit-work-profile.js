@@ -82,10 +82,15 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
             />
           </Grid>
           <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="inputTextColor.main">
+              Super Speciality
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+            </Typography>
             <TextField
               variant="outlined"
               name={'subSpeciality'}
-              label={'Super Speciality'}
               placeholder="Enter Super Speciality"
               required={true}
               fullWidth
@@ -108,6 +113,13 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
             </Typography>
           </Grid>
           <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="inputTextColor.main">
+              Are you currently working
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+            </Typography>
+
             <RadioGroup
               onChange={handleselection}
               name={'selection'}
@@ -123,7 +135,6 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
                   label: 'No',
                 },
               ]}
-              label="Are you currently working"
               required={true}
               error={errors.selection?.message}
             />
@@ -138,7 +149,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               required={true}
               placeholder={'Nature Of Work'}
               {...register('NatureOfWork', {
-                required: 'Select Nature of Work',
+                required: 'Select nature of work',
               })}
               options={[
                 {
@@ -149,8 +160,15 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
             />
           </Grid>
         </Grid>
-        <Grid container item spacing={2}>
-          <Grid item xs={12} md={4}>
+        <Grid container item spacing={2} mt={1}>
+          <Grid item xs={12} md={4} lg={12}>
+            <Typography variant="subtitle2" color="inputTextColor.main">
+              Choose work status
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+            </Typography>
+
             <RadioGroup
               onChange={handleWorkStatus}
               name={'workStatus'}
@@ -170,30 +188,27 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
                   label: 'Both',
                 },
               ]}
-              label="Choose work status"
               required={true}
               error={errors.workStatus?.message}
             />
           </Grid>
         </Grid>
-        <Grid container item spacing={2}>
+        <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={6}>
+            <Typography variant="subtitle2" color="inputTextColor.main">
+              Upload the proof of work for govt.such as Appointment letter, Last pay slip, Recent
+              transfer order etc.
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+            </Typography>
+
             <UploadFile
               uploadFiles="single"
               sizeAllowed={1}
               fileTypes={['image/jpg', 'image/jpeg', 'image/png']}
               fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
                Maximum size allowed for the attachment is 5MB.`}
-              label={
-                <>
-                  <Typography color="text.primary">
-                    {t(
-                      'Upload the proof of work for govt. Such as Appointment letter, Last pay slip, recent transfer order etc.*'
-                    )}
-                  </Typography>
-                  <Typography color="error"> *</Typography>
-                </>
-              }
               fileData={workProof}
               setFileData={setWorkProof}
             />
@@ -243,13 +258,18 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
             />
           </Grid>
         </Grid>
-        <Grid container item spacing={2}>
+        <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="inputTextColor.main">
+              State
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+            </Typography>
             <Select
               fullWidth
               error={errors.state?.message}
               name={'state'}
-              label={'State'}
               defaultValue={getValues().state}
               required={true}
               {...register('state', {
@@ -283,10 +303,16 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
             />
           </Grid>
           <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="inputTextColor.main">
+              Name of the organization where you work
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+            </Typography>
+
             <TextField
               variant="outlined"
               name={'workingOrganizationName'}
-              label={'Name Of The Organization Where You Work'}
               placeholder="Name Of The Organization"
               fullWidth
               defaultValue={getValues().workingOrganizationName}
@@ -300,12 +326,14 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
             />
           </Grid>
         </Grid>
-        <Grid container item spacing={2}>
+        <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="inputTextColor.main">
+              Organization Type
+            </Typography>
             <TextField
               variant="outlined"
               name={'organizationType'}
-              label={'Organization Type'}
               fullWidth
               defaultValue={getValues().organizationType}
               {...register('organizationType', {
@@ -337,10 +365,15 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
             </Grid> */}
 
           <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="inputTextColor.main">
+              Address
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+            </Typography>
             <TextField
               variant="outlined"
               name={'Address'}
-              label={'Address'}
               required={true}
               fullWidth
               placeholder="Address"
@@ -356,17 +389,23 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
             />
           </Grid>
           <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="inputTextColor.main">
+              Pin Code
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+            </Typography>
+
             <TextField
               variant="outlined"
               name={'Pincode'}
-              label={'Pincode'}
               required={true}
               placeholder="Pincode"
               fullWidth
               error={errors.Pincode?.message}
               defaultValue={getValues().Pincode}
               {...register('Pincode', {
-                required: 'PinCode is Required',
+                required: 'Pin code is required',
                 pattern: {
                   value: /^[0-9]{6}$/,
                   message: 'Should only contains 6 digits',
@@ -375,26 +414,32 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
             />
           </Grid>
         </Grid>
-        <Grid container item spacing={2}>
+        <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="inputTextColor.main">
+              Telecommunication URL
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+            </Typography>
+
             <TextField
               variant="outlined"
               name={'telecommunicationURL'}
-              label={'Telecommunication URL'}
               required={true}
               placeholder="Telecommunication URL"
               fullWidth
               error={errors.telecommunicationURL?.message}
               defaultValue={getValues().telecommunicationURL}
               {...register('telecommunicationURL', {
-                required: 'Telecommunication URL is required',
+                required: 'Telecommunication url is required',
               })}
             />
           </Grid>
         </Grid>
       </Grid>
       <Grid container display="flex" justifyContent="space-between" alignItems="center" mt={5}>
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} md={8} lg={6}>
           <Button
             onClick={handleBackButton}
             color="grey"
@@ -413,7 +458,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
             {t('Back')}
           </Button>
         </Grid>
-        <Grid item xs={12} md="auto" display="flex" justifyContent="end">
+        <Grid item xs={12} md="auto" display="flex" justifyContent="end" lg={4}>
           <Button
             onClick={handleSubmit}
             variant="outlined"
@@ -432,7 +477,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
             {t('Save')}
           </Button>
         </Grid>
-        <Grid item xs={12} md="auto" display="flex" justifyContent="end">
+        <Grid item xs={12} md="auto" display="flex" justifyContent="end" lg={2}>
           <Button
             onClick={handleSubmit(onHandleOptionNext)}
             variant="contained"
