@@ -6,13 +6,38 @@ import { useSelector } from 'react-redux';
 
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
-const CommunicationAddress = () => {
+const CommunicationAddress = ({ doctorUserProfile }) => {
   const { userActiveTab } = useSelector((state) => state.common);
 
   const [openModal, setOpenModal] = useState(false);
   const ClosePopup = () => {
     setOpenModal(false);
   };
+  const {
+    communication_address: {
+      country: { name: countryName },
+      state: { name: stateName },
+      district: { name: districtName },
+      sub_district: { name: sub_districtName },
+      pincode,
+      address_line1,
+      email,
+      mobile,
+      address_type: { name: addressTypeName },
+      full_name,
+    },
+  } =
+    doctorUserProfile && Object.values(doctorUserProfile).length > 3
+      ? doctorUserProfile
+      : {
+          communication_address: {
+            country: {},
+            state: {},
+            district: {},
+            sub_district: {},
+            address_type: {},
+          },
+        };
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2} mt={1}>
@@ -25,7 +50,7 @@ const CommunicationAddress = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              Aarnav Sharma
+              {full_name ? full_name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -46,7 +71,7 @@ const CommunicationAddress = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              Hno. 560 Row 3 Sadar Bazar, New Delhi
+              {address_line1 ? address_line1 : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -70,7 +95,7 @@ const CommunicationAddress = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              New Delhi
+              {addressTypeName ? addressTypeName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -91,7 +116,7 @@ const CommunicationAddress = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              New Delhi
+              {districtName ? districtName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -109,7 +134,7 @@ const CommunicationAddress = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              Sub District
+              {sub_districtName ? sub_districtName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -133,7 +158,7 @@ const CommunicationAddress = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              New Delhi
+              {stateName ? stateName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -154,7 +179,7 @@ const CommunicationAddress = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              India
+              {countryName ? countryName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -175,7 +200,7 @@ const CommunicationAddress = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              120018
+              {pincode ? pincode : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -199,7 +224,7 @@ const CommunicationAddress = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              aarushi.sharma309@gmail.com
+              {email ? email : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -220,7 +245,7 @@ const CommunicationAddress = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              9988334355
+              {mobile ? mobile : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
