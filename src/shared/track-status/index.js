@@ -83,10 +83,9 @@ export default function TrackStatus() {
                 />
               </Box>
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={4} display="flex" alignItems="center">
               <Button
                 sx={{
-                  marginTop: '30px',
                   width: {
                     xs: '100%',
                     md: 'fit-content',

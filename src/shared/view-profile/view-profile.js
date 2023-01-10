@@ -1,9 +1,9 @@
-import { Box, Container, Grid, Typography } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 export function ViewProfile(props) {
   return (
-    <Container>
+    <>
       <Box display={'flex'} flexDirection={{ xs: 'column', md: 'row' }}>
         <Typography
           sx={{ marginBottom: '0px' }}
@@ -118,7 +118,7 @@ export function ViewProfile(props) {
           </Grid>
         </Grid>
       </Box>
-    </Container>
+    </>
   );
 }
 

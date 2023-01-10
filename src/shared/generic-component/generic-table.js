@@ -201,6 +201,11 @@ export default function GenericTable(props) {
                                 {...bindTrigger(popupState)}
                                 sx={{
                                   width: 'max-content',
+                                  backgroundColor: 'inherit',
+                                  color: 'black.main',
+                                  '&:hover': {
+                                    backgroundColor: 'inherit',
+                                  },
                                 }}
                               ></Button>
                               <Menu {...bindMenu(popupState)}>
