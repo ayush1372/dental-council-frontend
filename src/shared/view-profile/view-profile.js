@@ -59,7 +59,7 @@ export function ViewProfile(props) {
         <Grid container spacing={2} mt={2} p={3}>
           <Grid container item spacing={6}>
             <Grid item xs={8} md={4}>
-              <Typography variant="body3" color="grey.label">
+              <Typography variant="body1" color="inputTextColor.main">
                 NMR ID
                 <Typography component="span" color="error.main">
                   *
@@ -70,7 +70,7 @@ export function ViewProfile(props) {
               </Typography>
             </Grid>
             <Grid item xs={8} md={4}>
-              <Typography variant="body3" color="grey.label">
+              <Typography variant="body1" color="inputTextColor.main">
                 Council verification status
                 <Typography component="span" color="error.main">
                   *
@@ -81,7 +81,7 @@ export function ViewProfile(props) {
               </Typography>
             </Grid>
             <Grid item xs={8} md={4}>
-              <Typography variant="body3" color="grey.label">
+              <Typography variant="body1" color="inputTextColor.main">
                 Work Detail Verification Status
                 <Typography component="span" color="error.main">
                   *
@@ -97,7 +97,7 @@ export function ViewProfile(props) {
 
           <Grid container item spacing={6}>
             <Grid item xs={8} md={4}>
-              <Typography variant="body3" color="grey.label">
+              <Typography variant="body1" color="inputTextColor.main">
                 Email
                 <Typography component="span" color="error.main">
                   *
@@ -108,7 +108,7 @@ export function ViewProfile(props) {
               </Typography>
             </Grid>
             <Grid item xs={8} md={4}>
-              <Typography variant="body3" color="grey.label">
+              <Typography variant="body1" color="inputTextColor.main">
                 Mobile Number
               </Typography>
               <Typography variant="subtitle2" color="primary.main">

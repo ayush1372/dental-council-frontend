@@ -17,19 +17,14 @@ const IMRDetails = () => {
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             IMR ID
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography variant="subtitle2" color="primary.main">
               9598237230192838
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -43,20 +38,15 @@ const IMRDetails = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
-            Year of info
+          <Typography variant="subtitle2" color="grey.label">
+            Year of Info
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
-              Select Year of info
+            <Typography variant="subtitle2" color="primary.main">
+              Select Year of Info
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -69,19 +59,14 @@ const IMRDetails = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Registration Number
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
+            <Typography variant="subtitle2" color="primary.main">
               672929
             </Typography>
             {userActiveTab === 'dashboard' && (

@@ -92,6 +92,10 @@ const DoctorRegistrationWelcomePage = () => {
                   error={errors.RegistrationNumber?.message}
                   {...register('RegistrationNumber', {
                     required: 'Registration Number is required',
+                    pattern: {
+                      value: /^\d{10}$/i,
+                      message: 'Enter Valid Registration Number',
+                    },
                   })}
                 />
               </Box>

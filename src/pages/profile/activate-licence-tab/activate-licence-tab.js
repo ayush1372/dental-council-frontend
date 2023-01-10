@@ -174,7 +174,7 @@ const ActivateLicence = (props) => {
             </Typography>
           </Grid>
           <Grid mt={3}>
-            <TableSearch trackApplication />
+            <TableSearch />
           </Grid>
           <GenericTable
             order={order}
