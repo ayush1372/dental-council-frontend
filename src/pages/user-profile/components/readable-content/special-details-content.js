@@ -18,7 +18,7 @@ const SpecialDetails = () => {
       <Grid container item spacing={2}>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
-            Broad Speciality
+            Broad Specialty
             <Typography component="span" color="error.main">
               *
             </Typography>
@@ -39,11 +39,11 @@ const SpecialDetails = () => {
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
-            Super Speciality
+            Super Specialty
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              Your Sub Speciality
+              Your Sub Specialty
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
