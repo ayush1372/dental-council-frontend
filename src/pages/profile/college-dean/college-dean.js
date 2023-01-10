@@ -106,11 +106,11 @@ export function CollegeDean() {
           defaultValue={getValues().deanEmail}
           error={errors.deanEmail?.message}
           {...register('deanEmail', {
-            required: 'Enter valid Email address',
+            required: 'Enter Valid Email Address',
             pattern: {
               value:
                 /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-              message: 'Enter valid Email address',
+              message: 'Enter Valid Email Address',
             },
           })}
         />
