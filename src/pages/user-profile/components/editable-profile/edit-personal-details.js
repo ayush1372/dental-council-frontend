@@ -812,11 +812,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               {...register('RegistrationNumber', {
                 required: 'Registration Number is Required',
               })}
-              sx={{
-                input: {
-                  backgroundColor: 'grey2.main',
-                },
-              }}
+              bgcolor="grey2.main"
               InputProps={{ readOnly: true }}
             />
           </Grid>
