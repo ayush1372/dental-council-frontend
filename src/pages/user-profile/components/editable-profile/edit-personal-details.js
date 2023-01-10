@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { Box, Button, Grid, IconButton, InputAdornment, Typography } from '@mui/material';
+import { Box, Button, Grid, IconButton, InputAdornment, Typography, useTheme } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,6 +16,7 @@ import { RadioGroup, Select, TextField } from '../../../../ui/core';
 import MobileNumber from '../../../../ui/core/mobile-number/mobile-number';
 
 const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
+  const theme = useTheme();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const loggedInUserType = useSelector((state) => state?.login?.loggedInUserType);
@@ -878,7 +879,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               })}
               sx={{
                 input: {
-                  backgroundColor: 'grey2.main',
+                  backgroundColor: theme.palette.grey2.main,
                 },
               }}
               InputProps={{ readOnly: true }}
@@ -905,7 +906,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               options={get_year_data(1930)}
               sx={{
                 '.MuiSelect-select': {
-                  backgroundColor: 'grey2.main',
+                  backgroundColor: theme.palette.grey2.main,
                 },
               }}
               InputProps={{ readOnly: true }}
@@ -928,7 +929,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               {...register('RegistrationNumber', {
                 required: 'Registration Number is Required',
               })}
-              bgcolor="grey2.main"
+              sx={{
+                input: {
+                  backgroundColor: theme.palette.grey2.main,
+                },
+              }}
               InputProps={{ readOnly: true }}
             />
           </Grid>
