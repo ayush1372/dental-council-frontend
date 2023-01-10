@@ -4,8 +4,8 @@ const initialState = {
   doctorUserProfile: { data: [], isLoading: Boolean(true), isError: false },
 };
 
-const doctorUserProfileList = createSlice({
-  name: 'doctorUserProfileList',
+const doctorUserProfileReducer = createSlice({
+  name: 'doctorUserProfileReducer',
   initialState,
   reducers: {
     getDoctorUserProfile: (state, action) => {
@@ -14,6 +14,6 @@ const doctorUserProfileList = createSlice({
   },
 });
 
-export const { getDoctorUserProfile } = doctorUserProfileList.actions;
+export const { getDoctorUserProfile } = doctorUserProfileReducer.actions;
 
-export default doctorUserProfileList.reducer;
+export default doctorUserProfileReducer.reducer;

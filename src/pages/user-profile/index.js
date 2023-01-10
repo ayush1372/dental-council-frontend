@@ -9,7 +9,7 @@ import { verboseLog } from '../../config/debug';
 import useWizard from '../../hooks/use-wizard';
 import ReactivateLicencePopup from '../../shared/reactivate-licence-popup/re-activate-licence-popup';
 import SuccessPopup from '../../shared/reactivate-licence-popup/success-popup';
-import { getDoctorUserProfileList } from '../../store/actions/doctor-user-profile-actions';
+import { getDoctorUserProfileData } from '../../store/actions/doctor-user-profile-actions';
 import { getCountriesList, getStatesList } from '../../store/actions/menu-list-actions';
 import { Button } from '../../ui/core/button/button';
 import Wizard from '../../ui/core/wizard';
@@ -90,8 +90,8 @@ export const UserProfile = ({
     }
   }, [isReadMode]);
 
-  const fetchDoctorUserProfileList = () => {
-    dispatch(getDoctorUserProfileList())
+  const fetchDoctorUserProfileData = () => {
+    dispatch(getDoctorUserProfileData())
       .then((dataResponse) => {
         verboseLog('dataResponse1', dataResponse);
       })
@@ -100,7 +100,7 @@ export const UserProfile = ({
       });
   };
   useEffect(() => {
-    fetchDoctorUserProfileList();
+    fetchDoctorUserProfileData();
   }, []);
   return (
     <>

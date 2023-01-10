@@ -15,7 +15,7 @@ const store = configureStore({
     appFontSize: appFontSizeActivity,
     getCaptchaData: captchaReducer,
     menuLists: menuListsReducer,
-    doctorUserProfileList: doctorUserProfileReducer,
+    doctorUserProfileReducer: doctorUserProfileReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(thunk).concat(logger),
   devTools: true,

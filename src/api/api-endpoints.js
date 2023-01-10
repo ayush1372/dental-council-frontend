@@ -6,7 +6,7 @@ export const API = {
     userType: '/login',
   },
   editProfile: {},
-  DoctorUserProfileList: {
+  DoctorUserProfileData: {
     DoctorUserProfile: 'api/v1/hp/hpProfileDetail/23',
   },
   menuLists: {
