@@ -34,6 +34,10 @@ const YearOfRegistration = ({ setDoSearch }) => {
         <Select
           sx={{
             color: 'inputTextColor.main',
+            borderRadius: '3px',
+            input: {
+              letterSpacing: 0,
+            },
           }}
           fullWidth
           error={errors.yearofRegistration?.message}

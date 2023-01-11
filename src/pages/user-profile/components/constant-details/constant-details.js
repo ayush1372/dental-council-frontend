@@ -16,7 +16,7 @@ const ConstantDetails = () => {
           </Grid>
           <Grid item xs={8} md={4}>
             <Typography variant="body3" color="grey.label">
-              Work Detail verification status
+              Work Detail Verification Status
             </Typography>
             <Typography variant="subtitle2" color="primary.main">
               Submitted

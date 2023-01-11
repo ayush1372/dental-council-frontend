@@ -6,13 +6,33 @@ import { useSelector } from 'react-redux';
 
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
-const PersonalDetails = () => {
+const PersonalDetails = ({ doctorUserProfile }) => {
   const { userActiveTab } = useSelector((state) => state.common);
 
   const [openModal, setOpenModal] = useState(false);
   const ClosePopup = () => {
     setOpenModal(false);
   };
+  const {
+    personal_details: {
+      first_name,
+      last_name,
+      aadhaar_token,
+      date_of_birth,
+      father_name,
+      gender,
+      language,
+      middle_name,
+      mother_name,
+      country_nationality: { name: nationality },
+      salutation,
+      schedule: { name: nameSchedule },
+      spouse_name,
+    },
+  } =
+    doctorUserProfile && Object.values(doctorUserProfile).length > 3
+      ? doctorUserProfile
+      : { personal_details: { country_nationality: {}, schedule: {} } };
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
@@ -25,7 +45,7 @@ const PersonalDetails = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              Dr.
+              {salutation ? salutation : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -38,26 +58,28 @@ const PersonalDetails = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
 
-        <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor.main">
-            Aadhaar Number
-            <Typography component="span" color="error.main">
-              *
+        {false && (
+          <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="grey.label">
+              Aadhaar Number
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
             </Typography>
-          </Typography>
-          <Grid display="flex" alignItems="center">
-            <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
-              xxxx-xxxx-4688
-            </Typography>
-            {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
-                color="primary"
-                onClick={() => setOpenModal(true)}
-                fontSize="width30"
-              />
-            )}{' '}
+            <Grid display="flex" alignItems="center">
+              <Typography p={1} variant="subtitle2" color="inputTextColor.light">
+                xxxx-xxxx-{aadhaar_token ? aadhaar_token : 'XXXX'}
+              </Typography>
+              {userActiveTab === 'dashboard' && (
+                <EditOutlinedIcon
+                  color="primary"
+                  onClick={() => setOpenModal(true)}
+                  fontSize="width30"
+                />
+              )}{' '}
+            </Grid>
           </Grid>
-        </Grid>
+        )}
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         {false && (
           <Grid item xs={12} md={4}>
@@ -68,14 +90,15 @@ const PersonalDetails = () => {
               </Typography>
             </Typography>
             <Typography variant="subtitle2" color="primary.main">
-              Dr.
+              {salutation ? salutation : ''}
             </Typography>
           </Grid>
         )}
       </Grid>
-      <Grid container item spacing={2}>
+      {/* //firstname */}
+      <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             First Name
             <Typography component="span" color="error.main">
               *
@@ -83,8 +106,8 @@ const PersonalDetails = () => {
           </Typography>
 
           <Grid display="flex" alignItems="center">
-            <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
-              Aarnav
+            <Typography variant="subtitle2" color="primary.main">
+              {first_name ? first_name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -97,12 +120,12 @@ const PersonalDetails = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Middle Name
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
-              Your middle name
+            <Typography variant="subtitle2" color="primary.main">
+              {middle_name ? middle_name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -115,15 +138,15 @@ const PersonalDetails = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Last Name
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
-              Sharma
+            <Typography variant="subtitle2" color="primary.main">
+              {last_name ? last_name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -136,17 +159,18 @@ const PersonalDetails = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
       </Grid>
-      <Grid container item spacing={2}>
+      {/* fathers name */}
+      <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Father&apos;s Name
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
-              Praveen Sharma
+            <Typography variant="subtitle2" color="primary.main">
+              {father_name ? father_name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -159,12 +183,12 @@ const PersonalDetails = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Mother&apos;s Name
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
-              Savita Sharma
+            <Typography variant="subtitle2" color="primary.main">
+              {mother_name ? mother_name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -177,12 +201,12 @@ const PersonalDetails = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Spouse Name
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
-              Poonam Bala
+            <Typography variant="subtitle2" color="primary.main">
+              {spouse_name ? spouse_name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -195,18 +219,18 @@ const PersonalDetails = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
       </Grid>
-      <Grid container item spacing={2}>
+      {/* nationality */}
+      <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Nationality
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
-
           <Grid display="flex" alignItems="center">
-            <Typography bgcolor="grey2.main" p={1} variant="subtitle2" color="inputTextColor.light">
-              Indian
+            <Typography variant="subtitle2" color="primary.main">
+              {nationality ? nationality : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -218,7 +242,7 @@ const PersonalDetails = () => {
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={4} mt={1}>
           <Typography variant="subtitle2" color="grey.label">
             Languages
             <Typography component="span" color="error.main">
@@ -227,7 +251,7 @@ const PersonalDetails = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              Hindi,English
+              {language && language[0]?.name ? language[0]?.name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -239,16 +263,16 @@ const PersonalDetails = () => {
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={4} mt={1}>
           <Typography variant="subtitle2" color="grey.label">
-            Date Of Birth
+            Date of Birth
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              09-18-1989
+              {date_of_birth ? date_of_birth : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -256,12 +280,13 @@ const PersonalDetails = () => {
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
               />
-            )}{' '}
+            )}
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
       </Grid>
-      <Grid container item spacing={2}>
+      {/* gender */}
+      <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
             Gender
@@ -271,7 +296,7 @@ const PersonalDetails = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              Male
+              {gender ? gender : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -292,7 +317,7 @@ const PersonalDetails = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              Schedule 1
+              {nameSchedule ? nameSchedule : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
