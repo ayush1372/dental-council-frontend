@@ -260,8 +260,8 @@ export default function Dashboard() {
         />
       ) : showViewProfile ? (
         <Box>
-          <ViewProfile />
           <Container sx={{ marginTop: 2 }}>
+            <ViewProfile />
             <UserProfile
               setShowDashboard={setShowDashboard}
               setShowTable={setShowTable}

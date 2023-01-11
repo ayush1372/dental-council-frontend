@@ -102,19 +102,19 @@ export default function ApplicationStepper({ activeStep = 1, steps }) {
           <Typography variant="body3" color="grey.label">
             SMC will verify the applcation and take action
           </Typography>
-          <Chip type="submitted" label="In Progress" />
+          <Chip type="submitted" label="In Progress" sx={{ ml: 1 }} />
         </Grid>
         <Grid item xs={8} md={3}>
           <Typography variant="body3" color="grey.label">
             NMC will verify the applcation and take action
           </Typography>
-          <Chip type="pending" label="Pending" />
+          <Chip type="pending" label="Pending" sx={{ ml: 1 }} />
         </Grid>
         <Grid item xs={8} md={3}>
           <Typography variant="body3" color="grey.label">
             Application can be approved or rejected
           </Typography>
-          <Chip type="pending" label="Pending" />
+          <Chip type="pending" label="Pending" sx={{ ml: 1 }} />
         </Grid>
       </Grid>
     </Grid>

@@ -26,8 +26,8 @@ export function ViewProfile(props) {
                 xs: 'fit-content',
                 md: '250px',
               },
-              marginLeft: 0,
-              marginRight: -3,
+              // marginLeft: 0,
+              // marginRight: -3,
             }}
             value="email"
             control={<Switch color="primary" defaultChecked />}
