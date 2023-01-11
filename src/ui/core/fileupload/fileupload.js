@@ -96,8 +96,8 @@ export const UploadFile = (props) => {
             <UploadFileIcon color="primary" />
           </div>
           <div>
-            <span className={styles.dragDropFiles}>Drag and drop files,or </span>
-            <span className={styles.browseFiles}>Browse</span>
+            <span className={styles.browseFiles}>Drag and drop files,or </span>
+            <span className={styles.browseFiles}>browse</span>
           </div>
           <div className={styles.dragDropFiles}>{fileMessage}</div>
           <input

@@ -201,7 +201,7 @@ function FetchDoctorDetails() {
                     pattern: {
                       value:
                         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-                      message: 'Provide a Valid Email ID',
+                      message: 'Enter Valid Email ID',
                     },
                   })}
                   InputProps={{
@@ -289,7 +289,7 @@ function FetchDoctorDetails() {
                       required: 'Mobile Number is required',
                       pattern: {
                         value: /^\d{10}$/i,
-                        message: 'Provide a Valid Phone Number',
+                        message: 'Enter Valid Mobile Number',
                       },
                     })}
                     InputProps={{

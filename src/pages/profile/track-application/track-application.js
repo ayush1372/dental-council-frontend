@@ -41,7 +41,7 @@ export function TrackApplication() {
           </Box>
           <Box>
             <ViewProfile />
-            <UserProfile showUserProfile={showUserProfile} />
+            <UserProfile showUserProfile={showUserProfile} showViewProfile={true} />
           </Box>
         </Box>
       )}

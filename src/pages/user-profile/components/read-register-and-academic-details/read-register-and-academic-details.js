@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import AddIcon from '@mui/icons-material/Add';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import RemoveIcon from '@mui/icons-material/Remove';
 import {
   Accordion,
@@ -19,7 +20,7 @@ import RegistrationDetailsContent from '../readable-content/registration-details
 const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack, showActions = true }) => {
   const [accordionKey, setAccordionKey] = useState('accordion-0');
   const userType = useSelector((state) => state.common.loggedInUserType);
-
+  const { doctorUserProfile } = useSelector((state) => state?.doctorUserProfileReducer);
   const accordions = [
     {
       title: 'Registration Details',
@@ -59,12 +60,12 @@ const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack, showActions = 
               }}
             >
               <AccordionSummary expandIcon={accordionKey === key ? <RemoveIcon /> : <AddIcon />}>
-                <Typography variant="body1" color="primary">
+                <Typography variant="body1" color="primary.main">
                   {accordion.title}
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Component />
+                <Component doctorUserProfile={doctorUserProfile} />
               </AccordionDetails>
             </Accordion>
           );
@@ -87,7 +88,7 @@ const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack, showActions = 
                 disabled
                 sx={{ margin: '16px 20px 0px 0px' }}
               >
-                Action...
+                Action <MoreHorizIcon />
               </Button>
             )}
             <ButtonGroupWizard handleNext={handleNext} />
