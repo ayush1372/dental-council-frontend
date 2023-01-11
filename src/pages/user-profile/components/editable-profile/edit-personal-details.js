@@ -5,8 +5,8 @@ import { Box, Button, Grid, IconButton, InputAdornment, Typography } from '@mui/
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 
-import { verboseLog } from '../../../../config/debug';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
 import { get_year_data } from '../../../../helpers/functions/common-functions';
 import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
@@ -18,6 +18,7 @@ import {
 } from '../../../../store/actions/menu-list-actions';
 import { RadioGroup, Select, TextField } from '../../../../ui/core';
 import MobileNumber from '../../../../ui/core/mobile-number/mobile-number';
+import successToast from '../../../../ui/core/toaster';
 
 const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const { t } = useTranslation();
@@ -72,11 +73,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const fetchDistricts = (stateId) => {
     if (stateId) {
       dispatch(getDistrictList(stateId))
-        .then((dataResponse) => {
-          verboseLog('dataResponse', dataResponse);
-        })
-        .catch((error) => {
-          verboseLog('error occured', error);
+        .then(() => {})
+        .catch((allFailMsg) => {
+          successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
         });
     }
   };
@@ -84,26 +83,18 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const fetchSubDistricts = (districtId) => {
     if (districtId) {
       dispatch(getSubDistrictsList(districtId))
-        .then((dataResponse) => {
-          verboseLog('dataResponse', dataResponse);
-        })
-        .catch((error) => {
-          verboseLog('error occured', error);
+        .then(() => {})
+        .catch((allFailMsg) => {
+          successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
         });
     }
   };
 
   const fetchCities = (subDistrictId) => {
     try {
-      dispatch(getCitiesList(subDistrictId))
-        .then((dataResponse) => {
-          verboseLog('dataResponse', dataResponse);
-        })
-        .catch((error) => {
-          verboseLog('error occured', error);
-        });
-    } catch (err) {
-      verboseLog('error', err);
+      dispatch(getCitiesList(subDistrictId)).then(() => {});
+    } catch (allFailMsg) {
+      successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
     }
   };
 
@@ -161,6 +152,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
         },
       }}
     >
+      <ToastContainer></ToastContainer>
       <Grid container spacing={2} mt={2}>
         {/* layer 1 */}
         <Grid container item spacing={2}>
