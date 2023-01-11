@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { Box, Button, Grid, IconButton, InputAdornment, Typography } from '@mui/material';
+import { Box, Button, Grid, IconButton, InputAdornment, Typography, useTheme } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,6 +16,7 @@ import { RadioGroup, Select, TextField } from '../../../../ui/core';
 import MobileNumber from '../../../../ui/core/mobile-number/mobile-number';
 
 const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
+  const theme = useTheme();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const loggedInUserType = useSelector((state) => state?.login?.loggedInUserType);
@@ -134,7 +135,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       sx={{
         padding: {
           xs: '0px 10px 10px 10px',
-          md: '0px 91px 44px 41px',
+          md: '0px 41px 44px 41px',
         },
       }}
     >
@@ -227,7 +228,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               fullWidth
               defaultValue={getValues().FirstName}
               {...register('FirstName', {
-                required: 'First Name is Required',
+                required: 'Missing field',
                 maxLength: {
                   value: 100,
                   message: 'Length should be less than 100.',
@@ -281,7 +282,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               fullWidth
               defaultValue={getValues().LastName}
               {...register('LastName', {
-                required: 'Last Name is Required',
+                required: 'Missing field',
                 maxLength: {
                   value: 100,
                   message: 'Length should be less than 100.',
@@ -310,7 +311,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               fullWidth
               defaultValue={getValues().FatherName}
               {...register('FatherName', {
-                required: 'Father Name is Required',
+                required: 'Missing field',
                 maxLength: {
                   value: 100,
                   message: 'Length should be less than 100.',
@@ -333,7 +334,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               fullWidth
               defaultValue={getValues().MotherName}
               {...register('MotherName', {
-                required: 'Mother Name is Required',
+                required: 'Missing field',
                 maxLength: {
                   value: 100,
                   message: 'Length should be less than 100.',
@@ -356,7 +357,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               fullWidth
               defaultValue={getValues().SpouseName}
               {...register('SpouseName', {
-                required: 'Spouse Name is Required',
+                required: 'Missing field',
                 maxLength: {
                   value: 100,
                   message: 'Length should be less than 100.',
@@ -411,7 +412,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               error={languages.length === 0 && errors.LanguageSpoken?.message}
               multiple={true}
               {...register('LanguageSpoken', {
-                required: 'Languages are required',
+                required: 'Missing field',
               })}
               onChange={(value) => {
                 handleLanguageSpokenChange('LanguageSpoken', value);
@@ -876,6 +877,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               {...register('IMRID', {
                 required: 'IMR ID is Required',
               })}
+              sx={{
+                input: {
+                  backgroundColor: theme.palette.grey2.main,
+                },
+              }}
+              InputProps={{ readOnly: true }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -897,6 +904,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 required: 'Year of info is required',
               })}
               options={get_year_data(1930)}
+              sx={{
+                '.MuiSelect-select': {
+                  backgroundColor: theme.palette.grey2.main,
+                },
+              }}
+              InputProps={{ readOnly: true }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -916,6 +929,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               {...register('RegistrationNumber', {
                 required: 'Registration Number is Required',
               })}
+              sx={{
+                input: {
+                  backgroundColor: theme.palette.grey2.main,
+                },
+              }}
+              InputProps={{ readOnly: true }}
             />
           </Grid>
         </Grid>

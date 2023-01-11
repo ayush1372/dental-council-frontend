@@ -6,13 +6,23 @@ import { useSelector } from 'react-redux';
 
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
-const QualificationDetailsContent = () => {
+const QualificationDetailsContent = ({ doctorUserProfile }) => {
   const [openModal, setOpenModal] = useState(false);
   const ClosePopup = () => {
     setOpenModal(false);
   };
   const { userActiveTab } = useSelector((state) => state.common);
-
+  const {
+    country: { name: countryName },
+    state: { name: stateName },
+    college: { name: collegeName },
+    university: { name: universityName },
+    course: { name: courseName },
+    qualification_year,
+    is_name_change,
+  } = doctorUserProfile && Object.values(doctorUserProfile).length > 3
+    ? doctorUserProfile.qualification_detail[3]
+    : { country: {}, state: {}, college: {}, university: {}, course: {} };
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2} mt={1}>
@@ -25,7 +35,7 @@ const QualificationDetailsContent = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography color="primary.main" variant="subtitle2">
-              Bachelor of Dental Surgery
+              {courseName ? courseName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -48,7 +58,7 @@ const QualificationDetailsContent = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              India
+              {countryName ? countryName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -69,7 +79,7 @@ const QualificationDetailsContent = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography color="primary.main" variant="subtitle2">
-              New Delhi
+              {stateName ? stateName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -91,7 +101,7 @@ const QualificationDetailsContent = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              Care Dental College
+              {collegeName ? collegeName : ''}
             </Typography>
 
             {userActiveTab === 'dashboard' && (
@@ -113,7 +123,7 @@ const QualificationDetailsContent = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              Dr. NTR University of Health sciences
+              {universityName ? universityName : ''}
             </Typography>{' '}
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -154,7 +164,7 @@ const QualificationDetailsContent = () => {
 
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              2016
+              {qualification_year ? qualification_year : ''}
             </Typography>{' '}
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -174,7 +184,7 @@ const QualificationDetailsContent = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              No
+              {is_name_change === 0 ? 'Yes' : is_name_change === 1 ? 'No' : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon

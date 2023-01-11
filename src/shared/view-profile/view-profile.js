@@ -1,9 +1,9 @@
-import { Box, Container, Grid, Typography } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 export function ViewProfile(props) {
   return (
-    <Container>
+    <>
       <Box display={'flex'} flexDirection={{ xs: 'column', md: 'row' }}>
         <Typography
           sx={{ marginBottom: '0px' }}
@@ -26,8 +26,8 @@ export function ViewProfile(props) {
                 xs: 'fit-content',
                 md: '250px',
               },
-              marginLeft: 0,
-              marginRight: -3,
+              // marginLeft: 0,
+              // marginRight: -3,
             }}
             value="email"
             control={<Switch color="primary" defaultChecked />}
@@ -118,7 +118,7 @@ export function ViewProfile(props) {
           </Grid>
         </Grid>
       </Box>
-    </Container>
+    </>
   );
 }
 

@@ -7,13 +7,26 @@ import { useSelector } from 'react-redux';
 
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
-const RegistrationDetailsContent = () => {
+const RegistrationDetailsContent = ({ doctorUserProfile }) => {
   const { userActiveTab } = useSelector((state) => state.common);
 
   const [openModal, setOpenModal] = useState(false);
   const ClosePopup = () => {
     setOpenModal(false);
   };
+  const {
+    registration_detail: {
+      registration_date,
+      registration_number,
+      state_medical_council: { name: smcName },
+      is_renewable,
+      renewable_registration_date,
+      is_name_change,
+    },
+  } =
+    doctorUserProfile && Object.values(doctorUserProfile).length > 3
+      ? doctorUserProfile
+      : { registration_detail: { state_medical_council: {} } };
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2} mt={1}>
@@ -26,7 +39,7 @@ const RegistrationDetailsContent = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              West Bengal Medical Council
+              {smcName ? smcName : ''}
             </Typography>
 
             {userActiveTab === 'dashboard' && (
@@ -48,7 +61,7 @@ const RegistrationDetailsContent = () => {
           </Typography>
           <Grid display="flex">
             <Typography color="primary.main" variant="subtitle2">
-              7991749871719
+              {registration_number ? registration_number : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -68,7 +81,7 @@ const RegistrationDetailsContent = () => {
           </Typography>
           <Grid display="flex">
             <Typography color="primary.main" variant="subtitle2">
-              30-10-2021
+              {registration_date ? registration_date : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -90,7 +103,7 @@ const RegistrationDetailsContent = () => {
           </Typography>
           <Grid display="flex">
             <Typography variant="subtitle2" color="primary.main">
-              Permanent
+              {is_renewable === '1' ? 'Permanent' : is_renewable === '2' ? 'Renewable' : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -107,7 +120,7 @@ const RegistrationDetailsContent = () => {
           </Typography>
           <Grid display="flex">
             <Typography color="primary.main" variant="subtitle2">
-              30-10-2022
+              {renewable_registration_date ? renewable_registration_date : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -127,7 +140,7 @@ const RegistrationDetailsContent = () => {
           </Typography>
           <Grid display="flex">
             <Typography variant="subtitle2" color="primary.main">
-              Yes
+              {is_name_change === '0' ? 'Yes' : is_name_change === '1' ? 'No' : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon

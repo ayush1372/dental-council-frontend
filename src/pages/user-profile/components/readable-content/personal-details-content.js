@@ -6,13 +6,33 @@ import { useSelector } from 'react-redux';
 
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
-const PersonalDetails = () => {
+const PersonalDetails = ({ doctorUserProfile }) => {
   const { userActiveTab } = useSelector((state) => state.common);
 
   const [openModal, setOpenModal] = useState(false);
   const ClosePopup = () => {
     setOpenModal(false);
   };
+  const {
+    personal_details: {
+      first_name,
+      last_name,
+      aadhaar_token,
+      date_of_birth,
+      father_name,
+      gender,
+      language,
+      middle_name,
+      mother_name,
+      country_nationality: { name: nationality },
+      salutation,
+      schedule: { name: nameSchedule },
+      spouse_name,
+    },
+  } =
+    doctorUserProfile && Object.values(doctorUserProfile).length > 3
+      ? doctorUserProfile
+      : { personal_details: { country_nationality: {}, schedule: {} } };
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
@@ -25,7 +45,7 @@ const PersonalDetails = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              Dr.
+              {salutation ? salutation : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -48,7 +68,7 @@ const PersonalDetails = () => {
             </Typography>
             <Grid display="flex" alignItems="center">
               <Typography p={1} variant="subtitle2" color="inputTextColor.light">
-                xxxx-xxxx-4688
+                xxxx-xxxx-{aadhaar_token ? aadhaar_token : 'XXXX'}
               </Typography>
               {userActiveTab === 'dashboard' && (
                 <EditOutlinedIcon
@@ -70,7 +90,7 @@ const PersonalDetails = () => {
               </Typography>
             </Typography>
             <Typography variant="subtitle2" color="primary.main">
-              Dr.
+              {salutation ? salutation : ''}
             </Typography>
           </Grid>
         )}
@@ -87,7 +107,7 @@ const PersonalDetails = () => {
 
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              Aarnav
+              {first_name ? first_name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -105,7 +125,7 @@ const PersonalDetails = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              Your Middle Name
+              {middle_name ? middle_name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -126,7 +146,7 @@ const PersonalDetails = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              Sharma
+              {last_name ? last_name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -150,7 +170,7 @@ const PersonalDetails = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              Praveen Sharma
+              {father_name ? father_name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -168,7 +188,7 @@ const PersonalDetails = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              Savita Sharma
+              {mother_name ? mother_name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -186,7 +206,7 @@ const PersonalDetails = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              Poonam Bala
+              {spouse_name ? spouse_name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -210,7 +230,7 @@ const PersonalDetails = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              Indian
+              {nationality ? nationality : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -231,7 +251,7 @@ const PersonalDetails = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              Hindi, English
+              {language && language[0]?.name ? language[0]?.name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -252,7 +272,7 @@ const PersonalDetails = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              09-18-1989
+              {date_of_birth ? date_of_birth : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -276,7 +296,7 @@ const PersonalDetails = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              Male
+              {gender ? gender : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -297,7 +317,7 @@ const PersonalDetails = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              Schedule 1
+              {nameSchedule ? nameSchedule : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
