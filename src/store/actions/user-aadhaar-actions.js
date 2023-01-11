@@ -1,10 +1,9 @@
 import { API } from '../../api/api-endpoints';
-import { verboseLog } from '../../config/debug';
 import { POST } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
-import { userTxId } from '../reducers/aaadhaar-tnxid-reducer';
+import { aadhaarNumberData } from '../reducers/user-aadhaar-verify-reducer';
 
-export const sendAaadharOtp = async (aadhaarNumberValue, dispatch) => {
+export const sendAaadharOtp = (aadhaarNumberValue) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: POST,
@@ -12,21 +11,15 @@ export const sendAaadharOtp = async (aadhaarNumberValue, dispatch) => {
       data: aadhaarNumberValue,
     })
       .then((response) => {
-        dispatch(userTxId());
-        // verboseLog('otp response===>', response);
-        // localStorage.setItem('transid', response.data.DOAuthOTP.uidtkn);
-        return response.DOAuthOTP.uidtkn;
+        dispatch(aadhaarNumberData(response));
+        return resolve(response.DOAuthOTP.uidtkn);
       })
       .catch((error) => {
         return reject(error);
       });
   });
 };
-export const validateOtpAadhaar = async () => {
-  const aadhaarNumber = localStorage.getItem('aadharNumber');
-  const txnId = localStorage.getItem('transid');
-  const otp = localStorage.getItem('otp');
-
+export const validateOtpAadhaar = async (aadhaarNumber, txnId, otp) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: POST,
@@ -34,7 +27,6 @@ export const validateOtpAadhaar = async () => {
       data: { aadhaarNumber, txnId, otp },
     })
       .then((response) => {
-        verboseLog('otp response===>', response);
         return resolve(response);
       })
       .catch((error) => {

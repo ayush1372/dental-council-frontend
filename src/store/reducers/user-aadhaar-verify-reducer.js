@@ -1,20 +1,19 @@
-/* eslint-disable no-console */
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  tnxID: { data: '', isLoading: Boolean(true), isError: false },
+  aadharData: { data: [], isLoading: Boolean(true), isError: false },
 };
 
 export const AadhaarTransactionId = createSlice({
   name: 'AadhaarTransactionId',
   initialState,
   reducers: {
-    userTxId: (state, action) => {
-      state.tnxID = action.payload;
+    aadhaarNumberData: (state, action) => {
+      state.aadharData = action.payload;
     },
   },
 });
 
-export const { userTxId } = AadhaarTransactionId.actions;
+export const { aadhaarNumberData } = AadhaarTransactionId.actions;
 
 export default AadhaarTransactionId.reducer;

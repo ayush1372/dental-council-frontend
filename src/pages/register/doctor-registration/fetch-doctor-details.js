@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -11,10 +10,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { verboseLog } from '../../../config/debug';
 import { encryptData } from '../../../constants/common-data';
 import OtpForm from '../../../shared/otp-form/otp-component';
-import { sendAaadharOtp, validateOtpAadhaar } from '../../../store/actions/aadhaar-action';
-import { userAadharNumber } from '../../../store/reducers/common-reducers';
+import { sendAaadharOtp, validateOtpAadhaar } from '../../../store/actions/user-aadhaar-actions';
 import { Button, TextField } from '../../../ui/core';
-import AadhaarInputField from '../doctor-registration/aadhaar-input-field';
+import AadhaarInputField from '../../../ui/core/aadhaar-input-field/aadhaar-input-field';
 import UniqueUserNameForDoctorRegistration from './unique-username';
 
 function FetchDoctorDetails() {
@@ -27,10 +25,8 @@ function FetchDoctorDetails() {
   const [isOtpValidMobile, setisOtpValidMobile] = useState(false);
   const [isOtpValidAadhar, setisOtpValidAadhar] = useState(false);
   const [enableSubmit, setEnableSubmit] = useState(false);
-  const [adhrState, setadhrState] = useState('');
+  const [aadhaarState, setAadhaarState] = useState('');
   const dispatch = useDispatch();
-  const finalOtp = useSelector((state) => state);
-  console.log('final otp----', finalOtp);
 
   const {
     register,
@@ -62,7 +58,7 @@ function FetchDoctorDetails() {
   const handleVerifyMobile = () => {
     if (isOtpValidEmail === true) {
       setShowOtpMobile(true);
-      isOtpValidMobile(false);
+      setisOtpValidMobile(false);
     }
   };
   const handleValidateMobile = () => {
@@ -78,46 +74,34 @@ function FetchDoctorDetails() {
   };
 
   const onSubmit = (dataValue) => {
-    verboseLog('adhar datavalue', dataValue);
-    verboseLog(encryptData(dataValue.field_1 + dataValue.field_2 + dataValue.field_3));
-    dispatch(
-      userAadharNumber(
-        encryptData(dataValue.field_1 + dataValue.field_2 + dataValue.field_3, 'aadharNumber')
-      )
-    );
-    let adhrvalue = encryptData(
+    let encryptedUserAadhaarNumber = encryptData(
       dataValue.field_1 + dataValue.field_2 + dataValue.field_3,
       'aadharNumber'
     );
-    console.log(adhrvalue, 'adhrvalue');
-    handleVerifyAadhar(adhrvalue);
+    handleVerifyAadhar(encryptedUserAadhaarNumber);
   };
 
-  const handleVerifyAadhar = async (value) => {
-    setadhrState(value);
-
-    let transactionId = await sendAaadharOtp(value);
-    console.log('txid---', transactionId);
+  const handleVerifyAadhar = (value) => {
+    setAadhaarState(value);
+    dispatch(sendAaadharOtp(value));
     if (isOtpValidEmail === true && isOtpValidMobile === true) {
       setshowOtpAadhar(true);
-      isOtpValidMobile(false);
-      isOtpValidEmail(false);
+      setisOtpValidMobile(false);
+      setisOtpValidEmail(false);
     }
-    // console.log('api calling', sendAaadharOtp(value))
   };
 
-  console.log('adhr state', adhrState);
+  const finalTransactionId = useSelector(
+    (state) => state?.AadhaarTransactionId?.aadharData?.data?.DOAuthOTP?.uidtkn
+  );
 
   const handleValidateAadhar = () => {
     let userOtp = encryptData(otpValue, 'otp');
-    console.log('userotp', userOtp);
     if (otpValue.length === 6) {
+      dispatch(validateOtpAadhaar(aadhaarState, finalTransactionId, userOtp));
       setisOtpValidAadhar(true);
-      validateOtpAadhaar();
       setshowOtpAadhar(false);
       handleClear();
-      localStorage.clear();
-
       if (isOtpValidAadhar === true && isOtpValidMobile === true) {
         setEnableSubmit(true);
       }
@@ -307,10 +291,6 @@ function FetchDoctorDetails() {
                 <Box
                   sx={{
                     display: 'flex',
-                    // flexDirection: {
-                    //   xs: 'column',
-                    //   sm: 'row',
-                    // },
                   }}
                 >
                   <TextField
