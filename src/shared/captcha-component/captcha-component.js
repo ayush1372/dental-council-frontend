@@ -79,15 +79,15 @@ const CaptchaComponent = ({ captchaResult }) => {
               </Grid>
               <Grid container alignItems="center" justifyContent="center" gap={1} flexWrap="wrap">
                 <Grid item xs="auto">
-                  <Typography fontSize="small" color="gray.dark">
-                    Type answer-
+                  <Typography variant="body3" color="gray.dark">
+                    Type answer -
                   </Typography>
                 </Grid>
                 <Grid item xs={6} flexGrow="1">
                   <TextField
                     // className={`${!error ? 'text-captcha' : 'text-captcha-danger'}`}
                     name="anwser"
-                    placeholder="Enter answer"
+                    placeholder="Enter Answer"
                     value={anwser}
                     onBlur={onFocusChange}
                     onChange={handleChange}
