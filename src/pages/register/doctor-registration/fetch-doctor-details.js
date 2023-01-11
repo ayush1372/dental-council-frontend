@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { verboseLog } from '../../../config/debug';
-import { encryptData } from '../../../constants/common-data';
+import { encryptData } from '../../../helpers/functions/common-functions';
 import OtpForm from '../../../shared/otp-form/otp-component';
 import { sendAaadharOtp, validateOtpAadhaar } from '../../../store/actions/user-aadhaar-actions';
 import { Button, TextField } from '../../../ui/core';
@@ -75,8 +75,7 @@ function FetchDoctorDetails() {
 
   const onSubmit = (dataValue) => {
     let encryptedUserAadhaarNumber = encryptData(
-      dataValue.field_1 + dataValue.field_2 + dataValue.field_3,
-      'aadharNumber'
+      dataValue.field_1 + dataValue.field_2 + dataValue.field_3
     );
     handleVerifyAadhar(encryptedUserAadhaarNumber);
   };
@@ -86,8 +85,8 @@ function FetchDoctorDetails() {
     dispatch(sendAaadharOtp(value));
     if (isOtpValidEmail === true && isOtpValidMobile === true) {
       setshowOtpAadhar(true);
-      setisOtpValidMobile(false);
-      setisOtpValidEmail(false);
+      // setisOtpValidMobile(false);
+      // setisOtpValidEmail(false);
     }
   };
 
@@ -96,11 +95,12 @@ function FetchDoctorDetails() {
   );
 
   const handleValidateAadhar = () => {
-    let userOtp = encryptData(otpValue, 'otp');
+    let userOtp = encryptData(otpValue);
+    setshowOtpAadhar(false);
+    setisOtpValidAadhar(true);
+
     if (otpValue.length === 6) {
       dispatch(validateOtpAadhaar(aadhaarState, finalTransactionId, userOtp));
-      setisOtpValidAadhar(true);
-      setshowOtpAadhar(false);
       handleClear();
       if (isOtpValidAadhar === true && isOtpValidMobile === true) {
         setEnableSubmit(true);
@@ -123,7 +123,6 @@ function FetchDoctorDetails() {
         : Math.max(0, parseInt(e.target.value)).toString().slice(0, 10);
     }
   };
-
   return (
     <>
       {showEditScreen ? (
@@ -379,10 +378,14 @@ function FetchDoctorDetails() {
                   />
                 </Box>
                 <Box p="35px 32px 0px 32px">
-                  {isOtpValidAadhar ? <CheckCircleIcon color="success" /> : ''}
+                  <IconButton aria-label="toggle password visibility" edge="end">
+                    {isOtpValidAadhar === true ? <CheckCircleIcon color="success" /> : ''}
+                  </IconButton>
+
+                  {/* {isOtpValidAadhar ===true ? <CheckCircleIcon color="success" /> : ''} */}
                 </Box>
 
-                {!showOtpAadhar && !isOtpValidAadhar && (
+                {isOtpValidAadhar === false && showOtpAadhar === false && (
                   <Box mt={3}>
                     <Button
                       variant="contained"
@@ -396,7 +399,7 @@ function FetchDoctorDetails() {
                 )}
               </Box>
             </Box>
-            {showOtpAadhar && (
+            {showOtpAadhar === true && (
               <Box
                 sx={{
                   display: 'flex',

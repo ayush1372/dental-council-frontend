@@ -1,3 +1,7 @@
+import JSEncrypt from 'jsencrypt';
+
+import { verboseLog } from '../../config/debug';
+
 export function get_year_data(startYear = 1900) {
   var ans = [];
   var date = new Date();
@@ -26,4 +30,12 @@ export const changeAppFontSize = (size, appFontType) => {
   const fontSize =
     appFontType === 'small' ? `${size - 2}` : appFontType === 'large' ? `${size + 2}` : `${size}`;
   return `${fontSize}px`;
+};
+export const encryptData = (data) => {
+  var publicKey = process.env.REACT_APP_PUBLIC_KEY;
+  var encrypt = new JSEncrypt();
+  encrypt.setPublicKey(publicKey);
+  var encryptedPass = encrypt.encrypt(data);
+  verboseLog('encryption pass & key==>', encryptedPass);
+  return encryptedPass;
 };
