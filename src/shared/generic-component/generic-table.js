@@ -197,7 +197,7 @@ export default function GenericTable(props) {
                               <Button
                                 endIcon={<MoreVertSharpIcon />}
                                 variant="contained"
-                                color="white"
+                                // color="white"
                                 {...bindTrigger(popupState)}
                                 sx={{
                                   width: 'max-content',
