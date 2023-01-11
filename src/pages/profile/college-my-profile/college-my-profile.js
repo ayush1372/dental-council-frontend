@@ -5,7 +5,7 @@ import { Grid, Typography } from '@mui/material';
 
 import { collegeProfileData } from '../../../constants/common-data';
 import { Button } from '../../../ui/core';
-import ChangePassword from '../change-password/change-password';
+// import ChangePassword from '../change-password/change-password';
 import CollegeEditProfile from './college-edit-profile';
 const CollegeMyProfile = () => {
   const [showPage, setShowpage] = useState('Profile');
@@ -19,7 +19,7 @@ const CollegeMyProfile = () => {
                 My Profile
               </Typography>
             </Grid>
-            <Grid item xs={12} sm="auto">
+            {/* <Grid item xs={12} sm="auto">
               <Button
                 fullWidth
                 variant="contained"
@@ -28,7 +28,7 @@ const CollegeMyProfile = () => {
               >
                 Change Password
               </Button>
-            </Grid>
+            </Grid> */}
             <Grid item xs={12} sm="auto">
               <Button
                 fullWidth
@@ -133,7 +133,7 @@ const CollegeMyProfile = () => {
         </Grid>
       )}
       {showPage === 'Edit' && <CollegeEditProfile />}
-      {showPage === 'ChangePassword' && <ChangePassword />}
+      {/* {showPage === 'ChangePassword' && <ChangePassword />} */}
     </Grid>
   );
 };
