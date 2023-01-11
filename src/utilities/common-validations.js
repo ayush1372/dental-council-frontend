@@ -72,7 +72,8 @@ export const PasswordRegexValidation = {
   required: 'Provide  valid  Password',
   pattern: {
     value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&])[A-Za-z\d@$!%*?#&]{8,}$/,
-    message: 'Minimum eight characters, at least one letter, one number and one special character',
+    message:
+      'Create valid password including an uppercase, a lowercase, a number and a special character',
   },
 };
 

@@ -20,7 +20,7 @@ import RegistrationDetailsContent from '../readable-content/registration-details
 const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack, showActions = true }) => {
   const [accordionKey, setAccordionKey] = useState('accordion-0');
   const userType = useSelector((state) => state.common.loggedInUserType);
-
+  const { doctorUserProfile } = useSelector((state) => state?.doctorUserProfileReducer);
   const accordions = [
     {
       title: 'Registration Details',
@@ -60,12 +60,12 @@ const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack, showActions = 
               }}
             >
               <AccordionSummary expandIcon={accordionKey === key ? <RemoveIcon /> : <AddIcon />}>
-                <Typography variant="body1" color="primary">
+                <Typography variant="body1" color="primary.main">
                   {accordion.title}
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Component />
+                <Component doctorUserProfile={doctorUserProfile} />
               </AccordionDetails>
             </Accordion>
           );
