@@ -59,19 +59,19 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               color="tabHighlightedBackgroundColor.main"
               variant="h3"
             >
-              Speciality Details*
+              Specialty Details*
             </Typography>
           </Grid>
           <Grid item xs={12} md={4}>
             <Select
               fullWidth
-              error={errors.Speciality?.message}
-              name="Speciality"
-              label="Broad Speciality"
-              defaultValue={getValues().Speciality}
+              error={errors.Specialty?.message}
+              name="Specialty"
+              label="Broad Specialty"
+              defaultValue={getValues().Specialty}
               required={true}
-              {...register('Speciality', {
-                required: 'Speciality is required',
+              {...register('Specialty', {
+                required: 'Specialty is required',
               })}
               options={[
                 {
@@ -83,19 +83,19 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
-              Super Speciality
+              Super Specialty
               <Typography component="span" color="error.main">
                 *
               </Typography>
             </Typography>
             <TextField
               variant="outlined"
-              name={'subSpeciality'}
-              placeholder="Enter Super Speciality"
+              name={'subSpecialty'}
+              placeholder="Enter Super Specialty"
               required={true}
               fullWidth
-              defaultValue={getValues().subSpeciality}
-              {...register('subSpeciality')}
+              defaultValue={getValues().subSpecialty}
+              {...register('subSpecialty')}
             />
           </Grid>
         </Grid>
