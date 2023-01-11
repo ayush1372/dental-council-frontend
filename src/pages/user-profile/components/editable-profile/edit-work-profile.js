@@ -44,7 +44,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
       sx={{
         padding: {
           xs: '0px 10px 10px 10px',
-          md: '0px 91px 44px 41px',
+          md: '0px 41px 44px 41px',
         },
       }}
     >
