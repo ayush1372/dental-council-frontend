@@ -45,7 +45,7 @@ export default function TrackStatus() {
             <Grid item xs={12} md={4}>
               <Box pb={{ xs: 2, md: 4 }}>
                 <Typography color="inputTextColor.main">
-                  Medical Council Name
+                  Council Name
                   <Typography component="span" color="error.main">
                     *
                   </Typography>
@@ -54,11 +54,15 @@ export default function TrackStatus() {
                   sx={{ mt: 1 }}
                   name="RegistrationCouncil"
                   items={RegistrationCouncilNames}
-                  placeholder="Select Medical Council Name"
+                  placeholder={
+                    loggedInUserType !== 'SMC'
+                      ? 'Select Council Name'
+                      : 'Maharashtra Medical Council'
+                  }
                   clearErrors={clearErrors}
-                  error={errors.RegistrationCouncil?.message}
+                  error={loggedInUserType !== 'SMC' && errors.RegistrationCouncil?.message}
                   {...register('RegistrationCouncil', {
-                    required: 'Medical Council is required',
+                    required: loggedInUserType !== 'SMC' && 'Council Name is required',
                   })}
                   disabled={loggedInUserType === 'SMC'}
                 />
@@ -67,7 +71,7 @@ export default function TrackStatus() {
             <Grid item xs={12} md={4}>
               <Box pb={{ xs: 2, md: 4 }}>
                 <Typography color="inputTextColor.main">
-                  Medical Council Name
+                  Registration Number
                   <Typography component="span" color="error.main">
                     *
                   </Typography>

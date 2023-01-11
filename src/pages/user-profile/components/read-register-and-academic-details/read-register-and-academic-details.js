@@ -19,7 +19,8 @@ import RegistrationDetailsContent from '../readable-content/registration-details
 
 const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack, showActions = true }) => {
   const [accordionKey, setAccordionKey] = useState('accordion-0');
-  const userType = useSelector((state) => state.common.loggedInUserType);
+  // const userType = useSelector((state) => state.common.loggedInUserType);
+  const { userActiveTab } = useSelector((state) => state.common);
   const { doctorUserProfile } = useSelector((state) => state?.doctorUserProfileReducer);
   const accordions = [
     {
@@ -81,7 +82,7 @@ const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack, showActions = 
           <ButtonGroupWizard handlePrevious={handleBack} />
 
           <Box display="flex" justifyContent="flex-end">
-            {userType !== 'Doctor' && (
+            {userActiveTab === 'dashboard' && (
               <Button
                 variant="contained"
                 color="secondary"

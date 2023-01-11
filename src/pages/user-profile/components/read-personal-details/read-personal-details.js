@@ -19,8 +19,9 @@ import CommunicationAddressContent from '../readable-content/communication-detai
 import IMRDetailsContent from '../readable-content/imr-details-content';
 import PersonalDetailsContent from '../readable-content/personal-details-content';
 const ReadPersonalDetails = ({ handleNext, showActions = true }) => {
-  const userType = useSelector((state) => state.common.loggedInUserType);
+  // const userType = useSelector((state) => state.common.loggedInUserType);
   const { doctorUserProfile } = useSelector((state) => state?.doctorUserProfileReducer);
+  const { userActiveTab } = useSelector((state) => state.common);
   const { t } = useTranslation();
   const [accordionKey, setAccordionKey] = useState('accordion-0');
   const accordions = [
@@ -79,7 +80,7 @@ const ReadPersonalDetails = ({ handleNext, showActions = true }) => {
       </Box>
       {showActions && (
         <Box px={3} display="flex" justifyContent="flex-end">
-          {userType !== 'Doctor' && (
+          {userActiveTab === 'dashboard' && (
             <Button
               variant="contained"
               color="secondary"

@@ -38,7 +38,7 @@ export default function RejectLicenseModal(props) {
               alignItems={'center'}
               justifyContent={'center'}
             >
-              Reason to Reject application
+              Reason to Reject Application
             </Typography>
             <Box>
               <Box>
