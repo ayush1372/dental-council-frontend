@@ -7,13 +7,28 @@ import { useSelector } from 'react-redux';
 
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
-const WorkDetails = () => {
+const WorkDetails = ({ doctorUserProfile }) => {
   const { userActiveTab } = useSelector((state) => state.common);
 
   const [openModal, setOpenModal] = useState(false);
   const ClosePopup = () => {
     setOpenModal(false);
   };
+  const {
+    work_details: {
+      is_user_currently_working,
+      work_status: { name: workStatusName },
+      work_nature: { name: workNatureName },
+    },
+  } =
+    doctorUserProfile && Object.values(doctorUserProfile).length > 3
+      ? doctorUserProfile
+      : {
+          work_details: {
+            work_status: {},
+            work_nature: {},
+          },
+        };
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
@@ -26,7 +41,11 @@ const WorkDetails = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              No
+              {is_user_currently_working === 0
+                ? 'Yes'
+                : is_user_currently_working === 1
+                ? 'No'
+                : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -47,7 +66,7 @@ const WorkDetails = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              Nature of Work
+              {workNatureName ? workNatureName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -70,7 +89,7 @@ const WorkDetails = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              Government Only
+              {workStatusName ? workStatusName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
