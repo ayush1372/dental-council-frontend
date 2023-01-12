@@ -7,6 +7,7 @@ import commonActivity from './reducers/common-reducers';
 import appFontSizeActivity from './reducers/app-font-size';
 import captchaReducer from './reducers/captcha-reducers';
 import menuListsReducer from './reducers/menu-lists-reducer';
+import navMenu from './reducers/nav-menu-reducer';
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     appFontSize: appFontSizeActivity,
     getCaptchaData: captchaReducer,
     menuLists: menuListsReducer,
+    navMenu: navMenu.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(thunk).concat(logger),
   devTools: true,

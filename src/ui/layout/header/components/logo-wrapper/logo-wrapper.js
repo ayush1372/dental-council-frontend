@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 import DigitalIndia from '../../../../../assets/images/logo-slider/digital-India.png';
 import { logout, resetCommonReducer } from '../../../../../store/reducers/common-reducers';
+// import { uiActions } from '../../../../../store/reducers/nav-menu-reducer';
 import { Button } from '../../../../core';
 import { LoginRegisterPopover } from './login-register-popover/login-register-popover';
 
@@ -37,6 +38,15 @@ export const LogoWrapper = () => {
     navigate('/');
   };
 
+  // const { menuOpen } = useSelector((state) => state.ui);
+
+  // const menuToggleHandler = () => {
+  //   dispatch(uiActions.menuToggle());
+  // };
+  // const menuCloseHandler = () => {
+  //   if (menuOpen) dispatch(uiActions.menuClose());
+  // };
+
   return (
     <Container>
       <Grid container alignItems="center">
@@ -44,7 +54,7 @@ export const LogoWrapper = () => {
           <Grid container>
             <Grid item xs={4}>
               <Grid item xs={12}>
-                <Link onClick={() => navigate('/')}>
+                <Link to="/" onClick={() => navigate('/')}>
                   <Typography variant="subtitle2" sx={{ cursor: 'pointer' }}>
                     {'राष्ट्रीय आयुर्विज्ञान आयोग'}
                   </Typography>
