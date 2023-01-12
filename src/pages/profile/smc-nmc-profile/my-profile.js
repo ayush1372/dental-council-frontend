@@ -6,7 +6,7 @@ import { Box, Grid, Typography } from '@mui/material';
 import { verboseLog } from '../../../config/debug';
 import { nmcProfileDetails, smcProfileDetails } from '../../../constants/common-data';
 import { Button } from '../../../ui/core';
-import ChangePassword from '../change-password/change-password';
+// import ChangePassword from '../change-password/change-password';
 import NmcEditProfile from '../smc-nmc-editprofiles/nmc-editprofiles';
 import SmcEditProfile from '../smc-nmc-editprofiles/smc-editprofile';
 
@@ -36,7 +36,7 @@ const MyProfile = (props) => {
               </Typography>
             </Grid>
 
-            <Grid item xs={12} sm="auto">
+            {/* <Grid item xs={12} sm="auto">
               <Button
                 fullWidth
                 size="small"
@@ -45,7 +45,7 @@ const MyProfile = (props) => {
               >
                 Change Password
               </Button>
-            </Grid>
+            </Grid> */}
             <Grid item xs={12} sm="auto">
               <Button
                 fullWidth
@@ -90,7 +90,7 @@ const MyProfile = (props) => {
           )}
         </Box>
       )}
-      {showPage === 'Password' && <ChangePassword />}
+      {/* {showPage === 'Password' && <ChangePassword />} */}
     </Grid>
   );
 };

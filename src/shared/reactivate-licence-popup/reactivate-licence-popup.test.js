@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 
 import ReactivateLicencePopup from './re-activate-licence-popup';
 
-describe('Reactivate Licence', () => {
+describe('Reactivate License', () => {
   beforeEach(() => {
     render(<ReactivateLicencePopup />);
   });
