@@ -1,16 +1,8 @@
 import { useState } from 'react';
 
 import AddIcon from '@mui/icons-material/Add';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import RemoveIcon from '@mui/icons-material/Remove';
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Button,
-  Typography,
-} from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 import ButtonGroupWizard from '../../../../ui/core/wizard/button-group-wizard';
@@ -19,7 +11,7 @@ import RegistrationDetailsContent from '../readable-content/registration-details
 
 const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack, showActions = true }) => {
   const [accordionKey, setAccordionKey] = useState('accordion-0');
-  const userType = useSelector((state) => state.common.loggedInUserType);
+
   const { doctorUserProfile } = useSelector((state) => state?.doctorUserProfileReducer);
   const accordions = [
     {
@@ -80,19 +72,7 @@ const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack, showActions = 
         >
           <ButtonGroupWizard handlePrevious={handleBack} />
 
-          <Box display="flex" justifyContent="flex-end">
-            {userType !== 'Doctor' && (
-              <Button
-                variant="contained"
-                color="secondary"
-                disabled
-                sx={{ margin: '16px 20px 0px 0px' }}
-              >
-                Action <MoreHorizIcon />
-              </Button>
-            )}
-            <ButtonGroupWizard handleNext={handleNext} />
-          </Box>
+          <ButtonGroupWizard handleNext={handleNext} />
         </Box>
       )}
     </Box>

@@ -1,6 +1,6 @@
 import { useTheme } from '@emotion/react';
 import SearchIcon from '@mui/icons-material/Search';
-import { Box, Grid, InputAdornment, Typography } from '@mui/material';
+import { Box, Grid, InputAdornment } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
@@ -47,7 +47,7 @@ export function TableSearch({ trackApplication }) {
             placeholder={'Search by Application Type'}
             defaultValue={getValues().search}
             error={errors.search?.message}
-            label="Search by Application Type"
+            // label="Search by Application Type"
             {...register('search')}
             InputProps={{
               endAdornment: (
@@ -66,13 +66,13 @@ export function TableSearch({ trackApplication }) {
           <Grid container item xs={12} sx={{ alignItems: 'flex-end', display: 'flex', gap: 1 }}>
             {trackApplication === true && (
               <>
-                <Grid item md={4} xs={12} ml="auto">
+                <Grid item md={3} xs={12} ml="auto">
                   <Select
                     error={errors.Filter?.message}
                     name="Filter"
-                    label="Filter"
+                    // label="Filter"
                     defaultValue={getValues().Filter}
-                    placeholder={'All Applications'}
+                    placeholder="All Applications"
                     options={[
                       {
                         label: 'Application',
@@ -81,11 +81,11 @@ export function TableSearch({ trackApplication }) {
                     ]}
                   />
                 </Grid>
-                <Grid item md={4} xs={12}>
+                <Grid item md={3} xs={12}>
                   <Select
                     error={errors.Date?.message}
                     name="Date"
-                    label="Sort by"
+                    // label="Sort by"
                     defaultValue={getValues().Date}
                     options={[
                       {
@@ -112,7 +112,7 @@ export function TableSearch({ trackApplication }) {
                   defaultValue={getValues().filterByName}
                   error={errors.filterByName?.message}
                   {...register('filterByName')}
-                  label="Filter By Name"
+                  // label="Filter By Name"
                 />
               </Grid>
             )}
@@ -131,13 +131,13 @@ export function TableSearch({ trackApplication }) {
                   defaultValue={getValues().filterByRegNo}
                   error={errors.filterByRegNo?.message}
                   {...register('filterByRegNo')}
-                  label="Filter by Reg No"
+                  // label="Filter by Reg No"
                 />
               </Grid>
             )}
             {(loggedInUserType === 'College' || loggedInUserType === 'NMC') && (
               <Grid item md={3} xs={12}>
-                <Typography>Filter by council</Typography>
+                {/* <Typography>Filter by council</Typography> */}
                 <SearchableDropdown
                   name="RegistrationCouncil"
                   placeholder="Filter by Council"
