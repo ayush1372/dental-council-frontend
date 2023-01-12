@@ -2,18 +2,18 @@ import { useEffect, useState } from 'react';
 
 import EditIcon from '@mui/icons-material/Edit';
 import TuneIcon from '@mui/icons-material/Tune';
-import { Alert, Box, Container, Grid, Link, Typography } from '@mui/material';
+import { Alert, Box, Grid, Link, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { verboseLog } from '../../config/debug';
 import useWizard from '../../hooks/use-wizard';
 import ReactivateLicencePopup from '../../shared/reactivate-licence-popup/re-activate-licence-popup';
 import SuccessPopup from '../../shared/reactivate-licence-popup/success-popup';
+import { getCountriesList, getStatesList } from '../../store/actions/common-actions';
 import { getDoctorUserProfileData } from '../../store/actions/doctor-user-profile-actions';
-import { getCountriesList, getStatesList } from '../../store/actions/menu-list-actions';
 import { Button } from '../../ui/core/button/button';
 import Wizard from '../../ui/core/wizard';
-import ChangePassword from '../profile/change-password/change-password';
+// import ChangePassword from '../profile/change-password/change-password';
 import ConstantDetails from './components/constant-details/constant-details';
 import PersonalDetails from './components/personal-details/personal-details';
 import PreviewProfile from './components/preview-profile/preview-profile';
@@ -31,7 +31,7 @@ export const UserProfile = ({
 }) => {
   const dispatch = useDispatch();
   const [isReadMode, setIsReadMode] = useState(true);
-  const [showChangepassword, setShowChangepassword] = useState(false);
+  // const [showChangepassword, setShowChangepassword] = useState(false);
   const [showReactivateLicense, setShowReactivateLicense] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
@@ -143,45 +143,44 @@ export const UserProfile = ({
       </Box>
       {showReactivateLicense && <ReactivateLicencePopup renderSuccess={renderSuccess} />}
       {showSuccessPopup && <SuccessPopup />}
-      {!showChangepassword ? (
-        <Box mt={3}>
-          {!showViewProfile ? (
-            <Grid container display="flex" justifyContent="space-between">
-              <Grid item xs={12} md={6}>
-                <Typography
-                  component="div"
-                  variant="h2"
-                  color="primary.main"
-                  py={2}
-                  sx={{
-                    textAlign: {
-                      xs: 'center',
-                      md: 'start',
-                    },
-                  }}
-                >
-                  {isReadMode ? 'User Profile' : 'Edit Profile'}
-                  {!isReadMode && (
-                    <Typography component="div" variant="body3" color="inputTextColor.main">
-                      Update all your details correctly so that it could be verified by NMR
-                      verifiers.
-                    </Typography>
-                  )}
-                </Typography>
-              </Grid>
-              {loggedInUserType === 'Doctor' && (
-                <Grid
-                  item
-                  xs={12}
-                  md={3}
-                  sx={{
-                    padding: {
-                      xs: '5px 0 5px 0',
-                      md: '0 10px 0 0 ',
-                    },
-                  }}
-                >
-                  <Button
+      {/* {!showChangepassword ? ( */}
+      <Box mt={3}>
+        {!showViewProfile ? (
+          <Grid container display="flex" justifyContent="space-between">
+            <Grid item xs={12} md={6}>
+              <Typography
+                component="div"
+                variant="h2"
+                color="primary.main"
+                py={2}
+                sx={{
+                  textAlign: {
+                    xs: 'center',
+                    md: 'start',
+                  },
+                }}
+              >
+                {isReadMode ? 'User Profile' : 'Edit Profile'}
+                {!isReadMode && (
+                  <Typography component="div" variant="body3" color="inputTextColor.main">
+                    Update all your details correctly so that it could be verified by NMR verifiers.
+                  </Typography>
+                )}
+              </Typography>
+            </Grid>
+            {loggedInUserType === 'Doctor' && (
+              <Grid
+                item
+                xs={12}
+                md={3}
+                sx={{
+                  padding: {
+                    xs: '5px 0 5px 0',
+                    md: '0 10px 0 0 ',
+                  },
+                }}
+              >
+                {/* <Button
                     variant="contained"
                     color="primary"
                     onClick={() => {
@@ -192,96 +191,91 @@ export const UserProfile = ({
                     }}
                   >
                     Change Password
-                  </Button>
-                </Grid>
-              )}
-              {isReadMode && (
-                <Grid
-                  item
-                  xs={12}
-                  md={3}
+                  </Button> */}
+              </Grid>
+            )}
+            {isReadMode && (
+              <Grid
+                item
+                xs={12}
+                md={3}
+                sx={{
+                  marginBottom: {
+                    xs: '10px',
+                    md: '0',
+                  },
+                }}
+              >
+                <Button
+                  startIcon={<EditIcon sx={{ mr: 1 }} />}
+                  variant="contained"
+                  color="secondary"
+                  onClick={openDoctorEditProfile}
                   sx={{
-                    marginBottom: {
-                      xs: '10px',
-                      md: '0',
-                    },
+                    width: '100%',
                   }}
                 >
-                  <Button
-                    startIcon={<EditIcon sx={{ mr: 1 }} />}
-                    variant="contained"
-                    color="secondary"
-                    onClick={openDoctorEditProfile}
-                    sx={{
-                      width: '100%',
-                    }}
-                  >
-                    Edit Profile
-                  </Button>
-                </Grid>
-              )}
-            </Grid>
-          ) : null}
-          {!isReadMode && <ConstantDetails />}
-          <Box bgcolor="white.main">
-            <Wizard
-              activeStep={loggedInUserType === 'College' ? activeStep + 1 : activeStep}
-              handleBack={handleBack}
-              handleNext={handleNext}
-              steps={wizardSteps}
-              progress={false}
-            >
-              {activeStep === 0 && (
-                <PersonalDetails
-                  isReadMode={isReadMode}
-                  setIsReadMode={setIsReadMode}
-                  handleNext={handleNext}
-                  handleBack={handleBack}
-                />
-              )}
-              {activeStep === 1 && (
-                <RegisterAndAcademicDetails
-                  isReadMode={isReadMode}
-                  setIsReadMode={setIsReadMode}
-                  handleNext={handleNext}
-                  handleBack={handleBack}
-                />
-              )}
-              {activeStep === 2 && (
-                <WorkProfile
-                  isReadMode={isReadMode}
-                  setIsReadMode={setIsReadMode}
-                  handleNext={handleNext}
-                  handleBack={handleBack}
-                  setShowDashboard={setShowDashboard}
-                  setShowTable={setShowTable}
-                  setShowViewPorfile={setShowViewPorfile}
-                  activeStep={activeStep}
-                />
-              )}
-              {activeStep === 3 && (
-                <PreviewProfile
-                  isReadMode={isReadMode}
-                  setIsReadMode={setIsReadMode}
-                  handleNext={handleNext}
-                  handleBack={handleBack}
-                />
-              )}
-            </Wizard>
-          </Box>
-          {!isReadMode && activeStep === 3 && (
-            <ProfileConsent
-              handleBack={handleBack}
-              resetStep={resetStep}
-              setIsReadMode={setIsReadMode}
-            />
-          )}
+                  Edit Profile
+                </Button>
+              </Grid>
+            )}
+          </Grid>
+        ) : null}
+        {!isReadMode && <ConstantDetails />}
+        <Box bgcolor="white.main">
+          <Wizard
+            activeStep={loggedInUserType === 'College' ? activeStep + 1 : activeStep}
+            handleBack={handleBack}
+            handleNext={handleNext}
+            steps={wizardSteps}
+            progress={false}
+          >
+            {activeStep === 0 && (
+              <PersonalDetails
+                isReadMode={isReadMode}
+                setIsReadMode={setIsReadMode}
+                handleNext={handleNext}
+                handleBack={handleBack}
+              />
+            )}
+            {activeStep === 1 && (
+              <RegisterAndAcademicDetails
+                isReadMode={isReadMode}
+                setIsReadMode={setIsReadMode}
+                handleNext={handleNext}
+                handleBack={handleBack}
+              />
+            )}
+            {activeStep === 2 && (
+              <WorkProfile
+                isReadMode={isReadMode}
+                setIsReadMode={setIsReadMode}
+                handleNext={handleNext}
+                handleBack={handleBack}
+                setShowDashboard={setShowDashboard}
+                setShowTable={setShowTable}
+                setShowViewPorfile={setShowViewPorfile}
+                activeStep={activeStep}
+              />
+            )}
+            {activeStep === 3 && (
+              <PreviewProfile
+                isReadMode={isReadMode}
+                setIsReadMode={setIsReadMode}
+                handleNext={handleNext}
+                handleBack={handleBack}
+              />
+            )}
+          </Wizard>
         </Box>
-      ) : (
-        <Container>
-          <ChangePassword />
-        </Container>
-      )}
+        {!isReadMode && activeStep === 3 && (
+          <ProfileConsent
+            handleBack={handleBack}
+            resetStep={resetStep}
+            setIsReadMode={setIsReadMode}
+          />
+        )}
+      </Box>
     </>
   );
 };

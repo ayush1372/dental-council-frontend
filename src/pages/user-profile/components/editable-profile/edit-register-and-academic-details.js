@@ -95,7 +95,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
       sx={{
         padding: {
           xs: '0px 10px 10px 10px',
-          md: '0px 91px 44px 41px',
+          md: '0px 41px 44px 41px',
         },
       }}
     >
@@ -154,9 +154,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
               required={true}
               fullWidth
               defaultValue={getValues().RegistrationNumber}
-              {...register('RegistrationNumber', {
-                required: 'Registration Number is Required',
-              })}
+              // {...register('RegistrationNumber', {
+              //   required: 'Registration Number is Required',
+              // })}
               sx={{
                 input: {
                   backgroundColor: 'grey2.main',

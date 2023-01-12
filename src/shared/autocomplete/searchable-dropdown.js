@@ -17,6 +17,7 @@ const AutoCompleteField = (
     error,
     multiple = false,
     clearErrors,
+    disabled = false,
 
     ...props
   },
@@ -32,6 +33,7 @@ const AutoCompleteField = (
         clearErrors(name);
         onChange(newValue);
       }}
+      disabled={disabled}
       id={id}
       getOptionLabel={(item) => `${item.name}`}
       options={items}

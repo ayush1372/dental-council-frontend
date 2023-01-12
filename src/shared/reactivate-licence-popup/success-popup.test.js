@@ -5,7 +5,7 @@ import { screen } from '@testing-library/react';
 
 import SuccessPopup from './success-popup';
 
-describe('Reactivate Licence', () => {
+describe('Reactivate License', () => {
   beforeEach(() => {
     render(<SuccessPopup />);
   });

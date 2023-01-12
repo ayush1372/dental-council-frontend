@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { Box, Button, Grid, IconButton, InputAdornment, Typography } from '@mui/material';
+import { Box, Button, Grid, IconButton, InputAdornment, Typography, useTheme } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,16 +11,17 @@ import { createSelectFieldData } from '../../../../helpers/functions/common-func
 import { get_year_data } from '../../../../helpers/functions/common-functions';
 import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
 import { ModalOTP } from '../../../../shared/otp-modal/otp-modal';
-import { getDistrictList, getSubDistrictsList } from '../../../../store/actions/menu-list-actions';
+import { getDistrictList, getSubDistrictsList } from '../../../../store/actions/common-actions';
 import { RadioGroup, Select, TextField } from '../../../../ui/core';
 import MobileNumber from '../../../../ui/core/mobile-number/mobile-number';
 
 const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
+  const theme = useTheme();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const loggedInUserType = useSelector((state) => state?.login?.loggedInUserType);
   const { statesList, countriesList, districtsList, subDistrictList } = useSelector(
-    (state) => state?.menuLists
+    (state) => state?.common
   );
 
   const [languages, setLanguages] = useState([]);
@@ -134,7 +135,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       sx={{
         padding: {
           xs: '0px 10px 10px 10px',
-          md: '0px 91px 44px 41px',
+          md: '0px 41px 44px 41px',
         },
       }}
     >
@@ -876,6 +877,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               {...register('IMRID', {
                 required: 'IMR ID is Required',
               })}
+              sx={{
+                input: {
+                  backgroundColor: theme.palette.grey2.main,
+                },
+              }}
+              InputProps={{ readOnly: true }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -897,6 +904,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 required: 'Year of info is required',
               })}
               options={get_year_data(1930)}
+              sx={{
+                '.MuiSelect-select': {
+                  backgroundColor: theme.palette.grey2.main,
+                },
+              }}
+              InputProps={{ readOnly: true }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -916,6 +929,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               {...register('RegistrationNumber', {
                 required: 'Registration Number is Required',
               })}
+              sx={{
+                input: {
+                  backgroundColor: theme.palette.grey2.main,
+                },
+              }}
+              InputProps={{ readOnly: true }}
             />
           </Grid>
         </Grid>

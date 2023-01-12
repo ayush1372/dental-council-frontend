@@ -5,12 +5,17 @@ import { SessionTimer } from '../../constants/session-timer';
 const sessionTiming = 0.5;
 
 const initialState = {
+  apiLoading: false,
   isloggedIn: false,
   timer: 0,
   mobileNumber: undefined,
   loggedInUserType: '',
   userActiveTab: '',
   getUserAadhaarNumber: '',
+  statesList: { data: [], isLoading: Boolean(true), isError: false },
+  countriesList: { data: [], isLoading: Boolean(true), isError: false },
+  districtsList: { data: [], isLoading: Boolean(true), isError: false },
+  subDistrictList: { data: [], isLoading: Boolean(true), isError: false },
 };
 
 export const CommonActivity = createSlice({
@@ -41,6 +46,18 @@ export const CommonActivity = createSlice({
     userAadharNumber: (state, action) => {
       state.getUserAadhaarNumber = action.payload;
     },
+    getStates: (state, action) => {
+      state.statesList = action.payload;
+    },
+    getCountries: (state, action) => {
+      state.countriesList = action.payload;
+    },
+    getDistricts: (state, action) => {
+      state.districtsList = action.payload;
+    },
+    getSubDistricts: (state, action) => {
+      state.subDistrictList = action.payload;
+    },
   },
 });
 
@@ -54,6 +71,10 @@ export const {
   resetCommonReducer,
   setApiLoading,
   changeUserActiveTab,
+  getStates,
+  getCountries,
+  getDistricts,
+  getSubDistricts,
 } = CommonActivity.actions;
 
 export default CommonActivity.reducer;
