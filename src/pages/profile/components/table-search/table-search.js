@@ -53,7 +53,7 @@ export function TableSearch({ trackApplication }) {
               endAdornment: (
                 <InputAdornment
                   position="end"
-                  sx={{ p: 4, backgroundColor: theme.palette.grey.main }}
+                  sx={{ p: 3.5, backgroundColor: theme.palette.grey.main }}
                 >
                   <SearchIcon />{' '}
                 </InputAdornment>

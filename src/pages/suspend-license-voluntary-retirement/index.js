@@ -22,7 +22,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
       voluntarySuspendLicense: 'voluntary-suspension-check',
     },
   });
-  const [selectedSuspension, setSelectedSuspension] = useState('voluntary-suspension-check');
+  const [setSelectedSuspension] = useState('voluntary-suspension-check');
 
   const onSubmit = () => {
     handleSubmitDetails();
@@ -80,9 +80,9 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
           : selectedValue === 'reject'
           ? 'Reason to Reject application'
           : selectedValue === 'suspend'
-          ? 'Request NMC to permanent suspension?'
+          ? 'Want to Permanent Suspend?'
           : selectedValue === 'blacklist'
-          ? 'Request NMC to temporary suspension?'
+          ? 'Request NMC to Temporary Suspend?'
           : ''}
       </Typography>
       {selectedValue === 'raise' ||
@@ -157,7 +157,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
                 })}
               />
             </Grid>
-            {selectedSuspension === 'voluntary-suspension-check' && (
+            {/* {selectedSuspension === 'voluntary-suspension-check' && (
               <Grid item xs={12} md={6} my={{ xs: 1, md: 0 }}>
                 <Typography component={'p'} variant="body1">
                   Select To Date
@@ -186,7 +186,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
                   })}
                 />
               </Grid>
-            )}
+            )} */}
           </Grid>
         </Box>
       )}
@@ -217,8 +217,8 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
               name="remark"
               required={true}
               placeholder={
-                tabName || selectedValue === 'suspend' || selectedValue === 'suspend'
-                  ? 'Add a reason'
+                tabName || selectedValue === 'suspend' || selectedValue === 'blacklist'
+                  ? 'Add a reason...'
                   : selectedValue === 'raise'
                   ? 'Write something here . . .'
                   : selectedValue === 'reject' || selectedValue === 'approve'
