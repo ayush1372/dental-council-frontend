@@ -11,7 +11,6 @@ const initialState = {
   mobileNumber: undefined,
   loggedInUserType: '',
   userActiveTab: '',
-  getUserAadhaarNumber: '',
   statesList: { data: [], isLoading: Boolean(true), isError: false },
   countriesList: { data: [], isLoading: Boolean(true), isError: false },
   districtsList: { data: [], isLoading: Boolean(true), isError: false },
@@ -43,9 +42,6 @@ export const CommonActivity = createSlice({
     changeUserActiveTab: (state, action) => {
       state.userActiveTab = action.payload;
     },
-    userAadharNumber: (state, action) => {
-      state.getUserAadhaarNumber = action.payload;
-    },
     getStates: (state, action) => {
       state.statesList = action.payload;
     },
@@ -62,7 +58,6 @@ export const CommonActivity = createSlice({
 });
 
 export const {
-  userAadharNumber,
   login,
   logout,
   fontsizes,
