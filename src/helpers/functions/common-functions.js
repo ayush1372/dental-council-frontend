@@ -1,7 +1,5 @@
 import JSEncrypt from 'jsencrypt';
 
-import { verboseLog } from '../../config/debug';
-
 export function get_year_data(startYear = 1900) {
   var ans = [];
   var date = new Date();
@@ -36,6 +34,5 @@ export const encryptData = (data) => {
   var encrypt = new JSEncrypt();
   encrypt.setPublicKey(publicKey);
   var encryptedPass = encrypt.encrypt(data);
-  verboseLog('encryption pass & key==>', encryptedPass);
   return encryptedPass;
 };
