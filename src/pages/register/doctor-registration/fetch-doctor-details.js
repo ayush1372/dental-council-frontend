@@ -16,7 +16,7 @@ import AadhaarInputField from '../../../ui/core/aadhaar-input-field/aadhaar-inpu
 import UniqueUserNameForDoctorRegistration from './unique-username';
 
 function FetchDoctorDetails() {
-  const [showEditScreen, setShowEditScreen] = useState(false);
+  const [showUniqueNameForDoctorReg, setUniqueNameForDoctorReg] = useState(false);
   const [showOtpEmail, setShowOtpEmail] = useState(false);
   const [showOtpMobile, setShowOtpMobile] = useState(false);
   const [showOtpAadhar, setshowOtpAadhar] = useState(false);
@@ -61,6 +61,7 @@ function FetchDoctorDetails() {
       setisOtpValidMobile(false);
     }
   };
+
   const handleValidateMobile = () => {
     if (otpValue.length === 6) {
       setisOtpValidMobile(true);
@@ -73,7 +74,11 @@ function FetchDoctorDetails() {
     }
   };
 
-  const onSubmit = (dataValue) => {
+  const onSubmit = () => {
+    setUniqueNameForDoctorReg(true);
+  };
+
+  const handleUserAadhaarNumber = (dataValue) => {
     let encryptedUserAadhaarNumber = encryptData(
       dataValue.field_1 + dataValue.field_2 + dataValue.field_3
     );
@@ -83,11 +88,9 @@ function FetchDoctorDetails() {
   const handleVerifyAadhar = (value) => {
     setAadhaarState(value);
     dispatch(sendAaadharOtp(value));
-    if (isOtpValidEmail === true && isOtpValidMobile === true) {
-      setshowOtpAadhar(true);
-      // setisOtpValidMobile(false);
-      // setisOtpValidEmail(false);
-    }
+    setshowOtpAadhar(true);
+    setisOtpValidMobile(false);
+    setisOtpValidEmail(false);
   };
 
   const finalTransactionId = useSelector(
@@ -98,13 +101,10 @@ function FetchDoctorDetails() {
     let userOtp = encryptData(otpValue);
     setshowOtpAadhar(false);
     setisOtpValidAadhar(true);
+    handleClear();
 
     if (otpValue.length === 6) {
       dispatch(validateOtpAadhaar(aadhaarState, finalTransactionId, userOtp));
-      handleClear();
-      if (isOtpValidAadhar === true && isOtpValidMobile === true) {
-        setEnableSubmit(true);
-      }
     }
   };
 
@@ -125,7 +125,7 @@ function FetchDoctorDetails() {
   };
   return (
     <>
-      {showEditScreen ? (
+      {showUniqueNameForDoctorReg ? (
         <UniqueUserNameForDoctorRegistration />
       ) : (
         <Container
@@ -197,6 +197,71 @@ function FetchDoctorDetails() {
               </Typography>
             </Box>
             <Divider sx={{ marginBottom: '25px' }} variant="fullWidth" />
+            {/* aadhaar field */}
+            <Box
+              display="flex"
+              justifyContent="space-between"
+              flexDirection={{ xs: 'column', sm: 'row' }}
+            >
+              <Box>
+                <AadhaarInputField
+                  defaultValue={getValues().AadhaarNumber}
+                  name="AadhaarNumber"
+                  {...register('AadhaarNumber', {})}
+                  register={register}
+                  getValues={getValues}
+                  required={true}
+                  errors={errors}
+                />
+              </Box>
+              <Box p="35px 32px 0px 32px">
+                {isOtpValidAadhar ? <CheckCircleIcon color="success" /> : ''}
+              </Box>
+
+              {!showOtpAadhar && !isOtpValidAadhar && (
+                <Box mt={3}>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    width="95px"
+                    onClick={handleUserAadhaarNumber}
+                  >
+                    Verify
+                  </Button>
+                </Box>
+              )}
+            </Box>
+            {showOtpAadhar && (
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: {
+                    xs: 'column',
+                    sm: 'row',
+                  },
+                }}
+              >
+                <Box>
+                  <Typography variant="body1">
+                    We just sent an OTP on your Mobile Number.
+                  </Typography>
+                  {otpform}
+                </Box>
+                <Box>
+                  <Button
+                    sx={{ width: '114px', height: '53px', marginTop: '47px' }}
+                    component="span"
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleValidateAadhar}
+                  >
+                    Validate
+                  </Button>
+                </Box>
+              </Box>
+            )}
+
+            <Divider sx={{ mb: 4, mt: 4 }} variant="fullWidth" />
 
             <Box>
               <Box>
@@ -280,126 +345,58 @@ function FetchDoctorDetails() {
             <Divider sx={{ mb: 4, mt: 4 }} variant="fullWidth" />
 
             <Box sx={{ marginTop: '20px', paddingBottom: '48px' }}>
-              <Box>
-                <Typography variant="body3">
-                  Mobile Number
-                  <Typography component="span" sx={{ color: 'error.main' }}>
-                    *
-                  </Typography>
+              <Typography variant="body3">
+                Mobile Number
+                <Typography component="span" sx={{ color: 'error.main' }}>
+                  *
                 </Typography>
-                <Box
-                  sx={{
-                    display: 'flex',
-                  }}
-                >
-                  <TextField
-                    sx={{ width: { xs: '100%', sm: '536px' }, marginRight: '16px' }}
-                    required
-                    type="text"
-                    onInput={(e) => handleInput(e)}
-                    name={'MobileNumber'}
-                    placeholder={t('Enter mobile number')}
-                    defaultValue={getValues().MobileNumber}
-                    error={errors.MobileNumber?.message}
-                    {...register('MobileNumber', {
-                      required: 'Mobile Number is required',
-                      pattern: {
-                        value: /^\d{10}$/i,
-                        message: 'Enter Valid Mobile Number',
-                      },
-                    })}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end" sx={{ pr: 1 }}>
-                          <IconButton aria-label="toggle password visibility" edge="end">
-                            {isOtpValidMobile ? <CheckCircleIcon color="success" /> : ''}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                  <Box>
-                    {!showOtpMobile && !isOtpValidMobile && (
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        width="95px"
-                        onClick={handleVerifyMobile}
-                      >
-                        Verify
-                      </Button>
-                    )}
-                  </Box>
-                </Box>
-              </Box>
-              {showOtpMobile && (
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: {
-                      xs: 'column',
-                      sm: 'row',
-                    },
-                  }}
-                >
-                  <Box>
-                    <Typography variant="body1">
-                      We just sent an OTP on your Mobile Number.
-                    </Typography>
-                    {otpform}
-                  </Box>
-                  <Box>
-                    <Button
-                      sx={{ width: '114px', height: '53px', marginTop: '47px' }}
-                      component="span"
-                      variant="contained"
-                      color="secondary"
-                      onClick={handleValidateMobile}
-                    >
-                      Validate
-                    </Button>
-                  </Box>
-                </Box>
-              )}
-              <Divider sx={{ my: 4 }} variant="fullWidth" />
+              </Typography>
               <Box
-                display="flex"
-                justifyContent="space-between"
-                flexDirection={{ xs: 'column', sm: 'row' }}
+                sx={{
+                  display: 'flex',
+                }}
               >
+                <TextField
+                  sx={{ width: { xs: '100%', sm: '536px' }, marginRight: '16px' }}
+                  required
+                  type="text"
+                  onInput={(e) => handleInput(e)}
+                  name={'MobileNumber'}
+                  placeholder={t('Enter mobile number')}
+                  defaultValue={getValues().MobileNumber}
+                  error={errors.MobileNumber?.message}
+                  {...register('MobileNumber', {
+                    required: 'Mobile Number is required',
+                    pattern: {
+                      value: /^\d{10}$/i,
+                      message: 'Enter Valid Mobile Number',
+                    },
+                  })}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end" sx={{ pr: 1 }}>
+                        <IconButton aria-label="toggle password visibility" edge="end">
+                          {isOtpValidMobile ? <CheckCircleIcon color="success" /> : ''}
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
                 <Box>
-                  <AadhaarInputField
-                    name="AadhaarNumber"
-                    {...register('AadhaarNumber', {})}
-                    register={register}
-                    getValues={getValues}
-                    required={true}
-                    errors={errors}
-                  />
-                </Box>
-                <Box p="35px 32px 0px 32px">
-                  <IconButton aria-label="toggle password visibility" edge="end">
-                    {isOtpValidAadhar === true ? <CheckCircleIcon color="success" /> : ''}
-                  </IconButton>
-
-                  {/* {isOtpValidAadhar ===true ? <CheckCircleIcon color="success" /> : ''} */}
-                </Box>
-
-                {isOtpValidAadhar === false && showOtpAadhar === false && (
-                  <Box mt={3}>
+                  {!showOtpMobile && !isOtpValidMobile && (
                     <Button
                       variant="contained"
                       color="secondary"
                       width="95px"
-                      onClick={handleSubmit(onSubmit)}
+                      onClick={handleVerifyMobile}
                     >
                       Verify
                     </Button>
-                  </Box>
-                )}
+                  )}
+                </Box>
               </Box>
             </Box>
-            {showOtpAadhar === true && (
+            {showOtpMobile && (
               <Box
                 sx={{
                   display: 'flex',
@@ -411,7 +408,7 @@ function FetchDoctorDetails() {
               >
                 <Box>
                   <Typography variant="body1">
-                    We just sent an OTP on your mobile number which is registered with Aadhaar.
+                    We just sent an OTP on your Mobile Number.
                   </Typography>
                   {otpform}
                 </Box>
@@ -421,7 +418,7 @@ function FetchDoctorDetails() {
                     component="span"
                     variant="contained"
                     color="secondary"
-                    onClick={handleValidateAadhar}
+                    onClick={handleValidateMobile}
                   >
                     Validate
                   </Button>
@@ -435,7 +432,7 @@ function FetchDoctorDetails() {
                 color="secondary"
                 disabled={!enableSubmit}
                 sx={{ marginRight: '10px', width: '105px', height: '48px' }}
-                onClick={() => setShowEditScreen(true)}
+                onClick={handleSubmit(onSubmit)}
               >
                 Submit
               </Button>
