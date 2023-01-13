@@ -30,27 +30,28 @@ export function MobileNumber(props) {
   };
   return (
     <StyledEngineProvider injectFirst>
-      <div className={styles.main} data-testid="mobile-number">
-        <div className={styles.mobileField}>
+      <Box data-testid="mobile-number">
+        <Box>
+          <Typography variant="subtitle2" component={'span'}>
+            {label}
+          </Typography>
+          <Typography variant="body2" color="error">
+            {required ? ' *' : ''}
+          </Typography>
+        </Box>
+        <Box
+          width="100%"
+          className={styles.mobileField}
+          display="flex"
+          gap={{ xs: 1, sm: 0 }}
+          flexWrap={{ xs: 'wrap', sm: 'nowrap' }}
+        >
           <TextField
+            fullWidth
             id="outlined-adornment-password"
             type={'number'}
             name={'mobileNo'}
             disabled={disabled}
-            label={
-              label ? (
-                <Box>
-                  <Typography variant="subtitle2" component={'span'}>
-                    {label}
-                  </Typography>
-                  <Typography variant="body2" color="error">
-                    {required ? ' *' : ''}
-                  </Typography>
-                </Box>
-              ) : (
-                ''
-              )
-            }
             defaultValue={getValues().mobileNo}
             sx={{
               ...(showVerify === false && {
@@ -71,10 +72,14 @@ export function MobileNumber(props) {
             onInput={(e) => handleInput(e)}
             error={errors.mobileNo?.message}
             InputProps={{
-              paddingLeft: '0px',
-              paddingRight: '0px',
+              paddingLeft: '0',
+              paddingRight: '0',
               startAdornment: (
-                <InputAdornment position="start" className={styles.countryCode}>
+                <InputAdornment
+                  sx={{ backgroundColor: 'grey.main' }}
+                  position="start"
+                  className={styles.countryCode}
+                >
                   +91
                 </InputAdornment>
               ),
@@ -101,25 +106,23 @@ export function MobileNumber(props) {
           {showVerify && (
             <Button
               variant="contained"
+              sx={{ height: '56px' }}
               color="primary"
-              // sx={{ marginLeft: '20px' }}
               onClick={verifyOnClick}
             >
               GetOTP
             </Button>
           )}
-          <div>
-            {showhint && (
-              <Typography variant="caption" color="primary">
-                <InfoOutlinedIcon
-                  sx={{ fontSize: '15px', verticalAlign: 'middle', marginRight: '5px' }}
-                />
-                Enter Mobile Number linked with your Aadhaar.
-              </Typography>
-            )}
-          </div>
-        </div>
-      </div>
+          {showhint && (
+            <Typography variant="caption" color="primary" component="div">
+              <InfoOutlinedIcon
+                sx={{ fontSize: '15px', verticalAlign: 'middle', marginRight: '5px' }}
+              />
+              Enter Mobile Number linked with your Aadhaar.
+            </Typography>
+          )}
+        </Box>
+      </Box>
     </StyledEngineProvider>
   );
 }

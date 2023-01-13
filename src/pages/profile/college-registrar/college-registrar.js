@@ -69,7 +69,7 @@ export function CollegeRegistrar() {
           defaultValue={getValues().registrarName}
           error={errors.registrarName?.message}
           {...register('registrarName', {
-            required: 'Provide Registrar Name',
+            required: 'Enter valid college registrar name',
           })}
         />
       </Grid>
@@ -93,10 +93,10 @@ export function CollegeRegistrar() {
           defaultValue={getValues().registrarPhoneNumber}
           error={errors.registrarPhoneNumber?.message}
           {...register('registrarPhoneNumber', {
-            required: 'Provide Phone Number',
+            required: 'Enter valid phone number',
             pattern: {
               value: /^(\d{13})$/i,
-              message: 'Provide Phone Number',
+              message: 'Enter valid phone number',
             },
           })}
         />
@@ -121,11 +121,11 @@ export function CollegeRegistrar() {
           defaultValue={getValues().registrarEmail}
           error={errors.registrarEmail?.message}
           {...register('registrarEmail', {
-            required: 'Provide Email ID',
+            required: 'Enter Valid Email Address',
             pattern: {
               value:
                 /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-              message: 'Provide Email ID',
+              message: 'Enter Valid Email Address',
             },
           })}
         />
@@ -150,7 +150,7 @@ export function CollegeRegistrar() {
           defaultValue={getValues().registrarUserId}
           error={errors.registrarUserId?.message}
           {...register('registrarUserId', {
-            required: 'Provide Registrar User ID',
+            required: 'Enter valid username',
           })}
         />
       </Grid>

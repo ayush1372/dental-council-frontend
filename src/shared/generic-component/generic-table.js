@@ -197,10 +197,15 @@ export default function GenericTable(props) {
                               <Button
                                 endIcon={<MoreVertSharpIcon />}
                                 variant="contained"
-                                color="white"
+                                // color="white"
                                 {...bindTrigger(popupState)}
                                 sx={{
                                   width: 'max-content',
+                                  backgroundColor: 'inherit',
+                                  color: 'black.main',
+                                  '&:hover': {
+                                    backgroundColor: 'inherit',
+                                  },
                                 }}
                               ></Button>
                               <Menu {...bindMenu(popupState)}>

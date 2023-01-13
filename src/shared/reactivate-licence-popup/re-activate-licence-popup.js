@@ -40,7 +40,7 @@ export default function ReactivateLicencePopup(props) {
               height="30px"
             />
             <Typography variant="h2" color="primary" ml={3} data-testid="popup-input-text">
-              Reactivate Licence
+              Reactivate License
             </Typography>
             <CloseIcon color="grey.context" onClick={handleClose} />
           </Box>

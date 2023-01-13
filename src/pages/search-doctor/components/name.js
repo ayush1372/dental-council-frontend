@@ -46,6 +46,12 @@ const Name = ({ setDoSearch }) => {
         <TextField
           sx={{
             color: 'inputTextColor.main',
+            '.MuiOutlinedInput-root': {
+              borderRadius: '3px',
+            },
+            input: {
+              letterSpacing: 0,
+            },
           }}
           variant="outlined"
           name={'EnterDoctorName'}

@@ -9,13 +9,13 @@ import {
   getDistricts,
   getStates,
   getSubDistricts,
-} from '../reducers/menu-lists-reducer';
+} from '../reducers/common-reducers';
 
 export const getStatesList = () => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,
-      url: API.menuLists.states,
+      url: API.common.states,
     })
       .then((response) => {
         dispatch(getStates(response.data));
@@ -58,7 +58,7 @@ export const getSubDistrictsList = (districtId) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,
-      url: API.menuLists.subDistricts.replace('{district_id}', districtId),
+      url: API.common.subDistricts.replace('{district_id}', districtId),
     })
       .then((response) => {
         dispatch(getSubDistricts(response.data));
@@ -74,7 +74,7 @@ export const getCountriesList = () => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,
-      url: API.menuLists.countries,
+      url: API.common.countries,
     })
       .then((response) => {
         dispatch(getCountries(response.data));
@@ -90,7 +90,7 @@ export const getDistrictList = (stateId) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,
-      url: API.menuLists.districts.replace('{state_id}', stateId),
+      url: API.common.districts.replace('{state_id}', stateId),
     })
       .then((response) => {
         dispatch(getDistricts(response.data));

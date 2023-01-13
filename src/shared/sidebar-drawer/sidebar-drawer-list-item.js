@@ -3,9 +3,11 @@ import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
 import BadgeIcon from '@mui/icons-material/Badge';
 import CreditCardOffIcon from '@mui/icons-material/CreditCardOff';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import PasswordIcon from '@mui/icons-material/Password';
 import { useSelector } from 'react-redux';
 
 import ActivateLicence from '../../pages/profile/activate-licence-tab/activate-licence-tab';
+import ChangePassword from '../../pages/profile/change-password/change-password';
 import CollegeDean from '../../pages/profile/college-dean/college-dean';
 import CollegeMyProfile from '../../pages/profile/college-my-profile/college-my-profile';
 import CollegeRegistrar from '../../pages/profile/college-registrar/college-registrar';
@@ -43,6 +45,13 @@ export const doctorTabs = [
     tabName: 'voluntary-suspend-license',
     icon: <CreditCardOffIcon />,
     element: <VoluntarySuspendLicense tabName={SideDrawerListItem} />,
+  },
+  {
+    option: 3,
+    name: 'Change Password',
+    tabName: 'change-password',
+    icon: <PasswordIcon />,
+    element: <ChangePassword tabName={SideDrawerListItem} />,
   },
 ];
 
@@ -82,6 +91,13 @@ export const smcTabs = [
     icon: <AppRegistrationIcon />,
     element: <ActivateLicence />,
   },
+  {
+    option: 5,
+    name: 'Change Password',
+    tabName: 'change-password',
+    icon: <PasswordIcon />,
+    element: <ChangePassword tabName={SideDrawerListItem} />,
+  },
 ];
 
 export const nmcTabs = [
@@ -120,6 +136,13 @@ export const nmcTabs = [
     icon: <AppRegistrationIcon />,
     element: <CollegeApproval />,
   },
+  {
+    option: 5,
+    name: 'Change Password',
+    tabName: 'change-password',
+    icon: <PasswordIcon />,
+    element: <ChangePassword tabName={SideDrawerListItem} />,
+  },
 ];
 
 export const colgTabs = [
@@ -157,5 +180,12 @@ export const colgTabs = [
     tabName: 'college-dean',
     icon: <AppRegistrationIcon />,
     element: <CollegeDean />,
+  },
+  {
+    option: 5,
+    name: 'Change Password',
+    tabName: 'change-password',
+    icon: <PasswordIcon />,
+    element: <ChangePassword tabName={SideDrawerListItem} />,
   },
 ];

@@ -32,6 +32,7 @@ export const useAxiosCall = async (payload = axiosProps) => {
       .then((response) => {
         return resolve({
           data: response.data,
+          responseHeader: response.headers,
           isLoading: false,
           isError: false,
         });
