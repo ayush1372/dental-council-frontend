@@ -1,7 +1,7 @@
 import { Box, TextField, Typography } from '@mui/material';
 
 import { validateAadharNumber } from '../../../constants/common-data';
-import { SvgImageComponent } from '../../../ui/core/svg-icons';
+import { SvgImageComponent } from '../svg-icons';
 
 export const FIELD = 'field';
 export const FIRST_FIELD_NAME = `${FIELD}_1`;
