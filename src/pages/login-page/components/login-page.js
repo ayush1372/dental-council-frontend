@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
-import { encryption } from '../../../helpers/functions/common-functions';
+import { encryptData } from '../../../helpers/functions/common-functions';
 import CaptchaComponent from '../../../shared/captcha-component/captcha-component';
 import {
   generateCaptchaImage,
@@ -64,7 +64,7 @@ export function LoginPage({ handleForgotPassword }) {
         if (response?.data?.validity) {
           const requestObj = {
             username: param?.nmrID,
-            password: encryption(param?.password),
+            password: encryptData(param?.password),
             user_type:
               loginFormname === 'Doctor'
                 ? 1

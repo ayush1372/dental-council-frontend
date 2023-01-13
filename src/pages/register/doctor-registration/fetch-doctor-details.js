@@ -5,11 +5,14 @@ import { Alert, Container, Divider, IconButton, InputAdornment, Typography } fro
 import { Box } from '@mui/system';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { verboseLog } from '../../../config/debug';
+import { encryptData } from '../../../helpers/functions/common-functions';
 import OtpForm from '../../../shared/otp-form/otp-component';
+import { sendAaadharOtp, validateOtpAadhaar } from '../../../store/actions/user-aadhaar-actions';
 import { Button, TextField } from '../../../ui/core';
-import AadhaarInputField from '../doctor-registration/aadhaar-input-field';
+import AadhaarInputField from '../../../ui/core/aadhaar-input-field/aadhaar-input-field';
 import UniqueUserNameForDoctorRegistration from './unique-username';
 
 function FetchDoctorDetails() {
@@ -22,10 +25,12 @@ function FetchDoctorDetails() {
   const [isOtpValidMobile, setisOtpValidMobile] = useState(false);
   const [isOtpValidAadhar, setisOtpValidAadhar] = useState(false);
   const [enableSubmit, setEnableSubmit] = useState(false);
+  const [aadhaarState, setAadhaarState] = useState('');
+  const dispatch = useDispatch();
 
   const {
     register,
-
+    handleSubmit,
     getValues,
     formState: { errors },
   } = useForm({
@@ -53,9 +58,10 @@ function FetchDoctorDetails() {
   const handleVerifyMobile = () => {
     if (isOtpValidEmail === true) {
       setShowOtpMobile(true);
-      isOtpValidMobile(false);
+      setisOtpValidMobile(false);
     }
   };
+
   const handleValidateMobile = () => {
     if (otpValue.length === 6) {
       setisOtpValidMobile(true);
@@ -67,21 +73,38 @@ function FetchDoctorDetails() {
       }
     }
   };
-  const handleVerifyAadhar = () => {
-    setshowOtpAadhar(true);
-    isOtpValidMobile(false);
-    isOtpValidEmail(false);
+
+  const onSubmit = () => {
+    setUniqueNameForDoctorReg(true);
   };
 
-  const handleValidateAadhar = () => {
-    if (otpValue.length === 6) {
-      setisOtpValidAadhar(true);
-      setshowOtpAadhar(false);
-      handleClear();
+  const handleUserAadhaarNumber = (dataValue) => {
+    let encryptedUserAadhaarNumber = encryptData(
+      dataValue.field_1 + dataValue.field_2 + dataValue.field_3
+    );
+    handleVerifyAadhar(encryptedUserAadhaarNumber);
+  };
 
-      if (isOtpValidAadhar === true && isOtpValidMobile === true) {
-        setEnableSubmit(true);
-      }
+  const handleVerifyAadhar = (value) => {
+    setAadhaarState(value);
+    dispatch(sendAaadharOtp(value));
+    setshowOtpAadhar(true);
+    setisOtpValidMobile(false);
+    setisOtpValidEmail(false);
+  };
+
+  const finalTransactionId = useSelector(
+    (state) => state?.AadhaarTransactionId?.aadharData?.data?.DOAuthOTP?.uidtkn
+  );
+
+  const handleValidateAadhar = () => {
+    let userOtp = encryptData(otpValue);
+    setshowOtpAadhar(false);
+    setisOtpValidAadhar(true);
+    handleClear();
+
+    if (otpValue.length === 6) {
+      dispatch(validateOtpAadhaar(aadhaarState, finalTransactionId, userOtp));
     }
   };
 
@@ -100,7 +123,6 @@ function FetchDoctorDetails() {
         : Math.max(0, parseInt(e.target.value)).toString().slice(0, 10);
     }
   };
-
   return (
     <>
       {showUniqueNameForDoctorReg ? (
@@ -175,7 +197,7 @@ function FetchDoctorDetails() {
               </Typography>
             </Box>
             <Divider sx={{ marginBottom: '25px' }} variant="fullWidth" />
-
+            {/* aadhaar field */}
             <Box
               display="flex"
               justifyContent="space-between"
@@ -202,7 +224,7 @@ function FetchDoctorDetails() {
                     variant="contained"
                     color="secondary"
                     width="95px"
-                    onClick={handleVerifyAadhar}
+                    onClick={handleUserAadhaarNumber}
                   >
                     Verify
                   </Button>
@@ -332,10 +354,6 @@ function FetchDoctorDetails() {
               <Box
                 sx={{
                   display: 'flex',
-                  // flexDirection: {
-                  //   xs: 'column',
-                  //   sm: 'row',
-                  // },
                 }}
               >
                 <TextField
@@ -414,7 +432,7 @@ function FetchDoctorDetails() {
                 color="secondary"
                 disabled={!enableSubmit}
                 sx={{ marginRight: '10px', width: '105px', height: '48px' }}
-                onClick={() => setUniqueNameForDoctorReg(true)}
+                onClick={handleSubmit(onSubmit)}
               >
                 Submit
               </Button>
