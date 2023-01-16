@@ -12,12 +12,19 @@ const collegeReducer = createSlice({
   name: 'college',
   initialState,
   reducers: {
-    getCollegeData: (state, action) => {
+    getCollegeAdminData: (state, action) => {
+      state.collegeData = action.payload;
+    },
+    getCollegeRegistrarData: (state, action) => {
+      state.collegeData = action.payload;
+    },
+    getCollegeDeanData: (state, action) => {
       state.collegeData = action.payload;
     },
   },
 });
 
-export const { getCollegeData } = collegeReducer.actions;
+export const { getCollegeAdminData, getCollegeRegistrarData, getCollegeDeanData } =
+  collegeReducer.actions;
 
 export default collegeReducer.reducer;

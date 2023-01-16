@@ -24,5 +24,7 @@ export const API = {
   },
   college: {
     getCollegeProfile: 'api/v1/college/{id}',
+    getCollegeRegistrarProfile: '/api/v1/college/registrar/{id}',
+    getCollegeDeanProfile: '/api/v1/college/dean/{id}',
   },
 };

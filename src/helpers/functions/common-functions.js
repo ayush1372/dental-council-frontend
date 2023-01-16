@@ -36,14 +36,15 @@ export const encryptData = (data, key) => {
   return encryptedPass;
 };
 
-// export const userSubType = () => {
-//   const userSubTypeObj = { '1': 'College', '2': 'College Registrar', '3': 'College Dean' }
-//   var user_sub_type = userSubTypeObj.reduce(function(result, currentObject) {
-//     result[currentObject.id] = currentObject.name;
-//     return result;
-//   }, {});
-
-//   // eslint-disable-next-line no-console
-//   console.log('asd', user_sub_type);
-
-// }
+export const userGroupType = (userGroupID) => {
+  const userGroupTypeObj = {
+    1: 'Health Professional',
+    2: 'State Medical Council',
+    3: 'National Medical Council',
+    4: 'College Dean',
+    5: 'College Registrar',
+    6: 'College Admin',
+    7: 'NBE',
+  };
+  return userGroupTypeObj[userGroupID];
+};
