@@ -29,10 +29,9 @@ export const changeAppFontSize = (size, appFontType) => {
     appFontType === 'small' ? `${size - 2}` : appFontType === 'large' ? `${size + 2}` : `${size}`;
   return `${fontSize}px`;
 };
-export const encryptData = (data) => {
-  var publicKey = process.env.REACT_APP_PUBLIC_KEY;
+export const encryptData = (data, key) => {
   var encrypt = new JSEncrypt();
-  encrypt.setPublicKey(publicKey);
+  encrypt.setPublicKey(key);
   var encryptedPass = encrypt.encrypt(data);
   return encryptedPass;
 };
