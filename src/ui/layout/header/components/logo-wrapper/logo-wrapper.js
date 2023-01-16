@@ -1,7 +1,8 @@
 import { useState } from 'react';
 
+import { makeStyles } from '@material-ui/core';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { Container, Grid, Link, Typography } from '@mui/material';
+import { Box, Container, Grid, Link, Typography, useTheme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -14,7 +15,7 @@ import { LoginRegisterPopover } from './login-register-popover/login-register-po
 
 import styles from './logo-wrapper.module.scss';
 
-export const LogoWrapper = () => {
+export const LogoWrapper = ({ menuToggleHandler }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const loggedIn = useSelector((state) => state.common.isloggedIn);
@@ -38,6 +39,42 @@ export const LogoWrapper = () => {
     navigate('/');
   };
 
+  const theme = useTheme();
+  const useStyles = makeStyles(() => ({
+    hamburger: {
+      display: 'none',
+      position: 'absolute',
+      width: '42px',
+      height: '39px',
+      padding: '8px',
+      right: '16px',
+      top: '50%',
+      transform: 'translateY(-50%)',
+      backgroundColor: theme.palette.primary.main,
+      cursor: 'pointer',
+      [theme.breakpoints.down('md')]: {
+        display: 'block',
+      },
+    },
+    bar: {
+      position: 'absolute',
+      content: '',
+      zIndex: '9',
+      width: '25px',
+      height: '3px',
+      left: '8px',
+      backgroundColor: theme.palette.white.main,
+
+      '&:nth-child(2)': {
+        transform: 'translateY(10px)',
+      },
+      '&:nth-child(3)': {
+        transform: 'translateY(20px)',
+      },
+    },
+  }));
+  const classes = useStyles(theme);
+
   // const { menuOpen } = useSelector((state) => state.ui);
 
   // const menuToggleHandler = () => {
@@ -48,7 +85,7 @@ export const LogoWrapper = () => {
   // };
 
   return (
-    <Container>
+    <Container sx={{ position: 'relative' }}>
       <Grid container alignItems="center">
         <Grid item xs={12} sm={6} my={1}>
           <Grid container>
@@ -108,6 +145,12 @@ export const LogoWrapper = () => {
           )}
         </Grid>
       </Grid>
+
+      <Box className={classes.hamburger} onClick={menuToggleHandler}>
+        <span className={classes.bar}></span>
+        <span className={classes.bar}></span>
+        <span className={classes.bar}></span>
+      </Box>
     </Container>
   );
 };

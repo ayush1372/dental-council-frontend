@@ -1,39 +1,54 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 
-// import { SArrowIcon } from '../styles';
+import { makeStyles } from '@material-ui/core';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 
 import styles from './dropdown.scss';
 
 const TreeItem = ({ onSelectCallback, label, children, link }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const theme = useTheme();
+  const useStyles = makeStyles(() => ({
+    submenu: {
+      zIndex: '9',
+      padding: '16px',
+      width: '100%',
+      borderBottom: '1px solid',
+      borderBottomColor: theme.palette.primary.dark,
+      '&.active': {
+        backgroundColor: theme.palette.primary.dark,
+      },
+      [theme.breakpoints.down('md')]: {
+        color: theme.palette.primary.main,
+        backgroundColor: theme.palette.grey.main,
+        '&.active': {
+          color: theme.palette.primary.main,
+          backgroundColor: theme.palette.grey.main,
+        },
+      },
+    },
+  }));
+  const classes = useStyles(theme);
 
   return (
-    <Box>
+    <>
       {link && (
-        <NavLink to={link} onClick={onSelectCallback} className="test">
-          <Typography
-            color={{ xs: 'primary.main', md: 'white.main' }}
-            variant="body3"
-            borderBottom="1px solid"
-            borderColor="primary.dark"
-            borderRadius="0"
-            component="div"
-            p={1}
-            px={2}
-            backgroundColor={{ xs: 'grey.main', md: 'primary.main' }}
-            sx={{
-              '&:hover': {
-                backgroundColor: 'primary.dark',
-                color: 'white.main',
-              },
-            }}
-          >
+        <Box
+          display="flex"
+          backgroundColor={{ xs: 'grey.main', md: 'primary.main' }}
+          sx={{
+            '&:hover': {
+              backgroundColor: 'primary.dark',
+              color: 'white.main',
+            },
+          }}
+        >
+          <NavLink to={link} onClick={onSelectCallback} className={classes.submenu}>
             {label}
-          </Typography>
-        </NavLink>
+          </NavLink>
+        </Box>
       )}
       {!link && (
         <Box
@@ -52,7 +67,7 @@ const TreeItem = ({ onSelectCallback, label, children, link }) => {
         </Box>
       )}
       {children && isOpen && <Box mt={1}>{children}</Box>}
-    </Box>
+    </>
   );
 };
 
@@ -60,7 +75,7 @@ const Dropdown = ({ tree, onSelectCallback }) => {
   const createTree = (branch) => (
     <TreeItem onSelectCallback={onSelectCallback} label={branch.label} link={branch.link}>
       {branch?.branches?.map((branch, index) => (
-        <Typography key={index}>{createTree(branch)}</Typography>
+        <Fragment key={index}>{createTree(branch)}</Fragment>
       ))}
     </TreeItem>
   );
@@ -75,6 +90,7 @@ const Dropdown = ({ tree, onSelectCallback }) => {
       width={{ xs: '100%', md: '200px' }}
       className={styles.submenu}
       boxShadow="1"
+      zIndex="9"
     >
       {tree.map((branch, index) => (
         <Typography key={index}> {createTree(branch)}</Typography>

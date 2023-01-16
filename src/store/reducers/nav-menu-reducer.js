@@ -15,5 +15,5 @@ const navMenu = createSlice({
   },
 });
 
-export const uiActions = navMenu.actions;
+export const { menuToggle } = navMenu.actions;
 export default navMenu;

@@ -2,29 +2,97 @@ import './navbar.scss';
 
 import { Fragment, useState } from 'react';
 
+import { makeStyles } from '@material-ui/core';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
+import { menuToggle } from '../../../../../store/reducers/nav-menu-reducer';
 import Dropdown from './dropdown';
 
 const Nav = ({ navLinks, menuToggleHandler }) => {
   const [openDropdown, setOpenDropdown] = useState(null);
+  const theme = useTheme();
+  const dispatch = useDispatch();
+
+  const useStyles = makeStyles(() => ({
+    navMenu: {
+      display: 'flex',
+      justifyContent: 'flex-start',
+      alignItems: 'center',
+      position: 'relative',
+      padding: '20px',
+      lineHeight: '1',
+      borderBottom: '4px solid',
+      borderBottomColor: theme.palette.primary.main,
+      borderRight: '1px solid',
+      borderRightColor: theme.palette.primary.dark,
+
+      '&:hover': {
+        backgroundColor: theme.palette.primary.dark,
+        borderBottom: '4px solid',
+        borderBottomColor: theme.palette.secondary.main,
+      },
+
+      '&.active': {
+        backgroundColor: theme.palette.primary.dark,
+        borderBottom: '4px solid',
+        borderBottomColor: theme.palette.secondary.main,
+      },
+
+      [theme.breakpoints.down('md')]: {
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        borderRight: '0',
+        borderBottom: '0',
+        '&:hover': {
+          backgroundColor: 'none',
+          borderBottom: 'none',
+        },
+        '&.active': {
+          backgroundColor: 'none',
+          borderBottom: 'none',
+        },
+      },
+    },
+  }));
+
+  const classes = useStyles(theme);
 
   const openDropdownHandler = (label) => {
-    if (label === openDropdown) return setOpenDropdown(null);
-    setOpenDropdown(label);
+    if (window.innerWidth <= 1024) {
+      if (label === openDropdown) return setOpenDropdown(null);
+      setOpenDropdown(label);
+    }
+  };
+
+  const hoverEffect = (label) => {
+    if (window.innerWidth >= 1023) {
+      if (label === openDropdown) return setOpenDropdown(null);
+      setOpenDropdown(label);
+    }
+  };
+
+  const hoverOutEffect = () => {
+    if (window.innerWidth >= 1023) {
+      setOpenDropdown(null);
+    }
   };
 
   const onSelectCallback = () => {
     if (menuToggleHandler) menuToggleHandler();
     setOpenDropdown(null);
+    dispatch(menuToggle(!menuOpen));
   };
+
+  const { menuOpen } = useSelector((state) => state.navMenu);
 
   return (
     <Box
       className="navLinkContainer"
-      display="flex"
+      display={{ xs: menuOpen ? 'flex' : 'none', md: 'flex' }}
       width="100%"
       flexDirection={{ xs: 'column', md: 'row' }}
       alignItems="center"
@@ -37,7 +105,13 @@ const Nav = ({ navLinks, menuToggleHandler }) => {
         return (
           <Fragment key={label}>
             {link ? (
-              <NavLink className="navMenu" to={link}>
+              <NavLink
+                className={classes.navMenu}
+                to={link}
+                onClick={() => {
+                  dispatch(menuToggle(!menuOpen));
+                }}
+              >
                 <Typography variant="body3">{label}</Typography>
               </NavLink>
             ) : (
@@ -46,13 +120,14 @@ const Nav = ({ navLinks, menuToggleHandler }) => {
                 width={{ xs: '100%', md: 'auto' }}
                 textAlign="left"
                 position="relative"
+                onMouseEnter={() => hoverEffect(label)}
+                onMouseLeave={() => hoverOutEffect(null)}
               >
-                {/* <NavLink to="/" className="navMenu" isOpen={isOpen}> */}
                 <Box
                   display="flex"
                   flexDirection="row"
                   alignItems="center"
-                  className="navMenu"
+                  className={classes.navMenu}
                   gap={1}
                   sx={{ cursor: 'pointer' }}
                 >
