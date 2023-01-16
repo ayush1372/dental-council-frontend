@@ -64,7 +64,7 @@ export function LoginPage({ handleForgotPassword }) {
         if (response?.data?.validity) {
           const requestObj = {
             username: param?.nmrID,
-            password: encryptData(param?.password),
+            password: encryptData(param?.password, process.env.REACT_APP_PASS_SITE_KEY),
             user_type:
               loginFormname === 'Doctor'
                 ? 1
