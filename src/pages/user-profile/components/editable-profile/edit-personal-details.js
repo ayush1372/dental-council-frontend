@@ -11,7 +11,7 @@ import { createSelectFieldData } from '../../../../helpers/functions/common-func
 import { get_year_data } from '../../../../helpers/functions/common-functions';
 import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
 import { ModalOTP } from '../../../../shared/otp-modal/otp-modal';
-import { getDistrictList, getSubDistrictsList } from '../../../../store/actions/menu-list-actions';
+import { getDistrictList, getSubDistrictsList } from '../../../../store/actions/common-actions';
 import { RadioGroup, Select, TextField } from '../../../../ui/core';
 import MobileNumber from '../../../../ui/core/mobile-number/mobile-number';
 
@@ -21,7 +21,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const dispatch = useDispatch();
   const loggedInUserType = useSelector((state) => state?.login?.loggedInUserType);
   const { statesList, countriesList, districtsList, subDistrictList } = useSelector(
-    (state) => state?.menuLists
+    (state) => state?.common
   );
 
   const [languages, setLanguages] = useState([]);
