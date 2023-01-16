@@ -18,4 +18,8 @@ export const API = {
     subDistricts: 'api/v1/md/district/{district_id}/sub_districts',
     districts: 'api/v1/md/state/{state_id}/districts',
   },
+  Aadhaar: {
+    sendAadhaarOtp: 'api/v1/sendAadhaarOtp',
+    verifyAadhaarOtp: 'api/v1/verifyAadhaarOtp',
+  },
 };
