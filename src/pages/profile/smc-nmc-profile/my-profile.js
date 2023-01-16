@@ -36,16 +36,6 @@ const MyProfile = (props) => {
               </Typography>
             </Grid>
 
-            {/* <Grid item xs={12} sm="auto">
-              <Button
-                fullWidth
-                size="small"
-                variant="contained"
-                onClick={() => setShowpage('Password')}
-              >
-                Change Password
-              </Button>
-            </Grid> */}
             <Grid item xs={12} sm="auto">
               <Button
                 fullWidth

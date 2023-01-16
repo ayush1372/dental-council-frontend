@@ -7,8 +7,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
-import { encryptData } from '../../../helpers/functions/common-functions';
+import { encryptData, userGroupType } from '../../../helpers/functions/common-functions';
 import CaptchaComponent from '../../../shared/captcha-component/captcha-component';
+import {
+  getCollegeAdminProfileData,
+  getCollegeDeanProfileData,
+  getCollegeRegistrarProfileData,
+} from '../../../store/actions/college-actions';
 import {
   generateCaptchaImage,
   getCaptchaEnabledFlagValue,
@@ -41,6 +46,7 @@ export function LoginPage({ handleForgotPassword }) {
     register,
     handleSubmit,
     getValues,
+    reset,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
@@ -76,12 +82,22 @@ export function LoginPage({ handleForgotPassword }) {
             captcha_trans_id: generateCaptcha?.transaction_id,
           };
           dispatch(loginAction(requestObj))
-            .then(() => {
+            .then((response) => {
               let req = { mobile: param.nmrID };
               if (req) {
                 dispatch(login());
                 dispatch(userLoggedInType(loginFormname));
                 navigate(`/profile`);
+                const userType = userGroupType(response?.data?.user_group_id);
+
+                if (userType === 'College Dean') {
+                  dispatch(getCollegeDeanProfileData(response?.data?.profile_id));
+                } else if (userType === 'College Registrar') {
+                  dispatch(getCollegeRegistrarProfileData(response?.data?.profile_id));
+                } else if (userType === 'College Admin') {
+                  dispatch(getCollegeAdminProfileData(response?.data?.profile_id));
+                }
+
                 window.scrollTo({
                   top: 0,
                   behavior: 'smooth',
@@ -106,6 +122,7 @@ export function LoginPage({ handleForgotPassword }) {
   };
 
   useEffect(() => {
+    reset();
     dispatch(getCaptchaEnabledFlagValue())
       .then((response) => {
         if (response?.data) {
@@ -117,7 +134,7 @@ export function LoginPage({ handleForgotPassword }) {
       .catch((error) => {
         successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
       });
-  }, []);
+  }, [loginFormNames[loginFormname]]);
 
   return (
     <>
