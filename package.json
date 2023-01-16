@@ -23,6 +23,7 @@
     "es-abstract": "^1.20.1",
     "fs": "^0.0.1-security",
     "i18next": "^21.8.16",
+    "jsencrypt": "3.2.1",
     "inquirer-directory": "^2.2.0",
     "js-encrypt": "^2.3.4",
     "lodash": "^4.17.21",

@@ -8,12 +8,14 @@ import collegeReducer from './reducers/college-reducer';
 import commonActivity from './reducers/common-reducers';
 import doctorUserProfileReducer from './reducers/doctor-user-profile-reducer';
 import loginReducer from './reducers/login-reducer';
+import AadhaarTransactionId from './reducers/user-aadhaar-verify-reducer';
 
 const store = configureStore({
   reducer: {
     common: commonActivity,
     appFontSize: appFontSizeActivity,
     getCaptchaData: captchaReducer,
+    AadhaarTransactionId: AadhaarTransactionId,
     loginReducer: loginReducer,
     doctorUserProfileReducer: doctorUserProfileReducer,
     college: collegeReducer,
