@@ -114,6 +114,11 @@ const NAV_META = [
     title: 'ScreenReader',
     component: 'screen-reader',
   },
+  {
+    path: 'reset-password/:request_id',
+    title: 'Reset Password',
+    component: 'reset-password',
+  },
 ];
 
 export const LOGGED_IN = true;
