@@ -49,14 +49,14 @@ const CollegeMyProfile = () => {
                 {userData?.name ? userData?.name : ''}
               </Typography>
             </Grid>
-            {userData?.college_id ? (
+            {userData?.college_code ? (
               <Grid item xs={12} md={4} sm={6}>
                 <Typography variant="body3" color="grey.label">
                   College ID
                 </Typography>
 
                 <Typography variant="subtitle2" color="primary.main">
-                  {userData?.college_id}
+                  {userData?.college_code}
                 </Typography>
               </Grid>
             ) : (
