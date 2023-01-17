@@ -5,11 +5,21 @@ import { SessionTimer } from '../../constants/session-timer';
 const sessionTiming = 0.5;
 
 const initialState = {
+  apiLoading: false,
   isloggedIn: false,
   timer: 0,
   mobileNumber: undefined,
   loggedInUserType: '',
   userActiveTab: '',
+  statesList: { data: [], isLoading: Boolean(true), isError: false },
+  countriesList: { data: [], isLoading: Boolean(true), isError: false },
+  districtsList: { data: [], isLoading: Boolean(true), isError: false },
+  subDistrictList: { data: [], isLoading: Boolean(true), isError: false },
+  languagesList: { data: [], isLoading: Boolean(true), isError: false },
+  universitiesList: { data: [], isLoading: Boolean(true), isError: false },
+  collegesList: { data: [], isLoading: Boolean(true), isError: false },
+  coursesList: { data: [], isLoading: Boolean(true), isError: false },
+  specialitiesList: { data: [], isLoading: Boolean(true), isError: false },
 };
 
 export const CommonActivity = createSlice({
@@ -37,6 +47,33 @@ export const CommonActivity = createSlice({
     changeUserActiveTab: (state, action) => {
       state.userActiveTab = action.payload;
     },
+    getStates: (state, action) => {
+      state.statesList = action.payload;
+    },
+    getCountries: (state, action) => {
+      state.countriesList = action.payload;
+    },
+    getDistricts: (state, action) => {
+      state.districtsList = action.payload;
+    },
+    getSubDistricts: (state, action) => {
+      state.subDistrictList = action.payload;
+    },
+    getLanguages: (state, action) => {
+      state.languagesList.data = action.payload;
+    },
+    getUniversities: (state, action) => {
+      state.universitiesList.data = action.payload;
+    },
+    getColleges: (state, action) => {
+      state.collegesList.data = action.payload;
+    },
+    getCourses: (state, action) => {
+      state.coursesList.data = action.payload;
+    },
+    getSpecialities: (state, action) => {
+      state.specialitiesList.data = action.payload;
+    },
   },
 });
 
@@ -49,6 +86,15 @@ export const {
   resetCommonReducer,
   setApiLoading,
   changeUserActiveTab,
+  getStates,
+  getCountries,
+  getDistricts,
+  getSubDistricts,
+  getLanguages,
+  getColleges,
+  getUniversities,
+  getCourses,
+  getSpecialities,
 } = CommonActivity.actions;
 
 export default CommonActivity.reducer;

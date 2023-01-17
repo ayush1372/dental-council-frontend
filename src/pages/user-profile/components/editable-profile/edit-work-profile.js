@@ -185,7 +185,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
       sx={{
         padding: {
           xs: '0px 10px 10px 10px',
-          md: '0px 91px 44px 41px',
+          md: '0px 41px 44px 41px',
         },
       }}
     >
@@ -200,26 +200,26 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               color="tabHighlightedBackgroundColor.main"
               variant="h3"
             >
-              Speciality Details*
+              Specialty Details*
             </Typography>
           </Grid>
           <Grid item xs={12} md={4}>
             <Select
               fullWidth
-              error={errors.Speciality?.message}
-              name="Speciality"
-              label="Broad Speciality"
-              defaultValue={getValues().Speciality}
+              error={errors.Specialty?.message}
+              name="Specialty"
+              label="Broad Specialty"
+              defaultValue={getValues().Specialty}
               required={true}
-              {...register('Speciality', {
-                required: 'Speciality is required',
+              {...register('Specialty', {
+                required: 'Specialty is required',
               })}
               options={createSelectFieldData(specialitiesList.data)}
             />
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
-              Super Speciality
+              Super Specialty
               <Typography component="span" color="error.main">
                 *
               </Typography>

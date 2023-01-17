@@ -18,7 +18,7 @@ export function TrackApplication() {
     setShowTrackApplicationTable(true);
   };
   return (
-    <Box p={3}>
+    <Box>
       {showUserProfile && (
         <Box bgcolor="grey1.lighter">
           <Box align="right" pt={2} pr={2}>
@@ -46,7 +46,7 @@ export function TrackApplication() {
         </Box>
       )}
       {showTrackApplicationTable ? (
-        <Box>
+        <Box p={3}>
           <TrackApplicationTable
             userType={loggedInUserType === 'Doctor' ? true : false}
             setShowTrackApplication={setShowTrackApplication}
@@ -56,10 +56,12 @@ export function TrackApplication() {
         </Box>
       ) : (
         showTrackApplication && (
-          <ApplicationDetails
-            setShowTrackApplication={setShowTrackApplication}
-            setShowTrackApplicationTable={setShowTrackApplicationTable}
-          />
+          <Box p={3}>
+            <ApplicationDetails
+              setShowTrackApplication={setShowTrackApplication}
+              setShowTrackApplicationTable={setShowTrackApplicationTable}
+            />
+          </Box>
         )
       )}
     </Box>
