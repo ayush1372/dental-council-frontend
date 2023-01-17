@@ -85,7 +85,7 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
                 <Link to="/" onClick={() => navigate('/')}>
                   <Typography
                     fontWeight="600"
-                    variant={{ xs: 'body3', md: 'subtitle2' }}
+                    variant="subtitle2"
                     lineHeight={{ xs: '18px', md: '22px' }}
                     sx={{ cursor: 'pointer' }}
                   >
@@ -97,7 +97,7 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
                 <Link onClick={() => navigate('/')}>
                   <Typography
                     fontWeight="600"
-                    variant={{ xs: 'body3', md: 'subtitle2' }}
+                    variant="subtitle2"
                     lineHeight={{ xs: '18px', md: '22px' }}
                     sx={{ cursor: 'pointer' }}
                   >
