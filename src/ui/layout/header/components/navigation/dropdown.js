@@ -5,8 +5,6 @@ import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDown
 import { Box, Typography, useTheme } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 
-import styles from './dropdown.scss';
-
 const TreeItem = ({ onSelectCallback, label, children, link }) => {
   const [isOpen, setIsOpen] = useState(false);
   const theme = useTheme();
@@ -88,7 +86,6 @@ const Dropdown = ({ tree, onSelectCallback }) => {
       left="0"
       bgcolor="primary.main"
       width={{ xs: '100%', md: '200px' }}
-      className={styles.submenu}
       boxShadow="1"
       zIndex="9"
     >

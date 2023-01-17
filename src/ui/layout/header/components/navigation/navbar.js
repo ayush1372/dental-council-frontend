@@ -1,5 +1,3 @@
-import './navbar.scss';
-
 import { Fragment, useState } from 'react';
 
 import { makeStyles } from '@material-ui/core';
