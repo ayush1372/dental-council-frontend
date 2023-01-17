@@ -11,7 +11,11 @@ import { createSelectFieldData } from '../../../../helpers/functions/common-func
 import { get_year_data } from '../../../../helpers/functions/common-functions';
 import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
 import { ModalOTP } from '../../../../shared/otp-modal/otp-modal';
-import { getDistrictList, getSubDistrictsList } from '../../../../store/actions/menu-list-actions';
+import {
+  getDistrictList,
+  getLanguagesList,
+  getSubDistrictsList,
+} from '../../../../store/actions/menu-list-actions';
 import { RadioGroup, Select, TextField } from '../../../../ui/core';
 import MobileNumber from '../../../../ui/core/mobile-number/mobile-number';
 
@@ -19,7 +23,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const loggedInUserType = useSelector((state) => state?.login?.loggedInUserType);
-  const { statesList, countriesList, districtsList, subDistrictList } = useSelector(
+  const { statesList, countriesList, districtsList, subDistrictList, languagesList } = useSelector(
     (state) => state?.menuLists
   );
 
@@ -100,6 +104,20 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     fetchSubDistricts(selectedDistrict);
   }, [selectedDistrict]);
 
+  const fetchLanguages = () => {
+    dispatch(getLanguagesList())
+      .then((dataResponse) => {
+        verboseLog('dataResponse', dataResponse);
+      })
+      .catch((error) => {
+        verboseLog('error occured', error);
+      });
+  };
+
+  useEffect(() => {
+    fetchLanguages();
+  }, []);
+
   const { otpPopup, handleClickOpen, otpVerified } = ModalOTP({ afterConfirm: () => {} });
 
   const handleBackButton = () => {
@@ -116,10 +134,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     setValue(event.target.name, event.target.value, true);
   };
 
-  const handleLanguageSpokenChange = (name, value) => {
-    setValue(name, value, true);
-    setLanguages([...value]);
-  };
+  // const handleLanguageSpokenChange = (name, value) => {
+  //   setValue(name, value);
+  //   setLanguages([...value]);
+  // };
 
   // if(countriesList) {
 
@@ -400,13 +418,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             </Typography>
             <AutoComplete
               name="LanguageSpoken"
-              options={[
-                { id: 1, name: 'Telugu' },
-                { id: 2, name: 'Hindi' },
-                { id: 3, name: 'English' },
-                { id: 4, name: 'Marathi' },
-                { id: 5, name: 'Kannada' },
-              ]}
+              options={languagesList.data}
               value={getValues().LanguageSpoken}
               error={languages.length === 0 && errors.LanguageSpoken?.message}
               multiple={true}
@@ -414,7 +426,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 required: 'Missing field',
               })}
               onChange={(value) => {
-                handleLanguageSpokenChange('LanguageSpoken', value);
+                setValue('LanguageSpoken', value);
+                setLanguages(value);
               }}
             />
           </Grid>

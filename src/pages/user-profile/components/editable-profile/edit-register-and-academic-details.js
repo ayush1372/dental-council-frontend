@@ -1,11 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import CancelIcon from '@mui/icons-material/Cancel';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Box, Divider, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { verboseLog } from '../../../../config/debug';
+import { monthsData } from '../../../../constants/common-data';
+import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
+import {
+  getCollegesList,
+  getCoursesList,
+  getUniversitiesList,
+} from '../../../../store/actions/menu-list-actions';
+import { getDoctorUserProfile } from '../../../../store/reducers/doctor-user-profile-reducer';
 import { Button, RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
 import ButtonGroupWizard from '../../../../ui/core/wizard/button-group-wizard';
@@ -25,6 +35,8 @@ const createQualificationObject = (index) => {
 };
 
 const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserType }) => {
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
   const [registrationFileData, setRegistrationFileData] = useState([]);
   const [qualificationFilesData, setQualificationFilesData] = useState({
     'qualification.1.files': [],
@@ -33,7 +45,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
   const [qualificationArray, setQualificationArray] = useState([
     createQualificationObject(qualificationCount),
   ]);
-  const { t } = useTranslation();
+  const [collegeByIndex, setCollegeByIndex] = useState([[]]);
+  const { coursesList, universitiesList } = useSelector((state) => state?.menuLists);
+  const { doctorUserProfile } = useSelector((state) => state?.doctorUserProfileReducer);
+  const { qualification_detail } = doctorUserProfile || {};
   const {
     formState: { errors },
     getValues,
@@ -61,6 +76,32 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
   });
 
   const onHandleOptionNext = () => {
+    const inputValues = getValues();
+    const qualificationObj = qualificationArray[0];
+    const courseId = inputValues[qualificationObj[0]];
+    const collegeId = inputValues[qualificationObj[3]];
+    const universityId = inputValues[qualificationObj[4]];
+    const qualificationYear = inputValues[qualificationObj[6]];
+    const isNameChange = inputValues[qualificationObj[7]];
+
+    const updatedObj = {
+      ...qualification_detail[3],
+      course: coursesList.data?.find((x) => x.id === courseId),
+      university: universitiesList.data?.find((x) => x.id === universityId),
+      college: collegeByIndex[0]?.find((x) => x.id === collegeId),
+      qualification_year: qualificationYear,
+      is_name_change: isNameChange,
+    };
+    const copy_qualification_detail = [...qualification_detail];
+
+    copy_qualification_detail[3] = { ...updatedObj };
+    const stateObj = {
+      qualification_detail: [...copy_qualification_detail],
+    };
+
+    const updatedDoctorProfile = { ...doctorUserProfile, ...stateObj };
+    dispatch(getDoctorUserProfile(JSON.parse(JSON.stringify(updatedDoctorProfile))));
+
     handleNext();
   };
   const handleQualificationFilesData = (fileName, files) => {
@@ -79,15 +120,76 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
     const count = qualificationCount + 1;
     const newQualificationArray = [...qualificationArray, createQualificationObject(count)];
     setQualificationArray(newQualificationArray);
+    setCollegeByIndex([...collegeByIndex, []]);
     setQualificationCount(count);
   };
 
   const handleRemoveQualification = (index) => {
     if (qualificationCount === 0) return;
     const newQualificationArray = [...qualificationArray];
+    const newCollegeByIndexArray = [...collegeByIndex];
     newQualificationArray.splice(index, 1);
+    newCollegeByIndexArray.splice(index, 1);
     setQualificationArray([...newQualificationArray]);
+    setCollegeByIndex([...newCollegeByIndexArray]);
   };
+
+  const fetchCourses = () => {
+    dispatch(getCoursesList())
+      .then((dataResponse) => {
+        verboseLog('dataResponse', dataResponse);
+      })
+      .catch((error) => {
+        verboseLog('error occured', error);
+      });
+  };
+  const fetchUniversities = () => {
+    dispatch(getUniversitiesList())
+      .then((dataResponse) => {
+        verboseLog('dataResponse', dataResponse);
+      })
+      .catch((error) => {
+        verboseLog('error occured', error);
+      });
+  };
+
+  const fetchColleges = (collegeId, index) => {
+    if (collegeId) {
+      dispatch(getCollegesList(collegeId))
+        .then((dataResponse) => {
+          collegeByIndex[index] = dataResponse.data;
+          setCollegeByIndex([...collegeByIndex]);
+          verboseLog('dataResponse', dataResponse);
+        })
+        .catch((error) => {
+          verboseLog('error occured', error);
+        });
+    }
+  };
+
+  // const selectedCollege = watch('college');
+
+  // useEffect(() => {
+  //   fetchColleges(selectedCollege);
+  // }, [selectedCollege]);
+
+  useEffect(() => {
+    fetchCourses();
+    fetchUniversities();
+  }, []);
+
+  useEffect(() => {
+    const { qualification_year, university, course, college, is_name_change } =
+      qualification_detail[3];
+    const qualificationObj = qualificationArray[0];
+
+    setValue(qualificationObj[0], course?.id);
+    setValue(qualificationObj[3], college?.id);
+    setValue(qualificationObj[4], university?.id);
+    setValue(qualificationObj[6], qualification_year);
+    setValue(qualificationObj[7], is_name_change);
+    fetchColleges(university?.id, 0);
+  }, [qualification_detail]);
 
   return (
     <Box
@@ -101,7 +203,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
     >
       <Grid container spacing={2} mt={2}>
         {/* layer 1 */}
-        <Grid container item spacing={2} mt={1}>
+        <Grid container item spacing={2}>
           <Grid item xs={12}>
             <Typography
               bgcolor="grey1.light"
@@ -114,16 +216,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
             </Typography>
           </Grid>
           <Grid item xs={12} md={4}>
-            <Typography variant="subtitle2" color="inputTextColor.main">
-              Registered With Council
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
-            </Typography>
-
             <TextField
               variant="outlined"
               name={'RegisteredWithCouncil'}
+              label={'Registered with council'}
               required={true}
               fullWidth
               defaultValue={getValues().RegisteredWithCouncil}
@@ -140,42 +236,23 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
             />
           </Grid>
           <Grid item xs={12} md={4}>
-            <Typography variant="subtitle2" color="inputTextColor.main">
-              Registration Number
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
-            </Typography>
             <TextField
               variant="outlined"
               name={'RegistrationNumber'}
-              Registration
-              Number
+              label={'Registration Number'}
               required={true}
               fullWidth
               defaultValue={getValues().RegistrationNumber}
               {...register('RegistrationNumber', {
                 required: 'Registration Number is Required',
               })}
-              sx={{
-                input: {
-                  backgroundColor: 'grey2.main',
-                },
-              }}
-              InputProps={{ readOnly: true }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
-            <Typography variant="subtitle2" color="inputTextColor.main">
-              Registration Date(if available)
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
-            </Typography>
-
             <TextField
               variant="outlined"
               name={'RegistrationDate'}
+              label={'Registration Date(if available)'}
               required={true}
               fullWidth
               defaultValue={getValues().RegistrationDate}
@@ -191,14 +268,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
             />
           </Grid>
         </Grid>
-        <Grid container item spacing={2} mt={1}>
+        <Grid container item spacing={2}>
           <Grid item xs={12} md={4}>
-            <Typography variant="subtitle2" color="inputTextColor.main">
-              Is registration permanent for renewable?
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
-            </Typography>
             <RadioGroup
               onChange={handleRegistration}
               name={'registration'}
@@ -214,21 +285,16 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                   label: 'Renewable',
                 },
               ]}
+              label="Is this registration permanent for renewable?"
               required={true}
               error={errors.registration?.message}
             />
           </Grid>
           <Grid item xs={12} md={4}>
-            <Typography variant="subtitle2" color="inputTextColor.main">
-              Due Date of Renewal
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
-            </Typography>
-
             <TextField
               variant="outlined"
               name={'RenewalDate'}
+              label={'Due Date of Renewal'}
               required={true}
               fullWidth
               defaultValue={getValues().RenewalDate}
@@ -244,15 +310,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
             />
           </Grid>
         </Grid>
-        <Grid container item spacing={2} mt={1}>
+        <Grid container item spacing={2}>
           <Grid item xs={12} md={4}>
-            <Typography variant="subtitle2" color="inputTextColor.main">
-              Is your name in registration certificate, different from your name in Aadhaar?
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
-            </Typography>
-
             <RadioGroup
               onChange={handleRegistration}
               name={'registrationCertificate'}
@@ -268,33 +327,36 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                   label: 'No',
                 },
               ]}
+              label="Is your name in registration certificate, different from your name in Aadhaar?"
               required={true}
               error={errors.registrationCertificate?.message}
             />
           </Grid>
         </Grid>
-        <Grid container item spacing={2} mt={1}>
+        <Grid container item spacing={2}>
           <Grid item xs={12} md={6}>
-            <Typography variant="subtitle2" color="inputTextColor.main" mb={1}>
-              Upload the registration certificate
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
-            </Typography>
-
             <UploadFile
               uploadFiles="single"
               sizeAllowed={1}
               fileTypes={['image/jpg', 'image/jpeg', 'image/png']}
               fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
                Maximum size allowed for the attachment is 5MB.`}
+              label={
+                <>
+                  <Typography color="text.primary">
+                    {t('upload_the_registration_certificate')}
+                  </Typography>
+
+                  <Typography color="error"> *</Typography>
+                </>
+              }
               fileData={registrationFileData}
               setFileData={setRegistrationFileData}
             />
           </Grid>
         </Grid>
         {/*layer 2*/}
-        <Grid container item spacing={2} mt={1}>
+        <Grid container item spacing={2}>
           <Grid item xs={12}>
             <Typography
               bgcolor="grey1.light"
@@ -323,126 +385,106 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                   />
                 </Grid>
               )}
-              <Grid container item spacing={2} mt={1}>
+              <Grid container item spacing={2}>
                 <Grid item xs={12} md={4}>
-                  <Typography variant="subtitle2" color="inputTextColor.main">
-                    Name of the Degree or Diploma Obtained
-                    <Typography component="span" color="error.main">
-                      *
-                    </Typography>
-                  </Typography>
-
-                  <Select
-                    fullWidth
-                    error={errors[qualification[0]]?.message}
-                    name="Qualification"
-                    defaultValue={getValues()[qualification[0]]}
-                    required={true}
-                    {...register(qualification[0], {
-                      required: 'Degree or Diploma is required',
-                    })}
-                    options={[
-                      {
-                        label: 'Bachelor of Dental surgery',
-                        value: 'bachelor of dental surgery',
-                      },
-                    ]}
-                  />
+                  {getValues()[qualification[0]] !== undefined && (
+                    <Select
+                      fullWidth
+                      error={errors[qualification[0]]?.message}
+                      name="Qualification"
+                      label="Name of the degree or diploma obtained"
+                      defaultValue={getValues()[qualification[0]]}
+                      required={true}
+                      {...register(qualification[0], {
+                        required: 'degree or diploma is required',
+                      })}
+                      options={createSelectFieldData(coursesList.data)}
+                      MenuProps={{
+                        style: {
+                          maxHeight: 250,
+                          maxWidth: 130,
+                        },
+                      }}
+                    />
+                  )}
                 </Grid>
                 <Grid item xs={12} md={4}>
-                  <Typography variant="subtitle2" color="inputTextColor.main">
-                    Country Name
-                    <Typography component="span" color="error.main">
-                      *
-                    </Typography>
-                  </Typography>
-
                   <TextField
                     variant="outlined"
                     name={'country'}
-                    label={''}
+                    label={'Country name'}
                     required={true}
                     fullWidth
                     error={errors[qualification[1]]?.message}
                     defaultValue={getValues()[qualification[1]]}
                     {...register(qualification[1], {
-                      required: 'Country is required',
+                      required: 'country is Required',
                     })}
                   />
                 </Grid>
                 <Grid item xs={12} md={4}>
-                  <Typography variant="subtitle2" color="inputTextColor.main">
-                    State (in which college is located)
-                    <Typography component="span" color="error.main">
-                      *
-                    </Typography>
-                  </Typography>
-
                   <TextField
                     variant="outlined"
                     name={'state'}
                     // placeholder="Your state"
-                    label={''}
+                    label={'State (in which college is located)'}
                     fullWidth
                     required={true}
                     defaultValue={getValues()[qualification[2]]}
                     {...register(qualification[2], {
-                      required: 'State is required',
+                      required: 'State is Required',
                     })}
                     error={errors[qualification[2]]?.message}
                   />
                 </Grid>
               </Grid>
-              <Grid container item spacing={2} mt={1}>
+              <Grid container item spacing={2}>
                 <Grid item xs={12} md={4}>
-                  <Typography variant="subtitle2" color="inputTextColor.main">
-                    Name of the college
-                    <Typography component="span" color="error.main">
-                      *
-                    </Typography>
-                  </Typography>
-
-                  <Select
-                    fullWidth
-                    error={errors[qualification[3]]?.message}
-                    name="College"
-                    defaultValue={getValues()[qualification[3]]}
-                    required={true}
-                    {...register(qualification[3], {
-                      required: 'College is required',
-                    })}
-                    options={[
-                      {
-                        label: 'Care Dental College',
-                        value: 'care Dental College',
-                      },
-                    ]}
-                  />
+                  {getValues()[qualification[3]] !== undefined && (
+                    <Select
+                      fullWidth
+                      error={errors[qualification[3]]?.message}
+                      name="College"
+                      label="Name of the college"
+                      defaultValue={getValues()[qualification[3]]}
+                      required={true}
+                      {...register(qualification[3], {
+                        required: 'college is required',
+                      })}
+                      options={createSelectFieldData(collegeByIndex[index])}
+                      MenuProps={{
+                        style: {
+                          maxHeight: 250,
+                          maxWidth: 130,
+                        },
+                      }}
+                    />
+                  )}
                 </Grid>
                 <Grid item xs={12} md={4}>
-                  <Typography variant="subtitle2" color="inputTextColor.main">
-                    University
-                    <Typography component="span" color="error.main">
-                      *
-                    </Typography>
-                  </Typography>
-
-                  <Select
-                    fullWidth
-                    error={errors[qualification[4]]?.message}
-                    name="University"
-                    defaultValue={getValues()[qualification[4]]}
-                    required={true}
-                    {...register(qualification[4], {
-                      required: 'University is required',
-                    })}
-                    options={[
-                      {
-                        label: 'Dr. NTR University of Health sciences',
-                        value: 'Dr. NTR University of Health sciences',
-                      },
-                    ]}
-                  />
+                  {getValues()[qualification[4]] !== undefined && (
+                    <Select
+                      fullWidth
+                      error={errors[qualification[4]]?.message}
+                      name="University"
+                      label="University"
+                      defaultValue={getValues()[qualification[4]]}
+                      required={true}
+                      {...register(qualification[4], {
+                        required: 'University is required',
+                        onChange: (e) => {
+                          fetchColleges(e.target.value, index);
+                        },
+                      })}
+                      options={createSelectFieldData(universitiesList.data)}
+                      MenuProps={{
+                        style: {
+                          maxHeight: 250,
+                          maxWidth: 130,
+                        },
+                      }}
+                    />
+                  )}
                 </Grid>
                 <Grid item xs={12} md={4}>
                   <Select
@@ -452,86 +494,71 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                     label="Month of awarding Degree/Diploma"
                     defaultValue={getValues()[qualification[5]]}
                     {...register(qualification[5], {
-                      required: 'Awarding is required',
+                      required: 'awarding is required',
                     })}
-                    options={[
-                      {
-                        label: 'november',
-                        value: 'November',
-                      },
-                    ]}
+                    options={monthsData}
                   />
                 </Grid>
               </Grid>
-              <Grid container item spacing={2} mt={1}>
+              <Grid container item spacing={2}>
                 <Grid item xs={12} md={4}>
-                  <Typography variant="subtitle2" color="inputTextColor.main">
-                    Year of Awarding Degree/Diploma
-                    <Typography component="span" color="error.main">
-                      *
-                    </Typography>
-                  </Typography>
-
                   <TextField
                     variant="outlined"
                     name={'Year'}
+                    label={'Year of awarding Degree/Diploma'}
                     required={true}
                     placeHolder={'Year of awarding'}
                     fullWidth
                     error={errors[qualification[6]]?.message}
                     defaultValue={getValues()[qualification[6]]}
                     {...register(qualification[6], {
-                      required: 'Awarding is required',
+                      required: 'awarding is Required',
                     })}
                   />
                 </Grid>
               </Grid>
               <Grid container item spacing={2}>
                 <Grid item xs={12} md={6}>
-                  <Typography variant="subtitle2" color="inputTextColor.main" mb={1}>
-                    Upload the Degree
-                    <Typography component="span" color="error.main">
-                      *
-                    </Typography>
-                  </Typography>
-
                   <UploadFile
                     uploadFiles="single"
                     sizeAllowed={1}
                     fileTypes={['image/jpg', 'image/jpeg', 'image/png']}
                     fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
                  Maximum size allowed for the attachment is 5MB.`}
+                    label={
+                      <>
+                        <Typography color="text.primary">{t('Upload the Degree')}</Typography>
+                        <Typography color="error"> *</Typography>
+                      </>
+                    }
                     fileData={qualificationFilesData[qualification[8]] || []}
                     setFileData={(files) => {
                       handleQualificationFilesData(qualification[8], files);
                     }}
                   />
                 </Grid>
-                <Grid item xs={12} md={6} mt={1}>
-                  <Typography variant="subtitle2" color="inputTextColor.main" mb={1}>
-                    Is your name in degree, different from your name in Aadhaar?
-                    <Typography component="span" color="error.main">
-                      *
-                    </Typography>
-                  </Typography>
-                  <RadioGroup
-                    onChange={handleRegistration}
-                    name={qualification[7]}
-                    size="small"
-                    defaultValue={getValues()[qualification[7]]}
-                    items={[
-                      {
-                        value: 'yes',
-                        label: 'Yes',
-                      },
-                      {
-                        value: 'no',
-                        label: 'No',
-                      },
-                    ]}
-                    required={true}
-                    error={errors[qualification[7]]?.message}
-                  />
+                <Grid item xs={12} md={6}>
+                  {getValues()[qualification[7]] !== undefined && (
+                    <RadioGroup
+                      onChange={handleRegistration}
+                      name={qualification[7]}
+                      size="small"
+                      defaultValue={getValues()[qualification[7]]}
+                      items={[
+                        {
+                          value: 1,
+                          label: 'Yes',
+                        },
+                        {
+                          value: 0,
+                          label: 'No',
+                        },
+                      ]}
+                      label="Is your name in degree, different from your name in Aadhaar?"
+                      required={true}
+                      error={errors[qualification[7]]?.message}
+                    />
+                  )}
                 </Grid>
               </Grid>
             </>

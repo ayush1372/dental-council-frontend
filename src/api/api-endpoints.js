@@ -14,5 +14,10 @@ export const API = {
     countries: 'api/v1/md/countries',
     subDistricts: 'api/v1/md/district/{district_id}/sub_districts',
     districts: 'api/v1/md/state/{state_id}/districts',
+    languages: 'api/v1/md/languages',
+    universities: 'api/v1/md/universities',
+    colleges: 'api/v1/md/university/{university_id}/colleges',
+    courses: 'api/v1/md/courses',
+    specialities: 'api/v1/md/specialities',
   },
 };

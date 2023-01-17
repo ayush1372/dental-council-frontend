@@ -1,33 +1,83 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Box, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { verboseLog } from '../../../../config/debug';
+import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
+import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
+import { getDistrictList, getSpecialitiesList } from '../../../../store/actions/menu-list-actions';
+import { getDoctorUserProfile } from '../../../../store/reducers/doctor-user-profile-reducer';
+import { getDistricts } from '../../../../store/reducers/menu-lists-reducer';
 import { Button, RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
 
 const EditWorkProfile = ({ handleNext, handleBack }) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const [workProof, setWorkProof] = useState([]);
+  const [subSpecialities, setSubSpecialities] = useState([]);
+  const { statesList, specialitiesList, districtsList } = useSelector((state) => state?.menuLists);
+  const { doctorUserProfile } = useSelector((state) => state?.doctorUserProfileReducer);
+  const { work_details, speciality_details, current_work_details } = doctorUserProfile || {};
+  const { is_user_currently_working, work_nature, work_status } = work_details || {};
+  const { broad_speciality, super_speciality: subSpecialityOptions } = speciality_details || {};
+  const { address, url, work_organization } = current_work_details || {};
+  const { state: stateDetails, district: districtDetails, pincode, address_line1 } = address || {};
+
   const {
     formState: { errors },
     getValues,
     handleSubmit,
     register,
     setValue,
+    watch,
   } = useForm({
     mode: 'onChange',
-    defaultValues: {},
+    defaultValues: {
+      subSpeciality: [],
+      currentWorkingSelection: is_user_currently_working,
+      NatureOfWork: work_nature?.id,
+      Speciality: broad_speciality?.id,
+      workStatus: work_status?.id,
+      state: stateDetails?.id,
+      District: districtDetails?.id,
+      workingOrganizationName: work_organization,
+      Address: address_line1,
+      Pincode: pincode,
+      telecommunicationURL: url,
+    },
   });
 
-  //   const { otpPopup, handleClickOpen, otpVerified } = ModalOTP({ afterConfirm: () => {} });
+  useEffect(() => {
+    dispatch(getDistricts([]));
+    if (subSpecialityOptions) {
+      setSubSpecialities([...subSpecialityOptions]);
+      setValue('subSpeciality', [...subSpecialityOptions]);
+    }
+  }, []);
 
+  const fetchDisricts = (stateId) => {
+    try {
+      dispatch(getDistrictList(stateId));
+    } catch {
+      verboseLog('Error occured while fetching districts');
+    }
+  };
+
+  const changedState = watch('state');
+
+  useEffect(() => {
+    fetchDisricts(changedState);
+  }, [changedState]);
   const handleBackButton = () => {
     handleBack();
   };
 
   const onHandleOptionNext = () => {
+    handleSave();
     handleNext();
   };
   const handleselection = (event) => {
@@ -35,7 +85,98 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
   };
 
   const handleWorkStatus = (event) => {
-    setValue(event.target.name, event.target.value, true);
+    setValue(event.target.name, event.target.value);
+  };
+
+  const fetchSpecialities = () => {
+    dispatch(getSpecialitiesList());
+  };
+
+  useEffect(() => {
+    fetchSpecialities();
+  }, []);
+
+  const natureOfWork = [
+    {
+      id: 1,
+      name: 'Administrative',
+    },
+    {
+      id: 2,
+      name: 'Practice',
+    },
+    {
+      id: 3,
+      name: 'Research',
+    },
+    {
+      id: 4,
+      name: 'Teaching',
+    },
+  ];
+
+  const workStatusOptions = [
+    {
+      id: 3,
+      name: 'Government only',
+    },
+    {
+      id: 2,
+      name: 'Private Practice only',
+    },
+    {
+      id: 1,
+      name: 'Both',
+    },
+  ];
+
+  const handleSave = () => {
+    const {
+      currentWorkingSelection,
+      NatureOfWork,
+      Speciality,
+      workStatus,
+      state,
+      District,
+      workingOrganizationName,
+      Address,
+      Pincode,
+      telecommunicationURL,
+    } = getValues();
+
+    const workDetails = {
+      ...(work_details || {}),
+      is_user_currently_working: currentWorkingSelection,
+      work_nature: natureOfWork.find((x) => x.id === NatureOfWork),
+      work_status: workStatusOptions.find((x) => x.id === parseInt(workStatus)),
+    };
+
+    const specialityDetails = {
+      ...(speciality_details || {}),
+      broad_speciality: specialitiesList.data?.find((x) => x.id === Speciality),
+      super_speciality: [...subSpecialities],
+    };
+    const currentWorkDetails = {
+      ...(current_work_details || {}),
+      url: telecommunicationURL,
+      work_organization: workingOrganizationName,
+      address: {
+        state: statesList?.find((x) => x.id === state),
+        district: districtsList?.find((x) => x.id === District),
+        pincode: Pincode,
+        address_line1: Address,
+      },
+    };
+
+    const stateObj = {
+      work_details: { ...workDetails },
+      speciality_details: { ...specialityDetails },
+      current_work_details: { ...currentWorkDetails },
+    };
+
+    const updatedDoctorProfile = { ...doctorUserProfile, ...stateObj };
+
+    dispatch(getDoctorUserProfile(JSON.parse(JSON.stringify(updatedDoctorProfile))));
   };
 
   return (
@@ -73,12 +214,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               {...register('Speciality', {
                 required: 'Speciality is required',
               })}
-              options={[
-                {
-                  label: 'Doctor',
-                  value: 'doctor',
-                },
-              ]}
+              options={createSelectFieldData(specialitiesList.data)}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -88,14 +224,19 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
                 *
               </Typography>
             </Typography>
-            <TextField
-              variant="outlined"
-              name={'subSpeciality'}
-              placeholder="Enter Super Speciality"
-              required={true}
-              fullWidth
-              defaultValue={getValues().subSpeciality}
-              {...register('subSpeciality')}
+            <AutoComplete
+              name="subSpeciality"
+              options={subSpecialityOptions}
+              value={getValues().subSpeciality}
+              error={subSpecialities.length === 0 && errors.subSpeciality?.message}
+              multiple={true}
+              {...register('subSpeciality', {
+                required: 'Missing field',
+              })}
+              onChange={(value) => {
+                setValue('subSpeciality', value);
+                setSubSpecialities(value);
+              }}
             />
           </Grid>
         </Grid>
@@ -122,16 +263,16 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
 
             <RadioGroup
               onChange={handleselection}
-              name={'selection'}
+              name={'currentWorkingSelection'}
               size="small"
-              defaultValue={getValues().selection}
+              defaultValue={getValues().currentWorkingSelection}
               items={[
                 {
-                  value: 'yes',
+                  value: 1,
                   label: 'Yes',
                 },
                 {
-                  value: 'no',
+                  value: 0,
                   label: 'No',
                 },
               ]}
@@ -151,12 +292,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               {...register('NatureOfWork', {
                 required: 'Select nature of work',
               })}
-              options={[
-                {
-                  label: 'Nature Of work',
-                  value: 'NatureOfWork',
-                },
-              ]}
+              options={createSelectFieldData(natureOfWork)}
             />
           </Grid>
         </Grid>
@@ -174,20 +310,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               name={'workStatus'}
               size="small"
               defaultValue={getValues().workStatus}
-              items={[
-                {
-                  value: 'government_only',
-                  label: 'Government only',
-                },
-                {
-                  value: 'private_practice',
-                  label: 'Private Practice only',
-                },
-                {
-                  value: 'both',
-                  label: 'Both',
-                },
-              ]}
+              items={createSelectFieldData(workStatusOptions)}
               required={true}
               error={errors.workStatus?.message}
             />
@@ -275,12 +398,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               {...register('state', {
                 required: 'State is required',
               })}
-              options={[
-                {
-                  label: 'Telangana',
-                  value: 'telangana',
-                },
-              ]}
+              options={createSelectFieldData(statesList)}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -294,12 +412,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               {...register('District', {
                 required: 'District is required',
               })}
-              options={[
-                {
-                  label: 'Telangana',
-                  value: 'telangana',
-                },
-              ]}
+              options={createSelectFieldData(districtsList)}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -460,7 +573,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
         </Grid>
         <Grid item xs={12} md="auto" display="flex" justifyContent="end" lg={4}>
           <Button
-            onClick={handleSubmit}
+            onClick={handleSubmit(handleSave)}
             variant="outlined"
             color="secondary"
             sx={{
