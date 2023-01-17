@@ -9,11 +9,8 @@ import { useNavigate } from 'react-router-dom';
 
 import DigitalIndia from '../../../../../assets/images/logo-slider/digital-India.png';
 import { logout, resetCommonReducer } from '../../../../../store/reducers/common-reducers';
-// import { uiActions } from '../../../../../store/reducers/nav-menu-reducer';
 import { Button } from '../../../../core';
 import { LoginRegisterPopover } from './login-register-popover/login-register-popover';
-
-import styles from './logo-wrapper.module.scss';
 
 export const LogoWrapper = ({ menuToggleHandler }) => {
   const navigate = useNavigate();
@@ -72,17 +69,11 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
         transform: 'translateY(20px)',
       },
     },
+    logoImage: {
+      height: '72px',
+    },
   }));
   const classes = useStyles(theme);
-
-  // const { menuOpen } = useSelector((state) => state.ui);
-
-  // const menuToggleHandler = () => {
-  //   dispatch(uiActions.menuToggle());
-  // };
-  // const menuCloseHandler = () => {
-  //   if (menuOpen) dispatch(uiActions.menuClose());
-  // };
 
   return (
     <Container sx={{ position: 'relative' }}>
@@ -92,14 +83,24 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
             <Grid item xs={4}>
               <Grid item xs={12}>
                 <Link to="/" onClick={() => navigate('/')}>
-                  <Typography variant="subtitle2" sx={{ cursor: 'pointer' }}>
+                  <Typography
+                    fontWeight="600"
+                    variant={{ xs: 'body3', md: 'subtitle2' }}
+                    lineHeight={{ xs: '18px', md: '22px' }}
+                    sx={{ cursor: 'pointer' }}
+                  >
                     {'राष्ट्रीय आयुर्विज्ञान आयोग'}
                   </Typography>
                 </Link>
               </Grid>
               <Grid item xs={12}>
                 <Link onClick={() => navigate('/')}>
-                  <Typography variant="subtitle2" sx={{ cursor: 'pointer' }}>
+                  <Typography
+                    fontWeight="600"
+                    variant={{ xs: 'body3', md: 'subtitle2' }}
+                    lineHeight={{ xs: '18px', md: '22px' }}
+                    sx={{ cursor: 'pointer' }}
+                  >
                     {'NATIONAL MEDICAL COMMISSION'}
                   </Typography>
                 </Link>
@@ -107,13 +108,20 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
             </Grid>
             <Grid item xs={8}>
               <Link onClick={() => navigate('/')} sx={{ cursor: 'pointer' }}>
-                <img className={styles.logoImage} src={DigitalIndia} alt="Digital logo" />
+                <img className={classes.logoImage} src={DigitalIndia} alt="Digital logo" />
               </Link>
             </Grid>
           </Grid>
         </Grid>
 
-        <Grid xs={12} sm={6} item alignItems="center" textAlign="right">
+        <Grid
+          xs={12}
+          md={6}
+          item
+          alignItems="center"
+          textAlign={{ xs: 'left', md: 'right' }}
+          my={{ xs: 2, md: 0 }}
+        >
           {loggedIn ? (
             <Button
               variant="contained"
