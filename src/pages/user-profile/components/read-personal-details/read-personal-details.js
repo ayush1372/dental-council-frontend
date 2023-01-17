@@ -1,16 +1,8 @@
 import { useState } from 'react';
 
 import AddIcon from '@mui/icons-material/Add';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import RemoveIcon from '@mui/icons-material/Remove';
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Button,
-  Typography,
-} from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
@@ -19,7 +11,8 @@ import CommunicationAddressContent from '../readable-content/communication-detai
 import IMRDetailsContent from '../readable-content/imr-details-content';
 import PersonalDetailsContent from '../readable-content/personal-details-content';
 const ReadPersonalDetails = ({ handleNext, showActions = true }) => {
-  const userType = useSelector((state) => state.common.loggedInUserType);
+  const { doctorUserProfile } = useSelector((state) => state?.doctorUserProfileReducer);
+
   const { t } = useTranslation();
   const [accordionKey, setAccordionKey] = useState('accordion-0');
   const accordions = [
@@ -70,7 +63,7 @@ const ReadPersonalDetails = ({ handleNext, showActions = true }) => {
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Component />
+                <Component doctorUserProfile={doctorUserProfile} />
               </AccordionDetails>
             </Accordion>
           );
@@ -78,16 +71,6 @@ const ReadPersonalDetails = ({ handleNext, showActions = true }) => {
       </Box>
       {showActions && (
         <Box px={3} display="flex" justifyContent="flex-end">
-          {userType !== 'Doctor' && (
-            <Button
-              variant="contained"
-              color="secondary"
-              disabled
-              sx={{ margin: '16px 20px 0px 0px' }}
-            >
-              Action <MoreHorizIcon />
-            </Button>
-          )}
           <ButtonGroupWizard handleNext={handleNext} labelNext={t('Next')} hidePrevious={true} />
         </Box>
       )}

@@ -6,31 +6,32 @@ import { useSelector } from 'react-redux';
 
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
-const IMRDetails = () => {
+const IMRDetails = ({ doctorUserProfile }) => {
   const { userActiveTab } = useSelector((state) => state.common);
 
   const [openModal, setOpenModal] = useState(false);
   const ClosePopup = () => {
     setOpenModal(false);
   };
+  const {
+    imr_details: { registration_number, nmr_id, year_of_info },
+  } =
+    doctorUserProfile && Object.values(doctorUserProfile).length > 3
+      ? doctorUserProfile
+      : { imr_details: {} };
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             IMR ID
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
-              9598237230192838
+            <Typography variant="subtitle2" color="primary.main">
+              {nmr_id ? nmr_id : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -43,20 +44,15 @@ const IMRDetails = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
-            Year of info
+          <Typography variant="subtitle2" color="grey.label">
+            Year of Info
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
-              Select Year of info
+            <Typography variant="subtitle2" color="primary.main">
+              {year_of_info ? year_of_info : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -69,20 +65,15 @@ const IMRDetails = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Registration Number
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
-              672929
+            <Typography variant="subtitle2" color="primary.main">
+              {registration_number ? registration_number : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon

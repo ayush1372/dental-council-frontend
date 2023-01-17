@@ -1,21 +1,26 @@
-/* eslint-disable simple-import-sort/imports */
 import { configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 
-import commonActivity from './reducers/common-reducers';
 import appFontSizeActivity from './reducers/app-font-size';
 import captchaReducer from './reducers/captcha-reducers';
-import menuListsReducer from './reducers/menu-lists-reducer';
+import collegeReducer from './reducers/college-reducer';
+import commonActivity from './reducers/common-reducers';
+import doctorUserProfileReducer from './reducers/doctor-user-profile-reducer';
+import loginReducer from './reducers/login-reducer';
 import navMenu from './reducers/nav-menu-reducer';
+import AadhaarTransactionId from './reducers/user-aadhaar-verify-reducer';
 
 const store = configureStore({
   reducer: {
     common: commonActivity,
     appFontSize: appFontSizeActivity,
     getCaptchaData: captchaReducer,
-    menuLists: menuListsReducer,
     navMenu: navMenu.reducer,
+    AadhaarTransactionId: AadhaarTransactionId,
+    loginReducer: loginReducer,
+    doctorUserProfileReducer: doctorUserProfileReducer,
+    college: collegeReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(thunk).concat(logger),
   devTools: true,

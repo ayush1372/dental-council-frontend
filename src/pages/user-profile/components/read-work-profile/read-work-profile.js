@@ -31,9 +31,10 @@ const ReadWorkProfile = ({
   activeStep,
 }) => {
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  const { doctorUserProfile } = useSelector((state) => state?.doctorUserProfileReducer);
   const [selected, setSelected] = useState('');
   const [confirmationModal, setConfirmationModal] = useState(false);
-
+  const { userActiveTab } = useSelector((state) => state.common);
   const [accordionKey, setAccordionKey] = useState('accordion-0');
   const accordions = [
     {
@@ -97,7 +98,7 @@ const ReadWorkProfile = ({
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Component />
+                <Component doctorUserProfile={doctorUserProfile} />
               </AccordionDetails>
             </Accordion>
           );
@@ -127,7 +128,7 @@ const ReadWorkProfile = ({
           >
             Back
           </Button>
-          {showActions && loggedInUserType !== 'Doctor' && (
+          {userActiveTab === 'dashboard' && (
             <Box mt={2}>
               <PopupState>
                 {(popupState) => (
@@ -180,19 +181,6 @@ const ReadWorkProfile = ({
                   </React.Fragment>
                 )}
               </PopupState>
-              <Button
-                color="secondary"
-                variant="contained"
-                onClick={handleSubmitDetails}
-                sx={{
-                  width: {
-                    xs: '100%',
-                    md: 'fit-content',
-                  },
-                }}
-              >
-                Submit
-              </Button>
             </Box>
           )}
         </Box>

@@ -45,7 +45,7 @@ export default function SuccessPopup() {
             ml={10}
             data-testid="popup-input-text"
           >
-            Your reactivate licence <br />
+            Your reactivate license <br />
             request has been sent to SMC
           </Typography>
           <Button

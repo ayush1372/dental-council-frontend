@@ -6,31 +6,51 @@ import { useSelector } from 'react-redux';
 
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
-const CommunicationAddress = () => {
+const CommunicationAddress = ({ doctorUserProfile }) => {
   const { userActiveTab } = useSelector((state) => state.common);
 
   const [openModal, setOpenModal] = useState(false);
   const ClosePopup = () => {
     setOpenModal(false);
   };
+  const {
+    communication_address: {
+      country: { name: countryName },
+      state: { name: stateName },
+      district: { name: districtName },
+      sub_district: { name: sub_districtName },
+      pincode,
+      address_line1,
+      email,
+      mobile,
+      address_type: { name: addressTypeName },
+      full_name,
+    },
+  } =
+    doctorUserProfile && Object.values(doctorUserProfile).length > 3
+      ? doctorUserProfile
+      : {
+          communication_address: {
+            country: {},
+            state: {},
+            district: {},
+            sub_district: {},
+            address_type: {},
+          },
+        };
   return (
     <Grid container spacing={2} mt={2}>
-      <Grid container item spacing={2}>
+      <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Your Name
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
-              Aarnav Sharma
+            <Typography variant="subtitle2" color="primary.main">
+              {full_name ? full_name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -43,20 +63,15 @@ const CommunicationAddress = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Your Address
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
-              Hno. 560 Row 3 Sadar Bazar, New Delhi
+            <Typography variant="subtitle2" color="primary.main">
+              {address_line1 ? address_line1 : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -69,22 +84,18 @@ const CommunicationAddress = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
       </Grid>
-      <Grid container item spacing={2}>
+
+      <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             City/Town/Village
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
-              New Delhi
+            <Typography variant="subtitle2" color="primary.main">
+              {addressTypeName ? addressTypeName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -97,20 +108,15 @@ const CommunicationAddress = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             District
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
-              New Delhi
+            <Typography variant="subtitle2" color="primary.main">
+              {districtName ? districtName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -123,17 +129,12 @@ const CommunicationAddress = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Sub District
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
-              Sub District
+            <Typography variant="subtitle2" color="primary.main">
+              {sub_districtName ? sub_districtName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -146,22 +147,18 @@ const CommunicationAddress = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
       </Grid>
-      <Grid container item spacing={2}>
+
+      <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             State/Union Territory
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
-              New Delhi
+            <Typography variant="subtitle2" color="primary.main">
+              {stateName ? stateName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -174,20 +171,15 @@ const CommunicationAddress = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Country
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
-              India
+            <Typography variant="subtitle2" color="primary.main">
+              {countryName ? countryName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -200,20 +192,15 @@ const CommunicationAddress = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
-            Postal code
+          <Typography variant="subtitle2" color="grey.label">
+            Pin Code
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
-              120018
+            <Typography variant="subtitle2" color="primary.main">
+              {pincode ? pincode : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -226,22 +213,18 @@ const CommunicationAddress = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
       </Grid>
-      <Grid container item spacing={2}>
+
+      <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Email Address
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
-              aarushi.sharma309@gmail.com
+            <Typography variant="subtitle2" color="primary.main">
+              {email ? email : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -254,20 +237,15 @@ const CommunicationAddress = () => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor">
+          <Typography variant="subtitle2" color="grey.label">
             Mobile Number
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography
-              bgcolor="grey2.main"
-              padding="10px"
-              variant="subtitle2"
-              color="inputTextColor.light"
-            >
-              9988334355
+            <Typography variant="subtitle2" color="primary.main">
+              {mobile ? mobile : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
