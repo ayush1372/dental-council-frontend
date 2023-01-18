@@ -1,14 +1,27 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import EditIcon from '@mui/icons-material/Edit';
 import { Grid, Typography } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { collegeProfileData } from '../../../constants/common-data';
+// import { userSubType } from '../../../helpers/functions/common-functions';
+import { getCollegeProfileData } from '../../../store/actions/college-actions';
 import { Button } from '../../../ui/core';
-// import ChangePassword from '../change-password/change-password';
 import CollegeEditProfile from './college-edit-profile';
+
 const CollegeMyProfile = () => {
+  const dispatch = useDispatch();
   const [showPage, setShowpage] = useState('Profile');
+  const { loginData } = useSelector((state) => state.loginReducer);
+  // eslint-disable-next-line no-console
+  console.log('loginData', loginData);
+
+  useEffect(() => {
+    // userSubType();
+    dispatch(getCollegeProfileData(loginData?.data?.profile_id));
+  }, []);
+
   return (
     <Grid boxShadow={2} mt={2} p={3}>
       {showPage === 'Profile' && (

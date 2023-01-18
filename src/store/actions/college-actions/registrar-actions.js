@@ -17,6 +17,7 @@ export const sendRegistrarDetails = async (details) => {
     useAxiosCall({
       method: POST,
       url: API.college.registrar,
+      headers: { Authorization: localStorage.getItem('access-token') },
       data: {
         id,
         name,

@@ -25,5 +25,6 @@ export const API = {
   Aadhaar: {
     sendAadhaarOtp: 'api/v1/sendAadhaarOtp',
     verifyAadhaarOtp: 'api/v1/verifyAadhaarOtp',
+    getCollegeProfile: 'api/v1/college/{id}',
   },
 };

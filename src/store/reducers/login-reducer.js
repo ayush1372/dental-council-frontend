@@ -28,7 +28,15 @@ const loginReducer = createSlice({
       state.validateCaptchaFlag = action.payload;
     },
     loginUser: (state, action) => {
-      state.loginData.data = action.payload;
+      state.loginData = action.payload;
+      // eslint-disable-next-line no-console
+      console.log('login red', action.payload);
+      JSON.stringify(
+        localStorage.setItem('accesstoken', action.payload.responseHeader['access-token'])
+      );
+      JSON.stringify(
+        localStorage.setItem('refreshtoken', action.payload.responseHeader['refresh-token'])
+      );
       state.loginData.accessToken = action.payload.responseHeader['access-token'];
       state.loginData.refreshToken = action.payload.responseHeader['refresh-token'];
     },
