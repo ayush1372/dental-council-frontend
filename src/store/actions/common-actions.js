@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useSelector } from 'react-redux';
 
 import { API } from '../../api/api-endpoints';
@@ -33,7 +32,6 @@ export const sendRegistrarDetails = () => async () => {
   let phone_number = details.registrarPhoneNumber;
   let email_id = details.registrarEmail;
   let user_id = null;
-  console.log('clicked1');
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: POST,
