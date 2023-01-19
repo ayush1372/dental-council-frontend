@@ -1,5 +1,7 @@
 import JSEncrypt from 'jsencrypt';
 
+import { verboseLog } from '../../config/debug';
+
 export function get_year_data(startYear = 1900) {
   var ans = [];
   var date = new Date();
@@ -43,8 +45,7 @@ export const userSubType = () => {
     return result;
   }, {});
 
-  // eslint-disable-next-line no-console
-  console.log('asd', user_sub_type);
+  verboseLog('asd', user_sub_type);
 };
 export const userGroupType = (userGroupID) => {
   const userGroupTypeObj = {

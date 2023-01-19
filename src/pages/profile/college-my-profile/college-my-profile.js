@@ -4,8 +4,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Grid, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
-// import { collegeProfileData } from '../../../constants/common-data';
-// import { userSubType } from '../../../helpers/functions/common-functions';
+import { verboseLog } from '../../../config/debug';
 import { getCollegeAdminProfileData } from '../../../store/actions/college-actions';
 import { Button } from '../../../ui/core';
 import CollegeEditProfile from './college-edit-profile';
@@ -14,11 +13,9 @@ const CollegeMyProfile = () => {
   const dispatch = useDispatch();
   const [showPage, setShowpage] = useState('Profile');
   const { loginData } = useSelector((state) => state.loginReducer);
-  // eslint-disable-next-line no-console
-  console.log('loginData', loginData);
+  verboseLog('loginData', loginData);
 
   useEffect(() => {
-    // userSubType();
     dispatch(getCollegeAdminProfileData(loginData?.data?.profile_id));
   }, []);
   const { collegeData } = useSelector((state) => state.college);

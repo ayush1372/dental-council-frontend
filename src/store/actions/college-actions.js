@@ -32,7 +32,6 @@ export const getCollegeRegistrarProfileData = (id) => async (dispatch) => {
     useAxiosCall({
       method: GET,
       url: API.college.getCollegeRegistrarProfile.replace('{id}', id),
-      // data: {},
       headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
       .then((response) => {
