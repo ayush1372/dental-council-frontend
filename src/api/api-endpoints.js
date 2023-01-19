@@ -7,6 +7,7 @@ export const API = {
     generateCaptcha: 'api/v1/generateCaptcha',
     validateCaptcha: 'api/v1/validateCaptcha',
     loginUser: 'api/v1/login',
+    refreshToken: 'api/v1/refreshToken',
   },
   editProfile: {},
   DoctorUserProfileData: {

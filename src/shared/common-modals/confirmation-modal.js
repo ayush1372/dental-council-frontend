@@ -1,27 +1,44 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogContentText } from '@mui/material';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from '@mui/material';
 
-export default function ConfirmationModal({ showModal, handleLogout }) {
-  const handleStay = () => {};
-
+export default function ConfirmationModal({
+  showModal,
+  handleYes,
+  handleNo,
+  handleYesText,
+  handleNoText,
+  text,
+}) {
   return (
     <Dialog
+      maxWidth="xs"
+      fullWidth
       open={showModal}
-      //onClose={handleClose}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      {/* <DialogTitle id="alert-dialog-title">
-          
-      </DialogTitle> */}
+      <DialogTitle id="alert-dialog-title">{text?.heading}</DialogTitle>
       <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          You Have Been Idle! You will get timed out.
-        </DialogContentText>
+        <DialogContentText id="alert-dialog-description">{text?.message}</DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleStay}>Stay</Button>
-        <Button onClick={handleLogout} autoFocus>
-          Logout
+        <Button color="grey" variant="contained" sx={{ marginLeft: 2 }} onClick={handleNo}>
+          {handleNoText}
+        </Button>
+        <Button
+          color="secondary"
+          variant="contained"
+          sx={{ marginLeft: 2 }}
+          onClick={handleYes}
+          autoFocus
+        >
+          {handleYesText}
         </Button>
       </DialogActions>
     </Dialog>

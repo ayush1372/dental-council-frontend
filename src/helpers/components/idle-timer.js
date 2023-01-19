@@ -1,19 +1,21 @@
 import { useState } from 'react';
 
 import { useIdleTimer } from 'react-idle-timer';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import ConfirmationModal from '../../shared/common-modals/confirmation-modal';
+import { refreshTokenAction } from '../../store/actions/login-action';
+import { logout, resetCommonReducer } from '../../store/reducers/common-reducers';
 
 export function IdleTimer() {
   // eslint-disable-next-line no-console
   console.log('onActive');
   // Set timeout values
   const timeout = 60000; // 600000; // 10 mins
-  const promptTimeout = 1000 * 30; // 60000; 1 min
+  const promptTimeout = 1000 * 600; // 60000; 1 min
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // Modal open state
   const [open, setOpen] = useState(false);
 
@@ -51,8 +53,6 @@ export function IdleTimer() {
     // onActive will only be called if `reset()` is called while `isPrompted()`
     // is true. Here you will also want to close your modal and perform
     // any active actions.
-    // eslint-disable-next-line no-console
-    console.log('in onActive', remaining);
     setOpen(false);
     setRemaining(0);
   };
@@ -66,19 +66,19 @@ export function IdleTimer() {
   });
 
   const handleStillHere = () => {
-    setOpen(false);
     setRemaining(0);
     activate();
-    // renewToken();
+    refreshToken();
     reset();
+    setOpen(false);
   };
 
-  //   const renewToken = () => {
-  //     const requestObj = {
-  //       renewal_token: JSON.parse(localStorage.getItem('renewal-token'))
-  //     };
-  //     dispatch(renewTokenApi(requestObj));
-  //   };
+  const refreshToken = () => {
+    const requestObj = {
+      refreshtoken: JSON.parse(localStorage.getItem('refreshtoken')),
+    };
+    dispatch(refreshTokenAction(requestObj));
+  };
 
   const handleLogout = () => {
     setOpen(false);
@@ -88,16 +88,23 @@ export function IdleTimer() {
 
   const logoutUser = () => {
     localStorage.clear();
-
+    dispatch(logout());
+    dispatch(resetCommonReducer());
     navigate('/');
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
     });
-    // handleCloseNavMenu();
   };
 
   return (
-    <ConfirmationModal showModal={open} handleClose={handleStillHere} handleLogout={handleLogout} />
+    <ConfirmationModal
+      showModal={open}
+      handleNo={handleStillHere}
+      handleNoText={'Stay'}
+      handleYes={handleLogout}
+      handleYesText={'Logout'}
+      text={{ heading: 'You Have Been Idle!', message: 'You will get timed out.' }}
+    />
   );
 }
