@@ -29,10 +29,9 @@ export const changeAppFontSize = (size, appFontType) => {
     appFontType === 'small' ? `${size - 2}` : appFontType === 'large' ? `${size + 2}` : `${size}`;
   return `${fontSize}px`;
 };
-export const encryptData = (data) => {
-  var publicKey = process.env.REACT_APP_PUBLIC_KEY;
+export const encryptData = (data, key) => {
   var encrypt = new JSEncrypt();
-  encrypt.setPublicKey(publicKey);
+  encrypt.setPublicKey(key);
   var encryptedPass = encrypt.encrypt(data);
   return encryptedPass;
 };
@@ -48,3 +47,15 @@ export const encryptData = (data) => {
 //   console.log('asd', user_sub_type);
 
 // }
+export const userGroupType = (userGroupID) => {
+  const userGroupTypeObj = {
+    1: 'Health Professional',
+    2: 'State Medical Council',
+    3: 'National Medical Council',
+    4: 'College Dean',
+    5: 'College Registrar',
+    6: 'College Admin',
+    7: 'NBE',
+  };
+  return userGroupTypeObj[userGroupID];
+};

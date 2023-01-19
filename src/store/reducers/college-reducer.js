@@ -6,18 +6,33 @@ const initialState = {
     isLoading: Boolean(true),
     isError: false,
   },
+  registrarDetails: { data: [], isLoading: Boolean(true), isError: false },
 };
 
 const collegeReducer = createSlice({
   name: 'college',
   initialState,
   reducers: {
-    getCollegeData: (state, action) => {
+    getCollegeAdminData: (state, action) => {
       state.collegeData = action.payload;
+    },
+    getCollegeRegistrarData: (state, action) => {
+      state.collegeData = action.payload;
+    },
+    getCollegeDeanData: (state, action) => {
+      state.collegeData = action.payload;
+    },
+    detailsOfRegistrar: (state, action) => {
+      state.registrarDetails = action.payload;
     },
   },
 });
 
-export const { getCollegeData } = collegeReducer.actions;
+export const {
+  getCollegeAdminData,
+  getCollegeRegistrarData,
+  getCollegeDeanData,
+  detailsOfRegistrar,
+} = collegeReducer.actions;
 
 export default collegeReducer.reducer;

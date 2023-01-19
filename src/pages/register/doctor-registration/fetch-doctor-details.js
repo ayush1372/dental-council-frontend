@@ -80,7 +80,8 @@ function FetchDoctorDetails() {
 
   const handleUserAadhaarNumber = (dataValue) => {
     let encryptedUserAadhaarNumber = encryptData(
-      dataValue.field_1 + dataValue.field_2 + dataValue.field_3
+      dataValue.field_1 + dataValue.field_2 + dataValue.field_3,
+      process.env.REACT_APP_PUBLIC_KEY
     );
     handleVerifyAadhar(encryptedUserAadhaarNumber);
   };
@@ -98,7 +99,7 @@ function FetchDoctorDetails() {
   );
 
   const handleValidateAadhar = () => {
-    let userOtp = encryptData(otpValue);
+    let userOtp = encryptData(otpValue, process.env.REACT_APP_PUBLIC_KEY);
     setshowOtpAadhar(false);
     setisOtpValidAadhar(true);
     handleClear();
