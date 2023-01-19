@@ -27,8 +27,16 @@ export function CollegeRegistrar() {
     },
   });
 
-  const onSubmit = (dataValue) => {
-    dispatch(sendRegistrarDetails(dataValue));
+  const onSubmit = (fieldData) => {
+    let registrarData = {
+      id: null,
+      name: fieldData.registrarName,
+      phone_number: fieldData.registrarPhoneNumber,
+      email_id: fieldData.registrarPhoneNumber,
+      user_id: null,
+      password: fieldData.registrarPassword,
+    };
+    dispatch(sendRegistrarDetails(registrarData));
     reset();
   };
 

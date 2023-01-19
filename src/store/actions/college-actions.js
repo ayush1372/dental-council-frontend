@@ -67,25 +67,12 @@ export const getCollegeDeanProfileData = (id) => async (dispatch) => {
 };
 
 export const sendRegistrarDetails = (details) => async (dispatch) => {
-  let id = null;
-  let name = details.registrarName;
-  let phone_number = details.registrarPhoneNumber;
-  let email_id = details.registrarEmail;
-  let user_id = null;
-  let password = details.registrarPassword;
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: POST,
       url: API.college.registrar,
       headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
-      data: {
-        id,
-        name,
-        phone_number,
-        email_id,
-        user_id,
-        password,
-      },
+      data: details,
     })
       .then((response) => {
         dispatch(detailsOfRegistrar(response));
