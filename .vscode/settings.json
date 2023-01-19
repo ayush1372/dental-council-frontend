@@ -54,12 +54,7 @@
     "స్వాగతం",
     "హోమ్"
   ],
-  "files.eol": "\n",
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  },
-
-  "eslint.validate": ["javascript"]
+  "files.eol": "\n"
   // "workbench.colorCustomizations": {
   //   "activityBar.background": "#60002E",
   //   "titleBar.activeBackground": "#860041",

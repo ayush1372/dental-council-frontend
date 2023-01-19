@@ -1,7 +1,5 @@
-import { useSelector } from 'react-redux';
-
 import { API } from '../../api/api-endpoints';
-import { GET, POST } from '../../constants/requests';
+import { GET } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import {
   getCountries,
@@ -18,33 +16,6 @@ export const getStatesList = () => async (dispatch) => {
     })
       .then((response) => {
         dispatch(getStates(response.data));
-        return resolve(response);
-      })
-      .catch((error) => {
-        return reject(error);
-      });
-  });
-};
-export const sendRegistrarDetails = () => async () => {
-  const details = useSelector((state) => state.collegeData.registrarDetails);
-  let id = null;
-  let name = details.registrarName;
-  let phone_number = details.registrarPhoneNumber;
-  let email_id = details.registrarEmail;
-  let user_id = null;
-  return await new Promise((resolve, reject) => {
-    useAxiosCall({
-      method: POST,
-      url: API.college.registrar,
-      data: {
-        id,
-        name,
-        phone_number,
-        email_id,
-        user_id,
-      },
-    })
-      .then((response) => {
         return resolve(response);
       })
       .catch((error) => {
