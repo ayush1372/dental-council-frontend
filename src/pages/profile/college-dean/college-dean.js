@@ -1,18 +1,22 @@
 import { Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
+import { sendDeanDetails } from '../../../store/actions/college-actions';
 import { Button, TextField } from '../../../ui/core';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 export function CollegeDean() {
+  const dispatch = useDispatch();
+
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     getValues,
+    reset,
+
     formState: { errors },
   } = useForm({
     mode: 'onChange',
@@ -24,8 +28,9 @@ export function CollegeDean() {
       deanPassword: '',
     },
   });
-  const onSubmit = () => {
-    navigate(`/NMR/NMR-generate`);
+  const onSubmit = (fieldValues) => {
+    dispatch(sendDeanDetails(fieldValues));
+    reset();
   };
   return (
     <Grid container item spacing={2} p={2}>

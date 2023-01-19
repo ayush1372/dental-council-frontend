@@ -1,8 +1,8 @@
-/* eslint-disable no-console */
 import { API } from '../../api/api-endpoints';
 import { GET, POST } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import {
+  detailsOfDean,
   detailsOfRegistrar,
   getCollegeAdminData,
   getCollegeDeanData,
@@ -14,7 +14,6 @@ export const getCollegeAdminProfileData = (id) => async (dispatch) => {
     useAxiosCall({
       method: GET,
       url: API.college.getCollegeProfile.replace('{id}', id),
-      // data: {},
       headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
       .then((response) => {
@@ -68,7 +67,6 @@ export const getCollegeDeanProfileData = (id) => async (dispatch) => {
 };
 
 export const sendRegistrarDetails = (details) => async (dispatch) => {
-  console.log('onsubmit response for registrar==>', details);
   let id = null;
   let name = details.registrarName;
   let phone_number = details.registrarPhoneNumber;
@@ -90,8 +88,37 @@ export const sendRegistrarDetails = (details) => async (dispatch) => {
       },
     })
       .then((response) => {
-        console.log(response, 'response of registrar');
         dispatch(detailsOfRegistrar(response));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+export const sendDeanDetails = (details) => async (dispatch) => {
+  let id = null;
+  let name = details.deanName;
+  let phone_number = details.deanPhoneNumber;
+  let email_id = details.deanEmail;
+  let user_id = null;
+  let password = details.deanPassword;
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.college.dean,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      data: {
+        id,
+        name,
+        phone_number,
+        email_id,
+        user_id,
+        password,
+      },
+    })
+      .then((response) => {
+        dispatch(detailsOfDean(response));
         return resolve(response);
       })
       .catch((error) => {

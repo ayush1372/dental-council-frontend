@@ -1,18 +1,14 @@
-/* eslint-disable no-console */
 import { Box, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
-// import { useNavigate } from 'react-router-dom';
-// import { verboseLog } from '../../../config/debug';
 import { sendRegistrarDetails } from '../../../store/actions/college-actions';
 import { Button, TextField } from '../../../ui/core';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 export function CollegeRegistrar() {
   const { t } = useTranslation();
-  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const {
     register,
@@ -35,8 +31,6 @@ export function CollegeRegistrar() {
     dispatch(sendRegistrarDetails(dataValue));
     reset();
   };
-
-  console.log('local storage accesstoken', localStorage.getItem('accesstoken'));
 
   return (
     <Grid container item spacing={2} p={2}>
