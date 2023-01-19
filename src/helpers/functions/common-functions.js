@@ -1,4 +1,4 @@
-import { JSEncrypt } from 'js-encrypt';
+import JSEncrypt from 'jsencrypt';
 
 export function get_year_data(startYear = 1900) {
   var ans = [];
@@ -29,11 +29,22 @@ export const changeAppFontSize = (size, appFontType) => {
     appFontType === 'small' ? `${size - 2}` : appFontType === 'large' ? `${size + 2}` : `${size}`;
   return `${fontSize}px`;
 };
+export const encryptData = (data, key) => {
+  var encrypt = new JSEncrypt();
+  encrypt.setPublicKey(key);
+  var encryptedPass = encrypt.encrypt(data);
+  return encryptedPass;
+};
 
-export const encryption = (value) => {
-  // Encrypt with the public key...
-  const encrypt = new JSEncrypt();
-  encrypt.setPublicKey(process.env.REACT_APP_PASS_SITE_KEY);
-  const encryptedValue = encrypt.encrypt(value);
-  return encryptedValue;
+export const userGroupType = (userGroupID) => {
+  const userGroupTypeObj = {
+    1: 'Health Professional',
+    2: 'State Medical Council',
+    3: 'National Medical Council',
+    4: 'College Dean',
+    5: 'College Registrar',
+    6: 'College Admin',
+    7: 'NBE',
+  };
+  return userGroupTypeObj[userGroupID];
 };
