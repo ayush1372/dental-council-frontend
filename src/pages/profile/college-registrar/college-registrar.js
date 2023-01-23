@@ -1,18 +1,20 @@
 import { Box, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
+import { sendRegistrarDetails } from '../../../store/actions/college-actions';
 import { Button, TextField } from '../../../ui/core';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 export function CollegeRegistrar() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
     getValues,
+    reset,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
@@ -24,9 +26,20 @@ export function CollegeRegistrar() {
       registrarPassword: '',
     },
   });
-  const onSubmit = () => {
-    navigate(`/NMR/NMR-generate`);
+
+  const onSubmit = (fieldData) => {
+    let registrarData = {
+      id: null,
+      name: fieldData.registrarName,
+      phone_number: fieldData.registrarPhoneNumber,
+      email_id: fieldData.registrarPhoneNumber,
+      user_id: null,
+      password: fieldData.registrarPassword,
+    };
+    dispatch(sendRegistrarDetails(registrarData));
+    reset();
   };
+
   return (
     <Grid container item spacing={2} p={2}>
       <Grid item xs={12}>
@@ -82,7 +95,7 @@ export function CollegeRegistrar() {
           {...register('registrarPhoneNumber', {
             required: 'Enter valid phone number',
             pattern: {
-              value: /^(\d{13})$/i,
+              value: /^(\d{10})$/i,
               message: 'Enter valid phone number',
             },
           })}
@@ -152,7 +165,7 @@ export function CollegeRegistrar() {
           fullWidth
           inputProps={{ maxLength: 100 }}
           variant="outlined"
-          type="password"
+          type="Password"
           name="registrarPassword"
           required="true"
           placeholder={t('College Registrar Password')}
@@ -167,12 +180,12 @@ export function CollegeRegistrar() {
       <Grid container item spacing={2} mt={{ lg: 1 }}>
         <Grid item xs={12} sm="auto">
           <Button fullWidth variant="contained" color="secondary" onClick={handleSubmit(onSubmit)}>
-            {t('SUBMIT')}
+            {t('Submit')}
           </Button>
         </Grid>
 
         <Grid item xs={12} sm="auto">
-          <Button fullWidth variant="contained" color="grey" onClick={handleSubmit(onSubmit)}>
+          <Button fullWidth variant="contained" color="grey">
             {t('Cancel')}
           </Button>
         </Grid>
