@@ -19,13 +19,15 @@ export const API = {
     districts: 'api/v1/md/state/{state_id}/districts',
     profileImage: 'api/v1/hp/hpProfileDetail/profile_picture/{hp_profile_id}',
   },
-  Aadhaar: {
-    sendAadhaarOtp: 'api/v1/sendAadhaarOtp',
-    verifyAadhaarOtp: 'api/v1/verifyAadhaarOtp',
-  },
   college: {
+    registrar: 'api/v1/college/registrar',
+    dean: 'api/v1/college/dean',
     getCollegeProfile: 'api/v1/college/{id}',
     getCollegeRegistrarProfile: '/api/v1/college/registrar/{id}',
     getCollegeDeanProfile: '/api/v1/college/dean/{id}',
+  },
+  Aadhaar: {
+    sendAadhaarOtp: 'api/v1/sendAadhaarOtp',
+    verifyAadhaarOtp: 'api/v1/verifyAadhaarOtp',
   },
 };
