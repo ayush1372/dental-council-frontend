@@ -64,7 +64,6 @@ export const loginAction = (body) => async (dispatch) => {
       method: POST,
       url: API.login.loginUser,
       data: body,
-      headers: { Authorization: localStorage.getItem('access-token') },
     })
       .then((response) => {
         dispatch(loginUser(response));

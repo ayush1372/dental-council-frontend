@@ -23,6 +23,7 @@ export const getStatesList = () => async (dispatch) => {
       });
   });
 };
+
 export const getSubDistrictsList = (districtId) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({

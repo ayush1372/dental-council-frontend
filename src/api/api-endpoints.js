@@ -21,10 +21,10 @@ export const API = {
   college: {
     registrar: 'api/v1/college/registrar',
     dean: 'api/v1/college/dean',
+    getCollegeProfile: 'api/v1/college/{id}',
   },
   Aadhaar: {
     sendAadhaarOtp: 'api/v1/sendAadhaarOtp',
     verifyAadhaarOtp: 'api/v1/verifyAadhaarOtp',
-    getCollegeProfile: 'api/v1/college/{id}',
   },
 };
