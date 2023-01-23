@@ -15,6 +15,7 @@ const initialState = {
   countriesList: { data: [], isLoading: Boolean(true), isError: false },
   districtsList: { data: [], isLoading: Boolean(true), isError: false },
   subDistrictList: { data: [], isLoading: Boolean(true), isError: false },
+  profileImage: { data: [], isLoading: Boolean(true), isError: false },
 };
 
 export const CommonActivity = createSlice({
@@ -54,6 +55,9 @@ export const CommonActivity = createSlice({
     getSubDistricts: (state, action) => {
       state.subDistrictList = action.payload;
     },
+    getProfileImage: (state, action) => {
+      state.profileImage = action.payload;
+    },
   },
 });
 
@@ -70,6 +74,7 @@ export const {
   getCountries,
   getDistricts,
   getSubDistricts,
+  getProfileImage,
 } = CommonActivity.actions;
 
 export default CommonActivity.reducer;

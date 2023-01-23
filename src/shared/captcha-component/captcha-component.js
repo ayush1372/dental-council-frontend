@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 
 import RefreshIcon from '@mui/icons-material/Refresh';
@@ -46,6 +47,7 @@ const CaptchaComponent = ({ captchaResult }) => {
       setError(null);
     }
   };
+  console.log('captcha==>', generateCaptcha);
 
   return (
     <>
