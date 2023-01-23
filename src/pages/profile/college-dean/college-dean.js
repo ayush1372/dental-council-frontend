@@ -106,7 +106,7 @@ export function CollegeDean() {
           defaultValue={getValues().deanEmail}
           error={errors.deanEmail?.message}
           {...register('deanEmail', {
-            required: 'Enter Valid Email Address',
+            required: 'Enter valid email address',
             pattern: {
               value:
                 /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
@@ -135,7 +135,7 @@ export function CollegeDean() {
           defaultValue={getValues().deanUserId}
           error={errors.deanUserId?.message}
           {...register('deanUserId', {
-            required: 'Enter valid username',
+            required: 'Enter valid user ID',
           })}
         />
       </Grid>
@@ -158,7 +158,7 @@ export function CollegeDean() {
           defaultValue={getValues().deanPassword}
           error={errors.deanPassword?.message}
           {...register('deanPassword', PasswordRegexValidation, {
-            required: 'Provide Dean Password',
+            required: 'Enter valid password',
           })}
         />
       </Grid>

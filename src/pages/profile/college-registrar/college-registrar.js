@@ -108,11 +108,11 @@ export function CollegeRegistrar() {
           defaultValue={getValues().registrarEmail}
           error={errors.registrarEmail?.message}
           {...register('registrarEmail', {
-            required: 'Enter Valid Email Address',
+            required: 'Enter valid email address',
             pattern: {
               value:
                 /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-              message: 'Enter Valid Email Address',
+              message: 'Enter valid email address',
             },
           })}
         />
@@ -137,7 +137,7 @@ export function CollegeRegistrar() {
           defaultValue={getValues().registrarUserId}
           error={errors.registrarUserId?.message}
           {...register('registrarUserId', {
-            required: 'Enter valid username',
+            required: 'Enter valid user ID',
           })}
         />
       </Grid>
@@ -160,7 +160,7 @@ export function CollegeRegistrar() {
           defaultValue={getValues().registrarPassword}
           error={errors.registrarPassword?.message}
           {...register('registrarPassword', PasswordRegexValidation, {
-            required: 'Provide registrar Password',
+            required: 'Enter valid password',
           })}
         />
       </Grid>
