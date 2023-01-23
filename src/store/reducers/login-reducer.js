@@ -36,7 +36,7 @@ const loginReducer = createSlice({
         localStorage.setItem('refreshtoken', action.payload.responseHeader['refresh-token'])
       );
     },
-    refreshToken: (state, action) => {
+    refreshTokenApi: (state, action) => {
       state.loginData = action.payload;
       JSON.stringify(
         localStorage.setItem('accesstoken', action.payload.responseHeader['access-token'])
@@ -48,7 +48,12 @@ const loginReducer = createSlice({
   },
 });
 
-export const { getCaptchaEnabledFlag, generateCaptcha, validateCaptcha, loginUser, refreshToken } =
-  loginReducer.actions;
+export const {
+  getCaptchaEnabledFlag,
+  generateCaptcha,
+  validateCaptcha,
+  loginUser,
+  refreshTokenApi,
+} = loginReducer.actions;
 
 export default loginReducer.reducer;

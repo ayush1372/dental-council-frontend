@@ -1,9 +1,6 @@
 /* eslint import/no-cycle: [2, { maxDepth: 1 }] */
-import axios from 'axios';
 
-import { verboseLog } from '../config/debug';
 import successToast from '../ui/core/toaster';
-import { API } from './api-endpoints';
 import { expireSession } from './session';
 
 const capitalizeFirstLetter = (s) => {
@@ -18,22 +15,6 @@ const authInterceptors = (error) => {
   if (error && error?.response) {
     if (error?.response?.status && error?.response?.status === 401) {
       let data = error?.response?.data;
-      // refresh token api call
-      const headers = {
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('refreshtoken'),
-      };
-      axios
-        .post(API.login.refreshToken, {
-          headers: headers,
-        })
-        .then((response) => {
-          verboseLog('refresh token', response);
-        })
-        .catch((error) => {
-          verboseLog('refresh token error', error);
-        });
-
       if (
         data?.details &&
         data?.details.length > 0 &&

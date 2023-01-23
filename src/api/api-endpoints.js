@@ -11,7 +11,7 @@ export const API = {
   },
   editProfile: {},
   DoctorUserProfileData: {
-    DoctorUserProfile: 'api/v1/hp/hpProfileDetail/23',
+    DoctorUserProfile: 'api/v1/hp/hpProfileDetail/',
   },
   common: {
     states: 'api/v1/md/country/356/states',
