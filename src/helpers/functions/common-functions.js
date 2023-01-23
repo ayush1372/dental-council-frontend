@@ -1,7 +1,5 @@
 import JSEncrypt from 'jsencrypt';
 
-import { verboseLog } from '../../config/debug';
-
 export function get_year_data(startYear = 1900) {
   var ans = [];
   var date = new Date();
@@ -38,15 +36,6 @@ export const encryptData = (data, key) => {
   return encryptedPass;
 };
 
-export const userSubType = () => {
-  const userSubTypeObj = { 1: 'College', 2: 'College Registrar', 3: 'College Dean' };
-  var user_sub_type = userSubTypeObj.reduce(function (result, currentObject) {
-    result[currentObject.id] = currentObject.name;
-    return result;
-  }, {});
-
-  verboseLog('asd', user_sub_type);
-};
 export const userGroupType = (userGroupID) => {
   const userGroupTypeObj = {
     1: 'Health Professional',
