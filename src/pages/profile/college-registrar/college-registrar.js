@@ -95,7 +95,7 @@ export function CollegeRegistrar() {
           {...register('registrarPhoneNumber', {
             required: 'Enter valid phone number',
             pattern: {
-              value: /^(\d{13})$/i,
+              value: /^(\d{10})$/i,
               message: 'Enter valid phone number',
             },
           })}
@@ -165,7 +165,7 @@ export function CollegeRegistrar() {
           fullWidth
           inputProps={{ maxLength: 100 }}
           variant="outlined"
-          type="password"
+          type="Password"
           name="registrarPassword"
           required="true"
           placeholder={t('College Registrar Password')}

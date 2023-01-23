@@ -85,7 +85,7 @@ export function CollegeDean() {
           {...register('deanPhoneNumber', {
             required: 'Enter valid phone number',
             pattern: {
-              value: /^(\d{13})$/i,
+              value: /^(\d{10})$/i,
               message: 'Enter valid phone number',
             },
           })}
@@ -155,7 +155,7 @@ export function CollegeDean() {
           fullWidth
           inputProps={{ maxLength: 100 }}
           variant="outlined"
-          type="password"
+          type="Password"
           name="deanPassword"
           required="true"
           placeholder={t('College Dean Password')}
