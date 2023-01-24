@@ -78,7 +78,6 @@ export const UserProfile = ({
   const openDoctorEditProfile = () => {
     setIsReadMode(false);
     fetchStates();
-    // fetchDistricts(stateId);
     fetchCountries();
   };
 

@@ -1,18 +1,22 @@
 import { Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
+import { sendDeanDetails } from '../../../store/actions/college-actions';
 import { Button, TextField } from '../../../ui/core';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 export function CollegeDean() {
+  const dispatch = useDispatch();
+
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     getValues,
+    reset,
+
     formState: { errors },
   } = useForm({
     mode: 'onChange',
@@ -24,8 +28,9 @@ export function CollegeDean() {
       deanPassword: '',
     },
   });
-  const onSubmit = () => {
-    navigate(`/NMR/NMR-generate`);
+  const onSubmit = (fieldValues) => {
+    dispatch(sendDeanDetails(fieldValues));
+    reset();
   };
   return (
     <Grid container item spacing={2} p={2}>
@@ -80,7 +85,7 @@ export function CollegeDean() {
           {...register('deanPhoneNumber', {
             required: 'Enter valid phone number',
             pattern: {
-              value: /^(\d{13})$/i,
+              value: /^(\d{10})$/i,
               message: 'Enter valid phone number',
             },
           })}
@@ -106,7 +111,7 @@ export function CollegeDean() {
           defaultValue={getValues().deanEmail}
           error={errors.deanEmail?.message}
           {...register('deanEmail', {
-            required: 'Enter Valid Email Address',
+            required: 'Enter valid email address',
             pattern: {
               value:
                 /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
@@ -135,7 +140,7 @@ export function CollegeDean() {
           defaultValue={getValues().deanUserId}
           error={errors.deanUserId?.message}
           {...register('deanUserId', {
-            required: 'Enter valid username',
+            required: 'Enter valid user ID',
           })}
         />
       </Grid>
@@ -150,7 +155,7 @@ export function CollegeDean() {
           fullWidth
           inputProps={{ maxLength: 100 }}
           variant="outlined"
-          type="password"
+          type="Password"
           name="deanPassword"
           required="true"
           placeholder={t('College Dean Password')}
@@ -158,7 +163,7 @@ export function CollegeDean() {
           defaultValue={getValues().deanPassword}
           error={errors.deanPassword?.message}
           {...register('deanPassword', PasswordRegexValidation, {
-            required: 'Provide Dean Password',
+            required: 'Enter valid password',
           })}
         />
       </Grid>

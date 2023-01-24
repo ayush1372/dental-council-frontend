@@ -166,7 +166,14 @@ export function TableSearch({ trackApplication }) {
                 </Button>
               </Grid>
             )}
-            <Grid item md="auto" xs={12}>
+            <Grid
+              item
+              md="auto"
+              xs={12}
+              sx={{
+                padding: '2px ',
+              }}
+            >
               <ExportFiles />
             </Grid>
           </Grid>
