@@ -11,6 +11,7 @@ import DigitalIndia from '../../../../../assets/images/logo-slider/digital-India
 import { logout, resetCommonReducer } from '../../../../../store/reducers/common-reducers';
 import { Button } from '../../../../core';
 import { LoginRegisterPopover } from './login-register-popover/login-register-popover';
+import { MobileDrawer } from './mobile-drawer';
 
 export const LogoWrapper = ({ menuToggleHandler }) => {
   const navigate = useNavigate();
@@ -77,6 +78,7 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
 
   return (
     <Container sx={{ position: 'relative' }}>
+      <MobileDrawer />
       <Grid container alignItems="center">
         <Grid item xs={12} sm={6} my={1}>
           <Grid container>
