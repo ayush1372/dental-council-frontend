@@ -18,16 +18,18 @@ export const API = {
     subDistricts: 'api/v1/md/district/{district_id}/sub_districts',
     districts: 'api/v1/md/state/{state_id}/districts',
   },
-  Aadhaar: {
-    sendAadhaarOtp: 'api/v1/sendAadhaarOtp',
-    verifyAadhaarOtp: 'api/v1/verifyAadhaarOtp',
-  },
   college: {
+    registrar: 'api/v1/college/registrar',
+    dean: 'api/v1/college/dean',
     getCollegeProfile: 'api/v1/college/{id}',
     getCollegeRegistrarProfile: '/api/v1/college/registrar/{id}',
     getCollegeDeanProfile: '/api/v1/college/dean/{id}',
   },
   nmc: {
     getNMCProfileData: '/api/v1/user/nmc/{id}',
+  },
+  Aadhaar: {
+    sendAadhaarOtp: 'api/v1/sendAadhaarOtp',
+    verifyAadhaarOtp: 'api/v1/verifyAadhaarOtp',
   },
 };
