@@ -41,12 +41,11 @@ export const smcProfileDetails = [
   { label: 'User Id', value: 'aarnav.sharma', id: '4' },
   { label: 'Council', value: 'West Bengal', id: '5' },
 ];
-export const nmcProfileDetails = [
-  { label: 'Name', value: 'Aarnav Sharma', id: '1' },
-  { label: 'Phone Number', value: '8765678876', id: '2' },
-  { label: 'Email Address', value: 'Arnav.123@abdm.com', id: '3' },
-  { label: 'User ID', value: 'Arnav.Sharma', id: '4' },
-  { label: 'Password', value: 'Arnav@1234', id: '5' },
+export const getNMCProfileDetails = (details) => [
+  { label: 'Name', value: details.display_name, id: '1' },
+  { label: 'Enrolment Number NDHM', value: details.ndhm_enrollment, id: '2' },
+  { label: 'Enrolment Number', value: details.enrolled_number, id: '3' },
+  { label: 'Council', value: details.state_medical_council.name, id: '4' },
 ];
 export const DepartmentNames = [
   { id: '1', name: 'Out patient' },
