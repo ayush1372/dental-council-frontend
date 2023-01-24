@@ -76,13 +76,13 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
           : selectedValue === 'raise'
           ? 'Raise a Query for all'
           : selectedValue === 'approve'
-          ? 'Reason to Approve application'
+          ? 'Reason to Approve Application'
           : selectedValue === 'reject'
-          ? 'Reason to Reject application'
+          ? 'Reason to Reject Application'
           : selectedValue === 'suspend'
-          ? 'Request NMC to permanent suspension?'
+          ? 'Request NMC to Permanent suspension?'
           : selectedValue === 'blacklist'
-          ? 'Request NMC to temporary suspension?'
+          ? 'Request NMC to Temporary suspension?'
           : ''}
       </Typography>
       {selectedValue === 'raise' ||
@@ -217,8 +217,8 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
               name="remark"
               required={true}
               placeholder={
-                tabName || selectedValue === 'suspend' || selectedValue === 'suspend'
-                  ? 'Add a reason'
+                tabName || selectedValue === 'suspend' || selectedValue === 'blacklist'
+                  ? 'Add a reason...'
                   : selectedValue === 'raise'
                   ? 'Write something here . . .'
                   : selectedValue === 'reject' || selectedValue === 'approve'

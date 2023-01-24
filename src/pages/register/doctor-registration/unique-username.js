@@ -80,7 +80,7 @@ const UniqueUserNameForDoctorRegistration = () => {
                         position="end"
                         sx={{ p: 4, backgroundColor: theme.palette.grey.main }}
                       >
-                        <Typography>abdm.com</Typography>
+                        <Typography></Typography>
                       </InputAdornment>
                     ),
                   }}

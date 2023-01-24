@@ -54,10 +54,8 @@ export default function SuccessModal() {
             component="div"
             flexDirection="column"
           >
-            Your password has been
-            <br />
-            successfully Changed. <br />
-            You need to login with new password.
+            Your User ID has been created Successfully, further details has been sent to your
+            registered Email ID and Mobile Number.
           </Typography>
           <Button
             sx={{ width: { xs: '100%', sm: '408px' }, mt: 5 }}

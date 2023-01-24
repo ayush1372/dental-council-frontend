@@ -1,5 +1,4 @@
 import { get_year_data } from '../helpers/functions/common-functions';
-
 export const StateNames = [
   { id: '1', name: 'Andhra Pradesh' },
   { id: '2', name: 'Maharastra' },
