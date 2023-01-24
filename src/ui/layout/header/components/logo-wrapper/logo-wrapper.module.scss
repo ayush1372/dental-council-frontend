@@ -1,30 +1,11 @@
 .menuLeftBar {
   display: none;
   position: absolute;
-  width: 42px;
-  height: 39px;
   padding: 8px;
-  left: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: #3498db;
+  left: 24px;
+  top: 8%;
   cursor: pointer;
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 1023px) {
     display: block;
-  }
-  span {
-    position: absolute;
-    content: '';
-    z-index: 9;
-    width: 25px;
-    height: 3px;
-    background-color: #fff;
-
-    &:nth-child(2) {
-      transform: translateY(10px);
-    }
-    &:nth-child(3) {
-      transform: translateY(20px);
-    }
   }
 }

@@ -1,5 +1,6 @@
 import { Fragment, useState } from 'react';
 
+import MenuOpenOutlinedIcon from '@mui/icons-material/MenuOpenOutlined';
 import { Box, Drawer, Grid } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -52,12 +53,13 @@ export const MobileDrawer = () => {
               <Box
                 className={styles.menuLeftBar}
                 onClick={toggleDrawer(anchor, true)}
-                bgcolor={{ md: 'none', lg: 'none' }}
+                // bgcolor={{ md: 'none', lg: 'none' }}
                 display={{ xs: 'flex', md: 'none', lg: 'none' }}
               >
+                {/* <span></span>
                 <span></span>
-                <span></span>
-                <span></span>
+                <span></span> */}
+                <MenuOpenOutlinedIcon sx={{ fontSize: '34px', color: 'primary.main' }} />
               </Box>
               <Drawer
                 anchor={anchor}

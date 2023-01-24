@@ -6,10 +6,10 @@ import { Box, Typography, useTheme } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
+import { navbar_routes } from '../../../../../constants/navigation-meta';
 import { menuToggle } from '../../../../../store/reducers/nav-menu-reducer';
 import Dropdown from './dropdown';
-
-const Nav = ({ navLinks, menuToggleHandler }) => {
+const Nav = ({ navbar_routes, menuToggleHandler }) => {
   const [openDropdown, setOpenDropdown] = useState(null);
 
   const theme = useTheme();
@@ -40,6 +40,9 @@ const Nav = ({ navLinks, menuToggleHandler }) => {
         borderBottomColor: theme.palette.secondary.main,
       },
 
+      [theme.breakpoints.down('lg')]: {
+        padding: '20px 12px',
+      },
       [theme.breakpoints.down('md')]: {
         width: '100%',
         flexDirection: 'row',
@@ -89,196 +92,65 @@ const Nav = ({ navLinks, menuToggleHandler }) => {
   const { menuOpen } = useSelector((state) => state.navMenu);
 
   return (
-    <>
-      {/* {loggedIn && (
-        <div>
-          {['left'].map((anchor) => (
-            <Fragment key={anchor} display={{ xs: 'flex', md: 'none', lg: 'none' }}>
+    <Box
+      className="navLinkContainer"
+      display={{ xs: menuOpen ? 'flex' : 'none', md: 'flex' }}
+      width="100%"
+      flexDirection={{ xs: 'column', md: 'row' }}
+      alignItems="center"
+      bgcolor="primary.main"
+      position="relative"
+      px={{ xs: 0, md: 3 }}
+    >
+      {navbar_routes.map(({ label, link, tree }) => {
+        const isOpen = openDropdown === label;
+        return (
+          <Fragment key={label}>
+            {link ? (
+              <NavLink
+                className={classes.navMenu}
+                to={link}
+                onClick={() => {
+                  dispatch(menuToggle(!menuOpen));
+                }}
+              >
+                <Typography variant="body3">{label}</Typography>
+              </NavLink>
+            ) : (
               <Box
-                className={styles.menuLeftBar}
-                onClick={toggleDrawer(anchor, true)}
-                bgcolor={{ md: 'none', lg: 'none' }}
-                display={{ xs: 'flex', md: 'none', lg: 'none' }}
-              >
-                <span></span>
-                <span></span>
-                <span></span>
-              </Box>
-              <Drawer
-                anchor={anchor}
-                open={state[anchor]}
-                onClose={toggleDrawer(anchor, false)}
-                disableBackdropTransition={{ xs: true, md: false, lg: false }}
+                onClick={() => openDropdownHandler(label)}
+                width={{ xs: '100%', md: 'auto' }}
+                textAlign="left"
+                position="relative"
+                onMouseEnter={() => hoverEffect(label)}
+                onMouseLeave={() => hoverOutEffect(null)}
               >
                 <Box
-                  sx={{
-                    width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250,
-                    display: { md: 'none', lg: 'none' },
-                  }}
-                  role="presentation"
-                  onClick={toggleDrawer(anchor, false)}
-                  onKeyDown={toggleDrawer(anchor, false)}
-                >
-                  <Grid container mb={3}>
-                    <ProfileImage
-                      name={
-                        loggedInUserType === 'Doctor'
-                          ? 'Dr. ABC'
-                          : loggedInUserType === 'College'
-                          ? 'IP University'
-                          : loggedInUserType === 'NMC'
-                          ? 'National Medical Commission'
-                          : loggedInUserType === 'SMC'
-                          ? 'Maharashtra Medical Council'
-                          : loggedInUserType !== 'Doctor' &&
-                            loggedInUserType !== 'College' &&
-                            loggedInUserType !== 'SMC' &&
-                            loggedInUserType !== 'NMC'
-                          ? 'Dr. ABC'
-                          : null
-                      }
-                    />
-                  </Grid>
-
-                  <SideDrawerList
-                    open={anchor}
-                    DrawerOptions={
-                      loggedInUserType === 'Doctor'
-                        ? doctorTabs
-                        : loggedInUserType === 'NMC'
-                        ? nmcTabs
-                        : loggedInUserType === 'SMC'
-                        ? smcTabs
-                        : loggedInUserType === 'College'
-                        ? colgTabs
-                        : ''
-                    }
-                    handleSwitch={setActiveTab}
-                    ActiveOption={isActiveTab}
-                  />
-                </Box>
-              </Drawer>
-            </Fragment>
-          ))}
-        </div>
-      )} */}
-      <Box
-        className="navLinkContainer"
-        display={{ xs: menuOpen ? 'flex' : 'none', md: 'flex' }}
-        width="100%"
-        flexDirection={{ xs: 'column', md: 'row' }}
-        alignItems="center"
-        bgcolor="primary.main"
-        position="relative"
-        px={{ xs: 0, md: 3 }}
-      >
-        {navLinks.map(({ label, link, tree }) => {
-          const isOpen = openDropdown === label;
-          return (
-            <Fragment key={label}>
-              {link ? (
-                <NavLink
+                  display="flex"
+                  flexDirection="row"
+                  alignItems="center"
                   className={classes.navMenu}
-                  to={link}
-                  onClick={() => {
-                    dispatch(menuToggle(!menuOpen));
-                  }}
+                  gap={1}
+                  sx={{ cursor: 'pointer' }}
                 >
-                  <Typography variant="body3">{label}</Typography>
-                </NavLink>
-              ) : (
-                <Box
-                  onClick={() => openDropdownHandler(label)}
-                  width={{ xs: '100%', md: 'auto' }}
-                  textAlign="left"
-                  position="relative"
-                  onMouseEnter={() => hoverEffect(label)}
-                  onMouseLeave={() => hoverOutEffect(null)}
-                >
-                  <Box
-                    display="flex"
-                    flexDirection="row"
-                    alignItems="center"
-                    className={classes.navMenu}
-                    gap={1}
-                    sx={{ cursor: 'pointer' }}
-                  >
-                    <Typography component="a" variant="body3">
-                      {label}
-                    </Typography>
-                    <KeyboardArrowDownOutlinedIcon color="white" sx={{ fontSize: '16px' }} />
-                  </Box>
-                  {/* </NavLink> */}
-                  {isOpen && <Dropdown tree={tree} onSelectCallback={onSelectCallback} />}
+                  <Typography component="a" variant="body3">
+                    {label}
+                  </Typography>
+                  <KeyboardArrowDownOutlinedIcon color="white" sx={{ fontSize: '16px' }} />
                 </Box>
-              )}
-            </Fragment>
-          );
-        })}
-      </Box>
-    </>
+                {/* </NavLink> */}
+                {isOpen && <Dropdown tree={tree} onSelectCallback={onSelectCallback} />}
+              </Box>
+            )}
+          </Fragment>
+        );
+      })}
+    </Box>
   );
 };
 
 Nav.defaultProps = {
-  navLinks: [
-    {
-      label: 'About NMR',
-      link: '/about-us',
-    },
-    {
-      label: 'NMR ACT',
-      link: null,
-      tree: [
-        {
-          label: 'Financial',
-          link: '/financial',
-          branches: null,
-        },
-        {
-          label: 'Agro',
-          link: '/agro',
-          branches: null,
-        },
-        {
-          label: 'Pricing',
-          link: '/pricing',
-          branches: null,
-        },
-      ],
-    },
-
-    {
-      label: 'Rules & Regulations',
-      link: '/rules-regulations',
-      tree: null,
-    },
-    {
-      label: 'Information Desk',
-      link: '/information-desk',
-      tree: null,
-    },
-    {
-      label: 'Media Room',
-      link: '/media-room',
-      tree: null,
-    },
-    {
-      label: 'E-Gazette',
-      link: '/e-gazette',
-      tree: null,
-    },
-    {
-      label: 'Photo Gallery',
-      link: '/photo-gallery',
-      tree: null,
-    },
-    {
-      label: 'Search Doctor',
-      link: '/search-doctor',
-      tree: null,
-    },
-  ],
+  navbar_routes,
 };
 
 export default Nav;
