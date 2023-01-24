@@ -16,19 +16,22 @@ export const API = {
   },
   common: {
     states: 'api/v1/md/country/356/states',
+    cities: 'api/v1/md/sub_district/{sub_district_id}/cities',
     countries: 'api/v1/md/countries',
     subDistricts: 'api/v1/md/district/{district_id}/sub_districts',
     districts: 'api/v1/md/state/{state_id}/districts',
     getCouncilNames: 'api/v1/md/smcs',
     getUniversityNames: 'api/v1/md/universities',
   },
-  Aadhaar: {
-    sendAadhaarOtp: 'api/v1/sendAadhaarOtp',
-    verifyAadhaarOtp: 'api/v1/verifyAadhaarOtp',
-  },
   college: {
+    registrar: 'api/v1/college/registrar',
+    dean: 'api/v1/college/dean',
     getCollegeProfile: 'api/v1/college/{id}',
     getCollegeRegistrarProfile: '/api/v1/college/registrar/{id}',
     getCollegeDeanProfile: '/api/v1/college/dean/{id}',
+  },
+  Aadhaar: {
+    sendAadhaarOtp: 'api/v1/sendAadhaarOtp',
+    verifyAadhaarOtp: 'api/v1/verifyAadhaarOtp',
   },
 };

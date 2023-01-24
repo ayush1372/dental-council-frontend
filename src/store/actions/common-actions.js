@@ -2,6 +2,7 @@ import { API } from '../../api/api-endpoints';
 import { GET } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import {
+  getCities,
   getCountries,
   getDistricts,
   getRegistrationCouncil,
@@ -73,6 +74,23 @@ export const getDistrictList = (stateId) => async (dispatch) => {
       });
   });
 };
+
+export const getCitiesList = (sub_district_id) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: GET,
+      url: API.common.cities.replace('{sub_district_id}', sub_district_id),
+    })
+      .then((response) => {
+        dispatch(getCities(response.data));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
 export const getRegistrationCouncilList = () => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
