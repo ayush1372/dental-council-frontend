@@ -15,6 +15,8 @@ const initialState = {
   countriesList: { data: [], isLoading: Boolean(true), isError: false },
   districtsList: { data: [], isLoading: Boolean(true), isError: false },
   subDistrictList: { data: [], isLoading: Boolean(true), isError: false },
+  registrationCouncilList: { data: [], isLoading: Boolean(true), isError: false },
+  universitiesList: { data: [], isLoading: Boolean(true), isError: false },
 };
 
 export const CommonActivity = createSlice({
@@ -54,6 +56,12 @@ export const CommonActivity = createSlice({
     getSubDistricts: (state, action) => {
       state.subDistrictList = action.payload;
     },
+    getRegistrationCouncil: (state, action) => {
+      state.registrationCouncilList = action.payload;
+    },
+    getUniversity: (state, action) => {
+      state.universitiesList = action.payload;
+    },
   },
 });
 
@@ -70,6 +78,8 @@ export const {
   getCountries,
   getDistricts,
   getSubDistricts,
+  getRegistrationCouncil,
+  getUniversity,
 } = CommonActivity.actions;
 
 export default CommonActivity.reducer;

@@ -8,7 +8,9 @@ export const API = {
     validateCaptcha: 'api/v1/validateCaptcha',
     loginUser: 'api/v1/login',
   },
-  editProfile: {},
+  editProfile: {
+    editAdminCollegeProfile: 'api/v1/college',
+  },
   DoctorUserProfileData: {
     DoctorUserProfile: 'api/v1/hp/hpProfileDetail/23',
   },
@@ -17,6 +19,8 @@ export const API = {
     countries: 'api/v1/md/countries',
     subDistricts: 'api/v1/md/district/{district_id}/sub_districts',
     districts: 'api/v1/md/state/{state_id}/districts',
+    getCouncilNames: 'api/v1/md/smcs',
+    getUniversityNames: 'api/v1/md/universities',
   },
   Aadhaar: {
     sendAadhaarOtp: 'api/v1/sendAadhaarOtp',

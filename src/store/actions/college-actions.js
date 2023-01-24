@@ -1,10 +1,11 @@
 import { API } from '../../api/api-endpoints';
-import { GET } from '../../constants/requests';
+import { GET, PUT } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import {
   getCollegeAdminData,
   getCollegeDeanData,
   getCollegeRegistrarData,
+  // updateCollegeAdminProfile
 } from '../reducers/college-reducer';
 
 export const getCollegeAdminProfileData = (id) => async (dispatch) => {
@@ -60,6 +61,26 @@ export const getCollegeDeanProfileData = (id) => async (dispatch) => {
       })
       .catch((error) => {
         dispatch(getCollegeDeanData({ data: [], isError: true, isLoading: false }));
+        return reject(error);
+      });
+  });
+};
+
+export const updateCollegeAdminProfileData = (body) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: PUT,
+      url: API.editProfile.editAdminCollegeProfile,
+      data: body,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+    })
+      .then((response) => {
+        // eslint-disable-next-line no-console
+        console.log('inside action', response);
+        //  dispatch(updateCollegeAdminProfile(response.data));
+        return resolve(response);
+      })
+      .catch((error) => {
         return reject(error);
       });
   });

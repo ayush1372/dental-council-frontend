@@ -1,16 +1,41 @@
+import { useEffect } from 'react';
+
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Box, Grid, IconButton, InputAdornment, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
-import {
-  RegistrationCouncilNames,
-  StateNames,
-  UniversityNames,
-} from '../../../constants/common-data';
+import { createEditFieldData } from '../../../helpers/functions/common-functions';
+// import {
+//   RegistrationCouncilNames,//   StateNames,
+//   UniversityNames,
+// } from '../../../constants/common-data';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
+import { updateCollegeAdminProfileData } from '../../../store/actions/college-actions';
+import {
+  getRegistrationCouncilList,
+  getStatesList,
+  getUniversityList,
+} from '../../../store/actions/common-actions';
 import { Button, TextField } from '../../../ui/core';
 
 const CollegeEditProfile = () => {
+  const { collegeData } = useSelector((state) => state.college);
+  const { statesList, registrationCouncilList, universitiesList } = useSelector(
+    (state) => state.common
+  );
+  // // eslint-disable-next-line no-console
+  // console.log('state data ----', statesList);
+  //  eslint-disable-next-line no-console
+  console.log('vales', createEditFieldData(statesList));
+  const userData = collegeData?.data;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getStatesList());
+    dispatch(getRegistrationCouncilList());
+    dispatch(getUniversityList());
+  }, []);
   const {
     register,
     handleSubmit,
@@ -20,18 +45,45 @@ const CollegeEditProfile = () => {
   } = useForm({
     mode: 'onChange',
     defaultValues: {
-      CollegeEmailId: 'aarnav.sharma@gmail.com',
-      CollegeName: 'Aarnav sharma',
-      CollegeId: '132188',
-      CollegePhoneNumber: '8778636526',
-      CollegeAddress: 'GGSIPU, Golf Course Rd, Sector 16 C, Dwarka, Delhi, 110078',
-      CollegePincode: '110088',
-      UniversityName: 'AIIMS Delhi',
-      DeparmentName: '',
-      StateName: 'New Delhi',
-      CollegeWebsite: 'ipuniversity.co.in',
+      CollegeEmailId: userData?.email_id,
+      CollegeName: userData?.name,
+      CollegeId: userData?.college_code,
+      CollegePhoneNumber: userData?.phone_number,
+      CollegeAddress: userData?.address,
+      CollegePincode: userData?.pin_code,
+      UniversityName: '',
+      RegistrationCouncil: '',
+      StateName: '',
+      CollegeWebsite: userData?.website,
     },
   });
+
+  const onhandleSubmitClick = () => {
+    // eslint-disable-next-line no-console
+    console.log('user id is ', userData?.id);
+    // eslint-disable-next-line no-console
+    console.log('get-values', getValues());
+    const updatedValues = {
+      id: userData?.id,
+      name: getValues().CollegeName,
+      college_code: getValues().CollegeId,
+      phone_number: getValues().CollegePhoneNumber,
+      email_id: getValues().CollegeEmailId,
+      state_name: getValues().StateId,
+      council_name: getValues().RegistrationCouncil,
+      university_name: getValues().UniversityName,
+      website: getValues().CollegeWebsite,
+      address: getValues().CollegeAddress,
+      pin_code: getValues().CollegePincode,
+    };
+    // eslint-disable-next-line no-console
+    // console.log('updatedValues ', updatedValues);
+    dispatch(updateCollegeAdminProfileData(updatedValues)).then((response) => {
+      // eslint-disable-next-line no-console
+      console.log(' update response is', response);
+    });
+  };
+
   const handleInput = (e) => {
     e.preventDefault();
     if (e.target.value.length > 0) {
@@ -200,7 +252,7 @@ const CollegeEditProfile = () => {
             name="UniversityName"
             clearErrors={clearErrors}
             defaultValue={getValues().UniversityName}
-            items={UniversityNames}
+            items={createEditFieldData(universitiesList)}
             // TO DO:UniversityName default value to be shown on UI for future ref
             // value={UniversityNames[0].name}
             placeholder="Select University Name"
@@ -221,6 +273,9 @@ const CollegeEditProfile = () => {
             name={'CollegeWebsite'}
             placeholder={'Enter College Website'}
             defaultValue={getValues().CollegeWebsite}
+            {...register('CollegeWebsite', {
+              required: 'CollegeWebsite  is required',
+            })}
           />
         </Grid>
       </Grid>
@@ -238,6 +293,9 @@ const CollegeEditProfile = () => {
             name={'CollegeAddress'}
             defaultValue={getValues().CollegeAddress}
             error={errors.CollegeAddress?.message}
+            {...register('CollegeAddress', {
+              required: 'CollegeAddress  is required',
+            })}
           />
         </Grid>
 
@@ -271,12 +329,17 @@ const CollegeEditProfile = () => {
           <SearchableDropdown
             name="StateName"
             clearErrors={clearErrors}
-            items={StateNames}
+            items={createEditFieldData(statesList)}
             placeholder="Select State Name"
             error={errors.StateName?.message}
             {...register('StateName', {
               required: 'State Name is required',
             })}
+            onChange={(e) => {
+              getValues().StateName.onChange(e);
+            }}
+            // eslint-disable-next-line no-console
+            // onChange={(e)=>{getValues().StateName(e)}}
           />
         </Grid>
       </Grid>
@@ -292,7 +355,7 @@ const CollegeEditProfile = () => {
           <Box>
             <SearchableDropdown
               name="RegistrationCouncil"
-              items={RegistrationCouncilNames}
+              items={createEditFieldData(registrationCouncilList)}
               placeholder="Select your Registration Council"
               clearErrors={clearErrors}
               error={errors.RegistrationCouncil?.message}
@@ -321,7 +384,8 @@ const CollegeEditProfile = () => {
             }}
             variant="contained"
             color="secondary"
-            onClick={handleSubmit(onsubmit)}
+            // onClick={handleSubmit(onsubmit)}
+            onClick={handleSubmit(onhandleSubmitClick)}
           >
             Submit
           </Button>

@@ -23,6 +23,16 @@ export const createSelectFieldData = (arrayOfStrings, valueKey = 'id') => {
     return [];
   }
 };
+export const createEditFieldData = (arrayOfStrings, valueKey = 'id') => {
+  if (arrayOfStrings && arrayOfStrings.length > 0) {
+    return arrayOfStrings?.map((item) => ({
+      name: item?.name,
+      id: item[valueKey],
+    }));
+  } else {
+    return [];
+  }
+};
 
 export const changeAppFontSize = (size, appFontType) => {
   const fontSize =

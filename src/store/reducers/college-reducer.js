@@ -21,10 +21,19 @@ const collegeReducer = createSlice({
     getCollegeDeanData: (state, action) => {
       state.collegeData = action.payload;
     },
+    updateCollegeAdminProfile: (state, action) => {
+      // eslint-disable-next-line no-console
+      console.log('inside college reducer -payload ', action.payload);
+      state.collegeData = action.payload;
+    },
   },
 });
 
-export const { getCollegeAdminData, getCollegeRegistrarData, getCollegeDeanData } =
-  collegeReducer.actions;
+export const {
+  getCollegeAdminData,
+  getCollegeRegistrarData,
+  getCollegeDeanData,
+  updateCollegeAdminProfile,
+} = collegeReducer.actions;
 
 export default collegeReducer.reducer;

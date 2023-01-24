@@ -4,8 +4,10 @@ import { useAxiosCall } from '../../hooks/use-axios';
 import {
   getCountries,
   getDistricts,
+  getRegistrationCouncil,
   getStates,
   getSubDistricts,
+  getUniversity,
 } from '../reducers/common-reducers';
 
 export const getStatesList = () => async (dispatch) => {
@@ -64,6 +66,36 @@ export const getDistrictList = (stateId) => async (dispatch) => {
     })
       .then((response) => {
         dispatch(getDistricts(response.data));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+export const getRegistrationCouncilList = () => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: GET,
+      url: API.common.getCouncilNames,
+    })
+      .then((response) => {
+        dispatch(getRegistrationCouncil(response.data));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+export const getUniversityList = () => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: GET,
+      url: API.common.getUniversityNames,
+    })
+      .then((response) => {
+        dispatch(getUniversity(response.data));
         return resolve(response);
       })
       .catch((error) => {
