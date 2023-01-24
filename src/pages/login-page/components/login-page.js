@@ -14,6 +14,7 @@ import {
   getCollegeDeanProfileData,
   getCollegeRegistrarProfileData,
 } from '../../../store/actions/college-actions';
+import { getCardCount } from '../../../store/actions/dashboard-actions';
 import {
   generateCaptchaImage,
   getCaptchaEnabledFlagValue,
@@ -89,7 +90,15 @@ export function LoginPage({ handleForgotPassword }) {
                 dispatch(userLoggedInType(loginFormname));
                 navigate(`/profile`);
                 const userType = userGroupType(response?.data?.user_group_id);
-
+                // get dashboard card count
+                if (userType !== 'Health Professional') {
+                  dispatch(
+                    getCardCount({
+                      group_name: userType,
+                    })
+                  );
+                }
+                // get college user profile data
                 if (userType === 'College Dean') {
                   dispatch(getCollegeDeanProfileData(response?.data?.profile_id));
                 } else if (userType === 'College Registrar') {

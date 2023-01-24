@@ -29,4 +29,7 @@ export const API = {
     sendAadhaarOtp: 'api/v1/sendAadhaarOtp',
     verifyAadhaarOtp: 'api/v1/verifyAadhaarOtp',
   },
+  dashboard: {
+    cardCount: '/api/v1/dashboard/cardCount',
+  },
 };

@@ -6,7 +6,7 @@ import { useTheme } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
 
 import { verboseLog } from '../../../../config/debug';
-import { dashboardCountData } from '../../../../constants/common-data';
+// import { dashboardCountData } from '../../../../constants/common-data';
 import ViewProfile from '../../../../shared/view-profile/view-profile';
 import { Button } from '../../../../ui/core';
 import UserProfile from '../../../user-profile/index';
@@ -16,6 +16,11 @@ import DashboardControlledTable from '../dashboard-controlled-table/dashboard-co
 export default function Dashboard() {
   const theme = useTheme();
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  const { count } = useSelector((state) => state.dashboard);
+
+  // eslint-disable-next-line no-console
+  console.log('count', count?.data, count?.data['hp_registration_requests']);
+
   const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(1),
     textAlign: 'center',
@@ -27,7 +32,7 @@ export default function Dashboard() {
   let blankDashboard = {
     'Registration Request': [
       {
-        name: 'Total Registration Request',
+        name: 'Total Registration Requests',
         value: 0,
       },
       {
@@ -102,21 +107,37 @@ export default function Dashboard() {
   const [showTable, setShowTable] = useState(false);
   const [showViewProfile, setShowViewPorfile] = useState(false);
 
-  const countResp = Object.values(dashboardCountData);
+  const countResp = Object.values(count?.data);
   const blankResp = Object.values(blankDashboard);
 
   const resultCountResp =
     loggedInUserType === 'NMC' || loggedInUserType === 'SMC'
-      ? countResp[0].concat(countResp[1]).concat(countResp[2])
-      : countResp[0].concat(countResp[1]);
+      ? countResp['hp_registration_requests']
+          ?.concat(countResp['hp_modification_requests'])
+          ?.concat(countResp[2])
+      : countResp['hp_registration_requests']?.concat(countResp['hp_modification_requests']);
   const resultblankResp =
     loggedInUserType === 'NMC' || loggedInUserType === 'SMC'
-      ? blankResp[0].concat(blankResp[1]).concat(blankResp[2])
-      : blankResp[0].concat(blankResp[1]);
+      ? blankResp['Registration Request']
+          ?.concat(blankResp['Updation Request'])
+          ?.concat(blankResp[2])
+      : blankResp['Registration Request']?.concat(blankResp['Updation Request']);
+
+  // eslint-disable-next-line no-console
+  console.log(
+    'resultblankResp',
+    count,
+    countResp,
+    countResp['hp_registration_requests'],
+    resultblankResp,
+    resultCountResp
+  );
 
   if (resultCountResp?.length > 0) {
     for (let i = 0; i < resultCountResp?.length; i++) {
       for (let j = 0; j < resultblankResp?.length; j++) {
+        // eslint-disable-next-line no-console
+        console.log('resultblankResp', resultblankResp, resultCountResp);
         if (resultCountResp[i].name === resultblankResp[j].name) {
           resultblankResp[j].value = resultCountResp[i].count;
         }
