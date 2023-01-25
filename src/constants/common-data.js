@@ -46,6 +46,8 @@ export const getNMCProfileDetails = (details) => [
   { label: 'Enrolment Number NDHM', value: details.ndhm_enrollment, id: '2' },
   { label: 'Enrolment Number', value: details.enrolled_number, id: '3' },
   { label: 'Council', value: details.state_medical_council.name, id: '4' },
+  { label: 'Phone Number', value: details.mobile_no, id: '5' },
+  { label: 'Email Address', value: details.email_id, id: '6' },
 ];
 export const DepartmentNames = [
   { id: '1', name: 'Out patient' },
