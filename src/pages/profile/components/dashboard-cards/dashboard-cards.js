@@ -229,7 +229,7 @@ export default function Dashboard() {
                             onClick={() => showTableFun(item)}
                           >
                             <Box
-                              color="secondary.contrastText"
+                              color="black.secondary"
                               fontSize="14px"
                               sx={{ minHeight: '60px', wordBreak: 'break-word' }}
                             >

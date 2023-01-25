@@ -23,7 +23,7 @@ const CollegeMyProfile = () => {
       {showPage === 'Profile' && (
         <Grid>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm="auto" sx={{ mr: { xs: 0, sm: 'auto' } }}>
+            <Grid mt={2} item xs={12} sm="auto" sx={{ mr: { xs: 0, sm: 'auto' } }}>
               <Typography variant="h2" color="textPrimary.main">
                 My Profile
               </Typography>
