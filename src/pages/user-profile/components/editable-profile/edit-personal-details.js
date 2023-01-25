@@ -990,6 +990,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               width: {
                 xs: '100%',
                 md: 'fit-content',
+                height: '52px',
               },
             }}
           >
