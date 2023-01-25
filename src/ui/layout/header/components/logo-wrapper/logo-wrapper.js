@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import DigitalIndia from '../../../../../assets/images/logo-slider/digital-India.png';
+import { IdleTimer } from '../../../../../helpers/components/idle-timer';
 import { logout, resetCommonReducer } from '../../../../../store/reducers/common-reducers';
 import { Button } from '../../../../core';
 import { LoginRegisterPopover } from './login-register-popover/login-register-popover';
@@ -77,6 +78,7 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
 
   return (
     <Container sx={{ position: 'relative' }}>
+      {loggedIn && <IdleTimer />}
       <Grid container alignItems="center">
         <Grid item xs={12} sm={6} my={1}>
           <Grid container>
