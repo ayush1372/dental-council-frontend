@@ -1,6 +1,6 @@
 import { useTheme } from '@emotion/react';
 import SearchIcon from '@mui/icons-material/Search';
-import { Box, Grid, InputAdornment } from '@mui/material';
+import { Box, Grid, IconButton, InputAdornment } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
@@ -56,19 +56,24 @@ export function TableSearch({ trackApplication, activateLicence }) {
             {...register('search')}
             InputProps={{
               endAdornment: (
-                <InputAdornment
-                  position="end"
-                  sx={{ p: '27px', backgroundColor: theme.palette.grey.main }}
-                >
-                  <SearchIcon />
+                <InputAdornment position="end" sx={{ backgroundColor: theme.palette.grey.main }}>
+                  <IconButton
+                    sx={{
+                      p: '16px 10px 13px 10px',
+                      backgroundColor: theme.palette.grey.main,
+                      borderRadius: '0 5px 5px 0',
+                    }}
+                  >
+                    <SearchIcon />
+                  </IconButton>
                 </InputAdornment>
               ),
             }}
           />
         </Grid>
 
-        <Grid item md={trackApplication ? 7 : activateLicence ? 8 : 10} xs={12}>
-          <Grid container item xs={12} sx={{ alignItems: 'flex-end', display: 'flex', gap: 1 }}>
+        <Grid item md={trackApplication ? 7 : 10} xs={12}>
+          <Grid container item xs={12} sx={{ alignItems: 'center', display: 'flex', gap: 1 }}>
             {trackApplication === true && (
               <>
                 <Grid item md={3} xs={12} ml="auto">
