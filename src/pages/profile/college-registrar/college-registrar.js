@@ -42,7 +42,7 @@ export function CollegeRegistrar() {
 
   return (
     <Grid container item spacing={2} p={2}>
-      <Grid item xs={12}>
+      <Grid item xs={12} mt={5}>
         <Box>
           <Typography color="textPrimary.main" variant="h2">
             College Registrar
