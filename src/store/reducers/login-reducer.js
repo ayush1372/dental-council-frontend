@@ -36,10 +36,24 @@ const loginReducer = createSlice({
         localStorage.setItem('refreshtoken', action.payload.responseHeader['refresh-token'])
       );
     },
+    refreshTokenApi: (state, action) => {
+      state.loginData = action.payload;
+      JSON.stringify(
+        localStorage.setItem('accesstoken', action.payload.responseHeader['access-token'])
+      );
+      JSON.stringify(
+        localStorage.setItem('refreshtoken', action.payload.responseHeader['refresh-token'])
+      );
+    },
   },
 });
 
-export const { getCaptchaEnabledFlag, generateCaptcha, validateCaptcha, loginUser } =
-  loginReducer.actions;
+export const {
+  getCaptchaEnabledFlag,
+  generateCaptcha,
+  validateCaptcha,
+  loginUser,
+  refreshTokenApi,
+} = loginReducer.actions;
 
 export default loginReducer.reducer;

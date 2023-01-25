@@ -7,10 +7,11 @@ export const API = {
     generateCaptcha: 'api/v1/generateCaptcha',
     validateCaptcha: 'api/v1/validateCaptcha',
     loginUser: 'api/v1/login',
+    refreshToken: 'api/v1/refreshToken',
   },
   editProfile: {},
   DoctorUserProfileData: {
-    DoctorUserProfile: 'api/v1/hp/hpProfileDetail/23',
+    DoctorUserProfile: 'api/v1/hp/hpProfileDetail/',
   },
   common: {
     states: 'api/v1/md/country/356/states',
