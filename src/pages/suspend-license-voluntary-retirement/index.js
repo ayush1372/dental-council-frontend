@@ -96,7 +96,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
           {tabName === 'voluntary-suspend-license' && (
             <Grid item xs={12} md={12} mb={2}>
               <Typography variant="subtitle2" color="textPrimary.main">
-                {'Select suspension'}
+                {'Select Suspension'}
                 <Typography variant="body4" color="error.main">
                   *
                 </Typography>

@@ -21,6 +21,7 @@ import {
   loginAction,
   validateCaptchaImage,
 } from '../../../store/actions/login-action';
+import { getNMCProfileData } from '../../../store/actions/nmc-actions';
 import { login, userLoggedInType } from '../../../store/reducers/common-reducers';
 import { Button, TextField } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
@@ -105,6 +106,8 @@ export function LoginPage({ handleForgotPassword }) {
                   dispatch(getCollegeRegistrarProfileData(response?.data?.profile_id));
                 } else if (userType === 'College Admin') {
                   dispatch(getCollegeAdminProfileData(response?.data?.profile_id));
+                } else if (userType === 'National Medical Council') {
+                  dispatch(getNMCProfileData(response?.data?.profile_id));
                 }
 
                 window.scrollTo({
