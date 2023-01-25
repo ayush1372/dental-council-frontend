@@ -57,7 +57,7 @@ const MyProfile = (props) => {
             {data.map((field) => {
               return (
                 <Grid item xs={12} md={6} sm={6} lg={3} key={field.id}>
-                  <Typography variant="body3" color="grey.label">
+                  <Typography variant="body1" color="inputTextColor.main">
                     {field.label}
                   </Typography>
                   <Grid>

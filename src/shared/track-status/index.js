@@ -38,7 +38,7 @@ export default function TrackStatus() {
     <Box>
       {showHeader && (
         <Box px={3}>
-          <Typography variant="h2" color="textPrimary.main" component="div" mt={5}>
+          <Typography variant="h2" color="textPrimary.main" component="div" mt={8}>
             Track Status
           </Typography>
           <Grid container spacing={2} mt={1}>
