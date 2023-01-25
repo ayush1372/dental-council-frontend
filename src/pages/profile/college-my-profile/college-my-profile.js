@@ -2,8 +2,9 @@ import { useState } from 'react';
 
 import EditIcon from '@mui/icons-material/Edit';
 import { Grid, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { getCollegeRegistrarProfileData } from '../../../store/actions/college-actions';
 import { Button } from '../../../ui/core';
 import CollegeEditProfile from './college-edit-profile';
 
@@ -11,6 +12,11 @@ const CollegeMyProfile = () => {
   const [showPage, setShowpage] = useState('Profile');
   const { collegeData } = useSelector((state) => state.college);
   const userData = collegeData?.data;
+  const dispatch = useDispatch();
+
+  const getUserProfile = () => {
+    dispatch(getCollegeRegistrarProfileData(1));
+  };
 
   return (
     <Grid boxShadow={2} mt={2} p={3}>
@@ -31,6 +37,7 @@ const CollegeMyProfile = () => {
                 color="secondary"
                 onClick={() => {
                   setShowpage('Edit');
+                  getUserProfile();
                 }}
                 size="small"
               >
