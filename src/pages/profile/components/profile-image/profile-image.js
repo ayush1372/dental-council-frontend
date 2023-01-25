@@ -26,19 +26,22 @@ export default function ProfileImage(props) {
     // console.log('clicked');
     const reader = new FileReader();
     reader.onloadend = () => {
-      console.log('image==>', setImage(reader.result.toString()));
-      // console.log('image and file==>', image);
+      setImage(reader.result.toString());
     };
     reader.readAsDataURL(e.target.files[0]);
-    // console.log(image.length,'length')
+    console.log(image.length, 'length');
     if (image.length > 0) {
       console.log(image, '<===image');
     }
   };
+  let formData = new FormData();
+  let imageId = formData.append('profile_ID', profileId);
+  let imageValue = formData.append('image', image);
+  console.log(image, 'test1');
   useEffect(() => {
-    if (image.length > 0) {
-      dispatch(getUserProfileImage(profileId, image));
-    }
+    console.log(image, 'test2');
+
+    dispatch(getUserProfileImage(imageId, imageValue));
   }, [image]);
 
   console.log('image ==>', image); //image url

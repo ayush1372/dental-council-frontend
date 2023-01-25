@@ -74,18 +74,15 @@ export const getDistrictList = (stateId) => async (dispatch) => {
       });
   });
 };
+
 export const getUserProfileImage = (hp_profile_id, file) => async (dispatch) => {
   console.log('id and file actions==>', hp_profile_id, file);
-
-  let formData = new FormData();
-  formData.append('profile_ID', hp_profile_id);
-  formData.append('image', file);
 
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: POST,
       url: API.common.profileImage.replace('{hp_profile_id}', hp_profile_id),
-      data: formData,
+      data: { hp_profile_id, file },
     })
       .then((response) => {
         dispatch(getProfileImage(response.data));
