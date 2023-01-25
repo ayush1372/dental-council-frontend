@@ -10,6 +10,7 @@ import styles from './main-layout.module.scss';
 const ZoomSize = () => {
   return useSelector((state) => state.appFontSize.appFontSize);
 };
+
 export const MainLayout = () => (
   <div style={{ fontSize: ZoomSize() }}>
     <main>

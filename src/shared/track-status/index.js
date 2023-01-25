@@ -103,7 +103,7 @@ export default function TrackStatus() {
                 color="secondary"
                 size="medium"
               >
-                Submit
+                Search
               </Button>
             </Grid>
           </Grid>
