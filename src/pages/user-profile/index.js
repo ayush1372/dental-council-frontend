@@ -42,6 +42,7 @@ export const UserProfile = ({
     loggedInUserType === 'Doctor' ? 0 : 1,
     []
   );
+  const { loginData } = useSelector((state) => state.loginReducer);
 
   const renderSuccess = () => {
     setShowReactivateLicense(false);
@@ -78,7 +79,6 @@ export const UserProfile = ({
   const openDoctorEditProfile = () => {
     setIsReadMode(false);
     fetchStates();
-    // fetchDistricts(stateId);
     fetchCountries();
   };
 
@@ -91,7 +91,7 @@ export const UserProfile = ({
   }, [isReadMode]);
 
   const fetchDoctorUserProfileData = () => {
-    dispatch(getDoctorUserProfileData())
+    dispatch(getDoctorUserProfileData({ id: loginData?.data?.profile_id }))
       .then((dataResponse) => {
         verboseLog('dataResponse1', dataResponse);
       })
@@ -99,9 +99,11 @@ export const UserProfile = ({
         verboseLog('error occured1', error);
       });
   };
+
   useEffect(() => {
     fetchDoctorUserProfileData();
   }, []);
+
   return (
     <>
       <Box display="flex" justifyContent="start">
