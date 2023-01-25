@@ -31,4 +31,7 @@ export const API = {
     sendAadhaarOtp: 'api/v1/sendAadhaarOtp',
     verifyAadhaarOtp: 'api/v1/verifyAadhaarOtp',
   },
+  smc: {
+    getSMCProfileData: '/api/v1/user/smc/{id}',
+  },
 };
