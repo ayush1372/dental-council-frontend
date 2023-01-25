@@ -9,7 +9,7 @@ import { SearchableDropdown } from '../../../../shared/autocomplete/searchable-d
 import ExportFiles from '../../../../shared/export-component/export-file';
 import { Button, Select, TextField } from '../../../../ui/core';
 
-export function TableSearch({ trackApplication }) {
+export function TableSearch({ trackApplication, activateLicence }) {
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const {
     register,
@@ -33,7 +33,12 @@ export function TableSearch({ trackApplication }) {
   return (
     <Box data-testid="table-search">
       <Grid container sx={{ alignItems: 'flex-end' }} mb={5}>
-        <Grid item md={trackApplication ? 5 : 2} xs={12}>
+        <Grid
+          item
+          md={trackApplication ? 5 : activateLicence ? 4 : 2}
+          xs={12}
+          mb={{ xs: 1, sm: 0 }}
+        >
           <TextField
             sx={{ mt: 1 }}
             data-testid="freesearch"
@@ -53,16 +58,16 @@ export function TableSearch({ trackApplication }) {
               endAdornment: (
                 <InputAdornment
                   position="end"
-                  sx={{ p: 4, backgroundColor: theme.palette.grey.main }}
+                  sx={{ p: '27px', backgroundColor: theme.palette.grey.main }}
                 >
-                  <SearchIcon />{' '}
+                  <SearchIcon />
                 </InputAdornment>
               ),
             }}
           />
         </Grid>
 
-        <Grid item md={trackApplication ? 7 : 10} xs={12}>
+        <Grid item md={trackApplication ? 7 : activateLicence ? 8 : 10} xs={12}>
           <Grid container item xs={12} sx={{ alignItems: 'flex-end', display: 'flex', gap: 1 }}>
             {trackApplication === true && (
               <>
@@ -146,7 +151,7 @@ export function TableSearch({ trackApplication }) {
               </Grid>
             )}
             {trackApplication !== true && (
-              <Grid item md={1} xs={12}>
+              <Grid item md="auto" xs={12}>
                 <Button
                   data-testid="filterButton"
                   sx={{
@@ -166,14 +171,7 @@ export function TableSearch({ trackApplication }) {
                 </Button>
               </Grid>
             )}
-            <Grid
-              item
-              md="auto"
-              xs={12}
-              sx={{
-                padding: '2px ',
-              }}
-            >
+            <Grid item md="auto" xs={12}>
               <ExportFiles />
             </Grid>
           </Grid>
