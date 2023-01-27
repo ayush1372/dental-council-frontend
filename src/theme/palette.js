@@ -59,6 +59,7 @@ export const palette = (mode) => {
     black: {
       main: '#000',
       textBlack: mode === 'dark' ? '#fff' : '#262626',
+      secondary: '#000000',
     },
     transparent: {
       main: 'transparent',

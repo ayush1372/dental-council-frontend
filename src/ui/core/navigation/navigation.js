@@ -5,15 +5,15 @@ import CN from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
-import ProfileImage from '../../../pages/profile/components/profile-image/profile-image';
-// import ProfileTabContainer from '../../../pages/profile/components/profile-sidebar/profile-tab-container';
-import SideDrawerList from '../../../shared/sidebar-drawer/sidebar-drawer-list';
 import {
   colgTabs,
   doctorTabs,
   nmcTabs,
   smcTabs,
-} from '../../../shared/sidebar-drawer/sidebar-drawer-list-item';
+} from '../../../helpers/components/sidebar-drawer-list-item.js';
+import ProfileImage from '../../../pages/profile/components/profile-image/profile-image';
+// import ProfileTabContainer from '../../../pages/profile/components/profile-sidebar/profile-tab-container';
+import SideDrawerList from '../../../shared/sidebar-drawer/sidebar-drawer-list';
 import { changeUserActiveTab } from '../../../store/reducers/common-reducers';
 import { Menu } from '../menu/menu';
 

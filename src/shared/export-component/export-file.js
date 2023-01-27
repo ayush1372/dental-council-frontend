@@ -25,10 +25,6 @@ const ExportFiles = () => {
         data-testid="exportButton"
         sx={{
           padding: '17px 10px',
-          m: {
-            xs: '35px 0px',
-            md: '0px',
-          },
           width: {
             xs: '100%',
             md: 'fit-content',

@@ -8,7 +8,7 @@ import {
   doctorTabs,
   nmcTabs,
   smcTabs,
-} from '../../shared/sidebar-drawer/sidebar-drawer-list-item';
+} from '../../helpers/components/sidebar-drawer-list-item';
 import { changeUserActiveTab } from '../../store/reducers/common-reducers';
 import MiniDrawer from './components/profile-sidebar/profile-sidebar';
 import ProfileTabContainer from './components/profile-sidebar/profile-tab-container';
