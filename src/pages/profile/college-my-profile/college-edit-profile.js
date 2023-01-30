@@ -52,7 +52,7 @@ const CollegeEditProfile = () => {
 
       <Grid container item spacing={2} mt={3}>
         <Grid item xs={12} md={4}>
-          <Typography variant="body3" color="grey.label">
+          <Typography variant="body1" color="inputTextColor.main">
             College Name
           </Typography>
           <Typography component="span" color="error.main">
@@ -72,7 +72,7 @@ const CollegeEditProfile = () => {
         </Grid>
 
         <Grid item xs={12} md={4}>
-          <Typography variant="body3" color="grey.label">
+          <Typography variant="body1" color="inputTextColor.main">
             College ID
           </Typography>
           <Typography component="span" color="error.main">
@@ -92,7 +92,7 @@ const CollegeEditProfile = () => {
         </Grid>
 
         <Grid item xs={12} md={4}>
-          <Typography variant="body3" color="inputTextColor.main">
+          <Typography variant="body1" color="inputTextColor.main">
             College Phone Number
             <Typography component="span" color="error.main">
               *
@@ -143,7 +143,7 @@ const CollegeEditProfile = () => {
 
       <Grid container item spacing={2} mt={3}>
         <Grid item xs={12} md={4}>
-          <Typography variant="body3" color="inputTextColor.main">
+          <Typography variant="body1" color="inputTextColor.main">
             College Email ID
             <Typography component="span" color="error.main">
               *
@@ -190,7 +190,7 @@ const CollegeEditProfile = () => {
         </Grid>
 
         <Grid item xs={12} md={4}>
-          <Typography variant="body3" color="grey.label">
+          <Typography variant="body1" color="inputTextColor.main">
             Select University Name
           </Typography>
           <Typography component="span" color="error.main">
@@ -212,7 +212,7 @@ const CollegeEditProfile = () => {
         </Grid>
 
         <Grid item xs={12} md={4}>
-          <Typography variant="body3" color="grey.label">
+          <Typography variant="body1" color="inputTextColor.main">
             College Website
           </Typography>
 
@@ -227,7 +227,7 @@ const CollegeEditProfile = () => {
 
       <Grid container item spacing={2} mt={3}>
         <Grid item xs={12} md={4}>
-          <Typography variant="body3" color="grey.label">
+          <Typography variant="body1" color="inputTextColor.main">
             College Address
           </Typography>
 
@@ -242,7 +242,7 @@ const CollegeEditProfile = () => {
         </Grid>
 
         <Grid item xs={12} md={4}>
-          <Typography variant="body3" color="grey.label">
+          <Typography variant="body1" color="inputTextColor.main">
             College Pin Code
           </Typography>
           <Typography component="span" color="error.main">
@@ -261,7 +261,7 @@ const CollegeEditProfile = () => {
         </Grid>
 
         <Grid item xs={12} md={4}>
-          <Typography variant="body3" color="grey.label">
+          <Typography variant="body1" color="inputTextColor.main">
             State Name
           </Typography>
           <Typography component="span" color="error.main">
@@ -283,7 +283,7 @@ const CollegeEditProfile = () => {
 
       <Grid container item spacing={2} mt={3}>
         <Grid item xs={12} md={4}>
-          <Typography variant="body3" color="textSecondary.main">
+          <Typography variant="body1" color="inputTextColor.main">
             Select your Registration Council
             <Typography component="span" color="error.main">
               *
@@ -293,7 +293,7 @@ const CollegeEditProfile = () => {
             <SearchableDropdown
               name="RegistrationCouncil"
               items={RegistrationCouncilNames}
-              placeholder="Select your Registration Council"
+              placeholder="Select Your Registration Council"
               clearErrors={clearErrors}
               error={errors.RegistrationCouncil?.message}
               {...register('RegistrationCouncil', {
