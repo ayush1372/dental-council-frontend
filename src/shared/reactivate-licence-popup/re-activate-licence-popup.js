@@ -96,11 +96,11 @@ export default function ReactivateLicencePopup(props) {
               multiline
               rows={4}
               fullWidth
-              placeholder="Write a reason here . . ."
+              placeholder="Add a reason..."
             />
           </Box>
           <Box display="flex" textAlign="right">
-            <Typography color="inputFocusColor.main">150 words only</Typography>
+            <Typography color="grey1.main">150 words only</Typography>
           </Box>
 
           <Box display="flex" justifyContent="flex-end" mt={5}>

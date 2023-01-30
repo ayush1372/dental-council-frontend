@@ -34,13 +34,15 @@ export const UniqueUserNameForDoctor = [
   { id: '1', name: 'aarushi.sharma309' },
 ];
 
-export const smcProfileDetails = [
-  { label: 'Name', value: 'Aarnav Sharma', id: '1' },
-  { label: 'Enrollment Number NDHM', value: 'No', id: '2' },
-  { label: 'Enrollment Number', value: '12345', id: '3' },
-  { label: 'User Id', value: 'aarnav.sharma', id: '4' },
-  { label: 'Council', value: 'West Bengal', id: '5' },
+export const getSMCProfileDetails = (details) => [
+  { label: 'Name', value: details.display_name, id: '1' },
+  { label: 'Enrolment Number NDHM', value: details.ndhm_enrollment, id: '2' },
+  { label: 'Enrolment Number', value: details.enrolled_number, id: '3' },
+  { label: 'Council', value: details.state_medical_council.name, id: '4' },
+  { label: 'Phone Number', value: details.mobile_no, id: '5' },
+  { label: 'Email Address', value: details.email_id, id: '6' },
 ];
+
 export const getNMCProfileDetails = (details) => [
   { label: 'Name', value: details.display_name, id: '1' },
   { label: 'Enrolment Number NDHM', value: details.ndhm_enrollment, id: '2' },
