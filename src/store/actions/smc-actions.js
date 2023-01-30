@@ -7,7 +7,7 @@ export const getSMCProfileData = (id) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,
-      url: API.nmc.getNMCProfileData.replace('{id}', id),
+      url: API.smc.getSMCProfileData.replace('{id}', id),
       headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
       .then((response) => {

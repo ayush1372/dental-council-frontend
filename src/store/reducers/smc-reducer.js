@@ -18,6 +18,6 @@ const smcReducer = createSlice({
   },
 });
 
-export const { getNMCProfile } = smcReducer.actions;
+export const { getSMCProfile } = smcReducer.actions;
 
 export default smcReducer.reducer;

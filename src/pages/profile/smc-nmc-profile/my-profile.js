@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, Grid, Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 import { verboseLog } from '../../../config/debug';
 import { getSMCProfileDetails, nmcProfileDetails } from '../../../constants/common-data';
@@ -12,9 +13,10 @@ import SmcEditProfile from '../smc-nmc-editprofiles/smc-editprofile';
 
 const MyProfile = (props) => {
   const [showPage, setShowpage] = useState('Profile');
+  const { smcProfileData } = useSelector((state) => state.nmc);
 
   const [data, setData] = useState(
-    props.userType === 'SMC' ? getSMCProfileDetails : nmcProfileDetails
+    props.userType === 'SMC' ? getSMCProfileDetails(smcProfileData.data) : nmcProfileDetails
   );
   const [showSmcEditProfile, setShowSmcEditProfile] = useState(false);
 
