@@ -37,4 +37,7 @@ export const API = {
   dashboard: {
     cardCount: '/api/v1/dashboard/cardCount',
   },
+  smc: {
+    getSMCProfileData: '/api/v1/user/smc/{id}',
+  },
 };

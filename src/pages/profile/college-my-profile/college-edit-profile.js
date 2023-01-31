@@ -293,7 +293,7 @@ const CollegeEditProfile = () => {
             <SearchableDropdown
               name="RegistrationCouncil"
               items={RegistrationCouncilNames}
-              placeholder="Select your Registration Council"
+              placeholder="Select Your Registration Council"
               clearErrors={clearErrors}
               error={errors.RegistrationCouncil?.message}
               {...register('RegistrationCouncil', {
