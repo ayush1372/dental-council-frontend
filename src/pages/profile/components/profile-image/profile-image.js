@@ -1,74 +1,76 @@
-/* eslint-disable no-console */
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import EditIcon from '@mui/icons-material/Edit';
-// import { PhotoCamera } from '@material-ui/icons';
-// import EditIcon from '@mui/icons-material/Edit';
 import { Grid, IconButton, Typography } from '@mui/material';
+import { FormGroup } from '@mui/material';
+import { Box } from '@mui/system';
 import { useDispatch, useSelector } from 'react-redux';
 
 import avtarImg from '../../../../assets/images/user.png';
 import { getUserProfileImage } from '../../../../store/actions/common-actions';
 
-// import { Button } from '../../../../ui/core';
 import styles from './profile-image.module.scss';
 
 export default function ProfileImage(props) {
   const profileId = useSelector((state) => state.loginReducer.loginData.data.profile_id);
+  const profileImage = useSelector((state) => state.common.profileImage.data.profile_picture);
   const dispatch = useDispatch();
-  // console.log('profile id==>', stateData);
-  const [file, setFile] = useState(null);
-  const [image, setImage] = useState('');
+  const [imageChanged, setImageChanged] = useState(false);
+  const [imageTypeError, setImageTypeError] = useState(false);
+  const [imageErrorMessage, setImageErrorMessage] = useState('');
 
-  const handleChange = (e) => {
-    // console.log(e.target.files[0]);
-    setFile(URL.createObjectURL(e.target.files[0]));
-    // console.log('clicked');
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setImage(reader.result.toString());
-    };
-    reader.readAsDataURL(e.target.files[0]);
-    console.log(image.length, 'length');
-    if (image.length > 0) {
-      console.log(image, '<===image');
+  const changeImage = (e) => {
+    const requestObjNew = new FormData();
+    if (
+      e.target.files[0].type === 'image/jpeg' ||
+      e.target.files[0].type === 'image/jpg' ||
+      e.target.files[0].type === 'image/png'
+    ) {
+      if (e.target.files[0].size > 5000000) {
+        setImageChanged(!imageChanged);
+        setImageErrorMessage('Maximum allowed file size is 5MB');
+        setImageTypeError(true);
+      } else {
+        setImageTypeError(false);
+        requestObjNew.append('file', e.target.files[0]);
+        dispatch(getUserProfileImage(profileId, requestObjNew));
+        setImageChanged(!imageChanged);
+      }
+    } else {
+      setImageChanged(!imageChanged);
+      setImageErrorMessage('Allowed file types are JPEG/PNG');
+      setImageTypeError(true);
     }
   };
-  let formData = new FormData();
-  let imageId = formData.append('profile_ID', profileId);
-  let imageValue = formData.append('image', image);
-  console.log(image, 'test1');
-  useEffect(() => {
-    console.log(image, 'test2');
-
-    dispatch(getUserProfileImage(imageId, imageValue));
-  }, [image]);
-
-  console.log('image ==>', image); //image url
-  console.log('file==>', file); // file converted to base64
 
   return (
     <Grid container className={styles.profileImageDetailsContainer}>
-      <Grid item xs={12} display="flex" justifyContent="center" mt={2}>
-        <img
-          alt="avtarImg"
-          className={styles.profileImage}
-          src={file === null ? avtarImg : file}
-          data-testid="profileImg"
-        />
+      <Grid item xs={12} mt={2}>
+        <FormGroup className="update-image">
+          <Box>
+            <img
+              src={profileImage ? 'data:image/*;base64,' + profileImage : avtarImg}
+              className={styles.profileImage}
+              alt=""
+            />
+          </Box>
+        </FormGroup>
+        {imageTypeError && imageErrorMessage}
+
         <input
-          onChange={handleChange}
-          accept="image/*"
-          id="icon-button-file"
           type="file"
+          id="icon-button-file"
+          accept=" image/jpeg, image/jpg, image/png"
+          onChange={(event) => changeImage(event)}
           style={{ display: 'none' }}
         />
-
-        <label htmlFor="icon-button-file">
-          <IconButton color="primary" aria-label="upload picture" component="span">
-            <EditIcon sx={{ mt: 7 }} />
-          </IconButton>
-        </label>
+        <span>
+          <label htmlFor="icon-button-file">
+            <IconButton color="primary" aria-label="upload picture" component="span">
+              <EditIcon sx={{ ml: 15 }} />
+            </IconButton>
+          </label>
+        </span>
       </Grid>
       <Grid textAlign="center" item xs={12}>
         <Typography variant="subtitle2">{props.name}</Typography>
