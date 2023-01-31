@@ -8,7 +8,6 @@ import { useTranslation } from 'react-i18next';
 
 import { Button, RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
-import ButtonGroupWizard from '../../../../ui/core/wizard/button-group-wizard';
 
 const createQualificationObject = (index) => {
   return [
@@ -68,7 +67,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
     setQualificationFilesData({ ...qualificationFilesData });
   };
 
-  const onHandleOptionBack = () => {
+  const handleBackButton = () => {
     handleBack();
   };
   const handleRegistration = (event) => {
@@ -339,7 +338,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                     defaultValue={getValues()[qualification[0]]}
                     required={true}
                     {...register(qualification[0], {
-                      required: 'Degree or Diploma is required',
+                      required: 'Missing field',
                     })}
                     options={[
                       {
@@ -366,7 +365,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                     error={errors[qualification[1]]?.message}
                     defaultValue={getValues()[qualification[1]]}
                     {...register(qualification[1], {
-                      required: 'Country is required',
+                      required: 'Missing field',
                     })}
                   />
                 </Grid>
@@ -387,7 +386,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                     required={true}
                     defaultValue={getValues()[qualification[2]]}
                     {...register(qualification[2], {
-                      required: 'State is required',
+                      required: 'Missing field',
                     })}
                     error={errors[qualification[2]]?.message}
                   />
@@ -409,7 +408,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                     defaultValue={getValues()[qualification[3]]}
                     required={true}
                     {...register(qualification[3], {
-                      required: 'College is required',
+                      required: 'Missing field',
                     })}
                     options={[
                       {
@@ -452,7 +451,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                     label="Month of awarding Degree/Diploma"
                     defaultValue={getValues()[qualification[5]]}
                     {...register(qualification[5], {
-                      required: 'Awarding is required',
+                      required: 'Missing field',
                     })}
                     options={[
                       {
@@ -481,7 +480,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                     error={errors[qualification[6]]?.message}
                     defaultValue={getValues()[qualification[6]]}
                     {...register(qualification[6], {
-                      required: 'Awarding is required',
+                      required: 'Missing field',
                     })}
                   />
                 </Grid>
@@ -555,15 +554,69 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
           </Typography>
         </Box>
       )}
-      <Box width="100%">
-        <ButtonGroupWizard
-          handleNext={handleSubmit(onHandleOptionNext)}
-          handlePrevious={onHandleOptionBack}
-          labelNext={t('Save & Next')}
-          labelPrevious={t('Back')}
-          // hidePrevious={false}
-        />
-      </Box>
+
+      <Grid container display="flex" justifyContent="space-between" alignItems="center" mt={5}>
+        <Grid item xs={12} md={8} lg={6}>
+          <Button
+            onClick={handleBackButton}
+            color="grey"
+            variant="contained"
+            sx={{
+              margin: {
+                xs: '5px 0',
+                md: '0',
+              },
+              width: {
+                xs: '100%',
+                md: 'fit-content',
+              },
+            }}
+          >
+            {t('Back')}
+          </Button>
+        </Grid>
+        <Grid item xs={12} md="auto" display="flex" justifyContent="end" lg={4}>
+          <Button
+            onClick={handleSubmit}
+            size="medium"
+            variant="outlined"
+            color="secondary"
+            sx={{
+              margin: {
+                xs: '5px 0',
+                md: '0',
+              },
+              width: {
+                xs: '100%',
+                md: 'fit-content',
+                height: '52px',
+              },
+            }}
+          >
+            {t('Save')}
+          </Button>
+        </Grid>
+        <Grid item xs={12} md="auto" display="flex" justifyContent="end" lg={2}>
+          <Button
+            size="medium"
+            onClick={handleSubmit(onHandleOptionNext)}
+            variant="contained"
+            color="secondary"
+            sx={{
+              margin: {
+                xs: '5px 0',
+                md: '0',
+              },
+              width: {
+                xs: '100%',
+                md: 'fit-content',
+              },
+            }}
+          >
+            {t('Save & Next')}
+          </Button>
+        </Grid>
+      </Grid>
     </Box>
   );
 };

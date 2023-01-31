@@ -49,7 +49,19 @@ export default function RejectLicenseModal(props) {
                   *
                 </Typography>
               </Box>
-              <TextField multiline rows={4} fullWidth placeholder="Add your reason here . . ." />
+              <TextField
+                multiline
+                rows={4}
+                fullWidth
+                placeholder="Add your reason here . . ."
+                sx={{
+                  textarea: {
+                    '::placeholder': {
+                      color: '#BFBFBF',
+                    },
+                  },
+                }}
+              />
             </Box>
             <Box display="flex" textAlign="right">
               <Typography color="inputFocusColor.main">150 words only</Typography>

@@ -34,7 +34,7 @@ export function CollegeDean() {
   };
   return (
     <Grid container item spacing={2} p={2}>
-      <Grid item xs={12}>
+      <Grid item xs={12} mt={3}>
         <Typography color="textPrimary.main" variant="h2" mt={2}>
           College Dean
         </Typography>
