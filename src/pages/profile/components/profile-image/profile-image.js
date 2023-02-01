@@ -51,7 +51,7 @@ export default function ProfileImage(props) {
             <img
               src={profileImage ? 'data:image/*;base64,' + profileImage : avtarImg}
               className={styles.profileImage}
-              alt="image"
+              alt=""
             />
           </Box>
         </FormGroup>
