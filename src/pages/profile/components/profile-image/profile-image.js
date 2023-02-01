@@ -1,9 +1,7 @@
 import { useState } from 'react';
 
 import EditIcon from '@mui/icons-material/Edit';
-import { Grid, IconButton, Typography } from '@mui/material';
-import { FormGroup } from '@mui/material';
-import { Box } from '@mui/system';
+import { Box, FormGroup, Grid, IconButton, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import avtarImg from '../../../../assets/images/user.png';

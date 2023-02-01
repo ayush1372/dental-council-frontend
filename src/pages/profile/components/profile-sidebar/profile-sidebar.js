@@ -111,7 +111,7 @@ export default function MiniDrawer({ DrawerOptions = [], handleSwitch }) {
               <ProfileImage
                 name={
                   loggedInUserType === 'Doctor'
-                    ? 'Dr. ABXXXXXC'
+                    ? 'Dr. ABC'
                     : loggedInUserType === 'College'
                     ? 'IP University'
                     : loggedInUserType === 'NMC'
