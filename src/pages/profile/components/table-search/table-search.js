@@ -56,7 +56,10 @@ export function TableSearch({ trackApplication, activateLicence }) {
             {...register('search')}
             InputProps={{
               endAdornment: (
-                <InputAdornment position="end" sx={{ backgroundColor: theme.palette.grey.main }}>
+                <InputAdornment
+                  position="end"
+                  sx={{ p: 3.5, backgroundColor: theme.palette.grey.main }}
+                >
                   <IconButton
                     sx={{
                       p: '16px 10px 13px 10px',
