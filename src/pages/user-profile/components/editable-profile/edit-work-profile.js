@@ -8,9 +8,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { verboseLog } from '../../../../config/debug';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
 import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
-import { getDistrictList, getSpecialitiesList } from '../../../../store/actions/menu-list-actions';
-import { getDoctorUserProfile } from '../../../../store/reducers/doctor-user-profile-reducer';
-import { getDistricts } from '../../../../store/reducers/menu-lists-reducer';
+import { getDistrictList, getSpecialitiesList } from '../../../../store/actions/common-actions';
+import { getDistricts } from '../../../../store/reducers/common-reducers';
+import { updateWorkProfileDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
 import { Button, RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
 
@@ -19,9 +19,9 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
   const dispatch = useDispatch();
   const [workProof, setWorkProof] = useState([]);
   const [subSpecialities, setSubSpecialities] = useState([]);
-  const { statesList, specialitiesList, districtsList } = useSelector((state) => state?.menuLists);
-  const { doctorUserProfile } = useSelector((state) => state?.doctorUserProfileReducer);
-  const { work_details, speciality_details, current_work_details } = doctorUserProfile || {};
+  const { statesList, specialitiesList, districtsList } = useSelector((state) => state?.common);
+  const { workProfileDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const { work_details, speciality_details, current_work_details } = workProfileDetails || {};
   const { is_user_currently_working, work_nature, work_status } = work_details || {};
   const { broad_speciality, super_speciality: subSpecialityOptions } = speciality_details || {};
   const { address, url, work_organization } = current_work_details || {};
@@ -61,7 +61,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
 
   const fetchDisricts = (stateId) => {
     try {
-      dispatch(getDistrictList(stateId));
+      if (stateId) dispatch(getDistrictList(stateId));
     } catch {
       verboseLog('Error occured while fetching districts');
     }
@@ -174,9 +174,9 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
       current_work_details: { ...currentWorkDetails },
     };
 
-    const updatedDoctorProfile = { ...doctorUserProfile, ...stateObj };
+    const updatedDoctorProfile = { ...workProfileDetails, ...stateObj };
 
-    dispatch(getDoctorUserProfile(JSON.parse(JSON.stringify(updatedDoctorProfile))));
+    dispatch(updateWorkProfileDetails(JSON.parse(JSON.stringify(updatedDoctorProfile))));
   };
 
   return (
@@ -200,19 +200,19 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               color="tabHighlightedBackgroundColor.main"
               variant="h3"
             >
-              Specialty Details*
+              Speciality Details*
             </Typography>
           </Grid>
           <Grid item xs={12} md={4}>
             <Select
               fullWidth
-              error={errors.Specialty?.message}
-              name="Specialty"
-              label="Broad Specialty"
-              defaultValue={getValues().Specialty}
+              error={errors.Speciality?.message}
+              name="Speciality"
+              label="Broad Speciality"
+              defaultValue={getValues().Speciality}
               required={true}
-              {...register('Specialty', {
-                required: 'Specialty is required',
+              {...register('Speciality', {
+                required: 'Speciality is required',
               })}
               options={createSelectFieldData(specialitiesList.data)}
             />

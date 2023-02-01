@@ -10,7 +10,11 @@ import useWizard from '../../hooks/use-wizard';
 import ReactivateLicencePopup from '../../shared/reactivate-licence-popup/re-activate-licence-popup';
 import SuccessPopup from '../../shared/reactivate-licence-popup/success-popup';
 import { getCountriesList, getStatesList } from '../../store/actions/common-actions';
-import { getDoctorUserProfileData } from '../../store/actions/doctor-user-profile-actions';
+import {
+  getDoctorUserProfileData,
+  getRegistrationAndAcademicDetailsData,
+  getWorkProfileData,
+} from '../../store/actions/doctor-user-profile-actions';
 import { Button } from '../../ui/core/button/button';
 import Wizard from '../../ui/core/wizard';
 // import ChangePassword from '../profile/change-password/change-password';
@@ -99,8 +103,30 @@ export const UserProfile = ({
         verboseLog('error occured1', error);
       });
   };
+
+  const fetchQualificationDetails = () => {
+    dispatch(getRegistrationAndAcademicDetailsData())
+      .then((dataResponse) => {
+        verboseLog('dataResponse1', dataResponse);
+      })
+      .catch((error) => {
+        verboseLog('error occured1', error);
+      });
+  };
+
+  const fetchWorkProfileDetails = () => {
+    dispatch(getWorkProfileData())
+      .then((dataResponse) => {
+        verboseLog('dataResponse1', dataResponse);
+      })
+      .catch((error) => {
+        verboseLog('error occured1', error);
+      });
+  };
   useEffect(() => {
     fetchDoctorUserProfileData();
+    fetchQualificationDetails();
+    fetchWorkProfileDetails();
   }, []);
   return (
     <>

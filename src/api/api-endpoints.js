@@ -11,6 +11,8 @@ export const API = {
   editProfile: {},
   DoctorUserProfileData: {
     DoctorUserProfile: 'api/v1/hp/hpProfileDetail/23',
+    QualificationDetails: 'api/v1/hp/health-professional/registration/176',
+    WorkProfileDetails: 'api/v1/hp/health-professional/work-profile/165',
   },
   common: {
     states: 'api/v1/md/country/356/states',
@@ -22,6 +24,7 @@ export const API = {
     colleges: 'api/v1/md/university/{university_id}/colleges',
     courses: 'api/v1/md/courses',
     specialities: 'api/v1/md/specialities',
+    councilNames: 'api/v1/md/smcs',
   },
   Aadhaar: {
     sendAadhaarOtp: 'api/v1/sendAadhaarOtp',
