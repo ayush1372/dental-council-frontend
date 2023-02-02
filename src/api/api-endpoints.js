@@ -37,4 +37,9 @@ export const API = {
   smc: {
     getSMCProfileData: '/api/v1/user/smc/{id}',
   },
+  forgotPassword: {
+    doctor: '/api/v1/reset-password',
+    smc: '/api/v1/reset-password',
+    nmc: '/api/v1/reset-password',
+  },
 };

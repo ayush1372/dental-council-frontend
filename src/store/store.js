@@ -7,6 +7,7 @@ import captchaReducer from './reducers/captcha-reducers';
 import collegeReducer from './reducers/college-reducer';
 import commonActivity from './reducers/common-reducers';
 import doctorUserProfileReducer from './reducers/doctor-user-profile-reducer';
+import forgotPasswordReducer from './reducers/forgot-password-reducer';
 import loginReducer from './reducers/login-reducer';
 import navMenu from './reducers/nav-menu-reducer';
 import nmcReducer from './reducers/nmc-reducer';
@@ -25,6 +26,7 @@ const store = configureStore({
     college: collegeReducer,
     smc: smcReducer,
     nmc: nmcReducer,
+    forgotpassword: forgotPasswordReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(thunk).concat(logger),
   devTools: true,

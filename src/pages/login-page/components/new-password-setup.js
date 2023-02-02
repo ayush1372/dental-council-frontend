@@ -1,7 +1,9 @@
 import { Box, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 
+import { forgotPassword } from '../../../store/actions/forgot-password-actions';
 import { Button, TextField } from '../../../ui/core';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
@@ -24,7 +26,12 @@ const NewPasswordSetup = ({ handlePasswordSetup }) => {
 
   const onSubmit = () => {
     handlePasswordSetup();
+    const data = { username: getValues().password, password: getValues().confirmPassword };
+    dispatch(forgotPassword(data));
   };
+
+  const dispatch = useDispatch();
+
   return (
     <Box data-testid="new-password-setup" p={4} bgcolor="white.main" boxShadow="4">
       <Typography mt={2} variant="h2" component="div" textAlign="center" data-testid="Password">
