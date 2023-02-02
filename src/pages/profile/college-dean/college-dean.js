@@ -1,18 +1,22 @@
 import { Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
+import { sendDeanDetails } from '../../../store/actions/college-actions';
 import { Button, TextField } from '../../../ui/core';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 export function CollegeDean() {
+  const dispatch = useDispatch();
+
   const { t } = useTranslation();
-  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     getValues,
+    reset,
+
     formState: { errors },
   } = useForm({
     mode: 'onChange',
@@ -24,12 +28,13 @@ export function CollegeDean() {
       deanPassword: '',
     },
   });
-  const onSubmit = () => {
-    navigate(`/NMR/NMR-generate`);
+  const onSubmit = (fieldValues) => {
+    dispatch(sendDeanDetails(fieldValues));
+    reset();
   };
   return (
     <Grid container item spacing={2} p={2}>
-      <Grid item xs={12}>
+      <Grid item xs={12} mt={3}>
         <Typography color="textPrimary.main" variant="h2" mt={2}>
           College Dean
         </Typography>
@@ -80,7 +85,7 @@ export function CollegeDean() {
           {...register('deanPhoneNumber', {
             required: 'Enter valid phone number',
             pattern: {
-              value: /^(\d{13})$/i,
+              value: /^(\d{10})$/i,
               message: 'Enter valid phone number',
             },
           })}
@@ -150,7 +155,7 @@ export function CollegeDean() {
           fullWidth
           inputProps={{ maxLength: 100 }}
           variant="outlined"
-          type="password"
+          type="Password"
           name="deanPassword"
           required="true"
           placeholder={t('College Dean Password')}
