@@ -7,12 +7,13 @@ export const API = {
     generateCaptcha: 'api/v1/generateCaptcha',
     validateCaptcha: 'api/v1/validateCaptcha',
     loginUser: 'api/v1/login',
+    refreshToken: 'api/v1/refreshToken',
   },
   editProfile: {
     editAdminCollegeProfile: 'api/v1/college',
   },
   DoctorUserProfileData: {
-    DoctorUserProfile: 'api/v1/hp/hpProfileDetail/23',
+    DoctorUserProfile: 'api/v1/hp/hpProfileDetail/',
   },
   common: {
     states: 'api/v1/md/country/356/states',
@@ -33,8 +34,14 @@ export const API = {
     getCollegeDeanProfile: '/api/v1/college/dean/{id}',
     register: 'api/v1/college',
   },
+  nmc: {
+    getNMCProfileData: '/api/v1/user/nmc/{id}',
+  },
   Aadhaar: {
     sendAadhaarOtp: 'api/v1/sendAadhaarOtp',
     verifyAadhaarOtp: 'api/v1/verifyAadhaarOtp',
+  },
+  smc: {
+    getSMCProfileData: '/api/v1/user/smc/{id}',
   },
 };

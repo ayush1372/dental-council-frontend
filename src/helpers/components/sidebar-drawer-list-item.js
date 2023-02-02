@@ -18,7 +18,7 @@ import MyProfile from '../../pages/profile/smc-nmc-profile/my-profile';
 import VoluntarySuspendLicense from '../../pages/profile/sub-pages/voluntary-suspend-license/voluntary-suspend-license';
 import TrackApplication from '../../pages/profile/track-application/track-application';
 import UserProfile from '../../pages/user-profile';
-import TrackStatus from '../track-status';
+import TrackStatus from '../../shared/track-status';
 
 function SideDrawerListItem() {
   const { userActiveTab } = useSelector((state) => state.common);

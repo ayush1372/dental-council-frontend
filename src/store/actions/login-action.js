@@ -5,6 +5,7 @@ import {
   generateCaptcha,
   getCaptchaEnabledFlag,
   loginUser,
+  refreshTokenApi,
   validateCaptcha,
 } from '../reducers/login-reducer';
 
@@ -67,6 +68,23 @@ export const loginAction = (body) => async (dispatch) => {
     })
       .then((response) => {
         dispatch(loginUser(response));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const refreshTokenAction = () => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.login.refreshToken,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('refreshtoken') },
+    })
+      .then((response) => {
+        dispatch(refreshTokenApi(response));
         return resolve(response);
       })
       .catch((error) => {

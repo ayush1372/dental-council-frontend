@@ -71,7 +71,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               defaultValue={getValues().Specialty}
               required={true}
               {...register('Specialty', {
-                required: 'Specialty is required',
+                required: 'Missing field',
               })}
               options={[
                 {
@@ -149,7 +149,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               required={true}
               placeholder={'Nature Of Work'}
               {...register('NatureOfWork', {
-                required: 'Select nature of work',
+                required: 'Missing field',
               })}
               options={[
                 {
@@ -273,7 +273,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               defaultValue={getValues().state}
               required={true}
               {...register('state', {
-                required: 'State is required',
+                required: 'Missing field',
               })}
               options={[
                 {
@@ -292,7 +292,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               defaultValue={getValues().District}
               required={true}
               {...register('District', {
-                required: 'District is required',
+                required: 'Missing field',
               })}
               options={[
                 {
@@ -334,6 +334,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
             <TextField
               variant="outlined"
               name={'organizationType'}
+              placeholder="Organization Type"
               fullWidth
               defaultValue={getValues().organizationType}
               {...register('organizationType', {
@@ -379,7 +380,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               placeholder="Address"
               defaultValue={getValues().Address}
               {...register('Address', {
-                required: 'Address is Required',
+                required: 'Missing field',
                 maxLength: {
                   value: 300,
                   message: 'Should be less than 300 characters',
@@ -405,7 +406,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               error={errors.Pincode?.message}
               defaultValue={getValues().Pincode}
               {...register('Pincode', {
-                required: 'Pin code is required',
+                required: 'Missing field',
                 pattern: {
                   value: /^[0-9]{6}$/,
                   message: 'Should only contains 6 digits',
@@ -432,7 +433,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               error={errors.telecommunicationURL?.message}
               defaultValue={getValues().telecommunicationURL}
               {...register('telecommunicationURL', {
-                required: 'Telecommunication url is required',
+                required: 'Missing field',
               })}
             />
           </Grid>
@@ -471,6 +472,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               width: {
                 xs: '100%',
                 md: 'fit-content',
+                height: '52px',
               },
             }}
           >
