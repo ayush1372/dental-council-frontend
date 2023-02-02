@@ -3,12 +3,20 @@ import { useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import WarningIcon from '@mui/icons-material/Warning';
 import { Box, Dialog, Grid, Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
+import { userActionType } from '../../../../helpers/functions/common-functions';
+import { initiateCollegeWorkFlow } from '../../../../store/actions/college-actions';
 import { Button } from '../../../../ui/core';
 
 const CollegeDetails = ({ collegeDetails, setShowTable }) => {
   const [confirmationModal, setConfirmationModal] = useState(false);
+  const { collegeData } = useSelector((state) => state.college);
+  const { loginData } = useSelector((state) => state.loginReducer);
+  const userData = collegeData?.data;
   const [type, setType] = useState('');
+  const dispatch = useDispatch();
   const handleClose = () => {
     setConfirmationModal(false);
   };
@@ -16,6 +24,18 @@ const CollegeDetails = ({ collegeDetails, setShowTable }) => {
     setType(type);
     setConfirmationModal(true);
   };
+
+  const initiateCollegeFlow = () => {
+    const actionID = userActionType(type);
+    const requestObj = {
+      request_id: userData?.request_id,
+      application_type_id: 6, //application_type_id will be always 6
+      actor_id: loginData?.data?.user_group_id,
+      action_id: actionID,
+    };
+    dispatch(initiateCollegeWorkFlow(requestObj));
+  };
+
   return (
     <Box boxShadow={2} p={5} data-testid="College Details">
       <Grid container>
@@ -32,7 +52,7 @@ const CollegeDetails = ({ collegeDetails, setShowTable }) => {
             </Typography>
 
             <Typography variant="body1" color="primary.main">
-              {collegeDetails?.collegeName}
+              {userData?.name ? userData?.name : ''}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -41,7 +61,7 @@ const CollegeDetails = ({ collegeDetails, setShowTable }) => {
             </Typography>
 
             <Typography variant="body1" color="primary.main">
-              {collegeDetails?.collegeId}
+              {userData?.college_code}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -50,7 +70,7 @@ const CollegeDetails = ({ collegeDetails, setShowTable }) => {
             </Typography>
 
             <Typography variant="body1" color="primary.main">
-              {collegeDetails?.collegePhnNumber}
+              {userData?.phone_number ? userData?.phone_number : ''}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -58,7 +78,7 @@ const CollegeDetails = ({ collegeDetails, setShowTable }) => {
               College Email ID
             </Typography>
             <Typography variant="body1" color="primary.main">
-              {collegeDetails?.collegeEmailId}
+              {userData?.email_id ? userData?.email_id : ''}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -82,7 +102,7 @@ const CollegeDetails = ({ collegeDetails, setShowTable }) => {
               College Website
             </Typography>
             <Typography variant="body1" color="primary.main">
-              {collegeDetails?.collegeWebsite}
+              {userData?.website}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -90,7 +110,7 @@ const CollegeDetails = ({ collegeDetails, setShowTable }) => {
               State Name
             </Typography>
             <Typography variant="body1" color="primary.main">
-              {collegeDetails?.state}
+              {userData?.state_name}
             </Typography>
           </Grid>
 
@@ -99,7 +119,7 @@ const CollegeDetails = ({ collegeDetails, setShowTable }) => {
               College Address
             </Typography>
             <Typography variant="body1" color="primary.main">
-              {collegeDetails?.collegeAddress}
+              {userData?.address}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -107,7 +127,7 @@ const CollegeDetails = ({ collegeDetails, setShowTable }) => {
               College Pin Code
             </Typography>
             <Typography variant="body1" color="primary.main">
-              {collegeDetails?.collegePinCode}
+              {userData?.pin_code}
             </Typography>
           </Grid>
         </Grid>
@@ -137,7 +157,7 @@ const CollegeDetails = ({ collegeDetails, setShowTable }) => {
         </Grid>
         <Grid item xs={12} md="auto" display="flex" justifyContent="end">
           <Button
-            onClick={() => handleSubmitDetails('reject')}
+            onClick={() => handleSubmitDetails('Rejected')}
             variant="outlined"
             color="secondary"
             sx={{
@@ -156,7 +176,7 @@ const CollegeDetails = ({ collegeDetails, setShowTable }) => {
         </Grid>
         <Grid item xs={12} md="auto" display="flex" justifyContent="end">
           <Button
-            onClick={() => handleSubmitDetails('approve')}
+            onClick={() => handleSubmitDetails('Approved')}
             variant="contained"
             color="secondary"
             sx={{
@@ -217,6 +237,7 @@ const CollegeDetails = ({ collegeDetails, setShowTable }) => {
               onClick={() => {
                 setConfirmationModal(false);
                 setShowTable(true);
+                initiateCollegeFlow();
               }}
               color="secondary"
               variant="contained"

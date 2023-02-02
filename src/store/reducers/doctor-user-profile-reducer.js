@@ -4,6 +4,7 @@ const initialState = {
   doctorUserProfile: { data: [], isLoading: Boolean(true), isError: false },
   registrationAndAcademicDetails: { data: [], isLoading: Boolean(true), isError: false },
   workProfileDetails: { data: [], isLoading: Boolean(true), isError: false },
+  profileImage: { data: [], isLoading: Boolean(true), isError: false },
 };
 
 const doctorUserProfileReducer = createSlice({
@@ -19,6 +20,9 @@ const doctorUserProfileReducer = createSlice({
     updateWorkProfileDetails: (state, action) => {
       state.workProfileDetails = action.payload;
     },
+    getProfileImage: (state, action) => {
+      state.profileImage = action.payload;
+    },
   },
 });
 
@@ -26,6 +30,7 @@ export const {
   getDoctorUserProfile,
   updateRegistrationAndAcademicDetails,
   updateWorkProfileDetails,
+  getProfileImage,
 } = doctorUserProfileReducer.actions;
 
 export default doctorUserProfileReducer.reducer;
