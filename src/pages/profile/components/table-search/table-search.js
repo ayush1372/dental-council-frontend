@@ -5,29 +5,40 @@ import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
 import { verboseLog } from '../../../../config/debug';
+import { RegistrationCouncilNames } from '../../../../constants/common-data';
 import { SearchableDropdown } from '../../../../shared/autocomplete/searchable-dropdown';
 import ExportFiles from '../../../../shared/export-component/export-file';
 import { Button, Select, TextField } from '../../../../ui/core';
 
-export function TableSearch({ trackApplication, activateLicence }) {
+export function TableSearch({ trackApplication, activateLicence, searchParams }) {
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const {
     register,
     handleSubmit,
     getValues,
     reset,
+    clearErrors,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
     defaultValues: {
       filterByName: '',
       filterByRegNo: '',
+      registrationCouncil: '',
+      search: '',
     },
   });
   const theme = useTheme();
   const onClickFilterButtonHandler = (data) => {
     verboseLog('data', data);
-    reset({ filterByName: '', filterByRegNo: '' });
+    searchParams(data);
+    reset({ filterByName: '', filterByRegNo: '', registrationCouncil: '', search: '' });
+  };
+
+  const onClickSearchButtonHandler = (data) => {
+    verboseLog('data in search', data);
+    searchParams(data);
+    reset({ filterByName: '', filterByRegNo: '', registrationCouncil: '', search: '' });
   };
 
   return (
@@ -66,6 +77,7 @@ export function TableSearch({ trackApplication, activateLicence }) {
                       backgroundColor: theme.palette.grey.main,
                       borderRadius: '0 5px 5px 0',
                     }}
+                    onClick={handleSubmit(onClickSearchButtonHandler)}
                   >
                     <SearchIcon />
                   </IconButton>
@@ -152,9 +164,12 @@ export function TableSearch({ trackApplication, activateLicence }) {
               <Grid item md={3} xs={12}>
                 {/* <Typography>Filter by council</Typography> */}
                 <SearchableDropdown
-                  name="RegistrationCouncil"
+                  fullWidth
+                  name="registrationCouncil"
+                  items={RegistrationCouncilNames}
                   placeholder="Filter by Council"
-                  items={[{ id: 1, name: 'first' }]}
+                  clearErrors={clearErrors}
+                  {...register('registrationCouncil')}
                 />
               </Grid>
             )}
