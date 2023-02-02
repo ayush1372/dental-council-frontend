@@ -21,7 +21,7 @@ export const getUserProfileImage = (hp_profile_id, file) => async (dispatch) => 
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: POST,
-      url: API.common.profileImage.replace('{hp_profile_id}', hp_profile_id),
+      url: API.DoctorUserProfileData.profileImage.replace('{hp_profile_id}', hp_profile_id),
       headers: { 'Content-Type': 'multipart/form-data' },
       data: file,
     })
