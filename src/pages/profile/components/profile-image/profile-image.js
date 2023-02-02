@@ -3,9 +3,11 @@ import { useState } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, FormGroup, Grid, IconButton, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 
 import avtarImg from '../../../../assets/images/user.png';
 import { getUserProfileImage } from '../../../../store/actions/doctor-user-profile-actions';
+import successToast from '../../../../ui/core/toaster';
 
 import styles from './profile-image.module.scss';
 
@@ -35,7 +37,16 @@ export default function ProfileImage(props) {
       } else {
         setImageTypeError(false);
         requestObjNew.append('file', e.target.files[0]);
-        dispatch(getUserProfileImage(profileId, requestObjNew));
+        dispatch(getUserProfileImage(profileId, requestObjNew))
+          .then(() => {})
+          .catch((errorMsg) => {
+            successToast(
+              'ERR_INT: ' + errorMsg + imageTypeError + imageErrorMessage,
+              'auth-error',
+              'error',
+              'top-center'
+            );
+          });
         setImageChanged(!imageChanged);
       }
     } else {
@@ -47,6 +58,8 @@ export default function ProfileImage(props) {
 
   return (
     <Grid container className={styles.profileImageDetailsContainer}>
+      <ToastContainer></ToastContainer>
+
       {loggedInUserType === 'Doctor' ? (
         <Grid item xs={12} mt={2}>
           <FormGroup className="update-image">
@@ -58,7 +71,6 @@ export default function ProfileImage(props) {
               />
             </Box>
           </FormGroup>
-          {imageTypeError && imageErrorMessage}
           <input
             type="file"
             id="icon-button-file"
