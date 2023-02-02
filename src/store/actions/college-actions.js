@@ -7,6 +7,7 @@ import {
   getCollegeAdminData,
   getCollegeDeanData,
   getCollegeRegistrarData,
+  postInitiateCollegeWorkFlow,
 } from '../reducers/college-reducer';
 
 export const getCollegeAdminProfileData = (id) => async (dispatch) => {
@@ -108,6 +109,27 @@ export const sendDeanDetails = (details) => async (dispatch) => {
         return resolve(response);
       })
       .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const initiateCollegeWorkFlow = (body) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.college.initiateCollegeWorkFlow,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      data: body,
+    })
+      .then((response) => {
+        dispatch(
+          postInitiateCollegeWorkFlow({ data: response.data, isError: false, isLoading: false })
+        );
+        return resolve(response);
+      })
+      .catch((error) => {
+        dispatch(postInitiateCollegeWorkFlow({ data: [], isError: true, isLoading: false }));
         return reject(error);
       });
   });

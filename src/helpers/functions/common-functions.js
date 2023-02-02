@@ -48,3 +48,14 @@ export const userGroupType = (userGroupID) => {
   };
   return userGroupTypeObj[userGroupID];
 };
+
+export const userActionType = (actionType) => {
+  const actionTypeObj = {
+    Submitted: 1,
+    Forwarded: 2,
+    'Query Raised': 3,
+    Approved: 4,
+    Rejected: 5,
+  };
+  return actionTypeObj[actionType];
+};
