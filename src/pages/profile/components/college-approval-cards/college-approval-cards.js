@@ -6,18 +6,13 @@ import CollegeDetails from '../college-details/college-details';
 export default function Dashboard() {
   const [showTable, setShowTable] = useState(true);
   const [showViewProfile, setShowViewPorfile] = useState(false);
-  const [collegeDetails, setCollegeDetails] = useState(null);
 
   return (
     <>
       {showTable ? (
-        <CollegeApprovalTable
-          setShowViewPorfile={setShowViewPorfile}
-          setShowTable={setShowTable}
-          setCollegeDetails={setCollegeDetails}
-        />
+        <CollegeApprovalTable setShowViewPorfile={setShowViewPorfile} setShowTable={setShowTable} />
       ) : showViewProfile ? (
-        <CollegeDetails collegeDetails={collegeDetails} setShowTable={setShowTable} />
+        <CollegeDetails setShowTable={setShowTable} />
       ) : null}
     </>
   );
