@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -10,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { verboseLog } from '../../../config/debug';
 import { encryptData } from '../../../helpers/functions/common-functions';
 import OtpForm from '../../../shared/otp-form/otp-component';
+import { sendNotificationOtp } from '../../../store/actions/common-actions';
 import { sendAaadharOtp, validateOtpAadhaar } from '../../../store/actions/user-aadhaar-actions';
 import { Button, TextField } from '../../../ui/core';
 import AadhaarInputField from '../../../ui/core/aadhaar-input-field/aadhaar-input-field';
@@ -42,6 +44,8 @@ function FetchDoctorDetails() {
     },
   });
   const handleVerifyEmail = () => {
+    console.log('email=>', getValues().email);
+    dispatch(sendNotificationOtp(getValues().email, 'email'));
     setShowOtpEmail(true);
   };
   const handleValidateEmail = () => {
@@ -79,6 +83,7 @@ function FetchDoctorDetails() {
   };
 
   const handleUserAadhaarNumber = (dataValue) => {
+    console.log('user entered aadhar number==>', dataValue);
     let encryptedUserAadhaarNumber = encryptData(
       dataValue.field_1 + dataValue.field_2 + dataValue.field_3,
       process.env.REACT_APP_PUBLIC_KEY

@@ -1,21 +1,28 @@
-import { useState } from 'react';
+/* eslint-disable no-console */
+import { useEffect, useState } from 'react';
 
 import { Box, Container, Typography } from '@mui/material';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { verboseLog } from '../../../config/debug';
-import { RegistrationCouncilNames } from '../../../constants/common-data';
+import { createEditFieldData } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
+import { getRegistrationCouncilList } from '../../../store/actions/common-actions';
+import { fetchSmcRegistrationDetails } from '../../../store/actions/doctor-registration-actions';
 import { Button } from '../../../ui/core';
 import { TextField } from '../../../ui/core/form/textfield/textfield';
 import FetchDoctorDetails from './fetch-doctor-details';
 const DoctorRegistrationWelcomePage = () => {
+  // const registrationDetails = useSelector((state) => state.doctorRegistration.smcRegistrationDetail.data);
+  // console.log('registrationDetails=>', registrationDetails);
   const [isNext, setIsNext] = useState(false);
   const {
     register,
     handleSubmit,
     getValues,
+    setValue,
     clearErrors,
     formState: { errors },
   } = useForm({
@@ -23,10 +30,25 @@ const DoctorRegistrationWelcomePage = () => {
     defaultValues: {
       options: '',
       RegistrationCouncil: '',
+      RegistrationCouncId: '',
       RegistrationNumber: '',
     },
   });
+  const { registrationCouncilList } = useSelector((state) => state.common);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getRegistrationCouncilList());
+  }, []);
+
   const onSubmit = () => {
+    // console.log('onsubmit values==>', values.RegistrationCouncil, values.RegistrationNumber);
+    let registrationData = {
+      council_id: getValues().RegistrationCouncId,
+      registration_number: getValues().RegistrationNumber,
+    };
+    dispatch(fetchSmcRegistrationDetails(registrationData));
+
     setIsNext(true);
   };
   verboseLog(isNext);
@@ -67,13 +89,16 @@ const DoctorRegistrationWelcomePage = () => {
                 <Box>
                   <SearchableDropdown
                     name="RegistrationCouncil"
-                    items={RegistrationCouncilNames}
-                    placeholder="Select your Registration Council"
+                    items={createEditFieldData(registrationCouncilList)}
+                    placeholder="Select Your Registration Council"
                     clearErrors={clearErrors}
                     error={errors.RegistrationCouncil?.message}
                     {...register('RegistrationCouncil', {
                       required: 'Registration Council is required',
                     })}
+                    onChange={(currentValue) => {
+                      setValue('RegistrationCouncId', currentValue.id);
+                    }}
                   />
                 </Box>
               </Box>

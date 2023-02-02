@@ -19,6 +19,9 @@ export const API = {
     countries: 'api/v1/md/countries',
     subDistricts: 'api/v1/md/district/{district_id}/sub_districts',
     districts: 'api/v1/md/state/{state_id}/districts',
+    getCouncilNames: 'api/v1/md/smcs',
+    sendOtp: 'api/v1/notification/send-otp',
+    verifyOtp: 'api/v1/notification/verify-otp',
   },
   college: {
     registrar: 'api/v1/college/registrar',
@@ -36,5 +39,8 @@ export const API = {
   },
   smc: {
     getSMCProfileData: '/api/v1/user/smc/{id}',
+  },
+  doctorRegistration: {
+    smcRegistrationDetail: 'api/v1/hp/hpSmcRegistrationDetail',
   },
 };

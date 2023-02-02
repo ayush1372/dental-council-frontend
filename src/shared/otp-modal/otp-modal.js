@@ -59,7 +59,7 @@ export function ModalOTP({
     successToast('OTP Resent Successfully', 'otp-resent', 'success', 'top-center');
   };
 
-  const { otpform, getOtpValidation, handleClear } = OtpForm({
+  const { otpform, otpValue, getOtpValidation, handleClear } = OtpForm({
     resendAction: otpResend,
   });
 
@@ -73,12 +73,12 @@ export function ModalOTP({
   };
 
   const handleConfirm = () => {
+    afterConfirm(otpValue);
     if (getOtpValidation()) {
       setOpen(false);
       setOtpMobileVerify(true);
       setOtpEmailVerify(true);
       handleClear();
-      afterConfirm();
     }
   };
 
@@ -133,6 +133,7 @@ export function ModalOTP({
     ),
     handleClickOpen: handleClickOpen,
     otpEmailVerify,
+    otpValue,
     otpMobileVerify,
   };
 }
