@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 
-// import CancelIcon from '@mui/icons-material/Cancel';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Box, Grid, Typography } from '@mui/material';
 import { useFieldArray, useForm } from 'react-hook-form';
@@ -12,7 +11,6 @@ import { getCoursesList, getUniversitiesList } from '../../../../store/actions/c
 import { updateRegistrationAndAcademicDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
 import { Button, RadioGroup, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
-// import ButtonGroupWizard from '../../../../ui/core/wizard/button-group-wizard';
 import EditQualificationDetails from './edit-qualification-details';
 
 const qualificationObjTemplate = [

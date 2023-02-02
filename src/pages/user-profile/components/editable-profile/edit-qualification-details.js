@@ -34,7 +34,6 @@ const EditQualificationDetails = ({
   const handleRegistration = (event) => {
     fields[index][event.target.name] = event.target.value;
     update(index, { ...fields[index] });
-    // setValue(event.target.name, event.target.value, true);
   };
 
   const handleQualificationFrom = (event) => {

@@ -112,7 +112,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   }, [selectedDistrict]);
 
   const fetchLanguages = () => {
-    dispatch(getLanguagesList()).then(() => {});
+    dispatch(getLanguagesList());
   };
 
   useEffect(() => {
@@ -137,18 +137,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const handleGender = (event) => {
     setValue(event.target.name, event.target.value, true);
   };
-
-  // const handleLanguageSpokenChange = (name, value) => {
-  //   setValue(name, value);
-  //   setLanguages([...value]);
-  // };
-
-  // if(countriesList) {
-
-  // }
-  // const countryIndia = countriesList?.filter(function (item) {
-  //   return item.name === 'India';
-  // });
 
   return (
     <Box
