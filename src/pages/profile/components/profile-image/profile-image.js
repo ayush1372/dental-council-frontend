@@ -5,13 +5,17 @@ import { Box, FormGroup, Grid, IconButton, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import avtarImg from '../../../../assets/images/user.png';
-import { getUserProfileImage } from '../../../../store/actions/common-actions';
+import { getUserProfileImage } from '../../../../store/actions/doctor-user-profile-actions';
 
 import styles from './profile-image.module.scss';
 
 export default function ProfileImage(props) {
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+
   const profileId = useSelector((state) => state.loginReducer.loginData.data.profile_id);
-  const profileImage = useSelector((state) => state.common.profileImage.data.profile_picture);
+  const profileImage = useSelector(
+    (state) => state.doctorUserProfileReducer.profileImage.data.profile_picture
+  );
   const dispatch = useDispatch();
   const [imageChanged, setImageChanged] = useState(false);
   const [imageTypeError, setImageTypeError] = useState(false);
@@ -43,33 +47,43 @@ export default function ProfileImage(props) {
 
   return (
     <Grid container className={styles.profileImageDetailsContainer}>
-      <Grid item xs={12} mt={2}>
-        <FormGroup className="update-image">
-          <Box>
-            <img
-              src={profileImage ? 'data:image/*;base64,' + profileImage : avtarImg}
-              className={styles.profileImage}
-              alt=""
-            />
-          </Box>
-        </FormGroup>
-        {imageTypeError && imageErrorMessage}
-
-        <input
-          type="file"
-          id="icon-button-file"
-          accept=" image/jpeg, image/jpg, image/png"
-          onChange={(event) => changeImage(event)}
-          style={{ display: 'none' }}
-        />
-        <span>
-          <label htmlFor="icon-button-file">
-            <IconButton color="primary" aria-label="upload picture" component="span">
-              <EditIcon sx={{ ml: 15 }} />
-            </IconButton>
-          </label>
-        </span>
-      </Grid>
+      {loggedInUserType === 'Doctor' ? (
+        <Grid item xs={12} mt={2}>
+          <FormGroup className="update-image">
+            <Box>
+              <img
+                src={profileImage ? 'data:image/*;base64,' + profileImage : avtarImg}
+                className={styles.profileImage}
+                alt=""
+              />
+            </Box>
+          </FormGroup>
+          {imageTypeError && imageErrorMessage}
+          <input
+            type="file"
+            id="icon-button-file"
+            accept=" image/jpeg, image/jpg, image/png"
+            onChange={(event) => changeImage(event)}
+            style={{ display: 'none' }}
+          />
+          <span>
+            <label htmlFor="icon-button-file">
+              <IconButton color="primary" aria-label="upload picture" component="span">
+                <EditIcon sx={{ ml: 15 }} />
+              </IconButton>
+            </label>
+          </span>
+        </Grid>
+      ) : (
+        <Grid item xs={12} display="flex" justifyContent="center" mt={2}>
+          <img
+            alt="avtarImg"
+            className={styles.profileImage}
+            src={avtarImg}
+            data-testid="profileImg"
+          />
+        </Grid>
+      )}
       <Grid textAlign="center" item xs={12}>
         <Typography variant="subtitle2">{props.name}</Typography>
       </Grid>
