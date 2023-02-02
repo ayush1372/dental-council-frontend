@@ -5,10 +5,10 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { verboseLog } from '../../../../config/debug';
+import { natureOfWork, workStatusOptions } from '../../../../constants/common-data';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
 import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
-import { getDistrictList, getSpecialitiesList } from '../../../../store/actions/common-actions';
+import { getDistrictList } from '../../../../store/actions/common-actions';
 import { getDistricts } from '../../../../store/reducers/common-reducers';
 import { updateWorkProfileDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
 import { Button, RadioGroup, Select, TextField } from '../../../../ui/core';
@@ -61,11 +61,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
   }, []);
 
   const fetchDisricts = (stateId) => {
-    try {
-      if (stateId) dispatch(getDistrictList(stateId));
-    } catch {
-      verboseLog('Error occured while fetching districts');
-    }
+    if (stateId) dispatch(getDistrictList(stateId));
   };
 
   const changedState = watch('state');
@@ -88,48 +84,6 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
   const handleWorkStatus = (event) => {
     setValue(event.target.name, event.target.value);
   };
-
-  const fetchSpecialities = () => {
-    dispatch(getSpecialitiesList());
-  };
-
-  useEffect(() => {
-    fetchSpecialities();
-  }, []);
-
-  const natureOfWork = [
-    {
-      id: 1,
-      name: 'Administrative',
-    },
-    {
-      id: 2,
-      name: 'Practice',
-    },
-    {
-      id: 3,
-      name: 'Research',
-    },
-    {
-      id: 4,
-      name: 'Teaching',
-    },
-  ];
-
-  const workStatusOptions = [
-    {
-      id: 3,
-      name: 'Government only',
-    },
-    {
-      id: 2,
-      name: 'Private Practice only',
-    },
-    {
-      id: 1,
-      name: 'Both',
-    },
-  ];
 
   const handleSave = () => {
     const {
@@ -231,7 +185,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               name="subSpeciality"
               options={subSpecialityOptions}
               value={getValues().subSpeciality}
-              error={subSpecialities.length === 0 && errors.subSpeciality?.message}
+              error={subSpecialities?.length === 0 && errors.subSpeciality?.message}
               multiple={true}
               {...register('subSpeciality', {
                 required: 'Missing field',

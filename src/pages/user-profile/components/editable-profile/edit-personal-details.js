@@ -14,7 +14,6 @@ import { ModalOTP } from '../../../../shared/otp-modal/otp-modal';
 import {
   getCitiesList,
   getDistrictList,
-  getLanguagesList,
   getSubDistrictsList,
 } from '../../../../store/actions/common-actions';
 import { RadioGroup, Select, TextField } from '../../../../ui/core';
@@ -111,13 +110,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     fetchSubDistricts(selectedDistrict);
   }, [selectedDistrict]);
 
-  const fetchLanguages = () => {
-    dispatch(getLanguagesList());
-  };
-
-  useEffect(() => {
-    fetchLanguages();
-  }, []);
   useEffect(() => {
     fetchCities(selectedSubDistrict);
   }, [selectedSubDistrict]);

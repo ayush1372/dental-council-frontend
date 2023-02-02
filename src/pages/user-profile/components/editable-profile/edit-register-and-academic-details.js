@@ -6,8 +6,6 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { verboseLog } from '../../../../config/debug';
-import { getCoursesList, getUniversitiesList } from '../../../../store/actions/common-actions';
 import { updateRegistrationAndAcademicDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
 import { Button, RadioGroup, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
@@ -25,11 +23,6 @@ const qualificationObjTemplate = [
     nameindegree: '',
     files: '',
     qualificationfrom: '',
-    // rollno: '',
-    // result: '',
-    // yearfmge: '',
-    // monthfmge: '',
-    // marksobtained: '',
   },
 ];
 
@@ -112,31 +105,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
     setValue(event.target.name, event.target.value, true);
   };
 
-  const fetchCourses = () => {
-    dispatch(getCoursesList())
-      .then((dataResponse) => {
-        verboseLog('dataResponse', dataResponse);
-      })
-      .catch((error) => {
-        verboseLog('error occured', error);
-      });
-  };
-
-  const fetchUniversities = () => {
-    dispatch(getUniversitiesList())
-      .then((dataResponse) => {
-        verboseLog('dataResponse', dataResponse);
-      })
-      .catch((error) => {
-        verboseLog('error occured', error);
-      });
-  };
-
-  useEffect(() => {
-    fetchCourses();
-    fetchUniversities();
-  }, []);
-
   useEffect(() => {
     const details = qualification_detail_response_tos[0];
     const obj = { ...qualificationObjTemplate[0] };
@@ -214,6 +182,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                 },
               }}
               InputProps={{ readOnly: true }}
+              error={errors?.RegistrationNumber?.message}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -233,6 +202,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                 },
               }}
               InputProps={{ readOnly: loggedInUserType === 'SMC' ? false : true }}
+              error={errors?.RegistrationDate?.message}
             />
           </Grid>
         </Grid>
@@ -275,6 +245,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack, loggedInUserTy
                 },
               }}
               InputProps={{ readOnly: loggedInUserType === 'SMC' ? false : true }}
+              error={errors.RenewalDate?.message}
             />
           </Grid>
         </Grid>

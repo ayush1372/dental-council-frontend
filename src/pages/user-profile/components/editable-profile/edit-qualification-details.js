@@ -4,7 +4,6 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { Divider, Grid, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { verboseLog } from '../../../../config/debug';
 import { monthsData } from '../../../../constants/common-data';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
 import { getCollegesList } from '../../../../store/actions/common-actions';
@@ -45,14 +44,9 @@ const EditQualificationDetails = ({
   const watchCollege = watch(`qualification[${index}].college`);
   const fetchColleges = (collegeId) => {
     if (collegeId) {
-      dispatch(getCollegesList(collegeId))
-        .then((dataResponse) => {
-          setColleges(dataResponse.data);
-          verboseLog('dataResponse', dataResponse);
-        })
-        .catch((error) => {
-          verboseLog('error occured', error);
-        });
+      dispatch(getCollegesList(collegeId)).then((dataResponse) => {
+        setColleges(dataResponse.data);
+      });
     }
   };
 

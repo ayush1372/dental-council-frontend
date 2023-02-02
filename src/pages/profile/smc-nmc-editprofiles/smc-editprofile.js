@@ -1,15 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import { createSelectFieldData } from '../../../helpers/functions/common-functions';
-import { getRegistrationCouncilList } from '../../../store/actions/common-actions';
 import { Button, Select, TextField } from '../../../ui/core';
 const SmcEditProfile = () => {
-  const dispatch = useDispatch();
   const [name, setName] = useState('Aarnav Sharma');
   const [phoneNumber, setphoneNumber] = useState('7547448483');
   const [email, setemail] = useState('aarnav@gmail.com.com');
@@ -43,10 +41,6 @@ const SmcEditProfile = () => {
   const handleUserid = (e) => {
     setuserId(e.target.value);
   };
-
-  useEffect(() => {
-    dispatch(getRegistrationCouncilList());
-  }, []);
 
   return (
     <Grid>

@@ -95,33 +95,15 @@ export const UserProfile = ({
   }, [isReadMode]);
 
   const fetchDoctorUserProfileData = () => {
-    dispatch(getDoctorUserProfileData({ id: loginData?.data?.profile_id }))
-      .then((dataResponse) => {
-        verboseLog('dataResponse1', dataResponse);
-      })
-      .catch((error) => {
-        verboseLog('error occured1', error);
-      });
+    dispatch(getDoctorUserProfileData({ id: loginData?.data?.profile_id }));
   };
 
   const fetchQualificationDetails = () => {
-    dispatch(getRegistrationAndAcademicDetailsData())
-      .then((dataResponse) => {
-        verboseLog('dataResponse1', dataResponse);
-      })
-      .catch((error) => {
-        verboseLog('error occured1', error);
-      });
+    dispatch(getRegistrationAndAcademicDetailsData());
   };
 
   const fetchWorkProfileDetails = () => {
-    dispatch(getWorkProfileData())
-      .then((dataResponse) => {
-        verboseLog('dataResponse1', dataResponse);
-      })
-      .catch((error) => {
-        verboseLog('error occured1', error);
-      });
+    dispatch(getWorkProfileData());
   };
   useEffect(() => {
     fetchDoctorUserProfileData();
