@@ -56,13 +56,10 @@ export function TableSearch({ trackApplication, activateLicence }) {
             {...register('search')}
             InputProps={{
               endAdornment: (
-                <InputAdornment
-                  position="end"
-                  sx={{ p: 3.5, backgroundColor: theme.palette.grey.main }}
-                >
+                <InputAdornment position="end" sx={{ backgroundColor: theme.palette.grey.main }}>
                   <IconButton
                     sx={{
-                      p: '16px 10px 13px 10px',
+                      p: 2,
                       backgroundColor: theme.palette.grey.main,
                       borderRadius: '0 5px 5px 0',
                     }}
@@ -75,7 +72,7 @@ export function TableSearch({ trackApplication, activateLicence }) {
           />
         </Grid>
 
-        <Grid item md={trackApplication ? 7 : 10} xs={12}>
+        <Grid item md={trackApplication ? 7 : activateLicence ? 8 : 10} xs={12}>
           <Grid container item xs={12} sx={{ alignItems: 'center', display: 'flex', gap: 1 }}>
             {trackApplication === true && (
               <>
