@@ -5,28 +5,29 @@ import { Box, Button, Grid, IconButton, InputAdornment, Typography, useTheme } f
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 
-import { verboseLog } from '../../../../config/debug';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
 import { get_year_data } from '../../../../helpers/functions/common-functions';
 import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
 import { ModalOTP } from '../../../../shared/otp-modal/otp-modal';
 import {
+  getCitiesList,
   getDistrictList,
   getLanguagesList,
   getSubDistrictsList,
 } from '../../../../store/actions/common-actions';
 import { RadioGroup, Select, TextField } from '../../../../ui/core';
 import MobileNumber from '../../../../ui/core/mobile-number/mobile-number';
+import successToast from '../../../../ui/core/toaster';
 
 const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const theme = useTheme();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const loggedInUserType = useSelector((state) => state?.login?.loggedInUserType);
-  const { statesList, countriesList, districtsList, subDistrictList, languagesList } = useSelector(
-    (state) => state?.common
-  );
+  const { statesList, countriesList, districtsList, subDistrictList, languagesList, citiesList } =
+    useSelector((state) => state?.common);
 
   const [languages, setLanguages] = useState([]);
   const {
@@ -73,51 +74,53 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const fetchDistricts = (stateId) => {
     if (stateId) {
       dispatch(getDistrictList(stateId))
-        .then((dataResponse) => {
-          verboseLog('dataResponse', dataResponse);
-        })
-        .catch((error) => {
-          verboseLog('error occured', error);
+        .then(() => {})
+        .catch((allFailMsg) => {
+          successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
         });
     }
   };
-
-  const selectedState = watch('State');
-  useEffect(() => {
-    fetchDistricts(selectedState);
-  }, [selectedState]);
 
   const fetchSubDistricts = (districtId) => {
     if (districtId) {
       dispatch(getSubDistrictsList(districtId))
-        .then((dataResponse) => {
-          verboseLog('dataResponse', dataResponse);
-        })
-        .catch((error) => {
-          verboseLog('error occured', error);
+        .then(() => {})
+        .catch((allFailMsg) => {
+          successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
         });
     }
   };
 
+  const fetchCities = (subDistrictId) => {
+    try {
+      dispatch(getCitiesList(subDistrictId)).then(() => {});
+    } catch (allFailMsg) {
+      successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    }
+  };
+
+  const selectedState = watch('State');
   const selectedDistrict = watch('District');
+  const selectedSubDistrict = watch('SubDistrict');
+
+  useEffect(() => {
+    fetchDistricts(selectedState);
+  }, [selectedState]);
 
   useEffect(() => {
     fetchSubDistricts(selectedDistrict);
   }, [selectedDistrict]);
 
   const fetchLanguages = () => {
-    dispatch(getLanguagesList())
-      .then((dataResponse) => {
-        verboseLog('dataResponse', dataResponse);
-      })
-      .catch((error) => {
-        verboseLog('error occured', error);
-      });
+    dispatch(getLanguagesList()).then(() => {});
   };
 
   useEffect(() => {
     fetchLanguages();
   }, []);
+  useEffect(() => {
+    fetchCities(selectedSubDistrict);
+  }, [selectedSubDistrict]);
 
   const { otpPopup, handleClickOpen, otpVerified } = ModalOTP({ afterConfirm: () => {} });
 
@@ -157,6 +160,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
         },
       }}
     >
+      <ToastContainer></ToastContainer>
       <Grid container spacing={2} mt={2}>
         {/* layer 1 */}
         <Grid container item spacing={2}>
@@ -642,12 +646,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               {...register('Area', {
                 required: 'City/Town/Village is required',
               })}
-              options={[
-                {
-                  label: 'New Delhi',
-                  value: 'new delhi',
+              options={createSelectFieldData(citiesList)}
+              MenuProps={{
+                style: {
+                  maxHeight: 250,
+                  maxWidth: 130,
                 },
-              ]}
+              }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -666,7 +671,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               {...register('District', {
                 required: 'District is required',
               })}
-              options={createSelectFieldData(districtsList)}
+              options={createSelectFieldData(districtsList, 'iso_code')}
               MenuProps={{
                 style: {
                   maxHeight: 250,
@@ -690,7 +695,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               placeholder="Sub District"
               defaultValue={getValues().SubDistrict}
               {...register('SubDistrict')}
-              options={createSelectFieldData(subDistrictList)}
+              options={createSelectFieldData(subDistrictList, 'iso_code')}
               MenuProps={{
                 style: {
                   maxHeight: 250,
@@ -987,6 +992,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               width: {
                 xs: '100%',
                 md: 'fit-content',
+                height: '52px',
               },
             }}
           >

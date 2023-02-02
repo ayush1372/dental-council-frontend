@@ -1,18 +1,20 @@
 import { Box, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
+import { sendRegistrarDetails } from '../../../store/actions/college-actions';
 import { Button, TextField } from '../../../ui/core';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 export function CollegeRegistrar() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
     getValues,
+    reset,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
@@ -24,12 +26,23 @@ export function CollegeRegistrar() {
       registrarPassword: '',
     },
   });
-  const onSubmit = () => {
-    navigate(`/NMR/NMR-generate`);
+
+  const onSubmit = (fieldData) => {
+    let registrarData = {
+      id: null,
+      name: fieldData.registrarName,
+      phone_number: fieldData.registrarPhoneNumber,
+      email_id: fieldData.registrarPhoneNumber,
+      user_id: null,
+      password: fieldData.registrarPassword,
+    };
+    dispatch(sendRegistrarDetails(registrarData));
+    reset();
   };
+
   return (
     <Grid container item spacing={2} p={2}>
-      <Grid item xs={12}>
+      <Grid item xs={12} mt={5}>
         <Box>
           <Typography color="textPrimary.main" variant="h2">
             College Registrar
@@ -82,7 +95,7 @@ export function CollegeRegistrar() {
           {...register('registrarPhoneNumber', {
             required: 'Enter valid phone number',
             pattern: {
-              value: /^(\d{13})$/i,
+              value: /^(\d{10})$/i,
               message: 'Enter valid phone number',
             },
           })}
@@ -108,11 +121,11 @@ export function CollegeRegistrar() {
           defaultValue={getValues().registrarEmail}
           error={errors.registrarEmail?.message}
           {...register('registrarEmail', {
-            required: 'Enter Valid Email Address',
+            required: 'Enter valid email address',
             pattern: {
               value:
                 /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-              message: 'Enter Valid Email Address',
+              message: 'Enter valid email address',
             },
           })}
         />
@@ -137,7 +150,7 @@ export function CollegeRegistrar() {
           defaultValue={getValues().registrarUserId}
           error={errors.registrarUserId?.message}
           {...register('registrarUserId', {
-            required: 'Enter valid username',
+            required: 'Enter valid user ID',
           })}
         />
       </Grid>
@@ -152,7 +165,7 @@ export function CollegeRegistrar() {
           fullWidth
           inputProps={{ maxLength: 100 }}
           variant="outlined"
-          type="password"
+          type="Password"
           name="registrarPassword"
           required="true"
           placeholder={t('College Registrar Password')}
@@ -160,19 +173,19 @@ export function CollegeRegistrar() {
           defaultValue={getValues().registrarPassword}
           error={errors.registrarPassword?.message}
           {...register('registrarPassword', PasswordRegexValidation, {
-            required: 'Provide registrar Password',
+            required: 'Enter valid password',
           })}
         />
       </Grid>
       <Grid container item spacing={2} mt={{ lg: 1 }}>
         <Grid item xs={12} sm="auto">
           <Button fullWidth variant="contained" color="secondary" onClick={handleSubmit(onSubmit)}>
-            {t('SUBMIT')}
+            {t('Submit')}
           </Button>
         </Grid>
 
         <Grid item xs={12} sm="auto">
-          <Button fullWidth variant="contained" color="grey" onClick={handleSubmit(onSubmit)}>
+          <Button fullWidth variant="contained" color="grey">
             {t('Cancel')}
           </Button>
         </Grid>

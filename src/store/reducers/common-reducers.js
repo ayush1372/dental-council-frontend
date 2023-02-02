@@ -12,6 +12,7 @@ const initialState = {
   loggedInUserType: '',
   userActiveTab: '',
   statesList: { data: [], isLoading: Boolean(true), isError: false },
+  citiesList: { data: [], isLoading: Boolean(true), isError: false },
   countriesList: { data: [], isLoading: Boolean(true), isError: false },
   districtsList: { data: [], isLoading: Boolean(true), isError: false },
   subDistrictList: { data: [], isLoading: Boolean(true), isError: false },
@@ -50,6 +51,9 @@ export const CommonActivity = createSlice({
     },
     getStates: (state, action) => {
       state.statesList = action.payload;
+    },
+    getCities: (state, action) => {
+      state.citiesList = action.payload;
     },
     getCountries: (state, action) => {
       state.countriesList = action.payload;
@@ -91,6 +95,7 @@ export const {
   setApiLoading,
   changeUserActiveTab,
   getStates,
+  getCities,
   getCountries,
   getDistricts,
   getSubDistricts,

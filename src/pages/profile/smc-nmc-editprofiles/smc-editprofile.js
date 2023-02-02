@@ -60,7 +60,7 @@ const SmcEditProfile = () => {
 
       <Grid container item spacing={2} mt={3}>
         <Grid item xs={12} md={4}>
-          <Typography variant="body3" color="grey.label">
+          <Typography variant="body1" color="inputTextColor.main">
             Name
           </Typography>
           <Typography component="span" color="error.main">
@@ -75,14 +75,14 @@ const SmcEditProfile = () => {
             defaultValue={getValues().Name}
             error={errors.Name?.message}
             {...register('Name', {
-              required: ' Name is required',
+              required: 'Enter valid name',
               onChange: (e) => handleName(e),
             })}
           />
         </Grid>
 
         <Grid item xs={12} md={4}>
-          <Typography variant="body3" color="grey.label">
+          <Typography variant="body1" color="inputTextColor.main">
             Phone Number
           </Typography>
           <Typography component="span" color="error.main">
@@ -97,14 +97,14 @@ const SmcEditProfile = () => {
             value={phoneNumber}
             error={errors.PhoneNumber?.message}
             {...register('PhoneNumber', {
-              required: 'Phone Number is required',
+              required: 'Enter valid phone number',
               onChange: (e) => handlePhoneNumber(e),
             })}
           />
         </Grid>
 
         <Grid item xs={12} md={4}>
-          <Typography variant="body3" color="grey.label">
+          <Typography variant="body1" color="inputTextColor.main">
             Email ID
           </Typography>
           <Typography component="span" color="error.main">
@@ -120,7 +120,7 @@ const SmcEditProfile = () => {
             defaultValue={getValues().EmailId}
             error={errors.EmailId?.message}
             {...register('EmailId', {
-              required: 'Email ID required',
+              required: 'Enter valid email ID',
               onChange: (e) => handleEmailId(e),
 
               pattern: {
@@ -135,7 +135,7 @@ const SmcEditProfile = () => {
 
       <Grid container item spacing={2} mt={3}>
         <Grid item xs={12} md={4}>
-          <Typography variant="body3" color="grey.label">
+          <Typography variant="body1" color="inputTextColor.main">
             User ID
           </Typography>
           <Typography component="span" color="error.main">
@@ -154,14 +154,14 @@ const SmcEditProfile = () => {
               onChange: (e) => handleUserid(e),
 
               pattern: {
-                message: 'Provide a Valid UserID',
+                message: 'Enter valid user ID',
               },
             })}
           />
         </Grid>
 
         <Grid item xs={12} md={4}>
-          <Typography variant="body3" color="grey.label">
+          <Typography variant="body1" color="inputTextColor.main">
             Council
           </Typography>
           <Typography component="span" color="error.main">

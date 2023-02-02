@@ -7,15 +7,17 @@ export const API = {
     generateCaptcha: 'api/v1/generateCaptcha',
     validateCaptcha: 'api/v1/validateCaptcha',
     loginUser: 'api/v1/login',
+    refreshToken: 'api/v1/refreshToken',
   },
   editProfile: {},
   DoctorUserProfileData: {
-    DoctorUserProfile: 'api/v1/hp/hpProfileDetail/23',
     QualificationDetails: 'api/v1/hp/health-professional/registration/176',
     WorkProfileDetails: 'api/v1/hp/health-professional/work-profile/165',
+    DoctorUserProfile: 'api/v1/hp/hpProfileDetail/',
   },
   common: {
     states: 'api/v1/md/country/356/states',
+    cities: 'api/v1/md/sub_district/{sub_district_id}/cities',
     countries: 'api/v1/md/countries',
     subDistricts: 'api/v1/md/district/{district_id}/sub_districts',
     districts: 'api/v1/md/state/{state_id}/districts',
@@ -26,13 +28,21 @@ export const API = {
     specialities: 'api/v1/md/specialities',
     councilNames: 'api/v1/md/smcs',
   },
+  college: {
+    registrar: 'api/v1/college/registrar',
+    dean: 'api/v1/college/dean',
+    getCollegeProfile: 'api/v1/college/{id}',
+    getCollegeRegistrarProfile: '/api/v1/college/registrar/{id}',
+    getCollegeDeanProfile: '/api/v1/college/dean/{id}',
+  },
+  nmc: {
+    getNMCProfileData: '/api/v1/user/nmc/{id}',
+  },
   Aadhaar: {
     sendAadhaarOtp: 'api/v1/sendAadhaarOtp',
     verifyAadhaarOtp: 'api/v1/verifyAadhaarOtp',
   },
-  college: {
-    getCollegeProfile: 'api/v1/college/{id}',
-    getCollegeRegistrarProfile: '/api/v1/college/registrar/{id}',
-    getCollegeDeanProfile: '/api/v1/college/dean/{id}',
+  smc: {
+    getSMCProfileData: '/api/v1/user/smc/{id}',
   },
 };

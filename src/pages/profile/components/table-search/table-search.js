@@ -1,6 +1,6 @@
 import { useTheme } from '@emotion/react';
 import SearchIcon from '@mui/icons-material/Search';
-import { Box, Grid, InputAdornment } from '@mui/material';
+import { Box, Grid, IconButton, InputAdornment } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
@@ -9,7 +9,7 @@ import { SearchableDropdown } from '../../../../shared/autocomplete/searchable-d
 import ExportFiles from '../../../../shared/export-component/export-file';
 import { Button, Select, TextField } from '../../../../ui/core';
 
-export function TableSearch({ trackApplication }) {
+export function TableSearch({ trackApplication, activateLicence }) {
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const {
     register,
@@ -33,7 +33,12 @@ export function TableSearch({ trackApplication }) {
   return (
     <Box data-testid="table-search">
       <Grid container sx={{ alignItems: 'flex-end' }} mb={5}>
-        <Grid item md={trackApplication ? 5 : 2} xs={12}>
+        <Grid
+          item
+          md={trackApplication ? 5 : activateLicence ? 4 : 2}
+          xs={12}
+          mb={{ xs: 1, sm: 0 }}
+        >
           <TextField
             sx={{ mt: 1 }}
             data-testid="freesearch"
@@ -53,9 +58,17 @@ export function TableSearch({ trackApplication }) {
               endAdornment: (
                 <InputAdornment
                   position="end"
-                  sx={{ p: 4, backgroundColor: theme.palette.grey.main }}
+                  sx={{ p: 3.5, backgroundColor: theme.palette.grey.main }}
                 >
-                  <SearchIcon />{' '}
+                  <IconButton
+                    sx={{
+                      p: '16px 10px 13px 10px',
+                      backgroundColor: theme.palette.grey.main,
+                      borderRadius: '0 5px 5px 0',
+                    }}
+                  >
+                    <SearchIcon />
+                  </IconButton>
                 </InputAdornment>
               ),
             }}
@@ -63,7 +76,7 @@ export function TableSearch({ trackApplication }) {
         </Grid>
 
         <Grid item md={trackApplication ? 7 : 10} xs={12}>
-          <Grid container item xs={12} sx={{ alignItems: 'flex-end', display: 'flex', gap: 1 }}>
+          <Grid container item xs={12} sx={{ alignItems: 'center', display: 'flex', gap: 1 }}>
             {trackApplication === true && (
               <>
                 <Grid item md={3} xs={12} ml="auto">
@@ -146,7 +159,7 @@ export function TableSearch({ trackApplication }) {
               </Grid>
             )}
             {trackApplication !== true && (
-              <Grid item md={1} xs={12}>
+              <Grid item md="auto" xs={12}>
                 <Button
                   data-testid="filterButton"
                   sx={{

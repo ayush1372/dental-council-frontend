@@ -44,7 +44,7 @@ const ChangePassword = () => {
         <Box p={2} boxShadow="1">
           <Box>
             <Box mt={2}>
-              <Typography variant="body3" color="primary">
+              <Typography variant="body1" color="inputTextColor.main">
                 {t('Old Password')}
                 <Typography component="span" color="error.main">
                   *
@@ -67,7 +67,7 @@ const ChangePassword = () => {
               />
             </Box>
             <Box mt={2}>
-              <Typography variant="body3" color="primary" mt={2}>
+              <Typography variant="body1" color="inputTextColor.main" mt={2}>
                 {t('New Password')}
                 <Typography component="span" color="error.main">
                   *
@@ -90,7 +90,7 @@ const ChangePassword = () => {
               />
             </Box>
             <Box mt={2}>
-              <Typography variant="body3" color="primary">
+              <Typography variant="body1" color="inputTextColor.main">
                 {t('Confirm Password')}
                 <Typography component="span" color="error.main">
                   *

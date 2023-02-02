@@ -24,7 +24,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
   const { work_details, speciality_details, current_work_details } = workProfileDetails || {};
   const { is_user_currently_working, work_nature, work_status } = work_details || {};
   const { broad_speciality, super_speciality: subSpecialityOptions } = speciality_details || {};
-  const { address, url, work_organization } = current_work_details || {};
+  const { address, url, work_organization, facility } = current_work_details || {};
   const { state: stateDetails, district: districtDetails, pincode, address_line1 } = address || {};
 
   const {
@@ -48,6 +48,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
       Address: address_line1,
       Pincode: pincode,
       telecommunicationURL: url,
+      selection: facility,
     },
   });
 
@@ -142,6 +143,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
       Address,
       Pincode,
       telecommunicationURL,
+      selection,
     } = getValues();
 
     const workDetails = {
@@ -165,6 +167,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
         district: districtsList?.find((x) => x.id === District),
         pincode: Pincode,
         address_line1: Address,
+        facility: selection,
       },
     };
 
@@ -212,7 +215,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               defaultValue={getValues().Speciality}
               required={true}
               {...register('Speciality', {
-                required: 'Speciality is required',
+                required: 'Missing field',
               })}
               options={createSelectFieldData(specialitiesList.data)}
             />
@@ -277,7 +280,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
                 },
               ]}
               required={true}
-              error={errors.selection?.message}
+              error={errors.currentWorkingSelection?.message}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -290,7 +293,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               required={true}
               placeholder={'Nature Of Work'}
               {...register('NatureOfWork', {
-                required: 'Select nature of work',
+                required: 'Missing field',
               })}
               options={createSelectFieldData(natureOfWork)}
             />
@@ -368,11 +371,11 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               defaultValue={getValues().selection}
               items={[
                 {
-                  value: 'facility',
+                  value: '0',
                   label: 'Facility',
                 },
                 {
-                  value: 'organization',
+                  value: '1',
                   label: 'Organization',
                 },
               ]}
@@ -396,7 +399,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               defaultValue={getValues().state}
               required={true}
               {...register('state', {
-                required: 'State is required',
+                required: 'Missing field',
               })}
               options={createSelectFieldData(statesList)}
             />
@@ -410,7 +413,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               defaultValue={getValues().District}
               required={true}
               {...register('District', {
-                required: 'District is required',
+                required: 'Missing field',
               })}
               options={createSelectFieldData(districtsList)}
             />
@@ -447,6 +450,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
             <TextField
               variant="outlined"
               name={'organizationType'}
+              placeholder="Organization Type"
               fullWidth
               defaultValue={getValues().organizationType}
               {...register('organizationType', {
@@ -492,7 +496,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               placeholder="Address"
               defaultValue={getValues().Address}
               {...register('Address', {
-                required: 'Address is Required',
+                required: 'Missing field',
                 maxLength: {
                   value: 300,
                   message: 'Should be less than 300 characters',
@@ -518,7 +522,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               error={errors.Pincode?.message}
               defaultValue={getValues().Pincode}
               {...register('Pincode', {
-                required: 'Pin code is required',
+                required: 'Missing field',
                 pattern: {
                   value: /^[0-9]{6}$/,
                   message: 'Should only contains 6 digits',
@@ -545,7 +549,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               error={errors.telecommunicationURL?.message}
               defaultValue={getValues().telecommunicationURL}
               {...register('telecommunicationURL', {
-                required: 'Telecommunication url is required',
+                required: 'Missing field',
               })}
             />
           </Grid>
@@ -584,6 +588,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               width: {
                 xs: '100%',
                 md: 'fit-content',
+                height: '52px',
               },
             }}
           >

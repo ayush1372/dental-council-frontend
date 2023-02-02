@@ -2,9 +2,10 @@ import { useState } from 'react';
 
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, Grid, Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 import { verboseLog } from '../../../config/debug';
-import { nmcProfileDetails, smcProfileDetails } from '../../../constants/common-data';
+import { getNMCProfileDetails, getSMCProfileDetails } from '../../../constants/common-data';
 import { Button } from '../../../ui/core';
 // import ChangePassword from '../change-password/change-password';
 import NmcEditProfile from '../smc-nmc-editprofiles/nmc-editprofiles';
@@ -12,9 +13,13 @@ import SmcEditProfile from '../smc-nmc-editprofiles/smc-editprofile';
 
 const MyProfile = (props) => {
   const [showPage, setShowpage] = useState('Profile');
+  const { nmcProfileData } = useSelector((state) => state.nmc);
+  const { smcProfileData } = useSelector((state) => state.smc);
 
   const [data, setData] = useState(
-    props.userType === 'SMC' ? smcProfileDetails : nmcProfileDetails
+    props.userType === 'SMC'
+      ? getSMCProfileDetails(smcProfileData.data)
+      : getNMCProfileDetails(nmcProfileData.data)
   );
   const [showSmcEditProfile, setShowSmcEditProfile] = useState(false);
 
@@ -57,7 +62,7 @@ const MyProfile = (props) => {
             {data.map((field) => {
               return (
                 <Grid item xs={12} md={6} sm={6} lg={3} key={field.id}>
-                  <Typography variant="body3" color="grey.label">
+                  <Typography variant="body1" color="inputTextColor.main">
                     {field.label}
                   </Typography>
                   <Grid>

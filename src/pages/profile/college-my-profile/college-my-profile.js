@@ -2,8 +2,9 @@ import { useState } from 'react';
 
 import EditIcon from '@mui/icons-material/Edit';
 import { Grid, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { getCollegeRegistrarProfileData } from '../../../store/actions/college-actions';
 import { Button } from '../../../ui/core';
 import CollegeEditProfile from './college-edit-profile';
 
@@ -11,13 +12,18 @@ const CollegeMyProfile = () => {
   const [showPage, setShowpage] = useState('Profile');
   const { collegeData } = useSelector((state) => state.college);
   const userData = collegeData?.data;
+  const dispatch = useDispatch();
+
+  const getUserProfile = () => {
+    dispatch(getCollegeRegistrarProfileData(1));
+  };
 
   return (
     <Grid boxShadow={2} mt={2} p={3}>
       {showPage === 'Profile' && (
         <Grid>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm="auto" sx={{ mr: { xs: 0, sm: 'auto' } }}>
+            <Grid mt={2} item xs={12} sm="auto" sx={{ mr: { xs: 0, sm: 'auto' } }}>
               <Typography variant="h2" color="textPrimary.main">
                 My Profile
               </Typography>
@@ -31,6 +37,7 @@ const CollegeMyProfile = () => {
                 color="secondary"
                 onClick={() => {
                   setShowpage('Edit');
+                  getUserProfile();
                 }}
                 size="small"
               >
@@ -49,14 +56,14 @@ const CollegeMyProfile = () => {
                 {userData?.name ? userData?.name : ''}
               </Typography>
             </Grid>
-            {userData?.college_id ? (
+            {userData?.college_code ? (
               <Grid item xs={12} md={4} sm={6}>
                 <Typography variant="body3" color="grey.label">
                   College ID
                 </Typography>
 
                 <Typography variant="subtitle2" color="primary.main">
-                  {userData?.college_id}
+                  {userData?.college_code}
                 </Typography>
               </Grid>
             ) : (

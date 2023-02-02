@@ -1,4 +1,5 @@
 /* eslint import/no-cycle: [2, { maxDepth: 1 }] */
+
 import successToast from '../ui/core/toaster';
 import { expireSession } from './session';
 
