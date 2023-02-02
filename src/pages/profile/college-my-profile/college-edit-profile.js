@@ -5,6 +5,7 @@ import { Box, Grid, IconButton, InputAdornment, Typography } from '@mui/material
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { verboseLog } from '../../../config/debug';
 import { createEditFieldData } from '../../../helpers/functions/common-functions';
 // import {
 //   RegistrationCouncilNames,//   StateNames,
@@ -24,10 +25,7 @@ const CollegeEditProfile = () => {
   const { statesList, registrationCouncilList, universitiesList } = useSelector(
     (state) => state.common
   );
-  // // eslint-disable-next-line no-console
-  // console.log('state data ----', statesList);
-  //  eslint-disable-next-line no-console
-  console.log('vales', createEditFieldData(statesList));
+
   const userData = collegeData?.data;
   const dispatch = useDispatch();
 
@@ -40,6 +38,7 @@ const CollegeEditProfile = () => {
     register,
     handleSubmit,
     getValues,
+    setValue,
     clearErrors,
     formState: { errors },
   } = useForm({
@@ -52,35 +51,33 @@ const CollegeEditProfile = () => {
       CollegeAddress: userData?.address,
       CollegePincode: userData?.pin_code,
       UniversityName: '',
+      UniversityId: '',
       RegistrationCouncil: '',
+      RegistrationCouncilId: '',
       StateName: '',
+      StateId: '',
       CollegeWebsite: userData?.website,
     },
   });
 
   const onhandleSubmitClick = () => {
-    // eslint-disable-next-line no-console
-    console.log('user id is ', userData?.id);
-    // eslint-disable-next-line no-console
-    console.log('get-values', getValues());
     const updatedValues = {
       id: userData?.id,
       name: getValues().CollegeName,
       college_code: getValues().CollegeId,
       phone_number: getValues().CollegePhoneNumber,
       email_id: getValues().CollegeEmailId,
-      state_name: getValues().StateId,
-      council_name: getValues().RegistrationCouncil,
-      university_name: getValues().UniversityName,
+      user_id: userData?.id,
+      council_id: getValues().RegistrationCouncilId,
+      university_id: getValues().UniversityId,
       website: getValues().CollegeWebsite,
       address: getValues().CollegeAddress,
       pin_code: getValues().CollegePincode,
+      state_id: getValues().StateId,
     };
-    // eslint-disable-next-line no-console
-    // console.log('updatedValues ', updatedValues);
+    verboseLog('All-values', updatedValues);
     dispatch(updateCollegeAdminProfileData(updatedValues)).then((response) => {
-      // eslint-disable-next-line no-console
-      console.log(' update response is', response);
+      verboseLog(' update response is', response);
     });
   };
 
@@ -92,6 +89,17 @@ const CollegeEditProfile = () => {
         : Math.max(0, parseInt(e.target.value)).toString().slice(0, 10);
     }
   };
+  // const getOtp = (type) => {
+  //   alert(type);
+  //   if (type === 'phone' && otpMobileVerify) {
+  //     dispatch(sendNotificationOtp({ contact: getValues().CollegePhoneNumber, type: type }));
+  //     setVerifyMobile(true);
+  //   } else if (type === 'email' && otpEmailVerify) {
+  //     dispatch(sendNotificationOtp({ contact: getValues().email, type: type }));
+  //     setVerifyEmail(true);
+  //   }
+  //   handleClickOpen();
+  // };
   return (
     <Grid>
       <Grid container spacing={2} mt={2}>
@@ -260,6 +268,9 @@ const CollegeEditProfile = () => {
             {...register('UniversityName', {
               required: 'University Name is required',
             })}
+            onChange={(currentValue) => {
+              setValue('UniversityId', currentValue.id);
+            }}
           />
         </Grid>
 
@@ -335,11 +346,10 @@ const CollegeEditProfile = () => {
             {...register('StateName', {
               required: 'State Name is required',
             })}
-            onChange={(e) => {
-              getValues().StateName.onChange(e);
+            onChange={(currentValue) => {
+              setValue('StateId', currentValue.id);
+              // verboseLog('test verbose', getValues()?.StateId);
             }}
-            // eslint-disable-next-line no-console
-            // onChange={(e)=>{getValues().StateName(e)}}
           />
         </Grid>
       </Grid>
@@ -362,6 +372,9 @@ const CollegeEditProfile = () => {
               {...register('RegistrationCouncil', {
                 required: 'Registration Council is required',
               })}
+              onChange={(currentValue) => {
+                setValue('RegistrationCouncilId', currentValue.id);
+              }}
             />
           </Box>
           <Grid />

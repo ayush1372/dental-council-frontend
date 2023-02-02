@@ -1,5 +1,6 @@
 import { API } from '../../api/api-endpoints';
-import { GET } from '../../constants/requests';
+// import { verboseLog } from '../../config/debug';
+import { GET, POST } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import {
   getCities,
@@ -9,6 +10,8 @@ import {
   getStates,
   getSubDistricts,
   getUniversity,
+  sendNotificationData,
+  verifyNotificationData,
 } from '../reducers/common-reducers';
 
 export const getStatesList = () => async (dispatch) => {
@@ -115,6 +118,40 @@ export const getUniversityList = () => async (dispatch) => {
       .then((response) => {
         dispatch(getUniversity(response.data));
         return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const sendNotificationOtp = (otpTypeValue) => async (dispatch) => {
+  // verboseLog('inside common action', otpTypeValue);
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.common.sendOtp,
+      data: otpTypeValue,
+    })
+      .then((response) => {
+        dispatch(sendNotificationData(response));
+        // return resolve(response.DOAuthOTP.uidtkn);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+export const verifyNotificationOtp = (otpValue) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.common.verifyOtp,
+      data: otpValue,
+    })
+      .then((response) => {
+        dispatch(verifyNotificationData(response));
+        // return resolve(response.DOAuthOTP.uidtkn);
       })
       .catch((error) => {
         return reject(error);

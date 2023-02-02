@@ -52,20 +52,23 @@ export function ModalOTP({
   headerText = 'We just sent an OTP on your registered Mobile Number  XXXXXX2182 linked with your Aadhaar.',
 }) {
   const [open, setOpen] = useState(false);
-  const [otpEmailVerify, setOtpEmailVerify] = useState(false);
-  const [otpMobileVerify, setOtpMobileVerify] = useState(false);
+  const [otpEmailVerify, setOtpEmailVerify] = useState(true);
+  const [otpMobileVerify, setOtpMobileVerify] = useState(true);
 
   const otpResend = () => {
     successToast('OTP Resent Successfully', 'otp-resent', 'success', 'top-center');
   };
 
-  const { otpform, getOtpValidation, handleClear } = OtpForm({
+  const { otpform, otpValue, getOtpValidation, handleClear } = OtpForm({
     resendAction: otpResend,
   });
 
   const handleClickOpen = () => {
     setOpen(true);
   };
+  // const handleClickClose = () => {
+  //   setOpen(true);
+  // };
 
   const handleClose = () => {
     setOpen(false);
@@ -74,11 +77,11 @@ export function ModalOTP({
 
   const handleConfirm = () => {
     if (getOtpValidation()) {
-      setOpen(false);
+      // setOpen(false);
       setOtpMobileVerify(true);
       setOtpEmailVerify(true);
+      afterConfirm(otpValue);
       handleClear();
-      afterConfirm();
     }
   };
 
@@ -132,7 +135,11 @@ export function ModalOTP({
       </Box>
     ),
     handleClickOpen: handleClickOpen,
+    // handleClickClose: handleClickClose,
+    handleConfirm: handleConfirm,
+    handleClose: handleClose,
     otpEmailVerify,
+    otpValue,
     otpMobileVerify,
   };
 }

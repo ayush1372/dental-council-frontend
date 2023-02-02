@@ -1,10 +1,21 @@
+import { useEffect } from 'react';
+
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { getRegistrationCouncilList } from '../../../store/actions/common-actions';
 import { Button, Select, TextField } from '../../../ui/core';
 
 const AdvanceSearch = ({ setDoSearch }) => {
+  const { registrationCouncilList } = useSelector((state) => state.common);
+  // eslint-disable-next-line no-console
+  console.log('registrationCouncilList', registrationCouncilList);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getRegistrationCouncilList());
+  }, []);
   const {
     formState: { errors },
     getValues,
@@ -17,7 +28,7 @@ const AdvanceSearch = ({ setDoSearch }) => {
       DoctorName: '',
       RegistrationNumber: '',
       yearofRegistration: '',
-      Statemedicalcouncil: '',
+      Statemedicalcouncil: 'hii',
     },
   });
   return (

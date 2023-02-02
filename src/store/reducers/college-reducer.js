@@ -8,6 +8,7 @@ const initialState = {
   },
   registrarDetails: { data: [], isLoading: Boolean(true), isError: false },
   deanDetails: { data: [], isLoading: Boolean(true), isError: false },
+  collegeRegisterDetails: { data: [], isLoading: Boolean(true), isError: false },
 };
 
 const collegeReducer = createSlice({
@@ -34,6 +35,9 @@ const collegeReducer = createSlice({
     detailsOfDean: (state, action) => {
       state.deanDetails = action.payload;
     },
+    collegeRegister: (state, action) => {
+      state.collegeRegisterDetails = action.payload;
+    },
   },
 });
 
@@ -44,6 +48,7 @@ export const {
   updateCollegeAdminProfile,
   detailsOfRegistrar,
   detailsOfDean,
+  collegeRegister,
 } = collegeReducer.actions;
 
 export default collegeReducer.reducer;

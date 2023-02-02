@@ -22,6 +22,8 @@ export const API = {
     districts: 'api/v1/md/state/{state_id}/districts',
     getCouncilNames: 'api/v1/md/smcs',
     getUniversityNames: 'api/v1/md/universities',
+    sendOtp: 'api/v1/notification/send-otp',
+    verifyOtp: 'api/v1/notification/verify-otp',
   },
   college: {
     registrar: 'api/v1/college/registrar',
@@ -29,6 +31,7 @@ export const API = {
     getCollegeProfile: 'api/v1/college/{id}',
     getCollegeRegistrarProfile: '/api/v1/college/registrar/{id}',
     getCollegeDeanProfile: '/api/v1/college/dean/{id}',
+    register: 'api/v1/college',
   },
   Aadhaar: {
     sendAadhaarOtp: 'api/v1/sendAadhaarOtp',

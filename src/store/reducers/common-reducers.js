@@ -18,6 +18,8 @@ const initialState = {
   subDistrictList: { data: [], isLoading: Boolean(true), isError: false },
   registrationCouncilList: { data: [], isLoading: Boolean(true), isError: false },
   universitiesList: { data: [], isLoading: Boolean(true), isError: false },
+  sendNotificationOtpData: { data: [], isLoading: Boolean(true), isError: false },
+  verifyNotificationOtpData: { data: [], isLoading: Boolean(true), isError: false },
 };
 
 export const CommonActivity = createSlice({
@@ -66,6 +68,12 @@ export const CommonActivity = createSlice({
     getUniversity: (state, action) => {
       state.universitiesList = action.payload;
     },
+    sendNotificationData: (state, action) => {
+      state.sendNotificationOtpData = action.payload;
+    },
+    verifyNotificationData: (state, action) => {
+      state.verifyNotificationOtpData = action.payload;
+    },
   },
 });
 
@@ -85,6 +93,8 @@ export const {
   getSubDistricts,
   getRegistrationCouncil,
   getUniversity,
+  sendNotificationData,
+  verifyNotificationData,
 } = CommonActivity.actions;
 
 export default CommonActivity.reducer;

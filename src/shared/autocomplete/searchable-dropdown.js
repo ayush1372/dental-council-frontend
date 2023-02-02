@@ -23,15 +23,6 @@ const AutoCompleteField = (
   },
   ref
 ) => {
-  // eslint-disable-next-line no-console
-  console.log(
-    'inside searchable-dropdown=id,name,items,label,value',
-    id,
-    name,
-    items,
-    label,
-    value
-  );
   return (
     <Autocomplete
       limitTags={1}
@@ -39,10 +30,8 @@ const AutoCompleteField = (
       multiple={multiple}
       value={value}
       onChange={(event, newValue) => {
-        // eslint-disable-next-line no-console
-        console.log('newValue  and event is ', newValue, event);
         clearErrors(name);
-        onChange(newValue.id);
+        onChange(newValue);
       }}
       disabled={disabled}
       id={id}
@@ -53,18 +42,16 @@ const AutoCompleteField = (
       }}
       noOptiontext={'Not Available'}
       renderOption={(props, item) => (
-        <Box component="li" {...props} key={item.id} value={item.id}>
+        <Box component="li" {...props} key={item.id}>
           {item.name}
         </Box>
       )}
       renderInput={(params) => (
-        // console.log('params is', params);
         <TextField
           {...props}
           ref={ref}
           {...params}
           name={name}
-          value={id}
           label={label}
           placeholder={placeholder}
           required={required}

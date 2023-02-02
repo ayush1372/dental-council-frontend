@@ -2,6 +2,7 @@ import { API } from '../../api/api-endpoints';
 import { GET, POST, PUT } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import {
+  collegeRegister,
   detailsOfDean,
   detailsOfRegistrar,
   getCollegeAdminData,
@@ -125,6 +126,23 @@ export const updateCollegeAdminProfileData = (body) => async () => {
       .then((response) => {
         // eslint-disable-next-line no-console
         console.log('inside action', response);
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+export const registerCollegeDetails = (collegeDetails) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.college.register,
+      // headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      data: collegeDetails,
+    })
+      .then((response) => {
+        dispatch(collegeRegister(response));
         return resolve(response);
       })
       .catch((error) => {
