@@ -40,4 +40,7 @@ export const API = {
   smc: {
     getSMCProfileData: '/api/v1/user/smc/{id}',
   },
+  nbe: {
+    getNBEProfileData: '/api/v1/user/nbe/{id}',
+  },
 };
