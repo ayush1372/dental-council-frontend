@@ -32,7 +32,6 @@ export const API = {
     getCollegeRegistrarProfile: '/api/v1/college/registrar/{id}',
     getCollegeDeanProfile: '/api/v1/college/dean/{id}',
     register: 'api/v1/college',
-    editAdminCollegeProfile: 'api/v1/college',
     initiateCollegeWorkFlow: '/api/v1/action/initiateCollegeWorkFlow',
   },
   nmc: {

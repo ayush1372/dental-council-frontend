@@ -8,11 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createEditFieldData } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
 import { updateCollegeAdminProfileData } from '../../../store/actions/college-actions';
-import {
-  getRegistrationCouncilList,
-  getStatesList,
-  getUniversityList,
-} from '../../../store/actions/common-actions';
+import { getStatesList } from '../../../store/actions/common-actions';
 import { Button, TextField } from '../../../ui/core';
 
 const CollegeEditProfile = () => {
@@ -26,8 +22,6 @@ const CollegeEditProfile = () => {
 
   useEffect(() => {
     dispatch(getStatesList());
-    dispatch(getRegistrationCouncilList());
-    dispatch(getUniversityList());
   }, []);
   const {
     register,
