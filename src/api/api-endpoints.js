@@ -9,9 +9,7 @@ export const API = {
     loginUser: 'api/v1/login',
     refreshToken: 'api/v1/refreshToken',
   },
-  editProfile: {
-    editAdminCollegeProfile: 'api/v1/college',
-  },
+
   DoctorUserProfileData: {
     DoctorUserProfile: 'api/v1/hp/hpProfileDetail/',
   },
@@ -33,6 +31,7 @@ export const API = {
     getCollegeRegistrarProfile: '/api/v1/college/registrar/{id}',
     getCollegeDeanProfile: '/api/v1/college/dean/{id}',
     register: 'api/v1/college',
+    editAdminCollegeProfile: 'api/v1/college',
   },
   nmc: {
     getNMCProfileData: '/api/v1/user/nmc/{id}',

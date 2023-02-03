@@ -135,7 +135,7 @@ export const sendNotificationOtp = (otpTypeValue) => async (dispatch) => {
     })
       .then((response) => {
         dispatch(sendNotificationData(response));
-        // return resolve(response.DOAuthOTP.uidtkn);
+        return resolve(response);
       })
       .catch((error) => {
         return reject(error);
@@ -151,7 +151,7 @@ export const verifyNotificationOtp = (otpValue) => async (dispatch) => {
     })
       .then((response) => {
         dispatch(verifyNotificationData(response));
-        // return resolve(response.DOAuthOTP.uidtkn);
+        return resolve(response);
       })
       .catch((error) => {
         return reject(error);

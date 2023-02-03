@@ -8,7 +8,6 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { TextField } from '../../../../src/ui/core/form/textfield/textfield';
-import { verboseLog } from '../../../config/debug';
 import { createEditFieldData } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
 import ModalOTP from '../../../shared/otp-modal/otp-modal';
@@ -36,9 +35,6 @@ export function CollegeRegistration() {
   }, []);
 
   const onContinue = (otpNumber) => {
-    // eslint-disable-next-line no-console
-    console.log('inside comp', getValues().CollegePhoneNumber, getValues().email, type, otpNumber);
-    verboseLog('inside comp.', getValues().CollegePhoneNumber, getValues().email, type, otpNumber);
     if (type === 'sms') {
       dispatch(
         verifyNotificationOtp({
@@ -47,74 +43,61 @@ export function CollegeRegistration() {
           otp: otpNumber,
         })
       )
-        .then((response) => {
-          // handleClickOpen();
-          // eslint-disable-next-line no-console
-          console.log('response is ', response);
-          verboseLog('response is ', response);
+        .then(() => {
+          setVerifyMobile(true);
           handleClose();
         })
         .catch((error) => {
-          // handleClickOpen();
+          setVerifyMobile(false);
           successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
         });
-      // } else {
-      //   alert('inside email');
-      //   dispatch(
-      //     verifyNotificationOtp({
-      //       contact: getValues().email,
-      //       type: type,
-      //       otp: otpNumber,
-      //     })
-      //   )
-      // .then((response) => {
-      //   // onHandleClick();
-      //   verboseLog('otpverify reponse is', response);
-      // })
-      // .catch((error) => {
-      //   successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
-      // });
+    } else {
+      dispatch(
+        verifyNotificationOtp({
+          contact: getValues().email,
+          type: type,
+          otp: otpNumber,
+        })
+      )
+        .then(() => {
+          setVerifyEmail(true);
+          handleClose();
+        })
+        .catch((error) => {
+          setVerifyEmail(false);
+          successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+        });
     }
   };
 
-  const {
-    otpPopup,
-    handleClickOpen,
-    otpMobileVerify,
-    otpEmailVerify,
-    // handleClickClose,
-    handleClose,
-  } = ModalOTP({
-    afterConfirm: onContinue,
-    headerText:
-      'We just sent an OTP on your registered Mobile Number XXXXXX21123 linked with your Aadhaar.',
-  });
   const [verifyEmail, setVerifyEmail] = useState(false);
   const [verifyMobile, setVerifyMobile] = useState(false);
   const [type, setType] = useState('');
+  const [headerText, setHeaderText] = useState('');
   const getOtp = (type) => {
     setType(type);
+
     if (type === 'sms' && otpMobileVerify) {
+      setHeaderText(`Mobile Number${getValues().CollegePhoneNumber}`);
       dispatch(sendNotificationOtp({ contact: getValues().CollegePhoneNumber, type: type }))
-        .then((response) => {
-          // eslint-disable-next-line no-console
-          console.log('resposen of sent otp is ', response);
+        .then(() => {
+          handleClickOpen();
         })
         .catch((error) => {
-          // eslint-disable-next-line no-console
-          console.log('error is', error);
-          // handleClickOpen();
+          handleClose();
           successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
         });
-      setVerifyMobile(true);
     } else if (type === 'email' && otpEmailVerify) {
-      verboseLog('inside email');
-      dispatch(sendNotificationOtp({ contact: getValues().email, type: type }));
-      verboseLog('after dispatch email');
-      setVerifyEmail(true);
+      setHeaderText(`Email Id ${getValues().email}`);
+      dispatch(sendNotificationOtp({ contact: getValues().email, type: type }))
+        .then(() => {
+          handleClickOpen();
+        })
+        .catch((error) => {
+          handleClose();
+          successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+        });
     }
-    handleClickOpen();
-    // handleClickOpen({ contact: getValues().CollegePhoneNumber, type: type });
   };
   const {
     register,
@@ -122,6 +105,7 @@ export function CollegeRegistration() {
     getValues,
     setValue,
     clearErrors,
+    reset,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
@@ -139,12 +123,12 @@ export function CollegeRegistration() {
       RegistrationCouncilId: '',
       StateName: '',
       StateId: '',
-      request_id: '3',
     },
   });
-  // const onHandleChange = (data) => {
-  //   alert(data);
-  // };
+  const { otpPopup, handleClickOpen, otpMobileVerify, otpEmailVerify, handleClose } = ModalOTP({
+    afterConfirm: onContinue,
+    headerText: `We just sent an OTP on your registered  ${headerText} linked with your Aadhaar.`,
+  });
 
   const handleInput = (e) => {
     e.preventDefault();
@@ -156,7 +140,7 @@ export function CollegeRegistration() {
   };
 
   const onsubmit = () => {
-    const updatedValues = {
+    const collegeDetailValues = {
       id: null,
       name: getValues().CollegeName,
       college_code: getValues().CollegeId,
@@ -167,13 +151,13 @@ export function CollegeRegistration() {
       university_id: getValues().UniversityId,
       website: getValues().CollegeWebsite,
       address: getValues().CollegeAddress,
+      request_id: '3',
       pin_code: getValues().CollegePincode,
       state_id: getValues().StateId,
     };
-    verboseLog('updatedValues is', updatedValues);
 
-    dispatch(registerCollegeDetails(updatedValues)).then((response) => {
-      verboseLog(' college registration response is', response);
+    dispatch(registerCollegeDetails(collegeDetailValues)).then(() => {
+      reset();
     });
   };
   return (
@@ -364,7 +348,6 @@ export function CollegeRegistration() {
           <SearchableDropdown
             fullWidth
             name="UniversityName"
-            // onChange={onHandleChange}
             clearErrors={clearErrors}
             items={createEditFieldData(universitiesList)}
             placeholder="Select University Name"
@@ -438,9 +421,6 @@ export function CollegeRegistration() {
             name="StateName"
             items={createEditFieldData(statesList)}
             clearErrors={clearErrors}
-            // onChange={(newValue) => {
-            //   verboseLog(newValue);
-            // }}
             placeholder={'select state name'}
             error={errors.StateName?.message}
             {...register('StateName', {
@@ -448,7 +428,6 @@ export function CollegeRegistration() {
             })}
             onChange={(currentValue) => {
               setValue('StateId', currentValue.id);
-              verboseLog('test verbose', getValues()?.StateId);
             }}
           />
         </Grid>

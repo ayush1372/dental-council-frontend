@@ -25,8 +25,6 @@ const collegeReducer = createSlice({
       state.collegeData = action.payload;
     },
     updateCollegeAdminProfile: (state, action) => {
-      // eslint-disable-next-line no-console
-      console.log('inside college reducer -payload ', action.payload);
       state.collegeData = action.payload;
     },
     detailsOfRegistrar: (state, action) => {

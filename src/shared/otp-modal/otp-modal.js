@@ -66,10 +66,6 @@ export function ModalOTP({
   const handleClickOpen = () => {
     setOpen(true);
   };
-  // const handleClickClose = () => {
-  //   setOpen(true);
-  // };
-
   const handleClose = () => {
     setOpen(false);
     handleClear();
@@ -135,9 +131,8 @@ export function ModalOTP({
       </Box>
     ),
     handleClickOpen: handleClickOpen,
-    // handleClickClose: handleClickClose,
     handleConfirm: handleConfirm,
-    handleClose: handleClose,
+    handleClose,
     otpEmailVerify,
     otpValue,
     otpMobileVerify,

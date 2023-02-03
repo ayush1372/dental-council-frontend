@@ -5,12 +5,7 @@ import { Box, Grid, IconButton, InputAdornment, Typography } from '@mui/material
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { verboseLog } from '../../../config/debug';
 import { createEditFieldData } from '../../../helpers/functions/common-functions';
-// import {
-//   RegistrationCouncilNames,//   StateNames,
-//   UniversityNames,
-// } from '../../../constants/common-data';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
 import { updateCollegeAdminProfileData } from '../../../store/actions/college-actions';
 import {
@@ -61,7 +56,7 @@ const CollegeEditProfile = () => {
   });
 
   const onhandleSubmitClick = () => {
-    const updatedValues = {
+    const updatedCollegeDetails = {
       id: userData?.id,
       name: getValues().CollegeName,
       college_code: getValues().CollegeId,
@@ -75,10 +70,8 @@ const CollegeEditProfile = () => {
       pin_code: getValues().CollegePincode,
       state_id: getValues().StateId,
     };
-    verboseLog('All-values', updatedValues);
-    dispatch(updateCollegeAdminProfileData(updatedValues)).then((response) => {
-      verboseLog(' update response is', response);
-    });
+
+    dispatch(updateCollegeAdminProfileData(updatedCollegeDetails));
   };
 
   const handleInput = (e) => {
@@ -89,17 +82,7 @@ const CollegeEditProfile = () => {
         : Math.max(0, parseInt(e.target.value)).toString().slice(0, 10);
     }
   };
-  // const getOtp = (type) => {
-  //   alert(type);
-  //   if (type === 'phone' && otpMobileVerify) {
-  //     dispatch(sendNotificationOtp({ contact: getValues().CollegePhoneNumber, type: type }));
-  //     setVerifyMobile(true);
-  //   } else if (type === 'email' && otpEmailVerify) {
-  //     dispatch(sendNotificationOtp({ contact: getValues().email, type: type }));
-  //     setVerifyEmail(true);
-  //   }
-  //   handleClickOpen();
-  // };
+
   return (
     <Grid>
       <Grid container spacing={2} mt={2}>
@@ -348,7 +331,6 @@ const CollegeEditProfile = () => {
             })}
             onChange={(currentValue) => {
               setValue('StateId', currentValue.id);
-              // verboseLog('test verbose', getValues()?.StateId);
             }}
           />
         </Grid>

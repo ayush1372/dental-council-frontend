@@ -28,7 +28,7 @@ const AdvanceSearch = ({ setDoSearch }) => {
       DoctorName: '',
       RegistrationNumber: '',
       yearofRegistration: '',
-      Statemedicalcouncil: 'hii',
+      Statemedicalcouncil: '',
     },
   });
   return (

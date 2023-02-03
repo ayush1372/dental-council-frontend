@@ -119,13 +119,11 @@ export const updateCollegeAdminProfileData = (body) => async () => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: PUT,
-      url: API.editProfile.editAdminCollegeProfile,
+      url: API.college.editAdminCollegeProfile,
       data: body,
       headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
       .then((response) => {
-        // eslint-disable-next-line no-console
-        console.log('inside action', response);
         return resolve(response);
       })
       .catch((error) => {
