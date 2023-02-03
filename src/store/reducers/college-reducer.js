@@ -7,11 +7,8 @@ const initialState = {
     isError: false,
   },
   registrarDetails: { data: [], isLoading: Boolean(true), isError: false },
-
   deanDetails: { data: [], isLoading: Boolean(true), isError: false },
-
   collegeRegisterDetails: { data: [], isLoading: Boolean(true), isError: false },
-
   initiateCollegeWorkFlow: { data: [], isLoading: Boolean(true), isError: false },
 };
 
