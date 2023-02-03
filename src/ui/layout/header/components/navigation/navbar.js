@@ -6,11 +6,12 @@ import { Box, Typography, useTheme } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
+import { navbar_routes } from '../../../../../constants/navigation-meta';
 import { menuToggle } from '../../../../../store/reducers/nav-menu-reducer';
 import Dropdown from './dropdown';
-
-const Nav = ({ navLinks, menuToggleHandler }) => {
+const Nav = ({ navbar_routes, menuToggleHandler }) => {
   const [openDropdown, setOpenDropdown] = useState(null);
+
   const theme = useTheme();
   const dispatch = useDispatch();
 
@@ -39,6 +40,9 @@ const Nav = ({ navLinks, menuToggleHandler }) => {
         borderBottomColor: theme.palette.secondary.main,
       },
 
+      [theme.breakpoints.down('lg')]: {
+        padding: '20px 12px',
+      },
       [theme.breakpoints.down('md')]: {
         width: '100%',
         flexDirection: 'row',
@@ -98,7 +102,7 @@ const Nav = ({ navLinks, menuToggleHandler }) => {
       position="relative"
       px={{ xs: 0, md: 3 }}
     >
-      {navLinks.map(({ label, link, tree }) => {
+      {navbar_routes.map(({ label, link, tree }) => {
         const isOpen = openDropdown === label;
         return (
           <Fragment key={label}>
@@ -146,64 +150,7 @@ const Nav = ({ navLinks, menuToggleHandler }) => {
 };
 
 Nav.defaultProps = {
-  navLinks: [
-    {
-      label: 'About NMR',
-      link: '/about-us',
-    },
-    {
-      label: 'NMR ACT',
-      link: null,
-      tree: [
-        {
-          label: 'Financial',
-          link: '/financial',
-          branches: null,
-        },
-        {
-          label: 'Agro',
-          link: '/agro',
-          branches: null,
-        },
-        {
-          label: 'Pricing',
-          link: '/pricing',
-          branches: null,
-        },
-      ],
-    },
-
-    {
-      label: 'Rules & Regulations',
-      link: '/rules-regulations',
-      tree: null,
-    },
-    {
-      label: 'Information Desk',
-      link: '/information-desk',
-      tree: null,
-    },
-    {
-      label: 'Media Room',
-      link: '/media-room',
-      tree: null,
-    },
-    {
-      label: 'E-Gazette',
-      link: '/e-gazette',
-      tree: null,
-    },
-    {
-      label: 'Photo Gallery',
-      link: '/photo-gallery',
-      tree: null,
-    },
-    {
-      label: 'Search Doctor',
-      link: '/search-doctor',
-      tree: null,
-    },
-  ],
+  navbar_routes,
 };
 
 export default Nav;

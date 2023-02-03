@@ -1,6 +1,6 @@
 import { changeAppFontSize } from '../helpers/functions/common-functions';
 
-export const SvgIcon = (palettes, appFontType) => ({
+export const SvgIcon = (appFontType) => ({
   styleOverrides: {
     fontSizeWidth30: {
       fontSize: changeAppFontSize(30, appFontType),
@@ -17,6 +17,7 @@ export const SvgIcon = (palettes, appFontType) => ({
     fontSizeWidth24: {
       fontSize: changeAppFontSize(24, appFontType),
     },
+
     fontSizeWidth12: {
       fontSize: changeAppFontSize(12, appFontType),
     },
