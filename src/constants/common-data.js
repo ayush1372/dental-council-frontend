@@ -15,7 +15,7 @@ export const StateNames = [
 ];
 export const RegistrationCouncilNames = [
   { id: '1', name: 'West Bengal Medical Council' },
-  { id: '2', name: 'Maharastra Medical Council' },
+  { id: '2', name: 'Maharashtra Medical Council' },
   { id: '3', name: 'Andhra Pradesh Medical Council' },
   { id: '4', name: 'Karnataka Medical Council' },
   { id: '5', name: 'Telangana Medical Council' },
