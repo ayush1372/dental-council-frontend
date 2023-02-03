@@ -1,26 +1,34 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Box, Grid, TablePagination, Typography } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 
 import { verboseLog } from '../../../../config/debug';
-import { collegeApprovalsList } from '../../../../constants/common-data';
 import GenericTable from '../../../../shared/generic-component/generic-table';
+import { getCollegeAdminProfileData } from '../../../../store/actions/college-actions';
+import { getCollegeApprovalData } from '../../../../store/actions/nmc-actions';
+import successToast from '../../../../ui/core/toaster';
 import TableSearch from '../table-search/table-search';
 
 function createData(
   SNo,
+  id,
   collegeId,
   collegeName,
   nameofStateCouncil,
+  councilVerificationStatus,
   dateofSubmission,
   pendency,
   view
 ) {
   return {
     SNo,
+    id,
     collegeId,
     collegeName,
     nameofStateCouncil,
+    councilVerificationStatus,
     dateofSubmission,
     pendency,
     view,
@@ -32,8 +40,12 @@ function CollegeApprovalTable(props) {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
   const [selectedRowData, setRowData] = React.useState({});
+  const [searchQueryParams, setSearchQueryParams] = React.useState();
+  const { collegeApprovalData } = useSelector((state) => state.nmc);
 
-  verboseLog('selectedRowData', selectedRowData);
+  verboseLog('selectedRowData', selectedRowData, collegeApprovalData);
+  const dispatch = useDispatch();
+
   const dataHeader = [
     { title: 'S.No.', name: 'SNo', sorting: true, type: 'string' },
     {
@@ -49,10 +61,34 @@ function CollegeApprovalTable(props) {
       type: 'string',
     },
     { title: 'Name of State Council', name: 'nameofStateCouncil', sorting: true, type: 'string' },
+    {
+      title: 'Council Verification Status',
+      name: 'councilVerificationStatus',
+      sorting: true,
+      type: 'string',
+    },
     { title: 'Date of Submission', name: 'dateofSubmission', sorting: true, type: 'date' },
     { title: 'Pendency', name: 'pendency', sorting: true, type: 'string' },
     { title: 'View', name: 'view', sorting: false, type: 'string' },
   ];
+
+  const searchParams = (data) => {
+    setSearchQueryParams(data);
+  };
+
+  useEffect(() => {
+    const queryObj = {
+      pageNo: '',
+      limit: collegeApprovalData?.data?.total_no_of_records
+        ? collegeApprovalData?.data?.total_no_of_records
+        : '',
+      search: searchQueryParams ? searchQueryParams?.search : '',
+      id: searchQueryParams ? searchQueryParams?.filterByRegNo : '',
+      name: searchQueryParams ? searchQueryParams?.filterByName : '',
+      council: searchQueryParams ? searchQueryParams?.registrationCouncil : '',
+    };
+    dispatch(getCollegeApprovalData(queryObj));
+  }, [searchQueryParams]);
 
   const handleDataRowClick = (dataRow) => {
     setRowData(dataRow);
@@ -64,7 +100,9 @@ function CollegeApprovalTable(props) {
     setRowData(row);
     props.setShowViewPorfile(true);
     props.setShowTable(false);
-    props.setCollegeDetails({ ...collegeApprovalsList.message[row['SNo'].value - 1] });
+    dispatch(getCollegeAdminProfileData(row?.id?.value)).catch((error) => {
+      successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+    });
   };
 
   const handleRequestSort = (event, property) => {
@@ -72,24 +110,34 @@ function CollegeApprovalTable(props) {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
-  const newRowsData = collegeApprovalsList.message?.map((collegeApproval) => {
+
+  const newRowsData = collegeApprovalData?.data?.college_details?.map((collegeApproval, index) => {
     return createData(
-      { type: 'SNo', value: collegeApproval.SNo },
+      { type: 'SNo', value: index + 1 },
+      {
+        type: 'id',
+        value: collegeApproval?.id,
+      },
       {
         type: 'College Id',
-        value: collegeApproval?.collegeId,
+        value: collegeApproval?.college_id,
       },
       {
         type: 'College Name',
-        value: collegeApproval.collegeName,
+        value: collegeApproval?.college_name,
       },
       {
         type: 'nameofStateCouncil',
-        value: collegeApproval.nameofStateCouncil,
+        value: collegeApproval?.council_name,
       },
-      { type: 'dateofSubmission', value: collegeApproval.dateofSubmission },
-      { type: 'pendency', value: collegeApproval.pendency },
-      { type: 'view', value: collegeApproval.view, onClickCallback: viewCallback }
+      {
+        type: 'councilVerificationStatus',
+        value: collegeApproval?.status,
+      },
+
+      { type: 'dateofSubmission', value: collegeApproval?.submitted_on },
+      { type: 'pendency', value: collegeApproval?.pendency },
+      { type: 'view', value: 'View', onClickCallback: viewCallback }
     );
   });
 
@@ -107,37 +155,40 @@ function CollegeApprovalTable(props) {
   };
 
   return (
-    <Grid sx={{ m: 2 }}>
-      <Typography variant="h2" py={2}>
-        College Applications Pending List
-      </Typography>
-      <TableSearch />
-      <GenericTable
-        order={order}
-        orderBy={orderBy}
-        onRequestSort={handleRequestSort}
-        tableHeader={dataHeader}
-        data={newRowsData}
-        handleRowClick={handleDataRowClick}
-        rowsPerPage={rowsPerPage}
-        page={page}
-      />
-      <Box>
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={props.showTable?.count || newRowsData.length}
+    <>
+      <ToastContainer></ToastContainer>
+      <Grid sx={{ m: 2 }}>
+        <Typography variant="h2" py={2}>
+          College Applications Pending List
+        </Typography>
+        <TableSearch searchParams={searchParams} />
+        <GenericTable
+          order={order}
+          orderBy={orderBy}
+          onRequestSort={handleRequestSort}
+          tableHeader={dataHeader}
+          data={newRowsData}
+          handleRowClick={handleDataRowClick}
           rowsPerPage={rowsPerPage}
           page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-          }}
         />
-      </Box>
-    </Grid>
+        <Box>
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={props.showTable?.count || newRowsData?.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          />
+        </Box>
+      </Grid>
+    </>
   );
 }
 

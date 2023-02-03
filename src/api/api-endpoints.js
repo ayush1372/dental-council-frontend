@@ -12,6 +12,7 @@ export const API = {
 
   DoctorUserProfileData: {
     DoctorUserProfile: 'api/v1/hp/hpProfileDetail/',
+    profileImage: 'api/v1/hp/hpProfileDetail/profile_picture/{hp_profile_id}',
   },
   common: {
     states: 'api/v1/md/country/356/states',
@@ -32,9 +33,11 @@ export const API = {
     getCollegeDeanProfile: '/api/v1/college/dean/{id}',
     register: 'api/v1/college',
     editAdminCollegeProfile: 'api/v1/college',
+    initiateCollegeWorkFlow: '/api/v1/action/initiateCollegeWorkFlow',
   },
   nmc: {
     getNMCProfileData: '/api/v1/user/nmc/{id}',
+    collegeApproval: '/api/v1/registration/colleges',
   },
   Aadhaar: {
     sendAadhaarOtp: 'api/v1/sendAadhaarOtp',
