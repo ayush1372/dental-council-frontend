@@ -10,10 +10,12 @@ import {
   smcTabs,
 } from '../../helpers/components/sidebar-drawer-list-item';
 import {
+  getCountriesList,
   getCoursesList,
   getLanguagesList,
   getRegistrationCouncilList,
   getSpecialitiesList,
+  getStatesList,
   getUniversitiesList,
 } from '../../store/actions/common-actions';
 import { changeUserActiveTab } from '../../store/reducers/common-reducers';
@@ -56,6 +58,8 @@ export function Profile() {
     dispatch(getCoursesList());
     dispatch(getUniversitiesList());
     dispatch(getSpecialitiesList());
+    dispatch(getStatesList());
+    dispatch(getCountriesList());
 
     // only required api calls for user type.
     switch (loggedInUserType) {
