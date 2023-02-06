@@ -39,11 +39,12 @@ function CollegeApprovalTable(props) {
   const [orderBy, setOrderBy] = React.useState({});
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
-  const [selectedRowData, setRowData] = React.useState({});
+  //const [selectedRowData, setRowData] = React.useState({});
   const [searchQueryParams, setSearchQueryParams] = React.useState();
   const { collegeApprovalData } = useSelector((state) => state.nmc);
+  const { initiateCollegeWorkFlow } = useSelector((state) => state.college);
 
-  verboseLog('selectedRowData', selectedRowData, collegeApprovalData);
+  verboseLog('selectedRowData', initiateCollegeWorkFlow);
   const dispatch = useDispatch();
 
   const dataHeader = [
@@ -88,16 +89,16 @@ function CollegeApprovalTable(props) {
       council: searchQueryParams ? searchQueryParams?.registrationCouncil : '',
     };
     dispatch(getCollegeApprovalData(queryObj));
-  }, [searchQueryParams]);
+  }, [searchQueryParams, collegeApprovalData?.data?.total_no_of_records]);
 
-  const handleDataRowClick = (dataRow) => {
-    setRowData(dataRow);
+  const handleDataRowClick = () => {
+    //setRowData(dataRow);
   };
 
   const viewCallback = (event, row) => {
     event.preventDefault();
     event.stopPropagation();
-    setRowData(row);
+    // setRowData(row);
     props.setShowViewPorfile(true);
     props.setShowTable(false);
     dispatch(getCollegeAdminProfileData(row?.id?.value)).catch((error) => {

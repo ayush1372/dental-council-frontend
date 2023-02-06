@@ -33,6 +33,7 @@ const collegeReducer = createSlice({
     postInitiateCollegeWorkFlow: (state, action) => {
       state.initiateCollegeWorkFlow = action.payload;
     },
+    resetCollegeWorkflowReducer: () => initialState.initiateCollegeWorkFlow,
   },
 });
 
@@ -43,6 +44,7 @@ export const {
   detailsOfRegistrar,
   detailsOfDean,
   postInitiateCollegeWorkFlow,
+  resetCollegeWorkflowReducer,
 } = collegeReducer.actions;
 
 export default collegeReducer.reducer;
