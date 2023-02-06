@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { MenuItem, Select } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+// import { useTheme } from '@mui/material/styles';
 import { useTranslation } from 'react-i18next';
 
 import styles from '../../ui/layout/header/components/top-bar/top-bar.module.scss';
@@ -20,7 +20,7 @@ export const MultilingualDropdown = () => {
     setLanguageValue(event.target.value ? event.target.value : languageValue);
     i18n.changeLanguage(event.target.value);
   };
-  const theme = useTheme();
+  // const theme = useTheme();
   return (
     <Select
       className={styles.MultilingualSelect}
@@ -32,6 +32,7 @@ export const MultilingualDropdown = () => {
         '.MuiSelect-select': {
           paddingTop: '0',
           paddingBottom: '0',
+          pr: 0,
         },
       }}
       inputProps={{
@@ -42,8 +43,12 @@ export const MultilingualDropdown = () => {
       }}
       IconComponent={(props) => (
         <KeyboardArrowDownIcon
-          fontSizeWidth18
-          sx={{ color: theme.palette.textPrimary.main }}
+          fontSize="width24"
+          sx={{
+            '.MuiSvgIcon-root.MuiSelect-iconOutlined': {
+              color: 'primary.main',
+            },
+          }}
           {...props}
         />
       )}
