@@ -11,6 +11,8 @@ export const API = {
   },
   editProfile: {},
   DoctorUserProfileData: {
+    QualificationDetails: 'api/v1/hp/health-professional/registration/176',
+    WorkProfileDetails: 'api/v1/hp/health-professional/work-profile/165',
     DoctorUserProfile: 'api/v1/hp/hpProfileDetail/',
     profileImage: 'api/v1/hp/hpProfileDetail/profile_picture/{hp_profile_id}',
   },
@@ -20,6 +22,12 @@ export const API = {
     countries: 'api/v1/md/countries',
     subDistricts: 'api/v1/md/district/{district_id}/sub_districts',
     districts: 'api/v1/md/state/{state_id}/districts',
+    languages: 'api/v1/md/languages',
+    universities: 'api/v1/md/universities',
+    colleges: 'api/v1/md/university/{university_id}/colleges',
+    courses: 'api/v1/md/courses',
+    specialities: 'api/v1/md/specialities',
+    councilNames: 'api/v1/md/smcs',
   },
   college: {
     registrar: 'api/v1/college/registrar',

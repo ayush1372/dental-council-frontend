@@ -5,6 +5,13 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { colgTabs, doctorTabs } from '../../helpers/components/sidebar-drawer-list-item';
 import { sideBarTabs } from '../../helpers/functions/common-functions';
+import {
+  getCoursesList,
+  getLanguagesList,
+  getRegistrationCouncilList,
+  getSpecialitiesList,
+  getUniversitiesList,
+} from '../../store/actions/common-actions';
 import { changeUserActiveTab } from '../../store/reducers/common-reducers';
 import MiniDrawer from './components/profile-sidebar/profile-sidebar';
 import ProfileTabContainer from './components/profile-sidebar/profile-tab-container';
@@ -38,6 +45,25 @@ export function Profile() {
     );
   }, []);
 
+  useEffect(() => {
+    // making api calls which are independent of dependencies.
+
+    dispatch(getLanguagesList());
+    dispatch(getCoursesList());
+    dispatch(getUniversitiesList());
+    dispatch(getSpecialitiesList());
+
+    // only required api calls for user type.
+    switch (loggedInUserType) {
+      case 'SMC':
+        dispatch(getRegistrationCouncilList());
+        break;
+      case 'Doctor':
+        break;
+      default:
+        break;
+    }
+  }, [loggedInUserType]);
   const theme = useTheme();
 
   return (
