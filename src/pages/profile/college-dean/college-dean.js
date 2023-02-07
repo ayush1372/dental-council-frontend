@@ -1,14 +1,16 @@
 import { Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { sendDeanDetails } from '../../../store/actions/college-actions';
 import { Button, TextField } from '../../../ui/core';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
-export function CollegeDean() {
+export function CollegeDean({ showPage }) {
   const dispatch = useDispatch();
+  const { collegeData } = useSelector((state) => state.college);
+  const userData = collegeData?.data;
 
   const { t } = useTranslation();
   const {
@@ -21,7 +23,7 @@ export function CollegeDean() {
   } = useForm({
     mode: 'onChange',
     defaultValues: {
-      deanName: '',
+      deanName: showPage === 'edit' ? userData?.name : '',
       deanPhoneNumber: '',
       deanEmail: '',
       deanUserId: '',
@@ -36,7 +38,7 @@ export function CollegeDean() {
     <Grid container item spacing={2} p={2}>
       <Grid item xs={12} mt={3}>
         <Typography color="textPrimary.main" variant="h2" mt={2}>
-          College Dean
+          {showPage === 'edit' ? 'Edit College Dean' : 'College Dean'}
         </Typography>
       </Grid>
       <Grid item xs={12} md={6} sm={6} lg={4}>
