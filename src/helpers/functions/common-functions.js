@@ -1,5 +1,13 @@
 import JSEncrypt from 'jsencrypt';
 
+import {
+  colgTabs,
+  doctorTabs,
+  nbeTabs,
+  nmcTabs,
+  smcTabs,
+} from '../components/sidebar-drawer-list-item';
+
 export function get_year_data(startYear = 1900) {
   var ans = [];
   var date = new Date();
@@ -68,4 +76,26 @@ export const userActionType = (actionType) => {
     Rejected: 5,
   };
   return actionTypeObj[actionType];
+};
+
+export const usersType = (userType) => {
+  const usersObj = {
+    Doctor: 1,
+    College: 2,
+    SMC: 3,
+    NMC: 4,
+    NBE: 5,
+  };
+  return usersObj[userType];
+};
+
+export const sideBarTabs = (userType) => {
+  const usersObj = {
+    Doctor: doctorTabs,
+    College: colgTabs,
+    SMC: smcTabs,
+    NMC: nmcTabs,
+    NBE: nbeTabs,
+  };
+  return usersObj[userType];
 };

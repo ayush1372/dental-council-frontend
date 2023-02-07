@@ -24,6 +24,7 @@ import {
   loginAction,
   validateCaptchaImage,
 } from '../../../store/actions/login-action';
+import { getNBEProfileData } from '../../../store/actions/nbe-actions';
 import { getNMCProfileData } from '../../../store/actions/nmc-actions';
 import { getSMCProfileData } from '../../../store/actions/smc-actions';
 import { login, userLoggedInType } from '../../../store/reducers/common-reducers';
@@ -80,6 +81,8 @@ export function LoginPage({ handleForgotPassword }) {
       dispatch(getSMCProfileData(response?.data?.profile_id));
     } else if (userType === 'National Medical Council') {
       dispatch(getNMCProfileData(response?.data?.profile_id));
+    } else if (userType === 'NBE') {
+      dispatch(getNBEProfileData(response?.data?.profile_id));
     }
   };
 
@@ -113,11 +116,6 @@ export function LoginPage({ handleForgotPassword }) {
                 dispatch(userLoggedInType(loginFormname));
                 navigate(`/profile`);
                 getCommonData(response);
-
-                window.scrollTo({
-                  top: 0,
-                  behavior: 'smooth',
-                });
               }
             })
             .catch((error) => {

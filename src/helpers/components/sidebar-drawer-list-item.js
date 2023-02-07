@@ -189,3 +189,27 @@ export const colgTabs = [
     element: <ChangePassword tabName={SideDrawerListItem} />,
   },
 ];
+
+export const nbeTabs = [
+  {
+    option: 0,
+    name: 'Dashboard',
+    tabName: 'dashboard',
+    icon: <DashboardIcon />,
+    element: <Dashboard tabName={SideDrawerListItem} />,
+  },
+  {
+    option: 1,
+    name: 'My Profile',
+    tabName: 'my-profile',
+    icon: <AccountCircleIcon />,
+    element: <MyProfile userType={'NBE'} />,
+  },
+  {
+    option: 2,
+    name: 'Track Status',
+    tabName: 'track-status',
+    icon: <BadgeIcon />,
+    element: <TrackStatus tabName={SideDrawerListItem} />,
+  },
+];
