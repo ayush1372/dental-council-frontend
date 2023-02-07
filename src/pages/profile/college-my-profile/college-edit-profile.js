@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Box, Grid, IconButton, InputAdornment, Typography } from '@mui/material';
@@ -7,9 +7,15 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { createEditFieldData } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
+import ModalOTP from '../../../shared/otp-modal/otp-modal';
 import { updateCollegeAdminProfileData } from '../../../store/actions/college-actions';
-import { getStatesList } from '../../../store/actions/common-actions';
+import {
+  getStatesList,
+  sendNotificationOtp,
+  verifyNotificationOtp,
+} from '../../../store/actions/common-actions';
 import { Button, TextField } from '../../../ui/core';
+import successToast from '../../../ui/core/toaster';
 
 const CollegeEditProfile = () => {
   const { collegeData } = useSelector((state) => state.college);
@@ -17,12 +23,111 @@ const CollegeEditProfile = () => {
     (state) => state.common
   );
 
+  const [verifyEmail, setVerifyEmail] = useState(false);
+  const [verifyMobile, setVerifyMobile] = useState(false);
+  const [type, setType] = useState('');
+  const [headerText, setHeaderText] = useState('');
   const userData = collegeData?.data;
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(getStatesList());
   }, []);
+
+  const onContinue = (otpNumber) => {
+    if (type === 'sms') {
+      dispatch(
+        verifyNotificationOtp({
+          contact: getValues().CollegePhoneNumber,
+          type: type,
+          otp: otpNumber,
+        })
+      )
+        .then(() => {
+          setVerifyMobile(true);
+          handleClose();
+        })
+        .catch((error) => {
+          setVerifyMobile(false);
+          successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+        });
+    } else {
+      dispatch(
+        verifyNotificationOtp({
+          contact: getValues().email,
+          type: type,
+          otp: otpNumber,
+        })
+      )
+        .then(() => {
+          setVerifyEmail(true);
+          handleClose();
+        })
+        .catch((error) => {
+          setVerifyEmail(false);
+          successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+        });
+    }
+  };
+
+  const onOtpResendClick = () => {
+    if (type === 'sms' && otpMobileVerify) {
+      setHeaderText(`Mobile Number${getValues().CollegePhoneNumber}`);
+      dispatch(sendNotificationOtp({ contact: getValues().CollegePhoneNumber, type: type }))
+        .then(() => {
+          handleClickOpen();
+        })
+        .catch((error) => {
+          handleClose();
+          successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+        });
+    } else if (type === 'email' && otpEmailVerify) {
+      setHeaderText(`Email Id ${getValues().email}`);
+      dispatch(sendNotificationOtp({ contact: getValues().email, type: type }))
+        .then(() => {
+          handleClickOpen();
+        })
+        .catch((error) => {
+          handleClose();
+          successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+        });
+    }
+  };
+
+  const { otpPopup, handleClickOpen, otpMobileVerify, otpEmailVerify, handleClose } = ModalOTP({
+    afterConfirm: onContinue,
+    reSentOtp: onOtpResendClick,
+    headerText: `We just sent an OTP on your registered  ${headerText} linked with your Aadhaar.`,
+  });
+  const getOtp = (type) => {
+    setType(type);
+
+    if (type === 'sms' && otpMobileVerify) {
+      setHeaderText(
+        `Mobile NumberXXXXX${getValues().CollegePhoneNumber.substr(
+          getValues().CollegePhoneNumber.length - 4
+        )}`
+      );
+      dispatch(sendNotificationOtp({ contact: getValues().CollegePhoneNumber, type: type }))
+        .then(() => {
+          handleClickOpen();
+        })
+        .catch((error) => {
+          handleClose();
+          successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+        });
+    } else if (type === 'email' && otpEmailVerify) {
+      setHeaderText(`Email Id ******${getValues().email.substr(getValues().email.length - 15)}.`);
+      dispatch(sendNotificationOtp({ contact: getValues().email, type: type }))
+        .then(() => {
+          handleClickOpen();
+        })
+        .catch((error) => {
+          handleClose();
+          successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+        });
+    }
+  };
+
   const {
     register,
     handleSubmit,
@@ -136,11 +241,12 @@ const CollegeEditProfile = () => {
             </Typography>
             <Typography component="span">
               <IconButton aria-label="toggle password visibility" edge="end">
-                {getValues()?.CollegePhoneNumber?.length === 11 ? (
+                {/* {getValues()?.CollegePhoneNumber?.length === 11 ? (
                   <CheckCircleIcon color="success" />
                 ) : (
                   ''
-                )}
+                )} */}
+                {verifyMobile && <CheckCircleIcon color="success" />}
               </IconButton>
             </Typography>
           </Typography>
@@ -168,6 +274,7 @@ const CollegeEditProfile = () => {
                     sx={{
                       p: '15px 10px 12px 10px',
                     }}
+                    onClick={() => getOtp('sms')}
                   >
                     Get OTP
                   </Button>
@@ -175,6 +282,7 @@ const CollegeEditProfile = () => {
               ),
             }}
           />
+          {otpPopup}
         </Grid>
       </Grid>
 
@@ -187,7 +295,9 @@ const CollegeEditProfile = () => {
             </Typography>
             <Typography component="span">
               <IconButton aria-label="toggle password visibility" edge="end">
-                {!errors.CollegeEmailId?.message && getValues().CollegeEmailId.length !== 0
+                {verifyEmail &&
+                !errors.CollegeEmailId?.message &&
+                getValues().CollegeEmailId.length !== 0
                   ? // <CheckCircleIcon color="success" />
                     ''
                   : ''}

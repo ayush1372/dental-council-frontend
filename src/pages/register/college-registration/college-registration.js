@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Box, Container, Grid, IconButton, InputAdornment, Typography } from '@mui/material';
@@ -27,6 +26,10 @@ export function CollegeRegistration() {
     (state) => state.common
   );
 
+  const [verifyEmail, setVerifyEmail] = useState(false);
+  const [verifyMobile, setVerifyMobile] = useState(false);
+  const [type, setType] = useState('');
+  const [headerText, setHeaderText] = useState('');
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getStatesList());
@@ -70,13 +73,7 @@ export function CollegeRegistration() {
     }
   };
 
-  const [verifyEmail, setVerifyEmail] = useState(false);
-  const [verifyMobile, setVerifyMobile] = useState(false);
-  const [type, setType] = useState('');
-  const [headerText, setHeaderText] = useState('');
-  const getOtp = (type) => {
-    setType(type);
-
+  const onOtpResendClick = () => {
     if (type === 'sms' && otpMobileVerify) {
       setHeaderText(`Mobile Number${getValues().CollegePhoneNumber}`);
       dispatch(sendNotificationOtp({ contact: getValues().CollegePhoneNumber, type: type }))
@@ -89,6 +86,42 @@ export function CollegeRegistration() {
         });
     } else if (type === 'email' && otpEmailVerify) {
       setHeaderText(`Email Id ${getValues().email}`);
+      dispatch(sendNotificationOtp({ contact: getValues().email, type: type }))
+        .then(() => {
+          handleClickOpen();
+        })
+        .catch((error) => {
+          handleClose();
+          successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+        });
+    }
+  };
+
+  const { otpPopup, handleClickOpen, otpMobileVerify, otpEmailVerify, handleClose } = ModalOTP({
+    afterConfirm: onContinue,
+    reSentOtp: onOtpResendClick,
+    headerText: `We just sent an OTP on your registered  ${headerText} linked with your Aadhaar.`,
+  });
+
+  const getOtp = (type) => {
+    setType(type);
+
+    if (type === 'sms' && otpMobileVerify) {
+      setHeaderText(
+        `Mobile NumberXXXXX${getValues().CollegePhoneNumber.substr(
+          getValues().CollegePhoneNumber.length - 4
+        )}`
+      );
+      dispatch(sendNotificationOtp({ contact: getValues().CollegePhoneNumber, type: type }))
+        .then(() => {
+          handleClickOpen();
+        })
+        .catch((error) => {
+          handleClose();
+          successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+        });
+    } else if (type === 'email' && otpEmailVerify) {
+      setHeaderText(`Email Id ******${getValues().email.substr(getValues().email.length - 15)}.`);
       dispatch(sendNotificationOtp({ contact: getValues().email, type: type }))
         .then(() => {
           handleClickOpen();
@@ -124,10 +157,6 @@ export function CollegeRegistration() {
       StateName: '',
       StateId: '',
     },
-  });
-  const { otpPopup, handleClickOpen, otpMobileVerify, otpEmailVerify, handleClose } = ModalOTP({
-    afterConfirm: onContinue,
-    headerText: `We just sent an OTP on your registered  ${headerText} linked with your Aadhaar.`,
   });
 
   const handleInput = (e) => {

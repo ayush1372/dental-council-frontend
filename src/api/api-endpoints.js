@@ -9,7 +9,6 @@ export const API = {
     loginUser: 'api/v1/login',
     refreshToken: 'api/v1/refreshToken',
   },
-
   DoctorUserProfileData: {
     DoctorUserProfile: 'api/v1/hp/hpProfileDetail/',
     profileImage: 'api/v1/hp/hpProfileDetail/profile_picture/{hp_profile_id}',

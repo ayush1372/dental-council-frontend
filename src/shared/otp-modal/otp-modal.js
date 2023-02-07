@@ -49,6 +49,7 @@ CustomDialogTitle.propTypes = {
 
 export function ModalOTP({
   afterConfirm = undefined,
+  reSentOtp = undefined,
   headerText = 'We just sent an OTP on your registered Mobile Number  XXXXXX2182 linked with your Aadhaar.',
 }) {
   const [open, setOpen] = useState(false);
@@ -57,12 +58,11 @@ export function ModalOTP({
 
   const otpResend = () => {
     successToast('OTP Resent Successfully', 'otp-resent', 'success', 'top-center');
+    reSentOtp();
   };
-
   const { otpform, otpValue, getOtpValidation, handleClear } = OtpForm({
     resendAction: otpResend,
   });
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -70,7 +70,6 @@ export function ModalOTP({
     setOpen(false);
     handleClear();
   };
-
   const handleConfirm = () => {
     if (getOtpValidation()) {
       // setOpen(false);
@@ -80,7 +79,6 @@ export function ModalOTP({
       handleClear();
     }
   };
-
   return {
     otpPopup: (
       <Box>

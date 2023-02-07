@@ -126,7 +126,6 @@ export const getUniversityList = () => async (dispatch) => {
 };
 
 export const sendNotificationOtp = (otpTypeValue) => async (dispatch) => {
-  // verboseLog('inside common action', otpTypeValue);
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: POST,
