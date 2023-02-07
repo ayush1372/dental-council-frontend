@@ -60,17 +60,7 @@ export function Profile() {
     dispatch(getSpecialitiesList());
     dispatch(getStatesList());
     dispatch(getCountriesList());
-
-    // only required api calls for user type.
-    switch (loggedInUserType) {
-      case 'SMC':
-        dispatch(getRegistrationCouncilList());
-        break;
-      case 'Doctor':
-        break;
-      default:
-        break;
-    }
+    dispatch(getRegistrationCouncilList());
   }, [loggedInUserType]);
   const theme = useTheme();
 
