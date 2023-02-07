@@ -3,14 +3,16 @@ import { useState } from 'react';
 import { Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 
-import { Button, TextField } from '../../../ui/core';
+import { createSelectFieldData } from '../../../helpers/functions/common-functions';
+import { Button, Select, TextField } from '../../../ui/core';
 const SmcEditProfile = () => {
   const [name, setName] = useState('Aarnav Sharma');
   const [phoneNumber, setphoneNumber] = useState('7547448483');
   const [email, setemail] = useState('aarnav@gmail.com.com');
   const [userId, setuserId] = useState('aarnav.sharma');
-  const [password, setpassword] = useState('West Bengal');
+  const { councilNames } = useSelector((state) => state.common);
   const {
     register,
     handleSubmit,
@@ -38,9 +40,6 @@ const SmcEditProfile = () => {
   };
   const handleUserid = (e) => {
     setuserId(e.target.value);
-  };
-  const handlePassword = (e) => {
-    setpassword(e.target.value);
   };
 
   return (
@@ -162,19 +161,22 @@ const SmcEditProfile = () => {
           <Typography component="span" color="error.main">
             *
           </Typography>
-          <TextField
+          <Select
             fullWidth
-            required
-            type="password"
-            name={'Password'}
-            value={password}
-            placeholder={'Enter Council'}
-            defaultValue={getValues().Password}
-            error={errors.Password?.message}
-            {...register('Password', {
-              required: 'Enter valid council',
-              onChange: (e) => handlePassword(e),
+            error={errors.council?.message}
+            name="council"
+            defaultValue={getValues().council}
+            required={true}
+            {...register('council', {
+              required: 'Council is required',
             })}
+            options={createSelectFieldData(councilNames)}
+            MenuProps={{
+              style: {
+                maxHeight: 250,
+                maxWidth: 130,
+              },
+            }}
           />
         </Grid>
       </Grid>

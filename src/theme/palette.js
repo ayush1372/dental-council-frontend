@@ -35,6 +35,7 @@ export const palette = (mode) => {
       main: '#F0F0F0',
       light: '#C1BDD5',
       dark: '#C1BDD591',
+      ligther: '#8A8A8A',
     },
     backgroundColor: {
       main: mode === 'dark' ? '#000' : '#E9ECF3',

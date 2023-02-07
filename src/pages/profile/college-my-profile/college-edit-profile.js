@@ -241,11 +241,6 @@ const CollegeEditProfile = () => {
             </Typography>
             <Typography component="span">
               <IconButton aria-label="toggle password visibility" edge="end">
-                {/* {getValues()?.CollegePhoneNumber?.length === 11 ? (
-                  <CheckCircleIcon color="success" />
-                ) : (
-                  ''
-                )} */}
                 {verifyMobile && <CheckCircleIcon color="success" />}
               </IconButton>
             </Typography>
@@ -347,7 +342,7 @@ const CollegeEditProfile = () => {
             name="UniversityName"
             clearErrors={clearErrors}
             defaultValue={getValues().UniversityName}
-            items={createEditFieldData(universitiesList)}
+            items={createEditFieldData(universitiesList.data)}
             // TO DO:UniversityName default value to be shown on UI for future ref
             // value={UniversityNames[0].name}
             placeholder="Select University Name"

@@ -14,7 +14,7 @@ import { registerCollegeDetails } from '../../../store/actions/college-actions';
 import {
   getRegistrationCouncilList,
   getStatesList,
-  getUniversityList,
+  getUniversitiesList,
   sendNotificationOtp,
   verifyNotificationOtp,
 } from '../../../store/actions/common-actions';
@@ -22,10 +22,7 @@ import { Button } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
 
 export function CollegeRegistration() {
-  const { statesList, registrationCouncilList, universitiesList } = useSelector(
-    (state) => state.common
-  );
-
+  const { statesList, councilNames, universitiesList } = useSelector((state) => state.common);
   const [verifyEmail, setVerifyEmail] = useState(false);
   const [verifyMobile, setVerifyMobile] = useState(false);
   const [type, setType] = useState('');
@@ -34,7 +31,7 @@ export function CollegeRegistration() {
   useEffect(() => {
     dispatch(getStatesList());
     dispatch(getRegistrationCouncilList());
-    dispatch(getUniversityList());
+    dispatch(getUniversitiesList());
   }, []);
 
   const onContinue = (otpNumber) => {
@@ -352,7 +349,7 @@ export function CollegeRegistration() {
             <SearchableDropdown
               fullWidth
               name="RegistrationCouncil"
-              items={createEditFieldData(registrationCouncilList)}
+              items={createEditFieldData(councilNames)}
               placeholder="Select your Registration Council"
               clearErrors={clearErrors}
               error={errors.RegistrationCouncil?.message}
@@ -378,7 +375,7 @@ export function CollegeRegistration() {
             fullWidth
             name="UniversityName"
             clearErrors={clearErrors}
-            items={createEditFieldData(universitiesList)}
+            items={createEditFieldData(universitiesList.data)}
             placeholder="Select University Name"
             error={errors.UniversityName?.message}
             {...register('UniversityName', {

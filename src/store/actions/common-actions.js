@@ -4,13 +4,17 @@ import { GET, POST } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import {
   getCities,
+  getColleges,
   getCountries,
+  getCourses,
   getDistricts,
-  getRegistrationCouncil,
+  getLanguages,
+  getSpecialities,
   getStates,
   getSubDistricts,
-  getUniversity,
+  getUniversities,
   sendNotificationData,
+  updateCouncilNames,
   verifyNotificationData,
 } from '../reducers/common-reducers';
 
@@ -78,14 +82,78 @@ export const getDistrictList = (stateId) => async (dispatch) => {
   });
 };
 
-export const getCitiesList = (sub_district_id) => async (dispatch) => {
+export const getLanguagesList = () => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,
-      url: API.common.cities.replace('{sub_district_id}', sub_district_id),
+      url: API.common.languages,
     })
       .then((response) => {
-        dispatch(getCities(response.data));
+        dispatch(getLanguages(response.data));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const getUniversitiesList = () => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: GET,
+      url: API.common.universities,
+    })
+      .then((response) => {
+        dispatch(getUniversities(response.data));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const getCoursesList = () => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: GET,
+      url: API.common.courses,
+    })
+      .then((response) => {
+        dispatch(getCourses(response.data));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const getCollegesList = (university_id) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: GET,
+      url: API.common.colleges.replace('{university_id}', university_id),
+    })
+      .then((response) => {
+        dispatch(getColleges(response.data));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const getSpecialitiesList = () => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: GET,
+      url: API.common.specialities,
+    })
+      .then((response) => {
+        dispatch(getSpecialities(response.data));
         return resolve(response);
       })
       .catch((error) => {
@@ -98,10 +166,10 @@ export const getRegistrationCouncilList = () => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,
-      url: API.common.getCouncilNames,
+      url: API.common.councilNames,
     })
       .then((response) => {
-        dispatch(getRegistrationCouncil(response.data));
+        dispatch(updateCouncilNames(response.data));
         return resolve(response);
       })
       .catch((error) => {
@@ -109,14 +177,14 @@ export const getRegistrationCouncilList = () => async (dispatch) => {
       });
   });
 };
-export const getUniversityList = () => async (dispatch) => {
+export const getCitiesList = (sub_district_id) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,
-      url: API.common.getUniversityNames,
+      url: API.common.cities.replace('{sub_district_id}', sub_district_id),
     })
       .then((response) => {
-        dispatch(getUniversity(response.data));
+        dispatch(getCities(response.data));
         return resolve(response);
       })
       .catch((error) => {

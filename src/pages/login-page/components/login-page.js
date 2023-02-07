@@ -16,7 +16,7 @@ import {
 } from '../../../store/actions/college-actions';
 import {
   getRegistrationCouncilList,
-  getUniversityList,
+  getUniversitiesList,
 } from '../../../store/actions/common-actions';
 import {
   generateCaptchaImage,
@@ -67,7 +67,7 @@ export function LoginPage({ handleForgotPassword }) {
 
   const getCommonData = (response) => {
     dispatch(getRegistrationCouncilList());
-    dispatch(getUniversityList());
+    dispatch(getUniversitiesList());
     const userType = userGroupType(response?.data?.user_group_id);
 
     if (userType === 'College Dean') {

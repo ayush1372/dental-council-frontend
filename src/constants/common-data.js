@@ -442,3 +442,37 @@ export const dashboardCountData = {
     },
   ],
 };
+
+export const natureOfWork = [
+  {
+    id: 1,
+    name: 'Administrative',
+  },
+  {
+    id: 2,
+    name: 'Practice',
+  },
+  {
+    id: 3,
+    name: 'Research',
+  },
+  {
+    id: 4,
+    name: 'Teaching',
+  },
+];
+
+export const workStatusOptions = [
+  {
+    id: 3,
+    name: 'Government only',
+  },
+  {
+    id: 2,
+    name: 'Private Practice only',
+  },
+  {
+    id: 1,
+    name: 'Both',
+  },
+];
