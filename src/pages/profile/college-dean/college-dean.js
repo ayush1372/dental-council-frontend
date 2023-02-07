@@ -171,7 +171,7 @@ export function CollegeDean() {
       <Grid container item spacing={2} mt={{ lg: 1 }}>
         <Grid item xs={12} sm="auto">
           <Button fullWidth variant="contained" color="secondary" onClick={handleSubmit(onSubmit)}>
-            {t('SUBMIT')}
+            {t('Submit')}
           </Button>
         </Grid>
 

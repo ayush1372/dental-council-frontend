@@ -4,12 +4,8 @@ import MenuOpenOutlinedIcon from '@mui/icons-material/MenuOpenOutlined';
 import { Box, Drawer, Grid } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
-import {
-  colgTabs,
-  doctorTabs,
-  nmcTabs,
-  smcTabs,
-} from '../../../../../helpers/components/sidebar-drawer-list-item';
+import { colgTabs, doctorTabs } from '../../../../../helpers/components/sidebar-drawer-list-item';
+import { sideBarTabs } from '../../../../../helpers/functions/common-functions';
 import ProfileImage from '../../../../../pages/profile/components/profile-image/profile-image';
 import SideDrawerList from '../../../../../shared/sidebar-drawer/sidebar-drawer-list';
 import { changeUserActiveTab } from '../../../../../store/reducers/common-reducers';
@@ -17,6 +13,12 @@ import { changeUserActiveTab } from '../../../../../store/reducers/common-reduce
 import styles from './logo-wrapper.module.scss';
 
 export const MobileDrawer = () => {
+  const { nmcProfileData } = useSelector((state) => state.nmc);
+  const { collegeData } = useSelector((state) => state.college);
+  const { smcProfileData } = useSelector((state) => state.smc);
+  const { nbeData } = useSelector((state) => state.nbe);
+  const { doctorUserProfile } = useSelector((state) => state.doctorUserProfileReducer);
+
   const dispatch = useDispatch();
   const loggedIn = useSelector((state) => state.common.isloggedIn);
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
@@ -80,18 +82,15 @@ export const MobileDrawer = () => {
                     <ProfileImage
                       name={
                         loggedInUserType === 'Doctor'
-                          ? 'Dr. ABC'
+                          ? doctorUserProfile?.data?.name
                           : loggedInUserType === 'College'
-                          ? 'IP University'
+                          ? collegeData?.data?.name
                           : loggedInUserType === 'NMC'
-                          ? 'National Medical Commission'
+                          ? nmcProfileData?.data?.display_name
                           : loggedInUserType === 'SMC'
-                          ? 'Maharashtra Medical Council'
-                          : loggedInUserType !== 'Doctor' &&
-                            loggedInUserType !== 'College' &&
-                            loggedInUserType !== 'SMC' &&
-                            loggedInUserType !== 'NMC'
-                          ? 'Dr. ABC'
+                          ? smcProfileData?.data?.display_name
+                          : loggedInUserType === 'NBE'
+                          ? nbeData?.data?.display_name
                           : null
                       }
                     />
@@ -99,17 +98,7 @@ export const MobileDrawer = () => {
 
                   <SideDrawerList
                     open={anchor}
-                    DrawerOptions={
-                      loggedInUserType === 'Doctor'
-                        ? doctorTabs
-                        : loggedInUserType === 'NMC'
-                        ? nmcTabs
-                        : loggedInUserType === 'SMC'
-                        ? smcTabs
-                        : loggedInUserType === 'College'
-                        ? colgTabs
-                        : ''
-                    }
+                    DrawerOptions={sideBarTabs(loggedInUserType)}
                     handleSwitch={setActiveTab}
                     ActiveOption={isActiveTab}
                   />
