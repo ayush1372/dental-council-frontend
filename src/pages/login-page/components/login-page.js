@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
-import { encryptData, userGroupType } from '../../../helpers/functions/common-functions';
+import { encryptData, userGroupType, usersType } from '../../../helpers/functions/common-functions';
 import CaptchaComponent from '../../../shared/captcha-component/captcha-component';
 import {
   getCollegeAdminProfileData,
@@ -20,6 +20,7 @@ import {
   loginAction,
   validateCaptchaImage,
 } from '../../../store/actions/login-action';
+import { getNBEProfileData } from '../../../store/actions/nbe-actions';
 import { getNMCProfileData } from '../../../store/actions/nmc-actions';
 import { getSMCProfileData } from '../../../store/actions/smc-actions';
 import { login, userLoggedInType } from '../../../store/reducers/common-reducers';
@@ -41,6 +42,7 @@ export function LoginPage({ handleForgotPassword }) {
       College: 'College',
       SMC: 'SMC',
       NMC: 'NMC',
+      NBE: 'NBE',
     }),
     []
   );
@@ -70,17 +72,11 @@ export function LoginPage({ handleForgotPassword }) {
     )
       .then((response) => {
         if (response?.data?.validity) {
+          const usertypeId = usersType(loginFormname);
           const requestObj = {
             username: param?.nmrID,
             password: encryptData(param?.password, process.env.REACT_APP_PASS_SITE_KEY),
-            user_type:
-              loginFormname === 'Doctor'
-                ? 1
-                : loginFormname === 'College'
-                ? 2
-                : loginFormname === 'SMC'
-                ? 3
-                : 4,
+            user_type: usertypeId,
             captcha_trans_id: generateCaptcha?.transaction_id,
           };
           dispatch(loginAction(requestObj))
@@ -102,6 +98,8 @@ export function LoginPage({ handleForgotPassword }) {
                   dispatch(getSMCProfileData(response?.data?.profile_id));
                 } else if (userType === 'National Medical Council') {
                   dispatch(getNMCProfileData(response?.data?.profile_id));
+                } else if (userType === 'NBE') {
+                  dispatch(getNBEProfileData(response?.data?.profile_id));
                 }
 
                 window.scrollTo({

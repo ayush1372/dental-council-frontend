@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 import { Box, Checkbox, Container, FormControlLabel, Grid, Popover } from '@mui/material';
 import { RiCheckboxBlankCircleLine, RiCheckboxCircleFill } from 'react-icons/ri';
-// import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 
 import { Button } from '../../../../../core';
@@ -15,7 +14,6 @@ export const LoginRegisterPopover = ({
   setAnchorLRLoginRegister,
 }) => {
   const navigate = useNavigate();
-  // const { t } = useTranslation();
 
   /** Login Register */
 
@@ -30,7 +28,6 @@ export const LoginRegisterPopover = ({
   const handleClose = () => {
     setAnchorLR(null);
     setAnchorLRLoginRegister(null);
-    // handleCloseNavMenu();
   };
 
   const onClickRecruitingAgentHandler = () => {
@@ -41,11 +38,6 @@ export const LoginRegisterPopover = ({
       } else if (regType === 'College') {
         navigate('/register/college-registration');
       }
-      // else if (regType === 'SMC') {
-      //   navigate('/register/smc');
-      // } else if (regType === 'NMC') {
-      //   navigate('/register/nmc');
-      // }
       setAnchorLRLoginRegister(null);
       setRegType('');
     } else {
@@ -63,6 +55,8 @@ export const LoginRegisterPopover = ({
         navigate('/login-page', { state: { loginFormname: 'SMC' } });
       } else if (regType === 'NMC') {
         navigate('/login-page', { state: { loginFormname: 'NMC' } });
+      } else if (regType === 'NBE') {
+        navigate('/login-page', { state: { loginFormname: 'NBE' } });
       }
       setAnchorLRLoginRegister(null);
       setRegType('');
@@ -161,6 +155,23 @@ export const LoginRegisterPopover = ({
                   label="NMC"
                 />
               </Grid>
+              <Grid item xs={6}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      icon={<RiCheckboxBlankCircleLine />}
+                      checkedIcon={<RiCheckboxCircleFill />}
+                      checked={regType === 'NBE'}
+                      onChange={() => {
+                        setRegType('NBE');
+                        setRegTypeError(false);
+                      }}
+                      inputProps={{ 'aria-label': 'controlled' }}
+                    />
+                  }
+                  label="NBE"
+                />
+              </Grid>
             </Grid>
             <Grid item container>
               {regTypeError && (
@@ -183,7 +194,7 @@ export const LoginRegisterPopover = ({
                   }}
                   // className={styles.registerButton}
                   onClick={() => onClickRecruitingAgentHandler()}
-                  disabled={regType === 'SMC' || regType === 'NMC'}
+                  disabled={regType === 'SMC' || regType === 'NMC' || regType === 'NBE'}
                 >
                   Register
                 </Button>

@@ -35,7 +35,7 @@ export const API = {
     getCollegeProfile: 'api/v1/college/{id}',
     getCollegeRegistrarProfile: '/api/v1/college/registrar/{id}',
     getCollegeDeanProfile: '/api/v1/college/dean/{id}',
-    initiateCollegeWorkFlow: '/api/v1/action/initiateCollegeWorkFlow',
+    initiateCollegeWorkFlow: '/api/v1/colleges/action',
   },
   nmc: {
     getNMCProfileData: '/api/v1/user/nmc/{id}',
@@ -47,5 +47,8 @@ export const API = {
   },
   smc: {
     getSMCProfileData: '/api/v1/user/smc/{id}',
+  },
+  nbe: {
+    getNBEProfileData: '/api/v1/user/nbe/{id}',
   },
 };

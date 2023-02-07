@@ -3,12 +3,8 @@ import { useEffect, useState } from 'react';
 import { Box, CssBaseline, Grid, useTheme } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
-import {
-  colgTabs,
-  doctorTabs,
-  nmcTabs,
-  smcTabs,
-} from '../../helpers/components/sidebar-drawer-list-item';
+import { colgTabs, doctorTabs } from '../../helpers/components/sidebar-drawer-list-item';
+import { sideBarTabs } from '../../helpers/functions/common-functions';
 import {
   getCountriesList,
   getCoursesList,
@@ -84,33 +80,13 @@ export function Profile() {
           >
             <CssBaseline />
             <MiniDrawer
-              DrawerOptions={
-                loggedInUserType === 'Doctor'
-                  ? doctorTabs
-                  : loggedInUserType === 'NMC'
-                  ? nmcTabs
-                  : loggedInUserType === 'SMC'
-                  ? smcTabs
-                  : loggedInUserType === 'College'
-                  ? colgTabs
-                  : ''
-              }
+              DrawerOptions={sideBarTabs(loggedInUserType)}
               handleSwitch={setActiveTab}
               ActiveOption={isActiveTab}
             />
           </Box>
           <ProfileTabContainer
-            DrawerOptions={
-              loggedInUserType === 'Doctor'
-                ? doctorTabs
-                : loggedInUserType === 'NMC'
-                ? nmcTabs
-                : loggedInUserType === 'SMC'
-                ? smcTabs
-                : loggedInUserType === 'College'
-                ? colgTabs
-                : ''
-            }
+            DrawerOptions={sideBarTabs(loggedInUserType)}
             ActiveOption={isActiveTab}
           />
         </Box>
