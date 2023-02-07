@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
-import { encryptData, userGroupType } from '../../../helpers/functions/common-functions';
+import { encryptData, userGroupType, usersType } from '../../../helpers/functions/common-functions';
 import CaptchaComponent from '../../../shared/captcha-component/captcha-component';
 import {
   getCollegeAdminProfileData,
@@ -95,17 +95,11 @@ export function LoginPage({ handleForgotPassword }) {
     )
       .then((response) => {
         if (response?.data?.validity) {
+          const usertypeId = usersType(loginFormname);
           const requestObj = {
             username: param?.nmrID,
             password: encryptData(param?.password, process.env.REACT_APP_PASS_SITE_KEY),
-            user_type:
-              loginFormname === 'Doctor'
-                ? 1
-                : loginFormname === 'College'
-                ? 2
-                : loginFormname === 'SMC'
-                ? 3
-                : 4,
+            user_type: usertypeId,
             captcha_trans_id: generateCaptcha?.transaction_id,
           };
           dispatch(loginAction(requestObj))
