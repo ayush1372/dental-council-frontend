@@ -262,9 +262,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               required={true}
               fullWidth
               defaultValue={getValues().RegistrationNumber}
-              // {...register('RegistrationNumber', {
-              //   required: 'Registration Number is Required',
-              // })}
               sx={{
                 input: {
                   backgroundColor: 'grey2.main',

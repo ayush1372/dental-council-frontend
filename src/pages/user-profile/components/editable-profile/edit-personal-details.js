@@ -155,8 +155,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       mobileNo: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? mobile : '',
       EmailAddress: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? email : '',
       LanguageSpoken: [],
-      //       const ids = lang.map(o => o.id)
-      // const filtered = lang.filter(({id}, index) => !ids.includes(id, index + 1))
     },
   });
   const fetchDistricts = (stateId) => {

@@ -7,7 +7,6 @@ import {
   getRegistrationDetails,
   getWorkProfileDetails,
 } from '../reducers/doctor-user-profile-reducer';
-// export const getPersonalDetailsData = (doctor_profile_id) => async (dispatch) => {
 export const getPersonalDetailsData =
   (doctor_profile_id = 248) =>
   async (dispatch) => {
@@ -28,7 +27,6 @@ export const getPersonalDetailsData =
         });
     });
   };
-// export const getRegistrationDetailsData = (doctor_profile_id) => async (dispatch) => {
 export const getRegistrationDetailsData =
   (doctor_profile_id = 248) =>
   async (dispatch) => {
@@ -49,7 +47,6 @@ export const getRegistrationDetailsData =
         });
     });
   };
-// export const getWorkProfileDetailsData = (doctor_profile_id) => async (dispatch) => {
 export const getWorkProfileDetailsData =
   (doctor_profile_id = 248) =>
   async (dispatch) => {

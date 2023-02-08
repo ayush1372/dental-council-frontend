@@ -5,12 +5,12 @@ import TuneIcon from '@mui/icons-material/Tune';
 import { Alert, Box, Grid, Link, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { verboseLog } from '../../config/debug';
 import useWizard from '../../hooks/use-wizard';
 import ReactivateLicencePopup from '../../shared/reactivate-licence-popup/re-activate-licence-popup';
 import SuccessPopup from '../../shared/reactivate-licence-popup/success-popup';
 import { getCountriesList, getStatesList } from '../../store/actions/common-actions';
 import { Button } from '../../ui/core/button/button';
+import successToast from '../../ui/core/toaster';
 import Wizard from '../../ui/core/wizard';
 // import ChangePassword from '../profile/change-password/change-password';
 import ConstantDetails from './components/constant-details/constant-details';
@@ -48,29 +48,16 @@ export const UserProfile = ({
   };
   const fetchStates = () => {
     try {
-      dispatch(getStatesList())
-        .then((dataResponse) => {
-          verboseLog('dataResponse', dataResponse);
-        })
-        .catch((error) => {
-          verboseLog('error occured', error);
-        });
-    } catch (err) {
-      verboseLog('error', err);
+      dispatch(getStatesList()).then(() => {});
+    } catch (allFailMsg) {
+      successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
     }
   };
-
   const fetchCountries = () => {
     try {
-      dispatch(getCountriesList())
-        .then((dataResponse) => {
-          verboseLog('dataResponse', dataResponse);
-        })
-        .catch((error) => {
-          verboseLog('error occured', error);
-        });
-    } catch (err) {
-      verboseLog('error', err);
+      dispatch(getCountriesList()).then(() => {});
+    } catch (allFailMsg) {
+      successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
     }
   };
 
