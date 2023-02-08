@@ -6,10 +6,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { colgTabs, doctorTabs } from '../../helpers/components/sidebar-drawer-list-item';
 import { sideBarTabs } from '../../helpers/functions/common-functions';
 import {
+  getCountriesList,
   getCoursesList,
   getLanguagesList,
   getRegistrationCouncilList,
   getSpecialitiesList,
+  getStatesList,
   getUniversitiesList,
 } from '../../store/actions/common-actions';
 import { changeUserActiveTab } from '../../store/reducers/common-reducers';
@@ -52,17 +54,9 @@ export function Profile() {
     dispatch(getCoursesList());
     dispatch(getUniversitiesList());
     dispatch(getSpecialitiesList());
-
-    // only required api calls for user type.
-    switch (loggedInUserType) {
-      case 'SMC':
-        dispatch(getRegistrationCouncilList());
-        break;
-      case 'Doctor':
-        break;
-      default:
-        break;
-    }
+    dispatch(getStatesList());
+    dispatch(getCountriesList());
+    dispatch(getRegistrationCouncilList());
   }, [loggedInUserType]);
   const theme = useTheme();
 
