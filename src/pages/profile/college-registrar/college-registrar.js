@@ -204,7 +204,7 @@ export function CollegeRegistrar() {
                 'You have successfully registered your College Registrar. Defined credentials have been sent on the Email ID and Phone number you registered'
               }
             />
-          )}{' '}
+          )}
         </Grid>
       </Grid>
     </Grid>

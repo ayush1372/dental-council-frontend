@@ -9,8 +9,7 @@ import { verboseLog } from '../../../config/debug';
 import { createEditFieldData } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
 import { getRegistrationCouncilList } from '../../../store/actions/common-actions';
-import { Button } from '../../../ui/core';
-import { TextField } from '../../../ui/core/form/textfield/textfield';
+import { Button, TextField } from '../../../ui/core';
 import FetchDoctorDetails from './fetch-doctor-details';
 const DoctorRegistrationWelcomePage = () => {
   const [isNext, setIsNext] = useState(false);
