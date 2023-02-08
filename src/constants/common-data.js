@@ -51,6 +51,14 @@ export const getNMCProfileDetails = (details) => [
   { label: 'Phone Number', value: details.mobile_no, id: '5' },
   { label: 'Email Address', value: details.email_id, id: '6' },
 ];
+
+export const getNBEProfileDetails = (details) => [
+  { label: 'Name', value: details.display_name, id: '1' },
+  { label: 'Enrolment Number NDHM', value: details.ndhm_enrollment, id: '2' },
+  { label: 'Enrolment Number', value: details.enrolled_number, id: '3' },
+  // { label: 'Phone Number', value: details.mobile_no, id: '4' },
+  // { label: 'Email Address', value: details.email_id, id: '5' },
+];
 export const DepartmentNames = [
   { id: '1', name: 'Out patient' },
   { id: '2', name: 'Pharmacy' },
@@ -79,18 +87,18 @@ export const UniversityNames = [
 export const yearsData = get_year_data();
 
 export const monthsData = [
-  { value: '1', label: 'January' },
-  { value: '2', label: 'February' },
-  { value: '3', label: 'March' },
-  { value: '4', label: 'April' },
-  { value: '5', label: 'May' },
-  { value: '6', label: 'June' },
-  { value: '7', label: 'July' },
-  { value: '8', label: 'August' },
-  { value: '9', label: 'September' },
-  { value: '10', label: 'October' },
-  { value: '11', label: 'November' },
-  { value: '12', label: 'December' },
+  { value: 'January', label: 'January' },
+  { value: 'February', label: 'February' },
+  { value: 'March', label: 'March' },
+  { value: 'April', label: 'April' },
+  { value: 'May', label: 'May' },
+  { value: 'June', label: 'June' },
+  { value: 'July', label: 'July' },
+  { value: 'August', label: 'August' },
+  { value: 'September', label: 'September' },
+  { value: 'October', label: 'October' },
+  { value: 'November', label: 'November' },
+  { value: 'December', label: 'December' },
 ];
 
 export const daysData = [
@@ -442,3 +450,37 @@ export const dashboardCountData = {
     },
   ],
 };
+
+export const natureOfWork = [
+  {
+    id: 1,
+    name: 'Administrative',
+  },
+  {
+    id: 2,
+    name: 'Practice',
+  },
+  {
+    id: 3,
+    name: 'Research',
+  },
+  {
+    id: 4,
+    name: 'Teaching',
+  },
+];
+
+export const workStatusOptions = [
+  {
+    id: 3,
+    name: 'Government only',
+  },
+  {
+    id: 2,
+    name: 'Private Practice only',
+  },
+  {
+    id: 1,
+    name: 'Both',
+  },
+];

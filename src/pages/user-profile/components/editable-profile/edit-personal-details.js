@@ -25,9 +25,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const loggedInUserType = useSelector((state) => state?.login?.loggedInUserType);
-  const { statesList, countriesList, districtsList, subDistrictList, citiesList } = useSelector(
-    (state) => state?.common
-  );
+  const { statesList, countriesList, districtsList, subDistrictList, languagesList, citiesList } =
+    useSelector((state) => state?.common);
 
   const [languages, setLanguages] = useState([]);
   const {
@@ -130,18 +129,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const handleGender = (event) => {
     setValue(event.target.name, event.target.value, true);
   };
-
-  const handleLanguageSpokenChange = (name, value) => {
-    setValue(name, value, true);
-    setLanguages([...value]);
-  };
-
-  // if(countriesList) {
-
-  // }
-  // const countryIndia = countriesList?.filter(function (item) {
-  //   return item.name === 'India';
-  // });
 
   return (
     <Box
@@ -416,13 +403,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             </Typography>
             <AutoComplete
               name="LanguageSpoken"
-              options={[
-                { id: 1, name: 'Telugu' },
-                { id: 2, name: 'Hindi' },
-                { id: 3, name: 'English' },
-                { id: 4, name: 'Marathi' },
-                { id: 5, name: 'Kannada' },
-              ]}
+              options={languagesList.data}
               value={getValues().LanguageSpoken}
               error={languages.length === 0 && errors.LanguageSpoken?.message}
               multiple={true}
@@ -430,7 +411,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 required: 'Missing field',
               })}
               onChange={(value) => {
-                handleLanguageSpokenChange('LanguageSpoken', value);
+                setValue('LanguageSpoken', value);
+                setLanguages(value);
               }}
             />
           </Grid>

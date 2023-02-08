@@ -7,13 +7,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
-import { encryptData, userGroupType } from '../../../helpers/functions/common-functions';
+import { encryptData, userGroupType, usersType } from '../../../helpers/functions/common-functions';
 import CaptchaComponent from '../../../shared/captcha-component/captcha-component';
 import {
   getCollegeAdminProfileData,
   getCollegeDeanProfileData,
   getCollegeRegistrarProfileData,
 } from '../../../store/actions/college-actions';
+import {
+  getRegistrationCouncilList,
+  getUniversitiesList,
+} from '../../../store/actions/common-actions';
 import { getCardCount } from '../../../store/actions/dashboard-actions';
 import {
   generateCaptchaImage,
@@ -21,6 +25,7 @@ import {
   loginAction,
   validateCaptchaImage,
 } from '../../../store/actions/login-action';
+import { getNBEProfileData } from '../../../store/actions/nbe-actions';
 import { getNMCProfileData } from '../../../store/actions/nmc-actions';
 import { getSMCProfileData } from '../../../store/actions/smc-actions';
 import { login, userLoggedInType } from '../../../store/reducers/common-reducers';
@@ -62,6 +67,33 @@ export function LoginPage({ handleForgotPassword }) {
     setcaptachaAnswer(num);
   };
 
+  const getCommonData = (response) => {
+    dispatch(getRegistrationCouncilList());
+    dispatch(getUniversitiesList());
+    const userType = userGroupType(response?.data?.user_group_id);
+    // get dashboard card count
+    if (userType !== 'Health Professional') {
+      dispatch(
+        getCardCount({
+          group_name: userType,
+        })
+      );
+    }
+    if (userType === 'College Dean') {
+      dispatch(getCollegeDeanProfileData(response?.data?.profile_id));
+    } else if (userType === 'College Registrar') {
+      dispatch(getCollegeRegistrarProfileData(response?.data?.profile_id));
+    } else if (userType === 'College Admin') {
+      dispatch(getCollegeAdminProfileData(response?.data?.profile_id));
+    } else if (userType === 'State Medical Council') {
+      dispatch(getSMCProfileData(response?.data?.profile_id));
+    } else if (userType === 'National Medical Council') {
+      dispatch(getNMCProfileData(response?.data?.profile_id));
+    } else if (userType === 'NBE') {
+      dispatch(getNBEProfileData(response?.data?.profile_id));
+    }
+  };
+
   const onSubmit = (param) => {
     dispatch(
       validateCaptchaImage({
@@ -71,17 +103,11 @@ export function LoginPage({ handleForgotPassword }) {
     )
       .then((response) => {
         if (response?.data?.validity) {
+          const usertypeId = usersType(loginFormname);
           const requestObj = {
             username: param?.nmrID,
             password: encryptData(param?.password, process.env.REACT_APP_PASS_SITE_KEY),
-            user_type:
-              loginFormname === 'Doctor'
-                ? 1
-                : loginFormname === 'College'
-                ? 2
-                : loginFormname === 'SMC'
-                ? 3
-                : 4,
+            user_type: usertypeId,
             captcha_trans_id: generateCaptcha?.transaction_id,
           };
           dispatch(loginAction(requestObj))
@@ -91,32 +117,7 @@ export function LoginPage({ handleForgotPassword }) {
                 dispatch(login());
                 dispatch(userLoggedInType(loginFormname));
                 navigate(`/profile`);
-                const userType = userGroupType(response?.data?.user_group_id);
-                // get dashboard card count
-                if (userType !== 'Health Professional') {
-                  dispatch(
-                    getCardCount({
-                      group_name: userType,
-                    })
-                  );
-                }
-                // get college user profile data
-                if (userType === 'College Dean') {
-                  dispatch(getCollegeDeanProfileData(response?.data?.profile_id));
-                } else if (userType === 'College Registrar') {
-                  dispatch(getCollegeRegistrarProfileData(response?.data?.profile_id));
-                } else if (userType === 'College Admin') {
-                  dispatch(getCollegeAdminProfileData(response?.data?.profile_id));
-                } else if (userType === 'State Medical Council') {
-                  dispatch(getSMCProfileData(response?.data?.profile_id));
-                } else if (userType === 'National Medical Council') {
-                  dispatch(getNMCProfileData(response?.data?.profile_id));
-                }
-
-                window.scrollTo({
-                  top: 0,
-                  behavior: 'smooth',
-                });
+                getCommonData(response);
               }
             })
             .catch((error) => {
