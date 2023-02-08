@@ -61,14 +61,9 @@ function FetchDoctorDetails() {
         contact: getValues().email,
         type: 'email',
       })
-    )
-      .then((resp) => {
-        setShowOtpEmail(true);
-        successToast(resp?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
-      })
-      .catch((error) => {
-        successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
-      });
+    ).catch((error) => {
+      successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+    });
 
     setShowOtpEmail(true);
   };

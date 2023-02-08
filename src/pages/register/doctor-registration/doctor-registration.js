@@ -30,8 +30,7 @@ const DoctorRegistrationWelcomePage = () => {
       RegistrationNumber: '',
     },
   });
-  const { councilNames } = useSelector((state) => state.common); // eslint-disable-next-line no-console
-  // console.log('registrationCouncilList',registrationCouncilList)
+  const { councilNames } = useSelector((state) => state.common);
   const dispatch = useDispatch();
 
   useEffect(() => {

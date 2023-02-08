@@ -77,8 +77,6 @@ export const sendRegistrarDetails = (details) => async (dispatch) => {
       data: details,
     })
       .then((response) => {
-        // eslint-disable-next-line no-console
-        console.log('registrar response', response);
         dispatch(detailsOfRegistrar(response));
         return resolve(response);
       })
