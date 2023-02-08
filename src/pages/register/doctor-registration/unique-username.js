@@ -87,7 +87,7 @@ const UniqueUserNameForDoctorRegistration = () => {
                 />
               </Box>
             </Box>
-            <Box display="flex" justifyContent="space-between">
+            <Box display="flex" justifyContent="space-between" alignItems="center">
               <InfoOutlinedIcon sx={{ fontSize: '15px', verticalAlign: 'middle' }} />
               <Typography variant="body3" color="primary" component={'div'}>
                 You can use letters, numbers & symbols
