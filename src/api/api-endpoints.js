@@ -34,8 +34,8 @@ export const API = {
     getNMCProfileData: '/api/v1/user/nmc/{id}',
   },
   Aadhaar: {
-    sendAadhaarOtp: 'api/v1/sendAadhaarOtp',
-    verifyAadhaarOtp: 'api/v1/verifyAadhaarOtp',
+    sendAadhaarOtp: 'api/v1/aadhaar/send-otp',
+    verifyAadhaarOtp: 'api/v1/aadhaar/verify-otp',
   },
   smc: {
     getSMCProfileData: '/api/v1/user/smc/{id}',

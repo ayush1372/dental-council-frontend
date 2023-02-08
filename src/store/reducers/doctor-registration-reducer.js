@@ -4,7 +4,7 @@ const initialState = {
   smcRegistrationDetail: { data: [], isLoading: Boolean(true), isError: false },
 };
 
-export const CommonActivity = createSlice({
+export const registrationData = createSlice({
   name: 'doctorRegistration',
   initialState,
   reducers: {
@@ -14,6 +14,6 @@ export const CommonActivity = createSlice({
   },
 });
 
-export const { getSmcRegistrationDetails } = CommonActivity.actions;
+export const { getSmcRegistrationDetails } = registrationData.actions;
 
-export default CommonActivity.reducer;
+export default registrationData.reducer;

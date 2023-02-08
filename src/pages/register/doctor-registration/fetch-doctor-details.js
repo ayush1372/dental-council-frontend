@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -7,18 +6,27 @@ import { Box } from '@mui/system';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 
 import { verboseLog } from '../../../config/debug';
 import { encryptData } from '../../../helpers/functions/common-functions';
 import OtpForm from '../../../shared/otp-form/otp-component';
-import { sendNotificationOtp } from '../../../store/actions/common-actions';
+import { sendNotificationOtp, verifyNotificationOtp } from '../../../store/actions/common-actions';
 import { sendAaadharOtp, validateOtpAadhaar } from '../../../store/actions/user-aadhaar-actions';
 import { Button, TextField } from '../../../ui/core';
 import AadhaarInputField from '../../../ui/core/aadhaar-input-field/aadhaar-input-field';
-import UniqueUserNameForDoctorRegistration from './unique-username';
+import successToast from '../../../ui/core/toaster';
+import SuccessModal from './success-popup';
+import CreateHprId from './unique-username';
 
 function FetchDoctorDetails() {
-  const [showUniqueNameForDoctorReg, setUniqueNameForDoctorReg] = useState(false);
+  const councilName = useSelector(
+    (state) => state?.DoctorRegistrationData?.smcRegistrationDetail?.data?.council_name
+  );
+  const registrationNumber = useSelector(
+    (state) => state?.DoctorRegistrationData?.smcRegistrationDetail?.data?.registration_number
+  );
+  const [showCreateHprIdPage, setShowCreateHprIdPage] = useState(false);
   const [showOtpEmail, setShowOtpEmail] = useState(false);
   const [showOtpMobile, setShowOtpMobile] = useState(false);
   const [showOtpAadhar, setshowOtpAadhar] = useState(false);
@@ -28,6 +36,7 @@ function FetchDoctorDetails() {
   const [isOtpValidAadhar, setisOtpValidAadhar] = useState(false);
   const [enableSubmit, setEnableSubmit] = useState(false);
   const [aadhaarState, setAadhaarState] = useState('');
+  const [showSuccess, setShowSuccess] = useState(false);
   const dispatch = useDispatch();
 
   const {
@@ -41,15 +50,38 @@ function FetchDoctorDetails() {
       MobileNumber: '',
       email: '',
       AadhaarNumber: '',
+      field_1: '',
+      field_2: '',
+      field_3: '',
     },
   });
   const handleVerifyEmail = () => {
-    console.log('email=>', getValues().email);
-    dispatch(sendNotificationOtp(getValues().email, 'email'));
+    dispatch(
+      sendNotificationOtp({
+        contact: getValues().email,
+        type: 'email',
+      })
+    )
+      .then((resp) => {
+        setShowOtpEmail(true);
+        successToast(resp?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+      })
+      .catch((error) => {
+        successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+      });
+
     setShowOtpEmail(true);
   };
   const handleValidateEmail = () => {
     if (otpValue.length === 6) {
+      dispatch(
+        verifyNotificationOtp({
+          contact: getValues().email,
+          type: 'email',
+          otp: otpValue,
+        })
+      );
+
       setisOtpValidEmail(true);
       setShowOtpEmail(false);
       handleClear();
@@ -60,14 +92,25 @@ function FetchDoctorDetails() {
   };
 
   const handleVerifyMobile = () => {
-    if (isOtpValidEmail === true) {
-      setShowOtpMobile(true);
-      setisOtpValidMobile(false);
-    }
+    dispatch(
+      sendNotificationOtp({
+        contact: getValues().MobileNumber,
+        type: 'sms',
+      })
+    );
+    setShowOtpMobile(true);
+    setisOtpValidMobile(false);
   };
 
   const handleValidateMobile = () => {
     if (otpValue.length === 6) {
+      dispatch(
+        verifyNotificationOtp({
+          contact: getValues().MobileNumber,
+          type: 'sms',
+          otp: otpValue,
+        })
+      );
       setisOtpValidMobile(true);
       setShowOtpMobile(false);
       handleClear();
@@ -78,14 +121,10 @@ function FetchDoctorDetails() {
     }
   };
 
-  const onSubmit = () => {
-    setUniqueNameForDoctorReg(true);
-  };
-
-  const handleUserAadhaarNumber = (dataValue) => {
-    console.log('user entered aadhar number==>', dataValue);
+  const handleUserAadhaarNumber = () => {
+    let aadharDataFields = getValues().field_1 + getValues().field_2 + getValues().field_3;
     let encryptedUserAadhaarNumber = encryptData(
-      dataValue.field_1 + dataValue.field_2 + dataValue.field_3,
+      aadharDataFields,
       process.env.REACT_APP_PUBLIC_KEY
     );
     handleVerifyAadhar(encryptedUserAadhaarNumber);
@@ -102,15 +141,28 @@ function FetchDoctorDetails() {
   const finalTransactionId = useSelector(
     (state) => state?.AadhaarTransactionId?.aadharData?.data?.DOAuthOTP?.uidtkn
   );
+  const hpName = useSelector(
+    (state) => state?.DoctorRegistrationData?.smcRegistrationDetail?.data?.hp_name
+  );
+
+  const hpprofileId = useSelector(
+    (state) => state?.DoctorRegistrationData?.smcRegistrationDetail?.data?.hp_profile_id
+  );
 
   const handleValidateAadhar = () => {
     let userOtp = encryptData(otpValue, process.env.REACT_APP_PUBLIC_KEY);
     setshowOtpAadhar(false);
     setisOtpValidAadhar(true);
     handleClear();
-
     if (otpValue.length === 6) {
-      dispatch(validateOtpAadhaar(aadhaarState, finalTransactionId, userOtp));
+      dispatch(
+        validateOtpAadhaar({
+          hpProfileId: hpprofileId,
+          aadhaarNumber: aadhaarState,
+          txnId: finalTransactionId,
+          otp: userOtp,
+        })
+      );
     }
   };
 
@@ -129,10 +181,16 @@ function FetchDoctorDetails() {
         : Math.max(0, parseInt(e.target.value)).toString().slice(0, 10);
     }
   };
+  const onSubmit = () => {
+    setShowSuccess(false);
+    setShowCreateHprIdPage(true);
+  };
   return (
     <>
-      {showUniqueNameForDoctorReg ? (
-        <UniqueUserNameForDoctorRegistration />
+      <ToastContainer></ToastContainer>
+
+      {showCreateHprIdPage ? (
+        <CreateHprId />
       ) : (
         <Container
           sx={{
@@ -177,7 +235,7 @@ function FetchDoctorDetails() {
                   Name
                 </Typography>
                 <Typography variant="subtitle2" component="div" color="primary">
-                  Akshath Saxena
+                  {hpName ? hpName : ''}
                 </Typography>
               </Box>
               <Box>
@@ -190,7 +248,7 @@ function FetchDoctorDetails() {
                   Registration Number
                 </Typography>
                 <Typography variant="subtitle2" component="div" color="primary">
-                  9876543210
+                  {registrationNumber ? registrationNumber : ''}
                 </Typography>
               </Box>
             </Box>
@@ -199,7 +257,7 @@ function FetchDoctorDetails() {
                 Council
               </Typography>
               <Typography variant="subtitle2" component="div" color="primary">
-                West Bengal Medical Council
+                {councilName ? councilName : ''}
               </Typography>
             </Box>
             <Divider sx={{ marginBottom: '25px' }} variant="fullWidth" />
@@ -349,7 +407,7 @@ function FetchDoctorDetails() {
               </Box>
             )}
             <Divider sx={{ mb: 4, mt: 4 }} variant="fullWidth" />
-
+            {showSuccess === true && <SuccessModal />}
             <Box sx={{ marginTop: '20px', paddingBottom: '48px' }}>
               <Typography variant="body3">
                 Mobile Number

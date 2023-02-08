@@ -91,7 +91,7 @@ export const getCitiesList = (sub_district_id) => async (dispatch) => {
       });
   });
 };
-export const getRegistrationCouncilList = () => async (dispatch) => {
+export const getSmcList = () => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,
@@ -106,12 +106,12 @@ export const getRegistrationCouncilList = () => async (dispatch) => {
       });
   });
 };
-export const sendNotificationOtp = (contact, type) => async (dispatch) => {
+export const sendNotificationOtp = (otpTypeValue) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: POST,
       url: API.common.sendOtp,
-      data: { contact, type },
+      data: otpTypeValue,
     })
       .then((response) => {
         dispatch(sendNotificationData(response));
@@ -123,6 +123,8 @@ export const sendNotificationOtp = (contact, type) => async (dispatch) => {
   });
 };
 export const verifyNotificationOtp = (otpValue) => async (dispatch) => {
+  // eslint-disable-next-line no-console
+  console.log('otp api verify==>', otpValue);
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: POST,

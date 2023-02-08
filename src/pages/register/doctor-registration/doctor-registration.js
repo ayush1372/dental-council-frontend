@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 
 import { Box, Container, Typography } from '@mui/material';
@@ -9,14 +8,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { verboseLog } from '../../../config/debug';
 import { createEditFieldData } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
-import { getRegistrationCouncilList } from '../../../store/actions/common-actions';
+import { getSmcList } from '../../../store/actions/common-actions';
 import { fetchSmcRegistrationDetails } from '../../../store/actions/doctor-registration-actions';
 import { Button } from '../../../ui/core';
 import { TextField } from '../../../ui/core/form/textfield/textfield';
 import FetchDoctorDetails from './fetch-doctor-details';
 const DoctorRegistrationWelcomePage = () => {
-  // const registrationDetails = useSelector((state) => state.doctorRegistration.smcRegistrationDetail.data);
-  // console.log('registrationDetails=>', registrationDetails);
   const [isNext, setIsNext] = useState(false);
   const {
     register,
@@ -30,7 +27,7 @@ const DoctorRegistrationWelcomePage = () => {
     defaultValues: {
       options: '',
       RegistrationCouncil: '',
-      RegistrationCouncId: '',
+      RegistrationCouncilId: '',
       RegistrationNumber: '',
     },
   });
@@ -38,14 +35,13 @@ const DoctorRegistrationWelcomePage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getRegistrationCouncilList());
+    dispatch(getSmcList());
   }, []);
 
   const onSubmit = () => {
-    // console.log('onsubmit values==>', values.RegistrationCouncil, values.RegistrationNumber);
     let registrationData = {
-      council_id: getValues().RegistrationCouncId,
-      registration_number: getValues().RegistrationNumber,
+      council_id: getValues().RegistrationCouncilId,
+      registration_number: Number(getValues().RegistrationNumber),
     };
     dispatch(fetchSmcRegistrationDetails(registrationData));
 
@@ -97,7 +93,7 @@ const DoctorRegistrationWelcomePage = () => {
                       required: 'Registration Council is required',
                     })}
                     onChange={(currentValue) => {
-                      setValue('RegistrationCouncId', currentValue.id);
+                      setValue('RegistrationCouncilId', currentValue.id);
                     }}
                   />
                 </Box>
