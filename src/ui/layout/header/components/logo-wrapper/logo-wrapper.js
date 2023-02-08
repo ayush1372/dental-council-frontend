@@ -19,11 +19,13 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const loggedIn = useSelector((state) => state.common.isloggedIn);
+
   const { t } = useTranslation();
 
   /** Login Register */
 
   const [regType, setRegType] = useState('');
+
   const [anchorLRLoginRgister, setAnchorLRLoginRegister] = useState(null);
   const openLoginRegisterPopover = Boolean(anchorLRLoginRgister);
 
@@ -76,6 +78,18 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
         height: '60px',
       },
     },
+    loader: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: '100%',
+      height: '100vh',
+      backgroundColor: 'rgba(0,0,0,0.6)',
+      position: 'absolute',
+      left: '0',
+      top: '0',
+      zIndex: '9999',
+    },
   }));
   const classes = useStyles(theme);
 
@@ -83,6 +97,7 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
     <Container sx={{ position: 'relative' }}>
       <MobileDrawer />
       {loggedIn && <IdleTimer />}
+
       <Grid container alignItems="center">
         <Grid item xs={12} sm={6} my={1} pl={loggedIn && { xs: 7, md: 0 }}>
           <Grid container>

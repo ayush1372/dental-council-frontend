@@ -15,6 +15,10 @@ import {
   getCollegeRegistrarProfileData,
 } from '../../../store/actions/college-actions';
 import {
+  getRegistrationCouncilList,
+  getUniversitiesList,
+} from '../../../store/actions/common-actions';
+import {
   generateCaptchaImage,
   getCaptchaEnabledFlagValue,
   loginAction,
@@ -42,7 +46,6 @@ export function LoginPage({ handleForgotPassword }) {
       College: 'College',
       SMC: 'SMC',
       NMC: 'NMC',
-      NBE: 'NBE',
     }),
     []
   );
@@ -61,6 +64,26 @@ export function LoginPage({ handleForgotPassword }) {
   });
   const captchaResult = (num) => {
     setcaptachaAnswer(num);
+  };
+
+  const getCommonData = (response) => {
+    dispatch(getRegistrationCouncilList());
+    dispatch(getUniversitiesList());
+    const userType = userGroupType(response?.data?.user_group_id);
+
+    if (userType === 'College Dean') {
+      dispatch(getCollegeDeanProfileData(response?.data?.profile_id));
+    } else if (userType === 'College Registrar') {
+      dispatch(getCollegeRegistrarProfileData(response?.data?.profile_id));
+    } else if (userType === 'College Admin') {
+      dispatch(getCollegeAdminProfileData(response?.data?.profile_id));
+    } else if (userType === 'State Medical Council') {
+      dispatch(getSMCProfileData(response?.data?.profile_id));
+    } else if (userType === 'National Medical Council') {
+      dispatch(getNMCProfileData(response?.data?.profile_id));
+    } else if (userType === 'NBE') {
+      dispatch(getNBEProfileData(response?.data?.profile_id));
+    }
   };
 
   const onSubmit = (param) => {
@@ -86,26 +109,7 @@ export function LoginPage({ handleForgotPassword }) {
                 dispatch(login());
                 dispatch(userLoggedInType(loginFormname));
                 navigate(`/profile`);
-                const userType = userGroupType(response?.data?.user_group_id);
-
-                if (userType === 'College Dean') {
-                  dispatch(getCollegeDeanProfileData(response?.data?.profile_id));
-                } else if (userType === 'College Registrar') {
-                  dispatch(getCollegeRegistrarProfileData(response?.data?.profile_id));
-                } else if (userType === 'College Admin') {
-                  dispatch(getCollegeAdminProfileData(response?.data?.profile_id));
-                } else if (userType === 'State Medical Council') {
-                  dispatch(getSMCProfileData(response?.data?.profile_id));
-                } else if (userType === 'National Medical Council') {
-                  dispatch(getNMCProfileData(response?.data?.profile_id));
-                } else if (userType === 'NBE') {
-                  dispatch(getNBEProfileData(response?.data?.profile_id));
-                }
-
-                window.scrollTo({
-                  top: 0,
-                  behavior: 'smooth',
-                });
+                getCommonData(response);
               }
             })
             .catch((error) => {

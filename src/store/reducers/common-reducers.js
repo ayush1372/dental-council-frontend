@@ -16,6 +16,8 @@ const initialState = {
   countriesList: { data: [], isLoading: Boolean(true), isError: false },
   districtsList: { data: [], isLoading: Boolean(true), isError: false },
   subDistrictList: { data: [], isLoading: Boolean(true), isError: false },
+  sendNotificationOtpData: { data: [], isLoading: Boolean(true), isError: false },
+  verifyNotificationOtpData: { data: [], isLoading: Boolean(true), isError: false },
   languagesList: { data: [], isLoading: Boolean(true), isError: false },
   universitiesList: { data: [], isLoading: Boolean(true), isError: false },
   collegesList: { data: [], isLoading: Boolean(true), isError: false },
@@ -64,6 +66,12 @@ export const CommonActivity = createSlice({
     getSubDistricts: (state, action) => {
       state.subDistrictList = action.payload;
     },
+    sendNotificationData: (state, action) => {
+      state.sendNotificationOtpData = action.payload;
+    },
+    verifyNotificationData: (state, action) => {
+      state.verifyNotificationOtpData = action.payload;
+    },
     getLanguages: (state, action) => {
       state.languagesList.data = action.payload;
     },
@@ -99,6 +107,8 @@ export const {
   getCountries,
   getDistricts,
   getSubDistricts,
+  sendNotificationData,
+  verifyNotificationData,
   getLanguages,
   getColleges,
   getUniversities,

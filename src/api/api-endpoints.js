@@ -9,7 +9,6 @@ export const API = {
     loginUser: 'api/v1/login',
     refreshToken: 'api/v1/refreshToken',
   },
-  editProfile: {},
   DoctorUserProfileData: {
     QualificationDetails: 'api/v1/hp/health-professional/registration/176',
     WorkProfileDetails: 'api/v1/hp/health-professional/work-profile/165',
@@ -22,6 +21,8 @@ export const API = {
     countries: 'api/v1/md/countries',
     subDistricts: 'api/v1/md/district/{district_id}/sub_districts',
     districts: 'api/v1/md/state/{state_id}/districts',
+    sendOtp: 'api/v1/notification/send-otp',
+    verifyOtp: 'api/v1/notification/verify-otp',
     languages: 'api/v1/md/languages',
     universities: 'api/v1/md/universities',
     colleges: 'api/v1/md/university/{university_id}/colleges',
@@ -35,6 +36,7 @@ export const API = {
     getCollegeProfile: 'api/v1/college/{id}',
     getCollegeRegistrarProfile: '/api/v1/college/registrar/{id}',
     getCollegeDeanProfile: '/api/v1/college/dean/{id}',
+    register: 'api/v1/college',
     initiateCollegeWorkFlow: '/api/v1/colleges/action',
   },
   nmc: {
