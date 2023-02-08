@@ -19,10 +19,7 @@ const otpInputStyle = {
   fontSize: '18px',
   borderRadius: 5,
   border: '1px solid #D8DCDE',
-  borderColor: 'inputBorderColor.main',
-  color: '#D8DCDE',
-  boxShadow: '0 1px 3px #00000029',
-  backgroundColor: '#FAFAFA',
+  color: '#1C1B1B',
 };
 
 const otpMobileInputStyle = {
@@ -32,10 +29,7 @@ const otpMobileInputStyle = {
   fontSize: '18px',
   borderRadius: 5,
   border: '1px solid #D8DCDE',
-  borderColor: 'inputBorderColor.main',
-  color: '#D8DCDE',
-  boxShadow: '0 1px 3px #00000029',
-  backgroundColor: '#FAFAFA',
+  color: '#1C1B1B',
 };
 
 export const OtpForm = ({ otpInvalidError = false, resendAction = undefined, resendTime = 90 }) => {
@@ -186,7 +180,6 @@ export const OtpForm = ({ otpInvalidError = false, resendAction = undefined, res
     validationOtpInvalid: isOtpInvalid,
     handleClear,
     getOtpValidation,
-
     // handleCountdownRestart,
   };
 };

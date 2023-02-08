@@ -5,14 +5,11 @@ import TuneIcon from '@mui/icons-material/Tune';
 import { Alert, Box, Grid, Link, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { verboseLog } from '../../config/debug';
 import useWizard from '../../hooks/use-wizard';
 import ReactivateLicencePopup from '../../shared/reactivate-licence-popup/re-activate-licence-popup';
 import SuccessPopup from '../../shared/reactivate-licence-popup/success-popup';
-import {
-  getDoctorUserProfileData,
-  getRegistrationAndAcademicDetailsData,
-  getWorkProfileData,
-} from '../../store/actions/doctor-user-profile-actions';
+import { getCountriesList, getStatesList } from '../../store/actions/common-actions';
 import { Button } from '../../ui/core/button/button';
 import Wizard from '../../ui/core/wizard';
 // import ChangePassword from '../profile/change-password/change-password';
@@ -44,15 +41,43 @@ export const UserProfile = ({
     loggedInUserType === 'Doctor' ? 0 : 1,
     []
   );
-  const { loginData } = useSelector((state) => state.loginReducer);
 
   const renderSuccess = () => {
     setShowReactivateLicense(false);
     setShowSuccessPopup(true);
   };
+  const fetchStates = () => {
+    try {
+      dispatch(getStatesList())
+        .then((dataResponse) => {
+          verboseLog('dataResponse', dataResponse);
+        })
+        .catch((error) => {
+          verboseLog('error occured', error);
+        });
+    } catch (err) {
+      verboseLog('error', err);
+    }
+  };
+
+  const fetchCountries = () => {
+    try {
+      dispatch(getCountriesList())
+        .then((dataResponse) => {
+          verboseLog('dataResponse', dataResponse);
+        })
+        .catch((error) => {
+          verboseLog('error occured', error);
+        });
+    } catch (err) {
+      verboseLog('error', err);
+    }
+  };
 
   const openDoctorEditProfile = () => {
     setIsReadMode(false);
+    fetchCountries();
+    fetchStates();
   };
 
   useEffect(() => {
@@ -62,23 +87,6 @@ export const UserProfile = ({
       setWizardSteps([...readWizardSteps]);
     }
   }, [isReadMode]);
-
-  const fetchDoctorUserProfileData = () => {
-    dispatch(getDoctorUserProfileData({ id: loginData?.data?.profile_id }));
-  };
-
-  const fetchQualificationDetails = () => {
-    dispatch(getRegistrationAndAcademicDetailsData());
-  };
-
-  const fetchWorkProfileDetails = () => {
-    dispatch(getWorkProfileData());
-  };
-  useEffect(() => {
-    fetchDoctorUserProfileData();
-    fetchQualificationDetails();
-    fetchWorkProfileDetails();
-  }, []);
 
   return (
     <>

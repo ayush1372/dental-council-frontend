@@ -10,7 +10,7 @@ import { createSelectFieldData } from '../../../../helpers/functions/common-func
 import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
 import { getDistrictList } from '../../../../store/actions/common-actions';
 import { getDistricts } from '../../../../store/reducers/common-reducers';
-import { updateWorkProfileDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
+import { getWorkProfileDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
 import { Button, RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
 
@@ -133,7 +133,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
 
     const updatedDoctorProfile = { ...workProfileDetails, ...stateObj };
 
-    dispatch(updateWorkProfileDetails(JSON.parse(JSON.stringify(updatedDoctorProfile))));
+    dispatch(getWorkProfileDetails(JSON.parse(JSON.stringify(updatedDoctorProfile))));
   };
 
   return (

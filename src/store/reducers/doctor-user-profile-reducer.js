@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  doctorUserProfile: { data: [], isLoading: Boolean(true), isError: false },
-  registrationAndAcademicDetails: { data: [], isLoading: Boolean(true), isError: false },
+  personalDetails: { data: [], isLoading: Boolean(true), isError: false },
+  registrationDetails: { data: [], isLoading: Boolean(true), isError: false },
   workProfileDetails: { data: [], isLoading: Boolean(true), isError: false },
   profileImage: { data: [], isLoading: Boolean(true), isError: false },
 };
@@ -11,13 +11,13 @@ const doctorUserProfileReducer = createSlice({
   name: 'doctorUserProfileReducer',
   initialState,
   reducers: {
-    getDoctorUserProfile: (state, action) => {
-      state.doctorUserProfile = action.payload;
+    getPersonalDetails: (state, action) => {
+      state.personalDetails = action.payload;
     },
-    updateRegistrationAndAcademicDetails: (state, action) => {
-      state.registrationAndAcademicDetails = action.payload;
+    getRegistrationDetails: (state, action) => {
+      state.registrationDetails = action.payload;
     },
-    updateWorkProfileDetails: (state, action) => {
+    getWorkProfileDetails: (state, action) => {
       state.workProfileDetails = action.payload;
     },
     getProfileImage: (state, action) => {
@@ -27,9 +27,9 @@ const doctorUserProfileReducer = createSlice({
 });
 
 export const {
-  getDoctorUserProfile,
-  updateRegistrationAndAcademicDetails,
-  updateWorkProfileDetails,
+  getPersonalDetails,
+  getRegistrationDetails,
+  getWorkProfileDetails,
   getProfileImage,
 } = doctorUserProfileReducer.actions;
 

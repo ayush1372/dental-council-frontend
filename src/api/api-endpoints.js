@@ -10,9 +10,9 @@ export const API = {
     refreshToken: 'api/v1/refreshToken',
   },
   DoctorUserProfileData: {
-    QualificationDetails: 'api/v1/hp/health-professional/registration/176',
-    WorkProfileDetails: 'api/v1/hp/health-professional/work-profile/165',
-    DoctorUserProfile: 'api/v1/hp/hpProfileDetail/',
+    personalDetails: 'api/v1/hp/health-professional/personal/{doctor_profile_id}',
+    registrationDetails: 'api/v1/hp/health-professional/registration/{doctor_profile_id}',
+    workProfileDetails: 'api/v1/hp/health-professional/work-profile/{doctor_profile_id}',
     profileImage: 'api/v1/hp/hpProfileDetail/profile_picture/{hp_profile_id}',
   },
   common: {
@@ -29,6 +29,7 @@ export const API = {
     courses: 'api/v1/md/courses',
     specialities: 'api/v1/md/specialities',
     councilNames: 'api/v1/md/smcs',
+    initiateWorkFlow: 'api/v1/health-professional/action',
   },
   college: {
     registrar: 'api/v1/college/registrar',
