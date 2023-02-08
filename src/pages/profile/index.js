@@ -3,12 +3,17 @@ import { useEffect, useState } from 'react';
 import { Box, CssBaseline, Grid, useTheme } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { colgTabs, doctorTabs } from '../../helpers/components/sidebar-drawer-list-item';
+import { sideBarTabs } from '../../helpers/functions/common-functions';
 import {
-  colgTabs,
-  doctorTabs,
-  nmcTabs,
-  smcTabs,
-} from '../../helpers/components/sidebar-drawer-list-item';
+  getCountriesList,
+  getCoursesList,
+  getLanguagesList,
+  getRegistrationCouncilList,
+  getSpecialitiesList,
+  getStatesList,
+  getUniversitiesList,
+} from '../../store/actions/common-actions';
 import { changeUserActiveTab } from '../../store/reducers/common-reducers';
 import MiniDrawer from './components/profile-sidebar/profile-sidebar';
 import ProfileTabContainer from './components/profile-sidebar/profile-tab-container';
@@ -42,6 +47,17 @@ export function Profile() {
     );
   }, []);
 
+  useEffect(() => {
+    // making api calls which are independent of dependencies.
+
+    dispatch(getLanguagesList());
+    dispatch(getCoursesList());
+    dispatch(getUniversitiesList());
+    dispatch(getSpecialitiesList());
+    dispatch(getStatesList());
+    dispatch(getCountriesList());
+    dispatch(getRegistrationCouncilList());
+  }, [loggedInUserType]);
   const theme = useTheme();
 
   return (
@@ -64,33 +80,13 @@ export function Profile() {
           >
             <CssBaseline />
             <MiniDrawer
-              DrawerOptions={
-                loggedInUserType === 'Doctor'
-                  ? doctorTabs
-                  : loggedInUserType === 'NMC'
-                  ? nmcTabs
-                  : loggedInUserType === 'SMC'
-                  ? smcTabs
-                  : loggedInUserType === 'College'
-                  ? colgTabs
-                  : ''
-              }
+              DrawerOptions={sideBarTabs(loggedInUserType)}
               handleSwitch={setActiveTab}
               ActiveOption={isActiveTab}
             />
           </Box>
           <ProfileTabContainer
-            DrawerOptions={
-              loggedInUserType === 'Doctor'
-                ? doctorTabs
-                : loggedInUserType === 'NMC'
-                ? nmcTabs
-                : loggedInUserType === 'SMC'
-                ? smcTabs
-                : loggedInUserType === 'College'
-                ? colgTabs
-                : ''
-            }
+            DrawerOptions={sideBarTabs(loggedInUserType)}
             ActiveOption={isActiveTab}
           />
         </Box>

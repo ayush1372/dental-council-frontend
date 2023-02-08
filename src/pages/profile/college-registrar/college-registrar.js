@@ -1,13 +1,19 @@
+/* eslint-disable no-console */
+import { useState } from 'react';
+
 import { Box, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import { sendRegistrarDetails } from '../../../store/actions/college-actions';
 import { Button, TextField } from '../../../ui/core';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 export function CollegeRegistrar() {
+  const [successModalPopup, setSuccessModalPopup] = useState(false);
+  const successMessage = useSelector((state) => state.college.registrarDetails.data.email_id);
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const {
@@ -32,11 +38,14 @@ export function CollegeRegistrar() {
       id: null,
       name: fieldData.registrarName,
       phone_number: fieldData.registrarPhoneNumber,
-      email_id: fieldData.registrarPhoneNumber,
+      email_id: fieldData.registrarEmail,
       user_id: null,
       password: fieldData.registrarPassword,
     };
     dispatch(sendRegistrarDetails(registrarData));
+    if (successMessage.length > 0) {
+      setSuccessModalPopup(true);
+    }
     reset();
   };
 
@@ -188,6 +197,15 @@ export function CollegeRegistrar() {
           <Button fullWidth variant="contained" color="grey">
             {t('Cancel')}
           </Button>
+          {successModalPopup && (
+            <SuccessModalPopup
+              open={successModalPopup}
+              setOpen={() => setSuccessModalPopup(false)}
+              text={
+                'You have successfully registered your College Registrar. Defined credentials have been sent on the Email ID and Phone number you registered'
+              }
+            />
+          )}{' '}
         </Grid>
       </Grid>
     </Grid>

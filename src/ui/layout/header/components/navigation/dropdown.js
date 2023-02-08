@@ -87,7 +87,7 @@ const Dropdown = ({ tree, onSelectCallback }) => {
       bgcolor="primary.main"
       width={{ xs: '100%', md: '200px' }}
       boxShadow="1"
-      zIndex="9"
+      zIndex="999999"
     >
       {tree.map((branch, index) => (
         <Typography key={index}> {createTree(branch)}</Typography>

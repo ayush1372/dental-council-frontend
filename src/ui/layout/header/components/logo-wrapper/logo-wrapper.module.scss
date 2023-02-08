@@ -1,0 +1,11 @@
+.menuLeftBar {
+  display: none;
+  position: absolute;
+  padding: 8px;
+  left: 24px;
+  top: 8%;
+  cursor: pointer;
+  @media screen and (max-width: 1023px) {
+    display: block;
+  }
+}

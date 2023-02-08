@@ -86,6 +86,11 @@ export default function MiniDrawer({ DrawerOptions = [], handleSwitch }) {
   const theme = useTheme();
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const { userActiveTab } = useSelector((state) => state.common);
+  const { nmcProfileData } = useSelector((state) => state.nmc);
+  const { collegeData } = useSelector((state) => state.college);
+  const { smcProfileData } = useSelector((state) => state.smc);
+  const { nbeData } = useSelector((state) => state.nbe);
+  const { doctorUserProfile } = useSelector((state) => state.doctorUserProfileReducer);
 
   return (
     <Drawer
@@ -111,18 +116,15 @@ export default function MiniDrawer({ DrawerOptions = [], handleSwitch }) {
               <ProfileImage
                 name={
                   loggedInUserType === 'Doctor'
-                    ? 'Dr. ABC'
+                    ? doctorUserProfile?.data?.name
                     : loggedInUserType === 'College'
-                    ? 'IP University'
+                    ? collegeData?.data?.name
                     : loggedInUserType === 'NMC'
-                    ? 'National Medical Commission'
+                    ? nmcProfileData?.data?.display_name
                     : loggedInUserType === 'SMC'
-                    ? 'Maharashtra Medical Council'
-                    : loggedInUserType !== 'Doctor' &&
-                      loggedInUserType !== 'College' &&
-                      loggedInUserType !== 'SMC' &&
-                      loggedInUserType !== 'NMC'
-                    ? 'Dr. ABC'
+                    ? smcProfileData?.data?.display_name
+                    : loggedInUserType === 'NBE'
+                    ? nbeData?.data?.display_name
                     : null
                 }
               />

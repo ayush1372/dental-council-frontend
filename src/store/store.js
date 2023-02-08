@@ -6,10 +6,10 @@ import appFontSizeActivity from './reducers/app-font-size';
 import captchaReducer from './reducers/captcha-reducers';
 import collegeReducer from './reducers/college-reducer';
 import commonActivity from './reducers/common-reducers';
-import registrationData from './reducers/doctor-registration-reducer';
 import doctorUserProfileReducer from './reducers/doctor-user-profile-reducer';
 import loginReducer from './reducers/login-reducer';
 import navMenu from './reducers/nav-menu-reducer';
+import nbeReducers from './reducers/nbe-reducers';
 import nmcReducer from './reducers/nmc-reducer';
 import smcReducer from './reducers/smc-reducer';
 import AadhaarTransactionId from './reducers/user-aadhaar-verify-reducer';
@@ -26,7 +26,7 @@ const store = configureStore({
     college: collegeReducer,
     smc: smcReducer,
     nmc: nmcReducer,
-    DoctorRegistrationData: registrationData,
+    nbe: nbeReducers,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(thunk).concat(logger),
   devTools: true,

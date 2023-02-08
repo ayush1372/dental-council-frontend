@@ -1,61 +1,160 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Box, Container, Grid, IconButton, InputAdornment, Typography } from '@mui/material';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { TextField } from '../../../../src/ui/core/form/textfield/textfield';
-import { verboseLog } from '../../../config/debug';
-import {
-  RegistrationCouncilNames,
-  StateNames,
-  UniversityNames,
-} from '../../../constants/common-data';
+import { createEditFieldData } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
 import ModalOTP from '../../../shared/otp-modal/otp-modal';
+import { registerCollegeDetails } from '../../../store/actions/college-actions';
+import {
+  getRegistrationCouncilList,
+  getStatesList,
+  getUniversitiesList,
+  sendNotificationOtp,
+  verifyNotificationOtp,
+} from '../../../store/actions/common-actions';
 import { Button } from '../../../ui/core';
+import successToast from '../../../ui/core/toaster';
 
 export function CollegeRegistration() {
-  const { otpPopup, handleClickOpen, otpMobileVerify, otpEmailVerify } = ModalOTP({
-    afterConfirm: () => {},
-    headerText:
-      'We just sent an OTP on your registered Mobile Number XXXXXX2182 linked with your Aadhaar.',
-  });
+  const { statesList, councilNames, universitiesList } = useSelector((state) => state.common);
   const [verifyEmail, setVerifyEmail] = useState(false);
   const [verifyMobile, setVerifyMobile] = useState(false);
-  const getOtp = (type) => {
-    if (type === 'phone' && otpMobileVerify) {
-      setVerifyMobile(true);
-    } else if (type === 'email' && otpEmailVerify) {
-      setVerifyEmail(true);
+  const [type, setType] = useState('');
+  const [headerText, setHeaderText] = useState('');
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getStatesList());
+    dispatch(getRegistrationCouncilList());
+    dispatch(getUniversitiesList());
+  }, []);
+
+  const onContinue = (otpNumber) => {
+    if (type === 'sms') {
+      dispatch(
+        verifyNotificationOtp({
+          contact: getValues().CollegePhoneNumber,
+          type: type,
+          otp: otpNumber,
+        })
+      )
+        .then(() => {
+          setVerifyMobile(true);
+          handleClose();
+        })
+        .catch((error) => {
+          setVerifyMobile(false);
+          successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+        });
+    } else {
+      dispatch(
+        verifyNotificationOtp({
+          contact: getValues().email,
+          type: type,
+          otp: otpNumber,
+        })
+      )
+        .then(() => {
+          setVerifyEmail(true);
+          handleClose();
+        })
+        .catch((error) => {
+          setVerifyEmail(false);
+          successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+        });
     }
-    handleClickOpen();
+  };
+
+  const onOtpResendClick = () => {
+    if (type === 'sms' && otpMobileVerify) {
+      setHeaderText(`Mobile Number${getValues().CollegePhoneNumber}`);
+      dispatch(sendNotificationOtp({ contact: getValues().CollegePhoneNumber, type: type }))
+        .then(() => {
+          handleClickOpen();
+        })
+        .catch((error) => {
+          handleClose();
+          successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+        });
+    } else if (type === 'email' && otpEmailVerify) {
+      setHeaderText(`Email Id ${getValues().email}`);
+      dispatch(sendNotificationOtp({ contact: getValues().email, type: type }))
+        .then(() => {
+          handleClickOpen();
+        })
+        .catch((error) => {
+          handleClose();
+          successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+        });
+    }
+  };
+
+  const { otpPopup, handleClickOpen, otpMobileVerify, otpEmailVerify, handleClose } = ModalOTP({
+    afterConfirm: onContinue,
+    reSentOtp: onOtpResendClick,
+    headerText: `We just sent an OTP on your registered  ${headerText} linked with your Aadhaar.`,
+  });
+
+  const getOtp = (type) => {
+    setType(type);
+
+    if (type === 'sms' && otpMobileVerify) {
+      setHeaderText(
+        `Mobile NumberXXXXX${getValues().CollegePhoneNumber.substr(
+          getValues().CollegePhoneNumber.length - 4
+        )}`
+      );
+      dispatch(sendNotificationOtp({ contact: getValues().CollegePhoneNumber, type: type }))
+        .then(() => {
+          handleClickOpen();
+        })
+        .catch((error) => {
+          handleClose();
+          successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+        });
+    } else if (type === 'email' && otpEmailVerify) {
+      setHeaderText(`Email Id ******${getValues().email.substr(getValues().email.length - 15)}.`);
+      dispatch(sendNotificationOtp({ contact: getValues().email, type: type }))
+        .then(() => {
+          handleClickOpen();
+        })
+        .catch((error) => {
+          handleClose();
+          successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+        });
+    }
   };
   const {
     register,
     handleSubmit,
     getValues,
+    setValue,
     clearErrors,
+    reset,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
     defaultValues: {
-      email: '',
       CollegeName: '',
       CollegeId: '',
       CollegePhoneNumber: '',
+      email: '',
+      CollegeWebsite: '',
       CollegeAddress: '',
       CollegePincode: '',
-      CollegeWebsite: '',
-      DepartmentName: '',
-      StateName: '',
       UniversityName: '',
+      UniversityId: '',
+      RegistrationCouncil: '',
+      RegistrationCouncilId: '',
+      StateName: '',
+      StateId: '',
     },
   });
-  const onHandleChange = (data) => {
-    alert(data);
-  };
 
   const handleInput = (e) => {
     e.preventDefault();
@@ -67,7 +166,25 @@ export function CollegeRegistration() {
   };
 
   const onsubmit = () => {
-    alert(getValues().UniversityName);
+    const collegeDetailValues = {
+      id: null,
+      name: getValues().CollegeName,
+      college_code: getValues().CollegeId,
+      phone_number: getValues().CollegePhoneNumber,
+      email_id: getValues().email,
+      user_id: null,
+      council_id: getValues().RegistrationCouncilId,
+      university_id: getValues().UniversityId,
+      website: getValues().CollegeWebsite,
+      address: getValues().CollegeAddress,
+      request_id: '3',
+      pin_code: getValues().CollegePincode,
+      state_id: getValues().StateId,
+    };
+
+    dispatch(registerCollegeDetails(collegeDetailValues)).then(() => {
+      reset();
+    });
   };
   return (
     <Container sx={{ mt: 5 }}>
@@ -158,7 +275,7 @@ export function CollegeRegistration() {
                     sx={{
                       p: '15px 10px 12px 10px',
                     }}
-                    onClick={() => getOtp('phone')}
+                    onClick={() => getOtp('sms')}
                   >
                     Get OTP
                   </Button>
@@ -232,13 +349,16 @@ export function CollegeRegistration() {
             <SearchableDropdown
               fullWidth
               name="RegistrationCouncil"
-              items={RegistrationCouncilNames}
+              items={createEditFieldData(councilNames)}
               placeholder="Select your Registration Council"
               clearErrors={clearErrors}
               error={errors.RegistrationCouncil?.message}
               {...register('RegistrationCouncil', {
                 required: 'Registration Council is required',
               })}
+              onChange={(currentValue) => {
+                setValue('RegistrationCouncilId', currentValue.id);
+              }}
             />
           </Box>
           <Grid />
@@ -254,14 +374,16 @@ export function CollegeRegistration() {
           <SearchableDropdown
             fullWidth
             name="UniversityName"
-            onChange={onHandleChange}
             clearErrors={clearErrors}
-            items={UniversityNames}
+            items={createEditFieldData(universitiesList.data)}
             placeholder="Select University Name"
             error={errors.UniversityName?.message}
             {...register('UniversityName', {
               required: 'University Name is required',
             })}
+            onChange={(currentValue) => {
+              setValue('UniversityId', currentValue.id);
+            }}
           />
         </Grid>
 
@@ -270,7 +392,14 @@ export function CollegeRegistration() {
             College Website
           </Typography>
 
-          <TextField fullWidth name={'CollegeWebsite'} placeholder={'Enter College Website'} />
+          <TextField
+            fullWidth
+            name={'CollegeWebsite'}
+            placeholder={'Enter College Website'}
+            {...register('CollegeWebsite', {
+              required: 'CollegeWebsite  is required',
+            })}
+          />
         </Grid>
 
         <Grid item xs={12} md={6} lg={4}>
@@ -278,7 +407,16 @@ export function CollegeRegistration() {
             College Address
           </Typography>
 
-          <TextField multiline rows={1} fullWidth placeholder="Enter College Address" />
+          <TextField
+            multiline
+            rows={1}
+            fullWidth
+            name={'CollegeAddress'}
+            placeholder="Enter College Address"
+            {...register('CollegeAddress', {
+              required: 'CollegeAddress  is required',
+            })}
+          />
         </Grid>
 
         <Grid item xs={12} md={6} lg={4}>
@@ -290,6 +428,9 @@ export function CollegeRegistration() {
             required
             name={'CollegePincode'}
             placeholder={'Enter College Pin Code'}
+            {...register('CollegePincode', {
+              required: 'College PinCode  is required',
+            })}
           />
         </Grid>
 
@@ -304,16 +445,16 @@ export function CollegeRegistration() {
           <SearchableDropdown
             fullWidth
             name="StateName"
-            items={StateNames}
+            items={createEditFieldData(statesList)}
             clearErrors={clearErrors}
-            onChange={(newValue) => {
-              verboseLog(newValue);
-            }}
-            placeholder={'West Bengal'}
+            placeholder={'select state name'}
             error={errors.StateName?.message}
             {...register('StateName', {
               required: 'State Name is required',
             })}
+            onChange={(currentValue) => {
+              setValue('StateId', currentValue.id);
+            }}
           />
         </Grid>
       </Grid>

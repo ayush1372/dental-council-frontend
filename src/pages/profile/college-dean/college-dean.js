@@ -1,13 +1,19 @@
+import { useState } from 'react';
+
 import { Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import { sendDeanDetails } from '../../../store/actions/college-actions';
 import { Button, TextField } from '../../../ui/core';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 export function CollegeDean() {
+  const [successModalPopup, setSuccessModalPopup] = useState(false);
+  const successMessage = useSelector((state) => state.college.registrarDetails.data.email_id);
+
   const dispatch = useDispatch();
 
   const { t } = useTranslation();
@@ -30,6 +36,10 @@ export function CollegeDean() {
   });
   const onSubmit = (fieldValues) => {
     dispatch(sendDeanDetails(fieldValues));
+    if (successMessage.length > 0) {
+      setSuccessModalPopup(true);
+    }
+
     reset();
   };
   return (
@@ -171,7 +181,7 @@ export function CollegeDean() {
       <Grid container item spacing={2} mt={{ lg: 1 }}>
         <Grid item xs={12} sm="auto">
           <Button fullWidth variant="contained" color="secondary" onClick={handleSubmit(onSubmit)}>
-            {t('SUBMIT')}
+            {t('Submit')}
           </Button>
         </Grid>
 
@@ -180,6 +190,15 @@ export function CollegeDean() {
             {t('Cancel')}
           </Button>
         </Grid>
+        {successModalPopup && (
+          <SuccessModalPopup
+            open={successModalPopup}
+            setOpen={() => setSuccessModalPopup(false)}
+            text={
+              'You have successfully registered your College Dean. Defined credentials have been sent on the Email ID and Phone number you registered.'
+            }
+          />
+        )}
       </Grid>
     </Grid>
   );

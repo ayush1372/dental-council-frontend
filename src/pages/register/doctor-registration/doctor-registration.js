@@ -8,8 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { verboseLog } from '../../../config/debug';
 import { createEditFieldData } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
-import { getSmcList } from '../../../store/actions/common-actions';
-import { fetchSmcRegistrationDetails } from '../../../store/actions/doctor-registration-actions';
+import { getRegistrationCouncilList } from '../../../store/actions/common-actions';
 import { Button } from '../../../ui/core';
 import { TextField } from '../../../ui/core/form/textfield/textfield';
 import FetchDoctorDetails from './fetch-doctor-details';
@@ -31,11 +30,12 @@ const DoctorRegistrationWelcomePage = () => {
       RegistrationNumber: '',
     },
   });
-  const { registrationCouncilList } = useSelector((state) => state.common);
+  const { councilNames } = useSelector((state) => state.common); // eslint-disable-next-line no-console
+  // console.log('registrationCouncilList',registrationCouncilList)
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getSmcList());
+    dispatch(getRegistrationCouncilList());
   }, []);
 
   const onSubmit = () => {
@@ -43,7 +43,7 @@ const DoctorRegistrationWelcomePage = () => {
       council_id: getValues().RegistrationCouncilId,
       registration_number: Number(getValues().RegistrationNumber),
     };
-    dispatch(fetchSmcRegistrationDetails(registrationData));
+    dispatch(getRegistrationCouncilList(registrationData));
 
     setIsNext(true);
   };
@@ -85,7 +85,7 @@ const DoctorRegistrationWelcomePage = () => {
                 <Box>
                   <SearchableDropdown
                     name="RegistrationCouncil"
-                    items={createEditFieldData(registrationCouncilList)}
+                    items={createEditFieldData(councilNames)}
                     placeholder="Select Your Registration Council"
                     clearErrors={clearErrors}
                     error={errors.RegistrationCouncil?.message}

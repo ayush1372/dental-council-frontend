@@ -18,6 +18,7 @@ import MyProfile from '../../pages/profile/smc-nmc-profile/my-profile';
 import VoluntarySuspendLicense from '../../pages/profile/sub-pages/voluntary-suspend-license/voluntary-suspend-license';
 import TrackApplication from '../../pages/profile/track-application/track-application';
 import UserProfile from '../../pages/user-profile';
+import AdditionalQualifications from '../../pages/user-profile/components/additional-qualifications/additional-qualifications';
 import TrackStatus from '../../shared/track-status';
 
 function SideDrawerListItem() {
@@ -52,6 +53,13 @@ export const doctorTabs = [
     tabName: 'change-password',
     icon: <PasswordIcon />,
     element: <ChangePassword tabName={SideDrawerListItem} />,
+  },
+  {
+    option: 4,
+    name: 'Additional Qualifications',
+    tabName: 'additional-qualifications',
+    icon: <AccountCircleIcon />,
+    element: <AdditionalQualifications />,
   },
 ];
 
@@ -187,5 +195,29 @@ export const colgTabs = [
     tabName: 'change-password',
     icon: <PasswordIcon />,
     element: <ChangePassword tabName={SideDrawerListItem} />,
+  },
+];
+
+export const nbeTabs = [
+  {
+    option: 0,
+    name: 'Dashboard',
+    tabName: 'dashboard',
+    icon: <DashboardIcon />,
+    element: <Dashboard tabName={SideDrawerListItem} />,
+  },
+  {
+    option: 1,
+    name: 'My Profile',
+    tabName: 'my-profile',
+    icon: <AccountCircleIcon />,
+    element: <MyProfile userType={'NBE'} />,
+  },
+  {
+    option: 2,
+    name: 'Track Status',
+    tabName: 'track-status',
+    icon: <BadgeIcon />,
+    element: <TrackStatus tabName={SideDrawerListItem} />,
   },
 ];

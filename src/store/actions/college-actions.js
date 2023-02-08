@@ -1,12 +1,15 @@
 import { API } from '../../api/api-endpoints';
-import { GET, POST } from '../../constants/requests';
+import { GET, POST, PUT } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import {
+  collegeRegister,
   detailsOfDean,
   detailsOfRegistrar,
   getCollegeAdminData,
   getCollegeDeanData,
   getCollegeRegistrarData,
+  // updateCollegeAdminProfile
+  postInitiateCollegeWorkFlow,
 } from '../reducers/college-reducer';
 
 export const getCollegeAdminProfileData = (id) => async (dispatch) => {
@@ -74,6 +77,8 @@ export const sendRegistrarDetails = (details) => async (dispatch) => {
       data: details,
     })
       .then((response) => {
+        // eslint-disable-next-line no-console
+        console.log('registrar response', response);
         dispatch(detailsOfRegistrar(response));
         return resolve(response);
       })
@@ -108,6 +113,59 @@ export const sendDeanDetails = (details) => async (dispatch) => {
         return resolve(response);
       })
       .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const updateCollegeAdminProfileData = (body) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: PUT,
+      url: API.college.register,
+      data: body,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+export const registerCollegeDetails = (collegeDetails) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.college.register,
+      data: collegeDetails,
+    })
+      .then((response) => {
+        dispatch(collegeRegister(response));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+export const initiateCollegeWorkFlow = (body) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.college.initiateCollegeWorkFlow,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      data: body,
+    })
+      .then((response) => {
+        dispatch(
+          postInitiateCollegeWorkFlow({ data: response.data, isError: false, isLoading: false })
+        );
+        return resolve(response);
+      })
+      .catch((error) => {
+        dispatch(postInitiateCollegeWorkFlow({ data: [], isError: true, isLoading: false }));
         return reject(error);
       });
   });
