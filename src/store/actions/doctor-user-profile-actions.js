@@ -1,20 +1,81 @@
 import { API } from '../../api/api-endpoints';
-import { GET, POST } from '../../constants/requests';
+import { GET, POST, PUT } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import {
-  getDoctorUserProfile,
+  getPersonalDetails,
   getProfileImage,
-  updateRegistrationAndAcademicDetails,
-  updateWorkProfileDetails,
+  getRegistrationDetails,
+  getWorkProfileDetails,
 } from '../reducers/doctor-user-profile-reducer';
-export const getDoctorUserProfileData = (data) => async (dispatch) => {
+export const getPersonalDetailsData =
+  (doctor_profile_id = 248) =>
+  async (dispatch) => {
+    return await new Promise((resolve, reject) => {
+      useAxiosCall({
+        method: GET,
+        url: API.DoctorUserProfileData.personalDetails.replace(
+          '{doctor_profile_id}',
+          doctor_profile_id
+        ),
+      })
+        .then((response) => {
+          dispatch(getPersonalDetails(response.data));
+          return resolve(response);
+        })
+        .catch((error) => {
+          return reject(error);
+        });
+    });
+  };
+export const getRegistrationDetailsData =
+  (doctor_profile_id = 248) =>
+  async (dispatch) => {
+    return await new Promise((resolve, reject) => {
+      useAxiosCall({
+        method: GET,
+        url: API.DoctorUserProfileData.registrationDetails.replace(
+          '{doctor_profile_id}',
+          doctor_profile_id
+        ),
+      })
+        .then((response) => {
+          dispatch(getRegistrationDetails(response.data));
+          return resolve(response);
+        })
+        .catch((error) => {
+          return reject(error);
+        });
+    });
+  };
+export const getWorkProfileDetailsData =
+  (doctor_profile_id = 248) =>
+  async (dispatch) => {
+    return await new Promise((resolve, reject) => {
+      useAxiosCall({
+        method: GET,
+        url: API.DoctorUserProfileData.workProfileDetails.replace(
+          '{doctor_profile_id}',
+          doctor_profile_id
+        ),
+      })
+        .then((response) => {
+          dispatch(getWorkProfileDetails(response.data));
+          return resolve(response);
+        })
+        .catch((error) => {
+          return reject(error);
+        });
+    });
+  };
+
+export const getNewDoctorUserProfileData = () => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
-      method: GET,
-      url: API.DoctorUserProfileData.DoctorUserProfile + data?.id,
+      method: POST,
+      url: API.DoctorUserProfileData.personalDetails,
     })
       .then((response) => {
-        dispatch(getDoctorUserProfile(response.data));
+        dispatch(getPersonalDetails(response.data));
         return resolve(response);
       })
       .catch((error) => {
@@ -23,14 +84,17 @@ export const getDoctorUserProfileData = (data) => async (dispatch) => {
   });
 };
 
-export const getRegistrationAndAcademicDetailsData = () => async (dispatch) => {
+export const updateDoctorPersonalDetails = (body, doctor_profile_id) => async () => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
-      method: GET,
-      url: API.DoctorUserProfileData.QualificationDetails,
+      method: PUT,
+      url: API.DoctorUserProfileData.personalDetails.replace(
+        '{doctor_profile_id}',
+        doctor_profile_id
+      ),
+      data: body,
     })
       .then((response) => {
-        dispatch(updateRegistrationAndAcademicDetails(response.data));
         return resolve(response);
       })
       .catch((error) => {
@@ -39,14 +103,17 @@ export const getRegistrationAndAcademicDetailsData = () => async (dispatch) => {
   });
 };
 
-export const getWorkProfileData = () => async (dispatch) => {
+export const updateDoctorRegistrationDetails = (body, doctor_profile_id) => async () => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
-      method: GET,
-      url: API.DoctorUserProfileData.WorkProfileDetails,
+      method: PUT,
+      url: API.DoctorUserProfileData.registrationDetails.replace(
+        '{doctor_profile_id}',
+        doctor_profile_id
+      ),
+      data: body,
     })
       .then((response) => {
-        dispatch(updateWorkProfileDetails(response.data));
         return resolve(response);
       })
       .catch((error) => {
