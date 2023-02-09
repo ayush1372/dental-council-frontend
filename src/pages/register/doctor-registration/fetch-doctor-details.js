@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -12,6 +13,11 @@ import { verboseLog } from '../../../config/debug';
 import { encryptData } from '../../../helpers/functions/common-functions';
 import OtpForm from '../../../shared/otp-form/otp-component';
 import { sendNotificationOtp, verifyNotificationOtp } from '../../../store/actions/common-actions';
+import {
+  getHprIdSuggestions,
+  searchHpIdByMobileNumber,
+  sendResetPasswordLink,
+} from '../../../store/actions/doctor-registration-actions';
 import { sendAaadharOtp, validateOtpAadhaar } from '../../../store/actions/user-aadhaar-actions';
 import { Button, TextField } from '../../../ui/core';
 import AadhaarInputField from '../../../ui/core/aadhaar-input-field/aadhaar-input-field';
@@ -20,12 +26,6 @@ import SuccessModal from './success-popup';
 import CreateHprId from './unique-username';
 
 function FetchDoctorDetails() {
-  const councilName = useSelector(
-    (state) => state?.DoctorRegistrationData?.smcRegistrationDetail?.data?.council_name
-  );
-  const registrationNumber = useSelector(
-    (state) => state?.DoctorRegistrationData?.smcRegistrationDetail?.data?.registration_number
-  );
   const [showCreateHprIdPage, setShowCreateHprIdPage] = useState(false);
   const [showOtpEmail, setShowOtpEmail] = useState(false);
   const [showOtpMobile, setShowOtpMobile] = useState(false);
@@ -68,15 +68,16 @@ function FetchDoctorDetails() {
     setShowOtpEmail(true);
   };
   const handleValidateEmail = () => {
+    let emailUserOtp = encryptData(otpValue, process.env.REACT_APP_PUBLIC_KEY);
+    console.log('email otp encypt', emailUserOtp);
     if (otpValue.length === 6) {
       dispatch(
         verifyNotificationOtp({
           contact: getValues().email,
           type: 'email',
-          otp: otpValue,
+          otp: emailUserOtp,
         })
       );
-
       setisOtpValidEmail(true);
       setShowOtpEmail(false);
       handleClear();
@@ -98,12 +99,13 @@ function FetchDoctorDetails() {
   };
 
   const handleValidateMobile = () => {
+    let mobileUserOtp = encryptData(otpValue, process.env.REACT_APP_PUBLIC_KEY);
     if (otpValue.length === 6) {
       dispatch(
         verifyNotificationOtp({
           contact: getValues().MobileNumber,
           type: 'sms',
-          otp: otpValue,
+          otp: mobileUserOtp,
         })
       );
       setisOtpValidMobile(true);
@@ -132,16 +134,27 @@ function FetchDoctorDetails() {
     setisOtpValidMobile(false);
     setisOtpValidEmail(false);
   };
+  const hpId = useSelector((state) => state?.DoctorRegistrationData?.getHprIdByMobile?.data?.hpId);
+
+  const registrationNumber = useSelector(
+    (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.registration_number
+  );
 
   const finalTransactionId = useSelector(
     (state) => state?.AadhaarTransactionId?.aadharData?.data?.DOAuthOTP?.uidtkn
   );
-  const hpName = useSelector(
-    (state) => state?.DoctorRegistrationData?.smcRegistrationDetail?.data?.hp_name
+  const councilName = useSelector(
+    (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.council_name
   );
+  const hpName = useSelector(
+    (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.hp_name
+  );
+  console.log('hp name1', hpName);
+  console.log('hp name2', registrationNumber);
+  console.log('hp name3', councilName);
 
   const hpprofileId = useSelector(
-    (state) => state?.DoctorRegistrationData?.smcRegistrationDetail?.data?.hp_profile_id
+    (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.hp_profile_id
   );
 
   const handleValidateAadhar = () => {
@@ -176,9 +189,33 @@ function FetchDoctorDetails() {
         : Math.max(0, parseInt(e.target.value)).toString().slice(0, 10);
     }
   };
+  // const onSubmit = () => {
+  //   setShowSuccess(false);
+  //   setShowCreateHprIdPage(true);
+  // };
   const onSubmit = () => {
-    setShowSuccess(false);
-    setShowCreateHprIdPage(true);
+    //password reset api also should call here based on condition
+    dispatch(
+      searchHpIdByMobileNumber({
+        mobile: getValues().MobileNumber,
+        // name: hpName,
+        // yearOfBirth: hpYearOfBirth, // this should be in years?
+        // gender: hpGender,
+      })
+    );
+    if (hpId === undefined || hpId === null) {
+      setShowCreateHprIdPage(true);
+      dispatch(getHprIdSuggestions(finalTransactionId));
+    } else {
+      //reset password link api should call
+      dispatch(
+        sendResetPasswordLink({
+          contact: getValues().MobileNumber, //  mobile/email which needs to send?
+          type: 'sms',
+        })
+      );
+      setShowSuccess(true);
+    }
   };
   return (
     <>

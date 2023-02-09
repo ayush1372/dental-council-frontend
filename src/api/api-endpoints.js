@@ -29,6 +29,7 @@ export const API = {
     courses: 'api/v1/md/courses',
     specialities: 'api/v1/md/specialities',
     councilNames: 'api/v1/md/smcs',
+    resetPasswordLink: '/send-reset-password-link',
   },
   college: {
     registrar: 'api/v1/college/registrar',
@@ -52,8 +53,15 @@ export const API = {
   },
   doctorRegistration: {
     smcRegistrationDetail: 'api/v1/hp/hpSmcRegistrationDetail',
-    nbe: {
-      getNBEProfileData: '/api/v1/user/nbe/{id}',
-    },
+  },
+  nbe: {
+    getNBEProfileData: '/api/v1/user/nbe/{id}',
+  },
+};
+export const API_HPR = {
+  hpid: {
+    searchByMobile: 'api/v1/search/searchByMobile',
+    hpIdSuggestions: '/api/v1/account/hpid/suggestion',
+    createHprId: '/api/v1/registration/aadhaar/createHprIdWithAadhaarOtp',
   },
 };

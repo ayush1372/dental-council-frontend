@@ -1,16 +1,40 @@
+/* eslint-disable no-console */
 import { useState } from 'react';
 
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Box, Container, InputAdornment, Link, TextField, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { verboseLog } from '../../../config/debug';
 import { UniqueUserNameForDoctor } from '../../../constants/common-data';
+import {
+  createUniqueHprId,
+  // searchHpIdByMobileNumber,
+} from '../../../store/actions/doctor-registration-actions';
+// import { createUniqueHprId } from '../../../store/actions/doctor-registration-actions';
+// import { getHprIdSuggestions } from '../../../store/actions/doctor-registration-actions';
 import { Button } from '../../../ui/core';
 import SuccessModal from './success-popup';
 
-const UniqueUserNameForDoctorRegistration = () => {
+const CreateHprId = () => {
+  const suggestion = useSelector(
+    (state) => state?.DoctorRegistrationData?.getHprIdSuggestion?.data
+  );
+  const otp = useSelector((state) => state?.doctorRegistration?.storeUserMobileOtp);
+  console.log('user otp===>', otp);
+  const txnId = useSelector(
+    (state) => state?.AadhaarTransactionId?.aadharData?.data?.DOAuthOTP?.uidtkn
+  );
+  console.log('txn id===>', txnId);
+
+  const mobile = useSelector((state) => state?.doctorRegistration?.storeUserMobileNumber);
+  console.log('mobileNumberr===>', mobile);
+
+  console.log(suggestion);
+  const dispatch = useDispatch();
   const theme = useTheme();
   const [isNext, setIsNext] = useState(false);
   const {
@@ -27,10 +51,22 @@ const UniqueUserNameForDoctorRegistration = () => {
       RegistrationNumber: '',
     },
   });
+  //to send user mobile, otp, txnId from aadhar.. how to fetch that..?
+
   const onSubmit = () => {
+    // let name = '';
+    // let yearOfBirth = '';
+    // let gender = '';
+    dispatch(createUniqueHprId(mobile, otp, txnId));
+    //call reset password link along with createUjique username api
+    // dispatch(sendResetPasswordLink(contact,type));
+
     setIsNext(true);
   };
   verboseLog(isNext);
+
+  // useEffect(() => {
+  // }, []);
 
   return (
     <Box>
@@ -87,7 +123,7 @@ const UniqueUserNameForDoctorRegistration = () => {
                 />
               </Box>
             </Box>
-            <Box display="flex" justifyContent="space-between" alignItems="center">
+            <Box display="flex" justifyContent="space-between">
               <InfoOutlinedIcon sx={{ fontSize: '15px', verticalAlign: 'middle' }} />
               <Typography variant="body3" color="primary" component={'div'}>
                 You can use letters, numbers & symbols
@@ -97,14 +133,14 @@ const UniqueUserNameForDoctorRegistration = () => {
             <Box pt={2} pb={4}>
               <Typography>Suggestions:</Typography>
               <Link color="secondary.main" fontSize="14px">
-                aarushi.sharma3,{' '}
+                {/* {suggestion} */}
               </Link>
-              <Link color="secondary.main" fontSize="14px">
+              {/* <Link color="secondary.main" fontSize="14px">
                 aarushisharma390,{' '}
               </Link>
               <Link color="secondary.main" fontSize="14px">
                 sharmaaarushi090
-              </Link>
+              </Link> */}
             </Box>
 
             <Box display="flex" pb={6}>
@@ -138,4 +174,4 @@ const UniqueUserNameForDoctorRegistration = () => {
   );
 };
 
-export default UniqueUserNameForDoctorRegistration;
+export default CreateHprId;
