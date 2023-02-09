@@ -21,7 +21,6 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
       address: {
         state: { name: stateName },
         district: { name: districtName },
-        // organization_type: { name: organization_typeName },
         pincode,
         address_line1,
       },
