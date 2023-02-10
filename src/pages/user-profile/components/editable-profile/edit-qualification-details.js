@@ -414,9 +414,9 @@ const EditQualificationDetails = ({
                 <Typography color="error"> *</Typography>
               </>
             }
-            fileData={qualificationFilesData[`qualification[${index}].files`] || []}
+            fileData={qualificationFilesData[`qualification.${index}.files`] || []}
             setFileData={(files) => {
-              handleQualificationFilesData(`qualification[${index}].files`, files);
+              handleQualificationFilesData(`qualification.${index}.files`, files);
             }}
             isDigiLockcerVisible={true}
           />

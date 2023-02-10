@@ -17,7 +17,10 @@ import {
   getInitiateWorkFlow,
   getSubDistrictsList,
 } from '../../../../store/actions/common-actions';
-import { updateDoctorPersonalDetails } from '../../../../store/actions/doctor-user-profile-actions';
+import {
+  getRegistrationDetailsData,
+  updateDoctorPersonalDetails,
+} from '../../../../store/actions/doctor-user-profile-actions';
 import { getPersonalDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
 import { RadioGroup, Select, TextField } from '../../../../ui/core';
 import MobileNumber from '../../../../ui/core/mobile-number/mobile-number';
@@ -203,10 +206,16 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const fetchUpadtedDoctorUserProfileData = (personalDetails) => {
     dispatch(getInitiateWorkFlow(initiateWorkFlow.data[0]))
       .then(() => {
-        handleNext();
+        // handleNext();
         dispatch(updateDoctorPersonalDetails(personalDetails, loginData.data.profile_id))
           .then(() => {
-            // handleNext();
+            dispatch(getRegistrationDetailsData(loginData.data.profile_id))
+              .then(() => {
+                handleNext();
+              })
+              .catch((allFailMsg) => {
+                successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+              });
           })
           .catch((allFailMsg) => {
             successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');

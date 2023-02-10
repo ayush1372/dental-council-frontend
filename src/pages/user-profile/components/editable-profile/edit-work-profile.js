@@ -8,23 +8,28 @@ import { useDispatch, useSelector } from 'react-redux';
 import { natureOfWork, workStatusOptions } from '../../../../constants/common-data';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
 import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
-import { getDistrictList } from '../../../../store/actions/common-actions';
+import { getDistrictList, getInitiateWorkFlow } from '../../../../store/actions/common-actions';
+import { updateDoctorWorkDetails } from '../../../../store/actions/doctor-user-profile-actions';
 import { getDistricts } from '../../../../store/reducers/common-reducers';
 import { getWorkProfileDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
 import { Button, RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
+import successToast from '../../../../ui/core/toaster';
 
 const EditWorkProfile = ({ handleNext, handleBack }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [workProof, setWorkProof] = useState([]);
   const [subSpecialities, setSubSpecialities] = useState([]);
-  const { statesList, specialitiesList, districtsList } = useSelector((state) => state?.common);
+  const { statesList, specialitiesList, districtsList, initiateWorkFlow } = useSelector(
+    (state) => state?.common
+  );
   const { workProfileDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const { loginData } = useSelector((state) => state?.loginReducer);
   const { work_details, speciality_details, current_work_details } = workProfileDetails || {};
   const { is_user_currently_working, work_nature, work_status } = work_details || {};
   const { broad_speciality, super_speciality: subSpecialityOptions } = speciality_details || {};
-  const { address, url, work_organization, facility } = current_work_details || {};
+  const { address, url, work_organization, facility } = current_work_details[0] || {};
   const { state: stateDetails, district: districtDetails, pincode, address_line1 } = address || {};
 
   const {
@@ -75,7 +80,6 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
 
   const onHandleOptionNext = () => {
     handleSave();
-    handleNext();
   };
   const handleselection = (event) => {
     setValue(event.target.name, event.target.value, true);
@@ -113,7 +117,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
       super_speciality: [...subSpecialities],
     };
     const currentWorkDetails = {
-      ...(current_work_details || {}),
+      ...(current_work_details[0] || {}),
       url: telecommunicationURL,
       work_organization: workingOrganizationName,
       address: {
@@ -128,12 +132,37 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
     const stateObj = {
       work_details: { ...workDetails },
       speciality_details: { ...specialityDetails },
-      current_work_details: { ...currentWorkDetails },
+      current_work_details: [{ ...currentWorkDetails }],
     };
 
     const updatedDoctorProfile = { ...workProfileDetails, ...stateObj };
 
     dispatch(getWorkProfileDetails(JSON.parse(JSON.stringify(updatedDoctorProfile))));
+  };
+
+  const fetchUpdateDoctorWorkDetails = (workDetails) => {
+    dispatch(getInitiateWorkFlow(initiateWorkFlow.data[0]))
+      .then(() => {
+        const formData = new FormData();
+        formData.append('data', JSON.stringify(workDetails));
+        formData.append('proof', workProof?.[0].file);
+
+        dispatch(updateDoctorWorkDetails(formData, loginData.data.profile_id))
+          .then(() => {
+            handleNext();
+          })
+          .catch((allFailMsg) => {
+            successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+          });
+      })
+      .catch((allFailMsg) => {
+        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      });
+  };
+
+  const onHandleOption = () => {
+    onHandleOptionNext();
+    fetchUpdateDoctorWorkDetails(workProfileDetails);
   };
 
   return (
@@ -551,7 +580,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
         </Grid>
         <Grid item xs={12} md="auto" display="flex" justifyContent="end" lg={2}>
           <Button
-            onClick={handleSubmit(onHandleOptionNext)}
+            onClick={handleSubmit(onHandleOption)}
             variant="contained"
             color="secondary"
             sx={{

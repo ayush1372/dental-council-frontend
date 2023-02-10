@@ -122,6 +122,25 @@ export const updateDoctorRegistrationDetails = (body, doctor_profile_id) => asyn
   });
 };
 
+export const updateDoctorWorkDetails = (body, doctor_profile_id) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: PUT,
+      url: API.DoctorUserProfileData.workProfileDetails.replace(
+        '{doctor_profile_id}',
+        doctor_profile_id
+      ),
+      data: body,
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
 export const getUserProfileImage = (hp_profile_id, file) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
