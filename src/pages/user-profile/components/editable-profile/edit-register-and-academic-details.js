@@ -179,9 +179,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   };
 
   useEffect(() => {
-    const details = registrationDetails.qualification_detail_response_tos[0]
-      ? registrationDetails.qualification_detail_response_tos[0]
-      : {};
+    const details =
+      registrationDetails && Object.values(registrationDetails).length > 3
+        ? registrationDetails.qualification_detail_response_tos[0]
+        : {};
     const obj = { ...qualificationObjTemplate[0] };
     obj.university = details.university?.id;
     obj.qualification = details.course?.id;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
@@ -16,10 +16,8 @@ import {
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import PopupState, { bindMenu, bindTrigger } from 'material-ui-popup-state';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { getWorkProfileDetailsData } from '../../../../store/actions/doctor-user-profile-actions';
-import successToast from '../../../../ui/core/toaster';
 import SuspendLicenseVoluntaryRetirement from '../../../suspend-license-voluntary-retirement';
 import CurrentWorkDetails from '../readable-content/current-work-details';
 import SpecialDetailsContent from '../readable-content/special-details-content';
@@ -33,14 +31,12 @@ const ReadWorkProfile = ({
   activeStep,
 }) => {
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
-  const { loginData } = useSelector((state) => state?.loginReducer);
 
   const { workProfileDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const [selected, setSelected] = useState('');
   const [confirmationModal, setConfirmationModal] = useState(false);
   const { userActiveTab } = useSelector((state) => state.common);
   const [accordionKey, setAccordionKey] = useState('accordion-0');
-  const dispatch = useDispatch();
 
   const accordions = [
     {
@@ -59,16 +55,7 @@ const ReadWorkProfile = ({
   const handleChange = (accordionValue) => (_event, isExpanded) => {
     setAccordionKey(isExpanded ? accordionValue : null);
   };
-  const fetchDoctorUserProfileData = () => {
-    dispatch(getWorkProfileDetailsData(loginData.data.profile_id))
-      .then(() => {})
-      .catch((allFailMsg) => {
-        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-      });
-  };
-  useEffect(() => {
-    fetchDoctorUserProfileData();
-  }, []);
+
   const handleSubmitDetails = () => {
     setConfirmationModal(false);
     setShowDashboard(false);
