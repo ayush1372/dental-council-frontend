@@ -225,3 +225,19 @@ export const verifyNotificationOtp = (otpValue) => async (dispatch) => {
       });
   });
 };
+
+export const getInitiateWorkFlow = (body) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.common.initiateWorkFlow,
+      data: body,
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
