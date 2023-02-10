@@ -21,17 +21,15 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
   const dispatch = useDispatch();
   const [workProof, setWorkProof] = useState([]);
   const [subSpecialities, setSubSpecialities] = useState([]);
-  const { statesList, specialitiesList, districtsList, initiateWorkFlow } = useSelector(
-    (state) => state?.common
-  );
+  const { statesList, specialitiesList, districtsList } = useSelector((state) => state?.common);
   const { workProfileDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { loginData } = useSelector((state) => state?.loginReducer);
-  const { work_details, speciality_details, current_work_details } = workProfileDetails || {};
+  const { work_details, speciality_details, current_work_details, request_id } =
+    workProfileDetails || {};
   const { is_user_currently_working, work_nature, work_status } = work_details || {};
   const { broad_speciality, super_speciality: subSpecialityOptions } = speciality_details || {};
-  const { address, url, work_organization, facility } = current_work_details[0] || {};
+  const { address, url, work_organization, facility_id } = current_work_details[0] || {};
   const { state: stateDetails, district: districtDetails, pincode, address_line1 } = address || {};
-
   const {
     formState: { errors },
     getValues,
@@ -53,7 +51,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
       Address: address_line1,
       Pincode: pincode,
       telecommunicationURL: url,
-      selection: facility,
+      selection: facility_id,
     },
   });
 
@@ -141,7 +139,15 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
   };
 
   const fetchUpdateDoctorWorkDetails = (workDetails) => {
-    dispatch(getInitiateWorkFlow(initiateWorkFlow.data[0]))
+    const getInitiateWorkFlowHeader = {
+      application_type_id: 1,
+      actor_id: 2,
+      action_id: 3,
+      hp_profile_id: loginData.data.profile_id,
+      profile_status: 1,
+      request_id: request_id,
+    };
+    dispatch(getInitiateWorkFlow(getInitiateWorkFlowHeader))
       .then(() => {
         const formData = new FormData();
         formData.append('data', JSON.stringify(workDetails));
@@ -315,7 +321,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
             <UploadFile
               uploadFiles="single"
               sizeAllowed={1}
-              fileTypes={['image/jpg', 'image/jpeg', 'image/png']}
+              fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
               fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
                Maximum size allowed for the attachment is 5MB.`}
               fileData={workProof}
@@ -354,11 +360,11 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               defaultValue={getValues().selection}
               items={[
                 {
-                  value: '0',
+                  value: 0,
                   label: 'Facility',
                 },
                 {
-                  value: '1',
+                  value: 1,
                   label: 'Organization',
                 },
               ]}

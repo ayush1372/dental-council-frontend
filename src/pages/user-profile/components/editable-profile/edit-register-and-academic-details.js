@@ -416,7 +416,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
             <UploadFile
               uploadFiles="single"
               sizeAllowed={1}
-              fileTypes={['image/jpg', 'image/jpeg', 'image/png']}
+              fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
               fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
                Maximum size allowed for the attachment is 5MB.`}
               fileData={registrationFileData}
