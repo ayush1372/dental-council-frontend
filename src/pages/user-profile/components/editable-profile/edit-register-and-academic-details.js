@@ -42,7 +42,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   );
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { loginData } = useSelector((state) => state?.loginReducer);
-  const { initiateWorkFlow } = useSelector((state) => state?.common);
 
   const {
     registration_detail_to: {
@@ -53,6 +52,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
       renewable_registration_date,
       is_name_change,
     },
+    request_id,
   } =
     registrationDetails && Object.values(registrationDetails).length > 3
       ? registrationDetails
@@ -145,7 +145,15 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   };
 
   const fetchUpdateDoctorRegistrationDetails = (registrationDetails) => {
-    dispatch(getInitiateWorkFlow(initiateWorkFlow.data[0]))
+    const getInitiateWorkFlowHeader = {
+      application_type_id: 1,
+      actor_id: 2,
+      action_id: 3,
+      hp_profile_id: loginData.data.profile_id,
+      profile_status: 1,
+      request_id: request_id,
+    };
+    dispatch(getInitiateWorkFlow(getInitiateWorkFlowHeader))
       .then(() => {
         handleNext();
         dispatch(updateDoctorRegistrationDetails(registrationDetails, loginData.data.profile_id))

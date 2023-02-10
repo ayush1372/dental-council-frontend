@@ -30,14 +30,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const loggedInUserType = useSelector((state) => state?.common?.loggedInUserType);
   const { loginData } = useSelector((state) => state?.loginReducer);
 
-  const {
-    statesList,
-    countriesList,
-    districtsList,
-    subDistrictList,
-    citiesList,
-    initiateWorkFlow,
-  } = useSelector((state) => state?.common);
+  const { statesList, countriesList, districtsList, subDistrictList, citiesList } = useSelector(
+    (state) => state?.common
+  );
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
 
   const [languages, setLanguages] = useState([]);
@@ -70,6 +65,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       full_name,
     },
     imr_details: { registration_number, nmr_id, year_of_info },
+    request_id,
   } = personalDetails && Object.values(personalDetails).length > 3
     ? personalDetails
     : {
@@ -201,7 +197,15 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   }, [selectedSubDistrict]);
 
   const fetchUpadtedDoctorUserProfileData = (personalDetails) => {
-    dispatch(getInitiateWorkFlow(initiateWorkFlow.data[0]))
+    const getInitiateWorkFlowHeader = {
+      application_type_id: 1,
+      actor_id: 2,
+      action_id: 3,
+      hp_profile_id: loginData.data.profile_id,
+      profile_status: 1,
+      request_id: request_id,
+    };
+    dispatch(getInitiateWorkFlow(getInitiateWorkFlowHeader))
       .then(() => {
         handleNext();
         dispatch(updateDoctorPersonalDetails(personalDetails, loginData.data.profile_id))
