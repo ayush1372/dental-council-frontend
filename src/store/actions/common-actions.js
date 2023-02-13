@@ -1,5 +1,4 @@
 import { API } from '../../api/api-endpoints';
-// import { verboseLog } from '../../config/debug';
 import { GET, POST } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import {
@@ -13,6 +12,7 @@ import {
   getStates,
   getSubDistricts,
   getUniversities,
+  searchTrackStatusData,
   sendNotificationData,
   updateCouncilNames,
   verifyNotificationData,
@@ -218,6 +218,23 @@ export const verifyNotificationOtp = (otpValue) => async (dispatch) => {
     })
       .then((response) => {
         dispatch(verifyNotificationData(response));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const trackStatus = (trackData) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.common.trackStataus,
+      data: trackData,
+    })
+      .then((response) => {
+        dispatch(searchTrackStatusData(response));
         return resolve(response);
       })
       .catch((error) => {

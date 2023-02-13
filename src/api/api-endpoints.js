@@ -29,6 +29,7 @@ export const API = {
     courses: 'api/v1/md/courses',
     specialities: 'api/v1/md/specialities',
     councilNames: 'api/v1/md/smcs',
+    trackStataus: 'api/v1/health-professional/applications/status',
   },
   college: {
     registrar: 'api/v1/college/registrar',

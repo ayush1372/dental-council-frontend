@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux';
 import TableSearch from '../../../src/pages/profile/components/table-search/table-search';
 import UserProfile from '../../../src/pages/user-profile';
 import { verboseLog } from '../../config/debug';
-import { trackstatusData } from '../../constants/common-data';
 import GenericTable from '../../shared/generic-component/generic-table';
 import ViewProfile from '../../shared/view-profile/view-profile';
 import { Button } from '../../ui/core';
@@ -46,6 +45,7 @@ function TrackStatusTable(props) {
   const [page, setPage] = React.useState(0);
   const [selectedRowData, setRowData] = React.useState({});
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+
   const [showViewProfile, setShowViewPorfile] = useState(false);
   const viewNameOfApplicant = (event, row) => {
     event.preventDefault();
@@ -116,31 +116,38 @@ function TrackStatusTable(props) {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
-  const newRowsData = trackstatusData.message?.map((application) => {
+  // trackstatusData.message
+  //  trackStatusData?.data?.data?.health_professional_applications?.map((application) => {
+  //  trackStatusData !== undefined ||
+  // trackStatusData?.data?.data?.health_professional_applications.length > 0
+  //   ? trackStatusData?.data?.data?.health_professional_applications?.map(() => {
+
+  const newRowsData = props.trackStatusData?.map((application, index) => {
     return createData(
-      { type: 'SNo', value: application.SNo },
+      { type: 'SNo', value: index + 1 },
       {
         type: 'registrationNo',
-        value: application?.registrationNo,
+        value: application?.registration_no,
       },
       {
         type: 'nameofApplicant',
-        value: application.nameofApplicant,
+        value: application?.applicant_full_name,
         callbackNameOfApplicant: viewNameOfApplicant,
       },
       {
         type: 'nameofStateCouncil',
-        value: application.nameofStateCouncil,
+        value: application.council_name,
       },
-      { type: 'councilVerificationStatus', value: application.councilVerificationStatus },
+      { type: 'councilVerificationStatus', value: application?.smc_status },
       {
         type: 'collegeVerificationStatus',
-        value: application.collegeVerificationStatus,
+        value: 'verfied',
       },
-      { type: 'NMCVerificationStatus', value: application.NMCVerificationStatus },
-      { type: 'dateofSubmission', value: application.dateofSubmission },
-      { type: 'pendency', value: application.pendency },
-      { type: 'pending', value: 'N/A' },
+      { type: 'NMCVerificationStatus', value: application?.nmc_status },
+
+      { type: 'dateofSubmission', value: application?.created_at },
+      { type: 'pendency', value: '-' },
+      { type: 'pending', value: '-' },
       {
         type:
           loggedInUserType === 'NMC'
@@ -148,7 +155,7 @@ function TrackStatusTable(props) {
             : loggedInUserType === 'SMC'
             ? 'requestSMC'
             : 'college',
-        value: application.view,
+        value: '-',
       }
     );
   });
@@ -198,6 +205,7 @@ function TrackStatusTable(props) {
   ) : (
     <Grid sx={{ mx: 2 }} p={'0px'}>
       <TableSearch trackApplication />
+
       <GenericTable
         order={order}
         orderBy={orderBy}
