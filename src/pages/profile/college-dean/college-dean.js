@@ -1,7 +1,7 @@
 import { Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { sendDeanDetails } from '../../../store/actions/college-actions';
 import { Button, TextField } from '../../../ui/core';
@@ -11,6 +11,8 @@ export function CollegeDean() {
   const dispatch = useDispatch();
 
   const { t } = useTranslation();
+  const { collegeData } = useSelector((state) => state.college);
+  const userData = collegeData?.data;
   const {
     register,
     handleSubmit,
@@ -29,7 +31,7 @@ export function CollegeDean() {
     },
   });
   const onSubmit = (fieldValues) => {
-    dispatch(sendDeanDetails(fieldValues));
+    dispatch(sendDeanDetails(fieldValues, userData?.id));
     reset();
   };
   return (

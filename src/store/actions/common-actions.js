@@ -1,6 +1,6 @@
 import { API } from '../../api/api-endpoints';
 // import { verboseLog } from '../../config/debug';
-import { GET, POST } from '../../constants/requests';
+import { GET, PATCH, POST } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import {
   getCities,
@@ -229,8 +229,8 @@ export const verifyNotificationOtp = (otpValue) => async (dispatch) => {
 export const getInitiateWorkFlow = (body) => async () => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
-      method: POST,
-      url: API.common.initiateWorkFlow,
+      method: PATCH,
+      url: API.DoctorUserProfileData.initiateWorkFlow,
       data: body,
     })
       .then((response) => {
