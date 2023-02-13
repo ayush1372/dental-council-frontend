@@ -13,6 +13,7 @@ export function CollegeDean({ showPage }) {
   const userData = collegeData?.data;
 
   const { t } = useTranslation();
+
   const {
     register,
     handleSubmit,

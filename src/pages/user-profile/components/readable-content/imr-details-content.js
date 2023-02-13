@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
-const IMRDetails = ({ doctorUserProfile }) => {
+const IMRDetails = ({ personalDetails }) => {
   const { userActiveTab } = useSelector((state) => state.common);
 
   const [openModal, setOpenModal] = useState(false);
@@ -16,8 +16,8 @@ const IMRDetails = ({ doctorUserProfile }) => {
   const {
     imr_details: { registration_number, nmr_id, year_of_info },
   } =
-    doctorUserProfile && Object.values(doctorUserProfile).length > 3
-      ? doctorUserProfile
+    personalDetails && Object.values(personalDetails).length > 3
+      ? personalDetails
       : { imr_details: {} };
   return (
     <Grid container spacing={2} mt={2}>

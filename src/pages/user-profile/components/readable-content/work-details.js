@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
-const WorkDetails = ({ doctorUserProfile }) => {
+const WorkDetails = ({ workProfileDetails }) => {
   const { userActiveTab } = useSelector((state) => state.common);
 
   const [openModal, setOpenModal] = useState(false);
@@ -21,8 +21,8 @@ const WorkDetails = ({ doctorUserProfile }) => {
       work_nature: { name: workNatureName },
     },
   } =
-    doctorUserProfile && Object.values(doctorUserProfile).length > 3
-      ? doctorUserProfile
+    workProfileDetails && Object.values(workProfileDetails).length > 3
+      ? workProfileDetails
       : {
           work_details: {
             work_status: {},

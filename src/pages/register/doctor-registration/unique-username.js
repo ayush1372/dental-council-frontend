@@ -52,7 +52,7 @@ const UniqueUserNameForDoctorRegistration = () => {
                 Create your unique username
               </Typography>
               <Typography variant="body3" color="primary.main">
-                Create new password and confirm it. This new password will be used for login.
+                Create new Username and confirm it. This new Username will be used for login.
               </Typography>
             </Box>
 
@@ -87,7 +87,7 @@ const UniqueUserNameForDoctorRegistration = () => {
                 />
               </Box>
             </Box>
-            <Box display="flex" justifyContent="space-between">
+            <Box display="flex" justifyContent="space-between" alignItems="center">
               <InfoOutlinedIcon sx={{ fontSize: '15px', verticalAlign: 'middle' }} />
               <Typography variant="body3" color="primary" component={'div'}>
                 You can use letters, numbers & symbols

@@ -1,10 +1,18 @@
+import { useEffect } from 'react';
+
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 
+import { getRegistrationCouncilList } from '../../../store/actions/common-actions';
 import { Button, Select, TextField } from '../../../ui/core';
 
 const AdvanceSearch = ({ setDoSearch }) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getRegistrationCouncilList());
+  }, []);
   const {
     formState: { errors },
     getValues,

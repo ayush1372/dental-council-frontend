@@ -3,17 +3,15 @@ import { useEffect, useState } from 'react';
 import { Box, CssBaseline, Grid, useTheme } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { colgTabs, doctorTabs } from '../../helpers/components/sidebar-drawer-list-item';
+import { sideBarTabs } from '../../helpers/functions/common-functions';
 import {
-  colgTabs,
-  doctorTabs,
-  nmcTabs,
-  smcTabs,
-} from '../../helpers/components/sidebar-drawer-list-item';
-import {
+  getCountriesList,
   getCoursesList,
   getLanguagesList,
   getRegistrationCouncilList,
   getSpecialitiesList,
+  getStatesList,
   getUniversitiesList,
 } from '../../store/actions/common-actions';
 import { changeUserActiveTab } from '../../store/reducers/common-reducers';
@@ -56,17 +54,9 @@ export function Profile() {
     dispatch(getCoursesList());
     dispatch(getUniversitiesList());
     dispatch(getSpecialitiesList());
-
-    // only required api calls for user type.
-    switch (loggedInUserType) {
-      case 'SMC':
-        dispatch(getRegistrationCouncilList());
-        break;
-      case 'Doctor':
-        break;
-      default:
-        break;
-    }
+    dispatch(getStatesList());
+    dispatch(getCountriesList());
+    dispatch(getRegistrationCouncilList());
   }, [loggedInUserType]);
   const theme = useTheme();
 
@@ -90,33 +80,13 @@ export function Profile() {
           >
             <CssBaseline />
             <MiniDrawer
-              DrawerOptions={
-                loggedInUserType === 'Doctor'
-                  ? doctorTabs
-                  : loggedInUserType === 'NMC'
-                  ? nmcTabs
-                  : loggedInUserType === 'SMC'
-                  ? smcTabs
-                  : loggedInUserType === 'College'
-                  ? colgTabs
-                  : ''
-              }
+              DrawerOptions={sideBarTabs(loggedInUserType)}
               handleSwitch={setActiveTab}
               ActiveOption={isActiveTab}
             />
           </Box>
           <ProfileTabContainer
-            DrawerOptions={
-              loggedInUserType === 'Doctor'
-                ? doctorTabs
-                : loggedInUserType === 'NMC'
-                ? nmcTabs
-                : loggedInUserType === 'SMC'
-                ? smcTabs
-                : loggedInUserType === 'College'
-                ? colgTabs
-                : ''
-            }
+            DrawerOptions={sideBarTabs(loggedInUserType)}
             ActiveOption={isActiveTab}
           />
         </Box>

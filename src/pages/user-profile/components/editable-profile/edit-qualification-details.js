@@ -20,6 +20,7 @@ const EditQualificationDetails = ({
   register,
   unregister,
   update,
+  remove,
   watch,
   qualificationFilesData,
   handleQualificationFilesData,
@@ -77,9 +78,15 @@ const EditQualificationDetails = ({
   return (
     <>
       {showDeleteIcon && (
-        <Grid container item spacing={2} display="flex" alignItems="center">
-          <Divider width="97%" />
-          <CancelIcon color="secondary" fontSize="large" />
+        <Grid container item spacing={2} display="flex" alignItems="center" mt={2}>
+          <Divider width="96%" />
+          <CancelIcon
+            color="secondary"
+            fontSize="large"
+            onClick={() => {
+              remove(index);
+            }}
+          />
         </Grid>
       )}
       <Grid container item spacing={2}>
@@ -354,7 +361,7 @@ const EditQualificationDetails = ({
           />
         </Grid>
       </Grid>
-      <Grid container item spacing={2}>
+      <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
           <TextField
             variant="outlined"
@@ -367,31 +374,11 @@ const EditQualificationDetails = ({
             defaultValue={fields[index].year}
             {...register(`qualification[${index}].year`, {
               required: 'awarding is Required',
+              pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
             })}
           />
         </Grid>
-      </Grid>
-      <Grid container item spacing={2}>
-        <Grid item xs={12} md={6}>
-          <UploadFile
-            uploadFiles="single"
-            sizeAllowed={1}
-            fileTypes={['image/jpg', 'image/jpeg', 'image/png']}
-            fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
-                 Maximum size allowed for the attachment is 5MB.`}
-            label={
-              <>
-                <Typography color="text.primary">Upload the Degree</Typography>
-                <Typography color="error"> *</Typography>
-              </>
-            }
-            fileData={qualificationFilesData[`qualification[${index}].files`] || []}
-            setFileData={(files) => {
-              handleQualificationFilesData(`qualification[${index}].files`, files);
-            }}
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={8}>
           <RadioGroup
             onChange={handleRegistration}
             name={'nameindegree'}
@@ -410,6 +397,28 @@ const EditQualificationDetails = ({
             label="Is your name in degree, different from your name in Aadhaar?"
             required={true}
             error={errors?.qualification?.[index]?.nameindegree?.message}
+          />
+        </Grid>
+      </Grid>
+      <Grid container item spacing={2} mt={1}>
+        <Grid item xs={12}>
+          <UploadFile
+            uploadFiles="single"
+            sizeAllowed={1}
+            fileTypes={['image/jpg', 'image/jpeg', 'image/png']}
+            fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
+                 Maximum size allowed for the attachment is 5MB.`}
+            label={
+              <>
+                <Typography color="text.primary">Upload the Degree</Typography>
+                <Typography color="error"> *</Typography>
+              </>
+            }
+            fileData={qualificationFilesData[`qualification[${index}].files`] || []}
+            setFileData={(files) => {
+              handleQualificationFilesData(`qualification[${index}].files`, files);
+            }}
+            isDigiLockcerVisible={true}
           />
         </Grid>
       </Grid>
