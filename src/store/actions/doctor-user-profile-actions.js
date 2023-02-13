@@ -14,7 +14,7 @@ export const getPersonalDetailsData =
       useAxiosCall({
         method: GET,
         url: API.DoctorUserProfileData.personalDetails.replace(
-          '{doctor_profile_id}',
+          '{healthProfessionalId}',
           doctor_profile_id
         ),
       })
@@ -34,7 +34,7 @@ export const getRegistrationDetailsData =
       useAxiosCall({
         method: GET,
         url: API.DoctorUserProfileData.registrationDetails.replace(
-          '{doctor_profile_id}',
+          '{healthProfessionalId}',
           doctor_profile_id
         ),
       })
@@ -54,7 +54,7 @@ export const getWorkProfileDetailsData =
       useAxiosCall({
         method: GET,
         url: API.DoctorUserProfileData.workProfileDetails.replace(
-          '{doctor_profile_id}',
+          '{healthProfessionalId}',
           doctor_profile_id
         ),
       })
@@ -89,7 +89,7 @@ export const updateDoctorPersonalDetails = (body, doctor_profile_id) => async ()
     useAxiosCall({
       method: PUT,
       url: API.DoctorUserProfileData.personalDetails.replace(
-        '{doctor_profile_id}',
+        '{healthProfessionalId}',
         doctor_profile_id
       ),
       data: body,
@@ -108,7 +108,7 @@ export const updateDoctorRegistrationDetails = (body, doctor_profile_id) => asyn
     useAxiosCall({
       method: PUT,
       url: API.DoctorUserProfileData.registrationDetails.replace(
-        '{doctor_profile_id}',
+        '{healthProfessionalId}',
         doctor_profile_id
       ),
       data: body,
@@ -126,7 +126,7 @@ export const getUserProfileImage = (hp_profile_id, file) => async (dispatch) => 
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: POST,
-      url: API.DoctorUserProfileData.profileImage.replace('{hp_profile_id}', hp_profile_id),
+      url: API.DoctorUserProfileData.profileImage.replace('{healthProfessionalId}', hp_profile_id),
       headers: { 'Content-Type': 'multipart/form-data' },
       data: file,
     })
