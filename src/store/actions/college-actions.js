@@ -83,17 +83,19 @@ export const sendRegistrarDetails = (details) => async (dispatch) => {
       });
   });
 };
-export const sendDeanDetails = (details) => async (dispatch) => {
-  let id = null;
+export const sendDeanDetails = (details, action) => async (dispatch) => {
+  let id = action === 'editDean' ? details.id : null;
   let name = details.deanName;
   let phone_number = details.deanPhoneNumber;
   let email_id = details.deanEmail;
-  let user_id = null;
+  let user_id = action === 'editDean' ? details.deanUserId : null;
   let password = details.deanPassword;
+  let deanURL = action === 'editDean' ? API.college.dean + '/' + id : API.college.dean;
+
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: POST,
-      url: API.college.dean,
+      url: deanURL,
       headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
       data: {
         id,

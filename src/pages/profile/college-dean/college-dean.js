@@ -23,15 +23,21 @@ export function CollegeDean({ showPage }) {
   } = useForm({
     mode: 'onChange',
     defaultValues: {
+      id: showPage === 'edit' ? userData?.id : null,
       deanName: showPage === 'edit' ? userData?.name : '',
-      deanPhoneNumber: '',
-      deanEmail: '',
-      deanUserId: '',
+      deanPhoneNumber: showPage === 'edit' ? userData?.phone_number : '',
+      deanEmail: showPage === 'edit' ? userData?.email_id : '',
+      deanUserId: showPage === 'edit' ? userData?.user_id : '',
       deanPassword: '',
     },
   });
   const onSubmit = (fieldValues) => {
-    dispatch(sendDeanDetails(fieldValues));
+    if (showPage === 'edit') {
+      dispatch(sendDeanDetails(fieldValues, 'editDean'));
+    } else {
+      dispatch(sendDeanDetails(fieldValues));
+    }
+
     reset();
   };
   return (
