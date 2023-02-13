@@ -32,23 +32,23 @@ export const API = {
     registrar: 'api/v1/abdm/nmr/college/{collegeId}/registrar',
     dean: 'api/v1/abdm/nmr/college/{collegeId}/dean',
     getCollegeProfile: 'api/v1/abdm/nmr/college/{id}',
-    getCollegeRegistrarProfile: '/api/v1/abdm/nmr/college/registrar/{id}',
-    getCollegeDeanProfile: '/api/v1/abdm/nmr/college/dean/{id}',
+    getCollegeRegistrarProfile: 'api/v1/abdm/nmr/college/registrar/{id}',
+    getCollegeDeanProfile: 'api/v1/abdm/nmr/college/dean/{id}',
     register: 'api/v1/abdm/nmr/college',
-    initiateCollegeWorkFlow: '/api/v1/abdm/nmr/college/applications/status',
+    initiateCollegeWorkFlow: 'api/v1/abdm/nmr/college/applications/status',
   },
   nmc: {
-    getNMCProfileData: '/api/v1/abdm/nmr/nmc/user/{id}',
-    collegeApproval: '/api/v1/abdm/nmr/college/applications',
+    getNMCProfileData: 'api/v1/abdm/nmr/nmc/user/{id}',
+    collegeApproval: 'api/v1/abdm/nmr/college/applications',
   },
   Aadhaar: {
     sendAadhaarOtp: 'api/v1/abdm/nmr/aadhaar/send-otp',
     verifyAadhaarOtp: 'api/v1/abdm/nmr/aadhaar/verify-otp',
   },
   smc: {
-    getSMCProfileData: '/api/v1/abdm/nmr/smc/user/{id}',
+    getSMCProfileData: 'api/v1/abdm/nmr/smc/user/{id}',
   },
   nbe: {
-    getNBEProfileData: '/api/v1/abdm/nmr/nbe/user/{id}',
+    getNBEProfileData: 'api/v1/abdm/nmr/nbe/user/{id}',
   },
 };
