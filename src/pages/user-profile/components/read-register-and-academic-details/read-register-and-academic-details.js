@@ -1,18 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { getRegistrationDetailsData } from '../../../../store/actions/doctor-user-profile-actions';
+import successToast from '../../../../ui/core/toaster';
 import ButtonGroupWizard from '../../../../ui/core/wizard/button-group-wizard';
 import QualificationDetailsContent from '../readable-content/qualification-details-content';
 import RegistrationDetailsContent from '../readable-content/registration-details-content';
 
 const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack, showActions = true }) => {
+  const dispatch = useDispatch();
+
   const [accordionKey, setAccordionKey] = useState('accordion-0');
 
-  const { doctorUserProfile } = useSelector((state) => state?.doctorUserProfileReducer);
+  const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const { loginData } = useSelector((state) => state?.loginReducer);
   const accordions = [
     {
       title: 'Registration Details',
@@ -26,6 +31,16 @@ const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack, showActions = 
   const handleChange = (accordionValue) => (_event, isExpanded) => {
     setAccordionKey(isExpanded ? accordionValue : null);
   };
+  const fetchDoctorUserProfileData = () => {
+    dispatch(getRegistrationDetailsData(loginData.data.profile_id))
+      .then()
+      .catch((allFailMsg) => {
+        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      });
+  };
+  useEffect(() => {
+    fetchDoctorUserProfileData();
+  }, []);
   return (
     <Box>
       <Box>
@@ -57,7 +72,7 @@ const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack, showActions = 
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Component doctorUserProfile={doctorUserProfile} />
+                <Component registrationDetails={registrationDetails} />
               </AccordionDetails>
             </Accordion>
           );

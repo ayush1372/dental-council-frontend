@@ -25,6 +25,19 @@ const initialState = {
   specialitiesList: { data: [], isLoading: Boolean(true), isError: false },
   councilNames: { data: [], isLoading: Boolean(true), isError: false },
   trackStatusData: { data: [], isLoading: Boolean(true), isError: false },
+  initiateWorkFlow: {
+    data: [
+      {
+        application_type_id: 1,
+        actor_id: 2,
+        action_id: 3,
+        hp_profile_id: 248,
+        profile_status: 1,
+      },
+    ],
+    isLoading: Boolean(true),
+    isError: false,
+  },
 };
 
 export const CommonActivity = createSlice({
@@ -94,6 +107,9 @@ export const CommonActivity = createSlice({
     searchTrackStatusData: (state, action) => {
       state.trackStatusData.data = action.payload;
     },
+    getInitiateWorkFlow: (state, action) => {
+      state.initiateWorkFlow = action.payload;
+    },
   },
 });
 
@@ -120,6 +136,7 @@ export const {
   getSpecialities,
   updateCouncilNames,
   searchTrackStatusData,
+  getInitiateWorkFlow,
 } = CommonActivity.actions;
 
 export default CommonActivity.reducer;

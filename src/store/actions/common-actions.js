@@ -1,5 +1,6 @@
 import { API } from '../../api/api-endpoints';
-import { GET, POST } from '../../constants/requests';
+// import { verboseLog } from '../../config/debug';
+import { GET, PATCH, POST } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import {
   getCities,
@@ -235,6 +236,20 @@ export const trackStatus = (trackData) => async (dispatch) => {
     })
       .then((response) => {
         dispatch(searchTrackStatusData(response));
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+export const getInitiateWorkFlow = (body) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: PATCH,
+      url: API.DoctorUserProfileData.initiateWorkFlow,
+      data: body,
+    })
+      .then((response) => {
         return resolve(response);
       })
       .catch((error) => {
