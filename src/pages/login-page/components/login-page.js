@@ -73,11 +73,7 @@ export function LoginPage({ handleForgotPassword }) {
     const userType = userGroupType(response?.data?.user_group_id);
     // get dashboard card count
     if (userType !== 'Health Professional') {
-      dispatch(
-        getCardCount({
-          group_name: userType,
-        })
-      );
+      dispatch(getCardCount());
     }
     if (userType === 'College Dean') {
       dispatch(getCollegeDeanProfileData(response?.data?.profile_id));

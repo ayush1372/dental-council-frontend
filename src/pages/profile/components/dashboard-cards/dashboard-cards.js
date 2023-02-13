@@ -5,8 +5,6 @@ import { experimentalStyled as styled } from '@mui/material/styles';
 import { useTheme } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
 
-import { verboseLog } from '../../../../config/debug';
-// import { dashboardCountData } from '../../../../constants/common-data';
 import ViewProfile from '../../../../shared/view-profile/view-profile';
 import { Button } from '../../../../ui/core';
 import UserProfile from '../../../user-profile/index';
@@ -17,9 +15,6 @@ export default function Dashboard() {
   const theme = useTheme();
   // const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const { count } = useSelector((state) => state.dashboard);
-
-  // eslint-disable-next-line no-console
-  console.log('count', count, count?.data['hp_registration_requests']);
 
   const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(1),
@@ -55,8 +50,6 @@ export default function Dashboard() {
     updationRequestMapper,
     'hp_modification_requests'
   );
-  // eslint-disable-next-line no-console
-  console.log('upd', updationRequestData);
 
   let dashboard = {
     'Registration Request': registrationRequestData,
@@ -189,8 +182,6 @@ export default function Dashboard() {
   function getDataFromResponse(count, mapper, key) {
     let data = [];
     count?.data[key]?.forEach((request) => {
-      // eslint-disable-next-line no-console
-      console.log('1232', request);
       let currObj = {
         name: mapper[request['name']],
         value: request['count'],
@@ -217,10 +208,7 @@ export default function Dashboard() {
     setShowDashboard(false);
     setShowTable(true);
     setShowViewPorfile(false);
-    // eslint-disable-next-line no-console
-    console.log('item,', item);
-    verboseLog('item', item);
-    // setShowTable({ show: true, value: item.id, count: item.value })
+    setShowTable({ show: true, value: item.id, count: item.value });
   };
 
   const onClickBackButtonHandler = () => {
@@ -284,23 +272,24 @@ export default function Dashboard() {
                         <Box
                           mb={{ xs: 2, md: 4 }}
                           flex={{ xs: '1 0 100%', sm: '1 0 32%', md: '1 0 19%' }}
-                          key={item.name}
+                          key={item?.name}
                         >
                           <Item
-                            id={item.id}
+                            id={item?.id}
                             sx={
-                              item.name.includes('Pending') || item.name.includes('Received')
+                              item?.name?.includes('Pending') || item?.name?.includes('Received')
                                 ? {
                                     borderTop: `5px solid ${theme.palette.secondary.warningYellow}`,
                                   }
-                                : item.name.includes('Verified') || item.name.includes('Approved')
+                                : item?.name?.includes('Verified') ||
+                                  item?.name?.includes('Approved')
                                 ? { borderTop: `5px solid ${theme.palette.success.main}` }
-                                : item.name.includes('Raised')
+                                : item?.name.includes('Raised')
                                 ? { borderTop: `5px solid ${theme.palette.primary.main}` }
-                                : item.name.includes('Rejected') ||
-                                  item.name.includes('Blacklisted')
+                                : item?.name.includes('Rejected') ||
+                                  item?.name.includes('Blacklisted')
                                 ? { borderTop: `5px solid ${theme.palette.error.main}` }
-                                : item.name.includes('Total')
+                                : item?.name.includes('Total')
                                 ? { borderTop: `5px solid ${theme.palette.black.main}` }
                                 : ''
                             }
