@@ -116,11 +116,6 @@ function TrackStatusTable(props) {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
-  // trackstatusData.message
-  //  trackStatusData?.data?.data?.health_professional_applications?.map((application) => {
-  //  trackStatusData !== undefined ||
-  // trackStatusData?.data?.data?.health_professional_applications.length > 0
-  //   ? trackStatusData?.data?.data?.health_professional_applications?.map(() => {
 
   const newRowsData = props.trackStatusData?.map((application, index) => {
     return createData(
