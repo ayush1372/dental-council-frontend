@@ -7,12 +7,15 @@ import ViewProfile from '../../../shared/view-profile/view-profile';
 import UserProfile from '../../user-profile';
 import ApplicationDetails from './track-application-details';
 import TrackApplicationTable from './track-application-table';
-export function TrackApplication() {
+export function TrackApplication({ getTableData }) {
   const [showTrackApplication, setShowTrackApplication] = React.useState(false);
   const [showTrackApplicationTable, setShowTrackApplicationTable] = React.useState(true);
   const [showUserProfile, setShowUserProfile] = React.useState(false);
 
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  const profileId = useSelector((state) => state.loginReducer.loginData.data.profile_id);
+  const tableData = useSelector((state) => state.common.trackApplicationTableData);
+
   const onClickBackButtonHandler = () => {
     setShowUserProfile(false);
     setShowTrackApplicationTable(true);
@@ -52,6 +55,9 @@ export function TrackApplication() {
             setShowTrackApplication={setShowTrackApplication}
             setShowTrackApplicationTable={setShowTrackApplicationTable}
             setShowUserProfile={setShowUserProfile}
+            profileId={profileId}
+            tableData={tableData}
+            getTableData={getTableData}
           />
         </Box>
       ) : (
