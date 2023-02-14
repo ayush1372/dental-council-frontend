@@ -1,5 +1,5 @@
 import { API } from '../../api/api-endpoints';
-import { GET } from '../../constants/requests';
+import { GET, PUT } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import { getCollegeApproval, getNMCProfile } from '../reducers/nmc-reducer';
 
@@ -36,6 +36,24 @@ export const getCollegeApprovalData = (data) => async (dispatch) => {
       })
       .catch((error) => {
         dispatch(getCollegeApproval({ data: [], isError: true, isLoading: false }));
+        return reject(error);
+      });
+  });
+};
+export const getUpdatedNmcProfileData = (data) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: PUT,
+      url: API.nmc.getNMCProfileData.replace('{id}', data.id),
+      data: data,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+    })
+      .then((response) => {
+        dispatch(getNMCProfile({ data: response.data, isError: false, isLoading: false }));
+
+        return resolve(response);
+      })
+      .catch((error) => {
         return reject(error);
       });
   });
