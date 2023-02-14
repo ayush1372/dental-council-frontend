@@ -9,6 +9,11 @@ import useWizard from '../../hooks/use-wizard';
 import ReactivateLicencePopup from '../../shared/reactivate-licence-popup/re-activate-licence-popup';
 import SuccessPopup from '../../shared/reactivate-licence-popup/success-popup';
 import { getCountriesList, getStatesList } from '../../store/actions/common-actions';
+import {
+  getPersonalDetailsData,
+  getRegistrationDetailsData,
+  getWorkProfileDetailsData,
+} from '../../store/actions/doctor-user-profile-actions';
 import { Button } from '../../ui/core/button/button';
 import successToast from '../../ui/core/toaster';
 import Wizard from '../../ui/core/wizard';
@@ -36,6 +41,7 @@ export const UserProfile = ({
 
   const [wizardSteps, setWizardSteps] = useState(readWizardSteps);
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  const { loginData } = useSelector((state) => state?.loginReducer);
 
   const { activeStep, handleNext, handleBack, resetStep } = useWizard(
     loggedInUserType === 'Doctor' ? 0 : 1,
@@ -74,6 +80,36 @@ export const UserProfile = ({
       setWizardSteps([...readWizardSteps]);
     }
   }, [isReadMode]);
+
+  const fetchDoctorUserPersonalDetails = () => {
+    dispatch(getPersonalDetailsData(loginData.data.profile_id))
+      .then(() => {})
+      .catch((allFailMsg) => {
+        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      });
+  };
+
+  const fetchDoctorUserRegistrationDetails = () => {
+    dispatch(getRegistrationDetailsData(loginData.data.profile_id))
+      .then()
+      .catch((allFailMsg) => {
+        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      });
+  };
+
+  const fetchDoctorUserWorkProfileDetails = () => {
+    dispatch(getWorkProfileDetailsData(loginData.data.profile_id))
+      .then(() => {})
+      .catch((allFailMsg) => {
+        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      });
+  };
+
+  useEffect(() => {
+    fetchDoctorUserPersonalDetails();
+    fetchDoctorUserRegistrationDetails();
+    fetchDoctorUserWorkProfileDetails();
+  }, []);
 
   return (
     <>
