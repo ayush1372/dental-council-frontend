@@ -27,7 +27,7 @@ export const API = {
     courses: 'api/v1/abdm/nmr/courses',
     specialities: 'api/v1/abdm/nmr/specialities',
     councilNames: 'api/v1/abdm/nmr/state-medical-councils',
-    trackStatus: 'api/v1/abdm/nmr/health-professional/applications/status',
+    trackStatus: 'api/v1/abdm/nmr/health-professional/applications',
   },
   college: {
     registrar: 'api/v1/abdm/nmr/college/{collegeId}/registrar',

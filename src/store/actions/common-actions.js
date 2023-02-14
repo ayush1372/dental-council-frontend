@@ -230,7 +230,7 @@ export const verifyNotificationOtp = (otpValue) => async (dispatch) => {
 export const trackStatus = (trackData) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
-      method: PATCH,
+      method: GET,
       url: API.common.trackStatus,
       data: trackData,
     })
