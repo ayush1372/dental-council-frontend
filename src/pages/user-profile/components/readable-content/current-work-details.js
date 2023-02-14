@@ -14,17 +14,19 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
     setOpenModal(false);
   };
   const {
-    current_work_details: {
-      facility,
-      work_organization,
-      url,
-      address: {
-        state: { name: stateName },
-        district: { name: districtName },
-        pincode,
-        address_line1,
+    current_work_details: [
+      {
+        facility,
+        work_organization,
+        url,
+        address: {
+          state: { name: stateName },
+          district: { name: districtName },
+          pincode,
+          address_line1,
+        },
       },
-    },
+    ],
   } =
     workProfileDetails && Object.values(workProfileDetails).length > 3
       ? workProfileDetails

@@ -7,7 +7,10 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getInitiateWorkFlow } from '../../../../store/actions/common-actions';
-import { updateDoctorRegistrationDetails } from '../../../../store/actions/doctor-user-profile-actions';
+import {
+  getWorkProfileDetailsData,
+  updateDoctorRegistrationDetails,
+} from '../../../../store/actions/doctor-user-profile-actions';
 import { getRegistrationDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
 import { Button, RadioGroup, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
@@ -31,7 +34,7 @@ const qualificationObjTemplate = [
 const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   const [registrationFileData, setRegistrationFileData] = useState([]);
   const [qualificationFilesData, setQualificationFilesData] = useState({
-    'qualification.1.files': [],
+    'qualification.0.files': [],
   });
 
   const { t } = useTranslation();
@@ -42,7 +45,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   );
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { loginData } = useSelector((state) => state?.loginReducer);
-  const { initiateWorkFlow } = useSelector((state) => state?.common);
 
   const {
     registration_detail_to: {
@@ -53,6 +55,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
       renewable_registration_date,
       is_name_change,
     },
+    request_id,
   } =
     registrationDetails && Object.values(registrationDetails).length > 3
       ? registrationDetails
@@ -137,6 +140,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
     const cloneObj = { ...registrationDetails };
     cloneObj.registrationDetails = updatedObj;
+
     dispatch(
       getRegistrationDetails({
         ...JSON.parse(JSON.stringify(registrationDetailsValues)),
@@ -145,12 +149,29 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   };
 
   const fetchUpdateDoctorRegistrationDetails = (registrationDetails) => {
-    dispatch(getInitiateWorkFlow(initiateWorkFlow.data[0]))
+    const getInitiateWorkFlowHeader = {
+      application_type_id: 1,
+      actor_id: 2,
+      action_id: 3,
+      hp_profile_id: loginData.data.profile_id,
+      profile_status: 1,
+      request_id: request_id,
+    };
+    dispatch(getInitiateWorkFlow(getInitiateWorkFlowHeader))
       .then(() => {
-        handleNext();
-        dispatch(updateDoctorRegistrationDetails(registrationDetails, loginData.data.profile_id))
+        const formData = new FormData();
+        formData.append('data', JSON.stringify(registrationDetails));
+        formData.append('proof', Object.values(qualificationFilesData)?.[0]?.[0].file);
+        formData.append('certificate', registrationFileData[0].file);
+        dispatch(updateDoctorRegistrationDetails(formData, loginData.data.profile_id))
           .then(() => {
-            // handleNext();
+            dispatch(getWorkProfileDetailsData(loginData.data.profile_id))
+              .then(() => {
+                handleNext();
+              })
+              .catch((allFailMsg) => {
+                successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+              });
           })
           .catch((allFailMsg) => {
             successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
@@ -163,7 +184,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
   const onHandleOptionNext = () => {
     onHandleSave();
-    fetchUpdateDoctorRegistrationDetails();
+    fetchUpdateDoctorRegistrationDetails(registrationDetails);
   };
 
   const handleQualificationFilesData = (fileName, files) => {
@@ -179,9 +200,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   };
 
   useEffect(() => {
-    const details = registrationDetails.qualification_detail_response_tos[0]
-      ? registrationDetails.qualification_detail_response_tos[0]
-      : {};
+    const details =
+      registrationDetails && Object.values(registrationDetails).length > 3
+        ? registrationDetails.qualification_detail_response_tos[0]
+        : {};
     const obj = { ...qualificationObjTemplate[0] };
     obj.university = details.university?.id;
     obj.qualification = details.course?.id;
@@ -394,7 +416,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
             <UploadFile
               uploadFiles="single"
               sizeAllowed={1}
-              fileTypes={['image/jpg', 'image/jpeg', 'image/png']}
+              fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
               fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
                Maximum size allowed for the attachment is 5MB.`}
               fileData={registrationFileData}
