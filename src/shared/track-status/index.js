@@ -2,22 +2,27 @@ import { useState } from 'react';
 
 import { Box, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { verboseLog } from '../../config/debug';
-import { RegistrationCouncilNames } from '../../constants/common-data';
+import { createEditFieldData } from '../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../shared/autocomplete/searchable-dropdown';
 import TrackStatusTable from '../../shared/track-status/track-status-table';
+import { trackStatus } from '../../store/actions/common-actions';
 import { Button, TextField } from '../../ui/core';
+import successToast from '../../ui/core/toaster';
 export default function TrackStatus() {
   const [showTable, setShowTable] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  const { councilNames, trackStatusData } = useSelector((state) => state.common);
 
+  const dispatch = useDispatch();
   const {
     handleSubmit,
     register,
     getValues,
+    setValue,
     clearErrors,
     formState: { errors },
   } = useForm({
@@ -25,11 +30,32 @@ export default function TrackStatus() {
     defaultValues: {
       options: '',
       RegistrationCouncil: '',
+      RegistrationCouncilId: '',
       RegistrationNumber: '',
     },
   });
 
   const onSubmit = () => {
+    const trackValues = {
+      smc_id: getValues().RegistrationCouncilId,
+      registration_no: getValues().RegistrationNumber,
+      // work_flow_status_id: 'null',
+      // application_type_id: 'null',
+      page_no: 1,
+      size: 5,
+      sort_by: 'createdAt',
+      sort_order: 'desc',
+    };
+    dispatch(trackStatus(trackValues))
+      .then(() => {})
+      .catch((error) => {
+        successToast(
+          error?.data?.response?.data?.error,
+          'RegistrationError',
+          'error',
+          'top-center'
+        );
+      });
     verboseLog('');
     setShowTable(true);
   };
@@ -53,7 +79,7 @@ export default function TrackStatus() {
                 <SearchableDropdown
                   sx={{ mt: 1 }}
                   name="RegistrationCouncil"
-                  items={RegistrationCouncilNames}
+                  items={createEditFieldData(councilNames)}
                   placeholder={
                     loggedInUserType !== 'SMC'
                       ? 'Select Council Name'
@@ -65,6 +91,9 @@ export default function TrackStatus() {
                     required: loggedInUserType !== 'SMC' && 'Council Name is required',
                   })}
                   disabled={loggedInUserType === 'SMC'}
+                  onChange={(currentValue) => {
+                    setValue('RegistrationCouncilId', currentValue.id);
+                  }}
                 />
               </Box>
             </Grid>
@@ -110,7 +139,12 @@ export default function TrackStatus() {
         </Box>
       )}
 
-      {showTable && <TrackStatusTable setShowHeader={setShowHeader} />}
+      {showTable && trackStatusData?.data?.data?.health_professional_applications && (
+        <TrackStatusTable
+          setShowHeader={setShowHeader}
+          trackStatusData={trackStatusData?.data?.data?.health_professional_applications}
+        />
+      )}
     </Box>
   );
 }
