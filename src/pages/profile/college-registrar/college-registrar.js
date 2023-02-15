@@ -71,7 +71,7 @@ export function CollegeRegistrar() {
           defaultValue={getValues().registrarName}
           error={errors.registrarName?.message}
           {...register('registrarName', {
-            required: 'Enter valid college registrar name',
+            required: 'Enter valid name',
           })}
         />
       </Grid>

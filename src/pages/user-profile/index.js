@@ -160,7 +160,7 @@ export const UserProfile = ({
               <Typography
                 component="div"
                 variant="h2"
-                color="primary.main"
+                color="inputTextColor.main"
                 py={2}
                 sx={{
                   textAlign: {
