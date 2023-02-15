@@ -7,7 +7,7 @@ import { sendDeanDetails } from '../../../store/actions/college-actions';
 import { Button, TextField } from '../../../ui/core';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
-export function CollegeDean({ showPage }) {
+export function CollegeDean({ showPage, updateShowPage }) {
   const dispatch = useDispatch();
   const { collegeData } = useSelector((state) => state.college);
   const userData = collegeData?.data;
@@ -185,7 +185,14 @@ export function CollegeDean({ showPage }) {
         </Grid>
 
         <Grid item xs={12} sm="auto">
-          <Button fullWidth variant="contained" color="grey" onClick={handleSubmit(onSubmit)}>
+          <Button
+            fullWidth
+            variant="contained"
+            color="grey"
+            onClick={() => {
+              updateShowPage('Profile');
+            }}
+          >
             {t('Cancel')}
           </Button>
         </Grid>
