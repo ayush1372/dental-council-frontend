@@ -11,8 +11,7 @@ import CommunicationAddressContent from '../readable-content/communication-detai
 import IMRDetailsContent from '../readable-content/imr-details-content';
 import PersonalDetailsContent from '../readable-content/personal-details-content';
 const ReadPersonalDetails = ({ handleNext, showActions = true }) => {
-  const { doctorUserProfile } = useSelector((state) => state?.doctorUserProfileReducer);
-
+  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { t } = useTranslation();
   const [accordionKey, setAccordionKey] = useState('accordion-0');
   const accordions = [
@@ -32,6 +31,7 @@ const ReadPersonalDetails = ({ handleNext, showActions = true }) => {
   const handleChange = (accordionValue) => (_event, isExpanded) => {
     setAccordionKey(isExpanded ? accordionValue : null);
   };
+
   return (
     <Box>
       <Box>
@@ -63,7 +63,7 @@ const ReadPersonalDetails = ({ handleNext, showActions = true }) => {
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Component doctorUserProfile={doctorUserProfile} />
+                <Component personalDetails={personalDetails} />
               </AccordionDetails>
             </Accordion>
           );

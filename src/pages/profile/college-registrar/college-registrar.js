@@ -1,7 +1,7 @@
 import { Box, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { sendRegistrarDetails } from '../../../store/actions/college-actions';
 import { Button, TextField } from '../../../ui/core';
@@ -10,6 +10,8 @@ import { PasswordRegexValidation } from '../../../utilities/common-validations';
 export function CollegeRegistrar() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const { collegeData } = useSelector((state) => state.college);
+  const userData = collegeData?.data;
   const {
     register,
     handleSubmit,
@@ -36,7 +38,7 @@ export function CollegeRegistrar() {
       user_id: null,
       password: fieldData.registrarPassword,
     };
-    dispatch(sendRegistrarDetails(registrarData));
+    dispatch(sendRegistrarDetails(registrarData, userData?.id));
     reset();
   };
 
@@ -69,7 +71,7 @@ export function CollegeRegistrar() {
           defaultValue={getValues().registrarName}
           error={errors.registrarName?.message}
           {...register('registrarName', {
-            required: 'Enter valid college registrar name',
+            required: 'Enter valid name',
           })}
         />
       </Grid>

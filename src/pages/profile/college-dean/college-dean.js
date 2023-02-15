@@ -1,7 +1,7 @@
 import { Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { sendDeanDetails } from '../../../store/actions/college-actions';
 import { Button, TextField } from '../../../ui/core';
@@ -11,6 +11,8 @@ export function CollegeDean() {
   const dispatch = useDispatch();
 
   const { t } = useTranslation();
+  const { collegeData } = useSelector((state) => state.college);
+  const userData = collegeData?.data;
   const {
     register,
     handleSubmit,
@@ -29,7 +31,7 @@ export function CollegeDean() {
     },
   });
   const onSubmit = (fieldValues) => {
-    dispatch(sendDeanDetails(fieldValues));
+    dispatch(sendDeanDetails(fieldValues, userData?.id));
     reset();
   };
   return (
@@ -59,7 +61,7 @@ export function CollegeDean() {
           defaultValue={getValues().deanName}
           error={errors.deanName?.message}
           {...register('deanName', {
-            required: 'Enter valid college registrar name',
+            required: 'Enter valid name',
           })}
         />
       </Grid>
@@ -171,7 +173,7 @@ export function CollegeDean() {
       <Grid container item spacing={2} mt={{ lg: 1 }}>
         <Grid item xs={12} sm="auto">
           <Button fullWidth variant="contained" color="secondary" onClick={handleSubmit(onSubmit)}>
-            {t('SUBMIT')}
+            {t('Submit')}
           </Button>
         </Grid>
 

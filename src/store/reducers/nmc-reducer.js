@@ -6,6 +6,11 @@ const initialState = {
     isLoading: Boolean(true),
     isError: false,
   },
+  collegeApprovalData: {
+    data: [],
+    isLoading: Boolean(true),
+    isError: false,
+  },
 };
 
 const nmcReducer = createSlice({
@@ -15,9 +20,12 @@ const nmcReducer = createSlice({
     getNMCProfile: (state, action) => {
       state.nmcProfileData = action.payload;
     },
+    getCollegeApproval: (state, action) => {
+      state.collegeApprovalData = action.payload;
+    },
   },
 });
 
-export const { getNMCProfile } = nmcReducer.actions;
+export const { getNMCProfile, getCollegeApproval } = nmcReducer.actions;
 
 export default nmcReducer.reducer;

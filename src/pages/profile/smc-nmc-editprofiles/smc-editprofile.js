@@ -3,44 +3,71 @@ import { useState } from 'react';
 import { Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { createEditFieldData } from '../../../helpers/functions/common-functions';
+import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
+import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
+import { getUpdatedsmcProfileData } from '../../../store/actions/smc-actions';
 import { Button, TextField } from '../../../ui/core';
-const SmcEditProfile = () => {
-  const [name, setName] = useState('Aarnav Sharma');
-  const [phoneNumber, setphoneNumber] = useState('7547448483');
-  const [email, setemail] = useState('aarnav@gmail.com.com');
-  const [userId, setuserId] = useState('aarnav.sharma');
-  const [password, setpassword] = useState('West Bengal');
+const SmcEditProfile = (props) => {
+  const userData = useSelector((state) => state?.smc?.smcProfileData?.data);
+  const [successModalPopup, setSuccessModalPopup] = useState(false);
+
+  const { councilNames } = useSelector((state) => state.common);
   const {
     register,
     handleSubmit,
     getValues,
+    clearErrors,
+    setValue,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
     defaultValues: {
-      Name: 'Aarnav Sharma',
-      PhoneNumber: '7547448483',
-      UserId: 'aarnav.sharma',
-      EmailId: 'aarnav@gmail.com.com',
-      Password: 'Arnav@124',
+      id: userData?.id,
+      user_id: 10,
+      first_name: userData?.first_name,
+      last_name: userData?.last_name,
+      middle_name: userData?.middle_name,
+      state_medical_council: {
+        id: userData?.state_medical_council?.id,
+        code: 'MAHA',
+        name: userData?.state_medical_council?.name,
+      },
+      ndhm_enrollment: userData?.ndhm_enrollment,
+      enrolled_number: userData?.enrolled_number,
+      display_name: userData?.display_name,
+      email_id: userData?.email_id,
+      mobile_no: userData?.mobile_no,
     },
   });
+  const dispatch = useDispatch();
 
-  const handleName = (e) => {
-    setName(e.target.value);
+  let smcUpdatedData = {
+    id: userData?.id,
+    user_id: getValues().user_id,
+    first_name: getValues().first_name,
+    last_name: getValues().last_name,
+    middle_name: getValues().middle_name,
+    state_medical_council: {
+      id: getValues().state_medical_council?.id,
+      code: getValues().state_medical_council?.code,
+      name: getValues().state_medical_council?.name,
+    },
+    ndhm_enrollment: getValues().ndhm_enrollment,
+    enrolled_number: getValues().enrolled_number,
+    display_name: getValues().first_name,
+    email_id: getValues().email_id,
+    mobile_no: getValues().mobile_no,
   };
-  const handlePhoneNumber = (e) => {
-    setphoneNumber(e.target.value);
-  };
-  const handleEmailId = (e) => {
-    setemail(e.target.value);
-  };
-  const handleUserid = (e) => {
-    setuserId(e.target.value);
-  };
-  const handlePassword = (e) => {
-    setpassword(e.target.value);
+  const onsubmit = () => {
+    dispatch(getUpdatedsmcProfileData(smcUpdatedData)).then((response) => {
+      if (response?.data?.email_id.length > 0) {
+        setSuccessModalPopup(true);
+      }
+    });
+    props.sentDetails('Profile');
   };
 
   return (
@@ -64,14 +91,12 @@ const SmcEditProfile = () => {
           <TextField
             fullWidth
             required
-            name={'Name'}
+            name={'first_name'}
             placeholder={'Enter Name'}
-            value={name}
-            defaultValue={getValues().Name}
-            error={errors.Name?.message}
-            {...register('Name', {
-              required: 'Enter valid name',
-              onChange: (e) => handleName(e),
+            defaultValue={getValues().first_name}
+            error={errors.first_name?.message}
+            {...register('first_name', {
+              required: ' Name is required',
             })}
           />
         </Grid>
@@ -86,14 +111,12 @@ const SmcEditProfile = () => {
           <TextField
             fullWidth
             required
-            name={'PhoneNumber'}
+            name={'mobile_no'}
             placeholder={'Enter Phone Number '}
-            defaultValue={getValues().PhoneNumber}
-            value={phoneNumber}
-            error={errors.PhoneNumber?.message}
-            {...register('PhoneNumber', {
-              required: 'Enter valid phone number',
-              onChange: (e) => handlePhoneNumber(e),
+            defaultValue={getValues().mobile_no}
+            error={errors.mobile_no?.message}
+            {...register('mobile_no', {
+              required: 'Phone Number is required',
             })}
           />
         </Grid>
@@ -109,19 +132,17 @@ const SmcEditProfile = () => {
             type="text"
             fullWidth
             required
-            name={'EmailID'}
+            name={'email_id'}
             placeholder={'Enter Email ID'}
-            value={email}
-            defaultValue={getValues().EmailId}
-            error={errors.EmailId?.message}
-            {...register('EmailId', {
-              required: 'Enter valid email ID',
-              onChange: (e) => handleEmailId(e),
+            defaultValue={getValues().email_id}
+            error={errors.email_id?.message}
+            {...register('email_id', {
+              required: 'Email ID is required',
 
               pattern: {
                 value:
                   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-                message: 'Provide a Valid EmalId',
+                message: 'Provide a Valid Email Id',
               },
             })}
           />
@@ -139,20 +160,18 @@ const SmcEditProfile = () => {
           <TextField
             fullWidth
             required
-            name={'UserId'}
+            name={'user_id'}
             placeholder={'Enter User ID'}
-            value={userId}
-            defaultValue={getValues().UserId}
-            error={errors.UserId?.message}
-            {...register('UserId', {
+            defaultValue={getValues().user_id}
+            error={errors.user_id?.message}
+            {...register('user_id', {
               required: 'User ID is required',
-              onChange: (e) => handleUserid(e),
 
               pattern: {
-                message: 'Enter valid user ID',
+                message: 'Provide a Valid User ID',
               },
             })}
-          />
+          />{' '}
         </Grid>
 
         <Grid item xs={12} md={4}>
@@ -162,19 +181,19 @@ const SmcEditProfile = () => {
           <Typography component="span" color="error.main">
             *
           </Typography>
-          <TextField
-            fullWidth
-            required
-            type="password"
-            name={'Password'}
-            value={password}
-            placeholder={'Enter Council'}
-            defaultValue={getValues().Password}
-            error={errors.Password?.message}
-            {...register('Password', {
-              required: 'Enter valid council',
-              onChange: (e) => handlePassword(e),
+          <SearchableDropdown
+            name="RegistrationCouncil"
+            items={createEditFieldData(councilNames)}
+            defaultValue={getValues().state_medical_council?.name}
+            placeholder="Select Your Registration Council"
+            clearErrors={clearErrors}
+            error={errors.RegistrationCouncil?.message}
+            {...register('RegistrationCouncil', {
+              required: 'Registration Council is required',
             })}
+            onChange={(currentValue) => {
+              setValue('RegistrationCouncilId', currentValue.id);
+            }}
           />
         </Grid>
       </Grid>
@@ -209,6 +228,13 @@ const SmcEditProfile = () => {
         >
           Cancel
         </Button>
+        {successModalPopup && (
+          <SuccessModalPopup
+            open={successModalPopup}
+            setOpen={() => setSuccessModalPopup(false)}
+            text={'Your Profile has been successfully updated'}
+          />
+        )}
       </Box>
     </Grid>
   );

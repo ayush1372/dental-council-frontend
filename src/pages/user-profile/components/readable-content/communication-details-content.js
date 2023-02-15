@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
-const CommunicationAddress = ({ doctorUserProfile }) => {
+const CommunicationAddress = ({ personalDetails }) => {
   const { userActiveTab } = useSelector((state) => state.common);
 
   const [openModal, setOpenModal] = useState(false);
@@ -23,20 +23,21 @@ const CommunicationAddress = ({ doctorUserProfile }) => {
       address_line1,
       email,
       mobile,
-      address_type: { name: addressTypeName },
-      full_name,
+      village: { name: villageName },
     },
+    personal_details: { full_name },
   } =
-    doctorUserProfile && Object.values(doctorUserProfile).length > 3
-      ? doctorUserProfile
+    personalDetails && Object.values(personalDetails).length > 3
+      ? personalDetails
       : {
           communication_address: {
             country: {},
             state: {},
             district: {},
             sub_district: {},
-            address_type: {},
+            village: {},
           },
+          personal_details: {},
         };
   return (
     <Grid container spacing={2} mt={2}>
@@ -95,7 +96,7 @@ const CommunicationAddress = ({ doctorUserProfile }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              {addressTypeName ? addressTypeName : ''}
+              {villageName ? villageName : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon

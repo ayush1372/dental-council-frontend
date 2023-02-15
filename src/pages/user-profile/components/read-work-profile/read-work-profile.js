@@ -31,11 +31,13 @@ const ReadWorkProfile = ({
   activeStep,
 }) => {
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
-  const { doctorUserProfile } = useSelector((state) => state?.doctorUserProfileReducer);
+
+  const { workProfileDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const [selected, setSelected] = useState('');
   const [confirmationModal, setConfirmationModal] = useState(false);
   const { userActiveTab } = useSelector((state) => state.common);
   const [accordionKey, setAccordionKey] = useState('accordion-0');
+
   const accordions = [
     {
       title: 'Special Details',
@@ -53,6 +55,7 @@ const ReadWorkProfile = ({
   const handleChange = (accordionValue) => (_event, isExpanded) => {
     setAccordionKey(isExpanded ? accordionValue : null);
   };
+
   const handleSubmitDetails = () => {
     setConfirmationModal(false);
     setShowDashboard(false);
@@ -98,7 +101,7 @@ const ReadWorkProfile = ({
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Component doctorUserProfile={doctorUserProfile} />
+                <Component workProfileDetails={workProfileDetails} />
               </AccordionDetails>
             </Accordion>
           );

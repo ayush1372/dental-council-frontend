@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ReplayIcon from '@mui/icons-material/Replay';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
@@ -23,6 +24,7 @@ export const UploadFile = (props) => {
     sizeAllowed,
     fileTypes,
     fileMessage,
+    isDigiLockcerVisible = false,
   } = props;
   const [uploadPercentage, setUploadPercentage] = useState('');
   // const [fileData, setFileData] = useState([]);
@@ -52,6 +54,7 @@ export const UploadFile = (props) => {
         setUploadFileError(`File must be less than ${sizeAllowed}MB; ${fileMessage}`);
       } else {
         // setIsDisable(true);
+
         /*TODO api call to upload the api
         setUploadPercentage(1);
         const formData = new FormData();
@@ -73,6 +76,7 @@ export const UploadFile = (props) => {
           fileName: e.target.files[0].name,
           size: e.target.files[0].size / 1024,
           timeInfo: new Date(),
+          file: e.target.files[0],
         };
         if (uploadFiles === 'single') {
           setFileData([fileDetails]);
@@ -87,9 +91,25 @@ export const UploadFile = (props) => {
   };
   return (
     <>
-      <InputLabel id="demo-simple-select-label">
-        <Typography color="text.primary"> {label}</Typography>{' '}
-      </InputLabel>
+      <Box display="flex" justifyContent="space-between">
+        <Box>
+          <InputLabel id="demo-simple-select-label">
+            <Typography color="text.primary"> {label}</Typography>{' '}
+          </InputLabel>
+        </Box>
+        {isDigiLockcerVisible && (
+          <Typography
+            component="div"
+            color="primary.main"
+            width="fit-content"
+            display="flex"
+            alignItems="center"
+          >
+            <ControlPointIcon fontSize="18px" sx={{ marginRight: '5px' }} />
+            <Typography variant="body1">Pull from Digilocker</Typography>
+          </Typography>
+        )}
+      </Box>
       <div className={styles.inputDiv}>
         <div className={styles.fileUploadArea}>
           <div>

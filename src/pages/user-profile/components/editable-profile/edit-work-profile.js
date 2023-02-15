@@ -1,41 +1,174 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Box, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { natureOfWork, workStatusOptions } from '../../../../constants/common-data';
+import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
+import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
+import { getDistrictList, getInitiateWorkFlow } from '../../../../store/actions/common-actions';
+import { updateDoctorWorkDetails } from '../../../../store/actions/doctor-user-profile-actions';
+import { getDistricts } from '../../../../store/reducers/common-reducers';
+import { getWorkProfileDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
 import { Button, RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
+import successToast from '../../../../ui/core/toaster';
 
 const EditWorkProfile = ({ handleNext, handleBack }) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const [workProof, setWorkProof] = useState([]);
+  const [subSpecialities, setSubSpecialities] = useState([]);
+  const { statesList, specialitiesList, districtsList } = useSelector((state) => state?.common);
+  const { workProfileDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const { loginData } = useSelector((state) => state?.loginReducer);
+  const { work_details, speciality_details, current_work_details, request_id } =
+    workProfileDetails || {};
+  const { is_user_currently_working, work_nature, work_status } = work_details || {};
+  const { broad_speciality, super_speciality: subSpecialityOptions } = speciality_details || {};
+  const { address, url, work_organization, facility_id } = current_work_details[0] || {};
+  const { state: stateDetails, district: districtDetails, pincode, address_line1 } = address || {};
   const {
     formState: { errors },
     getValues,
     handleSubmit,
     register,
     setValue,
+    watch,
   } = useForm({
     mode: 'onChange',
-    defaultValues: {},
+    defaultValues: {
+      subSpeciality: [],
+      currentWorkingSelection: is_user_currently_working,
+      NatureOfWork: work_nature?.id,
+      Speciality: broad_speciality?.id,
+      workStatus: work_status?.id,
+      state: stateDetails?.id,
+      District: districtDetails?.id,
+      workingOrganizationName: work_organization,
+      Address: address_line1,
+      Pincode: pincode,
+      telecommunicationURL: url,
+      selection: facility_id,
+    },
   });
 
-  //   const { otpPopup, handleClickOpen, otpVerified } = ModalOTP({ afterConfirm: () => {} });
+  useEffect(() => {
+    dispatch(getDistricts([]));
+    if (subSpecialityOptions) {
+      setSubSpecialities([...subSpecialityOptions]);
+      setValue('subSpeciality', [...subSpecialityOptions]);
+    }
+  }, []);
 
+  const fetchDisricts = (stateId) => {
+    if (stateId) dispatch(getDistrictList(stateId));
+  };
+
+  const changedState = watch('state');
+
+  useEffect(() => {
+    fetchDisricts(changedState);
+  }, [changedState]);
   const handleBackButton = () => {
     handleBack();
   };
 
   const onHandleOptionNext = () => {
-    handleNext();
+    handleSave();
   };
   const handleselection = (event) => {
     setValue(event.target.name, event.target.value, true);
   };
 
   const handleWorkStatus = (event) => {
-    setValue(event.target.name, event.target.value, true);
+    setValue(event.target.name, event.target.value);
+  };
+
+  const handleSave = () => {
+    const {
+      currentWorkingSelection,
+      NatureOfWork,
+      Speciality,
+      workStatus,
+      state,
+      District,
+      workingOrganizationName,
+      Address,
+      Pincode,
+      telecommunicationURL,
+      selection,
+    } = getValues();
+
+    const workDetails = {
+      ...(work_details || {}),
+      is_user_currently_working: currentWorkingSelection,
+      work_nature: natureOfWork.find((x) => x.id === NatureOfWork),
+      work_status: workStatusOptions.find((x) => x.id === parseInt(workStatus)),
+    };
+
+    const specialityDetails = {
+      ...(speciality_details || {}),
+      broad_speciality: specialitiesList.data?.find((x) => x.id === Speciality),
+      super_speciality: [...subSpecialities],
+    };
+    const currentWorkDetails = {
+      ...(current_work_details[0] || {}),
+      url: telecommunicationURL,
+      work_organization: workingOrganizationName,
+      address: {
+        state: statesList?.find((x) => x.id === state),
+        district: districtsList?.find((x) => x.id === District),
+        pincode: Pincode,
+        address_line1: Address,
+        facility: selection,
+      },
+    };
+
+    const stateObj = {
+      work_details: { ...workDetails },
+      speciality_details: { ...specialityDetails },
+      current_work_details: [{ ...currentWorkDetails }],
+    };
+
+    const updatedDoctorProfile = { ...workProfileDetails, ...stateObj };
+
+    dispatch(getWorkProfileDetails(JSON.parse(JSON.stringify(updatedDoctorProfile))));
+  };
+
+  const fetchUpdateDoctorWorkDetails = (workDetails) => {
+    const getInitiateWorkFlowHeader = {
+      application_type_id: 1,
+      actor_id: 2,
+      action_id: 3,
+      hp_profile_id: loginData.data.profile_id,
+      profile_status: 1,
+      request_id: request_id,
+    };
+    dispatch(getInitiateWorkFlow(getInitiateWorkFlowHeader))
+      .then(() => {
+        const formData = new FormData();
+        formData.append('data', JSON.stringify(workDetails));
+        formData.append('proof', workProof?.[0].file);
+
+        dispatch(updateDoctorWorkDetails(formData, loginData.data.profile_id))
+          .then(() => {
+            handleNext();
+          })
+          .catch((allFailMsg) => {
+            successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+          });
+      })
+      .catch((allFailMsg) => {
+        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      });
+  };
+
+  const onHandleOption = () => {
+    onHandleOptionNext();
+    fetchUpdateDoctorWorkDetails(workProfileDetails);
   };
 
   return (
@@ -59,26 +192,21 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               color="tabHighlightedBackgroundColor.main"
               variant="h3"
             >
-              Specialty Details*
+              Speciality Details*
             </Typography>
           </Grid>
           <Grid item xs={12} md={4}>
             <Select
               fullWidth
-              error={errors.Specialty?.message}
-              name="Specialty"
-              label="Broad Specialty"
-              defaultValue={getValues().Specialty}
+              error={errors.Speciality?.message}
+              name="Speciality"
+              label="Broad Speciality"
+              defaultValue={getValues().Speciality}
               required={true}
-              {...register('Specialty', {
+              {...register('Speciality', {
                 required: 'Missing field',
               })}
-              options={[
-                {
-                  label: 'Doctor',
-                  value: 'doctor',
-                },
-              ]}
+              options={createSelectFieldData(specialitiesList.data)}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -88,14 +216,19 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
                 *
               </Typography>
             </Typography>
-            <TextField
-              variant="outlined"
-              name={'subSpecialty'}
-              placeholder="Enter Super Specialty"
-              required={true}
-              fullWidth
-              defaultValue={getValues().subSpecialty}
-              {...register('subSpecialty')}
+            <AutoComplete
+              name="subSpeciality"
+              options={subSpecialityOptions}
+              value={getValues().subSpeciality}
+              error={subSpecialities?.length === 0 && errors.subSpeciality?.message}
+              multiple={true}
+              {...register('subSpeciality', {
+                required: 'Missing field',
+              })}
+              onChange={(value) => {
+                setValue('subSpeciality', value);
+                setSubSpecialities(value);
+              }}
             />
           </Grid>
         </Grid>
@@ -122,21 +255,21 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
 
             <RadioGroup
               onChange={handleselection}
-              name={'selection'}
+              name={'currentWorkingSelection'}
               size="small"
-              defaultValue={getValues().selection}
+              defaultValue={getValues().currentWorkingSelection}
               items={[
                 {
-                  value: 'yes',
+                  value: 1,
                   label: 'Yes',
                 },
                 {
-                  value: 'no',
+                  value: 0,
                   label: 'No',
                 },
               ]}
               required={true}
-              error={errors.selection?.message}
+              error={errors.currentWorkingSelection?.message}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -151,12 +284,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               {...register('NatureOfWork', {
                 required: 'Missing field',
               })}
-              options={[
-                {
-                  label: 'Nature Of work',
-                  value: 'NatureOfWork',
-                },
-              ]}
+              options={createSelectFieldData(natureOfWork)}
             />
           </Grid>
         </Grid>
@@ -174,20 +302,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               name={'workStatus'}
               size="small"
               defaultValue={getValues().workStatus}
-              items={[
-                {
-                  value: 'government_only',
-                  label: 'Government only',
-                },
-                {
-                  value: 'private_practice',
-                  label: 'Private Practice only',
-                },
-                {
-                  value: 'both',
-                  label: 'Both',
-                },
-              ]}
+              items={createSelectFieldData(workStatusOptions)}
               required={true}
               error={errors.workStatus?.message}
             />
@@ -206,7 +321,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
             <UploadFile
               uploadFiles="single"
               sizeAllowed={1}
-              fileTypes={['image/jpg', 'image/jpeg', 'image/png']}
+              fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
               fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
                Maximum size allowed for the attachment is 5MB.`}
               fileData={workProof}
@@ -245,11 +360,11 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               defaultValue={getValues().selection}
               items={[
                 {
-                  value: 'facility',
+                  value: 0,
                   label: 'Facility',
                 },
                 {
-                  value: 'organization',
+                  value: 1,
                   label: 'Organization',
                 },
               ]}
@@ -275,12 +390,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               {...register('state', {
                 required: 'Missing field',
               })}
-              options={[
-                {
-                  label: 'Telangana',
-                  value: 'telangana',
-                },
-              ]}
+              options={createSelectFieldData(statesList)}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -294,12 +404,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               {...register('District', {
                 required: 'Missing field',
               })}
-              options={[
-                {
-                  label: 'Telangana',
-                  value: 'telangana',
-                },
-              ]}
+              options={createSelectFieldData(districtsList)}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -461,7 +566,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
         </Grid>
         <Grid item xs={12} md="auto" display="flex" justifyContent="end" lg={4}>
           <Button
-            onClick={handleSubmit}
+            onClick={handleSubmit(handleSave)}
             variant="outlined"
             color="secondary"
             sx={{
@@ -481,7 +586,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
         </Grid>
         <Grid item xs={12} md="auto" display="flex" justifyContent="end" lg={2}>
           <Button
-            onClick={handleSubmit(onHandleOptionNext)}
+            onClick={handleSubmit(onHandleOption)}
             variant="contained"
             color="secondary"
             sx={{

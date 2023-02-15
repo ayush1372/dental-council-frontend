@@ -1,10 +1,20 @@
+import { useEffect } from 'react';
+
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { createEditFieldData } from '../../../helpers/functions/common-functions';
+import { getRegistrationCouncilList } from '../../../store/actions/common-actions';
 import { Button, Select, TextField } from '../../../ui/core';
 
 const AdvanceSearch = ({ setDoSearch }) => {
+  const { councilNames } = useSelector((state) => state.common);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getRegistrationCouncilList());
+  }, []);
   const {
     formState: { errors },
     getValues,
@@ -112,6 +122,7 @@ const AdvanceSearch = ({ setDoSearch }) => {
           sx={{
             color: 'inputTextColor.main',
           }}
+          items={createEditFieldData(councilNames)}
           fullWidth
           error={errors.Statemedicalcouncil?.message}
           name="Statemedicalcouncil"

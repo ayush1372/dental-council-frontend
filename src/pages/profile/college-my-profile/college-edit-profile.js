@@ -1,37 +1,186 @@
+import { useEffect, useState } from 'react';
+
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Box, Grid, IconButton, InputAdornment, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
-import {
-  RegistrationCouncilNames,
-  StateNames,
-  UniversityNames,
-} from '../../../constants/common-data';
+import { createEditFieldData } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
+import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
+import ModalOTP from '../../../shared/otp-modal/otp-modal';
+import { updateCollegeAdminProfileData } from '../../../store/actions/college-actions';
+import {
+  getStatesList,
+  sendNotificationOtp,
+  verifyNotificationOtp,
+} from '../../../store/actions/common-actions';
 import { Button, TextField } from '../../../ui/core';
+import successToast from '../../../ui/core/toaster';
 
 const CollegeEditProfile = () => {
+  const { collegeData } = useSelector((state) => state.college);
+  const { statesList, councilNames, universitiesList } = useSelector((state) => state.common);
+  const registrationSuccess = useSelector((state) => state.college.collegeRegisterDetails.data);
+  const [verifyEmail, setVerifyEmail] = useState(false);
+  const [verifyMobile, setVerifyMobile] = useState(false);
+  const [successModalPopup, setSuccessModalPopup] = useState(false);
+  const [type, setType] = useState('');
+  const [headerText, setHeaderText] = useState('');
+  const userData = collegeData?.data;
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getStatesList());
+  }, []);
+
+  const onContinue = (otpNumber) => {
+    if (type === 'sms') {
+      dispatch(
+        verifyNotificationOtp({
+          contact: getValues().CollegePhoneNumber,
+          type: type,
+          otp: otpNumber,
+        })
+      )
+        .then(() => {
+          setVerifyMobile(true);
+          handleClose();
+        })
+        .catch((error) => {
+          setVerifyMobile(false);
+          successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+        });
+    } else {
+      dispatch(
+        verifyNotificationOtp({
+          contact: getValues().email,
+          type: type,
+          otp: otpNumber,
+        })
+      )
+        .then(() => {
+          setVerifyEmail(true);
+          handleClose();
+        })
+        .catch((error) => {
+          setVerifyEmail(false);
+          successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+        });
+    }
+  };
+
+  const onOtpResendClick = () => {
+    if (type === 'sms' && otpMobileVerify) {
+      setHeaderText(`Mobile Number${getValues().CollegePhoneNumber}`);
+      dispatch(sendNotificationOtp({ contact: getValues().CollegePhoneNumber, type: type }))
+        .then(() => {
+          handleClickOpen();
+        })
+        .catch((error) => {
+          handleClose();
+          successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+        });
+    } else if (type === 'email' && otpEmailVerify) {
+      setHeaderText(`Email Id ${getValues().email}`);
+      dispatch(sendNotificationOtp({ contact: getValues().email, type: type }))
+        .then(() => {
+          handleClickOpen();
+        })
+        .catch((error) => {
+          handleClose();
+          successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+        });
+    }
+  };
+
+  const { otpPopup, handleClickOpen, otpMobileVerify, otpEmailVerify, handleClose } = ModalOTP({
+    afterConfirm: onContinue,
+    reSentOtp: onOtpResendClick,
+    headerText: `We just sent an OTP on your registered  ${headerText} linked with your Aadhaar.`,
+  });
+  const getOtp = (type) => {
+    setType(type);
+
+    if (type === 'sms' && otpMobileVerify) {
+      setHeaderText(
+        `Mobile NumberXXXXX${getValues().CollegePhoneNumber.substr(
+          getValues().CollegePhoneNumber.length - 4
+        )}`
+      );
+      dispatch(sendNotificationOtp({ contact: getValues().CollegePhoneNumber, type: type }))
+        .then(() => {
+          handleClickOpen();
+        })
+        .catch((error) => {
+          handleClose();
+          successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+        });
+    } else if (type === 'email' && otpEmailVerify) {
+      setHeaderText(`Email Id ******${getValues().email.substr(getValues().email.length - 15)}.`);
+      dispatch(sendNotificationOtp({ contact: getValues().email, type: type }))
+        .then(() => {
+          handleClickOpen();
+        })
+        .catch((error) => {
+          handleClose();
+          successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+        });
+    }
+  };
+
   const {
     register,
     handleSubmit,
     getValues,
+    setValue,
     clearErrors,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
     defaultValues: {
-      CollegeEmailId: 'aarnav.sharma@gmail.com',
-      CollegeName: 'Aarnav sharma',
-      CollegeId: '132188',
-      CollegePhoneNumber: '8778636526',
-      CollegeAddress: 'GGSIPU, Golf Course Rd, Sector 16 C, Dwarka, Delhi, 110078',
-      CollegePincode: '110088',
-      UniversityName: 'AIIMS Delhi',
-      DeparmentName: '',
-      StateName: 'New Delhi',
-      CollegeWebsite: 'ipuniversity.co.in',
+      CollegeEmailId: userData?.email_id,
+      CollegeName: userData?.name,
+      CollegeId: userData?.college_code,
+      CollegePhoneNumber: userData?.phone_number,
+      CollegeAddress: userData?.address,
+      CollegePincode: userData?.pin_code,
+      UniversityName: '',
+      UniversityId: '',
+      RegistrationCouncil: '',
+      RegistrationCouncilId: '',
+      StateName: '',
+      StateId: '',
+      CollegeWebsite: userData?.website,
     },
   });
+
+  const onhandleSubmitClick = () => {
+    const updatedCollegeDetails = {
+      id: userData?.id,
+      name: getValues().CollegeName,
+      college_code: getValues().CollegeId,
+      phone_number: getValues().CollegePhoneNumber,
+      email_id: getValues().CollegeEmailId,
+      user_id: userData?.id,
+      council_id: getValues().RegistrationCouncilId,
+      university_id: getValues().UniversityId,
+      website: getValues().CollegeWebsite,
+      address: getValues().CollegeAddress,
+      pin_code: getValues().CollegePincode,
+      state_id: getValues().StateId,
+    };
+
+    dispatch(updateCollegeAdminProfileData(updatedCollegeDetails))
+      .then(() => {
+        if (registrationSuccess) {
+          setSuccessModalPopup(true);
+        }
+      })
+      .catch((error) => {
+        successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+      });
+  };
+
   const handleInput = (e) => {
     e.preventDefault();
     if (e.target.value.length > 0) {
@@ -40,8 +189,16 @@ const CollegeEditProfile = () => {
         : Math.max(0, parseInt(e.target.value)).toString().slice(0, 10);
     }
   };
+
   return (
     <Grid>
+      {successModalPopup && (
+        <SuccessModalPopup
+          open={successModalPopup}
+          setOpen={() => setSuccessModalPopup(false)}
+          text={'Your requested has Approved/Rejected Successfully'}
+        />
+      )}
       <Grid container spacing={2} mt={2}>
         <Grid container item xs={12}>
           <Typography variant="h2" color="textPrimary.main">
@@ -99,11 +256,7 @@ const CollegeEditProfile = () => {
             </Typography>
             <Typography component="span">
               <IconButton aria-label="toggle password visibility" edge="end">
-                {getValues()?.CollegePhoneNumber?.length === 11 ? (
-                  <CheckCircleIcon color="success" />
-                ) : (
-                  ''
-                )}
+                {verifyMobile && <CheckCircleIcon color="success" />}
               </IconButton>
             </Typography>
           </Typography>
@@ -131,6 +284,7 @@ const CollegeEditProfile = () => {
                     sx={{
                       p: '15px 10px 12px 10px',
                     }}
+                    onClick={() => getOtp('sms')}
                   >
                     Get OTP
                   </Button>
@@ -138,6 +292,7 @@ const CollegeEditProfile = () => {
               ),
             }}
           />
+          {otpPopup}
         </Grid>
       </Grid>
 
@@ -150,7 +305,9 @@ const CollegeEditProfile = () => {
             </Typography>
             <Typography component="span">
               <IconButton aria-label="toggle password visibility" edge="end">
-                {!errors.CollegeEmailId?.message && getValues().CollegeEmailId.length !== 0
+                {verifyEmail &&
+                !errors.CollegeEmailId?.message &&
+                getValues().CollegeEmailId.length !== 0
                   ? // <CheckCircleIcon color="success" />
                     ''
                   : ''}
@@ -200,7 +357,7 @@ const CollegeEditProfile = () => {
             name="UniversityName"
             clearErrors={clearErrors}
             defaultValue={getValues().UniversityName}
-            items={UniversityNames}
+            items={createEditFieldData(universitiesList.data)}
             // TO DO:UniversityName default value to be shown on UI for future ref
             // value={UniversityNames[0].name}
             placeholder="Select University Name"
@@ -208,6 +365,9 @@ const CollegeEditProfile = () => {
             {...register('UniversityName', {
               required: 'University Name is required',
             })}
+            onChange={(currentValue) => {
+              setValue('UniversityId', currentValue.id);
+            }}
           />
         </Grid>
 
@@ -221,6 +381,9 @@ const CollegeEditProfile = () => {
             name={'CollegeWebsite'}
             placeholder={'Enter College Website'}
             defaultValue={getValues().CollegeWebsite}
+            {...register('CollegeWebsite', {
+              required: 'CollegeWebsite  is required',
+            })}
           />
         </Grid>
       </Grid>
@@ -238,12 +401,15 @@ const CollegeEditProfile = () => {
             name={'CollegeAddress'}
             defaultValue={getValues().CollegeAddress}
             error={errors.CollegeAddress?.message}
+            {...register('CollegeAddress', {
+              required: 'CollegeAddress  is required',
+            })}
           />
         </Grid>
 
         <Grid item xs={12} md={4}>
           <Typography variant="body1" color="inputTextColor.main">
-            College Pin Code
+            College PIN Code
           </Typography>
           <Typography component="span" color="error.main">
             *
@@ -251,11 +417,11 @@ const CollegeEditProfile = () => {
           <TextField
             fullWidth
             name={'CollegePincode'}
-            placeholder={'Enter Pin Code'}
+            placeholder={'Enter PIN Code'}
             defaultValue={getValues().CollegePincode}
             error={errors.CollegePincode?.message}
             {...register('CollegePincode', {
-              required: 'College Pin Code is required',
+              required: 'College PIN Code is required',
             })}
           />
         </Grid>
@@ -271,12 +437,15 @@ const CollegeEditProfile = () => {
           <SearchableDropdown
             name="StateName"
             clearErrors={clearErrors}
-            items={StateNames}
+            items={createEditFieldData(statesList)}
             placeholder="Select State Name"
             error={errors.StateName?.message}
             {...register('StateName', {
               required: 'State Name is required',
             })}
+            onChange={(currentValue) => {
+              setValue('StateId', currentValue.id);
+            }}
           />
         </Grid>
       </Grid>
@@ -292,13 +461,16 @@ const CollegeEditProfile = () => {
           <Box>
             <SearchableDropdown
               name="RegistrationCouncil"
-              items={RegistrationCouncilNames}
-              placeholder="Select Your Registration Council"
+              items={createEditFieldData(councilNames)}
+              placeholder="Select your Registration Council"
               clearErrors={clearErrors}
               error={errors.RegistrationCouncil?.message}
               {...register('RegistrationCouncil', {
                 required: 'Registration Council is required',
               })}
+              onChange={(currentValue) => {
+                setValue('RegistrationCouncilId', currentValue.id);
+              }}
             />
           </Box>
           <Grid />
@@ -321,7 +493,8 @@ const CollegeEditProfile = () => {
             }}
             variant="contained"
             color="secondary"
-            onClick={handleSubmit(onsubmit)}
+            // onClick={handleSubmit(onsubmit)}
+            onClick={handleSubmit(onhandleSubmitClick)}
           >
             Submit
           </Button>

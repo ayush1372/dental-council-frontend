@@ -1,19 +1,36 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  doctorUserProfile: { data: [], isLoading: Boolean(true), isError: false },
+  personalDetails: { data: [], isLoading: Boolean(true), isError: false },
+  registrationDetails: { data: [], isLoading: Boolean(true), isError: false },
+  workProfileDetails: { data: [], isLoading: Boolean(true), isError: false },
+  profileImage: { data: [], isLoading: Boolean(true), isError: false },
 };
 
 const doctorUserProfileReducer = createSlice({
   name: 'doctorUserProfileReducer',
   initialState,
   reducers: {
-    getDoctorUserProfile: (state, action) => {
-      state.doctorUserProfile = action.payload;
+    getPersonalDetails: (state, action) => {
+      state.personalDetails = action.payload;
+    },
+    getRegistrationDetails: (state, action) => {
+      state.registrationDetails = action.payload;
+    },
+    getWorkProfileDetails: (state, action) => {
+      state.workProfileDetails = action.payload;
+    },
+    getProfileImage: (state, action) => {
+      state.profileImage = action.payload;
     },
   },
 });
 
-export const { getDoctorUserProfile } = doctorUserProfileReducer.actions;
+export const {
+  getPersonalDetails,
+  getRegistrationDetails,
+  getWorkProfileDetails,
+  getProfileImage,
+} = doctorUserProfileReducer.actions;
 
 export default doctorUserProfileReducer.reducer;

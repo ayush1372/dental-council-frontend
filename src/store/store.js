@@ -10,6 +10,7 @@ import doctorUserProfileReducer from './reducers/doctor-user-profile-reducer';
 import forgotPasswordReducer from './reducers/forgot-password-reducer';
 import loginReducer from './reducers/login-reducer';
 import navMenu from './reducers/nav-menu-reducer';
+import nbeReducers from './reducers/nbe-reducers';
 import nmcReducer from './reducers/nmc-reducer';
 import smcReducer from './reducers/smc-reducer';
 import AadhaarTransactionId from './reducers/user-aadhaar-verify-reducer';
@@ -26,6 +27,7 @@ const store = configureStore({
     college: collegeReducer,
     smc: smcReducer,
     nmc: nmcReducer,
+    nbe: nbeReducers,
     forgotpassword: forgotPasswordReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(thunk).concat(logger),
