@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useForm } from 'react-hook-form';
@@ -5,10 +7,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { createEditFieldData } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
+import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import { getUpdatedsmcProfileData } from '../../../store/actions/smc-actions';
 import { Button, TextField } from '../../../ui/core';
 const SmcEditProfile = (props) => {
   const userData = useSelector((state) => state?.smc?.smcProfileData?.data);
+  const [successModalPopup, setSuccessModalPopup] = useState(false);
 
   const { councilNames } = useSelector((state) => state.common);
   const {
@@ -58,7 +62,11 @@ const SmcEditProfile = (props) => {
     mobile_no: getValues().mobile_no,
   };
   const onsubmit = () => {
-    dispatch(getUpdatedsmcProfileData(smcUpdatedData));
+    dispatch(getUpdatedsmcProfileData(smcUpdatedData)).then((response) => {
+      if (response?.data?.email_id.length > 0) {
+        setSuccessModalPopup(true);
+      }
+    });
     props.sentDetails('Profile');
   };
 
@@ -220,6 +228,13 @@ const SmcEditProfile = (props) => {
         >
           Cancel
         </Button>
+        {successModalPopup && (
+          <SuccessModalPopup
+            open={successModalPopup}
+            setOpen={() => setSuccessModalPopup(false)}
+            text={'Your Profile has been successfully updated'}
+          />
+        )}
       </Box>
     </Grid>
   );

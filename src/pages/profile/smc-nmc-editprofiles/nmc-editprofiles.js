@@ -1,14 +1,18 @@
+import { useState } from 'react';
+
 import { Box, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { createEditFieldData } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
+import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import { getUpdatedNmcProfileData } from '../../../store/actions/nmc-actions';
 import { Button, TextField } from '../../../ui/core';
 const NmcEditProfile = (props) => {
   const userData = useSelector((state) => state?.nmc?.nmcProfileData?.data);
   const { councilNames } = useSelector((state) => state.common);
+  const [successModalPopup, setSuccessModalPopup] = useState(false);
   const {
     register,
     handleSubmit,
@@ -56,7 +60,11 @@ const NmcEditProfile = (props) => {
   };
   const dispatch = useDispatch();
   const onsubmit = () => {
-    dispatch(getUpdatedNmcProfileData(nmcUpdatedData));
+    dispatch(getUpdatedNmcProfileData(nmcUpdatedData)).then((response) => {
+      if (response?.data?.email_id.length > 0) {
+        setSuccessModalPopup(true);
+      }
+    });
     props.sentDetails('Profile');
   };
 
@@ -217,6 +225,13 @@ const NmcEditProfile = (props) => {
           Cancel
         </Button>
       </Box>
+      {successModalPopup && (
+        <SuccessModalPopup
+          open={successModalPopup}
+          setOpen={() => setSuccessModalPopup(false)}
+          text={'Your NMC Profile has been successfully updated'}
+        />
+      )}
     </Box>
   );
 };
