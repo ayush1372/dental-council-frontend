@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
-const CurrentWorkDetails = ({ doctorUserProfile }) => {
+const CurrentWorkDetails = ({ workProfileDetails }) => {
   const { userActiveTab } = useSelector((state) => state.common);
 
   const [openModal, setOpenModal] = useState(false);
@@ -14,21 +14,22 @@ const CurrentWorkDetails = ({ doctorUserProfile }) => {
     setOpenModal(false);
   };
   const {
-    current_work_details: {
-      facility,
-      work_organization,
-      url,
-      address: {
-        state: { name: stateName },
-        district: { name: districtName },
-        pincode,
-        address_line1,
-        address_type: { name: addressTypeName },
+    current_work_details: [
+      {
+        facility,
+        work_organization,
+        url,
+        address: {
+          state: { name: stateName },
+          district: { name: districtName },
+          pincode,
+          address_line1,
+        },
       },
-    },
+    ],
   } =
-    doctorUserProfile && Object.values(doctorUserProfile).length > 3
-      ? doctorUserProfile
+    workProfileDetails && Object.values(workProfileDetails).length > 3
+      ? workProfileDetails
       : { current_work_details: { address: { state: {}, district: {}, address_type: {} } } };
   return (
     <Grid container spacing={2} mt={2}>
@@ -111,7 +112,7 @@ const CurrentWorkDetails = ({ doctorUserProfile }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              {addressTypeName ? addressTypeName : ''}
+              {address_line1 ? address_line1 : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon

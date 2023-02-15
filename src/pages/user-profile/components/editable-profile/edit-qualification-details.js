@@ -405,7 +405,7 @@ const EditQualificationDetails = ({
           <UploadFile
             uploadFiles="single"
             sizeAllowed={1}
-            fileTypes={['image/jpg', 'image/jpeg', 'image/png']}
+            fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
             fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
                  Maximum size allowed for the attachment is 5MB.`}
             label={
@@ -414,9 +414,9 @@ const EditQualificationDetails = ({
                 <Typography color="error"> *</Typography>
               </>
             }
-            fileData={qualificationFilesData[`qualification[${index}].files`] || []}
+            fileData={qualificationFilesData[`qualification.${index}.files`] || []}
             setFileData={(files) => {
-              handleQualificationFilesData(`qualification[${index}].files`, files);
+              handleQualificationFilesData(`qualification.${index}.files`, files);
             }}
             isDigiLockcerVisible={true}
           />

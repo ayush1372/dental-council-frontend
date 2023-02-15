@@ -24,6 +24,7 @@ const initialState = {
   coursesList: { data: [], isLoading: Boolean(true), isError: false },
   specialitiesList: { data: [], isLoading: Boolean(true), isError: false },
   councilNames: { data: [], isLoading: Boolean(true), isError: false },
+  initiateWorkFlow: { data: [], isLoading: Boolean(true), isError: false },
 };
 
 export const CommonActivity = createSlice({
@@ -90,6 +91,9 @@ export const CommonActivity = createSlice({
     updateCouncilNames: (state, action) => {
       state.councilNames = action.payload;
     },
+    getInitiateWorkFlow: (state, action) => {
+      state.initiateWorkFlow = action.payload;
+    },
   },
 });
 
@@ -115,6 +119,7 @@ export const {
   getCourses,
   getSpecialities,
   updateCouncilNames,
+  getInitiateWorkFlow,
 } = CommonActivity.actions;
 
 export default CommonActivity.reducer;

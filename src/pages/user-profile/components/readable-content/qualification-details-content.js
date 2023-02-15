@@ -6,23 +6,27 @@ import { useSelector } from 'react-redux';
 
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
-const QualificationDetailsContent = ({ doctorUserProfile }) => {
+const QualificationDetailsContent = ({ registrationDetails }) => {
   const [openModal, setOpenModal] = useState(false);
   const ClosePopup = () => {
     setOpenModal(false);
   };
   const { userActiveTab } = useSelector((state) => state.common);
-  const {
-    country: { name: countryName },
-    state: { name: stateName },
-    college: { name: collegeName },
-    university: { name: universityName },
-    course: { name: courseName },
-    qualification_year,
-    is_name_change,
-  } = doctorUserProfile && Object.values(doctorUserProfile).length > 3
-    ? doctorUserProfile.qualification_detail[3]
-    : { country: {}, state: {}, college: {}, university: {}, course: {} };
+  const [
+    {
+      country: { name: countryName },
+      state: { name: stateName },
+      college: { name: collegeName },
+      university: { name: universityName },
+      course: { course_name: courseName },
+      qualification_month,
+      qualification_year,
+      is_name_change,
+    },
+  ] =
+    registrationDetails && Object.values(registrationDetails).length > 3
+      ? registrationDetails.qualification_detail_response_tos
+      : [{ country: {}, state: {}, college: {}, university: {}, course: {} }];
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2} mt={1}>
@@ -141,7 +145,7 @@ const QualificationDetailsContent = ({ doctorUserProfile }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              November
+              {qualification_month ? qualification_month : ''}
             </Typography>{' '}
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon

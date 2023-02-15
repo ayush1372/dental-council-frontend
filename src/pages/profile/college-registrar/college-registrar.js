@@ -15,6 +15,8 @@ export function CollegeRegistrar() {
   const successMessage = useSelector((state) => state.college.registrarDetails.data.email_id);
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const { collegeData } = useSelector((state) => state.college);
+  const userData = collegeData?.data;
   const {
     register,
     handleSubmit,
@@ -41,7 +43,7 @@ export function CollegeRegistrar() {
       user_id: null,
       password: fieldData.registrarPassword,
     };
-    dispatch(sendRegistrarDetails(registrarData));
+    dispatch(sendRegistrarDetails(registrarData, userData?.id));
     if (successMessage.length > 0) {
       setSuccessModalPopup(true);
     }

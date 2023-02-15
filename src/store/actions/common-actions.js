@@ -1,6 +1,5 @@
-/* eslint-disable no-console */
 import { API } from '../../api/api-endpoints';
-import { GET, POST } from '../../constants/requests';
+import { GET, PATCH, POST } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import {
   getCities,
@@ -210,7 +209,6 @@ export const sendNotificationOtp = (otpTypeValue) => async (dispatch) => {
   });
 };
 export const verifyNotificationOtp = (otpValue) => async (dispatch) => {
-  console.log('otpValue object', otpValue);
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: POST,
@@ -219,6 +217,22 @@ export const verifyNotificationOtp = (otpValue) => async (dispatch) => {
     })
       .then((response) => {
         dispatch(verifyNotificationData(response));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const getInitiateWorkFlow = (body) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: PATCH,
+      url: API.DoctorUserProfileData.initiateWorkFlow,
+      data: body,
+    })
+      .then((response) => {
         return resolve(response);
       })
       .catch((error) => {

@@ -1,5 +1,5 @@
 import { API } from '../../api/api-endpoints';
-import { GET, POST, PUT } from '../../constants/requests';
+import { GET, PATCH, POST, PUT } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import {
   collegeRegister,
@@ -68,11 +68,11 @@ export const getCollegeDeanProfileData = (id) => async (dispatch) => {
   });
 };
 
-export const sendRegistrarDetails = (details) => async (dispatch) => {
+export const sendRegistrarDetails = (details, collegeId) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: POST,
-      url: API.college.registrar,
+      url: API.college.registrar.replace('{collegeId}', collegeId),
       headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
       data: details,
     })
@@ -85,7 +85,7 @@ export const sendRegistrarDetails = (details) => async (dispatch) => {
       });
   });
 };
-export const sendDeanDetails = (details) => async (dispatch) => {
+export const sendDeanDetails = (details, collegeID) => async (dispatch) => {
   let id = null;
   let name = details.deanName;
   let phone_number = details.deanPhoneNumber;
@@ -95,7 +95,7 @@ export const sendDeanDetails = (details) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: POST,
-      url: API.college.dean,
+      url: API.college.dean.replace('{collegeId}', collegeID),
       headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
       data: {
         id,
@@ -151,7 +151,7 @@ export const registerCollegeDetails = (collegeDetails) => async (dispatch) => {
 export const initiateCollegeWorkFlow = (body) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
-      method: POST,
+      method: PATCH,
       url: API.college.initiateCollegeWorkFlow,
       headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
       data: body,

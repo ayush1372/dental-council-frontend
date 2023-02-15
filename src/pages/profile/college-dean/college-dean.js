@@ -17,6 +17,8 @@ export function CollegeDean() {
   const dispatch = useDispatch();
 
   const { t } = useTranslation();
+  const { collegeData } = useSelector((state) => state.college);
+  const userData = collegeData?.data;
   const {
     register,
     handleSubmit,
@@ -35,7 +37,7 @@ export function CollegeDean() {
     },
   });
   const onSubmit = (fieldValues) => {
-    dispatch(sendDeanDetails(fieldValues));
+    dispatch(sendDeanDetails(fieldValues, userData?.id));
     if (successMessage.length > 0) {
       setSuccessModalPopup(true);
     }

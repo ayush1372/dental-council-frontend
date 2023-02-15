@@ -12,7 +12,7 @@ import RegistrationDetailsContent from '../readable-content/registration-details
 const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack, showActions = true }) => {
   const [accordionKey, setAccordionKey] = useState('accordion-0');
 
-  const { doctorUserProfile } = useSelector((state) => state?.doctorUserProfileReducer);
+  const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const accordions = [
     {
       title: 'Registration Details',
@@ -26,6 +26,7 @@ const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack, showActions = 
   const handleChange = (accordionValue) => (_event, isExpanded) => {
     setAccordionKey(isExpanded ? accordionValue : null);
   };
+
   return (
     <Box>
       <Box>
@@ -57,7 +58,7 @@ const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack, showActions = 
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Component doctorUserProfile={doctorUserProfile} />
+                <Component registrationDetails={registrationDetails} />
               </AccordionDetails>
             </Accordion>
           );

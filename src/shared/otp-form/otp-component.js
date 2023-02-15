@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
-import { Box, Typography } from '@mui/material';
+import { makeStyles } from '@material-ui/core';
+import { Box, Typography, useTheme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import OtpInput from 'react-otp-input';
 import { ToastContainer } from 'react-toastify';
@@ -11,32 +12,6 @@ import { SvgImageComponent } from '../../ui/core/svg-icons';
 
 // import useCountdown from './use-countdown';
 import styles from './otp-component.module.scss';
-
-const otpInputStyle = {
-  width: '56px',
-  height: '56px',
-  marginRight: '12px',
-  fontSize: '18px',
-  borderRadius: 5,
-  border: '1px solid #D8DCDE',
-  borderColor: 'inputBorderColor.main',
-  color: '#D8DCDE',
-  boxShadow: '0 1px 3px #00000029',
-  backgroundColor: '#FAFAFA',
-};
-
-const otpMobileInputStyle = {
-  width: '40px',
-  height: '40px',
-  marginRight: '12px',
-  fontSize: '18px',
-  borderRadius: 5,
-  border: '1px solid #D8DCDE',
-  borderColor: 'inputBorderColor.main',
-  color: '#D8DCDE',
-  boxShadow: '0 1px 3px #00000029',
-  backgroundColor: '#FAFAFA',
-};
 
 export const OtpForm = ({ otpInvalidError = false, resendAction = undefined, resendTime = 90 }) => {
   const { t } = useTranslation();
@@ -80,42 +55,37 @@ export const OtpForm = ({ otpInvalidError = false, resendAction = undefined, res
     return isOtpValid && !isOtpInvalid;
   };
 
+  const theme = useTheme();
+  const useStyles = makeStyles(() => ({
+    otpInputStyle: {
+      width: '56px !important',
+      height: '56px',
+      marginRight: '12px',
+      fontSize: '18px',
+      borderRadius: 5,
+      border: '1px solid',
+      borderColor: theme.palette.otpTextColor.main,
+      color: theme.palette.textPrimary.main,
+      [theme.breakpoints.down('sm')]: {
+        width: '40px !important',
+        height: '40px',
+      },
+    },
+    focusStyle: {
+      outline: `2px solid ${theme.palette.primary.main}`,
+    },
+  }));
+  const classes = useStyles(theme);
+
   const OtpBox = (
     <Box pt={2}>
       <ToastContainer></ToastContainer>
       <Box>
-        <Box
-          sx={{
-            display: {
-              xs: 'none',
-              md: 'block',
-            },
-          }}
-        >
+        <Box>
           <OtpInput
-            // inputStyle={styles.otpInput}
-            inputStyle={otpInputStyle}
+            inputStyle={classes.otpInputStyle}
             shouldAutoFocus={true}
-            focusStyle={{ outline: '2px solid #264488' }}
-            isInputNum={true}
-            value={otp}
-            numInputs={6}
-            onChange={onChange}
-          />
-        </Box>
-        <Box
-          sx={{
-            display: {
-              xs: 'block',
-              md: 'none',
-            },
-          }}
-        >
-          <OtpInput
-            // inputStyle={styles.otpInput}
-            inputStyle={otpMobileInputStyle}
-            shouldAutoFocus={true}
-            focusStyle={{ outline: '2px solid #264488' }}
+            focusStyle={classes.focusStyle}
             isInputNum={true}
             value={otp}
             numInputs={6}
@@ -159,7 +129,7 @@ export const OtpForm = ({ otpInvalidError = false, resendAction = undefined, res
               cursor: 'pointer',
               paddingLeft: '10px',
               '&:hover': {
-                textDecoration: 'underline #D66025',
+                textDecoration: `underline ${theme.palette.secondary.main}`,
                 background: 'none',
               },
             }}
@@ -186,7 +156,6 @@ export const OtpForm = ({ otpInvalidError = false, resendAction = undefined, res
     validationOtpInvalid: isOtpInvalid,
     handleClear,
     getOtpValidation,
-
     // handleCountdownRestart,
   };
 };
