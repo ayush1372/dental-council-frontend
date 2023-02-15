@@ -31,10 +31,11 @@ export const getCollegeAdminProfileData = (id) => async (dispatch) => {
 };
 
 export const getCollegeRegistrarProfileData = (id) => async (dispatch) => {
+  const endpoint = API.college.getCollegeRegistrarProfile.replace('{id}', id);
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,
-      url: API.college.getCollegeRegistrarProfile.replace('{id}', id),
+      url: endpoint.replace('{collegeId}', id),
       headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
       .then((response) => {
@@ -51,10 +52,11 @@ export const getCollegeRegistrarProfileData = (id) => async (dispatch) => {
 };
 
 export const getCollegeDeanProfileData = (id) => async (dispatch) => {
+  const endpoint = API.college.getCollegeDeanProfile.replace('{id}', id);
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,
-      url: API.college.getCollegeDeanProfile.replace('{id}', id),
+      url: endpoint.replace('{collegeId}', id),
       headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
       .then((response) => {
@@ -121,7 +123,7 @@ export const updateCollegeAdminProfileData = (body) => async () => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: PUT,
-      url: API.college.register,
+      url: API.college.register + '/' + body?.id,
       data: body,
       headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
