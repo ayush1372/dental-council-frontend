@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { sendDeanDetails } from '../../../store/actions/college-actions';
+import { sendDeanDetails, updateCollegeDeanData } from '../../../store/actions/college-actions';
 import { Button, TextField } from '../../../ui/core';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
@@ -34,7 +34,7 @@ export function CollegeDean({ showPage, updateShowPage }) {
   });
   const onSubmit = (fieldValues) => {
     if (showPage === 'edit') {
-      dispatch(sendDeanDetails(fieldValues, 'editDean'));
+      dispatch(updateCollegeDeanData(fieldValues));
     } else {
       dispatch(sendDeanDetails(fieldValues));
     }

@@ -3,15 +3,18 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { verboseLog } from '../../../config/debug';
 import { sendRegistrarDetails } from '../../../store/actions/college-actions';
 import { Button, TextField } from '../../../ui/core';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
-export function CollegeRegistrar() {
+export function CollegeRegistrar({ showPage, updateShowPage }) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { collegeData } = useSelector((state) => state.college);
   const userData = collegeData?.data;
+  verboseLog(userData);
+
   const {
     register,
     handleSubmit,
@@ -21,10 +24,11 @@ export function CollegeRegistrar() {
   } = useForm({
     mode: 'onChange',
     defaultValues: {
-      registrarName: '',
-      registrarPhoneNumber: '',
-      registrarEmail: '',
-      registrarUserId: '',
+      id: showPage === 'edit' ? userData?.id : null,
+      registrarName: showPage === 'edit' ? userData?.name : '',
+      registrarPhoneNumber: showPage === 'edit' ? userData?.phone_number : '',
+      registrarEmail: showPage === 'edit' ? userData?.email_id : '',
+      registrarUserId: showPage === 'edit' ? userData?.user_id : '',
       registrarPassword: '',
     },
   });
@@ -187,7 +191,14 @@ export function CollegeRegistrar() {
         </Grid>
 
         <Grid item xs={12} sm="auto">
-          <Button fullWidth variant="contained" color="grey">
+          <Button
+            fullWidth
+            variant="contained"
+            color="grey"
+            onClick={() => {
+              updateShowPage('Profile');
+            }}
+          >
             {t('Cancel')}
           </Button>
         </Grid>
