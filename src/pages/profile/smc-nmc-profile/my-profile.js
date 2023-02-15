@@ -4,7 +4,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Box, Grid, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
-import { verboseLog } from '../../../config/debug';
 import {
   getNBEProfileDetails,
   getNMCProfileDetails,
@@ -12,7 +11,6 @@ import {
 } from '../../../constants/common-data';
 import CircularLoader from '../../../shared/circular-loader/circular-loader';
 import { Button } from '../../../ui/core';
-// import ChangePassword from '../change-password/change-password';
 import NmcEditProfile from '../smc-nmc-editprofiles/nmc-editprofiles';
 import SmcEditProfile from '../smc-nmc-editprofiles/smc-editprofile';
 
@@ -21,7 +19,6 @@ const MyProfile = (props) => {
   const { nmcProfileData } = useSelector((state) => state.nmc);
   const { smcProfileData } = useSelector((state) => state.smc);
   const { nbeData } = useSelector((state) => state.nbe);
-
   const data =
     props.userType === 'SMC'
       ? getSMCProfileDetails(smcProfileData?.data)
@@ -29,14 +26,10 @@ const MyProfile = (props) => {
       ? getNBEProfileDetails(nbeData?.data)
       : getNMCProfileDetails(nmcProfileData?.data);
 
-  const [showSmcEditProfile, setShowSmcEditProfile] = useState(false);
-
-  const sentDetails = () => {
-    setShowSmcEditProfile(true);
-    setShowpage('Edit');
+  const sentDetails = (value) => {
+    setShowpage(value);
   };
 
-  verboseLog(showSmcEditProfile);
   return (
     <>
       {(props.userType === 'SMC' && smcProfileData?.isLoading) ||
@@ -65,7 +58,7 @@ const MyProfile = (props) => {
                     color="secondary"
                     onClick={() => {
                       setShowpage('Edit');
-                      sentDetails();
+                      sentDetails('Edit');
                     }}
                   >
                     Edit Profile
@@ -96,11 +89,10 @@ const MyProfile = (props) => {
               {props.userType === 'SMC' ? (
                 <SmcEditProfile sentDetails={sentDetails} />
               ) : (
-                <NmcEditProfile />
+                <NmcEditProfile sentDetails={sentDetails} />
               )}
             </Box>
           )}
-          {/* {showPage === 'Password' && <ChangePassword />} */}
         </Grid>
       )}
     </>
