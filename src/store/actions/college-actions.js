@@ -155,6 +155,25 @@ export const updateCollegeDeanData = (body) => async () => {
   });
 };
 
+export const updateCollegeRegistrarData = (body) => async () => {
+  const endpoint = API.college.getCollegeRegistrarProfile.replace('{id}', body?.id);
+
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: PUT,
+      url: endpoint.replace('{collegeId}', body?.id),
+      data: body,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
 export const registerCollegeDetails = (collegeDetails) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({

@@ -4,7 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { verboseLog } from '../../../config/debug';
-import { sendRegistrarDetails } from '../../../store/actions/college-actions';
+import {
+  sendRegistrarDetails,
+  updateCollegeRegistrarData,
+} from '../../../store/actions/college-actions';
 import { Button, TextField } from '../../../ui/core';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
@@ -35,14 +38,18 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
 
   const onSubmit = (fieldData) => {
     let registrarData = {
-      id: null,
+      id: showPage === 'edit' ? fieldData?.id : null,
       name: fieldData.registrarName,
       phone_number: fieldData.registrarPhoneNumber,
       email_id: fieldData.registrarPhoneNumber,
-      user_id: null,
+      user_id: showPage === 'edit' ? fieldData?.user_id : null,
       password: fieldData.registrarPassword,
     };
-    dispatch(sendRegistrarDetails(registrarData, userData?.id));
+    if (showPage === 'edit') {
+      dispatch(updateCollegeRegistrarData(registrarData));
+    } else {
+      dispatch(sendRegistrarDetails(registrarData, userData?.id));
+    }
     reset();
   };
 
@@ -51,7 +58,7 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
       <Grid item xs={12} mt={5}>
         <Box>
           <Typography color="textPrimary.main" variant="h2">
-            College Registrar
+            {showPage === 'edit' ? 'Edit College Registrar' : 'College Registrar'}
           </Typography>
         </Box>
       </Grid>
