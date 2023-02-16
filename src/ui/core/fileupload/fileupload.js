@@ -76,6 +76,7 @@ export const UploadFile = (props) => {
           fileName: e.target.files[0].name,
           size: e.target.files[0].size / 1024,
           timeInfo: new Date(),
+          file: e.target.files[0],
         };
         if (uploadFiles === 'single') {
           setFileData([fileDetails]);

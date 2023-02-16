@@ -7,66 +7,61 @@ import {
   getRegistrationDetails,
   getWorkProfileDetails,
 } from '../reducers/doctor-user-profile-reducer';
-export const getPersonalDetailsData =
-  (doctor_profile_id = 248) =>
-  async (dispatch) => {
-    return await new Promise((resolve, reject) => {
-      useAxiosCall({
-        method: GET,
-        url: API.DoctorUserProfileData.personalDetails.replace(
-          '{healthProfessionalId}',
-          doctor_profile_id
-        ),
+
+export const getPersonalDetailsData = (doctor_profile_id) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: GET,
+      url: API.DoctorUserProfileData.personalDetails.replace(
+        '{healthProfessionalId}',
+        doctor_profile_id
+      ),
+    })
+      .then((response) => {
+        dispatch(getPersonalDetails(response.data));
+        return resolve(response);
       })
-        .then((response) => {
-          dispatch(getPersonalDetails(response.data));
-          return resolve(response);
-        })
-        .catch((error) => {
-          return reject(error);
-        });
-    });
-  };
-export const getRegistrationDetailsData =
-  (doctor_profile_id = 248) =>
-  async (dispatch) => {
-    return await new Promise((resolve, reject) => {
-      useAxiosCall({
-        method: GET,
-        url: API.DoctorUserProfileData.registrationDetails.replace(
-          '{healthProfessionalId}',
-          doctor_profile_id
-        ),
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+export const getRegistrationDetailsData = (doctor_profile_id) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: GET,
+      url: API.DoctorUserProfileData.registrationDetails.replace(
+        '{healthProfessionalId}',
+        doctor_profile_id
+      ),
+    })
+      .then((response) => {
+        dispatch(getRegistrationDetails(response.data));
+        return resolve(response);
       })
-        .then((response) => {
-          dispatch(getRegistrationDetails(response.data));
-          return resolve(response);
-        })
-        .catch((error) => {
-          return reject(error);
-        });
-    });
-  };
-export const getWorkProfileDetailsData =
-  (doctor_profile_id = 248) =>
-  async (dispatch) => {
-    return await new Promise((resolve, reject) => {
-      useAxiosCall({
-        method: GET,
-        url: API.DoctorUserProfileData.workProfileDetails.replace(
-          '{healthProfessionalId}',
-          doctor_profile_id
-        ),
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+export const getWorkProfileDetailsData = (doctor_profile_id) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: GET,
+      url: API.DoctorUserProfileData.workProfileDetails.replace(
+        '{healthProfessionalId}',
+        doctor_profile_id
+      ),
+    })
+      .then((response) => {
+        dispatch(getWorkProfileDetails(response.data));
+        return resolve(response);
       })
-        .then((response) => {
-          dispatch(getWorkProfileDetails(response.data));
-          return resolve(response);
-        })
-        .catch((error) => {
-          return reject(error);
-        });
-    });
-  };
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
 
 export const getNewDoctorUserProfileData = () => async (dispatch) => {
   return await new Promise((resolve, reject) => {
@@ -108,6 +103,25 @@ export const updateDoctorRegistrationDetails = (body, doctor_profile_id) => asyn
     useAxiosCall({
       method: PUT,
       url: API.DoctorUserProfileData.registrationDetails.replace(
+        '{healthProfessionalId}',
+        doctor_profile_id
+      ),
+      data: body,
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const updateDoctorWorkDetails = (body, doctor_profile_id) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: PUT,
+      url: API.DoctorUserProfileData.workProfileDetails.replace(
         '{healthProfessionalId}',
         doctor_profile_id
       ),

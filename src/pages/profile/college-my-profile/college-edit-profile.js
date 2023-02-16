@@ -409,7 +409,7 @@ const CollegeEditProfile = () => {
 
         <Grid item xs={12} md={4}>
           <Typography variant="body1" color="inputTextColor.main">
-            College Pin Code
+            College PIN Code
           </Typography>
           <Typography component="span" color="error.main">
             *
@@ -417,11 +417,11 @@ const CollegeEditProfile = () => {
           <TextField
             fullWidth
             name={'CollegePincode'}
-            placeholder={'Enter Pin Code'}
+            placeholder={'Enter PIN Code'}
             defaultValue={getValues().CollegePincode}
             error={errors.CollegePincode?.message}
             {...register('CollegePincode', {
-              required: 'College Pin Code is required',
+              required: 'College PIN Code is required',
             })}
           />
         </Grid>
