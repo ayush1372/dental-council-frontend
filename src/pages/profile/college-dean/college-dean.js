@@ -61,7 +61,7 @@ export function CollegeDean() {
           defaultValue={getValues().deanName}
           error={errors.deanName?.message}
           {...register('deanName', {
-            required: 'Enter valid college registrar name',
+            required: 'Enter valid name',
           })}
         />
       </Grid>

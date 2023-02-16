@@ -1,13 +1,17 @@
 import { Box, Divider, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 
 import { Button, TextField } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 
 const ForgotPassword = ({ handleConfirmPassword }) => {
   const { t } = useTranslation();
-
+  const doctorTitle = 'Enter NMR ID/User ID/Reg ID/Email ID';
+  const userTitle = 'Enter User ID/Email ID';
+  const { state } = useLocation();
+  const { loginFormname } = state;
   const {
     register,
     handleSubmit,
@@ -42,7 +46,7 @@ const ForgotPassword = ({ handleConfirmPassword }) => {
 
       <Box mt={2}>
         <Typography variant="body1">
-          Enter NMR ID/Reg ID/Email ID
+          {loginFormname === 'Doctor' ? doctorTitle : userTitle}
           <Typography component="span" color="error.main">
             *
           </Typography>

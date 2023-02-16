@@ -35,7 +35,7 @@ export const UniqueUserNameForDoctor = [
 ];
 
 export const getSMCProfileDetails = (details) => [
-  { label: 'Name', value: details.display_name, id: '1' },
+  { label: 'Name', value: details.first_name, id: '1' },
   { label: 'Enrolment Number NDHM', value: details.ndhm_enrollment, id: '2' },
   { label: 'Enrolment Number', value: details.enrolled_number, id: '3' },
   { label: 'Council', value: details.state_medical_council.name, id: '4' },
@@ -44,7 +44,7 @@ export const getSMCProfileDetails = (details) => [
 ];
 
 export const getNMCProfileDetails = (details) => [
-  { label: 'Name', value: details.display_name, id: '1' },
+  { label: 'Name', value: details.first_name, id: '1' },
   { label: 'Enrolment Number NDHM', value: details.ndhm_enrollment, id: '2' },
   { label: 'Enrolment Number', value: details.enrolled_number, id: '3' },
   { label: 'Council', value: details.state_medical_council.name, id: '4' },

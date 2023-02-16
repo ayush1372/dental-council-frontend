@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { createEditFieldData } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
+import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import ModalOTP from '../../../shared/otp-modal/otp-modal';
 import { updateCollegeAdminProfileData } from '../../../store/actions/college-actions';
 import {
@@ -19,12 +20,11 @@ import successToast from '../../../ui/core/toaster';
 
 const CollegeEditProfile = () => {
   const { collegeData } = useSelector((state) => state.college);
-  const { statesList, registrationCouncilList, universitiesList } = useSelector(
-    (state) => state.common
-  );
-
+  const { statesList, councilNames, universitiesList } = useSelector((state) => state.common);
+  const registrationSuccess = useSelector((state) => state.college.collegeRegisterDetails.data);
   const [verifyEmail, setVerifyEmail] = useState(false);
   const [verifyMobile, setVerifyMobile] = useState(false);
+  const [successModalPopup, setSuccessModalPopup] = useState(false);
   const [type, setType] = useState('');
   const [headerText, setHeaderText] = useState('');
   const userData = collegeData?.data;
@@ -170,7 +170,15 @@ const CollegeEditProfile = () => {
       state_id: getValues().StateId,
     };
 
-    dispatch(updateCollegeAdminProfileData(updatedCollegeDetails));
+    dispatch(updateCollegeAdminProfileData(updatedCollegeDetails))
+      .then(() => {
+        if (registrationSuccess) {
+          setSuccessModalPopup(true);
+        }
+      })
+      .catch((error) => {
+        successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+      });
   };
 
   const handleInput = (e) => {
@@ -184,6 +192,13 @@ const CollegeEditProfile = () => {
 
   return (
     <Grid>
+      {successModalPopup && (
+        <SuccessModalPopup
+          open={successModalPopup}
+          setOpen={() => setSuccessModalPopup(false)}
+          text={'Your requested has Approved/Rejected Successfully'}
+        />
+      )}
       <Grid container spacing={2} mt={2}>
         <Grid container item xs={12}>
           <Typography variant="h2" color="textPrimary.main">
@@ -394,7 +409,7 @@ const CollegeEditProfile = () => {
 
         <Grid item xs={12} md={4}>
           <Typography variant="body1" color="inputTextColor.main">
-            College Pin Code
+            College PIN Code
           </Typography>
           <Typography component="span" color="error.main">
             *
@@ -402,11 +417,11 @@ const CollegeEditProfile = () => {
           <TextField
             fullWidth
             name={'CollegePincode'}
-            placeholder={'Enter Pin Code'}
+            placeholder={'Enter PIN Code'}
             defaultValue={getValues().CollegePincode}
             error={errors.CollegePincode?.message}
             {...register('CollegePincode', {
-              required: 'College Pin Code is required',
+              required: 'College PIN Code is required',
             })}
           />
         </Grid>
@@ -446,7 +461,7 @@ const CollegeEditProfile = () => {
           <Box>
             <SearchableDropdown
               name="RegistrationCouncil"
-              items={createEditFieldData(registrationCouncilList)}
+              items={createEditFieldData(councilNames)}
               placeholder="Select your Registration Council"
               clearErrors={clearErrors}
               error={errors.RegistrationCouncil?.message}
