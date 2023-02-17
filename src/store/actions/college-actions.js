@@ -136,13 +136,13 @@ export const updateCollegeAdminProfileData = (body) => async () => {
   });
 };
 
-export const updateCollegeDeanData = (body) => async () => {
-  const endpoint = API.college.getCollegeDeanProfile.replace('{id}', body?.id);
+export const updateCollegeDeanData = (body, deanID) => async () => {
+  const endpoint = API.college.getCollegeDeanProfile.replace('{id}', deanID);
 
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: PUT,
-      url: endpoint.replace('{collegeId}', body?.id),
+      url: endpoint.replace('{collegeId}', deanID),
       data: body,
       headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
@@ -155,13 +155,13 @@ export const updateCollegeDeanData = (body) => async () => {
   });
 };
 
-export const updateCollegeRegistrarData = (body) => async () => {
-  const endpoint = API.college.getCollegeRegistrarProfile.replace('{id}', body?.id);
+export const updateCollegeRegistrarData = (body, registrarID) => async () => {
+  const endpoint = API.college.getCollegeRegistrarProfile.replace('{id}', registrarID);
 
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: PUT,
-      url: endpoint.replace('{collegeId}', body?.id),
+      url: endpoint.replace('{collegeId}', registrarID),
       data: body,
       headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })

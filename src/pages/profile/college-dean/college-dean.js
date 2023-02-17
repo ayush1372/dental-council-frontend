@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { sendDeanDetails, updateCollegeDeanData } from '../../../store/actions/college-actions';
 import { Button, TextField } from '../../../ui/core';
+import successToast from '../../../ui/core/toaster';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 export function CollegeDean({ showPage, updateShowPage }) {
@@ -33,10 +34,23 @@ export function CollegeDean({ showPage, updateShowPage }) {
     },
   });
   const onSubmit = (fieldValues) => {
+    let deanData = {
+      name: fieldValues.deanName,
+      phone_number: fieldValues.deanPhoneNumber,
+      email_id: fieldValues.deanEmail,
+      user_id: showPage === 'edit' ? fieldValues?.deanUserId : null,
+      password: fieldValues.deanPassword,
+    };
+
     if (showPage === 'edit') {
-      dispatch(updateCollegeDeanData(fieldValues));
+      dispatch(updateCollegeDeanData(deanData, fieldValues?.id)).then((response) => {
+        if (response?.isError === false) {
+          successToast('DeanData Updated Successfully.', 'success-msg', 'success', 'top-center');
+          updateShowPage('Profile');
+        }
+      });
     } else {
-      dispatch(sendDeanDetails(fieldValues));
+      dispatch(sendDeanDetails(deanData));
     }
 
     reset();

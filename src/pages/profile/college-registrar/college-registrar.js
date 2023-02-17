@@ -9,6 +9,7 @@ import {
   updateCollegeRegistrarData,
 } from '../../../store/actions/college-actions';
 import { Button, TextField } from '../../../ui/core';
+import successToast from '../../../ui/core/toaster';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 export function CollegeRegistrar({ showPage, updateShowPage }) {
@@ -38,15 +39,24 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
 
   const onSubmit = (fieldData) => {
     let registrarData = {
-      id: showPage === 'edit' ? fieldData?.id : null,
       name: fieldData.registrarName,
       phone_number: fieldData.registrarPhoneNumber,
       email_id: fieldData.registrarPhoneNumber,
-      user_id: showPage === 'edit' ? fieldData?.user_id : null,
+      user_id: showPage === 'edit' ? fieldData?.registrarUserId : null,
       password: fieldData.registrarPassword,
     };
     if (showPage === 'edit') {
-      dispatch(updateCollegeRegistrarData(registrarData));
+      dispatch(updateCollegeRegistrarData(registrarData, fieldData?.id)).then((response) => {
+        if (response?.isError === false) {
+          successToast(
+            'RegistrarData Updated Successfully.',
+            'success-msg',
+            'success',
+            'top-center'
+          );
+          updateShowPage('Profile');
+        }
+      });
     } else {
       dispatch(sendRegistrarDetails(registrarData, userData?.id));
     }
