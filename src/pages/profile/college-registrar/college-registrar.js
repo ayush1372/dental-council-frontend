@@ -1,9 +1,11 @@
+import { useState } from 'react';
+
 import { Box, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { verboseLog } from '../../../config/debug';
+import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import {
   sendRegistrarDetails,
   updateCollegeRegistrarData,
@@ -17,7 +19,7 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
   const dispatch = useDispatch();
   const { collegeData } = useSelector((state) => state.college);
   const userData = collegeData?.data;
-  verboseLog(userData);
+  const [successModalPopup, setSuccessModalPopup] = useState(false);
 
   const {
     register,
@@ -39,24 +41,22 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
 
   const onSubmit = (fieldData) => {
     let registrarData = {
-      name: fieldData.registrarName,
-      phone_number: fieldData.registrarPhoneNumber,
-      email_id: fieldData.registrarPhoneNumber,
+      name: showPage === 'edit' ? fieldData.registrarName : null,
+      phone_number: showPage === 'edit' ? fieldData.registrarPhoneNumber : null,
+      email_id: showPage === 'edit' ? fieldData.registrarPhoneNumber : null,
       user_id: showPage === 'edit' ? fieldData?.registrarUserId : null,
-      password: fieldData.registrarPassword,
+      password: showPage === 'edit' ? fieldData.registrarPassword : null,
     };
     if (showPage === 'edit') {
-      dispatch(updateCollegeRegistrarData(registrarData, fieldData?.id)).then((response) => {
-        if (response?.isError === false) {
-          successToast(
-            'RegistrarData Updated Successfully.',
-            'success-msg',
-            'success',
-            'top-center'
-          );
-          updateShowPage('Profile');
-        }
-      });
+      dispatch(updateCollegeRegistrarData(registrarData, fieldData?.id))
+        .then((response) => {
+          if (response?.isError === false) {
+            setSuccessModalPopup(true);
+          }
+        })
+        .catch((error) => {
+          successToast(error?.data?.response?.data?.message, 'UpdateError', 'error', 'top-center');
+        });
     } else {
       dispatch(sendRegistrarDetails(registrarData, userData?.id));
     }
@@ -65,6 +65,16 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
 
   return (
     <Grid container item spacing={2} p={2}>
+      {successModalPopup && (
+        <SuccessModalPopup
+          open={successModalPopup}
+          setOpen={() => {
+            updateShowPage('Profile');
+            setSuccessModalPopup(false);
+          }}
+          text={'College Registrar Data has been Updated Successfully.'}
+        />
+      )}
       <Grid item xs={12} mt={5}>
         <Box>
           <Typography color="textPrimary.main" variant="h2">

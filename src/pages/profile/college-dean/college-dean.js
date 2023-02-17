@@ -1,8 +1,11 @@
+import { useState } from 'react';
+
 import { Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
+import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import { sendDeanDetails, updateCollegeDeanData } from '../../../store/actions/college-actions';
 import { Button, TextField } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
@@ -12,7 +15,7 @@ export function CollegeDean({ showPage, updateShowPage }) {
   const dispatch = useDispatch();
   const { collegeData } = useSelector((state) => state.college);
   const userData = collegeData?.data;
-
+  const [successModalPopup, setSuccessModalPopup] = useState(false);
   const { t } = useTranslation();
 
   const {
@@ -35,20 +38,23 @@ export function CollegeDean({ showPage, updateShowPage }) {
   });
   const onSubmit = (fieldValues) => {
     let deanData = {
-      name: fieldValues.deanName,
-      phone_number: fieldValues.deanPhoneNumber,
-      email_id: fieldValues.deanEmail,
+      name: showPage === 'edit' ? fieldValues.deanName : null,
+      phone_number: showPage === 'edit' ? fieldValues.deanPhoneNumber : null,
+      email_id: showPage === 'edit' ? fieldValues.deanEmail : null,
       user_id: showPage === 'edit' ? fieldValues?.deanUserId : null,
-      password: fieldValues.deanPassword,
+      password: showPage === 'edit' ? fieldValues.deanPassword : null,
     };
 
     if (showPage === 'edit') {
-      dispatch(updateCollegeDeanData(deanData, fieldValues?.id)).then((response) => {
-        if (response?.isError === false) {
-          successToast('DeanData Updated Successfully.', 'success-msg', 'success', 'top-center');
-          updateShowPage('Profile');
-        }
-      });
+      dispatch(updateCollegeDeanData(deanData, fieldValues?.id))
+        .then((response) => {
+          if (response?.isError === false) {
+            setSuccessModalPopup(true);
+          }
+        })
+        .catch((error) => {
+          successToast(error?.data?.response?.data?.message, 'UpdateError', 'error', 'top-center');
+        });
     } else {
       dispatch(sendDeanDetails(deanData));
     }
@@ -57,6 +63,16 @@ export function CollegeDean({ showPage, updateShowPage }) {
   };
   return (
     <Grid container item spacing={2} p={2}>
+      {successModalPopup && (
+        <SuccessModalPopup
+          open={successModalPopup}
+          setOpen={() => {
+            updateShowPage('Profile');
+            setSuccessModalPopup(false);
+          }}
+          text={'College Dean Data has been Updated Successfully.'}
+        />
+      )}
       <Grid item xs={12} mt={3}>
         <Typography color="textPrimary.main" variant="h2" mt={2}>
           {showPage === 'edit' ? 'Edit College Dean' : 'College Dean'}
