@@ -11,6 +11,7 @@ export function TrackApplication({ getTableData }) {
   const [showTrackApplication, setShowTrackApplication] = React.useState(false);
   const [showTrackApplicationTable, setShowTrackApplicationTable] = React.useState(true);
   const [showUserProfile, setShowUserProfile] = React.useState(false);
+  const [selectedRowData, setRowData] = React.useState({});
 
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const profileId = useSelector((state) => state.loginReducer.loginData.data.profile_id);
@@ -58,12 +59,14 @@ export function TrackApplication({ getTableData }) {
             profileId={profileId}
             tableData={tableData}
             getTableData={getTableData}
+            setRowData={setRowData}
           />
         </Box>
       ) : (
         showTrackApplication && (
           <Box p={3}>
             <ApplicationDetails
+              selectedRowData={selectedRowData}
               setShowTrackApplication={setShowTrackApplication}
               setShowTrackApplicationTable={setShowTrackApplicationTable}
             />

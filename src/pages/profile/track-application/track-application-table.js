@@ -3,29 +3,33 @@ import React, { useEffect } from 'react';
 import { Box, Grid, TablePagination, Typography } from '@mui/material';
 import { useDispatch } from 'react-redux';
 
-import { verboseLog } from '../../../config/debug';
-// import { applications } from '../../../constants/common-data';
 import GenericTable from '../../../shared/generic-component/generic-table';
 import TableSearch from '../components/table-search/table-search';
 
 function createData(
   SNo,
   registration_no,
+  request_id,
   applicant_full_name,
   nameofStateCouncil,
   doctor_status,
   collegeVerificationStatus,
   NMCVerificationStatus,
   created_at,
+  smc_status,
+  nmc_status,
   pendency,
   view
 ) {
   return {
     SNo,
     registration_no,
+    request_id,
     applicant_full_name,
     nameofStateCouncil,
     doctor_status,
+    smc_status,
+    nmc_status,
     collegeVerificationStatus,
     NMCVerificationStatus,
     created_at,
@@ -41,13 +45,13 @@ function TrackAppicationTable({
   getTableData,
   profileId,
   tableData,
+  setRowData,
 }) {
   const dispatch = useDispatch();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState({});
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
-  const [selectedRowData, setRowData] = React.useState({});
 
   useEffect(() => {
     if (orderBy && getTableData && page !== null && profileId) dispatch(getTableData(profileId));
@@ -61,7 +65,6 @@ function TrackAppicationTable({
     setShowTrackApplicationTable(false);
   };
 
-  verboseLog('selectedRowData', selectedRowData);
   const dataHeader = [
     { title: 'S.No.', name: 'SNo', sorting: false, type: 'string' },
     {
@@ -113,6 +116,10 @@ function TrackAppicationTable({
         value: data?.registration_no,
       },
       {
+        type: 'request_id',
+        value: data?.request_id,
+      },
+      {
         type: 'applicant_full_name',
         value: data?.applicant_full_name,
         callbackNameOfApplicant: viewNameOfApplicant,
@@ -128,8 +135,16 @@ function TrackAppicationTable({
       },
       { type: 'NMCVerificationStatus', value: data?.NMCVerificationStatus },
       { type: 'created_at', value: data?.created_at },
+      {
+        type: 'SMC Status',
+        value: data?.smc_status,
+      },
+      {
+        type: 'NMC Status',
+        value: data?.nmc_status,
+      },
       { type: 'pendency', value: data?.pendency },
-      { type: 'view', value: data?.view, onClickCallback: viewCallback }
+      { type: 'view', value: data?.view || 'view', onClickCallback: viewCallback }
     );
   });
 

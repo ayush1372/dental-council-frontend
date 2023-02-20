@@ -1,21 +1,28 @@
 import { Box, Button, Divider, Grid, Typography } from '@mui/material';
 
+import { monthsData } from '../../../constants/common-data';
 import Stepper from '../../../shared/stepper/stepper';
-const wizardSteps = [
-  'Application Submitted',
-  'Pending At SMC',
-  'Pending At NMC',
-  'Application Approved/Rejected',
-];
+const wizardSteps = ['Application Submitted', 'At SMC', 'At NMC', 'Application Approved/Rejected'];
 export function TrackApplicationDetails({
   showViewProfile,
   setShowTrackApplicationTable,
   setShowTrackApplication,
+  selectedRowData,
 }) {
+  const { pendency, request_id, application_type_id, created_at, smc_status, nmc_status } =
+    selectedRowData;
   const showTrackApplicationTable = () => {
     setShowTrackApplicationTable(true);
     setShowTrackApplication(false);
   };
+
+  const getDate = (date) => {
+    const dateObj = new Date(date);
+    return `${dateObj.getDate()}-${monthsData[dateObj.getMonth()].value}-${dateObj.getFullYear()}`;
+  };
+  const stepperArray = [smc_status?.value, nmc_status?.value];
+  let activeStep = stepperArray.findIndex((value) => value === 'PENDING');
+  activeStep = activeStep > -1 ? activeStep + 1 : 4;
   return (
     <>
       <Typography
@@ -33,7 +40,7 @@ export function TrackApplicationDetails({
               Request ID
             </Typography>
             <Typography variant="subtitle2" color="textPrimary.main">
-              71-1567-8728-1025
+              {request_id?.value}
             </Typography>
           </Grid>
           <Grid item xs={8} md="auto">
@@ -41,7 +48,7 @@ export function TrackApplicationDetails({
               Type of Application
             </Typography>
             <Typography variant="subtitle2" color="textPrimary.main">
-              New Registration
+              {application_type_id?.value}
             </Typography>
           </Grid>
           <Grid item xs={8} md="auto">
@@ -49,7 +56,7 @@ export function TrackApplicationDetails({
               Date of Submission
             </Typography>
             <Typography variant="subtitle2" color="textPrimary.main">
-              31-Oct-2022
+              {getDate(created_at?.value || new Date())}
             </Typography>
           </Grid>
           <Grid item xs={8} md="auto">
@@ -65,7 +72,7 @@ export function TrackApplicationDetails({
               Pendency (days)
             </Typography>
             <Typography variant="subtitle2" color="textPrimary.main">
-              03
+              {pendency?.value}
             </Typography>
           </Grid>
         </Grid>
@@ -73,7 +80,7 @@ export function TrackApplicationDetails({
       <Divider sx={{ mt: 2 }} />
       <Grid container>
         <Grid container item xs={12} mt={8}>
-          <Stepper steps={wizardSteps} />
+          <Stepper steps={wizardSteps} selectedRowData={selectedRowData} activeStep={activeStep} />
         </Grid>
       </Grid>
       <Divider fullWidth sx={{ mt: 6 }} />
