@@ -13,6 +13,7 @@ import {
   getStates,
   getSubDistricts,
   getUniversities,
+  searchTrackStatusData,
   sendNotificationData,
   updateCouncilNames,
   verifyNotificationData,
@@ -226,6 +227,21 @@ export const verifyNotificationOtp = (otpValue) => async (dispatch) => {
   });
 };
 
+export const trackStatus = (trackData) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: GET,
+      url: API.common.trackStatus,
+      data: trackData,
+    })
+      .then((response) => {
+        dispatch(searchTrackStatusData(response));
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
 export const getInitiateWorkFlow = (body) => async () => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({

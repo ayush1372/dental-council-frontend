@@ -24,7 +24,7 @@ const ChangePassword = () => {
   });
   return (
     <>
-      <Typography color="primary" variant="h2" textAlign="center" mt={3}>
+      <Typography color="inputTextColor.main" variant="h2" textAlign="center" mt={3}>
         Change Password
       </Typography>
       <Box

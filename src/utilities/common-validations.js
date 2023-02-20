@@ -69,7 +69,7 @@ export const getMaskedMobileNumber = (mobileNumber) => {
 };
 
 export const PasswordRegexValidation = {
-  required: 'Provide  valid  Password',
+  required: 'Enter valid  Password',
   pattern: {
     value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&])[A-Za-z\d@$!%*?#&]{8,}$/,
     message:
@@ -78,7 +78,7 @@ export const PasswordRegexValidation = {
 };
 
 export const AadharRegexValidation = {
-  required: 'Provide a valid aadhaar number',
+  required: 'Enter a valid aadhaar number',
   pattern: {
     value: /^[0-9]{4}$/,
     message: 'Provide a valid aadhaar number',
@@ -86,7 +86,7 @@ export const AadharRegexValidation = {
 };
 
 export const EmailRegexValidation = {
-  required: 'Provide a Valid Email ID',
+  required: 'Enter a Valid Email ID',
   pattern: {
     value: /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/i,
     message: 'Provide a Valid Email ID',

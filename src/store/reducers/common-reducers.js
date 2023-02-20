@@ -24,6 +24,7 @@ const initialState = {
   coursesList: { data: [], isLoading: Boolean(true), isError: false },
   specialitiesList: { data: [], isLoading: Boolean(true), isError: false },
   councilNames: { data: [], isLoading: Boolean(true), isError: false },
+  trackStatusData: { data: [], isLoading: Boolean(true), isError: false },
   initiateWorkFlow: { data: [], isLoading: Boolean(true), isError: false },
   trackApplicationTableData: { data: [], isLoading: Boolean(true), isError: false },
 };
@@ -92,6 +93,9 @@ export const CommonActivity = createSlice({
     updateCouncilNames: (state, action) => {
       state.councilNames = action.payload;
     },
+    searchTrackStatusData: (state, action) => {
+      state.trackStatusData.data = action.payload;
+    },
     getInitiateWorkFlow: (state, action) => {
       state.initiateWorkFlow = action.payload;
     },
@@ -123,6 +127,7 @@ export const {
   getCourses,
   getSpecialities,
   updateCouncilNames,
+  searchTrackStatusData,
   getInitiateWorkFlow,
   updateTrackApplicationTableData,
 } = CommonActivity.actions;
