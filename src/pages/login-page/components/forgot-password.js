@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
-import { sendAaadharOtp } from '../../../store/actions/user-aadhaar-actions';
+import { sendNotificationOtp } from '../../../store/actions/common-actions';
 import { Button, TextField } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 
@@ -40,7 +40,8 @@ const ForgotPassword = ({ handleConfirmPassword }) => {
     } else {
       handleSubmit()();
     }
-    dispatch(sendAaadharOtp(getValues().mobileNo || getValues().Id));
+    const otpValue = { contact: getValues().mobileNo, type: 'sms' };
+    dispatch(sendNotificationOtp(otpValue));
   };
   return (
     <Box p={4} bgcolor="white.main" boxShadow="4">
