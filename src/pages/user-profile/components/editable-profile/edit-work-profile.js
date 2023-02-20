@@ -394,11 +394,16 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
             />
           </Grid>
           <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="inputTextColor.main">
+              District
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+            </Typography>
             <Select
               fullWidth
               error={errors.District?.message}
-              name="District"
-              label="District"
+              name={'District'}
               defaultValue={getValues().District}
               required={true}
               {...register('District', {
@@ -496,7 +501,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
-              Pin Code
+              Pincode
               <Typography component="span" color="error.main">
                 *
               </Typography>
