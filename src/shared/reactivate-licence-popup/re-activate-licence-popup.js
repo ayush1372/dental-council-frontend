@@ -3,12 +3,16 @@ import { useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, Button, Container, Modal, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
 import ReactivationLogo from '../../../src/assets/images/reactivate-license-icon.png';
+import { createReActivateLicense } from '../../store/actions/common-actions';
 import { TextField } from '../../ui/core';
-
+import successToast from '../../ui/core/toaster';
 export default function ReactivateLicencePopup(props) {
   const [open, setOpen] = useState(true);
+  const { loginData } = useSelector((state) => state?.loginReducer);
+  const dispatch = useDispatch();
   const {
     register,
     getValues,
@@ -18,13 +22,29 @@ export default function ReactivateLicencePopup(props) {
   });
 
   const handleClose = () => {
+    const { fromDate, reason } = getValues();
     setOpen(false);
     props.renderSuccess();
+    let reActivateLicensebody = {
+      hp_profile_id: loginData?.data?.profile_id,
+      // hp_profile_id: 346,
+      application_type_id: 5,
+      action_id: 1,
+      from_date: fromDate,
+      to_date: '2023-02-15T11:39:21.854Z',
+      remarks: reason,
+    };
+    try {
+      dispatch(createReActivateLicense(reActivateLicensebody)).then(() => {});
+    } catch (allFailMsg) {
+      successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    }
   };
   function handleReactivate() {
     handleClose();
     props.renderSuccess();
   }
+
   return (
     <Modal open={open} onClose={handleClose} sx={{ mt: 15, height: '561px' }}>
       <Container
@@ -96,7 +116,14 @@ export default function ReactivateLicencePopup(props) {
               multiline
               rows={4}
               fullWidth
+              name="reason"
               placeholder="Add a reason..."
+              required={true}
+              defaultValue={getValues().reason}
+              error={errors.reason?.message}
+              {...register('reason', {
+                required: 'This field is required',
+              })}
             />
           </Box>
           <Box display="flex" textAlign="right">

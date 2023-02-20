@@ -28,6 +28,9 @@ export const API = {
     specialities: 'api/v1/abdm/nmr/specialities',
     councilNames: 'api/v1/abdm/nmr/state-medical-councils',
     trackStatus: 'api/v1/abdm/nmr/health-professional/applications',
+    activateLicense:
+      'api/v1/abdm/nmr/health-professional/applications/re-activate?pageNo={page_No}&offset={offset_No}',
+    reactiveLicenseRequest: 'api/v1/abdm/nmr/health-professional/applications/re-activate',
   },
   college: {
     registrar: 'api/v1/abdm/nmr/college/{collegeId}/registrar',

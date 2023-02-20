@@ -3,6 +3,7 @@ import { API } from '../../api/api-endpoints';
 import { GET, PATCH, POST } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import {
+  getActivateLicense,
   getCities,
   getColleges,
   getCountries,
@@ -247,6 +248,57 @@ export const getInitiateWorkFlow = (body) => async () => {
     useAxiosCall({
       method: PATCH,
       url: API.DoctorUserProfileData.initiateWorkFlow,
+      data: body,
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const getActivateLicenseList = (body) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    let getActivateLicenseListUrl = API.common.activateLicense.replace('{page_No}', body.pageNo);
+    useAxiosCall({
+      method: GET,
+      url: getActivateLicenseListUrl.replace('{offset_No}', body.offset),
+      data: body,
+    })
+      .then((response) => {
+        dispatch(getActivateLicense(response));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const createReActivateLicense = (body) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.common.reactiveLicenseRequest,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      data: body,
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const reActivateLicenseStatus = (body) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: PATCH,
+      url: API.common.reactiveLicenseRequest,
       data: body,
     })
       .then((response) => {

@@ -1,14 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Box, Grid, TablePagination, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { verboseLog } from '../../../config/debug';
-import { ActivateLicenceData } from '../../../constants/common-data';
 import ApproveLicenseModal from '../../../shared/activate-licence-modals/approve-modal';
 import RejectLicenseModal from '../../../shared/activate-licence-modals/reject-modal';
 import GenericTable from '../../../shared/generic-component/generic-table';
 import ViewProfile from '../../../shared/view-profile/view-profile';
+import {
+  getActivateLicenseList,
+  reActivateLicenseStatus,
+} from '../../../store/actions/common-actions';
+import successToast from '../../../ui/core/toaster';
 import UserProfile from '../../user-profile';
 import TableSearch from '../components/table-search/table-search';
 
@@ -24,6 +28,8 @@ const ActivateLicence = (props) => {
   const [page, setPage] = useState(0);
   const [selectedRowData, setRowData] = useState({});
   verboseLog(selectedRowData);
+  const { activateLicenseList } = useSelector((state) => state?.common);
+  const dispatch = useDispatch();
 
   function createData(
     SNo,
@@ -100,33 +106,35 @@ const ActivateLicence = (props) => {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
-  const newRowsData = ActivateLicenceData.message?.map((application) => {
-    return createData(
-      { type: 'SNo', value: application.SNo },
-      {
-        type: 'registrationNo',
-        value: application?.registrationNo,
-      },
-      {
-        type: 'nameofApplicant',
-        value: application.ApplicantName,
-        callbackNameOfApplicant: viewNameOfApplicant,
-      },
-      {
-        type: 'dateOfSubmission',
-        value: application.DateOfSubmission,
-      },
-      {
-        type: 'reactivationFromDate',
-        value: application.DateOfReactivation,
-      },
-      { type: 'typeOfSuspension', value: application.TypeOfsuspension },
-      {
-        type: 'Remark',
-        value: application.Remark,
-      }
-    );
-  });
+  const newRowsData =
+    activateLicenseList?.data?.health_professional_details?.length >= 1 &&
+    activateLicenseList?.data.health_professional_details.map((application, index) => {
+      return createData(
+        { type: 'SNo', value: index + 1 },
+        {
+          type: 'registrationNo',
+          value: application?.health_professional_id,
+        },
+        {
+          type: 'nameofApplicant',
+          value: application.health_professional_name,
+          callbackNameOfApplicant: viewNameOfApplicant,
+        },
+        {
+          type: 'dateOfSubmission',
+          value: application.submitted_date,
+        },
+        {
+          type: 'reactivationFromDate',
+          value: application.reactivation,
+        },
+        { type: 'typeOfSuspension', value: application.suspension_type },
+        {
+          type: 'Remark',
+          value: application.remarks,
+        }
+      );
+    });
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -145,8 +153,10 @@ const ActivateLicence = (props) => {
         {
           keyName: 'Approve',
           dataValue: 'approve',
-          onClick: () => {
+          onClick: (row, rowIndex) => {
+            fetchReActivateLicenseHealthProfessionalId();
             setIsApproveModalOpen(true);
+            verboseLog(row, rowIndex + 'event,row,rowIndex');
           },
         },
         {
@@ -158,6 +168,36 @@ const ActivateLicence = (props) => {
         },
       ]
     : undefined;
+
+  useEffect(() => {
+    let ActivateLicenseListbody = {
+      pageNo: page + 1,
+      offset: rowsPerPage,
+    };
+    try {
+      dispatch(getActivateLicenseList(ActivateLicenseListbody)).then(() => {});
+    } catch (allFailMsg) {
+      successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    }
+  }, [page, rowsPerPage]);
+
+  const fetchReActivateLicenseHealthProfessionalId = () => {
+    let reActivateLicenseHealthProfessionalIdBody = {
+      request_id: 'NMR50055',
+      application_type_id: 5,
+      actor_id: loggedInUserType === 'SMC' ? 2 : 0,
+      action_id: 4,
+      hp_profile_id: 411,
+      start_date: '2023-02-16T05:43:15.204Z',
+      end_date: '2023-02-16T05:43:15.204Z',
+      remarks: 'Test',
+    };
+    try {
+      dispatch(reActivateLicenseStatus(reActivateLicenseHealthProfessionalIdBody)).then(() => {});
+    } catch (allFailMsg) {
+      successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    }
+  };
 
   return (
     <>
@@ -186,11 +226,12 @@ const ActivateLicence = (props) => {
             rowsPerPage={rowsPerPage}
             page={page}
             customPopupOptions={customPopupOptions}
+            setIsApproveModalOpen={setIsApproveModalOpen}
           />
 
           <Box>
             <TablePagination
-              rowsPerPageOptions={[5, 10, 25]}
+              rowsPerPageOptions={[5, 10, 25, 35, 45]}
               component="div"
               count={props.showTable?.count || newRowsData.length}
               rowsPerPage={rowsPerPage}
