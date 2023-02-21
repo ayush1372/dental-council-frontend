@@ -9,7 +9,7 @@ export function TrackApplicationDetails({
   setShowTrackApplication,
   selectedRowData,
 }) {
-  const { pendency, request_id, application_type_id, created_at, smc_status, nmc_status } =
+  const { pendency, request_id, application_type_name, created_at, smc_status, nmc_status } =
     selectedRowData;
   const showTrackApplicationTable = () => {
     setShowTrackApplicationTable(true);
@@ -48,7 +48,7 @@ export function TrackApplicationDetails({
               Type of Application
             </Typography>
             <Typography variant="subtitle2" color="textPrimary.main">
-              {application_type_id?.value}
+              {application_type_name?.value}
             </Typography>
           </Grid>
           <Grid item xs={8} md="auto">

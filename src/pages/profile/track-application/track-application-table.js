@@ -11,6 +11,7 @@ function createData(
   registration_no,
   request_id,
   applicant_full_name,
+  application_type_name,
   nameofStateCouncil,
   doctor_status,
   collegeVerificationStatus,
@@ -26,6 +27,7 @@ function createData(
     registration_no,
     request_id,
     applicant_full_name,
+    application_type_name,
     nameofStateCouncil,
     doctor_status,
     smc_status,
@@ -123,6 +125,10 @@ function TrackAppicationTable({
         type: 'applicant_full_name',
         value: data?.applicant_full_name,
         callbackNameOfApplicant: viewNameOfApplicant,
+      },
+      {
+        type: 'application_type_name',
+        value: data?.application_type_name,
       },
       {
         type: 'nameofStateCouncil',
