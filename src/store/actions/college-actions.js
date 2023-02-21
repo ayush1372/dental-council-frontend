@@ -94,6 +94,7 @@ export const sendDeanDetails = (details, collegeID) => async (dispatch) => {
   let email_id = details.deanEmail;
   let user_id = null;
   let password = details.deanPassword;
+
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: POST,
@@ -134,6 +135,45 @@ export const updateCollegeAdminProfileData = (body) => async () => {
       });
   });
 };
+
+export const updateCollegeDeanData = (body, deanID) => async () => {
+  const endpoint = API.college.getCollegeDeanProfile.replace('{id}', deanID);
+
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: PUT,
+      url: endpoint.replace('{collegeId}', deanID),
+      data: body,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const updateCollegeRegistrarData = (body, registrarID) => async () => {
+  const endpoint = API.college.getCollegeRegistrarProfile.replace('{id}', registrarID);
+
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: PUT,
+      url: endpoint.replace('{collegeId}', registrarID),
+      data: body,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
 export const registerCollegeDetails = (collegeDetails) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
