@@ -1,17 +1,26 @@
+import { useState } from 'react';
+
 import { Box, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { sendRegistrarDetails } from '../../../store/actions/college-actions';
+import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
+import {
+  sendRegistrarDetails,
+  updateCollegeRegistrarData,
+} from '../../../store/actions/college-actions';
 import { Button, TextField } from '../../../ui/core';
+import successToast from '../../../ui/core/toaster';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
-export function CollegeRegistrar() {
+export function CollegeRegistrar({ showPage, updateShowPage }) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { collegeData } = useSelector((state) => state.college);
   const userData = collegeData?.data;
+  const [successModalPopup, setSuccessModalPopup] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -21,33 +30,55 @@ export function CollegeRegistrar() {
   } = useForm({
     mode: 'onChange',
     defaultValues: {
-      registrarName: '',
-      registrarPhoneNumber: '',
-      registrarEmail: '',
-      registrarUserId: '',
+      id: showPage === 'edit' ? userData?.id : null,
+      registrarName: showPage === 'edit' ? userData?.name : '',
+      registrarPhoneNumber: showPage === 'edit' ? userData?.phone_number : '',
+      registrarEmail: showPage === 'edit' ? userData?.email_id : '',
+      registrarUserId: showPage === 'edit' ? userData?.user_id : '',
       registrarPassword: '',
     },
   });
 
   const onSubmit = (fieldData) => {
     let registrarData = {
-      id: null,
-      name: fieldData.registrarName,
-      phone_number: fieldData.registrarPhoneNumber,
-      email_id: fieldData.registrarPhoneNumber,
-      user_id: null,
-      password: fieldData.registrarPassword,
+      name: showPage === 'edit' ? fieldData.registrarName : null,
+      phone_number: showPage === 'edit' ? fieldData.registrarPhoneNumber : null,
+      email_id: showPage === 'edit' ? fieldData.registrarPhoneNumber : null,
+      user_id: showPage === 'edit' ? fieldData?.registrarUserId : null,
+      password: showPage === 'edit' ? fieldData.registrarPassword : null,
     };
-    dispatch(sendRegistrarDetails(registrarData, userData?.id));
+    if (showPage === 'edit') {
+      dispatch(updateCollegeRegistrarData(registrarData, fieldData?.id))
+        .then((response) => {
+          if (response?.isError === false) {
+            setSuccessModalPopup(true);
+          }
+        })
+        .catch((error) => {
+          successToast(error?.data?.response?.data?.message, 'UpdateError', 'error', 'top-center');
+        });
+    } else {
+      dispatch(sendRegistrarDetails(registrarData, userData?.id));
+    }
     reset();
   };
 
   return (
     <Grid container item spacing={2} p={2}>
+      {successModalPopup && (
+        <SuccessModalPopup
+          open={successModalPopup}
+          setOpen={() => {
+            updateShowPage('Profile');
+            setSuccessModalPopup(false);
+          }}
+          text={'College Registrar Data has been Updated Successfully.'}
+        />
+      )}
       <Grid item xs={12} mt={5}>
         <Box>
           <Typography color="textPrimary.main" variant="h2">
-            College Registrar
+            {showPage === 'edit' ? 'Edit College Registrar' : 'College Registrar'}
           </Typography>
         </Box>
       </Grid>
@@ -187,7 +218,14 @@ export function CollegeRegistrar() {
         </Grid>
 
         <Grid item xs={12} sm="auto">
-          <Button fullWidth variant="contained" color="grey">
+          <Button
+            fullWidth
+            variant="contained"
+            color="grey"
+            onClick={() => {
+              updateShowPage('Profile');
+            }}
+          >
             {t('Cancel')}
           </Button>
         </Grid>
