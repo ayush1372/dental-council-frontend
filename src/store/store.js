@@ -6,6 +6,7 @@ import appFontSizeActivity from './reducers/app-font-size';
 import captchaReducer from './reducers/captcha-reducers';
 import collegeReducer from './reducers/college-reducer';
 import commonActivity from './reducers/common-reducers';
+import searchDoctorReducer from './reducers/doctor-search-reducer';
 import doctorUserProfileReducer from './reducers/doctor-user-profile-reducer';
 import loginReducer from './reducers/login-reducer';
 import navMenu from './reducers/nav-menu-reducer';
@@ -27,6 +28,7 @@ const store = configureStore({
     smc: smcReducer,
     nmc: nmcReducer,
     nbe: nbeReducers,
+    searchDoctor: searchDoctorReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(thunk).concat(logger),
   devTools: true,

@@ -5,12 +5,16 @@ import { Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { createEditFieldData } from '../../../helpers/functions/common-functions';
+import { yearsData } from '../../../constants/common-data';
+import { createSelectFieldData } from '../../../helpers/functions/common-functions';
 import { getRegistrationCouncilList } from '../../../store/actions/common-actions';
+import { searchDoctorDetails } from '../../../store/actions/doctor-search-actions';
 import { Button, Select, TextField } from '../../../ui/core';
+import successToast from '../../../ui/core/toaster';
 
 const AdvanceSearch = ({ setDoSearch }) => {
   const { councilNames } = useSelector((state) => state.common);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getRegistrationCouncilList());
@@ -18,9 +22,9 @@ const AdvanceSearch = ({ setDoSearch }) => {
   const {
     formState: { errors },
     getValues,
-    // handleSubmit,
+    handleSubmit,
     register,
-    // setValue,
+    setValue,
   } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -28,8 +32,32 @@ const AdvanceSearch = ({ setDoSearch }) => {
       RegistrationNumber: '',
       yearofRegistration: '',
       Statemedicalcouncil: '',
+      RegistrationCouncilId: '',
     },
   });
+  const onsubmit = () => {
+    const searchValues = {
+      fullName: getValues().DoctorName,
+      registrationNumber: getValues().RegistrationNumber,
+      registrationYear: getValues().yearofRegistration,
+      stateMedicalCouncilId: getValues().RegistrationCouncilId,
+      page: 0,
+      size: 10,
+    };
+
+    setDoSearch(true);
+
+    dispatch(searchDoctorDetails(searchValues))
+      .then(() => {})
+      .catch((error) => {
+        successToast(
+          error?.data?.response?.data?.error,
+          'RegistrationError',
+          'error',
+          'top-center'
+        );
+      });
+  };
   return (
     <Grid container spacing={2} mt={2}>
       <Grid item xs={12}>
@@ -49,12 +77,12 @@ const AdvanceSearch = ({ setDoSearch }) => {
             color: 'inputTextColor.main',
           }}
           variant="outlined"
-          name={'EnterDoctorName'}
+          name={'DoctorName'}
           placeholder="Enter Doctor Name"
           label={'Doctor Name'}
           fullWidth
           defaultValue={getValues().EnterDoctorName}
-          {...register('EnterDoctorName', {
+          {...register('DoctorName', {
             required: 'Doctor Name is Required',
             maxLength: {
               value: 100,
@@ -99,19 +127,14 @@ const AdvanceSearch = ({ setDoSearch }) => {
 
         <Select
           fullWidth
-          error={errors.yearofRegistration?.message}
           name="yearofRegistration"
           placeholder="Select year of Registration"
           defaultValue={getValues().yearofRegistration}
           {...register('yearofRegistration', {
             required: 'year of Registration is required',
           })}
-          options={[
-            {
-              label: '-',
-              value: '-',
-            },
-          ]}
+          error={errors.yearofRegistration?.message}
+          options={yearsData}
         />
       </Grid>
       <Grid item xs={8}>
@@ -122,7 +145,6 @@ const AdvanceSearch = ({ setDoSearch }) => {
           sx={{
             color: 'inputTextColor.main',
           }}
-          items={createEditFieldData(councilNames)}
           fullWidth
           error={errors.Statemedicalcouncil?.message}
           name="Statemedicalcouncil"
@@ -131,16 +153,14 @@ const AdvanceSearch = ({ setDoSearch }) => {
           {...register('Statemedicalcouncil', {
             required: 'state medical council is required',
           })}
-          options={[
-            {
-              label: '-',
-              value: '-',
-            },
-          ]}
+          options={createSelectFieldData(councilNames)}
+          onChange={(currentValue) => {
+            setValue('RegistrationCouncilId', currentValue.target.value);
+          }}
         />
       </Grid>
       <Grid item xs={12}>
-        <Button variant="contained" color="secondary" onClick={() => setDoSearch(true)}>
+        <Button variant="contained" color="secondary" onClick={handleSubmit(onsubmit)}>
           Search
         </Button>
       </Grid>

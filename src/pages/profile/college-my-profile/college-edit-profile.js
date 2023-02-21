@@ -161,7 +161,7 @@ const CollegeEditProfile = () => {
       college_code: getValues().CollegeId,
       phone_number: getValues().CollegePhoneNumber,
       email_id: getValues().CollegeEmailId,
-      user_id: userData?.id,
+      user_id: userData?.user_id,
       council_id: getValues().RegistrationCouncilId,
       university_id: getValues().UniversityId,
       website: getValues().CollegeWebsite,
@@ -196,7 +196,7 @@ const CollegeEditProfile = () => {
         <SuccessModalPopup
           open={successModalPopup}
           setOpen={() => setSuccessModalPopup(false)}
-          text={'Your requested has Approved/Rejected Successfully'}
+          text={'College Profile Updated  Successfully'}
         />
       )}
       <Grid container spacing={2} mt={2}>

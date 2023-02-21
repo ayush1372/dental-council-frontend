@@ -15,17 +15,25 @@ import {
   Typography,
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
 
 import doctorImage from '../../../assets/images/doctor-image.png';
+import { verboseLog } from '../../../config/debug';
 import { Button } from '../../../ui/core/button/button';
 import { TextField } from '../../../ui/core/form/textfield/textfield';
 // import SearchCard from './search-card';
 const SearchResults = () => {
+  const { searchDetails } = useSelector((state) => state.searchDoctor);
+
   //   const [showData, setShowData] = useState(false);
   const [confirmationModal, setConfirmationModal] = useState(false);
 
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
+  verboseLog(
+    'data is++++++',
+    searchDetails?.data?.data?.results?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+  );
   const {
     formState: { errors },
     register,
@@ -52,6 +60,9 @@ const SearchResults = () => {
     });
   };
 
+  const handleViewProfile = () => {
+    setConfirmationModal(true);
+  };
   return (
     <Container
       maxWidth="lg"
@@ -64,7 +75,7 @@ const SearchResults = () => {
           Search Results
         </Typography>
         <Typography color="primary.main" component="div" variant="subtitle2">
-          (100 Matching Records Found)
+          {`${searchDetails?.data?.data?.results.length}  Matching Records Found `}
         </Typography>
         <Box mt={3}>
           <Box
@@ -96,71 +107,73 @@ const SearchResults = () => {
           </Box>
           <Box className="search-results" mt={3}>
             <Grid container spacing={2}>
-              {new Array(rowsPerPage).fill(1).map((doctor, index) => {
-                return (
-                  <Grid item md={4} key={`doctor-${index}`}>
-                    <Box p={2} borderRadius="10px" border="1px solid grey">
-                      <Box className="doctor-details" display="flex">
-                        <Box className="doctor-icon" width="30%">
-                          <img src={doctorImage} alt="do Image" />
+              {searchDetails?.data?.data?.results
+                ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                ?.map((doctor, index) => {
+                  return (
+                    <Grid item md={4} key={`doctor-${index}`}>
+                      <Box p={2} borderRadius="10px" border="1px solid grey">
+                        <Box className="doctor-details" display="flex">
+                          <Box className="doctor-icon" width="30%">
+                            <img src={doctor.profile_photo} alt="doctor profile" />
+                          </Box>
+                          <Box className="doctor-info" width="70%">
+                            <Typography component="div" variant="subtitle1">
+                              {doctor.salutation + doctor.full_name}
+                            </Typography>
+                            <Typography component="div" variant="body5" color="grey.label" mt={2}>
+                              State Medical Council
+                            </Typography>
+                            <Typography component="div" variant="body3" color="primary">
+                              {doctor.state_medical_council}
+                            </Typography>
+                          </Box>
                         </Box>
-                        <Box className="doctor-info" width="70%">
-                          <Typography component="div" variant="subtitle1">
-                            Dr. Aditi Kumari
-                          </Typography>
-                          <Typography component="div" variant="body5" color="grey.label" mt={2}>
-                            State Medical Council
-                          </Typography>
-                          <Typography component="div" variant="body3" color="primary">
-                            West Bengal Medical Council
-                          </Typography>
+                        <Box
+                          className="more-info"
+                          display="flex"
+                          justifyContent="space-between"
+                          mt={2}
+                        >
+                          <Box>
+                            <Typography component="div" variant="body5" color="grey.label">
+                              Registration number
+                            </Typography>
+                            <Typography component="div" variant="body3" color="primary">
+                              {doctor.registration_number}
+                            </Typography>
+                          </Box>
+                          <Box>
+                            <Typography component="div" variant="body5" color="grey.label">
+                              Year of Info
+                            </Typography>
+                            <Typography component="div" variant="body3" color="primary">
+                              {doctor.registration_year}
+                            </Typography>
+                          </Box>
                         </Box>
+                        <Button
+                          onClick={() => handleViewProfile(doctor.profile_id)}
+                          variant="contained"
+                          color="secondary"
+                          fullWidth
+                          sx={{
+                            marginTop: '10px',
+                          }}
+                        >
+                          <VisibilityOutlinedIcon sx={{ pr: '6px' }} /> View my Profile
+                        </Button>
                       </Box>
-                      <Box
-                        className="more-info"
-                        display="flex"
-                        justifyContent="space-between"
-                        mt={2}
-                      >
-                        <Box>
-                          <Typography component="div" variant="body5" color="grey.label">
-                            Registration number
-                          </Typography>
-                          <Typography component="div" variant="body3" color="primary">
-                            15580
-                          </Typography>
-                        </Box>
-                        <Box>
-                          <Typography component="div" variant="body5" color="grey.label">
-                            Year of Info
-                          </Typography>
-                          <Typography component="div" variant="body3" color="primary">
-                            1960
-                          </Typography>
-                        </Box>
-                      </Box>
-                      <Button
-                        onClick={() => setConfirmationModal(true)}
-                        variant="contained"
-                        color="secondary"
-                        fullWidth
-                        sx={{
-                          marginTop: '10px',
-                        }}
-                      >
-                        <VisibilityOutlinedIcon sx={{ pr: '6px' }} /> View my Profile
-                      </Button>
-                    </Box>
-                  </Grid>
-                );
-              })}
+                    </Grid>
+                  );
+                })}
             </Grid>
           </Box>
           <Box>
             <TablePagination
               rowsPerPageOptions={[5, 10, 25]}
               component="div"
-              count={100}
+              count={searchDetails?.data?.data?.results.length}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
@@ -196,7 +209,7 @@ const SearchResults = () => {
             <Box className="info" display="flex" py={1}>
               <Box className="icon" width="30%" position="relative">
                 <Box className="outer-image">
-                  <img src={doctorImage} alt="doctor Image" />
+                  <img src={doctorImage} alt="doctor profile" />
                 </Box>
               </Box>
               <Box className="details" width="70%">

@@ -1,23 +1,47 @@
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 
+import { searchDoctorDetails } from '../../../store/actions/doctor-search-actions';
 import { Button, TextField } from '../../../ui/core';
+import successToast from '../../../ui/core/toaster';
 
 const Name = ({ setDoSearch }) => {
   // const [Value, setValue] = useState([]);
+  const dispatch = useDispatch();
   const {
     formState: { errors },
     getValues,
-    // handleSubmit,
+    handleSubmit,
     register,
     // setValue,
   } = useForm({
     mode: 'onChange',
     defaultValues: {
-      EnterDoctorName: '',
+      DoctorName: '',
     },
   });
+  const onsubmit = () => {
+    const searchValues = {
+      fullName: getValues().DoctorName,
+      page: 0,
+      size: 10,
+    };
+
+    setDoSearch(true);
+
+    dispatch(searchDoctorDetails(searchValues))
+      .then(() => {})
+      .catch((error) => {
+        successToast(
+          error?.data?.response?.data?.error,
+          'RegistrationError',
+          'error',
+          'top-center'
+        );
+      });
+  };
   return (
     <Grid container spacing={2} mt={2}>
       <Grid item xs={12}>
@@ -54,11 +78,11 @@ const Name = ({ setDoSearch }) => {
             },
           }}
           variant="outlined"
-          name={'EnterDoctorName'}
+          name={'DoctorName'}
           placeholder="Enter Doctor Name"
           fullWidth
           defaultValue={getValues().EnterDoctorName}
-          {...register('EnterDoctorName', {
+          {...register('DoctorName', {
             required: 'Doctor Name is Required',
             maxLength: {
               value: 100,
@@ -69,7 +93,7 @@ const Name = ({ setDoSearch }) => {
         />
       </Grid>
       <Grid item xs={12}>
-        <Button variant="contained" color="secondary" onClick={() => setDoSearch(true)}>
+        <Button variant="contained" color="secondary" onClick={handleSubmit(onsubmit)}>
           Search
         </Button>
       </Grid>

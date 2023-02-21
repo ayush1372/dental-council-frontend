@@ -1,14 +1,18 @@
 import { Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 
+import { searchDoctorDetails } from '../../../store/actions/doctor-search-actions';
 import { Button, TextField } from '../../../ui/core';
+import successToast from '../../../ui/core/toaster';
 
 const RegistrationNumber = ({ setDoSearch }) => {
+  const dispatch = useDispatch();
   // const [Value, setValue] = useState([]);
   const {
     formState: { errors },
     getValues,
-    // handleSubmit,
+    handleSubmit,
     register,
     // setValue,
   } = useForm({
@@ -17,6 +21,26 @@ const RegistrationNumber = ({ setDoSearch }) => {
       RegistrationNumber: '',
     },
   });
+  const onsubmit = () => {
+    const searchValues = {
+      registrationNumber: getValues().RegistrationNumber,
+      page: 0,
+      size: 5,
+    };
+
+    setDoSearch(true);
+
+    dispatch(searchDoctorDetails(searchValues))
+      .then(() => {})
+      .catch((error) => {
+        successToast(
+          error?.data?.response?.data?.error,
+          'RegistrationError',
+          'error',
+          'top-center'
+        );
+      });
+  };
   return (
     <Grid container spacing={2} mt={2}>
       <Grid item xs={12}>
@@ -52,7 +76,7 @@ const RegistrationNumber = ({ setDoSearch }) => {
         />
       </Grid>
       <Grid item xs={12}>
-        <Button variant="contained" color="secondary" onClick={() => setDoSearch(true)}>
+        <Button variant="contained" color="secondary" onClick={handleSubmit(onsubmit)}>
           Search
         </Button>
       </Grid>
