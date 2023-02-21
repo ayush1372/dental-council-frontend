@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { API, API_HPR } from '../../api/api-endpoints';
-import { POST } from '../../constants/requests';
+import { GET, POST } from '../../constants/requests';
 import { hpIdUseAxiosCall, useAxiosCall } from '../../hooks/use-axios';
 import {
   hprIdData,
@@ -10,10 +10,14 @@ import {
 } from '../reducers/doctor-registration-reducer';
 
 export const fetchSmcRegistrationDetails = (registrationData) => async (dispatch) => {
+  console.log('reg num', registrationData);
   return await new Promise((resolve, reject) => {
     useAxiosCall({
-      method: POST,
-      url: API.doctorRegistration.smcRegistrationDetail,
+      method: GET,
+      url: API.doctorRegistration.smcRegistrationDetail
+        .replace('{smcId}', registrationData?.smcId)
+        .replace('{registrationNumber}', registrationData?.registrationNumber),
+
       data: registrationData,
     })
       .then((response) => {
@@ -30,7 +34,7 @@ export const sendResetPasswordLink = (data) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: POST,
-      url: API.common.resetPasswordLink,
+      url: API.doctorRegistration.passwordLink,
       data: { data },
     })
       .then((response) => {
@@ -58,13 +62,13 @@ export const searchHpIdByMobileNumber = (mobile) => async (dispatch) => {
       });
   });
 };
-export const getHprIdSuggestions = (txnId) => async (dispatch) => {
+export const getHprIdSuggestions = () => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     hpIdUseAxiosCall({
-      method: POST,
+      method: GET,
       url: API_HPR.hpid.hpIdSuggestions,
-      // headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
-      data: txnId,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      // data: txnId,
     })
       .then((response) => {
         dispatch(hprIdSuggestionsData(response));

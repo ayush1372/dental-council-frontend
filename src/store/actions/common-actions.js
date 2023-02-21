@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { API } from '../../api/api-endpoints';
 import { GET, PATCH, POST } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
@@ -209,6 +210,7 @@ export const sendNotificationOtp = (otpTypeValue) => async (dispatch) => {
   });
 };
 export const verifyNotificationOtp = (otpValue) => async (dispatch) => {
+  console.log('otp', otpValue);
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: POST,

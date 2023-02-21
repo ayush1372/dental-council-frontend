@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import JSEncrypt from 'jsencrypt';
 
 import {
@@ -48,9 +49,11 @@ export const changeAppFontSize = (size, appFontType) => {
   return `${fontSize}px`;
 };
 export const encryptData = (data, key) => {
+  console.log('data, key', data, key);
   var encrypt = new JSEncrypt();
   encrypt.setPublicKey(key);
   var encryptedPass = encrypt.encrypt(data);
+  console.log('data, key1', encryptedPass);
   return encryptedPass;
 };
 

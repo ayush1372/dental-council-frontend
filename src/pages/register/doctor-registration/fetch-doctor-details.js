@@ -68,7 +68,7 @@ function FetchDoctorDetails() {
     setShowOtpEmail(true);
   };
   const handleValidateEmail = () => {
-    let emailUserOtp = encryptData(otpValue, process.env.REACT_APP_PUBLIC_KEY);
+    let emailUserOtp = encryptData(otpValue, process.env.REACT_APP_PASS_SITE_KEY);
     console.log('email otp encypt', emailUserOtp);
     if (otpValue.length === 6) {
       dispatch(
@@ -88,6 +88,8 @@ function FetchDoctorDetails() {
   };
 
   const handleVerifyMobile = () => {
+    console.log('mobile type', typeof getValues().MobileNumber);
+
     dispatch(
       sendNotificationOtp({
         contact: getValues().MobileNumber,
@@ -97,15 +99,18 @@ function FetchDoctorDetails() {
     setShowOtpMobile(true);
     setisOtpValidMobile(false);
   };
+  // Decrypt with the private key...
 
   const handleValidateMobile = () => {
-    let mobileUserOtp = encryptData(otpValue, process.env.REACT_APP_PUBLIC_KEY);
+    console.log('mobile type', typeof getValues().MobileNumber);
+    // let mobileUserOtp = encryptData(otpValue, process.env.REACT_APP_PUBLIC_KEY);
     if (otpValue.length === 6) {
+      console.log('otp type', typeof otpValue);
       dispatch(
         verifyNotificationOtp({
           contact: getValues().MobileNumber,
           type: 'sms',
-          otp: mobileUserOtp,
+          otp: encryptData(otpValue, process.env.REACT_APP_PASS_SITE_KEY),
         })
       );
       setisOtpValidMobile(true);
@@ -117,16 +122,26 @@ function FetchDoctorDetails() {
       }
     }
   };
+  // var decrypt = new JSEncrypt();
+  // decrypt.setPrivateKey(
+  //   '59Ag5GZ7HkKBUo8kV4SDIGug9rex6Iqdbo+eJoHtbJIcf6279+9SX/pQjEuV/ID5frO9aSKwC7FIvGlV4ovgU35L/xjCfHQog6fxFaL9CZpC6SleCHY36hC49SVUc+tRfoOS2w=='
+  // );
+  // var uncrypted = decrypt.decrypt(
+  //   'Yx9ZLJB1Ilr75D8SxUm9YD3df2JTtDe/aWWPxaqD4BApzvR+0kHrumy91FATxUld94RyVcUk3JN58UaQDiQP8EUkp9MIp5HnH2LPTDx01g0R0Bt7tBqRcjvuULQlkxUH3IY9EUv6qj2SbeIsrmlzif+jlCFs7Lw8C8hVfnTBjBpwC8nVc1xuNTbb+4rUwglnFWh6SgssKv0XmTH8A2YmyL9kFCrijHr+J61NDp2EyUyXeJOblRxLY8Pc6emsobbawteWWzeP4Q6OTu8jES532T1aXMrmDK4oy9v08ELWWMwlr9waH6rDBGWnHaAqWam4+EGCQdQc2Td0WcaK3CpzQPfHMQVhfayj2oDUlfwfUdtFSNSl2ypwrdErjgjEb3aTOqqTAv7bwypmawdoBDK3PCgQLKQYCy71PQYfQ22T5grxK7019gzbTek0Zu5B0EAC/1+migq+kd9q0B5numU9GPvRpwncXYG7k5WsLzzsQzaX83IhMtK4rI4UEkH02vh/fMNYeqNpI40kN1fkWZFn6bh+hEoslTz0Z1HXuG9GHWDHOlTeyPMQ145xKp9TnvHasWhMtQovE/T4kDY/ApOJMZP/Ln77VHGiB2IOhWE2itdIpKL+xBhSqP/+pf6ArJ0u+tR9HFEPXbBtDHcCe7+hKAUqxxIHw6oVAKSgYdRiXQk='
+  // );
+  // console.log('dec', uncrypted);
 
   const handleUserAadhaarNumber = () => {
     let aadharDataFields = getValues().field_1 + getValues().field_2 + getValues().field_3;
+    // console.log('aadharDataFields1', typeof getValues().MobileNumber);
+
+    // console.log('aadharDataFields', typeof aadharDataFields);
     let encryptedUserAadhaarNumber = encryptData(
       aadharDataFields,
       process.env.REACT_APP_PUBLIC_KEY
     );
     handleVerifyAadhar(encryptedUserAadhaarNumber);
   };
-
   const handleVerifyAadhar = (value) => {
     setAadhaarState(value);
     dispatch(sendAaadharOtp(value));
@@ -134,7 +149,7 @@ function FetchDoctorDetails() {
     setisOtpValidMobile(false);
     setisOtpValidEmail(false);
   };
-  const hpId = useSelector((state) => state?.DoctorRegistrationData?.getHprIdByMobile?.data?.hpId);
+  // const hpId = useSelector((state) => state?.DoctorRegistrationData?.getHprIdByMobile?.data?.hpId);
 
   const registrationNumber = useSelector(
     (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.registration_number
@@ -149,9 +164,6 @@ function FetchDoctorDetails() {
   const hpName = useSelector(
     (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.hp_name
   );
-  console.log('hp name1', hpName);
-  console.log('hp name2', registrationNumber);
-  console.log('hp name3', councilName);
 
   const hpprofileId = useSelector(
     (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.hp_profile_id
@@ -194,7 +206,6 @@ function FetchDoctorDetails() {
   //   setShowCreateHprIdPage(true);
   // };
   const onSubmit = () => {
-    //password reset api also should call here based on condition
     dispatch(
       searchHpIdByMobileNumber({
         mobile: getValues().MobileNumber,
@@ -202,20 +213,21 @@ function FetchDoctorDetails() {
         // yearOfBirth: hpYearOfBirth, // this should be in years?
         // gender: hpGender,
       })
-    );
-    if (hpId === undefined || hpId === null) {
-      setShowCreateHprIdPage(true);
-      dispatch(getHprIdSuggestions(finalTransactionId));
-    } else {
-      //reset password link api should call
-      dispatch(
-        sendResetPasswordLink({
-          contact: getValues().MobileNumber, //  mobile/email which needs to send?
-          type: 'sms',
-        })
-      );
-      setShowSuccess(true);
-    }
+    ).then((response) => {
+      if (response?.data?.hpId === undefined || response?.data?.hpId === null) {
+        setShowCreateHprIdPage(true);
+        dispatch(getHprIdSuggestions());
+      } else {
+        dispatch(
+          sendResetPasswordLink({
+            email: getValues().email,
+            mobile: getValues().MobileNumber,
+            username: 'abc123', // need to get it from reducer using selector!!
+          })
+        );
+        setShowSuccess(true);
+      }
+    });
   };
   return (
     <>
@@ -358,6 +370,7 @@ function FetchDoctorDetails() {
             )}
 
             <Divider sx={{ mb: 4, mt: 4 }} variant="fullWidth" />
+            {showSuccess === true && <SuccessModal />}
 
             <Box>
               <Box>
@@ -438,8 +451,9 @@ function FetchDoctorDetails() {
                 </Box>
               </Box>
             )}
+
             <Divider sx={{ mb: 4, mt: 4 }} variant="fullWidth" />
-            {showSuccess === true && <SuccessModal />}
+
             <Box sx={{ marginTop: '20px', paddingBottom: '48px' }}>
               <Typography variant="body3">
                 Mobile Number

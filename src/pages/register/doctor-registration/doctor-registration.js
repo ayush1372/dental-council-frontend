@@ -38,8 +38,8 @@ const DoctorRegistrationWelcomePage = () => {
 
   const onSubmit = () => {
     let registrationData = {
-      council_id: getValues().RegistrationCouncilId,
-      registration_number: Number(getValues().RegistrationNumber),
+      smcId: getValues().RegistrationCouncilId,
+      registrationNumber: parseInt(getValues().RegistrationNumber),
     };
     dispatch(fetchSmcRegistrationDetails(registrationData));
 

@@ -49,9 +49,9 @@ export const API = {
     getSMCProfileData: 'api/v1/abdm/nmr/smc/user/{id}',
   },
   doctorRegistration: {
-    // smcRegistrationDetail: 'api/v1/abdm/nmr/hpSmcRegistrationDetail', old api
     smcRegistrationDetail:
       'api/v1/abdm/nmr/health-professional?smcId={smcId}&registrationNumber={registrationNumber}',
+    passwordLink: 'api/v1/abdm/nmr/user/password-link',
   },
   nbe: {
     getNBEProfileData: 'api/v1/abdm/nmr/nbe/user/{id}',
@@ -60,7 +60,7 @@ export const API = {
 export const API_HPR = {
   hpid: {
     searchByMobile: 'api/v1/search/searchByMobile',
-    hpIdSuggestions: '/api/v1/account/hpid/suggestion',
+    hpIdSuggestions: '/api/v1/account/hpid/suggestion', //this should not use.. we have to use post api
     createHprId: '/api/v1/registration/aadhaar/createHprIdWithAadhaarOtp',
   },
 };
