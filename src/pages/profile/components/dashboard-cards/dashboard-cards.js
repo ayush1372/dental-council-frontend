@@ -13,8 +13,18 @@ import DashboardControlledTable from '../dashboard-controlled-table/dashboard-co
 
 export default function Dashboard() {
   const theme = useTheme();
-  // const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const { count } = useSelector((state) => state.dashboard);
+  const [showDashboard, setShowDashboard] = useState(true);
+  const [showTable, setShowTable] = useState(false);
+  const [showViewProfile, setShowViewPorfile] = useState(false);
+  const [selectedCardDataData, setSelectedCardDataData] = useState();
+  const [selectedRowData, setSelectedRowData] = useState();
+
+  // eslint-disable-next-line no-console
+  console.log('count', count);
+  // eslint-disable-next-line no-console
+  console.log('loggedInUserType', loggedInUserType);
 
   const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(1),
@@ -26,29 +36,49 @@ export default function Dashboard() {
 
   // mapping BE keys -> card titles on FE
   let registrationRequestMapper = {
-    'Total HP Registration Requests': 'Total Registration Requests',
+    'Total HP Registration Requests': 'Total Registration request',
     Rejected: 'Rejected',
     Approved: 'Approved',
     'Query Raised': 'Query Raised',
+    Suspended: 'Suspended',
+    Blacklisted: 'Blacklisted',
     Pending: 'Pending',
   };
   let updationRequestMapper = {
-    'Total HP Modification Requests': 'Total Updation Requests',
+    'Total HP Modification Requests': 'Total Updation request',
+    Rejected: 'Update Request Rejected',
+    Approved: 'Update Request Approved',
+    'Query Raised': 'Query Raised on Update Request',
+    Suspended: 'Suspended',
+    Blacklisted: 'Blacklisted',
+    Pending: 'Update Request Received',
+  };
+
+  let suspensionRequestMapper = {
+    'Total Consolidated Suspension Requests': 'Total Suspension request',
     Rejected: 'Rejected',
-    Approved: 'Approved',
+    Approved: 'Temporary Suspension Approved',
     'Query Raised': 'Query Raised',
-    Pending: 'Pending',
+    Suspended: 'Suspended',
+    Blacklisted: 'Blacklisted',
+    Pending: 'Temporary Suspension Request Received',
   };
 
   let registrationRequestData = getDataFromResponse(
     count,
     registrationRequestMapper,
-    'hp_registration_requests'
+    loggedInUserType === 'NBE' ? 'foreign_hp_registration_requests' : 'hp_registration_requests'
   );
+
   let updationRequestData = getDataFromResponse(
     count,
     updationRequestMapper,
     'hp_modification_requests'
+  );
+  let suspensionRequestData = getDataFromResponse(
+    count,
+    suspensionRequestMapper,
+    'consolidated_suspension_requests'
   );
 
   let dashboard = {
@@ -56,135 +86,26 @@ export default function Dashboard() {
     'Updation Request': updationRequestData,
   };
 
-  // if (loggedInUserType === 'NMC' || loggedInUserType === 'SMC') {
-  //   dashboard = Object.assign(dashboard, {
-  //     'Suspension Request': suspensionRequestData,
-  //   });
-  // }
-
-  // previous code below ->
-  // let blankDashboard = {
-  //   'Registration Request': [
-  //     {
-  //       name: 'Total Registration Requests',
-  //       value: 0,
-  //     },
-  //     {
-  //       name: 'Pending',
-  //       value: 0,
-  //     },
-  //     {
-  //       name: 'Verified',
-  //       value: 0,
-  //     },
-  //     {
-  //       name: 'Query Raised',
-  //       value: 0,
-  //     },
-  //     {
-  //       name: 'Rejected',
-  //       value: 0,
-  //     },
-  //   ],
-  //   'Updation Request': [
-  //     {
-  //       name: 'Total Updation Request',
-  //       value: 0,
-  //     },
-  //     {
-  //       name: 'Update Request Received',
-  //       value: 0,
-  //     },
-  //     {
-  //       name: 'Update Request Approved',
-  //       value: 0,
-  //     },
-  //     {
-  //       name: 'Query Raised on Update Request',
-  //       value: 0,
-  //     },
-  //     {
-  //       name: 'Update Request Rejected',
-  //       value: 0,
-  //     },
-  //   ],
-  // };
-
-  // if (loggedInUserType === 'NMC' || loggedInUserType === 'SMC') {
-  //   blankDashboard = Object.assign(blankDashboard, {
-  //     'Suspension Request': [
-  //       {
-  //         name: 'Total Suspension Request',
-  //         value: 0,
-  //       },
-  //       {
-  //         name: 'Temporary Suspension Request Received',
-  //         value: 0,
-  //       },
-  //       {
-  //         name: 'Temporary Suspension Approved',
-  //         value: 0,
-  //       },
-  //       {
-  //         name: 'Permanent Suspension Request Received',
-  //         value: 0,
-  //       },
-  //       {
-  //         name: 'Permanent Suspension Request Approved',
-  //         value: 0,
-  //       },
-  //     ],
-  //   });
-  // }
-
-  const [showDashboard, setShowDashboard] = useState(true);
-  const [showTable, setShowTable] = useState(false);
-  const [showViewProfile, setShowViewPorfile] = useState(false);
-
-  // const countResp = Object.values(count?.data);
-  // const blankResp = Object.values(blankDashboard);
-
-  // const resultCountResp =
-  //   loggedInUserType === 'NMC' || loggedInUserType === 'SMC'
-  //     ? countResp['hp_registration_requests']
-  //         ?.concat(countResp['hp_modification_requests'])
-  //         ?.concat(countResp[2])
-  //     : countResp['hp_registration_requests']?.concat(countResp['hp_modification_requests']);
-  // const resultblankResp =
-  //   loggedInUserType === 'NMC' || loggedInUserType === 'SMC'
-  //     ? blankResp['Registration Request']
-  //         ?.concat(blankResp['Updation Request'])
-  //         ?.concat(blankResp[2])
-  //     : blankResp['Registration Request']?.concat(blankResp['Updation Request']);
-
-  // // eslint-disable-next-line no-console
-  // console.log(
-  //   'resultblankResp 123',
-  //   count,
-  //   countResp,
-  //   countResp['hp_registration_requests'],
-  //   resultblankResp,
-  //   resultCountResp
-  // );
-
-  // if (resultCountResp?.length > 0) {
-  //   for (let i = 0; i < resultCountResp?.length; i++) {
-  //     for (let j = 0; j < resultblankResp?.length; j++) {
-  //       // eslint-disable-next-line no-console
-  //       console.log('resultblankResp', resultblankResp, resultCountResp);
-  //       if (resultCountResp[i].name === resultblankResp[j].name) {
-  //         resultblankResp[j].value = resultCountResp[i].count;
-  //       }
-  //     }
-  //   }
-  // }
+  if (loggedInUserType === 'NMC' || loggedInUserType === 'SMC') {
+    dashboard = Object.assign(dashboard, {
+      'Suspension Request': suspensionRequestData,
+    });
+  }
 
   function getDataFromResponse(count, mapper, key) {
+    // eslint-disable-next-line no-console
+    console.log('1234', count);
     let data = [];
-    count?.data[key]?.forEach((request) => {
-      let currObj = {
+    const newCountArray = count?.data[key]?.filter(
+      (item) => item.name !== 'Suspended' && item.name !== 'Blacklisted'
+    );
+    newCountArray?.forEach((request) => {
+      let currObj;
+      currObj = {
         name: mapper[request['name']],
         value: request['count'],
+        applicationTypeID: request['application_type_id'],
+        responseKey: request['name'],
       };
       data.push(currObj);
     });
@@ -197,10 +118,12 @@ export default function Dashboard() {
       setShowDashboard(true);
       setShowTable(false);
       setShowViewPorfile(false);
+      setSelectedRowData();
     } else if (event.target.id === '2') {
       setShowDashboard(false);
       setShowTable(true);
       setShowViewPorfile(false);
+      setSelectedRowData();
     }
   }
 
@@ -208,7 +131,8 @@ export default function Dashboard() {
     setShowDashboard(false);
     setShowTable(true);
     setShowViewPorfile(false);
-    setShowTable({ show: true, value: item.id, count: item.value });
+    setSelectedCardDataData(item);
+    setSelectedRowData();
   };
 
   const onClickBackButtonHandler = () => {
@@ -216,12 +140,21 @@ export default function Dashboard() {
       setShowDashboard(false);
       setShowTable(true);
       setShowViewPorfile(false);
+      setSelectedRowData();
     } else if (showTable) {
       setShowDashboard(true);
       setShowTable(false);
       setShowViewPorfile(false);
+      setSelectedRowData();
     }
   };
+
+  const getSelectedRowData = (data) => {
+    setSelectedRowData(data);
+  };
+
+  // eslint-disable-next-line no-console
+  console.log('123 selectedRowData', selectedRowData);
 
   return (
     <>
@@ -324,6 +257,8 @@ export default function Dashboard() {
           setShowViewPorfile={setShowViewPorfile}
           setShowDashboard={setShowDashboard}
           setShowTable={setShowTable}
+          selectedCardDataData={selectedCardDataData}
+          getSelectedRowData={getSelectedRowData}
         />
       ) : showViewProfile ? (
         <Box>
@@ -334,6 +269,7 @@ export default function Dashboard() {
               setShowTable={setShowTable}
               setShowViewPorfile={setShowViewPorfile}
               showViewProfile={showViewProfile}
+              selectedRowData={selectedRowData}
             />
           </Container>
         </Box>

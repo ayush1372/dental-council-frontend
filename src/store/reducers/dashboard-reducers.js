@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   count: { data: [], isLoading: Boolean(true), isError: false },
+  dashboardTableDetails: { data: [], isLoading: Boolean(true), isError: false },
 };
 
 export const dashboardReducer = createSlice({
@@ -12,9 +13,12 @@ export const dashboardReducer = createSlice({
     cardCountDetails: (state, action) => {
       state.count = action.payload;
     },
+    dashboardTableData: (state, action) => {
+      state.dashboardTableDetails = action.payload;
+    },
   },
 });
 
-export const { cardCountDetails } = dashboardReducer.actions;
+export const { cardCountDetails, dashboardTableData } = dashboardReducer.actions;
 
 export default dashboardReducer.reducer;

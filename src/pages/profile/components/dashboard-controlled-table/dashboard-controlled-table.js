@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Box, Grid, TablePagination, Typography } from '@mui/material';
+import { useDispatch } from 'react-redux';
 
 import { verboseLog } from '../../../../config/debug';
 import { applications } from '../../../../constants/common-data';
 import GenericTable from '../../../../shared/generic-component/generic-table';
+import { getDashboardTableData } from '../../../../store/actions/dashboard-actions';
 import TableSearch from '../table-search/table-search';
 
 function createData(
@@ -17,7 +19,8 @@ function createData(
   NMCVerificationStatus,
   dateofSubmission,
   pendency,
-  view
+  view,
+  profileID
 ) {
   return {
     SNo,
@@ -30,6 +33,7 @@ function createData(
     dateofSubmission,
     pendency,
     view,
+    profileID,
   };
 }
 function DashboardControlledTable(props) {
@@ -38,6 +42,7 @@ function DashboardControlledTable(props) {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
   const [selectedRowData, setRowData] = React.useState({});
+  const dispatch = useDispatch();
 
   verboseLog('selectedRowData', selectedRowData);
   const dataHeader = [
@@ -89,6 +94,7 @@ function DashboardControlledTable(props) {
     props.setShowViewPorfile(true);
     props.setShowDashboard(false);
     props.setShowTable(false);
+    props.getSelectedRowData(row);
   };
 
   const handleRequestSort = (event, property) => {
@@ -96,9 +102,9 @@ function DashboardControlledTable(props) {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
-  const newRowsData = applications.message?.map((application) => {
+  const newRowsData = applications.message?.map((application, index) => {
     return createData(
-      { type: 'SNo', value: application.SNo },
+      { type: 'SNo', value: index + 1 },
       {
         type: 'registrationNo',
         value: application?.registrationNo,
@@ -119,7 +125,8 @@ function DashboardControlledTable(props) {
       { type: 'NMCVerificationStatus', value: application.NMCVerificationStatus },
       { type: 'dateofSubmission', value: application.dateofSubmission },
       { type: 'pendency', value: application.pendency },
-      { type: 'view', value: application.view, onClickCallback: viewCallback }
+      { type: 'view', value: application.view, onClickCallback: viewCallback },
+      { type: 'profileID', value: application.hp_profile_id }
     );
   });
 
@@ -135,6 +142,30 @@ function DashboardControlledTable(props) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  // eslint-disable-next-line no-console
+  console.log('12345 props?.selectedCardDataData', props?.selectedCardDataData);
+
+  useEffect(() => {
+    const requestObj = {
+      work_flow_status_id: '',
+      application_type_id: props?.selectedCardDataData?.applicationTypeID
+        ? props?.selectedCardDataData?.applicationTypeID.toString()
+        : '',
+      user_group_status: props?.selectedCardDataData?.responseKey
+        ? props?.selectedCardDataData?.responseKey
+        : '',
+      smc_id: '',
+      name: '',
+      nmr_id: '',
+      search: '',
+      page_no: 0,
+      size: 10,
+      sort_by: '',
+      sort_order: '',
+    };
+    dispatch(getDashboardTableData(requestObj));
+  }, []);
 
   return (
     <Grid sx={{ m: 2 }}>
