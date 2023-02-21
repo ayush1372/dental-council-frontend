@@ -1,18 +1,23 @@
+import { useState } from 'react';
+
 import { Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { sendDeanDetails } from '../../../store/actions/college-actions';
+import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
+import { sendDeanDetails, updateCollegeDeanData } from '../../../store/actions/college-actions';
 import { Button, TextField } from '../../../ui/core';
+import successToast from '../../../ui/core/toaster';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
-export function CollegeDean() {
+export function CollegeDean({ showPage, updateShowPage }) {
   const dispatch = useDispatch();
-
-  const { t } = useTranslation();
   const { collegeData } = useSelector((state) => state.college);
   const userData = collegeData?.data;
+  const [successModalPopup, setSuccessModalPopup] = useState(false);
+  const { t } = useTranslation();
+
   const {
     register,
     handleSubmit,
@@ -23,22 +28,54 @@ export function CollegeDean() {
   } = useForm({
     mode: 'onChange',
     defaultValues: {
-      deanName: '',
-      deanPhoneNumber: '',
-      deanEmail: '',
-      deanUserId: '',
+      id: showPage === 'edit' ? userData?.id : null,
+      deanName: showPage === 'edit' ? userData?.name : '',
+      deanPhoneNumber: showPage === 'edit' ? userData?.phone_number : '',
+      deanEmail: showPage === 'edit' ? userData?.email_id : '',
+      deanUserId: showPage === 'edit' ? userData?.user_id : '',
       deanPassword: '',
     },
   });
   const onSubmit = (fieldValues) => {
-    dispatch(sendDeanDetails(fieldValues, userData?.id));
+    let deanData = {
+      name: showPage === 'edit' ? fieldValues.deanName : null,
+      phone_number: showPage === 'edit' ? fieldValues.deanPhoneNumber : null,
+      email_id: showPage === 'edit' ? fieldValues.deanEmail : null,
+      user_id: showPage === 'edit' ? fieldValues?.deanUserId : null,
+      password: showPage === 'edit' ? fieldValues.deanPassword : null,
+    };
+
+    if (showPage === 'edit') {
+      dispatch(updateCollegeDeanData(deanData, fieldValues?.id))
+        .then((response) => {
+          if (response?.isError === false) {
+            setSuccessModalPopup(true);
+          }
+        })
+        .catch((error) => {
+          successToast(error?.data?.response?.data?.message, 'UpdateError', 'error', 'top-center');
+        });
+    } else {
+      dispatch(sendDeanDetails(deanData));
+    }
+
     reset();
   };
   return (
     <Grid container item spacing={2} p={2}>
+      {successModalPopup && (
+        <SuccessModalPopup
+          open={successModalPopup}
+          setOpen={() => {
+            updateShowPage('Profile');
+            setSuccessModalPopup(false);
+          }}
+          text={'College Dean Data has been Updated Successfully.'}
+        />
+      )}
       <Grid item xs={12} mt={3}>
         <Typography color="textPrimary.main" variant="h2" mt={2}>
-          College Dean
+          {showPage === 'edit' ? 'Edit College Dean' : 'College Dean'}
         </Typography>
       </Grid>
       <Grid item xs={12} md={6} sm={6} lg={4}>
@@ -178,7 +215,14 @@ export function CollegeDean() {
         </Grid>
 
         <Grid item xs={12} sm="auto">
-          <Button fullWidth variant="contained" color="grey" onClick={handleSubmit(onSubmit)}>
+          <Button
+            fullWidth
+            variant="contained"
+            color="grey"
+            onClick={() => {
+              updateShowPage('Profile');
+            }}
+          >
             {t('Cancel')}
           </Button>
         </Grid>
