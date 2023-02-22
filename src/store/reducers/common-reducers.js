@@ -26,6 +26,7 @@ const initialState = {
   councilNames: { data: [], isLoading: Boolean(true), isError: false },
   trackStatusData: { data: [], isLoading: Boolean(true), isError: false },
   initiateWorkFlow: { data: [], isLoading: Boolean(true), isError: false },
+  trackApplicationTableData: { data: [], isLoading: Boolean(true), isError: false },
 };
 
 export const CommonActivity = createSlice({
@@ -98,6 +99,9 @@ export const CommonActivity = createSlice({
     getInitiateWorkFlow: (state, action) => {
       state.initiateWorkFlow = action.payload;
     },
+    updateTrackApplicationTableData: (state, action) => {
+      state.trackApplicationTableData.data = action.payload;
+    },
   },
 });
 
@@ -125,6 +129,7 @@ export const {
   updateCouncilNames,
   searchTrackStatusData,
   getInitiateWorkFlow,
+  updateTrackApplicationTableData,
 } = CommonActivity.actions;
 
 export default CommonActivity.reducer;
