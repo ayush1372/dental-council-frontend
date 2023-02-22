@@ -2,8 +2,6 @@ import '@testing-library/jest-dom';
 
 import { render, screen } from '@testing-library/react';
 
-// import { Provider } from 'react-redux';
-// import store from '../../store/store';
 import ExportFiles from './export-file';
 
 describe('Button', () => {
