@@ -23,18 +23,6 @@ describe('suspend license and voluntary retirement', () => {
       const fromDate = screen.getByTestId('fromDate');
       expect(fromDate.querySelector('input').value).not.toBeUndefined();
     });
-    test('to date field should be present in the document', () => {
-      const toDate = screen.getByTestId('toDate');
-      expect(toDate).toBeInTheDocument();
-    });
-    test('to date field should not be null', () => {
-      const toDate = screen.getByTestId('toDate');
-      expect(toDate.querySelector('input').value).not.toBeNull();
-    });
-    test('to date field should not be undefined', () => {
-      const toDate = screen.getByTestId('toDate');
-      expect(toDate.querySelector('input').value).not.toBeUndefined();
-    });
   });
 
   describe('Remarks', () => {

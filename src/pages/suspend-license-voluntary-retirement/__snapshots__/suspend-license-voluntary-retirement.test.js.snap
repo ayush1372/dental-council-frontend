@@ -1,0 +1,295 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`College Details Add Timeline - from date field and to date field  field should be present in the document 1`] = `
+<div>
+  <div
+    class="MuiBox-root css-8atqhb"
+    data-testid="suspend-license-voluntary-retirement"
+  >
+    <div
+      align="center"
+      class="MuiBox-root css-0"
+    >
+      <svg
+        aria-hidden="true"
+        class="MuiSvgIcon-root MuiSvgIcon-colorError MuiSvgIcon-fontSizeWidth40 css-1uobei8-MuiSvgIcon-root"
+        data-testid="BlockIcon"
+        focusable="false"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM4 12c0-4.42 3.58-8 8-8 1.85 0 3.55.63 4.9 1.69L5.69 16.9C4.63 15.55 4 13.85 4 12zm8 8c-1.85 0-3.55-.63-4.9-1.69L18.31 7.1C19.37 8.45 20 10.15 20 12c0 4.42-3.58 8-8 8z"
+        />
+      </svg>
+    </div>
+    <h2
+      class="MuiTypography-root MuiTypography-h2 css-13cdq25-MuiTypography-root"
+    />
+    <div
+      class="MuiBox-root css-0"
+    >
+      <h6
+        class="MuiTypography-root MuiTypography-subtitle2 css-ati914-MuiTypography-root"
+      >
+        Add Timeline
+        <span
+          class="MuiTypography-root MuiTypography-body4 css-1eb24fs-MuiTypography-root"
+        >
+          *
+        </span>
+      </h6>
+      <div
+        class="MuiGrid-root MuiGrid-container css-19p8i1d-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 MuiGrid-grid-lg-6 css-1fyyp8j-MuiGrid-root"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+          >
+            Select From Date
+          </p>
+          <div
+            class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-938dm8-MuiFormControl-root-MuiTextField-root"
+            data-testid="fromDate"
+          >
+            <div
+              class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-md26zr-MuiInputBase-root-MuiOutlinedInput-root"
+            >
+              <input
+                aria-invalid="false"
+                autocomplete="off"
+                class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
+                id="fromDate"
+                name="fromDate"
+                type="date"
+                value=""
+              />
+              <fieldset
+                aria-hidden="true"
+                class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+              >
+                <legend
+                  class="css-ihdtdm"
+                >
+                  <span
+                    class="notranslate"
+                  >
+                    ​
+                  </span>
+                </legend>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div
+      align=""
+      class="MuiBox-root css-0"
+    >
+      <h3
+        class="MuiTypography-root MuiTypography-h3 css-iw9tfx-MuiTypography-root"
+      />
+    </div>
+    
+  </div>
+</div>
+`;
+
+exports[`College Details Information related to the various screen readers 1`] = `
+<div>
+  <div
+    class="MuiBox-root css-8atqhb"
+    data-testid="suspend-license-voluntary-retirement"
+  >
+    <div
+      align="center"
+      class="MuiBox-root css-0"
+    >
+      <svg
+        aria-hidden="true"
+        class="MuiSvgIcon-root MuiSvgIcon-colorError MuiSvgIcon-fontSizeWidth40 css-1uobei8-MuiSvgIcon-root"
+        data-testid="BlockIcon"
+        focusable="false"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM4 12c0-4.42 3.58-8 8-8 1.85 0 3.55.63 4.9 1.69L5.69 16.9C4.63 15.55 4 13.85 4 12zm8 8c-1.85 0-3.55-.63-4.9-1.69L18.31 7.1C19.37 8.45 20 10.15 20 12c0 4.42-3.58 8-8 8z"
+        />
+      </svg>
+    </div>
+    <h2
+      class="MuiTypography-root MuiTypography-h2 css-13cdq25-MuiTypography-root"
+    />
+    <div
+      class="MuiBox-root css-0"
+    >
+      <h6
+        class="MuiTypography-root MuiTypography-subtitle2 css-ati914-MuiTypography-root"
+      >
+        Add Timeline
+        <span
+          class="MuiTypography-root MuiTypography-body4 css-1eb24fs-MuiTypography-root"
+        >
+          *
+        </span>
+      </h6>
+      <div
+        class="MuiGrid-root MuiGrid-container css-19p8i1d-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 MuiGrid-grid-lg-6 css-1fyyp8j-MuiGrid-root"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+          >
+            Select From Date
+          </p>
+          <div
+            class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-938dm8-MuiFormControl-root-MuiTextField-root"
+            data-testid="fromDate"
+          >
+            <div
+              class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-md26zr-MuiInputBase-root-MuiOutlinedInput-root"
+            >
+              <input
+                aria-invalid="false"
+                autocomplete="off"
+                class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
+                id="fromDate"
+                name="fromDate"
+                type="date"
+                value=""
+              />
+              <fieldset
+                aria-hidden="true"
+                class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+              >
+                <legend
+                  class="css-ihdtdm"
+                >
+                  <span
+                    class="notranslate"
+                  >
+                    ​
+                  </span>
+                </legend>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div
+      align=""
+      class="MuiBox-root css-0"
+    >
+      <h3
+        class="MuiTypography-root MuiTypography-h3 css-iw9tfx-MuiTypography-root"
+      />
+    </div>
+    
+  </div>
+</div>
+`;
+
+exports[`College Details Logout Successful  message is displayed 1`] = `
+<div>
+  <div
+    class="MuiBox-root css-8atqhb"
+    data-testid="suspend-license-voluntary-retirement"
+  >
+    <div
+      align="center"
+      class="MuiBox-root css-0"
+    >
+      <svg
+        aria-hidden="true"
+        class="MuiSvgIcon-root MuiSvgIcon-colorError MuiSvgIcon-fontSizeWidth40 css-1uobei8-MuiSvgIcon-root"
+        data-testid="BlockIcon"
+        focusable="false"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM4 12c0-4.42 3.58-8 8-8 1.85 0 3.55.63 4.9 1.69L5.69 16.9C4.63 15.55 4 13.85 4 12zm8 8c-1.85 0-3.55-.63-4.9-1.69L18.31 7.1C19.37 8.45 20 10.15 20 12c0 4.42-3.58 8-8 8z"
+        />
+      </svg>
+    </div>
+    <h2
+      class="MuiTypography-root MuiTypography-h2 css-13cdq25-MuiTypography-root"
+    />
+    <div
+      class="MuiBox-root css-0"
+    >
+      <h6
+        class="MuiTypography-root MuiTypography-subtitle2 css-ati914-MuiTypography-root"
+      >
+        Add Timeline
+        <span
+          class="MuiTypography-root MuiTypography-body4 css-1eb24fs-MuiTypography-root"
+        >
+          *
+        </span>
+      </h6>
+      <div
+        class="MuiGrid-root MuiGrid-container css-19p8i1d-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 MuiGrid-grid-lg-6 css-1fyyp8j-MuiGrid-root"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+          >
+            Select From Date
+          </p>
+          <div
+            class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-938dm8-MuiFormControl-root-MuiTextField-root"
+            data-testid="fromDate"
+          >
+            <div
+              class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-md26zr-MuiInputBase-root-MuiOutlinedInput-root"
+            >
+              <input
+                aria-invalid="false"
+                autocomplete="off"
+                class="MuiInputBase-input MuiOutlinedInput-input css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input"
+                id="fromDate"
+                name="fromDate"
+                type="date"
+                value=""
+              />
+              <fieldset
+                aria-hidden="true"
+                class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+              >
+                <legend
+                  class="css-ihdtdm"
+                >
+                  <span
+                    class="notranslate"
+                  >
+                    ​
+                  </span>
+                </legend>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div
+      align=""
+      class="MuiBox-root css-0"
+    >
+      <h3
+        class="MuiTypography-root MuiTypography-h3 css-iw9tfx-MuiTypography-root"
+      />
+    </div>
+    
+  </div>
+</div>
+`;

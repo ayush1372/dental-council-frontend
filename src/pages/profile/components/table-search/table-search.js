@@ -71,7 +71,7 @@ export function TableSearch({ trackApplication, activateLicence, searchParams })
                   <IconButton
                     sx={{
                       p: 2,
-                      backgroundColor: theme.palette.grey.main,
+                      backgroundColor: theme?.palette?.grey?.main,
                       borderRadius: '0 5px 5px 0',
                     }}
                     onClick={handleSubmit(onClickSearchButtonHandler)}

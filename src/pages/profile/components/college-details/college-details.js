@@ -55,7 +55,7 @@ const CollegeDetails = ({ collegeDetails, setShowTable }) => {
 
           <Grid container item spacing={2} mt={1}>
             <Grid item xs={12} sm={6} md={4}>
-              <Typography variant="subtitle2" color="grey.label" data-testid="CollegeName">
+              <Typography variant="subtitle2" color="grey.label" data-testid="College Name">
                 College Name
               </Typography>
 
@@ -213,7 +213,7 @@ const CollegeDetails = ({ collegeDetails, setShowTable }) => {
               display={'flex'}
               justifyContent={'flex-start'}
               alignItems={'center'}
-              data-testid="Alert"
+              data-testid="message"
             >
               <WarningIcon color="secondary" />
               <Typography color="textPrimary.main" variant="h3">
