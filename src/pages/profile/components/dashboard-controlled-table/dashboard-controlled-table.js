@@ -143,9 +143,6 @@ function DashboardControlledTable(props) {
     setPage(0);
   };
 
-  // eslint-disable-next-line no-console
-  console.log('12345 props?.selectedCardDataData', props?.selectedCardDataData);
-
   useEffect(() => {
     const requestObj = {
       work_flow_status_id: '',
@@ -159,7 +156,7 @@ function DashboardControlledTable(props) {
       name: '',
       nmr_id: '',
       search: '',
-      page_no: 0,
+      page_no: 1,
       size: 10,
       sort_by: '',
       sort_order: '',

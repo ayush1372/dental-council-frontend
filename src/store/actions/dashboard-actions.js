@@ -1,5 +1,5 @@
 import { API } from '../../api/api-endpoints';
-import { GET, POST } from '../../constants/requests';
+import { GET } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import { cardCountDetails, dashboardTableData } from '../reducers/dashboard-reducers';
 
@@ -24,10 +24,9 @@ export const getCardCount = () => async (dispatch) => {
 export const getDashboardTableData = (body) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
-      method: POST,
-      url: API.dashboard.cardDetails,
+      method: GET,
+      url: `${API.dashboard.cardDetails}?workFlowStatusId=${body.work_flow_status_id}&applicationTypeId=${body.application_type_id}&userGroupStatus=${body.user_group_status}&smcId=${body.smc_id}&name=${body.name}&nmrId=${body.nmr_id}&pageNo=${body.page_no}&size=${body.size}&search=${body.search}&sortBy=${body.sort_by}&sortOrder=${body.sort_order}`,
       headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
-      data: body,
     })
       .then((response) => {
         dispatch(dashboardTableData({ data: response.data, isError: false, isLoading: false }));

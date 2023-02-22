@@ -382,74 +382,74 @@ export const collegeApprovalsList = {
   count: 5,
 };
 
-export const dashboardCountData = {
-  'Registration Request': [
-    {
-      count: 0,
-      name: 'Total Registration Request',
-    },
-    {
-      count: 0,
-      name: 'Pending',
-    },
-    {
-      count: 0,
-      name: 'Verified',
-    },
-    {
-      count: 0,
-      name: 'Query Raised',
-    },
-    {
-      count: 0,
-      name: 'Rejected',
-    },
-  ],
-  'Updation Request': [
-    {
-      count: 0,
-      name: 'Total Updation Request',
-    },
-    {
-      count: 0,
-      name: 'Update Request Received',
-    },
-    {
-      count: 0,
-      name: 'Update Request Approved',
-    },
-    {
-      count: 0,
-      name: 'Query Raised on Update Request',
-    },
-    {
-      count: 0,
-      name: 'Update Request Rejected',
-    },
-  ],
-  'Suspension Request': [
-    {
-      count: 0,
-      name: 'Total Suspension Request',
-    },
-    {
-      count: 0,
-      name: 'Temporary Suspension Request Received',
-    },
-    {
-      count: 0,
-      name: 'Temporary Suspension Approved',
-    },
-    {
-      count: 0,
-      name: 'Permanent Suspension Request Received',
-    },
-    {
-      count: 0,
-      name: 'Permanent Suspension Request Approved',
-    },
-  ],
-};
+// export const dashboardCountData = {
+//   'Registration Request': [
+//     {
+//       count: 0,
+//       name: 'Total Registration Request',
+//     },
+//     {
+//       count: 0,
+//       name: 'Pending',
+//     },
+//     {
+//       count: 0,
+//       name: 'Verified',
+//     },
+//     {
+//       count: 0,
+//       name: 'Query Raised',
+//     },
+//     {
+//       count: 0,
+//       name: 'Rejected',
+//     },
+//   ],
+//   'Updation Request': [
+//     {
+//       count: 0,
+//       name: 'Total Updation Request',
+//     },
+//     {
+//       count: 0,
+//       name: 'Update Request Received',
+//     },
+//     {
+//       count: 0,
+//       name: 'Update Request Approved',
+//     },
+//     {
+//       count: 0,
+//       name: 'Query Raised on Update Request',
+//     },
+//     {
+//       count: 0,
+//       name: 'Update Request Rejected',
+//     },
+//   ],
+//   'Suspension Request': [
+//     {
+//       count: 0,
+//       name: 'Total Suspension Request',
+//     },
+//     {
+//       count: 0,
+//       name: 'Temporary Suspension Request Received',
+//     },
+//     {
+//       count: 0,
+//       name: 'Temporary Suspension Approved',
+//     },
+//     {
+//       count: 0,
+//       name: 'Permanent Suspension Request Received',
+//     },
+//     {
+//       count: 0,
+//       name: 'Permanent Suspension Request Approved',
+//     },
+//   ],
+// };
 
 export const natureOfWork = [
   {
@@ -484,3 +484,34 @@ export const workStatusOptions = [
     name: 'Both',
   },
 ];
+
+// dashboard count mapping
+// mapping BE keys -> card titles on FE
+export const registrationRequestMapper = {
+  'Total HP Registration Requests': 'Total Registration request',
+  Rejected: 'Rejected',
+  Approved: 'Approved',
+  'Query Raised': 'Query Raised',
+  Suspended: 'Suspended',
+  Blacklisted: 'Blacklisted',
+  Pending: 'Pending',
+};
+export const updationRequestMapper = {
+  'Total HP Modification Requests': 'Total Updation request',
+  Rejected: 'Update Request Rejected',
+  Approved: 'Update Request Approved',
+  'Query Raised': 'Query Raised on Update Request',
+  Suspended: 'Suspended',
+  Blacklisted: 'Blacklisted',
+  Pending: 'Update Request Received',
+};
+
+export const suspensionRequestMapper = {
+  'Total Consolidated Suspension Requests': 'Total Suspension request',
+  Rejected: 'Rejected',
+  Approved: 'Temporary Suspension Approved',
+  'Query Raised': 'Query Raised',
+  Suspended: 'Suspended',
+  Blacklisted: 'Blacklisted',
+  Pending: 'Temporary Suspension Request Received',
+};

@@ -5,6 +5,11 @@ import { experimentalStyled as styled } from '@mui/material/styles';
 import { useTheme } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
 
+import {
+  registrationRequestMapper,
+  suspensionRequestMapper,
+  updationRequestMapper,
+} from '../../../../constants/common-data';
 import ViewProfile from '../../../../shared/view-profile/view-profile';
 import { Button } from '../../../../ui/core';
 import UserProfile from '../../../user-profile/index';
@@ -21,11 +26,6 @@ export default function Dashboard() {
   const [selectedCardDataData, setSelectedCardDataData] = useState();
   const [selectedRowData, setSelectedRowData] = useState();
 
-  // eslint-disable-next-line no-console
-  console.log('count', count);
-  // eslint-disable-next-line no-console
-  console.log('loggedInUserType', loggedInUserType);
-
   const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(1),
     textAlign: 'center',
@@ -34,51 +34,21 @@ export default function Dashboard() {
     cursor: 'pointer',
   }));
 
-  // mapping BE keys -> card titles on FE
-  let registrationRequestMapper = {
-    'Total HP Registration Requests': 'Total Registration request',
-    Rejected: 'Rejected',
-    Approved: 'Approved',
-    'Query Raised': 'Query Raised',
-    Suspended: 'Suspended',
-    Blacklisted: 'Blacklisted',
-    Pending: 'Pending',
-  };
-  let updationRequestMapper = {
-    'Total HP Modification Requests': 'Total Updation request',
-    Rejected: 'Update Request Rejected',
-    Approved: 'Update Request Approved',
-    'Query Raised': 'Query Raised on Update Request',
-    Suspended: 'Suspended',
-    Blacklisted: 'Blacklisted',
-    Pending: 'Update Request Received',
-  };
-
-  let suspensionRequestMapper = {
-    'Total Consolidated Suspension Requests': 'Total Suspension request',
-    Rejected: 'Rejected',
-    Approved: 'Temporary Suspension Approved',
-    'Query Raised': 'Query Raised',
-    Suspended: 'Suspended',
-    Blacklisted: 'Blacklisted',
-    Pending: 'Temporary Suspension Request Received',
-  };
-
   let registrationRequestData = getDataFromResponse(
     count,
     registrationRequestMapper,
-    loggedInUserType === 'NBE' ? 'foreign_hp_registration_requests' : 'hp_registration_requests'
+    'hp_registration_request'
   );
 
   let updationRequestData = getDataFromResponse(
     count,
     updationRequestMapper,
-    'hp_modification_requests'
+    'hp_modification_request'
   );
   let suspensionRequestData = getDataFromResponse(
     count,
     suspensionRequestMapper,
-    'consolidated_suspension_requests'
+    'consolidated_suspension_request'
   );
 
   let dashboard = {
@@ -93,23 +63,24 @@ export default function Dashboard() {
   }
 
   function getDataFromResponse(count, mapper, key) {
-    // eslint-disable-next-line no-console
-    console.log('1234', count);
-    let data = [];
-    const newCountArray = count?.data[key]?.filter(
-      (item) => item.name !== 'Suspended' && item.name !== 'Blacklisted'
-    );
-    newCountArray?.forEach((request) => {
-      let currObj;
-      currObj = {
-        name: mapper[request['name']],
-        value: request['count'],
-        applicationTypeID: request['application_type_id'],
-        responseKey: request['name'],
-      };
-      data.push(currObj);
-    });
-    return data;
+    let dataArr = [];
+    if (count?.data[key]?.status_wise_count !== undefined) {
+      const newCountArray = count?.data[key]?.status_wise_count?.filter(
+        (item) => item.name !== 'Suspended' && item.name !== 'Blacklisted'
+      );
+      newCountArray?.forEach((request) => {
+        let currObj;
+        currObj = {
+          name: mapper[request['name']],
+          value: request['count'],
+          applicationTypeID: count?.data[key].application_type_ids,
+          responseKey: request['name'],
+        };
+        dataArr.push(currObj);
+      });
+    }
+
+    return dataArr;
   }
 
   function handleBreadCrumClick(event) {
@@ -152,9 +123,6 @@ export default function Dashboard() {
   const getSelectedRowData = (data) => {
     setSelectedRowData(data);
   };
-
-  // eslint-disable-next-line no-console
-  console.log('123 selectedRowData', selectedRowData);
 
   return (
     <>
