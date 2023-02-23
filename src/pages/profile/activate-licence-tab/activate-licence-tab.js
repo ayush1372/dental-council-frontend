@@ -156,7 +156,8 @@ const ActivateLicence = (props) => {
           onClick: (row, rowIndex) => {
             fetchReActivateLicenseHealthProfessionalId();
             setIsApproveModalOpen(true);
-            verboseLog(row, rowIndex + 'event,row,rowIndex');
+            // eslint-disable-next-line no-console
+            console.log('hi123', row, rowIndex);
           },
         },
         {

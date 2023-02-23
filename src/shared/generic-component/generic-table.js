@@ -17,7 +17,6 @@ import Moment from 'moment';
 import propTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
-import { verboseLog } from '../../config/debug';
 import SuspendValuntaryPopup from '../../pages/suspend-valuntary-popup';
 import { Button, Chip } from '../../ui/core';
 
@@ -44,7 +43,8 @@ export default function GenericTable(props) {
   // const { myValue } = even
   //  setSelected(myValue);
   const selectionChangeHandler = (row, rowIndex) => {
-    verboseLog(row, rowIndex + 'rowIndex');
+    // eslint-disable-next-line no-console
+    console.log('hi12345', row, rowIndex);
     setConfirmationModal(true);
     setSelected('myValue');
     props.setIsApproveModalOpen(true);
@@ -220,7 +220,9 @@ export default function GenericTable(props) {
                                     <MenuItem
                                       key={option.dataValue}
                                       data-my-value={option.dataValue}
-                                      onClick={option?.onClick || selectionChangeHandler}
+                                      onClick={(e) =>
+                                        option?.onClick(e, row) || selectionChangeHandler
+                                      }
                                       // onClick={
                                       //   row.Action === undefined
                                       //     ? (row, rowIndex) => selectionChangeHandler(row, rowIndex)
