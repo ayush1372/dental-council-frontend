@@ -60,7 +60,7 @@ const CollegeDetails = ({ collegeDetails, setShowTable }) => {
               </Typography>
 
               <Typography variant="body1" color="primary.main">
-                {userData?.name ? userData?.name : ''}
+                {userData?.name ? userData.name : ''}
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
@@ -78,7 +78,7 @@ const CollegeDetails = ({ collegeDetails, setShowTable }) => {
               </Typography>
 
               <Typography variant="body1" color="primary.main">
-                {userData?.phone_number ? userData?.phone_number : ''}
+                {userData?.phone_number ? userData.phone_number : ''}
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
@@ -86,7 +86,7 @@ const CollegeDetails = ({ collegeDetails, setShowTable }) => {
                 College Email ID
               </Typography>
               <Typography variant="body1" color="primary.main">
-                {userData?.email_id ? userData?.email_id : ''}
+                {userData?.email_id ? userData.email_id : ''}
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
@@ -147,6 +147,7 @@ const CollegeDetails = ({ collegeDetails, setShowTable }) => {
               onClick={() => {
                 setShowTable(true);
               }}
+              data-testid="showTable"
               color="secondary"
               variant="outlined"
               sx={{
@@ -167,6 +168,7 @@ const CollegeDetails = ({ collegeDetails, setShowTable }) => {
             <Button
               onClick={() => handleSubmitDetails('Rejected')}
               variant="outlined"
+              data-testid="submitDetail"
               color="secondary"
               sx={{
                 margin: {
@@ -187,6 +189,7 @@ const CollegeDetails = ({ collegeDetails, setShowTable }) => {
               onClick={() => handleSubmitDetails('Approved')}
               variant="contained"
               color="secondary"
+              data-testid="approve"
               sx={{
                 margin: {
                   xs: '5px 0',
@@ -233,6 +236,7 @@ const CollegeDetails = ({ collegeDetails, setShowTable }) => {
                 onClick={() => {
                   setConfirmationModal(false);
                 }}
+                data-testid="confirmModal"
                 color="grey"
                 variant="contained"
                 sx={{

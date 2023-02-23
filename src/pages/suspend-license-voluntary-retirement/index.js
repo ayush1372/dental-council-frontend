@@ -178,7 +178,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
           <Grid item xs={12}>
             <TextField
               fullWidth
-              data-testid="remarking"
+              data-testid="remark"
               id="remark"
               type="text"
               multiline

@@ -1,4 +1,3 @@
-import { useTheme } from '@emotion/react';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Grid, IconButton, InputAdornment } from '@mui/material';
 import { useForm } from 'react-hook-form';
@@ -28,7 +27,6 @@ export function TableSearch({ trackApplication, activateLicence, searchParams })
       search: '',
     },
   });
-  const theme = useTheme();
   const onClickFilterButtonHandler = (data) => {
     verboseLog('data', data);
     searchParams(data);
@@ -67,11 +65,11 @@ export function TableSearch({ trackApplication, activateLicence, searchParams })
             {...register('search')}
             InputProps={{
               endAdornment: (
-                <InputAdornment position="end" sx={{ backgroundColor: theme.palette.grey.main }}>
+                <InputAdornment position="end" sx={{ backgroundColor: 'grey.main' }}>
                   <IconButton
                     sx={{
                       p: 2,
-                      backgroundColor: theme?.palette?.grey?.main,
+                      backgroundColor: 'grey.main',
                       borderRadius: '0 5px 5px 0',
                     }}
                     onClick={handleSubmit(onClickSearchButtonHandler)}
@@ -92,7 +90,6 @@ export function TableSearch({ trackApplication, activateLicence, searchParams })
                   <Select
                     error={errors.Filter?.message}
                     name="Filter"
-                    // label="Filter"
                     defaultValue={getValues().Filter}
                     placeholder="All Applications"
                     options={[
@@ -107,7 +104,6 @@ export function TableSearch({ trackApplication, activateLicence, searchParams })
                   <Select
                     error={errors.Date?.message}
                     name="Date"
-                    // label="Sort by"
                     defaultValue={getValues().Date}
                     options={[
                       {
@@ -134,14 +130,13 @@ export function TableSearch({ trackApplication, activateLicence, searchParams })
                   defaultValue={getValues().filterByName}
                   error={errors.filterByName?.message}
                   {...register('filterByName')}
-                  // label="Filter By Name"
                 />
               </Grid>
             )}
             {trackApplication !== true && (
               <Grid item md={3} xs={12}>
                 <TextField
-                  data-testid="filterByRegNo"
+                  data-testid="filter_By_RegNo"
                   inputProps={{ maxLength: 100 }}
                   fullWidth
                   id="outlined-basic"
@@ -153,13 +148,11 @@ export function TableSearch({ trackApplication, activateLicence, searchParams })
                   defaultValue={getValues().filterByRegNo}
                   error={errors.filterByRegNo?.message}
                   {...register('filterByRegNo')}
-                  // label="Filter by Reg No"
                 />
               </Grid>
             )}
             {(loggedInUserType === 'College' || loggedInUserType === 'NMC') && (
               <Grid item md={3} xs={12}>
-                {/* <Typography>Filter by council</Typography> */}
                 <SearchableDropdown
                   fullWidth
                   name="registrationCouncil"

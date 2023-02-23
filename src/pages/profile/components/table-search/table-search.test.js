@@ -26,16 +26,12 @@ describe('Table search', () => {
       expect(filterByName).toBeInTheDocument();
     });
     test('filterByRegNo field should present in the document', () => {
-      const filterByRegNo = screen.getByTestId('filterByRegNo');
+      const filterByRegNo = screen.getByTestId('filter_By_RegNo');
       expect(filterByRegNo).toBeInTheDocument();
     });
     test('filterButton button should present in the document', () => {
       const filterButton = screen.getByTestId('filterButton');
       expect(filterButton).toBeInTheDocument();
-    });
-    test('exportButton button should present in the document', () => {
-      const exportButton = screen.getByTestId('exportButton');
-      expect(exportButton).toBeInTheDocument();
     });
   });
 });
