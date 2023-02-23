@@ -90,7 +90,7 @@ const MyProfile = (props) => {
               {props.userType === 'SMC' ? (
                 <SmcEditProfile sentDetails={sentDetails} />
               ) : props.userType === 'NBE' ? (
-                <NbeEditProfile sentDetails={sentDetails} />
+                <NbeEditProfile sentDetails={sentDetails} updateShowPage={setShowpage} />
               ) : (
                 <NmcEditProfile sentDetails={sentDetails} />
               )}

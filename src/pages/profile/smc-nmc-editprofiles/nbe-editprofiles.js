@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { Box, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
@@ -9,6 +10,8 @@ import { getUpdatedNBEProfileData } from '../../../store/actions/nbe-actions';
 import { Button, TextField } from '../../../ui/core';
 
 const NbeEditProfile = (props) => {
+  const { t } = useTranslation();
+
   const userData = useSelector((state) => state?.nbe?.nbeData?.data);
   const [successModalPopup, setSuccessModalPopup] = useState(false);
   const {
@@ -50,7 +53,7 @@ const NbeEditProfile = (props) => {
         <Grid item xs={12}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
             <Typography variant="h2" color="textPrimary.main">
-              Edit Profile
+              {t('Edit Profile')}
             </Typography>
           </Box>
         </Grid>
@@ -59,7 +62,7 @@ const NbeEditProfile = (props) => {
       <Grid container item spacing={2} mt={3}>
         <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
-            User ID
+            {t('User ID')}
           </Typography>
           <Typography component="span" color="error.main">
             *
@@ -83,7 +86,7 @@ const NbeEditProfile = (props) => {
         </Grid>
         <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
-            Phone Number
+            {t('Phone Number')}
           </Typography>
           <Typography component="span" color="error.main">
             *
@@ -103,7 +106,7 @@ const NbeEditProfile = (props) => {
 
         <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
-            Email ID
+            {t('Email ID')}
           </Typography>
           <Typography component="span" color="error.main">
             *
@@ -143,7 +146,7 @@ const NbeEditProfile = (props) => {
           }}
           onClick={handleSubmit(onsubmit)}
         >
-          Submit
+          {t('Submit')}
         </Button>
         <Button
           variant="contained"
@@ -154,8 +157,11 @@ const NbeEditProfile = (props) => {
               md: 'fit-content',
             },
           }}
+          onClick={() => {
+            props.updateShowPage('Profile');
+          }}
         >
-          Cancel
+          {t('Cancel')}
         </Button>
       </Box>
       {successModalPopup && (
