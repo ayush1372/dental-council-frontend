@@ -2,23 +2,31 @@ import { useState } from 'react';
 
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 
 import { OtpForm } from '../../../shared/otp-form/otp-component';
+import { verifyNotificationOtp } from '../../../store/actions/common-actions';
 import { Button } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
 
 const ConfirmOTP = ({ handleConfirmOTP }) => {
   const { t } = useTranslation();
   const [isOtpValid, setIsOtpValid] = useState(true);
+  const dispatch = useDispatch();
 
   const otpResend = () => {
     successToast('OTP Resent Successfully', 'otp-resent', 'success', 'top-center');
   };
-  const onHandleVerify = () => {
+  const onHandleVerify = (otpNumber) => {
     if (getOtpValidation()) {
       setIsOtpValid(false);
       handleConfirmOTP();
     }
+    dispatch(
+      verifyNotificationOtp({
+        otp: otpNumber,
+      })
+    );
   };
 
   const { otpform, getOtpValidation } = OtpForm({

@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
+// import { verboseLog } from '../../../config/debug';
 import { sendNotificationOtp } from '../../../store/actions/common-actions';
 import { Button, TextField } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
@@ -36,13 +37,23 @@ const ForgotPassword = ({ handleConfirmPassword }) => {
 
   const onSubmit = () => {
     if (watchMobileNum || watchId) {
+      // verboseLog('hello', watchMobileNum );
       handleConfirmPassword();
     } else {
       handleSubmit()();
     }
-    const otpValue = { contact: getValues().mobileNo, type: 'sms' };
+
+    let otpValue = {};
+
+    if (getValues().mobileNo) {
+      otpValue = { contact: getValues().mobileNo, type: 'sms' };
+    } else {
+      otpValue = { contact: getValues().Id, type: 'email' };
+    }
+
     dispatch(sendNotificationOtp(otpValue));
   };
+
   return (
     <Box p={4} bgcolor="white.main" boxShadow="4">
       <Typography variant="h2" component="div" textAlign="center">

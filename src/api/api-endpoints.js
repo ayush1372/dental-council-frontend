@@ -53,7 +53,7 @@ export const API = {
     getNBEProfileData: 'api/v1/abdm/nmr/nbe/user/{id}',
   },
   forgotPassword: {
-    doctor: '/api/v1/reset-password',
+    doctor: '/api/v1/abdm/nmr/user/set-password',
     smc: '/api/v1/reset-password',
     nmc: '/api/v1/reset-password',
   },
