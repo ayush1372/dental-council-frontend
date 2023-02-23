@@ -220,4 +220,11 @@ export const nbeTabs = [
     icon: <BadgeIcon />,
     element: <TrackStatus tabName={SideDrawerListItem} />,
   },
+  {
+    option: 3,
+    name: 'Change Password',
+    tabName: 'change-password',
+    icon: <PasswordIcon />,
+    element: <ChangePassword tabName={SideDrawerListItem} />,
+  },
 ];
