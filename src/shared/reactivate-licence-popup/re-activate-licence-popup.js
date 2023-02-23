@@ -27,7 +27,6 @@ export default function ReactivateLicencePopup(props) {
     props.renderSuccess();
     let reActivateLicensebody = {
       hp_profile_id: loginData?.data?.profile_id,
-      // hp_profile_id: 346,
       application_type_id: 5,
       action_id: 1,
       from_date: fromDate,

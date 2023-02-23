@@ -6,10 +6,18 @@ import ErrorIcon from '@mui/icons-material/Error';
 import HelpIcon from '@mui/icons-material/Help';
 import { Box, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { suspendDoctor } from '../../store/actions/common-actions';
 import { Button, Checkbox, RadioGroup, TextField } from '../../ui/core';
+import successToast from '../../ui/core/toaster';
 
-export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, handleSubmitDetails }) {
+export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue }) {
+  const dispatch = useDispatch();
+  const { loginData } = useSelector((state) => state?.loginReducer);
+  const [selectedSuspension, setSelectedSuspension] = useState('voluntary-suspension-check');
+  const [selectedFromDate, setSelectedFromDate] = useState();
+
   const {
     register,
     handleSubmit,
@@ -20,17 +28,37 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
     mode: 'onChange',
     defaultValues: {
       voluntarySuspendLicense: 'voluntary-suspension-check',
+      fromDate: '',
+      toDate: selectedFromDate?.length >= 10 ? selectedFromDate : '',
     },
   });
-  const [setSelectedSuspension] = useState('voluntary-suspension-check');
 
   const onSubmit = () => {
-    handleSubmitDetails();
+    const { fromDate, toDate, remark } = getValues();
+    let suspendDoctorbody = {
+      hp_profile_id: loginData?.data?.profile_id,
+      application_type_id: selectedSuspension === 'voluntary-suspension-check' ? 3 : 4,
+      action_id: 1,
+      from_date: fromDate,
+      to_date: toDate,
+      remarks: remark,
+    };
+    try {
+      dispatch(suspendDoctor(suspendDoctorbody)).then(() => {});
+    } catch (allFailMsg) {
+      successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    }
   };
 
   const handlevoluntarySuspendLicenseChange = (event) => {
     setSelectedSuspension(event.target.value);
-    setValue(event.target.name, event.target.value);
+    autoFromDateSelected();
+  };
+  const autoFromDateSelected = (event) => {
+    const temp1 = +event.target.value.substring(0, 4) + 99 + '';
+    const temp2 = event.target.value.replace(event.target.value.substring(0, 4), temp1);
+    setValue('toDate', temp2);
+    setSelectedFromDate(temp2);
   };
 
   return (
@@ -103,10 +131,15 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
               </Typography>
               <RadioGroup
                 row
-                onChange={handlevoluntarySuspendLicenseChange}
                 name={'voluntarySuspendLicense'}
                 size="small"
+                required={true}
                 defaultValue={getValues().voluntarySuspendLicense}
+                error={errors.voluntarySuspendLicense?.message}
+                {...register('voluntarySuspendLicense', {
+                  required: 'Select suspend type',
+                  onChange: (e) => handlevoluntarySuspendLicenseChange(e),
+                })}
                 items={[
                   {
                     value: 'voluntary-suspension-check',
@@ -117,7 +150,6 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
                     label: 'Permanent Suspension',
                   },
                 ]}
-                error={errors.voluntarySuspendLicense?.message}
               />
             </Grid>
           )}
@@ -153,40 +185,40 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
                 defaultValue={getValues().fromDate}
                 error={errors.fromDate?.message}
                 {...register('fromDate', {
-                  required: 'Enter from date',
+                  required: 'Enter Date of Birth',
+                  onChange: (e) => autoFromDateSelected(e),
                 })}
               />
             </Grid>
-            {/* {selectedSuspension === 'voluntary-suspension-check' && (
-              <Grid item xs={12} md={6} my={{ xs: 1, md: 0 }}>
-                <Typography component={'p'} variant="body1">
-                  Select To Date
-                </Typography>
-                <TextField
-                  fullWidth
-                  data-testid="toDate"
-                  id="toDate"
-                  type="date"
-                  name="toDate"
-                  sx={{
-                    input: {
-                      color: 'grey1.dark',
-                      textTransform: 'uppercase',
-                    },
-                  }}
-                  InputLabelProps={{
-                    shrink: true,
-                    sx: { height: '40px' },
-                  }}
-                  required={true}
-                  defaultValue={getValues().toDate}
-                  error={errors.toDate?.message}
-                  {...register('toDate', {
-                    required: 'Enter to date',
-                  })}
-                />
-              </Grid>
-            )} */}
+            <Grid item xs={12} md={6} my={{ xs: 1, md: 0 }}>
+              <Typography component={'p'} variant="body1">
+                Select To Date
+              </Typography>
+              <TextField
+                fullWidth
+                data-testid="toDate"
+                id="toDate"
+                type="date"
+                name="toDate"
+                sx={{
+                  input: {
+                    color: 'grey1.dark',
+                    textTransform: 'uppercase',
+                  },
+                }}
+                InputLabelProps={{
+                  shrink: true,
+                  sx: { height: '40px' },
+                }}
+                disabled={selectedSuspension === 'voluntary-suspension-check' ? true : false}
+                required={true}
+                defaultValue={getValues().toDate}
+                error={errors.toDate?.message}
+                {...register('toDate', {
+                  required: 'Enter to date',
+                })}
+              />
+            </Grid>
           </Grid>
         </Box>
       )}
