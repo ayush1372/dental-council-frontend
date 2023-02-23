@@ -15,7 +15,7 @@ export const Header = () => {
     dispatch(menuToggle(!menuOpen));
   };
   return (
-    <Box>
+    <Box data-testid="Login">
       <TopBar />
       <LogoWrapper menuToggleHandler={menuToggleHandler} />
       <Navbar />

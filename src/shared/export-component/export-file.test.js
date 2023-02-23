@@ -1,23 +1,17 @@
 import '@testing-library/jest-dom';
 
 import { render, screen } from '@testing-library/react';
-import { Provider } from 'react-redux';
 
-import store from '../../../../store/store';
-import ActivateLicence from './activate-licence-tab';
+import ExportFiles from './export-file';
 
-describe('Table search', () => {
+describe('Button', () => {
   beforeEach(() => {
-    render(
-      <Provider store={store}>
-        <ActivateLicence />
-      </Provider>
-    );
+    render(<ExportFiles />);
   });
 
-  describe('Export button ', () => {
+  describe('exportButton', () => {
     test('exportButton button should present in the document', () => {
-      const exportButton = screen.getByTestId('exportButton');
+      const exportButton = screen.getByTestId('export_Button');
       expect(exportButton).toBeInTheDocument();
     });
   });
