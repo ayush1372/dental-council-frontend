@@ -1,3 +1,5 @@
+import '@testing-library/jest-dom';
+
 import { render, screen } from '@testing-library/react';
 
 import ReactivateLicencePopup from './re-activate-licence-popup';
@@ -16,7 +18,7 @@ describe('Reactivate License', () => {
     expect(Reason).toBeInTheDocument();
   });
   test('Renders field name reason', () => {
-    const FieldNameReason = screen.getByTestId('fieldname_reason');
+    const FieldNameReason = screen.getByTestId('fieldName_reason');
     expect(FieldNameReason).toBeInTheDocument();
   });
 });
