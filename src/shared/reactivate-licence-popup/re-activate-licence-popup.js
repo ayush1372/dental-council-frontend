@@ -100,7 +100,7 @@ export default function ReactivateLicencePopup(props) {
           <Box>
             <Box>
               <Typography
-                data-testid="fieldname_reason"
+                data-testid="fieldName_reason"
                 variant="subtitle2"
                 color="inputTextColor.main"
                 component="span"

@@ -74,7 +74,8 @@ function QontoStepIcon(props) {
     </QontoStepIconRoot>
   );
 }
-export default function ApplicationStepper({ activeStep = 1, steps }) {
+export default function ApplicationStepper({ activeStep = 1, steps, selectedRowData }) {
+  const { created_at, doctor_status, nmc_status, smc_status } = selectedRowData;
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -94,21 +95,21 @@ export default function ApplicationStepper({ activeStep = 1, steps }) {
       <Grid item container>
         <Grid item xs={8} md={3}>
           <Typography variant="body3" color="grey.label">
-            Tue, 31st Oct 2022 - 2:29pm
+            {new Date(created_at?.value).toDateString()}
           </Typography>
-          <Chip type="approved" label="Completed" />
+          <Chip type={doctor_status?.value.toLowerCase()} label={doctor_status?.value} />
         </Grid>
         <Grid item xs={8} md={3}>
           <Typography variant="body3" color="grey.label">
             SMC will verify the applcation and take action
           </Typography>
-          <Chip type="submitted" label="In Progress" sx={{ ml: 1 }} />
+          <Chip type={smc_status?.value.toLowerCase()} label={smc_status?.value} sx={{ ml: 1 }} />
         </Grid>
         <Grid item xs={8} md={3}>
           <Typography variant="body3" color="grey.label">
             NMC will verify the applcation and take action
           </Typography>
-          <Chip type="pending" label="Pending" sx={{ ml: 1 }} />
+          <Chip type={nmc_status?.value.toLowerCase()} label={nmc_status?.value} sx={{ ml: 1 }} />
         </Grid>
         <Grid item xs={8} md={3}>
           <Typography variant="body3" color="grey.label">
