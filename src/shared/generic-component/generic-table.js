@@ -40,11 +40,8 @@ export default function GenericTable(props) {
   const [selected, setSelected] = useState('');
   const [confirmationModal, setConfirmationModal] = useState(false);
 
-  // const selectionChangeHandler = (event) => {
-  // const { myValue } = even
-  //  setSelected(myValue);
   const selectionChangeHandler = (row, rowIndex) => {
-    verboseLog(row, rowIndex + 'rowIndex');
+    verboseLog('hi12345', row, rowIndex);
     setConfirmationModal(true);
     setSelected('myValue');
     props.setIsApproveModalOpen(true);
@@ -203,7 +200,6 @@ export default function GenericTable(props) {
                               <Button
                                 endIcon={<MoreVertSharpIcon />}
                                 variant="contained"
-                                // color="white"
                                 {...bindTrigger(popupState)}
                                 sx={{
                                   width: 'max-content',
@@ -220,12 +216,9 @@ export default function GenericTable(props) {
                                     <MenuItem
                                       key={option.dataValue}
                                       data-my-value={option.dataValue}
-                                      onClick={option?.onClick || selectionChangeHandler}
-                                      // onClick={
-                                      //   row.Action === undefined
-                                      //     ? (row, rowIndex) => selectionChangeHandler(row, rowIndex)
-                                      //     : ''
-                                      // }
+                                      onClick={(e) =>
+                                        option?.onClick(e, row) || selectionChangeHandler
+                                      }
                                     >
                                       {option.keyName}
                                     </MenuItem>

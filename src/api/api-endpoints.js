@@ -12,6 +12,7 @@ export const API = {
     workProfileDetails: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/work-profile',
     profileImage: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/profile-picture',
     initiateWorkFlow: 'api/v1/abdm/nmr/health-professional/applications/status',
+    trackApplicationData: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/applications',
   },
   common: {
     states: 'api/v1/abdm/nmr/countries/356/states',
@@ -32,6 +33,7 @@ export const API = {
       'api/v1/abdm/nmr/health-professional/applications/re-activate?pageNo={page_No}&offset={offset_No}',
     reactiveLicenseRequest: 'api/v1/abdm/nmr/health-professional/applications/re-activate',
     suspend: 'api/v1/abdm/nmr/health-professional/applications/suspend',
+    healthProfessionalApplicationStatus: 'api/v1/abdm/nmr/health-professional/applications/status',
   },
   college: {
     registrar: 'api/v1/abdm/nmr/college/{collegeId}/registrar',
