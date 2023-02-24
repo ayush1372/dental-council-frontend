@@ -2,16 +2,19 @@ import { Box, Button, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 
 import { TextField } from '../../../ui/core';
+import successToast from '../../../ui/core/toaster';
+import { changePasswordData } from './../../../store/actions/change-password-actions';
 
 const ChangePassword = () => {
   const theme = useTheme();
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
     getValues,
-    onSubmit,
     watch,
     formState: { errors },
   } = useForm({
@@ -22,6 +25,19 @@ const ChangePassword = () => {
       confirmPassword: '',
     },
   });
+  const Submit = () => {
+    const data = {
+      username: 'health_professional@lntinfotech.com',
+      oldPassword: getValues().oldPassword,
+      newPassword: getValues().newPassword,
+    };
+    dispatch(changePasswordData(data))
+      .then(() => {})
+      .catch((error) => {
+        successToast(error?.data?.response?.data?.error, 'error');
+      });
+  };
+
   return (
     <>
       <Typography color="inputTextColor.main" variant="h2" textAlign="center" mt={3}>
@@ -131,7 +147,7 @@ const ChangePassword = () => {
                     md: 'fit-content',
                   },
                 }}
-                onClick={handleSubmit(onSubmit)}
+                onClick={handleSubmit(Submit)}
               >
                 {t('Submit')}
               </Button>
