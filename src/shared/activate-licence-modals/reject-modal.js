@@ -3,6 +3,7 @@ import { useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import ErrorIcon from '@mui/icons-material/Error';
 import { Box, Container, Modal, Typography, useTheme } from '@mui/material';
+import { useForm } from 'react-hook-form';
 
 import { Button, TextField } from '../../ui/core';
 
@@ -14,6 +15,17 @@ export default function RejectLicenseModal(props) {
   };
 
   const theme = useTheme();
+  const {
+    register,
+    getValues,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      reason: '',
+    },
+  });
 
   return (
     <Box>
@@ -61,6 +73,13 @@ export default function RejectLicenseModal(props) {
                     },
                   },
                 }}
+                name="reason"
+                required
+                defaultValue={getValues().reason}
+                error={errors.reason?.message}
+                {...register('reason', {
+                  required: 'This field is required',
+                })}
               />
             </Box>
             <Box display="flex" textAlign="right">
@@ -69,16 +88,16 @@ export default function RejectLicenseModal(props) {
 
             <Box display="flex" justifyContent="flex-end" mt={5}>
               <Button
-                onClose={handleClose}
                 variant="contained"
                 color="grey"
                 sx={{
                   mr: 1,
                 }}
+                onClick={handleClose}
               >
                 Cancel
               </Button>
-              <Button onClose={handleClose} variant="contained" color="secondary">
+              <Button variant="contained" color="secondary" onClick={handleSubmit(handleClose)}>
                 Submit
               </Button>
             </Box>

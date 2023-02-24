@@ -23,13 +23,14 @@ const ActivateLicence = (props) => {
   const [showViewProfile, setShowViewPorfile] = useState(false);
   const [isApproveModalOpen, setIsApproveModalOpen] = useState(false);
   const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
-
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [page, setPage] = useState(0);
   const [selectedRowData, setRowData] = useState({});
   verboseLog(selectedRowData);
   const { activateLicenseList } = useSelector((state) => state?.common);
   const dispatch = useDispatch();
+  const [reactiveLicenseRequestHPApplicationData, setReactiveLicenseRequestHPApplicationData] =
+    useState();
 
   function createData(
     SNo,
@@ -128,7 +129,7 @@ const ActivateLicence = (props) => {
           type: 'reactivationFromDate',
           value: application.reactivation,
         },
-        { type: 'typeOfSuspension', value: application.suspension_type },
+        { type: 'typeOfSuspension', value: application.type_of_suspension },
         {
           type: 'Remark',
           value: application.remarks,
@@ -153,11 +154,10 @@ const ActivateLicence = (props) => {
         {
           keyName: 'Approve',
           dataValue: 'approve',
-          onClick: (row, rowIndex) => {
-            fetchReActivateLicenseHealthProfessionalId();
+          onClick: (event, row) => {
+            fetchReActivateLicenseHealthProfessionalId(row);
             setIsApproveModalOpen(true);
-            // eslint-disable-next-line no-console
-            console.log('hi123', row, rowIndex);
+            setReactiveLicenseRequestHPApplicationData(row);
           },
         },
         {
@@ -182,16 +182,15 @@ const ActivateLicence = (props) => {
     }
   }, [page, rowsPerPage]);
 
-  const fetchReActivateLicenseHealthProfessionalId = () => {
+  const fetchReActivateLicenseHealthProfessionalId = (selectedRow) => {
     let reActivateLicenseHealthProfessionalIdBody = {
-      request_id: 'NMR50055',
       application_type_id: 5,
-      actor_id: loggedInUserType === 'SMC' ? 2 : 0,
+      actor_id: loggedInUserType === 'SMC' ? 2 : loggedInUserType === 'NMC' ? 3 : 0,
       action_id: 4,
-      hp_profile_id: 411,
-      start_date: '2023-02-16T05:43:15.204Z',
-      end_date: '2023-02-16T05:43:15.204Z',
-      remarks: 'Test',
+      hp_profile_id: selectedRow?.registrationNo?.value,
+      start_date: selectedRow?.dateOfSubmission?.value,
+      end_date: selectedRow?.reactivationFromDate?.value,
+      remarks: selectedRow?.Remark?.value,
     };
     try {
       dispatch(reActivateLicenseStatus(reActivateLicenseHealthProfessionalIdBody)).then(() => {});
@@ -232,7 +231,7 @@ const ActivateLicence = (props) => {
 
           <Box>
             <TablePagination
-              rowsPerPageOptions={[5, 10, 25, 35, 45]}
+              rowsPerPageOptions={[5, 10, 25, 35, 45, 65]}
               component="div"
               count={props.showTable?.count || newRowsData.length}
               rowsPerPage={rowsPerPage}
@@ -252,6 +251,7 @@ const ActivateLicence = (props) => {
           ClosePopup={() => {
             setIsApproveModalOpen(false);
           }}
+          reactiveLicenseRequestHPApplicationData={reactiveLicenseRequestHPApplicationData}
         />
       )}
       {isRejectModalOpen && (

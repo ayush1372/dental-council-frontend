@@ -31,6 +31,7 @@ export const API = {
     activateLicense:
       'api/v1/abdm/nmr/health-professional/applications/re-activate?pageNo={page_No}&offset={offset_No}',
     reactiveLicenseRequest: 'api/v1/abdm/nmr/health-professional/applications/re-activate',
+    healthProfessionalApplicationStatus: 'api/v1/abdm/nmr/health-professional/applications/status',
   },
   college: {
     registrar: 'api/v1/abdm/nmr/college/{collegeId}/registrar',

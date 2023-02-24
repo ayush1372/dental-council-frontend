@@ -298,7 +298,7 @@ export const reActivateLicenseStatus = (body) => async () => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: PATCH,
-      url: API.common.reactiveLicenseRequest,
+      url: API.common.healthProfessionalApplicationStatus,
       data: body,
     })
       .then((response) => {

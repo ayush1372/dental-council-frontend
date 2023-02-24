@@ -6,14 +6,16 @@ import { useTheme } from '@mui/material/styles';
 
 import { Button } from '../../ui/core';
 
-export default function ApproveLicenseModal(props) {
+export default function ApproveLicenseModal({
+  ClosePopup,
+  reactiveLicenseRequestHPApplicationData,
+}) {
   const [open, setOpen] = useState(true);
   const handleClose = () => {
     setOpen(false);
-    props.ClosePopup();
+    ClosePopup();
   };
   const theme = useTheme();
-
   return (
     <Modal open={open} onClose={handleClose} sx={{ p: 5 }}>
       <Container
@@ -65,7 +67,7 @@ export default function ApproveLicenseModal(props) {
             </Typography>
 
             <Typography component="div" color="primary.main">
-              177255
+              {reactiveLicenseRequestHPApplicationData?.registrationNo?.value}
             </Typography>
           </Grid>
           <Grid item xs={6} md={4}>
@@ -74,7 +76,7 @@ export default function ApproveLicenseModal(props) {
             </Typography>
 
             <Typography component="div" color="primary.main">
-              Basavaraj Harihar
+              {reactiveLicenseRequestHPApplicationData?.nameofApplicant?.value}
             </Typography>
           </Grid>
           <Grid item xs={6} md={4}>
@@ -83,7 +85,7 @@ export default function ApproveLicenseModal(props) {
             </Typography>
 
             <Typography component="div" color="primary.main">
-              Temporary
+              {reactiveLicenseRequestHPApplicationData?.typeOfSuspension?.value}
             </Typography>
           </Grid>
         </Grid>

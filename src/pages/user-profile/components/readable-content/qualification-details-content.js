@@ -24,7 +24,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
       is_name_change,
     },
   ] =
-    registrationDetails && Object.values(registrationDetails).length > 3
+    registrationDetails && registrationDetails.qualification_detail_response_tos.length > 0
       ? registrationDetails.qualification_detail_response_tos
       : [{ country: {}, state: {}, college: {}, university: {}, course: {} }];
   return (
