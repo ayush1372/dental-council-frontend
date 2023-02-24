@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 
 import { Box, Grid, TablePagination, Typography } from '@mui/material';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { verboseLog } from '../../../../config/debug';
-import { applications } from '../../../../constants/common-data';
+// import { verboseLog } from '../../../../config/debug';
 import GenericTable from '../../../../shared/generic-component/generic-table';
 import { getDashboardTableData } from '../../../../store/actions/dashboard-actions';
 import TableSearch from '../table-search/table-search';
@@ -41,10 +40,11 @@ function DashboardControlledTable(props) {
   const [orderBy, setOrderBy] = React.useState({});
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
-  const [selectedRowData, setRowData] = React.useState({});
+  // const [selectedRowData, setRowData] = React.useState({});
   const dispatch = useDispatch();
 
-  verboseLog('selectedRowData', selectedRowData);
+  const { dashboardTableDetails } = useSelector((state) => state.dashboard);
+
   const dataHeader = [
     { title: 'S.No.', name: 'SNo', sorting: true, type: 'string' },
     {
@@ -83,14 +83,14 @@ function DashboardControlledTable(props) {
     { title: 'View', name: 'view', sorting: false, type: 'string' },
   ];
 
-  const handleDataRowClick = (dataRow) => {
-    setRowData(dataRow);
-  };
+  // const handleDataRowClick = (dataRow) => {
+  //   setRowData(dataRow);
+  // };
 
   const viewCallback = (event, row) => {
     event.preventDefault();
     event.stopPropagation();
-    setRowData(row);
+    // setRowData(row);
     props.setShowViewPorfile(true);
     props.setShowDashboard(false);
     props.setShowTable(false);
@@ -102,30 +102,30 @@ function DashboardControlledTable(props) {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
-  const newRowsData = applications.message?.map((application, index) => {
+  const newRowsData = dashboardTableDetails?.data?.dashboard_tolist?.map((application, index) => {
     return createData(
       { type: 'SNo', value: index + 1 },
       {
         type: 'registrationNo',
-        value: application?.registrationNo,
+        value: application?.registration_no,
       },
       {
         type: 'nameofApplicant',
-        value: application.nameofApplicant,
+        value: application.applicant_full_name,
       },
       {
         type: 'nameofStateCouncil',
-        value: application.nameofStateCouncil,
+        value: application.council_name,
       },
-      { type: 'councilVerificationStatus', value: application.councilVerificationStatus },
+      { type: 'councilVerificationStatus', value: application.smc_status },
       {
         type: 'collegeVerificationStatus',
-        value: application.collegeVerificationStatus,
+        value: application.college_dean_status,
       },
-      { type: 'NMCVerificationStatus', value: application.NMCVerificationStatus },
-      { type: 'dateofSubmission', value: application.dateofSubmission },
+      { type: 'NMCVerificationStatus', value: application.nmc_status },
+      { type: 'dateofSubmission', value: application.created_at },
       { type: 'pendency', value: application.pendency },
-      { type: 'view', value: application.view, onClickCallback: viewCallback },
+      { type: 'view', value: 'View', onClickCallback: viewCallback },
       { type: 'profileID', value: application.hp_profile_id }
     );
   });
@@ -176,7 +176,7 @@ function DashboardControlledTable(props) {
         onRequestSort={handleRequestSort}
         tableHeader={dataHeader}
         data={newRowsData}
-        handleRowClick={handleDataRowClick}
+        // handleRowClick={handleDataRowClick}
         rowsPerPage={rowsPerPage}
         page={page}
       />
@@ -184,7 +184,7 @@ function DashboardControlledTable(props) {
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={props.showTable?.count || newRowsData.length}
+          count={props.showTable?.count || newRowsData?.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
