@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import { Box, Grid, TablePagination, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
-// import { verboseLog } from '../../../../config/debug';
 import GenericTable from '../../../../shared/generic-component/generic-table';
 import { getDashboardTableData } from '../../../../store/actions/dashboard-actions';
 import TableSearch from '../table-search/table-search';
@@ -82,10 +81,6 @@ function DashboardControlledTable(props) {
     { title: 'Pendency', name: 'pendency', sorting: true, type: 'string' },
     { title: 'View', name: 'view', sorting: false, type: 'string' },
   ];
-
-  // const handleDataRowClick = (dataRow) => {
-  //   setRowData(dataRow);
-  // };
 
   const viewCallback = (event, row) => {
     event.preventDefault();
