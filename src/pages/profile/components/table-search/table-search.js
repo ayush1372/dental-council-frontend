@@ -1,5 +1,6 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Grid, IconButton, InputAdornment } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
@@ -11,6 +12,7 @@ import { Button, Select, TextField } from '../../../../ui/core';
 
 export function TableSearch({ trackApplication, activateLicence, searchParams }) {
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  const theme = useTheme();
   const {
     register,
     handleSubmit,
@@ -65,11 +67,11 @@ export function TableSearch({ trackApplication, activateLicence, searchParams })
             {...register('search')}
             InputProps={{
               endAdornment: (
-                <InputAdornment position="end" sx={{ backgroundColor: 'grey.main' }}>
+                <InputAdornment position="end" sx={{ backgroundColor: theme.palette.grey.main }}>
                   <IconButton
                     sx={{
                       p: 2,
-                      backgroundColor: 'grey.main',
+                      backgroundColor: theme.palette.grey.main,
                       borderRadius: '0 5px 5px 0',
                     }}
                     onClick={handleSubmit(onClickSearchButtonHandler)}
