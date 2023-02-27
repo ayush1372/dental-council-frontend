@@ -112,13 +112,6 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
               </Box>
             </Box>
             <Box width="38%" borderLeft="1px solid" borderColor="grey.main" pl={3}>
-              {/* <Box
-                  sx={{
-                    borderLeft: '1px solid',
-                    borderLeftColor: 'grey.main',
-                    padding: '0 10px',
-                  }}
-                > */}
               <Box className="detail" display="flex" mb={1}>
                 <Typography component="div" width="55%" color="inputTextColor.main" variant="body1">
                   Year of Info

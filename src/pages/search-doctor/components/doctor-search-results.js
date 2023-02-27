@@ -128,7 +128,7 @@ const SearchResults = ({ searchData }) => {
                       <Box className="doctor-details" display="flex">
                         <Box className="doctor-icon" width="80px" height="80px" mr={3}>
                           <img
-                            src={`data:image/png;base64,${doctor.profile_photo}`}
+                            src={`data:image/png;base64,${doctor?.profile_photo}`}
                             alt="doctor profile"
                             width="100%"
                             height="100%"
@@ -136,13 +136,13 @@ const SearchResults = ({ searchData }) => {
                         </Box>
                         <Box className="doctor-info" width="70%">
                           <Typography component="div" variant="subtitle1">
-                            {doctor.salutation + doctor.full_name}
+                            {doctor?.salutation + doctor?.full_name}
                           </Typography>
                           <Typography component="div" variant="body5" color="grey.label" mt={2}>
                             State Medical Council
                           </Typography>
                           <Typography component="div" variant="body3" color="primary">
-                            {doctor.state_medical_council}
+                            {doctor?.state_medical_council}
                           </Typography>
                         </Box>
                       </Box>
@@ -157,7 +157,7 @@ const SearchResults = ({ searchData }) => {
                             Registration number
                           </Typography>
                           <Typography component="div" variant="body3" color="primary">
-                            {doctor.registration_number}
+                            {doctor?.registration_number}
                           </Typography>
                         </Box>
                         <Box>
@@ -165,12 +165,12 @@ const SearchResults = ({ searchData }) => {
                             Year of Info
                           </Typography>
                           <Typography component="div" variant="body3" color="primary">
-                            {doctor.registration_year}
+                            {doctor?.registration_year}
                           </Typography>
                         </Box>
                       </Box>
                       <Button
-                        onClick={() => handleViewProfile(doctor.profile_id, doctor.profile_photo)}
+                        onClick={() => handleViewProfile(doctor?.profile_id, doctor?.profile_photo)}
                         variant="contained"
                         color="secondary"
                         fullWidth
