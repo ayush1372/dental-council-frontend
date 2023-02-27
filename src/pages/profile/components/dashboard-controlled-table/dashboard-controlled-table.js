@@ -107,22 +107,22 @@ function DashboardControlledTable(props) {
       },
       {
         type: 'nameofApplicant',
-        value: application.applicant_full_name,
+        value: application?.applicant_full_name,
       },
       {
         type: 'nameofStateCouncil',
-        value: application.council_name,
+        value: application?.council_name,
       },
-      { type: 'councilVerificationStatus', value: application.smc_status },
+      { type: 'councilVerificationStatus', value: application?.smc_status },
       {
         type: 'collegeVerificationStatus',
-        value: application.college_dean_status,
+        value: application?.college_dean_status,
       },
-      { type: 'NMCVerificationStatus', value: application.nmc_status },
-      { type: 'dateofSubmission', value: application.created_at },
-      { type: 'pendency', value: application.pendency },
+      { type: 'NMCVerificationStatus', value: application?.nmc_status },
+      { type: 'dateofSubmission', value: application?.created_at },
+      { type: 'pendency', value: application?.pendency },
       { type: 'view', value: 'View', onClickCallback: viewCallback },
-      { type: 'profileID', value: application.hp_profile_id }
+      { type: 'profileID', value: application?.hp_profile_id }
     );
   });
 
