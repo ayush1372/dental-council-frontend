@@ -4,14 +4,47 @@ import CloseIcon from '@mui/icons-material/Close';
 import ErrorIcon from '@mui/icons-material/Error';
 import { Box, Container, Modal, Typography, useTheme } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { reActivateLicenseStatus } from '../../store/actions/common-actions';
 import { Button, TextField } from '../../ui/core';
+import successToast from '../../ui/core/toaster';
 
-export default function RejectLicenseModal(props) {
+export default function RejectLicenseModal({
+  ClosePopup,
+  reactiveLicenseRequestHPApplicationData,
+}) {
   const [open, setOpen] = useState(true);
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+
+  const dispatch = useDispatch();
   const handleClose = () => {
     setOpen(false);
-    props.ClosePopup();
+    ClosePopup();
+  };
+
+  const handleReactivate = () => {
+    const { reason } = getValues();
+    let reActivateLicenseHealthProfessionalIdBody = {
+      request_id: reactiveLicenseRequestHPApplicationData?.Action.value,
+      application_type_id: 5,
+      actor_id: loggedInUserType === 'SMC' ? 2 : loggedInUserType === 'NMC' ? 3 : 0,
+      action_id: 5,
+      hp_profile_id: reactiveLicenseRequestHPApplicationData?.registrationNo?.value,
+      start_date: reactiveLicenseRequestHPApplicationData?.dateOfSubmission?.value,
+      end_date: reactiveLicenseRequestHPApplicationData?.reactivationFromDate?.value,
+      remarks: reason,
+    };
+
+    dispatch(reActivateLicenseStatus(reActivateLicenseHealthProfessionalIdBody))
+      .then((response) => {
+        if (response) {
+          ClosePopup();
+        }
+      })
+      .catch((allFailMsg) => {
+        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      });
   };
 
   const theme = useTheme();
@@ -97,7 +130,11 @@ export default function RejectLicenseModal(props) {
               >
                 Cancel
               </Button>
-              <Button variant="contained" color="secondary" onClick={handleSubmit(handleClose)}>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleSubmit(handleReactivate)}
+              >
                 Submit
               </Button>
             </Box>

@@ -52,6 +52,10 @@ export const UserProfile = ({
     setShowReactivateLicense(false);
     setShowSuccessPopup(true);
   };
+
+  const closeReactivateLicense = () => {
+    setShowReactivateLicense(false);
+  };
   const fetchStates = () => {
     try {
       dispatch(getStatesList()).then(() => {});
@@ -140,7 +144,10 @@ export const UserProfile = ({
               ml={1}
               height="20px"
               width="103px"
-              onClick={() => setShowReactivateLicense(true)}
+              onClick={() => {
+                setShowReactivateLicense(true);
+                setShowSuccessPopup(false);
+              }}
               sx={{
                 cursor: 'pointer',
               }}
@@ -150,7 +157,12 @@ export const UserProfile = ({
           </Alert>
         )}
       </Box>
-      {showReactivateLicense && <ReactivateLicencePopup renderSuccess={renderSuccess} />}
+      {showReactivateLicense && (
+        <ReactivateLicencePopup
+          renderSuccess={renderSuccess}
+          closeReactivateLicense={closeReactivateLicense}
+        />
+      )}
       {showSuccessPopup && <SuccessPopup />}
       {/* {!showChangepassword ? ( */}
       <Box mt={3}>

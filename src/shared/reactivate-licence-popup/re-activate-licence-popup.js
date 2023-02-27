@@ -16,33 +16,43 @@ export default function ReactivateLicencePopup(props) {
   const {
     register,
     getValues,
+    handleSubmit,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
   });
 
   const handleClose = () => {
-    const { fromDate, reason } = getValues();
     setOpen(false);
-    props.renderSuccess();
+    props.closeReactivateLicense();
+  };
+
+  function handleReactivate() {
+    const { fromDate, reason } = getValues();
+
     let reActivateLicensebody = {
       hp_profile_id: loginData?.data?.profile_id,
-      // hp_profile_id: 346,
       application_type_id: 5,
       action_id: 1,
       from_date: fromDate,
       to_date: '2023-02-15T11:39:21.854Z',
       remarks: reason,
     };
-    try {
-      dispatch(createReActivateLicense(reActivateLicensebody)).then(() => {});
-    } catch (allFailMsg) {
-      successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-    }
-  };
-  function handleReactivate() {
-    handleClose();
-    props.renderSuccess();
+
+    dispatch(createReActivateLicense(reActivateLicensebody))
+      .then((response) => {
+        if (response?.data?.toString()?.length > 0) {
+          props.renderSuccess();
+        }
+      })
+      .catch((allFailMsg) => {
+        successToast(
+          'ERR_INT: ' + JSON.stringify(allFailMsg?.data?.message),
+          'auth-error',
+          'error',
+          'top-center'
+        );
+      });
   }
 
   return (
@@ -143,9 +153,7 @@ export default function ReactivateLicencePopup(props) {
             </Button>
             <Button
               sx={{ ml: 2 }}
-              onClick={() => {
-                handleReactivate();
-              }}
+              onClick={handleSubmit(handleReactivate)}
               variant="contained"
               color="secondary"
             >

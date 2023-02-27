@@ -217,7 +217,8 @@ export default function GenericTable(props) {
                                       key={option.dataValue}
                                       data-my-value={option.dataValue}
                                       onClick={(e) =>
-                                        option?.onClick(e, row) || selectionChangeHandler
+                                        option?.onClick(e, row, option.dataValue) ||
+                                        selectionChangeHandler
                                       }
                                     >
                                       {option.keyName}
