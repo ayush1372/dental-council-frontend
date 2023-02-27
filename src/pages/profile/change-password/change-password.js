@@ -4,9 +4,9 @@ import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
+import { changePasswordData } from '../../../store/actions/common-actions';
 import { TextField } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
-import { changePasswordData } from './../../../store/actions/change-password-actions';
 
 const ChangePassword = () => {
   const theme = useTheme();
@@ -27,7 +27,7 @@ const ChangePassword = () => {
   });
   const Submit = () => {
     const data = {
-      username: 'health_professional@lntinfotech.com',
+      username: '',
       oldPassword: getValues().oldPassword,
       newPassword: getValues().newPassword,
     };

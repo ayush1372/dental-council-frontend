@@ -15,6 +15,7 @@ import {
   getUniversities,
   searchTrackStatusData,
   sendNotificationData,
+  setNewPassword,
   updateCouncilNames,
   verifyNotificationData,
 } from '../reducers/common-reducers';
@@ -242,6 +243,24 @@ export const trackStatus = (trackData) => async (dispatch) => {
       });
   });
 };
+
+export const changePasswordData = (data) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.common.changePassword,
+      data: data,
+    })
+      .then((response) => {
+        dispatch(setNewPassword(response));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
 export const getInitiateWorkFlow = (body) => async () => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({

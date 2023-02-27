@@ -27,6 +27,7 @@ const initialState = {
   trackStatusData: { data: [], isLoading: Boolean(true), isError: false },
   initiateWorkFlow: { data: [], isLoading: Boolean(true), isError: false },
   trackApplicationTableData: { data: [], isLoading: Boolean(true), isError: false },
+  changePasswordData: { data: [], isLoading: Boolean(true), isError: false },
 };
 
 export const CommonActivity = createSlice({
@@ -102,6 +103,9 @@ export const CommonActivity = createSlice({
     updateTrackApplicationTableData: (state, action) => {
       state.trackApplicationTableData.data = action.payload;
     },
+    setNewPassword: (state, action) => {
+      state.changePasswordData = action.payload;
+    },
   },
 });
 
@@ -130,6 +134,7 @@ export const {
   searchTrackStatusData,
   getInitiateWorkFlow,
   updateTrackApplicationTableData,
+  setNewPassword,
 } = CommonActivity.actions;
 
 export default CommonActivity.reducer;
