@@ -1,6 +1,6 @@
-import { useTheme } from '@emotion/react';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Grid, IconButton, InputAdornment } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
@@ -17,6 +17,7 @@ export function TableSearch({
   activateLicenseListFilterDataByTypeOfSuspension,
 }) {
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  const theme = useTheme();
   const {
     register,
     handleSubmit,
@@ -33,7 +34,6 @@ export function TableSearch({
       search: '',
     },
   });
-  const theme = useTheme();
   const onClickFilterButtonHandler = (data) => {
     activateLicenseListFilterData(data);
     // searchParams(data);
@@ -97,7 +97,6 @@ export function TableSearch({
                   <Select
                     error={errors.Filter?.message}
                     name="Filter"
-                    // label="Filter"
                     defaultValue={getValues().Filter}
                     placeholder="All Applications"
                     options={[
@@ -112,7 +111,6 @@ export function TableSearch({
                   <Select
                     error={errors.Date?.message}
                     name="Date"
-                    // label="Sort by"
                     defaultValue={getValues().Date}
                     options={[
                       {
@@ -139,14 +137,13 @@ export function TableSearch({
                   defaultValue={getValues().filterByName}
                   error={errors.filterByName?.message}
                   {...register('filterByName')}
-                  // label="Filter By Name"
                 />
               </Grid>
             )}
             {trackApplication !== true && (
               <Grid item md={3} xs={12}>
                 <TextField
-                  data-testid="filterByRegNo"
+                  data-testid="filter_By_RegNo"
                   inputProps={{ maxLength: 100 }}
                   fullWidth
                   id="outlined-basic"
@@ -158,13 +155,11 @@ export function TableSearch({
                   defaultValue={getValues().filterByRegNo}
                   error={errors.filterByRegNo?.message}
                   {...register('filterByRegNo')}
-                  // label="Filter by Reg No"
                 />
               </Grid>
             )}
             {(loggedInUserType === 'College' || loggedInUserType === 'NMC') && (
               <Grid item md={3} xs={12}>
-                {/* <Typography>Filter by council</Typography> */}
                 <SearchableDropdown
                   fullWidth
                   name="registrationCouncil"
