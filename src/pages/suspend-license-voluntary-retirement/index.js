@@ -23,13 +23,17 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue }) {
     handleSubmit,
     getValues,
     setValue,
+    reset,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
     defaultValues: {
       voluntarySuspendLicense: 'voluntary-suspension-check',
       fromDate: '',
-      toDate: selectedFromDate?.length >= 10 ? selectedFromDate : '',
+      toDate:
+        selectedSuspension === 'permanent-suspension-check'
+          ? selectedFromDate?.length >= 10 && selectedFromDate
+          : '',
     },
   });
 
@@ -52,12 +56,12 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue }) {
 
   const handlevoluntarySuspendLicenseChange = (event) => {
     setSelectedSuspension(event.target.value);
-    autoFromDateSelected();
+    reset({ toDate: '', fromDate: '', remark: '' });
   };
   const autoFromDateSelected = (event) => {
     const temp1 = +event.target.value.substring(0, 4) + 99 + '';
     const temp2 = event.target.value.replace(event.target.value.substring(0, 4), temp1);
-    setValue('toDate', temp2);
+    selectedSuspension === 'permanent-suspension-check' && setValue('toDate', temp2);
     setSelectedFromDate(temp2);
   };
 
@@ -210,7 +214,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue }) {
                   shrink: true,
                   sx: { height: '40px' },
                 }}
-                disabled={selectedSuspension === 'voluntary-suspension-check' ? true : false}
+                disabled={selectedSuspension === 'permanent-suspension-check' ? true : false}
                 required={true}
                 defaultValue={getValues().toDate}
                 error={errors.toDate?.message}
