@@ -375,9 +375,9 @@ export const updationRequestMapper = {
 export const suspensionRequestMapper = {
   'Total Consolidated Suspension Requests': 'Total Suspension request',
   Rejected: 'Rejected',
-  Approved: 'Temporary Suspension Approved',
+  Approved: 'Approved',
   'Query Raised': 'Query Raised',
   Suspended: 'Suspended',
   Blacklisted: 'Blacklisted',
-  Pending: 'Temporary Suspension Request Received',
+  Pending: 'Pending',
 };

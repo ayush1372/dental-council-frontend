@@ -41,6 +41,7 @@ function DashboardControlledTable(props) {
   const [page, setPage] = React.useState(0);
   // const [selectedRowData, setRowData] = React.useState({});
   const dispatch = useDispatch();
+  const [searchQueryParams, setSearchQueryParams] = React.useState();
 
   const { dashboardTableDetails } = useSelector((state) => state.dashboard);
 
@@ -127,6 +128,7 @@ function DashboardControlledTable(props) {
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
+    getTableData(newPage + 1, 10);
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
@@ -135,10 +137,14 @@ function DashboardControlledTable(props) {
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+    // setPage(0);
   };
 
   useEffect(() => {
+    getTableData(1, 10);
+  }, [searchQueryParams]);
+
+  const getTableData = (pageNo, noOfRecords) => {
     const requestObj = {
       work_flow_status_id: '',
       application_type_id: props?.selectedCardDataData?.applicationTypeID
@@ -147,24 +153,28 @@ function DashboardControlledTable(props) {
       user_group_status: props?.selectedCardDataData?.responseKey
         ? props?.selectedCardDataData?.responseKey
         : '',
-      smc_id: '',
-      name: '',
-      nmr_id: '',
-      search: '',
-      page_no: 1,
-      size: 10,
+      smc_id: searchQueryParams ? searchQueryParams?.registrationCouncil : '',
+      name: searchQueryParams ? searchQueryParams?.filterByName : '',
+      nmr_id: searchQueryParams ? searchQueryParams?.filterByRegNo : '',
+      search: searchQueryParams ? searchQueryParams?.search : '',
+      page_no: pageNo,
+      size: noOfRecords,
       sort_by: '',
       sort_order: '',
     };
     dispatch(getDashboardTableData(requestObj));
-  }, []);
+  };
+
+  const searchParams = (data) => {
+    setSearchQueryParams(data);
+  };
 
   return (
     <Grid sx={{ m: 2 }}>
       <Typography variant="h2" py={2}>
-        Applications Pending List
+        {`${props?.selectedCardDataData?.responseKey} Applications`}
       </Typography>
-      <TableSearch />
+      <TableSearch searchParams={searchParams} />
       <GenericTable
         order={order}
         orderBy={orderBy}
@@ -177,9 +187,9 @@ function DashboardControlledTable(props) {
       />
       <Box>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[]}
           component="div"
-          count={props.showTable?.count || newRowsData?.length}
+          count={dashboardTableDetails?.data?.total_no_of_records}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
