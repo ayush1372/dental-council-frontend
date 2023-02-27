@@ -54,5 +54,6 @@ export const API = {
   },
   searchDoctor: {
     searchDoctorDetails: 'api/v1/abdm/nmr/health-professional/search',
+    searchDoctorById: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}',
   },
 };

@@ -12,7 +12,7 @@ import { searchDoctorDetails } from '../../../store/actions/doctor-search-action
 import { Button, Select, TextField } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
 
-const AdvanceSearch = ({ setDoSearch }) => {
+const AdvanceSearch = ({ setDoSearch, setSearchData }) => {
   const { councilNames } = useSelector((state) => state.common);
 
   const dispatch = useDispatch();
@@ -30,7 +30,7 @@ const AdvanceSearch = ({ setDoSearch }) => {
     defaultValues: {
       DoctorName: '',
       RegistrationNumber: '',
-      yearofRegistration: '',
+      YearofRegistration: '',
       Statemedicalcouncil: '',
       RegistrationCouncilId: '',
     },
@@ -39,10 +39,10 @@ const AdvanceSearch = ({ setDoSearch }) => {
     const searchValues = {
       fullName: getValues().DoctorName,
       registrationNumber: getValues().RegistrationNumber,
-      registrationYear: getValues().yearofRegistration,
+      registrationYear: getValues().YearofRegistration,
       stateMedicalCouncilId: getValues().RegistrationCouncilId,
       page: 0,
-      size: 10,
+      size: 9,
     };
 
     setDoSearch(true);
@@ -57,6 +57,8 @@ const AdvanceSearch = ({ setDoSearch }) => {
           'top-center'
         );
       });
+
+    setSearchData(searchValues);
   };
   return (
     <Grid container spacing={2} mt={2}>
@@ -127,10 +129,9 @@ const AdvanceSearch = ({ setDoSearch }) => {
 
         <Select
           fullWidth
-          name="yearofRegistration"
+          name="YearofRegistration"
           placeholder="Select year of Registration"
-          defaultValue={getValues().yearofRegistration}
-          {...register('yearofRegistration', {
+          {...register('YearofRegistration', {
             required: 'year of Registration is required',
           })}
           error={errors.yearofRegistration?.message}

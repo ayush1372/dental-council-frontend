@@ -7,15 +7,13 @@ import { searchDoctorDetails } from '../../../store/actions/doctor-search-action
 import { Button, TextField } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
 
-const Name = ({ setDoSearch }) => {
-  // const [Value, setValue] = useState([]);
+const Name = ({ setDoSearch, setSearchData }) => {
   const dispatch = useDispatch();
   const {
     formState: { errors },
     getValues,
     handleSubmit,
     register,
-    // setValue,
   } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -26,7 +24,7 @@ const Name = ({ setDoSearch }) => {
     const searchValues = {
       fullName: getValues().DoctorName,
       page: 0,
-      size: 10,
+      size: 9,
     };
 
     setDoSearch(true);
@@ -41,6 +39,8 @@ const Name = ({ setDoSearch }) => {
           'top-center'
         );
       });
+
+    setSearchData(searchValues);
   };
   return (
     <Grid container spacing={2} mt={2}>
@@ -52,7 +52,7 @@ const Name = ({ setDoSearch }) => {
           color="tabHighlightedBackgroundColor.main"
           variant="h3"
         >
-          Browse by doctor&apos;s name*
+          Browse by doctors name*
         </Typography>
       </Grid>
       <Grid item xs={8}>

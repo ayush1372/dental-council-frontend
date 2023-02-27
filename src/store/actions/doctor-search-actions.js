@@ -1,7 +1,7 @@
 import { API } from '../../api/api-endpoints';
 import { GET } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
-import { searchDoctor } from '../reducers/doctor-search-reducer';
+import { searchDoctor, searchDoctorById } from '../reducers/doctor-search-reducer';
 
 export const searchDoctorDetails = (searchdetails) => async (dispatch) => {
   let path = '';
@@ -82,6 +82,22 @@ export const searchDoctorDetails = (searchdetails) => async (dispatch) => {
     })
       .then((response) => {
         dispatch(searchDoctor(response));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const searchDoctorDetailsById = (id) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: GET,
+      url: API.searchDoctor.searchDoctorById.replace('{healthProfessionalId}', id),
+    })
+      .then((response) => {
+        dispatch(searchDoctorById(response));
         return resolve(response);
       })
       .catch((error) => {

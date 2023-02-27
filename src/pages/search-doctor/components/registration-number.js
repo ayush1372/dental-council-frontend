@@ -6,15 +6,14 @@ import { searchDoctorDetails } from '../../../store/actions/doctor-search-action
 import { Button, TextField } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
 
-const RegistrationNumber = ({ setDoSearch }) => {
+const RegistrationNumber = ({ setDoSearch, setSearchData }) => {
   const dispatch = useDispatch();
-  // const [Value, setValue] = useState([]);
+
   const {
     formState: { errors },
     getValues,
     handleSubmit,
     register,
-    // setValue,
   } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -25,11 +24,11 @@ const RegistrationNumber = ({ setDoSearch }) => {
     const searchValues = {
       registrationNumber: getValues().RegistrationNumber,
       page: 0,
-      size: 5,
+      size: 9,
     };
 
     setDoSearch(true);
-
+    setSearchData(searchValues);
     dispatch(searchDoctorDetails(searchValues))
       .then(() => {})
       .catch((error) => {
@@ -40,6 +39,8 @@ const RegistrationNumber = ({ setDoSearch }) => {
           'top-center'
         );
       });
+
+    setSearchData(searchValues);
   };
   return (
     <Grid container spacing={2} mt={2}>

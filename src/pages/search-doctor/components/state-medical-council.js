@@ -7,8 +7,7 @@ import { searchDoctorDetails } from '../../../store/actions/doctor-search-action
 import { Button, Select } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
 
-const StateMedicalCouncil = ({ setDoSearch }) => {
-  // const [Value, setValue] = useState([]);
+const StateMedicalCouncil = ({ setDoSearch, setSearchData }) => {
   const { councilNames } = useSelector((state) => state.common);
   const dispatch = useDispatch();
   const {
@@ -28,7 +27,7 @@ const StateMedicalCouncil = ({ setDoSearch }) => {
     const searchValues = {
       stateMedicalCouncilId: getValues().RegistrationCouncilId,
       page: 0,
-      size: 10,
+      size: 9,
     };
 
     setDoSearch(true);
@@ -43,6 +42,8 @@ const StateMedicalCouncil = ({ setDoSearch }) => {
           'top-center'
         );
       });
+
+    setSearchData(searchValues);
   };
   return (
     <Grid container spacing={2} mt={2}>

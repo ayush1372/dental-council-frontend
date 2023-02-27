@@ -9,7 +9,7 @@ import { searchDoctorDetails } from '../../../store/actions/doctor-search-action
 import { Button, Select, TextField } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
 
-const BlacklistedDoctor = ({ setDoSearch }) => {
+const BlacklistedDoctor = ({ setDoSearch, setSearchData }) => {
   const { councilNames } = useSelector((state) => state.common);
   const dispatch = useDispatch();
   const {
@@ -23,7 +23,7 @@ const BlacklistedDoctor = ({ setDoSearch }) => {
     defaultValues: {
       SelectDoctorname: '',
       RegistrationNumber: '',
-      yearofRegistration: '',
+      YearofRegistration: '',
       Statemedicalcouncil: '',
       RegistrationCouncilId: '',
     },
@@ -32,15 +32,14 @@ const BlacklistedDoctor = ({ setDoSearch }) => {
     const searchValues = {
       fullName: getValues().DoctorName,
       registrationNumber: getValues().RegistrationNumber,
-      registrationYear: getValues().yearofRegistration,
+      registrationYear: getValues().YearofRegistration,
       stateMedicalCouncilId: getValues().RegistrationCouncilId,
       profileStatusId: 6,
       page: 0,
-      size: 10,
+      size: 9,
     };
 
     setDoSearch(true);
-
     dispatch(searchDoctorDetails(searchValues))
       .then(() => {})
       .catch((error) => {
@@ -51,6 +50,8 @@ const BlacklistedDoctor = ({ setDoSearch }) => {
           'top-center'
         );
       });
+
+    setSearchData(searchValues);
   };
   return (
     <Grid container spacing={2} mt={2}>
@@ -112,12 +113,12 @@ const BlacklistedDoctor = ({ setDoSearch }) => {
             }}
             fullWidth
             error={errors.yearofRegistration?.message}
-            name="yearofRegistration"
+            name="YearofRegistration"
             label="Select year of Registration"
             placeholder="Select year of Registration"
-            defaultValue={getValues().yearofRegistration}
-            {...register('yearofRegistration', {
-              required: 'year of Registration is required',
+            defaultValue={getValues().YearofRegistration}
+            {...register('YearofRegistration', {
+              required: 'Year of Registration is required',
             })}
             options={yearsData}
           />
