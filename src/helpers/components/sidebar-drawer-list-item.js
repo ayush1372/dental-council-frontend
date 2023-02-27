@@ -20,6 +20,7 @@ import TrackApplication from '../../pages/profile/track-application/track-applic
 import UserProfile from '../../pages/user-profile';
 import AdditionalQualifications from '../../pages/user-profile/components/additional-qualifications/additional-qualifications';
 import TrackStatus from '../../shared/track-status';
+import { getDoctorTrackApplicationData } from '../../store/actions/doctor-user-profile-actions';
 
 function SideDrawerListItem() {
   const { userActiveTab } = useSelector((state) => state.common);
@@ -38,7 +39,7 @@ export const doctorTabs = [
     name: 'Track Application',
     tabName: 'track-application',
     icon: <CreditCardOffIcon />,
-    element: <TrackApplication />,
+    element: <TrackApplication getTableData={getDoctorTrackApplicationData} />,
   },
   {
     option: 2,

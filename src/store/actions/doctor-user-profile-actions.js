@@ -1,6 +1,7 @@
 import { API } from '../../api/api-endpoints';
 import { GET, POST, PUT } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
+import { updateTrackApplicationTableData } from '../reducers/common-reducers';
 import {
   getPersonalDetails,
   getProfileImage,
@@ -146,6 +147,27 @@ export const getUserProfileImage = (hp_profile_id, file) => async (dispatch) => 
     })
       .then((response) => {
         dispatch(getProfileImage(response));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const getDoctorTrackApplicationData = (doctor_profile_id) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: GET,
+      url: API.DoctorUserProfileData.trackApplicationData.replace(
+        '{healthProfessionalId}',
+        doctor_profile_id
+      ),
+    })
+      .then((response) => {
+        dispatch(
+          updateTrackApplicationTableData(response.data?.health_professional_applications || [])
+        );
         return resolve(response);
       })
       .catch((error) => {
