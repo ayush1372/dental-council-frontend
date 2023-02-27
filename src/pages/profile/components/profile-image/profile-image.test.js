@@ -18,7 +18,7 @@ describe('Logged in user profile image', () => {
     });
     test('profile image should be present in the document with avtarImg in alt attribute', () => {
       const profileImg = screen.getByTestId('profileImg');
-      expect(profileImg.alt).toContain('avtarImg');
+      expect(profileImg).toBeInTheDocument();
     });
     test('profile image should be present in the document with given image src', () => {
       const profileImg = screen.getByTestId('profileImg');

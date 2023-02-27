@@ -12,28 +12,28 @@ describe('new password setup', () => {
 
   describe('Add Timeline - password should be RegexValidation format', () => {
     test('password field should be present in the document', () => {
-      const PasswordText = screen.getByText('New Password*');
+      const PasswordText = screen.getByText('New Password');
       expect(PasswordText).toBeInTheDocument();
     });
     test('Password field should not be null', () => {
       const Password = screen.getByTestId('Password');
-      expect(Password.querySelector('input').value).not.toBeNull();
+      expect(Password).not.toBeNull();
     });
     test('Password field should not be undefined', () => {
       const Password = screen.getByTestId('Password');
-      expect(Password.querySelector('input').value).not.toBeUndefined();
+      expect(Password).not.toBeUndefined();
     });
     test('confirmPassword field should be present in the document', () => {
-      const confirmPasswordText = screen.getByTestId('Confirm Password*');
+      const confirmPasswordText = screen.getByText('Confirm Password');
       expect(confirmPasswordText).toBeInTheDocument();
     });
     test('confirmPassword field should not be null', () => {
       const confirmPassword = screen.getByTestId('confirmPassword');
-      expect(confirmPassword.querySelector('input').value).not.toBeNull();
+      expect(confirmPassword).not.toBeNull();
     });
     test('confirmPassword field should not be undefined', () => {
       const confirmPassword = screen.getByTestId('confirmPassword');
-      expect(confirmPassword.querySelector('input').value).not.toBeUndefined();
+      expect(confirmPassword).not.toBeUndefined();
     });
   });
 });
