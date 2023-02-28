@@ -36,7 +36,7 @@ export const API = {
     getCollegeProfile: 'api/v1/abdm/nmr/college/{id}',
     getCollegeRegistrarProfile: 'api/v1/abdm/nmr/college/{collegeId}/registrar/{id}',
     getCollegeDeanProfile: 'api/v1/abdm/nmr/college/{collegeId}/dean/{id}',
-    register: 'api/v1/abdm/nmr/college',
+    register: 'api/v1/abdm/nmr/college/applications',
     initiateCollegeWorkFlow: 'api/v1/abdm/nmr/college/applications/status',
   },
   nmc: {
@@ -46,6 +46,10 @@ export const API = {
   Aadhaar: {
     sendAadhaarOtp: 'api/v1/abdm/nmr/aadhaar/send-otp',
     verifyAadhaarOtp: 'api/v1/abdm/nmr/aadhaar/verify-otp',
+  },
+  dashboard: {
+    cardCount: 'api/v1/abdm/nmr/dashboards/cards',
+    cardDetails: 'api/v1/abdm/nmr/dashboards/card-detail',
   },
   smc: {
     getSMCProfileData: 'api/v1/abdm/nmr/smc/user/{id}',
@@ -57,5 +61,9 @@ export const API = {
     doctor: '/api/v1/abdm/nmr/user/set-password',
     smc: '/api/v1/reset-password',
     nmc: '/api/v1/reset-password',
+  },
+  searchDoctor: {
+    searchDoctorDetails: 'api/v1/abdm/nmr/health-professional/search',
+    searchDoctorById: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}',
   },
 };

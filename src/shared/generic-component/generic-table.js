@@ -35,7 +35,7 @@ GenericTable.propTypes = {
 export default function GenericTable(props) {
   const { userActiveTab } = useSelector((state) => state.common);
   const tableCellWidth = Math.floor(window.innerWidth / props.tableHeader.length) + 'px';
-  const { order, orderBy, onRequestSort, page, rowsPerPage, customPopupOptions } = props;
+  const { order, orderBy, onRequestSort, customPopupOptions } = props;
   const [selected, setSelected] = useState('');
   const [confirmationModal, setConfirmationModal] = useState(false);
   const selectionChangeHandler = (event) => {
@@ -148,7 +148,7 @@ export default function GenericTable(props) {
         </TableHead>
         <TableBody>
           {stableSort(props?.data, getComparator(order, orderBy))
-            ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            // ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             ?.map((row, rowIndex) => (
               <TableRow
                 maxWidth={'100px'}

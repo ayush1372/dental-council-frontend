@@ -26,6 +26,7 @@ const CollegeEditProfile = () => {
   const [verifyMobile, setVerifyMobile] = useState(false);
   const [successModalPopup, setSuccessModalPopup] = useState(false);
   const [type, setType] = useState('');
+  const [transactionID, setTransactionID] = useState('');
   const [headerText, setHeaderText] = useState('');
   const userData = collegeData?.data;
   const dispatch = useDispatch();
@@ -37,6 +38,7 @@ const CollegeEditProfile = () => {
     if (type === 'sms') {
       dispatch(
         verifyNotificationOtp({
+          transaction_id: transactionID,
           contact: getValues().CollegePhoneNumber,
           type: type,
           otp: otpNumber,
@@ -53,6 +55,7 @@ const CollegeEditProfile = () => {
     } else {
       dispatch(
         verifyNotificationOtp({
+          transaction_id: transactionID,
           contact: getValues().email,
           type: type,
           otp: otpNumber,
@@ -73,7 +76,8 @@ const CollegeEditProfile = () => {
     if (type === 'sms' && otpMobileVerify) {
       setHeaderText(`Mobile Number${getValues().CollegePhoneNumber}`);
       dispatch(sendNotificationOtp({ contact: getValues().CollegePhoneNumber, type: type }))
-        .then(() => {
+        .then((response) => {
+          setTransactionID(response?.data?.transaction_id);
           handleClickOpen();
         })
         .catch((error) => {
@@ -83,7 +87,8 @@ const CollegeEditProfile = () => {
     } else if (type === 'email' && otpEmailVerify) {
       setHeaderText(`Email Id ${getValues().email}`);
       dispatch(sendNotificationOtp({ contact: getValues().email, type: type }))
-        .then(() => {
+        .then((response) => {
+          setTransactionID(response?.data?.transaction_id);
           handleClickOpen();
         })
         .catch((error) => {
@@ -108,7 +113,8 @@ const CollegeEditProfile = () => {
         )}`
       );
       dispatch(sendNotificationOtp({ contact: getValues().CollegePhoneNumber, type: type }))
-        .then(() => {
+        .then((response) => {
+          setTransactionID(response?.data?.transaction_id);
           handleClickOpen();
         })
         .catch((error) => {
@@ -118,7 +124,8 @@ const CollegeEditProfile = () => {
     } else if (type === 'email' && otpEmailVerify) {
       setHeaderText(`Email Id ******${getValues().email.substr(getValues().email.length - 15)}.`);
       dispatch(sendNotificationOtp({ contact: getValues().email, type: type }))
-        .then(() => {
+        .then((response) => {
+          setTransactionID(response?.data?.transaction_id);
           handleClickOpen();
         })
         .catch((error) => {
@@ -161,7 +168,7 @@ const CollegeEditProfile = () => {
       college_code: getValues().CollegeId,
       phone_number: getValues().CollegePhoneNumber,
       email_id: getValues().CollegeEmailId,
-      user_id: userData?.id,
+      user_id: userData?.user_id,
       council_id: getValues().RegistrationCouncilId,
       university_id: getValues().UniversityId,
       website: getValues().CollegeWebsite,
@@ -196,7 +203,7 @@ const CollegeEditProfile = () => {
         <SuccessModalPopup
           open={successModalPopup}
           setOpen={() => setSuccessModalPopup(false)}
-          text={'Your requested has Approved/Rejected Successfully'}
+          text={'College Profile Updated  Successfully'}
         />
       )}
       <Grid container spacing={2} mt={2}>
