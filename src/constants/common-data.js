@@ -53,11 +53,10 @@ export const getNMCProfileDetails = (details) => [
 ];
 
 export const getNBEProfileDetails = (details) => [
+  { label: 'User ID', value: details.id, id: '2' },
   { label: 'Name', value: details.display_name, id: '1' },
-  { label: 'Enrolment Number NDHM', value: details.ndhm_enrollment, id: '2' },
-  { label: 'Enrolment Number', value: details.enrolled_number, id: '3' },
-  // { label: 'Phone Number', value: details.mobile_no, id: '4' },
-  // { label: 'Email Address', value: details.email_id, id: '5' },
+  { label: 'Phone Number', value: details.mobile_no, id: '4' },
+  { label: 'Email Address', value: details.email_id, id: '5' },
 ];
 export const DepartmentNames = [
   { id: '1', name: 'Out patient' },
