@@ -1,5 +1,5 @@
 import { API } from '../../api/api-endpoints';
-import { GET, PATCH, POST } from '../../constants/requests';
+import { GET, PATCH, POST, PUT } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import {
   getActivateLicense,
@@ -298,6 +298,23 @@ export const reActivateLicenseStatus = (body) => async () => {
     useAxiosCall({
       method: PATCH,
       url: API.common.healthProfessionalApplicationStatus,
+      data: body,
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const enableUserNotification = (body) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: PUT,
+      url: API.common.enableNotification,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
       data: body,
     })
       .then((response) => {
