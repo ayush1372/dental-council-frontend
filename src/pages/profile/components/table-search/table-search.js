@@ -10,13 +10,7 @@ import { SearchableDropdown } from '../../../../shared/autocomplete/searchable-d
 import ExportFiles from '../../../../shared/export-component/export-file';
 import { Button, Select, TextField } from '../../../../ui/core';
 
-export function TableSearch({
-  trackApplication,
-  activateLicence,
-  // searchParams,
-  activateLicenseListFilterData,
-  activateLicenseListFilterDataByTypeOfSuspension,
-}) {
+export function TableSearch({ trackApplication, activateLicence, searchParams }) {
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const { councilNames } = useSelector((state) => state.common);
   const theme = useTheme();
@@ -37,14 +31,12 @@ export function TableSearch({
     },
   });
   const onClickFilterButtonHandler = (data) => {
-    activateLicenseListFilterData(data);
-    // searchParams(data);
+    searchParams(data);
     reset({ filterByName: '', filterByRegNo: '', registrationCouncil: '', search: '' });
   };
 
   const onClickSearchButtonHandler = (data) => {
-    activateLicenseListFilterDataByTypeOfSuspension(data);
-    // searchParams(data);
+    searchParams(data);
     reset({ filterByName: '', filterByRegNo: '', registrationCouncil: '', search: '' });
   };
 

@@ -29,9 +29,9 @@ const ActivateLicence = (props) => {
   verboseLog(selectedRowData);
   const { activateLicenseList } = useSelector((state) => state?.common);
   const dispatch = useDispatch();
-  const [activateLicenseListData, setActivateLicenseListData] = useState();
   const [reactiveLicenseRequestHPApplicationData, setReactiveLicenseRequestHPApplicationData] =
     useState();
+  const [searchQueryParams, setSearchQueryParams] = useState();
 
   function createData(
     SNo,
@@ -116,9 +116,10 @@ const ActivateLicence = (props) => {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
+
   const newRowsData =
-    activateLicenseListData?.length >= 1
-      ? activateLicenseListData?.map((application, index) => {
+    activateLicenseList?.data?.health_professional_details?.length >= 1
+      ? activateLicenseList?.data.health_professional_details.map((application, index) => {
           return createData(
             { type: 'SNo', value: index + 1 },
             {
@@ -127,63 +128,37 @@ const ActivateLicence = (props) => {
             },
             {
               type: 'nameofApplicant',
-              value: application.health_professional_name,
+              value: application?.health_professional_name,
               callbackNameOfApplicant: viewNameOfApplicant,
             },
             {
               type: 'dateOfSubmission',
-              value: application.submitted_date,
+              value: application?.submitted_date,
             },
             {
               type: 'reactivationFromDate',
-              value: application.reactivation,
+              value: application?.reactivation,
             },
-            { type: 'typeOfSuspension', value: application.type_of_suspension },
+            { type: 'typeOfSuspension', value: application?.type_of_suspension },
             {
               type: 'Remark',
-              value: application.remarks,
+              value: application?.remarks,
             },
             {
               type: 'RequestId',
-              value: application.request_id,
+              value: application?.request_id,
             }
           );
         })
-      : activateLicenseList?.data?.health_professional_details?.length >= 1 &&
-        activateLicenseList?.data.health_professional_details.map((application, index) => {
-          return createData(
-            { type: 'SNo', value: index + 1 },
-            {
-              type: 'registrationNo',
-              value: application?.registration_id,
-            },
-            {
-              type: 'nameofApplicant',
-              value: application.health_professional_name,
-              callbackNameOfApplicant: viewNameOfApplicant,
-            },
-            {
-              type: 'dateOfSubmission',
-              value: application.submitted_date,
-            },
-            {
-              type: 'reactivationFromDate',
-              value: application.reactivation,
-            },
-            { type: 'typeOfSuspension', value: application.type_of_suspension },
-            {
-              type: 'Remark',
-              value: application.remarks,
-            },
-            {
-              type: 'RequestId',
-              value: application.request_id,
-            }
-          );
-        });
+      : [];
+
+  const searchParams = (data) => {
+    setSearchQueryParams(data);
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
+    getTableData(newPage + 1);
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
@@ -215,20 +190,22 @@ const ActivateLicence = (props) => {
     : undefined;
 
   useEffect(() => {
+    setPage(0);
+    getTableData(1);
+  }, [searchQueryParams]);
+
+  const getTableData = (pageNo) => {
     let ActivateLicenseListbody = {
-      pageNo: page + 1,
-      offset: rowsPerPage,
+      pageNo: pageNo,
+      offset: 10,
+      search: searchQueryParams?.search ? searchQueryParams?.search : '',
     };
     try {
-      dispatch(getActivateLicenseList(ActivateLicenseListbody)).then((response) => {
-        if (response) {
-          setActivateLicenseListData();
-        }
-      });
+      dispatch(getActivateLicenseList(ActivateLicenseListbody)).then(() => {});
     } catch (allFailMsg) {
       successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
     }
-  }, [page, rowsPerPage]);
+  };
 
   const fetchReActivateLicenseHealthProfessionalId = (selectedRow, selectedStatus) => {
     let reActivateLicenseHealthProfessionalIdBody = {
@@ -255,41 +232,6 @@ const ActivateLicence = (props) => {
     }
   };
 
-  const activateLicenseListFilterData = (data) => {
-    const temp =
-      data.filterByRegNo.length > 1 && data.filterByName.length > 1
-        ? activateLicenseList?.data?.health_professional_details?.filter((a) =>
-            a.health_professional_name
-              .toLocaleLowerCase()
-              .includes(data?.filterByName.toLocaleLowerCase())
-          ) &&
-          activateLicenseList?.data?.health_professional_details?.filter((a) =>
-            a.registration_id.includes(data?.filterByRegNo)
-          )
-        : data.filterByRegNo.length > 1 && data.filterByName.length === 0
-        ? activateLicenseList?.data?.health_professional_details?.filter((a) => {
-            if (a.registration_id.toString() === data?.filterByRegNo) {
-              return a;
-            }
-          })
-        : data.filterByRegNo.length === 0 &&
-          data.filterByName.length > 1 &&
-          activateLicenseList?.data?.health_professional_details?.filter((a) =>
-            a.health_professional_name.toLowerCase().includes(data?.filterByName.toLowerCase())
-          );
-
-    temp.length > 1 && setActivateLicenseListData(temp);
-  };
-
-  const activateLicenseListFilterDataByTypeOfSuspension = (data) => {
-    const temp =
-      data.search?.length > 1 &&
-      activateLicenseList?.data?.health_professional_details?.filter((a) =>
-        a.type_of_suspension?.toLowerCase().includes(data?.search?.toLowerCase())
-      );
-
-    temp.length > 1 && setActivateLicenseListData(temp);
-  };
   return (
     <>
       {showViewProfile ? (
@@ -305,13 +247,7 @@ const ActivateLicence = (props) => {
             </Typography>
           </Grid>
           <Grid mt={3}>
-            <TableSearch
-              activateLicence
-              activateLicenseListFilterData={activateLicenseListFilterData}
-              activateLicenseListFilterDataByTypeOfSuspension={
-                activateLicenseListFilterDataByTypeOfSuspension
-              }
-            />
+            <TableSearch searchParams={searchParams} />
           </Grid>
           <GenericTable
             order={order}
@@ -328,9 +264,9 @@ const ActivateLicence = (props) => {
 
           <Box>
             <TablePagination
-              rowsPerPageOptions={[5, 10, 25, 50, 75, 100, 200, 400]}
+              rowsPerPageOptions={[]}
               component="div"
-              count={props?.showTable?.count || newRowsData?.length}
+              count={activateLicenseList?.data?.total_no_of_records}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}

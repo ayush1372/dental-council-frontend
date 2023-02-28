@@ -261,10 +261,10 @@ export const getInitiateWorkFlow = (body) => async () => {
 
 export const getActivateLicenseList = (body) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
-    let getActivateLicenseListUrl = API.common.activateLicense.replace('{page_No}', body.pageNo);
     useAxiosCall({
       method: GET,
-      url: getActivateLicenseListUrl.replace('{offset_No}', body.offset),
+      url: `${API.common.activateLicense}?pageNo=${body.pageNo}&offset=${body.offset}&search=${body.search}`,
+
       data: body,
     })
       .then((response) => {
