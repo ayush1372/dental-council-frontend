@@ -5,8 +5,11 @@ import { experimentalStyled as styled } from '@mui/material/styles';
 import { useTheme } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
 
-import { verboseLog } from '../../../../config/debug';
-import { dashboardCountData } from '../../../../constants/common-data';
+import {
+  registrationRequestMapper,
+  suspensionRequestMapper,
+  updationRequestMapper,
+} from '../../../../constants/common-data';
 import ViewProfile from '../../../../shared/view-profile/view-profile';
 import { Button } from '../../../../ui/core';
 import UserProfile from '../../../user-profile/index';
@@ -16,6 +19,13 @@ import DashboardControlledTable from '../dashboard-controlled-table/dashboard-co
 export default function Dashboard() {
   const theme = useTheme();
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  const { count } = useSelector((state) => state.dashboard);
+  const [showDashboard, setShowDashboard] = useState(true);
+  const [showTable, setShowTable] = useState(false);
+  const [showViewProfile, setShowViewPorfile] = useState(false);
+  const [selectedCardDataData, setSelectedCardDataData] = useState();
+  const [selectedRowData, setSelectedRowData] = useState();
+
   const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(1),
     textAlign: 'center',
@@ -24,104 +34,53 @@ export default function Dashboard() {
     cursor: 'pointer',
   }));
 
-  let blankDashboard = {
-    'Registration Request': [
-      {
-        name: 'Total Registration Request',
-        value: 0,
-      },
-      {
-        name: 'Pending',
-        value: 0,
-      },
-      {
-        name: 'Verified',
-        value: 0,
-      },
-      {
-        name: 'Query Raised',
-        value: 0,
-      },
-      {
-        name: 'Rejected',
-        value: 0,
-      },
-    ],
-    'Updation Request': [
-      {
-        name: 'Total Updation Request',
-        value: 0,
-      },
-      {
-        name: 'Update Request Received',
-        value: 0,
-      },
-      {
-        name: 'Update Request Approved',
-        value: 0,
-      },
-      {
-        name: 'Query Raised on Update Request',
-        value: 0,
-      },
-      {
-        name: 'Update Request Rejected',
-        value: 0,
-      },
-    ],
+  let registrationRequestData = getDataFromResponse(
+    count,
+    registrationRequestMapper,
+    'hp_registration_request'
+  );
+
+  let updationRequestData = getDataFromResponse(
+    count,
+    updationRequestMapper,
+    'hp_modification_request'
+  );
+  let suspensionRequestData = getDataFromResponse(
+    count,
+    suspensionRequestMapper,
+    'consolidated_suspension_request'
+  );
+
+  let dashboard = {
+    'Registration Request': registrationRequestData,
+    'Updation Request': updationRequestData,
   };
 
   if (loggedInUserType === 'NMC' || loggedInUserType === 'SMC') {
-    blankDashboard = Object.assign(blankDashboard, {
-      'Suspension Request': [
-        {
-          name: 'Total Suspension Request',
-          value: 0,
-        },
-        {
-          name: 'Temporary Suspension Request Received',
-          value: 0,
-        },
-        {
-          name: 'Temporary Suspension Approved',
-          value: 0,
-        },
-        {
-          name: 'Permanent Suspension Request Received',
-          value: 0,
-        },
-        {
-          name: 'Permanent Suspension Request Approved',
-          value: 0,
-        },
-      ],
+    dashboard = Object.assign(dashboard, {
+      'Suspension Request': suspensionRequestData,
     });
   }
 
-  const [showDashboard, setShowDashboard] = useState(true);
-  const [showTable, setShowTable] = useState(false);
-  const [showViewProfile, setShowViewPorfile] = useState(false);
-
-  const countResp = Object.values(dashboardCountData);
-  const blankResp = Object.values(blankDashboard);
-
-  const resultCountResp =
-    loggedInUserType === 'NMC' || loggedInUserType === 'SMC'
-      ? countResp[0].concat(countResp[1]).concat(countResp[2])
-      : countResp[0].concat(countResp[1]);
-  const resultblankResp =
-    loggedInUserType === 'NMC' || loggedInUserType === 'SMC'
-      ? blankResp[0].concat(blankResp[1]).concat(blankResp[2])
-      : blankResp[0].concat(blankResp[1]);
-
-  if (resultCountResp?.length > 0) {
-    for (let i = 0; i < resultCountResp?.length; i++) {
-      for (let j = 0; j < resultblankResp?.length; j++) {
-        if (resultCountResp[i].name === resultblankResp[j].name) {
-          resultblankResp[j].value = resultCountResp[i].count;
-        }
-      }
+  function getDataFromResponse(count, mapper, key) {
+    let dataArr = [];
+    if (count?.data[key]?.status_wise_count !== undefined) {
+      const newCountArray = count?.data[key]?.status_wise_count?.filter(
+        (item) => item.name !== 'Suspended' && item.name !== 'Blacklisted'
+      );
+      newCountArray?.forEach((request) => {
+        let currObj;
+        currObj = {
+          name: mapper[request['name']],
+          value: request['count'],
+          applicationTypeID: count?.data[key].application_type_ids,
+          responseKey: request['name'],
+        };
+        dataArr.push(currObj);
+      });
     }
+
+    return dataArr;
   }
 
   function handleBreadCrumClick(event) {
@@ -130,10 +89,12 @@ export default function Dashboard() {
       setShowDashboard(true);
       setShowTable(false);
       setShowViewPorfile(false);
+      setSelectedRowData();
     } else if (event.target.id === '2') {
       setShowDashboard(false);
       setShowTable(true);
       setShowViewPorfile(false);
+      setSelectedRowData();
     }
   }
 
@@ -141,8 +102,8 @@ export default function Dashboard() {
     setShowDashboard(false);
     setShowTable(true);
     setShowViewPorfile(false);
-    verboseLog('item', item);
-    // setShowTable({ show: true, value: item.id, count: item.value })
+    setSelectedCardDataData(item);
+    setSelectedRowData();
   };
 
   const onClickBackButtonHandler = () => {
@@ -150,11 +111,17 @@ export default function Dashboard() {
       setShowDashboard(false);
       setShowTable(true);
       setShowViewPorfile(false);
+      setSelectedRowData();
     } else if (showTable) {
       setShowDashboard(true);
       setShowTable(false);
       setShowViewPorfile(false);
+      setSelectedRowData();
     }
+  };
+
+  const getSelectedRowData = (data) => {
+    setSelectedRowData(data);
   };
 
   return (
@@ -197,7 +164,7 @@ export default function Dashboard() {
           </Typography>
           <Box sx={{ width: '100%' }}>
             <Box display="flex" flexWrap="wrap" gap={1}>
-              {Object.entries(blankDashboard).map((element) => {
+              {Object.entries(dashboard).map((element) => {
                 return (
                   <>
                     <Typography flex="1 0 100%">{element[0]}</Typography>
@@ -206,23 +173,24 @@ export default function Dashboard() {
                         <Box
                           mb={{ xs: 2, md: 4 }}
                           flex={{ xs: '1 0 100%', sm: '1 0 32%', md: '1 0 19%' }}
-                          key={item.name}
+                          key={item?.name}
                         >
                           <Item
-                            id={item.id}
+                            id={item?.id}
                             sx={
-                              item.name.includes('Pending') || item.name.includes('Received')
+                              item?.name?.includes('Pending') || item?.name?.includes('Received')
                                 ? {
                                     borderTop: `5px solid ${theme.palette.secondary.warningYellow}`,
                                   }
-                                : item.name.includes('Verified') || item.name.includes('Approved')
+                                : item?.name?.includes('Verified') ||
+                                  item?.name?.includes('Approved')
                                 ? { borderTop: `5px solid ${theme.palette.success.main}` }
-                                : item.name.includes('Raised')
+                                : item?.name.includes('Raised')
                                 ? { borderTop: `5px solid ${theme.palette.primary.main}` }
-                                : item.name.includes('Rejected') ||
-                                  item.name.includes('Blacklisted')
+                                : item?.name.includes('Rejected') ||
+                                  item?.name.includes('Blacklisted')
                                 ? { borderTop: `5px solid ${theme.palette.error.main}` }
-                                : item.name.includes('Total')
+                                : item?.name.includes('Total')
                                 ? { borderTop: `5px solid ${theme.palette.black.main}` }
                                 : ''
                             }
@@ -257,6 +225,8 @@ export default function Dashboard() {
           setShowViewPorfile={setShowViewPorfile}
           setShowDashboard={setShowDashboard}
           setShowTable={setShowTable}
+          selectedCardDataData={selectedCardDataData}
+          getSelectedRowData={getSelectedRowData}
         />
       ) : showViewProfile ? (
         <Box>
@@ -267,6 +237,7 @@ export default function Dashboard() {
               setShowTable={setShowTable}
               setShowViewPorfile={setShowViewPorfile}
               showViewProfile={showViewProfile}
+              selectedRowData={selectedRowData}
             />
           </Container>
         </Box>
