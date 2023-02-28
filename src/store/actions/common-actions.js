@@ -280,7 +280,7 @@ export const createReActivateLicense = (body) => async () => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: POST,
-      url: API.common.reactiveLicenseRequest,
+      url: API.common.activateLicense,
       headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
       data: body,
     })

@@ -17,7 +17,6 @@ import Moment from 'moment';
 import propTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
-import { verboseLog } from '../../config/debug';
 import SuspendValuntaryPopup from '../../pages/suspend-valuntary-popup';
 import { Button, Chip } from '../../ui/core';
 
@@ -40,8 +39,7 @@ export default function GenericTable(props) {
   const [selected, setSelected] = useState('');
   const [confirmationModal, setConfirmationModal] = useState(false);
 
-  const selectionChangeHandler = (row, rowIndex) => {
-    verboseLog('hi12345', row, rowIndex);
+  const selectionChangeHandler = () => {
     setConfirmationModal(true);
     setSelected('myValue');
     props.setIsApproveModalOpen(true);

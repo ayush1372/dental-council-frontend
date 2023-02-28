@@ -35,7 +35,6 @@ export default function ReactivateLicencePopup(props) {
       application_type_id: 5,
       action_id: 1,
       from_date: fromDate,
-      to_date: '2023-02-15T11:39:21.854Z',
       remarks: reason,
     };
 
