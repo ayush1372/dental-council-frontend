@@ -29,6 +29,8 @@ export const API = {
     specialities: 'api/v1/abdm/nmr/specialities',
     councilNames: 'api/v1/abdm/nmr/state-medical-councils',
     trackStatus: 'api/v1/abdm/nmr/health-professional/applications',
+    activateLicense: 'api/v1/abdm/nmr/health-professional/applications/re-activate',
+    healthProfessionalApplicationStatus: 'api/v1/abdm/nmr/health-professional/applications/status',
   },
   college: {
     registrar: 'api/v1/abdm/nmr/college/{collegeId}/registrar',
@@ -36,7 +38,7 @@ export const API = {
     getCollegeProfile: 'api/v1/abdm/nmr/college/{id}',
     getCollegeRegistrarProfile: 'api/v1/abdm/nmr/college/{collegeId}/registrar/{id}',
     getCollegeDeanProfile: 'api/v1/abdm/nmr/college/{collegeId}/dean/{id}',
-    register: 'api/v1/abdm/nmr/college',
+    register: 'api/v1/abdm/nmr/college/applications',
     initiateCollegeWorkFlow: 'api/v1/abdm/nmr/college/applications/status',
   },
   nmc: {
@@ -56,5 +58,9 @@ export const API = {
   },
   nbe: {
     getNBEProfileData: 'api/v1/abdm/nmr/nbe/user/{id}',
+  },
+  searchDoctor: {
+    searchDoctorDetails: 'api/v1/abdm/nmr/health-professional/search',
+    searchDoctorById: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}',
   },
 };
