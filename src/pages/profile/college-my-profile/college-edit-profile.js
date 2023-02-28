@@ -26,6 +26,7 @@ const CollegeEditProfile = () => {
   const [verifyMobile, setVerifyMobile] = useState(false);
   const [successModalPopup, setSuccessModalPopup] = useState(false);
   const [type, setType] = useState('');
+  const [transactionID, setTransactionID] = useState('');
   const [headerText, setHeaderText] = useState('');
   const userData = collegeData?.data;
   const dispatch = useDispatch();
@@ -37,6 +38,7 @@ const CollegeEditProfile = () => {
     if (type === 'sms') {
       dispatch(
         verifyNotificationOtp({
+          transaction_id: transactionID,
           contact: getValues().CollegePhoneNumber,
           type: type,
           otp: otpNumber,
@@ -53,6 +55,7 @@ const CollegeEditProfile = () => {
     } else {
       dispatch(
         verifyNotificationOtp({
+          transaction_id: transactionID,
           contact: getValues().email,
           type: type,
           otp: otpNumber,
@@ -73,7 +76,8 @@ const CollegeEditProfile = () => {
     if (type === 'sms' && otpMobileVerify) {
       setHeaderText(`Mobile Number${getValues().CollegePhoneNumber}`);
       dispatch(sendNotificationOtp({ contact: getValues().CollegePhoneNumber, type: type }))
-        .then(() => {
+        .then((response) => {
+          setTransactionID(response?.data?.transaction_id);
           handleClickOpen();
         })
         .catch((error) => {
@@ -83,7 +87,8 @@ const CollegeEditProfile = () => {
     } else if (type === 'email' && otpEmailVerify) {
       setHeaderText(`Email Id ${getValues().email}`);
       dispatch(sendNotificationOtp({ contact: getValues().email, type: type }))
-        .then(() => {
+        .then((response) => {
+          setTransactionID(response?.data?.transaction_id);
           handleClickOpen();
         })
         .catch((error) => {
@@ -108,7 +113,8 @@ const CollegeEditProfile = () => {
         )}`
       );
       dispatch(sendNotificationOtp({ contact: getValues().CollegePhoneNumber, type: type }))
-        .then(() => {
+        .then((response) => {
+          setTransactionID(response?.data?.transaction_id);
           handleClickOpen();
         })
         .catch((error) => {
@@ -118,7 +124,8 @@ const CollegeEditProfile = () => {
     } else if (type === 'email' && otpEmailVerify) {
       setHeaderText(`Email Id ******${getValues().email.substr(getValues().email.length - 15)}.`);
       dispatch(sendNotificationOtp({ contact: getValues().email, type: type }))
-        .then(() => {
+        .then((response) => {
+          setTransactionID(response?.data?.transaction_id);
           handleClickOpen();
         })
         .catch((error) => {
