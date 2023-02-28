@@ -243,6 +243,22 @@ export const trackStatus = (trackData) => async (dispatch) => {
   });
 };
 
+export const getInitiateWorkFlow = (body) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: PATCH,
+      url: API.DoctorUserProfileData.initiateWorkFlow,
+      data: body,
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
 export const changePasswordData = (data) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
@@ -252,22 +268,6 @@ export const changePasswordData = (data) => async (dispatch) => {
     })
       .then((response) => {
         dispatch(setNewPassword(response));
-        return resolve(response);
-      })
-      .catch((error) => {
-        return reject(error);
-      });
-  });
-};
-
-export const getInitiateWorkFlow = (body) => async () => {
-  return await new Promise((resolve, reject) => {
-    useAxiosCall({
-      method: PATCH,
-      url: API.DoctorUserProfileData.initiateWorkFlow,
-      data: body,
-    })
-      .then((response) => {
         return resolve(response);
       })
       .catch((error) => {

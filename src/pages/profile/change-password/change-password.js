@@ -2,14 +2,15 @@ import { Box, Button, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { changePasswordData } from '../../../store/actions/common-actions';
 import { TextField } from '../../../ui/core';
-import successToast from '../../../ui/core/toaster';
+// import successToast from '../../../ui/core/toaster';
 
 const ChangePassword = () => {
   const theme = useTheme();
+  const { loginUser } = useSelector((state) => state.loginReducer);
   const dispatch = useDispatch();
   const {
     register,
@@ -27,15 +28,15 @@ const ChangePassword = () => {
   });
   const Submit = () => {
     const data = {
-      username: '',
+      username: loginUser?.data?.user_id,
       oldPassword: getValues().oldPassword,
       newPassword: getValues().newPassword,
     };
-    dispatch(changePasswordData(data))
-      .then(() => {})
-      .catch((error) => {
-        successToast(error?.data?.response?.data?.error, 'error');
-      });
+    dispatch(changePasswordData(data));
+    // .then(() => {})
+    // .catch((error) => {
+    //   successToast(error?.data?.response?.data?.error, 'error');
+    // });
   };
 
   return (
