@@ -31,6 +31,7 @@ const ActivateLicence = (props) => {
   const dispatch = useDispatch();
   const [reactiveLicenseRequestHPApplicationData, setReactiveLicenseRequestHPApplicationData] =
     useState();
+  const [searchQueryParams, setSearchQueryParams] = useState();
 
   function createData(
     SNo,
@@ -40,7 +41,8 @@ const ActivateLicence = (props) => {
     reactivationFromDate,
     typeOfSuspension,
     Remark,
-    Action
+    Action,
+    RequestId
   ) {
     return {
       SNo,
@@ -51,6 +53,7 @@ const ActivateLicence = (props) => {
       typeOfSuspension,
       Remark,
       Action,
+      RequestId,
     };
   }
 
@@ -84,6 +87,12 @@ const ActivateLicence = (props) => {
       type: 'string',
     },
     {
+      title: 'RequestId',
+      name: 'RequestId',
+      sorting: true,
+      type: 'string',
+    },
+    {
       title: 'Action',
       name: 'Action',
       sorting: true,
@@ -107,38 +116,49 @@ const ActivateLicence = (props) => {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
+
   const newRowsData =
-    activateLicenseList?.data?.health_professional_details?.length >= 1 &&
-    activateLicenseList?.data.health_professional_details.map((application, index) => {
-      return createData(
-        { type: 'SNo', value: index + 1 },
-        {
-          type: 'registrationNo',
-          value: application?.health_professional_id,
-        },
-        {
-          type: 'nameofApplicant',
-          value: application.health_professional_name,
-          callbackNameOfApplicant: viewNameOfApplicant,
-        },
-        {
-          type: 'dateOfSubmission',
-          value: application.submitted_date,
-        },
-        {
-          type: 'reactivationFromDate',
-          value: application.reactivation,
-        },
-        { type: 'typeOfSuspension', value: application.type_of_suspension },
-        {
-          type: 'Remark',
-          value: application.remarks,
-        }
-      );
-    });
+    activateLicenseList?.data?.health_professional_details?.length >= 1
+      ? activateLicenseList?.data.health_professional_details.map((application, index) => {
+          return createData(
+            { type: 'SNo', value: index + 1 },
+            {
+              type: 'registrationNo',
+              value: application?.registration_id,
+            },
+            {
+              type: 'nameofApplicant',
+              value: application?.health_professional_name,
+              callbackNameOfApplicant: viewNameOfApplicant,
+            },
+            {
+              type: 'dateOfSubmission',
+              value: application?.submitted_date,
+            },
+            {
+              type: 'reactivationFromDate',
+              value: application?.reactivation,
+            },
+            { type: 'typeOfSuspension', value: application?.type_of_suspension },
+            {
+              type: 'Remark',
+              value: application?.remarks,
+            },
+            {
+              type: 'RequestId',
+              value: application?.request_id,
+            }
+          );
+        })
+      : [];
+
+  const searchParams = (data) => {
+    setSearchQueryParams(data);
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
+    getTableData(newPage + 1);
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
@@ -154,16 +174,15 @@ const ActivateLicence = (props) => {
         {
           keyName: 'Approve',
           dataValue: 'approve',
-          onClick: (event, row) => {
-            fetchReActivateLicenseHealthProfessionalId(row);
-            setIsApproveModalOpen(true);
-            setReactiveLicenseRequestHPApplicationData(row);
+          onClick: (event, row, selectedStatus) => {
+            fetchReActivateLicenseHealthProfessionalId(row, selectedStatus);
           },
         },
         {
           keyName: 'Reject',
           dataValue: 'reject',
-          onClick: () => {
+          onClick: (event, selectedRow) => {
+            setReactiveLicenseRequestHPApplicationData(selectedRow);
             setIsRejectModalOpen(true);
           },
         },
@@ -171,29 +190,43 @@ const ActivateLicence = (props) => {
     : undefined;
 
   useEffect(() => {
+    setPage(0);
+    getTableData(1);
+  }, [searchQueryParams]);
+
+  const getTableData = (pageNo) => {
     let ActivateLicenseListbody = {
-      pageNo: page + 1,
-      offset: rowsPerPage,
+      pageNo: pageNo,
+      offset: 10,
+      search: searchQueryParams?.search ? searchQueryParams?.search : '',
     };
     try {
       dispatch(getActivateLicenseList(ActivateLicenseListbody)).then(() => {});
     } catch (allFailMsg) {
       successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
     }
-  }, [page, rowsPerPage]);
+  };
 
-  const fetchReActivateLicenseHealthProfessionalId = (selectedRow) => {
+  const fetchReActivateLicenseHealthProfessionalId = (selectedRow, selectedStatus) => {
     let reActivateLicenseHealthProfessionalIdBody = {
+      request_id: selectedRow?.Action.value,
       application_type_id: 5,
       actor_id: loggedInUserType === 'SMC' ? 2 : loggedInUserType === 'NMC' ? 3 : 0,
-      action_id: 4,
+      action_id: selectedStatus === 'approve' ? 4 : 5,
       hp_profile_id: selectedRow?.registrationNo?.value,
       start_date: selectedRow?.dateOfSubmission?.value,
       end_date: selectedRow?.reactivationFromDate?.value,
       remarks: selectedRow?.Remark?.value,
     };
     try {
-      dispatch(reActivateLicenseStatus(reActivateLicenseHealthProfessionalIdBody)).then(() => {});
+      dispatch(reActivateLicenseStatus(reActivateLicenseHealthProfessionalIdBody)).then(
+        (response) => {
+          if (response.data.message === 'Success') {
+            setIsApproveModalOpen(true);
+            setReactiveLicenseRequestHPApplicationData(selectedRow);
+          }
+        }
+      );
     } catch (allFailMsg) {
       successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
     }
@@ -214,7 +247,7 @@ const ActivateLicence = (props) => {
             </Typography>
           </Grid>
           <Grid mt={3}>
-            <TableSearch activateLicence />
+            <TableSearch searchParams={searchParams} />
           </Grid>
           <GenericTable
             order={order}
@@ -231,9 +264,9 @@ const ActivateLicence = (props) => {
 
           <Box>
             <TablePagination
-              rowsPerPageOptions={[5, 10, 25, 35, 45, 65]}
+              rowsPerPageOptions={[]}
               component="div"
-              count={props.showTable?.count || newRowsData.length}
+              count={activateLicenseList?.data?.total_no_of_records}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
@@ -259,6 +292,7 @@ const ActivateLicence = (props) => {
           ClosePopup={() => {
             setIsRejectModalOpen(false);
           }}
+          reactiveLicenseRequestHPApplicationData={reactiveLicenseRequestHPApplicationData}
         />
       )}
     </>

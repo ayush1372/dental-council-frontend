@@ -29,8 +29,7 @@ export const API = {
     specialities: 'api/v1/abdm/nmr/specialities',
     councilNames: 'api/v1/abdm/nmr/state-medical-councils',
     trackStatus: 'api/v1/abdm/nmr/health-professional/applications',
-    activateLicense:
-      'api/v1/abdm/nmr/health-professional/applications/re-activate?pageNo={page_No}&offset={offset_No}',
+    activateLicense: 'api/v1/abdm/nmr/health-professional/applications/re-activate',
     reactiveLicenseRequest: 'api/v1/abdm/nmr/health-professional/applications/re-activate',
     suspend: 'api/v1/abdm/nmr/health-professional/applications/suspend',
     healthProfessionalApplicationStatus: 'api/v1/abdm/nmr/health-professional/applications/status',
