@@ -47,6 +47,10 @@ export const API = {
     sendAadhaarOtp: 'api/v1/abdm/nmr/aadhaar/send-otp',
     verifyAadhaarOtp: 'api/v1/abdm/nmr/aadhaar/verify-otp',
   },
+  dashboard: {
+    cardCount: 'api/v1/abdm/nmr/dashboards/cards',
+    cardDetails: 'api/v1/abdm/nmr/dashboards/card-detail',
+  },
   smc: {
     getSMCProfileData: 'api/v1/abdm/nmr/smc/user/{id}',
   },
