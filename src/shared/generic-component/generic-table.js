@@ -38,10 +38,11 @@ export default function GenericTable(props) {
   const { order, orderBy, onRequestSort, customPopupOptions } = props;
   const [selected, setSelected] = useState('');
   const [confirmationModal, setConfirmationModal] = useState(false);
-  const selectionChangeHandler = (event) => {
-    const { myValue } = event.currentTarget.dataset;
-    setSelected(myValue);
+
+  const selectionChangeHandler = () => {
     setConfirmationModal(true);
+    setSelected('myValue');
+    props.setIsApproveModalOpen(true);
   };
   const [popUpOptions] = useState([
     {
@@ -56,7 +57,7 @@ export default function GenericTable(props) {
     },
   ]);
   function stableSort(array, comparator) {
-    const stabilizedThis = array?.map((el, index) => [el, index]);
+    const stabilizedThis = array?.length > 1 ? array?.map((el, index) => [el, index]) : [];
     stabilizedThis?.sort((a, b) => {
       const order = comparator(a[0], b[0]);
       if (order !== 0) {
@@ -197,7 +198,6 @@ export default function GenericTable(props) {
                               <Button
                                 endIcon={<MoreVertSharpIcon />}
                                 variant="contained"
-                                // color="white"
                                 {...bindTrigger(popupState)}
                                 sx={{
                                   width: 'max-content',
@@ -214,7 +214,10 @@ export default function GenericTable(props) {
                                     <MenuItem
                                       key={option.dataValue}
                                       data-my-value={option.dataValue}
-                                      onClick={option?.onClick || selectionChangeHandler}
+                                      onClick={(e) =>
+                                        option?.onClick(e, row, option.dataValue) ||
+                                        selectionChangeHandler
+                                      }
                                     >
                                       {option.keyName}
                                     </MenuItem>
