@@ -9,7 +9,7 @@ import { sendNotificationOtp } from '../../../store/actions/common-actions';
 import { Button, TextField } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 
-const ForgotPassword = ({ handleConfirmPassword }) => {
+const ForgotPassword = ({ handleConfirmPassword, otpData }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const doctorTitle = 'Enter NMR ID/User ID/Reg ID/Email ID';
@@ -38,11 +38,11 @@ const ForgotPassword = ({ handleConfirmPassword }) => {
   const onSubmit = () => {
     if (watchMobileNum || watchId) {
       // verboseLog('hello', watchMobileNum );
+
       handleConfirmPassword();
     } else {
       handleSubmit()();
     }
-
     let otpValue = {};
 
     if (getValues().mobileNo) {
@@ -52,6 +52,7 @@ const ForgotPassword = ({ handleConfirmPassword }) => {
     }
 
     dispatch(sendNotificationOtp(otpValue));
+    otpData(otpValue);
   };
 
   return (

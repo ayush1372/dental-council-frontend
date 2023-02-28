@@ -2,8 +2,9 @@ import { useState } from 'react';
 
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { verboseLog } from '../../../config/debug';
 import { OtpForm } from '../../../shared/otp-form/otp-component';
 import { verifyNotificationOtp } from '../../../store/actions/common-actions';
 import { Button } from '../../../ui/core';
@@ -13,27 +14,34 @@ const ConfirmOTP = ({ handleConfirmOTP }) => {
   const { t } = useTranslation();
   const [isOtpValid, setIsOtpValid] = useState(true);
   const dispatch = useDispatch();
+  const { sendNotificationOtpData } = useSelector((state) => state?.common);
 
   const otpResend = () => {
     successToast('OTP Resent Successfully', 'otp-resent', 'success', 'top-center');
   };
-  const onHandleVerify = (otpNumber) => {
+
+  const { otpform, getOtpValidation, otpValue } = OtpForm({
+    resendAction: otpResend,
+    resendTime: 90,
+    otpInvalidError: !isOtpValid,
+  });
+
+  const onHandleVerify = () => {
+    verboseLog('hello', otpValue);
     if (getOtpValidation()) {
       setIsOtpValid(false);
       handleConfirmOTP();
     }
     dispatch(
       verifyNotificationOtp({
-        otp: otpNumber,
+        transaction_id: sendNotificationOtpData.data?.transaction_id,
+        contact: '9606757482',
+        type: 'sms',
+        otp: otpValue,
       })
     );
   };
 
-  const { otpform, getOtpValidation } = OtpForm({
-    resendAction: otpResend,
-    resendTime: 90,
-    otpInvalidError: !isOtpValid,
-  });
   return (
     <Box p={4} bgcolor="white.main" boxShadow="4">
       <Typography variant="h2" component="div">
