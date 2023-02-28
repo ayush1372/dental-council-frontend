@@ -32,6 +32,7 @@ export const UserProfile = ({
   setShowTable,
   setShowViewPorfile,
   showUserProfile,
+  selectedRowData,
 }) => {
   const dispatch = useDispatch();
   const [isReadMode, setIsReadMode] = useState(true);
@@ -86,7 +87,11 @@ export const UserProfile = ({
   }, [isReadMode]);
 
   const fetchDoctorUserPersonalDetails = () => {
-    dispatch(getPersonalDetailsData(loginData.data.profile_id))
+    dispatch(
+      getPersonalDetailsData(
+        showViewProfile ? selectedRowData?.profileID?.value : loginData.data.profile_id
+      )
+    )
       .then(() => {})
       .catch((allFailMsg) => {
         successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
@@ -94,7 +99,11 @@ export const UserProfile = ({
   };
 
   const fetchDoctorUserRegistrationDetails = () => {
-    dispatch(getRegistrationDetailsData(loginData.data.profile_id))
+    dispatch(
+      getRegistrationDetailsData(
+        showViewProfile ? selectedRowData?.profileID?.value : loginData.data.profile_id
+      )
+    )
       .then()
       .catch((allFailMsg) => {
         successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
@@ -102,7 +111,11 @@ export const UserProfile = ({
   };
 
   const fetchDoctorUserWorkProfileDetails = () => {
-    dispatch(getWorkProfileDetailsData(loginData.data.profile_id))
+    dispatch(
+      getWorkProfileDetailsData(
+        showViewProfile ? selectedRowData?.profileID?.value : loginData.data.profile_id
+      )
+    )
       .then(() => {})
       .catch((allFailMsg) => {
         successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');

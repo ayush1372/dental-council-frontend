@@ -30,6 +30,7 @@ export function CollegeRegistration() {
   const [type, setType] = useState('');
   const [headerText, setHeaderText] = useState('');
   const [successModalPopup, setSuccessModalPopup] = useState(false);
+  const [transactionID, setTransactionID] = useState('');
   const dispatch = useDispatch();
   // useEffect(() => {
   //   if (collegeRegisterDetails?.data.length !== 0) {
@@ -46,6 +47,7 @@ export function CollegeRegistration() {
     if (type === 'sms') {
       dispatch(
         verifyNotificationOtp({
+          transaction_id: transactionID,
           contact: getValues().CollegePhoneNumber,
           type: type,
           otp: otpNumber,
@@ -62,6 +64,7 @@ export function CollegeRegistration() {
     } else {
       dispatch(
         verifyNotificationOtp({
+          transaction_id: transactionID,
           contact: getValues().email,
           type: type,
           otp: otpNumber,
@@ -82,7 +85,8 @@ export function CollegeRegistration() {
     if (type === 'sms' && otpMobileVerify) {
       setHeaderText(`Mobile Number${getValues().CollegePhoneNumber}`);
       dispatch(sendNotificationOtp({ contact: getValues().CollegePhoneNumber, type: type }))
-        .then(() => {
+        .then((response) => {
+          setTransactionID(response?.data?.transaction_id);
           handleClickOpen();
         })
         .catch((error) => {
@@ -92,7 +96,8 @@ export function CollegeRegistration() {
     } else if (type === 'email' && otpEmailVerify) {
       setHeaderText(`Email Id ${getValues().email}`);
       dispatch(sendNotificationOtp({ contact: getValues().email, type: type }))
-        .then(() => {
+        .then((response) => {
+          setTransactionID(response?.data?.transaction_id);
           handleClickOpen();
         })
         .catch((error) => {
@@ -118,7 +123,8 @@ export function CollegeRegistration() {
         )}`
       );
       dispatch(sendNotificationOtp({ contact: getValues().CollegePhoneNumber, type: type }))
-        .then(() => {
+        .then((response) => {
+          setTransactionID(response?.data?.transaction_id);
           handleClickOpen();
         })
         .catch((error) => {
@@ -128,7 +134,8 @@ export function CollegeRegistration() {
     } else if (type === 'email' && otpEmailVerify) {
       setHeaderText(`Email Id ******${getValues().email.substr(getValues().email.length - 15)}.`);
       dispatch(sendNotificationOtp({ contact: getValues().email, type: type }))
-        .then(() => {
+        .then((response) => {
+          setTransactionID(response?.data?.transaction_id);
           handleClickOpen();
         })
         .catch((error) => {

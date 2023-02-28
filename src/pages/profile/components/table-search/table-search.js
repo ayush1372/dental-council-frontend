@@ -4,7 +4,8 @@ import { useTheme } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
-import { RegistrationCouncilNames } from '../../../../constants/common-data';
+// import { RegistrationCouncilNames } from '../../../../constants/common-data';
+import { createEditFieldData } from '../../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../../shared/autocomplete/searchable-dropdown';
 import ExportFiles from '../../../../shared/export-component/export-file';
 import { Button, Select, TextField } from '../../../../ui/core';
@@ -17,6 +18,7 @@ export function TableSearch({
   activateLicenseListFilterDataByTypeOfSuspension,
 }) {
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  const { councilNames } = useSelector((state) => state.common);
   const theme = useTheme();
   const {
     register,
@@ -65,7 +67,7 @@ export function TableSearch({
             type="text"
             name="search"
             required={false}
-            placeholder={'Search by Application Type'}
+            placeholder={'Search'}
             defaultValue={getValues().search}
             error={errors.search?.message}
             // label="Search by Application Type"
@@ -163,7 +165,8 @@ export function TableSearch({
                 <SearchableDropdown
                   fullWidth
                   name="registrationCouncil"
-                  items={RegistrationCouncilNames}
+                  items={createEditFieldData(councilNames)}
+                  // defaultValue={getValues().state_medical_council?.name}
                   placeholder="Filter by Council"
                   clearErrors={clearErrors}
                   {...register('registrationCouncil')}
