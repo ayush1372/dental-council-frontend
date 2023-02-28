@@ -21,11 +21,11 @@ export const getNBEProfileData = (id) => async (dispatch) => {
   });
 };
 
-export const getUpdatedNBEProfileData = (data) => async (dispatch) => {
+export const getUpdatedNBEProfileData = (data, id) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: PUT,
-      url: API.nbe.getNBEProfileData.replace('{id}', data.id),
+      url: API.nbe.getNBEProfileData.replace('{id}', id),
       data: data,
       headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })

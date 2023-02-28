@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import { getUpdatedNBEProfileData } from '../../../store/actions/nbe-actions';
 import { Button, TextField } from '../../../ui/core';
+import successToast from '../../../ui/core/toaster';
 
 const NbeEditProfile = (props) => {
   const { t } = useTranslation();
@@ -39,16 +40,31 @@ const NbeEditProfile = (props) => {
   };
   const dispatch = useDispatch();
   const onsubmit = () => {
-    dispatch(getUpdatedNBEProfileData(nbeUpdatedData)).then((response) => {
-      if (response?.data?.email_id.length > 0) {
-        setSuccessModalPopup(true);
-      }
-    });
-    props.sentDetails('Profile');
+    let updatedNbeData = { email_id: getValues().email_id, mobile_no: getValues().mobile_no };
+
+    dispatch(getUpdatedNBEProfileData(updatedNbeData, nbeUpdatedData?.id))
+      .then((response) => {
+        if (response?.isError === false) {
+          setSuccessModalPopup(true);
+        }
+      })
+      .catch((error) => {
+        successToast(error?.data?.response?.data?.message, 'UpdateError', 'error', 'top-center');
+      });
   };
 
   return (
     <Box>
+      {successModalPopup && (
+        <SuccessModalPopup
+          open={successModalPopup}
+          setOpen={() => {
+            props.sentDetails('Profile');
+            setSuccessModalPopup(false);
+          }}
+          text={'NBE Profile Data has been Updated Successfully.'}
+        />
+      )}
       <Grid container spacing={2} mt={2}>
         <Grid item xs={12}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -99,7 +115,11 @@ const NbeEditProfile = (props) => {
             defaultValue={getValues().mobile_no}
             error={errors.mobile_no?.message}
             {...register('mobile_no', {
-              required: 'Phone Number is required',
+              required: 'Enter valid phone number',
+              pattern: {
+                value: /^(\d{10})$/i,
+                message: 'Enter valid phone number',
+              },
             })}
           />
         </Grid>
@@ -158,19 +178,12 @@ const NbeEditProfile = (props) => {
             },
           }}
           onClick={() => {
-            props.updateShowPage('Profile');
+            props.sentDetails('Profile');
           }}
         >
           {t('Cancel')}
         </Button>
       </Box>
-      {successModalPopup && (
-        <SuccessModalPopup
-          open={successModalPopup}
-          setOpen={() => setSuccessModalPopup(false)}
-          text={'Your NBE Profile has been successfully updated'}
-        />
-      )}
     </Box>
   );
 };
