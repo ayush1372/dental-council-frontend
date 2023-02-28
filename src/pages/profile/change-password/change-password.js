@@ -10,7 +10,7 @@ import { TextField } from '../../../ui/core';
 
 const ChangePassword = () => {
   const theme = useTheme();
-  const { loginUser } = useSelector((state) => state.loginReducer);
+  const { loginData } = useSelector((state) => state.loginReducer);
   const dispatch = useDispatch();
   const {
     register,
@@ -26,9 +26,10 @@ const ChangePassword = () => {
       confirmPassword: '',
     },
   });
+
   const Submit = () => {
     const data = {
-      username: loginUser?.data?.user_id,
+      userId: loginData?.data?.user_id,
       oldPassword: getValues().oldPassword,
       newPassword: getValues().newPassword,
     };

@@ -264,6 +264,7 @@ export const changePasswordData = (data) => async (dispatch) => {
     useAxiosCall({
       method: POST,
       url: API.common.changePassword,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
       data: data,
     })
       .then((response) => {
