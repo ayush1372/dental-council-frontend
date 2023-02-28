@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Box, Grid, TablePagination } from '@mui/material';
 import { useSelector } from 'react-redux';
 
-import TableSearch from '../../../src/pages/profile/components/table-search/table-search';
+// import TableSearch from '../../../src/pages/profile/components/table-search/table-search';
 import UserProfile from '../../../src/pages/user-profile';
 import { verboseLog } from '../../config/debug';
 import GenericTable from '../../shared/generic-component/generic-table';
@@ -199,7 +199,7 @@ function TrackStatusTable(props) {
     </Box>
   ) : (
     <Grid sx={{ mx: 2 }} p={'0px'}>
-      <TableSearch trackApplication />
+      {/* <TableSearch trackApplication /> */}
 
       <GenericTable
         order={order}

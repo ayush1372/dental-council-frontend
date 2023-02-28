@@ -1,22 +1,50 @@
 import { Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { createSelectFieldData } from '../../../helpers/functions/common-functions';
+import { searchDoctorDetails } from '../../../store/actions/doctor-search-actions';
 import { Button, Select } from '../../../ui/core';
+import successToast from '../../../ui/core/toaster';
 
-const StateMedicalCouncil = ({ setDoSearch }) => {
-  // const [Value, setValue] = useState([]);
+const StateMedicalCouncil = ({ setDoSearch, setSearchData }) => {
+  const { councilNames } = useSelector((state) => state.common);
+  const dispatch = useDispatch();
   const {
     formState: { errors },
     getValues,
-    // handleSubmit,
+    handleSubmit,
     register,
-    // setValue,
+    setValue,
   } = useForm({
     mode: 'onChange',
     defaultValues: {
       Statemedicalcouncil: '',
+      RegistrationCouncilId: '',
     },
   });
+  const onsubmit = () => {
+    const searchValues = {
+      stateMedicalCouncilId: getValues().RegistrationCouncilId,
+      page: 0,
+      size: 9,
+    };
+
+    setDoSearch(true);
+
+    dispatch(searchDoctorDetails(searchValues))
+      .then(() => {})
+      .catch((error) => {
+        successToast(
+          error?.data?.response?.data?.error,
+          'RegistrationError',
+          'error',
+          'top-center'
+        );
+      });
+
+    setSearchData(searchValues);
+  };
   return (
     <Grid container spacing={2} mt={2}>
       <Grid item xs={12}>
@@ -48,16 +76,14 @@ const StateMedicalCouncil = ({ setDoSearch }) => {
           {...register('Statemedicalcouncil', {
             required: 'state medical council is required',
           })}
-          options={[
-            {
-              label: '-',
-              value: '-',
-            },
-          ]}
+          options={createSelectFieldData(councilNames)}
+          onChange={(currentValue) => {
+            setValue('RegistrationCouncilId', currentValue.target.value);
+          }}
         />
       </Grid>
       <Grid item xs={12}>
-        <Button variant="contained" color="secondary" onClick={() => setDoSearch(true)}>
+        <Button variant="contained" color="secondary" onClick={handleSubmit(onsubmit)}>
           Search
         </Button>
       </Grid>
