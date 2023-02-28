@@ -31,6 +31,7 @@ export const API = {
     trackStatus: 'api/v1/abdm/nmr/health-professional/applications',
     activateLicense: 'api/v1/abdm/nmr/health-professional/applications/re-activate',
     healthProfessionalApplicationStatus: 'api/v1/abdm/nmr/health-professional/applications/status',
+    enableNotification: '/api/v1/abdm/nmr/user/enable-notification',
   },
   college: {
     registrar: 'api/v1/abdm/nmr/college/{collegeId}/registrar',
