@@ -25,6 +25,7 @@ const tabNames = {
 
 const SearchDoctor = () => {
   const [doSearch, setDoSearch] = useState(false);
+  const [searchData, setSearchData] = useState({});
   const [tabValue, setTabValue] = useState('Advance Search');
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
@@ -62,11 +63,11 @@ const SearchDoctor = () => {
             </Tabs>
           </Box>
           <Box sx={{ boxShadow: '0px 3px 6px #00000014;' }} p={2}>
-            <Component setDoSearch={setDoSearch} />
+            <Component setDoSearch={setDoSearch} setSearchData={setSearchData} />
           </Box>
         </Box>
       ) : (
-        <SearchResults />
+        <SearchResults searchData={searchData} />
       )}
     </Container>
   );

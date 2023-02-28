@@ -39,7 +39,7 @@ export const API = {
     getCollegeProfile: 'api/v1/abdm/nmr/college/{id}',
     getCollegeRegistrarProfile: 'api/v1/abdm/nmr/college/{collegeId}/registrar/{id}',
     getCollegeDeanProfile: 'api/v1/abdm/nmr/college/{collegeId}/dean/{id}',
-    register: 'api/v1/abdm/nmr/college',
+    register: 'api/v1/abdm/nmr/college/applications',
     initiateCollegeWorkFlow: 'api/v1/abdm/nmr/college/applications/status',
   },
   nmc: {
@@ -59,5 +59,9 @@ export const API = {
   },
   nbe: {
     getNBEProfileData: 'api/v1/abdm/nmr/nbe/user/{id}',
+  },
+  searchDoctor: {
+    searchDoctorDetails: 'api/v1/abdm/nmr/health-professional/search',
+    searchDoctorById: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}',
   },
 };

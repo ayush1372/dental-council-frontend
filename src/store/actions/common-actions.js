@@ -1,5 +1,4 @@
 import { API } from '../../api/api-endpoints';
-// import { verboseLog } from '../../config/debug';
 import { GET, PATCH, POST } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import {
