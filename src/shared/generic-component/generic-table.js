@@ -39,10 +39,10 @@ export default function GenericTable(props) {
   const [selected, setSelected] = useState('');
   const [confirmationModal, setConfirmationModal] = useState(false);
 
-  const selectionChangeHandler = () => {
+  const selectionChangeHandler = (event) => {
+    const { myValue } = event.currentTarget.dataset;
+    setSelected(myValue);
     setConfirmationModal(true);
-    setSelected('myValue');
-    props.setIsApproveModalOpen(true);
   };
   const [popUpOptions] = useState([
     {
