@@ -1,6 +1,7 @@
 import JSEncrypt from 'jsencrypt';
 
 import {
+  colgDeanRegTabs,
   colgTabs,
   doctorTabs,
   nbeTabs,
@@ -91,10 +92,12 @@ export const usersType = (userType) => {
 
 export const sideBarTabs = (userType) => {
   const usersObj = {
-    Doctor: doctorTabs,
-    College: colgTabs,
-    SMC: smcTabs,
-    NMC: nmcTabs,
+    'Health Professional': doctorTabs,
+    'State Medical Council': smcTabs,
+    'National Medical Council': nmcTabs,
+    'College Dean': colgDeanRegTabs,
+    'College Registrar': colgDeanRegTabs,
+    'College Admin': colgTabs,
     NBE: nbeTabs,
   };
   return usersObj[userType];
