@@ -13,26 +13,47 @@ const PersonalDetails = ({ personalDetails }) => {
   const ClosePopup = () => {
     setOpenModal(false);
   };
+  // const {
+  //   personal_details: {
+  //     first_name,
+  //     last_name,
+  //     aadhaar_token,
+  //     date_of_birth,
+  //     father_name,
+  //     gender,
+  //     language,
+  //     middle_name,
+  //     mother_name,
+  //     country_nationality: { name: nationality },
+  //     salutation,
+  //     schedule: { name: nameSchedule },
+  //     spouse_name,
+  //   },
+  // } =
+  //   personalDetails && Object.values(personalDetails).length > 3
+  //     ? personalDetails
+  //     : { personal_details: { country_nationality: {}, schedule: {} } };
+
+  const { personal_details } = personalDetails || {};
   const {
-    personal_details: {
-      first_name,
-      last_name,
-      aadhaar_token,
-      date_of_birth,
-      father_name,
-      gender,
-      language,
-      middle_name,
-      mother_name,
-      country_nationality: { name: nationality },
-      salutation,
-      schedule: { name: nameSchedule },
-      spouse_name,
-    },
-  } =
-    personalDetails && Object.values(personalDetails).length > 3
-      ? personalDetails
-      : { personal_details: { country_nationality: {}, schedule: {} } };
+    first_name,
+    last_name,
+    aadhaar_token,
+    date_of_birth,
+    father_name,
+    gender,
+    language,
+    middle_name,
+    mother_name,
+    country_nationality,
+    salutation,
+    schedule,
+    spouse_name,
+  } = personal_details || {};
+
+  const nationality = country_nationality?.name || '';
+  const nameSchedule = schedule?.name || '';
+
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
@@ -230,7 +251,7 @@ const PersonalDetails = ({ personalDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              {nationality ? nationality : ''}
+              {nationality}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -317,7 +338,7 @@ const PersonalDetails = ({ personalDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              {nameSchedule ? nameSchedule : ''}
+              {nameSchedule}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon

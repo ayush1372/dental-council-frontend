@@ -13,24 +13,29 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
   const ClosePopup = () => {
     setOpenModal(false);
   };
-  const {
-    current_work_details: [
-      {
-        facility,
-        work_organization,
-        url,
-        address: {
-          state: { name: stateName },
-          district: { name: districtName },
-          pincode,
-          address_line1,
-        },
-      },
-    ],
-  } =
-    workProfileDetails && Object.values(workProfileDetails).length > 3
-      ? workProfileDetails
-      : { current_work_details: { address: { state: {}, district: {}, address_type: {} } } };
+  // const {
+  //   current_work_details: [
+  //     {
+  //       facility,
+  //       work_organization,
+  //       url,
+  //       address: {
+  //         state: { name: stateName },
+  //         district: { name: districtName },
+  //         pincode,
+  //         address_line1,
+  //       },
+  //     },
+  //   ],
+  // } =
+  //   workProfileDetails && Object.values(workProfileDetails).length > 3
+  //     ? workProfileDetails
+  //     : { current_work_details: { address: { state: {}, district: {}, address_type: {} } } };
+
+  const { current_work_details } = workProfileDetails || {};
+  const { facility, work_organization, url, address } = current_work_details?.[0] || {};
+  const { state, district, pincode, address_line1 } = address || {};
+
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
@@ -53,7 +58,7 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              {stateName ? stateName : ''}
+              {state?.name || ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -74,7 +79,7 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              {districtName ? districtName : ''}
+              {district?.name || ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon

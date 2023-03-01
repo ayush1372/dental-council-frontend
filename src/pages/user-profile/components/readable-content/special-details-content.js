@@ -13,19 +13,24 @@ const SpecialDetails = ({ workProfileDetails }) => {
   const ClosePopup = () => {
     setOpenModal(false);
   };
-  const {
-    speciality_details: {
-      broad_speciality: { name: broadSpecialityName },
-    },
-  } =
-    workProfileDetails && Object.values(workProfileDetails).length > 3
-      ? workProfileDetails
-      : {
-          speciality_details: {
-            broad_speciality: {},
-            super_speciality: [],
-          },
-        };
+  // const {
+  //   speciality_details: {
+  //     broad_speciality: { name: broadSpecialityName },
+  //   },
+  // } =
+  //   workProfileDetails && Object.values(workProfileDetails).length > 3
+  //     ? workProfileDetails
+  //     : {
+  //         speciality_details: {
+  //           broad_speciality: {},
+  //           super_speciality: [],
+  //         },
+  //       };
+
+  const { speciality_details } = workProfileDetails || {};
+  const { broad_speciality } = speciality_details || {};
+  const broadSpecialityName = broad_speciality?.name || '';
+
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
@@ -38,7 +43,7 @@ const SpecialDetails = ({ workProfileDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              {broadSpecialityName ? broadSpecialityName : ''}
+              {broadSpecialityName}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
