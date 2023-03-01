@@ -13,12 +13,6 @@ const IMRDetails = ({ personalDetails }) => {
   const ClosePopup = () => {
     setOpenModal(false);
   };
-  // const {
-  //   imr_details: { registration_number, nmr_id, year_of_info },
-  // } =
-  //   personalDetails && Object.values(personalDetails).length > 3
-  //     ? personalDetails
-  //     : { imr_details: {} };
 
   const { imr_details } = personalDetails || {};
   const { registration_number, nmr_id, year_of_info } = imr_details || {};

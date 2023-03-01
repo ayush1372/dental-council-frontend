@@ -12,24 +12,6 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
     setOpenModal(false);
   };
   const { userActiveTab } = useSelector((state) => state.common);
-  // const [
-  //   {
-  //     country: { name: countryName },
-  //     state: { name: stateName },
-  //     college: { name: collegeName },
-  //     university: { name: universityName },
-  //     course: { course_name: courseName },
-  //     qualification_month,
-  //     qualification_year,
-  //     is_name_change,
-  //   },
-  // ] =
-  //   registrationDetails &&
-  //   Object.values(registrationDetails).length > 3 &&
-  //   registrationDetails?.qualification_detail_response_tos.length > 0
-  //     ? registrationDetails.qualification_detail_response_tos
-  //     : [{ country: {}, state: {}, college: {}, university: {}, course: {} }];
-
   const {
     country,
     state,

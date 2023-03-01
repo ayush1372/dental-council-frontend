@@ -14,21 +14,6 @@ const WorkDetails = ({ workProfileDetails }) => {
   const ClosePopup = () => {
     setOpenModal(false);
   };
-  // const {
-  //   work_details: {
-  //     is_user_currently_working,
-  //     work_status: { name: workStatusName },
-  //     work_nature: { name: workNatureName },
-  //   },
-  // } =
-  //   workProfileDetails && Object.values(workProfileDetails).length > 3
-  //     ? workProfileDetails
-  //     : {
-  //         work_details: {
-  //           work_status: {},
-  //           work_nature: {},
-  //         },
-  //       };
 
   const { work_details } = workProfileDetails || {};
   const { is_user_currently_working, work_status, work_nature } = work_details || {};

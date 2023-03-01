@@ -14,23 +14,6 @@ const RegistrationDetailsContent = ({ registrationDetails }) => {
   const ClosePopup = () => {
     setOpenModal(false);
   };
-  // const {
-  //   registration_detail_to: {
-  //     registration_date,
-  //     registration_number,
-  //     state_medical_council: { name: smcName },
-  //     is_renewable,
-  //     renewable_registration_date,
-  //     is_name_change,
-  //   },
-  // } =
-  //   registrationDetails &&
-  //   Object.values(registrationDetails).length > 3 &&
-  //   Object.values(registrationDetails.registration_detail_to || {}).length
-  //     ? registrationDetails
-  //     : {
-  //         registration_detail_to: { state_medical_council: { name: '' } },
-  //       };
   const { registration_detail_to } = registrationDetails || {};
   const {
     registration_date,

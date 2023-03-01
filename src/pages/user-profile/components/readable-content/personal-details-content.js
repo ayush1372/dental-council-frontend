@@ -13,27 +13,6 @@ const PersonalDetails = ({ personalDetails }) => {
   const ClosePopup = () => {
     setOpenModal(false);
   };
-  // const {
-  //   personal_details: {
-  //     first_name,
-  //     last_name,
-  //     aadhaar_token,
-  //     date_of_birth,
-  //     father_name,
-  //     gender,
-  //     language,
-  //     middle_name,
-  //     mother_name,
-  //     country_nationality: { name: nationality },
-  //     salutation,
-  //     schedule: { name: nameSchedule },
-  //     spouse_name,
-  //   },
-  // } =
-  //   personalDetails && Object.values(personalDetails).length > 3
-  //     ? personalDetails
-  //     : { personal_details: { country_nationality: {}, schedule: {} } };
-
   const { personal_details } = personalDetails || {};
   const {
     first_name,

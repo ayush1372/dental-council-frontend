@@ -46,21 +46,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { loginData } = useSelector((state) => state?.loginReducer);
 
-  // const {
-  //   registration_detail_to: {
-  //     registration_date,
-  //     registration_number,
-  //     state_medical_council: { name: smcName },
-  //     is_renewable,
-  //     renewable_registration_date,
-  //     is_name_change,
-  //   },
-  //   request_id,
-  // } =
-  //   registrationDetails && Object.values(registrationDetails).length > 3
-  //     ? registrationDetails
-  //     : { registration_detail_to: { state_medical_council: {} } };
-
   const { registration_detail_to, request_id } = registrationDetails || {};
   const {
     registration_date,

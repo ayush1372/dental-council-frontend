@@ -13,32 +13,6 @@ const CommunicationAddress = ({ personalDetails }) => {
   const ClosePopup = () => {
     setOpenModal(false);
   };
-  // const {
-  //   communication_address: {
-  //     country: { name: countryName },
-  //     state: { name: stateName },
-  //     district: { name: districtName },
-  //     sub_district: { name: sub_districtName },
-  //     pincode,
-  //     address_line1,
-  //     email,
-  //     mobile,
-  //     village: { name: villageName },
-  //   },
-  //   personal_details: { full_name },
-  // } =
-  //   personalDetails && Object.values(personalDetails).length > 3
-  //     ? personalDetails
-  //     : {
-  //         communication_address: {
-  //           country: {},
-  //           state: {},
-  //           district: {},
-  //           sub_district: {},
-  //           village: {},
-  //         },
-  //         personal_details: {},
-  //       };
 
   const { communication_address, personal_details } = personalDetails || {};
   const { country, state, district, sub_district, pincode, address_line1, email, mobile, village } =
