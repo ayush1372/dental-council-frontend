@@ -27,7 +27,6 @@ const NewPasswordSetup = ({ handlePasswordSetup }) => {
   const onSubmit = () => {
     handlePasswordSetup();
     const data = { username: getValues().password, password: getValues().confirmPassword };
-    // const data = { newPassword: getValues().password, confirmPassword: getValues().confirmPassword };
     dispatch(forgotPassword(data));
   };
 
