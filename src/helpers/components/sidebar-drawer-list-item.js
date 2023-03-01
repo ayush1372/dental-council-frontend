@@ -229,3 +229,27 @@ export const nbeTabs = [
     element: <ChangePassword tabName={SideDrawerListItem} />,
   },
 ];
+
+export const colgDeanRegTabs = [
+  {
+    option: 0,
+    name: 'Dashboard',
+    tabName: 'dashboard',
+    icon: <DashboardIcon />,
+    element: <Dashboard tabName={SideDrawerListItem} />,
+  },
+  {
+    option: 1,
+    name: 'My Profile',
+    tabName: 'my-profile',
+    icon: <AccountCircleIcon />,
+    element: <CollegeMyProfile />,
+  },
+  {
+    option: 2,
+    name: 'Change Password',
+    tabName: 'change-password',
+    icon: <PasswordIcon />,
+    element: <ChangePassword tabName={SideDrawerListItem} />,
+  },
+];

@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Box, Container, Grid, Paper, Typography } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
 import { useTheme } from '@mui/material/styles';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   registrationRequestMapper,
@@ -11,6 +11,7 @@ import {
   updationRequestMapper,
 } from '../../../../constants/common-data';
 import ViewProfile from '../../../../shared/view-profile/view-profile';
+import { getCardCount } from '../../../../store/actions/dashboard-actions';
 import { Button } from '../../../../ui/core';
 import UserProfile from '../../../user-profile/index';
 import BreadcrumbsCompnent from '../breadcrums';
@@ -25,6 +26,7 @@ export default function Dashboard() {
   const [showViewProfile, setShowViewPorfile] = useState(false);
   const [selectedCardDataData, setSelectedCardDataData] = useState();
   const [selectedRowData, setSelectedRowData] = useState();
+  const dispatch = useDispatch();
 
   const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(1),
@@ -123,6 +125,10 @@ export default function Dashboard() {
   const getSelectedRowData = (data) => {
     setSelectedRowData(data);
   };
+
+  useEffect(() => {
+    dispatch(getCardCount());
+  }, []);
 
   return (
     <>
