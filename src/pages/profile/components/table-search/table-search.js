@@ -19,6 +19,7 @@ export function TableSearch({ trackApplication, activateLicence, searchParams })
     handleSubmit,
     getValues,
     reset,
+    setValue,
     clearErrors,
     formState: { errors },
   } = useForm({
@@ -27,17 +28,30 @@ export function TableSearch({ trackApplication, activateLicence, searchParams })
       filterByName: '',
       filterByRegNo: '',
       registrationCouncil: '',
+      RegistrationCouncilId: '',
       search: '',
     },
   });
   const onClickFilterButtonHandler = (data) => {
     searchParams(data);
-    reset({ filterByName: '', filterByRegNo: '', registrationCouncil: '', search: '' });
+    reset({
+      filterByName: '',
+      filterByRegNo: '',
+      registrationCouncil: '',
+      RegistrationCouncilId: '',
+      search: '',
+    });
   };
 
   const onClickSearchButtonHandler = (data) => {
     searchParams(data);
-    reset({ filterByName: '', filterByRegNo: '', registrationCouncil: '', search: '' });
+    reset({
+      filterByName: '',
+      filterByRegNo: '',
+      registrationCouncil: '',
+      RegistrationCouncilId: '',
+      search: '',
+    });
   };
 
   return (
@@ -158,10 +172,12 @@ export function TableSearch({ trackApplication, activateLicence, searchParams })
                   fullWidth
                   name="registrationCouncil"
                   items={createEditFieldData(councilNames)}
-                  // defaultValue={getValues().state_medical_council?.name}
                   placeholder="Filter by Council"
                   clearErrors={clearErrors}
                   {...register('registrationCouncil')}
+                  onChange={(currentValue) => {
+                    setValue('RegistrationCouncilId', currentValue.id);
+                  }}
                 />
               </Grid>
             )}

@@ -4,7 +4,6 @@ import thunk from 'redux-thunk';
 
 import appFontSizeActivity from './reducers/app-font-size';
 import captchaReducer from './reducers/captcha-reducers';
-import ChangePasswordReducer from './reducers/change-password-reducers';
 import collegeReducer from './reducers/college-reducer';
 import commonActivity from './reducers/common-reducers';
 import dashboardReducer from './reducers/dashboard-reducers';
@@ -31,7 +30,6 @@ const store = configureStore({
     smc: smcReducer,
     nmc: nmcReducer,
     nbe: nbeReducers,
-    changePassword: ChangePasswordReducer,
     searchDoctor: searchDoctorReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(thunk).concat(logger),
