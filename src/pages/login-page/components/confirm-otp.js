@@ -4,7 +4,7 @@ import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { verboseLog } from '../../../config/debug';
+import { encryptData } from '../../../helpers/functions/common-functions';
 import { OtpForm } from '../../../shared/otp-form/otp-component';
 import { verifyNotificationOtp } from '../../../store/actions/common-actions';
 import { Button } from '../../../ui/core';
@@ -27,7 +27,6 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData }) => {
   });
 
   const onHandleVerify = () => {
-    verboseLog('hello', otpValue);
     if (getOtpValidation()) {
       setIsOtpValid(false);
       handleConfirmOTP();
@@ -37,7 +36,7 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData }) => {
         transaction_id: sendNotificationOtpData.data?.transaction_id,
         contact: otpData?.contact,
         type: otpData?.type,
-        otp: otpValue,
+        otp: encryptData(otpValue, process.env.REACT_APP_PASS_SITE_KEY),
       })
     );
   };

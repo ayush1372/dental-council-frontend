@@ -4,7 +4,6 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
-// import { verboseLog } from '../../../config/debug';
 import { sendNotificationOtp } from '../../../store/actions/common-actions';
 import { Button, TextField } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
@@ -37,8 +36,6 @@ const ForgotPassword = ({ handleConfirmPassword, otpData }) => {
 
   const onSubmit = () => {
     if (watchMobileNum || watchId) {
-      // verboseLog('hello', watchMobileNum );
-
       handleConfirmPassword();
     } else {
       handleSubmit()();
