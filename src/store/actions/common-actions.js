@@ -214,6 +214,7 @@ export const verifyNotificationOtp = (otpValue) => async (dispatch) => {
     useAxiosCall({
       method: POST,
       url: API.common.verifyOtp,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
       data: otpValue,
     })
       .then((response) => {

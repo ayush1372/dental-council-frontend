@@ -10,7 +10,7 @@ import { verifyNotificationOtp } from '../../../store/actions/common-actions';
 import { Button } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
 
-const ConfirmOTP = ({ handleConfirmOTP }) => {
+const ConfirmOTP = ({ handleConfirmOTP, otpData }) => {
   const { t } = useTranslation();
   const [isOtpValid, setIsOtpValid] = useState(true);
   const dispatch = useDispatch();
@@ -35,8 +35,8 @@ const ConfirmOTP = ({ handleConfirmOTP }) => {
     dispatch(
       verifyNotificationOtp({
         transaction_id: sendNotificationOtpData.data?.transaction_id,
-        contact: '9606757482',
-        type: 'sms',
+        contact: otpData?.contact,
+        type: otpData?.type,
         otp: otpValue,
       })
     );

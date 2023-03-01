@@ -47,8 +47,10 @@ const ForgotPassword = ({ handleConfirmPassword, otpData }) => {
 
     if (getValues().mobileNo) {
       otpValue = { contact: getValues().mobileNo, type: 'sms' };
+      otpData(otpValue);
     } else {
       otpValue = { contact: getValues().Id, type: 'email' };
+      otpData(otpValue);
     }
 
     dispatch(sendNotificationOtp(otpValue));
