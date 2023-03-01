@@ -34,41 +34,39 @@ const SearchDoctor = () => {
   const Component = tabNames[tabValue];
   return (
     <Container maxWidth="lg">
-      {!doSearch ? (
-        <Box>
-          <Box sx={{ boxShadow: '0px 3px 6px #00000014;' }} mt={6}>
-            <Tabs
-              value={tabValue}
-              onChange={handleTabChange}
-              sx={{
-                '.MuiTabs-flexContainer': {
-                  button: {
-                    borderBottom: '5px solid',
-                    borderBottomColor: 'grey1.main',
-                    backgroundColor: 'backgroundColor.light',
-                  },
-                  'button.Mui-selected': {
-                    backgroundColor: 'white.main',
-                  },
+      <Box>
+        <Box sx={{ boxShadow: '0px 3px 6px #00000014;' }} mt={6}>
+          <Tabs
+            value={tabValue}
+            onChange={handleTabChange}
+            sx={{
+              '.MuiTabs-flexContainer': {
+                button: {
+                  borderBottom: '5px solid',
+                  borderBottomColor: 'grey1.main',
+                  backgroundColor: 'backgroundColor.light',
                 },
-                '.MuiTabs-indicator': {
-                  borderBottom: '4px solid',
-                  borderBottomColor: 'inputFocusColor.main',
+                'button.Mui-selected': {
+                  backgroundColor: 'white.main',
                 },
-              }}
-            >
-              {Object.keys(tabNames).map((tabName) => (
-                <Tab value={tabName} label={tabName} key={tabName}></Tab>
-              ))}
-            </Tabs>
-          </Box>
-          <Box sx={{ boxShadow: '0px 3px 6px #00000014;' }} p={2}>
-            <Component setDoSearch={setDoSearch} setSearchData={setSearchData} />
-          </Box>
+              },
+              '.MuiTabs-indicator': {
+                borderBottom: '4px solid',
+                borderBottomColor: 'inputFocusColor.main',
+              },
+            }}
+          >
+            {Object.keys(tabNames).map((tabName) => (
+              <Tab value={tabName} label={tabName} key={tabName}></Tab>
+            ))}
+          </Tabs>
         </Box>
-      ) : (
-        <SearchResults searchData={searchData} />
-      )}
+        <Box sx={{ boxShadow: '0px 3px 6px #00000014;' }} p={2}>
+          <Component setDoSearch={setDoSearch} setSearchData={setSearchData} />
+        </Box>
+      </Box>
+
+      {doSearch && <SearchResults searchData={searchData} />}
     </Container>
   );
 };
