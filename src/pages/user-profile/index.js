@@ -32,6 +32,7 @@ export const UserProfile = ({
   setShowTable,
   setShowViewPorfile,
   showUserProfile,
+  selectedRowData,
 }) => {
   const dispatch = useDispatch();
   const [isReadMode, setIsReadMode] = useState(true);
@@ -51,6 +52,10 @@ export const UserProfile = ({
   const renderSuccess = () => {
     setShowReactivateLicense(false);
     setShowSuccessPopup(true);
+  };
+
+  const closeReactivateLicense = () => {
+    setShowReactivateLicense(false);
   };
   const fetchStates = () => {
     try {
@@ -82,7 +87,11 @@ export const UserProfile = ({
   }, [isReadMode]);
 
   const fetchDoctorUserPersonalDetails = () => {
-    dispatch(getPersonalDetailsData(loginData.data.profile_id))
+    dispatch(
+      getPersonalDetailsData(
+        showViewProfile ? selectedRowData?.profileID?.value : loginData.data.profile_id
+      )
+    )
       .then(() => {})
       .catch((allFailMsg) => {
         successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
@@ -90,7 +99,11 @@ export const UserProfile = ({
   };
 
   const fetchDoctorUserRegistrationDetails = () => {
-    dispatch(getRegistrationDetailsData(loginData.data.profile_id))
+    dispatch(
+      getRegistrationDetailsData(
+        showViewProfile ? selectedRowData?.profileID?.value : loginData.data.profile_id
+      )
+    )
       .then()
       .catch((allFailMsg) => {
         successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
@@ -98,7 +111,11 @@ export const UserProfile = ({
   };
 
   const fetchDoctorUserWorkProfileDetails = () => {
-    dispatch(getWorkProfileDetailsData(loginData.data.profile_id))
+    dispatch(
+      getWorkProfileDetailsData(
+        showViewProfile ? selectedRowData?.profileID?.value : loginData.data.profile_id
+      )
+    )
       .then(() => {})
       .catch((allFailMsg) => {
         successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
@@ -140,7 +157,10 @@ export const UserProfile = ({
               ml={1}
               height="20px"
               width="103px"
-              onClick={() => setShowReactivateLicense(true)}
+              onClick={() => {
+                setShowReactivateLicense(true);
+                setShowSuccessPopup(false);
+              }}
               sx={{
                 cursor: 'pointer',
               }}
@@ -150,7 +170,12 @@ export const UserProfile = ({
           </Alert>
         )}
       </Box>
-      {showReactivateLicense && <ReactivateLicencePopup renderSuccess={renderSuccess} />}
+      {showReactivateLicense && (
+        <ReactivateLicencePopup
+          renderSuccess={renderSuccess}
+          closeReactivateLicense={closeReactivateLicense}
+        />
+      )}
       {showSuccessPopup && <SuccessPopup />}
       {/* {!showChangepassword ? ( */}
       <Box mt={3}>
@@ -160,7 +185,7 @@ export const UserProfile = ({
               <Typography
                 component="div"
                 variant="h2"
-                color="primary.main"
+                color="inputTextColor.main"
                 py={2}
                 sx={{
                   textAlign: {

@@ -1,22 +1,25 @@
-import { useTheme } from '@emotion/react';
 import SearchIcon from '@mui/icons-material/Search';
 import { Box, Grid, IconButton, InputAdornment } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
-import { verboseLog } from '../../../../config/debug';
-import { RegistrationCouncilNames } from '../../../../constants/common-data';
+// import { RegistrationCouncilNames } from '../../../../constants/common-data';
+import { createEditFieldData } from '../../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../../shared/autocomplete/searchable-dropdown';
 import ExportFiles from '../../../../shared/export-component/export-file';
 import { Button, Select, TextField } from '../../../../ui/core';
 
 export function TableSearch({ trackApplication, activateLicence, searchParams }) {
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  const { councilNames } = useSelector((state) => state.common);
+  const theme = useTheme();
   const {
     register,
     handleSubmit,
     getValues,
     reset,
+    setValue,
     clearErrors,
     formState: { errors },
   } = useForm({
@@ -25,20 +28,30 @@ export function TableSearch({ trackApplication, activateLicence, searchParams })
       filterByName: '',
       filterByRegNo: '',
       registrationCouncil: '',
+      RegistrationCouncilId: '',
       search: '',
     },
   });
-  const theme = useTheme();
   const onClickFilterButtonHandler = (data) => {
-    verboseLog('data', data);
     searchParams(data);
-    reset({ filterByName: '', filterByRegNo: '', registrationCouncil: '', search: '' });
+    reset({
+      filterByName: '',
+      filterByRegNo: '',
+      registrationCouncil: '',
+      RegistrationCouncilId: '',
+      search: '',
+    });
   };
 
   const onClickSearchButtonHandler = (data) => {
-    verboseLog('data in search', data);
     searchParams(data);
-    reset({ filterByName: '', filterByRegNo: '', registrationCouncil: '', search: '' });
+    reset({
+      filterByName: '',
+      filterByRegNo: '',
+      registrationCouncil: '',
+      RegistrationCouncilId: '',
+      search: '',
+    });
   };
 
   return (
@@ -60,7 +73,7 @@ export function TableSearch({ trackApplication, activateLicence, searchParams })
             type="text"
             name="search"
             required={false}
-            placeholder={'Search by Application Type'}
+            placeholder={'Search'}
             defaultValue={getValues().search}
             error={errors.search?.message}
             // label="Search by Application Type"
@@ -92,7 +105,6 @@ export function TableSearch({ trackApplication, activateLicence, searchParams })
                   <Select
                     error={errors.Filter?.message}
                     name="Filter"
-                    // label="Filter"
                     defaultValue={getValues().Filter}
                     placeholder="All Applications"
                     options={[
@@ -107,7 +119,6 @@ export function TableSearch({ trackApplication, activateLicence, searchParams })
                   <Select
                     error={errors.Date?.message}
                     name="Date"
-                    // label="Sort by"
                     defaultValue={getValues().Date}
                     options={[
                       {
@@ -134,14 +145,13 @@ export function TableSearch({ trackApplication, activateLicence, searchParams })
                   defaultValue={getValues().filterByName}
                   error={errors.filterByName?.message}
                   {...register('filterByName')}
-                  // label="Filter By Name"
                 />
               </Grid>
             )}
             {trackApplication !== true && (
               <Grid item md={3} xs={12}>
                 <TextField
-                  data-testid="filterByRegNo"
+                  data-testid="filter_By_RegNo"
                   inputProps={{ maxLength: 100 }}
                   fullWidth
                   id="outlined-basic"
@@ -153,20 +163,21 @@ export function TableSearch({ trackApplication, activateLicence, searchParams })
                   defaultValue={getValues().filterByRegNo}
                   error={errors.filterByRegNo?.message}
                   {...register('filterByRegNo')}
-                  // label="Filter by Reg No"
                 />
               </Grid>
             )}
             {(loggedInUserType === 'College' || loggedInUserType === 'NMC') && (
               <Grid item md={3} xs={12}>
-                {/* <Typography>Filter by council</Typography> */}
                 <SearchableDropdown
                   fullWidth
                   name="registrationCouncil"
-                  items={RegistrationCouncilNames}
+                  items={createEditFieldData(councilNames)}
                   placeholder="Filter by Council"
                   clearErrors={clearErrors}
                   {...register('registrationCouncil')}
+                  onChange={(currentValue) => {
+                    setValue('RegistrationCouncilId', currentValue.id);
+                  }}
                 />
               </Grid>
             )}

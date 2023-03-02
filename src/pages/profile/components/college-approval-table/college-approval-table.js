@@ -78,18 +78,21 @@ function CollegeApprovalTable(props) {
   };
 
   useEffect(() => {
+    setPage(0);
+    getTableData(1, 10);
+  }, [searchQueryParams]);
+
+  const getTableData = (pageNo, noOfRecords) => {
     const queryObj = {
-      pageNo: '',
-      limit: collegeApprovalData?.data?.total_no_of_records
-        ? collegeApprovalData?.data?.total_no_of_records
-        : '',
+      pageNo: pageNo,
+      limit: noOfRecords,
       search: searchQueryParams ? searchQueryParams?.search : '',
       id: searchQueryParams ? searchQueryParams?.filterByRegNo : '',
       name: searchQueryParams ? searchQueryParams?.filterByName : '',
-      council: searchQueryParams ? searchQueryParams?.registrationCouncil : '',
+      council: searchQueryParams ? searchQueryParams?.RegistrationCouncilId : '',
     };
     dispatch(getCollegeApprovalData(queryObj));
-  }, [searchQueryParams, collegeApprovalData?.data?.total_no_of_records]);
+  };
 
   const handleDataRowClick = () => {
     //setRowData(dataRow);
@@ -144,6 +147,7 @@ function CollegeApprovalTable(props) {
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
+    getTableData(newPage + 1, 10);
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
@@ -175,9 +179,9 @@ function CollegeApprovalTable(props) {
         />
         <Box>
           <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
+            rowsPerPageOptions={[]}
             component="div"
-            count={props.showTable?.count || newRowsData?.length}
+            count={collegeApprovalData?.data?.total_no_of_records}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

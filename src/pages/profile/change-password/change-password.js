@@ -1,17 +1,26 @@
+import { useState } from 'react';
+
 import { Box, Button, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { encryptData } from '../../../helpers/functions/common-functions';
+import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
+import { changePasswordData } from '../../../store/actions/common-actions';
 import { TextField } from '../../../ui/core';
+import successToast from '../../../ui/core/toaster';
 
 const ChangePassword = () => {
   const theme = useTheme();
+  const { loginData } = useSelector((state) => state.loginReducer);
+  const [successModalPopup, setSuccessModalPopup] = useState(false);
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
     getValues,
-    onSubmit,
     watch,
     formState: { errors },
   } = useForm({
@@ -22,9 +31,32 @@ const ChangePassword = () => {
       confirmPassword: '',
     },
   });
+
+  const Submit = () => {
+    const data = {
+      userId: loginData?.data?.user_id,
+      oldPassword: encryptData(getValues().oldPassword, process.env.REACT_APP_PASS_SITE_KEY),
+      newPassword: encryptData(getValues().newPassword, process.env.REACT_APP_PASS_SITE_KEY),
+    };
+    dispatch(changePasswordData(data))
+      .then(() => {
+        setSuccessModalPopup(true);
+      })
+      .catch((error) => {
+        successToast(error?.data?.response?.data?.error, 'error');
+      });
+  };
+
   return (
     <>
-      <Typography color="primary" variant="h2" textAlign="center" mt={3}>
+      {successModalPopup && (
+        <SuccessModalPopup
+          open={successModalPopup}
+          setOpen={() => setSuccessModalPopup(false)}
+          text={'Your Password has been successfully changed'}
+        />
+      )}
+      <Typography color="inputTextColor.main" variant="h2" textAlign="center" mt={3}>
         Change Password
       </Typography>
       <Box
@@ -131,7 +163,7 @@ const ChangePassword = () => {
                     md: 'fit-content',
                   },
                 }}
-                onClick={handleSubmit(onSubmit)}
+                onClick={handleSubmit(Submit)}
               >
                 {t('Submit')}
               </Button>

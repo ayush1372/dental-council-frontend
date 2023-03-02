@@ -12,6 +12,7 @@ export const API = {
     workProfileDetails: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/work-profile',
     profileImage: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/profile-picture',
     initiateWorkFlow: 'api/v1/abdm/nmr/health-professional/applications/status',
+    trackApplicationData: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/applications',
   },
   common: {
     states: 'api/v1/abdm/nmr/countries/356/states',
@@ -27,14 +28,19 @@ export const API = {
     courses: 'api/v1/abdm/nmr/courses',
     specialities: 'api/v1/abdm/nmr/specialities',
     councilNames: 'api/v1/abdm/nmr/state-medical-councils',
+    trackStatus: 'api/v1/abdm/nmr/health-professional/applications',
+    changePassword: 'api/v1/abdm/nmr/user/change-password',
+    activateLicense: 'api/v1/abdm/nmr/health-professional/applications/re-activate',
+    healthProfessionalApplicationStatus: 'api/v1/abdm/nmr/health-professional/applications/status',
+    enableNotification: '/api/v1/abdm/nmr/user/enable-notification',
   },
   college: {
     registrar: 'api/v1/abdm/nmr/college/{collegeId}/registrar',
     dean: 'api/v1/abdm/nmr/college/{collegeId}/dean',
     getCollegeProfile: 'api/v1/abdm/nmr/college/{id}',
-    getCollegeRegistrarProfile: 'api/v1/abdm/nmr/college/registrar/{id}',
-    getCollegeDeanProfile: 'api/v1/abdm/nmr/college/dean/{id}',
-    register: 'api/v1/abdm/nmr/college',
+    getCollegeRegistrarProfile: 'api/v1/abdm/nmr/college/{collegeId}/registrar/{id}',
+    getCollegeDeanProfile: 'api/v1/abdm/nmr/college/{collegeId}/dean/{id}',
+    register: 'api/v1/abdm/nmr/college/applications',
     initiateCollegeWorkFlow: 'api/v1/abdm/nmr/college/applications/status',
   },
   nmc: {
@@ -44,6 +50,10 @@ export const API = {
   Aadhaar: {
     sendAadhaarOtp: 'api/v1/abdm/nmr/aadhaar/send-otp',
     verifyAadhaarOtp: 'api/v1/abdm/nmr/aadhaar/verify-otp',
+  },
+  dashboard: {
+    cardCount: 'api/v1/abdm/nmr/dashboards/cards',
+    cardDetails: 'api/v1/abdm/nmr/dashboards/card-detail',
   },
   smc: {
     getSMCProfileData: 'api/v1/abdm/nmr/smc/user/{id}',
@@ -55,5 +65,12 @@ export const API = {
   },
   nbe: {
     getNBEProfileData: 'api/v1/abdm/nmr/nbe/user/{id}',
+  },
+  forgotPassword: {
+    setPassword: '/api/v1/abdm/nmr/user/set-password',
+  },
+  searchDoctor: {
+    searchDoctorDetails: 'api/v1/abdm/nmr/health-professional/search',
+    searchDoctorById: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}',
   },
 };

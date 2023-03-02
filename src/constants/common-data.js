@@ -35,7 +35,7 @@ export const UniqueUserNameForDoctor = [
 ];
 
 export const getSMCProfileDetails = (details) => [
-  { label: 'Name', value: details.display_name, id: '1' },
+  { label: 'Name', value: details.first_name, id: '1' },
   { label: 'Enrolment Number NDHM', value: details.ndhm_enrollment, id: '2' },
   { label: 'Enrolment Number', value: details.enrolled_number, id: '3' },
   { label: 'Council', value: details.state_medical_council.name, id: '4' },
@@ -44,7 +44,7 @@ export const getSMCProfileDetails = (details) => [
 ];
 
 export const getNMCProfileDetails = (details) => [
-  { label: 'Name', value: details.display_name, id: '1' },
+  { label: 'Name', value: details.first_name, id: '1' },
   { label: 'Enrolment Number NDHM', value: details.ndhm_enrollment, id: '2' },
   { label: 'Enrolment Number', value: details.enrolled_number, id: '3' },
   { label: 'Council', value: details.state_medical_council.name, id: '4' },
@@ -53,11 +53,10 @@ export const getNMCProfileDetails = (details) => [
 ];
 
 export const getNBEProfileDetails = (details) => [
+  { label: 'User ID', value: details.id, id: '2' },
   { label: 'Name', value: details.display_name, id: '1' },
-  { label: 'Enrolment Number NDHM', value: details.ndhm_enrollment, id: '2' },
-  { label: 'Enrolment Number', value: details.enrolled_number, id: '3' },
-  // { label: 'Phone Number', value: details.mobile_no, id: '4' },
-  // { label: 'Email Address', value: details.email_id, id: '5' },
+  { label: 'Phone Number', value: details.mobile_no, id: '4' },
+  { label: 'Email Address', value: details.email_id, id: '5' },
 ];
 export const DepartmentNames = [
   { id: '1', name: 'Out patient' },
@@ -199,71 +198,6 @@ export const trackstatusData = {
   ],
 };
 
-export const applications = {
-  message: [
-    {
-      SNo: 1,
-      registrationNo: '71-1567-8728-1025',
-      nameofApplicant: 'A Basavaraj S Harihar',
-      nameofStateCouncil: 'L West Bengal Medical Council',
-      councilVerificationStatus: 'Submitted',
-      collegeVerificationStatus: 'A Submitted',
-      NMCVerificationStatus: 'P Submitted',
-      dateofSubmission: '2026-06-25 05:03:57.0',
-      pendency: '28',
-      view: 'view',
-    },
-    {
-      SNo: 2,
-      registrationNo: '70-1567-8728-1025',
-      nameofApplicant: 'Z Basavaraj S Harihar',
-      nameofStateCouncil: 'I West Bengal Medical Council',
-      councilVerificationStatus: 'Pending',
-      collegeVerificationStatus: 'X Submitted',
-      NMCVerificationStatus: 'Q Submitted',
-      dateofSubmission: '2028-12-10 16:35:24.0',
-      pendency: '21',
-      view: 'view',
-    },
-    {
-      SNo: 3,
-      registrationNo: '76-1567-8728-1025',
-      nameofApplicant: 'T Basavaraj S Harihar',
-      nameofStateCouncil: 'T West Bengal Medical Council',
-      councilVerificationStatus: 'Reject',
-      collegeVerificationStatus: 'P Submitted',
-      NMCVerificationStatus: 'L Submitted',
-      dateofSubmission: '2022-07-22 09:59:04.0',
-      pendency: '20',
-      view: 'view',
-    },
-    {
-      SNo: 4,
-      registrationNo: '74-1567-8728-1025',
-      nameofApplicant: 'E Basavaraj S Harihar',
-      nameofStateCouncil: 'U West Bengal Medical Council',
-      councilVerificationStatus: 'Approved',
-      collegeVerificationStatus: 'Submitted',
-      NMCVerificationStatus: 'Submitted',
-      dateofSubmission: '2023-08-23 06:11:06.0',
-      pendency: '23',
-      view: 'view',
-    },
-    {
-      SNo: 5,
-      registrationNo: '79-1567-8728-1025',
-      nameofApplicant: 'K Basavaraj S Harihar',
-      nameofStateCouncil: 'A West Bengal Medical Council',
-      councilVerificationStatus: 'Submitted',
-      collegeVerificationStatus: 'Submitted',
-      NMCVerificationStatus: 'Submitted',
-      dateofSubmission: '2022-09-24 17:10:11.0',
-      pendency: '28',
-      view: 'view',
-    },
-  ],
-  count: 5,
-};
 export const ActivateLicenceData = {
   message: [
     {
@@ -382,75 +316,6 @@ export const collegeApprovalsList = {
   count: 5,
 };
 
-export const dashboardCountData = {
-  'Registration Request': [
-    {
-      count: 0,
-      name: 'Total Registration Request',
-    },
-    {
-      count: 0,
-      name: 'Pending',
-    },
-    {
-      count: 0,
-      name: 'Verified',
-    },
-    {
-      count: 0,
-      name: 'Query Raised',
-    },
-    {
-      count: 0,
-      name: 'Rejected',
-    },
-  ],
-  'Updation Request': [
-    {
-      count: 0,
-      name: 'Total Updation Request',
-    },
-    {
-      count: 0,
-      name: 'Update Request Received',
-    },
-    {
-      count: 0,
-      name: 'Update Request Approved',
-    },
-    {
-      count: 0,
-      name: 'Query Raised on Update Request',
-    },
-    {
-      count: 0,
-      name: 'Update Request Rejected',
-    },
-  ],
-  'Suspension Request': [
-    {
-      count: 0,
-      name: 'Total Suspension Request',
-    },
-    {
-      count: 0,
-      name: 'Temporary Suspension Request Received',
-    },
-    {
-      count: 0,
-      name: 'Temporary Suspension Approved',
-    },
-    {
-      count: 0,
-      name: 'Permanent Suspension Request Received',
-    },
-    {
-      count: 0,
-      name: 'Permanent Suspension Request Approved',
-    },
-  ],
-};
-
 export const natureOfWork = [
   {
     id: 1,
@@ -484,3 +349,34 @@ export const workStatusOptions = [
     name: 'Both',
   },
 ];
+
+// dashboard count mapping
+// mapping BE keys -> card titles on FE
+export const registrationRequestMapper = {
+  'Total HP Registration Requests': 'Total Registration request',
+  Rejected: 'Rejected',
+  Approved: 'Approved',
+  'Query Raised': 'Query Raised',
+  Suspended: 'Suspended',
+  Blacklisted: 'Blacklisted',
+  Pending: 'Pending',
+};
+export const updationRequestMapper = {
+  'Total HP Modification Requests': 'Total Updation request',
+  Rejected: 'Update Request Rejected',
+  Approved: 'Update Request Approved',
+  'Query Raised': 'Query Raised on Update Request',
+  Suspended: 'Suspended',
+  Blacklisted: 'Blacklisted',
+  Pending: 'Update Request Received',
+};
+
+export const suspensionRequestMapper = {
+  'Total Consolidated Suspension Requests': 'Total Suspension request',
+  Rejected: 'Rejected',
+  Approved: 'Approved',
+  'Query Raised': 'Query Raised',
+  Suspended: 'Suspended',
+  Blacklisted: 'Blacklisted',
+  Pending: 'Pending',
+};

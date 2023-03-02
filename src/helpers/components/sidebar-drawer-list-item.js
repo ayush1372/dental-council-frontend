@@ -20,6 +20,7 @@ import TrackApplication from '../../pages/profile/track-application/track-applic
 import UserProfile from '../../pages/user-profile';
 import AdditionalQualifications from '../../pages/user-profile/components/additional-qualifications/additional-qualifications';
 import TrackStatus from '../../shared/track-status';
+import { getDoctorTrackApplicationData } from '../../store/actions/doctor-user-profile-actions';
 
 function SideDrawerListItem() {
   const { userActiveTab } = useSelector((state) => state.common);
@@ -38,7 +39,7 @@ export const doctorTabs = [
     name: 'Track Application',
     tabName: 'track-application',
     icon: <CreditCardOffIcon />,
-    element: <TrackApplication />,
+    element: <TrackApplication getTableData={getDoctorTrackApplicationData} />,
   },
   {
     option: 2,
@@ -101,6 +102,13 @@ export const smcTabs = [
   },
   {
     option: 5,
+    name: 'College Approval',
+    tabName: 'college-approval',
+    icon: <AppRegistrationIcon />,
+    element: <CollegeApproval />,
+  },
+  {
+    option: 6,
     name: 'Change Password',
     tabName: 'change-password',
     icon: <PasswordIcon />,
@@ -219,5 +227,36 @@ export const nbeTabs = [
     tabName: 'track-status',
     icon: <BadgeIcon />,
     element: <TrackStatus tabName={SideDrawerListItem} />,
+  },
+  {
+    option: 3,
+    name: 'Change Password',
+    tabName: 'change-password',
+    icon: <PasswordIcon />,
+    element: <ChangePassword tabName={SideDrawerListItem} />,
+  },
+];
+
+export const colgDeanRegTabs = [
+  {
+    option: 0,
+    name: 'Dashboard',
+    tabName: 'dashboard',
+    icon: <DashboardIcon />,
+    element: <Dashboard tabName={SideDrawerListItem} />,
+  },
+  {
+    option: 1,
+    name: 'My Profile',
+    tabName: 'my-profile',
+    icon: <AccountCircleIcon />,
+    element: <CollegeMyProfile />,
+  },
+  {
+    option: 2,
+    name: 'Change Password',
+    tabName: 'change-password',
+    icon: <PasswordIcon />,
+    element: <ChangePassword tabName={SideDrawerListItem} />,
   },
 ];

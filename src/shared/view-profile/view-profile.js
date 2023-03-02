@@ -1,7 +1,35 @@
+import { useState } from 'react';
+
 import { Box, Grid, Typography } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
+import { useDispatch } from 'react-redux';
+
+import { enableUserNotification } from '../../store/actions/common-actions';
+
 export function ViewProfile(props) {
+  const dispatch = useDispatch();
+  const [emailNotification, setEmailNotification] = useState();
+  const [mobileNotification, setMobileNotification] = useState();
+
+  const handleNotification = (eventData, mode) => {
+    if (mode === 'email') {
+      setEmailNotification(eventData?.target?.checked);
+    }
+    if (mode === 'sms') {
+      setMobileNotification(eventData?.target?.checked);
+    }
+    let updatedNotificationData = {
+      notification_toggles: [
+        {
+          mode: mode,
+          is_enabled: eventData.target.checked,
+        },
+      ],
+    };
+    dispatch(enableUserNotification(updatedNotificationData));
+  };
+
   return (
     <>
       <Box display={'flex'} flexDirection={{ xs: 'column', md: 'row' }}>
@@ -14,23 +42,24 @@ export function ViewProfile(props) {
         >
           View Profile
         </Typography>
-        <Box
-          align="right"
-          // align={{ xs: 'none', md: 'right' }}
-          display={'flex'}
-          flexDirection={{ xs: 'column', md: 'row' }}
-        >
+        <Box align="right" display={'flex'} flexDirection={{ xs: 'column', md: 'row' }}>
           <FormControlLabel
             sx={{
               width: {
                 xs: 'fit-content',
                 md: '250px',
               },
-              // marginLeft: 0,
-              // marginRight: -3,
             }}
             value="email"
-            control={<Switch color="primary" defaultChecked />}
+            control={
+              <Switch
+                color="primary"
+                checked={emailNotification}
+                onChange={(e) => {
+                  handleNotification(e, 'email');
+                }}
+              />
+            }
             label="Email Notifications"
             labelPlacement="start"
           />
@@ -43,8 +72,16 @@ export function ViewProfile(props) {
               marginLeft: 0,
               marginRight: -3,
             }}
-            value="mobile"
-            control={<Switch color="primary" defaultChecked />}
+            value="sms"
+            control={
+              <Switch
+                color="primary"
+                checked={mobileNotification}
+                onChange={(e) => {
+                  handleNotification(e, 'sms');
+                }}
+              />
+            }
             label="Mobile Notifications"
             labelPlacement="start"
           />

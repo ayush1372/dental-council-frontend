@@ -28,7 +28,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
     workProfileDetails || {};
   const { is_user_currently_working, work_nature, work_status } = work_details || {};
   const { broad_speciality, super_speciality: subSpecialityOptions } = speciality_details || {};
-  const { address, url, work_organization, facility_id } = current_work_details[0] || {};
+  const { address, url, work_organization, facility_id } = current_work_details?.[0] || {};
   const { state: stateDetails, district: districtDetails, pincode, address_line1 } = address || {};
   const {
     formState: { errors },
@@ -218,7 +218,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
             </Typography>
             <AutoComplete
               name="subSpeciality"
-              options={subSpecialityOptions}
+              options={subSpecialityOptions || []}
               value={getValues().subSpeciality}
               error={subSpecialities?.length === 0 && errors.subSpeciality?.message}
               multiple={true}
@@ -394,11 +394,16 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
             />
           </Grid>
           <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="inputTextColor.main">
+              District
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+            </Typography>
             <Select
               fullWidth
               error={errors.District?.message}
-              name="District"
-              label="District"
+              name={'District'}
               defaultValue={getValues().District}
               required={true}
               {...register('District', {
@@ -496,7 +501,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
-              Pin Code
+              Pincode
               <Typography component="span" color="error.main">
                 *
               </Typography>

@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TextField } from '../../../../src/ui/core/form/textfield/textfield';
 import { createEditFieldData } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
+import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import ModalOTP from '../../../shared/otp-modal/otp-modal';
 import { registerCollegeDetails } from '../../../store/actions/college-actions';
 import {
@@ -23,11 +24,19 @@ import successToast from '../../../ui/core/toaster';
 
 export function CollegeRegistration() {
   const { statesList, councilNames, universitiesList } = useSelector((state) => state.common);
+  const registrationSuccess = useSelector((state) => state.college.collegeRegisterDetails.data);
   const [verifyEmail, setVerifyEmail] = useState(false);
   const [verifyMobile, setVerifyMobile] = useState(false);
   const [type, setType] = useState('');
   const [headerText, setHeaderText] = useState('');
+  const [successModalPopup, setSuccessModalPopup] = useState(false);
+  const [transactionID, setTransactionID] = useState('');
   const dispatch = useDispatch();
+  // useEffect(() => {
+  //   if (collegeRegisterDetails?.data.length !== 0) {
+  //     setSuccessModalPopup(true);
+  //   }
+  // }, [collegeRegisterDetails?.data]);
   useEffect(() => {
     dispatch(getStatesList());
     dispatch(getRegistrationCouncilList());
@@ -38,6 +47,7 @@ export function CollegeRegistration() {
     if (type === 'sms') {
       dispatch(
         verifyNotificationOtp({
+          transaction_id: transactionID,
           contact: getValues().CollegePhoneNumber,
           type: type,
           otp: otpNumber,
@@ -54,6 +64,7 @@ export function CollegeRegistration() {
     } else {
       dispatch(
         verifyNotificationOtp({
+          transaction_id: transactionID,
           contact: getValues().email,
           type: type,
           otp: otpNumber,
@@ -74,7 +85,8 @@ export function CollegeRegistration() {
     if (type === 'sms' && otpMobileVerify) {
       setHeaderText(`Mobile Number${getValues().CollegePhoneNumber}`);
       dispatch(sendNotificationOtp({ contact: getValues().CollegePhoneNumber, type: type }))
-        .then(() => {
+        .then((response) => {
+          setTransactionID(response?.data?.transaction_id);
           handleClickOpen();
         })
         .catch((error) => {
@@ -84,7 +96,8 @@ export function CollegeRegistration() {
     } else if (type === 'email' && otpEmailVerify) {
       setHeaderText(`Email Id ${getValues().email}`);
       dispatch(sendNotificationOtp({ contact: getValues().email, type: type }))
-        .then(() => {
+        .then((response) => {
+          setTransactionID(response?.data?.transaction_id);
           handleClickOpen();
         })
         .catch((error) => {
@@ -110,7 +123,8 @@ export function CollegeRegistration() {
         )}`
       );
       dispatch(sendNotificationOtp({ contact: getValues().CollegePhoneNumber, type: type }))
-        .then(() => {
+        .then((response) => {
+          setTransactionID(response?.data?.transaction_id);
           handleClickOpen();
         })
         .catch((error) => {
@@ -120,7 +134,8 @@ export function CollegeRegistration() {
     } else if (type === 'email' && otpEmailVerify) {
       setHeaderText(`Email Id ******${getValues().email.substr(getValues().email.length - 15)}.`);
       dispatch(sendNotificationOtp({ contact: getValues().email, type: type }))
-        .then(() => {
+        .then((response) => {
+          setTransactionID(response?.data?.transaction_id);
           handleClickOpen();
         })
         .catch((error) => {
@@ -182,9 +197,21 @@ export function CollegeRegistration() {
       state_id: getValues().StateId,
     };
 
-    dispatch(registerCollegeDetails(collegeDetailValues)).then(() => {
-      reset();
-    });
+    dispatch(registerCollegeDetails(collegeDetailValues))
+      .then(() => {
+        if (registrationSuccess) {
+          setSuccessModalPopup(true);
+        }
+        reset();
+      })
+      .catch((error) => {
+        successToast(
+          error?.data?.response?.data?.error,
+          'RegistrationError',
+          'error',
+          'top-center'
+        );
+      });
   };
   return (
     <Container sx={{ mt: 5 }}>
@@ -472,6 +499,15 @@ export function CollegeRegistration() {
           Cancel
         </Button>
       </Box>
+      {successModalPopup && (
+        <SuccessModalPopup
+          open={successModalPopup}
+          setOpen={() => setSuccessModalPopup(false)}
+          text={
+            'Your profile has been successfully registered.Further details would be sent on your registered Email ID'
+          }
+        />
+      )}
     </Container>
   );
 }

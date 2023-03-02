@@ -46,20 +46,18 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { loginData } = useSelector((state) => state?.loginReducer);
 
+  const { registration_detail_to, request_id } = registrationDetails || {};
   const {
-    registration_detail_to: {
-      registration_date,
-      registration_number,
-      state_medical_council: { name: smcName },
-      is_renewable,
-      renewable_registration_date,
-      is_name_change,
-    },
-    request_id,
-  } =
-    registrationDetails && Object.values(registrationDetails).length > 3
-      ? registrationDetails
-      : { registration_detail_to: { state_medical_council: {} } };
+    registration_date,
+    registration_number,
+    state_medical_council,
+    is_renewable,
+    renewable_registration_date,
+    is_name_change,
+  } = registration_detail_to || {};
+
+  const smcName = state_medical_council?.name || '';
+
   const {
     formState: { errors },
     getValues,
@@ -205,15 +203,15 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
         ? registrationDetails.qualification_detail_response_tos[0]
         : {};
     const obj = { ...qualificationObjTemplate[0] };
-    obj.university = details.university?.id;
-    obj.qualification = details.course?.id;
-    obj.college = details.college?.id;
-    obj.year = details.qualification_year;
-    obj.country = details.country?.id;
-    obj.state = details.state?.id;
-    obj.qualificationfrom = details.qualification_from;
-    obj.month = details.qualification_month;
-    obj.nameindegree = details.is_name_change;
+    obj.university = details?.university?.id;
+    obj.qualification = details?.course?.id;
+    obj.college = details?.college?.id;
+    obj.year = details?.qualification_year;
+    obj.country = details?.country?.id;
+    obj.state = details?.state?.id;
+    obj.qualificationfrom = details?.qualification_from;
+    obj.month = details?.qualification_month;
+    obj.nameindegree = details?.is_name_change;
 
     update(0, { ...obj });
   }, [registrationDetails]);
