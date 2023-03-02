@@ -19,7 +19,6 @@ const EditQualificationDetails = ({
   fields,
   register,
   unregister,
-  update,
   remove,
   watch,
   qualificationFilesData,
@@ -32,8 +31,7 @@ const EditQualificationDetails = ({
   );
 
   const handleRegistration = (event) => {
-    fields[index][event.target.name] = event.target.value;
-    update(index, { ...fields[index] });
+    setValue(`qualification.${index}.${event.target.name}`, event.target.value);
   };
 
   const handleQualificationFrom = (event) => {

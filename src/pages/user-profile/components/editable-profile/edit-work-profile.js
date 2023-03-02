@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { natureOfWork, workStatusOptions } from '../../../../constants/common-data';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
 import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
-import { getDistrictList, getInitiateWorkFlow } from '../../../../store/actions/common-actions';
+import { getDistrictList } from '../../../../store/actions/common-actions';
 import { updateDoctorWorkDetails } from '../../../../store/actions/doctor-user-profile-actions';
 import { getDistricts } from '../../../../store/reducers/common-reducers';
 import { getWorkProfileDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
@@ -24,8 +24,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
   const { statesList, specialitiesList, districtsList } = useSelector((state) => state?.common);
   const { workProfileDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { loginData } = useSelector((state) => state?.loginReducer);
-  const { work_details, speciality_details, current_work_details, request_id } =
-    workProfileDetails || {};
+  const { work_details, speciality_details, current_work_details } = workProfileDetails || {};
   const { is_user_currently_working, work_nature, work_status } = work_details || {};
   const { broad_speciality, super_speciality: subSpecialityOptions } = speciality_details || {};
   const { address, url, work_organization, facility_id } = current_work_details?.[0] || {};
@@ -139,27 +138,13 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
   };
 
   const fetchUpdateDoctorWorkDetails = (workDetails) => {
-    const getInitiateWorkFlowHeader = {
-      application_type_id: 1,
-      actor_id: 2,
-      action_id: 3,
-      hp_profile_id: loginData.data.profile_id,
-      profile_status: 1,
-      request_id: request_id,
-    };
-    dispatch(getInitiateWorkFlow(getInitiateWorkFlowHeader))
-      .then(() => {
-        const formData = new FormData();
-        formData.append('data', JSON.stringify(workDetails));
-        formData.append('proof', workProof?.[0].file);
+    const formData = new FormData();
+    formData.append('data', JSON.stringify(workDetails));
+    formData.append('proof', workProof?.[0].file);
 
-        dispatch(updateDoctorWorkDetails(formData, loginData.data.profile_id))
-          .then(() => {
-            handleNext();
-          })
-          .catch((allFailMsg) => {
-            successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-          });
+    dispatch(updateDoctorWorkDetails(formData, loginData.data.profile_id))
+      .then(() => {
+        handleNext();
       })
       .catch((allFailMsg) => {
         successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
