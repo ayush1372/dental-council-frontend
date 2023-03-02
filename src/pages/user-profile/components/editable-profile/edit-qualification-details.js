@@ -19,7 +19,6 @@ const EditQualificationDetails = ({
   fields,
   register,
   unregister,
-  update,
   remove,
   watch,
   qualificationFilesData,
@@ -32,8 +31,7 @@ const EditQualificationDetails = ({
   );
 
   const handleRegistration = (event) => {
-    fields[index][event.target.name] = event.target.value;
-    update(index, { ...fields[index] });
+    setValue(`qualification.${index}.${event.target.name}`, event.target.value);
   };
 
   const handleQualificationFrom = (event) => {
@@ -229,7 +227,7 @@ const EditQualificationDetails = ({
         </Grid>
       </Grid>
       <Grid container item spacing={2}>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={5} xl={4}>
           {/* {getValues()[qualification[0]] !== undefined && ( */}
           <Select
             fullWidth
@@ -251,7 +249,7 @@ const EditQualificationDetails = ({
           />
           {/* )} */}
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={3} xl={4}>
           {/* {getValues()[qualification[1]] !== undefined && ( */}
           <Select
             fullWidth
@@ -281,7 +279,7 @@ const EditQualificationDetails = ({
           />
           {/* )} */}
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={4} xl={4}>
           <Select
             fullWidth
             error={errors?.qualification?.[index]?.state?.message}
@@ -304,28 +302,6 @@ const EditQualificationDetails = ({
       </Grid>
       <Grid container item spacing={2}>
         <Grid item xs={12} md={4}>
-          {/* {getValues()[`qualification[${index}].college`] !== undefined && ( */}
-          <Select
-            fullWidth
-            error={errors?.qualification?.[index]?.college?.message}
-            name="College"
-            label="Name of the college"
-            defaultValue={fields[index].college}
-            required={true}
-            {...register(`qualification[${index}].college`, {
-              required: 'college is required',
-            })}
-            options={createSelectFieldData(colleges)}
-            MenuProps={{
-              style: {
-                maxHeight: 250,
-                maxWidth: 130,
-              },
-            }}
-          />
-          {/* )} */}
-        </Grid>
-        <Grid item xs={12} md={4}>
           {/* {getValues()[qualification[4]] !== undefined && ( */}
           <Select
             fullWidth
@@ -347,6 +323,29 @@ const EditQualificationDetails = ({
           />
           {/* )} */}
         </Grid>
+        <Grid item xs={12} md={4}>
+          {/* {getValues()[`qualification[${index}].college`] !== undefined && ( */}
+          <Select
+            fullWidth
+            error={errors?.qualification?.[index]?.college?.message}
+            name="College"
+            label="Name of the college"
+            defaultValue={fields[index].college}
+            required={true}
+            {...register(`qualification[${index}].college`, {
+              required: 'college is required',
+            })}
+            options={createSelectFieldData(colleges)}
+            MenuProps={{
+              style: {
+                maxHeight: 250,
+                maxWidth: 130,
+              },
+            }}
+          />
+          {/* )} */}
+        </Grid>
+
         <Grid item xs={12} md={4}>
           <Select
             fullWidth

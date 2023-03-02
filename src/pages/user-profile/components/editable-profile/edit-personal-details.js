@@ -14,7 +14,6 @@ import { ModalOTP } from '../../../../shared/otp-modal/otp-modal';
 import {
   getCitiesList,
   getDistrictList,
-  getInitiateWorkFlow,
   getSubDistrictsList,
 } from '../../../../store/actions/common-actions';
 import {
@@ -68,7 +67,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       full_name,
     },
     imr_details: { registration_number, nmr_id, year_of_info },
-    request_id,
+    // request_id,
   } = personalDetails && Object.values(personalDetails).length > 3
     ? personalDetails
     : {
@@ -200,26 +199,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   }, [selectedSubDistrict]);
 
   const fetchUpadtedDoctorUserProfileData = (personalDetails) => {
-    const getInitiateWorkFlowHeader = {
-      application_type_id: 1,
-      actor_id: 2,
-      action_id: 3,
-      hp_profile_id: loginData.data.profile_id,
-      profile_status: 1,
-      request_id: request_id,
-    };
-    dispatch(getInitiateWorkFlow(getInitiateWorkFlowHeader))
+    dispatch(updateDoctorPersonalDetails(personalDetails, loginData.data.profile_id))
       .then(() => {
-        // handleNext();
-        dispatch(updateDoctorPersonalDetails(personalDetails, loginData.data.profile_id))
+        dispatch(getRegistrationDetailsData(loginData.data.profile_id))
           .then(() => {
-            dispatch(getRegistrationDetailsData(loginData.data.profile_id))
-              .then(() => {
-                handleNext();
-              })
-              .catch((allFailMsg) => {
-                successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-              });
+            handleNext();
           })
           .catch((allFailMsg) => {
             successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
