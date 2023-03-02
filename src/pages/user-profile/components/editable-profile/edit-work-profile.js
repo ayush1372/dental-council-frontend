@@ -313,16 +313,6 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               setFileData={setWorkProof}
             />
           </Grid>
-          <Grid item xs={8} md={2} display="flex" alignItems="center">
-            <Typography variant="body1" color="inputTextColor.main" textAlign="center">
-              OR
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={4} display="flex" alignItems="center">
-            <Button color="secondary" variant="outlined">
-              View Application
-            </Button>
-          </Grid>
         </Grid>
         {/* layer 3 */}
         <Grid container item spacing={2}>
