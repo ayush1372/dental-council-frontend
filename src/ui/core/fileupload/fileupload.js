@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useState } from 'react';
 
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
@@ -9,12 +10,19 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
 import moment from 'moment';
+import { useDispatch } from 'react-redux';
 
+import {
+  uploadDegreeCertificate,
+  uploadProofFile,
+  uploadRegistrationCertificate,
+} from '../../../store/reducers/common-reducers.js';
 import { Button } from '../button/button.js';
 
 import styles from './fileupload.module.scss';
 
 export const UploadFile = (props) => {
+  const dispatch = useDispatch();
   const {
     showBrowse,
     uploadFiles,
@@ -39,10 +47,17 @@ export const UploadFile = (props) => {
     setBrowsedFileName(e.target.files[0].name);
   };
 
-  //To add the file in the file array
+  //To add the file in th e file array
   const handleChange = (e) => {
     setUploadFileError('');
     setFileData(fileData);
+    dispatch(uploadProofFile(e.target.files[0]));
+    dispatch(uploadDegreeCertificate(e.target.files[0]));
+    dispatch(uploadRegistrationCertificate(e.target.files[0]));
+    // dispatch(uploadProofFile());
+    console.log('file', e.target.files[0]);
+
+    console.log('fileData', fileData);
     e.preventDefault();
     setBrowsedFileData(e);
     setBrowsedFileName();

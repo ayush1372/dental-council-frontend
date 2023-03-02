@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -5,10 +6,32 @@ import CloseIcon from '@mui/icons-material/Close';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import { Box, Dialog, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { getEsignFormDetails } from '../../../../store/actions/doctor-user-profile-actions';
 import { Button, Checkbox } from '../../../../ui/core';
 
 const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType }) => {
+  const dispatch = useDispatch();
+  const personalDetails = useSelector((state) => state?.doctorUserProfileReducer?.personalDetails);
+  const commnicationAddress = useSelector(
+    (state) => state?.doctorUserProfileReducer?.personalDetails?.communication_address
+  );
+  const eSignResponse = useSelector((state) => state?.doctorUserProfileReducer?.esignDetails?.data);
+  const stateData = useSelector((state) => state?.doctorUserProfileReducer);
+  const workProfileData = useSelector(
+    (state) => state?.doctorUserProfileReducer?.workProfileDetails
+  );
+  const proofFileData = useSelector((state) => state?.common?.getProofFileData?.data);
+  console.log('stateData', stateData);
+  console.log('workProfileData', workProfileData);
+  console.log('commnicationAddress', commnicationAddress);
+  console.log('proof file data', proofFileData);
+
+  // const firstname = personalDetails?.personal_details;
+  console.log('personalDetails12', personalDetails);
+  console.log('eSignResponse', eSignResponse);
+
   const [confirmationModal, setConfirmationModal] = useState(false);
   const {
     formState: { errors },
@@ -28,6 +51,56 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
     const { consent } = getValues();
     if (consent) setConfirmationModal(true);
   };
+  function eSignHandler() {
+    console.log('clicked e-sign handler');
+    let data = {
+      signingPlace: personalDetails?.communication_address?.village?.name,
+      nmrDetails: {
+        nmrPersonalDetail: {
+          //frompersonal api?
+          firstName: personalDetails?.personal_details?.first_name || '',
+          userId: stateData?.personalDetails?.request_id || '', // nmr id or healthPRof id?
+          middleName: personalDetails?.personal_details?.middle_name || '',
+          lastName: personalDetails?.personal_details?.last_name || '',
+          qualification: 'degree', // ?????? in 2nd tab 2nd acccordion ?
+          mobileNumber: personalDetails?.personal_details?.email || 'abdm@nha.com',
+          emailId: personalDetails?.personal_details?.mobile || '9988775544',
+        },
+        nmrPersonalCommunication: {
+          //personal api
+          address: personalDetails?.communication_address?.address_line1 || '',
+          country: personalDetails?.communication_address?.country?.name || '',
+          stateUT: personalDetails?.communication_address?.state?.name || '',
+          district: personalDetails?.communication_address?.district?.name || '',
+          city: personalDetails?.communication_address?.village?.name || '',
+          pincode: personalDetails?.communication_address?.pincode || '',
+        },
+        nmrOfficeCommunication: {
+          //work profile
+          address: workProfileData?.current_work_details[0].address?.address_line1 || '',
+          country: 'India',
+          stateUT: workProfileData?.current_work_details[0].address?.state?.name || '',
+          district: workProfileData?.current_work_details[0].address?.district?.name || '',
+          city: workProfileData?.current_work_details[0].address?.district?.name || '', // city/village no data
+          subDistrict: 'string', // no data in repsonse
+          pincode: workProfileData?.current_work_details[0].address?.pincode || '',
+        },
+        isRegCerAttached: 'yes', //2nd tab 1st
+        isDegreeCardAttached: 'yes', //2nd tab 2nd
+        isOtherDocumentAttached: 'yes',
+        // proofFileData?.name.length > 0 ? 'Yes' : 'No', //3rd page''',
+      },
+    };
+    console.log('comAddress==>', workProfileData?.current_work_details[0].address?.address_line1);
+    dispatch(getEsignFormDetails(data));
+
+    document.getElementById('formid')?.submit();
+  }
+  // const handleEsign = () => {
+  //   document.getElementById('formid')?.submit();
+  // };
+  // console.log('123',Object.keys(proofFileData).length)
+
   return (
     <Box bgcolor="white.main" py={2} px={{ xs: 1, md: 4 }} mt={2} boxShadow={1}>
       <Typography component="div" color="primary.main" variant="body1">
@@ -100,6 +173,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
         {loggedInUserType !== 'SMC' && (
           <Grid item xs={12} md={2} display="flex" justifyContent="flex-end">
             <Button
+              onClick={eSignHandler}
               color="secondary"
               variant="contained"
               sx={{
@@ -137,6 +211,26 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
           </Button>
         </Grid>
       </Grid>
+      <div>
+        <form id="formid" target="_blank" method="POST" action={eSignResponse.esp_url}>
+          <input
+            type="hidden"
+            id="eSignRequest"
+            name="eSignRequest"
+            value={eSignResponse.esp_request}
+          />
+          <input type="hidden" id="aspTxnID" name="aspTxnID" value={eSignResponse.asp_txn_id} />
+          <input
+            type="hidden"
+            id="Content-Type"
+            name="Content-Type"
+            value={eSignResponse.content_type}
+          />
+          {/* <button type="submit" onClick={handleEsign()}>
+            Submit
+          </button> */}
+        </form>
+      </div>
 
       <Dialog
         open={confirmationModal}

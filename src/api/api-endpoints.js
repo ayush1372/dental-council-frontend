@@ -13,6 +13,7 @@ export const API = {
     profileImage: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/profile-picture',
     initiateWorkFlow: 'api/v1/abdm/nmr/health-professional/applications/status',
     trackApplicationData: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/applications',
+    eSign: 'api/v1/abdm/nmr/e-signature',
   },
   common: {
     states: 'api/v1/abdm/nmr/countries/356/states',

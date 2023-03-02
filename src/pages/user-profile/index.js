@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 
 import EditIcon from '@mui/icons-material/Edit';
@@ -98,6 +99,7 @@ export const UserProfile = ({
   };
 
   const fetchDoctorUserWorkProfileDetails = () => {
+    console.log(loginData);
     dispatch(getWorkProfileDetailsData(loginData.data.profile_id))
       .then(() => {})
       .catch((allFailMsg) => {

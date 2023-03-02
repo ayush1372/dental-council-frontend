@@ -1,8 +1,10 @@
+/* eslint-disable no-console */
 import { API } from '../../api/api-endpoints';
 import { GET, POST, PUT } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import { updateTrackApplicationTableData } from '../reducers/common-reducers';
 import {
+  getEsignDetails,
   getPersonalDetails,
   getProfileImage,
   getRegistrationDetails,
@@ -100,6 +102,7 @@ export const updateDoctorPersonalDetails = (body, doctor_profile_id) => async ()
 };
 
 export const updateDoctorRegistrationDetails = (body, doctor_profile_id) => async () => {
+  console.log('body of formdata', body);
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: PUT,
@@ -110,6 +113,7 @@ export const updateDoctorRegistrationDetails = (body, doctor_profile_id) => asyn
       data: body,
     })
       .then((response) => {
+        console.log('form data files', response);
         return resolve(response);
       })
       .catch((error) => {
@@ -168,6 +172,23 @@ export const getDoctorTrackApplicationData = (doctor_profile_id) => async (dispa
         dispatch(
           updateTrackApplicationTableData(response.data?.health_professional_applications || [])
         );
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+export const getEsignFormDetails = (data) => async (dispatch) => {
+  console.log('esign data', data);
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.DoctorUserProfileData.eSign,
+      data: data,
+    })
+      .then((response) => {
+        dispatch(getEsignDetails(response));
         return resolve(response);
       })
       .catch((error) => {
