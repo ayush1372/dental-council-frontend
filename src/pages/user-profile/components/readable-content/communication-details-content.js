@@ -13,32 +13,18 @@ const CommunicationAddress = ({ personalDetails }) => {
   const ClosePopup = () => {
     setOpenModal(false);
   };
-  const {
-    communication_address: {
-      country: { name: countryName },
-      state: { name: stateName },
-      district: { name: districtName },
-      sub_district: { name: sub_districtName },
-      pincode,
-      address_line1,
-      email,
-      mobile,
-      village: { name: villageName },
-    },
-    personal_details: { full_name },
-  } =
-    personalDetails && Object.values(personalDetails).length > 3
-      ? personalDetails
-      : {
-          communication_address: {
-            country: {},
-            state: {},
-            district: {},
-            sub_district: {},
-            village: {},
-          },
-          personal_details: {},
-        };
+
+  const { communication_address, personal_details } = personalDetails || {};
+  const { country, state, district, sub_district, pincode, address_line1, email, mobile, village } =
+    communication_address || {};
+  const { full_name } = personal_details || {};
+
+  const countryName = country?.name || '';
+  const stateName = state?.name || '';
+  const districtName = district?.name || '';
+  const subDistrictName = sub_district?.name || '';
+  const villageName = village?.name || '';
+
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2} mt={1}>
@@ -96,7 +82,7 @@ const CommunicationAddress = ({ personalDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              {villageName ? villageName : ''}
+              {villageName}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -117,7 +103,7 @@ const CommunicationAddress = ({ personalDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              {districtName ? districtName : ''}
+              {districtName}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -135,7 +121,7 @@ const CommunicationAddress = ({ personalDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              {sub_districtName ? sub_districtName : ''}
+              {subDistrictName}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -159,7 +145,7 @@ const CommunicationAddress = ({ personalDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              {stateName ? stateName : ''}
+              {stateName}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -180,7 +166,7 @@ const CommunicationAddress = ({ personalDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              {countryName ? countryName : ''}
+              {countryName}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon

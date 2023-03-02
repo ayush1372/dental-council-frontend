@@ -1,17 +1,7 @@
 import { useState } from 'react';
 
-import SearchIcon from '@mui/icons-material/Search';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
-import {
-  Box,
-  Container,
-  Grid,
-  InputAdornment,
-  TablePagination,
-  Typography,
-  useTheme,
-} from '@mui/material';
-import { useForm } from 'react-hook-form';
+import { Box, Container, Grid, TablePagination, Typography, useTheme } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
@@ -19,7 +9,6 @@ import {
   searchDoctorDetailsById,
 } from '../../../store/actions/doctor-search-actions';
 import { Button } from '../../../ui/core/button/button';
-import { TextField } from '../../../ui/core/form/textfield/textfield';
 import successToast from '../../../ui/core/toaster';
 import DoctorProfileModal from './doctor-profile-modal';
 
@@ -32,16 +21,6 @@ const SearchResults = ({ searchData }) => {
   const theme = useTheme();
 
   const dispatch = useDispatch();
-  const {
-    formState: { errors },
-    register,
-    getValues,
-  } = useForm({
-    mode: 'onChange',
-    defaultValues: {
-      search: '',
-    },
-  });
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
@@ -72,6 +51,7 @@ const SearchResults = ({ searchData }) => {
     setImagePath(imagePath);
     setConfirmationModal(true);
   };
+
   return (
     <Container
       maxWidth="lg"
@@ -87,33 +67,6 @@ const SearchResults = ({ searchData }) => {
           {`${searchDetails?.data?.data?.count}  Matching Records Found `}
         </Typography>
         <Box mt={3}>
-          <Box
-            className="options"
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            width="100%"
-          >
-            <TextField
-              data-testid="search-doctor"
-              id="outlined-basic"
-              variant="outlined"
-              type="text"
-              name="search"
-              required="false"
-              placeholder={'You can search anything here'}
-              defaultValue={getValues().search}
-              error={errors.search?.message}
-              {...register('search')}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end" sx={{ paddingRight: '3px' }}>
-                    <SearchIcon />
-                  </InputAdornment>
-                ),
-              }}
-            />
-          </Box>
           <Box className="search-results" mt={3}>
             <Grid container spacing={2}>
               {searchDetails?.data?.data?.results.map((doctor, index) => {

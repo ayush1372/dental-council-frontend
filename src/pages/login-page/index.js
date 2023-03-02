@@ -15,17 +15,19 @@ const LoginWrapper = () => {
   const location = useLocation();
   const { activeStep, handleNext, resetStep } = useWizard(0, []);
   const [showPopup, setShowPopup] = useState(false);
+  const [data, setData] = useState({ contact: '', type: '' });
   const handlePasswordSetup = () => {
     setShowPopup(true);
   };
   useEffect(() => {
     resetStep();
   }, [location.state.loginFormname]);
+
   return (
     <Box sx={{ mt: 5, mb: 5, maxWidth: '600px', margin: '40px auto' }}>
       {activeStep === 0 && <LoginPage handleForgotPassword={handleNext} />}
-      {activeStep === 1 && <ForgotPassword handleConfirmPassword={handleNext} />}
-      {activeStep === 2 && <ConfirmOTP handleConfirmOTP={handleNext} />}
+      {activeStep === 1 && <ForgotPassword handleConfirmPassword={handleNext} otpData={setData} />}
+      {activeStep === 2 && <ConfirmOTP handleConfirmOTP={handleNext} otpData={data} />}
       {activeStep === 3 && <NewPasswordSetup handlePasswordSetup={handlePasswordSetup} />}
       <Dialog
         sx={{

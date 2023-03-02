@@ -1,14 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Box, Container, Typography } from '@mui/material';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { verboseLog } from '../../../config/debug';
-import { RegistrationCouncilNames } from '../../../constants/common-data';
+import { createEditFieldData } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
-import { Button } from '../../../ui/core';
-import { TextField } from '../../../ui/core/form/textfield/textfield';
+import { getRegistrationCouncilList } from '../../../store/actions/common-actions';
+import { fetchSmcRegistrationDetails } from '../../../store/actions/doctor-registration-actions';
+import { Button, TextField } from '../../../ui/core';
 import FetchDoctorDetails from './fetch-doctor-details';
 const DoctorRegistrationWelcomePage = () => {
   const [isNext, setIsNext] = useState(false);
@@ -16,6 +17,7 @@ const DoctorRegistrationWelcomePage = () => {
     register,
     handleSubmit,
     getValues,
+    setValue,
     clearErrors,
     formState: { errors },
   } = useForm({
@@ -23,13 +25,26 @@ const DoctorRegistrationWelcomePage = () => {
     defaultValues: {
       options: '',
       RegistrationCouncil: '',
+      RegistrationCouncilId: '',
       RegistrationNumber: '',
     },
   });
+  const { councilNames } = useSelector((state) => state.common);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getRegistrationCouncilList());
+  }, []);
+
   const onSubmit = () => {
+    let registrationData = {
+      smcId: getValues().RegistrationCouncilId,
+      registrationNumber: parseInt(getValues().RegistrationNumber),
+    };
+    dispatch(fetchSmcRegistrationDetails(registrationData));
+
     setIsNext(true);
   };
-  verboseLog(isNext);
 
   return (
     <Box>
@@ -67,13 +82,16 @@ const DoctorRegistrationWelcomePage = () => {
                 <Box>
                   <SearchableDropdown
                     name="RegistrationCouncil"
-                    items={RegistrationCouncilNames}
-                    placeholder="Select your Registration Council"
+                    items={createEditFieldData(councilNames)}
+                    placeholder="Select Your Registration Council"
                     clearErrors={clearErrors}
                     error={errors.RegistrationCouncil?.message}
                     {...register('RegistrationCouncil', {
                       required: 'Registration Council is required',
                     })}
+                    onChange={(currentValue) => {
+                      setValue('RegistrationCouncilId', currentValue.id);
+                    }}
                   />
                 </Box>
               </Box>

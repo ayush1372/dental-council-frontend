@@ -1,5 +1,5 @@
 import { API } from '../../api/api-endpoints';
-import { GET, PATCH, POST } from '../../constants/requests';
+import { GET, PATCH, POST, PUT } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import {
   getActivateLicense,
@@ -15,6 +15,7 @@ import {
   getUniversities,
   searchTrackStatusData,
   sendNotificationData,
+  setNewPassword,
   updateCouncilNames,
   verifyNotificationData,
 } from '../reducers/common-reducers';
@@ -215,6 +216,7 @@ export const verifyNotificationOtp = (otpValue) => async (dispatch) => {
     useAxiosCall({
       method: POST,
       url: API.common.verifyOtp,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
       data: otpValue,
     })
       .then((response) => {
@@ -241,6 +243,7 @@ export const trackStatus = (body) => async (dispatch) => {
       });
   });
 };
+
 export const getInitiateWorkFlow = (body) => async () => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
@@ -249,6 +252,24 @@ export const getInitiateWorkFlow = (body) => async () => {
       data: body,
     })
       .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const changePasswordData = (data) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.common.changePassword,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      data: data,
+    })
+      .then((response) => {
+        dispatch(setNewPassword(response));
         return resolve(response);
       })
       .catch((error) => {
@@ -312,6 +333,23 @@ export const suspendDoctor = (body) => async () => {
     useAxiosCall({
       method: POST,
       url: API.common.suspend,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      data: body,
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const enableUserNotification = (body) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: PUT,
+      url: API.common.enableNotification,
       headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
       data: body,
     })

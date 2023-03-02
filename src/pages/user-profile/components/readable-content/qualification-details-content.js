@@ -12,23 +12,23 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
     setOpenModal(false);
   };
   const { userActiveTab } = useSelector((state) => state.common);
-  const [
-    {
-      country: { name: countryName },
-      state: { name: stateName },
-      college: { name: collegeName },
-      university: { name: universityName },
-      course: { course_name: courseName },
-      qualification_month,
-      qualification_year,
-      is_name_change,
-    },
-  ] =
-    registrationDetails &&
-    Object.values(registrationDetails).length > 3 &&
-    registrationDetails?.qualification_detail_response_tos.length > 0
-      ? registrationDetails.qualification_detail_response_tos
-      : [{ country: {}, state: {}, college: {}, university: {}, course: {} }];
+  const {
+    country,
+    state,
+    college,
+    university,
+    course,
+    qualification_month,
+    qualification_year,
+    is_name_change,
+  } = registrationDetails?.[0] || {};
+
+  const countryName = country?.name || '';
+  const stateName = state?.name || '';
+  const collegeName = college?.name || '';
+  const universityName = university?.name || '';
+  const courseName = course?.name || '';
+
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2} mt={1}>
@@ -41,7 +41,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography color="primary.main" variant="subtitle2">
-              {courseName ? courseName : ''}
+              {courseName}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -64,7 +64,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              {countryName ? countryName : ''}
+              {countryName}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -85,7 +85,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography color="primary.main" variant="subtitle2">
-              {stateName ? stateName : ''}
+              {stateName}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -107,7 +107,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              {collegeName ? collegeName : ''}
+              {collegeName}
             </Typography>
 
             {userActiveTab === 'dashboard' && (
@@ -129,7 +129,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              {universityName ? universityName : ''}
+              {universityName}
             </Typography>{' '}
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon

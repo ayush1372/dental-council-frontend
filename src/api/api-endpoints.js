@@ -11,8 +11,9 @@ export const API = {
     registrationDetails: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/registration',
     workProfileDetails: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/work-profile',
     profileImage: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/profile-picture',
-    initiateWorkFlow: 'api/v1/abdm/nmr/health-professional/applications/status',
+    // initiateWorkFlow: 'api/v1/abdm/nmr/health-professional/applications/status',
     trackApplicationData: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/applications',
+    profileConsent: 'api/v1/abdm/nmr/health-professional/register',
   },
   common: {
     states: 'api/v1/abdm/nmr/countries/356/states',
@@ -29,9 +30,11 @@ export const API = {
     specialities: 'api/v1/abdm/nmr/specialities',
     councilNames: 'api/v1/abdm/nmr/state-medical-councils',
     trackStatus: 'api/v1/abdm/nmr/health-professional/applications',
+    changePassword: 'api/v1/abdm/nmr/user/change-password',
     activateLicense: 'api/v1/abdm/nmr/health-professional/applications/re-activate',
     healthProfessionalApplicationStatus: 'api/v1/abdm/nmr/health-professional/applications/status',
     suspend: 'api/v1/abdm/nmr/health-professional/applications/suspend',
+    enableNotification: '/api/v1/abdm/nmr/user/enable-notification',
   },
   college: {
     registrar: 'api/v1/abdm/nmr/college/{collegeId}/registrar',
@@ -57,8 +60,15 @@ export const API = {
   smc: {
     getSMCProfileData: 'api/v1/abdm/nmr/smc/user/{id}',
   },
+  doctorRegistration: {
+    smcRegistrationDetail:
+      'api/v1/abdm/nmr/health-professional?smcId={smcId}&registrationNumber={registrationNumber}',
+  },
   nbe: {
     getNBEProfileData: 'api/v1/abdm/nmr/nbe/user/{id}',
+  },
+  forgotPassword: {
+    setPassword: '/api/v1/abdm/nmr/user/set-password',
   },
   searchDoctor: {
     searchDoctorDetails: 'api/v1/abdm/nmr/health-professional/search',
