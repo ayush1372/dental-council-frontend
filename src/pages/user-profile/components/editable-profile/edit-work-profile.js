@@ -349,7 +349,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
           </Grid>
         </Grid>
         <Grid container item spacing={2} mt={1}>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={4} lg={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
               State
               <Typography component="span" color="error.main">
@@ -368,7 +368,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               options={createSelectFieldData(statesList)}
             />
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={3} lg={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
               District
               <Typography component="span" color="error.main">
@@ -387,7 +387,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               options={createSelectFieldData(districtsList)}
             />
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={5} lg={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
               Name of the organization where you work
               <Typography component="span" color="error.main">
