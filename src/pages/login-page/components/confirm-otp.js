@@ -59,11 +59,10 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData }) => {
           }}
         >
           <Typography variant="body1">
-            We just sent an OTP on your registered{' '}
+            We have sent an OTP on your registered{' '}
             {otpData?.type === 'sms'
-              ? `Mobile Number XXXXXX${otpData?.contact.slice(-4)}`
-              : `email Id XXXXXX${otpData?.contact.slice(-12)}`}{' '}
-            linked with your Aadhaar.
+              ? `Mobile Number XXXXXX${otpData?.contact.slice(-4)} linked with your Aadhaar.`
+              : `Email ID XXXXXX${otpData?.contact.slice(-12)}`}{' '}
           </Typography>
 
           {otpform}
