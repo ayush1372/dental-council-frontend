@@ -2,21 +2,30 @@ import { useState } from 'react';
 
 import BlockIcon from '@mui/icons-material/Block';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CloseIcon from '@mui/icons-material/Close';
 import ErrorIcon from '@mui/icons-material/Error';
 import HelpIcon from '@mui/icons-material/Help';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Dialog, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { suspendDoctor } from '../../store/actions/common-actions';
+import { changeUserActiveTab } from '../../store/reducers/common-reducers';
 import { Button, Checkbox, RadioGroup, TextField } from '../../ui/core';
 import successToast from '../../ui/core/toaster';
 
-export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue }) {
+export function SuspendLicenseVoluntaryRetirement({
+  tabName,
+  selectedValue,
+  selectedSuspendLicenseProfile,
+}) {
   const dispatch = useDispatch();
   const { loginData } = useSelector((state) => state?.loginReducer);
   const [selectedSuspension, setSelectedSuspension] = useState('voluntary-suspension-check');
   const [selectedFromDate, setSelectedFromDate] = useState();
+  const { userActiveTab } = useSelector((state) => state.common);
+  const [conformSuspend, setConformSuspend] = useState(false);
+  const [confirmationModal, setConfirmationModal] = useState(false);
 
   const {
     register,
@@ -31,33 +40,64 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue }) {
       voluntarySuspendLicense: 'voluntary-suspension-check',
       fromDate: '',
       toDate:
-        selectedSuspension === 'permanent-suspension-check'
+        selectedSuspension === 'permanent-suspension-check' || selectedValue === 'suspend'
           ? selectedFromDate?.length >= 10 && selectedFromDate
           : '',
     },
   });
-
-  const onSubmit = () => {
+  const suspendLicenseStatus = () => {
     const { fromDate, toDate, remark } = getValues();
-    let suspendDoctorbody = {
-      hp_profile_id: loginData?.data?.profile_id,
-      application_type_id: selectedSuspension === 'voluntary-suspension-check' ? 3 : 4,
-      action_id: 1,
+    let suspendDoctorBody = {
+      hp_profile_id:
+        userActiveTab === 'voluntary-suspend-license'
+          ? loginData?.data?.profile_id
+          : userActiveTab === 'track-status' && selectedSuspendLicenseProfile?.view?.value,
+      application_type_id:
+        selectedSuspension === 'voluntary-suspension-check'
+          ? 3
+          : selectedSuspension === 'permanent-suspension-check'
+          ? 4
+          : selectedValue === 'suspend'
+          ? 4
+          : selectedValue === 'blacklist'
+          ? 3
+          : '',
+      action_id:
+        selectedValue === 'suspend'
+          ? 7
+          : selectedValue === 'blacklist'
+          ? 6
+          : userActiveTab === 'voluntary-suspend-license' && 1,
       from_date: fromDate,
       to_date: toDate,
       remarks: remark,
     };
     try {
-      dispatch(suspendDoctor(suspendDoctorbody)).then(() => {});
+      ((confirmationModal && userActiveTab === 'voluntary-suspend-license') ||
+        userActiveTab === 'track-status') &&
+        dispatch(suspendDoctor(suspendDoctorBody)).then((response) => {
+          if (response) {
+            setConfirmationModal(false);
+            userActiveTab === 'voluntary-suspend-license' &&
+              dispatch(changeUserActiveTab('my-profile'));
+          }
+        });
     } catch (allFailMsg) {
       successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
     }
+  };
+
+  const onSubmit = () => {
+    setConformSuspend(true);
+    setConfirmationModal(true);
+    suspendLicenseStatus();
   };
 
   const handlevoluntarySuspendLicenseChange = (event) => {
     setSelectedSuspension(event.target.value);
     reset({ toDate: '', fromDate: '', remark: '' });
   };
+
   const autoFromDateSelected = (event) => {
     const temp1 = +event.target.value.substring(0, 4) + 99 + '';
     const temp2 = event.target.value.replace(event.target.value.substring(0, 4), temp1);
@@ -65,6 +105,9 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue }) {
     setSelectedFromDate(temp2);
   };
 
+  const handleClose = () => {
+    setConfirmationModal(false);
+  };
   return (
     <Box data-testid="suspend-license-voluntary-retirement" width="100%">
       {!tabName && selectedValue !== 'forward' && (
@@ -189,7 +232,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue }) {
                 defaultValue={getValues().fromDate}
                 error={errors.fromDate?.message}
                 {...register('fromDate', {
-                  required: 'Enter Date of Birth',
+                  required: 'Enter From Date ',
                   onChange: (e) => autoFromDateSelected(e),
                 })}
               />
@@ -383,7 +426,7 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue }) {
           selectedValue === 'suspend' ||
           selectedValue === 'approve' ||
           selectedValue === 'blacklist' ? (
-            <Button variant="contained" color="grey">
+            <Button variant="contained" color="grey" onClick={handleClose}>
               Cancel
             </Button>
           ) : (
@@ -445,6 +488,65 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue }) {
             ''
           )}
         </Box>
+      )}
+      {conformSuspend && (
+        <Dialog
+          open={confirmationModal && userActiveTab === 'voluntary-suspend-license'}
+          onClose={() => {
+            setConfirmationModal(false);
+          }}
+        >
+          <Box p={2} width="410px" height="200">
+            <Box
+              display={'flex'}
+              justifyContent={'flex-start'}
+              alignItems={'center'}
+              data-testid="message"
+            >
+              <ErrorIcon color="error" sx={{ fontSize: '30px' }} />
+              <Typography color="textPrimary.main" variant="h3" p={1}>
+                Alert!
+              </Typography>
+              <CloseIcon onClick={handleClose} />
+            </Box>
+            <Box mt={4}>
+              <Typography color="textPrimary.main">
+                {`Are you sure you want to ${
+                  selectedSuspension === 'voluntary-suspension-check'
+                    ? 'voluntary suspend'
+                    : 'permanent suspend'
+                } this application`}
+              </Typography>
+            </Box>
+            <Box display={'flex'} justifyContent={'flex-end'} mt={1}>
+              <Button
+                onClick={() => {
+                  setConfirmationModal(false);
+                }}
+                data-testid="confirmModal"
+                color="grey"
+                variant="contained"
+                sx={{
+                  margin: '0 4px',
+                }}
+              >
+                No
+              </Button>
+              <Button
+                onClick={() => {
+                  suspendLicenseStatus();
+                }}
+                color="secondary"
+                variant="contained"
+                sx={{
+                  margin: '0 4px',
+                }}
+              >
+                Yes
+              </Button>
+            </Box>
+          </Box>
+        </Dialog>
       )}
     </Box>
   );

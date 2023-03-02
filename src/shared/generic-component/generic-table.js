@@ -38,11 +38,13 @@ export default function GenericTable(props) {
   const { order, orderBy, onRequestSort, customPopupOptions } = props;
   const [selected, setSelected] = useState('');
   const [confirmationModal, setConfirmationModal] = useState(false);
+  const [selectedSuspendLicenseProfile, setSelectedSuspendLicenseProfile] = useState();
 
-  const selectionChangeHandler = (event) => {
+  const selectionChangeHandler = (event, row) => {
     const { myValue } = event.currentTarget.dataset;
     setSelected(myValue);
     setConfirmationModal(true);
+    setSelectedSuspendLicenseProfile(row);
   };
   const [popUpOptions] = useState([
     {
@@ -110,6 +112,7 @@ export default function GenericTable(props) {
         selected={selected}
         confirmationModal={confirmationModal}
         handleClose={handleClose}
+        selectedSuspendLicenseProfile={selectedSuspendLicenseProfile}
       />
       <Table sx={{ minWidth: '650px' }} aria-label="table">
         <TableHead>
@@ -216,7 +219,7 @@ export default function GenericTable(props) {
                                       data-my-value={option.dataValue}
                                       onClick={(e) =>
                                         option?.onClick(e, row, option.dataValue) ||
-                                        selectionChangeHandler
+                                        selectionChangeHandler(e, row)
                                       }
                                     >
                                       {option.keyName}
