@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -13,16 +12,10 @@ import { verboseLog } from '../../../config/debug';
 import { encryptData } from '../../../helpers/functions/common-functions';
 import OtpForm from '../../../shared/otp-form/otp-component';
 import { sendNotificationOtp, verifyNotificationOtp } from '../../../store/actions/common-actions';
-import {
-  getHprIdSuggestions,
-  searchHpIdByMobileNumber,
-  sendResetPasswordLink,
-} from '../../../store/actions/doctor-registration-actions';
 import { sendAaadharOtp, validateOtpAadhaar } from '../../../store/actions/user-aadhaar-actions';
 import { Button, TextField } from '../../../ui/core';
 import AadhaarInputField from '../../../ui/core/aadhaar-input-field/aadhaar-input-field';
 import successToast from '../../../ui/core/toaster';
-import SuccessModal from './success-popup';
 import CreateHprId from './unique-username';
 
 function FetchDoctorDetails() {
@@ -36,7 +29,6 @@ function FetchDoctorDetails() {
   const [isOtpValidAadhar, setisOtpValidAadhar] = useState(false);
   const [enableSubmit, setEnableSubmit] = useState(false);
   const [aadhaarState, setAadhaarState] = useState('');
-  const [showSuccess, setShowSuccess] = useState(false);
   const dispatch = useDispatch();
 
   const {
@@ -69,15 +61,14 @@ function FetchDoctorDetails() {
   };
   const handleValidateEmail = () => {
     let emailUserOtp = encryptData(otpValue, process.env.REACT_APP_PASS_SITE_KEY);
-    console.log('email otp encypt', emailUserOtp);
+    let data = {
+      contact: getValues().email,
+      type: 'email',
+      otp: emailUserOtp,
+      transaction_id: contactTransactionId,
+    };
     if (otpValue.length === 6) {
-      dispatch(
-        verifyNotificationOtp({
-          contact: getValues().email,
-          type: 'email',
-          otp: emailUserOtp,
-        })
-      );
+      dispatch(verifyNotificationOtp(data));
       setisOtpValidEmail(true);
       setShowOtpEmail(false);
       handleClear();
@@ -88,8 +79,6 @@ function FetchDoctorDetails() {
   };
 
   const handleVerifyMobile = () => {
-    console.log('mobile type', typeof getValues().MobileNumber);
-
     dispatch(
       sendNotificationOtp({
         contact: getValues().MobileNumber,
@@ -99,20 +88,18 @@ function FetchDoctorDetails() {
     setShowOtpMobile(true);
     setisOtpValidMobile(false);
   };
-  // Decrypt with the private key...
 
   const handleValidateMobile = () => {
-    console.log('mobile type', typeof getValues().MobileNumber);
-    // let mobileUserOtp = encryptData(otpValue, process.env.REACT_APP_PUBLIC_KEY);
+    let mobileUserOtp = encryptData(otpValue, process.env.REACT_APP_PASS_SITE_KEY);
+
+    let data = {
+      contact: getValues().MobileNumber,
+      type: 'sms',
+      otp: mobileUserOtp,
+      transaction_id: contactTransactionId,
+    };
     if (otpValue.length === 6) {
-      console.log('otp type', typeof otpValue);
-      dispatch(
-        verifyNotificationOtp({
-          contact: getValues().MobileNumber,
-          type: 'sms',
-          otp: encryptData(otpValue, process.env.REACT_APP_PASS_SITE_KEY),
-        })
-      );
+      dispatch(verifyNotificationOtp(data));
       setisOtpValidMobile(true);
       setShowOtpMobile(false);
       handleClear();
@@ -122,20 +109,9 @@ function FetchDoctorDetails() {
       }
     }
   };
-  // var decrypt = new JSEncrypt();
-  // decrypt.setPrivateKey(
-  //   '59Ag5GZ7HkKBUo8kV4SDIGug9rex6Iqdbo+eJoHtbJIcf6279+9SX/pQjEuV/ID5frO9aSKwC7FIvGlV4ovgU35L/xjCfHQog6fxFaL9CZpC6SleCHY36hC49SVUc+tRfoOS2w=='
-  // );
-  // var uncrypted = decrypt.decrypt(
-  //   'Yx9ZLJB1Ilr75D8SxUm9YD3df2JTtDe/aWWPxaqD4BApzvR+0kHrumy91FATxUld94RyVcUk3JN58UaQDiQP8EUkp9MIp5HnH2LPTDx01g0R0Bt7tBqRcjvuULQlkxUH3IY9EUv6qj2SbeIsrmlzif+jlCFs7Lw8C8hVfnTBjBpwC8nVc1xuNTbb+4rUwglnFWh6SgssKv0XmTH8A2YmyL9kFCrijHr+J61NDp2EyUyXeJOblRxLY8Pc6emsobbawteWWzeP4Q6OTu8jES532T1aXMrmDK4oy9v08ELWWMwlr9waH6rDBGWnHaAqWam4+EGCQdQc2Td0WcaK3CpzQPfHMQVhfayj2oDUlfwfUdtFSNSl2ypwrdErjgjEb3aTOqqTAv7bwypmawdoBDK3PCgQLKQYCy71PQYfQ22T5grxK7019gzbTek0Zu5B0EAC/1+migq+kd9q0B5numU9GPvRpwncXYG7k5WsLzzsQzaX83IhMtK4rI4UEkH02vh/fMNYeqNpI40kN1fkWZFn6bh+hEoslTz0Z1HXuG9GHWDHOlTeyPMQ145xKp9TnvHasWhMtQovE/T4kDY/ApOJMZP/Ln77VHGiB2IOhWE2itdIpKL+xBhSqP/+pf6ArJ0u+tR9HFEPXbBtDHcCe7+hKAUqxxIHw6oVAKSgYdRiXQk='
-  // );
-  // console.log('dec', uncrypted);
 
   const handleUserAadhaarNumber = () => {
     let aadharDataFields = getValues().field_1 + getValues().field_2 + getValues().field_3;
-    // console.log('aadharDataFields1', typeof getValues().MobileNumber);
-
-    // console.log('aadharDataFields', typeof aadharDataFields);
     let encryptedUserAadhaarNumber = encryptData(
       aadharDataFields,
       process.env.REACT_APP_PUBLIC_KEY
@@ -149,10 +125,12 @@ function FetchDoctorDetails() {
     setisOtpValidMobile(false);
     setisOtpValidEmail(false);
   };
-  // const hpId = useSelector((state) => state?.DoctorRegistrationData?.getHprIdByMobile?.data?.hpId);
 
   const registrationNumber = useSelector(
     (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.registration_number
+  );
+  const contactTransactionId = useSelector(
+    (state) => state?.common?.sendNotificationOtpData?.data?.transaction_id
   );
 
   const finalTransactionId = useSelector(
@@ -201,33 +179,8 @@ function FetchDoctorDetails() {
         : Math.max(0, parseInt(e.target.value)).toString().slice(0, 10);
     }
   };
-  // const onSubmit = () => {
-  //   setShowSuccess(false);
-  //   setShowCreateHprIdPage(true);
-  // };
   const onSubmit = () => {
-    dispatch(
-      searchHpIdByMobileNumber({
-        mobile: getValues().MobileNumber,
-        // name: hpName,
-        // yearOfBirth: hpYearOfBirth, // this should be in years?
-        // gender: hpGender,
-      })
-    ).then((response) => {
-      if (response?.data?.hpId === undefined || response?.data?.hpId === null) {
-        setShowCreateHprIdPage(true);
-        dispatch(getHprIdSuggestions());
-      } else {
-        dispatch(
-          sendResetPasswordLink({
-            email: getValues().email,
-            mobile: getValues().MobileNumber,
-            username: 'abc123', // need to get it from reducer using selector!!
-          })
-        );
-        setShowSuccess(true);
-      }
-    });
+    setShowCreateHprIdPage(true);
   };
   return (
     <>
@@ -305,7 +258,6 @@ function FetchDoctorDetails() {
               </Typography>
             </Box>
             <Divider sx={{ marginBottom: '25px' }} variant="fullWidth" />
-            {/* aadhaar field */}
             <Box
               display="flex"
               justifyContent="space-between"
@@ -370,7 +322,6 @@ function FetchDoctorDetails() {
             )}
 
             <Divider sx={{ mb: 4, mt: 4 }} variant="fullWidth" />
-            {showSuccess === true && <SuccessModal />}
 
             <Box>
               <Box>

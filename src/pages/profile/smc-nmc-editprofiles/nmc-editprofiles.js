@@ -2,42 +2,70 @@ import { useState } from 'react';
 
 import { Box, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { createSelectFieldData } from '../../../helpers/functions/common-functions';
-import { Button, Select, TextField } from '../../../ui/core';
-const NmcEditProfile = () => {
-  const [name, setName] = useState('Aarnav Sharma');
-  const [phoneNumber, setphoneNumber] = useState('7547448483');
-  const [email, setemail] = useState('aarnav@gmail.com.com');
-  const [userId, setuserId] = useState('aarnav.sharma');
+import { createEditFieldData } from '../../../helpers/functions/common-functions';
+import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
+import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
+import { getUpdatedNmcProfileData } from '../../../store/actions/nmc-actions';
+import { Button, TextField } from '../../../ui/core';
+const NmcEditProfile = (props) => {
+  const userData = useSelector((state) => state?.nmc?.nmcProfileData?.data);
   const { councilNames } = useSelector((state) => state.common);
+  const [successModalPopup, setSuccessModalPopup] = useState(false);
   const {
     register,
     handleSubmit,
+    clearErrors,
+    setValue,
     getValues,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
     defaultValues: {
-      Name: 'Aarnav Sharma',
-      PhoneNumber: '7547448483',
-      UserId: 'aarnav.sharma',
-      EmailId: 'aarnav@gmail.com.com',
+      id: userData?.id,
+      user_id: 10,
+      first_name: userData?.first_name,
+      last_name: userData?.last_name,
+      middle_name: userData?.middle_name,
+      state_medical_council: {
+        id: userData?.state_medical_council?.id,
+        code: 'TEST',
+        name: userData?.state_medical_council?.name,
+      },
+      ndhm_enrollment: userData?.ndhm_enrollment,
+      enrolled_number: userData?.enrolled_number,
+      display_name: userData?.display_name,
+      email_id: userData?.email_id,
+      mobile_no: userData?.mobile_no,
     },
   });
 
-  const handleName = (e) => {
-    setName(e.target.value);
+  let nmcUpdatedData = {
+    id: userData?.id,
+    user_id: getValues().user_id,
+    first_name: getValues().first_name,
+    last_name: getValues().last_name,
+    middle_name: getValues().middle_name,
+    state_medical_council: {
+      id: getValues().state_medical_council?.id,
+      code: getValues().state_medical_council?.code,
+      name: getValues().state_medical_council?.name,
+    },
+    ndhm_enrollment: getValues().ndhm_enrollment,
+    enrolled_number: getValues().enrolled_number,
+    display_name: getValues().first_name,
+    email_id: getValues().email_id,
+    mobile_no: getValues().mobile_no,
   };
-  const handlePhoneNumber = (e) => {
-    setphoneNumber(e.target.value);
-  };
-  const handleEmailId = (e) => {
-    setemail(e.target.value);
-  };
-  const handleUserid = (e) => {
-    setuserId(e.target.value);
+  const dispatch = useDispatch();
+  const onsubmit = () => {
+    dispatch(getUpdatedNmcProfileData(nmcUpdatedData)).then((response) => {
+      if (response?.data?.email_id.length > 0) {
+        setSuccessModalPopup(true);
+      }
+    });
+    props.sentDetails('Profile');
   };
 
   return (
@@ -63,14 +91,12 @@ const NmcEditProfile = () => {
           <TextField
             fullWidth
             required
-            name={'Name'}
+            name={'first_name'}
             placeholder={'Enter Name'}
-            value={name}
-            defaultValue={getValues().Name}
-            error={errors.Name?.message}
-            {...register('Name', {
+            defaultValue={getValues().first_name}
+            error={errors.first_name?.message}
+            {...register('first_name', {
               required: ' Name is required',
-              onChange: (e) => handleName(e),
             })}
           />
         </Grid>
@@ -85,14 +111,12 @@ const NmcEditProfile = () => {
           <TextField
             fullWidth
             required
-            name={'PhoneNumber'}
+            name={'mobile_no'}
             placeholder={'Enter Phone Number '}
-            defaultValue={getValues().PhoneNumber}
-            value={phoneNumber}
-            error={errors.PhoneNumber?.message}
-            {...register('PhoneNumber', {
+            defaultValue={getValues().mobile_no}
+            error={errors.mobile_no?.message}
+            {...register('mobile_no', {
               required: 'Phone Number is required',
-              onChange: (e) => handlePhoneNumber(e),
             })}
           />
         </Grid>
@@ -108,19 +132,17 @@ const NmcEditProfile = () => {
             type="text"
             fullWidth
             required
-            name={'EmailId'}
+            name={'email_id'}
             placeholder={'Enter Email ID'}
-            value={email}
-            defaultValue={getValues().EmailId}
-            error={errors.EmailId?.message}
-            {...register('EmailId', {
-              required: 'Email ID required',
-              onChange: (e) => handleEmailId(e),
+            defaultValue={getValues().email_id}
+            error={errors.email_id?.message}
+            {...register('email_id', {
+              required: 'Email ID is required',
 
               pattern: {
                 value:
                   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-                message: 'Provide a Valid EmalId',
+                message: 'Provide a Valid Email Id',
               },
             })}
           />
@@ -137,14 +159,12 @@ const NmcEditProfile = () => {
           <TextField
             fullWidth
             required
-            name={'UserId'}
+            name={'user_id'}
             placeholder={'Enter User ID'}
-            value={userId}
-            defaultValue={getValues().UserId}
-            error={errors.UserId?.message}
-            {...register('UserId', {
+            defaultValue={getValues().user_id}
+            error={errors.user_id?.message}
+            {...register('user_id', {
               required: 'User ID is required',
-              onChange: (e) => handleUserid(e),
 
               pattern: {
                 message: 'Provide a Valid User ID',
@@ -160,21 +180,18 @@ const NmcEditProfile = () => {
           <Typography component="span" color="error.main">
             *
           </Typography>
-          <Select
-            fullWidth
-            error={errors.council?.message}
-            name="council"
-            defaultValue={getValues().council}
-            required={true}
-            {...register('council', {
-              required: 'Council is required',
+          <SearchableDropdown
+            name="RegistrationCouncil"
+            items={createEditFieldData(councilNames)}
+            defaultValue={getValues().state_medical_council?.name}
+            placeholder="Select Your Registration Council"
+            clearErrors={clearErrors}
+            error={errors.RegistrationCouncil?.message}
+            {...register('RegistrationCouncil', {
+              required: 'Registration Council is required',
             })}
-            options={createSelectFieldData(councilNames)}
-            MenuProps={{
-              style: {
-                maxHeight: 250,
-                maxWidth: 130,
-              },
+            onChange={(currentValue) => {
+              setValue('RegistrationCouncilId', currentValue.name);
             }}
           />
         </Grid>
@@ -208,6 +225,13 @@ const NmcEditProfile = () => {
           Cancel
         </Button>
       </Box>
+      {successModalPopup && (
+        <SuccessModalPopup
+          open={successModalPopup}
+          setOpen={() => setSuccessModalPopup(false)}
+          text={'Your NMC Profile has been successfully updated'}
+        />
+      )}
     </Box>
   );
 };

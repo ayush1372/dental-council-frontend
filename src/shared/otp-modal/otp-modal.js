@@ -71,7 +71,6 @@ export function ModalOTP({
     handleClear();
   };
   const handleConfirm = () => {
-    afterConfirm(otpValue);
     if (getOtpValidation()) {
       // setOpen(false);
       setOtpMobileVerify(true);

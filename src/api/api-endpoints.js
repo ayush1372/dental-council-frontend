@@ -57,10 +57,3 @@ export const API = {
     getNBEProfileData: 'api/v1/abdm/nmr/nbe/user/{id}',
   },
 };
-export const API_HPR = {
-  hpid: {
-    searchByMobile: 'api/v1/search/searchByMobile',
-    hpIdSuggestions: '/api/v1/account/hpid/suggestion', //this should not use.. we have to use post api
-    createHprId: '/api/v1/registration/aadhaar/createHprIdWithAadhaarOtp',
-  },
-};
