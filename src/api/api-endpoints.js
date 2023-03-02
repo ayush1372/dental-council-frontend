@@ -61,6 +61,9 @@ export const API = {
   nbe: {
     getNBEProfileData: 'api/v1/abdm/nmr/nbe/user/{id}',
   },
+  forgotPassword: {
+    setPassword: '/api/v1/abdm/nmr/user/set-password',
+  },
   searchDoctor: {
     searchDoctorDetails: 'api/v1/abdm/nmr/health-professional/search',
     searchDoctorById: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}',
