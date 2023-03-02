@@ -26,6 +26,9 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData }) => {
     otpInvalidError: !isOtpValid,
   });
 
+  // eslint-disable-next-line no-console
+  console.log('hello', otpData?.type);
+
   const onHandleVerify = () => {
     if (getOtpValidation()) {
       setIsOtpValid(false);
@@ -56,8 +59,13 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData }) => {
           }}
         >
           <Typography variant="body1">
-            {`We just sent an OTP on your registered Mobile Number XXXXXX2182 linked with your Aadhaar.`}
+            We just sent an OTP on your registered{' '}
+            {otpData?.type === 'sms'
+              ? `Mobile Number XXXXXX${otpData?.contact.slice(-4)}`
+              : `email Id XXXXXX${otpData?.contact.slice(-12)}`}{' '}
+            linked with your Aadhaar.
           </Typography>
+
           {otpform}
         </Box>
         <Box align="end" mt={3}>

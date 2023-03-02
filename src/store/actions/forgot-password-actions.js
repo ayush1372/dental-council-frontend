@@ -7,7 +7,7 @@ export const forgotPassword = (data) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: POST,
-      url: API.forgotPassword.doctor,
+      url: API.forgotPassword.setPassword,
       data: data,
     })
       .then((response) => {
