@@ -227,7 +227,7 @@ const EditQualificationDetails = ({
         </Grid>
       </Grid>
       <Grid container item spacing={2}>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={5}>
           {/* {getValues()[qualification[0]] !== undefined && ( */}
           <Select
             fullWidth
@@ -249,7 +249,7 @@ const EditQualificationDetails = ({
           />
           {/* )} */}
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={3}>
           {/* {getValues()[qualification[1]] !== undefined && ( */}
           <Select
             fullWidth

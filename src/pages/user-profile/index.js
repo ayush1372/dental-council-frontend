@@ -232,7 +232,7 @@ export const UserProfile = ({
               <Grid
                 item
                 xs={12}
-                md={3}
+                md="auto"
                 sx={{
                   marginBottom: {
                     xs: '10px',
