@@ -153,7 +153,7 @@ function DashboardControlledTable(props) {
       user_group_status: props?.selectedCardDataData?.responseKey
         ? props?.selectedCardDataData?.responseKey
         : '',
-      smc_id: searchQueryParams ? searchQueryParams?.registrationCouncil : '',
+      smc_id: searchQueryParams ? searchQueryParams?.RegistrationCouncilId : '',
       name: searchQueryParams ? searchQueryParams?.filterByName : '',
       nmr_id: searchQueryParams ? searchQueryParams?.filterByRegNo : '',
       search: searchQueryParams ? searchQueryParams?.search : '',

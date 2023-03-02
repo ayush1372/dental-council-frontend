@@ -89,7 +89,7 @@ function CollegeApprovalTable(props) {
       search: searchQueryParams ? searchQueryParams?.search : '',
       id: searchQueryParams ? searchQueryParams?.filterByRegNo : '',
       name: searchQueryParams ? searchQueryParams?.filterByName : '',
-      council: searchQueryParams ? searchQueryParams?.registrationCouncil : '',
+      council: searchQueryParams ? searchQueryParams?.RegistrationCouncilId : '',
     };
     dispatch(getCollegeApprovalData(queryObj));
   };

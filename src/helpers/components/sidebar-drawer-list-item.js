@@ -102,6 +102,13 @@ export const smcTabs = [
   },
   {
     option: 5,
+    name: 'College Approval',
+    tabName: 'college-approval',
+    icon: <AppRegistrationIcon />,
+    element: <CollegeApproval />,
+  },
+  {
+    option: 6,
     name: 'Change Password',
     tabName: 'change-password',
     icon: <PasswordIcon />,
