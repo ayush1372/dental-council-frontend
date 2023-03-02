@@ -14,21 +14,12 @@ const WorkDetails = ({ workProfileDetails }) => {
   const ClosePopup = () => {
     setOpenModal(false);
   };
-  const {
-    work_details: {
-      is_user_currently_working,
-      work_status: { name: workStatusName },
-      work_nature: { name: workNatureName },
-    },
-  } =
-    workProfileDetails && Object.values(workProfileDetails).length > 3
-      ? workProfileDetails
-      : {
-          work_details: {
-            work_status: {},
-            work_nature: {},
-          },
-        };
+
+  const { work_details } = workProfileDetails || {};
+  const { is_user_currently_working, work_status, work_nature } = work_details || {};
+  const workStatusName = work_status?.name || '';
+  const workNatureName = work_nature?.name || '';
+
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
@@ -66,7 +57,7 @@ const WorkDetails = ({ workProfileDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              {workNatureName ? workNatureName : ''}
+              {workNatureName}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -89,7 +80,7 @@ const WorkDetails = ({ workProfileDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              {workStatusName ? workStatusName : ''}
+              {workStatusName}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
