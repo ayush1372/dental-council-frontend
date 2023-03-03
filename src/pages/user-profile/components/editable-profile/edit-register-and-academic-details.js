@@ -45,7 +45,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   );
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { loginData } = useSelector((state) => state?.loginReducer);
-
+  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { registration_detail_to } = registrationDetails || {};
   const {
     registration_date,
@@ -71,24 +71,19 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     mode: 'onChange',
     defaultValues: {
       RegisteredWithCouncil:
-        loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? smcName : '',
+        loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? smcName : '',
       RegistrationNumber:
-        loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? registration_number : '',
+        loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? registration_number : '',
       RegistrationDate:
-        loggedInUserType === 'SMC'
-          ? ''
-          : loggedInUserType === 'Doctor'
+        loggedInUserType === 'SMC' || loggedInUserType === 'Doctor'
           ? registration_date?.length > 10
             ? registration_date?.substring(0, 10)
             : registration_date
           : '',
 
-      registration:
-        loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? is_renewable : '',
+      registration: loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? is_renewable : '',
       RenewalDate:
-        loggedInUserType === 'SMC'
-          ? ''
-          : loggedInUserType === 'Doctor'
+        loggedInUserType === 'SMC' || loggedInUserType === 'Doctor'
           ? renewable_registration_date?.length > 10
             ? renewable_registration_date?.substring(0, 10)
             : renewable_registration_date
@@ -114,11 +109,13 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     const registrationDetailsValues = JSON.parse(JSON.stringify(registrationDetails));
     registrationDetailsValues.registration_detail_to.registration_date = RegistrationDate;
     registrationDetailsValues.registration_detail_to.registration_number = RegistrationNumber;
+    registrationDetailsValues.registration_detail_to.state_medical_council = {};
     registrationDetailsValues.registration_detail_to.state_medical_council.name =
       RegisteredWithCouncil;
     registrationDetailsValues.registration_detail_to.is_renewable = registration;
     registrationDetailsValues.registration_detail_to.renewable_registration_date = RenewalDate;
     registrationDetailsValues.registration_detail_to.is_name_change = registrationCertificate;
+    registrationDetailsValues.hp_profile_id = personalDetails.hp_profile_id;
     // this below code is storing qualification details
     const { qualification } = getValues();
     let updatedObj = [];
@@ -151,8 +148,15 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     formData.append('data', JSON.stringify(registrationDetails));
     formData.append('proof', Object.values(qualificationFilesData)?.[0]?.[0].file);
     formData.append('certificate', registrationFileData[0].file);
-    dispatch(updateDoctorRegistrationDetails(formData, loginData.data.profile_id)).then(() => {
-      dispatch(getWorkProfileDetailsData(loginData.data.profile_id))
+    dispatch(
+      updateDoctorRegistrationDetails(
+        formData,
+        loggedInUserType === 'Doctor'
+          ? loginData?.data?.profile_id
+          : loggedInUserType === 'SMC' && personalDetails?.hp_profile_id
+      )
+    ).then(() => {
+      dispatch(getWorkProfileDetailsData(loginData?.data?.profile_id))
         .then(() => {
           handleNext();
         })
@@ -266,10 +270,12 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               defaultValue={getValues().RegistrationNumber}
               sx={{
                 input: {
-                  backgroundColor: 'grey2.main',
+                  backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
                 },
               }}
-              InputProps={{ readOnly: true }}
+              InputProps={{
+                readOnly: loggedInUserType === 'SMC' ? false : true,
+              }}
             />
           </Grid>
           <Grid item xs={12} md={4}>

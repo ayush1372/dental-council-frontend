@@ -17,6 +17,7 @@ import {
   getSubDistrictsList,
 } from '../../../../store/actions/common-actions';
 import {
+  getNewDoctorPersonalDetailsData,
   getRegistrationDetailsData,
   updateDoctorPersonalDetails,
 } from '../../../../store/actions/doctor-user-profile-actions';
@@ -93,9 +94,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     mode: 'onChange',
     defaultValues: {
       Salutation:
-        loggedInUserType === 'SMC'
-          ? ''
-          : loggedInUserType === 'Doctor'
+        loggedInUserType === 'SMC' || loggedInUserType === 'Doctor'
           ? salutation === 'Dr.'
             ? 'Dr.'
             : salutation === 'Mr.'
@@ -113,45 +112,36 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
           : loggedInUserType === 'Doctor'
           ? 8904 + '-' + 2728 + '-' + aadhaar_token
           : '8904-2728-4688',
-      FirstName: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? first_name : '',
-      MiddleName:
-        loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? middle_name : '',
-      LastName: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? last_name : '',
-      FatherName:
-        loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? father_name : '',
-      MotherName:
-        loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? mother_name : '',
-      SpouseName:
-        loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? spouse_name : '',
+      FirstName: loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? first_name : '',
+      MiddleName: loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? middle_name : '',
+      LastName: loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? last_name : '',
+      FatherName: loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? father_name : '',
+      MotherName: loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? mother_name : '',
+      SpouseName: loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? spouse_name : '',
       Nationality:
-        loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? countryNationalityId : '',
-      dateOfBirth:
-        loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? date_of_birth : '',
+        loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? countryNationalityId : '',
+      dateOfBirth: loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? date_of_birth : '',
       Gender:
-        loggedInUserType === 'SMC'
-          ? ''
-          : loggedInUserType === 'Doctor'
+        loggedInUserType === 'SMC' || loggedInUserType === 'Doctor'
           ? gender === 'M'
-            ? 'male'
-            : 'female'
+            ? 'M'
+            : 'F'
           : '',
-      Schedule: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? scheduleId : '',
-      Name: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? full_name : '',
-      Address: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? address_line1 : '',
-      Area: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? citiesId : '',
-      District: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? districtId : '',
-      SubDistrict:
-        loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? subdistrictId : '',
-      State: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? stateId : '',
-      Country: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? countryId : '',
-      PostalCode: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? pincode : '',
-      IMRID: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? nmr_id : '',
-      YearOfInfo:
-        loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? year_of_info : '',
+      Schedule: loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? scheduleId : '',
+      Name: loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? full_name : '',
+      Address: loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? address_line1 : '',
+      Area: loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? citiesId : '',
+      District: loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? districtId : '',
+      SubDistrict: loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? subdistrictId : '',
+      State: loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? stateId : '',
+      Country: loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? countryId : '',
+      PostalCode: loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? pincode : '',
+      IMRID: loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? nmr_id : '',
+      YearOfInfo: loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? year_of_info : '',
       RegistrationNumber:
-        loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? registration_number : '',
-      mobileNo: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? mobile : '',
-      EmailAddress: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? email : '',
+        loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? registration_number : '',
+      mobileNo: loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? mobile : '',
+      EmailAddress: loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? email : '',
       LanguageSpoken: [],
     },
   });
@@ -198,7 +188,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     fetchCities(selectedSubDistrict);
   }, [selectedSubDistrict]);
 
-  const fetchUpadtedDoctorUserProfileData = (personalDetails) => {
+  const fetchUpdatedDoctorUserProfileData = (personalDetails) => {
     dispatch(updateDoctorPersonalDetails(personalDetails, loginData.data.profile_id))
       .then(() => {
         dispatch(getRegistrationDetailsData(loginData.data.profile_id))
@@ -213,31 +203,34 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
         successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
       });
   };
+
+  const fetchNewDoctorUserProfileData = (personalDetails) => {
+    dispatch(getNewDoctorPersonalDetailsData(personalDetails))
+      .then(() => {
+        dispatch(getRegistrationDetailsData(loginData.data.profile_id))
+          .then(() => {
+            handleNext();
+          })
+          .catch((allFailMsg) => {
+            successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+          });
+      })
+      .catch((allFailMsg) => {
+        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      });
+  };
+
   const { otpPopup, handleClickOpen, otpVerified } = ModalOTP({ afterConfirm: () => {} });
 
   const handleBackButton = () => {
     setIsReadMode(true);
   };
 
-  const nationalities = [
-    {
-      id: 356,
-      name: 'Indian',
-    },
-  ];
+  const nationalities = [{ id: 356, name: 'Indian' }];
   const schedules = [
-    {
-      name: 'Schedule 1',
-      id: 1,
-    },
-    {
-      name: 'Schedule 2',
-      id: 2,
-    },
-    {
-      name: 'Schedule 3',
-      id: 3,
-    },
+    { name: 'Schedule 1', id: 1 },
+    { name: 'Schedule 2', id: 2 },
+    { name: 'Schedule 3', id: 3 },
   ];
 
   const onHandleSave = () => {
@@ -268,7 +261,42 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       DateOfBirth,
       LanguageSpoken,
     } = getValues();
-    const doctorProfileValues = JSON.parse(JSON.stringify(personalDetails));
+    const newDoctorRegistrationData = {
+      personal_details: {
+        salutation: '',
+        aadhaar_token: '',
+        first_name: '',
+        middle_name: '',
+        last_name: '',
+        full_name: '',
+        father_name: '',
+        mother_name: '',
+        spouse_name: '',
+        country_nationality: { id: 356, name: '' },
+        language: [{ id: 1, name: '' }],
+        date_of_birth: '',
+        gender: '',
+        schedule: { id: 1, name: '' },
+      },
+      communication_address: {
+        country: { id: 356, name: '' },
+        state: { id: 2, name: '' },
+        district: { id: 2, name: '' },
+        village: { id: 2, name: '' },
+        sub_district: { id: 2, name: '' },
+        pincode: '',
+        address_line1: '',
+        email: '',
+        mobile: '',
+        address_type: { id: 4, name: '' },
+        full_name: '',
+      },
+      imr_details: { registration_number: '', nmr_id: '', year_of_info: '' },
+      request_id: '1212121',
+    };
+    const doctorProfileValues = JSON.parse(
+      JSON.stringify(loggedInUserType === 'SMC' ? newDoctorRegistrationData : personalDetails)
+    );
     doctorProfileValues.personal_details.salutation = Salutation;
     doctorProfileValues.personal_details.first_name = FirstName;
     doctorProfileValues.personal_details.middle_name = MiddleName;
@@ -303,7 +331,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   };
   const onHandleOptionNext = () => {
     onHandleSave();
-    fetchUpadtedDoctorUserProfileData(personalDetails);
+    loggedInUserType === 'Doctor' && fetchUpdatedDoctorUserProfileData(personalDetails);
+    loggedInUserType === 'SMC' && fetchNewDoctorUserProfileData(personalDetails);
   };
   const handleSalutationChange = (event) => {
     setValue(event.target.name, event.target.value, true);
@@ -650,11 +679,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 defaultValue={getValues().Gender}
                 items={[
                   {
-                    value: 'male',
+                    value: 'M',
                     label: 'Male',
                   },
                   {
-                    value: 'female',
+                    value: 'F',
                     label: 'Female',
                   },
                   {
@@ -763,7 +792,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               {...register('Country', {
                 required: 'Country is required',
               })}
-              disabled
+              disabled={loggedInUserType === 'Doctor' ? true : false}
               options={
                 countriesList?.length > 0
                   ? createSelectFieldData(
@@ -1022,10 +1051,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               })}
               sx={{
                 input: {
-                  backgroundColor: theme.palette.grey2.main,
+                  backgroundColor: loggedInUserType === 'Doctor' && theme.palette.grey2.main,
                 },
               }}
-              InputProps={{ readOnly: true }}
+              InputProps={{ readOnly: loggedInUserType === 'SMC' ? false : true }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -1042,17 +1071,17 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               placeholder="Select year of info"
               defaultValue={getValues().YearOfInfo}
               required={true}
-              disabled
+              disabled={loggedInUserType === 'Doctor' ? true : false}
               {...register('YearOfInfo', {
                 required: 'Year of info is required',
               })}
               options={get_year_data(1930)}
               sx={{
                 '.MuiSelect-select': {
-                  backgroundColor: theme.palette.grey2.main,
+                  backgroundColor: loggedInUserType === 'Doctor' && theme.palette.grey2.main,
                 },
               }}
-              InputProps={{ readOnly: true }}
+              InputProps={{ readOnly: loggedInUserType === 'SMC' ? false : true }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -1074,10 +1103,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               })}
               sx={{
                 input: {
-                  backgroundColor: theme.palette.grey2.main,
+                  backgroundColor: loggedInUserType === 'Doctor' && theme.palette.grey2.main,
                 },
               }}
-              InputProps={{ readOnly: true }}
+              InputProps={{ readOnly: loggedInUserType === 'SMC' ? false : true }}
             />
           </Grid>
         </Grid>
