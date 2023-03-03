@@ -6,7 +6,9 @@ import ErrorIcon from '@mui/icons-material/Error';
 import HelpIcon from '@mui/icons-material/Help';
 import { Box, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { getInitiateWorkFlow } from '../../store/actions/common-actions';
 import { Button, Checkbox, RadioGroup, TextField } from '../../ui/core';
 
 export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, handleSubmitDetails }) {
@@ -22,9 +24,48 @@ export function SuspendLicenseVoluntaryRetirement({ tabName, selectedValue, hand
       voluntarySuspendLicense: 'voluntary-suspension-check',
     },
   });
+  const dispatch = useDispatch();
   const [setSelectedSuspension] = useState('voluntary-suspension-check');
+  const { workProfileDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
 
   const onSubmit = () => {
+    let action_id;
+    switch (selectedValue) {
+      case 'forward':
+        action_id = 2;
+        break;
+      case 'raise':
+        action_id = 3;
+        break;
+      case 'verify':
+        action_id = 4;
+        break;
+      case 'reject':
+        action_id = 5;
+        break;
+      case 'suspend':
+        action_id = 6;
+        break;
+      case 'blacklist':
+        action_id = 7;
+        break;
+      default:
+        action_id = 1;
+        break;
+    }
+    let workFlowData = {
+      request_id: workProfileDetails?.request_id,
+      application_type_id: workProfileDetails.application_type_id
+        ? workProfileDetails?.application_type_id
+        : 1,
+      actor_id: loggedInUserType === 'SMC' ? 2 : loggedInUserType === 'NMC' ? 3 : 0,
+      action_id: action_id,
+      hp_profile_id: workProfileDetails?.hp_profile_id,
+      start_date: getValues()?.fromDate ? getValues()?.fromDate : '',
+      remarks: getValues()?.remark ? getValues()?.remark : '',
+    };
+    dispatch(getInitiateWorkFlow(workFlowData));
     handleSubmitDetails();
   };
 
