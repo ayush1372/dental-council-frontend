@@ -2,22 +2,33 @@ import { useState } from 'react';
 
 import { Box, Grid, InputAdornment, Link, Typography, useTheme } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import MobileIcon from '../../../assets/images/mobile-icon.svg';
 import ProfileIcon from '../../../assets/images/profile-icon.svg';
 import { verboseLog } from '../../../config/debug';
+import { encryptData, usersType } from '../../../helpers/functions/common-functions';
 import CaptchaComponent from '../../../shared/captcha-component/captcha-component';
 import OtpForm from '../../../shared/otp-form/otp-component';
+import {
+  getRegistrationCouncilList,
+  getUniversitiesList,
+} from '../../../store/actions/common-actions';
+import { loginAction, validateCaptchaImage } from '../../../store/actions/login-action';
+import { login, userLoggedInType } from '../../../store/reducers/common-reducers';
 import { Button, TextField } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 import successToast from '../../../ui/core/toaster';
 
 export const DoctorLogin = ({ loginName = 'Doctor' }) => {
+  const [captchaAnswer, setcaptachaAnswer] = useState();
+  const { generateCaptcha } = useSelector((state) => state.loginReducer);
   const theme = useTheme();
-
+  const dispatch = useDispatch();
   const [selectedLoginOption, setSelectedLoginOption] = useState('nmrId');
   const [otpFormEnabled, setOtpFormEnable] = useState(false);
-
+  const navigate = useNavigate();
   const {
     register,
     getValues,
@@ -33,6 +44,9 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
   });
 
   const { otpform, otpValue, handleClear } = OtpForm({});
+  const captchaResult = (num) => {
+    setcaptachaAnswer(num);
+  };
 
   const handleLogin = () => {
     if (selectedLoginOption === 'nmrId') {
@@ -41,6 +55,47 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
     } else if (selectedLoginOption === 'userName') {
       verboseLog('Login Data -> ', getValues()?.password);
       verboseLog('Login Data -> ', getValues()?.userID);
+      dispatch(
+        validateCaptchaImage({
+          transaction_id: generateCaptcha?.transaction_id,
+          result: parseInt(captchaAnswer),
+        })
+      )
+        .then((response) => {
+          if (response?.data?.validity) {
+            const usertypeId = usersType(loginName);
+            const requestObj = {
+              username: getValues()?.userID,
+              password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
+              user_type: usertypeId,
+              captcha_trans_id: generateCaptcha?.transaction_id,
+            };
+            dispatch(loginAction(requestObj))
+              .then(() => {
+                // let req = { mobile: param.nmrID };
+                // if (req) {
+                dispatch(login());
+                dispatch(userLoggedInType(loginName));
+                dispatch(getRegistrationCouncilList());
+                dispatch(getUniversitiesList());
+                navigate(`/profile`);
+                // }
+              })
+              .catch((error) => {
+                successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+              });
+          } else {
+            successToast(
+              'ERROR: Invalid captcha, please try with new captcha',
+              'auth-error',
+              'error',
+              'top-center'
+            );
+          }
+        })
+        .catch((error) => {
+          successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+        });
     } else if (selectedLoginOption === 'mobileNumber') {
       verboseLog('Login Data -> ', getValues()?.mobileNo);
       verboseLog('Login Data -> ', otpValue);
@@ -198,12 +253,12 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
               fullWidth
               label={'User ID'}
               placeholder={'Please enter your User ID'}
-              inputProps={{ maxLength: 12 }}
+              // inputProps={{ maxLength: 12 }}
               name={'userID'}
               {...register('userID', {
                 required: 'Please enter an User ID',
                 pattern: {
-                  value: /^\d{12}$/i,
+                  //value: /^\d{12}$/i,
                   message: 'Please enter an valid User ID',
                 },
               })}
@@ -250,7 +305,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
           'Wrong Option'
         )}
       </Box>
-      <CaptchaComponent />
+      <CaptchaComponent captchaResult={captchaResult} />
       <Box my={4} width={'100%'} display={'flex'} justifyContent={'space-between'}>
         <Button
           variant="contained"
@@ -258,7 +313,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
           fullWidth
           sx={{ mr: 1 }}
           onClick={handleLogin}
-          disabled={!otpFormEnabled}
+          disabled={!otpFormEnabled && selectedLoginOption !== 'userName'}
         >
           Login
         </Button>
