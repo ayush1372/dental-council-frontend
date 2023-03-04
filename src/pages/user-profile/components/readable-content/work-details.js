@@ -1,14 +1,14 @@
 import { useState } from 'react';
 
 import AttachFileIcon from '@mui/icons-material/AttachFile';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+// import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
 import { Grid, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
 
+// import { useSelector } from 'react-redux';
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
 const WorkDetails = ({ workProfileDetails }) => {
-  const { userActiveTab } = useSelector((state) => state.common);
+  // const { userActiveTab } = useSelector((state) => state.common);
 
   const [openModal, setOpenModal] = useState(false);
   const ClosePopup = () => {
@@ -38,13 +38,13 @@ const WorkDetails = ({ workProfileDetails }) => {
                 ? 'No'
                 : ''}
             </Typography>
-            {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+            {/* {userActiveTab === 'dashboard' && (
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
               />
-            )}
+            )} */}
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
@@ -59,13 +59,13 @@ const WorkDetails = ({ workProfileDetails }) => {
             <Typography variant="subtitle2" color="primary.main">
               {workNatureName}
             </Typography>
-            {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+            {/* {userActiveTab === 'dashboard' && (
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
               />
-            )}{' '}
+            )}{' '} */}
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
@@ -82,13 +82,13 @@ const WorkDetails = ({ workProfileDetails }) => {
             <Typography variant="subtitle2" color="primary.main">
               {workStatusName}
             </Typography>
-            {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+            {/* {userActiveTab === 'dashboard' && (
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
               />
-            )}{' '}
+            )}{' '} */}
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
@@ -107,13 +107,13 @@ const WorkDetails = ({ workProfileDetails }) => {
               <AttachFileIcon fontSize="10px" />
               View attachment
             </Typography>
-            {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+            {/* {userActiveTab === 'dashboard' && (
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
               />
-            )}{' '}
+            )}{' '} */}
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}

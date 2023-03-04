@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
 import { Grid, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
@@ -32,7 +32,7 @@ const IMRDetails = ({ personalDetails }) => {
               {nmr_id ? nmr_id : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -53,7 +53,7 @@ const IMRDetails = ({ personalDetails }) => {
               {year_of_info ? year_of_info : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -74,7 +74,7 @@ const IMRDetails = ({ personalDetails }) => {
               {registration_number ? registration_number : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
