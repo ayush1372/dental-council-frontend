@@ -362,7 +362,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           </Grid>
         </Grid>
         <Grid container item spacing={2} mt={1}>
-          <Grid item xs={12} md={4}>
+          {/* <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
               Is your name in registration certificate, different from your name in Aadhaar?
               <Typography component="span" color="error.main">
@@ -388,7 +388,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               required={true}
               error={errors.registrationCertificate?.message}
             />
-          </Grid>
+          </Grid> */}
         </Grid>
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={6}>
