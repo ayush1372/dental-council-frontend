@@ -19,7 +19,7 @@ export const Navbar = () => {
   const { collegeData } = useSelector((state) => state.college);
   const { smcProfileData } = useSelector((state) => state.smc);
   const { nbeData } = useSelector((state) => state.nbe);
-  const { doctorUserProfile } = useSelector((state) => state.doctorUserProfileReducer);
+  const { personalDetails } = useSelector((state) => state.doctorUserProfileReducer);
   const { loginData } = useSelector((state) => state.loginReducer);
   const userType = userGroupType(loginData?.data?.user_group_id);
 
@@ -95,7 +95,7 @@ export const Navbar = () => {
                     <ProfileImage
                       name={
                         loggedInUserType === 'Doctor'
-                          ? doctorUserProfile?.data?.name
+                          ? personalDetails?.personal_details?.full_name
                           : loggedInUserType === 'College'
                           ? collegeData?.data?.name
                           : loggedInUserType === 'NMC'
