@@ -175,3 +175,20 @@ export const getDoctorTrackApplicationData = (doctor_profile_id) => async (dispa
       });
   });
 };
+
+export const updateProfileConsent = (payload) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.DoctorUserProfileData.profileConsent,
+      headers: { 'Content-Type': 'application/json' },
+      data: payload,
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
