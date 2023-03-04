@@ -75,3 +75,8 @@ export const API = {
     searchDoctorById: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}',
   },
 };
+export const API_HPRID = {
+  hp: {
+    checkHprIdExists: 'api/v1/search/existsByHprId',
+  },
+};
