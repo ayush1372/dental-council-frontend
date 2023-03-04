@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
 import { Grid, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
@@ -33,7 +33,7 @@ const SpecialDetails = ({ workProfileDetails }) => {
               {broadSpecialityName}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -57,7 +57,7 @@ const SpecialDetails = ({ workProfileDetails }) => {
                 : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"

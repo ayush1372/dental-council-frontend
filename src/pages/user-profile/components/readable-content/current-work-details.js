@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
 import { Grid, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
@@ -40,7 +40,7 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
               {state?.name || ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -61,7 +61,7 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
               {district?.name || ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -79,7 +79,7 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
               {work_organization ? work_organization : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -99,7 +99,7 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
               {address_line1 ? address_line1 : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -120,7 +120,7 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
               {address_line1 ? address_line1 : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -141,7 +141,7 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
               {pincode ? pincode : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -161,7 +161,7 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
               {url ? url : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
