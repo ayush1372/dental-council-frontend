@@ -23,14 +23,14 @@ import PersonalDetails from './components/personal-details/personal-details';
 import PreviewProfile from './components/preview-profile/preview-profile';
 import ProfileConsent from './components/profile-consent/profile-consent';
 import RegisterAndAcademicDetails from './components/register-and-academic-details/register-and-academic-details';
-import WorkProfile from './components/work-profile/work-profile';
-const readWizardSteps = ['Personal Details', 'Registration & Academic Details', 'Work Profile'];
+// import WorkProfile from './components/work-profile/work-profile';
+const readWizardSteps = ['Personal Details', 'Registration & Academic Details']; //, 'Work Profile'
 
 export const UserProfile = ({
   showViewProfile,
-  setShowDashboard,
-  setShowTable,
-  setShowViewPorfile,
+  // setShowDashboard,
+  // setShowTable,
+  // setShowViewPorfile,
   // showUserProfile,
   selectedRowData,
 }) => {
@@ -283,7 +283,7 @@ export const UserProfile = ({
                 handleBack={handleBack}
               />
             )}
-            {activeStep === 2 && (
+            {/* {activeStep === 2 && (
               <WorkProfile
                 isReadMode={isReadMode}
                 setIsReadMode={setIsReadMode}
@@ -294,8 +294,8 @@ export const UserProfile = ({
                 setShowViewPorfile={setShowViewPorfile}
                 activeStep={activeStep}
               />
-            )}
-            {activeStep === 3 && (
+            )} */}
+            {activeStep === 2 && (
               <PreviewProfile
                 isReadMode={isReadMode}
                 setIsReadMode={setIsReadMode}
@@ -305,7 +305,7 @@ export const UserProfile = ({
             )}
           </Wizard>
         </Box>
-        {!isReadMode && activeStep === 3 && (
+        {!isReadMode && activeStep === 2 && (
           <ProfileConsent
             handleBack={handleBack}
             resetStep={resetStep}
