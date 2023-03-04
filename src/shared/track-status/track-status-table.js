@@ -117,46 +117,50 @@ function TrackStatusTable(props) {
     setOrderBy(property);
   };
 
-  const newRowsData = props.trackStatusData?.map((application, index) => {
-    return createData(
-      { type: 'SNo', value: index + 1 },
-      {
-        type: 'registrationNo',
-        value: application?.registration_no,
-      },
-      {
-        type: 'nameofApplicant',
-        value: application?.applicant_full_name,
-        callbackNameOfApplicant: viewNameOfApplicant,
-      },
-      {
-        type: 'nameofStateCouncil',
-        value: application.council_name,
-      },
-      { type: 'councilVerificationStatus', value: application?.smc_status },
-      {
-        type: 'collegeVerificationStatus',
-        value: 'verfied',
-      },
-      { type: 'NMCVerificationStatus', value: application?.nmc_status },
+  const newRowsData = props?.trackStatusData?.health_professional_applications?.map(
+    (application, index) => {
+      return createData(
+        { type: 'SNo', value: index + 1 },
+        {
+          type: 'registrationNo',
+          value: application?.registration_no,
+        },
+        {
+          type: 'nameofApplicant',
+          value: application?.applicant_full_name,
+          callbackNameOfApplicant: viewNameOfApplicant,
+        },
+        {
+          type: 'nameofStateCouncil',
+          value: application.council_name,
+        },
+        { type: 'councilVerificationStatus', value: application?.smc_status },
+        {
+          type: 'collegeVerificationStatus',
+          value: 'verfied',
+        },
+        { type: 'NMCVerificationStatus', value: application?.nmc_status },
 
-      { type: 'dateofSubmission', value: application?.created_at },
-      { type: 'pendency', value: '-' },
-      { type: 'pending', value: '-' },
-      {
-        type:
-          loggedInUserType === 'NMC'
-            ? 'requestNMC'
-            : loggedInUserType === 'SMC'
-            ? 'requestSMC'
-            : 'college',
-        value: '-',
-      }
-    );
-  });
+        { type: 'dateofSubmission', value: application?.created_at },
+        { type: 'pendency', value: '-' },
+        { type: 'pending', value: '-' },
+        { type: 'HPProfileId', value: application?.hp_profile_id },
+        {
+          type:
+            loggedInUserType === 'NMC'
+              ? 'requestNMC'
+              : loggedInUserType === 'SMC'
+              ? 'requestSMC'
+              : 'college',
+          value: '-',
+        }
+      );
+    }
+  );
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
+    props.getTableData(newPage + 1);
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
@@ -214,9 +218,9 @@ function TrackStatusTable(props) {
 
       <Box>
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[]}
           component="div"
-          count={props.showTable?.count || newRowsData.length}
+          count={props?.trackStatusData?.total_no_of_records}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

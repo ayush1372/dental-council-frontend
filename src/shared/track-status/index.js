@@ -4,7 +4,6 @@ import { Box, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { verboseLog } from '../../config/debug';
 import { createEditFieldData } from '../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../shared/autocomplete/searchable-dropdown';
 import TrackStatusTable from '../../shared/track-status/track-status-table';
@@ -36,13 +35,17 @@ export default function TrackStatus() {
   });
 
   const onSubmit = () => {
+    getTableData(1);
+    setShowTable(true);
+  };
+  const getTableData = (pageNo) => {
     const trackValues = {
       smc_id: getValues().RegistrationCouncilId,
       registration_no: getValues().RegistrationNumber,
       // work_flow_status_id: 'null',
       // application_type_id: 'null',
-      page_no: 1,
-      size: 5,
+      pageNo: pageNo,
+      offset: 10,
       sort_by: 'createdAt',
       sort_order: 'desc',
     };
@@ -56,10 +59,7 @@ export default function TrackStatus() {
           'top-center'
         );
       });
-    verboseLog('');
-    setShowTable(true);
   };
-
   return (
     <Box>
       {showHeader && (
@@ -141,8 +141,9 @@ export default function TrackStatus() {
 
       {showTable && trackStatusData?.data?.data?.health_professional_applications && (
         <TrackStatusTable
+          getTableData={getTableData}
           setShowHeader={setShowHeader}
-          trackStatusData={trackStatusData?.data?.data?.health_professional_applications}
+          trackStatusData={trackStatusData?.data?.data}
         />
       )}
     </Box>

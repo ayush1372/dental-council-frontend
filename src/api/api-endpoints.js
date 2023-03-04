@@ -33,6 +33,7 @@ export const API = {
     changePassword: 'api/v1/abdm/nmr/user/change-password',
     activateLicense: 'api/v1/abdm/nmr/health-professional/applications/re-activate',
     healthProfessionalApplicationStatus: 'api/v1/abdm/nmr/health-professional/applications/status',
+    suspend: 'api/v1/abdm/nmr/health-professional/applications/suspend',
     enableNotification: '/api/v1/abdm/nmr/user/enable-notification',
   },
   college: {
