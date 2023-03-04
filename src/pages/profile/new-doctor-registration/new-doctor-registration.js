@@ -10,12 +10,12 @@ import PersonalDetails from '../../user-profile/components/personal-details/pers
 import PreviewProfile from '../../user-profile/components/preview-profile/preview-profile';
 import ProfileConsent from '../../user-profile/components/profile-consent/profile-consent';
 import RegisterAndAcademicDetails from '../../user-profile/components/register-and-academic-details/register-and-academic-details';
-import WorkProfile from '../../user-profile/components/work-profile/work-profile';
+// import WorkProfile from '../../user-profile/components/work-profile/work-profile';
 
 const readWizardSteps = [
   'Personal Details',
   'Registration & Academic Details',
-  'Work Profile',
+  // 'Work Profile',
   'Preview Profile',
 ];
 
@@ -51,7 +51,7 @@ export const NewDoctorRegistration = (props) => {
           handleBack={handleBack}
           handleNext={handleNext}
           steps={wizardSteps}
-          progress={activeStep === 0 ? 0 : activeStep === 1 ? 30 : activeStep === 2 ? 60 : 90}
+          progress={activeStep === 0 ? 0 : activeStep === 1 ? 30 : 60}
           // enableNaviagation={true}
         >
           {activeStep === 0 && (
@@ -72,7 +72,7 @@ export const NewDoctorRegistration = (props) => {
               loggedInUserType={loggedInUserType}
             />
           )}
-          {activeStep === 2 && (
+          {/* {activeStep === 2 && (
             <WorkProfile
               isReadMode={isReadMode}
               setIsReadMode={setIsReadMode}
@@ -80,8 +80,8 @@ export const NewDoctorRegistration = (props) => {
               handleBack={handleBack}
               loggedInUserType={loggedInUserType}
             />
-          )}
-          {activeStep === 3 && (
+          )} */}
+          {activeStep === 2 && (
             <PreviewProfile
               isReadMode={isReadMode}
               setIsReadMode={setIsReadMode}
@@ -92,7 +92,7 @@ export const NewDoctorRegistration = (props) => {
           )}
         </Wizard>
       </Box>
-      {isReadMode && activeStep === 3 && (
+      {isReadMode && activeStep === 2 && (
         <ProfileConsent
           handleBack={handleBack}
           resetStep={resetStep}

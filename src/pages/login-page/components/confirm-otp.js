@@ -26,9 +26,6 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData }) => {
     otpInvalidError: !isOtpValid,
   });
 
-  // eslint-disable-next-line no-console
-  console.log('hello', otpData?.type);
-
   const onHandleVerify = () => {
     if (getOtpValidation()) {
       setIsOtpValid(false);
