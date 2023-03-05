@@ -1,0 +1,7 @@
+<svg id="Group_70548" data-name="Group 70548" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+  <circle id="Ellipse_87" data-name="Ellipse 87" cx="24" cy="24" r="24" fill="#ff6745"/>
+  <g id="ico-close-circle-filled" transform="translate(12 12)">
+    <path id="Path_26590" data-name="Path 26590" d="M0,0H24V24H0Z" fill="none"/>
+    <path id="Path_26591" data-name="Path 26591" d="M12,2A10,10,0,1,0,22,12,9.991,9.991,0,0,0,12,2Zm5,13.59L15.59,17,12,13.41,8.41,17,7,15.59,10.59,12,7,8.41,8.41,7,12,10.59,15.59,7,17,8.41,13.41,12Z" transform="translate(0 0)" fill="#fff"/>
+  </g>
+</svg>
