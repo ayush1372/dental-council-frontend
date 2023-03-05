@@ -9,7 +9,7 @@ import { Box, Dialog, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { suspendDoctor } from '../../store/actions/common-actions';
+// import { suspendDoctor } from '../../store/actions/common-actions';
 import { getInitiateWorkFlow } from '../../store/actions/common-actions';
 import { changeUserActiveTab } from '../../store/reducers/common-reducers';
 import { Button, Checkbox, RadioGroup, TextField } from '../../ui/core';
@@ -46,52 +46,13 @@ export function SuspendLicenseVoluntaryRetirement({
           : '',
     },
   });
-  const suspendLicenseStatus = () => {
-    const { fromDate, toDate, remark } = getValues();
-    let suspendDoctorBody = {
-      hp_profile_id:
-        userActiveTab === 'voluntary-suspend-license'
-          ? loginData?.data?.profile_id
-          : userActiveTab === 'track-status' && selectedSuspendLicenseProfile?.view?.value,
-      application_type_id:
-        selectedSuspension === 'voluntary-suspension-check'
-          ? 3
-          : selectedSuspension === 'permanent-suspension-check'
-          ? 4
-          : selectedValue === 'suspend'
-          ? 4
-          : selectedValue === 'blacklist'
-          ? 3
-          : '',
-      action_id:
-        selectedValue === 'suspend'
-          ? 7
-          : selectedValue === 'blacklist'
-          ? 6
-          : userActiveTab === 'voluntary-suspend-license' && 1,
-      from_date: fromDate,
-      to_date: toDate,
-      remarks: remark,
-    };
-    try {
-      ((confirmationModal && userActiveTab === 'voluntary-suspend-license') ||
-        userActiveTab === 'track-status') &&
-        dispatch(suspendDoctor(suspendDoctorBody)).then((response) => {
-          if (response) {
-            setConfirmationModal(false);
-            userActiveTab === 'voluntary-suspend-license' &&
-              dispatch(changeUserActiveTab('my-profile'));
-          }
-        });
-    } catch (allFailMsg) {
-      successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-    }
-  };
+
   const { workProfileDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
 
   const onSubmit = () => {
     setConformSuspend(true);
+    setConfirmationModal(true);
     let action_id;
     switch (selectedValue) {
       case 'forward':
@@ -123,13 +84,38 @@ export function SuspendLicenseVoluntaryRetirement({
         : 1,
       actor_id: loggedInUserType === 'SMC' ? 2 : loggedInUserType === 'NMC' ? 3 : 0,
       action_id: action_id,
-      hp_profile_id: workProfileDetails?.hp_profile_id,
+      hp_profile_id: workProfileDetails?.hp_profile_id
+        ? workProfileDetails?.hp_profile_id
+        : userActiveTab === 'voluntary-suspend-license'
+        ? loginData?.data?.profile_id
+        : userActiveTab === 'track-status'
+        ? selectedSuspendLicenseProfile?.view?.value
+        : '',
       start_date: getValues()?.fromDate ? getValues()?.fromDate : '',
+      to_date: getValues()?.toDate ? getValues()?.toDate : '',
       remarks: getValues()?.remark ? getValues()?.remark : '',
     };
-    dispatch(getInitiateWorkFlow(workFlowData));
-    setConfirmationModal(true);
-    suspendLicenseStatus();
+    try {
+      dispatch(getInitiateWorkFlow(workFlowData))
+        .then((response) => {
+          if (response) {
+            setConfirmationModal(false);
+            userActiveTab === 'voluntary-suspend-license' &&
+              dispatch(changeUserActiveTab('my-profile'));
+          }
+        })
+        .catch((error) => {
+          successToast(
+            'ERR_INT: ' + error?.data?.response?.data?.error,
+            'UpdateError',
+            'error',
+            'top-center'
+          );
+          setConfirmationModal(false);
+        });
+    } catch (allFailMsg) {
+      successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    }
   };
 
   const handlevoluntarySuspendLicenseChange = (event) => {
@@ -426,7 +412,10 @@ export function SuspendLicenseVoluntaryRetirement({
           <Button
             variant="contained"
             color="secondary"
-            onClick={handleSubmit(onSubmit)}
+            onClick={() => {
+              setConformSuspend(true);
+              setConfirmationModal(true);
+            }}
             sx={{
               width: {
                 xs: '100%',
@@ -453,6 +442,10 @@ export function SuspendLicenseVoluntaryRetirement({
                 md: 'fit-content',
               },
             }}
+            onClick={(e) => {
+              e.preventDefault();
+              dispatch(changeUserActiveTab('my-profile'));
+            }}
           >
             Cancel
           </Button>
@@ -465,7 +458,14 @@ export function SuspendLicenseVoluntaryRetirement({
           selectedValue === 'suspend' ||
           selectedValue === 'approve' ||
           selectedValue === 'blacklist' ? (
-            <Button variant="contained" color="grey" onClick={handleClose}>
+            <Button
+              variant="contained"
+              color="grey"
+              onClick={(e) => {
+                e.preventDefault();
+                dispatch(changeUserActiveTab('my-profile'));
+              }}
+            >
               Cancel
             </Button>
           ) : (
@@ -497,7 +497,10 @@ export function SuspendLicenseVoluntaryRetirement({
               color="secondary"
               variant="contained"
               sx={{ marginLeft: 2 }}
-              onClick={handleSubmit(onSubmit)}
+              // onClick={handleSubmit(onSubmit)}
+              onClick={() => {
+                setConfirmationModal(true);
+              }}
             >
               Submit
             </Button>
@@ -510,7 +513,10 @@ export function SuspendLicenseVoluntaryRetirement({
                 color="grey"
                 variant="contained"
                 sx={{ marginLeft: 2 }}
-                // onClick={handelCancelDetails}
+                // onClick={dispatch(changeUserActiveTab('my-profile'))}
+                onClick={() => {
+                  setConfirmationModal(false);
+                }}
               >
                 No
               </Button>
@@ -572,9 +578,7 @@ export function SuspendLicenseVoluntaryRetirement({
                 No
               </Button>
               <Button
-                onClick={() => {
-                  suspendLicenseStatus();
-                }}
+                onClick={handleSubmit(onSubmit)}
                 color="secondary"
                 variant="contained"
                 sx={{
