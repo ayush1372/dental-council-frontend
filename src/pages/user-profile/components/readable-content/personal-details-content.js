@@ -15,17 +15,17 @@ const PersonalDetails = ({ personalDetails }) => {
   };
   const { personal_details } = personalDetails || {};
   const {
-    first_name,
-    last_name,
+    full_name,
+    // last_name,
     aadhaar_token,
     date_of_birth,
     father_name,
     gender,
     language,
-    middle_name,
+    // middle_name,
     mother_name,
     country_nationality,
-    salutation,
+    // salutation,
     schedule,
     spouse_name,
   } = personal_details || {};
@@ -36,7 +36,7 @@ const PersonalDetails = ({ personalDetails }) => {
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
-        <Grid item xs={12} md={4}>
+        {/* <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
             Salutation
             <Typography component="span" color="error.main">
@@ -55,8 +55,8 @@ const PersonalDetails = ({ personalDetails }) => {
               />
             )}{' '}
           </Grid>
-        </Grid>
-        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
+        </Grid> */}
+        {/* {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />} */}
 
         {false && (
           <Grid item xs={12} md={4}>
@@ -90,16 +90,16 @@ const PersonalDetails = ({ personalDetails }) => {
               </Typography>
             </Typography>
             <Typography variant="subtitle2" color="primary.main">
-              {salutation ? salutation : ''}
+              {/* {salutation ? salutation : ''} */}
             </Typography>
           </Grid>
         )}
       </Grid>
       {/* //firstname */}
       <Grid container item spacing={2} mt={1}>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={3}>
           <Typography variant="subtitle2" color="grey.label">
-            First Name
+            Name
             <Typography component="span" color="error.main">
               *
             </Typography>
@@ -107,7 +107,7 @@ const PersonalDetails = ({ personalDetails }) => {
 
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              {first_name ? first_name : ''}
+              {full_name ? full_name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -119,49 +119,7 @@ const PersonalDetails = ({ personalDetails }) => {
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-        <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
-            Middle Name
-          </Typography>
-          <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
-              {middle_name ? middle_name : ''}
-            </Typography>
-            {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
-                color="primary"
-                onClick={() => setOpenModal(true)}
-                fontSize="width30"
-              />
-            )}{' '}
-          </Grid>
-        </Grid>
-        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-        <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
-            Last Name
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
-          </Typography>
-          <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
-              {last_name ? last_name : ''}
-            </Typography>
-            {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
-                color="primary"
-                onClick={() => setOpenModal(true)}
-                fontSize="width30"
-              />
-            )}{' '}
-          </Grid>
-        </Grid>
-        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-      </Grid>
-      {/* fathers name */}
-      <Grid container item spacing={2} mt={1}>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={3}>
           <Typography variant="subtitle2" color="grey.label">
             Father&apos;s Name
             <Typography component="span" color="error.main">
@@ -182,7 +140,7 @@ const PersonalDetails = ({ personalDetails }) => {
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={3}>
           <Typography variant="subtitle2" color="grey.label">
             Mother&apos;s Name
           </Typography>
@@ -200,7 +158,7 @@ const PersonalDetails = ({ personalDetails }) => {
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={3}>
           <Typography variant="subtitle2" color="grey.label">
             Spouse Name
           </Typography>
@@ -219,75 +177,9 @@ const PersonalDetails = ({ personalDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
       </Grid>
-      {/* nationality */}
+
       <Grid container item spacing={2} mt={1}>
-        <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
-            Nationality
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
-          </Typography>
-          <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
-              {nationality}
-            </Typography>
-            {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
-                color="primary"
-                onClick={() => setOpenModal(true)}
-                fontSize="width30"
-              />
-            )}{' '}
-          </Grid>
-        </Grid>
-        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-        <Grid item xs={12} md={4} mt={1}>
-          <Typography variant="subtitle2" color="grey.label">
-            Languages
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
-          </Typography>
-          <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
-              {language && language[0]?.name ? language[0]?.name : ''}
-            </Typography>
-            {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
-                color="primary"
-                onClick={() => setOpenModal(true)}
-                fontSize="width30"
-              />
-            )}{' '}
-          </Grid>
-        </Grid>
-        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-        <Grid item xs={12} md={4} mt={1}>
-          <Typography variant="subtitle2" color="grey.label">
-            Date of Birth
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
-          </Typography>
-          <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
-              {date_of_birth ? date_of_birth : ''}
-            </Typography>
-            {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
-                color="primary"
-                onClick={() => setOpenModal(true)}
-                fontSize="width30"
-              />
-            )}
-          </Grid>
-        </Grid>
-        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-      </Grid>
-      {/* gender */}
-      <Grid container item spacing={2} mt={1}>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={3}>
           <Typography variant="subtitle2" color="grey.label">
             Gender
             <Typography component="span" color="error.main">
@@ -308,6 +200,74 @@ const PersonalDetails = ({ personalDetails }) => {
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
+
+        <Grid item xs={12} md={3}>
+          <Typography variant="subtitle2" color="grey.label">
+            Date of Birth
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
+          </Typography>
+          <Grid display="flex" alignItems="center">
+            <Typography variant="subtitle2" color="primary.main">
+              {date_of_birth ? date_of_birth : ''}
+            </Typography>
+            {userActiveTab === 'dashboard' && (
+              <EditOutlinedIcon
+                color="primary"
+                onClick={() => setOpenModal(true)}
+                fontSize="width30"
+              />
+            )}
+          </Grid>
+        </Grid>
+        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
+
+        <Grid item xs={12} md={3}>
+          <Typography variant="subtitle2" color="grey.label">
+            Nationality
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
+          </Typography>
+          <Grid display="flex" alignItems="center">
+            <Typography variant="subtitle2" color="primary.main">
+              {nationality}
+            </Typography>
+            {userActiveTab === 'dashboard' && (
+              <EditOutlinedIcon
+                color="primary"
+                onClick={() => setOpenModal(true)}
+                fontSize="width30"
+              />
+            )}{' '}
+          </Grid>
+        </Grid>
+        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
+
+        <Grid item xs={12} md={3}>
+          <Typography variant="subtitle2" color="grey.label">
+            Languages
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
+          </Typography>
+          <Grid display="flex" alignItems="center">
+            <Typography variant="subtitle2" color="primary.main">
+              {language && language[0]?.name ? language[0]?.name : ''}
+            </Typography>
+            {userActiveTab === 'dashboard' && (
+              <EditOutlinedIcon
+                color="primary"
+                onClick={() => setOpenModal(true)}
+                fontSize="width30"
+              />
+            )}{' '}
+          </Grid>
+        </Grid>
+        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
+      </Grid>
+      <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
             Schedule

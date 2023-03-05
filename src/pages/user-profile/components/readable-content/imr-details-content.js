@@ -14,22 +14,22 @@ const IMRDetails = ({ personalDetails }) => {
     setOpenModal(false);
   };
 
-  const { imr_details } = personalDetails || {};
-  const { registration_number, nmr_id, year_of_info } = imr_details || {};
-
+  const { communication_address } = personalDetails || {};
+  // const { registration_number, year_of_info } = imr_details || {};
+  const { address_line1 } = communication_address || {};
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
-            IMR ID
+            Aadhaar verified Address
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              {nmr_id ? nmr_id : ''}
+              {address_line1 ? address_line1 : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <EditOutlinedIcon
@@ -41,7 +41,7 @@ const IMRDetails = ({ personalDetails }) => {
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-        <Grid item xs={12} md={4}>
+        {/* <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
             Year of Info
             <Typography component="span" color="error.main">
@@ -82,7 +82,7 @@ const IMRDetails = ({ personalDetails }) => {
             )}{' '}
           </Grid>
         </Grid>
-        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
+        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />} */}
       </Grid>
     </Grid>
   );

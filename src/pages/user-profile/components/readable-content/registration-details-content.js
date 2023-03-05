@@ -21,7 +21,7 @@ const RegistrationDetailsContent = ({ registrationDetails }) => {
     state_medical_council,
     is_renewable,
     renewable_registration_date,
-    is_name_change,
+    // is_name_change,
   } = registration_detail_to || {};
 
   const smcName = state_medical_council?.name || '';
@@ -140,6 +140,18 @@ const RegistrationDetailsContent = ({ registrationDetails }) => {
         </Grid>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
+            Upload the registration certificate
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
+          </Typography>
+          <Typography variant="subtitle2" color="primary.main">
+            <AttachFileIcon fontSize="10px" />
+            View attachment
+          </Typography>
+        </Grid>
+        {/* <Grid item xs={12} md={4}>
+          <Typography variant="subtitle2" color="grey.label">
             Registration Certificate
             <Typography component="span" color="error.main">
               *
@@ -157,27 +169,13 @@ const RegistrationDetailsContent = ({ registrationDetails }) => {
               />
             )}
           </Grid>
-        </Grid>
+        </Grid> */}
       </Grid>
       {/* <Grid container item spacing={2}>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor"></Typography>
         </Grid>
       </Grid> */}
-      <Grid container item spacing={2} mt={1}>
-        <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
-            Upload the registration certificate
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
-          </Typography>
-          <Typography variant="subtitle2" color="primary.main">
-            <AttachFileIcon fontSize="10px" />
-            View attachment
-          </Typography>
-        </Grid>
-      </Grid>
     </Grid>
   );
 };

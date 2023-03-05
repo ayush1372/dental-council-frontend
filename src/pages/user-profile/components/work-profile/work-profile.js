@@ -12,18 +12,19 @@ const WorkProfile = ({
   setShowTable,
   setShowViewPorfile,
   activeStep,
+  showActions = true,
+  showSuccessModal = false,
 }) => {
   return (
     <Box mt={1}>
       {isReadMode && loggedInUserType !== 'SMC' && (
         <ReadWorkProfile
-          handleNext={handleNext}
           handleBack={handleBack}
-          setIsReadMode={setIsReadMode}
           setShowDashboard={setShowDashboard}
           setShowTable={setShowTable}
           setShowViewPorfile={setShowViewPorfile}
           activeStep={activeStep}
+          showActions={showActions}
         />
       )}
       {!isReadMode && (
@@ -31,10 +32,15 @@ const WorkProfile = ({
           handleNext={handleNext}
           handleBack={handleBack}
           setIsReadMode={setIsReadMode}
+          showSuccessModal={showSuccessModal}
         />
       )}
       {loggedInUserType === 'SMC' && (
-        <EditWorkProfile handleNext={handleNext} handleBack={handleBack} />
+        <EditWorkProfile
+          handleNext={handleNext}
+          handleBack={handleBack}
+          showSuccessModal={showSuccessModal}
+        />
       )}
     </Box>
   );

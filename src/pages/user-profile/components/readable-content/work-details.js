@@ -69,8 +69,6 @@ const WorkDetails = ({ workProfileDetails }) => {
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-      </Grid>
-      <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
             Choose Work Status
@@ -94,7 +92,7 @@ const WorkDetails = ({ workProfileDetails }) => {
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
       </Grid>
       <Grid container item spacing={2} mt={1}>
-        <Grid item xs={12} md={4} lg={12}>
+        <Grid item xs={12} md={8} lg={12}>
           <Typography variant="subtitle2" color="inputTextColor.main">
             Upload the proof of work for govt.such as Appointment letter, Last pay slip, Recent
             transfer order etc.

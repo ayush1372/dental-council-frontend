@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import AttachFileIcon from '@mui/icons-material/AttachFile';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Grid, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
@@ -20,7 +21,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
     course,
     qualification_month,
     qualification_year,
-    is_name_change,
+    // is_name_change,
   } = registrationDetails?.[0] || {};
 
   const countryName = country?.name || '';
@@ -143,7 +144,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
 
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
-            Month of Awarding Degree/Diploma
+            Month & Year of awarding Degree/Diploma
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
@@ -157,17 +158,6 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               />
             )}
           </Grid>
-        </Grid>
-      </Grid>
-      <Grid container item spacing={2} mt={1}>
-        <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
-            Year of awarding Degree/Diploma
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
-          </Typography>
-
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
               {qualification_year ? qualification_year : ''}
@@ -181,7 +171,31 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
             )}
           </Grid>
         </Grid>
-        <Grid item xs={12} md={6}>
+      </Grid>
+      <Grid container item spacing={2} mt={1}>
+        {/* <Grid item xs={12} md={4}>
+          <Typography variant="subtitle2" color="grey.label">
+            Year of awarding Degree/Diploma
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
+          </Typography>
+
+          
+        </Grid> */}
+        <Grid item xs={12} md={4}>
+          <Typography variant="subtitle2" color="grey.label">
+            Upload Qualification Degree
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
+          </Typography>
+          <Typography variant="subtitle2" color="primary.main">
+            <AttachFileIcon fontSize="10px" />
+            View attachment
+          </Typography>
+        </Grid>
+        {/* <Grid item xs={12} md={6}>
           <Typography variant="subtitle2" color="grey.label">
             Is your name in registration certificate, different from your name in Aadhaar?
             <Typography component="span" color="error.main">
@@ -200,7 +214,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               />
             )}
           </Grid>
-        </Grid>
+        </Grid> */}
       </Grid>
     </Grid>
   );
