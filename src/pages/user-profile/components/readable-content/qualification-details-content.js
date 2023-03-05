@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import AttachFileIcon from '@mui/icons-material/AttachFile';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
 import { Grid, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
@@ -45,7 +45,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               {courseName}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -68,7 +68,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               {countryName}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -89,7 +89,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               {stateName}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -112,7 +112,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
             </Typography>
 
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -133,7 +133,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               {universityName}
             </Typography>{' '}
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -151,7 +151,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               {qualification_month ? qualification_month : ''}
             </Typography>{' '}
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -163,7 +163,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               {qualification_year ? qualification_year : ''}
             </Typography>{' '}
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -207,7 +207,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               {is_name_change === 0 ? 'Yes' : is_name_change === 1 ? 'No' : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"

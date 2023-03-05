@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
 import { Grid, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
@@ -48,7 +48,7 @@ const PersonalDetails = ({ personalDetails }) => {
               {salutation ? salutation : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -71,7 +71,7 @@ const PersonalDetails = ({ personalDetails }) => {
                 xxxx-xxxx-{aadhaar_token ? aadhaar_token : 'XXXX'}
               </Typography>
               {userActiveTab === 'dashboard' && (
-                <EditOutlinedIcon
+                <ContactSupportOutlinedIcon
                   color="primary"
                   onClick={() => setOpenModal(true)}
                   fontSize="width30"
@@ -110,7 +110,7 @@ const PersonalDetails = ({ personalDetails }) => {
               {full_name ? full_name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -131,7 +131,7 @@ const PersonalDetails = ({ personalDetails }) => {
               {father_name ? father_name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -149,7 +149,7 @@ const PersonalDetails = ({ personalDetails }) => {
               {mother_name ? mother_name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -167,7 +167,7 @@ const PersonalDetails = ({ personalDetails }) => {
               {spouse_name ? spouse_name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -191,7 +191,7 @@ const PersonalDetails = ({ personalDetails }) => {
               {gender ? gender : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -213,7 +213,7 @@ const PersonalDetails = ({ personalDetails }) => {
               {date_of_birth ? date_of_birth : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -235,7 +235,7 @@ const PersonalDetails = ({ personalDetails }) => {
               {nationality}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -257,7 +257,7 @@ const PersonalDetails = ({ personalDetails }) => {
               {language && language[0]?.name ? language[0]?.name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -280,7 +280,7 @@ const PersonalDetails = ({ personalDetails }) => {
               {nameSchedule}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
