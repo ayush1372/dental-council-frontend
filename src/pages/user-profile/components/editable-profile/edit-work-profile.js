@@ -8,8 +8,13 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { natureOfWork, workStatusOptions } from '../../../../constants/common-data';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
+import SuccessModalPopup from '../../../../shared/common-modals/success-modal-popup';
 //  import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
-import { getDistrictList } from '../../../../store/actions/common-actions';
+import {
+  getCitiesList,
+  getDistrictList,
+  getSubDistrictsList,
+} from '../../../../store/actions/common-actions';
 import { updateDoctorWorkDetails } from '../../../../store/actions/doctor-user-profile-actions';
 import { getDistricts } from '../../../../store/reducers/common-reducers';
 import { getWorkProfileDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
@@ -17,11 +22,12 @@ import { Button, RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
 import successToast from '../../../../ui/core/toaster';
 
-const EditWorkProfile = ({ handleNext, handleBack }) => {
+const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [workProof, setWorkProof] = useState([]);
   const [subSpecialities, setSubSpecialities] = useState([]);
+  const [successModalPopup, setSuccessModalPopup] = useState(false);
   const {
     statesList,
     specialitiesList,
@@ -36,7 +42,15 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
   const { is_user_currently_working, work_nature, work_status } = work_details || {};
   const { broad_speciality, super_speciality: subSpecialityOptions } = speciality_details || {};
   const { address, url, work_organization, facility_id } = current_work_details?.[0] || {};
-  const { state: stateDetails, district: districtDetails, pincode, address_line1 } = address || {};
+  const {
+    state: stateDetails,
+    country,
+    district: districtDetails,
+    sub_district: subDistrictDetails,
+    pincode,
+    address_line1,
+    village,
+  } = address || {};
   const {
     formState: { errors },
     getValues,
@@ -53,7 +67,10 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
       Speciality: broad_speciality?.id,
       workStatus: work_status?.id,
       state: stateDetails?.id,
+      Country: country?.id,
+      Area: village?.id,
       District: districtDetails?.id,
+      SubDistrict: subDistrictDetails?.id,
       workingOrganizationName: work_organization,
       Address: address_line1,
       Pincode: pincode,
@@ -74,11 +91,40 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
     if (stateId) dispatch(getDistrictList(stateId));
   };
 
+  const fetchSubDistricts = (districtId) => {
+    if (districtId) {
+      dispatch(getSubDistrictsList(districtId))
+        .then(() => {})
+        .catch((allFailMsg) => {
+          successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+        });
+    }
+  };
+
+  const fetchCities = (subDistrictId) => {
+    try {
+      dispatch(getCitiesList(subDistrictId)).then(() => {});
+    } catch (allFailMsg) {
+      successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    }
+  };
+
   const changedState = watch('state');
+  const selectedDistrict = watch('District');
+  const selectedSubDistrict = watch('SubDistrict');
 
   useEffect(() => {
     fetchDisricts(changedState);
   }, [changedState]);
+
+  useEffect(() => {
+    fetchSubDistricts(selectedDistrict);
+  }, [selectedDistrict]);
+
+  useEffect(() => {
+    fetchCities(selectedSubDistrict);
+  }, [selectedSubDistrict]);
+
   const handleBackButton = () => {
     handleBack();
   };
@@ -153,6 +199,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
 
     dispatch(updateDoctorWorkDetails(formData, loginData.data.profile_id))
       .then(() => {
+        setSuccessModalPopup(true);
         handleNext();
       })
       .catch((allFailMsg) => {
@@ -506,7 +553,6 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               {...register('Country', {
                 required: 'Country is required',
               })}
-              disabled
               options={
                 countriesList?.length > 0
                   ? createSelectFieldData(
@@ -726,6 +772,14 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
           </Button>
         </Grid> */}
       </Grid>
+
+      {showSuccessModal && (
+        <SuccessModalPopup
+          open={successModalPopup}
+          setOpen={() => setSuccessModalPopup(false)}
+          text={'Your Work Details has been successfully changed'}
+        />
+      )}
     </Container>
   );
 };
