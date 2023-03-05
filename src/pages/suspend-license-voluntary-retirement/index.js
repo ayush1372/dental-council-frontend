@@ -9,7 +9,7 @@ import { Box, Dialog, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { verboseLog } from '../../config/debug';
+// import { verboseLog } from '../../config/debug';
 // import { suspendDoctor } from '../../store/actions/common-actions';
 import { getInitiateWorkFlow } from '../../store/actions/common-actions';
 import { changeUserActiveTab } from '../../store/reducers/common-reducers';
@@ -19,6 +19,7 @@ import successToast from '../../ui/core/toaster';
 export function SuspendLicenseVoluntaryRetirement({
   tabName,
   selectedValue,
+  handleClose,
   selectedSuspendLicenseProfile,
 }) {
   const dispatch = useDispatch();
@@ -100,7 +101,7 @@ export function SuspendLicenseVoluntaryRetirement({
       dispatch(getInitiateWorkFlow(workFlowData))
         .then((response) => {
           if (response) {
-            setConfirmationModal(false);
+            handleClose();
             userActiveTab === 'voluntary-suspend-license' &&
               dispatch(changeUserActiveTab('my-profile'));
           }
@@ -131,10 +132,6 @@ export function SuspendLicenseVoluntaryRetirement({
     setSelectedFromDate(temp2);
   };
 
-  const handleClose = () => {
-    verboseLog('Hello', confirmationModal);
-    setConfirmationModal(false);
-  };
   return (
     <Box data-testid="suspend-license-voluntary-retirement" width="100%">
       {!tabName && selectedValue !== 'forward' && (
@@ -496,15 +493,7 @@ export function SuspendLicenseVoluntaryRetirement({
           )}
           {selectedValue === 'verify' || selectedValue === 'forward' ? (
             <Box align={selectedValue === 'forward' ? 'right' : 'center'}>
-              <Button
-                color="grey"
-                variant="contained"
-                sx={{ marginLeft: 2 }}
-                // onClick={dispatch(changeUserActiveTab('my-profile'))}
-                onClick={() => {
-                  setConfirmationModal(false);
-                }}
-              >
+              <Button color="grey" variant="contained" sx={{ marginLeft: 2 }} onClick={handleClose}>
                 No
               </Button>
               <Button

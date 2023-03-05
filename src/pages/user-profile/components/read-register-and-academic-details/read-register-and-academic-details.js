@@ -241,6 +241,7 @@ const ReadRegisterAndAcademicDetails = ({
                 selectedValue={selected}
                 handleSubmitDetails={handleSubmitDetails}
                 activeStep={activeStep}
+                handleClose={handleClose}
               />
             </Box>
           ) : (

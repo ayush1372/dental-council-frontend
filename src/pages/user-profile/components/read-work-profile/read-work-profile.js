@@ -231,6 +231,7 @@ const ReadWorkProfile = ({
                 selectedValue={selected}
                 handleSubmitDetails={handleSubmitDetails}
                 activeStep={activeStep}
+                handleClose={handleClose}
               />
             </Box>
           ) : (
