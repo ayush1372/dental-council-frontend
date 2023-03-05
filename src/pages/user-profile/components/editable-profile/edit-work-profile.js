@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { Grid, Typography } from '@mui/material';
-import { Container } from '@mui/system';
+import { Box, Grid, Typography } from '@mui/material';
+// import { Container } from '@mui/system';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -213,10 +213,10 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
   // };
 
   return (
-    <Container>
-      <Typography variant="h2" color="textPrimary.main">
+    <Box>
+      {/* <Typography variant="h2" color="textPrimary.main">
         Work Details
-      </Typography>
+      </Typography> */}
       <Grid container mt={2}>
         {/* layer 1 */}
         {/* <Grid container item spacing={2}>
@@ -780,7 +780,7 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
           text={'Your Work Details has been successfully changed'}
         />
       )}
-    </Container>
+    </Box>
   );
 };
 

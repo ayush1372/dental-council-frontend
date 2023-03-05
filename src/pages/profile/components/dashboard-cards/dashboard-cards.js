@@ -165,9 +165,9 @@ export default function Dashboard() {
       )}
       {showDashboard ? (
         <Container>
-          <Typography variant="h2" mt={3} mb={4}>
+          {/* <Typography variant="h2" mt={3} mb={4}>
             Dashboard
-          </Typography>
+          </Typography> */}
           <Box sx={{ width: '100%' }}>
             <Box display="flex" flexWrap="wrap" gap={1}>
               {Object.entries(dashboard).map((element) => {

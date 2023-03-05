@@ -55,9 +55,9 @@ const AdditionalQualifications = () => {
   return (
     <Box p={3}>
       <Box>
-        <Typography variant="h3" color="textPrimary.main">
+        {/* <Typography variant="h3" color="textPrimary.main">
           Additional Qualifications
-        </Typography>
+        </Typography> */}
         <Typography variant="body4" color="messageBlue.main" display="flex" alignItems="center">
           <InfoOutlinedIcon fontSize="18px" />
           User can add up to 7 qualification degrees
