@@ -92,7 +92,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
         loginTypeID = 0;
         break;
     }
-    if (selectedLoginOption === 'nmrId' && selectedLoginOption === 'mobileNumber') {
+    if (selectedLoginOption === 'nmrId' || selectedLoginOption === 'mobileNumber') {
       verboseLog('Login Data -> ', getValues()?.nmrID);
       verboseLog('Login Data -> ', otpValue);
       dispatch(
