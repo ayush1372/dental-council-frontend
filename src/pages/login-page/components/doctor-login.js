@@ -106,7 +106,8 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
             const usertypeId = usersType(loginName);
 
             const requestObj = {
-              username: getValues()?.userID,
+              username:
+                selectedLoginOption === 'nmrId' ? getValues()?.nmrID : getValues()?.mobileNo,
               password: encryptData(otpValue, process.env.REACT_APP_PASS_SITE_KEY),
               user_type: usertypeId,
               login_type: loginTypeID,
@@ -370,9 +371,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
             />
             {otpFormEnabled && (
               <Box mt={2}>
-                <Typography variant="body1">
-                  We just sent an OTP on your Mobile Number 7654364789
-                </Typography>
+                <Typography variant="body1">We just sent an OTP on your Mobile Number.</Typography>
                 {otpform}
               </Box>
             )}
