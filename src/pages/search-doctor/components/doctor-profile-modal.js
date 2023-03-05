@@ -1,24 +1,31 @@
 import CloseIcon from '@mui/icons-material/Close';
-import { Box, Dialog } from '@mui/material';
+import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
+import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
+import { Box, Dialog, Grid, Typography, useTheme } from '@mui/material';
 
 // import { useSelector } from 'react-redux';
 import { verboseLog } from '../../../config/debug';
+import { Button } from '../../../ui/core';
 // import { Button } from '../../../ui/core/button/button';
 
 const DoctorProfileModal = ({ open, setOpen, doctorDetails, imagepath }) => {
   // const { searchDetailsById } = useSelector((state) => state.searchDoctor);
 
+  const theme = useTheme();
   const handleClose = () => {
     setOpen(false);
   };
   verboseLog('Doctor Details Object -> ', doctorDetails);
+
   return (
     <Dialog
-      maxWidth="sm"
+      scroll="body"
       sx={{
         '.MuiPaper-root': {
           borderRadius: '10px',
           width: '100%',
+          maxWidth: '882px',
+          boxShadow: 1,
         },
       }}
       open={open}
@@ -40,6 +47,7 @@ const DoctorProfileModal = ({ open, setOpen, doctorDetails, imagepath }) => {
                 />
               </Box>
             </Box>
+
             {/* <Box className="details" width="70%" mt={8}>
               <Typography variant="h2" color="textPrimary.main" component="div">
                 {searchDetailsById?.data?.data?.salutation +
@@ -50,6 +58,7 @@ const DoctorProfileModal = ({ open, setOpen, doctorDetails, imagepath }) => {
               </Typography>
             </Box> */}
           </Box>
+
           {/* <Divider />
           <Typography variant="subtitle1" color="textPrimary.main" component="div" mt={2} mb={1}>
             View IMR Details
@@ -164,6 +173,261 @@ const DoctorProfileModal = ({ open, setOpen, doctorDetails, imagepath }) => {
               Print
             </Button>
           </Box> */}
+        </Box>
+        <Box mt={7} p={4}>
+          <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+            <Typography variant="h2" color="inputTextColor.main">
+              Dr. Aditi Kumari
+            </Typography>
+            <Button sx={{ marginLeft: 'auto' }} color="secondary" variant="contained">
+              Print
+            </Button>
+            <ShareOutlinedIcon color="inputTextColor.main" sx={{ ml: 2 }} />
+          </Box>
+          <Typography component="div" variant="h3" color="textSecondary.main">
+            West Bengal Medical Council
+          </Typography>
+          <Grid
+            container
+            mb={3}
+            border={`1px solid ${theme?.palette?.inputBorderColor?.main}`}
+            borderRadius="5px"
+          >
+            <Grid
+              item
+              pl={3}
+              py={2}
+              xs={12}
+              sm={6}
+              md={3}
+              borderRight={`1px solid ${theme?.palette?.inputBorderColor?.main}`}
+            >
+              <Typography
+                component="div"
+                variant="body1"
+                fontWeight="400"
+                color="inputTextColor.main"
+              >
+                NMR ID
+              </Typography>
+              <Typography component="div" variant="body1" color="textSecondary.main">
+                IN23192789111
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              pl={3}
+              py={2}
+              xs={12}
+              sm={6}
+              md={3}
+              borderRight={`1px solid ${theme?.palette?.inputBorderColor?.main}`}
+            >
+              <Typography
+                component="div"
+                variant="body1"
+                fontWeight="400"
+                color="inputTextColor.main"
+              >
+                NMR ID
+              </Typography>
+              <Typography component="div" variant="body1" color="textSecondary.main">
+                IN23192789111
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              pl={3}
+              py={2}
+              xs={12}
+              sm={6}
+              md={3}
+              borderRight={`1px solid ${theme?.palette?.inputBorderColor?.main}`}
+            >
+              <Typography
+                component="div"
+                variant="body1"
+                fontWeight="400"
+                color="inputTextColor.main"
+              >
+                NMR ID
+              </Typography>
+              <Typography component="div" variant="body1" color="textSecondary.main">
+                IN23192789111
+              </Typography>
+            </Grid>
+            <Grid item pl={3} py={2} xs={12} sm={6} md={3}>
+              <Typography
+                component="div"
+                variant="body1"
+                fontWeight="400"
+                color="inputTextColor.main"
+              >
+                NMR ID
+              </Typography>
+              <Typography component="div" variant="body1" color="textSecondary.main">
+                IN23192789111
+              </Typography>
+            </Grid>
+          </Grid>
+          <Grid container rowSpacing={3}>
+            <Grid item xs={12} sm={6} md={3}>
+              <Typography
+                component="div"
+                variant="body1"
+                fontWeight="400"
+                color="inputTextColor.main"
+              >
+                Father/Husband Name
+              </Typography>
+              <Typography component="div" variant="body1" color="textSecondary.main">
+                N/A
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Typography
+                component="div"
+                variant="body1"
+                fontWeight="400"
+                color="inputTextColor.main"
+              >
+                Date of Birth
+              </Typography>
+              <Typography component="div" variant="body1" color="textSecondary.main">
+                N/A
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Typography
+                component="div"
+                variant="body1"
+                fontWeight="400"
+                color="inputTextColor.main"
+              >
+                Mobile number
+              </Typography>
+              <Typography component="span" variant="body1" color="textSecondary.main">
+                XXXXXX2137
+                <ContentCopyOutlinedIcon
+                  sx={{ color: 'inputFocusColor.main', width: '16px', height: '16px', ml: 0.5 }}
+                />
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Typography
+                component="div"
+                variant="body1"
+                fontWeight="400"
+                color="inputTextColor.main"
+              >
+                Email address
+              </Typography>
+              <Typography
+                sx={{ wordBreak: 'break-word' }}
+                component="span"
+                variant="body1"
+                color="textSecondary.main"
+              >
+                adxxx.xxxxxxxxxxxxxxxxxxx@gmail.com
+                <ContentCopyOutlinedIcon
+                  sx={{ color: 'inputFocusColor.main', width: '16px', height: '16px', ml: 0.5 }}
+                />
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Typography
+                component="div"
+                variant="body1"
+                fontWeight="400"
+                color="inputTextColor.main"
+              >
+                Qualification
+              </Typography>
+              <Typography component="span" variant="body1" color="textSecondary.main">
+                MBBS
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Typography
+                component="div"
+                variant="body1"
+                fontWeight="400"
+                color="inputTextColor.main"
+              >
+                Qualification year
+              </Typography>
+              <Typography component="span" variant="body1" color="textSecondary.main">
+                1994
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md={3}>
+              <Typography
+                component="div"
+                variant="body1"
+                fontWeight="400"
+                color="inputTextColor.main"
+              >
+                University Name
+              </Typography>
+              <Typography component="span" variant="body1" color="textSecondary.main">
+                U.Calcutta
+              </Typography>
+            </Grid>
+          </Grid>
+        </Box>
+
+        <Box borderTop={`1px solid ${theme?.palette?.inputBorderColor?.main}`} p={3}>
+          <Typography
+            color="tabHighlightedBackgroundColor.main"
+            component="div"
+            borderRadius={0}
+            pl={2}
+            mb={3}
+            borderLeft={`3px solid ${theme?.palette?.secondary?.main}`}
+          >
+            Additional Qualification :- 1
+          </Typography>
+          <Grid container rowSpacing={{ xs: 2, md: 0 }}>
+            <Grid item xs={12} sm={4} md={3}>
+              <Typography
+                component="div"
+                variant="body1"
+                fontWeight="400"
+                color="inputTextColor.main"
+              >
+                Qualification
+              </Typography>
+              <Typography component="div" variant="body1" color="textSecondary.main">
+                MBBS
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={4} md={3}>
+              <Typography
+                component="div"
+                variant="body1"
+                fontWeight="400"
+                color="inputTextColor.main"
+              >
+                Qualification year
+              </Typography>
+              <Typography component="div" variant="body1" color="textSecondary.main">
+                1994
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={4} md={3}>
+              <Typography
+                component="div"
+                variant="body1"
+                fontWeight="400"
+                color="inputTextColor.main"
+              >
+                University Name
+              </Typography>
+              <Typography component="div" variant="body1" color="textSecondary.main">
+                U.Calcutta
+              </Typography>
+            </Grid>
+          </Grid>
         </Box>
       </Box>
     </Dialog>

@@ -391,6 +391,28 @@ export const searchDoctorResult = [
     registration_year: '2023',
     salutation: 'Mr.',
     state_medical_council: 'Maharashtra Medical Council',
+    registration_date: '04/04/1998',
+    nmr_id: 'IN23192789111',
+    dateOfBirth: '19/07/1979',
+    mobile_no: '9769363879',
+    email_address: 'mdoe@gmail.com',
+    qualitfication: [
+      {
+        qualification: 'MBBS',
+        qualification_year: '2002',
+        university_name: 'University of Pune',
+      },
+      {
+        qualification: 'MD',
+        qualification_year: '2004',
+        university_name: 'University of Pune',
+      },
+      {
+        qualification: 'PhD',
+        qualification_year: '2006',
+        university_name: 'University of Pune',
+      },
+    ],
   },
   {
     full_name: 'John Doe',
@@ -401,6 +423,23 @@ export const searchDoctorResult = [
     registration_year: '2023',
     salutation: 'Mr.',
     state_medical_council: 'Maharashtra Medical Council',
+    registration_date: '02/04/1996',
+    nmr_id: 'IN23192789186',
+    dateOfBirth: '16/04/1977',
+    mobile_no: '9769363859',
+    email_address: 'jdoe@gmail.com',
+    qualitfication: [
+      {
+        qualification: 'MBBS',
+        qualification_year: '2000',
+        university_name: 'University of Mumbai',
+      },
+      {
+        qualification: 'MD',
+        qualification_year: '2002',
+        university_name: 'University of Mumbai',
+      },
+    ],
   },
   {
     full_name: 'Anna Dosh',
@@ -411,5 +450,27 @@ export const searchDoctorResult = [
     registration_year: '2023',
     salutation: 'Ms.',
     state_medical_council: 'Maharashtra Medical Council',
+    registration_date: '21/03/1999',
+    nmr_id: 'IN23192789272',
+    dateOfBirth: '17/09/1980',
+    mobile_no: '9769365879',
+    email_address: 'adosh@gmail.com',
+    qualitfication: [
+      {
+        qualification: 'MBBS',
+        qualification_year: '2003',
+        university_name: 'University of Calcutta',
+      },
+      {
+        qualification: 'MD',
+        qualification_year: '2005',
+        university_name: 'University of Calcutta',
+      },
+      {
+        qualification: 'PhD',
+        qualification_year: '2007',
+        university_name: 'University of Calcutta',
+      },
+    ],
   },
 ];
