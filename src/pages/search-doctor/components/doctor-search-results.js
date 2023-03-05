@@ -4,6 +4,7 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { Box, Container, Grid, TablePagination, Typography, useTheme } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { searchDoctorResult } from '../../../constants/common-data';
 import {
   searchDoctorDetails,
   searchDoctorDetailsById,
@@ -15,6 +16,7 @@ import DoctorProfileModal from './doctor-profile-modal';
 const SearchResults = ({ searchData }) => {
   const { searchDetails } = useSelector((state) => state.searchDoctor);
   const [confirmationModal, setConfirmationModal] = useState(false);
+  const [currentProfile, setCurrentProfile] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(9);
   const [page, setPage] = useState(0);
   const [imagepath, setImagePath] = useState('');
@@ -64,12 +66,13 @@ const SearchResults = ({ searchData }) => {
           Search Results
         </Typography>
         <Typography color="primary.main" component="div" variant="subtitle2">
-          {`${searchDetails?.data?.data?.count}  Matching Records Found `}
+          {`${searchDetails?.data?.data?.count || '0'}  Matching Records Found `}
         </Typography>
         <Box mt={3}>
           <Box className="search-results" mt={3}>
             <Grid container spacing={2}>
-              {searchDetails?.data?.data?.results.map((doctor, index) => {
+              {/* {searchDetails?.data?.data?.results.map((doctor, index) => { */}
+              {searchDoctorResult.map((doctor, index) => {
                 return (
                   <Grid item xs={12} sm={6} md={4} key={`doctor-${index}`}>
                     <Box
@@ -123,7 +126,10 @@ const SearchResults = ({ searchData }) => {
                         </Box>
                       </Box>
                       <Button
-                        onClick={() => handleViewProfile(doctor?.profile_id, doctor?.profile_photo)}
+                        onClick={() => {
+                          setCurrentProfile(doctor);
+                          handleViewProfile(doctor?.profile_id, doctor?.profile_photo);
+                        }}
                         variant="contained"
                         color="secondary"
                         fullWidth
@@ -143,7 +149,7 @@ const SearchResults = ({ searchData }) => {
             <TablePagination
               rowsPerPageOptions={[]}
               component="div"
-              count={searchDetails?.data?.data?.count}
+              count={searchDetails?.data?.data?.count || 0}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
@@ -161,8 +167,12 @@ const SearchResults = ({ searchData }) => {
       {confirmationModal && (
         <DoctorProfileModal
           open={confirmationModal}
-          setOpen={() => setConfirmationModal(false)}
+          setOpen={() => {
+            setCurrentProfile('');
+            setConfirmationModal(false);
+          }}
           imagepath={imagepath}
+          doctorDetails={currentProfile}
         />
       )}
     </Container>

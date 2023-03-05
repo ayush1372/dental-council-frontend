@@ -1,15 +1,17 @@
 import CloseIcon from '@mui/icons-material/Close';
-import { Box, Dialog, Divider, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { Box, Dialog } from '@mui/material';
 
-import { Button } from '../../../ui/core/button/button';
+// import { useSelector } from 'react-redux';
+import { verboseLog } from '../../../config/debug';
+// import { Button } from '../../../ui/core/button/button';
 
-const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
-  const { searchDetailsById } = useSelector((state) => state.searchDoctor);
+const DoctorProfileModal = ({ open, setOpen, doctorDetails, imagepath }) => {
+  // const { searchDetailsById } = useSelector((state) => state.searchDoctor);
 
   const handleClose = () => {
     setOpen(false);
   };
+  verboseLog('Doctor Details Object -> ', doctorDetails);
   return (
     <Dialog
       maxWidth="sm"
@@ -23,7 +25,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
       onClose={handleClose}
     >
       <Box width="100%">
-        <Box bgcolor="grey2.dark" p={3} display="flex" justifyContent="flex-end">
+        <Box bgcolor="grey2.dark" py={6} px={2} display="flex" justifyContent="flex-end">
           <CloseIcon color="white" onClick={handleClose} />
         </Box>
         <Box className="docter-details" px={6}>
@@ -38,17 +40,17 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                 />
               </Box>
             </Box>
-            <Box className="details" width="70%">
+            {/* <Box className="details" width="70%" mt={8}>
               <Typography variant="h2" color="textPrimary.main" component="div">
                 {searchDetailsById?.data?.data?.salutation +
-                  searchDetailsById?.data?.data?.full_name}
+                  searchDetailsById?.data?.data?.full_name || ''}
               </Typography>
               <Typography variant="subtitle1" color="textPrimary.main" component="div">
                 {searchDetailsById?.data?.data?.state_medical_council}
               </Typography>
-            </Box>
+            </Box> */}
           </Box>
-          <Divider />
+          {/* <Divider />
           <Typography variant="subtitle1" color="textPrimary.main" component="div" mt={2} mb={1}>
             View IMR Details
           </Typography>
@@ -161,7 +163,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
             <Button color="secondary" variant="contained">
               Print
             </Button>
-          </Box>
+          </Box> */}
         </Box>
       </Box>
     </Dialog>
