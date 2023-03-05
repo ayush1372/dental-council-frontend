@@ -14,15 +14,16 @@ import successToast from '../../../ui/core/toaster';
 import DoctorProfileModal from './doctor-profile-modal';
 
 const SearchResults = ({ searchData }) => {
-  const { searchDetails } = useSelector((state) => state.searchDoctor);
+  const theme = useTheme();
+  const dispatch = useDispatch();
+
   const [confirmationModal, setConfirmationModal] = useState(false);
   const [currentProfile, setCurrentProfile] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(9);
   const [page, setPage] = useState(0);
   const [imagepath, setImagePath] = useState('');
-  const theme = useTheme();
 
-  const dispatch = useDispatch();
+  const { searchDetails } = useSelector((state) => state.searchDoctor);
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
@@ -118,7 +119,7 @@ const SearchResults = ({ searchData }) => {
                         </Box>
                         <Box>
                           <Typography component="div" variant="body5" color="grey.label">
-                            Year of Info
+                            Year of Registration
                           </Typography>
                           <Typography component="div" variant="body3" color="primary">
                             {doctor?.registration_year}
@@ -137,7 +138,7 @@ const SearchResults = ({ searchData }) => {
                           marginTop: '10px',
                         }}
                       >
-                        <VisibilityOutlinedIcon sx={{ pr: '6px' }} /> View my Profile
+                        <VisibilityOutlinedIcon sx={{ pr: '6px' }} /> View Profile
                       </Button>
                     </Box>
                   </Grid>

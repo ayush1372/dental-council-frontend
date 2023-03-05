@@ -396,7 +396,7 @@ export const searchDoctorResult = [
     dateOfBirth: '19/07/1979',
     mobile_no: '9769363879',
     email_address: 'mdoe@gmail.com',
-    qualitfication: [
+    qualitfications: [
       {
         qualification: 'MBBS',
         qualification_year: '2002',
@@ -410,7 +410,7 @@ export const searchDoctorResult = [
       {
         qualification: 'PhD',
         qualification_year: '2006',
-        university_name: 'University of Pune',
+        university_name: 'University of Mumbai',
       },
     ],
   },
@@ -428,7 +428,7 @@ export const searchDoctorResult = [
     dateOfBirth: '16/04/1977',
     mobile_no: '9769363859',
     email_address: 'jdoe@gmail.com',
-    qualitfication: [
+    qualitfications: [
       {
         qualification: 'MBBS',
         qualification_year: '2000',
@@ -455,7 +455,7 @@ export const searchDoctorResult = [
     dateOfBirth: '17/09/1980',
     mobile_no: '9769365879',
     email_address: 'adosh@gmail.com',
-    qualitfication: [
+    qualitfications: [
       {
         qualification: 'MBBS',
         qualification_year: '2003',
