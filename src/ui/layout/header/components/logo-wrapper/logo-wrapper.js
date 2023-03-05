@@ -135,7 +135,7 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
           {loggedIn ? (
             <Button
               variant="contained"
-              color="grey"
+              color="secondary"
               data-testid="logoutbtn"
               size="medium"
               onClick={handleClickedLogout}
