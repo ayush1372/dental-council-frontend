@@ -1,7 +1,27 @@
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Box, Grid, Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
 
 const ConstantDetails = () => {
+  // const { imr_details } = ConstantDetails || {};
+  // const { nmrIdData } = imr_details || {};
+  // const { personal_details } = ConstantDetails || {};
+  // // const { gender } = personal_details || {};
+  // const { communication_address } = ConstantDetails || {};
+  // const { email, mobile } = communication_address || {};
+  const nmrIdData = useSelector(
+    (state) => state?.doctorUserProfileReducer?.personalDetails?.imr_details?.nmr_id
+  );
+  const personGender = useSelector(
+    (state) => state?.doctorUserProfileReducer?.personalDetails?.personal_details?.gender
+  );
+  const emailId = useSelector(
+    (state) => state?.doctorUserProfileReducer?.personalDetails?.communication_address?.email
+  );
+  const mobileNumber = useSelector(
+    (state) => state?.doctorUserProfileReducer?.personalDetails?.communication_address?.mobile
+  );
+
   return (
     <Box bgcolor="white.main" py={2} px={4} mb={6}>
       <Grid container spacing={2}>
@@ -11,7 +31,7 @@ const ConstantDetails = () => {
               IMR ID
             </Typography>
             <Typography variant="subtitle2" color="primary.main">
-              8904-2728-4688
+              {nmrIdData ? nmrIdData : ''}
             </Typography>
           </Grid>
           <Grid item xs={8} md={4}>
@@ -27,7 +47,7 @@ const ConstantDetails = () => {
               Gender
             </Typography>
             <Typography variant="subtitle2" color="primary.main">
-              Male
+              {personGender ? personGender : ''}
             </Typography>
           </Grid>
         </Grid>
@@ -38,7 +58,7 @@ const ConstantDetails = () => {
             </Typography>
             <Grid>
               <Typography variant="subtitle2" color="primary.main">
-                aarnav.sharma@gmail.com
+                {emailId ? emailId : ''}
                 <CheckCircleIcon color="success" fontSize="width12" sx={{ ml: 1 }} />
               </Typography>
             </Grid>
@@ -48,7 +68,8 @@ const ConstantDetails = () => {
               Mobile Number
             </Typography>
             <Typography variant="subtitle2" color="primary.main">
-              9967453678 <CheckCircleIcon color="success" fontSize="width12" sx={{ ml: 1 }} />
+              {mobileNumber ? mobileNumber : ''}
+              <CheckCircleIcon color="success" fontSize="width12" sx={{ ml: 1 }} />
             </Typography>
           </Grid>
           <Grid item xs={8} md={4}>

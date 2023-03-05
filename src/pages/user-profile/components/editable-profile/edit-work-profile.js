@@ -1,14 +1,20 @@
 import { useEffect, useState } from 'react';
 
-import { Box, Grid, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
+import { Container } from '@mui/system';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { natureOfWork, workStatusOptions } from '../../../../constants/common-data';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
-import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
-import { getDistrictList } from '../../../../store/actions/common-actions';
+import SuccessModalPopup from '../../../../shared/common-modals/success-modal-popup';
+//  import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
+import {
+  getCitiesList,
+  getDistrictList,
+  getSubDistrictsList,
+} from '../../../../store/actions/common-actions';
 import { updateDoctorWorkDetails } from '../../../../store/actions/doctor-user-profile-actions';
 import { getDistricts } from '../../../../store/reducers/common-reducers';
 import { getWorkProfileDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
@@ -16,19 +22,35 @@ import { Button, RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
 import successToast from '../../../../ui/core/toaster';
 
-const EditWorkProfile = ({ handleNext, handleBack }) => {
+const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const [workProof, setWorkProof] = useState([]);
   const [subSpecialities, setSubSpecialities] = useState([]);
-  const { statesList, specialitiesList, districtsList } = useSelector((state) => state?.common);
+  const [successModalPopup, setSuccessModalPopup] = useState(false);
+  const {
+    statesList,
+    specialitiesList,
+    countriesList,
+    districtsList,
+    subDistrictList,
+    citiesList,
+  } = useSelector((state) => state?.common);
   const { workProfileDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { loginData } = useSelector((state) => state?.loginReducer);
   const { work_details, speciality_details, current_work_details } = workProfileDetails || {};
   const { is_user_currently_working, work_nature, work_status } = work_details || {};
   const { broad_speciality, super_speciality: subSpecialityOptions } = speciality_details || {};
   const { address, url, work_organization, facility_id } = current_work_details?.[0] || {};
-  const { state: stateDetails, district: districtDetails, pincode, address_line1 } = address || {};
+  const {
+    state: stateDetails,
+    country,
+    district: districtDetails,
+    sub_district: subDistrictDetails,
+    pincode,
+    address_line1,
+    village,
+  } = address || {};
   const {
     formState: { errors },
     getValues,
@@ -45,7 +67,10 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
       Speciality: broad_speciality?.id,
       workStatus: work_status?.id,
       state: stateDetails?.id,
+      Country: country?.id,
+      Area: village?.id,
       District: districtDetails?.id,
+      SubDistrict: subDistrictDetails?.id,
       workingOrganizationName: work_organization,
       Address: address_line1,
       Pincode: pincode,
@@ -66,18 +91,47 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
     if (stateId) dispatch(getDistrictList(stateId));
   };
 
+  const fetchSubDistricts = (districtId) => {
+    if (districtId) {
+      dispatch(getSubDistrictsList(districtId))
+        .then(() => {})
+        .catch((allFailMsg) => {
+          successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+        });
+    }
+  };
+
+  const fetchCities = (subDistrictId) => {
+    try {
+      dispatch(getCitiesList(subDistrictId)).then(() => {});
+    } catch (allFailMsg) {
+      successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    }
+  };
+
   const changedState = watch('state');
+  const selectedDistrict = watch('District');
+  const selectedSubDistrict = watch('SubDistrict');
 
   useEffect(() => {
     fetchDisricts(changedState);
   }, [changedState]);
+
+  useEffect(() => {
+    fetchSubDistricts(selectedDistrict);
+  }, [selectedDistrict]);
+
+  useEffect(() => {
+    fetchCities(selectedSubDistrict);
+  }, [selectedSubDistrict]);
+
   const handleBackButton = () => {
     handleBack();
   };
 
-  const onHandleOptionNext = () => {
-    handleSave();
-  };
+  // const onHandleOptionNext = () => {
+  //   handleSave();
+  // };
   const handleselection = (event) => {
     setValue(event.target.name, event.target.value, true);
   };
@@ -135,6 +189,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
     const updatedDoctorProfile = { ...workProfileDetails, ...stateObj };
 
     dispatch(getWorkProfileDetails(JSON.parse(JSON.stringify(updatedDoctorProfile))));
+    fetchUpdateDoctorWorkDetails(workProfileDetails);
   };
 
   const fetchUpdateDoctorWorkDetails = (workDetails) => {
@@ -144,6 +199,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
 
     dispatch(updateDoctorWorkDetails(formData, loginData.data.profile_id))
       .then(() => {
+        setSuccessModalPopup(true);
         handleNext();
       })
       .catch((allFailMsg) => {
@@ -151,24 +207,19 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
       });
   };
 
-  const onHandleOption = () => {
-    onHandleOptionNext();
-    fetchUpdateDoctorWorkDetails(workProfileDetails);
-  };
+  // const onHandleOption = () => {
+  //   onHandleOptionNext();
+  //   fetchUpdateDoctorWorkDetails(workProfileDetails);
+  // };
 
   return (
-    <Box
-      boxShadow={1}
-      sx={{
-        padding: {
-          xs: '0px 10px 10px 10px',
-          md: '0px 41px 44px 41px',
-        },
-      }}
-    >
-      <Grid container spacing={2} mt={2}>
+    <Container>
+      <Typography variant="h2" color="textPrimary.main">
+        Work Details
+      </Typography>
+      <Grid container mt={2}>
         {/* layer 1 */}
-        <Grid container item spacing={2}>
+        {/* <Grid container item spacing={2}>
           <Grid item xs={12}>
             <Typography
               bgcolor="grey1.light"
@@ -216,10 +267,10 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               }}
             />
           </Grid>
-        </Grid>
+        </Grid> */}
         {/* layer 2 */}
-        <Grid container item spacing={2}>
-          <Grid item xs={12}>
+        <Grid container>
+          {/* <Grid item xs={12}>
             <Typography
               bgcolor="grey1.light"
               p={1}
@@ -229,7 +280,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
             >
               Work Details*
             </Typography>
-          </Grid>
+          </Grid> */}
           <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
               Are you currently working
@@ -272,8 +323,6 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               options={createSelectFieldData(natureOfWork)}
             />
           </Grid>
-        </Grid>
-        <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={4} lg={12}>
             <Typography variant="subtitle2" color="inputTextColor.main">
               Choose work status
@@ -293,8 +342,9 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
             />
           </Grid>
         </Grid>
+
         <Grid container item spacing={2} mt={1}>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={12}>
             <Typography variant="subtitle2" color="inputTextColor.main">
               Upload the proof of work for govt.such as Appointment letter, Last pay slip, Recent
               transfer order etc.
@@ -327,7 +377,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               Current Work Details*
             </Typography>
           </Grid>
-          <Grid item xs={12} md={4}>
+          {/* <Grid item xs={12} md={4}>
             <RadioGroup
               onChange={handleselection}
               name={'selection'}
@@ -345,6 +395,179 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               ]}
               required={true}
               error={errors.selection?.message}
+            />
+          </Grid> */}
+        </Grid>
+        <Grid container item spacing={2} mt={1}>
+          <Grid item xs={12} md={5} lg={4}>
+            <Typography variant="subtitle2" color="inputTextColor.main">
+              Name of the organization where you work
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+            </Typography>
+
+            <TextField
+              variant="outlined"
+              name={'workingOrganizationName'}
+              placeholder="Name Of The Organization"
+              fullWidth
+              defaultValue={getValues().workingOrganizationName}
+              {...register('workingOrganizationName', {
+                maxLength: {
+                  value: 300,
+                  message: 'Length should be less than 300.',
+                },
+              })}
+              error={errors.workingOrganizationName?.message}
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="inputTextColor.main">
+              Organization Type
+            </Typography>
+            <TextField
+              variant="outlined"
+              name={'organizationType'}
+              placeholder="Organization Type"
+              fullWidth
+              defaultValue={getValues().organizationType}
+              {...register('organizationType', {
+                maxLength: {
+                  value: 100,
+                  message: 'organizationType Is Reuired.',
+                },
+              })}
+              error={errors.organizationType?.message}
+            />
+          </Grid>
+        </Grid>
+        <Grid container item spacing={2} mt={1}>
+          <Grid item xs={12} md={8}>
+            <Typography variant="subtitle2" color="inputTextColor.main">
+              Address
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+            </Typography>
+            <TextField
+              variant="outlined"
+              name={'Address'}
+              required={true}
+              fullWidth
+              placeholder="Address"
+              defaultValue={getValues().Address}
+              {...register('Address', {
+                required: 'Missing field',
+                maxLength: {
+                  value: 300,
+                  message: 'Should be less than 300 characters',
+                },
+              })}
+              error={errors.Address?.message}
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="inputTextColor.main">
+              Street
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+            </Typography>
+            <TextField
+              variant="outlined"
+              name={'Street'}
+              required={true}
+              fullWidth
+              placeholder="Street"
+              defaultValue={getValues().Address}
+              {...register('Street', {
+                required: 'Missing field',
+                maxLength: {
+                  value: 300,
+                  message: 'Should be less than 300 characters',
+                },
+              })}
+              error={errors.Address?.message}
+            />
+          </Grid>
+        </Grid>
+
+        <Grid container item spacing={2} mt={1}>
+          <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="inputTextColor.main">
+              Landmark
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+            </Typography>
+            <TextField
+              variant="outlined"
+              name={'Landmark'}
+              required={true}
+              fullWidth
+              placeholder="Landmark"
+              defaultValue={getValues().Address}
+              {...register('Landmark', {
+                required: 'Missing field',
+                maxLength: {
+                  value: 300,
+                  message: 'Should be less than 300 characters',
+                },
+              })}
+              error={errors.Address?.message}
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="inputTextColor.main">
+              Locality
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+            </Typography>
+            <TextField
+              variant="outlined"
+              name={'Locality'}
+              required={true}
+              fullWidth
+              placeholder="Locality"
+              defaultValue={getValues().Address}
+              {...register('Locality', {
+                required: 'Missing field',
+                maxLength: {
+                  value: 300,
+                  message: 'Should be less than 300 characters',
+                },
+              })}
+              error={errors.Address?.message}
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Select
+              fullWidth
+              error={errors.Country?.message}
+              name="Country"
+              label="Country"
+              defaultValue={getValues().Country}
+              required={true}
+              {...register('Country', {
+                required: 'Country is required',
+              })}
+              options={
+                countriesList?.length > 0
+                  ? createSelectFieldData(
+                      countriesList?.filter(function (item) {
+                        return item.name === 'India';
+                      })
+                    )
+                  : []
+              }
+              MenuProps={{
+                style: {
+                  maxHeight: 250,
+                  maxWidth: 130,
+                },
+              }}
             />
           </Grid>
         </Grid>
@@ -387,91 +610,55 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               options={createSelectFieldData(districtsList)}
             />
           </Grid>
-          <Grid item xs={12} md={5} lg={4}>
+          <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
-              Name of the organization where you work
+              Sub District
               <Typography component="span" color="error.main">
                 *
               </Typography>
             </Typography>
 
-            <TextField
-              variant="outlined"
-              name={'workingOrganizationName'}
-              placeholder="Name Of The Organization"
+            <Select
               fullWidth
-              defaultValue={getValues().workingOrganizationName}
-              {...register('workingOrganizationName', {
-                maxLength: {
-                  value: 300,
-                  message: 'Length should be less than 300.',
+              error={errors.SubDistrict?.message}
+              name="SubDistrict"
+              placeholder="Sub District"
+              defaultValue={getValues().SubDistrict}
+              {...register('SubDistrict')}
+              options={createSelectFieldData(subDistrictList, 'iso_code')}
+              MenuProps={{
+                style: {
+                  maxHeight: 250,
+                  maxWidth: 130,
                 },
-              })}
-              error={errors.workingOrganizationName?.message}
+              }}
             />
           </Grid>
         </Grid>
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
-              Organization Type
-            </Typography>
-            <TextField
-              variant="outlined"
-              name={'organizationType'}
-              placeholder="Organization Type"
-              fullWidth
-              defaultValue={getValues().organizationType}
-              {...register('organizationType', {
-                maxLength: {
-                  value: 100,
-                  message: 'organizationType Is Reuired.',
-                },
-              })}
-              error={errors.organizationType?.message}
-            />
-          </Grid>
-
-          {/* <Grid item xs={6} md={4}>
-              <TextField
-                variant="outlined"
-                name={'Department'}
-                label={'Department'}
-                fullWidth
-                placeholder="Department"
-                defaultValue={getValues().Department}
-                {...register('Department', {
-                  maxLength: {
-                    value: 300,
-                    message: 'Department Is Reuired.',
-                  },
-                })}
-                error={errors.Department?.message}
-              />
-            </Grid> */}
-
-          <Grid item xs={12} md={4}>
-            <Typography variant="subtitle2" color="inputTextColor.main">
-              Address
+              City/Town/Village
               <Typography component="span" color="error.main">
                 *
               </Typography>
             </Typography>
-            <TextField
-              variant="outlined"
-              name={'Address'}
-              required={true}
+            <Select
               fullWidth
-              placeholder="Address"
-              defaultValue={getValues().Address}
-              {...register('Address', {
-                required: 'Missing field',
-                maxLength: {
-                  value: 300,
-                  message: 'Should be less than 300 characters',
-                },
+              error={errors.Area?.message}
+              name="Area"
+              defaultValue={getValues().Area}
+              required={true}
+              {...register('Area', {
+                required: 'City/Town/Village is required',
               })}
-              error={errors.Address?.message}
+              options={createSelectFieldData(citiesList)}
+              MenuProps={{
+                style: {
+                  maxHeight: 250,
+                  maxWidth: 130,
+                },
+              }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -500,6 +687,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
             />
           </Grid>
         </Grid>
+
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
@@ -526,25 +714,7 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
       </Grid>
       <Grid container display="flex" justifyContent="space-between" alignItems="center" mt={5}>
         <Grid item xs={12} md={8} lg={6}>
-          <Button
-            onClick={handleBackButton}
-            color="grey"
-            variant="contained"
-            sx={{
-              margin: {
-                xs: '5px 0',
-                md: '0',
-              },
-              width: {
-                xs: '100%',
-                md: 'fit-content',
-              },
-            }}
-          >
-            {t('Back')}
-          </Button>
-        </Grid>
-        <Grid item xs={12} md="auto" display="flex" justifyContent="end" lg={4}>
+          {/* // onClick={handleSubmit(onHandleOption)} */}
           <Button
             onClick={handleSubmit(handleSave)}
             variant="outlined"
@@ -561,10 +731,28 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
               },
             }}
           >
-            {t('Save')}
+            {t('Submit')}
+          </Button>
+          <Button
+            onClick={handleBackButton}
+            color="grey"
+            variant="contained"
+            sx={{
+              margin: {
+                xs: '5px 0',
+                md: '0',
+              },
+              width: {
+                xs: '100%',
+                md: 'fit-content',
+              },
+            }}
+          >
+            {t('Cancel')}
           </Button>
         </Grid>
-        <Grid item xs={12} md="auto" display="flex" justifyContent="end" lg={2}>
+
+        {/* <Grid item xs={12} md="auto" display="flex" justifyContent="end" lg={2}>
           <Button
             onClick={handleSubmit(onHandleOption)}
             variant="contained"
@@ -582,9 +770,17 @@ const EditWorkProfile = ({ handleNext, handleBack }) => {
           >
             {t('Save & Next')}
           </Button>
-        </Grid>
+        </Grid> */}
       </Grid>
-    </Box>
+
+      {showSuccessModal && (
+        <SuccessModalPopup
+          open={successModalPopup}
+          setOpen={() => setSuccessModalPopup(false)}
+          text={'Your Work Details has been successfully changed'}
+        />
+      )}
+    </Container>
   );
 };
 
