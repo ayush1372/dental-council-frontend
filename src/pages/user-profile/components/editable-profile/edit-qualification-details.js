@@ -19,7 +19,6 @@ const EditQualificationDetails = ({
   fields,
   register,
   unregister,
-  update,
   remove,
   watch,
   qualificationFilesData,
@@ -31,10 +30,9 @@ const EditQualificationDetails = ({
     (state) => state?.common
   );
 
-  const handleRegistration = (event) => {
-    fields[index][event.target.name] = event.target.value;
-    update(index, { ...fields[index] });
-  };
+  // const handleRegistration = (event) => {
+  //   setValue(`qualification.${index}.${event.target.name}`, event.target.value);
+  // };
 
   const handleQualificationFrom = (event) => {
     setValue(event.target.name, event.target.value);
@@ -219,17 +217,17 @@ const EditQualificationDetails = ({
       )}
 
       <Grid container item spacing={2} display="flex" alignItems="center">
-        <Grid item xs={2}>
+        <Grid item xs={3}>
           <Typography color="grey2.lighter" variant="body1">
-            QUALIFICATION
+            BASIC QUALIFICATION
           </Typography>
         </Grid>
-        <Grid item xs={10}>
+        <Grid item xs={9}>
           <Divider />
         </Grid>
       </Grid>
       <Grid container item spacing={2}>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={5} xl={4}>
           {/* {getValues()[qualification[0]] !== undefined && ( */}
           <Select
             fullWidth
@@ -251,7 +249,7 @@ const EditQualificationDetails = ({
           />
           {/* )} */}
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={3} xl={4}>
           {/* {getValues()[qualification[1]] !== undefined && ( */}
           <Select
             fullWidth
@@ -281,7 +279,7 @@ const EditQualificationDetails = ({
           />
           {/* )} */}
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={4} xl={4}>
           <Select
             fullWidth
             error={errors?.qualification?.[index]?.state?.message}
@@ -303,28 +301,6 @@ const EditQualificationDetails = ({
         </Grid>
       </Grid>
       <Grid container item spacing={2}>
-        <Grid item xs={12} md={4}>
-          {/* {getValues()[`qualification[${index}].college`] !== undefined && ( */}
-          <Select
-            fullWidth
-            error={errors?.qualification?.[index]?.college?.message}
-            name="College"
-            label="Name of the college"
-            defaultValue={fields[index].college}
-            required={true}
-            {...register(`qualification[${index}].college`, {
-              required: 'college is required',
-            })}
-            options={createSelectFieldData(colleges)}
-            MenuProps={{
-              style: {
-                maxHeight: 250,
-                maxWidth: 130,
-              },
-            }}
-          />
-          {/* )} */}
-        </Grid>
         <Grid item xs={12} md={4}>
           {/* {getValues()[qualification[4]] !== undefined && ( */}
           <Select
@@ -348,37 +324,62 @@ const EditQualificationDetails = ({
           {/* )} */}
         </Grid>
         <Grid item xs={12} md={4}>
+          {/* {getValues()[`qualification[${index}].college`] !== undefined && ( */}
           <Select
             fullWidth
-            error={errors?.qualification?.[index]?.month?.message}
-            name="Month"
-            label="Month of awarding Degree/Diploma"
-            defaultValue={fields[index].month}
-            {...register(`qualification[${index}].month`, {
-              required: 'awarding is required',
+            error={errors?.qualification?.[index]?.college?.message}
+            name="College"
+            label="Name of the college"
+            defaultValue={fields[index].college}
+            required={true}
+            {...register(`qualification[${index}].college`, {
+              required: 'college is required',
             })}
-            options={monthsData}
+            options={createSelectFieldData(colleges)}
+            MenuProps={{
+              style: {
+                maxHeight: 250,
+                maxWidth: 130,
+              },
+            }}
           />
+          {/* )} */}
+        </Grid>
+        <Grid container item xs={12} md={8} xl={4} columnSpacing={2}>
+          <Typography pl={2}>Month & Year of awarding Degree/Diploma</Typography>
+          <Grid item xs={12} md={6} mb={{ xs: 2, md: 0 }}>
+            <Select
+              fullWidth
+              error={errors?.qualification?.[index]?.month?.message}
+              name="Month"
+              // label="Month & Year of awarding Degree/Diploma"
+              defaultValue={fields[index].month}
+              {...register(`qualification[${index}].month`, {
+                required: 'awarding is required',
+              })}
+              options={monthsData}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TextField
+              variant="outlined"
+              name={'Year'}
+              // label={'Year of awarding Degree/Diploma'}
+              required={true}
+              placeHolder={'Year of awarding'}
+              fullWidth
+              error={errors?.qualification?.[index]?.year?.message}
+              defaultValue={fields[index].year}
+              {...register(`qualification[${index}].year`, {
+                required: 'awarding is Required',
+                pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
+              })}
+            />
+          </Grid>
         </Grid>
       </Grid>
-      <Grid container item spacing={2} mt={1}>
-        <Grid item xs={12} md={4}>
-          <TextField
-            variant="outlined"
-            name={'Year'}
-            label={'Year of awarding Degree/Diploma'}
-            required={true}
-            placeHolder={'Year of awarding'}
-            fullWidth
-            error={errors?.qualification?.[index]?.year?.message}
-            defaultValue={fields[index].year}
-            {...register(`qualification[${index}].year`, {
-              required: 'awarding is Required',
-              pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
-            })}
-          />
-        </Grid>
-        <Grid item xs={12} md={8}>
+
+      {/* <Grid item xs={12} md={8}>
           <RadioGroup
             onChange={handleRegistration}
             name={'nameindegree'}
@@ -398,8 +399,8 @@ const EditQualificationDetails = ({
             required={true}
             error={errors?.qualification?.[index]?.nameindegree?.message}
           />
-        </Grid>
-      </Grid>
+        </Grid> */}
+
       <Grid container item spacing={2} mt={1}>
         <Grid item xs={12}>
           <UploadFile

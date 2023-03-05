@@ -6,7 +6,7 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getInitiateWorkFlow } from '../../../../store/actions/common-actions';
+// import { getInitiateWorkFlow } from '../../../../store/actions/common-actions';
 import {
   getWorkProfileDetailsData,
   updateDoctorRegistrationDetails,
@@ -45,21 +45,19 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   );
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { loginData } = useSelector((state) => state?.loginReducer);
-
+  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const { registration_detail_to } = registrationDetails || {};
   const {
-    registration_detail_to: {
-      registration_date,
-      registration_number,
-      state_medical_council: { name: smcName },
-      is_renewable,
-      renewable_registration_date,
-      is_name_change,
-    },
-    request_id,
-  } =
-    registrationDetails && Object.values(registrationDetails).length > 3
-      ? registrationDetails
-      : { registration_detail_to: { state_medical_council: {} } };
+    registration_date,
+    registration_number,
+    state_medical_council,
+    is_renewable,
+    renewable_registration_date,
+    is_name_change,
+  } = registration_detail_to || {};
+
+  const smcName = state_medical_council?.name || '';
+
   const {
     formState: { errors },
     getValues,
@@ -73,24 +71,19 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     mode: 'onChange',
     defaultValues: {
       RegisteredWithCouncil:
-        loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? smcName : '',
+        loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? smcName : '',
       RegistrationNumber:
-        loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? registration_number : '',
+        loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? registration_number : '',
       RegistrationDate:
-        loggedInUserType === 'SMC'
-          ? ''
-          : loggedInUserType === 'Doctor'
+        loggedInUserType === 'SMC' || loggedInUserType === 'Doctor'
           ? registration_date?.length > 10
             ? registration_date?.substring(0, 10)
             : registration_date
           : '',
 
-      registration:
-        loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? is_renewable : '',
+      registration: loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? is_renewable : '',
       RenewalDate:
-        loggedInUserType === 'SMC'
-          ? ''
-          : loggedInUserType === 'Doctor'
+        loggedInUserType === 'SMC' || loggedInUserType === 'Doctor'
           ? renewable_registration_date?.length > 10
             ? renewable_registration_date?.substring(0, 10)
             : renewable_registration_date
@@ -116,11 +109,13 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     const registrationDetailsValues = JSON.parse(JSON.stringify(registrationDetails));
     registrationDetailsValues.registration_detail_to.registration_date = RegistrationDate;
     registrationDetailsValues.registration_detail_to.registration_number = RegistrationNumber;
+    registrationDetailsValues.registration_detail_to.state_medical_council = {};
     registrationDetailsValues.registration_detail_to.state_medical_council.name =
       RegisteredWithCouncil;
     registrationDetailsValues.registration_detail_to.is_renewable = registration;
     registrationDetailsValues.registration_detail_to.renewable_registration_date = RenewalDate;
     registrationDetailsValues.registration_detail_to.is_name_change = registrationCertificate;
+    registrationDetailsValues.hp_profile_id = personalDetails.hp_profile_id;
     // this below code is storing qualification details
     const { qualification } = getValues();
     let updatedObj = [];
@@ -149,37 +144,26 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   };
 
   const fetchUpdateDoctorRegistrationDetails = (registrationDetails) => {
-    const getInitiateWorkFlowHeader = {
-      application_type_id: 1,
-      actor_id: 2,
-      action_id: 3,
-      hp_profile_id: loginData.data.profile_id,
-      profile_status: 1,
-      request_id: request_id,
-    };
-    dispatch(getInitiateWorkFlow(getInitiateWorkFlowHeader))
-      .then(() => {
-        const formData = new FormData();
-        formData.append('data', JSON.stringify(registrationDetails));
-        formData.append('proof', Object.values(qualificationFilesData)?.[0]?.[0].file);
-        formData.append('certificate', registrationFileData[0].file);
-        dispatch(updateDoctorRegistrationDetails(formData, loginData.data.profile_id))
-          .then(() => {
-            dispatch(getWorkProfileDetailsData(loginData.data.profile_id))
-              .then(() => {
-                handleNext();
-              })
-              .catch((allFailMsg) => {
-                successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-              });
-          })
-          .catch((allFailMsg) => {
-            successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-          });
-      })
-      .catch((allFailMsg) => {
-        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-      });
+    const formData = new FormData();
+    formData.append('data', JSON.stringify(registrationDetails));
+    formData.append('proof', Object.values(qualificationFilesData)?.[0]?.[0].file);
+    formData.append('certificate', registrationFileData[0].file);
+    dispatch(
+      updateDoctorRegistrationDetails(
+        formData,
+        loggedInUserType === 'Doctor'
+          ? loginData?.data?.profile_id
+          : loggedInUserType === 'SMC' && personalDetails?.hp_profile_id
+      )
+    ).then(() => {
+      dispatch(getWorkProfileDetailsData(loginData?.data?.profile_id))
+        .then(() => {
+          handleNext();
+        })
+        .catch((allFailMsg) => {
+          successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+        });
+    });
   };
 
   const onHandleOptionNext = () => {
@@ -214,6 +198,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     obj.qualificationfrom = details?.qualification_from;
     obj.month = details?.qualification_month;
     obj.nameindegree = details?.is_name_change;
+
     update(0, { ...obj });
   }, [registrationDetails]);
   return (
@@ -285,10 +270,12 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               defaultValue={getValues().RegistrationNumber}
               sx={{
                 input: {
-                  backgroundColor: 'grey2.main',
+                  backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
                 },
               }}
-              InputProps={{ readOnly: true }}
+              InputProps={{
+                readOnly: loggedInUserType === 'SMC' ? false : true,
+              }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -375,7 +362,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           </Grid>
         </Grid>
         <Grid container item spacing={2} mt={1}>
-          <Grid item xs={12} md={4}>
+          {/* <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
               Is your name in registration certificate, different from your name in Aadhaar?
               <Typography component="span" color="error.main">
@@ -401,7 +388,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               required={true}
               error={errors.registrationCertificate?.message}
             />
-          </Grid>
+          </Grid> */}
         </Grid>
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={6}>
@@ -453,7 +440,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               unregister={unregister}
               qualificationFilesData={qualificationFilesData}
               handleQualificationFilesData={handleQualificationFilesData}
-              update={update}
             />
           );
         })}

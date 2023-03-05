@@ -206,7 +206,6 @@ export function CollegeDean({ showPage, updateShowPage }) {
           })}
         />
       </Grid>
-
       <Grid container item spacing={2} mt={{ lg: 1 }}>
         <Grid item xs={12} sm="auto">
           <Button fullWidth variant="contained" color="secondary" onClick={handleSubmit(onSubmit)}>
@@ -225,6 +224,15 @@ export function CollegeDean({ showPage, updateShowPage }) {
           >
             {t('Cancel')}
           </Button>
+          {successModalPopup && (
+            <SuccessModalPopup
+              open={successModalPopup}
+              setOpen={() => setSuccessModalPopup(false)}
+              text={
+                'You have successfully registered your College Dean. Defined credentials have been sent on the Email ID and Phone number you registered.'
+              }
+            />
+          )}
         </Grid>
       </Grid>
     </Grid>

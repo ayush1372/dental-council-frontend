@@ -26,7 +26,9 @@ const initialState = {
   councilNames: { data: [], isLoading: Boolean(true), isError: false },
   trackStatusData: { data: [], isLoading: Boolean(true), isError: false },
   initiateWorkFlow: { data: [], isLoading: Boolean(true), isError: false },
+  activateLicenseList: { data: [], isLoading: Boolean(true), isError: false },
   trackApplicationTableData: { data: [], isLoading: Boolean(true), isError: false },
+  changePasswordData: { data: [], isLoading: Boolean(true), isError: false },
 };
 
 export const CommonActivity = createSlice({
@@ -99,8 +101,14 @@ export const CommonActivity = createSlice({
     getInitiateWorkFlow: (state, action) => {
       state.initiateWorkFlow = action.payload;
     },
+    getActivateLicense: (state, action) => {
+      state.activateLicenseList = action.payload;
+    },
     updateTrackApplicationTableData: (state, action) => {
       state.trackApplicationTableData.data = action.payload;
+    },
+    setNewPassword: (state, action) => {
+      state.changePasswordData = action.payload;
     },
   },
 });

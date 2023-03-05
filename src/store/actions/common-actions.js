@@ -1,8 +1,8 @@
 import { API } from '../../api/api-endpoints';
-// import { verboseLog } from '../../config/debug';
-import { GET, PATCH, POST } from '../../constants/requests';
+import { GET, PATCH, POST, PUT } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import {
+  getActivateLicense,
   getCities,
   getColleges,
   getCountries,
@@ -15,6 +15,7 @@ import {
   getUniversities,
   searchTrackStatusData,
   sendNotificationData,
+  setNewPassword,
   updateCouncilNames,
   verifyNotificationData,
 } from '../reducers/common-reducers';
@@ -215,6 +216,7 @@ export const verifyNotificationOtp = (otpValue) => async (dispatch) => {
     useAxiosCall({
       method: POST,
       url: API.common.verifyOtp,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
       data: otpValue,
     })
       .then((response) => {
@@ -227,12 +229,11 @@ export const verifyNotificationOtp = (otpValue) => async (dispatch) => {
   });
 };
 
-export const trackStatus = (trackData) => async (dispatch) => {
+export const trackStatus = (body) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,
-      url: API.common.trackStatus,
-      data: trackData,
+      url: `${API.common.trackStatus}?pageNo=${body.pageNo}&offset=${body.offset}&registrationNo=${body?.registration_no}`,
     })
       .then((response) => {
         dispatch(searchTrackStatusData(response));
@@ -242,11 +243,114 @@ export const trackStatus = (trackData) => async (dispatch) => {
       });
   });
 };
+
 export const getInitiateWorkFlow = (body) => async () => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: PATCH,
       url: API.DoctorUserProfileData.initiateWorkFlow,
+      data: body,
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const changePasswordData = (data) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.common.changePassword,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      data: data,
+    })
+      .then((response) => {
+        dispatch(setNewPassword(response));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const getActivateLicenseList = (body) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: GET,
+      url: `${API.common.activateLicense}?pageNo=${body.pageNo}&offset=${body.offset}&search=${body.search}`,
+      data: body,
+    })
+      .then((response) => {
+        dispatch(getActivateLicense(response));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const createReActivateLicense = (body) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.common.activateLicense,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      data: body,
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const reActivateLicenseStatus = (body) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: PATCH,
+      url: API.common.healthProfessionalApplicationStatus,
+      data: body,
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const suspendDoctor = (body) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.common.suspend,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      data: body,
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const enableUserNotification = (body) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: PUT,
+      url: API.common.enableNotification,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
       data: body,
     })
       .then((response) => {

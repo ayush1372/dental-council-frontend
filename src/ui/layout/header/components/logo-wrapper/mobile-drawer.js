@@ -5,7 +5,7 @@ import { Box, Drawer, Grid } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { colgTabs, doctorTabs } from '../../../../../helpers/components/sidebar-drawer-list-item';
-import { sideBarTabs } from '../../../../../helpers/functions/common-functions';
+import { sideBarTabs, userGroupType } from '../../../../../helpers/functions/common-functions';
 import ProfileImage from '../../../../../pages/profile/components/profile-image/profile-image';
 import SideDrawerList from '../../../../../shared/sidebar-drawer/sidebar-drawer-list';
 import { changeUserActiveTab } from '../../../../../store/reducers/common-reducers';
@@ -17,11 +17,13 @@ export const MobileDrawer = () => {
   const { collegeData } = useSelector((state) => state.college);
   const { smcProfileData } = useSelector((state) => state.smc);
   const { nbeData } = useSelector((state) => state.nbe);
-  const { doctorUserProfile } = useSelector((state) => state.doctorUserProfileReducer);
+  const { personalDetails } = useSelector((state) => state.doctorUserProfileReducer);
 
   const dispatch = useDispatch();
   const loggedIn = useSelector((state) => state.common.isloggedIn);
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  const { loginData } = useSelector((state) => state.loginReducer);
+  const userType = userGroupType(loginData?.data?.user_group_id);
 
   const [state, setState] = useState({
     left: false,
@@ -82,7 +84,7 @@ export const MobileDrawer = () => {
                     <ProfileImage
                       name={
                         loggedInUserType === 'Doctor'
-                          ? doctorUserProfile?.data?.name
+                          ? personalDetails?.personal_details?.full_name
                           : loggedInUserType === 'College'
                           ? collegeData?.data?.name
                           : loggedInUserType === 'NMC'
@@ -98,7 +100,7 @@ export const MobileDrawer = () => {
 
                   <SideDrawerList
                     open={anchor}
-                    DrawerOptions={sideBarTabs(loggedInUserType)}
+                    DrawerOptions={sideBarTabs(userType)}
                     handleSwitch={setActiveTab}
                     ActiveOption={isActiveTab}
                   />

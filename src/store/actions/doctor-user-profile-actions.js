@@ -65,11 +65,12 @@ export const getWorkProfileDetailsData = (doctor_profile_id) => async (dispatch)
   });
 };
 
-export const getNewDoctorUserProfileData = () => async (dispatch) => {
+export const getNewDoctorPersonalDetailsData = (body) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: POST,
-      url: API.DoctorUserProfileData.personalDetails,
+      url: API.DoctorUserProfileData.createPersonalDetails,
+      data: body,
     })
       .then((response) => {
         dispatch(getPersonalDetails(response.data));
@@ -185,6 +186,21 @@ export const getEsignFormDetails = (data) => async (dispatch) => {
     })
       .then((response) => {
         dispatch(getEsignDetails(response));
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+export const updateProfileConsent = (payload) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.DoctorUserProfileData.profileConsent,
+      headers: { 'Content-Type': 'application/json' },
+      data: payload,
+    })
+      .then((response) => {
         return resolve(response);
       })
       .catch((error) => {

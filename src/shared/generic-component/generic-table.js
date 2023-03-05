@@ -35,13 +35,16 @@ GenericTable.propTypes = {
 export default function GenericTable(props) {
   const { userActiveTab } = useSelector((state) => state.common);
   const tableCellWidth = Math.floor(window.innerWidth / props.tableHeader.length) + 'px';
-  const { order, orderBy, onRequestSort, page, rowsPerPage, customPopupOptions } = props;
+  const { order, orderBy, onRequestSort, customPopupOptions } = props;
   const [selected, setSelected] = useState('');
   const [confirmationModal, setConfirmationModal] = useState(false);
-  const selectionChangeHandler = (event) => {
+  const [selectedSuspendLicenseProfile, setSelectedSuspendLicenseProfile] = useState();
+
+  const selectionChangeHandler = (event, row) => {
     const { myValue } = event.currentTarget.dataset;
     setSelected(myValue);
     setConfirmationModal(true);
+    setSelectedSuspendLicenseProfile(row);
   };
   const [popUpOptions] = useState([
     {
@@ -56,7 +59,7 @@ export default function GenericTable(props) {
     },
   ]);
   function stableSort(array, comparator) {
-    const stabilizedThis = array?.map((el, index) => [el, index]);
+    const stabilizedThis = array?.length > 1 ? array?.map((el, index) => [el, index]) : [];
     stabilizedThis?.sort((a, b) => {
       const order = comparator(a[0], b[0]);
       if (order !== 0) {
@@ -109,6 +112,7 @@ export default function GenericTable(props) {
         selected={selected}
         confirmationModal={confirmationModal}
         handleClose={handleClose}
+        selectedSuspendLicenseProfile={selectedSuspendLicenseProfile}
       />
       <Table sx={{ minWidth: '650px' }} aria-label="table">
         <TableHead>
@@ -148,7 +152,7 @@ export default function GenericTable(props) {
         </TableHead>
         <TableBody>
           {stableSort(props?.data, getComparator(order, orderBy))
-            ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            // ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             ?.map((row, rowIndex) => (
               <TableRow
                 maxWidth={'100px'}
@@ -197,7 +201,6 @@ export default function GenericTable(props) {
                               <Button
                                 endIcon={<MoreVertSharpIcon />}
                                 variant="contained"
-                                // color="white"
                                 {...bindTrigger(popupState)}
                                 sx={{
                                   width: 'max-content',
@@ -214,7 +217,10 @@ export default function GenericTable(props) {
                                     <MenuItem
                                       key={option.dataValue}
                                       data-my-value={option.dataValue}
-                                      onClick={option?.onClick || selectionChangeHandler}
+                                      onClick={(e) =>
+                                        option?.onClick(e, row, option.dataValue) ||
+                                        selectionChangeHandler(e, row)
+                                      }
                                     >
                                       {option.keyName}
                                     </MenuItem>

@@ -55,7 +55,7 @@ const CaptchaComponent = ({ captchaResult }) => {
           border={1}
           borderColor={theme.palette.grey.dark}
           width={{ xs: '100%', sm: '50%' }}
-          pb="20px"
+          py="10px"
           borderRadius="5px"
         >
           {captchaEnabledFlag?.isLoading ? (

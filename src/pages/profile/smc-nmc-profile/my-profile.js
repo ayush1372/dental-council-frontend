@@ -11,6 +11,7 @@ import {
 } from '../../../constants/common-data';
 import CircularLoader from '../../../shared/circular-loader/circular-loader';
 import { Button } from '../../../ui/core';
+import NbeEditProfile from '../smc-nmc-editprofiles/nbe-editprofiles';
 import NmcEditProfile from '../smc-nmc-editprofiles/nmc-editprofiles';
 import SmcEditProfile from '../smc-nmc-editprofiles/smc-editprofile';
 
@@ -88,6 +89,8 @@ const MyProfile = (props) => {
             <Box>
               {props.userType === 'SMC' ? (
                 <SmcEditProfile sentDetails={sentDetails} />
+              ) : props.userType === 'NBE' ? (
+                <NbeEditProfile sentDetails={sentDetails} />
               ) : (
                 <NmcEditProfile sentDetails={sentDetails} />
               )}

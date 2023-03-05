@@ -1,13 +1,16 @@
 import { Box, Divider, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
+import { sendNotificationOtp } from '../../../store/actions/common-actions';
 import { Button, TextField } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 
-const ForgotPassword = ({ handleConfirmPassword }) => {
+const ForgotPassword = ({ handleConfirmPassword, otpData }) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const doctorTitle = 'Enter NMR ID/User ID/Reg ID/Email ID';
   const userTitle = 'Enter User ID/Email ID';
   const { state } = useLocation();
@@ -37,7 +40,20 @@ const ForgotPassword = ({ handleConfirmPassword }) => {
     } else {
       handleSubmit()();
     }
+    let otpValue = {};
+
+    if (getValues().mobileNo) {
+      otpValue = { contact: getValues().mobileNo, type: 'sms' };
+      otpData(otpValue);
+    } else {
+      otpValue = { contact: getValues().Id, type: 'email' };
+      otpData(otpValue);
+    }
+
+    dispatch(sendNotificationOtp(otpValue));
+    otpData(otpValue);
   };
+
   return (
     <Box p={4} bgcolor="white.main" boxShadow="4">
       <Typography variant="h2" component="div" textAlign="center">

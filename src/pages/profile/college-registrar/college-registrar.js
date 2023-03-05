@@ -228,6 +228,15 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
           >
             {t('Cancel')}
           </Button>
+          {successModalPopup && (
+            <SuccessModalPopup
+              open={successModalPopup}
+              setOpen={() => setSuccessModalPopup(false)}
+              text={
+                'You have successfully registered your College Registrar. Defined credentials have been sent on the Email ID and Phone number you registered'
+              }
+            />
+          )}
         </Grid>
       </Grid>
     </Grid>

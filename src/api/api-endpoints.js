@@ -11,9 +11,11 @@ export const API = {
     registrationDetails: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/registration',
     workProfileDetails: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/work-profile',
     profileImage: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/profile-picture',
-    initiateWorkFlow: 'api/v1/abdm/nmr/health-professional/applications/status',
+    // initiateWorkFlow: 'api/v1/abdm/nmr/health-professional/applications/status',
     trackApplicationData: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/applications',
     eSign: 'api/v1/abdm/nmr/e-signature',
+    profileConsent: 'api/v1/abdm/nmr/health-professional/register',
+    createPersonalDetails: '/api/v1/abdm/nmr/health-professional/personal',
   },
   common: {
     states: 'api/v1/abdm/nmr/countries/356/states',
@@ -30,6 +32,11 @@ export const API = {
     specialities: 'api/v1/abdm/nmr/specialities',
     councilNames: 'api/v1/abdm/nmr/state-medical-councils',
     trackStatus: 'api/v1/abdm/nmr/health-professional/applications',
+    changePassword: 'api/v1/abdm/nmr/user/change-password',
+    activateLicense: 'api/v1/abdm/nmr/health-professional/applications/re-activate',
+    healthProfessionalApplicationStatus: 'api/v1/abdm/nmr/health-professional/applications/status',
+    suspend: 'api/v1/abdm/nmr/health-professional/applications/suspend',
+    enableNotification: '/api/v1/abdm/nmr/user/enable-notification',
   },
   college: {
     registrar: 'api/v1/abdm/nmr/college/{collegeId}/registrar',
@@ -37,7 +44,7 @@ export const API = {
     getCollegeProfile: 'api/v1/abdm/nmr/college/{id}',
     getCollegeRegistrarProfile: 'api/v1/abdm/nmr/college/{collegeId}/registrar/{id}',
     getCollegeDeanProfile: 'api/v1/abdm/nmr/college/{collegeId}/dean/{id}',
-    register: 'api/v1/abdm/nmr/college',
+    register: 'api/v1/abdm/nmr/college/applications',
     initiateCollegeWorkFlow: 'api/v1/abdm/nmr/college/applications/status',
   },
   nmc: {
@@ -48,10 +55,25 @@ export const API = {
     sendAadhaarOtp: 'api/v1/abdm/nmr/aadhaar/send-otp',
     verifyAadhaarOtp: 'api/v1/abdm/nmr/aadhaar/verify-otp',
   },
+  dashboard: {
+    cardCount: 'api/v1/abdm/nmr/dashboards/cards',
+    cardDetails: 'api/v1/abdm/nmr/dashboards/card-detail',
+  },
   smc: {
     getSMCProfileData: 'api/v1/abdm/nmr/smc/user/{id}',
   },
+  doctorRegistration: {
+    smcRegistrationDetail:
+      'api/v1/abdm/nmr/health-professional?smcId={smcId}&registrationNumber={registrationNumber}',
+  },
   nbe: {
     getNBEProfileData: 'api/v1/abdm/nmr/nbe/user/{id}',
+  },
+  forgotPassword: {
+    setPassword: '/api/v1/abdm/nmr/user/set-password',
+  },
+  searchDoctor: {
+    searchDoctorDetails: 'api/v1/abdm/nmr/health-professional/search',
+    searchDoctorById: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}',
   },
 };
