@@ -64,11 +64,12 @@ export const getWorkProfileDetailsData = (doctor_profile_id) => async (dispatch)
   });
 };
 
-export const getNewDoctorUserProfileData = () => async (dispatch) => {
+export const getNewDoctorPersonalDetailsData = (body) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: POST,
-      url: API.DoctorUserProfileData.personalDetails,
+      url: API.DoctorUserProfileData.createPersonalDetails,
+      data: body,
     })
       .then((response) => {
         dispatch(getPersonalDetails(response.data));

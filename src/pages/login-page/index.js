@@ -24,7 +24,7 @@ const LoginWrapper = () => {
   }, [location.state.loginFormname]);
 
   return (
-    <Box sx={{ mt: 5, mb: 5, maxWidth: '600px', margin: '40px auto' }}>
+    <Box sx={{ mt: 5, mb: 5, maxWidth: '648px', margin: '40px auto' }}>
       {activeStep === 0 && <LoginPage handleForgotPassword={handleNext} />}
       {activeStep === 1 && <ForgotPassword handleConfirmPassword={handleNext} otpData={setData} />}
       {activeStep === 2 && <ConfirmOTP handleConfirmOTP={handleNext} otpData={data} />}

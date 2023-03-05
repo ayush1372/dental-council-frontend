@@ -1,7 +1,9 @@
 import { useState } from 'react';
 
-import EditIcon from '@mui/icons-material/Edit';
+import { makeStyles } from '@material-ui/core';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Box, FormGroup, Grid, IconButton, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
@@ -22,6 +24,20 @@ export default function ProfileImage(props) {
   const [imageChanged, setImageChanged] = useState(false);
   const [imageTypeError, setImageTypeError] = useState(false);
   const [imageErrorMessage, setImageErrorMessage] = useState('');
+
+  const theme = useTheme();
+  const useStyles = makeStyles(() => ({
+    avtarImage: {
+      width: '30px',
+      height: '30px',
+      backgroundColor: theme.palette.secondary.main,
+      borderRadius: '50%',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  }));
+  const classes = useStyles(theme);
 
   const changeImage = (e) => {
     const requestObjNew = new FormData();
@@ -61,30 +77,32 @@ export default function ProfileImage(props) {
       <ToastContainer></ToastContainer>
 
       {loggedInUserType === 'Doctor' ? (
-        <Grid item xs={12} mt={2}>
-          <FormGroup className="update-image">
-            <Box>
-              <img
-                src={profileImage ? 'data:image/*;base64,' + profileImage : avtarImg}
-                className={styles.profileImage}
-                alt=""
+        <Grid item xs={12} mt={2} display="flex" justifyContent="center">
+          <Box maxWidth="110px" width="100%" position="relative">
+            <FormGroup className="update-image"></FormGroup>
+            <img
+              src={profileImage ? 'data:image/*;base64,' + profileImage : avtarImg}
+              className={styles.profileImage}
+              alt=""
+            />
+            <FormGroup />
+            <Box position="absolute" right="0" bottom="0">
+              <input
+                type="file"
+                id="icon-button-file"
+                accept=" image/jpeg, image/jpg, image/png"
+                onChange={(event) => changeImage(event)}
+                style={{ display: 'none' }}
               />
+              <Box className={classes.avtarImage}>
+                <label htmlFor="icon-button-file">
+                  <IconButton color="primary" aria-label="upload picture" component="Box">
+                    <EditOutlinedIcon color="white" fontSize="small" />
+                  </IconButton>
+                </label>
+              </Box>
             </Box>
-          </FormGroup>
-          <input
-            type="file"
-            id="icon-button-file"
-            accept=" image/jpeg, image/jpg, image/png"
-            onChange={(event) => changeImage(event)}
-            style={{ display: 'none' }}
-          />
-          <span>
-            <label htmlFor="icon-button-file">
-              <IconButton color="primary" aria-label="upload picture" component="span">
-                <EditIcon sx={{ ml: 15 }} />
-              </IconButton>
-            </label>
-          </span>
+          </Box>
         </Grid>
       ) : (
         <Grid item xs={12} display="flex" justifyContent="center" mt={2}>
