@@ -48,7 +48,7 @@ export function SuspendLicenseVoluntaryRetirement({
     },
   });
 
-  const { workProfileDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
 
   const onSubmit = () => {
@@ -79,14 +79,14 @@ export function SuspendLicenseVoluntaryRetirement({
         break;
     }
     let workFlowData = {
-      request_id: workProfileDetails?.request_id,
-      application_type_id: workProfileDetails.application_type_id
-        ? workProfileDetails?.application_type_id
+      request_id: personalDetails?.request_id,
+      application_type_id: personalDetails.application_type_id
+        ? personalDetails?.application_type_id
         : 1,
       actor_id: loggedInUserType === 'SMC' ? 2 : loggedInUserType === 'NMC' ? 3 : 0,
       action_id: action_id,
-      hp_profile_id: workProfileDetails?.hp_profile_id
-        ? workProfileDetails?.hp_profile_id
+      hp_profile_id: personalDetails?.hp_profile_id
+        ? personalDetails?.hp_profile_id
         : userActiveTab === 'voluntary-suspend-license'
         ? loginData?.data?.profile_id
         : userActiveTab === 'track-status'
