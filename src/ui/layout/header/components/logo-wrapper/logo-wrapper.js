@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import G20Logo from '../../../../../assets/images/g-20-logo.png';
 import DigitalIndia from '../../../../../assets/images/logo-slider/digital-India.png';
 import NmcLogo from '../../../../../assets/images/logo-slider/nmc-logo.png';
 import { IdleTimer } from '../../../../../helpers/components/idle-timer';
@@ -115,6 +116,11 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
                 <img className={classes.logoImage} src={DigitalIndia} alt="Digital logo" />
               </Link>
             </Grid>
+            <Grid item xs="auto">
+              <Link onClick={() => navigate('/')} sx={{ cursor: 'pointer' }}>
+                <img className={classes.logoImage} src={G20Logo} alt="G20 logo" />
+              </Link>
+            </Grid>
           </Grid>
         </Grid>
 
@@ -140,7 +146,7 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
             <>
               <Button
                 variant="contained"
-                color="grey"
+                color="secondary"
                 size="medium"
                 onClick={handleClickLoginRegister}
                 endIcon={<KeyboardArrowDownIcon />}
