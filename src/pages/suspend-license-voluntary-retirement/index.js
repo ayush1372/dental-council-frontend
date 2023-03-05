@@ -9,6 +9,7 @@ import { Box, Dialog, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { verboseLog } from '../../config/debug';
 // import { suspendDoctor } from '../../store/actions/common-actions';
 import { getInitiateWorkFlow } from '../../store/actions/common-actions';
 import { changeUserActiveTab } from '../../store/reducers/common-reducers';
@@ -131,6 +132,7 @@ export function SuspendLicenseVoluntaryRetirement({
   };
 
   const handleClose = () => {
+    verboseLog('Hello', confirmationModal);
     setConfirmationModal(false);
   };
   return (
@@ -412,10 +414,7 @@ export function SuspendLicenseVoluntaryRetirement({
           <Button
             variant="contained"
             color="secondary"
-            onClick={() => {
-              setConformSuspend(true);
-              setConfirmationModal(true);
-            }}
+            onClick={handleSubmit(onSubmit)}
             sx={{
               width: {
                 xs: '100%',
@@ -442,10 +441,7 @@ export function SuspendLicenseVoluntaryRetirement({
                 md: 'fit-content',
               },
             }}
-            onClick={(e) => {
-              e.preventDefault();
-              dispatch(changeUserActiveTab('my-profile'));
-            }}
+            onClick={handleClose}
           >
             Cancel
           </Button>
@@ -458,14 +454,7 @@ export function SuspendLicenseVoluntaryRetirement({
           selectedValue === 'suspend' ||
           selectedValue === 'approve' ||
           selectedValue === 'blacklist' ? (
-            <Button
-              variant="contained"
-              color="grey"
-              onClick={(e) => {
-                e.preventDefault();
-                dispatch(changeUserActiveTab('my-profile'));
-              }}
-            >
+            <Button variant="contained" color="grey" onClick={handleClose}>
               Cancel
             </Button>
           ) : (
@@ -498,9 +487,7 @@ export function SuspendLicenseVoluntaryRetirement({
               variant="contained"
               sx={{ marginLeft: 2 }}
               // onClick={handleSubmit(onSubmit)}
-              onClick={() => {
-                setConfirmationModal(true);
-              }}
+              onClick={handleSubmit(onSubmit)}
             >
               Submit
             </Button>
@@ -566,6 +553,7 @@ export function SuspendLicenseVoluntaryRetirement({
             <Box display={'flex'} justifyContent={'flex-end'} mt={1}>
               <Button
                 onClick={() => {
+                  setConformSuspend(false);
                   setConfirmationModal(false);
                 }}
                 data-testid="confirmModal"
