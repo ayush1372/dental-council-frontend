@@ -14,7 +14,9 @@ import OtpForm from '../../../shared/otp-form/otp-component';
 import {
   getRegistrationCouncilList,
   getUniversitiesList,
+  sendNotificationOtp,
 } from '../../../store/actions/common-actions';
+// import { , verifyNotificationOtp } from '../../../store/actions/common-actions';
 import { loginAction, validateCaptchaImage } from '../../../store/actions/login-action';
 import { login, userLoggedInType } from '../../../store/reducers/common-reducers';
 import { Button, TextField } from '../../../ui/core';
@@ -27,6 +29,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const [selectedLoginOption, setSelectedLoginOption] = useState('nmrId');
+  const [transaction_id, setTransaction_id] = useState('');
   const [otpFormEnabled, setOtpFormEnable] = useState(false);
   const navigate = useNavigate();
   const {
@@ -47,11 +50,92 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
   const captchaResult = (num) => {
     setcaptachaAnswer(num);
   };
+  const sendNotificationOTPHandler = (enableOTP, OTPType) => {
+    setOtpFormEnable(enableOTP);
+    let OTPTypeID;
+    switch (OTPType) {
+      case 'NMR':
+        OTPTypeID = 'nmr_id';
+        break;
+      case 'Mobile':
+        OTPTypeID = 'mobile';
+        break;
+      default:
+        OTPTypeID = 0;
+        break;
+    }
+    let sendOTPData = {
+      contact: getValues().nmrID,
+      type: OTPTypeID,
+    };
+
+    dispatch(sendNotificationOtp(sendOTPData)).then((response) => {
+      if (response) {
+        setTransaction_id(response?.data?.transaction_id);
+      }
+    });
+  };
 
   const handleLogin = () => {
-    if (selectedLoginOption === 'nmrId') {
+    let loginTypeID;
+    switch (selectedLoginOption) {
+      case 'nmrId':
+        loginTypeID = 'nmr_id';
+        break;
+      case 'mobile':
+        loginTypeID = 2;
+        break;
+      case 'userName':
+        loginTypeID = 1;
+        break;
+      default:
+        loginTypeID = 0;
+        break;
+    }
+    if (selectedLoginOption === 'nmrId' && selectedLoginOption === 'mobileNumber') {
       verboseLog('Login Data -> ', getValues()?.nmrID);
       verboseLog('Login Data -> ', otpValue);
+      dispatch(
+        validateCaptchaImage({
+          transaction_id: generateCaptcha?.transaction_id,
+          result: parseInt(captchaAnswer),
+        })
+      )
+        .then((response) => {
+          if (response?.data?.validity) {
+            const usertypeId = usersType(loginName);
+
+            const requestObj = {
+              username: getValues()?.userID,
+              password: encryptData(otpValue, process.env.REACT_APP_PASS_SITE_KEY),
+              user_type: usertypeId,
+              login_type: loginTypeID,
+              captcha_trans_id: generateCaptcha?.transaction_id,
+              otp_trans_id: transaction_id,
+            };
+            dispatch(loginAction(requestObj))
+              .then(() => {
+                dispatch(login());
+                dispatch(userLoggedInType(loginName));
+                dispatch(getRegistrationCouncilList());
+                dispatch(getUniversitiesList());
+                navigate(`/profile`);
+              })
+              .catch((error) => {
+                successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+              });
+          } else {
+            successToast(
+              'ERROR: Invalid captcha, please try with new captcha',
+              'auth-error',
+              'error',
+              'top-center'
+            );
+          }
+        })
+        .catch((error) => {
+          successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+        });
     } else if (selectedLoginOption === 'userName') {
       verboseLog('Login Data -> ', getValues()?.password);
       verboseLog('Login Data -> ', getValues()?.userID);
@@ -72,14 +156,11 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
             };
             dispatch(loginAction(requestObj))
               .then(() => {
-                // let req = { mobile: param.nmrID };
-                // if (req) {
                 dispatch(login());
                 dispatch(userLoggedInType(loginName));
                 dispatch(getRegistrationCouncilList());
                 dispatch(getUniversitiesList());
                 navigate(`/profile`);
-                // }
               })
               .catch((error) => {
                 successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
@@ -96,9 +177,6 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
         .catch((error) => {
           successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
         });
-    } else if (selectedLoginOption === 'mobileNumber') {
-      verboseLog('Login Data -> ', getValues()?.mobileNo);
-      verboseLog('Login Data -> ', otpValue);
     } else {
       successToast('Wrong Login Attempt', 'login-error', 'error', 'top-center');
     }
@@ -228,7 +306,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
                         cursor: 'pointer',
                       }}
                       color={'white.main'}
-                      onClick={() => setOtpFormEnable(!otpFormEnabled)}
+                      onClick={() => sendNotificationOTPHandler(!otpFormEnabled, 'NMR')}
                     >
                       {otpFormEnabled ? 'Re-Enter' : 'Verify'}
                     </Typography>
@@ -239,9 +317,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
 
             {otpFormEnabled && (
               <Box mt={2}>
-                <Typography variant="body1">
-                  We just sent an OTP on your Mobile Number 7654364789
-                </Typography>
+                <Typography variant="body1">We just sent an OTP on your NMR ID</Typography>
                 {otpform}
               </Box>
             )}
