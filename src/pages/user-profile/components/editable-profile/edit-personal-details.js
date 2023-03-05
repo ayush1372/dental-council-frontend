@@ -41,49 +41,35 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
 
   const [languages, setLanguages] = useState([]);
 
+  const { personal_details, communication_address, imr_details, request_id } =
+    personalDetails || {};
   const {
-    personal_details: {
-      salutation,
-      aadhaar_token,
-      first_name,
-      last_name,
-      middle_name,
-      father_name,
-      mother_name,
-      spouse_name,
-      country_nationality: { id: countryNationalityId },
-      date_of_birth,
-      gender,
-      schedule: { id: scheduleId },
-    },
-    communication_address: {
-      country: { id: countryId },
-      state: { id: stateId },
-      district: { id: districtId },
-      sub_district: { id: subdistrictId },
-      village: { id: citiesId },
-      pincode,
-      address_line1,
-      email,
-      mobile,
-      full_name,
-    },
-    imr_details: { registration_number, nmr_id, year_of_info },
-    request_id,
-  } = personalDetails && Object.values(personalDetails).length > 3
-    ? personalDetails
-    : {
-        personal_details: { country_nationality: {}, schedule: {} },
-        communication_address: {
-          country: {},
-          state: {},
-          district: {},
-          sub_district: {},
-          address_type: {},
-          village: {},
-        },
-        imr_details: {},
-      };
+    salutation,
+    aadhaar_token,
+    first_name,
+    last_name,
+    middle_name,
+    father_name,
+    mother_name,
+    spouse_name,
+    country_nationality,
+    date_of_birth,
+    gender,
+    schedule,
+    full_name,
+  } = personal_details || {};
+  const { country, state, district, sub_district, village, pincode, address_line1, email, mobile } =
+    communication_address || {};
+  const { registration_number, nmr_id, year_of_info } = imr_details || {};
+
+  const countryNationalityId = country_nationality?.id;
+  const scheduleId = schedule?.id;
+  const countryId = country?.id;
+  const stateId = state?.id;
+  const districtId = district?.id;
+  const subdistrictId = sub_district?.id;
+  const citiesId = village?.id;
+
   const {
     formState: { errors },
     getValues,
