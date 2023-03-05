@@ -27,9 +27,6 @@ const initialState = {
   trackStatusData: { data: [], isLoading: Boolean(true), isError: false },
   initiateWorkFlow: { data: [], isLoading: Boolean(true), isError: false },
   trackApplicationTableData: { data: [], isLoading: Boolean(true), isError: false },
-  getProofFileData: { data: [], isLoading: Boolean(true), isError: false },
-  getDegreeCertificateData: { data: [], isLoading: Boolean(true), isError: false },
-  getRegistrationCertificateData: { data: [], isLoading: Boolean(true), isError: false },
 };
 
 export const CommonActivity = createSlice({
@@ -105,23 +102,11 @@ export const CommonActivity = createSlice({
     updateTrackApplicationTableData: (state, action) => {
       state.trackApplicationTableData.data = action.payload;
     },
-    uploadProofFile: (state, action) => {
-      state.getProofFileData.data = action.payload;
-    },
-    uploadDegreeCertificate: (state, action) => {
-      state.getDegreeCertificateData.data = action.payload;
-    },
-    uploadRegistrationCertificate: (state, action) => {
-      state.getRegistrationCertificateData.data = action.payload;
-    },
   },
 });
 
 export const {
   login,
-  uploadProofFile,
-  uploadDegreeCertificate,
-  uploadRegistrationCertificate,
   logout,
   fontsizes,
   setMobileNumber,
@@ -144,7 +129,9 @@ export const {
   updateCouncilNames,
   searchTrackStatusData,
   getInitiateWorkFlow,
+  getActivateLicense,
   updateTrackApplicationTableData,
+  setNewPassword,
 } = CommonActivity.actions;
 
 export default CommonActivity.reducer;

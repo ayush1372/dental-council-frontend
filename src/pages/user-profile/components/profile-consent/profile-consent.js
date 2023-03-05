@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -14,23 +13,26 @@ import { Button, Checkbox } from '../../../../ui/core';
 const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType }) => {
   const dispatch = useDispatch();
   const personalDetails = useSelector((state) => state?.doctorUserProfileReducer?.personalDetails);
-  const commnicationAddress = useSelector(
-    (state) => state?.doctorUserProfileReducer?.personalDetails?.communication_address
-  );
   const eSignResponse = useSelector((state) => state?.doctorUserProfileReducer?.esignDetails?.data);
   const stateData = useSelector((state) => state?.doctorUserProfileReducer);
   const workProfileData = useSelector(
     (state) => state?.doctorUserProfileReducer?.workProfileDetails
   );
-  const proofFileData = useSelector((state) => state?.common?.getProofFileData?.data);
-  console.log('stateData', stateData);
-  console.log('workProfileData', workProfileData);
-  console.log('commnicationAddress', commnicationAddress);
-  console.log('proof file data', proofFileData);
-
-  // const firstname = personalDetails?.personal_details;
-  console.log('personalDetails12', personalDetails);
-  console.log('eSignResponse', eSignResponse);
+  const otherDocAttached = useSelector(
+    (state) =>
+      state?.doctorUserProfileReducer?.workProfileDetails?.current_work_details[0]
+        .current_work_proof.length
+  );
+  const degreeCertificate = useSelector(
+    (state) =>
+      state?.doctorUserProfileReducer?.registrationDetails?.registration_detail_to?.certificate
+        .length
+  );
+  const namechangeProof = useSelector(
+    (state) =>
+      state?.doctorUserProfileReducer?.registrationDetails?.registration_detail_to
+        ?.name_change_proof.length
+  );
 
   const [confirmationModal, setConfirmationModal] = useState(false);
   const {
@@ -52,22 +54,19 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
     if (consent) setConfirmationModal(true);
   };
   function eSignHandler() {
-    console.log('clicked e-sign handler');
     let data = {
       signingPlace: personalDetails?.communication_address?.village?.name,
       nmrDetails: {
         nmrPersonalDetail: {
-          //frompersonal api?
           firstName: personalDetails?.personal_details?.first_name || '',
-          userId: stateData?.personalDetails?.request_id || '', // nmr id or healthPRof id?
+          userId: stateData?.personalDetails?.request_id || '', //cs-1013: need to change this path when backend fixes done
           middleName: personalDetails?.personal_details?.middle_name || '',
           lastName: personalDetails?.personal_details?.last_name || '',
-          qualification: 'degree', // ?????? in 2nd tab 2nd acccordion ?
-          mobileNumber: personalDetails?.personal_details?.email || 'abdm@nha.com',
-          emailId: personalDetails?.personal_details?.mobile || '9988775544',
+          qualification: personalDetails?.personal_details?.first_name || '', //cs-1013: need to change this path when backend fixes done
+          mobileNumber: personalDetails?.personal_details?.email || '',
+          emailId: personalDetails?.personal_details?.mobile || '',
         },
         nmrPersonalCommunication: {
-          //personal api
           address: personalDetails?.communication_address?.address_line1 || '',
           country: personalDetails?.communication_address?.country?.name || '',
           stateUT: personalDetails?.communication_address?.state?.name || '',
@@ -76,30 +75,23 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
           pincode: personalDetails?.communication_address?.pincode || '',
         },
         nmrOfficeCommunication: {
-          //work profile
           address: workProfileData?.current_work_details[0].address?.address_line1 || '',
           country: 'India',
           stateUT: workProfileData?.current_work_details[0].address?.state?.name || '',
           district: workProfileData?.current_work_details[0].address?.district?.name || '',
-          city: workProfileData?.current_work_details[0].address?.district?.name || '', // city/village no data
-          subDistrict: 'string', // no data in repsonse
+          city: workProfileData?.current_work_details[0].address?.district?.name || '',
+          subDistrict: 'string', //cs-1013:need to change this path when backend fixes done*
           pincode: workProfileData?.current_work_details[0].address?.pincode || '',
         },
-        isRegCerAttached: 'yes', //2nd tab 1st
-        isDegreeCardAttached: 'yes', //2nd tab 2nd
-        isOtherDocumentAttached: 'yes',
-        // proofFileData?.name.length > 0 ? 'Yes' : 'No', //3rd page''',
+        isRegCerAttached: namechangeProof > 0 ? 'Yes' : 'No', //cs-1013:need to change this path when backend fixes done*
+        isDegreeCardAttached: degreeCertificate > 0 ? 'Yes' : 'No', //cs-1013:need to change this path when backend fixes done*
+        isOtherDocumentAttached: otherDocAttached > 0 ? 'Yes' : 'No', //cs-1013:need to change this path when backend fixes done*
       },
     };
-    console.log('comAddress==>', workProfileData?.current_work_details[0].address?.address_line1);
     dispatch(getEsignFormDetails(data));
 
     document.getElementById('formid')?.submit();
   }
-  // const handleEsign = () => {
-  //   document.getElementById('formid')?.submit();
-  // };
-  // console.log('123',Object.keys(proofFileData).length)
 
   return (
     <Box bgcolor="white.main" py={2} px={{ xs: 1, md: 4 }} mt={2} boxShadow={1}>
@@ -226,9 +218,6 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
             name="Content-Type"
             value={eSignResponse.content_type}
           />
-          {/* <button type="submit" onClick={handleEsign()}>
-            Submit
-          </button> */}
         </form>
       </div>
 

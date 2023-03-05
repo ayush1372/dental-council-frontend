@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
@@ -164,7 +163,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
         formData.append('data', JSON.stringify(registrationDetails));
         formData.append('proof', Object.values(qualificationFilesData)?.[0]?.[0].file);
         formData.append('certificate', registrationFileData[0].file);
-        // console.log('form data dispatch-->', formData);
         dispatch(updateDoctorRegistrationDetails(formData, loginData.data.profile_id))
           .then(() => {
             dispatch(getWorkProfileDetailsData(loginData.data.profile_id))

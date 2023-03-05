@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useState } from 'react';
 
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
@@ -14,7 +13,6 @@ const CommunicationAddress = ({ personalDetails }) => {
   const ClosePopup = () => {
     setOpenModal(false);
   };
-  console.log('abcdef', personalDetails);
 
   const {
     communication_address: {
