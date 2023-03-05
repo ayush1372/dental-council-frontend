@@ -1,10 +1,19 @@
 import { useEffect, useState } from 'react';
 
+import { makeStyles } from '@material-ui/core';
 import { Box, Container, Grid, Paper, Typography } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
 import { useTheme } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 
+import ApprovedApplication from '../../../../assets/images/application-approved.svg';
+import RaisedApplication from '../../../../assets/images/application-raised.svg';
+import RejectedApplication from '../../../../assets/images/application-rejected.svg';
+import PendingApplication from '../../../../assets/images/pending-application.svg';
+import RegistrationRequest from '../../../../assets/images/registration-request.svg';
+import SuspensionRequest from '../../../../assets/images/suspension-request.svg';
+import TotalRegReq from '../../../../assets/images/total-registration-request.svg';
+import UpdationRequest from '../../../../assets/images/updation-request.png';
 import {
   registrationRequestMapper,
   suspensionRequestMapper,
@@ -29,12 +38,29 @@ export default function Dashboard() {
   const dispatch = useDispatch();
 
   const Item = styled(Paper)(({ theme }) => ({
-    padding: theme.spacing(1),
-    textAlign: 'center',
+    padding: theme.spacing(3),
     borderRadius: '5px !important',
     borderTopWidth: 'thick',
     cursor: 'pointer',
+    height: '100%',
+    [theme.breakpoints.down('xl')]: {
+      padding: theme.spacing(2),
+    },
   }));
+
+  const useStyles = makeStyles(() => ({
+    iconImage: {
+      [theme.breakpoints.down('xl')]: {
+        width: '30px',
+        height: '30px',
+      },
+    },
+    requestIcon: {
+      width: '40px',
+      height: '40px',
+    },
+  }));
+  const classes = useStyles(theme);
 
   let registrationRequestData = getDataFromResponse(
     count,
@@ -130,6 +156,20 @@ export default function Dashboard() {
     dispatch(getCardCount());
   }, []);
 
+  const getCardIcons = (item) => {
+    if (item?.name?.includes('Pending') || item?.name?.includes('Received')) {
+      return PendingApplication;
+    } else if (item?.name?.includes('Verified') || item?.name?.includes('Approved')) {
+      return ApprovedApplication;
+    } else if (item?.name.includes('Raised')) {
+      return RaisedApplication;
+    } else if (item?.name.includes('Rejected') || item?.name.includes('Blacklisted')) {
+      return RejectedApplication;
+    } else if (item?.name.includes('Total')) {
+      return TotalRegReq;
+    }
+  };
+
   return (
     <>
       {!showDashboard && (
@@ -169,53 +209,73 @@ export default function Dashboard() {
             Dashboard
           </Typography> */}
           <Box sx={{ width: '100%' }}>
-            <Box display="flex" flexWrap="wrap" gap={1}>
+            <Box display="flex" flexWrap="wrap" gap={{ xs: 1, xl: 2 }}>
               {Object.entries(dashboard).map((element) => {
                 return (
                   <>
-                    <Typography flex="1 0 100%">{element[0]}</Typography>
+                    <Typography
+                      mb={3}
+                      variant="h2"
+                      component="div"
+                      display="flex"
+                      alignItems="center"
+                      gap={2}
+                      flex="1 0 100%"
+                    >
+                      <img
+                        className={classes.requestIcon}
+                        src={
+                          element[0].includes('Registration')
+                            ? RegistrationRequest
+                            : element[0].includes('Updation')
+                            ? UpdationRequest
+                            : element[0].includes('Suspension')
+                            ? SuspensionRequest
+                            : ''
+                        }
+                        alt="requestIcon"
+                      />
+                      {element[0]}
+                    </Typography>
                     {element[1].map((item) => {
                       return (
                         <Box
                           mb={{ xs: 2, md: 4 }}
-                          flex={{ xs: '1 0 100%', sm: '1 0 32%', md: '1 0 19%' }}
+                          flex={{ xs: '1 0 100%', sm: '1 0 32%', md: '1 0 24%', lg: '1 0 19%' }}
                           key={item?.name}
                         >
-                          <Item
-                            id={item?.id}
-                            sx={
-                              item?.name?.includes('Pending') || item?.name?.includes('Received')
-                                ? {
-                                    borderTop: `5px solid ${theme.palette.secondary.warningYellow}`,
-                                  }
-                                : item?.name?.includes('Verified') ||
-                                  item?.name?.includes('Approved')
-                                ? { borderTop: `5px solid ${theme.palette.success.main}` }
-                                : item?.name.includes('Raised')
-                                ? { borderTop: `5px solid ${theme.palette.primary.main}` }
-                                : item?.name.includes('Rejected') ||
-                                  item?.name.includes('Blacklisted')
-                                ? { borderTop: `5px solid ${theme.palette.error.main}` }
-                                : item?.name.includes('Total')
-                                ? { borderTop: `5px solid ${theme.palette.black.main}` }
-                                : ''
-                            }
-                            onClick={() => showTableFun(item)}
-                          >
+                          <Item id={item?.id} onClick={() => showTableFun(item)}>
                             <Box
-                              color="black.secondary"
-                              fontSize="14px"
-                              sx={{ minHeight: '60px', wordBreak: 'break-word' }}
+                              display="flex"
+                              justifyContent="space-between"
+                              alignItems="center"
+                              mb={2}
+                            >
+                              <Typography color="inputFocusColor.main" variant="h2">
+                                {item.value}
+                              </Typography>
+                              <img
+                                className={classes.iconImage}
+                                src={getCardIcons(item)}
+                                alt="icon"
+                              />
+                            </Box>
+                            <Typography
+                              variant="body1"
+                              color="primary"
+                              component="div"
+                              lineHeight={{ xs: '18px', lg: '24px' }}
                             >
                               {item.name}
-                            </Box>
-                            <Box
-                              color="tabHighlightedBackgroundColor.main"
-                              fontSize="20px"
-                              fontWeight={600}
+                            </Typography>
+                            <Typography
+                              variant="body1"
+                              color="primary"
+                              component="div"
+                              fontWeight="400"
                             >
-                              {item.value}
-                            </Box>
+                              Total number of applications after registration
+                            </Typography>
                           </Item>
                         </Box>
                       );
