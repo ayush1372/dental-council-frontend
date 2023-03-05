@@ -660,7 +660,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               variant="outlined"
               name={'Address'}
               placeholder="Your address"
-              required={true}
+              required={false}
               fullWidth
               defaultValue={getValues().Address}
               {...register('Address', {
@@ -754,17 +754,18 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 variant="outlined"
                 name={'Street'}
                 placeholder="Enter Street"
-                required={true}
+                required={false}
                 fullWidth
                 defaultValue={getValues().Street}
-                {...register('Street', {
-                  required: 'Street is Required',
-                  maxLength: {
-                    value: 300,
-                    message: 'Length should be less than 300.',
-                  },
-                })}
-                error={errors.Street?.message}
+                /*author:krishnakanth, purpose: after getting values from backend we will work onthis */
+                // {...register('Street', {
+                //  required: 'Street is Required',
+                //   maxLength: {
+                //     value: 300,
+                //     message: 'Length should be less than 300.',
+                //   },
+                // })}
+                // error={errors.Street?.message}
               />
             </Grid>
           </Grid>
@@ -777,17 +778,18 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 variant="outlined"
                 name={'Landmark'}
                 placeholder="Your Landmark"
-                required={true}
+                required={false}
                 fullWidth
                 defaultValue={getValues().Landmark}
-                {...register('Landmark', {
-                  required: 'Landmark is Required',
-                  maxLength: {
-                    value: 300,
-                    message: 'Length should be less than 300.',
-                  },
-                })}
-                error={errors.Landmark?.message}
+                /*author:krishnakanth, purpose: after getting values from backend we will work onthis */
+                // {...register('Landmark', {
+                //  required: 'Landmark is Required',
+                //   maxLength: {
+                //     value: 300,
+                //     message: 'Length should be less than 300.',
+                //   },
+                // })}
+                // error={errors.Landmark?.message}
               />
             </Grid>
             <Grid item xs={12} md={4}>
@@ -798,36 +800,41 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 variant="outlined"
                 name={'Locality'}
                 placeholder="Your Locality"
-                required={true}
+                required={false}
                 fullWidth
                 defaultValue={getValues().Locality}
-                {...register('Locality', {
-                  required: 'Locality is Required',
-                  maxLength: {
-                    value: 300,
-                    message: 'Length should be less than 300.',
-                  },
-                })}
-                error={errors.Locality?.message}
+                /*author:krishnakanth, purpose: after getting values from backend we will work onthis */
+                // {...register('Locality', {
+                //   required: 'Locality is Required',
+                //   maxLength: {
+                //     value: 300,
+                //     message: 'Length should be less than 300.',
+                //   },
+                // })}
+                // error={errors.Locality?.message}
               />
             </Grid>
             <Grid item xs={12} md={4}>
-              <Typography variant="subtitle2" color="inputTextColor.main">
-                City/Town/Village
-                <Typography component="span" color="error.main">
-                  *
-                </Typography>
-              </Typography>
               <Select
                 fullWidth
-                error={errors.Area?.message}
-                name="Area"
-                defaultValue={getValues().Area}
+                error={errors.Country?.message}
+                name="Country"
+                label="Country"
+                defaultValue={getValues().Country}
                 required={true}
-                {...register('Area', {
-                  required: 'City/Town/Village is required',
+                {...register('Country', {
+                  required: 'Country is required',
                 })}
-                options={createSelectFieldData(citiesList)}
+                disabled
+                options={
+                  countriesList?.length > 0
+                    ? createSelectFieldData(
+                        countriesList?.filter(function (item) {
+                          return item.name === 'India';
+                        })
+                      )
+                    : []
+                }
                 MenuProps={{
                   style: {
                     maxHeight: 250,
@@ -840,22 +847,21 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
           <Grid container item spacing={2} mt={1}>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
-                Sub District
+                State/Union Territory
                 <Typography component="span" color="error.main">
                   *
                 </Typography>
               </Typography>
-
               <Select
                 fullWidth
-                error={errors.SubDistrict?.message}
-                name="SubDistrict"
-                placeholder="Sub District"
-                defaultValue={getValues().SubDistrict}
-                {...register('SubDistrict', {
-                  required: 'SubDistrict is required',
+                error={errors.State?.message}
+                name="State"
+                defaultValue={getValues().State}
+                required={true}
+                {...register('State', {
+                  required: 'State/Union territory is required',
                 })}
-                options={createSelectFieldData(subDistrictList, 'iso_code')}
+                options={createSelectFieldData(statesList)}
                 MenuProps={{
                   style: {
                     maxHeight: 250,
@@ -891,21 +897,22 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             </Grid>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
-                State/Union Territory
+                Sub District
                 <Typography component="span" color="error.main">
                   *
                 </Typography>
               </Typography>
+
               <Select
                 fullWidth
-                error={errors.State?.message}
-                name="State"
-                defaultValue={getValues().State}
-                required={true}
-                {...register('State', {
-                  required: 'State/Union territory is required',
+                error={errors.SubDistrict?.message}
+                name="SubDistrict"
+                placeholder="Sub District"
+                defaultValue={getValues().SubDistrict}
+                {...register('SubDistrict', {
+                  required: 'SubDistrict is required',
                 })}
-                options={createSelectFieldData(statesList)}
+                options={createSelectFieldData(subDistrictList, 'iso_code')}
                 MenuProps={{
                   style: {
                     maxHeight: 250,
@@ -917,26 +924,22 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
           </Grid>
           <Grid container item spacing={2} mt={1}>
             <Grid item xs={12} md={4}>
+              <Typography variant="subtitle2" color="inputTextColor.main">
+                City/Town/Village
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
+              </Typography>
               <Select
                 fullWidth
-                error={errors.Country?.message}
-                name="Country"
-                label="Country"
-                defaultValue={getValues().Country}
+                error={errors.Area?.message}
+                name="Area"
+                defaultValue={getValues().Area}
                 required={true}
-                {...register('Country', {
-                  required: 'Country is required',
+                {...register('Area', {
+                  required: 'City/Town/Village is required',
                 })}
-                disabled
-                options={
-                  countriesList?.length > 0
-                    ? createSelectFieldData(
-                        countriesList?.filter(function (item) {
-                          return item.name === 'India';
-                        })
-                      )
-                    : []
-                }
+                options={createSelectFieldData(citiesList)}
                 MenuProps={{
                   style: {
                     maxHeight: 250,
