@@ -156,13 +156,17 @@ const ReadWorkProfile = ({
                     </Button>
 
                     <Menu {...bindMenu(popupState)}>
-                      <MenuItem onClick={selectionChangeHandler} data-my-value={'verify'}>
-                        Verify
-                      </MenuItem>
-                      <MenuItem onClick={selectionChangeHandler} data-my-value={'raise'}>
-                        Raise a Query
-                      </MenuItem>
-                      {loggedInUserType === 'SMC' && (
+                      {loggedInUserType !== 'NMC' && (
+                        <MenuItem onClick={selectionChangeHandler} data-my-value={'verify'}>
+                          Verify
+                        </MenuItem>
+                      )}
+                      {loggedInUserType !== 'NMC' && (
+                        <MenuItem onClick={selectionChangeHandler} data-my-value={'raise'}>
+                          Raise a Query
+                        </MenuItem>
+                      )}
+                      {loggedInUserType === 'SMC' && loggedInUserType !== 'NMC' && (
                         <MenuItem onClick={selectionChangeHandler} data-my-value={'forward'}>
                           Forward
                         </MenuItem>
