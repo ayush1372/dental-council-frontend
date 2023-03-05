@@ -20,7 +20,7 @@ import { useSelector } from 'react-redux';
 
 import SuspendLicenseVoluntaryRetirement from '../../../suspend-license-voluntary-retirement';
 import CurrentWorkDetails from '../readable-content/current-work-details';
-import SpecialDetailsContent from '../readable-content/special-details-content';
+// import SpecialDetailsContent from '../readable-content/special-details-content';
 import WorkDetails from '../readable-content/work-details';
 const ReadWorkProfile = ({
   handleBack,
@@ -39,10 +39,10 @@ const ReadWorkProfile = ({
   const [accordionKey, setAccordionKey] = useState('accordion-0');
 
   const accordions = [
-    {
-      title: 'Special Details',
-      body: SpecialDetailsContent,
-    },
+    // {
+    //   title: 'Special Details',
+    //   body: SpecialDetailsContent,
+    // },
     {
       title: 'Work Details',
       body: WorkDetails,
