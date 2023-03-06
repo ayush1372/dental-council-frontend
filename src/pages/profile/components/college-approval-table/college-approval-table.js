@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { Box, Grid, TablePagination } from '@mui/material';
+import { Box, Grid, TablePagination, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
@@ -163,10 +163,14 @@ function CollegeApprovalTable(props) {
     <>
       <ToastContainer></ToastContainer>
       <Grid sx={{ m: 2 }}>
-        {/* <Typography variant="h2" py={2}>
+        <Typography variant="h2" py={2}>
           College Applications Pending List
-        </Typography> */}
-        <TableSearch searchParams={searchParams} />
+        </Typography>
+        <TableSearch
+          searchParams={searchParams}
+          exportData={collegeApprovalData}
+          flag={'collegeApprovalData'}
+        />
         <GenericTable
           order={order}
           orderBy={orderBy}
@@ -181,7 +185,7 @@ function CollegeApprovalTable(props) {
           <TablePagination
             rowsPerPageOptions={[]}
             component="div"
-            count={collegeApprovalData?.data?.total_no_of_records}
+            count={collegeApprovalData?.data?.total_no_of_records || '0'}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

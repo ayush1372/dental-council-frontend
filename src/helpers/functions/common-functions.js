@@ -102,3 +102,10 @@ export const sideBarTabs = (userType) => {
   };
   return usersObj[userType];
 };
+
+export const workSheetTheme = {
+  type: 'pattern',
+  pattern: 'darkTrellis',
+  fgColor: { argb: 'FFFFFF00' },
+  bgColor: { argb: '#ffffcc00' },
+};
