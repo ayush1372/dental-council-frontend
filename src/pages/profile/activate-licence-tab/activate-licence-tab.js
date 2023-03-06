@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Box, Grid, TablePagination, Typography } from '@mui/material';
+import { Box, Grid, TablePagination } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { verboseLog } from '../../../config/debug';
@@ -242,12 +242,16 @@ const ActivateLicence = (props) => {
       ) : (
         <Grid sx={{ m: 2 }} lg={12} md={12}>
           <Grid item>
-            <Typography variant="h2" data-testid="tab-heading">
+            {/* <Typography variant="h2" data-testid="tab-heading">
               Application Requests
-            </Typography>
+            </Typography> */}
           </Grid>
           <Grid mt={3}>
-            <TableSearch searchParams={searchParams} />
+            <TableSearch
+              searchParams={searchParams}
+              exportData={activateLicenseList}
+              flag={'ActivateList'}
+            />
           </Grid>
           <GenericTable
             order={order}
@@ -266,7 +270,7 @@ const ActivateLicence = (props) => {
             <TablePagination
               rowsPerPageOptions={[]}
               component="div"
-              count={activateLicenseList?.data?.total_no_of_records}
+              count={activateLicenseList?.data?.total_no_of_records || '0'}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}

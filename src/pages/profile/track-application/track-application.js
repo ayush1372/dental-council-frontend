@@ -50,7 +50,7 @@ export function TrackApplication({ getTableData }) {
         </Box>
       )}
       {showTrackApplicationTable ? (
-        <Box p={3}>
+        <Box>
           <TrackApplicationTable
             userType={loggedInUserType === 'Doctor' ? true : false}
             setShowTrackApplication={setShowTrackApplication}

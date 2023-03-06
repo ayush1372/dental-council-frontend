@@ -46,6 +46,7 @@ export function SuspendValuntaryPopup({
         >
           <SuspendLicenseVoluntaryRetirement
             selectedValue={selected}
+            handleClose={handleClose}
             selectedSuspendLicenseProfile={selectedSuspendLicenseProfile}
           />
         </Box>
