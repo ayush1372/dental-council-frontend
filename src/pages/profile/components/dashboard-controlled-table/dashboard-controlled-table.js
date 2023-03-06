@@ -174,7 +174,11 @@ function DashboardControlledTable(props) {
       <Typography variant="h2" py={2}>
         {`${props?.selectedCardDataData?.responseKey} Applications`}
       </Typography>
-      <TableSearch searchParams={searchParams} />
+      <TableSearch
+        searchParams={searchParams}
+        exportData={dashboardTableDetails}
+        flag={'dashboardTableDetails'}
+      />
       <GenericTable
         order={order}
         orderBy={orderBy}

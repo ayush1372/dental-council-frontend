@@ -84,7 +84,7 @@ const SearchResults = ({ searchData }) => {
           Search Results
         </Typography>
         <Typography color="primary.main" component="div" variant="subtitle2">
-          {`${searchDetails?.data?.data?.count}  Matching Records Found `}
+          {`${searchDetails?.data?.data?.count || '0'}  Matching Records Found `}
         </Typography>
         <Box mt={3}>
           <Box
@@ -178,7 +178,7 @@ const SearchResults = ({ searchData }) => {
                           marginTop: '10px',
                         }}
                       >
-                        <VisibilityOutlinedIcon sx={{ pr: '6px' }} /> View my Profile
+                        <VisibilityOutlinedIcon sx={{ pr: '6px' }} /> View Profile
                       </Button>
                     </Box>
                   </Grid>

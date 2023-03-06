@@ -14,6 +14,7 @@ import successToast from '../../ui/core/toaster';
 export default function TrackStatus() {
   const [showTable, setShowTable] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
+  const [trackValues, setTrackValues] = useState({});
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const { councilNames, trackStatusData } = useSelector((state) => state.common);
 
@@ -36,17 +37,15 @@ export default function TrackStatus() {
   });
 
   const onSubmit = () => {
-    const trackValues = {
-      smc_id: getValues().RegistrationCouncilId,
-      registration_no: getValues().RegistrationNumber,
-      // work_flow_status_id: 'null',
-      // application_type_id: 'null',
-      page_no: 1,
-      size: 5,
-      sort_by: 'createdAt',
-      sort_order: 'desc',
+    const trackData = {
+      smcId: getValues().RegistrationCouncilId,
+      registrationNo: parseInt(getValues().RegistrationNumber),
+      pageNo: 1,
+      offset: 10,
+      sortBy: 'createdAt',
+      sortType: 'desc',
     };
-    dispatch(trackStatus(trackValues))
+    dispatch(trackStatus(trackData))
       .then(() => {})
       .catch((error) => {
         successToast(
@@ -58,6 +57,7 @@ export default function TrackStatus() {
       });
     verboseLog('');
     setShowTable(true);
+    setTrackValues(trackData);
   };
 
   return (
@@ -111,11 +111,10 @@ export default function TrackStatus() {
                   fullWidth
                   required
                   placeholder="Enter Registration Number"
-                  defaultValue={getValues().RegistrationNumber}
-                  error={errors.RegistrationNumber?.message}
                   {...register('RegistrationNumber', {
                     required: 'Registration Number is required',
                   })}
+                  error={errors.RegistrationNumber?.message}
                 />
               </Box>
             </Grid>
@@ -141,8 +140,9 @@ export default function TrackStatus() {
 
       {showTable && trackStatusData?.data?.data?.health_professional_applications && (
         <TrackStatusTable
+          trackValues={trackValues}
           setShowHeader={setShowHeader}
-          trackStatusData={trackStatusData?.data?.data?.health_professional_applications}
+          trackStatusData={trackStatusData?.data?.data}
         />
       )}
     </Box>

@@ -166,7 +166,11 @@ function CollegeApprovalTable(props) {
         <Typography variant="h2" py={2}>
           College Applications Pending List
         </Typography>
-        <TableSearch searchParams={searchParams} />
+        <TableSearch
+          searchParams={searchParams}
+          exportData={collegeApprovalData}
+          flag={'collegeApprovalData'}
+        />
         <GenericTable
           order={order}
           orderBy={orderBy}

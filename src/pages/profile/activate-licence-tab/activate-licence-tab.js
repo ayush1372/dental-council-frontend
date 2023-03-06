@@ -247,7 +247,11 @@ const ActivateLicence = (props) => {
             </Typography>
           </Grid>
           <Grid mt={3}>
-            <TableSearch searchParams={searchParams} />
+            <TableSearch
+              searchParams={searchParams}
+              exportData={activateLicenseList}
+              flag={'ActivateList'}
+            />
           </Grid>
           <GenericTable
             order={order}
