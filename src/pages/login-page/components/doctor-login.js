@@ -373,9 +373,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
             />
             {otpFormEnabled && (
               <Box mt={2}>
-                <Typography variant="body1">
-                  We just sent an OTP on your Registered Mobile Number.
-                </Typography>
+                <Typography variant="body1">We just sent an OTP on your Mobile Number.</Typography>
                 {otpform}
               </Box>
             )}
