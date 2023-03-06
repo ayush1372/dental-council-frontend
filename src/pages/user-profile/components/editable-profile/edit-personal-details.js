@@ -321,18 +321,17 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
 
   return (
     <Box
-      boxShadow={1}
       sx={{
         padding: {
-          xs: '0px 10px 10px 10px',
-          md: '0px 41px 44px 41px',
+          xs: '0 16px 16px 16px',
+          md: '0 24px 0 24px',
         },
       }}
     >
       <ToastContainer></ToastContainer>
       <Grid container spacing={2}>
         {/* layer 1 */}
-        <Grid container item spacing={2}>
+        <Grid container item>
           <Grid item xs={12}>
             <Typography
               bgcolor="grey1.light"
@@ -1146,8 +1145,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
           </Grid> */}
         </Grid>
 
-        <Grid container display="flex" justifyContent="space-between" alignItems="center" mt={5}>
-          <Grid item xs={12} md={8} lg={6}>
+        <Grid item container display="flex" alignItems="center" mt={5}>
+          <Grid item xs={12} md="auto">
             <Button
               onClick={handleBackButton}
               color="grey"
@@ -1166,7 +1165,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               {t('Back')}
             </Button>
           </Grid>
-          <Grid item xs={12} md="auto" display="flex" justifyContent="end" lg={4}>
+          <Grid item xs={12} md="auto" display="flex" ml="auto">
             <Button
               onClick={handleSubmit(onHandleSave)}
               variant="outlined"
@@ -1186,7 +1185,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               {t('Save')}
             </Button>
           </Grid>
-          <Grid item xs={12} md="auto" display="flex" justifyContent="end" lg={2}>
+          <Grid item xs={12} md="auto" display="flex" ml={{ xs: 0, md: 2 }}>
             <Button
               size="medium"
               onClick={handleSubmit(onHandleOptionNext)}
