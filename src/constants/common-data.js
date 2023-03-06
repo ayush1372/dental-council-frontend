@@ -35,21 +35,21 @@ export const UniqueUserNameForDoctor = [
 ];
 
 export const getSMCProfileDetails = (details) => [
-  { label: 'Name', value: details.first_name, id: '1' },
-  { label: 'Enrolment Number NDHM', value: details.ndhm_enrollment, id: '2' },
-  { label: 'Enrolment Number', value: details.enrolled_number, id: '3' },
-  { label: 'Council', value: details.state_medical_council.name, id: '4' },
-  { label: 'Phone Number', value: details.mobile_no, id: '5' },
-  { label: 'Email Address', value: details.email_id, id: '6' },
+  { label: 'Name', value: details?.first_name, id: '1' },
+  { label: 'Enrolment Number NDHM', value: details?.ndhm_enrollment, id: '2' },
+  { label: 'Enrolment Number', value: details?.enrolled_number, id: '3' },
+  { label: 'Council', value: details?.state_medical_council?.name, id: '4' },
+  { label: 'Phone Number', value: details?.mobile_no, id: '5' },
+  { label: 'Email Address', value: details?.email_id, id: '6' },
 ];
 
 export const getNMCProfileDetails = (details) => [
-  { label: 'Name', value: details.first_name, id: '1' },
-  { label: 'Enrolment Number NDHM', value: details.ndhm_enrollment, id: '2' },
-  { label: 'Enrolment Number', value: details.enrolled_number, id: '3' },
-  { label: 'Council', value: details.state_medical_council.name, id: '4' },
-  { label: 'Phone Number', value: details.mobile_no, id: '5' },
-  { label: 'Email Address', value: details.email_id, id: '6' },
+  { label: 'Name', value: details?.first_name, id: '1' },
+  { label: 'Enrolment Number NDHM', value: details?.ndhm_enrollment, id: '2' },
+  { label: 'Enrolment Number', value: details?.enrolled_number, id: '3' },
+  { label: 'Council', value: details?.state_medical_council?.name, id: '4' },
+  { label: 'Phone Number', value: details?.mobile_no, id: '5' },
+  { label: 'Email Address', value: details?.email_id, id: '6' },
 ];
 
 export const getNBEProfileDetails = (details) => [
@@ -363,7 +363,7 @@ export const registrationRequestMapper = {
 };
 export const updationRequestMapper = {
   'Total HP Modification Requests': 'Total Updation request',
-  Rejected: 'Update Request Rejected',
+  Rejected: 'v Request Rejected',
   Approved: 'Update Request Approved',
   'Query Raised': 'Query Raised on Update Request',
   Suspended: 'Suspended',

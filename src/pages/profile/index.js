@@ -4,7 +4,7 @@ import { Box, CssBaseline, Grid, useTheme } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { colgTabs, doctorTabs } from '../../helpers/components/sidebar-drawer-list-item';
-import { sideBarTabs, userGroupType } from '../../helpers/functions/common-functions';
+import { sideBarTabs, userGroupTypeForSession } from '../../helpers/functions/common-functions';
 import {
   getCountriesList,
   getCoursesList,
@@ -43,7 +43,7 @@ export function Profile() {
       );
     }
 
-    userType = userGroupType(JSON.parse(jsonPayload)?.authorities[0]);
+    userType = userGroupTypeForSession(JSON.parse(jsonPayload)?.authorities[0]);
 
     let type = '';
 
