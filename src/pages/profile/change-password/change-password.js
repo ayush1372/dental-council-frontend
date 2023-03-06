@@ -60,11 +60,10 @@ const ChangePassword = () => {
         Change Password
       </Typography> */}
       <Box
+        display="flex"
+        justifyContent="center"
+        pt={4}
         sx={{
-          margin: {
-            xs: 0,
-            md: '10px auto',
-          },
           backgroundColor: `${theme.palette.white.main}`,
           boxShadow: 4,
         }}
