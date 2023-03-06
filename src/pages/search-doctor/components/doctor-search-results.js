@@ -4,7 +4,7 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { Box, Container, Grid, TablePagination, Typography, useTheme } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { searchDoctorResult } from '../../../constants/common-data';
+import { verboseLog } from '../../../config/debug';
 import {
   searchDoctorDetails,
   searchDoctorDetailsById,
@@ -17,18 +17,18 @@ const SearchResults = ({ searchData }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
 
+  const { searchDetails } = useSelector((state) => state.searchDoctor);
+
   const [confirmationModal, setConfirmationModal] = useState(false);
-  const [currentProfile, setCurrentProfile] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(9);
   const [page, setPage] = useState(0);
   const [imagepath, setImagePath] = useState('');
-
-  const { searchDetails } = useSelector((state) => state.searchDoctor);
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
     window.scrollTo({
@@ -40,8 +40,11 @@ const SearchResults = ({ searchData }) => {
   };
 
   const handleViewProfile = (id, imagePath) => {
+    verboseLog('ID', id);
     dispatch(searchDoctorDetailsById(id))
-      .then(() => {})
+      .then(() => {
+        setConfirmationModal(true);
+      })
       .catch((error) => {
         successToast(
           error?.data?.response?.data?.error,
@@ -52,7 +55,6 @@ const SearchResults = ({ searchData }) => {
       });
 
     setImagePath(imagePath);
-    setConfirmationModal(true);
   };
 
   return (
@@ -72,8 +74,7 @@ const SearchResults = ({ searchData }) => {
         <Box mt={3}>
           <Box className="search-results" mt={3}>
             <Grid container spacing={2}>
-              {/* {searchDetails?.data?.data?.results.map((doctor, index) => { */}
-              {searchDoctorResult.map((doctor, index) => {
+              {searchDetails?.data?.data?.results.map((doctor, index) => {
                 return (
                   <Grid item xs={12} sm={6} md={4} key={`doctor-${index}`}>
                     <Box
@@ -93,13 +94,13 @@ const SearchResults = ({ searchData }) => {
                         </Box>
                         <Box className="doctor-info" width="70%">
                           <Typography component="div" variant="subtitle1">
-                            {doctor?.salutation + doctor?.full_name}
+                            {doctor?.salutation + doctor?.full_name || ''}
                           </Typography>
                           <Typography component="div" variant="body5" color="grey.label" mt={2}>
                             State Medical Council
                           </Typography>
                           <Typography component="div" variant="body3" color="primary">
-                            {doctor?.state_medical_council}
+                            {doctor?.state_medical_council || ''}
                           </Typography>
                         </Box>
                       </Box>
@@ -114,7 +115,7 @@ const SearchResults = ({ searchData }) => {
                             Registration number
                           </Typography>
                           <Typography component="div" variant="body3" color="primary">
-                            {doctor?.registration_number}
+                            {doctor?.registration_number || ''}
                           </Typography>
                         </Box>
                         <Box>
@@ -122,15 +123,12 @@ const SearchResults = ({ searchData }) => {
                             Year of Registration
                           </Typography>
                           <Typography component="div" variant="body3" color="primary">
-                            {doctor?.registration_year}
+                            {doctor?.registration_year || ''}
                           </Typography>
                         </Box>
                       </Box>
                       <Button
-                        onClick={() => {
-                          setCurrentProfile(doctor);
-                          handleViewProfile(doctor?.profile_id, doctor?.profile_photo);
-                        }}
+                        onClick={() => handleViewProfile(doctor?.profile_id, doctor?.profile_photo)}
                         variant="contained"
                         color="secondary"
                         fullWidth
@@ -168,12 +166,8 @@ const SearchResults = ({ searchData }) => {
       {confirmationModal && (
         <DoctorProfileModal
           open={confirmationModal}
-          setOpen={() => {
-            setCurrentProfile('');
-            setConfirmationModal(false);
-          }}
+          setOpen={() => setConfirmationModal(false)}
           imagepath={imagepath}
-          doctorDetails={currentProfile}
         />
       )}
     </Container>

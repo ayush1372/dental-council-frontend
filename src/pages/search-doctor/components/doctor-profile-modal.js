@@ -1,25 +1,37 @@
+import { useState } from 'react';
+
+import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import { Box, Dialog, Grid, Typography, useTheme } from '@mui/material';
+import { useSelector } from 'react-redux';
 
-// import { useSelector } from 'react-redux';
-import { verboseLog } from '../../../config/debug';
 import { Button } from '../../../ui/core';
-// import { Button } from '../../../ui/core/button/button';
 
-const DoctorProfileModal = ({ open, setOpen, doctorDetails, imagepath }) => {
-  // const { searchDetailsById } = useSelector((state) => state.searchDoctor);
+import styles from '../search-doctor.module.scss';
 
+const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
   const theme = useTheme();
+
+  const { searchDetailsById } = useSelector((state) => state.searchDoctor);
+
+  const [copiedItem, setCopiedItem] = useState('');
+
   const handleClose = () => {
     setOpen(false);
   };
-  verboseLog('Doctor Details Object -> ', doctorDetails);
+
+  const textCopier = (copiedValue, copiedItemName) => {
+    navigator.clipboard.writeText(copiedValue);
+    setCopiedItem(copiedItemName);
+  };
 
   return (
     <Dialog
       scroll="body"
+      open={open}
+      onClose={handleClose}
       sx={{
         '.MuiPaper-root': {
           borderRadius: '10px',
@@ -28,17 +40,21 @@ const DoctorProfileModal = ({ open, setOpen, doctorDetails, imagepath }) => {
           boxShadow: 1,
         },
       }}
-      open={open}
-      onClose={handleClose}
     >
       <Box width="100%">
-        <Box bgcolor="grey2.dark" py={6} px={2} display="flex" justifyContent="flex-end">
-          <CloseIcon color="white" onClick={handleClose} />
+        <Box
+          pt={3}
+          px={3}
+          display="flex"
+          justifyContent="flex-end"
+          className={styles.doctorTitleBackground}
+        >
+          <CloseIcon color="white" onClick={handleClose} sx={{ width: '48px', height: '48px' }} />
         </Box>
-        <Box className="docter-details" px={6}>
-          <Box className="info" display="flex" py={1}>
-            <Box className="icon" width="30%" position="relative">
-              <Box className="outer-image">
+        <Box className={styles.docterDetails} px={6}>
+          <Box display="flex" py={1}>
+            <Box className={styles.icon} width="30%" position="relative">
+              <Box className={styles.outerImage}>
                 <img
                   src={`data:image/png;base64,${imagepath}`}
                   alt="doctor profile"
@@ -47,36 +63,33 @@ const DoctorProfileModal = ({ open, setOpen, doctorDetails, imagepath }) => {
                 />
               </Box>
             </Box>
-
-            {/* <Box className="details" width="70%" mt={8}>
-              <Typography variant="h2" color="textPrimary.main" component="div">
-                {searchDetailsById?.data?.data?.salutation +
-                  searchDetailsById?.data?.data?.full_name || ''}
-              </Typography>
-              <Typography variant="subtitle1" color="textPrimary.main" component="div">
-                {searchDetailsById?.data?.data?.state_medical_council}
-              </Typography>
-            </Box> */}
           </Box>
         </Box>
         <Box mt={7} p={4}>
           <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
             <Typography variant="h2" color="inputTextColor.main">
-              {/* Dr. Aditi Kumari */ doctorDetails?.salutation + ' ' + doctorDetails?.full_name}
+              {searchDetailsById?.data?.data?.salutation +
+                ' ' +
+                searchDetailsById?.data?.data?.full_name || ''}
             </Typography>
-            <Button sx={{ marginLeft: 'auto' }} color="secondary" variant="contained">
+            <Button
+              sx={{ marginLeft: 'auto' }}
+              color="secondary"
+              variant="contained"
+              onClick={() => window.print()}
+            >
               Print
             </Button>
             <ShareOutlinedIcon color="inputTextColor.main" sx={{ ml: 2 }} />
           </Box>
           <Typography component="div" variant="h3" color="textSecondary.main">
-            {/* West Bengal Medical Council */ doctorDetails?.state_medical_council}
+            {searchDetailsById?.data?.data?.state_medical_council || ''}
           </Typography>
           <Grid
             container
             my={3}
-            border={`1px solid ${theme?.palette?.inputBorderColor?.main}`}
             borderRadius="5px"
+            border={`1px solid ${theme?.palette?.inputBorderColor?.main}`}
           >
             <Grid
               item
@@ -96,7 +109,7 @@ const DoctorProfileModal = ({ open, setOpen, doctorDetails, imagepath }) => {
                 NMR ID
               </Typography>
               <Typography component="div" variant="body1" color="textSecondary.main">
-                IN23192789111
+                {searchDetailsById?.data?.data?.nmr_id || ''}
               </Typography>
             </Grid>
             <Grid
@@ -114,10 +127,10 @@ const DoctorProfileModal = ({ open, setOpen, doctorDetails, imagepath }) => {
                 fontWeight="400"
                 color="inputTextColor.main"
               >
-                NMR ID
+                Registration No.
               </Typography>
               <Typography component="div" variant="body1" color="textSecondary.main">
-                IN23192789111
+                {searchDetailsById?.data?.data?.registration_number || ''}
               </Typography>
             </Grid>
             <Grid
@@ -135,10 +148,10 @@ const DoctorProfileModal = ({ open, setOpen, doctorDetails, imagepath }) => {
                 fontWeight="400"
                 color="inputTextColor.main"
               >
-                NMR ID
+                Date of Reg.
               </Typography>
               <Typography component="div" variant="body1" color="textSecondary.main">
-                IN23192789111
+                {searchDetailsById?.data?.data?.date_of_registration || ''}
               </Typography>
             </Grid>
             <Grid item pl={3} py={2} xs={12} sm={6} md={3}>
@@ -148,10 +161,10 @@ const DoctorProfileModal = ({ open, setOpen, doctorDetails, imagepath }) => {
                 fontWeight="400"
                 color="inputTextColor.main"
               >
-                NMR ID
+                Year of Registration
               </Typography>
               <Typography component="div" variant="body1" color="textSecondary.main">
-                IN23192789111
+                {searchDetailsById?.data?.data?.year_of_info || ''}
               </Typography>
             </Grid>
           </Grid>
@@ -166,7 +179,7 @@ const DoctorProfileModal = ({ open, setOpen, doctorDetails, imagepath }) => {
                 Father/Husband Name
               </Typography>
               <Typography component="div" variant="body1" color="textSecondary.main">
-                N/A
+                {searchDetailsById?.data?.data?.father_husband_name || ''}
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
@@ -179,7 +192,7 @@ const DoctorProfileModal = ({ open, setOpen, doctorDetails, imagepath }) => {
                 Date of Birth
               </Typography>
               <Typography component="div" variant="body1" color="textSecondary.main">
-                N/A
+                {searchDetailsById?.data?.data?.date_of_birth || ''}
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
@@ -192,10 +205,36 @@ const DoctorProfileModal = ({ open, setOpen, doctorDetails, imagepath }) => {
                 Mobile number
               </Typography>
               <Typography component="span" variant="body1" color="textSecondary.main">
-                XXXXXX2137
-                <ContentCopyOutlinedIcon
-                  sx={{ color: 'inputFocusColor.main', width: '16px', height: '16px', ml: 0.5 }}
-                />
+                {searchDetailsById?.data?.data?.mobile_number || ''}
+                {searchDetailsById?.data?.data?.mobile_number ? (
+                  copiedItem === 'mobile' ? (
+                    <CheckCircleOutlineOutlinedIcon
+                      sx={{
+                        color: 'success.main',
+                        width: '16px',
+                        height: '16px',
+                        ml: 0.5,
+                        cursor: 'pointer',
+                      }}
+                      onClick={() => setCopiedItem('')}
+                    />
+                  ) : (
+                    <ContentCopyOutlinedIcon
+                      sx={{
+                        color: 'inputFocusColor.main',
+                        width: '16px',
+                        height: '16px',
+                        ml: 0.5,
+                        cursor: 'pointer',
+                      }}
+                      onClick={() =>
+                        textCopier(searchDetailsById?.data?.data?.mobile_number, 'mobile')
+                      }
+                    />
+                  )
+                ) : (
+                  ''
+                )}
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
@@ -213,10 +252,34 @@ const DoctorProfileModal = ({ open, setOpen, doctorDetails, imagepath }) => {
                 variant="body1"
                 color="textSecondary.main"
               >
-                adxxx.xxxxxxxxxxxxxxxxxxx@gmail.com
-                <ContentCopyOutlinedIcon
-                  sx={{ color: 'inputFocusColor.main', width: '16px', height: '16px', ml: 0.5 }}
-                />
+                {searchDetailsById?.data?.data?.email || ''}
+                {searchDetailsById?.data?.data?.email ? (
+                  copiedItem === 'email' ? (
+                    <CheckCircleOutlineOutlinedIcon
+                      sx={{
+                        color: 'success.main',
+                        width: '16px',
+                        height: '16px',
+                        ml: 0.5,
+                        cursor: 'pointer',
+                      }}
+                      onClick={() => setCopiedItem('')}
+                    />
+                  ) : (
+                    <ContentCopyOutlinedIcon
+                      sx={{
+                        color: 'inputFocusColor.main',
+                        width: '16px',
+                        height: '16px',
+                        ml: 0.5,
+                        cursor: 'pointer',
+                      }}
+                      onClick={() => textCopier(searchDetailsById?.data?.data?.email, 'email')}
+                    />
+                  )
+                ) : (
+                  ''
+                )}
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
@@ -229,7 +292,7 @@ const DoctorProfileModal = ({ open, setOpen, doctorDetails, imagepath }) => {
                 Qualification
               </Typography>
               <Typography component="span" variant="body1" color="textSecondary.main">
-                MBBS
+                {searchDetailsById?.data?.data?.qualifications[0]?.qualification || ''}
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
@@ -242,7 +305,7 @@ const DoctorProfileModal = ({ open, setOpen, doctorDetails, imagepath }) => {
                 Qualification year
               </Typography>
               <Typography component="span" variant="body1" color="textSecondary.main">
-                1994
+                {searchDetailsById?.data?.data?.qualifications[0]?.qualification_year || ''}
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
@@ -255,75 +318,77 @@ const DoctorProfileModal = ({ open, setOpen, doctorDetails, imagepath }) => {
                 University Name
               </Typography>
               <Typography component="span" variant="body1" color="textSecondary.main">
-                U.Calcutta
+                {searchDetailsById?.data?.data?.qualifications[0]?.university_name || ''}
               </Typography>
             </Grid>
           </Grid>
         </Box>
 
-        {doctorDetails?.qualitfications.map((q, index) => {
-          return index !== 0 ? (
-            <Box
-              key={`qualification_${index}`}
-              borderTop={`1px solid ${theme?.palette?.inputBorderColor?.main}`}
-              p={3}
-            >
-              <Typography
-                color="tabHighlightedBackgroundColor.main"
-                component="div"
-                borderRadius={0}
-                pl={2}
-                mb={3}
-                borderLeft={`3px solid ${theme?.palette?.secondary?.main}`}
-              >
-                Additional Qualification :- {index}
-              </Typography>
-              <Grid container rowSpacing={{ xs: 2, md: 0 }}>
-                <Grid item xs={12} sm={4} md={3}>
+        {searchDetailsById?.data?.data?.qualifications
+          ? searchDetailsById?.data?.data?.qualifications?.map((q, index) => {
+              return index !== 0 ? (
+                <Box
+                  key={`qualification_${index}`}
+                  borderTop={`1px solid ${theme?.palette?.inputBorderColor?.main}`}
+                  p={3}
+                >
                   <Typography
+                    color="tabHighlightedBackgroundColor.main"
                     component="div"
-                    variant="body1"
-                    fontWeight="400"
-                    color="inputTextColor.main"
+                    borderRadius={0}
+                    pl={2}
+                    mb={3}
+                    borderLeft={`3px solid ${theme?.palette?.secondary?.main}`}
                   >
-                    Qualification
+                    Additional Qualification :- {index}
                   </Typography>
-                  <Typography component="div" variant="body1" color="textSecondary.main">
-                    {q?.qualification}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} sm={4} md={3}>
-                  <Typography
-                    component="div"
-                    variant="body1"
-                    fontWeight="400"
-                    color="inputTextColor.main"
-                  >
-                    Qualification year
-                  </Typography>
-                  <Typography component="div" variant="body1" color="textSecondary.main">
-                    {q?.qualification_year}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} sm={4} md={3}>
-                  <Typography
-                    component="div"
-                    variant="body1"
-                    fontWeight="400"
-                    color="inputTextColor.main"
-                  >
-                    University Name
-                  </Typography>
-                  <Typography component="div" variant="body1" color="textSecondary.main">
-                    {q?.university_name}
-                  </Typography>
-                </Grid>
-              </Grid>
-            </Box>
-          ) : (
-            ''
-          );
-        })}
+                  <Grid container rowSpacing={{ xs: 2, md: 0 }}>
+                    <Grid item xs={12} sm={4} md={3}>
+                      <Typography
+                        component="div"
+                        variant="body1"
+                        fontWeight="400"
+                        color="inputTextColor.main"
+                      >
+                        Qualification
+                      </Typography>
+                      <Typography component="div" variant="body1" color="textSecondary.main">
+                        {q?.qualification}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={4} md={3}>
+                      <Typography
+                        component="div"
+                        variant="body1"
+                        fontWeight="400"
+                        color="inputTextColor.main"
+                      >
+                        Qualification year
+                      </Typography>
+                      <Typography component="div" variant="body1" color="textSecondary.main">
+                        {q?.qualification_year}
+                      </Typography>
+                    </Grid>
+                    <Grid item xs={12} sm={4} md={3}>
+                      <Typography
+                        component="div"
+                        variant="body1"
+                        fontWeight="400"
+                        color="inputTextColor.main"
+                      >
+                        University Name
+                      </Typography>
+                      <Typography component="div" variant="body1" color="textSecondary.main">
+                        {q?.university_name}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Box>
+              ) : (
+                ''
+              );
+            })
+          : ''}
       </Box>
     </Dialog>
   );
