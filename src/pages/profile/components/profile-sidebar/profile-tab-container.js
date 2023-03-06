@@ -29,7 +29,7 @@ export default function ProfileTabContainer({ DrawerOptions }) {
               </Typography>
             )}
             <Box
-              bgcolor={`${theme.palette.white.main}`}
+              bgcolor={userActiveTab !== 'my-profile' && `${theme.palette.white.main}`}
               py={2}
               px={3}
               minHeight={'550px'}
