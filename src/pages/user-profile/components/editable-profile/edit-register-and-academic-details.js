@@ -44,6 +44,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     (state) => state?.common
   );
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  // console.log(registrationDetails, 'finalResult');
   const { loginData } = useSelector((state) => state?.loginReducer);
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { registration_detail_to } = registrationDetails || {};
@@ -97,25 +98,35 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     control,
     name: 'qualification',
   });
-  const onHandleSave = () => {
+
+  const onHandleSave = (moveToNext = false) => {
     const {
       RegisteredWithCouncil,
       RegistrationNumber,
       RegistrationDate,
       registration,
       RenewalDate,
-      registrationCertificate,
+      // registrationCertificate,
     } = getValues();
-    const registrationDetailsValues = JSON.parse(JSON.stringify(registrationDetails));
-    registrationDetailsValues.registration_detail_to.registration_date = RegistrationDate;
-    registrationDetailsValues.registration_detail_to.registration_number = RegistrationNumber;
-    registrationDetailsValues.registration_detail_to.state_medical_council = {};
-    registrationDetailsValues.registration_detail_to.state_medical_council.name =
-      RegisteredWithCouncil;
-    registrationDetailsValues.registration_detail_to.is_renewable = registration;
-    registrationDetailsValues.registration_detail_to.renewable_registration_date = RenewalDate;
-    registrationDetailsValues.registration_detail_to.is_name_change = registrationCertificate;
-    registrationDetailsValues.hp_profile_id = personalDetails.hp_profile_id;
+
+    const cloneObj = JSON.parse(JSON.stringify(registrationDetails));
+
+    let finalResult = {};
+    let registration_detail = {};
+    let qualification_details = {};
+
+    registration_detail.registration_date = RegistrationDate;
+    registration_detail.registration_number = RegistrationNumber;
+    registration_detail.state_medical_council = { id: 14 };
+    registration_detail.state_medical_council.name = RegisteredWithCouncil;
+    // registration_detail.registration_certificate = undefined;
+    registration_detail.is_renewable = registration;
+    registration_detail.renewable_registration_date = RenewalDate;
+    // registration_detail.is_name_change = registrationCertificate;
+
+    // removed this profile id to be sent via payload.
+    // registrationDetailsValues.hp_profile_id = personalDetails.hp_profile_id;
+
     // this below code is storing qualification details
     const { qualification } = getValues();
     let updatedObj = [];
@@ -127,27 +138,35 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
         state: statesList?.find((x) => x.id === q?.state),
         college: q?.collegeObj,
         qualification_year: q?.year,
-        is_name_change: q?.nameindegree,
+        //   is_name_change: q?.nameindegree,
         qualification_month: q?.month,
         qualification_from: q?.qualificationfrom,
       }));
     }
 
-    const cloneObj = { ...registrationDetails };
-    cloneObj.registrationDetails = updatedObj;
+    qualification_details = [...updatedObj];
+
+    finalResult = { registration_detail, qualification_details };
+    cloneObj.registration_detail_to = registration_detail;
+    // ...(cloneObj.qualification_detail_response_tos?.[0] || {})
+    cloneObj.qualification_detail_response_tos = [{ ...(qualification_details?.[0] || {}) }];
+
+    // console.log(finalResult, 'finalResult');
 
     dispatch(
       getRegistrationDetails({
-        ...JSON.parse(JSON.stringify(registrationDetailsValues)),
+        ...JSON.parse(JSON.stringify(cloneObj)),
       })
     );
+
+    fetchUpdateDoctorRegistrationDetails(finalResult, moveToNext);
   };
 
-  const fetchUpdateDoctorRegistrationDetails = (registrationDetails) => {
+  const fetchUpdateDoctorRegistrationDetails = (finalResult, moveToNext = false) => {
     const formData = new FormData();
-    formData.append('data', JSON.stringify(registrationDetails));
-    formData.append('proof', Object.values(qualificationFilesData)?.[0]?.[0].file);
-    formData.append('certificate', registrationFileData[0].file);
+    formData.append('data', JSON.stringify(finalResult));
+    formData.append('degreeCertificate', Object.values(qualificationFilesData)?.[0]?.[0].file);
+    formData.append('registrationCertificate', registrationFileData[0].file);
     dispatch(
       updateDoctorRegistrationDetails(
         formData,
@@ -158,7 +177,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     ).then(() => {
       dispatch(getWorkProfileDetailsData(loginData?.data?.profile_id))
         .then(() => {
-          handleNext();
+          if (moveToNext) handleNext();
         })
         .catch((allFailMsg) => {
           successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
@@ -167,8 +186,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   };
 
   const onHandleOptionNext = () => {
-    onHandleSave();
-    fetchUpdateDoctorRegistrationDetails(registrationDetails);
+    onHandleSave(true);
   };
 
   const handleQualificationFilesData = (fileName, files) => {
