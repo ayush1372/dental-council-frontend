@@ -229,11 +229,11 @@ export const verifyNotificationOtp = (otpValue) => async (dispatch) => {
   });
 };
 
-export const trackStatus = (body) => async (dispatch) => {
+export const trackStatus = (trackData) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,
-      url: `${API.common.trackStatus}?pageNo=${body.pageNo}&offset=${body.offset}&registrationNo=${body?.registration_no}`,
+      url: `${API.common.trackStatus}?smcId=${trackData.smcId}&registrationNo=${trackData.registrationNo}&pageNo=${trackData.pageNo}&offset=${trackData.offset}&sortBy=${trackData.sortBy}&sortType=${trackData.sortType}`,
     })
       .then((response) => {
         dispatch(searchTrackStatusData(response));

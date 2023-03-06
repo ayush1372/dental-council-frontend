@@ -69,8 +69,8 @@ const StateMedicalCouncil = ({ setDoSearch, setSearchData }) => {
           }}
           fullWidth
           error={errors.Statemedicalcouncil?.message}
-          name="Statemedicalcouncil"
-          label="Select State medical council"
+          name={'Statemedicalcouncil'}
+          label=" State Medical Council"
           placeholder="Select State medical council"
           defaultValue={getValues().Statemedicalcouncil}
           {...register('Statemedicalcouncil', {

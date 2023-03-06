@@ -166,7 +166,11 @@ function CollegeApprovalTable(props) {
         <Typography variant="h2" py={2}>
           College Applications Pending List
         </Typography>
-        <TableSearch searchParams={searchParams} />
+        <TableSearch
+          searchParams={searchParams}
+          exportData={collegeApprovalData}
+          flag={'collegeApprovalData'}
+        />
         <GenericTable
           order={order}
           orderBy={orderBy}
@@ -181,7 +185,7 @@ function CollegeApprovalTable(props) {
           <TablePagination
             rowsPerPageOptions={[]}
             component="div"
-            count={collegeApprovalData?.data?.total_no_of_records}
+            count={collegeApprovalData?.data?.total_no_of_records || '0'}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

@@ -2,13 +2,14 @@ import React from 'react';
 import { useState } from 'react';
 
 import { Box, Grid, TablePagination } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // import TableSearch from '../../../src/pages/profile/components/table-search/table-search';
 import UserProfile from '../../../src/pages/user-profile';
 import { verboseLog } from '../../config/debug';
 import GenericTable from '../../shared/generic-component/generic-table';
 import ViewProfile from '../../shared/view-profile/view-profile';
+import { trackStatus } from '../../store/actions/common-actions';
 import { Button } from '../../ui/core';
 
 function createData(
@@ -45,6 +46,7 @@ function TrackStatusTable(props) {
   const [page, setPage] = React.useState(0);
   const [selectedRowData, setRowData] = React.useState({});
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  const dispatch = useDispatch();
 
   const [showViewProfile, setShowViewPorfile] = useState(false);
   const viewNameOfApplicant = (event, row) => {
@@ -160,11 +162,13 @@ function TrackStatusTable(props) {
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
-    props.getTableData(newPage + 1);
+    // props.getTableData(newPage + 1);
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
     });
+    let finalSearchData = { ...props.trackValues, pageNo: newPage };
+    dispatch(trackStatus(finalSearchData));
   };
 
   const handleChangeRowsPerPage = (event) => {
@@ -220,7 +224,7 @@ function TrackStatusTable(props) {
         <TablePagination
           rowsPerPageOptions={[]}
           component="div"
-          count={props?.trackStatusData?.total_no_of_records}
+          count={props?.trackStatusData?.total_no_of_records || '0'}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

@@ -11,9 +11,10 @@ export const API = {
     registrationDetails: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/registration',
     workProfileDetails: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/work-profile',
     profileImage: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/profile-picture',
-    // initiateWorkFlow: 'api/v1/abdm/nmr/health-professional/applications/status',
+    initiateWorkFlow: 'api/v1/abdm/nmr/health-professional/applications/status',
     trackApplicationData: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/applications',
     profileConsent: 'api/v1/abdm/nmr/health-professional/register',
+    createPersonalDetails: '/api/v1/abdm/nmr/health-professional/personal',
   },
   common: {
     states: 'api/v1/abdm/nmr/countries/356/states',
