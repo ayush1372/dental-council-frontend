@@ -1,18 +1,43 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 import AddIcon from '@mui/icons-material/Add';
+import CloseIcon from '@mui/icons-material/Close';
+import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import RemoveIcon from '@mui/icons-material/Remove';
-import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Button,
+  Dialog,
+  Typography,
+} from '@mui/material';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import PopupState, { bindMenu, bindTrigger } from 'material-ui-popup-state';
 import { useSelector } from 'react-redux';
 
-import ButtonGroupWizard from '../../../../ui/core/wizard/button-group-wizard';
+import SuspendLicenseVoluntaryRetirement from '../../../suspend-license-voluntary-retirement';
 import QualificationDetailsContent from '../readable-content/qualification-details-content';
 import RegistrationDetailsContent from '../readable-content/registration-details-content';
 
-const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack, showActions = true }) => {
+const ReadRegisterAndAcademicDetails = ({
+  handleBack,
+  showActions = true,
+  activeStep,
+  setShowDashboard,
+  setShowViewPorfile,
+  setShowTable,
+}) => {
   const [accordionKey, setAccordionKey] = useState('accordion-0');
+  const [selected, setSelected] = useState('');
+  const [confirmationModal, setConfirmationModal] = useState(false);
 
+  const { userActiveTab } = useSelector((state) => state.common);
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+
   const accordions = [
     {
       title: 'Registration Details',
@@ -25,6 +50,22 @@ const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack, showActions = 
   ];
   const handleChange = (accordionValue) => (_event, isExpanded) => {
     setAccordionKey(isExpanded ? accordionValue : null);
+  };
+  const selectionChangeHandler = (event) => {
+    const { myValue } = event.currentTarget.dataset;
+    setSelected(myValue);
+    setConfirmationModal(true);
+  };
+
+  const handleClose = () => {
+    setConfirmationModal(false);
+  };
+
+  const handleSubmitDetails = () => {
+    setConfirmationModal(false);
+    setShowDashboard(false);
+    setShowTable(true);
+    setShowViewPorfile(false);
   };
 
   return (
@@ -64,7 +105,7 @@ const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack, showActions = 
           );
         })}
       </Box>
-      {showActions && (
+      {/* {showActions && (
         <Box
           px={3}
           display="flex"
@@ -75,7 +116,139 @@ const ReadRegisterAndAcademicDetails = ({ handleNext, handleBack, showActions = 
 
           <ButtonGroupWizard handleNext={handleNext} />
         </Box>
+      )} */}
+      {showActions && (
+        <Box
+          paddingBottom={'30px'}
+          pl={3}
+          display="flex"
+          justifyContent="space-between"
+          flexDirection={{ xs: 'column', md: 'row' }}
+        >
+          <Button
+            color="grey"
+            variant="contained"
+            onClick={handleBack}
+            sx={{
+              width: {
+                xs: '100%',
+                md: 'fit-content',
+              },
+              margin: {
+                xs: '10px 0',
+              },
+            }}
+          >
+            Back
+          </Button>
+          {userActiveTab === 'dashboard' && (
+            <Box mt={2}>
+              <PopupState>
+                {(popupState) => (
+                  <React.Fragment>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      {...bindTrigger(popupState)}
+                      sx={{
+                        mr: 2,
+                        mb: {
+                          xs: 1,
+                          md: 0,
+                        },
+                        width: {
+                          xs: '100%',
+                          md: 'fit-content',
+                        },
+                      }}
+                    >
+                      Action <MoreHorizIcon />
+                    </Button>
+
+                    <Menu {...bindMenu(popupState)}>
+                      <MenuItem onClick={selectionChangeHandler} data-my-value={'verify'}>
+                        Verify
+                      </MenuItem>
+                      <MenuItem onClick={selectionChangeHandler} data-my-value={'raise'}>
+                        Raise a Query
+                      </MenuItem>
+                      {loggedInUserType === 'SMC' && (
+                        <MenuItem onClick={selectionChangeHandler} data-my-value={'forward'}>
+                          Forward
+                        </MenuItem>
+                      )}
+                      <MenuItem onClick={selectionChangeHandler} data-my-value={'reject'}>
+                        Reject
+                      </MenuItem>
+                      {loggedInUserType === 'NMC' && (
+                        <MenuItem onClick={selectionChangeHandler} data-my-value={'suspend'}>
+                          Permanent suspend
+                        </MenuItem>
+                      )}
+                      {loggedInUserType === 'NMC' && (
+                        <MenuItem onClick={selectionChangeHandler} data-my-value={'blacklist'}>
+                          Temporary suspend
+                        </MenuItem>
+                      )}
+                    </Menu>
+                  </React.Fragment>
+                )}
+              </PopupState>
+            </Box>
+          )}
+        </Box>
       )}
+      <Dialog
+        open={confirmationModal}
+        onClose={() => {
+          setConfirmationModal(false);
+        }}
+        sx={{
+          '.MuiPaper-root': {
+            borderRadius: '10px',
+          },
+        }}
+      >
+        <Box
+          p={2}
+          width={selected === 'verify' ? '500px' : selected === 'forward' ? '700px' : '630px'}
+          height={
+            selected === 'reject'
+              ? '500px'
+              : selected === 'verify'
+              ? '380px'
+              : selected === 'forward'
+              ? '300px'
+              : selected === 'raise'
+              ? '650px'
+              : '720px'
+          }
+          borderRadius={'40px'}
+        >
+          <Box align="right">
+            <CloseIcon onClick={handleClose} />
+          </Box>
+          {loggedInUserType === 'NMC' ||
+          loggedInUserType === 'SMC' ||
+          loggedInUserType === 'College' ? (
+            <Box
+              display={'flex'}
+              flexDirection={'column'}
+              justifyContent={'flex-start'}
+              alignItems={'center'}
+            >
+              <SuspendLicenseVoluntaryRetirement
+                selectedValue={selected}
+                handleSubmitDetails={handleSubmitDetails}
+                activeStep={activeStep}
+                handleClose={handleClose}
+              />
+            </Box>
+          ) : (
+            ''
+          )}
+        </Box>
+      </Dialog>
     </Box>
   );
 };

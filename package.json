@@ -21,6 +21,8 @@
     "debug": "^4.3.4",
     "env-cmd": "^10.1.0",
     "es-abstract": "^1.20.1",
+    "exceljs": "^4.3.0",
+    "file-saver": "^2.0.5",
     "fs": "^0.0.1-security",
     "i18next": "^21.8.16",
     "inquirer-directory": "^2.2.0",

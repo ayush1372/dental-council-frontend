@@ -211,9 +211,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
         },
       }}
     >
-      <Grid container spacing={2} mt={2}>
+      <Grid container spacing={2}>
         {/* layer 1 */}
-        <Grid container item spacing={2} mt={1}>
+        <Grid container item spacing={2}>
           <Grid item xs={12}>
             <Typography
               bgcolor="grey1.light"

@@ -20,9 +20,9 @@ const WorkProfile = () => {
     <Container>
       {!isEditWorkProfileOpen && (
         <>
-          <Box>
+          {/* <Box>
             <Typography variant="h2">Work Details</Typography>
-          </Box>
+          </Box> */}
           <Box mt={2} display="flex" justifyContent="space-between">
             <Typography variant="h2" component="div">
               {work_organization}

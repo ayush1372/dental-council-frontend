@@ -106,12 +106,14 @@ export default function ProfileImage(props) {
         </Grid>
       ) : (
         <Grid item xs={12} display="flex" justifyContent="center" mt={2}>
-          <img
-            alt="avtarImg"
-            className={styles.profileImage}
-            src={avtarImg}
-            data-testid="profileImg"
-          />
+          <Box maxWidth="110px" width="100%" position="relative">
+            <img
+              alt="avtarImg"
+              className={styles.profileImage}
+              src={avtarImg}
+              data-testid="profileImg"
+            />
+          </Box>
         </Grid>
       )}
       <Grid textAlign="center" item xs={12}>
