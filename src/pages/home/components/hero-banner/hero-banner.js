@@ -26,7 +26,7 @@ export function HeroBanner() {
               {t(`Ayushmaan Bharat Digital Mission`)}
             </Typography>
             <Typography variant="h1" color="primary" mb={2}>
-              {t('National Medical Commission (Nmc)')}
+              {t('National Medical Commission (NMC)')}
             </Typography>
             <Typography variant="body1" color="textPrimary" component="div">
               {t(

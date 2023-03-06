@@ -186,13 +186,11 @@ export const LoginRegisterPopover = ({
                 <Button
                   size="small"
                   variant="contained"
+                  color="secondary"
                   sx={{
-                    backgroundColor: 'secondary.lightOrange',
-                    '&:hover': {
-                      backgroundColor: 'secondary.lightOrange',
-                    },
+                    mr: 2,
                   }}
-                  // className={styles.registerButton}
+                  className={styles.registerButton}
                   onClick={() => onClickRecruitingAgentHandler()}
                   disabled={regType === 'SMC' || regType === 'NMC' || regType === 'NBE'}
                 >
@@ -201,14 +199,7 @@ export const LoginRegisterPopover = ({
                 <Button
                   size="small"
                   variant="outlined"
-                  sx={{
-                    backgroundColor: 'white.main',
-                    ml: 2,
-                    '&:hover': {
-                      color: 'primary.main',
-                      backgroundColor: 'white.main',
-                    },
-                  }}
+                  color="secondary"
                   onClick={() => {
                     onClickLoginHandler();
                   }}
