@@ -282,8 +282,8 @@ export const getActivateLicenseList = (body) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,
-      url: `${API.common.activateLicense}?pageNo=${body.pageNo}&offset=${body.offset}&search=${body.search}`,
-      data: body,
+      url: `${API.common.activateLicense}?pageNo=${body.pageNo}&offset=${body.offset}`,
+      // data: body,
     })
       .then((response) => {
         dispatch(getActivateLicense(response));
