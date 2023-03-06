@@ -57,13 +57,13 @@ export const encryptData = (data, key) => {
 
 export const userGroupType = (userGroupID) => {
   const userGroupTypeObj = {
-    1: 'Health Professional',
-    2: 'State Medical Council',
-    3: 'National Medical Council',
-    4: 'College Dean',
-    5: 'College Registrar',
-    6: 'College Admin',
-    7: 'NBE',
+    ROLE_HEALTH_PROFESSIONAL: 'Health Professional',
+    ROLE_SMC: 'State Medical Council',
+    ROLE_NMC: 'National Medical Council',
+    ROLE_COLLEGE_DEAN: 'College Dean',
+    ROLE_COLLEGE_REGISTRAR: 'College Registrar',
+    ROLE_COLLEGE_ADMIN: 'College Admin',
+    ROLE_NBE: 'NBE',
   };
   return userGroupTypeObj[userGroupID];
 };
