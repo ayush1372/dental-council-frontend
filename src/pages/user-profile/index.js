@@ -199,11 +199,6 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
                 }}
               >
                 {isReadMode ? 'My Profile' : 'Edit Profile'}
-                {!isReadMode && (
-                  <Typography component="div" variant="body3" color="inputTextColor.main">
-                    Update all your details correctly so that it could be verified by NMR verifiers.
-                  </Typography>
-                )}
               </Typography>
             </Grid>
             {loggedInUserType === 'Doctor' && (
