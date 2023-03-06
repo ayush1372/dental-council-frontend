@@ -80,7 +80,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
     let loginTypeID;
     switch (selectedLoginOption) {
       case 'nmrId':
-        loginTypeID = 'nmr_id';
+        loginTypeID = 3;
         break;
       case 'mobile':
         loginTypeID = 2;
@@ -318,7 +318,9 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
 
             {otpFormEnabled && (
               <Box mt={2}>
-                <Typography variant="body1">We just sent an OTP on your NMR ID</Typography>
+                <Typography variant="body1">
+                  We just sent an OTP on your Registered Mobile Number Linked with your NMR ID
+                </Typography>
                 {otpform}
               </Box>
             )}
