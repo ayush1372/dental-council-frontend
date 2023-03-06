@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import EditIcon from '@mui/icons-material/Edit';
 // import TuneIcon from '@mui/icons-material/Tune';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Grid, Typography, useTheme } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import useWizard from '../../hooks/use-wizard';
@@ -26,17 +26,10 @@ import RegisterAndAcademicDetails from './components/register-and-academic-detai
 // import WorkProfile from './components/work-profile/work-profile';
 const readWizardSteps = ['Personal Details', 'Registration & Academic Details']; //, 'Work Profile'
 
-export const UserProfile = ({
-  showViewProfile,
-  // setShowDashboard,
-  // setShowTable,
-  // setShowViewPorfile,
-  // showUserProfile,
-  selectedRowData,
-}) => {
+export const UserProfile = ({ showViewProfile, selectedRowData }) => {
+  const theme = useTheme();
   const dispatch = useDispatch();
   const [isReadMode, setIsReadMode] = useState(true);
-  // const [showChangepassword, setShowChangepassword] = useState(false);
   const [showReactivateLicense, setShowReactivateLicense] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
@@ -181,15 +174,23 @@ export const UserProfile = ({
       )}
       {showSuccessPopup && <SuccessPopup />}
       {/* {!showChangepassword ? ( */}
-      <Box mt={3}>
+      <Box>
         {!showViewProfile ? (
-          <Grid container display="flex" justifyContent="space-between">
+          <Grid
+            container
+            display="flex"
+            justifyContent="space-between"
+            sx={{ alignItems: 'center' }}
+            bgcolor={`${theme.palette.white.main}`}
+            mb={2}
+            px={3}
+            py={2}
+          >
             <Grid item xs={12} md={6}>
               <Typography
                 component="div"
                 variant="h2"
                 color="inputTextColor.main"
-                py={2}
                 sx={{
                   textAlign: {
                     xs: 'center',
@@ -197,12 +198,7 @@ export const UserProfile = ({
                   },
                 }}
               >
-                {isReadMode ? 'User Profile' : 'Edit Profile'}
-                {!isReadMode && (
-                  <Typography component="div" variant="body3" color="inputTextColor.main">
-                    Update all your details correctly so that it could be verified by NMR verifiers.
-                  </Typography>
-                )}
+                {isReadMode ? 'My Profile' : 'Edit Profile'}
               </Typography>
             </Grid>
             {loggedInUserType === 'Doctor' && (
@@ -216,20 +212,7 @@ export const UserProfile = ({
                     md: '0 10px 0 0 ',
                   },
                 }}
-              >
-                {/* <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => {
-                      setShowChangepassword(true);
-                    }}
-                    sx={{
-                      width: '100%',
-                    }}
-                  >
-                    Change Password
-                  </Button> */}
-              </Grid>
+              ></Grid>
             )}
             {isReadMode && (
               <Grid

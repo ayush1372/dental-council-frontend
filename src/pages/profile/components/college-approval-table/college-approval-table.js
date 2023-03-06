@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { Box, Grid, TablePagination, Typography } from '@mui/material';
+import { Box, Grid, TablePagination } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
@@ -163,9 +163,9 @@ function CollegeApprovalTable(props) {
     <>
       <ToastContainer></ToastContainer>
       <Grid sx={{ m: 2 }}>
-        <Typography variant="h2" py={2}>
+        {/* <Typography variant="h2" py={2}>
           College Applications Pending List
-        </Typography>
+        </Typography> */}
         <TableSearch searchParams={searchParams} />
         <GenericTable
           order={order}
