@@ -58,7 +58,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     schedule,
     full_name,
     language,
-    house,
+    // house,
   } = personal_details || {};
   const { country, state, district, sub_district, village, pincode, address_line1, email, mobile } =
     communication_address || {};
@@ -128,7 +128,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       Schedule: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? scheduleId : '',
       Name: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? full_name : '',
       Address: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? address_line1 : '',
-      House: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? house : '',
+      // House: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? house : '',
       Area: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? citiesId : '',
       District: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? districtId : '',
       SubDistrict:
@@ -256,7 +256,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       District,
       SubDistrict,
       Area,
-      House,
+      // House,
       // Street,
       DateOfBirth,
       LanguageSpoken,
@@ -277,7 +277,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     doctorProfileValues.communication_address.pincode = PostalCode;
     doctorProfileValues.communication_address.address_line1 = Address;
     // console.log(house, doctorProfileValues, 'house');
-    doctorProfileValues.communication_address.house = House;
+    // doctorProfileValues.communication_address.house = House;
     doctorProfileValues.communication_address.email = EmailAddress;
     doctorProfileValues.communication_address.mobile = mobileNo;
     doctorProfileValues.personal_details.full_name = Name;
@@ -299,6 +299,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   };
   const onHandleOptionNext = () => {
     onHandleSave();
+    // console.log(personalDetails, 'personalDetails');
     fetchUpadtedDoctorUserProfileData(personalDetails);
   };
   // const handleSalutationChange = (event) => {
@@ -692,9 +693,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             </Grid> */}
             <Box bgcolor="backgroundColor.light" p={2} display="flex">
               <Checkbox
-                {...register('Address', {
-                  required: 'Address is Required',
-                })}
+                defaultChecked={personalDetails?.communication_address?.is_same_address}
+                checked={personalDetails?.communication_address?.is_same_address}
                 error={errors.Address?.message}
               />
               <Typography component="div" mt={1} variant="body7" color="textPrimary.main">
@@ -714,14 +714,19 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 placeholder="Your House address"
                 required={true}
                 fullWidth
-                defaultValue={getValues().House}
-                {...register('House', {
-                  required: 'House House is Required',
-                  maxLength: {
-                    value: 300,
-                    message: 'Length should be less than 300.',
-                  },
-                })}
+                defaultValue={
+                  personalDetails?.communication_address?.is_same_address
+                    ? personalDetails?.kyc_address?.house
+                    : getValues().Address
+                }
+                // defaultValue={getValues().House}
+                // {...register('House', {
+                //   required: 'House House is Required',
+                //   maxLength: {
+                //     value: 300,
+                //     message: 'Length should be less than 300.',
+                //   },
+                // })}
                 error={errors.House?.message}
               />
             </Grid>
@@ -735,6 +740,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 placeholder="Enter Street"
                 // required={false}
                 fullWidth
+                defaultValue={
+                  personalDetails?.communication_address?.is_same_address
+                    ? personalDetails?.kyc_address?.street
+                    : getValues().Street
+                }
                 // defaultValue={getValues().Street}
                 // /*author:krishnakanth, purpose: after getting values from backend we will work onthis */
                 // {...register('Street', {
@@ -759,7 +769,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 placeholder="Your Landmark"
                 required={false}
                 fullWidth
-                defaultValue={getValues().Landmark}
+                defaultValue={
+                  personalDetails?.communication_address?.is_same_address
+                    ? personalDetails?.kyc_address?.landmark
+                    : getValues().Landmark
+                }
+                // defaultValue={getValues().Landmark}
                 /*author:krishnakanth, purpose: after getting values from backend we will work onthis */
                 // {...register('Landmark', {
                 //  required: 'Landmark is Required',
@@ -781,15 +796,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 placeholder="Your Locality"
                 required={false}
                 fullWidth
-                defaultValue={getValues().Locality}
+                // defaultValue={getValues().Locality}
                 /*author:krishnakanth, purpose: after getting values from backend we will work onthis */
-                // {...register('Locality', {
-                //   required: 'Locality is Required',
-                //   maxLength: {
-                //     value: 300,
-                //     message: 'Length should be less than 300.',
-                //   },
-                // })}
+                defaultValue={
+                  personalDetails?.communication_address?.is_same_address
+                    ? personalDetails?.kyc_address?.locality
+                    : getValues().Locality
+                }
                 // error={errors.Locality?.message}
               />
             </Grid>
@@ -860,11 +873,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 fullWidth
                 error={errors.District?.message}
                 name="District"
-                defaultValue={getValues().District}
-                required={true}
-                {...register('District', {
-                  required: 'District is required',
-                })}
+                defaultValue={
+                  personalDetails?.communication_address?.is_same_address
+                    ? personalDetails?.kyc_address?.district?.name
+                    : getValues().District
+                }
                 options={createSelectFieldData(districtsList, 'iso_code')}
                 MenuProps={{
                   style: {
@@ -887,10 +900,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 error={errors.SubDistrict?.message}
                 name="SubDistrict"
                 placeholder="Sub District"
-                defaultValue={getValues().SubDistrict}
-                {...register('SubDistrict', {
-                  required: 'SubDistrict is required',
-                })}
+                defaultValue={
+                  personalDetails?.communication_address?.is_same_address
+                    ? personalDetails?.kyc_address?.sub_district?.name
+                    : getValues().SubDistrict
+                }
                 options={createSelectFieldData(subDistrictList, 'iso_code')}
                 MenuProps={{
                   style: {
@@ -940,14 +954,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 placeholder="Your postal code"
                 required={true}
                 fullWidth
-                defaultValue={getValues().PostalCode}
-                {...register('PostalCode', {
-                  required: 'PostalCode is Required',
-                  pattern: {
-                    value: /^[0-9]{6}$/,
-                    message: 'Should only contains 6 digits',
-                  },
-                })}
+                defaultValue={
+                  personalDetails?.communication_address?.is_same_address
+                    ? personalDetails?.kyc_address?.pincode
+                    : getValues().PostalCode
+                }
                 error={errors.PostalCode?.message}
               />
             </Grid>
