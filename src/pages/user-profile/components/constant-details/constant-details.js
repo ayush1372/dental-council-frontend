@@ -1,4 +1,4 @@
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+// import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Box, Grid, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
@@ -59,7 +59,7 @@ const ConstantDetails = () => {
             <Grid>
               <Typography variant="subtitle2" color="primary.main">
                 {emailId ? emailId : ''}
-                <CheckCircleIcon color="success" fontSize="width12" sx={{ ml: 1 }} />
+                {/* <CheckCircleIcon color="success" fontSize="width12" sx={{ ml: 1 }} /> */}
               </Typography>
             </Grid>
           </Grid>
@@ -69,7 +69,7 @@ const ConstantDetails = () => {
             </Typography>
             <Typography variant="subtitle2" color="primary.main">
               {mobileNumber ? mobileNumber : ''}
-              <CheckCircleIcon color="success" fontSize="width12" sx={{ ml: 1 }} />
+              {/* <CheckCircleIcon color="success" fontSize="width12" sx={{ ml: 1 }} /> */}
             </Typography>
           </Grid>
           <Grid item xs={8} md={4}>
@@ -77,7 +77,8 @@ const ConstantDetails = () => {
               Aadhaar
             </Typography>
             <Typography variant="subtitle2" color="primary.main">
-              Verified <CheckCircleIcon color="success" fontSize="width12" sx={{ ml: 1 }} />
+              Verified
+              {/* <CheckCircleIcon color="success" fontSize="width12" sx={{ ml: 1 }} /> */}
             </Typography>
           </Grid>
         </Grid>

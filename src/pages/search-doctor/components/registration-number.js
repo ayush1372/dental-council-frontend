@@ -62,12 +62,12 @@ const RegistrationNumber = ({ setDoSearch, setSearchData }) => {
           }}
           variant="outlined"
           name={'RegistrationNumber'}
-          placeholder="Enter Registration Name"
+          placeholder="Enter Registration Number"
           label={'Registration Number'}
           fullWidth
           defaultValue={getValues().RegistrationNumber}
           {...register('RegistrationNumber', {
-            required: 'Doctor Name is Required',
+            required: 'Registration Number is Required',
             maxLength: {
               value: 100,
               message: 'Length should be less than 100.',

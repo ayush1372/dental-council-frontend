@@ -41,7 +41,7 @@ const Nav = ({ navbar_routes, menuToggleHandler }) => {
       },
 
       [theme.breakpoints.down('lg')]: {
-        padding: '20px 12px',
+        padding: '20px 24px',
       },
       [theme.breakpoints.down('md')]: {
         width: '100%',

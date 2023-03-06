@@ -56,24 +56,28 @@ const ChangePassword = () => {
           text={'Your Password has been successfully changed'}
         />
       )}
-      <Typography color="inputTextColor.main" variant="h2" textAlign="center" mt={3}>
+      {/* <Typography color="inputTextColor.main" variant="h2" textAlign="center" mt={3}>
         Change Password
-      </Typography>
+      </Typography> */}
       <Box
+        display="flex"
+        justifyContent="center"
+        pt={4}
         sx={{
-          width: {
-            xs: '100%',
-            md: '60%',
-          },
-          margin: {
-            xs: 0,
-            md: '10px auto',
-          },
           backgroundColor: `${theme.palette.white.main}`,
           boxShadow: 4,
         }}
       >
-        <Box p={2} boxShadow="1">
+        <Box
+          p={2}
+          boxShadow="1"
+          sx={{
+            width: {
+              xs: '100%',
+              md: '60%',
+            },
+          }}
+        >
           <Box>
             <Box mt={2}>
               <Typography variant="body1" color="inputTextColor.main">

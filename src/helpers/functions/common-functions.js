@@ -68,6 +68,19 @@ export const userGroupType = (userGroupID) => {
   return userGroupTypeObj[userGroupID];
 };
 
+export const userGroupTypeForSession = (userGroupID) => {
+  const userGroupTypeObj = {
+    ROLE_HEALTH_PROFESSIONAL: 'Health Professional',
+    ROLE_SMC: 'State Medical Council',
+    ROLE_NMC: 'National Medical Council',
+    ROLE_COLLEGE_DEAN: 'College Dean',
+    ROLE_COLLEGE_REGISTRAR: 'College Registrar',
+    ROLE_COLLEGE_ADMIN: 'College Admin',
+    ROLE_NBE: 'NBE',
+  };
+  return userGroupTypeObj[userGroupID];
+};
+
 export const userActionType = (actionType) => {
   const actionTypeObj = {
     Submitted: 1,
@@ -101,4 +114,11 @@ export const sideBarTabs = (userType) => {
     NBE: nbeTabs,
   };
   return usersObj[userType];
+};
+
+export const workSheetTheme = {
+  type: 'pattern',
+  pattern: 'darkTrellis',
+  fgColor: { argb: 'FFFFFF00' },
+  bgColor: { argb: '#ffffcc00' },
 };
