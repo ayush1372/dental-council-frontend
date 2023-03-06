@@ -187,7 +187,7 @@ function TrackAppicationTable({
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"
-          count={newRowsData.length}
+          count={newRowsData.length || '0'}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

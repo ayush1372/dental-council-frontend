@@ -143,7 +143,7 @@ const SearchResults = ({ searchData }) => {
             <TablePagination
               rowsPerPageOptions={[]}
               component="div"
-              count={searchDetails?.data?.data?.count}
+              count={searchDetails?.data?.data?.count || '0'}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
