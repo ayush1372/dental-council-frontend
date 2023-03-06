@@ -1,7 +1,19 @@
 import { API, API_HPRID } from '../../api/api-endpoints';
-import { GET } from '../../constants/requests';
-import { useAxiosCall } from '../../hooks/use-axios';
-import { smcRegistrationDetail } from '../reducers/doctor-registration-reducer';
+import { accesstokenHprId } from '../../constants/common-data';
+import { GET, POST } from '../../constants/requests';
+import { gatewayApiUseAxiosCall, hpIdUseAxiosCall, useAxiosCall } from '../../hooks/use-axios';
+import {
+  createhprIdData,
+  getAccessToken,
+  getMobileOtp,
+  hpIdExistsDetails,
+  hprIdSuggestionsDetails,
+  sendResetPasswordLinkDetails,
+  smcRegistrationDetail,
+  storeMobileDetails,
+  storeMobileOtpData,
+} from '../reducers/doctor-registration-reducer';
+import { typeOfOtp } from '../reducers/user-aadhaar-verify-reducer';
 
 export const fetchSmcRegistrationDetails = (registrationData) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
@@ -22,16 +34,15 @@ export const fetchSmcRegistrationDetails = (registrationData) => async (dispatch
       });
   });
 };
-export const checkHpidExists = (hprId) => async (dispatch) => {
+export const getSessionAccessToken = (body) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
-    useAxiosCall({
-      method: GET,
-      url: API_HPRID.hp.checkHprIdExists,
-
-      data: hprId,
+    gatewayApiUseAxiosCall({
+      method: POST,
+      url: API_HPRID.hpId.sessionApi,
+      data: body,
     })
       .then((response) => {
-        dispatch(smcRegistrationDetail(response));
+        dispatch(getAccessToken(response));
         return resolve(response);
       })
       .catch((error) => {
@@ -39,54 +50,110 @@ export const checkHpidExists = (hprId) => async (dispatch) => {
       });
   });
 };
-// export const sendResetPasswordLink = (data) => async (dispatch) => {
-//   return await new Promise((resolve, reject) => {
-//     useAxiosCall({
-//       method: POST,
-//       url: API.doctorRegistration.passwordLink,
-//       data: { data },
-//     })
-//       .then((response) => {
-//         dispatch(sendResetPasswordLink(response));
-//         return resolve(response);
-//       })
-//       .catch((error) => {
-//         return reject(error);
-//       });
-//   });
-// };
+export const generateMobileOtp = (body) => async (dispatch) => {
+  let type = 'mobile';
+  return await new Promise((resolve, reject) => {
+    hpIdUseAxiosCall({
+      method: POST,
+      url: API_HPRID.hpId.generateMobileOtp,
+      data: body,
+      headers: { Authorization: 'Bearer ' + accesstokenHprId },
+    })
+      .then((response) => {
+        dispatch(getMobileOtp(response));
+        dispatch(storeMobileDetails(body));
+        dispatch(typeOfOtp(type));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+export const verifyMobileOtp = (body) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    hpIdUseAxiosCall({
+      method: POST,
+      url: API_HPRID.hpId.verifyMobileOtp,
+      data: body,
+      headers: { Authorization: 'Bearer ' + accesstokenHprId },
+    })
+      .then((response) => {
+        dispatch(storeMobileOtpData(response));
 
-// export const getHprIdSuggestions = () => async (dispatch) => {
-//   return await new Promise((resolve, reject) => {
-//     hpIdUseAxiosCall({
-//       method: GET,
-//       url: API_HPR.hpid.hpIdSuggestions,
-//       headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
-//       // data: txnId,
-//     })
-//       .then((response) => {
-//         dispatch(hprIdSuggestionsData(response));
-//         return resolve(response);
-//       })
-//       .catch((error) => {
-//         return reject(error);
-//       });
-//   });
-// };
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+export const checkHpidExists = (txnId) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    hpIdUseAxiosCall({
+      method: POST,
+      url: API_HPRID.hpId.checkHprIdExists,
+      data: txnId,
+      headers: { Authorization: 'Bearer ' + accesstokenHprId },
+    })
+      .then((response) => {
+        dispatch(hpIdExistsDetails(response));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+export const getHprIdSuggestions = (txnId) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    hpIdUseAxiosCall({
+      method: POST,
+      url: API_HPRID.hpId.hpIdSuggestion,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      data: txnId,
+    })
+      .then((response) => {
+        dispatch(hprIdSuggestionsDetails(response));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
 
-// export const createUniqueHprId = (mobile, otp, txnId) => async (dispatch) => {
-//   return await new Promise((resolve, reject) => {
-//     hpIdUseAxiosCall({
-//       method: POST,
-//       url: API_HPR.hpid.createHprId,
-//       data: { mobile, otp, txnId },
-//     })
-//       .then((response) => {
-//         dispatch(hprIdData(response));
-//         return resolve(response);
-//       })
-//       .catch((error) => {
-//         return reject(error);
-//       });
-//   });
-// };
+export const sendResetPasswordLink = (data) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.doctorRegistration.passwordLink,
+      data: data,
+    })
+      .then((response) => {
+        dispatch(sendResetPasswordLinkDetails(response));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const createUniqueHprId = (data) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    hpIdUseAxiosCall({
+      method: POST,
+      url: API_HPRID.hpId.createHprId,
+      headers: { Authorization: 'Bearer ' + accesstokenHprId },
+      data: data,
+    })
+      .then((response) => {
+        dispatch(createhprIdData(response));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};

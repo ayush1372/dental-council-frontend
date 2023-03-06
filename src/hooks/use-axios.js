@@ -6,10 +6,12 @@ import store from '../store/store';
 
 const axios = Axios.create({
   baseURL: process.env.REACT_APP_V1_API_URL,
-  // timeout: 3000,
 });
 const hpIdAxios = Axios.create({
   baseURL: process.env.REACT_APP_HPR_REGISTER,
+});
+const gatewayApi = Axios.create({
+  baseURL: process.env.REACT_APP_GATEWAY_SESSION_API,
 });
 
 const setLoadingState = (booleanValue) => store.dispatch(setApiLoading(booleanValue));
@@ -59,6 +61,32 @@ export const hpIdUseAxiosCall = async (payload = axiosProps) => {
 
   return await new Promise((resolve, reject) => {
     hpIdAxios(payload)
+      .then((response) => {
+        return resolve({
+          data: response.data,
+          responseHeader: response.headers,
+          isLoading: false,
+          isError: false,
+        });
+      })
+      .catch((error) => {
+        authInterceptors(error);
+        return reject({
+          data: error,
+          isLoading: false,
+          isError: true,
+        });
+      })
+      .finally(() => setLoadingState(false));
+  });
+};
+export const gatewayApiUseAxiosCall = async (payload = axiosProps) => {
+  setLoadingState(true);
+  payload.headers =
+    payload.headers !== undefined ? Object.assign(payload.headers, appheader) : appheader;
+
+  return await new Promise((resolve, reject) => {
+    gatewayApi(payload)
       .then((response) => {
         return resolve({
           data: response.data,
