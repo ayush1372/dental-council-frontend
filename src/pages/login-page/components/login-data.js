@@ -8,15 +8,23 @@ import { useNavigate } from 'react-router-dom';
 import MobileIcon from '../../../assets/images/mobile-icon.svg';
 import ProfileIcon from '../../../assets/images/profile-icon.svg';
 import { verboseLog } from '../../../config/debug';
-import { encryptData, usersType } from '../../../helpers/functions/common-functions';
+import { encryptData, userGroupType, usersType } from '../../../helpers/functions/common-functions';
 import CaptchaComponent from '../../../shared/captcha-component/captcha-component';
 import OtpForm from '../../../shared/otp-form/otp-component';
+import {
+  getCollegeAdminProfileData,
+  getCollegeDeanProfileData,
+  getCollegeRegistrarProfileData,
+} from '../../../store/actions/college-actions';
 import {
   getRegistrationCouncilList,
   getUniversitiesList,
   sendNotificationOtp,
 } from '../../../store/actions/common-actions';
 import { loginAction, validateCaptchaImage } from '../../../store/actions/login-action';
+import { getNBEProfileData } from '../../../store/actions/nbe-actions';
+import { getNMCProfileData } from '../../../store/actions/nmc-actions';
+import { getSMCProfileData } from '../../../store/actions/smc-actions';
 import { login, userLoggedInType } from '../../../store/reducers/common-reducers';
 import { Button, TextField } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
@@ -65,6 +73,26 @@ export const Login = ({ loginName }) => {
     });
   };
 
+  const getCommonData = (response) => {
+    // dispatch(getRegistrationCouncilList());
+    // dispatch(getUniversitiesList());
+    const userType = userGroupType(response?.data?.user_group_id);
+
+    if (userType === 'College Dean') {
+      dispatch(getCollegeDeanProfileData(response?.data?.profile_id));
+    } else if (userType === 'College Registrar') {
+      dispatch(getCollegeRegistrarProfileData(response?.data?.profile_id));
+    } else if (userType === 'College Admin') {
+      dispatch(getCollegeAdminProfileData(response?.data?.profile_id));
+    } else if (userType === 'State Medical Council') {
+      dispatch(getSMCProfileData(response?.data?.profile_id));
+    } else if (userType === 'National Medical Council') {
+      dispatch(getNMCProfileData(response?.data?.profile_id));
+    } else if (userType === 'NBE') {
+      dispatch(getNBEProfileData(response?.data?.profile_id));
+    }
+  };
+
   const handleLogin = () => {
     let loginTypeID;
     switch (selectedLoginOption) {
@@ -101,12 +129,13 @@ export const Login = ({ loginName }) => {
               otp_trans_id: transaction_id,
             };
             dispatch(loginAction(requestObj))
-              .then(() => {
+              .then((resp) => {
                 dispatch(login());
                 dispatch(userLoggedInType(loginName));
                 dispatch(getRegistrationCouncilList());
                 dispatch(getUniversitiesList());
                 navigate(`/profile`);
+                getCommonData(resp);
               })
               .catch((error) => {
                 successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
@@ -142,12 +171,13 @@ export const Login = ({ loginName }) => {
               captcha_trans_id: generateCaptcha?.transaction_id,
             };
             dispatch(loginAction(requestObj))
-              .then(() => {
+              .then((resp) => {
                 dispatch(login());
                 dispatch(userLoggedInType(loginName));
                 dispatch(getRegistrationCouncilList());
                 dispatch(getUniversitiesList());
                 navigate(`/profile`);
+                getCommonData(resp);
               })
               .catch((error) => {
                 successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
