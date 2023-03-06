@@ -216,6 +216,7 @@ export const verifyNotificationOtp = (otpValue) => async (dispatch) => {
     useAxiosCall({
       method: POST,
       url: API.common.verifyOtp,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
       data: otpValue,
     })
       .then((response) => {
@@ -282,7 +283,6 @@ export const getActivateLicenseList = (body) => async (dispatch) => {
     useAxiosCall({
       method: GET,
       url: `${API.common.activateLicense}?pageNo=${body.pageNo}&offset=${body.offset}&search=${body.search}`,
-
       data: body,
     })
       .then((response) => {
@@ -317,6 +317,23 @@ export const reActivateLicenseStatus = (body) => async () => {
     useAxiosCall({
       method: PATCH,
       url: API.common.healthProfessionalApplicationStatus,
+      data: body,
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const suspendDoctor = (body) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.common.suspend,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
       data: body,
     })
       .then((response) => {

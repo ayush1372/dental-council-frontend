@@ -13,6 +13,8 @@ export const API = {
     profileImage: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/profile-picture',
     initiateWorkFlow: 'api/v1/abdm/nmr/health-professional/applications/status',
     trackApplicationData: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/applications',
+    profileConsent: 'api/v1/abdm/nmr/health-professional/register',
+    createPersonalDetails: '/api/v1/abdm/nmr/health-professional/personal',
   },
   common: {
     states: 'api/v1/abdm/nmr/countries/356/states',
@@ -32,6 +34,7 @@ export const API = {
     changePassword: 'api/v1/abdm/nmr/user/change-password',
     activateLicense: 'api/v1/abdm/nmr/health-professional/applications/re-activate',
     healthProfessionalApplicationStatus: 'api/v1/abdm/nmr/health-professional/applications/status',
+    suspend: 'api/v1/abdm/nmr/health-professional/applications/suspend',
     enableNotification: '/api/v1/abdm/nmr/user/enable-notification',
   },
   college: {
@@ -58,8 +61,15 @@ export const API = {
   smc: {
     getSMCProfileData: 'api/v1/abdm/nmr/smc/user/{id}',
   },
+  doctorRegistration: {
+    smcRegistrationDetail:
+      'api/v1/abdm/nmr/health-professional?smcId={smcId}&registrationNumber={registrationNumber}',
+  },
   nbe: {
     getNBEProfileData: 'api/v1/abdm/nmr/nbe/user/{id}',
+  },
+  forgotPassword: {
+    setPassword: '/api/v1/abdm/nmr/user/set-password',
   },
   searchDoctor: {
     searchDoctorDetails: 'api/v1/abdm/nmr/health-professional/search',

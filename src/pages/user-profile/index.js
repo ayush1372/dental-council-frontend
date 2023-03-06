@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
 import EditIcon from '@mui/icons-material/Edit';
-import TuneIcon from '@mui/icons-material/Tune';
-import { Alert, Box, Grid, Link, Typography } from '@mui/material';
+// import TuneIcon from '@mui/icons-material/Tune';
+import { Box, Grid, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import useWizard from '../../hooks/use-wizard';
@@ -23,15 +23,15 @@ import PersonalDetails from './components/personal-details/personal-details';
 import PreviewProfile from './components/preview-profile/preview-profile';
 import ProfileConsent from './components/profile-consent/profile-consent';
 import RegisterAndAcademicDetails from './components/register-and-academic-details/register-and-academic-details';
-import WorkProfile from './components/work-profile/work-profile';
-const readWizardSteps = ['Personal Details', 'Registration & Academic Details', 'Work Profile'];
+// import WorkProfile from './components/work-profile/work-profile';
+const readWizardSteps = ['Personal Details', 'Registration & Academic Details']; //, 'Work Profile'
 
 export const UserProfile = ({
   showViewProfile,
-  setShowDashboard,
-  setShowTable,
-  setShowViewPorfile,
-  showUserProfile,
+  // setShowDashboard,
+  // setShowTable,
+  // setShowViewPorfile,
+  // showUserProfile,
   selectedRowData,
 }) => {
   const dispatch = useDispatch();
@@ -130,46 +130,49 @@ export const UserProfile = ({
 
   return (
     <>
-      <Box display="flex" justifyContent="start">
+      {
+        // we need to show the suspended flag
+        /* <Box display="flex" justifyContent="start">
         {loggedInUserType === 'Doctor' && showUserProfile !== true && (
-          <Alert
-            severity="error"
-            sx={{
-              color: 'suspendAlert.light',
-              width: '1479px',
-              height: '56px',
-            }}
-          >
-            <Typography width="667px" height="19px" color="suspendAlert.dark">
-              Your profile is set to suspend mode. You will not be able to perform actions on the
-              profile.
-            </Typography>
-            <TuneIcon
-              sx={{
-                color: 'suspendAlert.dark',
-                width: '18px',
-                height: '16px',
-                ml: 3,
-              }}
-            />
-            <Link
-              color="suspendAlert.secondary"
-              ml={1}
-              height="20px"
-              width="103px"
-              onClick={() => {
-                setShowReactivateLicense(true);
-                setShowSuccessPopup(false);
-              }}
-              sx={{
-                cursor: 'pointer',
-              }}
-            >
-              Change Settings
-            </Link>
-          </Alert>
+          // <Alert
+          //   severity="error"
+          //   sx={{
+          //     color: 'suspendAlert.light',
+          //     width: '1479px',
+          //     height: '56px',
+          //   }}
+          // >
+          //   <Typography width="667px" height="19px" color="suspendAlert.dark">
+          //     Your profile is set to suspend mode. You will not be able to perform actions on the
+          //     profile.
+          //   </Typography>
+          //   <TuneIcon
+          //     sx={{
+          //       color: 'suspendAlert.dark',
+          //       width: '18px',
+          //       height: '16px',
+          //       ml: 3,
+          //     }}
+          //   />
+          //   <Link
+          //     color="suspendAlert.secondary"
+          //     ml={1}
+          //     height="20px"
+          //     width="103px"
+          //     onClick={() => {
+          //       setShowReactivateLicense(true);
+          //       setShowSuccessPopup(false);
+          //     }}
+          //     sx={{
+          //       cursor: 'pointer',
+          //     }}
+          //   >
+          //     Change Settings
+          //   </Link>
+          // </Alert>
         )}
-      </Box>
+      </Box> */
+      }
       {showReactivateLicense && (
         <ReactivateLicencePopup
           renderSuccess={renderSuccess}
@@ -232,7 +235,7 @@ export const UserProfile = ({
               <Grid
                 item
                 xs={12}
-                md={3}
+                md="auto"
                 sx={{
                   marginBottom: {
                     xs: '10px',
@@ -280,7 +283,7 @@ export const UserProfile = ({
                 handleBack={handleBack}
               />
             )}
-            {activeStep === 2 && (
+            {/* {activeStep === 2 && (
               <WorkProfile
                 isReadMode={isReadMode}
                 setIsReadMode={setIsReadMode}
@@ -291,8 +294,8 @@ export const UserProfile = ({
                 setShowViewPorfile={setShowViewPorfile}
                 activeStep={activeStep}
               />
-            )}
-            {activeStep === 3 && (
+            )} */}
+            {activeStep === 2 && (
               <PreviewProfile
                 isReadMode={isReadMode}
                 setIsReadMode={setIsReadMode}
@@ -302,7 +305,7 @@ export const UserProfile = ({
             )}
           </Wizard>
         </Box>
-        {!isReadMode && activeStep === 3 && (
+        {!isReadMode && activeStep === 2 && (
           <ProfileConsent
             handleBack={handleBack}
             resetStep={resetStep}

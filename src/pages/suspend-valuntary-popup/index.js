@@ -3,11 +3,16 @@ import { Box, Dialog } from '@mui/material';
 
 import SuspendLicenseVoluntaryRetirement from '../suspend-license-voluntary-retirement';
 
-export function SuspendValuntaryPopup(props) {
+export function SuspendValuntaryPopup({
+  selected,
+  confirmationModal,
+  handleClose,
+  selectedSuspendLicenseProfile,
+}) {
   return (
     <Dialog
-      open={props.confirmationModal}
-      onClose={props.handleClose}
+      open={confirmationModal}
+      onClose={handleClose}
       sx={{
         '.MuiPaper-root': {
           borderRadius: '10px',
@@ -16,24 +21,22 @@ export function SuspendValuntaryPopup(props) {
     >
       <Box
         p={2}
-        width={
-          props.selected === 'verify' ? '500px' : props.selected === 'forward' ? '700px' : '630px'
-        }
+        width={selected === 'verify' ? '500px' : selected === 'forward' ? '700px' : '630px'}
         height={
-          props.selected === 'reject'
+          selected === 'reject'
             ? '500px'
-            : props.selected === 'verify'
+            : selected === 'verify'
             ? '380px'
-            : props.selected === 'forward'
+            : selected === 'forward'
             ? '300px'
-            : props.selected === 'raise'
+            : selected === 'raise'
             ? '650px'
             : '720px'
         }
         borderRadius={'40px'}
       >
         <Box align="right">
-          <CloseIcon onClick={props.handleClose} />
+          <CloseIcon onClick={handleClose} />
         </Box>
         <Box
           display={'flex'}
@@ -41,7 +44,11 @@ export function SuspendValuntaryPopup(props) {
           justifyContent={'flex-start'}
           alignItems={'center'}
         >
-          <SuspendLicenseVoluntaryRetirement selectedValue={props.selected} />
+          <SuspendLicenseVoluntaryRetirement
+            selectedValue={selected}
+            handleClose={handleClose}
+            selectedSuspendLicenseProfile={selectedSuspendLicenseProfile}
+          />
         </Box>
       </Box>
     </Dialog>

@@ -31,6 +31,7 @@ import { login, userLoggedInType } from '../../../store/reducers/common-reducers
 import { Button, TextField } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
+import { DoctorLogin } from './doctor-login';
 
 export function LoginPage({ handleForgotPassword }) {
   const [captchaAnswer, setcaptachaAnswer] = useState();
@@ -144,7 +145,9 @@ export function LoginPage({ handleForgotPassword }) {
       });
   }, [loginFormNames[loginFormname]]);
 
-  return (
+  return loginFormNames[loginFormname] === 'Doctor' ? (
+    <DoctorLogin loginName={loginFormNames[loginFormname]} />
+  ) : (
     <>
       <ToastContainer></ToastContainer>
       <Box p={4} bgcolor="white.main" boxShadow="4">

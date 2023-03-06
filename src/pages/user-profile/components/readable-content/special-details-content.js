@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
 import { Grid, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
@@ -13,19 +13,11 @@ const SpecialDetails = ({ workProfileDetails }) => {
   const ClosePopup = () => {
     setOpenModal(false);
   };
-  const {
-    speciality_details: {
-      broad_speciality: { name: broadSpecialityName },
-    },
-  } =
-    workProfileDetails && Object.values(workProfileDetails).length > 3
-      ? workProfileDetails
-      : {
-          speciality_details: {
-            broad_speciality: {},
-            super_speciality: [],
-          },
-        };
+
+  const { speciality_details } = workProfileDetails || {};
+  const { broad_speciality } = speciality_details || {};
+  const broadSpecialityName = broad_speciality?.name || '';
+
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
@@ -38,10 +30,10 @@ const SpecialDetails = ({ workProfileDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              {broadSpecialityName ? broadSpecialityName : ''}
+              {broadSpecialityName}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -65,7 +57,7 @@ const SpecialDetails = ({ workProfileDetails }) => {
                 : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"

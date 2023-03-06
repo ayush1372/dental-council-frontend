@@ -4,7 +4,6 @@ import { Box, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { verboseLog } from '../../config/debug';
 import { createEditFieldData } from '../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../shared/autocomplete/searchable-dropdown';
 import TrackStatusTable from '../../shared/track-status/track-status-table';
@@ -55,11 +54,10 @@ export default function TrackStatus() {
           'top-center'
         );
       });
-    verboseLog('');
+
     setShowTable(true);
     setTrackValues(trackData);
   };
-
   return (
     <Box>
       {showHeader && (
@@ -141,6 +139,7 @@ export default function TrackStatus() {
       {showTable && trackStatusData?.data?.data?.health_professional_applications && (
         <TrackStatusTable
           trackValues={trackValues}
+          // getTableData={getTableData}
           setShowHeader={setShowHeader}
           trackStatusData={trackStatusData?.data?.data}
         />

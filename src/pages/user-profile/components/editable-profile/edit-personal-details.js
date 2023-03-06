@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { Box, Button, Grid, IconButton, InputAdornment, Typography, useTheme } from '@mui/material';
+// import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { Box, Button, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
-import { get_year_data } from '../../../../helpers/functions/common-functions';
+// import { get_year_data } from '../../../../helpers/functions/common-functions';
 import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
-import { ModalOTP } from '../../../../shared/otp-modal/otp-modal';
+// import { ModalOTP } from '../../../../shared/otp-modal/otp-modal';
 import {
   getCitiesList,
   getDistrictList,
@@ -22,13 +22,14 @@ import {
   updateDoctorPersonalDetails,
 } from '../../../../store/actions/doctor-user-profile-actions';
 import { getPersonalDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
+import { Checkbox } from '../../../../ui/core';
 import { RadioGroup, Select, TextField } from '../../../../ui/core';
-import MobileNumber from '../../../../ui/core/mobile-number/mobile-number';
+// import MobileNumber from '../../../../ui/core/mobile-number/mobile-number';
 import successToast from '../../../../ui/core/toaster';
 
 const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const { t } = useTranslation();
-  const theme = useTheme();
+  // const theme = useTheme();
   const dispatch = useDispatch();
   const loggedInUserType = useSelector((state) => state?.common?.loggedInUserType);
   const { loginData } = useSelector((state) => state?.loginReducer);
@@ -40,49 +41,35 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
 
   const [languages, setLanguages] = useState([]);
 
+  const { personal_details, communication_address, imr_details, request_id } =
+    personalDetails || {};
   const {
-    personal_details: {
-      salutation,
-      aadhaar_token,
-      first_name,
-      last_name,
-      middle_name,
-      father_name,
-      mother_name,
-      spouse_name,
-      country_nationality: { id: countryNationalityId },
-      date_of_birth,
-      gender,
-      schedule: { id: scheduleId },
-    },
-    communication_address: {
-      country: { id: countryId },
-      state: { id: stateId },
-      district: { id: districtId },
-      sub_district: { id: subdistrictId },
-      village: { id: citiesId },
-      pincode,
-      address_line1,
-      email,
-      mobile,
-      full_name,
-    },
-    imr_details: { registration_number, nmr_id, year_of_info },
-    request_id,
-  } = personalDetails && Object.values(personalDetails).length > 3
-    ? personalDetails
-    : {
-        personal_details: { country_nationality: {}, schedule: {} },
-        communication_address: {
-          country: {},
-          state: {},
-          district: {},
-          sub_district: {},
-          address_type: {},
-          village: {},
-        },
-        imr_details: {},
-      };
+    salutation,
+    aadhaar_token,
+    first_name,
+    last_name,
+    middle_name,
+    father_name,
+    mother_name,
+    spouse_name,
+    country_nationality,
+    date_of_birth,
+    gender,
+    schedule,
+    full_name,
+  } = personal_details || {};
+  const { country, state, district, sub_district, village, pincode, address_line1, email, mobile } =
+    communication_address || {};
+  const { registration_number, nmr_id, year_of_info } = imr_details || {};
+
+  const countryNationalityId = country_nationality?.id;
+  const scheduleId = schedule?.id;
+  const countryId = country?.id;
+  const stateId = state?.id;
+  const districtId = district?.id;
+  const subdistrictId = sub_district?.id;
+  const citiesId = village?.id;
+
   const {
     formState: { errors },
     getValues,
@@ -229,7 +216,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
         successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
       });
   };
-  const { otpPopup, handleClickOpen, otpVerified } = ModalOTP({ afterConfirm: () => {} });
+  // const { otpPopup,  otpVerified } = ModalOTP({ afterConfirm: () => {} });
 
   const handleBackButton = () => {
     setIsReadMode(true);
@@ -258,8 +245,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
 
   const onHandleSave = () => {
     const {
-      Salutation,
-      FirstName,
+      // Salutation,
       MiddleName,
       LastName,
       FatherName,
@@ -285,8 +271,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       LanguageSpoken,
     } = getValues();
     const doctorProfileValues = JSON.parse(JSON.stringify(personalDetails));
-    doctorProfileValues.personal_details.salutation = Salutation;
-    doctorProfileValues.personal_details.first_name = FirstName;
+    // doctorProfileValues.personal_details.salutation = Salutation;
+    // doctorProfileValues.personal_details.first_name = FirstName;
     doctorProfileValues.personal_details.middle_name = MiddleName;
     doctorProfileValues.personal_details.last_name = LastName;
     doctorProfileValues.personal_details.father_name = FatherName;
@@ -321,9 +307,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     onHandleSave();
     fetchUpadtedDoctorUserProfileData(personalDetails);
   };
-  const handleSalutationChange = (event) => {
-    setValue(event.target.name, event.target.value, true);
-  };
+  // const handleSalutationChange = (event) => {
+  //   setValue(event.target.name, event.target.value, true);
+  // };
   const handleGender = (event) => {
     setValue(event.target.name, event.target.value, true);
   };
@@ -358,7 +344,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               Personal Details*
             </Typography>
           </Grid>
-          <Grid item xs={12} md={4} lg={12}>
+          {/* <Grid item xs={12} md={4} lg={12}>
             <Grid item>
               <Typography color="inputTextColor.main" variant="body1">
                 Salutation
@@ -395,7 +381,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 error={errors.Salutation?.message}
               />
             </Grid>
-          </Grid>
+          </Grid> */}
           {false && (
             <Grid item xs={12} md={4}>
               <TextField
@@ -420,19 +406,19 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
-              First Name
+              Name
               <Typography component="span" color="error.main">
                 *
               </Typography>
             </Typography>
             <TextField
               variant="outlined"
-              name={'FirstName'}
+              name={'Name'}
               placeholder="Your first name"
               required={true}
               fullWidth
-              defaultValue={getValues().FirstName}
-              {...register('FirstName', {
+              defaultValue={getValues().Name}
+              {...register('Name', {
                 required: 'Missing field',
                 maxLength: {
                   value: 100,
@@ -445,63 +431,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 },
               }}
               InputProps={{ readOnly: loggedInUserType === 'SMC' ? false : true }}
-              error={errors.FirstName?.message}
+              error={errors.Name?.message}
             />
           </Grid>
-          <Grid item xs={12} md={4}>
-            <Typography color="inputTextColor.main" variant="body1">
-              Middle Name
-            </Typography>
-            <TextField
-              variant="outlined"
-              name={'MiddleName'}
-              placeholder=""
-              fullWidth
-              defaultValue={getValues().MiddleName}
-              {...register('MiddleName', {
-                maxLength: {
-                  value: 100,
-                  message: 'Length should be less than 100.',
-                },
-              })}
-              sx={{
-                input: {
-                  backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
-                },
-              }}
-              InputProps={{ readOnly: loggedInUserType === 'SMC' ? false : true }}
-            />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Typography variant="subtitle2" color="inputTextColor.main">
-              Last Name
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
-            </Typography>
-
-            <TextField
-              variant="outlined"
-              name={'LastName'}
-              placeholder="Your last name"
-              fullWidth
-              defaultValue={getValues().LastName}
-              {...register('LastName', {
-                required: 'Missing field',
-                maxLength: {
-                  value: 100,
-                  message: 'Length should be less than 100.',
-                },
-              })}
-              sx={{
-                input: {
-                  backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
-                },
-              }}
-            />
-          </Grid>
-        </Grid>
-        <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
               Father&apos;s Name
@@ -548,6 +480,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               error={errors.MotherName?.message}
             />
           </Grid>
+        </Grid>
+        <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
               Spouse Name
@@ -571,8 +505,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               error={errors.SpouseName?.message}
             />
           </Grid>
-        </Grid>
-        <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
               Select Nationality
@@ -590,65 +522,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 required: 'Nationality is required',
               })}
               options={createSelectFieldData(nationalities)}
-            />
-          </Grid>
-          <Grid item xs={12} md={8}>
-            <Typography variant="body1" color="inputTextColor.main">
-              Language Spoken
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
-            </Typography>
-            <AutoComplete
-              name="LanguageSpoken"
-              options={[
-                { id: 1, name: 'English' },
-                { id: 2, name: 'Hindi' },
-                { id: 3, name: 'Bengali' },
-                { id: 4, name: 'Marathi' },
-                { id: 5, name: 'Telugu' },
-              ]}
-              value={getValues().LanguageSpoken}
-              error={languages?.length === 0 && errors.LanguageSpoken?.message}
-              multiple={true}
-              {...register('LanguageSpoken')}
-              onChange={(value) => {
-                handleLanguageSpokenChange('LanguageSpoken', value);
-              }}
-            />
-          </Grid>
-        </Grid>
-
-        <Grid container item spacing={2} mt={1}>
-          <Grid item xs={12} md={4}>
-            <Typography variant="body1" color="inputTextColor.main">
-              Date of Birth
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
-            </Typography>
-            <TextField
-              fullWidth
-              data-testid="Date of Birth"
-              id="Date of Birth"
-              type="date"
-              name="DateOfBirth"
-              sx={{
-                height: '48px',
-                input: {
-                  color: 'grey1.dark',
-                  textTransform: 'uppercase',
-                },
-              }}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              required={true}
-              defaultValue={getValues().dateOfBirth}
-              error={errors.DateOfBirth?.message}
-              {...register('DateOfBirth', {
-                required: 'Enter Date of Birth',
-              })}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -683,6 +556,64 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               />
             </Grid>
           </Grid>
+        </Grid>
+        <Grid container item spacing={2} mt={1}>
+          <Grid item xs={12} md={4}>
+            <Typography variant="body1" color="inputTextColor.main">
+              Date of Birth
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+            </Typography>
+            <TextField
+              fullWidth
+              data-testid="Date of Birth"
+              id="Date of Birth"
+              type="date"
+              name="DateOfBirth"
+              sx={{
+                height: '48px',
+                input: {
+                  color: 'grey1.dark',
+                  textTransform: 'uppercase',
+                },
+              }}
+              InputLabelProps={{
+                shrink: true,
+              }}
+              required={true}
+              defaultValue={getValues().dateOfBirth}
+              error={errors.DateOfBirth?.message}
+              {...register('DateOfBirth', {
+                required: 'Enter Date of Birth',
+              })}
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Typography variant="body1" color="inputTextColor.main">
+              Language Spoken
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+            </Typography>
+            <AutoComplete
+              name="LanguageSpoken"
+              options={[
+                { id: 1, name: 'English' },
+                { id: 2, name: 'Hindi' },
+                { id: 3, name: 'Bengali' },
+                { id: 4, name: 'Marathi' },
+                { id: 5, name: 'Telugu' },
+              ]}
+              value={getValues().LanguageSpoken}
+              error={languages?.length === 0 && errors.LanguageSpoken?.message}
+              multiple={true}
+              {...register('LanguageSpoken')}
+              onChange={(value) => {
+                handleLanguageSpokenChange('LanguageSpoken', value);
+              }}
+            />
+          </Grid>
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
               Schedule
@@ -704,7 +635,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
           </Grid>
         </Grid>
 
-        {/* layer 2 */}
+        {/*Layer 2*/}
+
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12}>
             <Typography
@@ -714,36 +646,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               color="tabHighlightedBackgroundColor.main"
               variant="h3"
             >
-              Communication Address*
+              Address as per KYC
             </Typography>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Typography variant="subtitle2" color="inputTextColor.main">
-              Your Name
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
-            </Typography>
-            <TextField
-              variant="outlined"
-              name={'Name'}
-              placeholder="Your name"
-              required={true}
-              fullWidth
-              defaultValue={getValues().Name}
-              {...register('Name', {
-                required: 'Name is Required',
-                maxLength: {
-                  value: 100,
-                  message: 'Length should be less than 100.',
-                },
-              })}
-              error={errors.Name?.message}
-            />
           </Grid>
           <Grid item xs={12} md={8}>
             <Typography variant="subtitle2" color="inputTextColor.main">
-              Your Address
+              Aadhaar verified Address
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -752,7 +660,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               variant="outlined"
               name={'Address'}
               placeholder="Your address"
-              required={true}
+              required={false}
               fullWidth
               defaultValue={getValues().Address}
               {...register('Address', {
@@ -765,399 +673,539 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               error={errors.Address?.message}
             />
           </Grid>
-        </Grid>
 
-        <Grid container item spacing={2} mt={1}>
-          <Grid item xs={12} md={4}>
-            <Select
-              fullWidth
-              error={errors.Country?.message}
-              name="Country"
-              label="Country"
-              defaultValue={getValues().Country}
-              required={true}
-              {...register('Country', {
-                required: 'Country is required',
-              })}
-              disabled
-              options={
-                countriesList?.length > 0
-                  ? createSelectFieldData(
-                      countriesList?.filter(function (item) {
-                        return item.name === 'India';
-                      })
-                    )
-                  : []
-              }
-              MenuProps={{
-                style: {
-                  maxHeight: 250,
-                  maxWidth: 130,
-                },
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Typography variant="subtitle2" color="inputTextColor.main">
-              State/Union Territory
-              <Typography component="span" color="error.main">
-                *
+          {/* layer 3 */}
+          <Grid container item spacing={2} mt={1}>
+            <Grid item xs={12}>
+              <Typography
+                bgcolor="grey1.light"
+                p={1}
+                component="div"
+                color="tabHighlightedBackgroundColor.main"
+                variant="h3"
+              >
+                Communication Address*
               </Typography>
-            </Typography>
-            <Select
-              fullWidth
-              error={errors.State?.message}
-              name="State"
-              defaultValue={getValues().State}
-              required={true}
-              {...register('State', {
-                required: 'State/Union territory is required',
-              })}
-              options={createSelectFieldData(statesList)}
-              MenuProps={{
-                style: {
-                  maxHeight: 250,
-                  maxWidth: 130,
-                },
-              }}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={4}>
-            <Typography variant="subtitle2" color="inputTextColor.main">
-              District
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
-            </Typography>
-            <Select
-              fullWidth
-              error={errors.District?.message}
-              name="District"
-              defaultValue={getValues().District}
-              required={true}
-              {...register('District', {
-                required: 'District is required',
-              })}
-              options={createSelectFieldData(districtsList, 'iso_code')}
-              MenuProps={{
-                style: {
-                  maxHeight: 250,
-                  maxWidth: 130,
-                },
-              }}
-            />
-          </Grid>
-        </Grid>
-        <Grid container item spacing={2} mt={1}>
-          <Grid item xs={12} md={4}>
-            <Typography variant="subtitle2" color="inputTextColor.main">
-              Sub District
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
-            </Typography>
-
-            <Select
-              fullWidth
-              error={errors.SubDistrict?.message}
-              name="SubDistrict"
-              placeholder="Sub District"
-              defaultValue={getValues().SubDistrict}
-              {...register('SubDistrict')}
-              options={createSelectFieldData(subDistrictList, 'iso_code')}
-              MenuProps={{
-                style: {
-                  maxHeight: 250,
-                  maxWidth: 130,
-                },
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Typography variant="subtitle2" color="inputTextColor.main">
-              City/Town/Village
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
-            </Typography>
-            <Select
-              fullWidth
-              error={errors.Area?.message}
-              name="Area"
-              defaultValue={getValues().Area}
-              required={true}
-              {...register('Area', {
-                required: 'City/Town/Village is required',
-              })}
-              options={createSelectFieldData(citiesList)}
-              MenuProps={{
-                style: {
-                  maxHeight: 250,
-                  maxWidth: 130,
-                },
-              }}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={4}>
-            <Typography variant="subtitle2" color="inputTextColor.main">
-              Pin Code
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
-            </Typography>
-            <TextField
-              variant="outlined"
-              name={'PostalCode'}
-              placeholder="Your postal code"
-              required={true}
-              fullWidth
-              defaultValue={getValues().PostalCode}
-              {...register('PostalCode', {
-                required: 'PostalCode is Required',
-                pattern: {
-                  value: /^[0-9]{6}$/,
-                  message: 'Should only contains 6 digits',
-                },
-              })}
-              error={errors.PostalCode?.message}
-            />
-          </Grid>
-        </Grid>
-        <Grid container item spacing={2} mt={1}>
-          <Grid item xs={12} md={6}>
-            <Box display="flex" alignItems="end">
-              <Box>
-                <Typography variant="subtitle2" color="inputTextColor.main">
-                  Email Address
-                  <Typography component="span" color="error.main">
-                    *
-                  </Typography>
+            </Grid>
+            {/* <Grid item xs={12} md={4}>
+              <Typography variant="subtitle2" color="inputTextColor.main">
+                Your Name
+                <Typography component="span" color="error.main">
+                  *
                 </Typography>
-                <TextField
-                  sx={{ minWidth: '265px' }}
-                  type="text"
-                  name="EmailAddress"
-                  variant="outlined"
-                  required
-                  defaultValue={getValues().EmailAddress}
-                  error={errors.EmailAddress?.message}
-                  {...register('EmailAddress', {
-                    required: {
-                      value: true,
-                      message: 'Provide a Valid Email ID',
-                    },
-                    pattern: {
-                      value:
-                        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-                      message: 'Provide a Valid Email ID',
-                    },
-                  })}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <IconButton aria-label="toggle password visibility" edge="end">
-                          {!errors.EmailAddress?.message &&
-                          getValues()?.EmailAddress?.length !== 0 &&
-                          otpVerified ? (
-                            <CheckCircleIcon color="success" />
-                          ) : (
-                            ''
-                          )}
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-              </Box>
-              <Box>
-                <Button
-                  onClick={handleClickOpen}
-                  variant="contained"
-                  color="primary"
-                  sx={{ height: '55px' }}
-                >
-                  {t('GetOTP')}
-                </Button>
-              </Box>
-              {otpPopup}
+              </Typography>
+              <TextField
+                variant="outlined"
+                name={'Name'}
+                placeholder="Your name"
+                required={true}
+                fullWidth
+                defaultValue={getValues().Name}
+                {...register('Name', {
+                  required: 'Name is Required',
+                  maxLength: {
+                    value: 100,
+                    message: 'Length should be less than 100.',
+                  },
+                })}
+                error={errors.Name?.message}
+              />
+            </Grid> */}
+            <Box bgcolor="backgroundColor.light" p={2} display="flex">
+              <Checkbox
+                {...register('Address', {
+                  required: 'Address is Required',
+                })}
+                error={errors.Address?.message}
+              />
+              <Typography component="div" mt={1} variant="body7" color="textPrimary.main">
+                Is the communication address same as your address as per your KYC?
+              </Typography>
             </Box>
-          </Grid>
-        </Grid>
-        <Grid container item spacing={2}>
-          <Grid item xs={12} md={6}>
-            <Typography variant="subtitle2" color="inputTextColor.main">
-              Mobile Number
-              <Typography component="span" color="error.main">
-                *
+            <Grid item xs={12} md={8}>
+              <Typography variant="subtitle2" color="inputTextColor.main">
+                House
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
               </Typography>
-            </Typography>
-            <MobileNumber
-              register={register}
-              getValues={getValues}
-              errors={errors}
-              data-testid={'Mobile-No'}
-              showhint={false}
-              defaultValue={getValues().mobileNo}
-              {...register('mobileNo')}
-              showVerify={true}
-              verifyOnClick={handleClickOpen}
-            />
-          </Grid>
-        </Grid>
-        {/* layer 3 */}
-        <Grid container item spacing={2} mt={1}>
-          <Grid item xs={12}>
-            <Typography
-              bgcolor="grey1.light"
-              p={1}
-              component="div"
-              color="tabHighlightedBackgroundColor.main"
-              variant="h3"
-            >
-              IMR Details*
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Typography variant="subtitle2" color="inputTextColor.main">
-              IMR ID
-              <Typography component="span" color="error.main">
-                *
+              <TextField
+                variant="outlined"
+                name={'House'}
+                placeholder="Your House address"
+                required={true}
+                fullWidth
+                defaultValue={getValues().Address}
+                {...register('Address', {
+                  required: 'House Address is Required',
+                  maxLength: {
+                    value: 300,
+                    message: 'Length should be less than 300.',
+                  },
+                })}
+                error={errors.Address?.message}
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Typography variant="subtitle2" color="inputTextColor.main">
+                Street
               </Typography>
-            </Typography>
-            <TextField
-              variant="outlined"
-              name={'IMRID'}
-              placeholder="Your IMR ID"
-              required={true}
-              fullWidth
-              defaultValue={getValues().IMRID}
-              {...register('IMRID', {
-                required: 'IMR ID is Required',
-              })}
-              sx={{
-                input: {
-                  backgroundColor: theme.palette.grey2.main,
-                },
-              }}
-              InputProps={{ readOnly: true }}
-            />
+              <TextField
+                variant="outlined"
+                name={'Street'}
+                placeholder="Enter Street"
+                required={false}
+                fullWidth
+                defaultValue={getValues().Street}
+                /*author:krishnakanth, purpose: after getting values from backend we will work onthis */
+                // {...register('Street', {
+                //  required: 'Street is Required',
+                //   maxLength: {
+                //     value: 300,
+                //     message: 'Length should be less than 300.',
+                //   },
+                // })}
+                // error={errors.Street?.message}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12} md={4}>
-            <Typography variant="subtitle2" color="inputTextColor.main">
-              Year of Info
-              <Typography component="span" color="error.main">
-                *
+          <Grid container item spacing={2} mt={1}>
+            <Grid item xs={12} md={4}>
+              <Typography variant="subtitle2" color="inputTextColor.main">
+                Landmark
               </Typography>
-            </Typography>
-            <Select
-              fullWidth
-              error={errors.YearOfInfo?.message}
-              name="YearOfInfo"
-              placeholder="Select year of info"
-              defaultValue={getValues().YearOfInfo}
-              required={true}
-              disabled
-              {...register('YearOfInfo', {
-                required: 'Year of info is required',
-              })}
-              options={get_year_data(1930)}
-              sx={{
-                '.MuiSelect-select': {
-                  backgroundColor: theme.palette.grey2.main,
-                },
-              }}
-              InputProps={{ readOnly: true }}
-            />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Typography variant="subtitle2" color="inputTextColor.main">
-              Registration Number
-              <Typography component="span" color="error.main">
-                *
+              <TextField
+                variant="outlined"
+                name={'Landmark'}
+                placeholder="Your Landmark"
+                required={false}
+                fullWidth
+                defaultValue={getValues().Landmark}
+                /*author:krishnakanth, purpose: after getting values from backend we will work onthis */
+                // {...register('Landmark', {
+                //  required: 'Landmark is Required',
+                //   maxLength: {
+                //     value: 300,
+                //     message: 'Length should be less than 300.',
+                //   },
+                // })}
+                // error={errors.Landmark?.message}
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Typography variant="subtitle2" color="inputTextColor.main">
+                Locality
               </Typography>
-            </Typography>
-            <TextField
-              variant="outlined"
-              name={'RegistrationNumber'}
-              placeholder="Your registration number"
-              required={true}
-              fullWidth
-              defaultValue={getValues().RegistrationNumber}
-              {...register('RegistrationNumber', {
-                required: 'Registration Number is Required',
-              })}
-              sx={{
-                input: {
-                  backgroundColor: theme.palette.grey2.main,
-                },
-              }}
-              InputProps={{ readOnly: true }}
-            />
+              <TextField
+                variant="outlined"
+                name={'Locality'}
+                placeholder="Your Locality"
+                required={false}
+                fullWidth
+                defaultValue={getValues().Locality}
+                /*author:krishnakanth, purpose: after getting values from backend we will work onthis */
+                // {...register('Locality', {
+                //   required: 'Locality is Required',
+                //   maxLength: {
+                //     value: 300,
+                //     message: 'Length should be less than 300.',
+                //   },
+                // })}
+                // error={errors.Locality?.message}
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Select
+                fullWidth
+                error={errors.Country?.message}
+                name="Country"
+                label="Country"
+                defaultValue={getValues().Country}
+                required={true}
+                {...register('Country', {
+                  required: 'Country is required',
+                })}
+                disabled
+                options={
+                  countriesList?.length > 0
+                    ? createSelectFieldData(
+                        countriesList?.filter(function (item) {
+                          return item.name === 'India';
+                        })
+                      )
+                    : []
+                }
+                MenuProps={{
+                  style: {
+                    maxHeight: 250,
+                    maxWidth: 130,
+                  },
+                }}
+              />
+            </Grid>
           </Grid>
-        </Grid>
-      </Grid>
+          <Grid container item spacing={2} mt={1}>
+            <Grid item xs={12} md={4}>
+              <Typography variant="subtitle2" color="inputTextColor.main">
+                State/Union Territory
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
+              </Typography>
+              <Select
+                fullWidth
+                error={errors.State?.message}
+                name="State"
+                defaultValue={getValues().State}
+                required={true}
+                {...register('State', {
+                  required: 'State/Union territory is required',
+                })}
+                options={createSelectFieldData(statesList)}
+                MenuProps={{
+                  style: {
+                    maxHeight: 250,
+                    maxWidth: 130,
+                  },
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Typography variant="subtitle2" color="inputTextColor.main">
+                District
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
+              </Typography>
+              <Select
+                fullWidth
+                error={errors.District?.message}
+                name="District"
+                defaultValue={getValues().District}
+                required={true}
+                {...register('District', {
+                  required: 'District is required',
+                })}
+                options={createSelectFieldData(districtsList, 'iso_code')}
+                MenuProps={{
+                  style: {
+                    maxHeight: 250,
+                    maxWidth: 130,
+                  },
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Typography variant="subtitle2" color="inputTextColor.main">
+                Sub District
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
+              </Typography>
 
-      <Grid container display="flex" justifyContent="space-between" alignItems="center" mt={5}>
-        <Grid item xs={12} md={8} lg={6}>
-          <Button
-            onClick={handleBackButton}
-            color="grey"
-            variant="contained"
-            sx={{
-              margin: {
-                xs: '5px 0',
-                md: '0',
-              },
-              width: {
-                xs: '100%',
-                md: 'fit-content',
-              },
-            }}
-          >
-            {t('Back')}
-          </Button>
+              <Select
+                fullWidth
+                error={errors.SubDistrict?.message}
+                name="SubDistrict"
+                placeholder="Sub District"
+                defaultValue={getValues().SubDistrict}
+                {...register('SubDistrict', {
+                  required: 'SubDistrict is required',
+                })}
+                options={createSelectFieldData(subDistrictList, 'iso_code')}
+                MenuProps={{
+                  style: {
+                    maxHeight: 250,
+                    maxWidth: 130,
+                  },
+                }}
+              />
+            </Grid>
+          </Grid>
+          <Grid container item spacing={2} mt={1}>
+            <Grid item xs={12} md={4}>
+              <Typography variant="subtitle2" color="inputTextColor.main">
+                City/Town/Village
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
+              </Typography>
+              <Select
+                fullWidth
+                error={errors.Area?.message}
+                name="Area"
+                defaultValue={getValues().Area}
+                required={true}
+                {...register('Area', {
+                  required: 'City/Town/Village is required',
+                })}
+                options={createSelectFieldData(citiesList)}
+                MenuProps={{
+                  style: {
+                    maxHeight: 250,
+                    maxWidth: 130,
+                  },
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Typography variant="subtitle2" color="inputTextColor.main">
+                Pincode
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
+              </Typography>
+              <TextField
+                variant="outlined"
+                name={'PostalCode'}
+                placeholder="Your postal code"
+                required={true}
+                fullWidth
+                defaultValue={getValues().PostalCode}
+                {...register('PostalCode', {
+                  required: 'PostalCode is Required',
+                  pattern: {
+                    value: /^[0-9]{6}$/,
+                    message: 'Should only contains 6 digits',
+                  },
+                })}
+                error={errors.PostalCode?.message}
+              />
+            </Grid>
+          </Grid>
+          {/* <Grid container item spacing={2} mt={1}>
+            <Grid item xs={12} md={6}>
+              <Box display="flex" alignItems="end">
+                <Box>
+                  <Typography variant="subtitle2" color="inputTextColor.main">
+                    Email Address
+                    <Typography component="span" color="error.main">
+                      *
+                    </Typography>
+                  </Typography>
+                  <TextField
+                    sx={{ minWidth: '265px' }}
+                    type="text"
+                    name="EmailAddress"
+                    variant="outlined"
+                    required
+                    defaultValue={getValues().EmailAddress}
+                    error={errors.EmailAddress?.message}
+                    {...register('EmailAddress', {
+                      required: {
+                        value: true,
+                        message: 'Provide a Valid Email ID',
+                      },
+                      pattern: {
+                        value:
+                          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
+                        message: 'Provide a Valid Email ID',
+                      },
+                    })}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton aria-label="toggle password visibility" edge="end">
+                            {!errors.EmailAddress?.message &&
+                            getValues()?.EmailAddress?.length !== 0 &&
+                            otpVerified ? (
+                              <CheckCircleIcon color="success" />
+                            ) : (
+                              ''
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                </Box>
+                <Box>
+                  <Button
+                    onClick={handleClickOpen}
+                    variant="contained"
+                    color="primary"
+                    sx={{ height: '55px' }}
+                  >
+                    {t('GetOTP')}
+                  </Button>
+                </Box>
+                {otpPopup}
+              </Box>
+            </Grid>
+          </Grid>
+          <Grid container item spacing={2}>
+            <Grid item xs={12} md={6}>
+              <Typography variant="subtitle2" color="inputTextColor.main">
+                Mobile Number
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
+              </Typography>
+              <MobileNumber
+                register={register}
+                getValues={getValues}
+                errors={errors}
+                data-testid={'Mobile-No'}
+                showhint={false}
+                defaultValue={getValues().mobileNo}
+                {...register('mobileNo')}
+                showVerify={true}
+                verifyOnClick={handleClickOpen}
+              />
+            </Grid>
+          </Grid> */}
+          {/* <Grid container item spacing={2} mt={1}>
+            <Grid item xs={12}>
+              <Typography
+                bgcolor="grey1.light"
+                p={1}
+                component="div"
+                color="tabHighlightedBackgroundColor.main"
+                variant="h3"
+              >
+                IMR Details*
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Typography variant="subtitle2" color="inputTextColor.main">
+                IMR ID
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
+              </Typography>
+              <TextField
+                variant="outlined"
+                name={'IMRID'}
+                placeholder="Your IMR ID"
+                required={true}
+                fullWidth
+                defaultValue={getValues().IMRID}
+                {...register('IMRID', {
+                  required: 'IMR ID is Required',
+                })}
+                sx={{
+                  input: {
+                    backgroundColor: theme.palette.grey2.main,
+                  },
+                }}
+                InputProps={{ readOnly: true }}
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Typography variant="subtitle2" color="inputTextColor.main">
+                Year of Info
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
+              </Typography>
+              <Select
+                fullWidth
+                error={errors.YearOfInfo?.message}
+                name="YearOfInfo"
+                placeholder="Select year of info"
+                defaultValue={getValues().YearOfInfo}
+                required={true}
+                disabled
+                {...register('YearOfInfo', {
+                  required: 'Year of info is required',
+                })}
+                options={get_year_data(1930)}
+                sx={{
+                  '.MuiSelect-select': {
+                    backgroundColor: theme.palette.grey2.main,
+                  },
+                }}
+                InputProps={{ readOnly: true }}
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Typography variant="subtitle2" color="inputTextColor.main">
+                Registration Number
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
+              </Typography>
+              <TextField
+                variant="outlined"
+                name={'RegistrationNumber'}
+                placeholder="Your registration number"
+                required={true}
+                fullWidth
+                defaultValue={getValues().RegistrationNumber}
+                {...register('RegistrationNumber', {
+                  required: 'Registration Number is Required',
+                })}
+                sx={{
+                  input: {
+                    backgroundColor: theme.palette.grey2.main,
+                  },
+                }}
+                InputProps={{ readOnly: true }}
+              />
+            </Grid>
+          </Grid> */}
         </Grid>
-        <Grid item xs={12} md="auto" display="flex" justifyContent="end" lg={4}>
-          <Button
-            onClick={handleSubmit(onHandleSave)}
-            variant="outlined"
-            color="secondary"
-            sx={{
-              margin: {
-                xs: '5px 0',
-                md: '0',
-              },
-              width: {
-                xs: '100%',
-                md: 'fit-content',
-                height: '52px',
-              },
-            }}
-          >
-            {t('Save')}
-          </Button>
-        </Grid>
-        <Grid item xs={12} md="auto" display="flex" justifyContent="end" lg={2}>
-          <Button
-            size="medium"
-            onClick={handleSubmit(onHandleOptionNext)}
-            variant="contained"
-            color="secondary"
-            sx={{
-              margin: {
-                xs: '5px 0',
-                md: '0',
-              },
-              width: {
-                xs: '100%',
-                md: 'fit-content',
-              },
-            }}
-          >
-            {t('Save & Next')}
-          </Button>
+
+        <Grid container display="flex" justifyContent="space-between" alignItems="center" mt={5}>
+          <Grid item xs={12} md={8} lg={6}>
+            <Button
+              onClick={handleBackButton}
+              color="grey"
+              variant="contained"
+              sx={{
+                margin: {
+                  xs: '5px 0',
+                  md: '0',
+                },
+                width: {
+                  xs: '100%',
+                  md: 'fit-content',
+                },
+              }}
+            >
+              {t('Back')}
+            </Button>
+          </Grid>
+          <Grid item xs={12} md="auto" display="flex" justifyContent="end" lg={4}>
+            <Button
+              onClick={handleSubmit(onHandleSave)}
+              variant="outlined"
+              color="secondary"
+              sx={{
+                margin: {
+                  xs: '5px 0',
+                  md: '0',
+                },
+                width: {
+                  xs: '100%',
+                  md: 'fit-content',
+                  height: '52px',
+                },
+              }}
+            >
+              {t('Save')}
+            </Button>
+          </Grid>
+          <Grid item xs={12} md="auto" display="flex" justifyContent="end" lg={2}>
+            <Button
+              size="medium"
+              onClick={handleSubmit(onHandleOptionNext)}
+              variant="contained"
+              color="secondary"
+              sx={{
+                margin: {
+                  xs: '5px 0',
+                  md: '0',
+                },
+                width: {
+                  xs: '100%',
+                  md: 'fit-content',
+                },
+              }}
+            >
+              {t('Save & Next')}
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
     </Box>

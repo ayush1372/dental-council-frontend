@@ -19,6 +19,7 @@ import VoluntarySuspendLicense from '../../pages/profile/sub-pages/voluntary-sus
 import TrackApplication from '../../pages/profile/track-application/track-application';
 import UserProfile from '../../pages/user-profile';
 import AdditionalQualifications from '../../pages/user-profile/components/additional-qualifications/additional-qualifications';
+import WorkProfile from '../../pages/user-profile/components/work-profile';
 import TrackStatus from '../../shared/track-status';
 import { getDoctorTrackApplicationData } from '../../store/actions/doctor-user-profile-actions';
 
@@ -61,6 +62,13 @@ export const doctorTabs = [
     tabName: 'additional-qualifications',
     icon: <AccountCircleIcon />,
     element: <AdditionalQualifications />,
+  },
+  {
+    option: 5,
+    name: 'Work Details',
+    tabName: 'work-details',
+    icon: <AccountCircleIcon />,
+    element: <WorkProfile />,
   },
 ];
 

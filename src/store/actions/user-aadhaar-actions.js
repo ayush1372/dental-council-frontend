@@ -3,12 +3,12 @@ import { POST } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import { aadhaarNumberData } from '../reducers/user-aadhaar-verify-reducer';
 
-export const sendAaadharOtp = (aadhaarNumberValue) => async (dispatch) => {
+export const sendAaadharOtp = (aadhaarNumber) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: POST,
       url: API.Aadhaar.sendAadhaarOtp,
-      data: aadhaarNumberValue,
+      data: { aadhaarNumber },
     })
       .then((response) => {
         dispatch(aadhaarNumberData(response));
@@ -19,12 +19,12 @@ export const sendAaadharOtp = (aadhaarNumberValue) => async (dispatch) => {
       });
   });
 };
-export const validateOtpAadhaar = async (aadhaarNumber, txnId, otp) => {
+export const validateOtpAadhaar = async (dataValues) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: POST,
       url: API.Aadhaar.verifyAadhaarOtp,
-      data: { aadhaarNumber, txnId, otp },
+      data: dataValues,
     })
       .then((response) => {
         return resolve(response);

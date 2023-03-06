@@ -20,12 +20,12 @@ const ReadPersonalDetails = ({ handleNext, showActions = true }) => {
       body: PersonalDetailsContent,
     },
     {
-      title: 'Communication Address',
-      body: CommunicationAddressContent,
+      title: 'Address as per KYC',
+      body: IMRDetailsContent,
     },
     {
-      title: 'IMR Details',
-      body: IMRDetailsContent,
+      title: 'Communication Address',
+      body: CommunicationAddressContent,
     },
   ];
   const handleChange = (accordionValue) => (_event, isExpanded) => {

@@ -119,7 +119,7 @@ function TrackStatusTable(props) {
     setOrderBy(property);
   };
 
-  const newRowsData = props.trackStatusData?.health_professional_applications?.map(
+  const newRowsData = props?.trackStatusData?.health_professional_applications?.map(
     (application, index) => {
       return createData(
         { type: 'SNo', value: index + 1 },
@@ -146,6 +146,7 @@ function TrackStatusTable(props) {
         { type: 'dateofSubmission', value: application?.created_at },
         { type: 'pendency', value: '-' },
         { type: 'pending', value: '-' },
+        { type: 'HPProfileId', value: application?.hp_profile_id },
         {
           type:
             loggedInUserType === 'NMC'
@@ -161,6 +162,7 @@ function TrackStatusTable(props) {
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
+    // props.getTableData(newPage + 1);
     window.scrollTo({
       top: 0,
       behavior: 'smooth',

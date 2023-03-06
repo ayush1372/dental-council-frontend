@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
+import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
 import { Grid, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
@@ -12,23 +13,23 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
     setOpenModal(false);
   };
   const { userActiveTab } = useSelector((state) => state.common);
-  const [
-    {
-      country: { name: countryName },
-      state: { name: stateName },
-      college: { name: collegeName },
-      university: { name: universityName },
-      course: { course_name: courseName },
-      qualification_month,
-      qualification_year,
-      is_name_change,
-    },
-  ] =
-    registrationDetails &&
-    Object.values(registrationDetails).length > 3 &&
-    registrationDetails?.qualification_detail_response_tos.length > 0
-      ? registrationDetails.qualification_detail_response_tos
-      : [{ country: {}, state: {}, college: {}, university: {}, course: {} }];
+  const {
+    country,
+    state,
+    college,
+    university,
+    course,
+    qualification_month,
+    qualification_year,
+    // is_name_change,
+  } = registrationDetails?.[0] || {};
+
+  const countryName = country?.name || '';
+  const stateName = state?.name || '';
+  const collegeName = college?.name || '';
+  const universityName = university?.name || '';
+  const courseName = course?.name || '';
+
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2} mt={1}>
@@ -41,10 +42,10 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography color="primary.main" variant="subtitle2">
-              {courseName ? courseName : ''}
+              {courseName}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -64,10 +65,10 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              {countryName ? countryName : ''}
+              {countryName}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -85,10 +86,10 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography color="primary.main" variant="subtitle2">
-              {stateName ? stateName : ''}
+              {stateName}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -107,11 +108,11 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              {collegeName ? collegeName : ''}
+              {collegeName}
             </Typography>
 
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -129,10 +130,10 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              {universityName ? universityName : ''}
+              {universityName}
             </Typography>{' '}
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -143,14 +144,26 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
 
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
-            Month of Awarding Degree/Diploma
+            Month & Year of awarding Degree/Diploma
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
               {qualification_month ? qualification_month : ''}
             </Typography>{' '}
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
+                color="primary"
+                onClick={() => setOpenModal(true)}
+                fontSize="width30"
+              />
+            )}
+          </Grid>
+          <Grid display="flex" alignItems="center">
+            <Typography variant="subtitle2" color="primary.main">
+              {qualification_year ? qualification_year : ''}
+            </Typography>{' '}
+            {userActiveTab === 'dashboard' && (
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
@@ -160,7 +173,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
         </Grid>
       </Grid>
       <Grid container item spacing={2} mt={1}>
-        <Grid item xs={12} md={4}>
+        {/* <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
             Year of awarding Degree/Diploma
             <Typography component="span" color="error.main">
@@ -168,20 +181,21 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
             </Typography>
           </Typography>
 
-          <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
-              {qualification_year ? qualification_year : ''}
-            </Typography>{' '}
-            {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
-                color="primary"
-                onClick={() => setOpenModal(true)}
-                fontSize="width30"
-              />
-            )}
-          </Grid>
+          
+        </Grid> */}
+        <Grid item xs={12} md={4}>
+          <Typography variant="subtitle2" color="grey.label">
+            Upload Qualification Degree
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
+          </Typography>
+          <Typography variant="subtitle2" color="primary.main">
+            <AttachFileIcon fontSize="10px" />
+            View attachment
+          </Typography>
         </Grid>
-        <Grid item xs={12} md={6}>
+        {/* <Grid item xs={12} md={6}>
           <Typography variant="subtitle2" color="grey.label">
             Is your name in registration certificate, different from your name in Aadhaar?
             <Typography component="span" color="error.main">
@@ -193,14 +207,14 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               {is_name_change === 0 ? 'Yes' : is_name_change === 1 ? 'No' : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
-              <EditOutlinedIcon
+              <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => setOpenModal(true)}
                 fontSize="width30"
               />
             )}
           </Grid>
-        </Grid>
+        </Grid> */}
       </Grid>
     </Grid>
   );
