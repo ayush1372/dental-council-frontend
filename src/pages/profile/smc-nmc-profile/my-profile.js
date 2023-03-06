@@ -68,15 +68,15 @@ const MyProfile = (props) => {
               </Grid>
 
               <Grid container spacing={2} mt={3}>
-                {data.map((field) => {
+                {data?.map((field) => {
                   return (
-                    <Grid item xs={12} md={6} sm={6} lg={3} key={field.id}>
+                    <Grid item xs={12} md={6} sm={6} lg={3} key={field?.id}>
                       <Typography variant="body1" color="inputTextColor.main">
-                        {field.label}
+                        {field?.label}
                       </Typography>
                       <Grid>
                         <Typography variant="body3" color="primary.main">
-                          {field.value}
+                          {field?.value}
                         </Typography>
                       </Grid>
                     </Grid>
