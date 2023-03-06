@@ -12,7 +12,7 @@ import { getCountriesList, getStatesList } from '../../store/actions/common-acti
 import {
   getPersonalDetailsData,
   getRegistrationDetailsData,
-  getWorkProfileDetailsData,
+  // getWorkProfileDetailsData,
 } from '../../store/actions/doctor-user-profile-actions';
 import { Button } from '../../ui/core/button/button';
 import successToast from '../../ui/core/toaster';
@@ -122,20 +122,22 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
       });
   };
 
-  const fetchDoctorUserWorkProfileDetails = () => {
-    dispatch(
-      getWorkProfileDetailsData(showViewProfile ? selectedRowData?.profileID?.value : profile_id)
-    )
-      .then(() => {})
-      .catch((allFailMsg) => {
-        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-      });
-  };
+  // const fetchDoctorUserWorkProfileDetails = () => {
+  //   dispatch(
+  //     getWorkProfileDetailsData(showViewProfile ? selectedRowData?.profileID?.value : profile_id)
+  //   )
+  //     .then(() => {})
+  //     .catch((allFailMsg) => {
+  //       successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+  //     });
+  // };
 
   useEffect(() => {
     fetchDoctorUserPersonalDetails();
     fetchDoctorUserRegistrationDetails();
-    fetchDoctorUserWorkProfileDetails();
+
+    //commented work flow details
+    // fetchDoctorUserWorkProfileDetails();
   }, []);
 
   return (
