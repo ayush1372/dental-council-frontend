@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import EditIcon from '@mui/icons-material/Edit';
 // import TuneIcon from '@mui/icons-material/Tune';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Grid, Typography, useTheme } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import useWizard from '../../hooks/use-wizard';
@@ -12,7 +12,7 @@ import { getCountriesList, getStatesList } from '../../store/actions/common-acti
 import {
   getPersonalDetailsData,
   getRegistrationDetailsData,
-  getWorkProfileDetailsData,
+  // getWorkProfileDetailsData,
 } from '../../store/actions/doctor-user-profile-actions';
 import { Button } from '../../ui/core/button/button';
 import successToast from '../../ui/core/toaster';
@@ -26,23 +26,39 @@ import RegisterAndAcademicDetails from './components/register-and-academic-detai
 // import WorkProfile from './components/work-profile/work-profile';
 const readWizardSteps = ['Personal Details', 'Registration & Academic Details']; //, 'Work Profile'
 
-export const UserProfile = ({
-  showViewProfile,
-  // setShowDashboard,
-  // setShowTable,
-  // setShowViewPorfile,
-  // showUserProfile,
-  selectedRowData,
-}) => {
+export const UserProfile = ({ showViewProfile, selectedRowData }) => {
+  const theme = useTheme();
   const dispatch = useDispatch();
   const [isReadMode, setIsReadMode] = useState(true);
-  // const [showChangepassword, setShowChangepassword] = useState(false);
   const [showReactivateLicense, setShowReactivateLicense] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   const [wizardSteps, setWizardSteps] = useState(readWizardSteps);
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
-  const { loginData } = useSelector((state) => state?.loginReducer);
+  // const { loginData } = useSelector((state) => state?.loginReducer);
+
+  let profile_id;
+  if (localStorage.getItem('accesstoken')) {
+    let base64Url = localStorage.getItem('accesstoken')?.split('.')[1];
+    let base64 = base64Url?.replace(/-/g, '+').replace(/_/g, '/');
+    let jsonPayload;
+    if (base64) {
+      jsonPayload = decodeURIComponent(
+        window
+          ?.atob(base64)
+          ?.split('')
+          ?.map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+          })
+          ?.join('')
+      );
+    }
+
+    profile_id = JSON.parse(jsonPayload)?.profile_id;
+    // if (JSON.parse(jsonPayload)?.authorities[0] === 'ROLE_HEALTH_PROFESSIONAL') type = 'Doctor';
+
+    // dispatch(userLoggedInType(type));
+  }
 
   const { activeStep, handleNext, handleBack, resetStep } = useWizard(
     loggedInUserType === 'Doctor' ? 0 : 1,
@@ -88,9 +104,7 @@ export const UserProfile = ({
 
   const fetchDoctorUserPersonalDetails = () => {
     dispatch(
-      getPersonalDetailsData(
-        showViewProfile ? selectedRowData?.profileID?.value : loginData.data.profile_id
-      )
+      getPersonalDetailsData(showViewProfile ? selectedRowData?.profileID?.value : profile_id)
     )
       .then(() => {})
       .catch((allFailMsg) => {
@@ -100,9 +114,7 @@ export const UserProfile = ({
 
   const fetchDoctorUserRegistrationDetails = () => {
     dispatch(
-      getRegistrationDetailsData(
-        showViewProfile ? selectedRowData?.profileID?.value : loginData.data.profile_id
-      )
+      getRegistrationDetailsData(showViewProfile ? selectedRowData?.profileID?.value : profile_id)
     )
       .then()
       .catch((allFailMsg) => {
@@ -110,22 +122,22 @@ export const UserProfile = ({
       });
   };
 
-  const fetchDoctorUserWorkProfileDetails = () => {
-    dispatch(
-      getWorkProfileDetailsData(
-        showViewProfile ? selectedRowData?.profileID?.value : loginData.data.profile_id
-      )
-    )
-      .then(() => {})
-      .catch((allFailMsg) => {
-        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-      });
-  };
+  // const fetchDoctorUserWorkProfileDetails = () => {
+  //   dispatch(
+  //     getWorkProfileDetailsData(showViewProfile ? selectedRowData?.profileID?.value : profile_id)
+  //   )
+  //     .then(() => {})
+  //     .catch((allFailMsg) => {
+  //       successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+  //     });
+  // };
 
   useEffect(() => {
     fetchDoctorUserPersonalDetails();
     fetchDoctorUserRegistrationDetails();
-    fetchDoctorUserWorkProfileDetails();
+
+    //commented work flow details
+    // fetchDoctorUserWorkProfileDetails();
   }, []);
 
   return (
@@ -181,15 +193,23 @@ export const UserProfile = ({
       )}
       {showSuccessPopup && <SuccessPopup />}
       {/* {!showChangepassword ? ( */}
-      <Box mt={3}>
+      <Box>
         {!showViewProfile ? (
-          <Grid container display="flex" justifyContent="space-between">
+          <Grid
+            container
+            display="flex"
+            justifyContent="space-between"
+            sx={{ alignItems: 'center' }}
+            bgcolor={`${theme.palette.white.main}`}
+            mb={2}
+            px={3}
+            py={2}
+          >
             <Grid item xs={12} md={6}>
               <Typography
                 component="div"
                 variant="h2"
                 color="inputTextColor.main"
-                py={2}
                 sx={{
                   textAlign: {
                     xs: 'center',
@@ -197,12 +217,7 @@ export const UserProfile = ({
                   },
                 }}
               >
-                {isReadMode ? 'User Profile' : 'Edit Profile'}
-                {!isReadMode && (
-                  <Typography component="div" variant="body3" color="inputTextColor.main">
-                    Update all your details correctly so that it could be verified by NMR verifiers.
-                  </Typography>
-                )}
+                {isReadMode ? 'My Profile' : 'Edit Profile'}
               </Typography>
             </Grid>
             {loggedInUserType === 'Doctor' && (
@@ -216,20 +231,7 @@ export const UserProfile = ({
                     md: '0 10px 0 0 ',
                   },
                 }}
-              >
-                {/* <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={() => {
-                      setShowChangepassword(true);
-                    }}
-                    sx={{
-                      width: '100%',
-                    }}
-                  >
-                    Change Password
-                  </Button> */}
-              </Grid>
+              ></Grid>
             )}
             {isReadMode && (
               <Grid

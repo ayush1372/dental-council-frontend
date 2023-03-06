@@ -381,6 +381,34 @@ export const suspensionRequestMapper = {
   Pending: 'Pending',
 };
 
+export const DashboardData = [
+  { header: 'IMR ID/Registration NO', key: 'registration_no' },
+  { header: 'Name of Applicant', key: 'applicant_full_name' },
+  { header: 'Name of State Council', key: 'council_name' },
+  { header: 'Council Verification Status', key: 'smc_status' },
+  { header: 'College Verification Status', key: 'college_dean_status' },
+  { header: 'NMC Verification Status', key: 'nmc_status' },
+  { header: 'Date of Submission', key: 'created_at' },
+  { header: 'Pendency', key: 'pendency' },
+];
+export const CollegeApproval = [
+  { header: 'College_ID', key: 'college_id' },
+  { header: 'College Name', key: 'college_name' },
+  { header: 'Name Of State Council', key: 'council_name' },
+  { header: 'Council Verification Status', key: 'status' },
+  { header: 'Date of Submission', key: 'submitted_on' },
+  { header: 'Pendency', key: 'pendency' },
+];
+export const ActivateLicence = [
+  { header: 'IMR ID/Registration NO', key: 'registration_id' },
+  { header: 'Applicant Name', key: 'health_professional_name' },
+  { header: 'Date of Submission', key: 'submitted_date' },
+  { header: 'Reactivation from Date', key: 'submitted_date' },
+  { header: 'Type of Suspension', key: 'typeOfSuspension' },
+  { header: 'Remark', key: 'remarks' },
+  { header: 'RequestId', key: 'request_id' },
+];
+
 export const searchDoctorResult = [
   {
     full_name: 'Monnie Doe',
