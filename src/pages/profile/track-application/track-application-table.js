@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { Box, Grid, TablePagination, Typography } from '@mui/material';
+import { Box, Grid, TablePagination } from '@mui/material';
 import { useDispatch } from 'react-redux';
 
 import GenericTable from '../../../shared/generic-component/generic-table';
@@ -54,6 +54,7 @@ function TrackAppicationTable({
   const [orderBy, setOrderBy] = React.useState({});
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
+  // const theme = useTheme();
 
   useEffect(() => {
     if (orderBy && getTableData && page !== null && profileId) dispatch(getTableData(profileId));
@@ -169,21 +170,21 @@ function TrackAppicationTable({
 
   return (
     <Grid>
-      <Typography variant="h2" py={2}>
+      {/* <Typography variant="h2" py={3} bgcolor={`${theme.palette.white.main}`} mb={2} px={3}>
         Track Application
-      </Typography>
+      </Typography>    */}
       <TableSearch trackApplication={userType} />
-      <GenericTable
-        order={order}
-        orderBy={orderBy}
-        onRequestSort={handleRequestSort}
-        tableHeader={dataHeader}
-        data={newRowsData}
-        handleRowClick={handleDataRowClick}
-        rowsPerPage={rowsPerPage}
-        page={page}
-      />
       <Box>
+        <GenericTable
+          order={order}
+          orderBy={orderBy}
+          onRequestSort={handleRequestSort}
+          tableHeader={dataHeader}
+          data={newRowsData}
+          handleRowClick={handleDataRowClick}
+          rowsPerPage={rowsPerPage}
+          page={page}
+        />
         <TablePagination
           rowsPerPageOptions={[5, 10, 25]}
           component="div"

@@ -55,8 +55,8 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
   };
 
   return (
-    <Box data-testid="table-search">
-      <Grid container sx={{ alignItems: 'flex-end' }} mb={5}>
+    <Box data-testid="table-search" mb={2}>
+      <Grid container sx={{ alignItems: 'flex-end' }}>
         <Grid
           item
           md={trackApplication ? 5 : activateLicence ? 4 : 2}
