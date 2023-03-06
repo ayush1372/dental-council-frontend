@@ -91,6 +91,7 @@ export const searchDoctorDetails = (searchdetails) => async (dispatch) => {
 };
 
 export const searchDoctorDetailsById = (id) => async (dispatch) => {
+  dispatch(searchDoctorById({ data: [], isLoading: true, isError: false }));
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,

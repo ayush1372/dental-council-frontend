@@ -4,6 +4,7 @@ import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { Box, Container, Grid, TablePagination, Typography, useTheme } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { verboseLog } from '../../../config/debug';
 import {
   searchDoctorDetails,
   searchDoctorDetailsById,
@@ -13,19 +14,21 @@ import successToast from '../../../ui/core/toaster';
 import DoctorProfileModal from './doctor-profile-modal';
 
 const SearchResults = ({ searchData }) => {
+  const theme = useTheme();
+  const dispatch = useDispatch();
+
   const { searchDetails } = useSelector((state) => state.searchDoctor);
+
   const [confirmationModal, setConfirmationModal] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(9);
   const [page, setPage] = useState(0);
   const [imagepath, setImagePath] = useState('');
-  const theme = useTheme();
-
-  const dispatch = useDispatch();
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
     window.scrollTo({
@@ -37,8 +40,11 @@ const SearchResults = ({ searchData }) => {
   };
 
   const handleViewProfile = (id, imagePath) => {
+    verboseLog('ID', id);
     dispatch(searchDoctorDetailsById(id))
-      .then(() => {})
+      .then(() => {
+        setConfirmationModal(true);
+      })
       .catch((error) => {
         successToast(
           error?.data?.response?.data?.error,
@@ -49,7 +55,6 @@ const SearchResults = ({ searchData }) => {
       });
 
     setImagePath(imagePath);
-    setConfirmationModal(true);
   };
 
   return (
@@ -89,13 +94,13 @@ const SearchResults = ({ searchData }) => {
                         </Box>
                         <Box className="doctor-info" width="70%">
                           <Typography component="div" variant="subtitle1">
-                            {doctor?.salutation + doctor?.full_name}
+                            {doctor?.salutation + doctor?.full_name || ''}
                           </Typography>
                           <Typography component="div" variant="body5" color="grey.label" mt={2}>
                             State Medical Council
                           </Typography>
                           <Typography component="div" variant="body3" color="primary">
-                            {doctor?.state_medical_council}
+                            {doctor?.state_medical_council || ''}
                           </Typography>
                         </Box>
                       </Box>
@@ -110,15 +115,15 @@ const SearchResults = ({ searchData }) => {
                             Registration number
                           </Typography>
                           <Typography component="div" variant="body3" color="primary">
-                            {doctor?.registration_number}
+                            {doctor?.registration_number || ''}
                           </Typography>
                         </Box>
                         <Box>
                           <Typography component="div" variant="body5" color="grey.label">
-                            Year of Info
+                            Year of Registration
                           </Typography>
                           <Typography component="div" variant="body3" color="primary">
-                            {doctor?.registration_year}
+                            {doctor?.registration_year || ''}
                           </Typography>
                         </Box>
                       </Box>
@@ -143,7 +148,7 @@ const SearchResults = ({ searchData }) => {
             <TablePagination
               rowsPerPageOptions={[]}
               component="div"
-              count={searchDetails?.data?.data?.count || '0'}
+              count={searchDetails?.data?.data?.count || 0}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
