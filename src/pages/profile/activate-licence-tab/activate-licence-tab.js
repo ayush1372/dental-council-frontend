@@ -247,7 +247,11 @@ const ActivateLicence = (props) => {
             </Typography> */}
           </Grid>
           <Grid mt={3}>
-            <TableSearch searchParams={searchParams} />
+            <TableSearch
+              searchParams={searchParams}
+              exportData={activateLicenseList}
+              flag={'ActivateList'}
+            />
           </Grid>
           <GenericTable
             order={order}
@@ -266,7 +270,7 @@ const ActivateLicence = (props) => {
             <TablePagination
               rowsPerPageOptions={[]}
               component="div"
-              count={activateLicenseList?.data?.total_no_of_records}
+              count={activateLicenseList?.data?.total_no_of_records || '0'}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}

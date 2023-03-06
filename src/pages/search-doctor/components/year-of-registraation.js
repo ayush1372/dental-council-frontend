@@ -65,12 +65,12 @@ const YearOfRegistration = ({ setDoSearch, setSearchData }) => {
             },
           }}
           fullWidth
-          error={errors.yearofRegistration?.message}
-          name="YearofRegistration"
-          label="Select year of Registration"
-          placeholder="Select year of Registration"
+          error={errors.YearofRegistration?.message}
+          name={'YearofRegistration'}
+          placeholder="Select Year of Registration"
+          label=" Year of Registration"
           {...register('YearofRegistration', {
-            required: 'Year of registration is required',
+            required: 'Year of Registration is required',
           })}
           options={yearsData}
         />
