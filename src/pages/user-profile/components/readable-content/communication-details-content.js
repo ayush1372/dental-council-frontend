@@ -221,51 +221,6 @@ const CommunicationAddress = ({ personalDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
       </Grid>
-
-      {/* <Grid container item spacing={2} mt={1}>
-        <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
-            Email Address
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
-          </Typography>
-          <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
-              {email ? email : ''}
-            </Typography>
-            {userActiveTab === 'dashboard' && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => setOpenModal(true)}
-                fontSize="width30"
-              />
-            )}{' '}
-          </Grid>
-        </Grid>
-        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-        <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
-            Mobile Number
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
-          </Typography>
-          <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
-              {mobile ? mobile : ''}
-            </Typography>
-            {userActiveTab === 'dashboard' && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => setOpenModal(true)}
-                fontSize="width30"
-              />
-            )}{' '}
-          </Grid>
-        </Grid>
-        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-      </Grid> */}
     </Grid>
   );
 };

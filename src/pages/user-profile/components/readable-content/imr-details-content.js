@@ -41,7 +41,11 @@ const IMRDetails = ({ personalDetails }) => {
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-        {/* <Grid item xs={12} md={4}>
+
+        {/*
+        Author:Krishnakanth,purpose: imr id,registration number
+        */
+        /* <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
             Year of Info
             <Typography component="span" color="error.main">
