@@ -54,8 +54,7 @@ export default function SuccessModal() {
             component="div"
             flexDirection="column"
           >
-            Your User ID has been created Successfully, further details has been sent to your
-            registered Email ID and Mobile Number.
+            Your Password been created Successfully
           </Typography>
           <Button
             sx={{ width: { xs: '100%', sm: '408px' }, mt: 5 }}
