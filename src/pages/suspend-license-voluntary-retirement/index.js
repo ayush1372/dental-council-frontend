@@ -582,6 +582,7 @@ export function SuspendLicenseVoluntaryRetirement({
           setOpen={() => setShowSuccessPopup(false)}
           text={successPopupMessage}
           handleClose={handleClose}
+          SuspensionCall={true}
         />
       )}
     </Box>
