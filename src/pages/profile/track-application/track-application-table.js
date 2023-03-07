@@ -30,11 +30,11 @@ function createData(
     application_type_name,
     nameofStateCouncil,
     doctor_status,
-    smc_status,
-    nmc_status,
     collegeVerificationStatus,
     NMCVerificationStatus,
     created_at,
+    smc_status,
+    nmc_status,
     pendency,
     view,
   };
@@ -49,8 +49,6 @@ function TrackAppicationTable({
   tableData,
   setRowData,
 }) {
-  // eslint-disable-next-line no-console
-  console.log('table data is ', tableData);
   const dispatch = useDispatch();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState({});
@@ -119,8 +117,6 @@ function TrackAppicationTable({
   };
   const newRowsData = (tableData?.data?.data?.health_professional_applications || [])?.map(
     (data, index) => {
-      // eslint-disable-next-line no-console
-      console.log('map data is ================', data);
       return createData(
         { type: 'SNo', value: index + 1 },
         {

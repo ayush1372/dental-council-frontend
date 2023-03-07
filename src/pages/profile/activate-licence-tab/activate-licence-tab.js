@@ -200,7 +200,7 @@ const ActivateLicence = (props) => {
       offset: 10,
       // search: searchQueryParams?.search ? searchQueryParams?.search : '',
     };
-    if (searchQueryParams?.search) {
+    if (searchQueryParams) {
       ActivateLicenseListbody.search = searchQueryParams?.search;
     }
 

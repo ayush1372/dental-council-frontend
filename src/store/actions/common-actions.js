@@ -279,11 +279,15 @@ export const changePasswordData = (data) => async (dispatch) => {
 };
 
 export const getActivateLicenseList = (body) => async (dispatch) => {
+  let path = '';
+  if (body.search !== undefined && body.search !== null && body.search !== '') {
+    path += '&search=' + body.search;
+  }
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,
-      url: `${API.common.activateLicense}?pageNo=${body.pageNo}&offset=${body.offset}`,
-      // data: body,
+      url: `${API.common.activateLicense}?pageNo=${body.pageNo}&offset=${body.offset}${path}`,
+      // url: `${API.common.activateLicense}?pageNo=${body.pageNo}&offset=${body.offset}`,
     })
       .then((response) => {
         dispatch(getActivateLicense(response));
