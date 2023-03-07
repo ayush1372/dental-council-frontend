@@ -49,6 +49,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     gender,
     schedule,
     full_name,
+    language,
   } = personal_details || {};
   const {
     country,
@@ -144,7 +145,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
         loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? registration_number : '',
       mobileNo: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? mobile : '',
       EmailAddress: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? email : '',
-      LanguageSpoken: [],
+      LanguageSpoken: language || [],
       Landmark: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? landmark : '',
       Locality: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? locality : '',
       Street: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? street : '',
@@ -425,9 +426,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
               Father&apos;s Name
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
             </Typography>
             <TextField
               variant="outlined"
@@ -436,7 +434,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               fullWidth
               defaultValue={getValues().FatherName}
               {...register('FatherName', {
-                required: 'Missing field',
+                // required: 'Missing field',
                 maxLength: {
                   value: 100,
                   message: 'Length should be less than 100.',
@@ -448,9 +446,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
               Mother&apos;s Name
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
             </Typography>
             <TextField
               variant="outlined"
@@ -459,7 +454,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               fullWidth
               defaultValue={getValues().MotherName}
               {...register('MotherName', {
-                required: 'Missing field',
+                // required: 'Missing field',
                 maxLength: {
                   value: 100,
                   message: 'Length should be less than 100.',
@@ -473,9 +468,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
               Spouse Name
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
             </Typography>
             <TextField
               variant="outlined"
@@ -484,7 +476,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               fullWidth
               defaultValue={getValues().SpouseName}
               {...register('SpouseName', {
-                required: 'Missing field',
+                // required: 'Missing field',
                 maxLength: {
                   value: 100,
                   message: 'Length should be less than 100.',
@@ -721,7 +713,15 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                     ? personalDetails?.kyc_address?.house
                     : getValues().Address
                 }
-                error={errors.Address?.message}
+                // defaultValue={getValues().House}
+                // {...register('House', {
+                //   required: 'House House is Required',
+                //   maxLength: {
+                //     value: 300,
+                //     message: 'Length should be less than 300.',
+                //   },
+                // })}
+                error={errors.House?.message}
               />
             </Grid>
             <Grid item xs={12} md={4}>
@@ -791,7 +791,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                     message: 'Length should be less than 300.',
                   },
                 })}
-                error={errors.Locality?.message}
               />
             </Grid>
             <Grid item xs={12} md={4}>
