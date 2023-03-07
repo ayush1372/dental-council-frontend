@@ -122,9 +122,6 @@ const PersonalDetails = ({ personalDetails }) => {
         <Grid item xs={12} md={3}>
           <Typography variant="subtitle2" color="grey.label">
             Father&apos;s Name
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
