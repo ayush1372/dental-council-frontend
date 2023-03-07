@@ -96,9 +96,9 @@ const PersonalDetails = ({ personalDetails }) => {
         )}
       </Grid>
       {/* //firstname */}
-      <Grid container item spacing={2} mt={1}>
+      <Grid container item spacing={2}>
         <Grid item xs={12} md={3}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             Name
             <Typography component="span" color="error.main">
               *
@@ -106,7 +106,7 @@ const PersonalDetails = ({ personalDetails }) => {
           </Typography>
 
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {full_name ? full_name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -120,11 +120,11 @@ const PersonalDetails = ({ personalDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={3}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             Father&apos;s Name
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {father_name ? father_name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -138,11 +138,11 @@ const PersonalDetails = ({ personalDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={3}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             Mother&apos;s Name
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {mother_name ? mother_name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -156,11 +156,11 @@ const PersonalDetails = ({ personalDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={3}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             Spouse Name
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {spouse_name ? spouse_name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -175,16 +175,16 @@ const PersonalDetails = ({ personalDetails }) => {
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
       </Grid>
 
-      <Grid container item spacing={2} mt={1}>
+      <Grid container item spacing={2}>
         <Grid item xs={12} md={3}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             Gender
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {gender ? gender : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -199,14 +199,14 @@ const PersonalDetails = ({ personalDetails }) => {
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
 
         <Grid item xs={12} md={3}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             Date of Birth
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {date_of_birth ? date_of_birth : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -221,14 +221,14 @@ const PersonalDetails = ({ personalDetails }) => {
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
 
         <Grid item xs={12} md={3}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             Nationality
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {nationality}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -243,14 +243,14 @@ const PersonalDetails = ({ personalDetails }) => {
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
 
         <Grid item xs={12} md={3}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             Languages
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {language && language[0]?.name ? language[0]?.name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -264,16 +264,16 @@ const PersonalDetails = ({ personalDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
       </Grid>
-      <Grid container item spacing={2} mt={1}>
+      <Grid container item spacing={2}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             Schedule
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {nameSchedule}
             </Typography>
             {userActiveTab === 'dashboard' && (

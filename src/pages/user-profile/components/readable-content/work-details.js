@@ -24,14 +24,14 @@ const WorkDetails = ({ workProfileDetails }) => {
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             Are you currently working
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {is_user_currently_working === 0
                 ? 'Yes'
                 : is_user_currently_working === 1
@@ -49,14 +49,14 @@ const WorkDetails = ({ workProfileDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             Nature of Work
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {workNatureName}
             </Typography>
             {/* {userActiveTab === 'dashboard' && (
@@ -70,14 +70,14 @@ const WorkDetails = ({ workProfileDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             Choose Work Status
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color=" mt={2}.main">
               {workStatusName}
             </Typography>
             {/* {userActiveTab === 'dashboard' && (
@@ -93,7 +93,7 @@ const WorkDetails = ({ workProfileDetails }) => {
       </Grid>
       <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={8} lg={12}>
-          <Typography variant="subtitle2" color="inputTextColor.main">
+          <Typography variant="body5" color="inputTextColor.main">
             Upload the proof of work for govt.such as Appointment letter, Last pay slip, Recent
             transfer order etc.
             <Typography component="span" color="error.main">
@@ -101,7 +101,7 @@ const WorkDetails = ({ workProfileDetails }) => {
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               <AttachFileIcon fontSize="10px" />
               View attachment
             </Typography>
