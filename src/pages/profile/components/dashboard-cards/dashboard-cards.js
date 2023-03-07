@@ -161,11 +161,11 @@ export default function Dashboard() {
       return PendingApplication;
     } else if (item?.name?.includes('Verified') || item?.name?.includes('Approved')) {
       return ApprovedApplication;
-    } else if (item?.name.includes('Raised')) {
+    } else if (item?.name?.includes('Raised')) {
       return RaisedApplication;
-    } else if (item?.name.includes('Rejected') || item?.name.includes('Blacklisted')) {
+    } else if (item?.name?.includes('Rejected') || item?.name?.includes('Blacklisted')) {
       return RejectedApplication;
-    } else if (item?.name.includes('Total')) {
+    } else if (item?.name?.includes('Total')) {
       return TotalRegReq;
     }
   };
@@ -179,9 +179,9 @@ export default function Dashboard() {
       return 'Total number of applications approved by production.';
     } else if (item?.name?.includes('Raised')) {
       return 'Total number of applications raised a query.';
-    } else if (item?.name.includes('Rejected') || item?.name.includes('Blacklisted')) {
+    } else if (item?.name?.includes('Rejected') || item?.name?.includes('Blacklisted')) {
       return 'Total number of applications which are rejected';
-    } else if (item?.name.includes('Total')) {
+    } else if (item?.name?.includes('Total')) {
       return 'Total number of requests';
     }
   };
