@@ -70,7 +70,7 @@ const YearOfRegistration = ({ setDoSearch, setSearchData }) => {
           placeholder="Select Year of Registration"
           label=" Year of Registration"
           {...register('YearofRegistration', {
-            required: 'Year of Registration is required',
+            // required: 'Year of Registration is required',
           })}
           options={yearsData}
         />

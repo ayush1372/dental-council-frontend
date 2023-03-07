@@ -83,11 +83,11 @@ const Name = ({ setDoSearch, setSearchData }) => {
           fullWidth
           defaultValue={getValues().DoctorName}
           {...register('DoctorName', {
-            required: 'Doctor Name is Required',
-            maxLength: {
-              value: 100,
-              message: 'Length should be less than 100.',
-            },
+            // required: 'Doctor Name is Required',
+            // maxLength: {
+            //   value: 100,
+            //   message: 'Length should be less than 100.',
+            // },
           })}
           error={errors.DoctorName?.message}
         />

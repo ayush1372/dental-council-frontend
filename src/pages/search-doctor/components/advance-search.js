@@ -85,11 +85,11 @@ const AdvanceSearch = ({ setDoSearch, setSearchData }) => {
           fullWidth
           defaultValue={getValues().DoctorName}
           {...register('DoctorName', {
-            required: 'Doctor Name is Required',
-            maxLength: {
-              value: 100,
-              message: 'Length should be less than 100.',
-            },
+            // required: 'Doctor Name is Required',
+            // maxLength: {
+            //   value: 100,
+            //   message: 'Length should be less than 100.',
+            // },
           })}
           error={errors.DoctorName?.message}
         />
@@ -113,11 +113,11 @@ const AdvanceSearch = ({ setDoSearch, setSearchData }) => {
           fullWidth
           defaultValue={getValues().RegistrationNumber}
           {...register('RegistrationNumber', {
-            required: 'Registration Number is Required',
-            maxLength: {
-              value: 100,
-              message: 'Length should be less than 100.',
-            },
+            // required: 'Registration Number is Required',
+            // maxLength: {
+            //   value: 100,
+            //   message: 'Length should be less than 100.',
+            // },
           })}
           error={errors.RegistrationNumber?.message}
         />
@@ -130,11 +130,12 @@ const AdvanceSearch = ({ setDoSearch, setSearchData }) => {
         <Select
           fullWidth
           name={'YearofRegistration'}
-          placeholder="Select year of Registration"
-          {...register('YearofRegistration', {
-            required: 'Year of Registration is required',
-          })}
+          placeholder="Select Year of Registration"
+          defaultValue={getValues().YearofRegistration}
           error={errors.YearofRegistration?.message}
+          {...register('YearofRegistration', {
+            // required: 'Year of Registration is required',
+          })}
           options={yearsData}
         />
       </Grid>
@@ -152,7 +153,7 @@ const AdvanceSearch = ({ setDoSearch, setSearchData }) => {
           placeholder="Select State medical council"
           defaultValue={getValues().Statemedicalcouncil}
           {...register('Statemedicalcouncil', {
-            required: 'state medical council is required',
+            // required: 'state medical council is required',
           })}
           options={createSelectFieldData(councilNames)}
           onChange={(currentValue) => {
