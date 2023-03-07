@@ -30,11 +30,11 @@ function createData(
     application_type_name,
     nameofStateCouncil,
     doctor_status,
-    smc_status,
-    nmc_status,
     collegeVerificationStatus,
     NMCVerificationStatus,
     created_at,
+    smc_status,
+    nmc_status,
     pendency,
     view,
   };
@@ -55,9 +55,13 @@ function TrackAppicationTable({
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
   // const theme = useTheme();
-
+  let trackData = {
+    pageNo: 1,
+    offset: 10,
+  };
   useEffect(() => {
-    if (orderBy && getTableData && page !== null && profileId) dispatch(getTableData(profileId));
+    if (orderBy && getTableData && page !== null && profileId)
+      dispatch(getTableData(profileId, trackData));
   }, [orderBy, getTableData, page, profileId]);
 
   const viewNameOfApplicant = (event, row) => {
@@ -111,49 +115,52 @@ function TrackAppicationTable({
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
-  const newRowsData = (tableData?.data || [])?.map((data, index) => {
-    return createData(
-      { type: 'SNo', value: index + 1 },
-      {
-        type: 'registration_no',
-        value: data?.registration_no,
-      },
-      {
-        type: 'request_id',
-        value: data?.request_id,
-      },
-      {
-        type: 'applicant_full_name',
-        value: data?.applicant_full_name,
-        callbackNameOfApplicant: viewNameOfApplicant,
-      },
-      {
-        type: 'application_type_name',
-        value: data?.application_type_name,
-      },
-      {
-        type: 'nameofStateCouncil',
-        value: data?.nameofStateCouncil,
-      },
-      { type: 'doctor_status', value: data?.doctor_status },
-      {
-        type: 'collegeVerificationStatus',
-        value: data?.collegeVerificationStatus,
-      },
-      { type: 'NMCVerificationStatus', value: data?.NMCVerificationStatus },
-      { type: 'created_at', value: data?.created_at },
-      {
-        type: 'SMC Status',
-        value: data?.smc_status,
-      },
-      {
-        type: 'NMC Status',
-        value: data?.nmc_status,
-      },
-      { type: 'pendency', value: data?.pendency },
-      { type: 'view', value: data?.view || 'view', onClickCallback: viewCallback }
-    );
-  });
+  const newRowsData = (tableData?.data?.data?.health_professional_applications || [])?.map(
+    (data, index) => {
+      return createData(
+        { type: 'SNo', value: index + 1 },
+        {
+          type: 'registration_no',
+          value: data?.registration_no,
+        },
+        {
+          type: 'request_id',
+          value: data?.request_id,
+        },
+        {
+          type: 'applicant_full_name',
+          value: data?.applicant_full_name,
+          callbackNameOfApplicant: viewNameOfApplicant,
+        },
+
+        {
+          type: 'application_type_name',
+          value: data?.application_type_name,
+        },
+        {
+          type: 'nameofStateCouncil',
+          value: data?.nameofStateCouncil,
+        },
+        { type: 'doctor_status', value: data?.doctor_status },
+        {
+          type: 'collegeVerificationStatus',
+          value: data?.collegeVerificationStatus,
+        },
+        { type: 'NMCVerificationStatus', value: data?.NMCVerificationStatus },
+        { type: 'created_at', value: data?.created_at },
+        {
+          type: 'SMC Status',
+          value: data?.smc_status,
+        },
+        {
+          type: 'NMC Status',
+          value: data?.nmc_status,
+        },
+        { type: 'pendency', value: data?.pendency },
+        { type: 'view', value: data?.view || 'view', onClickCallback: viewCallback }
+      );
+    }
+  );
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -161,6 +168,8 @@ function TrackAppicationTable({
       top: 0,
       behavior: 'smooth',
     });
+    let finalTrackData = { ...trackData, pageNo: newPage };
+    dispatch(getTableData(profileId, finalTrackData));
   };
 
   const handleChangeRowsPerPage = (event) => {
@@ -186,9 +195,9 @@ function TrackAppicationTable({
           page={page}
         />
         <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
+          rowsPerPageOptions={[]}
           component="div"
-          count={newRowsData.length || '0'}
+          count={tableData?.data?.data?.total_no_of_records || '0'}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

@@ -198,8 +198,12 @@ const ActivateLicence = (props) => {
     let ActivateLicenseListbody = {
       pageNo: pageNo,
       offset: 10,
-      search: searchQueryParams?.search ? searchQueryParams?.search : '',
+      // search: searchQueryParams?.search ? searchQueryParams?.search : '',
     };
+    if (searchQueryParams) {
+      ActivateLicenseListbody.search = searchQueryParams?.search;
+    }
+
     try {
       dispatch(getActivateLicenseList(ActivateLicenseListbody)).then(() => {});
     } catch (allFailMsg) {
