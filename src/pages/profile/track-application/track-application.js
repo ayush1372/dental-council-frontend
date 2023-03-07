@@ -22,7 +22,7 @@ export function TrackApplication({ getTableData }) {
     setShowTrackApplicationTable(true);
   };
   return (
-    <Box>
+    <Box px={2} py={1}>
       {showUserProfile && (
         <Box bgcolor="grey1.lighter">
           <Box align="right" pt={2} pr={2}>

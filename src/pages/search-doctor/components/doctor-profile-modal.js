@@ -1,8 +1,8 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 
-import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
+// import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import CloseIcon from '@mui/icons-material/Close';
-import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
+// import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import { Box, Dialog, Grid, Typography, useTheme } from '@mui/material';
 import { useSelector } from 'react-redux';
@@ -16,16 +16,16 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
 
   const { searchDetailsById } = useSelector((state) => state.searchDoctor);
 
-  const [copiedItem, setCopiedItem] = useState('');
+  // const [copiedItem, setCopiedItem] = useState('');
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const textCopier = (copiedValue, copiedItemName) => {
-    navigator.clipboard.writeText(copiedValue);
-    setCopiedItem(copiedItemName);
-  };
+  // const textCopier = (copiedValue, copiedItemName) => {
+  //   navigator.clipboard.writeText(copiedValue);
+  //   setCopiedItem(copiedItemName);
+  // };
 
   return (
     <Dialog
@@ -49,7 +49,11 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
           justifyContent="flex-end"
           className={styles.doctorTitleBackground}
         >
-          <CloseIcon color="white" onClick={handleClose} sx={{ width: '48px', height: '48px' }} />
+          <CloseIcon
+            color="white"
+            onClick={handleClose}
+            sx={{ width: '48px', height: '48px', zIndex: 1, cursor: 'pointer' }}
+          />
         </Box>
         <Box className={styles.docterDetails} px={6}>
           <Box display="flex" py={1}>
@@ -206,7 +210,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
               </Typography>
               <Typography component="span" variant="body1" color="textSecondary.main">
                 {searchDetailsById?.data?.data?.mobile_number || ''}
-                {searchDetailsById?.data?.data?.mobile_number ? (
+                {/* {searchDetailsById?.data?.data?.mobile_number ? (
                   copiedItem === 'mobile' ? (
                     <CheckCircleOutlineOutlinedIcon
                       sx={{
@@ -234,7 +238,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                   )
                 ) : (
                   ''
-                )}
+                )} */}
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
@@ -253,7 +257,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                 color="textSecondary.main"
               >
                 {searchDetailsById?.data?.data?.email || ''}
-                {searchDetailsById?.data?.data?.email ? (
+                {/* {searchDetailsById?.data?.data?.email ? (
                   copiedItem === 'email' ? (
                     <CheckCircleOutlineOutlinedIcon
                       sx={{
@@ -279,7 +283,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                   )
                 ) : (
                   ''
-                )}
+                )} */}
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6} md={3}>
