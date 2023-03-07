@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { Box, Typography } from '@mui/material';
+// import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import { Box } from '@mui/material';
 import { useFieldArray, useForm } from 'react-hook-form';
 
 import { Button } from '../../../../ui/core';
@@ -58,10 +58,10 @@ const AdditionalQualifications = () => {
         {/* <Typography variant="h3" color="textPrimary.main">
           Additional Qualifications
         </Typography> */}
-        <Typography variant="body4" color="messageBlue.main" display="flex" alignItems="center">
+        {/* <Typography variant="body4" color="messageBlue.main" display="flex" alignItems="center">
           <InfoOutlinedIcon fontSize="18px" />
           User can add up to 7 qualification degrees
-        </Typography>
+        </Typography> */}
       </Box>
       <Box mt={1}>
         {fields.map((qualification, index) => {

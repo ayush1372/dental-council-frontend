@@ -103,7 +103,7 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
         <Grid item xs={12} sm={6} my={1} pl={loggedIn && { xs: 7, md: 0 }}>
           <Grid container>
             <Grid item xs="auto">
-              <Link onClick={() => navigate('/')}>
+              <Link onClick={() => navigate('/')} sx={{ cursor: 'pointer' }}>
                 <img
                   className={classes.logoImage}
                   src={NmcLogo}

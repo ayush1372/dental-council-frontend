@@ -87,8 +87,11 @@ const EditQualificationDetails = ({
           />
         </Grid>
       )}
-      <Grid container item spacing={2}>
-        <Grid item xs={12} md={12}>
+      <Grid container item spacing={2} mb={3}>
+        <Grid item xs={12}>
+          <Typography component="div" variant="body1" color="inputTextColor">
+            Qualification From
+          </Typography>
           <RadioGroup
             onChange={handleQualificationFrom}
             name={`qualification[${index}].qualificationfrom`}
@@ -104,14 +107,13 @@ const EditQualificationDetails = ({
                 label: 'International',
               },
             ]}
-            label="Qualification From"
             error={errors?.qualification?.[index]?.qualificationfrom?.message}
           />
         </Grid>
       </Grid>
 
       {qualificationfrom === 'International' && (
-        <Grid container item spacing={2} display="flex" alignItems="center">
+        <Grid container item spacing={2} display="flex" alignItems="center" mb={2}>
           <Grid item xs={4}>
             <Typography color="grey2.lighter" variant="body1">
               FMGE QUALIFICATION DETAILS
@@ -216,7 +218,7 @@ const EditQualificationDetails = ({
         </Grid>
       )}
 
-      <Grid container item spacing={2} display="flex" alignItems="center">
+      <Grid container item spacing={2} display="flex" alignItems="center" mt={3} mb={2}>
         <Grid item xs={3}>
           <Typography color="grey2.lighter" variant="body1">
             BASIC QUALIFICATION
@@ -299,8 +301,6 @@ const EditQualificationDetails = ({
             }}
           />
         </Grid>
-      </Grid>
-      <Grid container item spacing={2}>
         <Grid item xs={12} md={4}>
           {/* {getValues()[qualification[4]] !== undefined && ( */}
           <Select
@@ -411,7 +411,9 @@ const EditQualificationDetails = ({
                  Maximum size allowed for the attachment is 5MB.`}
             label={
               <>
-                <Typography color="text.primary">Upload the Degree</Typography>
+                <Typography variant="body1" sx={{ fontSize: '16px' }} color="text.primary">
+                  Upload Qualification Degree
+                </Typography>
                 <Typography color="error"> *</Typography>
               </>
             }

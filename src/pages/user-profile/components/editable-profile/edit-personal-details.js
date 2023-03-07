@@ -649,7 +649,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             </Typography>
           </Grid>
           <Grid item xs={12} md={8}>
-            <Typography variant="subtitle2" color="inputTextColor.main">
+            <Typography variant="subtitle2" color="grey.main">
               Aadhaar verified Address
               <Typography component="span" color="error.main">
                 *

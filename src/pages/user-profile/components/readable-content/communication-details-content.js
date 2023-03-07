@@ -27,16 +27,16 @@ const CommunicationAddress = ({ personalDetails }) => {
 
   return (
     <Grid container spacing={2} mt={2}>
-      <Grid container item spacing={2} mt={1}>
+      <Grid container item spacing={2}>
         <Grid item xs={12} md={6}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             House
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {address_line1 ? address_line1 : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -51,14 +51,14 @@ const CommunicationAddress = ({ personalDetails }) => {
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
 
         <Grid item xs={12} md={3}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             Street
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {villageName}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -72,14 +72,14 @@ const CommunicationAddress = ({ personalDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={3}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             Landmark
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {villageName}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -93,16 +93,16 @@ const CommunicationAddress = ({ personalDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
       </Grid>
-      <Grid container item spacing={2} mt={1}>
+      <Grid container item spacing={2}>
         <Grid item xs={12} md={3}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="bod5" color="grey.label">
             City/Town/Village
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {villageName}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -116,14 +116,14 @@ const CommunicationAddress = ({ personalDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={3}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             District
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {districtName}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -137,11 +137,11 @@ const CommunicationAddress = ({ personalDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={3}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             Sub District
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {subDistrictName}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -155,14 +155,14 @@ const CommunicationAddress = ({ personalDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={3}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             State/Union Territory
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {stateName}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -177,16 +177,16 @@ const CommunicationAddress = ({ personalDetails }) => {
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
       </Grid>
 
-      <Grid container item spacing={2} mt={1}>
+      <Grid container item spacing={2}>
         <Grid item xs={12} md={3}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             Country
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {countryName}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -200,14 +200,14 @@ const CommunicationAddress = ({ personalDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={3}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             Pincode
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {pincode ? pincode : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
