@@ -30,11 +30,12 @@ const SmcEditProfile = (props) => {
       first_name: userData?.first_name,
       last_name: userData?.last_name,
       middle_name: userData?.middle_name,
-      state_medical_council: {
+      RegistrationCouncil: {
         id: userData?.state_medical_council?.id,
         code: 'MAHA',
         name: userData?.state_medical_council?.name,
       },
+      // RegistrationCouncil: { name: userData?.state_medical_council?.name },
       ndhm_enrollment: userData?.ndhm_enrollment,
       enrolled_number: userData?.enrolled_number,
       display_name: userData?.display_name,
@@ -51,9 +52,9 @@ const SmcEditProfile = (props) => {
     last_name: getValues().last_name,
     middle_name: getValues().middle_name,
     state_medical_council: {
-      id: getValues().state_medical_council?.id,
-      code: getValues().state_medical_council?.code,
-      name: getValues().state_medical_council?.name,
+      id: getValues().RegistrationCouncil?.id,
+      code: getValues().RegistrationCouncil?.code,
+      name: getValues().RegistrationCouncil?.name,
     },
     ndhm_enrollment: getValues().ndhm_enrollment,
     enrolled_number: getValues().enrolled_number,
@@ -184,15 +185,21 @@ const SmcEditProfile = (props) => {
           <SearchableDropdown
             name="RegistrationCouncil"
             items={createEditFieldData(councilNames)}
-            defaultValue={getValues().state_medical_council?.name}
+            value={getValues().RegistrationCouncil}
+            defaultValue={getValues().RegistrationCouncil}
             placeholder="Select Your Registration Council"
             clearErrors={clearErrors}
             error={errors.RegistrationCouncil?.message}
+            disabled={true}
             {...register('RegistrationCouncil', {
               required: 'Registration Council is required',
             })}
             onChange={(currentValue) => {
-              setValue('RegistrationCouncilId', currentValue.id);
+              setValue('RegistrationCouncil', {
+                id: currentValue.id,
+                name: currentValue.name,
+                code: 'MAHA',
+              });
             }}
           />
         </Grid>
