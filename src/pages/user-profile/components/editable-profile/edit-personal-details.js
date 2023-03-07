@@ -190,7 +190,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     fetchCities(selectedSubDistrict);
   }, [selectedSubDistrict]);
 
-  const fetchUpadtedDoctorUserProfileData = (personalDetails) => {
+  const fetchUpdatedDoctorUserProfileData = (personalDetails) => {
     dispatch(updateDoctorPersonalDetails(personalDetails, loginData.data.profile_id))
       .then(() => {
         dispatch(getRegistrationDetailsData(loginData.data.profile_id))
@@ -200,6 +200,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
           .catch((allFailMsg) => {
             successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
           });
+        handleNext();
       })
       .catch((allFailMsg) => {
         successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
@@ -232,7 +233,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     },
   ];
 
-  const onHandleSave = () => {
+  async function onHandleSave() {
     const {
       // Salutation,
       MiddleName,
@@ -296,12 +297,14 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
 
     doctorProfileValues.personal_details.schedule = schedules.find((x) => x.id === Schedule) || {};
     dispatch(getPersonalDetails({ ...JSON.parse(JSON.stringify(doctorProfileValues)) }));
-  };
-  const onHandleOptionNext = () => {
-    onHandleSave();
-    // console.log(personalDetails, 'personalDetails');
-    fetchUpadtedDoctorUserProfileData(personalDetails);
-  };
+
+    return doctorProfileValues;
+  }
+  async function onHandleOptionNext() {
+    await onHandleSave().then((response) => {
+      fetchUpdatedDoctorUserProfileData(response);
+    });
+  }
   // const handleSalutationChange = (event) => {
   //   setValue(event.target.name, event.target.value, true);
   // };
