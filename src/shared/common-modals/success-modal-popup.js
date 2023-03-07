@@ -4,8 +4,8 @@ import { useTheme } from '@mui/material/styles';
 
 import { Button } from '../../ui/core';
 
-export default function SuccessModalPopup({ open, setOpen, text }) {
-  const handleClose = () => {
+export default function SuccessModalPopup({ open, setOpen, text, handleClose }) {
+  const handleCloseModal = () => {
     setOpen(false);
   };
   const theme = useTheme();
@@ -59,7 +59,7 @@ export default function SuccessModalPopup({ open, setOpen, text }) {
             sx={{ width: { xs: '100%', sm: '408px' }, mt: 5 }}
             variant="contained"
             color="warning"
-            onClick={handleClose}
+            onClick={handleClose ? handleClose : handleCloseModal}
           >
             Ok
           </Button>

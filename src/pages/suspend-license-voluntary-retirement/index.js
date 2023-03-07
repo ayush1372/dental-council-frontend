@@ -9,8 +9,7 @@ import { Box, Dialog, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
-// import { verboseLog } from '../../config/debug';
-// import { suspendDoctor } from '../../store/actions/common-actions';
+import SuccessModalPopup from '../../shared/common-modals/success-modal-popup';
 import { getInitiateWorkFlow } from '../../store/actions/common-actions';
 import { changeUserActiveTab } from '../../store/reducers/common-reducers';
 import { Button, Checkbox, RadioGroup, TextField } from '../../ui/core';
@@ -27,6 +26,8 @@ export function SuspendLicenseVoluntaryRetirement({
   const { loginData } = useSelector((state) => state.loginReducer);
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
 
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [successPopupMessage, setSuccessPopupMessage] = useState('');
   const [selectedSuspension, setSelectedSuspension] = useState('voluntary-suspension-check');
   const [selectedFromDate, setSelectedFromDate] = useState();
   const { userActiveTab } = useSelector((state) => state.common);
@@ -59,21 +60,27 @@ export function SuspendLicenseVoluntaryRetirement({
     switch (selectedValue) {
       case 'forward':
         action_id = 2;
+        setSuccessPopupMessage('Forwarded Successfully');
         break;
       case 'raise':
         action_id = 3;
+        setSuccessPopupMessage('Query Raised Successfully');
         break;
       case 'verify':
         action_id = 4;
+        setSuccessPopupMessage('Approved Successfully');
         break;
       case 'reject':
         action_id = 5;
+        setSuccessPopupMessage('Rejected Successfully');
         break;
       case 'suspend':
         action_id = 6;
+        setSuccessPopupMessage('Temporarily Suspended');
         break;
       case 'blacklist':
         action_id = 7;
+        setSuccessPopupMessage('Permanently Suspended');
         break;
       default:
         action_id = 1;
@@ -101,8 +108,8 @@ export function SuspendLicenseVoluntaryRetirement({
     try {
       dispatch(getInitiateWorkFlow(workFlowData))
         .then((response) => {
+          setShowSuccessPopup(true);
           if (response) {
-            handleClose();
             userActiveTab === 'voluntary-suspend-license' &&
               dispatch(changeUserActiveTab('my-profile'));
           }
@@ -568,6 +575,14 @@ export function SuspendLicenseVoluntaryRetirement({
             </Box>
           </Box>
         </Dialog>
+      )}
+      {showSuccessPopup && (
+        <SuccessModalPopup
+          open={showSuccessPopup}
+          setOpen={() => setShowSuccessPopup(false)}
+          text={successPopupMessage}
+          handleClose={handleClose}
+        />
       )}
     </Box>
   );
