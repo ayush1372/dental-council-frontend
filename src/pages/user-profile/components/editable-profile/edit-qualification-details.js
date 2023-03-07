@@ -403,20 +403,15 @@ const EditQualificationDetails = ({
 
       <Grid container item spacing={2} mt={1}>
         <Grid item xs={12}>
+          <Typography variant="body1" sx={{ fontSize: '16px' }} color="text.primary">
+            Upload Qualification Degree <Typography color="error"> *</Typography>
+          </Typography>
           <UploadFile
             uploadFiles="single"
             sizeAllowed={1}
             fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
             fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
                  Maximum size allowed for the attachment is 5MB.`}
-            label={
-              <>
-                <Typography variant="body1" sx={{ fontSize: '16px' }} color="text.primary">
-                  Upload Qualification Degree
-                </Typography>
-                <Typography color="error"> *</Typography>
-              </>
-            }
             fileData={qualificationFilesData[`qualification.${index}.files`] || []}
             setFileData={(files) => {
               handleQualificationFilesData(`qualification.${index}.files`, files);

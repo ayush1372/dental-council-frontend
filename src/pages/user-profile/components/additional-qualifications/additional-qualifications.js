@@ -86,8 +86,16 @@ const AdditionalQualifications = () => {
           );
         })}
       </Box>
-      <Box>
+
+      <Box mt={2} display="flex" width="100%">
+        <Button variant="contained" color="secondary" onClick={handleSubmit}>
+          Submit
+        </Button>
+        <Button variant="contained" color="grey" sx={{ marginLeft: '20px' }}>
+          Cancel
+        </Button>
         <Button
+          sx={{ ml: 'auto' }}
           variant="outlined"
           color="primary"
           onClick={() => {
@@ -95,15 +103,6 @@ const AdditionalQualifications = () => {
           }}
         >
           Add Additional Qualification
-        </Button>
-      </Box>
-
-      <Box mt={2}>
-        <Button variant="contained" color="secondary" onClick={handleSubmit}>
-          Submit
-        </Button>
-        <Button variant="contained" color="grey" sx={{ marginLeft: '20px' }}>
-          Cancel
         </Button>
       </Box>
     </Box>
