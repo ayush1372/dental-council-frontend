@@ -139,21 +139,21 @@ function TrackAppicationTable({
         },
         {
           type: 'nameofStateCouncil',
-          value: data?.nameofStateCouncil,
+          value: data?.council_name,
         },
         { type: 'doctor_status', value: data?.doctor_status },
         {
           type: 'collegeVerificationStatus',
-          value: data?.collegeVerificationStatus,
+          value: data?.college_dean_status,
         },
-        { type: 'NMCVerificationStatus', value: data?.NMCVerificationStatus },
+        { type: 'NMCVerificationStatus', value: data?.nmc_status },
         { type: 'created_at', value: data?.created_at },
         {
-          type: 'SMC Status',
+          type: 'smc_status',
           value: data?.smc_status,
         },
         {
-          type: 'NMC Status',
+          type: 'nmc_status',
           value: data?.nmc_status,
         },
         { type: 'pendency', value: data?.pendency },
