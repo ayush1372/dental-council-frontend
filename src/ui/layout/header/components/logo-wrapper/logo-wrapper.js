@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { Box, Container, Grid, Link, useTheme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import G20Logo from '../../../../../assets/images/g-20-logo.png';
@@ -19,7 +19,7 @@ import { MobileDrawer } from './mobile-drawer';
 export const LogoWrapper = ({ menuToggleHandler }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const loggedIn = useSelector((state) => state.common.isloggedIn);
+  const loggedIn = localStorage.getItem('accesstoken');
 
   const { t } = useTranslation();
 

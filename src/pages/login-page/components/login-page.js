@@ -1,44 +1,19 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo } from 'react';
 
-import { Box, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
-import { encryptData, userGroupType, usersType } from '../../../helpers/functions/common-functions';
-import CaptchaComponent from '../../../shared/captcha-component/captcha-component';
-import {
-  getCollegeAdminProfileData,
-  getCollegeDeanProfileData,
-  getCollegeRegistrarProfileData,
-} from '../../../store/actions/college-actions';
-import {
-  getRegistrationCouncilList,
-  getUniversitiesList,
-} from '../../../store/actions/common-actions';
 import {
   generateCaptchaImage,
   getCaptchaEnabledFlagValue,
-  loginAction,
-  validateCaptchaImage,
 } from '../../../store/actions/login-action';
-import { getNBEProfileData } from '../../../store/actions/nbe-actions';
-import { getNMCProfileData } from '../../../store/actions/nmc-actions';
-import { getSMCProfileData } from '../../../store/actions/smc-actions';
-import { login, userLoggedInType } from '../../../store/reducers/common-reducers';
-import { Button, TextField } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
-import { PasswordRegexValidation } from '../../../utilities/common-validations';
 import { DoctorLogin } from './doctor-login';
+import { Login } from './login-data';
 
-export function LoginPage({ handleForgotPassword }) {
-  const [captchaAnswer, setcaptachaAnswer] = useState();
-  const { generateCaptcha } = useSelector((state) => state.loginReducer);
+export function LoginPage() {
   const dispatch = useDispatch();
-  const { t } = useTranslation();
-  const navigate = useNavigate();
   const { state } = useLocation();
   const { loginFormname } = state;
   const loginFormNames = useMemo(
@@ -50,85 +25,13 @@ export function LoginPage({ handleForgotPassword }) {
     }),
     []
   );
-  const {
-    register,
-    handleSubmit,
-    getValues,
-    reset,
-    formState: { errors },
-  } = useForm({
+  const { reset } = useForm({
     mode: 'onChange',
     defaultValues: {
       nmrID: '',
       password: '',
     },
   });
-  const captchaResult = (num) => {
-    setcaptachaAnswer(num);
-  };
-
-  const getCommonData = (response) => {
-    dispatch(getRegistrationCouncilList());
-    dispatch(getUniversitiesList());
-    const userType = userGroupType(response?.data?.user_group_id);
-
-    if (userType === 'College Dean') {
-      dispatch(getCollegeDeanProfileData(response?.data?.profile_id));
-    } else if (userType === 'College Registrar') {
-      dispatch(getCollegeRegistrarProfileData(response?.data?.profile_id));
-    } else if (userType === 'College Admin') {
-      dispatch(getCollegeAdminProfileData(response?.data?.profile_id));
-    } else if (userType === 'State Medical Council') {
-      dispatch(getSMCProfileData(response?.data?.profile_id));
-    } else if (userType === 'National Medical Council') {
-      dispatch(getNMCProfileData(response?.data?.profile_id));
-    } else if (userType === 'NBE') {
-      dispatch(getNBEProfileData(response?.data?.profile_id));
-    }
-  };
-
-  const onSubmit = (param) => {
-    dispatch(
-      validateCaptchaImage({
-        transaction_id: generateCaptcha?.transaction_id,
-        result: parseInt(captchaAnswer),
-      })
-    )
-      .then((response) => {
-        if (response?.data?.validity) {
-          const usertypeId = usersType(loginFormname);
-          const requestObj = {
-            username: param?.nmrID,
-            password: encryptData(param?.password, process.env.REACT_APP_PASS_SITE_KEY),
-            user_type: usertypeId,
-            captcha_trans_id: generateCaptcha?.transaction_id,
-          };
-          dispatch(loginAction(requestObj))
-            .then((response) => {
-              let req = { mobile: param.nmrID };
-              if (req) {
-                dispatch(login());
-                dispatch(userLoggedInType(loginFormname));
-                navigate(`/profile`);
-                getCommonData(response);
-              }
-            })
-            .catch((error) => {
-              successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-            });
-        } else {
-          successToast(
-            'ERROR: Invalid captcha, please try with new captcha',
-            'auth-error',
-            'error',
-            'top-center'
-          );
-        }
-      })
-      .catch((error) => {
-        successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-      });
-  };
 
   useEffect(() => {
     reset();
@@ -143,99 +46,13 @@ export function LoginPage({ handleForgotPassword }) {
       .catch((error) => {
         successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loginFormNames[loginFormname]]);
 
   return loginFormNames[loginFormname] === 'Doctor' ? (
     <DoctorLogin loginName={loginFormNames[loginFormname]} />
   ) : (
-    <>
-      <ToastContainer></ToastContainer>
-      <Box p={4} bgcolor="white.main" boxShadow="4">
-        <Typography variant="h2" color="primary.dark">
-          {loginFormNames[loginFormname]} {t('Login')}
-        </Typography>
-        <Box>
-          <Box mt={2}>
-            <Typography variant="body3">
-              {loginFormname === 'Doctor' ? 'NMR ID/User ID' : 'User ID'}
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
-            </Typography>
-            <TextField
-              inputProps={{ maxLength: 100 }}
-              fullWidth
-              id="outlined-basic"
-              variant="outlined"
-              type="text"
-              name="nmrID"
-              required="true"
-              placeholder={t(loginFormname === 'Doctor' ? 'Enter NMR ID/User ID' : 'Enter User ID')}
-              margin="dense"
-              defaultValue={getValues().nmrID}
-              error={errors.nmrID?.message}
-              {...register('nmrID', {
-                required: 'Provide valid ID',
-              })}
-            />
-          </Box>
-          <Box mt={1}>
-            <Typography variant="body3">
-              {t('Password')}
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
-            </Typography>
-            <TextField
-              fullWidth
-              id="outlined-basic"
-              variant="outlined"
-              type="Password"
-              name="password"
-              required="true"
-              placeholder={t('Enter Password')}
-              margin="dense"
-              defaultValue={getValues().password}
-              error={errors.password?.message}
-              {...register('password', PasswordRegexValidation)}
-            />
-          </Box>
-          <Box align="center" mt={3}>
-            <CaptchaComponent captchaResult={captchaResult} />
-          </Box>
-
-          <Box align="center" mt={3}>
-            <Button
-              size="medium"
-              variant="contained"
-              sx={{
-                backgroundColor: 'secondary.lightOrange',
-                '&:hover': {
-                  backgroundColor: 'secondary.lightOrange',
-                },
-              }}
-              onClick={handleSubmit(onSubmit)}
-            >
-              {t('Login')}
-            </Button>
-          </Box>
-          <Box mt={3} textAlign={'center'}>
-            <Typography
-              variant="body1"
-              color="textPrimary.dark"
-              component="div"
-              onClick={handleForgotPassword}
-              sx={{
-                textDecoration: 'underline',
-                cursor: 'pointer',
-              }}
-            >
-              {t('Forgot your password?')}
-            </Typography>
-          </Box>
-        </Box>
-      </Box>
-    </>
+    <Login loginName={loginFormNames[loginFormname]} />
   );
 }
 

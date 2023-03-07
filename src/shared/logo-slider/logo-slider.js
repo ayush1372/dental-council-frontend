@@ -9,7 +9,7 @@ import NHAENGLISHLOGO from '../../assets/images/logo-slider/nha-english-logo.png
 export function LogoSlider() {
   return (
     <Container>
-      <Box display="flex" justifyContent="space-between" alignItems="center" flexWrap="wrap">
+      <Box my={6} display="flex" justifyContent="space-between" alignItems="center" flexWrap="wrap">
         <Link flexBasis="20%" href="https://nha.gov.in/" target="_blank" rel="noreferrer">
           <img src={NHAENGLISHLOGO} alt="NHA English Logo" />
         </Link>
