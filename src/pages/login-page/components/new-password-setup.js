@@ -1,18 +1,22 @@
+import { useState } from 'react';
+
 import { Box, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router';
 
 import { encryptData } from '../../../helpers/functions/common-functions';
 import { forgotPassword } from '../../../store/actions/forgot-password-actions';
 import { Button, TextField } from '../../../ui/core';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
+import SuccessModal from '../../register/doctor-registration/success-popup';
 
 const NewPasswordSetup = ({ handlePasswordSetup }) => {
+  const [showSuccess, setShowSuccess] = useState();
+  const params = useParams();
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { verifyNotificationOtpData } = useSelector((state) => state?.common);
-
   const {
     register,
     handleSubmit,
@@ -26,16 +30,16 @@ const NewPasswordSetup = ({ handlePasswordSetup }) => {
       confirmPassword: '',
     },
   });
-
   const onSubmit = () => {
     handlePasswordSetup();
     const data = {
-      token: verifyNotificationOtpData.data?.message?.transaction_id,
+      token: params.request_id,
       password: encryptData(getValues().password, process.env.REACT_APP_PASS_SITE_KEY),
     };
-    dispatch(forgotPassword(data));
+    dispatch(forgotPassword(data)).then(() => {
+      setShowSuccess(true);
+    });
   };
-
   return (
     <Box data-testid="new-password-setup" p={4} bgcolor="white.main" boxShadow="4">
       <Typography mt={2} variant="h2" component="div" textAlign="center" data-testid="Password">
@@ -112,6 +116,7 @@ const NewPasswordSetup = ({ handlePasswordSetup }) => {
           </Button>
         </Box>
       </Box>
+      {showSuccess && <SuccessModal />}
     </Box>
   );
 };
