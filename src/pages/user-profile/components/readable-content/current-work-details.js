@@ -21,7 +21,7 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
   const villageName = village?.name || '';
 
   return (
-    <Grid container spacing={2} mt={2}>
+    <Grid container spacing={2}>
       <Grid container item spacing={2}>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="primary.main">
@@ -31,11 +31,11 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
       </Grid>
       <Grid container item spacing={2}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             Name of the organization where you work
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {work_organization ? work_organization : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -49,11 +49,11 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             Organization Type
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {address_line1 ? address_line1 : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -67,14 +67,14 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             Address
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {address_line1 ? address_line1 : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -89,14 +89,14 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={4}>
-            <Typography variant="subtitle2" color="grey.label">
+            <Typography variant="body5" color="grey.label">
               Street
               <Typography component="span" color="error.main">
                 *
               </Typography>
             </Typography>
             <Grid display="flex" alignItems="center">
-              <Typography variant="subtitle2" color="primary.main">
+              <Typography variant="subtitle2" color="textPrimary.main">
                 {address_line1 ? address_line1 : ''}
               </Typography>
               {userActiveTab === 'dashboard' && (
@@ -110,14 +110,14 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
           </Grid>
           {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
           <Grid item xs={12} md={4}>
-            <Typography variant="subtitle2" color="grey.label">
+            <Typography variant="body5" color="grey.label">
               Landmark
               <Typography component="span" color="error.main">
                 *
               </Typography>
             </Typography>
             <Grid display="flex" alignItems="center">
-              <Typography variant="subtitle2" color="primary.main">
+              <Typography variant="subtitle2" color="textPrimary.main">
                 {address_line1 ? address_line1 : ''}
               </Typography>
               {userActiveTab === 'dashboard' && (
@@ -131,14 +131,14 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
           </Grid>
           {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
           <Grid item xs={12} md={4}>
-            <Typography variant="subtitle2" color="grey.label">
+            <Typography variant="body5" color="grey.label">
               Locality
               <Typography component="span" color="error.main">
                 *
               </Typography>
             </Typography>
             <Grid display="flex" alignItems="center">
-              <Typography variant="subtitle2" color="primary.main">
+              <Typography variant="subtitle2" color="textPrimary.main">
                 {address_line1 ? address_line1 : ''}
               </Typography>
               {userActiveTab === 'dashboard' && (
@@ -155,14 +155,14 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
       </Grid>
       <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             State
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {state?.name || ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -176,14 +176,14 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             District
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {district?.name || ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -197,11 +197,11 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             Sub District
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {subDistrictName}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -217,11 +217,11 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
       </Grid>
       <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             City/Town/Village
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {villageName}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -235,14 +235,14 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             Address
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {address_line1 ? address_line1 : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -256,14 +256,14 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             Pin Code
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {pincode ? pincode : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -277,11 +277,11 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             Telecommunication URL
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {url ? url : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (

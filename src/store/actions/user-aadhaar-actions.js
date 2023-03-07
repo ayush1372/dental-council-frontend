@@ -1,32 +1,43 @@
-import { API } from '../../api/api-endpoints';
+import { API_HPRID } from '../../api/api-endpoints';
+import { accesstokenHprId } from '../../constants/common-data';
 import { POST } from '../../constants/requests';
-import { useAxiosCall } from '../../hooks/use-axios';
-import { aadhaarNumberData } from '../reducers/user-aadhaar-verify-reducer';
+import { hpIdUseAxiosCall } from '../../hooks/use-axios';
+import {
+  aadhaarNumberData,
+  aadhaarOtpDetails,
+  typeOfOtp,
+} from '../reducers/user-aadhaar-verify-reducer';
 
-export const sendAaadharOtp = (aadhaarNumber) => async (dispatch) => {
+export const sendAaadharOtp = (aadhaar) => async (dispatch) => {
+  let type = 'aadhaar';
   return await new Promise((resolve, reject) => {
-    useAxiosCall({
+    hpIdUseAxiosCall({
       method: POST,
-      url: API.Aadhaar.sendAadhaarOtp,
-      data: { aadhaarNumber },
+      url: API_HPRID.hpId.sendAadhaarOtp,
+      data: { aadhaar },
+      headers: { Authorization: 'Bearer ' + accesstokenHprId },
     })
       .then((response) => {
         dispatch(aadhaarNumberData(response));
-        return resolve(response.DOAuthOTP.uidtkn);
+        dispatch(typeOfOtp(type));
+
+        return resolve(response);
       })
       .catch((error) => {
         return reject(error);
       });
   });
 };
-export const validateOtpAadhaar = async (dataValues) => {
+export const validateOtpAadhaar = (dataValues) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
-    useAxiosCall({
+    hpIdUseAxiosCall({
       method: POST,
-      url: API.Aadhaar.verifyAadhaarOtp,
+      url: API_HPRID.hpId.verifyAadhaarOtp,
       data: dataValues,
+      headers: { Authorization: 'Bearer ' + accesstokenHprId },
     })
       .then((response) => {
+        dispatch(aadhaarOtpDetails(response));
         return resolve(response);
       })
       .catch((error) => {

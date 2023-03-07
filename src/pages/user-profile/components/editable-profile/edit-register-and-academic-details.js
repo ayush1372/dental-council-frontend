@@ -6,15 +6,10 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
-// import { getInitiateWorkFlow } from '../../../../store/actions/common-actions';
-import {
-  getWorkProfileDetailsData,
-  updateDoctorRegistrationDetails,
-} from '../../../../store/actions/doctor-user-profile-actions';
+import { updateDoctorRegistrationDetails } from '../../../../store/actions/doctor-user-profile-actions';
 import { getRegistrationDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
 import { Button, RadioGroup, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
-import successToast from '../../../../ui/core/toaster';
 import EditQualificationDetails from './edit-qualification-details';
 const qualificationObjTemplate = [
   {
@@ -40,10 +35,11 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   const { t } = useTranslation();
   const loggedInUserType = useSelector((state) => state?.common?.loggedInUserType);
   const dispatch = useDispatch();
-  const { countriesList, coursesList, universitiesList, statesList } = useSelector(
+  const { countriesList, coursesList, universitiesList, statesList, collegesList } = useSelector(
     (state) => state?.common
   );
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+
   const { loginData } = useSelector((state) => state?.loginReducer);
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { registration_detail_to } = registrationDetails || {};
@@ -97,25 +93,29 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     control,
     name: 'qualification',
   });
-  const onHandleSave = () => {
+
+  const onHandleSave = (moveToNext = false) => {
     const {
       RegisteredWithCouncil,
       RegistrationNumber,
       RegistrationDate,
       registration,
       RenewalDate,
-      registrationCertificate,
     } = getValues();
-    const registrationDetailsValues = JSON.parse(JSON.stringify(registrationDetails));
-    registrationDetailsValues.registration_detail_to.registration_date = RegistrationDate;
-    registrationDetailsValues.registration_detail_to.registration_number = RegistrationNumber;
-    registrationDetailsValues.registration_detail_to.state_medical_council = {};
-    registrationDetailsValues.registration_detail_to.state_medical_council.name =
-      RegisteredWithCouncil;
-    registrationDetailsValues.registration_detail_to.is_renewable = registration;
-    registrationDetailsValues.registration_detail_to.renewable_registration_date = RenewalDate;
-    registrationDetailsValues.registration_detail_to.is_name_change = registrationCertificate;
-    registrationDetailsValues.hp_profile_id = personalDetails.hp_profile_id;
+
+    const cloneObj = JSON.parse(JSON.stringify(registrationDetails));
+
+    let finalResult = {};
+    let registration_detail = {};
+    let qualification_details = {};
+
+    registration_detail.registration_date = RegistrationDate;
+    registration_detail.registration_number = RegistrationNumber;
+    registration_detail.state_medical_council = { id: 14 };
+    registration_detail.state_medical_council.name = RegisteredWithCouncil;
+    registration_detail.is_renewable = registration;
+    registration_detail.renewable_registration_date = RenewalDate;
+
     // this below code is storing qualification details
     const { qualification } = getValues();
     let updatedObj = [];
@@ -125,29 +125,33 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
         course: coursesList.data?.find((x) => x.id === q?.qualification),
         university: universitiesList.data?.find((x) => x.id === q?.university),
         state: statesList?.find((x) => x.id === q?.state),
-        college: q?.collegeObj,
+        college: collegesList.data?.find((x) => x.id === q?.college),
         qualification_year: q?.year,
-        is_name_change: q?.nameindegree,
         qualification_month: q?.month,
         qualification_from: q?.qualificationfrom,
       }));
     }
 
-    const cloneObj = { ...registrationDetails };
-    cloneObj.registrationDetails = updatedObj;
+    qualification_details = [...updatedObj];
+
+    finalResult = { registration_detail, qualification_details };
+    cloneObj.registration_detail_to = registration_detail;
+    cloneObj.qualification_detail_response_tos = [{ ...(qualification_details?.[0] || {}) }];
 
     dispatch(
       getRegistrationDetails({
-        ...JSON.parse(JSON.stringify(registrationDetailsValues)),
+        ...JSON.parse(JSON.stringify(cloneObj)),
       })
     );
+
+    fetchUpdateDoctorRegistrationDetails(finalResult, moveToNext);
   };
 
-  const fetchUpdateDoctorRegistrationDetails = (registrationDetails) => {
+  const fetchUpdateDoctorRegistrationDetails = (finalResult, moveToNext = false) => {
     const formData = new FormData();
-    formData.append('data', JSON.stringify(registrationDetails));
-    formData.append('proof', Object.values(qualificationFilesData)?.[0]?.[0].file);
-    formData.append('certificate', registrationFileData[0].file);
+    formData.append('data', JSON.stringify(finalResult));
+    formData.append('degreeCertificate', Object.values(qualificationFilesData)?.[0]?.[0].file);
+    formData.append('registrationCertificate', registrationFileData[0].file);
     dispatch(
       updateDoctorRegistrationDetails(
         formData,
@@ -156,19 +160,12 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           : loggedInUserType === 'SMC' && personalDetails?.hp_profile_id
       )
     ).then(() => {
-      dispatch(getWorkProfileDetailsData(loginData?.data?.profile_id))
-        .then(() => {
-          handleNext();
-        })
-        .catch((allFailMsg) => {
-          successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-        });
+      if (moveToNext) handleNext();
     });
   };
 
   const onHandleOptionNext = () => {
-    onHandleSave();
-    fetchUpdateDoctorRegistrationDetails(registrationDetails);
+    onHandleSave(true);
   };
 
   const handleQualificationFilesData = (fileName, files) => {
@@ -211,8 +208,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
         },
       }}
     >
-      <Grid container spacing={2}>
-        {/* layer 1 */}
+      <Grid container spacing={2} mt={2}>
         <Grid container item spacing={2}>
           <Grid item xs={12}>
             <Typography
@@ -362,35 +358,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           </Grid>
         </Grid>
         <Grid container item spacing={2} mt={1}>
-          {/* <Grid item xs={12} md={4}>
-            <Typography variant="subtitle2" color="inputTextColor.main">
-              Is your name in registration certificate, different from your name in Aadhaar?
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
-            </Typography>
-
-            <RadioGroup
-              onChange={handleRegistration}
-              name={'registrationCertificate'}
-              size="small"
-              defaultValue={getValues().registrationCertificate}
-              items={[
-                {
-                  value: '0',
-                  label: 'Yes',
-                },
-                {
-                  value: '1',
-                  label: 'No',
-                },
-              ]}
-              required={true}
-              error={errors.registrationCertificate?.message}
-            />
-          </Grid> */}
-        </Grid>
-        <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={6}>
             <Typography variant="subtitle2" color="inputTextColor.main" mb={1}>
               Upload the registration certificate
@@ -410,7 +377,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
             />
           </Grid>
         </Grid>
-        {/*layer 2*/}
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12}>
             <Typography

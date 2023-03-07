@@ -58,14 +58,14 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
         OTPTypeID = 'nmr_id';
         break;
       case 'Mobile':
-        OTPTypeID = 'mobile';
+        OTPTypeID = 'sms';
         break;
       default:
-        OTPTypeID = 0;
+        OTPTypeID = 'sms';
         break;
     }
     let sendOTPData = {
-      contact: getValues().nmrID,
+      contact: selectedLoginOption === 'nmrId' ? getValues().nmrID : getValues().mobileNo,
       type: OTPTypeID,
     };
 
@@ -370,7 +370,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
               errors={errors}
               label={'Enter your Mobile Number'}
               showVerify
-              verifyOnClick={() => setOtpFormEnable(true)}
+              verifyOnClick={sendNotificationOTPHandler}
             />
             {otpFormEnabled && (
               <Box mt={2}>

@@ -59,7 +59,7 @@ export default function GenericTable(props) {
     },
   ]);
   function stableSort(array, comparator) {
-    const stabilizedThis = array?.length > 1 ? array?.map((el, index) => [el, index]) : [];
+    const stabilizedThis = array?.length > 0 ? array?.map((el, index) => [el, index]) : [];
     stabilizedThis?.sort((a, b) => {
       const order = comparator(a[0], b[0]);
       if (order !== 0) {
@@ -282,7 +282,7 @@ export default function GenericTable(props) {
             ))}
           {props.data?.length === 0 ? (
             <TableRow sx={{ textAlign: 'center' }}>
-              <TableCell align="center" sx={{ width: '100%' }}>
+              <TableCell colSpan="100%" align="center">
                 <Box display="flex" justifyContent="center" width="100%">
                   No Result Found
                 </Box>
