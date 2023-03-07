@@ -85,12 +85,18 @@ function CollegeApprovalTable(props) {
   const getTableData = (pageNo, noOfRecords) => {
     const queryObj = {
       pageNo: pageNo,
-      limit: noOfRecords,
-      search: searchQueryParams ? searchQueryParams?.search : '',
-      id: searchQueryParams ? searchQueryParams?.filterByRegNo : '',
-      name: searchQueryParams ? searchQueryParams?.filterByName : '',
-      council: searchQueryParams ? searchQueryParams?.RegistrationCouncilId : '',
+      offset: noOfRecords,
+      // search: searchQueryParams ? searchQueryParams?.search : '',
+      // id: searchQueryParams ? searchQueryParams?.filterByRegNo : '',
+      // name: searchQueryParams ? searchQueryParams?.filterByName : '',
+      // council: searchQueryParams ? searchQueryParams?.RegistrationCouncilId : '',
     };
+    if (searchQueryParams) {
+      queryObj.search = searchQueryParams?.search;
+      queryObj.id = searchQueryParams?.filterByRegNo;
+      queryObj.name = searchQueryParams?.filterByName;
+      queryObj.council = searchQueryParams?.RegistrationCouncilId;
+    }
     dispatch(getCollegeApprovalData(queryObj));
   };
 
