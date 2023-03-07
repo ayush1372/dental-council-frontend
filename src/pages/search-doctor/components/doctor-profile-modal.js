@@ -3,7 +3,7 @@
 // import CheckCircleOutlineOutlinedIcon from '@mui/icons-material/CheckCircleOutlineOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 // import ContentCopyOutlinedIcon from '@mui/icons-material/ContentCopyOutlined';
-import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
+// import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined';
 import { Box, Dialog, Grid, Typography, useTheme } from '@mui/material';
 import { useSelector } from 'react-redux';
 
@@ -84,7 +84,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
             >
               Print
             </Button>
-            <ShareOutlinedIcon color="inputTextColor.main" sx={{ ml: 2 }} />
+            {/* <ShareOutlinedIcon color="inputTextColor.main" sx={{ ml: 2 }} /> */}
           </Box>
           <Typography component="div" variant="h3" color="textSecondary.main">
             {searchDetailsById?.data?.data?.state_medical_council || ''}
