@@ -83,7 +83,7 @@ const AdvanceSearch = ({ setDoSearch, setSearchData }) => {
           placeholder="Enter Doctor Name"
           label={'Doctor Name'}
           fullWidth
-          defaultValue={getValues().EnterDoctorName}
+          defaultValue={getValues().DoctorName}
           {...register('DoctorName', {
             required: 'Doctor Name is Required',
             maxLength: {
@@ -91,7 +91,7 @@ const AdvanceSearch = ({ setDoSearch, setSearchData }) => {
               message: 'Length should be less than 100.',
             },
           })}
-          error={errors.EnterDoctorName?.message}
+          error={errors.DoctorName?.message}
         />
       </Grid>
       <Grid item xs={4}>
@@ -109,7 +109,7 @@ const AdvanceSearch = ({ setDoSearch, setSearchData }) => {
         <TextField
           variant="outlined"
           name={'RegistrationNumber'}
-          placeholder="Enter Registration Name"
+          placeholder="Enter Registration Number"
           fullWidth
           defaultValue={getValues().RegistrationNumber}
           {...register('RegistrationNumber', {
@@ -124,17 +124,17 @@ const AdvanceSearch = ({ setDoSearch, setSearchData }) => {
       </Grid>
       <Grid item xs={4}>
         <Typography component="span" color="inputTextColor.main">
-          Select year of Registration
+          Year of Registration
         </Typography>
 
         <Select
           fullWidth
-          name="YearofRegistration"
+          name={'YearofRegistration'}
           placeholder="Select year of Registration"
           {...register('YearofRegistration', {
-            required: 'year of Registration is required',
+            required: 'Year of Registration is required',
           })}
-          error={errors.yearofRegistration?.message}
+          error={errors.YearofRegistration?.message}
           options={yearsData}
         />
       </Grid>

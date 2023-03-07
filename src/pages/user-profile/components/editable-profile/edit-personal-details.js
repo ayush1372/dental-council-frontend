@@ -325,7 +325,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       }}
     >
       <ToastContainer></ToastContainer>
-      <Grid container spacing={2} mt={2}>
+      <Grid container spacing={2}>
         {/* layer 1 */}
         <Grid container item spacing={2}>
           <Grid item xs={12}>
@@ -691,7 +691,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 error={errors.Name?.message}
               />
             </Grid> */}
-            <Box bgcolor="backgroundColor.light" p={2} display="flex">
+            <Box p={2} display="flex">
               <Checkbox
                 defaultChecked={personalDetails?.communication_address?.is_same_address}
                 checked={personalDetails?.communication_address?.is_same_address}

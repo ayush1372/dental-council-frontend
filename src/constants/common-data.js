@@ -1,4 +1,6 @@
 import { get_year_data } from '../helpers/functions/common-functions';
+export const accesstokenHprId =
+  'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI1WVpwM043VlFCdEE1cDZwcktkdXYyV0NaTTZVVlFVLWZTcEZJb0tiQU9ZIn0.eyJleHAiOjE2NzgxNTExMDEsImlhdCI6MTY3ODExNTEwMSwianRpIjoiOTJmZjM5ZTgtODI2Ni00ZjUwLTg3ZjktMDMyZTUwMGVhMTI2IiwiaXNzIjoiaHR0cHM6Ly9wcmVwcm9kLmFiZG0uZ292LmluL2F1dGgvcmVhbG1zL2NlbnRyYWwtcmVnaXN0cnkiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiZmUzZTEwMDctNjZlMi00OTkzLWFmYTktYjMyYjM1NDk1NDIwIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiaHBfaWQiLCJzZXNzaW9uX3N0YXRlIjoiOTJhZDRmYzQtN2UzZS00MzU3LWJkZjAtOWY2MzJjYWFmYTg5IiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwOi8vbG9jYWxob3N0OjkwMDciXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwiaGVhbHRoSWQiLCJocF9pZCJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfSwiaHBfaWQiOnsicm9sZXMiOlsidW1hX3Byb3RlY3Rpb24iXX19LCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwiY2xpZW50SWQiOiJocF9pZCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiY2xpZW50SG9zdCI6IjEwLjIzMy42Ny4xMDciLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtaHBfaWQiLCJjbGllbnRBZGRyZXNzIjoiMTAuMjMzLjY3LjEwNyJ9.YIoz0eAMRJ6OYGuvltcYFudcfeVLBVTbrXN46xFjLdPS370AYtxe0JjFPTzMzgW76gURBsSQt0iDtizEmR461CLpgW5XPxjAIZUFXWFXW64BkVy4waM43idVX6AYs1vQOvUP8fPPZU6zOAL-douIQ_oyCNNrot4qlQOlBTFPITCdGDXSf3pEjgZymbWn2vPORJhG8GGzJ9LKPXPs0H3Kv7Z2PUbdxlRJ2UkH2Fu89t4lIIFVxPe0SdVMsd0hgby8m3NEWnFnuncvslWPWmQLQqjZtblVqs_hc9gOA4x5uad_OOvUyvda4c-bLfmSJFloAH4QDX0AiI48oJ8BB27IMA';
 export const StateNames = [
   { id: '1', name: 'Andhra Pradesh' },
   { id: '2', name: 'Maharastra' },
@@ -35,21 +37,21 @@ export const UniqueUserNameForDoctor = [
 ];
 
 export const getSMCProfileDetails = (details) => [
-  { label: 'Name', value: details.first_name, id: '1' },
-  { label: 'Enrolment Number NDHM', value: details.ndhm_enrollment, id: '2' },
-  { label: 'Enrolment Number', value: details.enrolled_number, id: '3' },
-  { label: 'Council', value: details.state_medical_council.name, id: '4' },
-  { label: 'Phone Number', value: details.mobile_no, id: '5' },
-  { label: 'Email Address', value: details.email_id, id: '6' },
+  { label: 'Name', value: details?.first_name, id: '1' },
+  { label: 'Enrolment Number NDHM', value: details?.ndhm_enrollment, id: '2' },
+  { label: 'Enrolment Number', value: details?.enrolled_number, id: '3' },
+  { label: 'Council', value: details?.state_medical_council?.name, id: '4' },
+  { label: 'Phone Number', value: details?.mobile_no, id: '5' },
+  { label: 'Email Address', value: details?.email_id, id: '6' },
 ];
 
 export const getNMCProfileDetails = (details) => [
-  { label: 'Name', value: details.first_name, id: '1' },
-  { label: 'Enrolment Number NDHM', value: details.ndhm_enrollment, id: '2' },
-  { label: 'Enrolment Number', value: details.enrolled_number, id: '3' },
-  { label: 'Council', value: details.state_medical_council.name, id: '4' },
-  { label: 'Phone Number', value: details.mobile_no, id: '5' },
-  { label: 'Email Address', value: details.email_id, id: '6' },
+  { label: 'Name', value: details?.first_name, id: '1' },
+  { label: 'Enrolment Number NDHM', value: details?.ndhm_enrollment, id: '2' },
+  { label: 'Enrolment Number', value: details?.enrolled_number, id: '3' },
+  { label: 'Council', value: details?.state_medical_council?.name, id: '4' },
+  { label: 'Phone Number', value: details?.mobile_no, id: '5' },
+  { label: 'Email Address', value: details?.email_id, id: '6' },
 ];
 
 export const getNBEProfileDetails = (details) => [
@@ -363,7 +365,7 @@ export const registrationRequestMapper = {
 };
 export const updationRequestMapper = {
   'Total HP Modification Requests': 'Total Updation request',
-  Rejected: 'Update Request Rejected',
+  Rejected: 'v Request Rejected',
   Approved: 'Update Request Approved',
   'Query Raised': 'Query Raised on Update Request',
   Suspended: 'Suspended',
@@ -380,3 +382,125 @@ export const suspensionRequestMapper = {
   Blacklisted: 'Blacklisted',
   Pending: 'Pending',
 };
+
+export const DashboardData = [
+  { header: 'IMR ID/Registration NO', key: 'registration_no' },
+  { header: 'Name of Applicant', key: 'applicant_full_name' },
+  { header: 'Name of State Council', key: 'council_name' },
+  { header: 'Council Verification Status', key: 'smc_status' },
+  { header: 'College Verification Status', key: 'college_dean_status' },
+  { header: 'NMC Verification Status', key: 'nmc_status' },
+  { header: 'Date of Submission', key: 'created_at' },
+  { header: 'Pendency', key: 'pendency' },
+];
+export const CollegeApproval = [
+  { header: 'College_ID', key: 'college_id' },
+  { header: 'College Name', key: 'college_name' },
+  { header: 'Name Of State Council', key: 'council_name' },
+  { header: 'Council Verification Status', key: 'status' },
+  { header: 'Date of Submission', key: 'submitted_on' },
+  { header: 'Pendency', key: 'pendency' },
+];
+export const ActivateLicence = [
+  { header: 'IMR ID/Registration NO', key: 'registration_id' },
+  { header: 'Applicant Name', key: 'health_professional_name' },
+  { header: 'Date of Submission', key: 'submitted_date' },
+  { header: 'Reactivation from Date', key: 'submitted_date' },
+  { header: 'Type of Suspension', key: 'typeOfSuspension' },
+  { header: 'Remark', key: 'remarks' },
+  { header: 'RequestId', key: 'request_id' },
+];
+
+export const searchDoctorResult = [
+  {
+    full_name: 'Monnie Doe',
+    profile_id: '100',
+    profile_photo:
+      'iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAM1BMVEXk5ueutLeqsbTn6eqpr7PJzc/j5ebf4eLZ3N2wtrnBxsjN0NLGysy6v8HT1tissra8wMNxTKO9AAAFDklEQVR4nO2d3XqDIAxAlfivoO//tEOZWzvbVTEpic252W3PF0gAIcsyRVEURVEURVEURVEURVEURVEURVEURVEURVEURflgAFL/AirAqzXO9R7XNBVcy9TbuMHmxjN6lr92cNVVLKEurVfK/zCORVvW8iUBnC02dj+Wpu0z0Y6QlaN5phcwZqjkOkK5HZyPAjkIjSO4fIdfcOwFKkJlX4zPu7Ha1tIcwR3wWxyFhRG6g4Je0YpSPDJCV8a2Sv2zd1O1x/2WMDZCwljH+clRrHfWCLGK8REMiql//2si5+DKWKcWeAGcFMzzNrXC/0TUwQ2s6+LhlcwjTMlYsUIQzPOCb7YBiyHopyLXIEKPEkI/TgeuiidK/R9FniUDOjRDpvm0RhqjMyyXNjDhCfIMYl1gGjIMIuYsnGEYRMRZOMMunaLVwpWRW008v6fYKDIzxCwVAeNSO90BJW6emelYBRF/kHpYGVaoxTDAaxOFsfP9y8hpJ4xd7gOcij7JNGQ1EYFgkPJa1jQEiYZXRaRINKxSDUW9n+FT82lSKadkiru9/4XPqSLWOekGPoY05TAvLm9orm+YWuwHoBHkZKijNBJGmeb61eL6Ff/6q7bLr7yvv3vKGhpDRjvgjGaPz+gUg6YgcvpyAR2FIZ9U6nEEyZRTovmEU32KichpGn7C17XrfyH9gK/c0CMP05HZIM2uf9sEveizKveBy9/6Qt7o89ne33D525cfcIMW6ab+TMEukQbQbu+xu7X3A9bChmWaCeAkG17bpntwXgWxHaMzGPmUaR5dQZiKqRVeUZ3047fi3nAu28h4CHxCsZAgmEH8Y27jJAhm8c+5RQzRQNVGhVFSfxOYIjp/pP7RxzjevYXVGf4eLt+BJ1vCuLuLkrgABgCGXZ2wik5uty+oBvNirI6mkzhAf4Gsb58Hcm67Jzd+KwD10BYPLL3e0MjvKrgAULnOfveF/O4N2Xb9BZom3gJes3F9X5Zze8/6Yt09b4CrqsEjUv8oFBaR2rl+6CZr2xVrp24o/WitBKuGrrpl1+bFkmK2qXTON4VpbdfLa7o7y/WdLxG7lm2Lqh2clOwTegbvc/vj2U78CwhA87Bn8G5Nk3eOb0Nsr9flz3sG78UUtue4kpv1xvjg3TMay62BMlTlP+vrOMnJsRmt/ze0jsfkPPYdAH57hK+34PeOyc8XIXu5xT2HsUkdZz+adwg8HGFfQ3K5jtDvbUiO4Di9/ywHGrL88pDizZ++oTp+an+SMX/ndymUCwmHMdO7yuOx83pUx/eEMU0AvxWndwgidAqOZ8ypCwdEfvvEo6D9HwpA8wzvmOJEqAg9ySu8g4x0Hb9hSB/BANEKJ+LbPBU0lzbAJs4xt1AoshKkUGQmiH8/jJ0gdhTTLmSegHlPE0oOdXALnqDjKYh3px//fSgSWG8UqfrrIICzYYSJXRr9BSPbpNzw7gBjKjKOYI7ReIGqQRIap5+5MdjyvuDkExvGeXSlONWZAP3/AZBwJohU7QJRGU+cTVH18ELmRPNBmibW6MT/k1b0XhdkRBvyT6SB6EYv/GvhSmRNpGngRULsAlxMCGNXp7w3FfdEbTEEDdLI9TdIKRUzUesa3I461ER8cpNT7gMRhpKmYVS9ELOgCUQsa4SsulciKiLbY+AnHD8cpuhISsnxpamI84sbDq9qYJgf8wiiOBrC7Ml7M7ZECCqKoiiKoiiKoiiKoijv5AvJxlZRyNWWLwAAAABJRU5ErkJggg==',
+    registration_number: '9011255793',
+    registration_year: '2023',
+    salutation: 'Mr.',
+    state_medical_council: 'Maharashtra Medical Council',
+    registration_date: '04/04/1998',
+    nmr_id: 'IN23192789111',
+    dateOfBirth: '19/07/1979',
+    mobile_no: '9769363879',
+    email_address: 'mdoe@gmail.com',
+    qualitfications: [
+      {
+        qualification: 'MBBS',
+        qualification_year: '2002',
+        university_name: 'University of Pune',
+      },
+      {
+        qualification: 'MD',
+        qualification_year: '2004',
+        university_name: 'University of Pune',
+      },
+      {
+        qualification: 'PhD',
+        qualification_year: '2006',
+        university_name: 'University of Mumbai',
+      },
+    ],
+  },
+  {
+    full_name: 'John Doe',
+    profile_id: '100',
+    profile_photo:
+      'iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAM1BMVEXk5ueutLeqsbTn6eqpr7PJzc/j5ebf4eLZ3N2wtrnBxsjN0NLGysy6v8HT1tissra8wMNxTKO9AAAFDklEQVR4nO2d3XqDIAxAlfivoO//tEOZWzvbVTEpic252W3PF0gAIcsyRVEURVEURVEURVEURVEURVEURVEURVEURVEURflgAFL/AirAqzXO9R7XNBVcy9TbuMHmxjN6lr92cNVVLKEurVfK/zCORVvW8iUBnC02dj+Wpu0z0Y6QlaN5phcwZqjkOkK5HZyPAjkIjSO4fIdfcOwFKkJlX4zPu7Ha1tIcwR3wWxyFhRG6g4Je0YpSPDJCV8a2Sv2zd1O1x/2WMDZCwljH+clRrHfWCLGK8REMiql//2si5+DKWKcWeAGcFMzzNrXC/0TUwQ2s6+LhlcwjTMlYsUIQzPOCb7YBiyHopyLXIEKPEkI/TgeuiidK/R9FniUDOjRDpvm0RhqjMyyXNjDhCfIMYl1gGjIMIuYsnGEYRMRZOMMunaLVwpWRW008v6fYKDIzxCwVAeNSO90BJW6emelYBRF/kHpYGVaoxTDAaxOFsfP9y8hpJ4xd7gOcij7JNGQ1EYFgkPJa1jQEiYZXRaRINKxSDUW9n+FT82lSKadkiru9/4XPqSLWOekGPoY05TAvLm9orm+YWuwHoBHkZKijNBJGmeb61eL6Ff/6q7bLr7yvv3vKGhpDRjvgjGaPz+gUg6YgcvpyAR2FIZ9U6nEEyZRTovmEU32KichpGn7C17XrfyH9gK/c0CMP05HZIM2uf9sEveizKveBy9/6Qt7o89ne33D525cfcIMW6ab+TMEukQbQbu+xu7X3A9bChmWaCeAkG17bpntwXgWxHaMzGPmUaR5dQZiKqRVeUZ3047fi3nAu28h4CHxCsZAgmEH8Y27jJAhm8c+5RQzRQNVGhVFSfxOYIjp/pP7RxzjevYXVGf4eLt+BJ1vCuLuLkrgABgCGXZ2wik5uty+oBvNirI6mkzhAf4Gsb58Hcm67Jzd+KwD10BYPLL3e0MjvKrgAULnOfveF/O4N2Xb9BZom3gJes3F9X5Zze8/6Yt09b4CrqsEjUv8oFBaR2rl+6CZr2xVrp24o/WitBKuGrrpl1+bFkmK2qXTON4VpbdfLa7o7y/WdLxG7lm2Lqh2clOwTegbvc/vj2U78CwhA87Bn8G5Nk3eOb0Nsr9flz3sG78UUtue4kpv1xvjg3TMay62BMlTlP+vrOMnJsRmt/ze0jsfkPPYdAH57hK+34PeOyc8XIXu5xT2HsUkdZz+adwg8HGFfQ3K5jtDvbUiO4Di9/ywHGrL88pDizZ++oTp+an+SMX/ndymUCwmHMdO7yuOx83pUx/eEMU0AvxWndwgidAqOZ8ypCwdEfvvEo6D9HwpA8wzvmOJEqAg9ySu8g4x0Hb9hSB/BANEKJ+LbPBU0lzbAJs4xt1AoshKkUGQmiH8/jJ0gdhTTLmSegHlPE0oOdXALnqDjKYh3px//fSgSWG8UqfrrIICzYYSJXRr9BSPbpNzw7gBjKjKOYI7ReIGqQRIap5+5MdjyvuDkExvGeXSlONWZAP3/AZBwJohU7QJRGU+cTVH18ELmRPNBmibW6MT/k1b0XhdkRBvyT6SB6EYv/GvhSmRNpGngRULsAlxMCGNXp7w3FfdEbTEEDdLI9TdIKRUzUesa3I461ER8cpNT7gMRhpKmYVS9ELOgCUQsa4SsulciKiLbY+AnHD8cpuhISsnxpamI84sbDq9qYJgf8wiiOBrC7Ml7M7ZECCqKoiiKoiiKoiiKoijv5AvJxlZRyNWWLwAAAABJRU5ErkJggg==',
+    registration_number: '9011259897',
+    registration_year: '2023',
+    salutation: 'Mr.',
+    state_medical_council: 'Maharashtra Medical Council',
+    registration_date: '02/04/1996',
+    nmr_id: 'IN23192789186',
+    dateOfBirth: '16/04/1977',
+    mobile_no: '9769363859',
+    email_address: 'jdoe@gmail.com',
+    qualitfications: [
+      {
+        qualification: 'MBBS',
+        qualification_year: '2000',
+        university_name: 'University of Mumbai',
+      },
+      {
+        qualification: 'MD',
+        qualification_year: '2002',
+        university_name: 'University of Mumbai',
+      },
+    ],
+  },
+  {
+    full_name: 'Anna Dosh',
+    profile_id: '100',
+    profile_photo:
+      'iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAM1BMVEXk5ueutLeqsbTn6eqpr7PJzc/j5ebf4eLZ3N2wtrnBxsjN0NLGysy6v8HT1tissra8wMNxTKO9AAAFDklEQVR4nO2d3XqDIAxAlfivoO//tEOZWzvbVTEpic252W3PF0gAIcsyRVEURVEURVEURVEURVEURVEURVEURVEURVEURflgAFL/AirAqzXO9R7XNBVcy9TbuMHmxjN6lr92cNVVLKEurVfK/zCORVvW8iUBnC02dj+Wpu0z0Y6QlaN5phcwZqjkOkK5HZyPAjkIjSO4fIdfcOwFKkJlX4zPu7Ha1tIcwR3wWxyFhRG6g4Je0YpSPDJCV8a2Sv2zd1O1x/2WMDZCwljH+clRrHfWCLGK8REMiql//2si5+DKWKcWeAGcFMzzNrXC/0TUwQ2s6+LhlcwjTMlYsUIQzPOCb7YBiyHopyLXIEKPEkI/TgeuiidK/R9FniUDOjRDpvm0RhqjMyyXNjDhCfIMYl1gGjIMIuYsnGEYRMRZOMMunaLVwpWRW008v6fYKDIzxCwVAeNSO90BJW6emelYBRF/kHpYGVaoxTDAaxOFsfP9y8hpJ4xd7gOcij7JNGQ1EYFgkPJa1jQEiYZXRaRINKxSDUW9n+FT82lSKadkiru9/4XPqSLWOekGPoY05TAvLm9orm+YWuwHoBHkZKijNBJGmeb61eL6Ff/6q7bLr7yvv3vKGhpDRjvgjGaPz+gUg6YgcvpyAR2FIZ9U6nEEyZRTovmEU32KichpGn7C17XrfyH9gK/c0CMP05HZIM2uf9sEveizKveBy9/6Qt7o89ne33D525cfcIMW6ab+TMEukQbQbu+xu7X3A9bChmWaCeAkG17bpntwXgWxHaMzGPmUaR5dQZiKqRVeUZ3047fi3nAu28h4CHxCsZAgmEH8Y27jJAhm8c+5RQzRQNVGhVFSfxOYIjp/pP7RxzjevYXVGf4eLt+BJ1vCuLuLkrgABgCGXZ2wik5uty+oBvNirI6mkzhAf4Gsb58Hcm67Jzd+KwD10BYPLL3e0MjvKrgAULnOfveF/O4N2Xb9BZom3gJes3F9X5Zze8/6Yt09b4CrqsEjUv8oFBaR2rl+6CZr2xVrp24o/WitBKuGrrpl1+bFkmK2qXTON4VpbdfLa7o7y/WdLxG7lm2Lqh2clOwTegbvc/vj2U78CwhA87Bn8G5Nk3eOb0Nsr9flz3sG78UUtue4kpv1xvjg3TMay62BMlTlP+vrOMnJsRmt/ze0jsfkPPYdAH57hK+34PeOyc8XIXu5xT2HsUkdZz+adwg8HGFfQ3K5jtDvbUiO4Di9/ywHGrL88pDizZ++oTp+an+SMX/ndymUCwmHMdO7yuOx83pUx/eEMU0AvxWndwgidAqOZ8ypCwdEfvvEo6D9HwpA8wzvmOJEqAg9ySu8g4x0Hb9hSB/BANEKJ+LbPBU0lzbAJs4xt1AoshKkUGQmiH8/jJ0gdhTTLmSegHlPE0oOdXALnqDjKYh3px//fSgSWG8UqfrrIICzYYSJXRr9BSPbpNzw7gBjKjKOYI7ReIGqQRIap5+5MdjyvuDkExvGeXSlONWZAP3/AZBwJohU7QJRGU+cTVH18ELmRPNBmibW6MT/k1b0XhdkRBvyT6SB6EYv/GvhSmRNpGngRULsAlxMCGNXp7w3FfdEbTEEDdLI9TdIKRUzUesa3I461ER8cpNT7gMRhpKmYVS9ELOgCUQsa4SsulciKiLbY+AnHD8cpuhISsnxpamI84sbDq9qYJgf8wiiOBrC7Ml7M7ZECCqKoiiKoiiKoiiKoijv5AvJxlZRyNWWLwAAAABJRU5ErkJggg==',
+    registration_number: '9011259168',
+    registration_year: '2023',
+    salutation: 'Ms.',
+    state_medical_council: 'Maharashtra Medical Council',
+    registration_date: '21/03/1999',
+    nmr_id: 'IN23192789272',
+    dateOfBirth: '17/09/1980',
+    mobile_no: '9769365879',
+    email_address: 'adosh@gmail.com',
+    qualitfications: [
+      {
+        qualification: 'MBBS',
+        qualification_year: '2003',
+        university_name: 'University of Calcutta',
+      },
+      {
+        qualification: 'MD',
+        qualification_year: '2005',
+        university_name: 'University of Calcutta',
+      },
+      {
+        qualification: 'PhD',
+        qualification_year: '2007',
+        university_name: 'University of Calcutta',
+      },
+    ],
+  },
+];

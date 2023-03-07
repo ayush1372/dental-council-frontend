@@ -58,7 +58,7 @@ const Name = ({ setDoSearch, setSearchData }) => {
       <Grid item xs={8}>
         <Grid>
           <Typography color="inputTextColor.main">
-            Enter Doctor Name{' '}
+            Doctor Name{' '}
             <ErrorOutlineIcon
               fontSize="width12"
               sx={{
@@ -81,7 +81,7 @@ const Name = ({ setDoSearch, setSearchData }) => {
           name={'DoctorName'}
           placeholder="Enter Doctor Name"
           fullWidth
-          defaultValue={getValues().EnterDoctorName}
+          defaultValue={getValues().DoctorName}
           {...register('DoctorName', {
             required: 'Doctor Name is Required',
             maxLength: {
@@ -89,7 +89,7 @@ const Name = ({ setDoSearch, setSearchData }) => {
               message: 'Length should be less than 100.',
             },
           })}
-          error={errors.EnterDoctorName?.message}
+          error={errors.DoctorName?.message}
         />
       </Grid>
       <Grid item xs={12}>

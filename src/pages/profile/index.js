@@ -4,7 +4,7 @@ import { Box, CssBaseline, Grid, useTheme } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { colgTabs, doctorTabs } from '../../helpers/components/sidebar-drawer-list-item';
-import { sideBarTabs, userGroupType } from '../../helpers/functions/common-functions';
+import { sideBarTabs, userGroupTypeForSession } from '../../helpers/functions/common-functions';
 import {
   getCountriesList,
   getCoursesList,
@@ -14,15 +14,51 @@ import {
   getStatesList,
   getUniversitiesList,
 } from '../../store/actions/common-actions';
-import { changeUserActiveTab } from '../../store/reducers/common-reducers';
+import { changeUserActiveTab, userLoggedInType } from '../../store/reducers/common-reducers';
 import MiniDrawer from './components/profile-sidebar/profile-sidebar';
 import ProfileTabContainer from './components/profile-sidebar/profile-tab-container';
 
 export function Profile() {
   const dispatch = useDispatch();
+  // const loggedInUserType = 'Doctor';
+  // const { loginData } = useSelector((state) => state.loginReducer);
+
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
-  const { loginData } = useSelector((state) => state.loginReducer);
-  const userType = userGroupType(loginData?.data?.user_group_id);
+  // const { loginData } = useSelector((state) => state.loginReducer);
+  let userType;
+
+  if (localStorage.getItem('accesstoken')) {
+    let base64Url = localStorage.getItem('accesstoken')?.split('.')[1];
+    let base64 = base64Url?.replace(/-/g, '+').replace(/_/g, '/');
+    let jsonPayload;
+    if (base64) {
+      jsonPayload = decodeURIComponent(
+        window
+          ?.atob(base64)
+          ?.split('')
+          ?.map(function (c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+          })
+          ?.join('')
+      );
+    }
+
+    userType = userGroupTypeForSession(JSON.parse(jsonPayload)?.authorities[0]);
+
+    let type = '';
+
+    if (JSON.parse(jsonPayload)?.authorities[0] === 'ROLE_HEALTH_PROFESSIONAL') type = 'Doctor';
+    if (
+      JSON.parse(jsonPayload)?.authorities[0] === 'ROLE_COLLEGE_ADMIN' ||
+      JSON.parse(jsonPayload)?.authorities[0] === 'ROLE_COLLEGE_DEAN' ||
+      JSON.parse(jsonPayload)?.authorities[0] === 'ROLE_COLLEGE_REGISTRAR'
+    )
+      type = 'College';
+    if (JSON.parse(jsonPayload)?.authorities[0] === 'ROLE_SMC') type = 'SMC';
+    if (JSON.parse(jsonPayload)?.authorities[0] === 'ROLE_NMC') type = 'NMC';
+
+    dispatch(userLoggedInType(type));
+  }
 
   const [isActiveTab, setIsActiveTab] = useState(
     loggedInUserType === 'Doctor'

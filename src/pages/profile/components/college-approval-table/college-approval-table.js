@@ -85,12 +85,18 @@ function CollegeApprovalTable(props) {
   const getTableData = (pageNo, noOfRecords) => {
     const queryObj = {
       pageNo: pageNo,
-      limit: noOfRecords,
-      search: searchQueryParams ? searchQueryParams?.search : '',
-      id: searchQueryParams ? searchQueryParams?.filterByRegNo : '',
-      name: searchQueryParams ? searchQueryParams?.filterByName : '',
-      council: searchQueryParams ? searchQueryParams?.RegistrationCouncilId : '',
+      offset: noOfRecords,
+      // search: searchQueryParams ? searchQueryParams?.search : '',
+      // id: searchQueryParams ? searchQueryParams?.filterByRegNo : '',
+      // name: searchQueryParams ? searchQueryParams?.filterByName : '',
+      // council: searchQueryParams ? searchQueryParams?.RegistrationCouncilId : '',
     };
+    if (searchQueryParams) {
+      queryObj.search = searchQueryParams?.search;
+      queryObj.id = searchQueryParams?.filterByRegNo;
+      queryObj.name = searchQueryParams?.filterByName;
+      queryObj.council = searchQueryParams?.RegistrationCouncilId;
+    }
     dispatch(getCollegeApprovalData(queryObj));
   };
 
@@ -166,7 +172,11 @@ function CollegeApprovalTable(props) {
         <Typography variant="h2" py={2}>
           College Applications Pending List
         </Typography>
-        <TableSearch searchParams={searchParams} />
+        <TableSearch
+          searchParams={searchParams}
+          exportData={collegeApprovalData}
+          flag={'collegeApprovalData'}
+        />
         <GenericTable
           order={order}
           orderBy={orderBy}
@@ -181,7 +191,7 @@ function CollegeApprovalTable(props) {
           <TablePagination
             rowsPerPageOptions={[]}
             component="div"
-            count={collegeApprovalData?.data?.total_no_of_records}
+            count={collegeApprovalData?.data?.total_no_of_records || '0'}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

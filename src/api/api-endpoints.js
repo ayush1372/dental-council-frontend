@@ -11,7 +11,7 @@ export const API = {
     registrationDetails: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/registration',
     workProfileDetails: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/work-profile',
     profileImage: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/profile-picture',
-    // initiateWorkFlow: 'api/v1/abdm/nmr/health-professional/applications/status',
+    initiateWorkFlow: 'api/v1/abdm/nmr/health-professional/applications/status',
     trackApplicationData: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/applications',
     profileConsent: 'api/v1/abdm/nmr/health-professional/register',
     createPersonalDetails: '/api/v1/abdm/nmr/health-professional/personal',
@@ -50,10 +50,6 @@ export const API = {
     getNMCProfileData: 'api/v1/abdm/nmr/nmc/user/{id}',
     collegeApproval: 'api/v1/abdm/nmr/college/applications',
   },
-  Aadhaar: {
-    sendAadhaarOtp: 'api/v1/abdm/nmr/aadhaar/send-otp',
-    verifyAadhaarOtp: 'api/v1/abdm/nmr/aadhaar/verify-otp',
-  },
   dashboard: {
     cardCount: 'api/v1/abdm/nmr/dashboards/cards',
     cardDetails: 'api/v1/abdm/nmr/dashboards/card-detail',
@@ -64,6 +60,7 @@ export const API = {
   doctorRegistration: {
     smcRegistrationDetail:
       'api/v1/abdm/nmr/health-professional?smcId={smcId}&registrationNumber={registrationNumber}',
+    passwordLink: 'api/v1/abdm/nmr/user/password-link',
   },
   nbe: {
     getNBEProfileData: 'api/v1/abdm/nmr/nbe/user/{id}',
@@ -74,5 +71,17 @@ export const API = {
   searchDoctor: {
     searchDoctorDetails: 'api/v1/abdm/nmr/health-professional/search',
     searchDoctorById: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}',
+  },
+};
+export const API_HPRID = {
+  hpId: {
+    checkHprIdExists: 'api/v2/registration/aadhaar/checkHpIdAccountExist',
+    hpIdSuggestion: 'api/v1/registration/aadhaar/hpid/suggestion',
+    sessionApi: 'gateway/v0.5/sessions',
+    sendAadhaarOtp: 'api/v1/registration/aadhaar/generateOtp',
+    verifyAadhaarOtp: 'api/v1/registration/aadhaar/verifyOTP',
+    generateMobileOtp: 'api/v1/registration/aadhaar/generateMobileOTP',
+    verifyMobileOtp: '/api/v1/registration/aadhaar/verifyMobileOTP',
+    createHprId: 'api/v1/registration/aadhaar/createHprIdWithPreVerified',
   },
 };
