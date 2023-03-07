@@ -22,7 +22,9 @@ const UniqueUserNameForDoctorRegistration = () => {
   const userEmail = useSelector(
     (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.email_id
   );
-
+  const registrationNumber = useSelector(
+    (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.registration_number
+  );
   const firstSuggestion = useSelector(
     (state) => state?.doctorRegistration?.hprIdSuggestionsDetailsData?.data[0]
   );
@@ -61,6 +63,7 @@ const UniqueUserNameForDoctorRegistration = () => {
         email: userEmail,
         mobile: userMobileNumber,
         username: `${getValues().UniqueUserNameForDoctor}@hpr.abdm`,
+        registration_number: registrationNumber,
       };
       dispatch(sendResetPasswordLink(data)).then(() => {
         setShowSuccess(true);

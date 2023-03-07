@@ -163,6 +163,7 @@ function FetchDoctorDetails() {
           email: userEmail,
           mobile: getValues().MobileNumber,
           username: response?.data?.hprId,
+          registration_number: registrationNumber,
         };
         dispatch(sendResetPasswordLink(data)).then(() => {
           setShowSuccess(true);
