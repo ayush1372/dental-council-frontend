@@ -1,17 +1,28 @@
-.docter-details {
+.doctorTitleBackground {
+  background-image: url('../../assets//images/view-doctor-profile-background.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  min-height: 180px;
+}
+
+.docterDetails {
   .icon {
     position: relative;
-    .outer-image {
+
+    .outerImage {
       position: absolute;
       top: -70px;
       display: inline-block;
       padding: 5px;
       background-color: white;
       border-radius: 50%;
+
       img {
         border-radius: 50%;
         width: 120px;
         height: 120px;
+        min-width: 126px;
+        min-height: 126px;
       }
     }
   }

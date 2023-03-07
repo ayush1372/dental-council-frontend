@@ -1,5 +1,3 @@
-import './search-doctor.scss';
-
 import { useState } from 'react';
 
 import { Box, Container, Tab, Tabs } from '@mui/material';

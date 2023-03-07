@@ -114,7 +114,7 @@ export default function GenericTable(props) {
         handleClose={handleClose}
         selectedSuspendLicenseProfile={selectedSuspendLicenseProfile}
       />
-      <Table sx={{ minWidth: '650px' }} aria-label="table">
+      <Table aria-label="table">
         <TableHead>
           <TableRow sx={{ backgroundColor: 'primary.main' }}>
             {props.tableHeader.map((item, index) => {
@@ -280,7 +280,17 @@ export default function GenericTable(props) {
                 })}
               </TableRow>
             ))}
-          {props.data?.length === 0 ? 'No Result Found' : ''}
+          {props.data?.length === 0 ? (
+            <TableRow sx={{ textAlign: 'center' }}>
+              <TableCell align="center" sx={{ width: '100%' }}>
+                <Box display="flex" justifyContent="center" width="100%">
+                  No Result Found
+                </Box>
+              </TableCell>
+            </TableRow>
+          ) : (
+            ''
+          )}
         </TableBody>
       </Table>
     </TableContainer>

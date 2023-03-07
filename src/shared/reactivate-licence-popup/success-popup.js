@@ -2,18 +2,29 @@ import { useState } from 'react';
 
 import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined';
 import { Box, Container, Modal, Typography } from '@mui/material';
+import { useNavigate } from 'react-router';
 
 import { Button } from '../../ui/core';
 
 export default function SuccessPopup() {
+  const navigate = useNavigate();
+
   const [open, setOpen] = useState(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    navigate('/');
+    navigate('/');
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
 
   return (
     <Modal open={open} onClose={handleClose} sx={{ mt: 15 }}>
       <Container
         maxWidth="xs"
-        sx={{ backgroundColor: 'white.main', borderRadius: '10px', height: '350px', p: '30px' }}
+        sx={{ backgroundColor: 'white.main', borderRadius: '10px', height: '430px', p: '30px' }}
       >
         <Box mb={1} display="flex" justifyContent="center">
           <TaskAltOutlinedIcon
@@ -41,15 +52,15 @@ export default function SuccessPopup() {
             display="flex"
             alignItems="center"
             textAlign="center"
-            mt={2}
-            ml={10}
+            mt={4}
+            variant="body1"
             data-testid="popup-input-text"
           >
-            Your reactivate license <br />
-            request has been sent to SMC
+            Your username has been successfully created.
+            <br /> A link to create your password has been sent to the registered mobile number.
           </Typography>
           <Button
-            sx={{ width: '408px', mt: 5 }}
+            sx={{ width: '408px', mt: 8 }}
             variant="contained"
             color="warning"
             onClick={handleClose}

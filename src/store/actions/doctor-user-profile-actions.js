@@ -157,18 +157,23 @@ export const getUserProfileImage = (hp_profile_id, file) => async (dispatch) => 
   });
 };
 
-export const getDoctorTrackApplicationData = (doctor_profile_id) => async (dispatch) => {
+export const getDoctorTrackApplicationData = (doctor_profile_id, trackData) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,
-      url: API.DoctorUserProfileData.trackApplicationData.replace(
+      url: `${API.DoctorUserProfileData.trackApplicationData.replace(
         '{healthProfessionalId}',
         doctor_profile_id
-      ),
+      )}?pageNo=${trackData.pageNo}&offset=${trackData.offset}`,
+      // url: API.DoctorUserProfileData.trackApplicationData.replace(
+      //   '{healthProfessionalId}',
+      //   doctor_profile_id
+      // ),
     })
       .then((response) => {
         dispatch(
-          updateTrackApplicationTableData(response.data?.health_professional_applications || [])
+          updateTrackApplicationTableData(response || [])
+          // updateTrackApplicationTableData(response.data?.health_professional_applications || [])
         );
         return resolve(response);
       })
