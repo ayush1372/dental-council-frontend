@@ -23,7 +23,10 @@ export function SuspendLicenseVoluntaryRetirement({
   selectedSuspendLicenseProfile,
 }) {
   const dispatch = useDispatch();
-  const { loginData } = useSelector((state) => state?.loginReducer);
+
+  const { loginData } = useSelector((state) => state.loginReducer);
+  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+
   const [selectedSuspension, setSelectedSuspension] = useState('voluntary-suspension-check');
   const [selectedFromDate, setSelectedFromDate] = useState();
   const { userActiveTab } = useSelector((state) => state.common);
@@ -48,9 +51,6 @@ export function SuspendLicenseVoluntaryRetirement({
           : '',
     },
   });
-
-  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
-  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
 
   const onSubmit = () => {
     setConformSuspend(true);
@@ -79,12 +79,13 @@ export function SuspendLicenseVoluntaryRetirement({
         action_id = 1;
         break;
     }
+
     let workFlowData = {
       request_id: personalDetails?.request_id,
       application_type_id: personalDetails.application_type_id
         ? personalDetails?.application_type_id
         : 1,
-      actor_id: loggedInUserType === 'SMC' ? 2 : loggedInUserType === 'NMC' ? 3 : 0,
+      actor_id: loginData?.data?.user_group_id,
       action_id: action_id,
       hp_profile_id: personalDetails?.hp_profile_id
         ? personalDetails?.hp_profile_id
