@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 
-// import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Box, Button, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
@@ -8,13 +7,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
-// import { get_year_data } from '../../../../helpers/functions/common-functions';
 import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
-// import { ModalOTP } from '../../../../shared/otp-modal/otp-modal';
 import {
   getCitiesList,
   getDistrictList,
-  // getInitiateWorkFlow,
   getSubDistrictsList,
 } from '../../../../store/actions/common-actions';
 import {
@@ -24,12 +20,10 @@ import {
 import { getPersonalDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
 import { Checkbox } from '../../../../ui/core';
 import { RadioGroup, Select, TextField } from '../../../../ui/core';
-// import MobileNumber from '../../../../ui/core/mobile-number/mobile-number';
 import successToast from '../../../../ui/core/toaster';
 
 const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const { t } = useTranslation();
-  // const theme = useTheme();
   const dispatch = useDispatch();
   const loggedInUserType = useSelector((state) => state?.common?.loggedInUserType);
   const { loginData } = useSelector((state) => state?.loginReducer);
@@ -41,7 +35,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const [languages, setLanguages] = useState([]);
 
   const { personal_details, communication_address, imr_details } = personalDetails || {};
-
   const {
     salutation,
     aadhaar_token,
@@ -54,14 +47,23 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     country_nationality,
     date_of_birth,
     gender,
-    // Street,
     schedule,
     full_name,
-    language,
-    // house,
   } = personal_details || {};
-  const { country, state, district, sub_district, village, pincode, address_line1, email, mobile } =
-    communication_address || {};
+  const {
+    country,
+    state,
+    district,
+    sub_district,
+    village,
+    pincode,
+    address_line1,
+    email,
+    mobile,
+    landmark,
+    locality,
+    street,
+  } = communication_address || {};
   const { registration_number, nmr_id, year_of_info } = imr_details || {};
 
   const countryNationalityId = country_nationality?.id;
@@ -128,7 +130,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       Schedule: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? scheduleId : '',
       Name: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? full_name : '',
       Address: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? address_line1 : '',
-      // House: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? house : '',
       Area: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? citiesId : '',
       District: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? districtId : '',
       SubDistrict:
@@ -143,8 +144,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
         loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? registration_number : '',
       mobileNo: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? mobile : '',
       EmailAddress: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? email : '',
-      // Street: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? street : '',
-      LanguageSpoken: language || [],
+      LanguageSpoken: [],
+      Landmark: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? landmark : '',
+      Locality: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? locality : '',
+      Street: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? street : '',
     },
   });
   const fetchDistricts = (stateId) => {
@@ -200,13 +203,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
           .catch((allFailMsg) => {
             successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
           });
-        handleNext();
       })
       .catch((allFailMsg) => {
         successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
       });
   };
-  // const { otpPopup,  otpVerified } = ModalOTP({ afterConfirm: () => {} });
 
   const handleBackButton = () => {
     setIsReadMode(true);
@@ -235,7 +236,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
 
   async function onHandleSave() {
     const {
-      // Salutation,
       MiddleName,
       LastName,
       FatherName,
@@ -244,9 +244,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       Gender,
       Schedule,
       Nationality,
-      // RegistrationNumber,
-      // IMRID,
-      // YearOfInfo,
       PostalCode,
       Address,
       EmailAddress,
@@ -257,14 +254,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       District,
       SubDistrict,
       Area,
-      // House,
-      // Street,
       DateOfBirth,
       LanguageSpoken,
+      Landmark,
+      Locality,
+      Street,
     } = getValues();
     const doctorProfileValues = JSON.parse(JSON.stringify(personalDetails));
-    // doctorProfileValues.personal_details.salutation = Salutation;
-    // doctorProfileValues.personal_details.first_name = FirstName;
     doctorProfileValues.personal_details.middle_name = MiddleName;
     doctorProfileValues.personal_details.last_name = LastName;
     doctorProfileValues.personal_details.father_name = FatherName;
@@ -272,29 +268,25 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     doctorProfileValues.personal_details.spouse_name = SpouseName;
     doctorProfileValues.personal_details.schedule.name = Schedule;
     doctorProfileValues.personal_details.date_of_birth = DateOfBirth;
-    // doctorProfileValues.imr_details.registration_number = RegistrationNumber;
-    // doctorProfileValues.imr_details.nmr_id = IMRID;
-    // doctorProfileValues.imr_details.year_of_info = YearOfInfo;
     doctorProfileValues.communication_address.pincode = PostalCode;
     doctorProfileValues.communication_address.address_line1 = Address;
-    // console.log(house, doctorProfileValues, 'house');
-    // doctorProfileValues.communication_address.house = House;
     doctorProfileValues.communication_address.email = EmailAddress;
     doctorProfileValues.communication_address.mobile = mobileNo;
     doctorProfileValues.personal_details.full_name = Name;
-    // doctorProfileValues.communication_address.full_name = Name;
+    doctorProfileValues.communication_address.full_name = Name;
     doctorProfileValues.communication_address.country.id = Country;
     doctorProfileValues.communication_address.state.id = State;
     doctorProfileValues.communication_address.district.id = District;
     doctorProfileValues.communication_address.sub_district.id = SubDistrict;
     doctorProfileValues.communication_address.village.id = Area;
-    // doctorProfileValues.communication_address.street.id = Street;
+    doctorProfileValues.communication_address.landmark = Landmark;
+    doctorProfileValues.communication_address.locality = Locality;
+    doctorProfileValues.communication_address.street = Street;
     doctorProfileValues.personal_details.language = LanguageSpoken;
     doctorProfileValues.communication_address.address_type = { id: 4, name: 'communication' };
     doctorProfileValues.personal_details.country_nationality =
       nationalities.find((x) => x.id === Nationality) || {};
     doctorProfileValues.personal_details.gender = Gender;
-
     doctorProfileValues.personal_details.schedule = schedules.find((x) => x.id === Schedule) || {};
     dispatch(getPersonalDetails({ ...JSON.parse(JSON.stringify(doctorProfileValues)) }));
 
@@ -305,9 +297,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       fetchUpdatedDoctorUserProfileData(response);
     });
   }
-  // const handleSalutationChange = (event) => {
-  //   setValue(event.target.name, event.target.value, true);
-  // };
+
   const handleGender = (event) => {
     setValue(event.target.name, event.target.value, true);
   };
@@ -435,6 +425,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
               Father&apos;s Name
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
             </Typography>
             <TextField
               variant="outlined"
@@ -443,7 +436,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               fullWidth
               defaultValue={getValues().FatherName}
               {...register('FatherName', {
-                // required: 'Missing field',
+                required: 'Missing field',
                 maxLength: {
                   value: 100,
                   message: 'Length should be less than 100.',
@@ -455,6 +448,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
               Mother&apos;s Name
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
             </Typography>
             <TextField
               variant="outlined"
@@ -463,7 +459,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               fullWidth
               defaultValue={getValues().MotherName}
               {...register('MotherName', {
-                // required: 'Missing field',
+                required: 'Missing field',
                 maxLength: {
                   value: 100,
                   message: 'Length should be less than 100.',
@@ -477,6 +473,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
               Spouse Name
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
             </Typography>
             <TextField
               variant="outlined"
@@ -485,7 +484,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               fullWidth
               defaultValue={getValues().SpouseName}
               {...register('SpouseName', {
-                // required: 'Missing field',
+                required: 'Missing field',
                 maxLength: {
                   value: 100,
                   message: 'Length should be less than 100.',
@@ -722,15 +721,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                     ? personalDetails?.kyc_address?.house
                     : getValues().Address
                 }
-                // defaultValue={getValues().House}
-                // {...register('House', {
-                //   required: 'House House is Required',
-                //   maxLength: {
-                //     value: 300,
-                //     message: 'Length should be less than 300.',
-                //   },
-                // })}
-                error={errors.House?.message}
+                error={errors.Address?.message}
               />
             </Grid>
             <Grid item xs={12} md={4}>
@@ -741,23 +732,21 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 variant="outlined"
                 name={'Street'}
                 placeholder="Enter Street"
-                // required={false}
+                required={false}
                 fullWidth
                 defaultValue={
                   personalDetails?.communication_address?.is_same_address
                     ? personalDetails?.kyc_address?.street
                     : getValues().Street
                 }
-                // defaultValue={getValues().Street}
-                // /*author:krishnakanth, purpose: after getting values from backend we will work onthis */
-                // {...register('Street', {
-                //   // required: 'Street is Required',
-                //   maxLength: {
-                //     value: 300,
-                //     message: 'Length should be less than 300.',
-                //   },
-                // })}
-                // error={errors.Street?.message}
+                {...register('Street', {
+                  required: 'Street is Required',
+                  maxLength: {
+                    value: 300,
+                    message: 'Length should be less than 300.',
+                  },
+                })}
+                error={errors.Street?.message}
               />
             </Grid>
           </Grid>
@@ -777,16 +766,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                     ? personalDetails?.kyc_address?.landmark
                     : getValues().Landmark
                 }
-                // defaultValue={getValues().Landmark}
-                /*author:krishnakanth, purpose: after getting values from backend we will work onthis */
-                // {...register('Landmark', {
-                //  required: 'Landmark is Required',
-                //   maxLength: {
-                //     value: 300,
-                //     message: 'Length should be less than 300.',
-                //   },
-                // })}
-                // error={errors.Landmark?.message}
+                error={errors.Landmark?.message}
               />
             </Grid>
             <Grid item xs={12} md={4}>
@@ -799,14 +779,19 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 placeholder="Your Locality"
                 required={false}
                 fullWidth
-                // defaultValue={getValues().Locality}
-                /*author:krishnakanth, purpose: after getting values from backend we will work onthis */
                 defaultValue={
                   personalDetails?.communication_address?.is_same_address
                     ? personalDetails?.kyc_address?.locality
                     : getValues().Locality
                 }
-                // error={errors.Locality?.message}
+                {...register('Locality', {
+                  required: 'Locality is Required',
+                  maxLength: {
+                    value: 300,
+                    message: 'Length should be less than 300.',
+                  },
+                })}
+                error={errors.Locality?.message}
               />
             </Grid>
             <Grid item xs={12} md={4}>
@@ -881,6 +866,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                     ? personalDetails?.kyc_address?.district?.name
                     : getValues().District
                 }
+                required={true}
+                {...register('District', {
+                  required: 'District is required',
+                })}
                 options={createSelectFieldData(districtsList, 'iso_code')}
                 MenuProps={{
                   style: {
@@ -962,6 +951,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                     ? personalDetails?.kyc_address?.pincode
                     : getValues().PostalCode
                 }
+                {...register('PostalCode', {
+                  required: 'PostalCode is Required',
+                  pattern: {
+                    value: /^[0-9]{6}$/,
+                    message: 'Should only contains 6 digits',
+                  },
+                })}
                 error={errors.PostalCode?.message}
               />
             </Grid>
