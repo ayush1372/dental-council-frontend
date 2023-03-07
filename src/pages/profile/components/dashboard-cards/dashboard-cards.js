@@ -170,6 +170,22 @@ export default function Dashboard() {
     }
   };
 
+  const getTextLabelIcons = (item) => {
+    if (item?.name?.includes('Pending') || item?.name?.includes('Received')) {
+      return 'Applications which are in pending stage.';
+    } else if (item?.name?.includes('Approved')) {
+      return 'Total number of applications after Approved';
+    } else if (item?.name?.includes('Verified') || item?.name?.includes('Approved')) {
+      return 'Total number of applications approved by production.';
+    } else if (item?.name?.includes('Raised')) {
+      return 'Total number of applications raised a query.';
+    } else if (item?.name.includes('Rejected') || item?.name.includes('Blacklisted')) {
+      return 'Total number of applications which are rejected';
+    } else if (item?.name.includes('Total')) {
+      return 'Total number of requests';
+    }
+  };
+
   return (
     <>
       {!showDashboard && (
@@ -265,6 +281,7 @@ export default function Dashboard() {
                               color="primary"
                               component="div"
                               lineHeight={{ xs: '18px', lg: '24px' }}
+                              mb={1}
                             >
                               {item.name}
                             </Typography>
@@ -274,7 +291,8 @@ export default function Dashboard() {
                               component="div"
                               fontWeight="400"
                             >
-                              Total number of applications after registration
+                              {getTextLabelIcons(item)}
+                              {/* Total number of applications after registration */}
                             </Typography>
                           </Item>
                         </Box>
