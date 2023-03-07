@@ -59,7 +59,7 @@ export default function GenericTable(props) {
     },
   ]);
   function stableSort(array, comparator) {
-    const stabilizedThis = array?.length > 1 ? array?.map((el, index) => [el, index]) : [];
+    const stabilizedThis = array?.length > 0 ? array?.map((el, index) => [el, index]) : [];
     stabilizedThis?.sort((a, b) => {
       const order = comparator(a[0], b[0]);
       if (order !== 0) {
