@@ -1,0 +1,9 @@
+<svg id="ico-verified" xmlns="http://www.w3.org/2000/svg" width="29" height="29" viewBox="0 0 29 29">
+  <g id="Group_31757" data-name="Group 31757">
+    <rect id="Rectangle_21948" data-name="Rectangle 21948" width="29" height="29" fill="rgba(255,255,255,0)"/>
+  </g>
+  <g id="Group_31758" data-name="Group 31758" transform="translate(2 2)">
+    <circle id="Ellipse_870" data-name="Ellipse 870" cx="10.5" cy="10.5" r="10.5" transform="translate(2)" fill="#fff"/>
+    <path id="Path_27553" data-name="Path 27553" d="M27,14.5l-2.766-3.226L24.625,7l-4.109-.953L18.375,2.36,14.5,4.06l-3.859-1.7L8.484,6.046,4.391,7l.391,4.274L2,14.5l2.766,3.226L4.375,22l4.109.953,2.141,3.686L14.5,24.924l3.859,1.7L20.5,22.938l4.109-.953-.391-4.274ZM12.3,19.378,8.984,16.01l1.109-1.128,2.2,2.24,6.625-6.737,1.109,1.128Z" transform="translate(-2 -2.36)" fill="#36b37e"/>
+  </g>
+</svg>

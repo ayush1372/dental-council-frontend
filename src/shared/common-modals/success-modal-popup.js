@@ -1,14 +1,25 @@
 import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined';
 import { Box, Container, Modal, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import { useDispatch } from 'react-redux';
 
+import { getCardCount } from '../../store/actions/dashboard-actions';
 import { Button } from '../../ui/core';
 
-export default function SuccessModalPopup({ open, setOpen, text }) {
-  const handleClose = () => {
+export default function SuccessModalPopup({ open, setOpen, text, handleClose, SuspensionCall }) {
+  const handleCloseModal = () => {
     setOpen(false);
   };
   const theme = useTheme();
+  const dispatch = useDispatch();
+
+  const handleCloseModalALL = () => {
+    setOpen(false);
+    handleClose();
+    if (SuspensionCall) {
+      dispatch(getCardCount());
+    }
+  };
 
   return (
     <Modal open={open} onClose={handleClose} sx={{ mt: 15 }}>
@@ -59,7 +70,7 @@ export default function SuccessModalPopup({ open, setOpen, text }) {
             sx={{ width: { xs: '100%', sm: '408px' }, mt: 5 }}
             variant="contained"
             color="warning"
-            onClick={handleClose}
+            onClick={handleClose ? handleCloseModalALL : handleCloseModal}
           >
             Ok
           </Button>

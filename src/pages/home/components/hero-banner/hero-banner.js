@@ -1,6 +1,5 @@
 import { Box, Container, Grid, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import { useNavigate } from 'react-router-dom';
 
 import BannerImage from '../../../../assets/images/hero-banner.png';
 import { Button } from '../../../../ui/core';
@@ -9,7 +8,6 @@ import styles from './hero-banner.module.scss';
 
 export function HeroBanner() {
   const { t } = useTranslation();
-  const navigate = useNavigate();
   return (
     <Box
       p={{ md: '70px 0', xs: '30px 0' }}
@@ -34,12 +32,7 @@ export function HeroBanner() {
               )}
             </Typography>
 
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={() => navigate('/register')}
-              sx={{ margin: '16px 0 32px' }}
-            >
+            <Button variant="contained" color="secondary" sx={{ margin: '16px 0 32px' }}>
               {t('Click here to Login or Register')}
             </Button>
           </Grid>

@@ -74,7 +74,7 @@ const StateMedicalCouncil = ({ setDoSearch, setSearchData }) => {
           placeholder="Select State medical council"
           defaultValue={getValues().Statemedicalcouncil}
           {...register('Statemedicalcouncil', {
-            required: 'state medical council is required',
+            // required: 'state medical council is required',
           })}
           options={createSelectFieldData(councilNames)}
           onChange={(currentValue) => {

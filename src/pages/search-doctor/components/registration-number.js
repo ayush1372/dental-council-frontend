@@ -67,11 +67,11 @@ const RegistrationNumber = ({ setDoSearch, setSearchData }) => {
           fullWidth
           defaultValue={getValues().RegistrationNumber}
           {...register('RegistrationNumber', {
-            required: 'Registration Number is Required',
-            maxLength: {
-              value: 100,
-              message: 'Length should be less than 100.',
-            },
+            // required: 'Registration Number is Required',
+            // maxLength: {
+            //   value: 100,
+            //   message: 'Length should be less than 100.',
+            // },
           })}
           error={errors.RegistrationNumber?.message}
         />

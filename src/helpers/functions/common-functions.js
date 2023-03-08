@@ -19,6 +19,7 @@ export function get_year_data(startYear = 1900) {
     entry_struct['label'] = i;
     ans.push(entry_struct);
   }
+  ans.reverse();
   return ans;
 }
 

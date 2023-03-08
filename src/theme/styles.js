@@ -99,6 +99,18 @@ const themeWrapper = (mode, appFontType) => {
           },
         },
       },
+      MuiRadio: {
+        styleOverrides: {
+          root: {
+            '.MuiButtonBase-root.MuiRadio-colorPrimary': {
+              color: palette.primary,
+            },
+          },
+          colorPrimary: {
+            color: palette.primary,
+          },
+        },
+      },
     },
 
     // STYLE FOR BORDER RADIUS
