@@ -21,7 +21,7 @@ const BlacklistedDoctor = ({ setDoSearch, setSearchData }) => {
   } = useForm({
     mode: 'onChange',
     defaultValues: {
-      SelectDoctorname: '',
+      DoctorName: '',
       RegistrationNumber: '',
       YearofRegistration: '',
       Statemedicalcouncil: '',
@@ -56,7 +56,7 @@ const BlacklistedDoctor = ({ setDoSearch, setSearchData }) => {
   return (
     <Grid container spacing={2} mt={2}>
       <Grid item xs={4}>
-        <Select
+        {/* <Select
           sx={{
             color: 'inputTextColor.main',
           }}
@@ -67,7 +67,7 @@ const BlacklistedDoctor = ({ setDoSearch, setSearchData }) => {
           placeholder="Select Doctor name"
           defaultValue={getValues().SelectDoctorname}
           {...register('SelectDoctorname', {
-            required: 'Select Doctor name  is required',
+            // required: 'Select Doctor name  is required',
           })}
           options={[
             {
@@ -75,6 +75,25 @@ const BlacklistedDoctor = ({ setDoSearch, setSearchData }) => {
               value: '-',
             },
           ]}
+        /> */}
+        <TextField
+          sx={{
+            color: 'inputTextColor.main',
+          }}
+          variant="outlined"
+          name={'DoctorName'}
+          placeholder="Enter Doctor Name"
+          label={'Doctor Name'}
+          fullWidth
+          defaultValue={getValues().DoctorName}
+          {...register('DoctorName', {
+            // required: 'Doctor Name is Required',
+            // maxLength: {
+            //   value: 100,
+            //   message: 'Length should be less than 100.',
+            // },
+          })}
+          error={errors.DoctorName?.message}
         />
       </Grid>
       <Grid item xs={4}>
@@ -96,11 +115,11 @@ const BlacklistedDoctor = ({ setDoSearch, setSearchData }) => {
           fullWidth
           defaultValue={getValues().RegistrationNumber}
           {...register('RegistrationNumber', {
-            required: 'Registration Number is Required',
-            maxLength: {
-              value: 100,
-              message: 'Length should be less than 100.',
-            },
+            // required: 'Registration Number is Required',
+            // maxLength: {
+            //   value: 100,
+            //   message: 'Length should be less than 100.',
+            // },
           })}
           error={errors.RegistrationNumber?.message}
         />
@@ -118,7 +137,7 @@ const BlacklistedDoctor = ({ setDoSearch, setSearchData }) => {
             placeholder="Select year of Registration"
             defaultValue={getValues().YearofRegistration}
             {...register('YearofRegistration', {
-              required: 'Year of Registration is required',
+              // required: 'Year of Registration is required',
             })}
             options={yearsData}
           />
@@ -135,7 +154,7 @@ const BlacklistedDoctor = ({ setDoSearch, setSearchData }) => {
             placeholder="Select State medical council"
             defaultValue={getValues().Statemedicalcouncil}
             {...register('Statemedicalcouncil', {
-              required: 'state medical council is required',
+              // required: 'state medical council is required',
             })}
             options={createSelectFieldData(councilNames)}
             onChange={(currentValue) => {

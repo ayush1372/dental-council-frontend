@@ -365,7 +365,7 @@ export const registrationRequestMapper = {
 };
 export const updationRequestMapper = {
   'Total HP Modification Requests': 'Total Updation request',
-  Rejected: 'v Request Rejected',
+  Rejected: 'Request Rejected',
   Approved: 'Update Request Approved',
   'Query Raised': 'Query Raised on Update Request',
   Suspended: 'Suspended',

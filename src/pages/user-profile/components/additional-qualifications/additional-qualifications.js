@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { Box, Typography } from '@mui/material';
+// import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import { Box } from '@mui/material';
 import { useFieldArray, useForm } from 'react-hook-form';
 
 import { Button } from '../../../../ui/core';
@@ -58,10 +58,10 @@ const AdditionalQualifications = () => {
         {/* <Typography variant="h3" color="textPrimary.main">
           Additional Qualifications
         </Typography> */}
-        <Typography variant="body4" color="messageBlue.main" display="flex" alignItems="center">
+        {/* <Typography variant="body4" color="messageBlue.main" display="flex" alignItems="center">
           <InfoOutlinedIcon fontSize="18px" />
           User can add up to 7 qualification degrees
-        </Typography>
+        </Typography> */}
       </Box>
       <Box mt={1}>
         {fields.map((qualification, index) => {
@@ -86,8 +86,16 @@ const AdditionalQualifications = () => {
           );
         })}
       </Box>
-      <Box>
+
+      <Box mt={2} display="flex" width="100%">
+        <Button variant="contained" color="secondary" onClick={handleSubmit}>
+          Submit
+        </Button>
+        <Button variant="contained" color="grey" sx={{ marginLeft: '20px' }}>
+          Cancel
+        </Button>
         <Button
+          sx={{ ml: 'auto' }}
           variant="outlined"
           color="primary"
           onClick={() => {
@@ -95,15 +103,6 @@ const AdditionalQualifications = () => {
           }}
         >
           Add Additional Qualification
-        </Button>
-      </Box>
-
-      <Box mt={2}>
-        <Button variant="contained" color="secondary" onClick={handleSubmit}>
-          Submit
-        </Button>
-        <Button variant="contained" color="grey" sx={{ marginLeft: '20px' }}>
-          Cancel
         </Button>
       </Box>
     </Box>

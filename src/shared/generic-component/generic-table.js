@@ -282,7 +282,7 @@ export default function GenericTable(props) {
             ))}
           {props.data?.length === 0 ? (
             <TableRow sx={{ textAlign: 'center' }}>
-              <TableCell align="center" sx={{ width: '100%' }}>
+              <TableCell colSpan="100%" align="center">
                 <Box display="flex" justifyContent="center" width="100%">
                   No Result Found
                 </Box>

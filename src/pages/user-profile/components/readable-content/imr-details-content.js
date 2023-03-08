@@ -18,17 +18,17 @@ const IMRDetails = ({ personalDetails }) => {
   // const { registration_number, year_of_info } = imr_details || {};
   const { address_line1 } = communication_address || {};
   return (
-    <Grid container spacing={2} mt={2}>
+    <Grid container spacing={2} mt={1}>
       <Grid container item spacing={2}>
         <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
+          <Typography variant="body5" color="grey.label">
             Aadhaar verified Address
             <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {address_line1 ? address_line1 : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
