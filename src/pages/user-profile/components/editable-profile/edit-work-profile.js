@@ -240,7 +240,7 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
               defaultValue={getValues().Speciality}
               required={true}
               {...register('Speciality', {
-                required: 'Missing field',
+                required: 'This field is required',
               })}
               options={createSelectFieldData(specialitiesList.data)}
             />
@@ -259,7 +259,7 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
               error={subSpecialities?.length === 0 && errors.subSpeciality?.message}
               multiple={true}
               {...register('subSpeciality', {
-                required: 'Missing field',
+                required: 'This field is required',
               })}
               onChange={(value) => {
                 setValue('subSpeciality', value);
@@ -318,7 +318,7 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
               required={true}
               placeholder={'Nature Of Work'}
               {...register('NatureOfWork', {
-                required: 'Missing field',
+                required: 'This field is required',
               })}
               options={createSelectFieldData(natureOfWork)}
             />
@@ -414,6 +414,7 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
               fullWidth
               defaultValue={getValues().workingOrganizationName}
               {...register('workingOrganizationName', {
+                required: 'This field is required',
                 maxLength: {
                   value: 300,
                   message: 'Length should be less than 300.',
@@ -458,7 +459,7 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
               placeholder="Address"
               defaultValue={getValues().Address}
               {...register('Address', {
-                required: 'Missing field',
+                required: 'This field is required',
                 maxLength: {
                   value: 300,
                   message: 'Should be less than 300 characters',
@@ -482,7 +483,7 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
               placeholder="Street"
               defaultValue={getValues().Address}
               {...register('Street', {
-                required: 'Missing field',
+                required: 'This field is required',
                 maxLength: {
                   value: 300,
                   message: 'Should be less than 300 characters',
@@ -509,7 +510,7 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
               placeholder="Landmark"
               defaultValue={getValues().Address}
               {...register('Landmark', {
-                required: 'Missing field',
+                required: 'This field is required',
                 maxLength: {
                   value: 300,
                   message: 'Should be less than 300 characters',
@@ -533,7 +534,7 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
               placeholder="Locality"
               defaultValue={getValues().Address}
               {...register('Locality', {
-                required: 'Missing field',
+                required: 'This field is required',
                 maxLength: {
                   value: 300,
                   message: 'Should be less than 300 characters',
@@ -586,7 +587,7 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
               defaultValue={getValues().state}
               required={true}
               {...register('state', {
-                required: 'Missing field',
+                required: 'This field is required',
               })}
               options={createSelectFieldData(statesList)}
             />
@@ -605,7 +606,7 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
               defaultValue={getValues().District}
               required={true}
               {...register('District', {
-                required: 'Missing field',
+                required: 'This field is required',
               })}
               options={createSelectFieldData(districtsList)}
             />
@@ -678,7 +679,7 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
               error={errors.Pincode?.message}
               defaultValue={getValues().Pincode}
               {...register('Pincode', {
-                required: 'Missing field',
+                required: 'This field is required',
                 pattern: {
                   value: /^[0-9]{6}$/,
                   message: 'Should only contains 6 digits',
@@ -706,7 +707,7 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
               error={errors.telecommunicationURL?.message}
               defaultValue={getValues().telecommunicationURL}
               {...register('telecommunicationURL', {
-                required: 'Missing field',
+                required: 'This field is required',
               })}
             />
           </Grid>
