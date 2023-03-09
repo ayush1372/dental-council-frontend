@@ -5,18 +5,12 @@ import { useSelector } from 'react-redux';
 import IconVerified from '../../../../assets/images/ico-verified.svg';
 
 const ConstantDetails = () => {
-  // const { imr_details } = ConstantDetails || {};
-  // const { nmrIdData } = imr_details || {};
-  // const { personal_details } = ConstantDetails || {};
-  // // const { gender } = personal_details || {};
-  // const { communication_address } = ConstantDetails || {};
-  // const { email, mobile } = communication_address || {};
   const nmrIdData = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.imr_details?.nmr_id
   );
-  const personGender = useSelector(
-    (state) => state?.doctorUserProfileReducer?.personalDetails?.personal_details?.gender
-  );
+  // const personGender = useSelector(
+  //   (state) => state?.doctorUserProfileReducer?.personalDetails?.personal_details?.gender
+  // );
   const emailId = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.communication_address?.email
   );
@@ -54,6 +48,24 @@ const ConstantDetails = () => {
           sm={6}
           md={3}
           lg="auto"
+          xl={2}
+          px={2}
+          mb={{ xs: 1, lg: 0 }}
+        >
+          <Typography variant="body3" color="grey.label">
+            NMR ID
+          </Typography>
+          <Typography variant="subtitle2" color="textPrimary.main">
+            {nmrIdData ? nmrIdData : ''}
+          </Typography>
+        </Grid>
+        {/* <Grid
+          borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
+          item
+          xs={12}
+          sm={6}
+          md={3}
+          lg="auto"
           px={2}
           mb={{ xs: 1, lg: 0 }}
         >
@@ -63,8 +75,8 @@ const ConstantDetails = () => {
           <Typography variant="subtitle2" color="textPrimary.main">
             Submitted
           </Typography>
-        </Grid>
-        <Grid
+        </Grid> */}
+        {/* <Grid
           borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
           item
           xs={12}
@@ -80,8 +92,8 @@ const ConstantDetails = () => {
           <Typography variant="subtitle2" color="textPrimary.main">
             {personGender ? personGender : ''}
           </Typography>
-        </Grid>
-        <Grid
+        </Grid> */}
+        {/* <Grid
           borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
           item
           xs={12}
@@ -98,7 +110,7 @@ const ConstantDetails = () => {
             Verified
             <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
           </Typography>
-        </Grid>
+        </Grid> */}
         <Grid
           borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
           item
