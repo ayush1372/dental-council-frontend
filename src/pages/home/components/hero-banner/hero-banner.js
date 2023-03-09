@@ -20,7 +20,7 @@ export function HeroBanner() {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="h2" color="black" mb={2}>
-              {t(`Ayushmaan Bharat Digital Mission`)}
+              {t(`Ayushman Bharat Digital Mission`)}
             </Typography>
             <Typography variant="h1" color="primary" mb={2}>
               {t('National Medical Register (NMR)')}
