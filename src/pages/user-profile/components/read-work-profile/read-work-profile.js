@@ -20,7 +20,6 @@ import { useSelector } from 'react-redux';
 
 import SuspendLicenseVoluntaryRetirement from '../../../suspend-license-voluntary-retirement';
 import CurrentWorkDetails from '../readable-content/current-work-details';
-// import SpecialDetailsContent from '../readable-content/special-details-content';
 import WorkDetails from '../readable-content/work-details';
 const ReadWorkProfile = ({
   handleBack,
@@ -31,8 +30,9 @@ const ReadWorkProfile = ({
   activeStep,
 }) => {
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
-
-  const { workProfileDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const { workProfileDetails, personalDetails } = useSelector(
+    (state) => state?.doctorUserProfileReducer
+  );
   const [selected, setSelected] = useState('');
   const [confirmationModal, setConfirmationModal] = useState(false);
   const { userActiveTab } = useSelector((state) => state.common);
@@ -156,21 +156,23 @@ const ReadWorkProfile = ({
                     </Button>
 
                     <Menu {...bindMenu(popupState)}>
-                      {loggedInUserType !== 'NMC' && (
+                      {loggedInUserType !== 'NMC' && personalDetails.application_type_id !== 2 && (
                         <MenuItem onClick={selectionChangeHandler} data-my-value={'verify'}>
                           Verify
                         </MenuItem>
                       )}
-                      {loggedInUserType !== 'NMC' && (
+                      {loggedInUserType !== 'NMC' && personalDetails.application_type_id !== 2 && (
                         <MenuItem onClick={selectionChangeHandler} data-my-value={'raise'}>
                           Raise a Query
                         </MenuItem>
                       )}
-                      {loggedInUserType === 'SMC' && loggedInUserType !== 'NMC' && (
-                        <MenuItem onClick={selectionChangeHandler} data-my-value={'forward'}>
-                          Forward
-                        </MenuItem>
-                      )}
+                      {loggedInUserType === 'SMC' &&
+                        loggedInUserType !== 'NMC' &&
+                        personalDetails.application_type_id !== 2 && (
+                          <MenuItem onClick={selectionChangeHandler} data-my-value={'forward'}>
+                            Forward
+                          </MenuItem>
+                        )}
                       <MenuItem onClick={selectionChangeHandler} data-my-value={'reject'}>
                         Reject
                       </MenuItem>
