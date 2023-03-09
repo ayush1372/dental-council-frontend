@@ -22,13 +22,13 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
     qualification_month,
     qualification_year,
     // is_name_change,
-  } = registrationDetails?.[0] || {};
+  } = registrationDetails?.qualification_detail_response_tos?.[0] || {};
 
   const countryName = country?.name || '';
   const stateName = state?.name || '';
   const collegeName = college?.name || '';
   const universityName = university?.name || '';
-  const courseName = course?.name || '';
+  const courseName = course?.course_name || '';
 
   return (
     <Grid container spacing={2} mt={2}>
