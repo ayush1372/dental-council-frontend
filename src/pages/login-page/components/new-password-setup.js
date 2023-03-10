@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { encryptData } from '../../../helpers/functions/common-functions';
 import { setUserPassword } from '../../../store/actions/doctor-registration-actions';
 import { Button, TextField } from '../../../ui/core';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
@@ -14,11 +15,18 @@ const NewPasswordSetup = () => {
   const [showSuccess, setShowSuccess] = useState();
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { hprIdDataDetails } = useSelector((state) => state?.doctorRegistration);
+  // const { hprIdDataDetails } = useSelector((state) => state?.doctorRegistration);
   const registrationNumber = useSelector(
     (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.registration_number
   );
-  let usernamePayLoad = hprIdDataDetails?.data?.hprId?.replace('@hpr.abdm', '');
+  const uniqueHpId = useSelector(
+    (state) => state?.doctorRegistration?.createhprIdData?.data?.hprId
+  );
+  const userHprId = uniqueHpId.replace('@hpr.abdm', '');
+  // const userMobileNumber = useSelector(
+  //   (state) => state?.AadhaarTransactionId?.demographicAuthMobileDetailsData?.data?.mobilen
+  // );
+  // let usernamePayLoad = hprIdDataDetails?.data?.hprId?.replace('@hpr.abdm', '');
   const {
     register,
     handleSubmit,
@@ -34,17 +42,17 @@ const NewPasswordSetup = () => {
   });
   const onSubmit = () => {
     const reqObj = {
-      email: null,
-      mobile: hprIdDataDetails?.data?.mobile,
-      username: usernamePayLoad,
+      // email: null, (not required)
+      username: userHprId,
       registration_number: registrationNumber,
-      password: getValues().password,
+      password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
+      // mobile: userMobileNumber,(not required)
     };
-    alert(reqObj);
     dispatch(setUserPassword(reqObj)).then(() => {
       setShowSuccess(true);
     });
   };
+
   return (
     <Box data-testid="new-password-setup" p={4} bgcolor="white.main" boxShadow="4">
       <Typography mt={2} variant="h2" component="div" textAlign="center" data-testid="Password">
@@ -125,7 +133,7 @@ const NewPasswordSetup = () => {
         <SuccessModal
           open={showSuccess}
           setOpen={() => setShowSuccess(false)}
-          text={`You have been successfully created the ID ${usernamePayLoad} `}
+          text={`Your username ${userHprId} has been successfully created please proceed to set your password `}
           successRegistration={true}
         />
       )}
