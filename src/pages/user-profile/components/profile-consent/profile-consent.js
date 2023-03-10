@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -19,24 +18,6 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
   const personalDetails = useSelector((state) => state?.doctorUserProfileReducer?.personalDetails);
   const eSignResponse = useSelector((state) => state?.doctorUserProfileReducer?.esignDetails?.data);
   const stateData = useSelector((state) => state?.doctorUserProfileReducer);
-  // const workProfileData = useSelector(
-  //   (state) => state?.doctorUserProfileReducer?.workProfileDetails
-  // );
-  // const otherDocAttached = useSelector(
-  //   (state) =>
-  //     state?.doctorUserProfileReducer?.workProfileDetails?.current_work_details[0]
-  //       .current_work_proof.length
-  // );
-  // const degreeCertificate = useSelector(
-  //   (state) =>
-  //     state?.doctorUserProfileReducer?.registrationDetails?.registration_detail_to?.certificate
-  //       .length
-  // );
-  // const namechangeProof = useSelector(
-  //   (state) =>
-  //     state?.doctorUserProfileReducer?.registrationDetails?.registration_detail_to
-  //       ?.name_change_proof.length
-  // );
 
   const [confirmationModal, setConfirmationModal] = useState(false);
 
@@ -85,7 +66,6 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
       });
   };
   function eSignHandler() {
-    console.log('clicked');
     let data = {
       signingPlace: personalDetails?.communication_address?.village?.name,
       nmrDetails: {
@@ -95,8 +75,8 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
           middleName: personalDetails?.personal_details?.middle_name || '',
           lastName: personalDetails?.personal_details?.last_name || '',
           qualification: personalDetails?.personal_details?.first_name || '', //cs-1013: need to change this path when backend fixes done
-          mobileNumber: personalDetails?.personal_details?.email || '',
-          emailId: personalDetails?.personal_details?.mobile || '',
+          mobileNumber: personalDetails?.personal_details?.mobile || '9999999999',
+          emailId: personalDetails?.personal_details?.email || 'mohith2lntinfotech.com',
         },
         nmrPersonalCommunication: {
           address: personalDetails?.communication_address?.address_line1 || '',
@@ -107,17 +87,18 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
           pincode: personalDetails?.communication_address?.pincode || '',
         },
         nmrOfficeCommunication: {
-          // address: workProfileData?.current_work_details[0].address?.address_line1 || '',
-          // country: 'India',
-          // stateUT: workProfileData?.current_work_details[0].address?.state?.name || '',
-          // district: workProfileData?.current_work_details[0].address?.district?.name || '',
-          // city: workProfileData?.current_work_details[0].address?.district?.name || '',
-          // subDistrict: 'string', //cs-1013:need to change this path when backend fixes done*
-          // pincode: workProfileData?.current_work_details[0].address?.pincode || '',
+          //this object paylaod need to send exact path later
+          address: personalDetails?.communication_address?.address_line1 || '',
+          country: 'India',
+          stateUT: personalDetails?.communication_address?.address_line1 || '',
+          district: personalDetails?.communication_address?.address_line1 || '',
+          city: personalDetails?.communication_address?.address_line1 || '',
+          subDistrict: 'Krishna', //cs-1013:need to change this path when backend fixes done*
+          pincode: personalDetails?.communication_address?.address_line1 || '',
         },
-        // isRegCerAttached: namechangeProof > 0 ? 'Yes' : 'No', //cs-1013:need to change this path when backend fixes done*
-        // isDegreeCardAttached: degreeCertificate > 0 ? 'Yes' : 'No', //cs-1013:need to change this path when backend fixes done*
-        // isOtherDocumentAttached: otherDocAttached > 0 ? 'Yes' : 'No', //cs-1013:need to change this path when backend fixes done*
+        isRegCerAttached: 'No', //cs-1013:need to change this path when backend fixes done*
+        isDegreeCardAttached: 'No', //cs-1013:need to change this path when backend fixes done*
+        isOtherDocumentAttached: 'No', //cs-1013:need to change this path when backend fixes done*
       },
     };
     dispatch(getEsignFormDetails(data));
@@ -253,7 +234,12 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
         </Grid>
 
         <div>
-          <form id="formid" target="_blank" method="POST" action={eSignResponse.esp_url}>
+          <form
+            id="formid"
+            target="_blank"
+            method="POST"
+            action="https://es-staging.cdac.in/esignlevel2/2.1/form/signdoc"
+          >
             <input
               type="hidden"
               id="eSignRequest"
