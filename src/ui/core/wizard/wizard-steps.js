@@ -48,7 +48,7 @@ const WizardSteps = ({ activeStep, steps, progress }) => {
   return (
     <Container spacing={4} disableGutters backgroundColor="white">
       {progress !== false ? (
-        <Box mb={1} sx={{ width: '100%' }}>
+        <Box mb={1} sx={{ width: '30%' }}>
           <LinearProgressWithLabel activeStep={activeStep} value={progress} pb={2} />
         </Box>
       ) : (
