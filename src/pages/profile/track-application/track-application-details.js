@@ -2,7 +2,13 @@ import { Box, Button, Divider, Grid, Typography } from '@mui/material';
 
 import { monthsData } from '../../../constants/common-data';
 import Stepper from '../../../shared/stepper/stepper';
-const wizardSteps = ['Application Submitted', 'At SMC', 'At NMC', 'Application Approved/Rejected'];
+const wizardSteps = [
+  'Application Submitted',
+  'Pending At SMC',
+  'Pending At College',
+  'Pending At NMC',
+  // 'Application Approved/Rejected',
+];
 export function TrackApplicationDetails({
   showViewProfile,
   setShowTrackApplicationTable,
