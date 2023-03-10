@@ -73,10 +73,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const countryNationalityId = country_nationality?.id;
   const scheduleId = schedule?.id;
   const countryId = country?.id;
-  const stateId = state?.id;
-  const districtId = district?.id;
-  const subdistrictId = sub_district?.id;
-  const citiesId = village?.id;
+  const stateId = isSameAddress ? personalDetails?.kyc_address?.state?.id : state?.id;
+  const districtId = isSameAddress ? personalDetails?.kyc_address?.district?.id : district?.id;
+  const subdistrictId = isSameAddress
+    ? personalDetails?.kyc_address?.sub_district?.id
+    : sub_district?.id;
+  const citiesId = isSameAddress ? personalDetails?.kyc_address?.village?.id : village?.id;
 
   const {
     formState: { errors },
@@ -628,8 +630,21 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 checked={isSameAddress}
                 error={errors.Address?.message}
                 onChange={(e) => {
-                  // dispatch(getPersonalDetails(personalDetails?.hp_profile_id));
                   setIsSameAddress(e.target.checked);
+                  if (e.target.checked) {
+                    setValue('State', personalDetails?.kyc_address?.state?.id);
+                    setValue('District', personalDetails?.kyc_address?.district?.id);
+                    setValue('SubDistrict', personalDetails?.kyc_address?.sub_district?.id);
+                    setValue('Area', personalDetails?.kyc_address?.village?.id);
+                  } else {
+                    setValue('State', personalDetails?.communication_address?.state?.id);
+                    setValue('District', personalDetails?.communication_address?.District?.id);
+                    setValue(
+                      'SubDistrict',
+                      personalDetails?.communication_address?.sub_district?.id
+                    );
+                    setValue('Area', personalDetails?.communication_address?.village?.id);
+                  }
                 }}
               />
               <Typography component="div" mt={1} variant="body7" color="textPrimary.main">
@@ -811,6 +826,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 error={errors.State?.message}
                 name="State"
                 defaultValue={getValues().State}
+                value={getValues().State}
                 required={true}
                 disabled={isSameAddress}
                 sx={{
@@ -841,12 +857,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 fullWidth
                 error={errors.District?.message}
                 name="District"
-                defaultValue={
-                  isSameAddress ? personalDetails?.kyc_address?.district?.id : getValues().District
-                }
-                value={
-                  isSameAddress ? personalDetails?.kyc_address?.district?.id : getValues().District
-                }
+                defaultValue={getValues().District}
+                value={getValues().District}
                 required={true}
                 disabled={isSameAddress}
                 sx={{
@@ -885,16 +897,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                     backgroundColor: isSameAddress ? 'grey2.main' : '',
                   },
                 }}
-                defaultValue={
-                  isSameAddress
-                    ? personalDetails?.kyc_address?.sub_district?.name
-                    : getValues().SubDistrict
-                }
-                value={
-                  isSameAddress
-                    ? personalDetails?.kyc_address?.sub_district?.id
-                    : getValues().SubDistrict
-                }
+                defaultValue={getValues().SubDistrict}
+                value={getValues().SubDistrict}
                 {...register('SubDistrict', {
                   required: 'District is required',
                 })}
@@ -925,14 +929,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                   },
                 }}
                 name="Area"
-                defaultValue={
-                  isSameAddress ? personalDetails?.kyc_address?.sub_district?.id : getValues().Area
-                }
-                value={
-                  isSameAddress
-                    ? personalDetails?.kyc_address?.sub_district?.id
-                    : getValues().SubDistrict
-                }
+                defaultValue={getValues().Area}
+                value={getValues().Area}
                 disabled={isSameAddress}
                 required={true}
                 {...register('Area', {
