@@ -123,3 +123,7 @@ export const workSheetTheme = {
   fgColor: { argb: 'FFFFFF00' },
   bgColor: { argb: '#ffffcc00' },
 };
+
+export const replaceString = (original = '', replacement = '', withReplace = '') => {
+  return original.replace(replacement, withReplace);
+};

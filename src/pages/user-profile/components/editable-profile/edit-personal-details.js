@@ -151,6 +151,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       Street: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? street : '',
     },
   });
+
   const fetchDistricts = (stateId) => {
     if (stateId) {
       dispatch(getDistrictList(stateId))
@@ -587,25 +588,27 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               }}
             />
           </Grid>
-          <Grid item xs={12} md={4}>
-            <Typography color="inputTextColor.main" variant="body1">
-              Schedule
-              <Typography component="span" color="error.main">
-                *
+          {false && (
+            <Grid item xs={12} md={4}>
+              <Typography color="inputTextColor.main" variant="body1">
+                Schedule
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
               </Typography>
-            </Typography>
-            <Select
-              fullWidth
-              error={errors.Schedule?.message}
-              name="Schedule"
-              defaultValue={getValues().Schedule}
-              required={true}
-              {...register('Schedule', {
-                required: 'Schedule is required',
-              })}
-              options={createSelectFieldData(schedules)}
-            />
-          </Grid>
+              <Select
+                fullWidth
+                error={errors.Schedule?.message}
+                name="Schedule"
+                defaultValue={getValues().Schedule}
+                required={true}
+                {...register('Schedule', {
+                  required: 'Schedule is required',
+                })}
+                options={createSelectFieldData(schedules)}
+              />
+            </Grid>
+          )}
         </Grid>
 
         {/*Layer 2*/}
@@ -861,14 +864,14 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 name="District"
                 defaultValue={
                   personalDetails?.communication_address?.is_same_address
-                    ? personalDetails?.kyc_address?.district?.name
+                    ? personalDetails?.kyc_address?.district?.id
                     : getValues().District
                 }
                 required={true}
                 {...register('District', {
                   required: 'District is required',
                 })}
-                options={createSelectFieldData(districtsList, 'iso_code')}
+                options={createSelectFieldData(districtsList, 'id')}
                 MenuProps={{
                   style: {
                     maxHeight: 250,
@@ -892,10 +895,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 placeholder="Sub District"
                 defaultValue={
                   personalDetails?.communication_address?.is_same_address
-                    ? personalDetails?.kyc_address?.sub_district?.name
+                    ? personalDetails?.kyc_address?.sub_district?.id
                     : getValues().SubDistrict
                 }
-                options={createSelectFieldData(subDistrictList, 'iso_code')}
+                options={createSelectFieldData(subDistrictList, 'id')}
                 MenuProps={{
                   style: {
                     maxHeight: 250,
