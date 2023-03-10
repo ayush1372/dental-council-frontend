@@ -132,8 +132,12 @@ function FetchDoctorDetails() {
         ).then((response) => {
           console.log('resp kyc', response.data.kyc_fuzzy_match_status);
           if (response.data.kyc_fuzzy_match_status === 'Fail') {
-            console.log('resp kyc1 injected in loop');
+            console.log(
+              'resp kyc1 injected in loop',
+              response.data.kyc_fuzzy_match_status === 'Fail'
+            );
             setShowRejectPopup(true);
+            setShowSuccess(true);
           }
         });
       });
@@ -244,6 +248,13 @@ function FetchDoctorDetails() {
   return (
     <>
       <ToastContainer></ToastContainer>
+      {showRejectPopup && (
+        <SuccessModalPopup
+          open={showRejectPopup}
+          setOpen={() => setShowRejectPopup(false)}
+          text="Your KYC Details are not matching"
+        />
+      )}
 
       {showCreateHprIdPage ? (
         <CreateHprId />
@@ -488,7 +499,6 @@ function FetchDoctorDetails() {
               </Box>
             </Box>
           </Container>
-          {showRejectPopup && <SuccessModalPopup text="Your KYC Details are not matching" />}
 
           {showSuccess && <SuccessModalPopup />}
         </>

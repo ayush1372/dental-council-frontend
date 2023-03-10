@@ -7,6 +7,8 @@ import { getCardCount } from '../../store/actions/dashboard-actions';
 import { Button } from '../../ui/core';
 
 export default function SuccessModalPopup({ open, setOpen, text, handleClose, SuspensionCall }) {
+  // eslint-disable-next-line no-console
+  console.log('popup', open, setOpen, text, handleClose);
   const handleCloseModal = () => {
     setOpen(false);
   };
