@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import SideDrawerList from '../../../../shared/sidebar-drawer/sidebar-drawer-list';
 import ProfileImage from '../profile-image/profile-image';
 
-const drawerWidth = 200;
+const drawerWidth = 240;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
