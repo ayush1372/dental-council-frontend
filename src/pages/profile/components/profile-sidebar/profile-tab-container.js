@@ -1,4 +1,3 @@
-// import { useTheme } from '@emotion/react';
 import { Box, Typography, useTheme } from '@mui/material';
 import { useSelector } from 'react-redux';
 
@@ -10,12 +9,7 @@ export default function ProfileTabContainer({ DrawerOptions }) {
   return (
     <Box
       sx={{
-        width: '69%',
-        // bgcolor:
-        //   (userActiveTab === 'my-profile' && loggedInUserType === 'Doctor') ||
-        //   (userActiveTab === 'New-doctor-registration' && loggedInUserType === 'SMC')
-        //     ? 'none'
-        //     : `${theme.palette.white.main}`,
+        width: '100%',
         flex: 1,
         borderRadius: '8px',
       }}
@@ -36,8 +30,6 @@ export default function ProfileTabContainer({ DrawerOptions }) {
                   ? ''
                   : `${theme.palette.white.main}`
               }
-              // py={2}
-              // px={3}
               minHeight={'550px'}
               key={index}
             >
