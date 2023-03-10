@@ -10,6 +10,7 @@ const initialState = {
   hprIdDataDetails: { data: [], isLoading: Boolean(true), isError: false },
   storeMobileDetailsData: { data: [], isLoading: Boolean(true), isError: false },
   typeOfOtpDetailsData: { data: [], isLoading: Boolean(true), isError: false },
+  getkycDetailsData: { data: [], isLoading: Boolean(true), isError: false },
 };
 
 export const registrationData = createSlice({
@@ -18,6 +19,9 @@ export const registrationData = createSlice({
   reducers: {
     smcRegistrationDetail: (state, action) => {
       state.getSmcRegistrationDetails = action.payload;
+    },
+    getkycDetails: (state, action) => {
+      state.getkycDetailsData = action.payload;
     },
     getMobileOtp: (state, action) => {
       state.getMobileOtpDetails = action.payload;
@@ -53,6 +57,7 @@ export const {
   sendResetPasswordLinkDetails,
   createhprIdData,
   storeMobileDetails,
+  getkycDetails,
 } = registrationData.actions;
 
 export default registrationData.reducer;

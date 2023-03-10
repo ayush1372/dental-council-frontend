@@ -19,6 +19,7 @@ const DoctorRegistrationWelcomePage = () => {
     getValues,
     setValue,
     clearErrors,
+    reset,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
@@ -45,7 +46,9 @@ const DoctorRegistrationWelcomePage = () => {
 
     setIsNext(true);
   };
-
+  const onReset = () => {
+    reset();
+  };
   return (
     <Box>
       {isNext === false ? (
@@ -131,6 +134,7 @@ const DoctorRegistrationWelcomePage = () => {
                   Submit
                 </Button>
                 <Button
+                  onClick={onReset}
                   variant="outlined"
                   sx={{
                     width: '105px',

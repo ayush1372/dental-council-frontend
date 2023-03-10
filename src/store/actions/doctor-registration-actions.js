@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { API, API_HPRID } from '../../api/api-endpoints';
 import { accesstokenHprId } from '../../constants/common-data';
 import { GET, POST } from '../../constants/requests';
@@ -5,6 +6,7 @@ import { gatewayApiUseAxiosCall, hpIdUseAxiosCall, useAxiosCall } from '../../ho
 import {
   createhprIdData,
   getAccessToken,
+  getkycDetails,
   getMobileOtp,
   hpIdExistsDetails,
   hprIdSuggestionsDetails,
@@ -16,13 +18,14 @@ import {
 import { typeOfOtp } from '../reducers/user-aadhaar-verify-reducer';
 
 export const fetchSmcRegistrationDetails = (registrationData) => async (dispatch) => {
+  console.log('hi data', registrationData);
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,
       url: API.doctorRegistration.smcRegistrationDetail
         .replace('{smcId}', registrationData?.smcId)
         .replace('{registrationNumber}', registrationData?.registrationNumber),
-
+      headers: { 'Content-Type': 'application/json' },
       data: registrationData,
     })
       .then((response) => {
@@ -43,6 +46,23 @@ export const getSessionAccessToken = (body) => async (dispatch) => {
     })
       .then((response) => {
         dispatch(getAccessToken(response));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+export const checkKycDetails = (body) => async (dispatch) => {
+  console.log('action body', body);
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.kyc.kycCheck.replace('{registrationNumber}', body.registrationNumber),
+      data: body,
+    })
+      .then((response) => {
+        dispatch(getkycDetails(response));
         return resolve(response);
       })
       .catch((error) => {
