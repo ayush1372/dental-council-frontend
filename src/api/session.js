@@ -1,6 +1,6 @@
 import successToast from '../ui/core/toaster';
 
-export const expireSession = (msg = 'Session Expired!') => {
+export const expireSession = (msg) => {
   successToast(msg, 'auth-error', 'error', 'top-center');
   setTimeout(() => {
     window.location.href = '/';

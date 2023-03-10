@@ -1,88 +1,53 @@
-import { useEffect, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { useIdleTimer } from 'react-idle-timer';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import ConfirmationModal from '../../shared/common-modals/confirmation-modal';
-import { refreshTokenAction } from '../../store/actions/login-action';
 import { logout, resetCommonReducer } from '../../store/reducers/common-reducers';
+import { millisecondToDate } from '../functions/common-functions';
 
 export function IdleTimer() {
   // Set timeout values
-  const timeout = 600000; // 10 mins
-  const promptTimeout = 1000 * 30;
   const navigate = useNavigate();
   const dispatch = useDispatch();
   // Modal open state
   const [open, setOpen] = useState(false);
+  const timerId = useRef(null);
 
   // Time before idle
-  const [remaining, setRemaining] = useState(0);
-
-  const onPrompt = () => {
-    // onPrompt will be called after the timeout value is reached
-    // In this case 30 minutes. Here you can open your prompt.
-    // All events are disabled while the prompt is active.
-    // If the user wishes to stay active, call the `reset()` method.
-    // You can get the remaining prompt time with the `getRemainingTime()` method,
-
-    if (remaining) {
-      logoutUser();
-    } else {
-      setOpen(true);
-      setRemaining(promptTimeout);
-      reset();
-    }
-  };
 
   const onIdle = () => {
     // onIdle will be called after the promptTimeout is reached.
     // In this case 30 seconds. Here you can close your prompt and
     // perform what ever idle action you want such as log out your user.
     // Events will be rebound as long as `stopOnMount` is not set.
-    setOpen(false);
-    setRemaining(0);
+    setOpen(true);
+
+    const refreshToken = localStorage.getItem('refreshtoken');
+
+    if (refreshToken) {
+      let timer = millisecondToDate(refreshToken) - new Date().getTime();
+
+      // if user is idle till the refresh token expires, then it automatically logout
+      timerId.current = setTimeout(() => {
+        handleLogout();
+      }, timer);
+    }
   };
 
-  const onActive = () => {
-    // onActive will only be called if `reset()` is called while `isPrompted()`
-    // is true. Here you will also want to close your modal and perform
-    // any active actions.
-    setOpen(false);
-    setRemaining(0);
-  };
-
-  const { activate, reset } = useIdleTimer({
-    timeout,
-    promptTimeout,
-    onPrompt,
-    onIdle,
-    onActive,
+  useIdleTimer({
+    timeout: 1000 * 60 * 30,
+    onIdle: onIdle,
   });
 
   const handleStillHere = () => {
-    setRemaining(0);
-    activate();
-    refreshToken();
-    reset();
     setOpen(false);
   };
-
-  const refreshToken = () => {
-    dispatch(refreshTokenAction());
-  };
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      dispatch(refreshTokenAction());
-    }, 1080000); // 18 mins
-    return () => clearTimeout(timer);
-  }, []);
 
   const handleLogout = () => {
     setOpen(false);
-    activate();
     logoutUser();
   };
 
