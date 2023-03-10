@@ -74,8 +74,6 @@ export const Login = ({ loginName }) => {
   };
 
   const getCommonData = (response) => {
-    // dispatch(getRegistrationCouncilList());
-    // dispatch(getUniversitiesList());
     const userType = userGroupType(response?.data?.user_group_id);
 
     if (userType === 'College Dean') {
@@ -270,12 +268,10 @@ export const Login = ({ loginName }) => {
               fullWidth
               label={'User ID'}
               placeholder={'Please enter your User ID'}
-              // inputProps={{ maxLength: 12 }}
               name={'userID'}
               {...register('userID', {
                 required: 'Please enter an User ID',
                 pattern: {
-                  //value: /^\d{12}$/i,
                   message: 'Please enter an valid User ID',
                 },
               })}
@@ -311,7 +307,11 @@ export const Login = ({ loginName }) => {
             />
             {otpFormEnabled && (
               <Box mt={2}>
-                <Typography variant="body1">We just sent an OTP on your Mobile Number.</Typography>
+                <Typography variant="body1">
+                  {' '}
+                  We just sent an OTP on your Mobile Number{' '}
+                  {getValues().mobileNo.replace(/^.{6}/g, 'XXXXXX')}.
+                </Typography>
                 {otpform}
               </Box>
             )}

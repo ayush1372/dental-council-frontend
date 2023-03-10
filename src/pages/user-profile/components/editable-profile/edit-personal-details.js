@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
-import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
+// import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
 import {
   getCitiesList,
   getDistrictList,
@@ -28,10 +28,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const loggedInUserType = useSelector((state) => state?.common?.loggedInUserType);
   const { loginData } = useSelector((state) => state?.loginReducer);
 
+  // eslint-disable-next-line no-unused-vars
   const { statesList, countriesList, districtsList, subDistrictList, citiesList, languagesList } =
     useSelector((state) => state?.common);
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
 
+  // eslint-disable-next-line no-unused-vars
   const [languages, setLanguages] = useState([]);
 
   const { personal_details, communication_address, imr_details } = personalDetails || {};
@@ -303,10 +305,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     setValue(event.target.name, event.target.value, true);
   };
 
-  const handleLanguageSpokenChange = (name, value) => {
-    setValue(name, value, true);
-    setLanguages([...value]);
-  };
+  //Author: Mahalingam V S
+  // Reason: As suggestion given in CEO meeting.
+  // Date:09/03/2023
+  // const handleLanguageSpokenChange = (name, value) => {
+  //   setValue(name, value, true);
+  //   setLanguages([...value]);
+  // };
 
   return (
     <Box
@@ -568,6 +573,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               })}
             />
           </Grid>
+
+          {/* 
+            Author: Mahalingam V S
+            Reason: As suggestion given in CEO meeting.
+            Date:09/03/2023
           <Grid item xs={12} md={4}>
             <Typography variant="body1" color="inputTextColor.main">
               Language Spoken
@@ -586,7 +596,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 handleLanguageSpokenChange('LanguageSpoken', value);
               }}
             />
-          </Grid>
+          </Grid> */}
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
               Schedule
@@ -861,14 +871,14 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 name="District"
                 defaultValue={
                   personalDetails?.communication_address?.is_same_address
-                    ? personalDetails?.kyc_address?.district?.name
+                    ? personalDetails?.kyc_address?.district?.id
                     : getValues().District
                 }
                 required={true}
                 {...register('District', {
                   required: 'District is required',
                 })}
-                options={createSelectFieldData(districtsList, 'iso_code')}
+                options={createSelectFieldData(districtsList)}
                 MenuProps={{
                   style: {
                     maxHeight: 250,
@@ -892,10 +902,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 placeholder="Sub District"
                 defaultValue={
                   personalDetails?.communication_address?.is_same_address
-                    ? personalDetails?.kyc_address?.sub_district?.name
+                    ? personalDetails?.kyc_address?.sub_district?.id
                     : getValues().SubDistrict
                 }
-                options={createSelectFieldData(subDistrictList, 'iso_code')}
+                options={createSelectFieldData(subDistrictList)}
                 MenuProps={{
                   style: {
                     maxHeight: 250,
