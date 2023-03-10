@@ -1,30 +1,31 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Box, Container, InputAdornment, Link, TextField, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-import { verboseLog } from '../../../config/debug';
+// import { verboseLog } from '../../../config/debug';
 import { UniqueUserNameForDoctor } from '../../../constants/common-data';
-import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
+// import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import {
   createUniqueHprId,
-  sendResetPasswordLink,
+  // sendResetPasswordLink,
 } from '../../../store/actions/doctor-registration-actions';
 import { Button } from '../../../ui/core';
 
 const UniqueUserNameForDoctorRegistration = () => {
   const dispatch = useDispatch();
-  const [showSuccess, setShowSuccess] = useState(false);
+  // const [showSuccess, setShowSuccess] = useState(false);
   const aadhaarTxnId = useSelector((state) => state?.AadhaarTransactionId?.aadharData?.data?.txnId);
-  const userEmail = useSelector(
-    (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.email_id
-  );
-  const registrationNumber = useSelector(
-    (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.registration_number
-  );
+  // const userEmail = useSelector(
+  //   (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.email_id
+  // );
+  // const registrationNumber = useSelector(
+  //   (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.registration_number
+  // );
   const firstSuggestion = useSelector(
     (state) => state?.doctorRegistration?.hprIdSuggestionsDetailsData?.data[0]
   );
@@ -34,11 +35,13 @@ const UniqueUserNameForDoctorRegistration = () => {
   const thirdSuggestion = useSelector(
     (state) => state?.doctorRegistration?.hprIdSuggestionsDetailsData?.data[2]
   );
-  const userMobileNumber = useSelector(
-    (state) => state?.doctorRegistration?.storeMobileDetailsData?.mobile
-  );
+  // const userMobileNumber = useSelector(
+  //   (state) => state?.doctorRegistration?.storeMobileDetailsData?.mobile
+  // );
   const theme = useTheme();
-  const [isNext, setIsNext] = useState(false);
+  // const [isNext, setIsNext] = useState(false);
+  const navigate = useNavigate();
+
   const {
     register,
     getValues,
@@ -54,24 +57,25 @@ const UniqueUserNameForDoctorRegistration = () => {
 
   const onSubmit = () => {
     let data = {
-      email: userEmail,
+      email: null,
       txnId: aadhaarTxnId,
       hprId: `${getValues().UniqueUserNameForDoctor}@hpr.abdm`,
     };
     dispatch(createUniqueHprId(data)).then(() => {
-      let data = {
-        email: userEmail,
-        mobile: userMobileNumber,
-        username: `${getValues().UniqueUserNameForDoctor}@hpr.abdm`,
-        registration_number: registrationNumber,
-      };
-      dispatch(sendResetPasswordLink(data)).then(() => {
-        setShowSuccess(true);
-      });
-      setIsNext(true);
+      navigate(`/reset-password`);
+      // let data = {
+      //   email: userEmail,
+      //   mobile: userMobileNumber,
+      //   username: `${getValues().UniqueUserNameForDoctor}@hpr.abdm`,
+      //   registration_number: registrationNumber,
+      // };
+      // dispatch(sendResetPasswordLink(data)).then(() => {
+      // setShowSuccess(true);
+      // });
+      // setIsNext(true);
     });
   };
-  verboseLog(isNext);
+  // verboseLog(isNext);
 
   return (
     <Box>
@@ -160,7 +164,7 @@ const UniqueUserNameForDoctorRegistration = () => {
                   backgroundColor: theme.palette.secondary.main,
                 }}
               >
-                Create
+                Continue to set your password
               </Button>
               <Button
                 variant="outlined"
@@ -176,15 +180,15 @@ const UniqueUserNameForDoctorRegistration = () => {
           </Box>
         </Container>
       </Box>
-      {showSuccess && (
+      {/* {showSuccess && (
         <SuccessModalPopup
           open={showSuccess}
           setOpen={() => showSuccess(false)}
           text={
-            'Your username has been successfully created. A link to create your password has been sent to the registered mobile number.'
+            `Your HPR ID has been created ${getValues().hprId} please continue to to set your password.`
           }
         />
-      )}
+      )} */}
     </Box>
   );
 };
