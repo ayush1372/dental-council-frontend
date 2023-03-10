@@ -38,7 +38,7 @@ const authInterceptors = (error) => {
       } else {
         // alert("ERR_SESSION: Session error. Please clear cache or use private/incognito window.");
         // expireSession("ERR_SESSION: Session error. Please clear cache or use private/incognito window.");
-        expireSession('ERR_SESSION: Session expired.');
+        expireSession(error?.response?.data?.message);
         return Promise.reject(error?.response);
       }
     } else if (error?.response?.status >= 500) {

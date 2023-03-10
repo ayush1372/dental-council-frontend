@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
-import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
+// import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
 import {
   getCitiesList,
   getDistrictList,
@@ -28,10 +28,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const loggedInUserType = useSelector((state) => state?.common?.loggedInUserType);
   const { loginData } = useSelector((state) => state?.loginReducer);
 
+  // eslint-disable-next-line no-unused-vars
   const { statesList, countriesList, districtsList, subDistrictList, citiesList, languagesList } =
     useSelector((state) => state?.common);
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
 
+  // eslint-disable-next-line no-unused-vars
   const [languages, setLanguages] = useState([]);
 
   const { personal_details, communication_address, imr_details } = personalDetails || {};
@@ -304,10 +306,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     setValue(event.target.name, event.target.value, true);
   };
 
-  const handleLanguageSpokenChange = (name, value) => {
-    setValue(name, value, true);
-    setLanguages([...value]);
-  };
+  //Author: Mahalingam V S
+  // Reason: As suggestion given in CEO meeting.
+  // Date:09/03/2023
+  // const handleLanguageSpokenChange = (name, value) => {
+  //   setValue(name, value, true);
+  //   setLanguages([...value]);
+  // };
 
   return (
     <Box
@@ -569,6 +574,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               })}
             />
           </Grid>
+
+          {/*Author: Mahalingam V S
+            Reason: As suggestion given in CEO meeting.
+            Date:09/03/2023
           <Grid item xs={12} md={4}>
             <Typography variant="body1" color="inputTextColor.main">
               Language Spoken
@@ -587,7 +596,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 handleLanguageSpokenChange('LanguageSpoken', value);
               }}
             />
-          </Grid>
+          </Grid>*/}
           {false && (
             <Grid item xs={12} md={4}>
               <Typography color="inputTextColor.main" variant="body1">
@@ -663,30 +672,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 Communication Address*
               </Typography>
             </Grid>
-            {/* <Grid item xs={12} md={4}>
-              <Typography variant="subtitle2" color="inputTextColor.main">
-                Your Name
-                <Typography component="span" color="error.main">
-                  *
-                </Typography>
-              </Typography>
-              <TextField
-                variant="outlined"
-                name={'Name'}
-                placeholder="Your name"
-                required={true}
-                fullWidth
-                defaultValue={getValues().Name}
-                {...register('Name', {
-                  required: 'Name is Required',
-                  maxLength: {
-                    value: 100,
-                    message: 'Length should be less than 100.',
-                  },
-                })}
-                error={errors.Name?.message}
-              />
-            </Grid> */}
             <Box p={2} display="flex">
               <Checkbox
                 defaultChecked={personalDetails?.communication_address?.is_same_address}
