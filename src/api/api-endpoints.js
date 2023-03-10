@@ -57,10 +57,14 @@ export const API = {
   smc: {
     getSMCProfileData: 'api/v1/abdm/nmr/smc/user/{id}',
   },
+  kyc: {
+    kycCheck: 'api/v1/abdm/nmr/health-professional/{registrationNumber}/kyc',
+  },
   doctorRegistration: {
     smcRegistrationDetail:
       'api/v1/abdm/nmr/health-professional?smcId={smcId}&registrationNumber={registrationNumber}',
     passwordLink: 'api/v1/abdm/nmr/user/password-link',
+    setUserPassword: 'api/v1/abdm/nmr/health-professional/user',
   },
   nbe: {
     getNBEProfileData: 'api/v1/abdm/nmr/nbe/user/{id}',
@@ -83,5 +87,6 @@ export const API_HPRID = {
     generateMobileOtp: 'api/v1/registration/aadhaar/generateMobileOTP',
     verifyMobileOtp: '/api/v1/registration/aadhaar/verifyMobileOTP',
     createHprId: 'api/v1/registration/aadhaar/createHprIdWithPreVerified',
+    demographicAuthMobile: 'api/v1/registration/aadhaar/demographicAuthViaMobile',
   },
 };

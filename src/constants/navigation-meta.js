@@ -115,7 +115,7 @@ const NAV_META = [
     component: 'screen-reader',
   },
   {
-    path: 'reset-password/:request_id',
+    path: 'reset-password', ////:request_id',
     title: 'Reset Password',
     component: 'reset-password',
   },

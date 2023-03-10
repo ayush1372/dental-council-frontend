@@ -94,28 +94,84 @@ export default function ApplicationStepper({ activeStep = 1, steps, selectedRowD
       </Grid>
       <Grid item container>
         <Grid item xs={8} md={3}>
-          <Typography variant="body3" color="grey.label">
+          <Typography
+            variant="body3"
+            color="grey.label"
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
             {new Date(created_at?.value).toDateString()}
           </Typography>
-          <Chip type={doctor_status?.value.toLowerCase()} label={doctor_status?.value} />
+          <Grid
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            <Chip type={doctor_status?.value.toLowerCase()} label={doctor_status?.value} />
+          </Grid>
         </Grid>
         <Grid item xs={8} md={3}>
-          <Typography variant="body3" color="grey.label">
-            SMC will verify the applcation and take action
+          <Typography
+            variant="body3"
+            color="grey.label"
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            SMC will verify the applcation and take action.
           </Typography>
-          <Chip type={smc_status?.value.toLowerCase()} label={smc_status?.value} sx={{ ml: 1 }} />
+          <Grid
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            <Chip type={smc_status?.value.toLowerCase()} label={smc_status?.value} sx={{ ml: 1 }} />
+          </Grid>
         </Grid>
         <Grid item xs={8} md={3}>
-          <Typography variant="body3" color="grey.label">
-            NMC will verify the applcation and take action
+          <Typography
+            variant="body3"
+            color="grey.label"
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            College will verify the application and take action.
           </Typography>
-          <Chip type={nmc_status?.value.toLowerCase()} label={nmc_status?.value} sx={{ ml: 1 }} />
+          <Grid
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            <Chip type={nmc_status?.value.toLowerCase()} label={nmc_status?.value} sx={{ ml: 3 }} />
+          </Grid>
         </Grid>
         <Grid item xs={8} md={3}>
-          <Typography variant="body3" color="grey.label">
-            Application can be approved or rejected
+          <Typography
+            variant="body3"
+            color="grey.label"
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            NMC will verify the Application and take action.
           </Typography>
-          <Chip type="pending" label="Pending" sx={{ ml: 1 }} />
+          <Grid
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          >
+            <Chip type="pending" label="Pending" sx={{ ml: 1 }} />
+          </Grid>
         </Grid>
       </Grid>
     </Grid>
