@@ -9,7 +9,7 @@ export default function ProfileTabContainer({ DrawerOptions }) {
   return (
     <Box
       sx={{
-        width: '100%',
+        width: '69%',
         flex: 1,
         borderRadius: '8px',
       }}
