@@ -149,7 +149,12 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
   const fetchUpdateDoctorRegistrationDetails = (finalResult, moveToNext = false) => {
     const formData = new FormData();
-    formData.append('data', JSON.stringify(finalResult));
+
+    const doctorRegistrationDetailsJson = JSON.stringify(finalResult);
+    const doctorRegistrationDetailsBlob = new Blob([doctorRegistrationDetailsJson], {
+      type: 'application/json',
+    });
+    formData.append('data', doctorRegistrationDetailsBlob);
     formData.append('degreeCertificate', Object.values(qualificationFilesData)?.[0]?.[0].file);
     formData.append('registrationCertificate', registrationFileData[0].file);
     dispatch(
