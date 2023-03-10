@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Typography } from '@mui/material';
+import { Box, Button, Container, Grid, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 import BannerImage from '../../../../assets/images/hero-banner-image.png';
@@ -30,7 +30,11 @@ export function HeroBanner() {
                 `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages.`
               )}
             </Typography>
-            <Typography>(This data is for sample purposes only.)</Typography>
+            <Typography component="div">(This data is for sample purposes only.)</Typography>
+
+            <Button variant="contained" color="secondary" sx={{ margin: '16px 0 32px' }}>
+              {t('Login/Register as Doctor')}
+            </Button>
           </Grid>
         </Grid>
       </Container>

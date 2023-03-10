@@ -11,11 +11,11 @@ import { useSelector } from 'react-redux';
 import SideDrawerList from '../../../../shared/sidebar-drawer/sidebar-drawer-list';
 import ProfileImage from '../profile-image/profile-image';
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
 const openedMixin = (theme) => ({
   width: drawerWidth,
-  [theme.breakpoints.up('lg')]: {
+  [theme.breakpoints.up('xl')]: {
     width: 255,
   },
   backgroundColor: `${theme.palette.white.main}`,
@@ -54,7 +54,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
     width: drawerWidth,
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up('xl')]: {
       width: 320,
     },
     flexShrink: 0,

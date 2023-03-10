@@ -264,6 +264,7 @@ export const Login = ({ loginName }) => {
         {selectedLoginOption === 'userName' ? (
           <>
             <TextField
+              sx={{ mb: 2 }}
               required
               fullWidth
               label={'User ID'}
