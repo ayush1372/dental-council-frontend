@@ -235,42 +235,23 @@ const EditQualificationDetails = ({
             fullWidth
             error={errors?.qualification?.[index]?.qualification?.message}
             name="Qualification"
-            label="Name of the degree or diploma obtained"
-            defaultValue={fields[index].qualification}
+            label="Name of the Degree"
+            defaultValue={'MBBS - Bachelor of Medicine and Bachelor of Surgery '}
             required={true}
             {...register(`qualification[${index}].qualification`, {
               required: 'degree or diploma is required',
             })}
-            options={createSelectFieldData(coursesList.data) || []}
-            MenuProps={{
-              style: {
-                maxHeight: 250,
-                maxWidth: 130,
-              },
-            }}
-          />
-          {/* )} */}
-        </Grid>
-        <Grid item xs={12} md={3} xl={4}>
-          {/* {getValues()[qualification[1]] !== undefined && ( */}
-          <Select
-            fullWidth
-            error={errors?.qualification?.[index]?.country?.message}
-            name="country"
-            label="Country name"
-            defaultValue={fields[index].country}
-            required={true}
-            {...register(`qualification[${index}].country`, {
-              required: 'country is Required',
-            })}
+            disabled={qualificationfrom === 'International' ? false : true}
             options={
-              countriesList?.length > 0
-                ? createSelectFieldData(
-                    countriesList?.filter(function (item) {
-                      return item.name === 'India';
-                    }, 'id')
-                  )
-                : []
+              qualificationfrom === 'International'
+                ? createSelectFieldData(coursesList.data)
+                : [
+                    {
+                      label: 'MBBS - Bachelor of Medicine and Bachelor of Surgery ',
+                      value: 'MBBS - Bachelor of Medicine and Bachelor of Surgery ',
+                      id: '69',
+                    },
+                  ]
             }
             MenuProps={{
               style: {
@@ -281,6 +262,39 @@ const EditQualificationDetails = ({
           />
           {/* )} */}
         </Grid>
+        {qualificationfrom === 'International' && (
+          <Grid item xs={12} md={3} xl={4}>
+            {/* {getValues()[qualification[1]] !== undefined && ( */}
+            <Select
+              fullWidth
+              error={errors?.qualification?.[index]?.country?.message}
+              name="country"
+              label="Country name"
+              defaultValue={fields[index].country}
+              required={true}
+              {...register(`qualification[${index}].country`, {
+                required: 'country is Required',
+              })}
+              options={
+                countriesList?.length > 0
+                  ? createSelectFieldData(
+                      countriesList?.filter(function (item) {
+                        return item.name === 'India';
+                      }, 'id')
+                    )
+                  : []
+              }
+              MenuProps={{
+                style: {
+                  maxHeight: 250,
+                  maxWidth: 130,
+                },
+              }}
+            />
+            {/* )} */}
+          </Grid>
+        )}
+
         <Grid item xs={12} md={4} xl={4}>
           <Select
             fullWidth
@@ -346,7 +360,7 @@ const EditQualificationDetails = ({
           {/* )} */}
         </Grid>
         <Grid container item xs={12} md={8} xl={4} columnSpacing={2}>
-          <Typography pl={2}>Month & Year of awarding Degree/Diploma</Typography>
+          <Typography pl={2}>Month & Year of awarding Degree</Typography>
           <Grid item xs={12} md={6} mb={{ xs: 2, md: 0 }}>
             <Select
               fullWidth
@@ -366,7 +380,7 @@ const EditQualificationDetails = ({
               name={'Year'}
               // label={'Year of awarding Degree/Diploma'}
               required={true}
-              placeHolder={'Year of awarding'}
+              placeholder={'Year of awarding'}
               fullWidth
               error={errors?.qualification?.[index]?.year?.message}
               defaultValue={fields[index].year}
