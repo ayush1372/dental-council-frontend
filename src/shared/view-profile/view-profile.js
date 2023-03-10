@@ -1,14 +1,26 @@
 import { useState } from 'react';
 
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Grid, Typography, useTheme } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import IconVerified from '../../assets/images/ico-verified.svg';
 import { enableUserNotification } from '../../store/actions/common-actions';
 
 export function ViewProfile(props) {
   const dispatch = useDispatch();
+  const nmrIdData = useSelector(
+    (state) => state?.doctorUserProfileReducer?.personalDetails?.imr_details?.nmr_id
+  );
+
+  const emailId = useSelector(
+    (state) => state?.doctorUserProfileReducer?.personalDetails?.communication_address?.email
+  );
+  const mobileNumber = useSelector(
+    (state) => state?.doctorUserProfileReducer?.personalDetails?.communication_address?.mobile
+  );
+
   const [emailNotification, setEmailNotification] = useState();
   const [mobileNotification, setMobileNotification] = useState();
 
@@ -29,6 +41,8 @@ export function ViewProfile(props) {
     };
     dispatch(enableUserNotification(updatedNotificationData));
   };
+
+  const theme = useTheme();
 
   return (
     <>
@@ -87,69 +101,110 @@ export function ViewProfile(props) {
           />
         </Box>
       </Box>
-      <Box
-        sx={{
-          boxShadow: '1',
-        }}
-        bgcolor="white.main"
-      >
-        <Grid container spacing={2} mt={2} p={3}>
-          <Grid container item spacing={6}>
-            <Grid item xs={8} md={4}>
-              <Typography variant="body1" color="inputTextColor.main">
-                NMR ID
-                <Typography component="span" color="error.main">
-                  *
-                </Typography>
-              </Typography>
-              <Typography variant="subtitle2" color="primary.main">
-                71-1567-8728-1025
-              </Typography>
-            </Grid>
-            <Grid item xs={8} md={4}>
-              <Typography variant="body1" color="inputTextColor.main">
-                Council verification status
-                <Typography component="span" color="error.main">
-                  *
-                </Typography>
-              </Typography>
-              <Typography variant="subtitle2" color="primary.main">
-                Submitted
-              </Typography>
-            </Grid>
-            <Grid item xs={8} md={4}>
-              <Typography variant="body1" color="inputTextColor.main">
-                Work Detail Verification Status
-                <Typography component="span" color="error.main">
-                  *
-                </Typography>
-              </Typography>
-              <Typography variant="subtitle2" color="primary.main">
-                Submitted
-              </Typography>
-            </Grid>
+      <Box bgcolor="white.main" py={3} mb={2} boxShadow="1">
+        <Grid container>
+          <Grid
+            borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
+            item
+            xs={12}
+            sm={6}
+            md={3}
+            lg="auto"
+            xl={2}
+            px={2}
+            mb={{ xs: 1, lg: 0 }}
+          >
+            <Typography variant="body3" color="grey.label">
+              IMR/Registration Number
+            </Typography>
+            <Typography variant="subtitle2" color="textPrimary.main">
+              {nmrIdData ? nmrIdData : ''}
+            </Typography>
           </Grid>
-
-          {/* First row */}
-
-          <Grid container item spacing={6}>
-            <Grid item xs={8} md={4}>
-              <Typography variant="body1" color="inputTextColor.main">
-                Email
-                <Typography component="span" color="error.main">
-                  *
-                </Typography>
+          {/* <Grid
+          borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
+          item
+          xs={12}
+          sm={6}
+          md={3}
+          lg="auto"
+          px={2}
+          mb={{ xs: 1, lg: 0 }}
+        >
+            <Typography variant="body3" color="grey.label">
+              Work Detail Verification Status
+            </Typography>
+            <Typography variant="subtitle2" color="textPrimary.main">
+              Submitted
+            </Typography>
+          </Grid> */}
+          {/* <Grid
+          borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
+          item
+          xs={12}
+          sm={6}
+          md={3}
+          lg={1}
+          pl={2}
+          mb={{ xs: 1, lg: 0 }}
+        >
+            <Typography variant="body3" color="grey.label">
+              Gender
+            </Typography>
+            <Typography variant="subtitle2" color="textPrimary.main">
+              {personGender ? personGender : ''}
+            </Typography>
+          </Grid> */}
+          {/* <Grid
+          borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
+          item
+          xs={12}
+          sm={6}
+          md={3}
+          lg="auto"
+          px={2}
+          mb={{ xs: 1, lg: 0 }}
+        >
+            <Typography variant="body3" color="grey.label">
+              Aadhaar
+            </Typography>
+            <Typography variant="subtitle2" color="textPrimary.main">
+              Verified
+              <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
+            </Typography>
+          </Grid> */}
+          <Grid
+            borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
+            item
+            xs={12}
+            sm={6}
+            md={3}
+            lg="auto"
+            xl={2}
+            px={2}
+          >
+            <Typography variant="body3" color="grey.label">
+              Mobile Number
+            </Typography>
+            <Typography variant="subtitle2" color="textPrimary.main">
+              {mobileNumber ? mobileNumber : ''}
+              <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
+              <Typography component="span" variant="subtitle2" color="primary.main" ml={1}>
+                Change
               </Typography>
-              <Typography variant="subtitle2" color="primary.main">
-                madhura638@gmail.com
-              </Typography>
-            </Grid>
-            <Grid item xs={8} md={4}>
-              <Typography variant="body1" color="inputTextColor.main">
-                Mobile Number
-              </Typography>
-              <Typography variant="subtitle2" color="primary.main">
-                9967453678
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6} md="auto" lg="auto" pl={2}>
+            <Typography variant="body3" color="grey.label">
+              Email
+            </Typography>
+            <Grid>
+              <Typography
+                variant="subtitle2"
+                color="textPrimary.main"
+                sx={{ wordBreak: 'break-word' }}
+              >
+                {emailId ? emailId : ''}
               </Typography>
             </Grid>
           </Grid>
