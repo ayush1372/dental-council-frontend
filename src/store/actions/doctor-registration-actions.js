@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { API, API_HPRID } from '../../api/api-endpoints';
 import { accesstokenHprId } from '../../constants/common-data';
 import { GET, POST } from '../../constants/requests';
@@ -19,7 +18,6 @@ import {
 import { typeOfOtp } from '../reducers/user-aadhaar-verify-reducer';
 
 export const fetchSmcRegistrationDetails = (registrationData) => async (dispatch) => {
-  console.log('hi data', registrationData);
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,
@@ -55,7 +53,6 @@ export const getSessionAccessToken = (body) => async (dispatch) => {
   });
 };
 export const checkKycDetails = (body) => async (dispatch) => {
-  console.log('action body', body);
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: POST,

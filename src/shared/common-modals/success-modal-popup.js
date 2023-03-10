@@ -2,19 +2,29 @@ import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined';
 import { Box, Container, Modal, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
 
 import { getCardCount } from '../../store/actions/dashboard-actions';
 import { Button } from '../../ui/core';
 
-export default function SuccessModalPopup({ open, setOpen, text, handleClose, SuspensionCall }) {
-  // eslint-disable-next-line no-console
-  console.log('popup', open, setOpen, text, handleClose);
+export default function SuccessModalPopup({
+  open,
+  setOpen,
+  text,
+  handleClose,
+  SuspensionCall,
+  isHpIdCreated,
+  successRegistration,
+}) {
+  const navigate = useNavigate();
   const handleCloseModal = () => {
     setOpen(false);
   };
   const theme = useTheme();
   const dispatch = useDispatch();
-
+  const navigateSetpassword = () => {
+    navigate('/reset-password');
+  };
   const handleCloseModalALL = () => {
     setOpen(false);
     handleClose();
@@ -22,7 +32,9 @@ export default function SuccessModalPopup({ open, setOpen, text, handleClose, Su
       dispatch(getCardCount());
     }
   };
-
+  const navigateLogin = () => {
+    navigate('/');
+  };
   return (
     <Modal open={open} onClose={handleClose} sx={{ mt: 15 }}>
       <Container
@@ -72,7 +84,15 @@ export default function SuccessModalPopup({ open, setOpen, text, handleClose, Su
             sx={{ width: { xs: '100%', sm: '408px' }, mt: 5 }}
             variant="contained"
             color="warning"
-            onClick={handleClose ? handleCloseModalALL : handleCloseModal}
+            onClick={
+              handleClose
+                ? handleCloseModalALL
+                : isHpIdCreated
+                ? navigateSetpassword
+                : successRegistration
+                ? navigateLogin
+                : handleCloseModal
+            }
           >
             Ok
           </Button>

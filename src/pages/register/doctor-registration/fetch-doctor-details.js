@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-expressions */
-/* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -72,6 +70,9 @@ function FetchDoctorDetails() {
   const demographicAuthMobileVerify = useSelector(
     (state) => state?.AadhaarTransactionId?.demographicAuthMobileDetailsData
   );
+  const existUSerName = useSelector(
+    (state) => state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId
+  );
 
   const {
     register,
@@ -110,7 +111,6 @@ function FetchDoctorDetails() {
           otp: otpValue,
         })
       ).then((response) => {
-        console.log('123 response', dateFormat(response.data.birthdate));
         dispatch(
           checkKycDetails({
             registrationNumber: registrationNumber || '',
@@ -135,14 +135,8 @@ function FetchDoctorDetails() {
             address: response.data.address || '',
           })
         ).then((response) => {
-          console.log('resp kyc', response.data.kyc_fuzzy_match_status);
           if (response.data.kyc_fuzzy_match_status === 'Fail') {
-            console.log(
-              'resp kyc1 injected in loop',
-              response.data.kyc_fuzzy_match_status === 'Fail'
-            );
             setShowRejectPopup(true);
-            //setShowSuccess(true);
           }
         });
       });
@@ -150,51 +144,12 @@ function FetchDoctorDetails() {
   };
 
   const handleVerifyMobile = () => {
-    // let generateData = {
-    //   mobile: getValues().MobileNumber,
-    //   txnId: aadhaarTxnId,
-    // };
-
     dispatch(
       getDemographicAuthMobile({
         txnId: aadhaarTxnId,
         mobileNumber: getValues().MobileNumber,
       })
     );
-
-    // dispatch(
-    //   getDemographicAuthMobile({
-    //     txnId: aadhaarTxnId,
-    //     mobileNumber: getValues().MobileNumber,
-    //   })
-    // ).then((response) => {
-    //   console.log('hi', response);
-    //   if (response.data.verified !== true) {
-    //     dispatch(generateMobileOtp(generateData)).then(() => {
-    //       setShowOtpMobile(true);
-    //       setisOtpValidMobile(false);
-    //     });
-    //   } else {
-    //     dispatch(
-    //       checkHpidExists({
-    //         txnId: aadhaarTxnId,
-    //       })
-    //     ).then((response) => {
-    //       if (response?.data?.hprId === undefined || response?.data?.hprId === null) {
-    //         setShowCreateHprIdPage(true);
-    //         dispatch(
-    //           getHprIdSuggestions({
-    //             txnId: aadhaarTxnId,
-    //           })
-    //         );
-    //       } else {
-    //         if (response?.data?.hprId.length > 0) {
-    //           setShowSuccess(true);
-    //         }
-    //       }
-    //     });
-    //   }
-    // });
   };
 
   useEffect(() => {
@@ -289,7 +244,7 @@ function FetchDoctorDetails() {
         <ErrorModalPopup
           open={showRejectPopup}
           setOpen={() => setShowRejectPopup(false)}
-          text="Data not found. To continue registration"
+          text="The registration details are not matching with the KYC details please validate registration/kyc details"
         />
       )}
 
@@ -541,7 +496,11 @@ function FetchDoctorDetails() {
             <SuccessModalPopup
               open={showSuccess}
               setOpen={() => setShowSuccess(false)}
-              text={'Account exists'}
+              text={`Your username ${existUSerName.replace(
+                '@hpr.abdm',
+                ''
+              )} has been successfully created. Please proceed to set the password for logging in to your NMR Profile`}
+              isHpIdCreated={true}
             />
           )}
         </>

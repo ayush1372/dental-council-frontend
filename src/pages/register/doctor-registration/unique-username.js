@@ -1,4 +1,4 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Box, Container, InputAdornment, Link, TextField, Typography } from '@mui/material';
@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { verboseLog } from '../../../config/debug';
+// import { verboseLog } from '../../../config/debug';
 import { UniqueUserNameForDoctor } from '../../../constants/common-data';
 // import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import {
@@ -20,9 +20,9 @@ const UniqueUserNameForDoctorRegistration = () => {
   const dispatch = useDispatch();
   // const [showSuccess, setShowSuccess] = useState(false);
   const aadhaarTxnId = useSelector((state) => state?.AadhaarTransactionId?.aadharData?.data?.txnId);
-  const userEmail = useSelector(
-    (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.email_id
-  );
+  // const userEmail = useSelector(
+  //   (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.email_id
+  // );
   // const registrationNumber = useSelector(
   //   (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.registration_number
   // );
@@ -39,7 +39,7 @@ const UniqueUserNameForDoctorRegistration = () => {
   //   (state) => state?.doctorRegistration?.storeMobileDetailsData?.mobile
   // );
   const theme = useTheme();
-  const [isNext, setIsNext] = useState(false);
+  // const [isNext, setIsNext] = useState(false);
   const navigate = useNavigate();
 
   const {
@@ -57,7 +57,7 @@ const UniqueUserNameForDoctorRegistration = () => {
 
   const onSubmit = () => {
     let data = {
-      email: userEmail,
+      email: null,
       txnId: aadhaarTxnId,
       hprId: `${getValues().UniqueUserNameForDoctor}@hpr.abdm`,
     };
@@ -72,10 +72,10 @@ const UniqueUserNameForDoctorRegistration = () => {
       // dispatch(sendResetPasswordLink(data)).then(() => {
       // setShowSuccess(true);
       // });
-      setIsNext(true);
+      // setIsNext(true);
     });
   };
-  verboseLog(isNext);
+  // verboseLog(isNext);
 
   return (
     <Box>
