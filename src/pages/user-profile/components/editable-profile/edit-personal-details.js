@@ -628,7 +628,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 checked={isSameAddress}
                 error={errors.Address?.message}
                 onChange={(e) => {
-                  alert(e.target.checked);
                   // dispatch(getPersonalDetails(personalDetails?.hp_profile_id));
                   setIsSameAddress(e.target.checked);
                 }}
@@ -649,6 +648,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 name={'House'}
                 placeholder="Your House address"
                 disabled={isSameAddress}
+                sx={{
+                  input: {
+                    backgroundColor: isSameAddress ? 'grey2.main' : '',
+                  },
+                }}
                 required={true}
                 fullWidth
                 defaultValue={
@@ -676,6 +680,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 disabled={isSameAddress}
                 required={false}
                 fullWidth
+                sx={{
+                  input: {
+                    backgroundColor: isSameAddress ? 'grey2.main' : '',
+                  },
+                }}
                 defaultValue={
                   isSameAddress ? personalDetails?.kyc_address?.street : getValues().Street
                 }
@@ -701,6 +710,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 name={'Landmark'}
                 placeholder="Your Landmark"
                 disabled={isSameAddress}
+                sx={{
+                  input: {
+                    backgroundColor: isSameAddress ? 'grey2.main' : '',
+                  },
+                }}
                 required={false}
                 fullWidth
                 defaultValue={
@@ -727,6 +741,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 name={'Locality'}
                 placeholder="Your Locality"
                 disabled={isSameAddress}
+                sx={{
+                  input: {
+                    backgroundColor: isSameAddress ? 'grey2.main' : '',
+                  },
+                }}
                 required={false}
                 fullWidth
                 defaultValue={
@@ -755,6 +774,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 {...register('Country', {
                   required: 'Country is required',
                 })}
+                sx={{
+                  input: {
+                    backgroundColor: isSameAddress ? 'grey2.main' : '',
+                  },
+                }}
                 disabled
                 options={
                   countriesList?.length > 0
@@ -789,6 +813,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 defaultValue={getValues().State}
                 required={true}
                 disabled={isSameAddress}
+                sx={{
+                  input: {
+                    backgroundColor: isSameAddress ? 'grey2.main' : '',
+                  },
+                }}
                 {...register('State', {
                   required: 'State/Union territory is required',
                 })}
@@ -820,6 +849,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 }
                 required={true}
                 disabled={isSameAddress}
+                sx={{
+                  input: {
+                    backgroundColor: isSameAddress ? 'grey2.main' : '',
+                  },
+                }}
                 {...register('District', {
                   required: 'District is required',
                 })}
@@ -846,9 +880,14 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 name="SubDistrict"
                 placeholder="Sub District"
                 disabled={isSameAddress}
+                sx={{
+                  input: {
+                    backgroundColor: isSameAddress ? 'grey2.main' : '',
+                  },
+                }}
                 defaultValue={
                   isSameAddress
-                    ? personalDetails?.kyc_address?.sub_district?.id
+                    ? personalDetails?.kyc_address?.sub_district?.name
                     : getValues().SubDistrict
                 }
                 value={
@@ -880,6 +919,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               <Select
                 fullWidth
                 error={errors.Area?.message}
+                sx={{
+                  input: {
+                    backgroundColor: isSameAddress ? 'grey2.main' : '',
+                  },
+                }}
                 name="Area"
                 defaultValue={
                   isSameAddress ? personalDetails?.kyc_address?.sub_district?.id : getValues().Area
@@ -916,6 +960,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 placeholder="Your postal code"
                 required={true}
                 fullWidth
+                sx={{
+                  input: {
+                    backgroundColor: isSameAddress ? 'grey2.main' : '',
+                  },
+                }}
                 defaultValue={
                   isSameAddress ? personalDetails?.kyc_address?.pincode : getValues().PostalCode
                 }
