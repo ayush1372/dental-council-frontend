@@ -64,6 +64,7 @@ export const API = {
     smcRegistrationDetail:
       'api/v1/abdm/nmr/health-professional?smcId={smcId}&registrationNumber={registrationNumber}',
     passwordLink: 'api/v1/abdm/nmr/user/password-link',
+    setUserPassword: 'api/v1/abdm/nmr/health-professional/user',
   },
   nbe: {
     getNBEProfileData: 'api/v1/abdm/nmr/nbe/user/{id}',

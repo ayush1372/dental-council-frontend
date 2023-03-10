@@ -44,6 +44,9 @@ export const registrationData = createSlice({
     getAccessToken: (state, action) => {
       state.getAccessTokenDetails = action.payload;
     },
+    setUserPasswordData: (state, action) => {
+      state.getAccessTokenDetails = action.payload;
+    },
   },
 });
 
@@ -58,6 +61,7 @@ export const {
   createhprIdData,
   storeMobileDetails,
   getkycDetails,
+  setUserPasswordData,
 } = registrationData.actions;
 
 export default registrationData.reducer;

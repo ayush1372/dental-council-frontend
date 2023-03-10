@@ -3,20 +3,28 @@ import { useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { encryptData } from '../../../helpers/functions/common-functions';
-import { forgotPassword } from '../../../store/actions/forgot-password-actions';
+// import { useParams } from 'react-router';
+//import { encryptData } from '../../../helpers/functions/common-functions';
+import { setUserPassword } from '../../../store/actions/doctor-registration-actions';
+// import { forgotPassword } from '../../../store/actions/forgot-password-actions';
 import { Button, TextField } from '../../../ui/core';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 import SuccessModal from '../../register/doctor-registration/success-popup';
 
 const NewPasswordSetup = ({ handlePasswordSetup }) => {
   const [showSuccess, setShowSuccess] = useState();
-  const params = useParams();
+  //const params = useParams();
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const { hprIdDataDetails } = useSelector((state) => state?.doctorRegistration);
+  const registrationNumber = useSelector(
+    (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.registration_number
+  );
+  // eslint-disable-next-line no-console
+  console.log('hprIdDataDetails', hprIdDataDetails);
+
   const {
     register,
     handleSubmit,
@@ -32,13 +40,25 @@ const NewPasswordSetup = ({ handlePasswordSetup }) => {
   });
   const onSubmit = () => {
     handlePasswordSetup();
-    const data = {
-      token: params.request_id,
-      password: encryptData(getValues().password, process.env.REACT_APP_PASS_SITE_KEY),
+    // let stringName = 'sneha_pr@hpr.abdm';
+    // stringName.replace('@hpr.abdm', '');
+    const reqObj = {
+      email: null,
+      mobile: hprIdDataDetails?.data?.mobile,
+      username: hprIdDataDetails?.data?.hprId?.replace('@hpr.abdm', ''),
+      registration_number: registrationNumber,
+      password: getValues().password,
     };
-    dispatch(forgotPassword(data)).then(() => {
+    dispatch(setUserPassword(reqObj)).then(() => {
       setShowSuccess(true);
     });
+    // const data = {
+    //   token: params.request_id,
+    //   password: encryptData(getValues().password, process.env.REACT_APP_PASS_SITE_KEY),
+    // };
+    // dispatch(forgotPassword(data)).then(() => {
+    //   setShowSuccess(true);
+    // });
   };
   return (
     <Box data-testid="new-password-setup" p={4} bgcolor="white.main" boxShadow="4">

@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-console */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Alert, Container, Divider, IconButton, InputAdornment, Typography } from '@mui/material';
@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
 import { dateFormat } from '../../../helpers/functions/common-functions';
+import ErrorModalPopup from '../../../shared/common-modals/error-modal-popup';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import OtpForm from '../../../shared/otp-form/otp-component';
 // import SuccessPopup from '../../../shared/reactivate-licence-popup/success-popup';
@@ -66,6 +67,10 @@ function FetchDoctorDetails() {
 
   const hpName = useSelector(
     (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.hp_name
+  );
+
+  const demographicAuthMobileVerify = useSelector(
+    (state) => state?.AadhaarTransactionId?.demographicAuthMobileDetailsData
   );
 
   const {
@@ -137,7 +142,7 @@ function FetchDoctorDetails() {
               response.data.kyc_fuzzy_match_status === 'Fail'
             );
             setShowRejectPopup(true);
-            setShowSuccess(true);
+            //setShowSuccess(true);
           }
         });
       });
@@ -145,43 +150,75 @@ function FetchDoctorDetails() {
   };
 
   const handleVerifyMobile = () => {
-    let generateData = {
-      mobile: getValues().MobileNumber,
-      txnId: aadhaarTxnId,
-    };
+    // let generateData = {
+    //   mobile: getValues().MobileNumber,
+    //   txnId: aadhaarTxnId,
+    // };
+
     dispatch(
       getDemographicAuthMobile({
         txnId: aadhaarTxnId,
         mobileNumber: getValues().MobileNumber,
       })
-    ).then((response) => {
-      if (response.data.verified !== true) {
-        dispatch(generateMobileOtp(generateData)).then(() => {
-          setShowOtpMobile(true);
-          setisOtpValidMobile(false);
-        });
-      } else {
-        dispatch(
-          checkHpidExists({
-            txnId: aadhaarTxnId,
-          })
-        ).then((response) => {
-          if (response?.data?.hprId === undefined || response?.data?.hprId === null) {
-            setShowCreateHprIdPage(true);
-            dispatch(
-              getHprIdSuggestions({
-                txnId: aadhaarTxnId,
-              })
-            );
-          } else {
-            if (response?.data?.hprId.length > 0) {
-              setShowSuccess(true);
-            }
-          }
-        });
-      }
-    });
+    );
+
+    // dispatch(
+    //   getDemographicAuthMobile({
+    //     txnId: aadhaarTxnId,
+    //     mobileNumber: getValues().MobileNumber,
+    //   })
+    // ).then((response) => {
+    //   console.log('hi', response);
+    //   if (response.data.verified !== true) {
+    //     dispatch(generateMobileOtp(generateData)).then(() => {
+    //       setShowOtpMobile(true);
+    //       setisOtpValidMobile(false);
+    //     });
+    //   } else {
+    //     dispatch(
+    //       checkHpidExists({
+    //         txnId: aadhaarTxnId,
+    //       })
+    //     ).then((response) => {
+    //       if (response?.data?.hprId === undefined || response?.data?.hprId === null) {
+    //         setShowCreateHprIdPage(true);
+    //         dispatch(
+    //           getHprIdSuggestions({
+    //             txnId: aadhaarTxnId,
+    //           })
+    //         );
+    //       } else {
+    //         if (response?.data?.hprId.length > 0) {
+    //           setShowSuccess(true);
+    //         }
+    //       }
+    //     });
+    //   }
+    // });
   };
+
+  useEffect(() => {
+    if (demographicAuthMobileVerify?.data?.verified) {
+      dispatch(
+        checkHpidExists({
+          txnId: aadhaarTxnId,
+        })
+      ).then((response) => {
+        if (response?.data?.hprId === undefined || response?.data?.hprId === null) {
+          setShowCreateHprIdPage(true);
+          dispatch(
+            getHprIdSuggestions({
+              txnId: aadhaarTxnId,
+            })
+          );
+        } else {
+          if (response?.data?.hprId.length > 0) {
+            setShowSuccess(true);
+          }
+        }
+      });
+    }
+  }, [demographicAuthMobileVerify?.data?.verified]);
 
   const handleValidateMobile = () => {
     let data = {
@@ -249,10 +286,10 @@ function FetchDoctorDetails() {
     <>
       <ToastContainer></ToastContainer>
       {showRejectPopup && (
-        <SuccessModalPopup
+        <ErrorModalPopup
           open={showRejectPopup}
           setOpen={() => setShowRejectPopup(false)}
-          text="Your KYC Details are not matching"
+          text="Data not found. To continue registration"
         />
       )}
 
@@ -372,7 +409,7 @@ function FetchDoctorDetails() {
                     },
                   }}
                 >
-                  <Box>
+                  <Box pt={1}>
                     <Typography variant="body1">
                       We just sent an OTP on your mobile number {mobileNumber} which is registered
                       with Aadhaar.
@@ -500,7 +537,13 @@ function FetchDoctorDetails() {
             </Box>
           </Container>
 
-          {showSuccess && <SuccessModalPopup />}
+          {showSuccess && (
+            <SuccessModalPopup
+              open={showSuccess}
+              setOpen={() => setShowSuccess(false)}
+              text={'Account exists'}
+            />
+          )}
         </>
       )}
     </>

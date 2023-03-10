@@ -11,6 +11,7 @@ import {
   hpIdExistsDetails,
   hprIdSuggestionsDetails,
   sendResetPasswordLinkDetails,
+  setUserPasswordData,
   smcRegistrationDetail,
   storeMobileDetails,
   storeMobileOtpData,
@@ -170,6 +171,24 @@ export const createUniqueHprId = (data) => async (dispatch) => {
     })
       .then((response) => {
         dispatch(createhprIdData(response));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const setUserPassword = (data) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.doctorRegistration.setUserPassword,
+      // headers: { Authorization: 'Bearer ' + accesstokenHprId },
+      data: data,
+    })
+      .then((response) => {
+        dispatch(setUserPasswordData(response));
         return resolve(response);
       })
       .catch((error) => {
