@@ -2,12 +2,15 @@ import { useState } from 'react';
 
 import { makeStyles } from '@material-ui/core';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { Box, FormGroup, Grid, IconButton, Typography } from '@mui/material';
+import { Box, FormGroup, Grid, IconButton, Link, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
+import ReactivationLogo from '../../../../../src/assets/images/reactivate-license-icon.png';
 import avtarImg from '../../../../assets/images/user.png';
+import ReactivateLicencePopup from '../../../../shared/reactivate-licence-popup/re-activate-licence-popup';
+import SuccessPopup from '../../../../shared/reactivate-licence-popup/success-popup';
 import { getUserProfileImage } from '../../../../store/actions/doctor-user-profile-actions';
 import successToast from '../../../../ui/core/toaster';
 
@@ -24,7 +27,11 @@ export default function ProfileImage(props) {
   const [imageChanged, setImageChanged] = useState(false);
   const [imageTypeError, setImageTypeError] = useState(false);
   const [imageErrorMessage, setImageErrorMessage] = useState('');
-
+  const [showReactivateLicense, setShowReactivateLicense] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const logInDoctorStatus = useSelector(
+    (state) => state?.loginReducer?.loginData?.data?.blacklisted
+  );
   const theme = useTheme();
   const useStyles = makeStyles(() => ({
     avtarImage: {
@@ -71,11 +78,16 @@ export default function ProfileImage(props) {
       setImageTypeError(true);
     }
   };
-
+  const renderSuccess = () => {
+    setShowReactivateLicense(false);
+    setShowSuccessPopup(true);
+  };
+  const closeReactivateLicense = () => {
+    setShowReactivateLicense(false);
+  };
   return (
     <Grid container className={styles.profileImageDetailsContainer}>
       <ToastContainer></ToastContainer>
-
       {loggedInUserType === 'Doctor' ? (
         <Grid item xs={12} mt={2} display="flex" justifyContent="center">
           <Box maxWidth="110px" width="100%" position="relative">
@@ -116,9 +128,52 @@ export default function ProfileImage(props) {
           </Box>
         </Grid>
       )}
-      <Grid textAlign="center" item xs={12}>
+      <Grid textAlign="center" item xs={12} mt={4}>
         <Typography variant="subtitle2">{props.name}</Typography>
       </Grid>
+      {logInDoctorStatus && (
+        <Grid container mt={1}>
+          <Grid item xs={12}>
+            <Typography
+              color="suspendAlert.dark"
+              component="div"
+              textAlign="center"
+              display="inline-flex"
+            >
+              Your profile is set to suspend mode.
+              <br />
+              You will not be able to perform actions <br />
+              on the profile.
+            </Typography>
+          </Grid>
+          <Grid item xs={12} textAlign="center" mt={1}>
+            <img
+              src={ReactivationLogo}
+              alt="Reactivation license logo"
+              width="15px"
+              height="15px"
+            />
+            <Link
+              sx={{ cursor: 'pointer' }}
+              ml={1}
+              variant="subtitle2"
+              onClick={() => {
+                setShowReactivateLicense(true);
+                setShowSuccessPopup(false);
+              }}
+            >
+              Reactivate License
+            </Link>
+          </Grid>
+        </Grid>
+      )}
+      {showReactivateLicense && (
+        <ReactivateLicencePopup
+          renderSuccess={renderSuccess}
+          closeReactivateLicense={closeReactivateLicense}
+        />
+      )}{' '}
+      {showSuccessPopup && <SuccessPopup />}
     </Grid>
   );
 }
