@@ -7,7 +7,7 @@ import { searchDoctorDetails } from '../../../store/actions/doctor-search-action
 import { Button, Select } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
 
-const YearOfRegistration = ({ setDoSearch, setSearchData }) => {
+const YearOfRegistration = ({ setDoSearch, setSearchData, setScrollDown }) => {
   const dispatch = useDispatch();
   const {
     formState: { errors },
@@ -41,6 +41,7 @@ const YearOfRegistration = ({ setDoSearch, setSearchData }) => {
       });
 
     setSearchData(searchValues);
+    setScrollDown(true);
   };
   return (
     <Grid container spacing={2} mt={2}>

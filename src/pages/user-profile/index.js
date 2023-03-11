@@ -35,30 +35,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
 
   const [wizardSteps, setWizardSteps] = useState(readWizardSteps);
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
-  // const { loginData } = useSelector((state) => state?.loginReducer);
-
-  let profile_id;
-  if (localStorage.getItem('accesstoken')) {
-    let base64Url = localStorage.getItem('accesstoken')?.split('.')[1];
-    let base64 = base64Url?.replace(/-/g, '+').replace(/_/g, '/');
-    let jsonPayload;
-    if (base64) {
-      jsonPayload = decodeURIComponent(
-        window
-          ?.atob(base64)
-          ?.split('')
-          ?.map(function (c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-          })
-          ?.join('')
-      );
-    }
-
-    profile_id = JSON.parse(jsonPayload)?.profile_id;
-    // if (JSON.parse(jsonPayload)?.authorities[0] === 'ROLE_HEALTH_PROFESSIONAL') type = 'Doctor';
-
-    // dispatch(userLoggedInType(type));
-  }
+  const { loginData } = useSelector((state) => state?.loginReducer);
 
   const { activeStep, handleNext, handleBack, resetStep } = useWizard(
     loggedInUserType === 'Doctor' || loggedInUserType === 'SMC' || loggedInUserType === 'NMC'
@@ -106,7 +83,9 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
 
   const fetchDoctorUserPersonalDetails = () => {
     dispatch(
-      getPersonalDetailsData(showViewProfile ? selectedRowData?.profileID?.value : profile_id)
+      getPersonalDetailsData(
+        showViewProfile ? selectedRowData?.profileID?.value : loginData?.data?.profile_id
+      )
     )
       .then(() => {})
       .catch((allFailMsg) => {
@@ -116,7 +95,9 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
 
   const fetchDoctorUserRegistrationDetails = () => {
     dispatch(
-      getRegistrationDetailsData(showViewProfile ? selectedRowData?.profileID?.value : profile_id)
+      getRegistrationDetailsData(
+        showViewProfile ? selectedRowData?.profileID?.value : loginData?.data?.profile_id
+      )
     )
       .then()
       .catch((allFailMsg) => {

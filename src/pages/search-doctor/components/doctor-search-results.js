@@ -13,7 +13,13 @@ import { Button } from '../../../ui/core/button/button';
 import successToast from '../../../ui/core/toaster';
 import DoctorProfileModal from './doctor-profile-modal';
 
-const SearchResults = ({ searchData }) => {
+const SearchResults = ({ searchData, scrolldown }) => {
+  if (scrolldown) {
+    const element = document.getElementById('search-section');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
   const theme = useTheme();
   const dispatch = useDispatch();
 
@@ -59,6 +65,7 @@ const SearchResults = ({ searchData }) => {
 
   return (
     <Container
+      id="search-section"
       maxWidth="lg"
       sx={{
         paddingTop: '20px',
