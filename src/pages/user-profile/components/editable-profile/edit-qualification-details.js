@@ -432,10 +432,8 @@ const EditQualificationDetails = ({
             fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
             fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
                  Maximum size allowed for the attachment is 5MB.`}
-            fileData={qualificationFilesData[`qualification.${index}.files`] || []}
-            setFileData={(files) => {
-              handleQualificationFilesData(`qualification.${index}.files`, files);
-            }}
+            fileData={qualificationFilesData}
+            setFileData={handleQualificationFilesData}
             isDigiLockcerVisible={true}
           />
         </Grid>

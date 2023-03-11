@@ -9,8 +9,9 @@ import { useSelector } from 'react-redux';
 import AttachmentViewPopup from '../../../../shared/query-modal-popup/attachement-view-popup';
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
-const RegistrationDetailsContent = ({ registrationDetails }) => {
+const RegistrationDetailsContent = () => {
   const { userActiveTab } = useSelector((state) => state.common);
+  const { registrationDetails } = useSelector((state) => state.doctorUserProfileReducer);
 
   const [openModal, setOpenModal] = useState(false);
   const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
@@ -183,13 +184,13 @@ const RegistrationDetailsContent = ({ registrationDetails }) => {
               />
             )}
           </Grid>
-        </Grid> */}
+        </Grid>
       </Grid>
       {/* <Grid container item spacing={2}>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor"></Typography>
-        </Grid>
-      </Grid> */}
+        </Grid> */}
+      </Grid>
       {attachmentViewProfile && (
         <AttachmentViewPopup
           certificate={registration_certificate}

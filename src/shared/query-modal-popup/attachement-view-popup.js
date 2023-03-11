@@ -44,7 +44,7 @@ export default function AttachmentViewPopup(props) {
               >
                 {props?.alt} Preview
               </Typography>
-              <img src={`data:image/png;base64,${props.certificate}`} alt={props?.alt} />
+              <img src={`data:image/png;base64,${props?.certificate}`} alt={props?.alt} />
             </Box>
             <Box display="flex" justifyContent="flex-end" mt={16}>
               <Button

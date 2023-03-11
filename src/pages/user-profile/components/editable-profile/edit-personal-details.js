@@ -51,7 +51,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     country_nationality,
     date_of_birth,
     gender,
-    schedule,
+    // schedule,
     full_name,
     language,
   } = personal_details || {};
@@ -73,7 +73,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const { registration_number, nmr_id, year_of_info } = imr_details || {};
 
   const countryNationalityId = country_nationality?.id;
-  const scheduleId = schedule?.id;
+  // const scheduleId = schedule?.id;
   const countryId = country?.id;
   const stateId = isSameAddress ? personalDetails?.kyc_address?.state?.id : state?.id;
   const districtId = isSameAddress ? personalDetails?.kyc_address?.district?.id : district?.id;
@@ -135,7 +135,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             ? 'male'
             : 'female'
           : '',
-      Schedule: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? scheduleId : '',
+      // Schedule: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? scheduleId : '',
       Name: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? full_name : '',
       Address: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? address_line1 : '',
       IMRID: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? nmr_id : '',
@@ -290,20 +290,20 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       name: 'Indian',
     },
   ];
-  const schedules = [
-    {
-      name: 'Schedule 1',
-      id: 1,
-    },
-    {
-      name: 'Schedule 2',
-      id: 2,
-    },
-    {
-      name: 'Schedule 3',
-      id: 3,
-    },
-  ];
+  // const schedules = [
+  //   {
+  //     name: 'Schedule 1',
+  //     id: 1,
+  //   },
+  //   {
+  //     name: 'Schedule 2',
+  //     id: 2,
+  //   },
+  //   {
+  //     name: 'Schedule 3',
+  //     id: 3,
+  //   },
+  // ];
 
   async function onHandleSave() {
     const {
@@ -313,7 +313,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       MotherName,
       SpouseName,
       Gender,
-      Schedule,
+      // Schedule,
       Nationality,
       PostalCode,
       Address,
@@ -337,13 +337,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     doctorProfileValues.personal_details.father_name = FatherName;
     doctorProfileValues.personal_details.mother_name = MotherName;
     doctorProfileValues.personal_details.spouse_name = SpouseName;
-    doctorProfileValues.personal_details.schedule.name = Schedule;
+    // doctorProfileValues.personal_details.schedule.name = Schedule;
     doctorProfileValues.personal_details.date_of_birth = DateOfBirth;
     doctorProfileValues.personal_details.full_name = Name;
     doctorProfileValues.personal_details.country_nationality =
       nationalities.find((x) => x.id === Nationality) || {};
     doctorProfileValues.personal_details.gender = Gender;
-    doctorProfileValues.personal_details.schedule = schedules.find((x) => x.id === Schedule) || {};
+    // doctorProfileValues.personal_details.schedule = schedules.find((x) => x.id === Schedule) || {};
 
     doctorProfileValues.communication_address.pincode = PostalCode;
     doctorProfileValues.communication_address.address_line1 = Address;
@@ -620,7 +620,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 handleLanguageSpokenChange('LanguageSpoken', value);
               }}
             />
-          </Grid>*/}
+          </Grid>
           {false && (
             <Grid item xs={12} md={4}>
               <Typography color="inputTextColor.main" variant="body1">
@@ -641,7 +641,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 options={createSelectFieldData(schedules)}
               />
             </Grid>
-          )}
+          )} */}
         </Grid>
 
         {/*Layer 2*/}
