@@ -6,19 +6,18 @@ import { Box } from '@mui/system';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 import { ToastContainer } from 'react-toastify';
 
 import { dateFormat } from '../../../helpers/functions/common-functions';
-import ErrorModalPopup from '../../../shared/common-modals/error-modal-popup';
+import KycErrorPopup from '../../../shared/common-modals/kyc-error-popup';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import OtpForm from '../../../shared/otp-form/otp-component';
-// import SuccessPopup from '../../../shared/reactivate-licence-popup/success-popup';
 import {
   checkHpidExists,
   checkKycDetails,
   generateMobileOtp,
   getHprIdSuggestions,
-  // sendResetPasswordLink,
   verifyMobileOtp,
 } from '../../../store/actions/doctor-registration-actions';
 import {
@@ -39,11 +38,8 @@ function FetchDoctorDetails() {
   const [isOtpValidMobile, setisOtpValidMobile] = useState(false);
   const [isOtpValidAadhar, setisOtpValidAadhar] = useState(false);
   const [enableSubmit, setEnableSubmit] = useState(false);
-  const [showRejectPopup, setShowRejectPopup] = useState(false);
+  const [kycError, setKycError] = useState(false);
   const dispatch = useDispatch();
-  // const userEmail = useSelector(
-  //   (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.email_id
-  // );
 
   const otptype = useSelector((state) => state?.AadhaarTransactionId?.typeOfOtpDetailsData);
 
@@ -100,9 +96,11 @@ function FetchDoctorDetails() {
       setisOtpValidEmail(false);
     });
   };
+  const navigate = useNavigate();
+  const onCancel = () => {
+    navigate('/');
+  };
   const handleValidateAadhar = () => {
-    setisOtpValidAadhar(true);
-    setshowOtpAadhar(false);
     handleClear();
     if (otpValue.length === 6) {
       dispatch(
@@ -111,6 +109,11 @@ function FetchDoctorDetails() {
           otp: otpValue,
         })
       ).then((response) => {
+        setisOtpValidAadhar(true);
+
+        setshowOtpAadhar(false);
+        handleClear();
+
         dispatch(
           checkKycDetails({
             registrationNumber: registrationNumber || '',
@@ -136,7 +139,7 @@ function FetchDoctorDetails() {
           })
         ).then((response) => {
           if (response.data.kyc_fuzzy_match_status === 'Fail') {
-            setShowRejectPopup(true);
+            setKycError(true);
           }
         });
       });
@@ -181,10 +184,12 @@ function FetchDoctorDetails() {
       otp: otpValue,
     };
     if (otpValue.length === 6) {
-      dispatch(verifyMobileOtp(data));
-      setisOtpValidMobile(true);
-      setShowOtpMobile(false);
-      handleClear();
+      dispatch(verifyMobileOtp(data)).then(() => {
+        setisOtpValidMobile(true);
+        setShowOtpMobile(false);
+        handleClear();
+      });
+
       if (isOtpValidEmail === true) {
         setEnableSubmit(true);
       }
@@ -240,10 +245,10 @@ function FetchDoctorDetails() {
   return (
     <>
       <ToastContainer></ToastContainer>
-      {showRejectPopup && (
-        <ErrorModalPopup
-          open={showRejectPopup}
-          setOpen={() => setShowRejectPopup(false)}
+      {kycError && (
+        <KycErrorPopup
+          open={kycError}
+          setOpen={() => setKycError(false)}
           text="The registration details are not matching with the KYC details please validate registration/kyc details"
         />
       )}
@@ -335,6 +340,7 @@ function FetchDoctorDetails() {
                     getValues={getValues}
                     required={true}
                     errors={errors}
+                    disabled={showOtpAadhar || isOtpValidAadhar}
                   />
                 </Box>
                 <Box p="35px 32px 0px 32px">
@@ -477,6 +483,7 @@ function FetchDoctorDetails() {
                   Submit
                 </Button>
                 <Button
+                  onClick={onCancel}
                   variant="outlined"
                   disabled={!enableSubmit}
                   sx={{
@@ -496,6 +503,7 @@ function FetchDoctorDetails() {
             <SuccessModalPopup
               open={showSuccess}
               setOpen={() => setShowSuccess(false)}
+              existHprId={true}
               text={`Your username ${existUSerName.replace(
                 '@hpr.abdm',
                 ''

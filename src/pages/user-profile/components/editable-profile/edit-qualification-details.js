@@ -87,7 +87,7 @@ const EditQualificationDetails = ({
           />
         </Grid>
       )}
-      <Grid container item spacing={2} mb={3}>
+      <Grid container item spacing={2}>
         <Grid item xs={12}>
           <Typography component="div" variant="body1" color="inputTextColor">
             Qualification From
@@ -218,7 +218,7 @@ const EditQualificationDetails = ({
         </Grid>
       )}
 
-      <Grid container item spacing={2} display="flex" alignItems="center" mt={3} mb={2}>
+      <Grid container item spacing={2} display="flex" alignItems="center" mb={2}>
         <Grid item xs={3}>
           <Typography color="grey2.lighter" variant="body1">
             BASIC QUALIFICATION
