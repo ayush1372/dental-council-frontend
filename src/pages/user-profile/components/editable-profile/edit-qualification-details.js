@@ -5,6 +5,7 @@ import { Divider, Grid, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { monthsData } from '../../../../constants/common-data';
+import { getYearData } from '../../../../helpers/functions/common-functions';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
 import { getCollegesList } from '../../../../store/actions/common-actions';
 import { RadioGroup, Select, TextField } from '../../../../ui/core';
@@ -381,9 +382,10 @@ const EditQualificationDetails = ({
             />
           </Grid>
           <Grid item xs={12} md={6}>
-            <TextField
+            <Select
               variant="outlined"
-              name={'Year'}
+              name="year"
+              options={getYearData}
               // label={'Year of awarding Degree/Diploma'}
               required={true}
               placeholder={'Year of awarding'}
