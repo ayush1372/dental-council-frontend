@@ -9,7 +9,7 @@ import { searchDoctorDetails } from '../../../store/actions/doctor-search-action
 import { Button, Select, TextField } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
 
-const BlacklistedDoctor = ({ setDoSearch, setSearchData }) => {
+const BlacklistedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
   const { councilNames } = useSelector((state) => state.common);
   const dispatch = useDispatch();
   const {
@@ -52,6 +52,7 @@ const BlacklistedDoctor = ({ setDoSearch, setSearchData }) => {
       });
 
     setSearchData(searchValues);
+    setScrollDown(true);
   };
   return (
     <Grid container spacing={2} mt={2}>

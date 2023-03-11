@@ -7,8 +7,9 @@ import { searchDoctorDetails } from '../../../store/actions/doctor-search-action
 import { Button, Select } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
 
-const StateMedicalCouncil = ({ setDoSearch, setSearchData }) => {
+const StateMedicalCouncil = ({ setDoSearch, setSearchData, setScrollDown }) => {
   const { councilNames } = useSelector((state) => state.common);
+
   const dispatch = useDispatch();
   const {
     formState: { errors },
@@ -44,6 +45,7 @@ const StateMedicalCouncil = ({ setDoSearch, setSearchData }) => {
       });
 
     setSearchData(searchValues);
+    setScrollDown(true);
   };
   return (
     <Grid container spacing={2} mt={2}>
