@@ -139,6 +139,7 @@ export default function ProfileImage(props) {
               component="div"
               textAlign="center"
               display="inline-flex"
+              variant="body2"
             >
               Your profile is set to suspend mode.
               <br />
@@ -146,7 +147,7 @@ export default function ProfileImage(props) {
               on the profile.
             </Typography>
           </Grid>
-          <Grid item xs={12} textAlign="center" mt={1}>
+          <Grid item xs={12} textAlign="center" mt={1} mr={2}>
             <img
               src={ReactivationLogo}
               alt="Reactivation license logo"
