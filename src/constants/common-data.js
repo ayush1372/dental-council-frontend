@@ -504,3 +504,27 @@ export const searchDoctorResult = [
     ],
   },
 ];
+
+export const applicationType = [
+  { id: 1, name: 'HP Registration' },
+  { id: 2, name: 'HP Modification' },
+  { id: 3, name: 'Temporary Suspension' },
+  { id: 4, name: 'Permanent Suspension' },
+  { id: 5, name: 'Activate License' },
+  { id: 6, name: 'College Registration' },
+  { id: 7, name: 'Foreign HP Registration' },
+  { id: 8, name: 'Qualification Workflow' },
+];
+export const applicationStatus = [
+  { id: 1, name: 'SUBMITTED' },
+  { id: 2, name: 'PENDING' },
+  { id: 3, name: 'REJECTED' },
+  { id: 4, name: 'FORWARDED' },
+  { id: 5, name: 'APPROVED' },
+  { id: 6, name: 'NOT YET RECEIVED' },
+  { id: 7, name: 'QUERY RAISED' },
+];
+export const filterDropDownData = [
+  { id: 'application_type_id', name: 'Type of Application ' },
+  { id: 'work_flow_status_id', name: ' Current Status' },
+];
