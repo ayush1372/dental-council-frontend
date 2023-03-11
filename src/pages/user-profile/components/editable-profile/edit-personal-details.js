@@ -689,7 +689,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 }
                 value={isSameAddress ? personalDetails?.kyc_address?.house : getValues().Address}
                 {...register('House', {
-                  required: 'House House is Required',
+                  required: 'House is Required',
                   maxLength: {
                     value: 300,
                     message: 'Length should be less than 300.',

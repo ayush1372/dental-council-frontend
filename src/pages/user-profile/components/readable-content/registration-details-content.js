@@ -3,14 +3,17 @@ import { useState } from 'react';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
 import { Grid, Typography } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
 import { useSelector } from 'react-redux';
 
+import AttachmentViewPopup from '../../../../shared/query-modal-popup/attachement-view-popup';
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
 const RegistrationDetailsContent = ({ registrationDetails }) => {
   const { userActiveTab } = useSelector((state) => state.common);
 
   const [openModal, setOpenModal] = useState(false);
+  const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
   const ClosePopup = () => {
     setOpenModal(false);
   };
@@ -21,10 +24,13 @@ const RegistrationDetailsContent = ({ registrationDetails }) => {
     state_medical_council,
     is_renewable,
     renewable_registration_date,
-    // is_name_change,
   } = registration_detail_to || {};
 
   const smcName = state_medical_council?.name || '';
+
+  const CloseAttachmentPopup = () => {
+    setAttachmentViewProfile(false);
+  };
 
   return (
     <Grid container spacing={2} mt={2}>
@@ -146,7 +152,14 @@ const RegistrationDetailsContent = ({ registrationDetails }) => {
             </Typography>
           </Typography>
           <Typography variant="subtitle2" color="primary.main">
-            <AttachFileIcon fontSize="10px" />
+            <IconButton
+              onClick={(e) => {
+                e.preventDefault();
+                setAttachmentViewProfile(true);
+              }}
+            >
+              <AttachFileIcon fontSize="10px" />
+            </IconButton>
             View attachment
           </Typography>
         </Grid>
@@ -176,6 +189,13 @@ const RegistrationDetailsContent = ({ registrationDetails }) => {
           <Typography variant="subtitle2" color="inputTextColor"></Typography>
         </Grid>
       </Grid> */}
+      {attachmentViewProfile && (
+        <AttachmentViewPopup
+          certificate={registration_detail_to?.registration_certificate}
+          closePopup={CloseAttachmentPopup}
+          alt={'Registration Certificate'}
+        />
+      )}
     </Grid>
   );
 };
