@@ -24,6 +24,7 @@ const RegistrationDetailsContent = ({ registrationDetails }) => {
     state_medical_council,
     is_renewable,
     renewable_registration_date,
+    registration_certificate,
   } = registration_detail_to || {};
 
   const smcName = state_medical_council?.name || '';
@@ -191,7 +192,7 @@ const RegistrationDetailsContent = ({ registrationDetails }) => {
       </Grid> */}
       {attachmentViewProfile && (
         <AttachmentViewPopup
-          certificate={registration_detail_to?.registration_certificate}
+          certificate={registration_certificate}
           closePopup={CloseAttachmentPopup}
           alt={'Registration Certificate'}
         />
