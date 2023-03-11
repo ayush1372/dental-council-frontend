@@ -17,6 +17,7 @@ import {
 import { Button } from '../../ui/core/button/button';
 import successToast from '../../ui/core/toaster';
 import Wizard from '../../ui/core/wizard';
+import ProgressBar from '../../ui/core/wizard/progress-bar';
 // import ChangePassword from '../profile/change-password/change-password';
 import ConstantDetails from './components/constant-details/constant-details';
 import PersonalDetails from './components/personal-details/personal-details';
@@ -218,19 +219,23 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
                   },
                 }}
               >
-                {isReadMode ? 'My Profile' : 'Edit Profile '}
+                {isReadMode && 'My Profile'}
               </Typography>
+              <Box display="flex" gap={2}>
+                {!isReadMode && (
+                  <Typography variant="h2" component="div">
+                    Edit Profile
+                  </Typography>
+                )}
+                {!isReadMode && (
+                  <ProgressBar
+                    progress={!isReadMode && progress}
+                    completed={!isReadMode && completed}
+                  />
+                )}
+              </Box>
             </Grid>
-            {!isReadMode && (
-              <Wizard
-                activeStep={loggedInUserType === 'College' ? activeStep + 1 : activeStep}
-                handleBack={handleBack}
-                handleNext={handleNext}
-                steps={wizardSteps}
-                progress={!isReadMode && progress}
-                completed={!isReadMode && completed}
-              ></Wizard>
-            )}
+
             {loggedInUserType === 'Doctor' && (
               <Grid
                 item
@@ -272,6 +277,14 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
           </Grid>
         ) : null}
         {!isReadMode && <ConstantDetails />}
+        <Wizard
+          activeStep={loggedInUserType === 'College' ? activeStep + 1 : activeStep}
+          handleBack={handleBack}
+          handleNext={handleNext}
+          steps={wizardSteps}
+          progress={false}
+        ></Wizard>
+
         <Box bgcolor="white.main">
           {activeStep === 0 && (
             <PersonalDetails
