@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
 
 import ButtonGroupWizard from './button-group-wizard';
+import ProgressBar from './progress-bar';
 import WizardSteps from './wizard-steps';
 
 export default function Wizard({
@@ -15,7 +16,8 @@ export default function Wizard({
 }) {
   return (
     <Box width="100%" bgcolor={'white'}>
-      <WizardSteps
+      <WizardSteps steps={steps} activeStep={activeStep} />
+      <ProgressBar
         steps={steps}
         activeStep={activeStep}
         progress={progress}

@@ -5,20 +5,23 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { encryptData } from '../../../helpers/functions/common-functions';
+import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import { setUserPassword } from '../../../store/actions/doctor-registration-actions';
 import { Button, TextField } from '../../../ui/core';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
-import SuccessModal from '../../register/doctor-registration/success-popup';
 
 const NewPasswordSetup = () => {
-  const [showSuccess, setShowSuccess] = useState();
+  const [showSuccess, setShowSuccess] = useState(false);
+
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { hprIdDataDetails } = useSelector((state) => state?.doctorRegistration);
   const registrationNumber = useSelector(
     (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.registration_number
   );
-  let usernamePayLoad = hprIdDataDetails?.data?.hprId?.replace('@hpr.abdm', '');
+  const uniqueHpId = useSelector((state) =>
+    state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId.replace('@hpr.abdm', '')
+  );
   const {
     register,
     handleSubmit,
@@ -34,22 +37,31 @@ const NewPasswordSetup = () => {
   });
   const onSubmit = () => {
     const reqObj = {
-      email: null,
-      mobile: hprIdDataDetails?.data?.mobile,
-      username: usernamePayLoad,
+      username: uniqueHpId,
       registration_number: registrationNumber,
-      password: getValues().password,
+      password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
     };
-    alert(reqObj);
     dispatch(setUserPassword(reqObj)).then(() => {
       setShowSuccess(true);
     });
   };
+
   return (
-    <Box data-testid="new-password-setup" p={4} bgcolor="white.main" boxShadow="4">
-      <Typography mt={2} variant="h2" component="div" textAlign="center" data-testid="Password">
-        Enter New Password
+    <Box data-testid="new-password-setup" p={4} bgcolor="white.main" boxShadow="4" width="40%">
+      <Typography mt={2} variant="h4" component="div" textAlign="center" data-testid="Password">
+        {`Welcome  ${uniqueHpId} ! `}
       </Typography>
+      <Typography
+        mt={2}
+        variant="body1"
+        component="div"
+        textAlign="center"
+        data-testid="Password"
+        pb={1}
+      >
+        {`please set your password `}
+      </Typography>
+
       <Box>
         <Box mt={2}>
           <Typography variant="body1">
@@ -98,7 +110,7 @@ const NewPasswordSetup = () => {
               required: 'Provide Confirm Password',
               validate: (val) => {
                 if (watch('password') !== val) {
-                  return 'Your passwords do no match';
+                  return 'Entered passwords does not match';
                 }
               },
             })}
@@ -122,10 +134,10 @@ const NewPasswordSetup = () => {
         </Box>
       </Box>
       {showSuccess && (
-        <SuccessModal
+        <SuccessModalPopup
           open={showSuccess}
           setOpen={() => setShowSuccess(false)}
-          text={`You have been successfully created the ID ${usernamePayLoad} `}
+          text={`Your password for ${uniqueHpId} has been successfully created `}
           successRegistration={true}
         />
       )}
