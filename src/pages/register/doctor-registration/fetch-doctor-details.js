@@ -340,7 +340,7 @@ function FetchDoctorDetails() {
                     getValues={getValues}
                     required={true}
                     errors={errors}
-                    disabled={showOtpAadhar}
+                    disabled={showOtpAadhar || isOtpValidAadhar}
                   />
                 </Box>
                 <Box p="35px 32px 0px 32px">
