@@ -34,7 +34,7 @@ const ReadRegisterAndAcademicDetails = ({
   const [selected, setSelected] = useState('');
   const [confirmationModal, setConfirmationModal] = useState(false);
 
-  const { userActiveTab } = useSelector((state) => state.common);
+  const { userActiveTab, selectedAcademicStatus } = useSelector((state) => state.common);
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
 
@@ -141,7 +141,7 @@ const ReadRegisterAndAcademicDetails = ({
           >
             Back
           </Button>
-          {userActiveTab === 'dashboard' && (
+          {userActiveTab === 'dashboard' && selectedAcademicStatus?.toUpperCase() === 'PENDING' && (
             <Box mt={2}>
               <PopupState>
                 {(popupState) => (
@@ -162,7 +162,7 @@ const ReadRegisterAndAcademicDetails = ({
                         },
                       }}
                     >
-                      Action <MoreHorizIcon />
+                      Acti <MoreHorizIcon />
                     </Button>
 
                     <Menu {...bindMenu(popupState)}>

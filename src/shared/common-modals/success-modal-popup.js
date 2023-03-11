@@ -22,12 +22,11 @@ export default function SuccessModalPopup({
   };
   const theme = useTheme();
   const dispatch = useDispatch();
-  const navigateSetpassword = () => {
-    navigate('/reset-password');
-  };
+  const navigateSetpassword = () => {};
   const handleCloseModalALL = () => {
     setOpen(false);
     handleClose();
+    window.location.href = '/profile';
     if (SuspensionCall) {
       dispatch(getCardCount());
     }
