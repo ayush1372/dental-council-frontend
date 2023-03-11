@@ -525,6 +525,6 @@ export const applicationStatus = [
   { id: 7, name: 'QUERY RAISED' },
 ];
 export const filterDropDownData = [
-  { id: 'application_type_id', name: 'Application Type' },
+  { id: 'application_type_id', name: 'Type of Application ' },
   { id: 'work_flow_status_id', name: ' Current Status' },
 ];
