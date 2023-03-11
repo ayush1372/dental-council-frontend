@@ -255,7 +255,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
 
   useEffect(() => {
     if (getValues().PostalCode?.length === 6) {
-      getPostalAddress(getValues().PostalCode);
+      dispatch(getPostalAddress(getValues().PostalCode))
+        .then(() => {})
+        .catch((allFailMsg) => {
+          successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+        });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [getValues().PostalCode]);
@@ -611,7 +615,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             </Typography>
           </Grid>
           <Grid item xs={12} md={8}>
-            <Typography variant="subtitle2" color="grey.main">
+            <Typography variant="body1" color="inputTextColor.main">
               Aadhaar verified Address
               <Typography component="span" color="error.main">
                 *
