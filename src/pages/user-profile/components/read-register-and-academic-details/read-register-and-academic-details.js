@@ -18,6 +18,7 @@ import MenuItem from '@mui/material/MenuItem';
 import PopupState, { bindMenu, bindTrigger } from 'material-ui-popup-state';
 import { useSelector } from 'react-redux';
 
+import SuccessModalPopup from '../../../../shared/common-modals/success-modal-popup';
 import SuspendLicenseVoluntaryRetirement from '../../../suspend-license-voluntary-retirement';
 import QualificationDetailsContent from '../readable-content/qualification-details-content';
 import RegistrationDetailsContent from '../readable-content/registration-details-content';
@@ -33,7 +34,8 @@ const ReadRegisterAndAcademicDetails = ({
   const [accordionKey, setAccordionKey] = useState('accordion-0');
   const [selected, setSelected] = useState('');
   const [confirmationModal, setConfirmationModal] = useState(false);
-
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [successPopupMessage, setSuccessPopupMessage] = useState('');
   const { userActiveTab } = useSelector((state) => state.common);
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
@@ -242,6 +244,9 @@ const ReadRegisterAndAcademicDetails = ({
                 handleSubmitDetails={handleSubmitDetails}
                 activeStep={activeStep}
                 handleClose={handleClose}
+                closeActionModal={setConfirmationModal}
+                showSuccessPopup={setShowSuccessPopup}
+                setSuccessPopupMessage={setSuccessPopupMessage}
               />
             </Box>
           ) : (
@@ -249,6 +254,14 @@ const ReadRegisterAndAcademicDetails = ({
           )}
         </Box>
       </Dialog>
+      {showSuccessPopup && (
+        <SuccessModalPopup
+          open={true}
+          setOpen={() => setShowSuccessPopup(false)}
+          text={successPopupMessage}
+          SuspensionCall={true}
+        />
+      )}
     </Box>
   );
 };
