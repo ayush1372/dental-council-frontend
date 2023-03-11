@@ -259,6 +259,12 @@ const EditQualificationDetails = ({
                 maxWidth: 130,
               },
             }}
+            sx={{
+              '.MuiSelect-select': {
+                backgroundColor: 'grey2.main',
+              },
+            }}
+            InputProps={{ readOnly: true }}
           />
           {/* )} */}
         </Grid>

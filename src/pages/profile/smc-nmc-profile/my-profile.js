@@ -1,15 +1,24 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, Grid, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   getNBEProfileDetails,
   getNMCProfileDetails,
   getSMCProfileDetails,
 } from '../../../constants/common-data';
+import { userGroupType } from '../../../helpers/functions/common-functions';
 import CircularLoader from '../../../shared/circular-loader/circular-loader';
+import {
+  getCollegeAdminProfileData,
+  getCollegeDeanProfileData,
+  getCollegeRegistrarProfileData,
+} from '../../../store/actions/college-actions';
+import { getNBEProfileData } from '../../../store/actions/nbe-actions';
+import { getNMCProfileData } from '../../../store/actions/nmc-actions';
+import { getSMCProfileData } from '../../../store/actions/smc-actions';
 import { Button } from '../../../ui/core';
 import NbeEditProfile from '../smc-nmc-editprofiles/nbe-editprofiles';
 import NmcEditProfile from '../smc-nmc-editprofiles/nmc-editprofiles';
@@ -20,6 +29,8 @@ const MyProfile = (props) => {
   const { nmcProfileData } = useSelector((state) => state.nmc);
   const { smcProfileData } = useSelector((state) => state.smc);
   const { nbeData } = useSelector((state) => state.nbe);
+  const { loginData } = useSelector((state) => state.loginReducer);
+  const dispatch = useDispatch();
   const data =
     props.userType === 'SMC'
       ? getSMCProfileDetails(smcProfileData?.data)
@@ -30,6 +41,29 @@ const MyProfile = (props) => {
   const sentDetails = (value) => {
     setShowpage(value);
   };
+
+  useEffect(() => {
+    const getCommonData = () => {
+      // dispatch(getRegistrationCouncilList());
+      // dispatch(getUniversitiesList());
+      const userType = userGroupType(loginData?.data?.user_group_id);
+
+      if (userType === 'College Dean') {
+        dispatch(getCollegeDeanProfileData(loginData?.data?.profile_id));
+      } else if (userType === 'College Registrar') {
+        dispatch(getCollegeRegistrarProfileData(loginData?.data?.profile_id));
+      } else if (userType === 'College Admin') {
+        dispatch(getCollegeAdminProfileData(loginData?.data?.profile_id));
+      } else if (userType === 'State Medical Council') {
+        dispatch(getSMCProfileData(loginData?.data?.profile_id));
+      } else if (userType === 'National Medical Council') {
+        dispatch(getNMCProfileData(loginData?.data?.profile_id));
+      } else if (userType === 'NBE') {
+        dispatch(getNBEProfileData(loginData?.data?.profile_id));
+      }
+    };
+    getCommonData();
+  }, [dispatch, loginData?.data?.profile_id, loginData?.data?.user_group_id]);
 
   return (
     <>

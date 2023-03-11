@@ -284,8 +284,8 @@ const PersonalDetails = ({ personalDetails }) => {
               />
             )}{' '}
           </Grid>
-        </Grid> */}
-        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
+        </Grid>
+        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />} */}
       </Grid>
     </Grid>
   );

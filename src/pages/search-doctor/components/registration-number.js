@@ -6,7 +6,7 @@ import { searchDoctorDetails } from '../../../store/actions/doctor-search-action
 import { Button, TextField } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
 
-const RegistrationNumber = ({ setDoSearch, setSearchData }) => {
+const RegistrationNumber = ({ setDoSearch, setSearchData, setScrollDown }) => {
   const dispatch = useDispatch();
 
   const {
@@ -41,6 +41,7 @@ const RegistrationNumber = ({ setDoSearch, setSearchData }) => {
       });
 
     setSearchData(searchValues);
+    setScrollDown(true);
   };
   return (
     <Grid container spacing={2} mt={2}>

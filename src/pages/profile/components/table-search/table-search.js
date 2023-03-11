@@ -1,19 +1,27 @@
-import SearchIcon from '@mui/icons-material/Search';
-import { Box, Grid, IconButton, InputAdornment } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+// import SearchIcon from '@mui/icons-material/Search';
+import { Box, Grid } from '@mui/material';
+// import { useTheme } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { filterDropDownData } from '../../../../../src/constants/common-data';
 // import { RegistrationCouncilNames } from '../../../../constants/common-data';
 import { createEditFieldData } from '../../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../../shared/autocomplete/searchable-dropdown';
 import ExportFiles from '../../../../shared/export-component/export-file';
-import { Button, Select, TextField } from '../../../../ui/core';
+import { getDoctorTrackApplicationData } from '../../../../store/actions/doctor-user-profile-actions';
+import { Button, TextField } from '../../../../ui/core';
 
 export function TableSearch({ trackApplication, activateLicence, searchParams, exportData, flag }) {
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const { councilNames } = useSelector((state) => state.common);
-  const theme = useTheme();
+  const profileId = useSelector((state) => state.loginReducer.loginData.data.profile_id);
+  const dispatch = useDispatch();
+  // const theme = useTheme();
+  let trackData = {
+    pageNo: 1,
+    offset: 10,
+  };
   const {
     register,
     handleSubmit,
@@ -30,9 +38,25 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
       registrationCouncil: '',
       RegistrationCouncilId: '',
       search: '',
+      FilterValue: '',
+      Filter: '',
+      FilterId: '',
     },
   });
-  const onClickFilterButtonHandler = (data) => {
+  const onClickSearchButtonHandler = (data) => {
+    if (
+      trackApplication &&
+      getValues().FilterId !== '' &&
+      getValues().FilterId !== undefined &&
+      getValues().FilterId !== null &&
+      getValues().FilterValue !== '' &&
+      getValues().FilterValue !== undefined &&
+      getValues().FilterValue !== null
+    ) {
+      trackData.search = getValues().FilterId;
+      trackData.value = getValues().FilterValue;
+      dispatch(getDoctorTrackApplicationData(profileId, trackData));
+    }
     searchParams(data);
     reset({
       filterByName: '',
@@ -43,16 +67,18 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
     });
   };
 
-  const onClickSearchButtonHandler = (data) => {
-    searchParams(data);
-    reset({
-      filterByName: '',
-      filterByRegNo: '',
-      registrationCouncil: '',
-      RegistrationCouncilId: '',
-      search: '',
-    });
-  };
+  // const onClickSearchButtonHandler = (data) => {
+  //   trackData.search = data.search;
+  //   searchParams(data);
+  //   dispatch(getDoctorTrackApplicationData(trackData));
+  //   reset({
+  //     filterByName: '',
+  //     filterByRegNo: '',
+  //     registrationCouncil: '',
+  //     RegistrationCouncilId: '',
+  //     search: '',
+  //   });
+  // };
 
   return (
     <Box data-testid="table-search" mb={2}>
@@ -63,7 +89,7 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
           xs={12}
           mb={{ xs: 1, sm: 0 }}
         >
-          <TextField
+          {/* <TextField
             sx={{ mt: 1 }}
             data-testid="freesearch"
             inputProps={{ maxLength: 100 }}
@@ -94,7 +120,7 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
                 </InputAdornment>
               ),
             }}
-          />
+          /> */}
         </Grid>
 
         <Grid item md={trackApplication ? 7 : activateLicence ? 8 : 10} xs={12}>
@@ -102,31 +128,57 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
             {trackApplication === true && (
               <>
                 <Grid item md={3} xs={12} ml="auto">
-                  <Select
+                  <SearchableDropdown
+                    fullWidth
+                    name="Filter"
+                    items={createEditFieldData(filterDropDownData)}
+                    placeholder=""
+                    clearErrors={clearErrors}
+                    {...register('Filter')}
+                    onChange={(currentValue) => {
+                      setValue('FilterId', currentValue.id);
+                    }}
+                  />
+                  {/* <Select
                     error={errors.Filter?.message}
                     name="Filter"
                     defaultValue={getValues().Filter}
                     placeholder="All Applications"
-                    options={[
-                      {
-                        label: 'Application',
-                        value: 'Application',
-                      },
-                    ]}
-                  />
+                    options={createSelectFieldData(filterDropDownData)}
+                    
+                  /> */}
                 </Grid>
                 <Grid item md={3} xs={12}>
-                  <Select
+                  <TextField
+                    sx={{
+                      color: 'inputTextColor.main',
+                      '.MuiOutlinedInput-root': {
+                        borderRadius: '3px',
+                      },
+                      input: {
+                        letterSpacing: 0,
+                      },
+                    }}
+                    variant="outlined"
+                    name={'FilterValue'}
+                    placeholder=""
+                    fullWidth
+                    defaultValue={getValues().FilterValue}
+                    {...register('FilterValue', {
+                      // required: 'Doctor Name is Required',
+                      // maxLength: {
+                      //   value: 100,
+                      //   message: 'Length should be less than 100.',
+                      // },
+                    })}
+                    error={errors.FilterValue?.message}
+                  />
+                  {/* <Select
                     error={errors.Date?.message}
                     name="Date"
                     defaultValue={getValues().Date}
-                    options={[
-                      {
-                        label: '01-01-0001',
-                        value: '01-01-0001',
-                      },
-                    ]}
-                  />
+                    options={createSelectFieldData(applicationStatus)}
+                  /> */}
                 </Grid>
               </>
             )}
@@ -181,7 +233,7 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
                 />
               </Grid>
             )}
-            {trackApplication !== true && (
+            {(trackApplication !== true || trackApplication === true) && (
               <Grid item md="auto" xs={12}>
                 <Button
                   data-testid="filterButton"
@@ -196,9 +248,9 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
                     },
                   }}
                   variant="contained"
-                  onClick={handleSubmit(onClickFilterButtonHandler)}
+                  onClick={handleSubmit(onClickSearchButtonHandler)}
                 >
-                  Filter
+                  Search
                 </Button>
               </Grid>
             )}

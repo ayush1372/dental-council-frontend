@@ -568,6 +568,50 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               })}
             />
           </Grid>
+
+          {/*Author: Mahalingam V S
+            Reason: As suggestion given in CEO meeting.
+            Date:09/03/2023
+          <Grid item xs={12} md={4}>
+            <Typography variant="body1" color="inputTextColor.main">
+              Language Spoken
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+            </Typography>
+            <AutoComplete
+              name="LanguageSpoken"
+              options={languagesList?.data || []}
+              value={getValues().LanguageSpoken}
+              error={languages?.length === 0 && errors.LanguageSpoken?.message}
+              multiple={true}
+              {...register('LanguageSpoken')}
+              onChange={(value) => {
+                handleLanguageSpokenChange('LanguageSpoken', value);
+              }}
+            />
+          </Grid>*/}
+          {false && (
+            <Grid item xs={12} md={4}>
+              <Typography color="inputTextColor.main" variant="body1">
+                Schedule
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
+              </Typography>
+              <Select
+                fullWidth
+                error={errors.Schedule?.message}
+                name="Schedule"
+                defaultValue={getValues().Schedule}
+                required={true}
+                {...register('Schedule', {
+                  required: 'Schedule is required',
+                })}
+                options={createSelectFieldData(schedules)}
+              />
+            </Grid>
+          )}
         </Grid>
 
         {/*Layer 2*/}
@@ -857,7 +901,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 {...register('District', {
                   required: 'District is required',
                 })}
-                options={createSelectFieldData(districtsList)}
+                options={createSelectFieldData(districtsList, 'id')}
                 MenuProps={{
                   style: {
                     maxHeight: 250,
@@ -898,7 +942,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 {...register('SubDistrict', {
                   required: 'District is required',
                 })}
-                options={createSelectFieldData(subDistrictList)}
+                options={createSelectFieldData(subDistrictList, 'id')}
                 MenuProps={{
                   style: {
                     maxHeight: 250,

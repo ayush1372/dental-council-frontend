@@ -93,6 +93,19 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
             consent at any point of time, subject to applicable laws, rules and regulations.
           </Typography>
         </Box>
+        <Box bgcolor="backgroundColor.light" p={2} display="flex">
+          <Checkbox
+            name="HPR"
+            // {...register('consent', {
+            //   required: 'Consent is Required',
+            // })}
+            // error={errors.consent?.message}
+          />
+
+          <Typography component="div" mt={1} variant="body5">
+            I want to save time and create HPR. This needs to be added.
+          </Typography>
+        </Box>
         <Grid container mt={3}>
           <Grid item xs={12} md>
             <Button
