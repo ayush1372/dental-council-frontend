@@ -3,20 +3,22 @@ import { useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { encryptData } from '../../../helpers/functions/common-functions';
-import { forgotPassword } from '../../../store/actions/forgot-password-actions';
+import { setUserPassword } from '../../../store/actions/doctor-registration-actions';
 import { Button, TextField } from '../../../ui/core';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 import SuccessModal from '../../register/doctor-registration/success-popup';
 
-const NewPasswordSetup = ({ handlePasswordSetup }) => {
+const NewPasswordSetup = () => {
   const [showSuccess, setShowSuccess] = useState();
-  const params = useParams();
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const { hprIdDataDetails } = useSelector((state) => state?.doctorRegistration);
+  const registrationNumber = useSelector(
+    (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.registration_number
+  );
+  let usernamePayLoad = hprIdDataDetails?.data?.hprId?.replace('@hpr.abdm', '');
   const {
     register,
     handleSubmit,
@@ -31,12 +33,15 @@ const NewPasswordSetup = ({ handlePasswordSetup }) => {
     },
   });
   const onSubmit = () => {
-    handlePasswordSetup();
-    const data = {
-      token: params.request_id,
-      password: encryptData(getValues().password, process.env.REACT_APP_PASS_SITE_KEY),
+    const reqObj = {
+      email: null,
+      mobile: hprIdDataDetails?.data?.mobile,
+      username: usernamePayLoad,
+      registration_number: registrationNumber,
+      password: getValues().password,
     };
-    dispatch(forgotPassword(data)).then(() => {
+    alert(reqObj);
+    dispatch(setUserPassword(reqObj)).then(() => {
       setShowSuccess(true);
     });
   };
@@ -116,7 +121,14 @@ const NewPasswordSetup = ({ handlePasswordSetup }) => {
           </Button>
         </Box>
       </Box>
-      {showSuccess && <SuccessModal />}
+      {showSuccess && (
+        <SuccessModal
+          open={showSuccess}
+          setOpen={() => setShowSuccess(false)}
+          text={`You have been successfully created the ID ${usernamePayLoad} `}
+          successRegistration={true}
+        />
+      )}
     </Box>
   );
 };
