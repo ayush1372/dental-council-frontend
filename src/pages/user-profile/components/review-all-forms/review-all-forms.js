@@ -6,7 +6,7 @@ import { Box, Tab, Tabs } from '@mui/material';
 // import { useTranslation } from 'react-i18next';
 import ReadPersonalDetails from '../read-personal-details/read-personal-details';
 import ReadRegisterAndAcademicDetails from '../read-register-and-academic-details/read-register-and-academic-details';
-import ReadWorkProfile from '../read-work-profile/read-work-profile';
+// import ReadWorkProfile from '../read-work-profile/read-work-profile';
 
 const ReviewAllForms = () => {
   const [tabValue, setTabValue] = useState(0);
@@ -49,7 +49,7 @@ const ReviewAllForms = () => {
         >
           <Tab label="Personal Details" />
           <Tab label="Registration And Academic Details" />
-          <Tab label="Work Details" />
+          {/* <Tab label="Work Details" /> */}
         </Tabs>
       </Box>
       <Box
@@ -60,7 +60,7 @@ const ReviewAllForms = () => {
       >
         {tabValue === 0 && <ReadPersonalDetails showActions={false} />}
         {tabValue === 1 && <ReadRegisterAndAcademicDetails showActions={false} />}
-        {tabValue === 2 && <ReadWorkProfile showActions={false} />}
+        {/* {tabValue === 2 && <ReadWorkProfile showActions={false} />} */}
       </Box>
     </Box>
   );
