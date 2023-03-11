@@ -30,7 +30,6 @@ export const sendAaadharOtp = (aadhaar) => async (dispatch) => {
   });
 };
 export const getDemographicAuthMobile = (data) => async (dispatch) => {
-  // let type = 'aadhaar';
   return await new Promise((resolve, reject) => {
     hpIdUseAxiosCall({
       method: POST,
@@ -39,8 +38,6 @@ export const getDemographicAuthMobile = (data) => async (dispatch) => {
       headers: { Authorization: 'Bearer ' + accesstokenHprId },
     })
       .then((response) => {
-        // eslint-disable-next-line no-console
-        console.log('mobile num', response);
         dispatch(demographicAuthMobileDetails(response));
       })
       .catch((error) => {
