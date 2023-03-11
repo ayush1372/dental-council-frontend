@@ -124,8 +124,8 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
                 dispatch(getUniversitiesList());
                 navigate(`/profile`);
               })
-              .catch((error) => {
-                successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+              .catch(() => {
+                // successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
               });
           } else {
             successToast(
@@ -165,8 +165,8 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
                 dispatch(getUniversitiesList());
                 navigate(`/profile`);
               })
-              .catch((error) => {
-                successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+              .catch(() => {
+                // successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
               });
           } else {
             successToast(
