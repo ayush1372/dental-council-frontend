@@ -9,7 +9,7 @@ import { searchDoctorDetails } from '../../../store/actions/doctor-search-action
 import { Button, Select, TextField } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
 
-const SuspendedDoctor = ({ setDoSearch, setSearchData }) => {
+const SuspendedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
   const { councilNames } = useSelector((state) => state.common);
   const dispatch = useDispatch();
   const {
@@ -41,6 +41,7 @@ const SuspendedDoctor = ({ setDoSearch, setSearchData }) => {
 
     setDoSearch(true);
     setSearchData(searchValues);
+    setScrollDown(true);
     dispatch(searchDoctorDetails(searchValues))
       .then(() => {})
       .catch((error) => {

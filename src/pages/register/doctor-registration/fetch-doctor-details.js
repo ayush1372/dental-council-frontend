@@ -314,7 +314,7 @@ function FetchDoctorDetails() {
               <Divider sx={{ mb: 4, mt: 4 }} variant="fullWidth" />
 
               <Box sx={{ marginTop: '20px', paddingBottom: '48px' }}>
-                <Typography variant="body3">
+                <Typography variant="subtitle2">
                   Mobile Number
                   <Typography component="span" sx={{ color: 'error.main' }}>
                     *
