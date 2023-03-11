@@ -29,21 +29,9 @@ const loginReducer = createSlice({
     },
     loginUser: (state, action) => {
       state.loginData = action.payload;
-      JSON.stringify(
-        localStorage.setItem('accesstoken', action.payload.responseHeader['access-token'])
-      );
-      JSON.stringify(
-        localStorage.setItem('refreshtoken', action.payload.responseHeader['refresh-token'])
-      );
     },
     refreshTokenApi: (state, action) => {
       state.loginData = action.payload;
-      JSON.stringify(
-        localStorage.setItem('accesstoken', action.payload.responseHeader['access-token'])
-      );
-      JSON.stringify(
-        localStorage.setItem('refreshtoken', action.payload.responseHeader['refresh-token'])
-      );
     },
   },
 });
