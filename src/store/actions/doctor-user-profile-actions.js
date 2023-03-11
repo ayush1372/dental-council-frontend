@@ -157,16 +157,6 @@ export const getUserProfileImage = (hp_profile_id, file) => async (dispatch) => 
 };
 
 export const getDoctorTrackApplicationData = (doctor_profile_id, trackData) => async (dispatch) => {
-  // let path = '';
-  // if (trackData.search !== undefined && trackData.search !== null && trackData.search !== '') {
-  //   path += '&search=' + trackData.search;
-  // }
-  // if (trackData.value !== undefined && trackData.value !== null && trackData.value !== '') {
-  //   path += '&value=' + trackData.value;
-  // }
-  // // eslint-disable-next-line no-console
-  // console.log('path is ===', path);
-
   let path = '';
   if (trackData.search !== undefined && trackData.search !== null && trackData.search !== '') {
     if (path === '') {
@@ -189,8 +179,7 @@ export const getDoctorTrackApplicationData = (doctor_profile_id, trackData) => a
   if (trackData.offset !== undefined && trackData.offset !== null && trackData.offset !== '') {
     path += '&size=' + trackData.offset;
   }
-  // eslint-disable-next-line no-console
-  console.log('final url is ', path);
+
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,
@@ -198,14 +187,6 @@ export const getDoctorTrackApplicationData = (doctor_profile_id, trackData) => a
         '{healthProfessionalId}',
         doctor_profile_id
       )}?${path}`,
-      // url: `${API.DoctorUserProfileData.trackApplicationData.replace(
-      //   '{healthProfessionalId}',
-      //   doctor_profile_id
-      // )}?pageNo=${trackData.pageNo}&offset=${trackData.offset}`,
-      // url: API.DoctorUserProfileData.trackApplicationData.replace(
-      //   '{healthProfessionalId}',
-      //   doctor_profile_id
-      // ),
     })
       .then((response) => {
         dispatch(

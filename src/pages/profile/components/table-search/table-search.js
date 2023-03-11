@@ -44,8 +44,6 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
     },
   });
   const onClickSearchButtonHandler = (data) => {
-    // eslint-disable-next-line no-console
-    console.log('on click of search button', getValues().FilterId, getValues().FilterValue);
     if (
       trackApplication &&
       getValues().FilterId !== '' &&
