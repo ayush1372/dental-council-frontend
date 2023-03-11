@@ -15,6 +15,7 @@ export default function SuccessModalPopup({
   SuspensionCall,
   isHpIdCreated,
   successRegistration,
+  existHprId,
 }) {
   const navigate = useNavigate();
   const handleCloseModal = () => {
@@ -24,6 +25,10 @@ export default function SuccessModalPopup({
   const dispatch = useDispatch();
   const navigateSetpassword = () => {
     navigate('/reset-password');
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
   const handleCloseModalALL = () => {
     setOpen(false);
@@ -33,7 +38,7 @@ export default function SuccessModalPopup({
     }
   };
   const navigateLogin = () => {
-    navigate('/');
+    navigate('/login-page', { state: { loginFormname: 'Doctor' } });
   };
   return (
     <Modal open={open} onClose={handleClose} sx={{ mt: 15 }}>
@@ -94,7 +99,11 @@ export default function SuccessModalPopup({
                 : handleCloseModal
             }
           >
-            Ok
+            {successRegistration
+              ? 'Continue to login'
+              : existHprId
+              ? 'Continue to set password'
+              : 'Ok'}
           </Button>
         </Box>
       </Container>
