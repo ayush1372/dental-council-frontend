@@ -40,7 +40,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   );
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
 
-  const { loginData } = useSelector((state) => state?.loginReducer);
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { registration_detail_to } = registrationDetails || {};
   const {
@@ -161,7 +160,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
       updateDoctorRegistrationDetails(
         formData,
         loggedInUserType === 'Doctor'
-          ? loginData?.data?.profile_id
+          ? registrationDetails?.hp_profile_id
           : loggedInUserType === 'SMC' && personalDetails?.hp_profile_id
       )
     ).then(() => {
