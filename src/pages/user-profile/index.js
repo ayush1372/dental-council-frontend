@@ -42,7 +42,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
 
   useEffect(() => {
     if (personalDetails?.hp_profile_status_id === 1) {
-      setIsApplicationPending(false);
+      setIsApplicationPending(true);
     }
   }, [personalDetails?.hp_profile_status_id]);
   const { activeStep, handleNext, handleBack, resetStep } = useWizard(

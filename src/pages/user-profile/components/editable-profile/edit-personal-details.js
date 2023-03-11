@@ -36,7 +36,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   // eslint-disable-next-line no-unused-vars
   // const [languages, setLanguages] = useState([]);
   const [isSameAddress, setIsSameAddress] = useState(
-    personalDetails?.communication_address?.is_same_address
+    personalDetails?.communication_address?.is_same_address || false
   );
   const { personal_details, communication_address, imr_details } = personalDetails || {};
   const {
@@ -698,8 +698,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             </Grid>
             <Box p={2} display="flex">
               <Checkbox
-                defaultChecked={personalDetails?.communication_address?.is_same_address}
-                checked={isSameAddress}
+                defaultChecked={personalDetails?.communication_address?.is_same_address || false}
                 error={errors.Address?.message}
                 onChange={(e) => {
                   setIsSameAddress(e.target.checked);
