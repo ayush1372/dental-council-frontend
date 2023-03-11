@@ -42,7 +42,7 @@ const ProgressBar = ({ activeStep, steps, progress }) => {
   verboseLog('steps', steps);
 
   return (
-    <Container backgroundColor="white">
+    <Container backgroundColor="white" sx={{ width: '100%' }}>
       {progress !== false ? (
         <LinearProgressWithLabel activeStep={activeStep} value={progress} pb={2} />
       ) : (

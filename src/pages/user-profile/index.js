@@ -14,6 +14,7 @@ import {
   getRegistrationDetailsData,
   // getWorkProfileDetailsData,
 } from '../../store/actions/doctor-user-profile-actions';
+import BreadcrumbContainer from '../../ui/core/breadcrumb/breadcrumb';
 import { Button } from '../../ui/core/button/button';
 import successToast from '../../ui/core/toaster';
 import Wizard from '../../ui/core/wizard';
@@ -215,6 +216,13 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
                   />
                 )}
               </Box>
+              {!isReadMode && (
+                <BreadcrumbContainer
+                  primary="My Profile"
+                  primaryLink={'/profile'}
+                  secondary={'Edit Profile'}
+                />
+              )}
             </Grid>
 
             {loggedInUserType === 'Doctor' && (
