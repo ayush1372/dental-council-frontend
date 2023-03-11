@@ -1,6 +1,6 @@
-import SearchIcon from '@mui/icons-material/Search';
-import { Box, Grid, IconButton, InputAdornment } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+// import SearchIcon from '@mui/icons-material/Search';
+import { Box, Grid } from '@mui/material';
+// import { useTheme } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -17,10 +17,13 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
   exportData?.map((data) => {
     applicationData.push(data.application_type_name);
   });
+  // eslint-disable-next-line no-console
+  console.log('in table serach props valeus ', exportData, trackApplication);
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const { councilNames } = useSelector((state) => state.common);
+  const profileId = useSelector((state) => state.loginReducer.loginData.data.profile_id);
   const dispatch = useDispatch();
-  const theme = useTheme();
+  // const theme = useTheme();
   let trackData = {
     pageNo: 1,
     offset: 10,
@@ -46,7 +49,22 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
       FilterId: '',
     },
   });
-  const onClickFilterButtonHandler = (data) => {
+  const onClickSearchButtonHandler = (data) => {
+    // eslint-disable-next-line no-console
+    console.log('on click of search button', getValues().FilterId, getValues().FilterValue);
+    if (
+      trackApplication &&
+      getValues().FilterId !== '' &&
+      getValues().FilterId !== undefined &&
+      getValues().FilterId !== null &&
+      getValues().FilterValue !== '' &&
+      getValues().FilterValue !== undefined &&
+      getValues().FilterValue !== null
+    ) {
+      trackData.search = getValues().FilterId;
+      trackData.value = getValues().FilterValue;
+      dispatch(getDoctorTrackApplicationData(profileId, trackData));
+    }
     searchParams(data);
     reset({
       filterByName: '',
@@ -57,18 +75,18 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
     });
   };
 
-  const onClickSearchButtonHandler = (data) => {
-    trackData.search = data.search;
-    searchParams(data);
-    dispatch(getDoctorTrackApplicationData(trackData));
-    reset({
-      filterByName: '',
-      filterByRegNo: '',
-      registrationCouncil: '',
-      RegistrationCouncilId: '',
-      search: '',
-    });
-  };
+  // const onClickSearchButtonHandler = (data) => {
+  //   trackData.search = data.search;
+  //   searchParams(data);
+  //   dispatch(getDoctorTrackApplicationData(trackData));
+  //   reset({
+  //     filterByName: '',
+  //     filterByRegNo: '',
+  //     registrationCouncil: '',
+  //     RegistrationCouncilId: '',
+  //     search: '',
+  //   });
+  // };
 
   return (
     <Box data-testid="table-search" mb={2}>
@@ -79,7 +97,7 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
           xs={12}
           mb={{ xs: 1, sm: 0 }}
         >
-          <TextField
+          {/* <TextField
             sx={{ mt: 1 }}
             data-testid="freesearch"
             inputProps={{ maxLength: 100 }}
@@ -110,7 +128,7 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
                 </InputAdornment>
               ),
             }}
-          />
+          /> */}
         </Grid>
 
         <Grid item md={trackApplication ? 7 : activateLicence ? 8 : 10} xs={12}>
@@ -126,7 +144,6 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
                     clearErrors={clearErrors}
                     {...register('Filter')}
                     onChange={(currentValue) => {
-                      alert(currentValue.id);
                       setValue('FilterId', currentValue.id);
                     }}
                   />
@@ -239,9 +256,9 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
                     },
                   }}
                   variant="contained"
-                  onClick={handleSubmit(onClickFilterButtonHandler)}
+                  onClick={handleSubmit(onClickSearchButtonHandler)}
                 >
-                  Filter
+                  Search
                 </Button>
               </Grid>
             )}
