@@ -410,6 +410,13 @@ export const ActivateLicence = [
   { header: 'Remark', key: 'remarks' },
   { header: 'RequestId', key: 'request_id' },
 ];
+export const TrackApplication = [
+  { header: 'Request ID', key: 'request_id' },
+  { header: 'Type of Application', key: 'application_type_name' },
+  { header: 'Date of Submission', key: 'created_at' },
+  { header: 'Current Status', key: 'doctor_status' },
+  { header: 'Pendency', key: 'pendency' },
+];
 
 export const searchDoctorResult = [
   {
@@ -527,4 +534,19 @@ export const applicationStatus = [
 export const filterDropDownData = [
   { id: 'application_type_id', name: 'Type of Application ' },
   { id: 'work_flow_status_id', name: ' Current Status' },
+];
+
+export const CollegeApprovalFieldList = [
+  { id: 'college_name', name: 'College Name' },
+  { id: 'council_name', name: 'Council Name' },
+];
+
+export const ActivateLicenceFieldList = [
+  { id: 'health_professional_name', name: 'Health Professional Name' },
+];
+
+export const DashBoardCardsFieldList = [
+  { id: 'registration_no', name: 'Registration Number' },
+  { id: 'applicant_full_name', name: 'Applicant Full Name' },
+  { id: 'council_name', name: 'Council Name' },
 ];

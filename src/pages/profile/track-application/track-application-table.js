@@ -103,8 +103,6 @@ function TrackAppicationTable({
   };
 
   const viewCallback = (event, row) => {
-    // eslint-disable-next-line no-console
-    console.log('row is', row);
     setShowTrackApplication(true);
     setShowTrackApplicationTable(false);
     event.preventDefault();
