@@ -915,7 +915,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 error={errors.District?.message}
                 name="District"
                 defaultValue={getValues().District}
-                value={getValues().District}
                 required={true}
                 disabled={isSameAddress}
                 sx={{
