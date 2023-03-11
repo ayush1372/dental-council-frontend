@@ -94,6 +94,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     name: 'qualification',
   });
 
+  const isRenewable = watch('registration');
+
   const onHandleSave = (moveToNext = false) => {
     const {
       RegisteredWithCouncil,
@@ -334,33 +336,35 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               error={errors.registration?.message}
             />
           </Grid>
-          <Grid item xs={12} md={4}>
-            <Typography variant="subtitle2" color="inputTextColor.main">
-              Due Date of Renewal
-              <Typography component="span" color="error.main">
-                *
+          {isRenewable === '1' && (
+            <Grid item xs={12} md={4}>
+              <Typography variant="subtitle2" color="inputTextColor.main">
+                Due Date of Renewal
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
               </Typography>
-            </Typography>
 
-            <TextField
-              variant="outlined"
-              name={'RenewalDate'}
-              required={true}
-              fullWidth
-              defaultValue={getValues().RenewalDate}
-              {...register('RenewalDate', {
-                required: 'Registration Date is Required',
-              })}
-              sx={{
-                input: {
-                  backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
-                },
-              }}
-              InputProps={{
-                readOnly: loggedInUserType === 'SMC' ? false : true,
-              }}
-            />
-          </Grid>
+              <TextField
+                variant="outlined"
+                name={'RenewalDate'}
+                required={true}
+                fullWidth
+                defaultValue={getValues().RenewalDate}
+                {...register('RenewalDate', {
+                  required: 'Registration Date is Required',
+                })}
+                sx={{
+                  input: {
+                    backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
+                  },
+                }}
+                InputProps={{
+                  readOnly: loggedInUserType === 'SMC' ? false : true,
+                }}
+              />
+            </Grid>
+          )}
         </Grid>
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={6}>

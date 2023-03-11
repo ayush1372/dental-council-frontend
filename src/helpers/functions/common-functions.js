@@ -128,6 +128,10 @@ export const workSheetTheme = {
   bgColor: { argb: '#ffffcc00' },
 };
 
+export const replaceString = (original = '', replacement = '', withReplace = '') => {
+  return original.replace(replacement, withReplace);
+};
+
 export const parserJWT = (token) => {
   let base64Url = token?.split('.')[1];
   let base64 = base64Url?.replace(/-/g, '+').replace(/_/g, '/');
