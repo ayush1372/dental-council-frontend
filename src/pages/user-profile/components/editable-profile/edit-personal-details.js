@@ -10,6 +10,7 @@ import { createSelectFieldData } from '../../../../helpers/functions/common-func
 import {
   getCitiesList,
   getDistrictList,
+  getPostalAddress,
   getSubDistrictsList,
 } from '../../../../store/actions/common-actions';
 import {
@@ -27,8 +28,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const loggedInUserType = useSelector((state) => state?.common?.loggedInUserType);
 
   // eslint-disable-next-line no-unused-vars
-  const { statesList, countriesList, districtsList, subDistrictList, citiesList, languagesList } =
-    useSelector((state) => state?.common);
+  const { statesList, countriesList, districtsList, subDistrictList, citiesList } = useSelector(
+    (state) => state?.common
+  );
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
 
   // eslint-disable-next-line no-unused-vars
@@ -235,6 +237,28 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   useEffect(() => {
     fetchCities(selectedSubDistrict);
   }, [selectedSubDistrict]);
+
+  useEffect(() => {
+    if (isSameAddress) {
+      setValue('State', personalDetails?.kyc_address?.state?.id);
+      setValue('District', personalDetails?.kyc_address?.district?.id);
+      setValue('SubDistrict', personalDetails?.kyc_address?.sub_district?.id);
+      setValue('Area', personalDetails?.kyc_address?.village?.id);
+    } else {
+      setValue('State', personalDetails?.communication_address?.state?.id);
+      setValue('District', personalDetails?.communication_address?.District?.id);
+      setValue('SubDistrict', personalDetails?.communication_address?.sub_district?.id);
+      setValue('Area', personalDetails?.communication_address?.village?.id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSameAddress]);
+
+  useEffect(() => {
+    if (getValues().PostalCode?.length === 6) {
+      getPostalAddress(getValues().PostalCode);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [getValues().PostalCode]);
 
   const fetchUpdatedDoctorUserProfileData = (personalDetails) => {
     dispatch(updateDoctorPersonalDetails(personalDetails, personalDetails?.hp_profile_id))
@@ -631,20 +655,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 error={errors.Address?.message}
                 onChange={(e) => {
                   setIsSameAddress(e.target.checked);
-                  if (e.target.checked) {
-                    setValue('State', personalDetails?.kyc_address?.state?.id);
-                    setValue('District', personalDetails?.kyc_address?.district?.id);
-                    setValue('SubDistrict', personalDetails?.kyc_address?.sub_district?.id);
-                    setValue('Area', personalDetails?.kyc_address?.village?.id);
-                  } else {
-                    setValue('State', personalDetails?.communication_address?.state?.id);
-                    setValue('District', personalDetails?.communication_address?.District?.id);
-                    setValue(
-                      'SubDistrict',
-                      personalDetails?.communication_address?.sub_district?.id
-                    );
-                    setValue('Area', personalDetails?.communication_address?.village?.id);
-                  }
                 }}
               />
               <Typography component="div" mt={1} variant="body7" color="textPrimary.main">
@@ -761,7 +771,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                     backgroundColor: isSameAddress ? 'grey2.main' : '',
                   },
                 }}
-                required={false}
+                // required={false}
                 fullWidth
                 defaultValue={
                   isSameAddress ? personalDetails?.kyc_address?.locality : getValues().Locality
@@ -770,11 +780,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                   isSameAddress ? personalDetails?.kyc_address?.locality : getValues().locality
                 }
                 {...register('Locality', {
-                  required: 'Locality is Required',
-                  maxLength: {
-                    value: 300,
-                    message: 'Length should be less than 300.',
-                  },
+                  // required: 'Locality is Required',
+                  // maxLength: {
+                  //   value: 300,
+                  //   message: 'Length should be less than 300.',
+                  // },
                 })}
               />
             </Grid>
@@ -881,11 +891,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 Sub District
-                <Typography component="span" color="error.main">
-                  *
-                </Typography>
               </Typography>
-
               <Select
                 fullWidth
                 error={errors.SubDistrict?.message}
@@ -899,9 +905,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 }}
                 defaultValue={getValues().SubDistrict}
                 value={getValues().SubDistrict}
-                {...register('SubDistrict', {
-                  required: 'District is required',
-                })}
+                {...register('SubDistrict')}
                 options={createSelectFieldData(subDistrictList)}
                 MenuProps={{
                   style: {
@@ -916,9 +920,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 City/Town/Village
-                <Typography component="span" color="error.main">
-                  *
-                </Typography>
               </Typography>
               <Select
                 fullWidth
@@ -933,9 +934,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 value={getValues().Area}
                 disabled={isSameAddress}
                 required={true}
-                {...register('Area', {
-                  required: 'City/Town/Village is required',
-                })}
+                {...register('Area')}
                 options={createSelectFieldData(citiesList)}
                 MenuProps={{
                   style: {
@@ -966,9 +965,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 defaultValue={
                   isSameAddress ? personalDetails?.kyc_address?.pincode : getValues().PostalCode
                 }
-                value={
-                  isSameAddress ? personalDetails?.kyc_address?.pincode : getValues().PostalCode
-                }
+                // onChange={(e) => {
+                //   alert(e.target.value);
+                // }}
                 disabled={isSameAddress}
                 {...register('PostalCode', {
                   required: 'PostalCode is Required',

@@ -36,6 +36,7 @@ export const API = {
     healthProfessionalApplicationStatus: 'api/v1/abdm/nmr/health-professional/applications/status',
     suspend: 'api/v1/abdm/nmr/health-professional/applications/suspend',
     enableNotification: '/api/v1/abdm/nmr/user/enable-notification',
+    LGDService: '/api/v1/abdm/nmr/health-professional/lgd/search?pinCode=',
   },
   college: {
     registrar: 'api/v1/abdm/nmr/college/{collegeId}/registrar',
