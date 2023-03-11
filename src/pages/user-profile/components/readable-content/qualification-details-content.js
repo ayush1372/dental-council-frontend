@@ -13,6 +13,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
     setOpenModal(false);
   };
   const { userActiveTab } = useSelector((state) => state.common);
+  const { qualification_detail_response_tos } = registrationDetails || {};
   const {
     country,
     state,
@@ -22,13 +23,13 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
     qualification_month,
     qualification_year,
     // is_name_change,
-  } = registrationDetails?.[0] || {};
+  } = qualification_detail_response_tos?.[0] || {};
 
   const countryName = country?.name || '';
   const stateName = state?.name || '';
   const collegeName = college?.name || '';
   const universityName = university?.name || '';
-  const courseName = course?.name || '';
+  const courseName = course?.course_name || '';
 
   return (
     <Grid container spacing={2} mt={2}>
@@ -148,7 +149,8 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="primary.main">
-              {qualification_month ? qualification_month : ''}
+              {qualification_month ? qualification_month : ''} ,{' '}
+              {qualification_year ? qualification_year : ''}
             </Typography>{' '}
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
@@ -159,9 +161,6 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
             )}
           </Grid>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
-              {qualification_year ? qualification_year : ''}
-            </Typography>{' '}
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
                 color="primary"
@@ -173,16 +172,6 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
         </Grid>
       </Grid>
       <Grid container item spacing={2} mt={1}>
-        {/* <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
-            Year of awarding Degree/Diploma
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
-          </Typography>
-
-          
-        </Grid> */}
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
             Upload Qualification Degree
@@ -195,26 +184,6 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
             View attachment
           </Typography>
         </Grid>
-        {/* <Grid item xs={12} md={6}>
-          <Typography variant="subtitle2" color="grey.label">
-            Is your name in registration certificate, different from your name in Aadhaar?
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
-          </Typography>
-          <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
-              {is_name_change === 0 ? 'Yes' : is_name_change === 1 ? 'No' : ''}
-            </Typography>
-            {userActiveTab === 'dashboard' && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => setOpenModal(true)}
-                fontSize="width30"
-              />
-            )}
-          </Grid>
-        </Grid> */}
       </Grid>
     </Grid>
   );

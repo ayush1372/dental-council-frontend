@@ -9,6 +9,10 @@ import {
   smcTabs,
 } from '../components/sidebar-drawer-list-item';
 
+export function dateFormat(s) {
+  var b = s.split(/\D/);
+  return b.reverse().join('-');
+}
 export function get_year_data(startYear = 1900) {
   var ans = [];
   var date = new Date();
@@ -122,4 +126,32 @@ export const workSheetTheme = {
   pattern: 'darkTrellis',
   fgColor: { argb: 'FFFFFF00' },
   bgColor: { argb: '#ffffcc00' },
+};
+
+export const replaceString = (original = '', replacement = '', withReplace = '') => {
+  return original.replace(replacement, withReplace);
+};
+
+export const parserJWT = (token) => {
+  let base64Url = token?.split('.')[1];
+  let base64 = base64Url?.replace(/-/g, '+').replace(/_/g, '/');
+  if (base64) {
+    let jsonPayload = decodeURIComponent(
+      window
+        ?.atob(base64)
+        ?.split('')
+        ?.map(function (c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        ?.join('')
+    );
+
+    return JSON.parse(jsonPayload);
+  } else {
+    return false;
+  }
+};
+
+export const millisecondToDate = (millisecond) => {
+  return new Date(parserJWT(millisecond)?.exp * 1000);
 };

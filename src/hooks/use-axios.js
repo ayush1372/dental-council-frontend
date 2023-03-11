@@ -1,6 +1,9 @@
 import Axios from 'axios';
 
+import { API } from '../api/api-endpoints';
 import authInterceptors from '../api/auth-interceptors';
+// import { expireSession } from '../api/session';
+import { millisecondToDate } from '../helpers/functions/common-functions';
 import { setApiLoading } from '../store/reducers/common-reducers';
 import store from '../store/store';
 
@@ -13,6 +16,48 @@ const hpIdAxios = Axios.create({
 const gatewayApi = Axios.create({
   baseURL: process.env.REACT_APP_GATEWAY_SESSION_API,
 });
+
+axios.interceptors.response.use(
+  (response) => {
+    return Promise.resolve(response);
+  },
+  (error) => {
+    // when api getting 401
+    if (error.response.status === 401) {
+      // const accessToken = localStorage.getItem('userToken');
+      const refreshToken = localStorage.getItem('refreshtoken');
+
+      //if refresh token expire logout the user, if not check access token
+      if (millisecondToDate(refreshToken) > new Date()) {
+        //if access token expire logout the user, if not refresh token api
+        // if (new Date() >= millisecondToDate(accessToken)) {
+        //refresh token api
+        return Axios.post(process.env.REACT_APP_V1_API_URL + API.login.refreshToken, '', {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('refreshtoken'),
+          },
+        })
+          .then((response) => {
+            localStorage.setItem('accesstoken', response.headers['access-token']);
+            localStorage.setItem('refreshtoken', response.headers['refresh-token']);
+            //passing updated token in headers for authorization
+            error.config.headers['Authorization'] = 'Bearer ' + response.headers['access-token'];
+            return axios.request(error.response.config);
+          })
+          .catch(() => {
+            // expireSession('ERR_SESSION: Session expired.');
+          });
+        // } else {
+        //   expireSession('ERR_SESSION: Session expired.');
+        // }
+      } else {
+        // expireSession('ERR_SESSION: Session expired.');
+      }
+    } else {
+      return Promise.reject(error);
+    }
+  }
+);
 
 const setLoadingState = (booleanValue) => store.dispatch(setApiLoading(booleanValue));
 

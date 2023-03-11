@@ -31,6 +31,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
   const [selectedLoginOption, setSelectedLoginOption] = useState('nmrId');
   const [transaction_id, setTransaction_id] = useState('');
   const [otpFormEnabled, setOtpFormEnable] = useState(false);
+  const [maskedMobileNumber, setMaskedMobileNumber] = useState('');
   const navigate = useNavigate();
   const {
     register,
@@ -72,6 +73,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
     dispatch(sendNotificationOtp(sendOTPData)).then((response) => {
       if (response) {
         setTransaction_id(response?.data?.transaction_id);
+        setMaskedMobileNumber(response?.data?.sent_on.replace(/^.{6}/g, 'XXXXXX'));
       }
     });
   };
@@ -315,11 +317,11 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
                 ),
               }}
             />
-
             {otpFormEnabled && (
               <Box mt={2}>
                 <Typography variant="body1">
-                  We just sent an OTP on your Registered Mobile Number Linked with your NMR ID
+                  We just sent an OTP on your Registered Mobile Number {maskedMobileNumber} Linked
+                  with your NMR ID.
                 </Typography>
                 {otpform}
               </Box>
@@ -328,17 +330,15 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
         ) : selectedLoginOption === 'userName' ? (
           <>
             <TextField
-              sx={{ mb: 4 }}
+              sx={{ mb: 2 }}
               required
               fullWidth
               label={'User ID'}
               placeholder={'Please enter your User ID'}
-              // inputProps={{ maxLength: 12 }}
               name={'userID'}
               {...register('userID', {
                 required: 'Please enter an User ID',
                 pattern: {
-                  //value: /^\d{12}$/i,
                   message: 'Please enter an valid User ID',
                 },
               })}
@@ -374,7 +374,10 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
             />
             {otpFormEnabled && (
               <Box mt={2}>
-                <Typography variant="body1">We just sent an OTP on your Mobile Number.</Typography>
+                <Typography variant="body1">
+                  We just sent an OTP on your Mobile Number{' '}
+                  {getValues().mobileNo.replace(/^.{6}/g, 'XXXXXX')}.
+                </Typography>
                 {otpform}
               </Box>
             )}

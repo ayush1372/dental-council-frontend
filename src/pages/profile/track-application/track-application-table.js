@@ -123,7 +123,7 @@ function TrackAppicationTable({
         { type: 'SNo', value: index + 1 },
         {
           type: 'registration_no',
-          value: data?.registration_no,
+          value: data?.request_id,
         },
         {
           type: 'request_id',
