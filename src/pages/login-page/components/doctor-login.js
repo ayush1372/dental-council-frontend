@@ -330,7 +330,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
         ) : selectedLoginOption === 'userName' ? (
           <>
             <TextField
-              sx={{ mb: 4 }}
+              sx={{ mb: 2 }}
               required
               fullWidth
               label={'User ID'}

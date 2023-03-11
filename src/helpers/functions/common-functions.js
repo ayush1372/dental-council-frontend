@@ -9,6 +9,10 @@ import {
   smcTabs,
 } from '../components/sidebar-drawer-list-item';
 
+export function dateFormat(s) {
+  var b = s.split(/\D/);
+  return b.reverse().join('-');
+}
 export function get_year_data(startYear = 1900) {
   var ans = [];
   var date = new Date();

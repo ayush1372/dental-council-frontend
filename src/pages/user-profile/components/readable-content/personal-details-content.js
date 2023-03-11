@@ -21,7 +21,7 @@ const PersonalDetails = ({ personalDetails }) => {
     date_of_birth,
     father_name,
     gender,
-    language,
+    // language,
     // middle_name,
     mother_name,
     country_nationality,
@@ -242,7 +242,7 @@ const PersonalDetails = ({ personalDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
 
-        <Grid item xs={12} md={3}>
+        {/* <Grid item xs={12} md={3}>
           <Typography variant="body5" color="grey.label">
             Languages
             <Typography component="span" color="error.main">
@@ -261,7 +261,7 @@ const PersonalDetails = ({ personalDetails }) => {
               />
             )}{' '}
           </Grid>
-        </Grid>
+        </Grid> */}
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
       </Grid>
       <Grid container item spacing={2}>

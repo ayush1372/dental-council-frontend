@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Alert, Container, Divider, IconButton, InputAdornment, Typography } from '@mui/material';
@@ -8,16 +8,24 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
+import { dateFormat } from '../../../helpers/functions/common-functions';
+import ErrorModalPopup from '../../../shared/common-modals/error-modal-popup';
+import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import OtpForm from '../../../shared/otp-form/otp-component';
-import SuccessPopup from '../../../shared/reactivate-licence-popup/success-popup';
+// import SuccessPopup from '../../../shared/reactivate-licence-popup/success-popup';
 import {
   checkHpidExists,
+  checkKycDetails,
   generateMobileOtp,
   getHprIdSuggestions,
-  sendResetPasswordLink,
+  // sendResetPasswordLink,
   verifyMobileOtp,
 } from '../../../store/actions/doctor-registration-actions';
-import { sendAaadharOtp, validateOtpAadhaar } from '../../../store/actions/user-aadhaar-actions';
+import {
+  getDemographicAuthMobile,
+  sendAaadharOtp,
+  validateOtpAadhaar,
+} from '../../../store/actions/user-aadhaar-actions';
 import { Button, TextField } from '../../../ui/core';
 import AadhaarInputField from '../../../ui/core/aadhaar-input-field/aadhaar-input-field';
 import CreateHprId from './unique-username';
@@ -31,10 +39,11 @@ function FetchDoctorDetails() {
   const [isOtpValidMobile, setisOtpValidMobile] = useState(false);
   const [isOtpValidAadhar, setisOtpValidAadhar] = useState(false);
   const [enableSubmit, setEnableSubmit] = useState(false);
+  const [showRejectPopup, setShowRejectPopup] = useState(false);
   const dispatch = useDispatch();
-  const userEmail = useSelector(
-    (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.email_id
-  );
+  // const userEmail = useSelector(
+  //   (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.email_id
+  // );
 
   const otptype = useSelector((state) => state?.AadhaarTransactionId?.typeOfOtpDetailsData);
 
@@ -42,6 +51,10 @@ function FetchDoctorDetails() {
     (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.registration_number
   );
   const aadhaarTxnId = useSelector((state) => state?.AadhaarTransactionId?.aadharData?.data?.txnId);
+  const mobileNumber = useSelector(
+    (state) => state?.AadhaarTransactionId?.aadharData?.data?.mobileNumber
+  );
+
   const mobileTxnId = useSelector(
     (state) => state?.doctorRegistration?.getMobileOtpDetails?.data?.txnId
   );
@@ -49,8 +62,16 @@ function FetchDoctorDetails() {
   const councilName = useSelector(
     (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.council_name
   );
+
   const hpName = useSelector(
     (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.hp_name
+  );
+
+  const demographicAuthMobileVerify = useSelector(
+    (state) => state?.AadhaarTransactionId?.demographicAuthMobileDetailsData
+  );
+  const existUSerName = useSelector(
+    (state) => state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId
   );
 
   const {
@@ -89,20 +110,70 @@ function FetchDoctorDetails() {
           txnId: aadhaarTxnId,
           otp: otpValue,
         })
-      );
+      ).then((response) => {
+        dispatch(
+          checkKycDetails({
+            registrationNumber: registrationNumber || '',
+            txn_id: response.data.txnId || '',
+            mobile_number: response.data.mobileNumber || '',
+            photo: response.data.photo || '',
+            gender: response.data.gender || '',
+            name: response.data.name || '',
+            email: response.data.email || '',
+            pincode: response.data.pincode || '',
+            birth_date: dateFormat(response.data.birthdate) || '',
+            care_of: response.data.careOf || '',
+            house: response.data.house || '',
+            street: response.data.street || '',
+            kycLandMark: response.data.landmark || '',
+            locality: response.data.locality || '',
+            village_town_city: response.data.villageTownCity || '',
+            sub_dist: response.data.subDist || '',
+            district: response.data.district || '',
+            state: response.data.state || '',
+            post_office: response.data.postOffice || '',
+            address: response.data.address || '',
+          })
+        ).then((response) => {
+          if (response.data.kyc_fuzzy_match_status === 'Fail') {
+            setShowRejectPopup(true);
+          }
+        });
+      });
     }
   };
 
   const handleVerifyMobile = () => {
-    let data = {
-      mobile: getValues().MobileNumber,
-      txnId: aadhaarTxnId,
-    };
-    dispatch(generateMobileOtp(data)).then(() => {
-      setShowOtpMobile(true);
-      setisOtpValidMobile(false);
-    });
+    dispatch(
+      getDemographicAuthMobile({
+        txnId: aadhaarTxnId,
+        mobileNumber: getValues().MobileNumber,
+      })
+    );
   };
+
+  useEffect(() => {
+    if (demographicAuthMobileVerify?.data?.verified) {
+      dispatch(
+        checkHpidExists({
+          txnId: aadhaarTxnId,
+        })
+      ).then((response) => {
+        if (response?.data?.hprId === undefined || response?.data?.hprId === null) {
+          setShowCreateHprIdPage(true);
+          dispatch(
+            getHprIdSuggestions({
+              txnId: aadhaarTxnId,
+            })
+          );
+        } else {
+          if (response?.data?.hprId.length > 0) {
+            setShowSuccess(true);
+          }
+        }
+      });
+    }
+  }, [demographicAuthMobileVerify?.data?.verified]);
 
   const handleValidateMobile = () => {
     let data = {
@@ -159,15 +230,9 @@ function FetchDoctorDetails() {
           })
         );
       } else {
-        let data = {
-          email: userEmail,
-          mobile: getValues().MobileNumber,
-          username: response?.data?.hprId,
-          registration_number: registrationNumber,
-        };
-        dispatch(sendResetPasswordLink(data)).then(() => {
+        if (response?.data?.hprId.length > 0) {
           setShowSuccess(true);
-        });
+        }
       }
     });
   };
@@ -175,6 +240,13 @@ function FetchDoctorDetails() {
   return (
     <>
       <ToastContainer></ToastContainer>
+      {showRejectPopup && (
+        <ErrorModalPopup
+          open={showRejectPopup}
+          setOpen={() => setShowRejectPopup(false)}
+          text="The registration details are not matching with the KYC details please validate registration/kyc details"
+        />
+      )}
 
       {showCreateHprIdPage ? (
         <CreateHprId />
@@ -292,9 +364,10 @@ function FetchDoctorDetails() {
                     },
                   }}
                 >
-                  <Box>
+                  <Box pt={1}>
                     <Typography variant="body1">
-                      We just sent an OTP on your Mobile Number.
+                      We just sent an OTP on your mobile number {mobileNumber} which is registered
+                      with Aadhaar.
                     </Typography>
                     {otpform}
                   </Box>
@@ -311,8 +384,8 @@ function FetchDoctorDetails() {
                   </Box>
                 </Box>
               )}
-              <Divider sx={{ mb: 4, mt: 4 }} variant="fullWidth" />
 
+              <Divider sx={{ mb: 4, mt: 4 }} variant="fullWidth" />
               <Box sx={{ marginTop: '20px', paddingBottom: '48px' }}>
                 <Typography variant="body3">
                   Mobile Number
@@ -394,7 +467,6 @@ function FetchDoctorDetails() {
                   </Box>
                 </Box>
               )}
-
               <Box sx={{ paddingBottom: '40px', marginTop: { xs: '10px', sm: 0 } }}>
                 <Button
                   variant="contained"
@@ -419,7 +491,18 @@ function FetchDoctorDetails() {
               </Box>
             </Box>
           </Container>
-          {showSuccess && <SuccessPopup />}
+
+          {showSuccess && (
+            <SuccessModalPopup
+              open={showSuccess}
+              setOpen={() => setShowSuccess(false)}
+              text={`Your username ${existUSerName.replace(
+                '@hpr.abdm',
+                ''
+              )} has been successfully created. Please proceed to set the password for logging in to your NMR Profile`}
+              isHpIdCreated={true}
+            />
+          )}
         </>
       )}
     </>

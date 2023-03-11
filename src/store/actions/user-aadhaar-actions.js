@@ -5,6 +5,7 @@ import { hpIdUseAxiosCall } from '../../hooks/use-axios';
 import {
   aadhaarNumberData,
   aadhaarOtpDetails,
+  demographicAuthMobileDetails,
   typeOfOtp,
 } from '../reducers/user-aadhaar-verify-reducer';
 
@@ -22,6 +23,23 @@ export const sendAaadharOtp = (aadhaar) => async (dispatch) => {
         dispatch(typeOfOtp(type));
 
         return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+export const getDemographicAuthMobile = (data) => async (dispatch) => {
+  // let type = 'aadhaar';
+  return await new Promise((resolve, reject) => {
+    hpIdUseAxiosCall({
+      method: POST,
+      url: API_HPRID.hpId.demographicAuthMobile,
+      data: data,
+      headers: { Authorization: 'Bearer ' + accesstokenHprId },
+    })
+      .then((response) => {
+        dispatch(demographicAuthMobileDetails(response));
       })
       .catch((error) => {
         return reject(error);
