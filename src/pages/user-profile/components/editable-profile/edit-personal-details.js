@@ -496,10 +496,19 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               error={errors.Nationality?.message}
               name="Nationality"
               defaultValue={getValues().Nationality}
+              disabled
               required={true}
+              sx={{
+                input: {
+                  backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
+                },
+              }}
               {...register('Nationality', {
                 required: 'Nationality is required',
               })}
+              InputProps={{
+                readOnly: loggedInUserType === 'SMC' ? false : true,
+              }}
               options={createSelectFieldData(nationalities)}
             />
           </Grid>
@@ -513,6 +522,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             <Grid container item mt={1}>
               <RadioGroup
                 onChange={handleGender}
+                disabled
                 name={'Gender'}
                 size="small"
                 defaultValue={getValues().Gender}
@@ -555,10 +565,14 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 input: {
                   color: 'grey1.dark',
                   textTransform: 'uppercase',
+                  backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
                 },
               }}
               InputLabelProps={{
                 shrink: true,
+              }}
+              InputProps={{
+                readOnly: loggedInUserType === 'SMC' ? false : true,
               }}
               required={true}
               defaultValue={getValues().dateOfBirth}
@@ -641,6 +655,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               placeholder="Your address"
               required={false}
               fullWidth
+              sx={{
+                input: {
+                  backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
+                },
+              }}
               defaultValue={getValues().Address}
               {...register('Address', {
                 required: 'Address is Required',
@@ -649,6 +668,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                   message: 'Length should be less than 300.',
                 },
               })}
+              InputProps={{
+                readOnly: loggedInUserType === 'SMC' ? false : true,
+              }}
               error={errors.Address?.message}
             />
           </Grid>
@@ -734,7 +756,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 }
                 value={isSameAddress ? personalDetails?.kyc_address?.street : getValues().street}
                 {...register('Street', {
-                  required: 'Street is Required',
+                  // required: 'Street is Required',
                   maxLength: {
                     value: 300,
                     message: 'Length should be less than 300.',
@@ -931,7 +953,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 }}
                 defaultValue={
                   isSameAddress
-                    ? personalDetails?.kyc_address?.sub_district?.name
+                    ? personalDetails?.kyc_address?.sub_district?.id
                     : getValues().SubDistrict
                 }
                 value={
@@ -970,19 +992,15 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 }}
                 name="Area"
                 defaultValue={
-                  isSameAddress ? personalDetails?.kyc_address?.sub_district?.id : getValues().Area
+                  isSameAddress ? personalDetails?.kyc_address?.village?.id : getValues().Area
                 }
-                value={
-                  isSameAddress
-                    ? personalDetails?.kyc_address?.sub_district?.id
-                    : getValues().SubDistrict
-                }
+                value={isSameAddress ? personalDetails?.kyc_address?.village?.id : getValues().Area}
                 disabled={isSameAddress}
                 required={true}
                 {...register('Area', {
                   required: 'City/Town/Village is required',
                 })}
-                options={createSelectFieldData(citiesList)}
+                options={createSelectFieldData(citiesList, 'id')}
                 MenuProps={{
                   style: {
                     maxHeight: 250,

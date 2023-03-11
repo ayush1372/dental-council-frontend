@@ -61,7 +61,9 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
   }
 
   const { activeStep, handleNext, handleBack, resetStep } = useWizard(
-    loggedInUserType === 'Doctor' ? 0 : 1,
+    loggedInUserType === 'Doctor' || loggedInUserType === 'SMC' || loggedInUserType === 'NMC'
+      ? 0
+      : 1,
     []
   );
 

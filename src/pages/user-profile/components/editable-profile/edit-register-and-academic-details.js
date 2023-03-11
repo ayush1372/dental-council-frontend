@@ -359,9 +359,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                     backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
                   },
                 }}
-                InputProps={{
-                  readOnly: loggedInUserType === 'SMC' ? false : true,
-                }}
+                // InputProps={{
+                //   readOnly: loggedInUserType === 'SMC' ? false : true,
+                // }}
               />
             </Grid>
           )}

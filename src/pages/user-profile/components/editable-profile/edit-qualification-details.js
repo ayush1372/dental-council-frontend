@@ -422,7 +422,7 @@ const EditQualificationDetails = ({
         </Grid> */}
 
       <Grid container item spacing={2} mt={1}>
-        <Grid item xs={12}>
+        <Grid item xs={12} md={6}>
           <Typography variant="body1" sx={{ fontSize: '16px' }} color="text.primary">
             Upload Qualification Degree <Typography color="error"> *</Typography>
           </Typography>
