@@ -344,7 +344,7 @@ export function SuspendLicenseVoluntaryRetirement({
             />
           </Grid>
           <Box align="right" mt={1}>
-            <Typography color={'inputFocusColor.main'}>150 word only</Typography>
+            <Typography color="grey2.light">300 words only</Typography>
           </Box>
         </Box>
       ) : (
@@ -376,7 +376,7 @@ export function SuspendLicenseVoluntaryRetirement({
             sx={{ padding: '0 8px 0 0' }}
             label={
               tabName
-                ? 'You will no longer be able to receive notifications or perform actions on your profile.'
+                ? 'I understand that during the period of my suspension, I will not be able to practice, and my NMR profile will be deactivated.'
                 : selectedValue === 'blacklist' || selectedValue === 'suspend'
                 ? 'Doctor will no longer be able to receive notifications or perform actions on his/her profile.'
                 : ''
