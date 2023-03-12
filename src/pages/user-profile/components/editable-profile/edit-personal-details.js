@@ -1030,9 +1030,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 defaultValue={
                   isSameAddress ? personalDetails?.kyc_address?.pincode : getValues().PostalCode
                 }
-                value={
-                  isSameAddress ? personalDetails?.kyc_address?.pincode : getValues().PostalCode
-                }
+                value={isSameAddress ? personalDetails?.kyc_address?.pincode : getValues().pincode}
                 disabled={isSameAddress}
                 {...register('PostalCode', {
                   required: 'PostalCode is Required',

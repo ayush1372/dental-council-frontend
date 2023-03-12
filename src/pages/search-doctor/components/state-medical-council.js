@@ -9,8 +9,7 @@ import successToast from '../../../ui/core/toaster';
 
 const StateMedicalCouncil = ({ setDoSearch, setSearchData, setScrollDown }) => {
   const { councilNames } = useSelector((state) => state.common);
-  // eslint-disable-next-line no-console
-  console.log('counil name dropdown', councilNames);
+
   const dispatch = useDispatch();
   const {
     formState: { errors },

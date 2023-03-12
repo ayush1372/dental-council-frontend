@@ -81,8 +81,8 @@ function TrackAppicationTable({
       type: 'string',
     },
     {
-      title: 'Name of Applicant',
-      name: 'applicant_full_name',
+      title: 'Type of Application',
+      name: 'application_type_name',
       sorting: true,
       type: 'string',
     },
@@ -185,7 +185,7 @@ function TrackAppicationTable({
         Track Application
       </Typography>    */}
       <TableSearch
-        // searchParams={searchParams}
+        //  searchParams={searchParams}
         trackApplication={userType}
         exportData={tableData?.data?.data?.health_professional_applications}
         flag={'trackApplicationData'}

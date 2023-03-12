@@ -10,6 +10,13 @@ import { enableUserNotification } from '../../store/actions/common-actions';
 
 export function ViewProfile(props) {
   const dispatch = useDispatch();
+
+  const registration_number = useSelector(
+    (state) =>
+      state?.doctorUserProfileReducer?.registrationDetails?.registration_detail_to
+        ?.registration_number
+  );
+
   const nmrIdData = useSelector(
     (state) =>
       state?.doctorUserProfileReducer?.registrationDetails?.registration_detail_to
@@ -120,9 +127,31 @@ export function ViewProfile(props) {
               IMR/Registration Number
             </Typography>
             <Typography variant="subtitle2" color="textPrimary.main">
-              {nmrIdData ? nmrIdData : ''}
+              {registration_number ? registration_number : ''}
             </Typography>
           </Grid>
+
+          {nmrIdData && (
+            <Grid
+              borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
+              item
+              xs={12}
+              sm={6}
+              md={3}
+              lg="auto"
+              xl={2}
+              px={2}
+              mb={{ xs: 1, lg: 0 }}
+            >
+              <Typography variant="body3" color="grey.label">
+                NMR ID
+              </Typography>
+              <Typography variant="subtitle2" color="textPrimary.main">
+                {nmrIdData ? nmrIdData : ''}
+              </Typography>{' '}
+            </Grid>
+          )}
+
           {/* <Grid
           borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
           item
