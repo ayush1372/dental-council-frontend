@@ -48,7 +48,7 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
       Filter: '',
       FilterId: '',
       collegeApproval: '',
-      collegeApprovaId: '',
+      collegeApprovalId: '',
       collegeApprovalFilter: '',
       ActivateLicence: '',
       ActivateLicenceId: '',
@@ -60,8 +60,9 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
   });
   const onClickSearchButtonHandler = (data) => {
     if (exportData?.data?.dashboard_tolist) {
-      trackData.search = getValues().dashBoardCardId;
       trackData.value = getValues().dashBoardCardFilter;
+      trackData.search = getValues().dashBoardCardId;
+
       dispatch(getDoctorTrackApplicationData(profileId, trackData));
     }
 
@@ -71,40 +72,46 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
       dispatch(getDoctorTrackApplicationData(profileId, trackData));
     }
     if (trackApplication) {
-      if (getValues().FilterValue === 'HP Registration' || getValues().FilterValue === 'PENDING') {
+      if (
+        getValues().FilterValue.toLowerCase() === 'HP Registration'.toLowerCase() ||
+        getValues().FilterValue.toLowerCase() === 'PENDING'.toLowerCase()
+      ) {
         trackData.value = 1;
       }
-      if (getValues().FilterValue === 'HP Modification' || getValues().FilterValue === 'APPROVED') {
+      if (
+        getValues().FilterValue.toLowerCase() === 'HP Modification'.toLowerCase() ||
+        getValues().FilterValue.toLowerCase() === 'APPROVED'.toLowerCase()
+      ) {
         trackData.value = 2;
       }
       if (
-        getValues().FilterValue === 'Temporary Suspension' ||
-        getValues().FilterValue === 'QUERY RAISED'
+        getValues().FilterValue.toLowerCase() === 'Temporary Suspension'.toLowerCase() ||
+        getValues().FilterValue.toLowerCase() === 'QUERY RAISED'.toLowerCase()
       ) {
         trackData.value = 3;
       }
       if (
-        getValues().FilterValue === 'Permanent Suspension' ||
-        getValues().FilterValue === 'REJECTED'
+        getValues().FilterValue.toLowerCase() === 'Permanent Suspension'.toLowerCase() ||
+        getValues().FilterValue.toLowerCase() === 'REJECTED'.toLowerCase()
       ) {
         trackData.value = 4;
       }
       if (
-        getValues().FilterValue === 'Activate License' ||
-        getValues().FilterValue === 'SUSPENDED'
+        getValues().FilterValue.toLowerCase() === 'Activate License'.toLowerCase() ||
+        getValues().FilterValue.toLowerCase() === 'SUSPENDED'.toLowerCase()
       ) {
         trackData.value = 5;
       }
       if (
-        getValues().FilterValue === 'College Registration' ||
-        getValues().FilterValue === 'BLACKLISTED'
+        getValues().FilterValue.toLowerCase() === 'College Registration'.toLowerCase() ||
+        getValues().FilterValue.toLowerCase() === 'BLACKLISTED'.toLowerCase()
       ) {
         trackData.value = 6;
       }
-      if (getValues().FilterValue === 'Foreign HP Registration') {
+      if (getValues().FilterValue.toLowerCase() === 'Foreign HP Registration'.toLowerCase()) {
         trackData.value = 7;
       }
-      if (getValues().FilterValue === 'Qualification Workflow') {
+      if (getValues().FilterValue.toLowerCase() === 'Qualification Workflow'.toLowerCase()) {
         trackData.value = 8;
       }
       trackData.search = getValues().FilterId;
@@ -240,13 +247,11 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
                     fullWidth
                     id="outlined-basic"
                     variant="outlined"
-                    type="text"
-                    name="collegeApprovalFilter"
-                    required={false}
+                    name={'dashBoardCardFilter'}
                     placeholder={'enter keywords'}
-                    defaultValue={getValues().collegeApprovalFilter}
-                    error={errors.collegeApprovalFilter?.message}
-                    {...register('collegeApprovalFilter')}
+                    defaultValue={getValues().dashBoardCardFilter}
+                    {...register('dashBoardCardFilter', {})}
+                    error={errors.dashBoardCardFilter?.message}
                   />
                 ) : (
                   <TextField
@@ -256,12 +261,12 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
                     id="outlined-basic"
                     variant="outlined"
                     type="text"
-                    name="dashBoardCardFilter"
+                    name="collegeApprovalFilter"
                     required={false}
                     placeholder={'enter keywords'}
-                    defaultValue={getValues().dashBoardCardFilter}
-                    error={errors.dashBoardCardFilter?.message}
-                    {...register('dashBoardCardFilter')}
+                    defaultValue={getValues().collegeApprovalFilter}
+                    error={errors.collegeApprovalFilter?.message}
+                    {...register('collegeApprovalFilter')}
                   />
                 )}
               </Grid>
