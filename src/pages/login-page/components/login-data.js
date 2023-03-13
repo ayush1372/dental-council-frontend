@@ -77,9 +77,16 @@ export const Login = ({ loginName }) => {
     const userType = userGroupType(response?.data?.user_group_id);
 
     if (userType === 'College Dean') {
-      dispatch(getCollegeDeanProfileData(response?.data?.profile_id));
+      dispatch(
+        getCollegeDeanProfileData(response?.data?.parent_profile_id, response?.data?.profile_id)
+      );
     } else if (userType === 'College Registrar') {
-      dispatch(getCollegeRegistrarProfileData(response?.data?.profile_id));
+      dispatch(
+        getCollegeRegistrarProfileData(
+          response?.data?.parent_profile_id,
+          response?.data?.profile_id
+        )
+      );
     } else if (userType === 'College Admin') {
       dispatch(getCollegeAdminProfileData(response?.data?.profile_id));
     } else if (userType === 'State Medical Council') {
