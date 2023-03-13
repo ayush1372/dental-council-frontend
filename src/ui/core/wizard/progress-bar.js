@@ -1,4 +1,4 @@
-import { Box, Container, LinearProgress, Typography } from '@mui/material';
+import { Box, LinearProgress, Typography } from '@mui/material';
 import PropTypes from 'prop-types';
 
 import { verboseLog } from '../../../config/debug';
@@ -42,13 +42,13 @@ const ProgressBar = ({ activeStep, steps, progress }) => {
   verboseLog('steps', steps);
 
   return (
-    <Container backgroundColor="white" sx={{ width: '100%' }}>
+    <Box backgroundColor="white" width="100%">
       {progress !== false ? (
         <LinearProgressWithLabel activeStep={activeStep} value={progress} pb={2} />
       ) : (
         ''
       )}
-    </Container>
+    </Box>
   );
 };
 
