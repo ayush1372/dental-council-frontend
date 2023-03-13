@@ -162,7 +162,7 @@ function FetchDoctorDetails() {
           txnId: aadhaarTxnId,
         })
       ).then((response) => {
-        if (response?.data?.hprId === undefined || response?.data?.hprId === null) {
+        if (response?.data?.hprIdNumber === null || response?.data?.hprIdNumber === '') {
           setShowCreateHprIdPage(true);
           dispatch(
             getHprIdSuggestions({
@@ -170,7 +170,7 @@ function FetchDoctorDetails() {
             })
           );
         } else {
-          if (response?.data?.hprId.length > 0) {
+          if (response?.data?.hprId && response?.data?.hprIdNumber) {
             setShowSuccess(true);
           }
         }
@@ -227,7 +227,7 @@ function FetchDoctorDetails() {
         txnId: aadhaarTxnId,
       })
     ).then((response) => {
-      if (response?.data?.hprId === undefined || response?.data?.hprId === null) {
+      if (response?.data?.new === true) {
         setShowCreateHprIdPage(true);
         dispatch(
           getHprIdSuggestions({
@@ -235,7 +235,7 @@ function FetchDoctorDetails() {
           })
         );
       } else {
-        if (response?.data?.hprId.length > 0) {
+        if (response?.data?.hprIdNumber.length > 0) {
           setShowSuccess(true);
         }
       }
@@ -249,7 +249,7 @@ function FetchDoctorDetails() {
         <KycErrorPopup
           open={kycError}
           setOpen={() => setKycError(false)}
-          text="The registration details are not matching with the KYC details please validate registration/KYC details"
+          text="The registration details are not matching with the KYC details. Please validate Registration/KYC details"
         />
       )}
 
@@ -507,7 +507,7 @@ function FetchDoctorDetails() {
               text={`Your username ${existUSerName.replace(
                 '@hpr.abdm',
                 ''
-              )} has been successfully created. Please proceed to set the password for logging in to your NMR Profile`}
+              )} has been already created. Please proceed to set the password for logging in to your NMR Profile`}
               isHpIdCreated={true}
             />
           )}

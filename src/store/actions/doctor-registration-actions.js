@@ -1,9 +1,9 @@
+/* eslint-disable no-console */
 import { API, API_HPRID } from '../../api/api-endpoints';
 import { accesstokenHprId } from '../../constants/common-data';
 import { GET, POST } from '../../constants/requests';
 import { gatewayApiUseAxiosCall, hpIdUseAxiosCall, useAxiosCall } from '../../hooks/use-axios';
 import {
-  createhprIdData,
   getAccessToken,
   getkycDetails,
   getMobileOtp,
@@ -116,6 +116,8 @@ export const checkHpidExists = (txnId) => async (dispatch) => {
     })
       .then((response) => {
         dispatch(hpIdExistsDetails(response));
+        console.log('exists', response);
+
         return resolve(response);
       })
       .catch((error) => {
@@ -128,7 +130,7 @@ export const getHprIdSuggestions = (txnId) => async (dispatch) => {
     hpIdUseAxiosCall({
       method: POST,
       url: API_HPRID.hpId.hpIdSuggestion,
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + accesstokenHprId },
       data: txnId,
     })
       .then((response) => {
@@ -167,7 +169,7 @@ export const createUniqueHprId = (data) => async (dispatch) => {
       data: data,
     })
       .then((response) => {
-        dispatch(createhprIdData(response));
+        dispatch(hpIdExistsDetails(response));
         return resolve(response);
       })
       .catch((error) => {
