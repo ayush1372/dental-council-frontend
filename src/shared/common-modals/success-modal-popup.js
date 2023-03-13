@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 
 import { getCardCount } from '../../store/actions/dashboard-actions';
+import { setBreadcrumbsActivetab } from '../../store/reducers/common-reducers';
 import { Button } from '../../ui/core';
 
 export default function SuccessModalPopup({
@@ -26,7 +27,7 @@ export default function SuccessModalPopup({
   const handleCloseModalALL = () => {
     setOpen(false);
     handleClose();
-    window.location.href = '/profile';
+    dispatch(setBreadcrumbsActivetab('DASHBOARD'));
     if (SuspensionCall) {
       dispatch(getCardCount());
     }

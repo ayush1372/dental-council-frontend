@@ -30,6 +30,7 @@ const initialState = {
   trackApplicationTableData: { data: [], isLoading: Boolean(true), isError: false },
   changePasswordData: { data: [], isLoading: Boolean(true), isError: false },
   selectedAcademicStatus: '',
+  breadcrumbsActivetab: '',
 };
 
 export const CommonActivity = createSlice({
@@ -114,6 +115,9 @@ export const CommonActivity = createSlice({
     setSelectedAcademicStatus: (state, action) => {
       state.selectedAcademicStatus = action.payload;
     },
+    setBreadcrumbsActivetab: (state, action) => {
+      state.breadcrumbsActivetab = action.payload;
+    },
   },
 });
 
@@ -145,6 +149,7 @@ export const {
   updateTrackApplicationTableData,
   setNewPassword,
   setSelectedAcademicStatus,
+  setBreadcrumbsActivetab,
 } = CommonActivity.actions;
 
 export default CommonActivity.reducer;
