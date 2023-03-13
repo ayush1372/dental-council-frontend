@@ -165,7 +165,7 @@ const ReadRegisterAndAcademicDetails = ({
                         },
                       }}
                     >
-                      Acti <MoreHorizIcon />
+                      Action <MoreHorizIcon />
                     </Button>
 
                     <Menu {...bindMenu(popupState)}>
