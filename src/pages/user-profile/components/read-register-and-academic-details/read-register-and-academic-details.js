@@ -16,11 +16,9 @@ import {
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import PopupState, { bindMenu, bindTrigger } from 'material-ui-popup-state';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import SuccessModalPopup from '../../../../shared/common-modals/success-modal-popup';
-import { getRegistrationDetailsData } from '../../../../store/actions/doctor-user-profile-actions';
-import successToast from '../../../../ui/core/toaster';
 import SuspendLicenseVoluntaryRetirement from '../../../suspend-license-voluntary-retirement';
 import QualificationDetailsContent from '../readable-content/qualification-details-content';
 import RegistrationDetailsContent from '../readable-content/registration-details-content';
@@ -41,9 +39,9 @@ const ReadRegisterAndAcademicDetails = ({
   const { userActiveTab } = useSelector((state) => state.common);
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
-  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  // const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const accordions = [
     {
@@ -66,16 +64,6 @@ const ReadRegisterAndAcademicDetails = ({
 
   const handleClose = () => {
     setConfirmationModal(false);
-  };
-
-  const handleBackAction = () => {
-    dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id))
-      .then(() => {
-        handleBack();
-      })
-      .catch((allFailMsg) => {
-        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-      });
   };
 
   const handleSubmitDetails = () => {
@@ -145,7 +133,7 @@ const ReadRegisterAndAcademicDetails = ({
           <Button
             color="grey"
             variant="contained"
-            onClick={handleBackAction()}
+            onClick={handleBack}
             sx={{
               width: {
                 xs: '100%',
