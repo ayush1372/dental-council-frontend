@@ -365,3 +365,19 @@ export const enableUserNotification = (body) => async () => {
       });
   });
 };
+
+//To get the Complete Address while entering postal Code.
+export const getPostalAddress = (postalID) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: GET,
+      url: API.common.LGDService + postalID,
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};

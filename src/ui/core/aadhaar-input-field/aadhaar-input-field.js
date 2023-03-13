@@ -76,6 +76,7 @@ export const AadhaarInputField = (props) => {
         <Box gap="10px" display="flex" width="335px">
           <TextField
             name={FIRST_FIELD_NAME}
+            disabled={props.disabled}
             error={
               Boolean(errors[FIRST_FIELD_NAME]?.message) ||
               Boolean(
@@ -112,6 +113,7 @@ export const AadhaarInputField = (props) => {
             -
           </Box>
           <TextField
+            disabled={props.disabled}
             name={SECOND_FIELD_NAME}
             error={
               Boolean(errors[SECOND_FIELD_NAME]?.message) ||
@@ -149,6 +151,7 @@ export const AadhaarInputField = (props) => {
             -
           </Box>
           <TextField
+            disabled={props.disabled}
             error={
               Boolean(errors[THIRD_FIELD_NAME]?.message) ||
               Boolean(

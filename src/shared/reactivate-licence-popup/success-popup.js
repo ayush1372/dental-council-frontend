@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined';
 import { Box, Container, Modal, Typography } from '@mui/material';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 
 import { Button } from '../../ui/core';
@@ -10,6 +11,9 @@ export default function SuccessPopup() {
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(true);
+  const logInDoctorStatus = useSelector(
+    (state) => state?.loginReducer?.loginData?.data?.blacklisted
+  );
   const handleClose = () => {
     setOpen(false);
     navigate('/');
@@ -56,8 +60,10 @@ export default function SuccessPopup() {
             variant="body1"
             data-testid="popup-input-text"
           >
-            Your username has been successfully created.
-            <br /> A link to create your password has been sent to the registered mobile number.
+            {logInDoctorStatus
+              ? `Your profile has been successfully re-activated. You can be able to perform actions on your profile now.`
+              : `Your username has been successfully created.
+            <br /> A link to create your password has been sent to the registered mobile number.`}
           </Typography>
           <Button
             sx={{ width: '408px', mt: 8 }}

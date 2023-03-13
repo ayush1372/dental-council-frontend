@@ -87,7 +87,7 @@ const EditQualificationDetails = ({
           />
         </Grid>
       )}
-      <Grid container item spacing={2} mb={3}>
+      <Grid container item spacing={2}>
         <Grid item xs={12}>
           <Typography component="div" variant="body1" color="inputTextColor">
             Qualification From
@@ -150,7 +150,7 @@ const EditQualificationDetails = ({
               defaultValue={getValues()[`qualification[${index}].result`]}
               required={true}
               {...register(`qualification[${index}].result`, {
-                required: 'degree or diploma is required',
+                required: 'degree is required',
               })}
               options={[]}
               MenuProps={{
@@ -170,7 +170,7 @@ const EditQualificationDetails = ({
               defaultValue={getValues()[`qualification[${index}].yearfmge`]}
               required={true}
               {...register(`qualification[${index}].yearfmge`, {
-                required: 'degree or diploma is required',
+                required: 'degree is required',
               })}
               options={[]}
               MenuProps={{
@@ -190,7 +190,7 @@ const EditQualificationDetails = ({
               defaultValue={getValues()[`qualification[${index}].monthfmge`]}
               required={true}
               {...register(`qualification[${index}].monthfmge`, {
-                required: 'degree or diploma is required',
+                required: 'degree is required',
               })}
               options={[]}
               MenuProps={{
@@ -218,7 +218,7 @@ const EditQualificationDetails = ({
         </Grid>
       )}
 
-      <Grid container item spacing={2} display="flex" alignItems="center" mt={3} mb={2}>
+      <Grid container item spacing={2} display="flex" alignItems="center" mb={2}>
         <Grid item xs={3}>
           <Typography color="grey2.lighter" variant="body1">
             BASIC QUALIFICATION
@@ -239,7 +239,7 @@ const EditQualificationDetails = ({
             defaultValue={'MBBS - Bachelor of Medicine and Bachelor of Surgery '}
             required={true}
             {...register(`qualification[${index}].qualification`, {
-              required: 'degree or diploma is required',
+              required: 'degree is required',
             })}
             disabled={qualificationfrom === 'International' ? false : true}
             options={
@@ -432,10 +432,8 @@ const EditQualificationDetails = ({
             fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
             fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
                  Maximum size allowed for the attachment is 5MB.`}
-            fileData={qualificationFilesData[`qualification.${index}.files`] || []}
-            setFileData={(files) => {
-              handleQualificationFilesData(`qualification.${index}.files`, files);
-            }}
+            fileData={qualificationFilesData}
+            setFileData={handleQualificationFilesData}
             isDigiLockcerVisible={true}
           />
         </Grid>

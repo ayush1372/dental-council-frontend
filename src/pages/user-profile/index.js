@@ -39,6 +39,14 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const { loginData } = useSelector((state) => state?.loginReducer);
 
+  const [isApplicationPending, setIsApplicationPending] = useState(true);
+  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+
+  useEffect(() => {
+    if (personalDetails?.hp_profile_status_id === 1) {
+      setIsApplicationPending(true);
+    }
+  }, [personalDetails?.hp_profile_status_id]);
   const { activeStep, handleNext, handleBack, resetStep, completed, progress } = useWizard(
     loggedInUserType === 'Doctor' ? 0 : 1,
     [],
@@ -244,7 +252,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
                 }}
               ></Grid>
             )}
-            {isReadMode && (
+            {isReadMode && isApplicationPending && (
               <Grid
                 item
                 xs={12}
