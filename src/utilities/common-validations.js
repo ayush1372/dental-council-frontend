@@ -94,7 +94,6 @@ export const EmailRegexValidation = {
 };
 
 export const convertGender = (gender) => {
-  // eslint-disable-next-line no-console
   return gender?.toUpperCase() === 'M'
     ? 'MALE'
     : gender?.toUpperCase() === 'F'
