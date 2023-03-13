@@ -177,7 +177,7 @@ export const getDoctorTrackApplicationData = (doctor_profile_id, trackData) => a
     path += '&pageNo=' + trackData.pageNo;
   }
   if (trackData.offset !== undefined && trackData.offset !== null && trackData.offset !== '') {
-    path += '&size=' + trackData.offset;
+    path += '&offset=' + trackData.offset;
   }
 
   return await new Promise((resolve, reject) => {
