@@ -57,7 +57,12 @@ const SearchDoctor = () => {
             }}
           >
             {Object.keys(tabNames).map((tabName) => (
-              <Tab value={tabName} label={tabName} key={tabName}></Tab>
+              <Tab
+                value={tabName}
+                label={tabName}
+                key={tabName}
+                sx={{ textTransform: 'none' }}
+              ></Tab>
             ))}
           </Tabs>
         </Box>
