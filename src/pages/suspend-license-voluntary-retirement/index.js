@@ -121,6 +121,7 @@ export function SuspendLicenseVoluntaryRetirement({
             'top-center'
           );
           closeActionModal(false);
+          handleClose();
         });
     } catch (allFailMsg) {
       successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
