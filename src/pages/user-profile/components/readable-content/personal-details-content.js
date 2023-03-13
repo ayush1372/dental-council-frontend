@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 import { convertGender } from '../../../../utilities/common-validations';
+
 const PersonalDetails = ({ personalDetails }) => {
   const { userActiveTab } = useSelector((state) => state.common);
 

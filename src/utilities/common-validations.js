@@ -94,6 +94,9 @@ export const EmailRegexValidation = {
 };
 
 export const convertGender = (gender) => {
+  if(gender.length > 1) {
+    return gender ? gender.charAt(0).toUpperCase() + gender.slice(1) : ''
+  } else {
   return gender?.toUpperCase() === 'M'
     ? 'Male'
     : gender?.toUpperCase() === 'F'
@@ -101,4 +104,5 @@ export const convertGender = (gender) => {
     : gender?.toUpperCase() === 'O'
     ? 'Other'
     : '';
+  }
 };
