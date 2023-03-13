@@ -185,7 +185,7 @@ const PersonalDetails = ({ personalDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
-              {gender ? gender : ''}
+              {gender ? gender.charAt(0).toUpperCase() + gender.slice(1) : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon

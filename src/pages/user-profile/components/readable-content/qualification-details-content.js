@@ -166,15 +166,6 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               />
             )}
           </Grid>
-          <Grid display="flex" alignItems="center">
-            {userActiveTab === 'dashboard' && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => setOpenModal(true)}
-                fontSize="width30"
-              />
-            )}
-          </Grid>
         </Grid>
       </Grid>
       <Grid container item spacing={2} mt={1}>
@@ -196,15 +187,22 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
             </IconButton>
             View attachment
           </Typography>
+          {attachmentViewProfile && (
+            <AttachmentViewPopup
+              certificate={degree_certificate}
+              closePopup={CloseAttachmentPopup}
+              alt={'Qualification Certificate'}
+            />
+          )}
+          {userActiveTab === 'dashboard' && (
+            <ContactSupportOutlinedIcon
+              color="primary"
+              onClick={() => setOpenModal(true)}
+              fontSize="width30"
+            />
+          )}
         </Grid>
       </Grid>
-      {attachmentViewProfile && (
-        <AttachmentViewPopup
-          certificate={degree_certificate}
-          closePopup={CloseAttachmentPopup}
-          alt={'Qualification Certificate'}
-        />
-      )}
     </Grid>
   );
 };
