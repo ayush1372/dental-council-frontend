@@ -168,14 +168,14 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid container item spacing={2} mt={1}>
-        <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
-            Upload Qualification Degree
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
+      <Grid item xs={12} md={4}>
+        <Typography variant="subtitle2" color="grey.label">
+          Upload Qualification Degree
+          <Typography component="span" color="error.main">
+            *
           </Typography>
+        </Typography>
+        <Grid display="flex" alignItems="center">
           <Typography variant="subtitle2" color="primary.main">
             <IconButton
               onClick={(e) => {
@@ -187,6 +187,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
             </IconButton>
             View attachment
           </Typography>
+
           {attachmentViewProfile && (
             <AttachmentViewPopup
               certificate={degree_certificate}
