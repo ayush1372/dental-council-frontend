@@ -48,7 +48,9 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
     }
   }, [personalDetails?.hp_profile_status_id]);
   const { activeStep, handleNext, handleBack, resetStep, completed, progress } = useWizard(
-    loggedInUserType === 'Doctor' ? 0 : 1,
+    loggedInUserType === 'Doctor' || loggedInUserType === 'SMC' || loggedInUserType === 'NMC'
+      ? 0
+      : 1,
     [],
     [25, 25, 25]
   );
@@ -211,9 +213,15 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
               >
                 {isReadMode && 'My Profile'}
               </Typography>
-              <Box display="flex" gap={2}>
+              <Box display="flex" gap={1}>
+                {' '}
                 {!isReadMode && (
-                  <Typography variant="h2" component="div">
+                  <Typography
+                    variant="h2"
+                    component="span"
+                    width={{ sm: '200px', lg: '170px', xl: '140px' }}
+                  >
+                    {' '}
                     Edit Profile
                   </Typography>
                 )}

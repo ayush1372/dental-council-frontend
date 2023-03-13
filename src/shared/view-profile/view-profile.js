@@ -18,7 +18,9 @@ export function ViewProfile(props) {
   );
 
   const nmrIdData = useSelector(
-    (state) => state?.doctorUserProfileReducer?.personalDetails?.imr_details?.nmr_id
+    (state) =>
+      state?.doctorUserProfileReducer?.registrationDetails?.registration_detail_to
+        ?.registration_number
   );
 
   const emailId = useSelector(
