@@ -124,8 +124,8 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
                 dispatch(getUniversitiesList());
                 navigate(`/profile`);
               })
-              .catch((error) => {
-                successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+              .catch(() => {
+                // successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
               });
           } else {
             successToast(
@@ -165,8 +165,8 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
                 dispatch(getUniversitiesList());
                 navigate(`/profile`);
               })
-              .catch((error) => {
-                successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+              .catch(() => {
+                // successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
               });
           } else {
             successToast(
@@ -187,7 +187,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
 
   return (
     <Box p={4} bgcolor="white.main" boxShadow="4">
-      <Typography variant="h2" color="primary.dark" mb={5}>
+      <Typography variant="h2" color="textPrimary.main" mb={5}>
         {loginName} Login
       </Typography>
       <Typography variant="body1" color="textPrimary.main">
@@ -196,6 +196,32 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
 
       <Grid container xs={12} columnSpacing={1} mt={1}>
         <Grid item xs={12} sm={3.5}>
+          <Button
+            fullWidth
+            variant="outlined"
+            startIcon={<img src={ProfileIcon} alt={'profile_icon'} />}
+            onClick={() => {
+              setSelectedLoginOption('userName');
+              handleClear();
+              setOtpFormEnable(false);
+            }}
+            sx={{
+              border: `2px solid ${
+                selectedLoginOption === 'userName'
+                  ? theme.palette.secondary.main
+                  : theme.palette.grey.main
+              }`,
+              '&:hover': {
+                backgroundColor: 'transparent !important',
+              },
+            }}
+          >
+            <Typography variant="body1" color="textPrimary.main" textAlign={'left'} ml={1}>
+              Username
+            </Typography>
+          </Button>
+        </Grid>
+        <Grid item xs={12} sm={4}>
           <Button
             fullWidth
             variant="outlined"
@@ -218,32 +244,6 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
           >
             <Typography variant="body1" color="textPrimary.main" textAlign={'left'} ml={1}>
               NMR ID
-            </Typography>
-          </Button>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <Button
-            fullWidth
-            variant="outlined"
-            startIcon={<img src={ProfileIcon} alt={'profile_icon'} />}
-            onClick={() => {
-              setSelectedLoginOption('userName');
-              handleClear();
-              setOtpFormEnable(false);
-            }}
-            sx={{
-              border: `2px solid ${
-                selectedLoginOption === 'userName'
-                  ? theme.palette.secondary.main
-                  : theme.palette.grey.main
-              }`,
-              '&:hover': {
-                backgroundColor: 'transparent !important',
-              },
-            }}
-          >
-            <Typography variant="body1" color="textPrimary.main" textAlign={'left'} ml={1}>
-              User ID
             </Typography>
           </Button>
         </Grid>
@@ -280,6 +280,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
             <TextField
               required
               disabled={otpFormEnabled}
+              label={'NMR ID'}
               placeholder={'Please enter your NMR ID'}
               inputProps={{ maxLength: 12 }}
               name={'nmrID'}
@@ -330,16 +331,16 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
         ) : selectedLoginOption === 'userName' ? (
           <>
             <TextField
-              sx={{ mb: 4 }}
+              sx={{ mb: 2 }}
               required
               fullWidth
-              label={'User ID'}
-              placeholder={'Please enter your User ID'}
+              label={'Username'}
+              placeholder={'Please enter your Username'}
               name={'userID'}
               {...register('userID', {
-                required: 'Please enter an User ID',
+                required: 'Please enter an Username',
                 pattern: {
-                  message: 'Please enter an valid User ID',
+                  message: 'Please enter an valid Username',
                 },
               })}
             />

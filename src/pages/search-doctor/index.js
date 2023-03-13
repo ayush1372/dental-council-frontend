@@ -23,9 +23,11 @@ const tabNames = {
 
 const SearchDoctor = () => {
   const [doSearch, setDoSearch] = useState(false);
+  const [scrolldown, setScrollDown] = useState(false);
   const [searchData, setSearchData] = useState({});
   const [tabValue, setTabValue] = useState('Advance Search');
   const handleTabChange = (event, newValue) => {
+    setScrollDown(false);
     setTabValue(newValue);
   };
 
@@ -55,16 +57,25 @@ const SearchDoctor = () => {
             }}
           >
             {Object.keys(tabNames).map((tabName) => (
-              <Tab value={tabName} label={tabName} key={tabName}></Tab>
+              <Tab
+                value={tabName}
+                label={tabName}
+                key={tabName}
+                sx={{ textTransform: 'none' }}
+              ></Tab>
             ))}
           </Tabs>
         </Box>
         <Box sx={{ boxShadow: '0px 3px 6px #00000014;' }} p={2}>
-          <Component setDoSearch={setDoSearch} setSearchData={setSearchData} />
+          <Component
+            setDoSearch={setDoSearch}
+            setSearchData={setSearchData}
+            setScrollDown={setScrollDown}
+          />
         </Box>
       </Box>
 
-      {doSearch && <SearchResults searchData={searchData} />}
+      {doSearch && <SearchResults searchData={searchData} scrolldown={scrolldown} />}
     </Container>
   );
 };

@@ -2,15 +2,29 @@ import { Box, Button, Divider, Grid, Typography } from '@mui/material';
 
 import { monthsData } from '../../../constants/common-data';
 import Stepper from '../../../shared/stepper/stepper';
-const wizardSteps = ['Application Submitted', 'At SMC', 'At NMC', 'Application Approved/Rejected'];
+const wizardSteps = [
+  'Application Submitted',
+  'Pending At SMC',
+  'Pending At College',
+  'Pending At SMC',
+  'Pending At NMC',
+];
 export function TrackApplicationDetails({
   showViewProfile,
   setShowTrackApplicationTable,
   setShowTrackApplication,
   selectedRowData,
 }) {
-  const { pendency, request_id, application_type_name, created_at, smc_status, nmc_status } =
-    selectedRowData;
+  const {
+    pendency,
+    request_id,
+    application_type_name,
+    created_at,
+    smc_status,
+    nmc_status,
+    collegeVerificationStatus,
+    NMCVerificationStatus,
+  } = selectedRowData;
   const showTrackApplicationTable = () => {
     setShowTrackApplicationTable(true);
     setShowTrackApplication(false);
@@ -64,7 +78,24 @@ export function TrackApplicationDetails({
               Current Status
             </Typography>
             <Typography variant="subtitle2" color="primary.main">
-              Pending At SMC
+              {/* Pending At SMC */}
+
+              {smc_status?.value === 'PENDING' &&
+              NMCVerificationStatus?.value === 'NOT YET RECEIVED' &&
+              collegeVerificationStatus?.value === 'NOT YET RECEIVED' &&
+              nmc_status?.value === 'NOT YET RECEIVED'
+                ? 'Pending At SMC'
+                : smc_status?.value === 'APPROVED' &&
+                  NMCVerificationStatus?.value === 'PENDING' &&
+                  collegeVerificationStatus?.value === 'NOT YET RECEIVED' &&
+                  nmc_status?.value === 'NOT YET RECEIVED'
+                ? 'Pending At Registrar'
+                : smc_status?.value === 'APPROVED' &&
+                  NMCVerificationStatus?.value === 'APPROVED' &&
+                  collegeVerificationStatus?.value === 'PENDING' &&
+                  nmc_status?.value === 'NOT YET RECEIVED'
+                ? 'Pending At Dean'
+                : 'Pending At NMC'}
             </Typography>
           </Grid>
           <Grid item xs={8} md="auto">

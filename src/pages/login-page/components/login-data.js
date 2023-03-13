@@ -135,8 +135,8 @@ export const Login = ({ loginName }) => {
                 navigate(`/profile`);
                 getCommonData(resp);
               })
-              .catch((error) => {
-                successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+              .catch(() => {
+                // successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
               });
           } else {
             successToast(
@@ -177,8 +177,8 @@ export const Login = ({ loginName }) => {
                 navigate(`/profile`);
                 getCommonData(resp);
               })
-              .catch((error) => {
-                successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+              .catch(() => {
+                // successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
               });
           } else {
             successToast(
@@ -264,6 +264,7 @@ export const Login = ({ loginName }) => {
         {selectedLoginOption === 'userName' ? (
           <>
             <TextField
+              sx={{ mb: 2 }}
               required
               fullWidth
               label={'User ID'}

@@ -42,6 +42,7 @@ const SelectField = (
           </Typography>
         </Box>
       )}
+
       <MuiSelect
         IconComponent={KeyboardArrowDownIcon}
         fullWidth

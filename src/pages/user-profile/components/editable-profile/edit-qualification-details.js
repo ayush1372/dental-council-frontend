@@ -87,7 +87,7 @@ const EditQualificationDetails = ({
           />
         </Grid>
       )}
-      <Grid container item spacing={2} mb={3}>
+      <Grid container item spacing={2}>
         <Grid item xs={12}>
           <Typography component="div" variant="body1" color="inputTextColor">
             Qualification From
@@ -150,7 +150,7 @@ const EditQualificationDetails = ({
               defaultValue={getValues()[`qualification[${index}].result`]}
               required={true}
               {...register(`qualification[${index}].result`, {
-                required: 'degree or diploma is required',
+                required: 'degree is required',
               })}
               options={[]}
               MenuProps={{
@@ -170,7 +170,7 @@ const EditQualificationDetails = ({
               defaultValue={getValues()[`qualification[${index}].yearfmge`]}
               required={true}
               {...register(`qualification[${index}].yearfmge`, {
-                required: 'degree or diploma is required',
+                required: 'degree is required',
               })}
               options={[]}
               MenuProps={{
@@ -190,7 +190,7 @@ const EditQualificationDetails = ({
               defaultValue={getValues()[`qualification[${index}].monthfmge`]}
               required={true}
               {...register(`qualification[${index}].monthfmge`, {
-                required: 'degree or diploma is required',
+                required: 'degree is required',
               })}
               options={[]}
               MenuProps={{
@@ -218,7 +218,7 @@ const EditQualificationDetails = ({
         </Grid>
       )}
 
-      <Grid container item spacing={2} display="flex" alignItems="center" mt={3} mb={2}>
+      <Grid container item spacing={2} display="flex" alignItems="center" mb={2}>
         <Grid item xs={3}>
           <Typography color="grey2.lighter" variant="body1">
             BASIC QUALIFICATION
@@ -235,42 +235,23 @@ const EditQualificationDetails = ({
             fullWidth
             error={errors?.qualification?.[index]?.qualification?.message}
             name="Qualification"
-            label="Name of the degree or diploma obtained"
-            defaultValue={fields[index].qualification}
+            label="Name of the Degree"
+            defaultValue={'MBBS - Bachelor of Medicine and Bachelor of Surgery '}
             required={true}
             {...register(`qualification[${index}].qualification`, {
-              required: 'degree or diploma is required',
+              required: 'degree is required',
             })}
-            options={createSelectFieldData(coursesList.data) || []}
-            MenuProps={{
-              style: {
-                maxHeight: 250,
-                maxWidth: 130,
-              },
-            }}
-          />
-          {/* )} */}
-        </Grid>
-        <Grid item xs={12} md={3} xl={4}>
-          {/* {getValues()[qualification[1]] !== undefined && ( */}
-          <Select
-            fullWidth
-            error={errors?.qualification?.[index]?.country?.message}
-            name="country"
-            label="Country name"
-            defaultValue={fields[index].country}
-            required={true}
-            {...register(`qualification[${index}].country`, {
-              required: 'country is Required',
-            })}
+            disabled={qualificationfrom === 'International' ? false : true}
             options={
-              countriesList?.length > 0
-                ? createSelectFieldData(
-                    countriesList?.filter(function (item) {
-                      return item.name === 'India';
-                    }, 'id')
-                  )
-                : []
+              qualificationfrom === 'International'
+                ? createSelectFieldData(coursesList.data)
+                : [
+                    {
+                      label: 'MBBS - Bachelor of Medicine and Bachelor of Surgery ',
+                      value: 'MBBS - Bachelor of Medicine and Bachelor of Surgery ',
+                      id: '69',
+                    },
+                  ]
             }
             MenuProps={{
               style: {
@@ -278,9 +259,48 @@ const EditQualificationDetails = ({
                 maxWidth: 130,
               },
             }}
+            sx={{
+              '.MuiSelect-select': {
+                backgroundColor: 'grey2.main',
+              },
+            }}
+            InputProps={{ readOnly: true }}
           />
           {/* )} */}
         </Grid>
+        {qualificationfrom === 'International' && (
+          <Grid item xs={12} md={3} xl={4}>
+            {/* {getValues()[qualification[1]] !== undefined && ( */}
+            <Select
+              fullWidth
+              error={errors?.qualification?.[index]?.country?.message}
+              name="country"
+              label="Country name"
+              defaultValue={fields[index].country}
+              required={true}
+              {...register(`qualification[${index}].country`, {
+                required: 'country is Required',
+              })}
+              options={
+                countriesList?.length > 0
+                  ? createSelectFieldData(
+                      countriesList?.filter(function (item) {
+                        return item.name === 'India';
+                      }, 'id')
+                    )
+                  : []
+              }
+              MenuProps={{
+                style: {
+                  maxHeight: 250,
+                  maxWidth: 130,
+                },
+              }}
+            />
+            {/* )} */}
+          </Grid>
+        )}
+
         <Grid item xs={12} md={4} xl={4}>
           <Select
             fullWidth
@@ -346,7 +366,7 @@ const EditQualificationDetails = ({
           {/* )} */}
         </Grid>
         <Grid container item xs={12} md={8} xl={4} columnSpacing={2}>
-          <Typography pl={2}>Month & Year of awarding Degree/Diploma</Typography>
+          <Typography pl={2}>Month & Year of awarding Degree</Typography>
           <Grid item xs={12} md={6} mb={{ xs: 2, md: 0 }}>
             <Select
               fullWidth
@@ -366,7 +386,7 @@ const EditQualificationDetails = ({
               name={'Year'}
               // label={'Year of awarding Degree/Diploma'}
               required={true}
-              placeHolder={'Year of awarding'}
+              placeholder={'Year of awarding'}
               fullWidth
               error={errors?.qualification?.[index]?.year?.message}
               defaultValue={fields[index].year}
@@ -412,10 +432,8 @@ const EditQualificationDetails = ({
             fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
             fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
                  Maximum size allowed for the attachment is 5MB.`}
-            fileData={qualificationFilesData[`qualification.${index}.files`] || []}
-            setFileData={(files) => {
-              handleQualificationFilesData(`qualification.${index}.files`, files);
-            }}
+            fileData={qualificationFilesData}
+            setFileData={handleQualificationFilesData}
             isDigiLockcerVisible={true}
           />
         </Grid>

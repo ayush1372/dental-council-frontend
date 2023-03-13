@@ -220,90 +220,78 @@ export default function Dashboard() {
         </Grid>
       )}
       {showDashboard ? (
-        <Container>
-          {/* <Typography variant="h2" mt={3} mb={4}>
-            Dashboard
-          </Typography> */}
-          <Box sx={{ width: '100%' }}>
-            <Box display="flex" flexWrap="wrap" gap={{ xs: 1, xl: 2 }}>
-              {Object.entries(dashboard).map((element) => {
-                return (
-                  <>
-                    <Typography
-                      mb={3}
-                      variant="h2"
-                      component="div"
-                      display="flex"
-                      alignItems="center"
-                      gap={2}
-                      flex="1 0 100%"
+        <Box display="flex" flexWrap="wrap" gap={{ xs: 1, xl: 2 }} p={3} pb={0}>
+          {Object.entries(dashboard).map((element) => {
+            return (
+              <>
+                <Typography
+                  mb={3}
+                  variant="h2"
+                  component="div"
+                  display="flex"
+                  alignItems="center"
+                  gap={2}
+                  flex="1 0 100%"
+                >
+                  <img
+                    className={classes.requestIcon}
+                    src={
+                      element[0].includes('Registration')
+                        ? RegistrationRequest
+                        : element[0].includes('Updation')
+                        ? UpdationRequest
+                        : element[0].includes('Suspension')
+                        ? SuspensionRequest
+                        : ''
+                    }
+                    alt="requestIcon"
+                  />
+                  {element[0]}
+                </Typography>
+                {element[1].map((item) => {
+                  return (
+                    <Box
+                      mb={{ xs: 2, md: 4 }}
+                      flex={{ xs: '1 0 100%', sm: '1 0 32%', md: '1 0 24%', lg: '1 0 19%' }}
+                      key={item?.name}
                     >
-                      <img
-                        className={classes.requestIcon}
-                        src={
-                          element[0].includes('Registration')
-                            ? RegistrationRequest
-                            : element[0].includes('Updation')
-                            ? UpdationRequest
-                            : element[0].includes('Suspension')
-                            ? SuspensionRequest
-                            : ''
-                        }
-                        alt="requestIcon"
-                      />
-                      {element[0]}
-                    </Typography>
-                    {element[1].map((item) => {
-                      return (
+                      <Item id={item?.id} onClick={() => showTableFun(item)}>
                         <Box
-                          mb={{ xs: 2, md: 4 }}
-                          flex={{ xs: '1 0 100%', sm: '1 0 32%', md: '1 0 24%', lg: '1 0 19%' }}
-                          key={item?.name}
+                          display="flex"
+                          justifyContent="space-between"
+                          alignItems="center"
+                          mb={2}
                         >
-                          <Item id={item?.id} onClick={() => showTableFun(item)}>
-                            <Box
-                              display="flex"
-                              justifyContent="space-between"
-                              alignItems="center"
-                              mb={2}
-                            >
-                              <Typography color="inputFocusColor.main" variant="h2">
-                                {item.value}
-                              </Typography>
-                              <img
-                                className={classes.iconImage}
-                                src={getCardIcons(item)}
-                                alt="icon"
-                              />
-                            </Box>
-                            <Typography
-                              variant="body1"
-                              color="primary"
-                              component="div"
-                              lineHeight={{ xs: '18px', lg: '24px' }}
-                              mb={1}
-                            >
-                              {item.name}
-                            </Typography>
-                            <Typography
-                              variant="body1"
-                              color="primary"
-                              component="div"
-                              fontWeight="400"
-                            >
-                              {getTextLabelIcons(item)}
-                              {/* Total number of applications after registration */}
-                            </Typography>
-                          </Item>
+                          <Typography color="inputFocusColor.main" variant="h2">
+                            {item.value}
+                          </Typography>
+                          <img className={classes.iconImage} src={getCardIcons(item)} alt="icon" />
                         </Box>
-                      );
-                    })}
-                  </>
-                );
-              })}
-            </Box>
-          </Box>
-        </Container>
+                        <Typography
+                          variant="body1"
+                          color="primary"
+                          component="div"
+                          lineHeight={{ xs: '18px', lg: '24px' }}
+                          mb={1}
+                        >
+                          {item.name}
+                        </Typography>
+                        <Typography
+                          variant="body1"
+                          color="primary"
+                          component="div"
+                          fontWeight="400"
+                        >
+                          {getTextLabelIcons(item)}
+                        </Typography>
+                      </Item>
+                    </Box>
+                  );
+                })}
+              </>
+            );
+          })}
+        </Box>
       ) : showTable ? (
         <DashboardControlledTable
           setShowViewPorfile={setShowViewPorfile}

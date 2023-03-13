@@ -13,6 +13,7 @@ const NAV_META = [
     path: 'profile',
     title: 'Profile',
     component: 'profile',
+    isPrivate: true,
   },
   {
     path: '*',
@@ -108,6 +109,7 @@ const NAV_META = [
     path: 'search-doctor',
     title: 'search-doctor',
     component: 'search-doctor',
+    isPrivate: 'PUBLIC',
   },
   {
     path: 'screen-reader',
@@ -115,7 +117,7 @@ const NAV_META = [
     component: 'screen-reader',
   },
   {
-    path: 'reset-password/:request_id',
+    path: 'reset-password', ////:request_id',
     title: 'Reset Password',
     component: 'reset-password',
   },

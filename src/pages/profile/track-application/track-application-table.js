@@ -81,8 +81,8 @@ function TrackAppicationTable({
       type: 'string',
     },
     {
-      title: 'Name of Applicant',
-      name: 'applicant_full_name',
+      title: 'Type of Application',
+      name: 'application_type_name',
       sorting: true,
       type: 'string',
     },
@@ -121,7 +121,7 @@ function TrackAppicationTable({
         { type: 'SNo', value: index + 1 },
         {
           type: 'registration_no',
-          value: data?.registration_no,
+          value: data?.request_id,
         },
         {
           type: 'request_id',
@@ -146,7 +146,7 @@ function TrackAppicationTable({
           type: 'collegeVerificationStatus',
           value: data?.college_dean_status,
         },
-        { type: 'NMCVerificationStatus', value: data?.nmc_status },
+        { type: 'NMCVerificationStatus', value: data?.college_registrar_status },
         { type: 'created_at', value: data?.created_at },
         {
           type: 'smc_status',
@@ -157,7 +157,7 @@ function TrackAppicationTable({
           value: data?.nmc_status,
         },
         { type: 'pendency', value: data?.pendency },
-        { type: 'view', value: data?.view || 'view', onClickCallback: viewCallback }
+        { type: 'view', value: data?.view || 'view more', onClickCallback: viewCallback }
       );
     }
   );
@@ -182,7 +182,12 @@ function TrackAppicationTable({
       {/* <Typography variant="h2" py={3} bgcolor={`${theme.palette.white.main}`} mb={2} px={3}>
         Track Application
       </Typography>    */}
-      <TableSearch trackApplication={userType} />
+      <TableSearch
+        //  searchParams={searchParams}
+        trackApplication={userType}
+        exportData={tableData?.data?.data?.health_professional_applications}
+        flag={'trackApplicationData'}
+      />
       <Box>
         <GenericTable
           order={order}

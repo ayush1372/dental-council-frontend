@@ -27,11 +27,6 @@ const qualificationObjTemplate = [
 ];
 
 const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
-  const [registrationFileData, setRegistrationFileData] = useState([]);
-  const [qualificationFilesData, setQualificationFilesData] = useState({
-    'qualification.0.files': [],
-  });
-
   const { t } = useTranslation();
   const loggedInUserType = useSelector((state) => state?.common?.loggedInUserType);
   const dispatch = useDispatch();
@@ -40,9 +35,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   );
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
 
-  const { loginData } = useSelector((state) => state?.loginReducer);
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
-  const { registration_detail_to } = registrationDetails || {};
+  const { registration_detail_to, qualification_detail_response_tos } = registrationDetails || {};
   const {
     registration_date,
     registration_number,
@@ -50,8 +44,15 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     is_renewable,
     renewable_registration_date,
     is_name_change,
+    registration_certificate,
   } = registration_detail_to || {};
-
+  const { degree_certificate } = qualification_detail_response_tos?.[0] || {};
+  const [registrationFileData, setRegistrationFileData] = useState(
+    registration_certificate ? [{ file: registration_certificate }] : []
+  );
+  const [qualificationFilesData, setQualificationFilesData] = useState(
+    degree_certificate ? [{ file: degree_certificate }] : []
+  );
   const smcName = state_medical_council?.name || '';
 
   const {
@@ -93,6 +94,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     control,
     name: 'qualification',
   });
+
+  const isRenewable = watch('registration');
 
   const onHandleSave = (moveToNext = false) => {
     const {
@@ -155,13 +158,14 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
       type: 'application/json',
     });
     formData.append('data', doctorRegistrationDetailsBlob);
-    formData.append('degreeCertificate', Object.values(qualificationFilesData)?.[0]?.[0].file);
+    formData.append('degreeCertificate', qualificationFilesData[0].file);
+
     formData.append('registrationCertificate', registrationFileData[0].file);
     dispatch(
       updateDoctorRegistrationDetails(
         formData,
         loggedInUserType === 'Doctor'
-          ? loginData?.data?.profile_id
+          ? registrationDetails?.hp_profile_id
           : loggedInUserType === 'SMC' && personalDetails?.hp_profile_id
       )
     ).then(() => {
@@ -171,11 +175,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
   const onHandleOptionNext = () => {
     onHandleSave(true);
-  };
-
-  const handleQualificationFilesData = (fileName, files) => {
-    qualificationFilesData[fileName] = files;
-    setQualificationFilesData({ ...qualificationFilesData });
   };
 
   const handleBackButton = () => {
@@ -334,33 +333,35 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               error={errors.registration?.message}
             />
           </Grid>
-          <Grid item xs={12} md={4}>
-            <Typography variant="subtitle2" color="inputTextColor.main">
-              Due Date of Renewal
-              <Typography component="span" color="error.main">
-                *
+          {isRenewable === '1' && (
+            <Grid item xs={12} md={4}>
+              <Typography variant="subtitle2" color="inputTextColor.main">
+                Due Date of Renewal
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
               </Typography>
-            </Typography>
 
-            <TextField
-              variant="outlined"
-              name={'RenewalDate'}
-              required={true}
-              fullWidth
-              defaultValue={getValues().RenewalDate}
-              {...register('RenewalDate', {
-                required: 'Registration Date is Required',
-              })}
-              sx={{
-                input: {
-                  backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
-                },
-              }}
-              InputProps={{
-                readOnly: loggedInUserType === 'SMC' ? false : true,
-              }}
-            />
-          </Grid>
+              <TextField
+                variant="outlined"
+                name={'RenewalDate'}
+                required={true}
+                fullWidth
+                defaultValue={getValues().RenewalDate}
+                {...register('RenewalDate', {
+                  required: 'Registration Date is Required',
+                })}
+                sx={{
+                  input: {
+                    backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
+                  },
+                }}
+                InputProps={{
+                  readOnly: loggedInUserType === 'SMC' ? false : true,
+                }}
+              />
+            </Grid>
+          )}
         </Grid>
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={6}>
@@ -410,7 +411,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               register={register}
               unregister={unregister}
               qualificationFilesData={qualificationFilesData}
-              handleQualificationFilesData={handleQualificationFilesData}
+              handleQualificationFilesData={setQualificationFilesData}
             />
           );
         })}
