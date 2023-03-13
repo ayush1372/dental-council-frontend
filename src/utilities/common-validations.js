@@ -92,3 +92,14 @@ export const EmailRegexValidation = {
     message: 'Provide a Valid Email ID',
   },
 };
+
+export const convertGender = (gender) => {
+  // eslint-disable-next-line no-console
+  return gender?.toUpperCase() === 'M'
+    ? 'MALE'
+    : gender?.toUpperCase() === 'F'
+    ? 'FEMALE'
+    : gender?.toUpperCase() === 'O'
+    ? 'OTHER'
+    : '';
+};
