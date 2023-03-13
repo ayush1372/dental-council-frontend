@@ -60,19 +60,19 @@ export default function KycErrorPopup({ open, setOpen, text }) {
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Key</TableCell>
-                    <TableCell>Registered Value</TableCell>
-                    <TableCell>KYC Value</TableCell>
-                    <TableCell>Status</TableCell>
+                    <TableCell align="center">Field</TableCell>
+                    <TableCell align="center">Registered V alue</TableCell>
+                    <TableCell align="center">KYC Value</TableCell>
+                    <TableCell align="center">Status</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {fuzzyDetails.map((row) => (
                     <TableRow key={row.i}>
-                      <TableCell>{row.field}</TableCell>
-                      <TableCell>{row.registered_value}</TableCell>
-                      <TableCell>{row.kyc_value}</TableCell>
-                      <TableCell>{row.status}</TableCell>
+                      <TableCell align="center">{row.field}</TableCell>
+                      <TableCell align="center">{row.registered_value}</TableCell>
+                      <TableCell align="center">{row.kyc_value}</TableCell>
+                      <TableCell align="center">{row.status}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
