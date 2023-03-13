@@ -1,6 +1,6 @@
 import { get_year_data } from '../helpers/functions/common-functions';
 export const accesstokenHprId =
-  'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI1WVpwM043VlFCdEE1cDZwcktkdXYyV0NaTTZVVlFVLWZTcEZJb0tiQU9ZIn0.eyJleHAiOjE2Nzg1NzE1MTYsImlhdCI6MTY3ODUzNTUxNiwianRpIjoiMzY1OWFjNjctZDIyYS00NWU4LWI5YzYtOTBkNWYyZWEyZWFhIiwiaXNzIjoiaHR0cHM6Ly9wcmVwcm9kLmFiZG0uZ292LmluL2F1dGgvcmVhbG1zL2NlbnRyYWwtcmVnaXN0cnkiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiZmUzZTEwMDctNjZlMi00OTkzLWFmYTktYjMyYjM1NDk1NDIwIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiaHBfaWQiLCJzZXNzaW9uX3N0YXRlIjoiODYxNWQ5MWUtOTIxMi00MWYxLThlNzAtNTY2ZTJlMDYxYmU5IiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwOi8vbG9jYWxob3N0OjkwMDciXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwiaGVhbHRoSWQiLCJocF9pZCJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfSwiaHBfaWQiOnsicm9sZXMiOlsidW1hX3Byb3RlY3Rpb24iXX19LCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwiY2xpZW50SWQiOiJocF9pZCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiY2xpZW50SG9zdCI6IjEwLjIzMy43MC4xMTMiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtaHBfaWQiLCJjbGllbnRBZGRyZXNzIjoiMTAuMjMzLjcwLjExMyJ9.O1_pxIBsiGm4bqq_Aa4GcHoZrButwCshP8ou4EJGJzXofnFsMO7bqgKyDYRZ8ORliMVmUKgLajerQWs6jVU-84iR9qtOhyYRxKGXzrLG305a-Bs7LkdFL67Bxe0NwXInaCmoICfUHhn-9aTzmXlAWuE6ETDt3DHRJf0xQ22ZGURBnMYiAOdh2I49YpHpcaySJoCqOarni2HLLKqJEb51wAImMhcVRebs6wG3FZ-y33c6thXaPI6FPLHvGacz0i_YDWxPfEBZ9TjwQybuek50tVPphdr5nwbyq_Thg7aEQEEjMHOanGsDg-UEf_aWG6bhpKJUOP2Y-W8kaFVzShnibQ';
+  'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI1WVpwM043VlFCdEE1cDZwcktkdXYyV0NaTTZVVlFVLWZTcEZJb0tiQU9ZIn0.eyJleHAiOjE2Nzg3MzUyMjMsImlhdCI6MTY3ODY5OTIyMywianRpIjoiY2NlMjI1NGMtYTY1Mi00MTM2LThhOWYtNTM1NTBjMzU0YTdlIiwiaXNzIjoiaHR0cHM6Ly9wcmVwcm9kLmFiZG0uZ292LmluL2F1dGgvcmVhbG1zL2NlbnRyYWwtcmVnaXN0cnkiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiZmUzZTEwMDctNjZlMi00OTkzLWFmYTktYjMyYjM1NDk1NDIwIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiaHBfaWQiLCJzZXNzaW9uX3N0YXRlIjoiNmY0ZjM5ZjEtYTA5Mi00ZDFiLTk5YWQtZGNjNTQ5NDkzNzc3IiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwOi8vbG9jYWxob3N0OjkwMDciXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwiaGVhbHRoSWQiLCJocF9pZCJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfSwiaHBfaWQiOnsicm9sZXMiOlsidW1hX3Byb3RlY3Rpb24iXX19LCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwiY2xpZW50SWQiOiJocF9pZCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiY2xpZW50SG9zdCI6IjEwLjIzMy42OC4xNjkiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtaHBfaWQiLCJjbGllbnRBZGRyZXNzIjoiMTAuMjMzLjY4LjE2OSJ9.c3Cc8rSixZi3TxWbFROI3nliDzcbYJHr9udumDj4N745pAmhaCuOP4bNn2kmGZ0DiLcA9wAoMO-adSD9eHkSLQDmGZ2Ym8e7lEO3FN0ot41HeNK3SzJut9IU_vJm8PK-S-6zksCtTTSUgr3Gz4HZV8rPRQTj1qbBNgAeQl9lgkgbYxPFwchC0-WIOPGqsFB4LhmLo3b0aOz40eox1FOyjejEkwgiR3NsKPu52c_n2dvzYmUUP4iJwLXKVNTnFrmYauBPV540wsuxSHL486dSe-mldwviv_IEvWaklNk0_BtR12_zR_cSzxKGn0eBtOi_bywE-SeOusCjuWTQ_NN-Ow';
 export const StateNames = [
   { id: '1', name: 'Andhra Pradesh' },
   { id: '2', name: 'Maharastra' },
@@ -410,6 +410,13 @@ export const ActivateLicence = [
   { header: 'Remark', key: 'remarks' },
   { header: 'RequestId', key: 'request_id' },
 ];
+export const TrackApplication = [
+  { header: 'Request ID', key: 'request_id' },
+  { header: 'Type of Application', key: 'application_type_name' },
+  { header: 'Date of Submission', key: 'created_at' },
+  { header: 'Current Status', key: 'doctor_status' },
+  { header: 'Pendency', key: 'pendency' },
+];
 
 export const searchDoctorResult = [
   {
@@ -525,6 +532,28 @@ export const applicationStatus = [
   { id: 7, name: 'QUERY RAISED' },
 ];
 export const filterDropDownData = [
-  { id: 'application_type_id', name: 'Type of Application ' },
-  { id: 'work_flow_status_id', name: ' Current Status' },
+  { id: 'applicationTypeId', name: 'Type of Application ' },
+  { id: 'workFlowStatusId', name: ' Current Status' },
+];
+export const emptyData = [
+  {
+    id: '1',
+    name: '-',
+  },
+];
+
+export const CollegeApprovalFieldList = [
+  { id: 'collegeName', name: 'College Name' },
+  { id: 'councilName', name: 'Name of State Council ' },
+];
+
+export const ActivateLicenceFieldList = [
+  { id: 'healthProfessionalName', name: 'Applicant Name' },
+  { id: 'registrationNumber', name: 'Registration No' },
+];
+
+export const DashBoardCardsFieldList = [
+  { id: 'registrationNumber', name: 'Registration No' },
+  { id: 'applicantFullName', name: 'Name of Applicant' },
+  { id: 'councilName', name: 'Name of State Council' },
 ];

@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloseIcon from '@mui/icons-material/Close';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import { Box, Dialog, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
@@ -64,48 +65,77 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
     <>
       <ToastContainer></ToastContainer>
       <Box bgcolor="white.main" py={2} px={{ xs: 1, md: 4 }} mt={2} boxShadow={1}>
-        <Typography component="div" color="primary.main" variant="body1">
+        <Typography component="div" color="primary.main" variant="body1" mb={2}>
           Consent
           <Typography component="span" color="error.main">
             *
           </Typography>
         </Typography>
-        <Box bgcolor="backgroundColor.light" p={2} display="flex">
-          <Checkbox
-            name="consent"
-            {...register('consent', {
-              required: 'Consent is Required',
-            })}
-            error={errors.consent?.message}
-          />
-          <Typography component="div" mt={1} variant="body5">
-            I, the applicant of the above facility hereby verify that the details as submitted on
-            the portal pertaining to the above facility are true to my personal knowledge and
-            nothing material has been concealed or falsely stated. I request you to kindly verify
-            that the health facility as stated actually exists and give approval to that effect so
-            that the facility can be &aposvalidated for existence&apos on the portal.
-            <br /> <br />I am aware that the facility ID and related information can be used and
-            shared with the entities working in the National Digital Health Ecosystem (NDHE) which
-            inter alia includes stakeholders and entities such as healthcare professionals (e.g.
-            doctors), facilities (e.g. hospitals, laboratories) and data fiduciaries (e.g. health
-            programmes), which are registered with or linked to the Ayushman Bharat Digital Mission
-            (ABDM), and various processes there under. I reserve the right to revoke the given
-            consent at any point of time, subject to applicable laws, rules and regulations.
-          </Typography>
-        </Box>
-        <Box bgcolor="backgroundColor.light" p={2} display="flex">
-          <Checkbox
-            name="HPR"
-            // {...register('consent', {
-            //   required: 'Consent is Required',
-            // })}
-            // error={errors.consent?.message}
-          />
+        <Grid
+          container
+          bgcolor="backgroundColor.light"
+          p={3}
+          mb={2}
+          display="flex"
+          border="1px solid"
+          borderColor="inputBorderColor.main"
+          borderRadius="5px"
+        >
+          <Grid item xs={12} display="flex">
+            <Checkbox
+              sx={{ width: '18px', height: '18px', marginLeft: 1 }}
+              name="consent"
+              {...register('consent', {
+                required: 'Consent is Required',
+              })}
+              error={errors.consent?.message}
+            />
+            <Typography component="div" variant="body7">
+              I hereby declare that I am voluntarily sharing above mentioned particulars and
+              information. I certify that the above information furnished by me is true, complete,
+              and correct to the best of my knowledge. I understand that in the event of my
+              information being found false or incorrect at any stage, I shall be held liable for
+              the same.
+            </Typography>
+          </Grid>
+        </Grid>
+        {/* <Box
+          bgcolor="backgroundColor.light"
+          p={3}
+          display="flex"
+          justifyContent="flex-start"
+          alignItems="center"
+        > */}
+        <Grid
+          container
+          alignItems="center"
+          columnGap={1}
+          bgcolor="success.light"
+          p={3}
+          borderRadius="5px"
+        >
+          <Grid item sx="auto" display="flex" alignItems="center">
+            <Checkbox
+              sx={{ width: '18px', height: '18px' }}
+              name="HPR"
+              // {...register('consent', {
+              //   required: 'Consent is Required',
+              // })}
+              // error={errors.consent?.message}
+            />
+            <Typography component="div" variant="body7">
+              Save my time,share my details with HPR
+            </Typography>
+          </Grid>
+          <Grid item sx="auto" display="flex" alignItems="center">
+            <InfoOutlinedIcon sx={{ height: '14px', width: '14px', color: 'messageBlue.main' }} />
+            <Typography component="span" variant="body8" color="messageBlue.main">
+              Know more about HPR
+            </Typography>
+          </Grid>
+        </Grid>
 
-          <Typography component="div" mt={1} variant="body5">
-            I want to save time and create HPR. This needs to be added.
-          </Typography>
-        </Box>
+        {/* </Box> */}
         <Grid container mt={3}>
           <Grid item xs={12} md>
             <Button
@@ -126,7 +156,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
               Back
             </Button>
           </Grid>
-          <Grid item xs={12} md="auto" display="flex" justifyContent="flex-end">
+          {/* <Grid item xs={12} md="auto" display="flex" justifyContent="flex-end">
             <Button
               variant="outlined"
               color="secondary"
@@ -143,8 +173,8 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
             >
               Print & Save as PDF
             </Button>
-          </Grid>
-          {loggedInUserType !== 'SMC' && (
+          </Grid> */}
+          {/* {loggedInUserType !== 'SMC' && (
             <Grid
               item
               xs={12}
@@ -170,7 +200,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
                 E-sign Profile
               </Button>
             </Grid>
-          )}
+          )} */}
           <Grid
             item
             xs={12}
@@ -194,7 +224,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
               }}
               onClick={handleSubmit(handleSubmitDetails)}
             >
-              Submit
+              Finalize profile
             </Button>
           </Grid>
         </Grid>
