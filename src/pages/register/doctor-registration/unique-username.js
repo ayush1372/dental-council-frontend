@@ -96,16 +96,6 @@ const UniqueUserNameForDoctorRegistration = () => {
                     e.target.value > 4 ? setDisbale(true) : setDisbale(false);
                   }}
                   clearErrors={clearErrors}
-                  // InputProps={{
-                  //   endAdornment: (
-                  //     <InputAdornment
-                  //       position="end"
-                  //       sx={{ p: 4, backgroundColor: theme.palette.grey.main }}
-                  //     >
-                  //       <Typography></Typography>
-                  //     </InputAdornment>
-                  //   ),
-                  // }}
                 />
               </Box>
             </Box>

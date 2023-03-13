@@ -95,10 +95,10 @@ export const EmailRegexValidation = {
 
 export const convertGender = (gender) => {
   return gender?.toUpperCase() === 'M'
-    ? 'MALE'
+    ? 'Male'
     : gender?.toUpperCase() === 'F'
-    ? 'FEMALE'
+    ? 'Female'
     : gender?.toUpperCase() === 'O'
-    ? 'OTHER'
+    ? 'Other'
     : '';
 };
