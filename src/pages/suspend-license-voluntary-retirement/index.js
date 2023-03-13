@@ -9,7 +9,6 @@ import { Box, Dialog, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
-import SuccessModalPopup from '../../shared/common-modals/success-modal-popup';
 import { getInitiateWorkFlow } from '../../store/actions/common-actions';
 import { changeUserActiveTab } from '../../store/reducers/common-reducers';
 import { Button, Checkbox, RadioGroup, TextField } from '../../ui/core';
@@ -19,15 +18,15 @@ export function SuspendLicenseVoluntaryRetirement({
   tabName,
   selectedValue,
   handleClose,
+  closeActionModal,
+  showSuccessPopup,
+  setSuccessPopupMessage,
   selectedSuspendLicenseProfile,
 }) {
   const dispatch = useDispatch();
 
   const { loginData } = useSelector((state) => state.loginReducer);
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
-
-  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
-  const [successPopupMessage, setSuccessPopupMessage] = useState('');
   const [selectedSuspension, setSelectedSuspension] = useState('voluntary-suspension-check');
   const [selectedFromDate, setSelectedFromDate] = useState();
   const { userActiveTab } = useSelector((state) => state.common);
@@ -108,7 +107,7 @@ export function SuspendLicenseVoluntaryRetirement({
     try {
       dispatch(getInitiateWorkFlow(workFlowData))
         .then((response) => {
-          setShowSuccessPopup(true);
+          showSuccessPopup(true);
           if (response) {
             userActiveTab === 'voluntary-suspend-license' &&
               dispatch(changeUserActiveTab('my-profile'));
@@ -121,7 +120,7 @@ export function SuspendLicenseVoluntaryRetirement({
             'error',
             'top-center'
           );
-          setConfirmationModal(false);
+          closeActionModal(false);
         });
     } catch (allFailMsg) {
       successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
@@ -344,7 +343,7 @@ export function SuspendLicenseVoluntaryRetirement({
             />
           </Grid>
           <Box align="right" mt={1}>
-            <Typography color={'inputFocusColor.main'}>150 word only</Typography>
+            <Typography color="grey2.light">300 words only</Typography>
           </Box>
         </Box>
       ) : (
@@ -376,7 +375,7 @@ export function SuspendLicenseVoluntaryRetirement({
             sx={{ padding: '0 8px 0 0' }}
             label={
               tabName
-                ? 'You will no longer be able to receive notifications or perform actions on your profile.'
+                ? 'I understand that during the period of my suspension, I will not be able to practice, and my NMR profile will be deactivated.'
                 : selectedValue === 'blacklist' || selectedValue === 'suspend'
                 ? 'Doctor will no longer be able to receive notifications or perform actions on his/her profile.'
                 : ''
@@ -575,15 +574,6 @@ export function SuspendLicenseVoluntaryRetirement({
             </Box>
           </Box>
         </Dialog>
-      )}
-      {showSuccessPopup && (
-        <SuccessModalPopup
-          open={showSuccessPopup}
-          setOpen={() => setShowSuccessPopup(false)}
-          text={successPopupMessage}
-          handleClose={handleClose}
-          SuspensionCall={true}
-        />
       )}
     </Box>
   );

@@ -65,43 +65,77 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
     <>
       <ToastContainer></ToastContainer>
       <Box bgcolor="white.main" py={2} px={{ xs: 1, md: 4 }} mt={2} boxShadow={1}>
-        <Typography component="div" color="primary.main" variant="body1">
+        <Typography component="div" color="primary.main" variant="body1" mb={2}>
           Consent
           <Typography component="span" color="error.main">
             *
           </Typography>
         </Typography>
-        <Box bgcolor="backgroundColor.light" p={2} display="flex">
-          <Checkbox
-            name="consent"
-            {...register('consent', {
-              required: 'Consent is Required',
-            })}
-            error={errors.consent?.message}
-          />
-          <Typography component="div" mt={1} variant="body7">
-            I hereby declare that I am voluntarily sharing above mentioned particulars and
-            information. I certify that the above information furnished by me is true, complete, and
-            correct to the best of my knowledge. I understand that in the event of my information
-            being found false or incorrect at any stage, I shall be held liable for the same.
-          </Typography>
-        </Box>
-        <Box bgcolor="backgroundColor.light" p={2} display="flex">
-          <Checkbox
-            name="HPR"
-            // {...register('consent', {
-            //   required: 'Consent is Required',
-            // })}
-            // error={errors.consent?.message}
-          />
-          <Typography component="div" variant="body7">
-            Save my time,share my details with HPR
-          </Typography>
-          <InfoOutlinedIcon sx={{ height: '14px', width: '14px', color: 'messageBlue.main' }} />
-          <Typography component="span" variant="body8" color="messageBlue.main">
-            Know more about HPR
-          </Typography>
-        </Box>
+        <Grid
+          container
+          bgcolor="backgroundColor.light"
+          p={3}
+          mb={2}
+          display="flex"
+          border="1px solid"
+          borderColor="inputBorderColor.main"
+          borderRadius="5px"
+        >
+          <Grid item xs={12} display="flex">
+            <Checkbox
+              sx={{ width: '18px', height: '18px', marginLeft: 1 }}
+              name="consent"
+              {...register('consent', {
+                required: 'Consent is Required',
+              })}
+              error={errors.consent?.message}
+            />
+            <Typography component="div" variant="body7">
+              I hereby declare that I am voluntarily sharing above mentioned particulars and
+              information. I certify that the above information furnished by me is true, complete,
+              and correct to the best of my knowledge. I understand that in the event of my
+              information being found false or incorrect at any stage, I shall be held liable for
+              the same.
+            </Typography>
+          </Grid>
+        </Grid>
+        {/* <Box
+          bgcolor="backgroundColor.light"
+          p={3}
+          display="flex"
+          justifyContent="flex-start"
+          alignItems="center"
+        > */}
+        <Grid
+          container
+          alignItems="center"
+          columnGap={1}
+          bgcolor="success.light"
+          p={3}
+          borderRadius="5px"
+        >
+          <Grid item sx="auto" display="flex" alignItems="center">
+            <Checkbox
+              sx={{ width: '18px', height: '18px' }}
+              name="HPR"
+              // {...register('consent', {
+              //   required: 'Consent is Required',
+              // })}
+              // error={errors.consent?.message}
+            />
+            <Typography component="div" variant="body7">
+              Save my time,share my details with HPR
+            </Typography>
+          </Grid>
+          <Grid item sx="auto" display="flex" alignItems="center">
+            <InfoOutlinedIcon sx={{ height: '14px', width: '14px', color: 'messageBlue.main' }} />
+            <Typography component="span" variant="body8" color="messageBlue.main">
+              Know more about HPR
+            </Typography>
+          </Grid>
+        </Grid>
+
+        {/* </Box> */}
         <Grid container mt={3}>
           <Grid item xs={12} md>
             <Button
@@ -122,7 +156,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
               Back
             </Button>
           </Grid>
-          <Grid item xs={12} md="auto" display="flex" justifyContent="flex-end">
+          {/* <Grid item xs={12} md="auto" display="flex" justifyContent="flex-end">
             <Button
               variant="outlined"
               color="secondary"
@@ -139,8 +173,8 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
             >
               Print & Save as PDF
             </Button>
-          </Grid>
-          {loggedInUserType !== 'SMC' && (
+          </Grid> */}
+          {/* {loggedInUserType !== 'SMC' && (
             <Grid
               item
               xs={12}
@@ -166,7 +200,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
                 E-sign Profile
               </Button>
             </Grid>
-          )}
+          )} */}
           <Grid
             item
             xs={12}
@@ -190,7 +224,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
               }}
               onClick={handleSubmit(handleSubmitDetails)}
             >
-              Submit
+              Finalize profile
             </Button>
           </Grid>
         </Grid>
