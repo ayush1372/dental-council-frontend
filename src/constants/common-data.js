@@ -532,21 +532,28 @@ export const applicationStatus = [
   { id: 7, name: 'QUERY RAISED' },
 ];
 export const filterDropDownData = [
-  { id: 'application_type_id', name: 'Type of Application ' },
-  { id: 'work_flow_status_id', name: ' Current Status' },
+  { id: 'applicationTypeId', name: 'Type of Application ' },
+  { id: 'workFlowStatusId', name: ' Current Status' },
+];
+export const emptyData = [
+  {
+    id: '1',
+    name: '-',
+  },
 ];
 
 export const CollegeApprovalFieldList = [
-  { id: 'college_name', name: 'College Name' },
-  { id: 'council_name', name: 'Council Name' },
+  { id: 'collegeName', name: 'College Name' },
+  { id: 'councilName', name: 'Name of State Council ' },
 ];
 
 export const ActivateLicenceFieldList = [
-  { id: 'health_professional_name', name: 'Health Professional Name' },
+  { id: 'healthProfessionalName', name: 'Applicant Name' },
+  { id: 'registrationNumber', name: 'Registration No' },
 ];
 
 export const DashBoardCardsFieldList = [
-  { id: 'registration_no', name: 'Registration Number' },
-  { id: 'applicant_full_name', name: 'Applicant Full Name' },
-  { id: 'council_name', name: 'Council Name' },
+  { id: 'registrationNumber', name: 'Registration No' },
+  { id: 'applicantFullName', name: 'Name of Applicant' },
+  { id: 'councilName', name: 'Name of State Council' },
 ];

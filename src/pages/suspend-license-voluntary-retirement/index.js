@@ -390,7 +390,7 @@ export function SuspendLicenseVoluntaryRetirement({
         <Box>
           <Typography>Raise a Query for the following*</Typography>
           <Box display={'flex'}>
-            <Box my={4} color="grey1.dark">
+            <Box my={4} color="inputTextColor.main">
               <Checkbox
                 sx={{ padding: '0 8px 0 0' }}
                 name="notification"
