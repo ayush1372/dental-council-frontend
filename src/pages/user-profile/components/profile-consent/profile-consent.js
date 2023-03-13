@@ -71,31 +71,31 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
       signingPlace: personalDetails?.communication_address?.village?.name,
       nmrDetails: {
         nmrPersonalDetail: {
-          firstName: personalDetails?.personal_details?.first_name || '',
-          userId: stateData?.personalDetails?.request_id || '', //cs-1013: need to change this path when backend fixes done
-          middleName: personalDetails?.personal_details?.middle_name || '',
-          lastName: personalDetails?.personal_details?.last_name || '',
-          qualification: personalDetails?.personal_details?.first_name || '', //cs-1013: need to change this path when backend fixes done
+          firstName: personalDetails?.personal_details?.first_name || 'efgh',
+          userId: stateData?.personalDetails?.request_id || '747', //cs-1013: need to change this path when backend fixes done
+          middleName: personalDetails?.personal_details?.middle_name || 'abcd',
+          lastName: personalDetails?.personal_details?.last_name || 'lmnop',
+          qualification: personalDetails?.personal_details?.first_name || 'degree', //cs-1013: need to change this path when backend fixes done
           mobileNumber: personalDetails?.personal_details?.mobile || '9999999999',
           emailId: personalDetails?.personal_details?.email || 'mohith2lntinfotech.com',
         },
         nmrPersonalCommunication: {
-          address: personalDetails?.communication_address?.address_line1 || '',
-          country: personalDetails?.communication_address?.country?.name || '',
-          stateUT: personalDetails?.communication_address?.state?.name || '',
-          district: personalDetails?.communication_address?.district?.name || '',
-          city: personalDetails?.communication_address?.village?.name || '',
-          pincode: personalDetails?.communication_address?.pincode || '',
+          address: personalDetails?.communication_address?.address_line1 || 'address',
+          country: personalDetails?.communication_address?.country?.name || 'india',
+          stateUT: personalDetails?.communication_address?.state?.name || 'delhi',
+          district: personalDetails?.communication_address?.district?.name || 'delhi',
+          city: personalDetails?.communication_address?.village?.name || 'delhi',
+          pincode: personalDetails?.communication_address?.pincode || '383838',
         },
         nmrOfficeCommunication: {
           //this object paylaod need to send exact path later
-          address: personalDetails?.communication_address?.address_line1 || '',
+          address: personalDetails?.communication_address?.address_line1 || 'address',
           country: 'India',
-          stateUT: personalDetails?.communication_address?.address_line1 || '',
-          district: personalDetails?.communication_address?.address_line1 || '',
-          city: personalDetails?.communication_address?.address_line1 || '',
+          stateUT: personalDetails?.communication_address?.address_line1 || 'address',
+          district: personalDetails?.communication_address?.address_line1 || 'address',
+          city: personalDetails?.communication_address?.address_line1 || 'address',
           subDistrict: 'Krishna', //cs-1013:need to change this path when backend fixes done*
-          pincode: personalDetails?.communication_address?.address_line1 || '',
+          pincode: personalDetails?.communication_address?.address_line1 || '333333',
         },
         isRegCerAttached: 'No', //cs-1013:need to change this path when backend fixes done*
         isDegreeCardAttached: 'No', //cs-1013:need to change this path when backend fixes done*
@@ -202,7 +202,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
               Back
             </Button>
           </Grid>
-          {/* <Grid item xs={12} md="auto" display="flex" justifyContent="flex-end">
+          <Grid item xs={12} md="auto" display="flex" justifyContent="flex-end">
             <Button
               variant="outlined"
               color="secondary"
@@ -219,8 +219,8 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
             >
               Print & Save as PDF
             </Button>
-          </Grid> */}
-          {/* {loggedInUserType !== 'SMC' && (
+          </Grid>
+          {loggedInUserType !== 'SMC' && (
             <Grid
               item
               xs={12}
@@ -247,7 +247,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
                 E-sign Profile
               </Button>
             </Grid>
-          )} */}
+          )}
           <Grid
             item
             xs={12}
