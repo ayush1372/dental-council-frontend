@@ -150,7 +150,7 @@ const EditQualificationDetails = ({
               defaultValue={getValues()[`qualification[${index}].result`]}
               required={true}
               {...register(`qualification[${index}].result`, {
-                required: 'degree or diploma is required',
+                required: 'degree is required',
               })}
               options={[]}
               MenuProps={{
@@ -170,7 +170,7 @@ const EditQualificationDetails = ({
               defaultValue={getValues()[`qualification[${index}].yearfmge`]}
               required={true}
               {...register(`qualification[${index}].yearfmge`, {
-                required: 'degree or diploma is required',
+                required: 'degree is required',
               })}
               options={[]}
               MenuProps={{
@@ -190,7 +190,7 @@ const EditQualificationDetails = ({
               defaultValue={getValues()[`qualification[${index}].monthfmge`]}
               required={true}
               {...register(`qualification[${index}].monthfmge`, {
-                required: 'degree or diploma is required',
+                required: 'degree is required',
               })}
               options={[]}
               MenuProps={{
@@ -239,7 +239,7 @@ const EditQualificationDetails = ({
             defaultValue={'MBBS - Bachelor of Medicine and Bachelor of Surgery '}
             required={true}
             {...register(`qualification[${index}].qualification`, {
-              required: 'degree or diploma is required',
+              required: 'degree is required',
             })}
             disabled={qualificationfrom === 'International' ? false : true}
             options={

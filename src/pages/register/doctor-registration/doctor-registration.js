@@ -72,19 +72,17 @@ const DoctorRegistrationWelcomePage = () => {
             >
               <Box>
                 <Box pt={2} pb={4}>
-                  <Typography variant="h2" color="primary">
-                    Doctor Registration
+                  <Typography variant="h2" color="textSecondary.main">
+                    Register Your Profile
                   </Typography>
-                  <Typography variant="body3" color="primary.main">
-                    You can select your registration council first from the dropdown and then enter
-                    your Registration number. This will fetch your records from your registered
-                    council.
+                  <Typography variant="body3" color="textSecondary.main">
+                    Select registration council from dropdown and enter your registration number
                   </Typography>
                 </Box>
 
                 <Box pb={4}>
-                  <Typography variant="body3" color="textSecondary.main">
-                    Select your Registration Council
+                  <Typography variant="body1" color="textSecondary.main">
+                    Select Registered Council
                     <Typography component="span" color="error.main">
                       *
                     </Typography>
@@ -93,7 +91,7 @@ const DoctorRegistrationWelcomePage = () => {
                     <SearchableDropdown
                       name="RegistrationCouncil"
                       items={createEditFieldData(councilNames)}
-                      placeholder="Select Your Registration Council"
+                      placeholder="Select Registered Council"
                       clearErrors={clearErrors}
                       error={errors.RegistrationCouncil?.message}
                       {...register('RegistrationCouncil', {
@@ -106,7 +104,7 @@ const DoctorRegistrationWelcomePage = () => {
                   </Box>
                 </Box>
                 <Box pb={5}>
-                  <Typography variant="body3" color="textSecondary.main">
+                  <Typography variant="body1" color="textSecondary.main">
                     Enter Registration Number
                     <Typography component="span" color="error.main">
                       *
