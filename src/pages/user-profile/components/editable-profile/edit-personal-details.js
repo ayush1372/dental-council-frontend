@@ -62,7 +62,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     sub_district,
     village,
     pincode,
-    address_line1,
+    //address_line1,
     email,
     mobile,
     landmark,
@@ -137,7 +137,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
           : '',
       // Schedule: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? scheduleId : '',
       Name: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? full_name : '',
-      Address: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? address_line1 : '',
+      Address:
+        loggedInUserType === 'SMC'
+          ? ''
+          : loggedInUserType === 'Doctor'
+          ? personalDetails?.kyc_address?.address_line1
+          : '',
       IMRID: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? nmr_id : '',
       YearOfInfo:
         loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? year_of_info : '',
@@ -379,6 +384,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const handleGender = (event) => {
     setValue(event.target.name, event.target.value, true);
   };
+
   return (
     <Box
       sx={{
@@ -671,6 +677,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               placeholder="Your address"
               required={false}
               fullWidth
+              disabled
+              sx={{
+                input: {
+                  backgroundColor: 'grey2.main',
+                },
+              }}
               defaultValue={getValues().Address}
               {...register('Address', {
                 required: 'Address is Required',
@@ -725,19 +737,28 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                     backgroundColor: isSameAddress ? 'grey2.main' : '',
                   },
                 }}
-                required={true}
+                required={isSameAddress ? false : true}
                 fullWidth
                 defaultValue={
-                  isSameAddress ? personalDetails?.kyc_address?.house : getValues().Address
+                  isSameAddress
+                    ? personalDetails?.kyc_address?.house
+                    : personalDetails?.communication_address?.house
                 }
-                value={isSameAddress ? personalDetails?.kyc_address?.house : getValues().Address}
-                {...register('House', {
-                  required: 'House is Required',
-                  maxLength: {
-                    value: 300,
-                    message: 'Length should be less than 300.',
-                  },
-                })}
+                value={
+                  isSameAddress
+                    ? personalDetails?.kyc_address?.house
+                    : personalDetails?.communication_address?.house
+                }
+                {...register(
+                  'House',
+                  !isSameAddress && {
+                    required: 'House is Required',
+                    maxLength: {
+                      value: 300,
+                      message: 'Length should be less than 300.',
+                    },
+                  }
+                )}
                 error={errors.House?.message}
               />
             </Grid>
@@ -750,7 +771,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 name={'Street'}
                 placeholder="Enter Street"
                 disabled={isSameAddress}
-                required={false}
+                // required={false}
                 fullWidth
                 sx={{
                   input: {
@@ -758,11 +779,17 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                   },
                 }}
                 defaultValue={
-                  isSameAddress ? personalDetails?.kyc_address?.street : getValues().Street
+                  isSameAddress
+                    ? personalDetails?.kyc_address?.street
+                    : personalDetails?.communication_address?.street
                 }
-                value={isSameAddress ? personalDetails?.kyc_address?.street : getValues().street}
+                value={
+                  isSameAddress
+                    ? personalDetails?.kyc_address?.street
+                    : personalDetails?.communication_address?.street
+                }
                 {...register('Street', {
-                  required: 'Street is Required',
+                  // required: 'Street is Required',
                   maxLength: {
                     value: 300,
                     message: 'Length should be less than 300.',
@@ -790,11 +817,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 required={false}
                 fullWidth
                 defaultValue={
-                  isSameAddress ? personalDetails?.kyc_address?.landmark : getValues().Landmark
+                  isSameAddress
+                    ? personalDetails?.kyc_address?.landmark
+                    : personalDetails?.communication_address?.landmark
                 }
-                value={
-                  isSameAddress ? personalDetails?.kyc_address?.landmark : getValues().landmark
-                }
+                // value={
+                //   isSameAddress ? personalDetails?.kyc_address?.landmark : personalDetails?.communication_address?.landmark
+                // }
                 {...register('Landmark', {
                   maxLength: {
                     value: 300,
@@ -821,11 +850,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 // required={false}
                 fullWidth
                 defaultValue={
-                  isSameAddress ? personalDetails?.kyc_address?.locality : getValues().Locality
+                  isSameAddress
+                    ? personalDetails?.kyc_address?.locality
+                    : personalDetails?.communication_address?.locality
                 }
-                value={
-                  isSameAddress ? personalDetails?.kyc_address?.locality : getValues().locality
-                }
+                // value={
+                //   isSameAddress ? personalDetails?.kyc_address?.locality : personalDetails?.communication_address?.locality
+                // }
                 {...register('Locality', {
                   // required: 'Locality is Required',
                   // maxLength: {
@@ -874,9 +905,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 State/Union Territory
-                <Typography component="span" color="error.main">
-                  *
-                </Typography>
+                {!isSameAddress && (
+                  <Typography component="span" color="error.main">
+                    *
+                  </Typography>
+                )}
               </Typography>
               <Select
                 fullWidth
@@ -884,16 +917,21 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 name="State"
                 defaultValue={getValues().State}
                 value={getValues().State}
-                required={true}
+                required={isSameAddress ? false : true}
                 disabled={isSameAddress}
                 sx={{
                   input: {
                     backgroundColor: isSameAddress ? 'grey2.main' : '',
                   },
                 }}
-                {...register('State', {
-                  required: 'State/Union territory is required',
-                })}
+                {...register(
+                  'State',
+                  isSameAddress
+                    ? ''
+                    : {
+                        required: 'State/Union territory is required',
+                      }
+                )}
                 options={createSelectFieldData(statesList)}
                 MenuProps={{
                   style: {
@@ -906,25 +944,30 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 District
-                <Typography component="span" color="error.main">
-                  *
-                </Typography>
+                {!isSameAddress && (
+                  <Typography component="span" color="error.main">
+                    *
+                  </Typography>
+                )}
               </Typography>
               <Select
                 fullWidth
                 error={errors.District?.message}
                 name="District"
                 defaultValue={getValues().District}
-                required={true}
+                required={isSameAddress ? false : true}
                 disabled={isSameAddress}
                 sx={{
                   input: {
                     backgroundColor: isSameAddress ? 'grey2.main' : '',
                   },
                 }}
-                {...register('District', {
-                  required: 'District is required',
-                })}
+                {...register(
+                  'District',
+                  !isSameAddress && {
+                    required: 'District is required',
+                  }
+                )}
                 options={createSelectFieldData(districtsList, 'id')}
                 MenuProps={{
                   style: {
@@ -979,7 +1022,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 defaultValue={getValues().Area}
                 value={getValues().Area}
                 disabled={isSameAddress}
-                required={true}
+                required={isSameAddress ? false : true}
                 {...register('Area')}
                 options={createSelectFieldData(citiesList)}
                 MenuProps={{
