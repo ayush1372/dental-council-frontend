@@ -783,11 +783,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                     ? personalDetails?.kyc_address?.street
                     : personalDetails?.communication_address?.street
                 }
-                value={
-                  isSameAddress
-                    ? personalDetails?.kyc_address?.street
-                    : personalDetails?.communication_address?.street
-                }
+                value={isSameAddress ? personalDetails?.kyc_address?.street : getValues().street}
                 {...register('Street', {
                   // required: 'Street is Required',
                   maxLength: {
