@@ -48,7 +48,9 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
     }
   }, [personalDetails?.hp_profile_status_id]);
   const { activeStep, handleNext, handleBack, resetStep, completed, progress } = useWizard(
-    loggedInUserType === 'Doctor' ? 0 : 1,
+    loggedInUserType === 'Doctor' || loggedInUserType === 'SMC' || loggedInUserType === 'NMC'
+      ? 0
+      : 1,
     [],
     [25, 25, 25]
   );

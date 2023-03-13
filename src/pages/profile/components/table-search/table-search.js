@@ -18,6 +18,11 @@ import { getDoctorTrackApplicationData } from '../../../../store/actions/doctor-
 import { Button, TextField } from '../../../../ui/core';
 
 export function TableSearch({ trackApplication, activateLicence, searchParams, exportData, flag }) {
+  let applicationData = [{}];
+  exportData?.length > 0 &&
+    exportData?.map((data) => {
+      applicationData.push(data.application_type_name);
+    });
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const { councilNames } = useSelector((state) => state.common);
   const profileId = useSelector((state) => state.loginReducer.loginData.data.profile_id);
