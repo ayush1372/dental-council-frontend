@@ -75,7 +75,39 @@ function QontoStepIcon(props) {
   );
 }
 export default function ApplicationStepper({ activeStep = 1, steps, selectedRowData }) {
-  const { created_at, doctor_status, nmc_status, smc_status } = selectedRowData;
+  const { created_at, doctor_status, nmc_status, collegeVerificationStatus, smc_status } =
+    selectedRowData;
+  let applicationSubmittedDate = new Date(created_at?.value).toDateString();
+  const stepDescription = [
+    applicationSubmittedDate,
+    'SMC will verify the application and take action.',
+    'College will verify the application and take action.',
+    'SMC will verify the application and take action.',
+    'NMC will verify the Application and take action.',
+  ];
+
+  const stepStatus = [
+    {
+      type: doctor_status?.value.toLowerCase(),
+      label: doctor_status?.value,
+    },
+    {
+      type: smc_status?.value.toLowerCase(),
+      label: smc_status?.value,
+    },
+    {
+      type: collegeVerificationStatus?.value.toLowerCase(),
+      label: collegeVerificationStatus?.value,
+    },
+    {
+      type: smc_status?.value.toLowerCase(),
+      label: smc_status?.value,
+    },
+    {
+      type: nmc_status?.value.toLowerCase(),
+      label: nmc_status?.value,
+    },
+  ];
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -87,92 +119,31 @@ export default function ApplicationStepper({ activeStep = 1, steps, selectedRowD
                 sx={{ fill: index === activeStep ? 'stepIconActive.main' : 'grey1.main' }}
               >
                 {label}
+                <Grid item xs={'auto'}>
+                  <Typography
+                    variant="body3"
+                    color="grey.label"
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    {stepDescription[index]}
+                  </Typography>
+                  <Grid
+                    mt={index === 0 ? '23px' : 0}
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <Chip type={stepStatus[index].type} label={stepStatus[index].label} />
+                  </Grid>
+                </Grid>
               </StepLabel>
             </Step>
           ))}
         </Stepper>
-      </Grid>
-      <Grid item container>
-        <Grid item xs={8} md={3}>
-          <Typography
-            variant="body3"
-            color="grey.label"
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          >
-            {new Date(created_at?.value).toDateString()}
-          </Typography>
-          <Grid
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          >
-            <Chip type={doctor_status?.value.toLowerCase()} label={doctor_status?.value} />
-          </Grid>
-        </Grid>
-        <Grid item xs={8} md={3}>
-          <Typography
-            variant="body3"
-            color="grey.label"
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          >
-            SMC will verify the applcation and take action.
-          </Typography>
-          <Grid
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          >
-            <Chip type={smc_status?.value.toLowerCase()} label={smc_status?.value} sx={{ ml: 1 }} />
-          </Grid>
-        </Grid>
-        <Grid item xs={8} md={3}>
-          <Typography
-            variant="body3"
-            color="grey.label"
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          >
-            College will verify the application and take action.
-          </Typography>
-          <Grid
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          >
-            <Chip type={nmc_status?.value.toLowerCase()} label={nmc_status?.value} sx={{ ml: 3 }} />
-          </Grid>
-        </Grid>
-        <Grid item xs={8} md={3}>
-          <Typography
-            variant="body3"
-            color="grey.label"
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          >
-            NMC will verify the Application and take action.
-          </Typography>
-          <Grid
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          >
-            <Chip type="pending" label="Pending" sx={{ ml: 1 }} />
-          </Grid>
-        </Grid>
       </Grid>
     </Grid>
   );

@@ -122,7 +122,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
               Back
             </Button>
           </Grid>
-          <Grid item xs={12} md="auto" display="flex" justifyContent="flex-end">
+          {/* <Grid item xs={12} md="auto" display="flex" justifyContent="flex-end">
             <Button
               variant="outlined"
               color="secondary"
@@ -139,8 +139,8 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
             >
               Print & Save as PDF
             </Button>
-          </Grid>
-          {loggedInUserType !== 'SMC' && (
+          </Grid> */}
+          {/* {loggedInUserType !== 'SMC' && (
             <Grid
               item
               xs={12}
@@ -166,7 +166,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
                 E-sign Profile
               </Button>
             </Grid>
-          )}
+          )} */}
           <Grid
             item
             xs={12}
@@ -190,7 +190,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
               }}
               onClick={handleSubmit(handleSubmitDetails)}
             >
-              Submit
+              Finalize profile
             </Button>
           </Grid>
         </Grid>

@@ -2,9 +2,10 @@ import { useState } from 'react';
 
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
-import { Grid, Typography } from '@mui/material';
+import { Grid, IconButton, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
+import AttachmentViewPopup from '../../../../shared/query-modal-popup/attachement-view-popup';
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
 const QualificationDetailsContent = ({ registrationDetails }) => {
@@ -12,6 +13,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
   const ClosePopup = () => {
     setOpenModal(false);
   };
+  const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
   const { userActiveTab } = useSelector((state) => state.common);
   const { qualification_detail_response_tos } = registrationDetails || {};
   const {
@@ -22,7 +24,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
     course,
     qualification_month,
     qualification_year,
-    // is_name_change,
+    degree_certificate,
   } = qualification_detail_response_tos?.[0] || {};
 
   const countryName = country?.name || '';
@@ -30,6 +32,10 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
   const collegeName = college?.name || '';
   const universityName = university?.name || '';
   const courseName = course?.course_name || '';
+
+  const CloseAttachmentPopup = () => {
+    setAttachmentViewProfile(false);
+  };
 
   return (
     <Grid container spacing={2} mt={2}>
@@ -180,11 +186,25 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
             </Typography>
           </Typography>
           <Typography variant="subtitle2" color="primary.main">
-            <AttachFileIcon fontSize="10px" />
+            <IconButton
+              onClick={(e) => {
+                e.preventDefault();
+                setAttachmentViewProfile(true);
+              }}
+            >
+              <AttachFileIcon fontSize="10px" />
+            </IconButton>
             View attachment
           </Typography>
         </Grid>
       </Grid>
+      {attachmentViewProfile && (
+        <AttachmentViewPopup
+          certificate={degree_certificate}
+          closePopup={CloseAttachmentPopup}
+          alt={'Qualification Certificate'}
+        />
+      )}
     </Grid>
   );
 };

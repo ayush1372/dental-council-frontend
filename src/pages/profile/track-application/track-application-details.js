@@ -6,8 +6,8 @@ const wizardSteps = [
   'Application Submitted',
   'Pending At SMC',
   'Pending At College',
+  'Pending At SMC',
   'Pending At NMC',
-  // 'Application Approved/Rejected',
 ];
 export function TrackApplicationDetails({
   showViewProfile,
