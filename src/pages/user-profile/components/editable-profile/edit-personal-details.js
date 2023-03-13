@@ -10,7 +10,7 @@ import { createSelectFieldData } from '../../../../helpers/functions/common-func
 import {
   getCitiesList,
   getDistrictList,
-  getPostalAddress,
+  // getPostalAddress,
   getSubDistrictsList,
 } from '../../../../store/actions/common-actions';
 import {
@@ -258,16 +258,16 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSameAddress]);
 
-  useEffect(() => {
-    if (getValues().PostalCode?.length === 6) {
-      dispatch(getPostalAddress(getValues().PostalCode))
-        .then(() => {})
-        .catch((allFailMsg) => {
-          successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-        });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getValues().PostalCode]);
+  // useEffect(() => {
+  //   if (getValues().PostalCode?.length === 6) {
+  //     dispatch(getPostalAddress(getValues().PostalCode))
+  //       .then(() => {})
+  //       .catch((allFailMsg) => {
+  //         successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+  //       });
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [getValues().PostalCode]);
 
   const fetchUpdatedDoctorUserProfileData = (personalDetails) => {
     dispatch(updateDoctorPersonalDetails(personalDetails, personalDetails?.hp_profile_id))
