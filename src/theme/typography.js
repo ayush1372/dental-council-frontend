@@ -86,5 +86,10 @@ export const Typography = (palette, appFontType) => ({
       lineHeight: '21px',
       fontWeight: '400',
     },
+    body8: {
+      fontSize: changeAppFontSize(12, appFontType),
+      lineHeight: '20px',
+      fontWeight: '400',
+    },
   },
 });

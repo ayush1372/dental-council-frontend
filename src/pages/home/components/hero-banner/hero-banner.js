@@ -1,5 +1,6 @@
 import { Box, Button, Container, Grid, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 import BannerImage from '../../../../assets/images/hero-banner-image.png';
 
@@ -7,6 +8,7 @@ import styles from './hero-banner.module.scss';
 
 export function HeroBanner() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   return (
     <Box
       p={{ md: '70px 0', xs: '30px 0' }}
@@ -32,7 +34,12 @@ export function HeroBanner() {
             </Typography>
             <Typography component="div">(This data is for sample purposes only.)</Typography>
 
-            <Button variant="contained" color="secondary" sx={{ margin: '16px 0 32px' }}>
+            <Button
+              variant="contained"
+              color="secondary"
+              sx={{ margin: '16px 0 32px' }}
+              onClick={() => navigate('register/doctor-registration')}
+            >
               {t('Login/Register as Doctor')}
             </Button>
           </Grid>

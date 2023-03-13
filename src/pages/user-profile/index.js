@@ -14,9 +14,11 @@ import {
   getRegistrationDetailsData,
   // getWorkProfileDetailsData,
 } from '../../store/actions/doctor-user-profile-actions';
+import BreadcrumbContainer from '../../ui/core/breadcrumb/breadcrumb';
 import { Button } from '../../ui/core/button/button';
 import successToast from '../../ui/core/toaster';
 import Wizard from '../../ui/core/wizard';
+import ProgressBar from '../../ui/core/wizard/progress-bar';
 // import ChangePassword from '../profile/change-password/change-password';
 import ConstantDetails from './components/constant-details/constant-details';
 import PersonalDetails from './components/personal-details/personal-details';
@@ -37,9 +39,18 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const { loginData } = useSelector((state) => state?.loginReducer);
 
-  const { activeStep, handleNext, handleBack, resetStep } = useWizard(
+  const [isApplicationPending, setIsApplicationPending] = useState(true);
+  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+
+  useEffect(() => {
+    if (personalDetails?.hp_profile_status_id === 1) {
+      setIsApplicationPending(true);
+    }
+  }, [personalDetails?.hp_profile_status_id]);
+  const { activeStep, handleNext, handleBack, resetStep, completed, progress } = useWizard(
     loggedInUserType === 'Doctor' ? 0 : 1,
-    []
+    [],
+    [25, 25, 25]
   );
 
   const renderSuccess = () => {
@@ -198,9 +209,30 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
                   },
                 }}
               >
-                {isReadMode ? 'My Profile' : 'Edit Profile'}
+                {isReadMode && 'My Profile'}
               </Typography>
+              <Box display="flex" gap={2}>
+                {!isReadMode && (
+                  <Typography variant="h2" component="div">
+                    Edit Profile
+                  </Typography>
+                )}
+                {!isReadMode && (
+                  <ProgressBar
+                    progress={!isReadMode && progress}
+                    completed={!isReadMode && completed}
+                  />
+                )}
+              </Box>
+              {!isReadMode && (
+                <BreadcrumbContainer
+                  primary="My Profile"
+                  primaryLink={'/profile'}
+                  secondary={'Edit Profile'}
+                />
+              )}
             </Grid>
+
             {loggedInUserType === 'Doctor' && (
               <Grid
                 item
@@ -214,7 +246,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
                 }}
               ></Grid>
             )}
-            {isReadMode && (
+            {isReadMode && isApplicationPending && (
               <Grid
                 item
                 xs={12}
@@ -242,31 +274,32 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
           </Grid>
         ) : null}
         {!isReadMode && <ConstantDetails />}
+        <Wizard
+          activeStep={loggedInUserType === 'College' ? activeStep + 1 : activeStep}
+          handleBack={handleBack}
+          handleNext={handleNext}
+          steps={wizardSteps}
+          progress={false}
+        ></Wizard>
+
         <Box bgcolor="white.main">
-          <Wizard
-            activeStep={loggedInUserType === 'College' ? activeStep + 1 : activeStep}
-            handleBack={handleBack}
-            handleNext={handleNext}
-            steps={wizardSteps}
-            progress={false}
-          >
-            {activeStep === 0 && (
-              <PersonalDetails
-                isReadMode={isReadMode}
-                setIsReadMode={setIsReadMode}
-                handleNext={handleNext}
-                handleBack={handleBack}
-              />
-            )}
-            {activeStep === 1 && (
-              <RegisterAndAcademicDetails
-                isReadMode={isReadMode}
-                setIsReadMode={setIsReadMode}
-                handleNext={handleNext}
-                handleBack={handleBack}
-              />
-            )}
-            {/* {activeStep === 2 && (
+          {activeStep === 0 && (
+            <PersonalDetails
+              isReadMode={isReadMode}
+              setIsReadMode={setIsReadMode}
+              handleNext={handleNext}
+              handleBack={handleBack}
+            />
+          )}
+          {activeStep === 1 && (
+            <RegisterAndAcademicDetails
+              isReadMode={isReadMode}
+              setIsReadMode={setIsReadMode}
+              handleNext={handleNext}
+              handleBack={handleBack}
+            />
+          )}
+          {/* {activeStep === 2 && (
               <WorkProfile
                 isReadMode={isReadMode}
                 setIsReadMode={setIsReadMode}
@@ -278,15 +311,14 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
                 activeStep={activeStep}
               />
             )} */}
-            {activeStep === 2 && (
-              <PreviewProfile
-                isReadMode={isReadMode}
-                setIsReadMode={setIsReadMode}
-                handleNext={handleNext}
-                handleBack={handleBack}
-              />
-            )}
-          </Wizard>
+          {activeStep === 2 && (
+            <PreviewProfile
+              isReadMode={isReadMode}
+              setIsReadMode={setIsReadMode}
+              handleNext={handleNext}
+              handleBack={handleBack}
+            />
+          )}
         </Box>
         {!isReadMode && activeStep === 2 && (
           <ProfileConsent
