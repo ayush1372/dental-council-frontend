@@ -404,6 +404,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 // InputProps={{
                 //   readOnly: loggedInUserType === 'SMC' ? false : true,
                 // }}
+                inputProps={{
+                  min: new Date().toISOString().split('T')[0],
+                }}
               />
             </Grid>
           )}
