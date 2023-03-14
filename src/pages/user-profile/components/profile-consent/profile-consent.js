@@ -24,6 +24,9 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
   const [registrationFile, setRegistrationFile] = useState(false);
   const dispatch = useDispatch();
   const personalDetails = useSelector((state) => state?.doctorUserProfileReducer?.personalDetails);
+  const doctorRegDetails = useSelector(
+    (state) => state?.doctorUserProfileReducer?.registrationDetails
+  );
   const eSignResponse = useSelector((state) => state?.doctorUserProfileReducer?.esignDetails?.data);
   const [confirmationModal, setConfirmationModal] = useState(false);
 
@@ -86,19 +89,21 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
         );
       });
   };
+
   function eSignHandler() {
     let data = {
       signingPlace: personalDetails?.communication_address?.village?.name,
       nmrDetails: {
-        // nmrPersonalDetail: {
-        //   firstName: personalDetails?.personal_details?.first_name || '',
-        //   userId: personalDetails?.personalDetails?.hp_profile_id || '',
-        //   middleName: personalDetails?.personal_details?.middle_name || '',
-        //   lastName: personalDetails?.personal_details?.last_name || '',
-        //   qualification: personalDetails?.personal_details?.first_name || '',
-        //   mobileNumber: personalDetails?.personal_details?.kyc_address?.mobile || '',
-        //   emailId: personalDetails?.personal_details?.kyc_address?.email || '',
-        // },
+        nmrPersonalDetail: {
+          firstName: personalDetails?.personal_details?.first_name || '',
+          userId: doctorRegDetails?.hp_profile_id || '',
+          middleName: personalDetails?.personal_details?.middle_name || '',
+          lastName: personalDetails?.personal_details?.last_name || '',
+          qualification:
+            doctorRegDetails?.qualification_detail_response_tos[0]?.course.course_name || '',
+          mobileNumber: personalDetails?.kyc_address?.mobile || '',
+          emailId: personalDetails?.kyc_address?.email || '',
+        },
         nmrPersonalCommunication: {
           address: personalDetails?.communication_address?.address_line1 || '',
           country: personalDetails?.communication_address?.country?.name || '',
