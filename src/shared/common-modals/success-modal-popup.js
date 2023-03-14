@@ -87,7 +87,7 @@ export default function SuccessModalPopup({
             {text}
           </Typography>
           <Button
-            sx={{ width: { xs: '100%', sm: '408px' }, mt: 5 }}
+            sx={{ mt: 5 }}
             variant="contained"
             color="warning"
             onClick={
