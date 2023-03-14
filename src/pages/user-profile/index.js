@@ -43,14 +43,12 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
 
   useEffect(() => {
-    if (personalDetails?.hp_profile_status_id === 1) {
+    if (personalDetails?.work_flow_status_id === 1) {
       setIsApplicationPending(false);
     }
-  }, [personalDetails?.hp_profile_status_id]);
+  }, [personalDetails?.work_flow_status_id]);
   const { activeStep, handleNext, handleBack, resetStep, completed, progress } = useWizard(
-    loggedInUserType === 'Doctor' || loggedInUserType === 'SMC' || loggedInUserType === 'NMC'
-      ? 0
-      : 1,
+    ['Doctor', 'SMC', 'NMC'].includes(loggedInUserType) ? 0 : 1,
     [],
     [25, 25, 25]
   );

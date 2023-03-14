@@ -99,6 +99,28 @@ const ActivateLicence = (props) => {
       type: 'string',
     },
   ];
+
+  useEffect(() => {
+    setPage(0);
+    getTableData(1);
+  }, [searchQueryParams]);
+
+  const getTableData = (pageNo) => {
+    let ActivateLicenseListbody = {
+      pageNo: pageNo,
+      offset: 10,
+    };
+    if (searchQueryParams) {
+      ActivateLicenseListbody.search = searchQueryParams?.search;
+      ActivateLicenseListbody.value = searchQueryParams?.value;
+    }
+
+    try {
+      dispatch(getActivateLicenseList(ActivateLicenseListbody)).then(() => {});
+    } catch (allFailMsg) {
+      successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    }
+  };
   const viewNameOfApplicant = (event, row) => {
     event.preventDefault();
     event.stopPropagation();
@@ -188,28 +210,6 @@ const ActivateLicence = (props) => {
         },
       ]
     : undefined;
-
-  useEffect(() => {
-    setPage(0);
-    getTableData(1);
-  }, [searchQueryParams]);
-
-  const getTableData = (pageNo) => {
-    let ActivateLicenseListbody = {
-      pageNo: pageNo,
-      offset: 10,
-      // search: searchQueryParams?.search ? searchQueryParams?.search : '',
-    };
-    if (searchQueryParams) {
-      ActivateLicenseListbody.search = searchQueryParams?.search;
-    }
-
-    try {
-      dispatch(getActivateLicenseList(ActivateLicenseListbody)).then(() => {});
-    } catch (allFailMsg) {
-      successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-    }
-  };
 
   const fetchReActivateLicenseHealthProfessionalId = (selectedRow, selectedStatus) => {
     let reActivateLicenseHealthProfessionalIdBody = {

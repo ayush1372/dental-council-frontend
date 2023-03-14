@@ -523,13 +523,12 @@ export const applicationType = [
   { id: 8, name: 'Qualification Workflow' },
 ];
 export const applicationStatus = [
-  { id: 1, name: 'SUBMITTED' },
-  { id: 2, name: 'PENDING' },
-  { id: 3, name: 'REJECTED' },
-  { id: 4, name: 'FORWARDED' },
-  { id: 5, name: 'APPROVED' },
-  { id: 6, name: 'NOT YET RECEIVED' },
-  { id: 7, name: 'QUERY RAISED' },
+  { id: 1, name: 'PENDING' },
+  { id: 2, name: 'APPROVED' },
+  { id: 3, name: 'QUERY RAISED' },
+  { id: 4, name: 'REJECTED' },
+  { id: 5, name: 'SUSPENDED' },
+  { id: 6, name: 'BLACKLISTED' },
 ];
 export const filterDropDownData = [
   { id: 'applicationTypeId', name: 'Type of Application ' },
@@ -555,5 +554,4 @@ export const ActivateLicenceFieldList = [
 export const DashBoardCardsFieldList = [
   { id: 'registrationNumber', name: 'Registration No' },
   { id: 'applicantFullName', name: 'Name of Applicant' },
-  { id: 'councilName', name: 'Name of State Council' },
 ];

@@ -6,7 +6,7 @@ const RegisterAndAcademicDetails = ({ isReadMode, handleNext, handleBack, logged
   return (
     <Box mt={1} py={4}>
       {isReadMode && loggedInUserType !== 'SMC' && (
-        <ReadRegisterAndAcademicDetails handleBack={handleBack} />
+        <ReadRegisterAndAcademicDetails handleBack={handleBack} isReadMode={isReadMode} />
       )}
       {!isReadMode && (
         <EditRegisterAndAcademicDetails handleNext={handleNext} handleBack={handleBack} />

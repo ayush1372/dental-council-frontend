@@ -6,10 +6,15 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { updateDoctorRegistrationDetails } from '../../../../store/actions/doctor-user-profile-actions';
+import AttachmentViewPopup from '../../../../shared/query-modal-popup/attachement-view-popup';
+import {
+  getRegistrationDetailsData,
+  updateDoctorRegistrationDetails,
+} from '../../../../store/actions/doctor-user-profile-actions';
 import { getRegistrationDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
 import { Button, RadioGroup, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
+import successToast from '../../../../ui/core/toaster';
 import EditQualificationDetails from './edit-qualification-details';
 const qualificationObjTemplate = [
   {
@@ -34,7 +39,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     (state) => state?.common
   );
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
-
+  const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { registration_detail_to, qualification_detail_response_tos } = registrationDetails || {};
   const {
@@ -53,6 +58,11 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   const [qualificationFilesData, setQualificationFilesData] = useState(
     degree_certificate ? [{ file: degree_certificate }] : []
   );
+  const [viewCertificate, setViewCertificate] = useState({
+    registration: registration_certificate,
+    qualification: degree_certificate,
+  });
+
   const smcName = state_medical_council?.name || '';
 
   const {
@@ -171,6 +181,40 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     ).then(() => {
       if (moveToNext) handleNext();
     });
+  };
+
+  // const [test, setTest] = useState(true);
+
+  useEffect(() => {
+    // if (test) {
+    dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id))
+      .then((response) => {
+        viewCertificate.qualification =
+          response?.data?.qualification_detail_response_tos[0]?.degree_certificate;
+        setViewCertificate();
+        const QualificationFile = new File(
+          [response?.data?.qualification_detail_response_tos[0]?.degree_certificate],
+          'Qualification Certificate',
+          { type: 'image/png' }
+        );
+        const RegistrationFile = new File(
+          [response?.data?.registration_detail_to?.registration_certificate],
+          'Registration Certificate',
+          { type: 'image/png' }
+        );
+
+        setRegistrationFileData([{ file: RegistrationFile }]);
+        setQualificationFilesData([{ file: QualificationFile }]);
+      })
+      .catch((allFailMsg) => {
+        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      });
+    // setTest(false);
+    // }
+  }, []);
+
+  const CloseAttachmentPopup = () => {
+    setAttachmentViewProfile(false);
   };
 
   const onHandleOptionNext = () => {
@@ -352,6 +396,17 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 {...register('RenewalDate', {
                   required: 'Registration Date is Required',
                 })}
+                // sx={{
+                //   input: {
+                //     backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
+                //   },
+                // }}
+                // InputProps={{
+                //   readOnly: loggedInUserType === 'SMC' ? false : true,
+                // }}
+                inputProps={{
+                  min: new Date().toISOString().split('T')[0],
+                }}
               />
             </Grid>
           )}
@@ -408,6 +463,18 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
             />
           );
         })}
+        {/* {
+          <Typography
+            variant="subtitle2"
+            color="primary.main"
+            onClick={(e) => {
+              e.preventDefault();
+              setAttachmentViewProfile(true);
+            }}
+          >
+            View attachment
+          </Typography>
+        } */}
       </Grid>
       {false && (
         <Box width="100%">
@@ -484,6 +551,13 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           </Button>
         </Grid>
       </Grid>
+      {attachmentViewProfile && (
+        <AttachmentViewPopup
+          certificate={viewCertificate?.qualification}
+          closePopup={CloseAttachmentPopup}
+          alt={'Qualification Certificate'}
+        />
+      )}
     </Box>
   );
 };

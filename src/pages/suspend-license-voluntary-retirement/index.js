@@ -108,20 +108,20 @@ export function SuspendLicenseVoluntaryRetirement({
       dispatch(getInitiateWorkFlow(workFlowData))
         .then((response) => {
           showSuccessPopup(true);
+          closeActionModal(false);
           if (response) {
             userActiveTab === 'voluntary-suspend-license' &&
               dispatch(changeUserActiveTab('my-profile'));
           }
         })
-        .catch((error) => {
-          successToast(
-            'ERR_INT: ' + error?.data?.response?.data?.error,
-            'UpdateError',
-            'error',
-            'top-center'
-          );
+        .catch(() => {
+          // successToast(
+          //   'ERR_INT: ' + error?.data?.response?.data?.error,
+          //   'UpdateError',
+          //   'error',
+          //   'top-center'
+          // );
           closeActionModal(false);
-          handleClose();
         });
     } catch (allFailMsg) {
       successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
@@ -352,11 +352,11 @@ export function SuspendLicenseVoluntaryRetirement({
       )}
       <Box align={selectedValue === 'verify' ? 'center' : ''}>
         <Typography
-          mt={4}
+          mt={2}
           color="grey.context"
           textAlign={selectedValue === 'verify' ? 'center' : ''}
           variant="h3"
-          width="320px"
+          // width="320px"
         >
           {selectedValue === 'verify'
             ? 'Are you sure you want to approve the details of the doctor?'
@@ -453,7 +453,7 @@ export function SuspendLicenseVoluntaryRetirement({
         </Box>
       )}
       {selectedValue && (
-        <Box align="right" my={5}>
+        <Box align="right" my={2}>
           {selectedValue === 'raise' ||
           selectedValue === 'reject' ||
           selectedValue === 'suspend' ||
@@ -538,7 +538,7 @@ export function SuspendLicenseVoluntaryRetirement({
               </Typography>
               <CloseIcon onClick={handleClose} />
             </Box>
-            <Box mt={4}>
+            <Box mt={2}>
               <Typography color="textPrimary.main">
                 {`Are you sure you want to ${
                   selectedSuspension === 'voluntary-suspension-check'

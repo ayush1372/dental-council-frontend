@@ -49,8 +49,7 @@ export default function SuccessModalPopup({
         sx={{
           backgroundColor: theme.palette.white.main,
           borderRadius: '10px',
-          height: '350px',
-          p: '30px',
+          p: 3,
         }}
       >
         <Box mb={1} display="flex" justifyContent="center">
@@ -88,7 +87,7 @@ export default function SuccessModalPopup({
             {text}
           </Typography>
           <Button
-            sx={{ width: { xs: '100%', sm: '408px' }, mt: 5 }}
+            sx={{ mt: 5 }}
             variant="contained"
             color="warning"
             onClick={

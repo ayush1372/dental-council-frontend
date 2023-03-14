@@ -1,4 +1,4 @@
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+// import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -101,12 +101,12 @@ const BlacklistedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
         <Grid>
           <Typography color="inputTextColor.main">
             Registration Number{' '}
-            <ErrorOutlineIcon
+            {/* <ErrorOutlineIcon
               fontSize="width12"
               sx={{
                 color: 'textPrimary.secondary',
               }}
-            />
+            /> */}
           </Typography>
         </Grid>
         <TextField
