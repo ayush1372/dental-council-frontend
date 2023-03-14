@@ -58,6 +58,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   const [qualificationFilesData, setQualificationFilesData] = useState(
     degree_certificate ? [{ file: degree_certificate }] : []
   );
+
   const smcName = state_medical_council?.name || '';
 
   const {
@@ -178,6 +179,39 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     });
   };
 
+  // const [test, setTest] = useState(true);
+
+  useEffect(() => {
+    // if (test) {
+    dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id))
+      .then((response) => {
+        // eslint-disable-next-line no-console
+        console.log('resp', response);
+        const QualificationFile = new File(
+          [response?.data?.qualification_detail_response_tos[0]?.degree_certificate],
+          'Qualification Certificate',
+          { type: 'image/png' }
+        );
+        const RegistrationFile = new File(
+          [response?.data?.registration_detail_to?.registration_certificate],
+          'Registration Certificate',
+          { type: 'image/png' }
+        );
+
+        setRegistrationFileData([{ file: RegistrationFile }]);
+        setQualificationFilesData([{ file: QualificationFile }]);
+      })
+      .catch((allFailMsg) => {
+        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      });
+    // setTest(false);
+    // }
+  }, []);
+
+  const CloseAttachmentPopup = () => {
+    setAttachmentViewProfile(false);
+  };
+
   const onHandleOptionNext = () => {
     onHandleSave(true);
   };
@@ -187,38 +221,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   };
   const handleRegistration = (event) => {
     setValue(event.target.name, event.target.value, true);
-  };
-
-  const [test, setTest] = useState(true);
-  useEffect(() => {
-    if (test) {
-      dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id))
-        .then((response) => {
-          // eslint-disable-next-line no-console
-          console.log(
-            'resp',
-            response?.data?.qualification_detail_response_tos?.[0]?.degree_certificate
-          );
-          setRegistrationFileData(
-            registration_certificate
-              ? [
-                  {
-                    file: response?.data?.qualification_detail_response_tos?.[0]
-                      ?.degree_certificate,
-                  },
-                ]
-              : []
-          );
-        })
-        .catch((allFailMsg) => {
-          successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-        });
-      setTest(false);
-    }
-  }, []);
-
-  const CloseAttachmentPopup = () => {
-    setAttachmentViewProfile(false);
   };
 
   useEffect(() => {
