@@ -249,7 +249,7 @@ function FetchDoctorDetails() {
         <KycErrorPopup
           open={kycError}
           setOpen={() => setKycError(false)}
-          text="The registration details are not matching with the KYC details. Please validate registration/KYC details"
+          text="The registration details are not matching with the KYC details. Please validate Registration/KYC details!"
         />
       )}
 

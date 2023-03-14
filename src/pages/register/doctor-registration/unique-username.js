@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { Box, Container, InputAdornment, Link, TextField, Typography } from '@mui/material';
+import { Box, Container, Link, TextField, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -96,16 +96,6 @@ const UniqueUserNameForDoctorRegistration = () => {
                     e.target.value > 4 ? setDisbale(true) : setDisbale(false);
                   }}
                   clearErrors={clearErrors}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment
-                        position="end"
-                        sx={{ p: 4, backgroundColor: theme.palette.grey.main }}
-                      >
-                        <Typography></Typography>
-                      </InputAdornment>
-                    ),
-                  }}
                 />
               </Box>
             </Box>

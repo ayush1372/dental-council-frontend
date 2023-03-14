@@ -42,7 +42,7 @@ export default function KycErrorPopup({ open, setOpen, text }) {
             justifyContent="center"
             mt={2}
           >
-            Error
+            Details Mismatch!
           </Typography>
           <Typography
             display="flex"
