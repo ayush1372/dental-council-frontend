@@ -132,9 +132,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
         loggedInUserType === 'SMC'
           ? ''
           : loggedInUserType === 'Doctor'
-          ? gender === 'M'
-            ? 'male'
-            : 'female'
+          ? gender === 'female'
+            ? 'female'
+            : 'male'
           : '',
       // Schedule: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? scheduleId : '',
       Name: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? full_name : '',
@@ -686,18 +686,19 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               placeholder="Address"
               required={false}
               fullWidth
+              disabled
               defaultValue={getValues().Address}
               {...register('Address', {
-                //required: 'Address is Required',
                 maxLength: {
                   value: 300,
                   message: 'Length should be less than 300.',
                 },
               })}
-              InputProps={{
-                readOnly: loggedInUserType === 'SMC' ? false : true,
+              sx={{
+                input: {
+                  backgroundColor: 'grey2.main',
+                },
               }}
-              //error={errors.Address?.message}
             />
           </Grid>
 
@@ -965,7 +966,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                     required: 'District is required',
                   }
                 )}
-                options={createSelectFieldData(districtsList, 'id')}
+                options={createSelectFieldData(districtsList, 'iso_code')}
                 MenuProps={{
                   style: {
                     maxHeight: 250,
@@ -992,7 +993,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 defaultValue={getValues().SubDistrict}
                 value={getValues().SubDistrict}
                 {...register('SubDistrict')}
-                options={createSelectFieldData(subDistrictList, 'id')}
+                options={createSelectFieldData(subDistrictList, 'iso_code')}
                 MenuProps={{
                   style: {
                     maxHeight: 250,
