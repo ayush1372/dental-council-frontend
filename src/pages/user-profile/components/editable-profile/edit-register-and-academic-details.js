@@ -58,6 +58,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   const [qualificationFilesData, setQualificationFilesData] = useState(
     degree_certificate ? [{ file: degree_certificate }] : []
   );
+  const [viewCertificate, setViewCertificate] = useState({
+    registration: registration_certificate,
+    qualification: degree_certificate,
+  });
 
   const smcName = state_medical_council?.name || '';
 
@@ -185,8 +189,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     // if (test) {
     dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id))
       .then((response) => {
-        // eslint-disable-next-line no-console
-        console.log('resp', response);
+        viewCertificate.qualification =
+          response?.data?.qualification_detail_response_tos[0]?.degree_certificate;
+        setViewCertificate();
         const QualificationFile = new File(
           [response?.data?.qualification_detail_response_tos[0]?.degree_certificate],
           'Qualification Certificate',
@@ -455,7 +460,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
             />
           );
         })}
-        {
+        {/* {
           <Typography
             variant="subtitle2"
             color="primary.main"
@@ -466,7 +471,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           >
             View attachment
           </Typography>
-        }
+        } */}
       </Grid>
       {false && (
         <Box width="100%">
@@ -545,7 +550,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
       </Grid>
       {attachmentViewProfile && (
         <AttachmentViewPopup
-          certificate={qualificationFilesData[0]?.file}
+          certificate={viewCertificate?.qualification}
           closePopup={CloseAttachmentPopup}
           alt={'Qualification Certificate'}
         />
