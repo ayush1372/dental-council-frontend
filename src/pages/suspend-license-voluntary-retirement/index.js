@@ -113,13 +113,13 @@ export function SuspendLicenseVoluntaryRetirement({
               dispatch(changeUserActiveTab('my-profile'));
           }
         })
-        .catch((error) => {
-          successToast(
-            'ERR_INT: ' + error?.data?.response?.data?.error,
-            'UpdateError',
-            'error',
-            'top-center'
-          );
+        .catch(() => {
+          // successToast(
+          //   'ERR_INT: ' + error?.data?.response?.data?.error,
+          //   'UpdateError',
+          //   'error',
+          //   'top-center'
+          // );
           closeActionModal(false);
         });
     } catch (allFailMsg) {
