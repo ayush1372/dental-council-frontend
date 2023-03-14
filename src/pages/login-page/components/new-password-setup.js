@@ -59,7 +59,7 @@ const NewPasswordSetup = () => {
         data-testid="Password"
         pb={1}
       >
-        {`please set your password `}
+        {`Please set your password `}
       </Typography>
 
       <Box>
@@ -137,9 +137,16 @@ const NewPasswordSetup = () => {
         <SuccessModalPopup
           open={showSuccess}
           setOpen={() => setShowSuccess(false)}
-          text={`Your password for ${uniqueHpId} has been successfully created `}
+          text={`Your password for `}
           successRegistration={true}
-        />
+        >
+          <Typography variant="body1" fontWeight="600">
+            {uniqueHpId}
+          </Typography>
+          <Typography variant="body1" component="span">
+            {` has been successfully created`}
+          </Typography>
+        </SuccessModalPopup>
       )}
     </Box>
   );

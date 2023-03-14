@@ -434,8 +434,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             </Typography>
             <TextField
               variant="outlined"
-              name={'Name'}
-              placeholder="Your first name"
+              name={`Dr. ${'Name'}`}
+              placeholder="First name"
               required={true}
               fullWidth
               defaultValue={getValues().Name}
@@ -462,7 +462,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             <TextField
               variant="outlined"
               name={'FatherName'}
-              placeholder="Your father's name"
+              placeholder="Father's name"
               fullWidth
               defaultValue={getValues().FatherName}
               {...register('FatherName', {
@@ -481,7 +481,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             <TextField
               variant="outlined"
               name={'MotherName'}
-              placeholder="Your mother's name"
+              placeholder="Mother's name"
               fullWidth
               defaultValue={getValues().MotherName}
               {...register('MotherName', {
@@ -502,7 +502,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             <TextField
               variant="outlined"
               name={'SpouseName'}
-              placeholder="Your spouse name"
+              placeholder="Spouse name"
               fullWidth
               defaultValue={getValues().SpouseName}
               {...register('SpouseName', {
@@ -682,7 +682,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             <TextField
               variant="outlined"
               name={'Address'}
-              placeholder="Your address"
+              placeholder="Address"
               required={false}
               fullWidth
               sx={{
@@ -740,7 +740,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               <TextField
                 variant="outlined"
                 name={'House'}
-                placeholder="Your House address"
+                placeholder="House address"
                 disabled={isSameAddress}
                 sx={{
                   input: {
@@ -802,7 +802,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               <TextField
                 variant="outlined"
                 name={'Landmark'}
-                placeholder="Your Landmark"
+                placeholder="Landmark"
                 disabled={isSameAddress}
                 sx={{
                   input: {
@@ -833,7 +833,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               <TextField
                 variant="outlined"
                 name={'Locality'}
-                placeholder="Your Locality"
+                placeholder="Locality"
                 disabled={isSameAddress}
                 sx={{
                   input: {
@@ -1022,7 +1022,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               <TextField
                 variant="outlined"
                 name={'PostalCode'}
-                placeholder="Your postal code"
+                placeholder="Postal code"
                 required={true}
                 fullWidth
                 sx={{

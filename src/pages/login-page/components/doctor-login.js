@@ -281,7 +281,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
               required
               disabled={otpFormEnabled}
               label={'NMR ID'}
-              placeholder={'Please enter your NMR ID'}
+              placeholder={'Please enter NMR ID'}
               inputProps={{ maxLength: 12 }}
               name={'nmrID'}
               {...register('nmrID', {
@@ -338,7 +338,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
               placeholder={'Please enter your Username'}
               name={'userID'}
               {...register('userID', {
-                required: 'Please enter an Username',
+                required: 'Please enter a Username',
                 pattern: {
                   message: 'Please enter an valid Username',
                 },
