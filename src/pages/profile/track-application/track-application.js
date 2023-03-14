@@ -15,7 +15,6 @@ export function TrackApplication({ getTableData }) {
 
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const profileId = useSelector((state) => state.loginReducer.loginData.data.profile_id);
-  const tableData = useSelector((state) => state.common.trackApplicationTableData);
 
   const onClickBackButtonHandler = () => {
     setShowUserProfile(false);
@@ -57,7 +56,6 @@ export function TrackApplication({ getTableData }) {
             setShowTrackApplicationTable={setShowTrackApplicationTable}
             setShowUserProfile={setShowUserProfile}
             profileId={profileId}
-            tableData={tableData}
             getTableData={getTableData}
             setRowData={setRowData}
           />

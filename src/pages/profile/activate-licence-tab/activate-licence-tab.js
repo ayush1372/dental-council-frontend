@@ -31,7 +31,7 @@ const ActivateLicence = (props) => {
   const dispatch = useDispatch();
   const [reactiveLicenseRequestHPApplicationData, setReactiveLicenseRequestHPApplicationData] =
     useState();
-  const [searchQueryParams, setSearchQueryParams] = useState();
+  // const [searchQueryParams, setSearchQueryParams] = useState();
 
   function createData(
     SNo,
@@ -103,17 +103,13 @@ const ActivateLicence = (props) => {
   useEffect(() => {
     setPage(0);
     getTableData(1);
-  }, [searchQueryParams]);
+  }, []);
 
   const getTableData = (pageNo) => {
     let ActivateLicenseListbody = {
       pageNo: pageNo,
       offset: 10,
     };
-    if (searchQueryParams) {
-      ActivateLicenseListbody.search = searchQueryParams?.search;
-      ActivateLicenseListbody.value = searchQueryParams?.value;
-    }
 
     try {
       dispatch(getActivateLicenseList(ActivateLicenseListbody)).then(() => {});
@@ -175,7 +171,21 @@ const ActivateLicence = (props) => {
       : [];
 
   const searchParams = (data) => {
-    setSearchQueryParams(data);
+    let ActivateLicenseListbody = {
+      pageNo: 1,
+      offset: 10,
+    };
+    if (data) {
+      ActivateLicenseListbody.search = data?.search;
+      ActivateLicenseListbody.value = data?.value;
+      try {
+        dispatch(getActivateLicenseList(ActivateLicenseListbody)).then(() => {});
+      } catch (allFailMsg) {
+        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      }
+    }
+
+    // setSearchQueryParams(data);
   };
 
   const handleChangePage = (event, newPage) => {

@@ -68,12 +68,12 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
       dashBoardCardFilter: '',
     },
   });
-  const onClickSearchButtonHandler = (data) => {
+  const onClickSearchButtonHandler = () => {
     if (exportData?.data?.dashboard_tolist) {
       trackData.value = getValues().dashBoardCardFilter;
       trackData.search = getValues().dashBoardCardId;
-
-      dispatch(getDoctorTrackApplicationData(profileId, trackData));
+      searchParams(trackData);
+      // dispatch(getDoctorTrackApplicationData(profileId, trackData));
     }
 
     if (exportData?.data?.health_professional_details) {
@@ -84,7 +84,8 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
     if (trackApplication) {
       trackData.value = getValues().StatusId;
       trackData.search = getValues().FilterId;
-      dispatch(getDoctorTrackApplicationData(profileId, trackData));
+
+      searchParams(trackData, profileId);
     }
     if (exportData?.data?.college_details) {
       trackData.search = getValues().collegeApprovalId;
@@ -92,7 +93,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
       dispatch(getDoctorTrackApplicationData(profileId, trackData));
     }
 
-    searchParams(data);
+    // searchParams(data);
     reset({
       filterByName: '',
       filterByRegNo: '',

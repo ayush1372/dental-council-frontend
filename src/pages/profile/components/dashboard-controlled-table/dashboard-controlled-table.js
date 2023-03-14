@@ -168,6 +168,7 @@ function DashboardControlledTable(props) {
   };
 
   const searchParams = (data) => {
+    dispatch(getDashboardTableData(data));
     setSearchQueryParams(data);
   };
 
