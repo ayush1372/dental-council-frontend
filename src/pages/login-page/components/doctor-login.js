@@ -335,12 +335,12 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
               required
               fullWidth
               label={'Username'}
-              placeholder={'Please enter your Username'}
+              placeholder={'Please enter Username'}
               name={'userID'}
               {...register('userID', {
-                required: 'Please enter a Username',
+                required: 'Please enter Username',
                 pattern: {
-                  message: 'Please enter an valid Username',
+                  message: 'Please enter a valid Username',
                 },
               })}
             />
