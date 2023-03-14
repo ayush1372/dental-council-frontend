@@ -89,9 +89,6 @@ const CommunicationAddress = ({ personalDetails }) => {
         <Grid item xs={12} md={3}>
           <Typography variant="bod5" color="grey.label">
             City/Town/Village
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
