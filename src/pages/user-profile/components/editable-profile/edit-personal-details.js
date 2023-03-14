@@ -726,108 +726,110 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 Is the communication address same as your address as per your KYC?
               </Typography>
             </Box>
-            <Grid item xs={12} md={8}>
-              <Typography variant="subtitle2" color="inputTextColor.main">
-                House
-                <Typography component="span" color="error.main">
-                  *
+            <Grid container item columnSpacing={2}>
+              <Grid item xs={12} md={4}>
+                <Typography variant="subtitle2" color="inputTextColor.main">
+                  House
+                  <Typography component="span" color="error.main">
+                    *
+                  </Typography>
                 </Typography>
-              </Typography>
-              <TextField
-                variant="outlined"
-                name={'House'}
-                placeholder="House address"
-                disabled={isSameAddress ? true : false}
-                sx={{
-                  input: {
-                    backgroundColor: isSameAddress ? 'grey2.main' : '',
-                  },
-                }}
-                required={isSameAddress ? false : true}
-                fullWidth
-                defaultValue={
-                  isSameAddress
-                    ? personalDetails?.kyc_address?.house
-                    : personalDetails?.communication_address?.house
-                }
-                value={isSameAddress ? personalDetails?.kyc_address?.house : getValues().Address}
-                {...register('House', {
-                  required: 'House is Required',
-                  maxLength: {
-                    value: 300,
-                    message: 'Length should be less than 300.',
-                  },
-                })}
-                error={errors.House?.message}
-              />
-            </Grid>
-            <Grid item xs={12} md={4}>
-              <Typography variant="subtitle2" color="inputTextColor.main">
-                Street
-              </Typography>
-              <TextField
-                variant="outlined"
-                name={'Street'}
-                placeholder="Enter Street"
-                disabled={isSameAddress}
-                // required={false}
-                fullWidth
-                sx={{
-                  input: {
-                    backgroundColor: isSameAddress ? 'grey2.main' : '',
-                  },
-                }}
-                defaultValue={
-                  isSameAddress
-                    ? personalDetails?.kyc_address?.street
-                    : personalDetails?.communication_address?.street
-                }
-                // value={isSameAddress ? personalDetails?.kyc_address?.street : getValues().street}
-                {...register('Street', {
-                  // required: 'Street is Required',
-                  maxLength: {
-                    value: 300,
-                    message: 'Length should be less than 300.',
-                  },
-                })}
-                error={errors.Street?.message}
-              />
+                <TextField
+                  variant="outlined"
+                  name={'House'}
+                  placeholder="House address"
+                  disabled={isSameAddress ? true : false}
+                  sx={{
+                    input: {
+                      backgroundColor: isSameAddress ? 'grey2.main' : '',
+                    },
+                  }}
+                  required={isSameAddress ? false : true}
+                  fullWidth
+                  defaultValue={
+                    isSameAddress
+                      ? personalDetails?.kyc_address?.house
+                      : personalDetails?.communication_address?.house
+                  }
+                  value={isSameAddress ? personalDetails?.kyc_address?.house : getValues().Address}
+                  {...register('House', {
+                    required: 'House is Required',
+                    maxLength: {
+                      value: 300,
+                      message: 'Length should be less than 300.',
+                    },
+                  })}
+                  error={errors.House?.message}
+                />
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Typography variant="subtitle2" color="inputTextColor.main">
+                  Street
+                </Typography>
+                <TextField
+                  variant="outlined"
+                  name={'Street'}
+                  placeholder="Enter Street"
+                  disabled={isSameAddress}
+                  // required={false}
+                  fullWidth
+                  sx={{
+                    input: {
+                      backgroundColor: isSameAddress ? 'grey2.main' : '',
+                    },
+                  }}
+                  defaultValue={
+                    isSameAddress
+                      ? personalDetails?.kyc_address?.street
+                      : personalDetails?.communication_address?.street
+                  }
+                  // value={isSameAddress ? personalDetails?.kyc_address?.street : getValues().street}
+                  {...register('Street', {
+                    // required: 'Street is Required',
+                    maxLength: {
+                      value: 300,
+                      message: 'Length should be less than 300.',
+                    },
+                  })}
+                  error={errors.Street?.message}
+                />
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Typography variant="subtitle2" color="inputTextColor.main">
+                  Landmark
+                </Typography>
+                <TextField
+                  variant="outlined"
+                  name={'Landmark'}
+                  placeholder="Landmark"
+                  disabled={isSameAddress}
+                  sx={{
+                    input: {
+                      backgroundColor: isSameAddress ? 'grey2.main' : '',
+                    },
+                  }}
+                  required={false}
+                  fullWidth
+                  defaultValue={
+                    isSameAddress
+                      ? personalDetails?.kyc_address?.landmark
+                      : personalDetails?.communication_address?.landmark
+                  }
+                  value={
+                    isSameAddress ? personalDetails?.kyc_address?.landmark : getValues().landmark
+                  }
+                  {...register('Landmark', {
+                    maxLength: {
+                      value: 300,
+                      message: 'Length should be less than 300.',
+                    },
+                  })}
+                  error={errors.Landmark?.message}
+                />
+              </Grid>
             </Grid>
           </Grid>
-          <Grid container item spacing={2} mt={1}>
-            <Grid item xs={12} md={4}>
-              <Typography variant="subtitle2" color="inputTextColor.main">
-                Landmark
-              </Typography>
-              <TextField
-                variant="outlined"
-                name={'Landmark'}
-                placeholder="Landmark"
-                disabled={isSameAddress}
-                sx={{
-                  input: {
-                    backgroundColor: isSameAddress ? 'grey2.main' : '',
-                  },
-                }}
-                required={false}
-                fullWidth
-                defaultValue={
-                  isSameAddress
-                    ? personalDetails?.kyc_address?.landmark
-                    : personalDetails?.communication_address?.landmark
-                }
-                value={
-                  isSameAddress ? personalDetails?.kyc_address?.landmark : getValues().landmark
-                }
-                {...register('Landmark', {
-                  maxLength: {
-                    value: 300,
-                    message: 'Length should be less than 300.',
-                  },
-                })}
-                error={errors.Landmark?.message}
-              />
-            </Grid>
+          <Grid container item spacing={2}>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 Locality
@@ -895,8 +897,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 }}
               />
             </Grid>
-          </Grid>
-          <Grid container item spacing={2} mt={1}>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 State/Union Territory
@@ -936,6 +936,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 }}
               />
             </Grid>
+          </Grid>
+          <Grid container item spacing={2}>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 District
@@ -999,8 +1001,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 }}
               />
             </Grid>
-          </Grid>
-          <Grid container item spacing={2} mt={1}>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 City/Town/Village
@@ -1028,6 +1028,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 }}
               />
             </Grid>
+          </Grid>
+          <Grid container item spacing={2}>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 Pincode
