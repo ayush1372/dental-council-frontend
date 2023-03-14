@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloseIcon from '@mui/icons-material/Close';
@@ -10,22 +10,38 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
 import { doctorTabs, smcTabs } from '../../../../helpers/components/sidebar-drawer-list-item';
-import { getEsignFormDetails } from '../../../../store/actions/doctor-user-profile-actions';
+import {
+  getEsignFormDetails,
+  getRegistrationDetailsData,
+} from '../../../../store/actions/doctor-user-profile-actions';
 import { updateProfileConsent } from '../../../../store/actions/doctor-user-profile-actions';
 import { changeUserActiveTab } from '../../../../store/reducers/common-reducers';
 import { Button, Checkbox } from '../../../../ui/core';
 import successToast from '../../../../ui/core/toaster';
 
 const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType }) => {
+  const [degreeCertificate, setDegreeCertificate] = useState(false);
+  const [registrationFile, setRegistrationFile] = useState(false);
   const dispatch = useDispatch();
   const personalDetails = useSelector((state) => state?.doctorUserProfileReducer?.personalDetails);
   const eSignResponse = useSelector((state) => state?.doctorUserProfileReducer?.esignDetails?.data);
-  const stateData = useSelector((state) => state?.doctorUserProfileReducer);
-
   const [confirmationModal, setConfirmationModal] = useState(false);
 
   const { loginData } = useSelector((state) => state?.loginReducer);
-
+  useEffect(() => {
+    dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id)).then((response) => {
+      if (response?.data?.qualification_detail_response_tos[0]?.degree_certificate) {
+        setDegreeCertificate(true);
+      }
+    });
+  }, []);
+  useEffect(() => {
+    dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id)).then((response) => {
+      if (response?.data?.registration_detail_to?.registration_certificate) {
+        setRegistrationFile(true);
+      }
+    });
+  }, []);
   const {
     formState: { errors },
     register,
@@ -74,36 +90,35 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
     let data = {
       signingPlace: personalDetails?.communication_address?.village?.name,
       nmrDetails: {
-        nmrPersonalDetail: {
-          firstName: personalDetails?.personal_details?.first_name || 'efgh',
-          userId: stateData?.personalDetails?.request_id || '747', //cs-1013: need to change this path when backend fixes done
-          middleName: personalDetails?.personal_details?.middle_name || 'abcd',
-          lastName: personalDetails?.personal_details?.last_name || 'lmnop',
-          qualification: personalDetails?.personal_details?.first_name || 'degree', //cs-1013: need to change this path when backend fixes done
-          mobileNumber: personalDetails?.personal_details?.mobile || '9999999999',
-          emailId: personalDetails?.personal_details?.email || 'mohith2lntinfotech.com',
-        },
+        // nmrPersonalDetail: {
+        //   firstName: personalDetails?.personal_details?.first_name || '',
+        //   userId: personalDetails?.personalDetails?.hp_profile_id || '',
+        //   middleName: personalDetails?.personal_details?.middle_name || '',
+        //   lastName: personalDetails?.personal_details?.last_name || '',
+        //   qualification: personalDetails?.personal_details?.first_name || '',
+        //   mobileNumber: personalDetails?.personal_details?.kyc_address?.mobile || '',
+        //   emailId: personalDetails?.personal_details?.kyc_address?.email || '',
+        // },
         nmrPersonalCommunication: {
-          address: personalDetails?.communication_address?.address_line1 || 'address',
-          country: personalDetails?.communication_address?.country?.name || 'india',
-          stateUT: personalDetails?.communication_address?.state?.name || 'delhi',
-          district: personalDetails?.communication_address?.district?.name || 'delhi',
-          city: personalDetails?.communication_address?.village?.name || 'delhi',
-          pincode: personalDetails?.communication_address?.pincode || '383838',
+          address: personalDetails?.communication_address?.address_line1 || '',
+          country: personalDetails?.communication_address?.country?.name || '',
+          stateUT: personalDetails?.communication_address?.state?.name || '',
+          district: personalDetails?.communication_address?.district?.name || '',
+          city: personalDetails?.communication_address?.village?.name || '',
+          pincode: personalDetails?.communication_address?.pincode || '',
         },
         nmrOfficeCommunication: {
-          //this object paylaod need to send exact path later
-          address: personalDetails?.communication_address?.address_line1 || 'address',
-          country: 'India',
-          stateUT: personalDetails?.communication_address?.address_line1 || 'address',
-          district: personalDetails?.communication_address?.address_line1 || 'address',
-          city: personalDetails?.communication_address?.address_line1 || 'address',
-          subDistrict: 'Krishna', //cs-1013:need to change this path when backend fixes done*
-          pincode: personalDetails?.communication_address?.address_line1 || '333333',
+          address: personalDetails?.communication_address?.address_line1 || '',
+          country: personalDetails?.communication_address?.country?.name || '',
+          stateUT: personalDetails?.communication_address?.state?.name || '',
+          district: personalDetails?.communication_address?.district?.name || '',
+          city: personalDetails?.communication_address?.village?.name || '',
+          subDistrict: personalDetails?.communication_address?.sub_district?.name || '',
+          pincode: personalDetails?.communication_address?.pincode || '',
         },
-        isRegCerAttached: 'No', //cs-1013:need to change this path when backend fixes done*
-        isDegreeCardAttached: 'No', //cs-1013:need to change this path when backend fixes done*
-        isOtherDocumentAttached: 'No', //cs-1013:need to change this path when backend fixes done*
+        isRegCerAttached: registrationFile ? 'Yes' : 'No',
+        isDegreeCardAttached: degreeCertificate ? 'Yes' : 'No',
+        isOtherDocumentAttached: 'No', //cs-1013:needs to changed when workdetails API integrated*
       },
     };
     dispatch(getEsignFormDetails(data));
@@ -115,7 +130,15 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
     <>
       <ToastContainer></ToastContainer>
       <Box bgcolor="white.main" py={2} px={{ xs: 1, md: 4 }} mt={2} boxShadow={1}>
-        <Typography component="div" color="primary.main" variant="body1" mb={2}>
+        <Typography
+          // id="name"
+          // value="123"
+          component="div"
+          color="primary.main"
+          variant="body1"
+          mb={2}
+          // onClick={(e) => console.log('event of ', e)}
+        >
           Consent
           <Typography component="span" color="error.main">
             *
@@ -149,13 +172,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
             </Typography>
           </Grid>
         </Grid>
-        {/* <Box
-          bgcolor="backgroundColor.light"
-          p={3}
-          display="flex"
-          justifyContent="flex-start"
-          alignItems="center"
-        > */}
+
         <Grid
           container
           alignItems="center"
@@ -165,14 +182,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
           borderRadius="5px"
         >
           <Grid item sx="auto" display="flex" alignItems="center">
-            <Checkbox
-              sx={{ width: '18px', height: '18px' }}
-              name="HPR"
-              // {...register('consent', {
-              //   required: 'Consent is Required',
-              // })}
-              // error={errors.consent?.message}
-            />
+            <Checkbox sx={{ width: '18px', height: '18px' }} name="HPR" />
             <Typography component="div" variant="body7">
               Save my time,share my details with HPR
             </Typography>
