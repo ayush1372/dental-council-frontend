@@ -6,7 +6,6 @@ import { Box } from '@mui/system';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
 import { ToastContainer } from 'react-toastify';
 
 import { dateFormat } from '../../../helpers/functions/common-functions';
@@ -33,11 +32,10 @@ function FetchDoctorDetails() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [showOtpMobile, setShowOtpMobile] = useState(false);
   const [showOtpAadhar, setshowOtpAadhar] = useState(false);
+  const [demographicValue, setDemographicValue] = useState(false);
 
-  const [isOtpValidEmail, setisOtpValidEmail] = useState(false);
   const [isOtpValidMobile, setisOtpValidMobile] = useState(false);
   const [isOtpValidAadhar, setisOtpValidAadhar] = useState(false);
-  const [enableSubmit, setEnableSubmit] = useState(false);
   const [kycError, setKycError] = useState(false);
   const dispatch = useDispatch();
 
@@ -93,12 +91,10 @@ function FetchDoctorDetails() {
     dispatch(sendAaadharOtp(value)).then(() => {
       setshowOtpAadhar(true);
       setisOtpValidMobile(false);
-      setisOtpValidEmail(false);
     });
   };
-  const navigate = useNavigate();
   const onCancel = () => {
-    navigate('/');
+    window.location.reload();
   };
   const handleValidateAadhar = () => {
     handleClear();
@@ -162,7 +158,7 @@ function FetchDoctorDetails() {
           txnId: aadhaarTxnId,
         })
       ).then((response) => {
-        if (response?.data?.hprId === undefined || response?.data?.hprId === null) {
+        if (response?.data?.hprIdNumber === null || response?.data?.hprIdNumber === '') {
           setShowCreateHprIdPage(true);
           dispatch(
             getHprIdSuggestions({
@@ -170,12 +166,19 @@ function FetchDoctorDetails() {
             })
           );
         } else {
-          if (response?.data?.hprId.length > 0) {
+          if (response?.data?.hprId && response?.data?.hprIdNumber) {
             setShowSuccess(true);
           }
         }
       });
+    } else if (demographicValue) {
+      let data = {
+        mobile: getValues().MobileNumber,
+        txnId: aadhaarTxnId,
+      };
+      dispatch(generateMobileOtp(data));
     }
+    setDemographicValue(true);
   }, [demographicAuthMobileVerify?.data?.verified]);
 
   const handleValidateMobile = () => {
@@ -189,10 +192,6 @@ function FetchDoctorDetails() {
         setShowOtpMobile(false);
         handleClear();
       });
-
-      if (isOtpValidEmail === true) {
-        setEnableSubmit(true);
-      }
     }
   };
 
@@ -227,7 +226,7 @@ function FetchDoctorDetails() {
         txnId: aadhaarTxnId,
       })
     ).then((response) => {
-      if (response?.data?.hprId === undefined || response?.data?.hprId === null) {
+      if (response?.data?.new === true) {
         setShowCreateHprIdPage(true);
         dispatch(
           getHprIdSuggestions({
@@ -235,7 +234,7 @@ function FetchDoctorDetails() {
           })
         );
       } else {
-        if (response?.data?.hprId.length > 0) {
+        if (response?.data?.hprIdNumber.length > 0) {
           setShowSuccess(true);
         }
       }
@@ -485,7 +484,7 @@ function FetchDoctorDetails() {
                 <Button
                   onClick={onCancel}
                   variant="outlined"
-                  disabled={!enableSubmit}
+                  // disabled={!enableSubmit}
                   sx={{
                     backgroundColor: 'grey.main',
                     color: 'black.textBlack',
@@ -507,7 +506,7 @@ function FetchDoctorDetails() {
               text={`Your username ${existUSerName.replace(
                 '@hpr.abdm',
                 ''
-              )} has been successfully created. Please proceed to set the password for logging in to your NMR Profile`}
+              )} has been already created. Please proceed to set the password for logging in to your NMR Profile`}
               isHpIdCreated={true}
             />
           )}

@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Box, Container, Link, TextField, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
@@ -7,13 +5,10 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { UniqueUserNameForDoctor } from '../../../constants/common-data';
 import { createUniqueHprId } from '../../../store/actions/doctor-registration-actions';
 import { Button } from '../../../ui/core';
 
 const UniqueUserNameForDoctorRegistration = () => {
-  const [disable, setDisbale] = useState(false);
-
   const dispatch = useDispatch();
   const aadhaarTxnId = useSelector((state) => state?.AadhaarTransactionId?.aadharData?.data?.txnId);
   const firstSuggestion = useSelector(
@@ -27,7 +22,9 @@ const UniqueUserNameForDoctorRegistration = () => {
   );
   const theme = useTheme();
   const navigate = useNavigate();
-
+  const getInputValue = () => {
+    return getValues().UniqueUserNameForDoctor === '' ? '' : firstSuggestion;
+  };
   const {
     register,
     getValues,
@@ -86,15 +83,15 @@ const UniqueUserNameForDoctorRegistration = () => {
                 <TextField
                   fullWidth
                   name="UniqueUserName"
-                  defaultValue={getValues().UniqueUserNameForDoctor}
+                  defaultValue={getInputValue()}
                   error={errors.UniqueUserNameForDoctor?.message}
                   {...register('UniqueUserNameForDoctor', {
                     required: 'UniqueUserNameForDoctor Number is required',
                   })}
-                  items={UniqueUserNameForDoctor}
-                  onChange={(e) => {
-                    e.target.value > 4 ? setDisbale(true) : setDisbale(false);
-                  }}
+                  // items={UniqueUserNameForDoctor}
+                  // onChange={(e) => {
+                  //   e.target.value > 4 ? setDisbale(true) : setDisbale(false);
+                  // }}
                   clearErrors={clearErrors}
                 />
               </Box>
@@ -108,15 +105,34 @@ const UniqueUserNameForDoctorRegistration = () => {
 
             <Box pt={2} pb={4}>
               <Typography>Suggestions:</Typography>
-              <Link color="secondary.main" fontSize="14px" mr={1}>
+              <Link
+                sx={{ cursor: 'pointer' }}
+                color="secondary.main"
+                fontSize="14px"
+                mr={1}
+                onClick={() => {
+                  getValues().UniqueUserNameForDoctor = firstSuggestion;
+                }}
+              >
                 {firstSuggestion}
                 <span>,</span>
               </Link>
-              <Link color="secondary.main" fontSize="14px" mr={1}>
+              <Link
+                sx={{ cursor: 'pointer' }}
+                onClick={() => (getValues().UniqueUserNameForDoctor = secondSuggestion)}
+                color="secondary.main"
+                fontSize="14px"
+                mr={1}
+              >
                 {secondSuggestion}
                 <span>,</span>
               </Link>
-              <Link color="secondary.main" fontSize="14px">
+              <Link
+                sx={{ cursor: 'pointer' }}
+                onClick={() => (getValues().UniqueUserNameForDoctor = thirdSuggestion)}
+                color="secondary.main"
+                fontSize="14px"
+              >
                 {thirdSuggestion}
               </Link>
             </Box>
@@ -126,7 +142,7 @@ const UniqueUserNameForDoctorRegistration = () => {
                 onClick={handleSubmit(onSubmit)}
                 variant="contained"
                 size="medium"
-                disable={!disable}
+                // disable={!disable}
                 sx={{
                   mr: 3,
                   backgroundColor: theme.palette.secondary.main,
