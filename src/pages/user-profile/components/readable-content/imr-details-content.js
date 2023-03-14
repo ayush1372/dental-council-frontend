@@ -14,9 +14,8 @@ const IMRDetails = ({ personalDetails }) => {
     setOpenModal(false);
   };
 
-  const { communication_address } = personalDetails || {};
-  // const { registration_number, year_of_info } = imr_details || {};
-  const { address_line1 } = communication_address || {};
+  const { kyc_address } = personalDetails || {};
+
   return (
     <Grid container spacing={2} mt={1}>
       <Grid container item spacing={2}>
@@ -29,7 +28,7 @@ const IMRDetails = ({ personalDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
-              {address_line1 ? address_line1 : ''}
+              {kyc_address?.address_line1 ? kyc_address?.address_line1 : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon

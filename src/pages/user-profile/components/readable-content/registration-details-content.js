@@ -154,13 +154,15 @@ const RegistrationDetailsContent = () => {
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
-              <IconButton
-                onClick={(e) => {
-                  e.preventDefault();
-                  setAttachmentViewProfile(true);
-                }}
-              >
+            <Typography
+              variant="subtitle2"
+              color="primary.main"
+              onClick={(e) => {
+                e.preventDefault();
+                setAttachmentViewProfile(true);
+              }}
+            >
+              <IconButton>
                 <AttachFileIcon fontSize="10px" />
               </IconButton>
               View attachment
