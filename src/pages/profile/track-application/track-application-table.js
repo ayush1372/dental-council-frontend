@@ -54,15 +54,21 @@ function TrackAppicationTable({
   const [orderBy, setOrderBy] = React.useState({});
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
+
   // const theme = useTheme();
   let trackData = {
     pageNo: 1,
     offset: 10,
   };
+
+  // useEffect(() => {
+  //   if (orderBy && getTableData && page !== null && profileId)
+  //     dispatch(getTableData(profileId, trackData));
+  // }, [orderBy, getTableData, page, profileId]);
   useEffect(() => {
-    if (orderBy && getTableData && page !== null && profileId)
-      dispatch(getTableData(profileId, trackData));
-  }, [orderBy, getTableData, page, profileId]);
+    // if (orderBy && getTableData && page !== null && profileId)
+    dispatch(getTableData(profileId, trackData));
+  }, []);
 
   const viewNameOfApplicant = (event, row) => {
     event.preventDefault();
@@ -115,7 +121,7 @@ function TrackAppicationTable({
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
-  const newRowsData = (tableData?.data?.data?.health_professional_applications || [])?.map(
+  const newRowsData = tableData?.data?.data?.health_professional_applications?.map(
     (data, index) => {
       return createData(
         { type: 'SNo', value: index + 1 },
@@ -162,19 +168,28 @@ function TrackAppicationTable({
     }
   );
 
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+  let updatedvalue = 0;
   const handleChangePage = (event, newPage) => {
-    setPage(newPage);
+    if (page < newPage) {
+      setPage(newPage);
+      updatedvalue = newPage + 1;
+    }
+    if (page > newPage) {
+      setPage(newPage);
+      updatedvalue(page - 1);
+    }
+
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
     });
-    let finalTrackData = { ...trackData, pageNo: newPage };
-    dispatch(getTableData(profileId, finalTrackData));
-  };
 
-  const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPage(0);
+    let finalTrackData = { ...trackData, pageNo: updatedvalue };
+    dispatch(getTableData(profileId, finalTrackData));
   };
 
   return (
@@ -203,8 +218,8 @@ function TrackAppicationTable({
           rowsPerPageOptions={[]}
           component="div"
           count={tableData?.data?.data?.total_no_of_records || '0'}
-          rowsPerPage={rowsPerPage}
           page={page}
+          rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
           sx={{

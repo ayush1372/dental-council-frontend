@@ -168,21 +168,23 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={12} md={4}>
-        <Typography variant="subtitle2" color="grey.label">
-          Upload Qualification Degree
-          <Typography component="span" color="error.main">
-            *
+      <Grid container item spacing={2} mt={1}>
+        <Grid item xs={12} md={4}>
+          <Typography variant="subtitle2" color="grey.label">
+            Upload Qualification Degree
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
-        </Typography>
-        <Grid display="flex" alignItems="center">
-          <Typography variant="subtitle2" color="primary.main">
-            <IconButton
-              onClick={(e) => {
-                e.preventDefault();
-                setAttachmentViewProfile(true);
-              }}
-            >
+          <Typography
+            variant="subtitle2"
+            color="primary.main"
+            onClick={(e) => {
+              e.preventDefault();
+              setAttachmentViewProfile(true);
+            }}
+          >
+            <IconButton>
               <AttachFileIcon fontSize="10px" />
             </IconButton>
             View attachment
