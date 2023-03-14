@@ -6,7 +6,6 @@ import { Box } from '@mui/system';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
 import { ToastContainer } from 'react-toastify';
 
 import { dateFormat } from '../../../helpers/functions/common-functions';
@@ -33,11 +32,10 @@ function FetchDoctorDetails() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [showOtpMobile, setShowOtpMobile] = useState(false);
   const [showOtpAadhar, setshowOtpAadhar] = useState(false);
+  const [demographicValue, setDemographicValue] = useState(false);
 
-  const [isOtpValidEmail, setisOtpValidEmail] = useState(false);
   const [isOtpValidMobile, setisOtpValidMobile] = useState(false);
   const [isOtpValidAadhar, setisOtpValidAadhar] = useState(false);
-  const [enableSubmit, setEnableSubmit] = useState(false);
   const [kycError, setKycError] = useState(false);
   const dispatch = useDispatch();
 
@@ -93,12 +91,10 @@ function FetchDoctorDetails() {
     dispatch(sendAaadharOtp(value)).then(() => {
       setshowOtpAadhar(true);
       setisOtpValidMobile(false);
-      setisOtpValidEmail(false);
     });
   };
-  const navigate = useNavigate();
   const onCancel = () => {
-    navigate('/');
+    window.location.reload();
   };
   const handleValidateAadhar = () => {
     handleClear();
@@ -175,7 +171,14 @@ function FetchDoctorDetails() {
           }
         }
       });
+    } else if (demographicValue) {
+      let data = {
+        mobile: getValues().MobileNumber,
+        txnId: aadhaarTxnId,
+      };
+      dispatch(generateMobileOtp(data));
     }
+    setDemographicValue(true);
   }, [demographicAuthMobileVerify?.data?.verified]);
 
   const handleValidateMobile = () => {
@@ -189,10 +192,6 @@ function FetchDoctorDetails() {
         setShowOtpMobile(false);
         handleClear();
       });
-
-      if (isOtpValidEmail === true) {
-        setEnableSubmit(true);
-      }
     }
   };
 
@@ -485,7 +484,7 @@ function FetchDoctorDetails() {
                 <Button
                   onClick={onCancel}
                   variant="outlined"
-                  disabled={!enableSubmit}
+                  // disabled={!enableSubmit}
                   sx={{
                     backgroundColor: 'grey.main',
                     color: 'black.textBlack',
