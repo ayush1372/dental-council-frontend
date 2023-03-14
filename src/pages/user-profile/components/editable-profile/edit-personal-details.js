@@ -346,7 +346,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     doctorProfileValues.communication_address.address_line1 = Address;
     doctorProfileValues.communication_address.email = EmailAddress;
     doctorProfileValues.communication_address.mobile =
-      mobileNo !== undefined ? mobileNo : '0000000000';
+      mobileNo !== undefined ? mobileNo : '';
     doctorProfileValues.communication_address.country.id = Country;
     doctorProfileValues.communication_address.state.id = State;
     doctorProfileValues.communication_address.district.id = District;
