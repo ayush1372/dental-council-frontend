@@ -166,15 +166,6 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               />
             )}
           </Grid>
-          <Grid display="flex" alignItems="center">
-            {userActiveTab === 'dashboard' && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => setOpenModal(true)}
-                fontSize="width30"
-              />
-            )}
-          </Grid>
         </Grid>
       </Grid>
       <Grid container item spacing={2} mt={1}>
@@ -185,26 +176,36 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               *
             </Typography>
           </Typography>
-          <Typography variant="subtitle2" color="primary.main">
-            <IconButton
-              onClick={(e) => {
-                e.preventDefault();
-                setAttachmentViewProfile(true);
-              }}
-            >
+          <Typography
+            variant="subtitle2"
+            color="primary.main"
+            onClick={(e) => {
+              e.preventDefault();
+              setAttachmentViewProfile(true);
+            }}
+          >
+            <IconButton>
               <AttachFileIcon fontSize="10px" />
             </IconButton>
             View attachment
           </Typography>
+
+          {attachmentViewProfile && (
+            <AttachmentViewPopup
+              certificate={degree_certificate}
+              closePopup={CloseAttachmentPopup}
+              alt={'Qualification Certificate'}
+            />
+          )}
+          {userActiveTab === 'dashboard' && (
+            <ContactSupportOutlinedIcon
+              color="primary"
+              onClick={() => setOpenModal(true)}
+              fontSize="width30"
+            />
+          )}
         </Grid>
       </Grid>
-      {attachmentViewProfile && (
-        <AttachmentViewPopup
-          certificate={degree_certificate}
-          closePopup={CloseAttachmentPopup}
-          alt={'Qualification Certificate'}
-        />
-      )}
     </Grid>
   );
 };

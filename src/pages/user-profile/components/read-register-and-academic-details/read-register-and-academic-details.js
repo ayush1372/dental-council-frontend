@@ -34,11 +34,15 @@ const ReadRegisterAndAcademicDetails = ({
   const [accordionKey, setAccordionKey] = useState('accordion-0');
   const [selected, setSelected] = useState('');
   const [confirmationModal, setConfirmationModal] = useState(false);
+
+  const { userActiveTab, selectedAcademicStatus } = useSelector((state) => state.common);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [successPopupMessage, setSuccessPopupMessage] = useState('');
-  const { userActiveTab } = useSelector((state) => state.common);
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  // const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+
+  // const dispatch = useDispatch();
 
   const accordions = [
     {
@@ -143,7 +147,7 @@ const ReadRegisterAndAcademicDetails = ({
           >
             Back
           </Button>
-          {userActiveTab === 'dashboard' && (
+          {userActiveTab === 'dashboard' && selectedAcademicStatus?.toUpperCase() === 'PENDING' && (
             <Box mt={2}>
               <PopupState>
                 {(popupState) => (

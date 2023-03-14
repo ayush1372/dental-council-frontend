@@ -108,19 +108,21 @@ export function SuspendLicenseVoluntaryRetirement({
       dispatch(getInitiateWorkFlow(workFlowData))
         .then((response) => {
           showSuccessPopup(true);
+          closeActionModal(false);
           if (response) {
             userActiveTab === 'voluntary-suspend-license' &&
               dispatch(changeUserActiveTab('my-profile'));
           }
         })
-        .catch((error) => {
-          successToast(
-            'ERR_INT: ' + error?.data?.response?.data?.error,
-            'UpdateError',
-            'error',
-            'top-center'
-          );
+        .catch(() => {
+          // successToast(
+          //   'ERR_INT: ' + error?.data?.response?.data?.error,
+          //   'UpdateError',
+          //   'error',
+          //   'top-center'
+          // );
           closeActionModal(false);
+          handleClose();
         });
     } catch (allFailMsg) {
       successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
@@ -390,7 +392,7 @@ export function SuspendLicenseVoluntaryRetirement({
         <Box>
           <Typography>Raise a Query for the following*</Typography>
           <Box display={'flex'}>
-            <Box my={4} color="grey1.dark">
+            <Box my={4} color="inputTextColor.main">
               <Checkbox
                 sx={{ padding: '0 8px 0 0' }}
                 name="notification"

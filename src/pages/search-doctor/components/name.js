@@ -1,4 +1,4 @@
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+// import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
@@ -64,12 +64,12 @@ const Name = ({ setDoSearch, setSearchData, setScrollDown }) => {
         <Grid>
           <Typography color="inputTextColor.main">
             Doctor Name{' '}
-            <ErrorOutlineIcon
+            {/* <ErrorOutlineIcon
               fontSize="width12"
               sx={{
                 color: 'textPrimary.secondary',
               }}
-            />
+            /> */}
           </Typography>
         </Grid>
         <TextField

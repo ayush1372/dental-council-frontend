@@ -64,7 +64,7 @@ export function TrackApplication({ getTableData }) {
         </Box>
       ) : (
         showTrackApplication && (
-          <Box p={3}>
+          <Box>
             <ApplicationDetails
               selectedRowData={selectedRowData}
               setShowTrackApplication={setShowTrackApplication}

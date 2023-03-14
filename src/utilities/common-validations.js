@@ -92,3 +92,17 @@ export const EmailRegexValidation = {
     message: 'Provide a Valid Email ID',
   },
 };
+
+export const convertGender = (gender) => {
+  if (gender.length > 1) {
+    return gender ? gender.charAt(0).toUpperCase() + gender.slice(1) : '';
+  } else {
+    return gender?.toUpperCase() === 'M'
+      ? 'Male'
+      : gender?.toUpperCase() === 'F'
+      ? 'Female'
+      : gender?.toUpperCase() === 'O'
+      ? 'Other'
+      : '';
+  }
+};

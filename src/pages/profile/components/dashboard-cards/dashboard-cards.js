@@ -21,6 +21,7 @@ import {
 } from '../../../../constants/common-data';
 import ViewProfile from '../../../../shared/view-profile/view-profile';
 import { getCardCount } from '../../../../store/actions/dashboard-actions';
+import { setBreadcrumbsActivetab } from '../../../../store/reducers/common-reducers';
 import { Button } from '../../../../ui/core';
 import UserProfile from '../../../user-profile/index';
 import BreadcrumbsCompnent from '../breadcrums';
@@ -29,6 +30,7 @@ import DashboardControlledTable from '../dashboard-controlled-table/dashboard-co
 export default function Dashboard() {
   const theme = useTheme();
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  const breadcrumbsActive = useSelector((state) => state.common.breadcrumbsActivetab);
   const { count } = useSelector((state) => state.dashboard);
   const [showDashboard, setShowDashboard] = useState(true);
   const [showTable, setShowTable] = useState(false);
@@ -185,6 +187,13 @@ export default function Dashboard() {
       return 'Total number of requests';
     }
   };
+
+  useEffect(() => {
+    if (breadcrumbsActive === 'DASHBOARD') {
+      setShowDashboard(true);
+      dispatch(setBreadcrumbsActivetab(''));
+    }
+  }, [breadcrumbsActive, dispatch]);
 
   return (
     <>

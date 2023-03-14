@@ -28,7 +28,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
   const { generateCaptcha } = useSelector((state) => state.loginReducer);
   const theme = useTheme();
   const dispatch = useDispatch();
-  const [selectedLoginOption, setSelectedLoginOption] = useState('nmrId');
+  const [selectedLoginOption, setSelectedLoginOption] = useState('userName');
   const [transaction_id, setTransaction_id] = useState('');
   const [otpFormEnabled, setOtpFormEnable] = useState(false);
   const [maskedMobileNumber, setMaskedMobileNumber] = useState('');
@@ -281,7 +281,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
               required
               disabled={otpFormEnabled}
               label={'NMR ID'}
-              placeholder={'Please enter your NMR ID'}
+              placeholder={'Please enter NMR ID'}
               inputProps={{ maxLength: 12 }}
               name={'nmrID'}
               {...register('nmrID', {
@@ -335,12 +335,12 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
               required
               fullWidth
               label={'Username'}
-              placeholder={'Please enter your Username'}
+              placeholder={'Please enter Username'}
               name={'userID'}
               {...register('userID', {
-                required: 'Please enter an Username',
+                required: 'Please enter Username',
                 pattern: {
-                  message: 'Please enter an valid Username',
+                  message: 'Please enter a valid Username',
                 },
               })}
             />

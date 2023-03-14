@@ -5,6 +5,7 @@ import { Grid, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
+import { convertGender } from '../../../../utilities/common-validations';
 
 const PersonalDetails = ({ personalDetails }) => {
   const { userActiveTab } = useSelector((state) => state.common);
@@ -107,7 +108,7 @@ const PersonalDetails = ({ personalDetails }) => {
 
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
-              {full_name ? full_name : ''}
+              Dr. {full_name ? full_name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
@@ -185,7 +186,7 @@ const PersonalDetails = ({ personalDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
-              {gender ? gender : ''}
+              {gender && convertGender(gender)}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon

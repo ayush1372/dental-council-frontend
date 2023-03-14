@@ -59,7 +59,7 @@ const NewPasswordSetup = () => {
         data-testid="Password"
         pb={1}
       >
-        {`please set your password `}
+        {`Please set your password `}
       </Typography>
 
       <Box>

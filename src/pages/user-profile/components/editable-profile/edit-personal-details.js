@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { Box, Button, Grid, Typography } from '@mui/material';
+// import moment from 'moment';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,7 +11,7 @@ import { createSelectFieldData } from '../../../../helpers/functions/common-func
 import {
   getCitiesList,
   getDistrictList,
-  getPostalAddress,
+  // getPostalAddress,
   getSubDistrictsList,
 } from '../../../../store/actions/common-actions';
 import {
@@ -62,7 +63,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     sub_district,
     village,
     pincode,
-    address_line1,
+    //address_line1,
     email,
     mobile,
     landmark,
@@ -137,7 +138,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
           : '',
       // Schedule: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? scheduleId : '',
       Name: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? full_name : '',
-      Address: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? address_line1 : '',
+      Address:
+        loggedInUserType === 'SMC'
+          ? ''
+          : loggedInUserType === 'Doctor'
+          ? personalDetails?.kyc_address?.address_line1
+          : '',
       IMRID: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? nmr_id : '',
       YearOfInfo:
         loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? year_of_info : '',
@@ -244,25 +250,35 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       setValue('District', personalDetails?.kyc_address?.district?.id);
       setValue('SubDistrict', personalDetails?.kyc_address?.sub_district?.id);
       setValue('Area', personalDetails?.kyc_address?.village?.id);
+      setValue('House', personalDetails?.kyc_address?.house);
+      setValue('Street', personalDetails?.kyc_address?.street);
+      setValue('Landmark', personalDetails?.kyc_address?.landmark);
+      setValue('Locality', personalDetails?.kyc_address?.locality);
+      setValue('PostalCode', personalDetails?.kyc_address?.pincode);
     } else {
       setValue('State', personalDetails?.communication_address?.state?.id);
       setValue('District', personalDetails?.communication_address?.District?.id);
       setValue('SubDistrict', personalDetails?.communication_address?.sub_district?.id);
       setValue('Area', personalDetails?.communication_address?.village?.id);
+      setValue('House', personalDetails?.communication_address?.house);
+      setValue('Street', personalDetails?.communication_address?.street);
+      setValue('Landmark', personalDetails?.communication_address?.landmark);
+      setValue('Locality', personalDetails?.communication_address?.locality);
+      setValue('PostalCode', personalDetails?.kyc_address?.pincode);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSameAddress]);
 
-  useEffect(() => {
-    if (getValues().PostalCode?.length === 6) {
-      dispatch(getPostalAddress(getValues().PostalCode))
-        .then(() => {})
-        .catch((allFailMsg) => {
-          successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-        });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [getValues().PostalCode]);
+  // useEffect(() => {
+  //   if (getValues().PostalCode?.length === 6) {
+  //     dispatch(getPostalAddress(getValues().PostalCode))
+  //       .then(() => {})
+  //       .catch((allFailMsg) => {
+  //         successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+  //       });
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [getValues().PostalCode]);
 
   const fetchUpdatedDoctorUserProfileData = (personalDetails) => {
     dispatch(updateDoctorPersonalDetails(personalDetails, personalDetails?.hp_profile_id))
@@ -290,20 +306,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       name: 'Indian',
     },
   ];
-  // const schedules = [
-  //   {
-  //     name: 'Schedule 1',
-  //     id: 1,
-  //   },
-  //   {
-  //     name: 'Schedule 2',
-  //     id: 2,
-  //   },
-  //   {
-  //     name: 'Schedule 3',
-  //     id: 3,
-  //   },
-  // ];
 
   async function onHandleSave() {
     const {
@@ -348,8 +350,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     doctorProfileValues.communication_address.pincode = PostalCode;
     doctorProfileValues.communication_address.address_line1 = Address;
     doctorProfileValues.communication_address.email = EmailAddress;
-    doctorProfileValues.communication_address.mobile =
-      mobileNo !== undefined ? mobileNo : '0000000000';
+    doctorProfileValues.communication_address.mobile = mobileNo !== undefined ? mobileNo : '';
     doctorProfileValues.communication_address.country.id = Country;
     doctorProfileValues.communication_address.state.id = State;
     doctorProfileValues.communication_address.district.id = District;
@@ -434,13 +435,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             </Typography>
             <TextField
               variant="outlined"
-              name={'Name'}
-              placeholder="Your first name"
-              required={true}
+              name={`Dr. ${'Name'}`}
+              placeholder="First name"
+              //required={true}
               fullWidth
               defaultValue={getValues().Name}
               {...register('Name', {
-                required: 'Missing field',
+                // required: 'Missing field',
                 maxLength: {
                   value: 100,
                   message: 'Length should be less than 100.',
@@ -452,7 +453,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 },
               }}
               InputProps={{ readOnly: loggedInUserType === 'SMC' ? false : true }}
-              error={errors.Name?.message}
+              // error={errors.Name?.message}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -462,7 +463,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             <TextField
               variant="outlined"
               name={'FatherName'}
-              placeholder="Your father's name"
+              placeholder="Father's name"
               fullWidth
               defaultValue={getValues().FatherName}
               {...register('FatherName', {
@@ -481,7 +482,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             <TextField
               variant="outlined"
               name={'MotherName'}
-              placeholder="Your mother's name"
+              placeholder="Mother's name"
               fullWidth
               defaultValue={getValues().MotherName}
               {...register('MotherName', {
@@ -502,7 +503,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             <TextField
               variant="outlined"
               name={'SpouseName'}
-              placeholder="Your spouse name"
+              placeholder="Spouse name"
               fullWidth
               defaultValue={getValues().SpouseName}
               {...register('SpouseName', {
@@ -526,10 +527,19 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               error={errors.Nationality?.message}
               name="Nationality"
               defaultValue={getValues().Nationality}
+              disabled
               required={true}
+              sx={{
+                input: {
+                  backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
+                },
+              }}
               {...register('Nationality', {
                 required: 'Nationality is required',
               })}
+              InputProps={{
+                readOnly: loggedInUserType === 'SMC' ? false : true,
+              }}
               options={createSelectFieldData(nationalities)}
             />
           </Grid>
@@ -543,6 +553,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             <Grid container item mt={1}>
               <RadioGroup
                 onChange={handleGender}
+                disabled
                 name={'Gender'}
                 size="small"
                 defaultValue={getValues().Gender}
@@ -569,7 +580,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={4}>
             <Typography variant="body1" color="inputTextColor.main">
-              Date of Birth
+              Date of Birth (MM/DD/YYYY)
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -583,12 +594,16 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               sx={{
                 height: '48px',
                 input: {
-                  color: 'grey1.dark',
+                  color: 'black.main',
                   textTransform: 'uppercase',
+                  backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
                 },
               }}
               InputLabelProps={{
                 shrink: true,
+              }}
+              InputProps={{
+                readOnly: loggedInUserType === 'SMC' ? false : true,
               }}
               required={true}
               defaultValue={getValues().dateOfBirth}
@@ -668,18 +683,21 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             <TextField
               variant="outlined"
               name={'Address'}
-              placeholder="Your address"
+              placeholder="Address"
               required={false}
               fullWidth
               defaultValue={getValues().Address}
               {...register('Address', {
-                required: 'Address is Required',
+                //required: 'Address is Required',
                 maxLength: {
                   value: 300,
                   message: 'Length should be less than 300.',
                 },
               })}
-              error={errors.Address?.message}
+              InputProps={{
+                readOnly: loggedInUserType === 'SMC' ? false : true,
+              }}
+              //error={errors.Address?.message}
             />
           </Grid>
 
@@ -699,7 +717,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             <Box p={2} display="flex">
               <Checkbox
                 defaultChecked={personalDetails?.communication_address?.is_same_address || false}
-                error={errors.Address?.message}
+                // error={errors.Address?.message}
                 onChange={(e) => {
                   setIsSameAddress(e.target.checked);
                 }}
@@ -718,17 +736,19 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               <TextField
                 variant="outlined"
                 name={'House'}
-                placeholder="Your House address"
-                disabled={isSameAddress}
+                placeholder="House address"
+                disabled={isSameAddress ? true : false}
                 sx={{
                   input: {
                     backgroundColor: isSameAddress ? 'grey2.main' : '',
                   },
                 }}
-                required={true}
+                required={isSameAddress ? false : true}
                 fullWidth
                 defaultValue={
-                  isSameAddress ? personalDetails?.kyc_address?.house : getValues().Address
+                  isSameAddress
+                    ? personalDetails?.kyc_address?.house
+                    : personalDetails?.communication_address?.house
                 }
                 value={isSameAddress ? personalDetails?.kyc_address?.house : getValues().Address}
                 {...register('House', {
@@ -750,7 +770,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 name={'Street'}
                 placeholder="Enter Street"
                 disabled={isSameAddress}
-                required={false}
+                // required={false}
                 fullWidth
                 sx={{
                   input: {
@@ -758,11 +778,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                   },
                 }}
                 defaultValue={
-                  isSameAddress ? personalDetails?.kyc_address?.street : getValues().Street
+                  isSameAddress
+                    ? personalDetails?.kyc_address?.street
+                    : personalDetails?.communication_address?.street
                 }
-                value={isSameAddress ? personalDetails?.kyc_address?.street : getValues().street}
+                // value={isSameAddress ? personalDetails?.kyc_address?.street : getValues().street}
                 {...register('Street', {
-                  required: 'Street is Required',
+                  // required: 'Street is Required',
                   maxLength: {
                     value: 300,
                     message: 'Length should be less than 300.',
@@ -780,7 +802,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               <TextField
                 variant="outlined"
                 name={'Landmark'}
-                placeholder="Your Landmark"
+                placeholder="Landmark"
                 disabled={isSameAddress}
                 sx={{
                   input: {
@@ -790,7 +812,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 required={false}
                 fullWidth
                 defaultValue={
-                  isSameAddress ? personalDetails?.kyc_address?.landmark : getValues().Landmark
+                  isSameAddress
+                    ? personalDetails?.kyc_address?.landmark
+                    : personalDetails?.communication_address?.landmark
                 }
                 value={
                   isSameAddress ? personalDetails?.kyc_address?.landmark : getValues().landmark
@@ -811,7 +835,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               <TextField
                 variant="outlined"
                 name={'Locality'}
-                placeholder="Your Locality"
+                placeholder="Locality"
                 disabled={isSameAddress}
                 sx={{
                   input: {
@@ -821,7 +845,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 // required={false}
                 fullWidth
                 defaultValue={
-                  isSameAddress ? personalDetails?.kyc_address?.locality : getValues().Locality
+                  isSameAddress
+                    ? personalDetails?.kyc_address?.locality
+                    : personalDetails?.communication_address?.locality
                 }
                 value={
                   isSameAddress ? personalDetails?.kyc_address?.locality : getValues().locality
@@ -874,9 +900,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 State/Union Territory
-                <Typography component="span" color="error.main">
-                  *
-                </Typography>
+                {!isSameAddress && (
+                  <Typography component="span" color="error.main">
+                    *
+                  </Typography>
+                )}
               </Typography>
               <Select
                 fullWidth
@@ -884,16 +912,21 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 name="State"
                 defaultValue={getValues().State}
                 value={getValues().State}
-                required={true}
+                required={isSameAddress ? false : true}
                 disabled={isSameAddress}
                 sx={{
                   input: {
                     backgroundColor: isSameAddress ? 'grey2.main' : '',
                   },
                 }}
-                {...register('State', {
-                  required: 'State/Union territory is required',
-                })}
+                {...register(
+                  'State',
+                  isSameAddress
+                    ? ''
+                    : {
+                        required: 'State/Union territory is required',
+                      }
+                )}
                 options={createSelectFieldData(statesList)}
                 MenuProps={{
                   style: {
@@ -906,25 +939,30 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 District
-                <Typography component="span" color="error.main">
-                  *
-                </Typography>
+                {!isSameAddress && (
+                  <Typography component="span" color="error.main">
+                    *
+                  </Typography>
+                )}
               </Typography>
               <Select
                 fullWidth
                 error={errors.District?.message}
                 name="District"
                 defaultValue={getValues().District}
-                required={true}
+                required={isSameAddress ? false : true}
                 disabled={isSameAddress}
                 sx={{
                   input: {
                     backgroundColor: isSameAddress ? 'grey2.main' : '',
                   },
                 }}
-                {...register('District', {
-                  required: 'District is required',
-                })}
+                {...register(
+                  'District',
+                  !isSameAddress && {
+                    required: 'District is required',
+                  }
+                )}
                 options={createSelectFieldData(districtsList, 'id')}
                 MenuProps={{
                   style: {
@@ -952,7 +990,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 defaultValue={getValues().SubDistrict}
                 value={getValues().SubDistrict}
                 {...register('SubDistrict')}
-                options={createSelectFieldData(subDistrictList)}
+                options={createSelectFieldData(subDistrictList, 'id')}
                 MenuProps={{
                   style: {
                     maxHeight: 250,
@@ -969,7 +1007,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               </Typography>
               <Select
                 fullWidth
-                error={errors.Area?.message}
+                // error={errors.Area?.message}
                 sx={{
                   input: {
                     backgroundColor: isSameAddress ? 'grey2.main' : '',
@@ -977,11 +1015,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 }}
                 name="Area"
                 defaultValue={getValues().Area}
-                value={getValues().Area}
+                // value={getValues().Area}
                 disabled={isSameAddress}
                 required={true}
                 {...register('Area')}
-                options={createSelectFieldData(citiesList)}
+                options={createSelectFieldData(citiesList, 'id')}
                 MenuProps={{
                   style: {
                     maxHeight: 250,
@@ -1000,7 +1038,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               <TextField
                 variant="outlined"
                 name={'PostalCode'}
-                placeholder="Your postal code"
+                placeholder="Postal code"
                 required={true}
                 fullWidth
                 sx={{

@@ -1,4 +1,6 @@
 // import SearchIcon from '@mui/icons-material/Search';
+import { useState } from 'react';
+
 import { Box, Grid } from '@mui/material';
 // import { useTheme } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
@@ -6,8 +8,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {
   ActivateLicenceFieldList,
+  applicationStatus,
+  applicationType,
   CollegeApprovalFieldList,
   DashBoardCardsFieldList,
+  emptyData,
   filterDropDownData,
 } from '../../../../../src/constants/common-data';
 // import { RegistrationCouncilNames } from '../../../../constants/common-data';
@@ -17,10 +22,13 @@ import ExportFiles from '../../../../shared/export-component/export-file';
 import { getDoctorTrackApplicationData } from '../../../../store/actions/doctor-user-profile-actions';
 import { Button, TextField } from '../../../../ui/core';
 
-export function TableSearch({ trackApplication, activateLicence, searchParams, exportData, flag }) {
+export function TableSearch({ trackApplication, searchParams, exportData, flag }) {
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const { councilNames } = useSelector((state) => state.common);
   const profileId = useSelector((state) => state.loginReducer.loginData.data.profile_id);
+
+  const [applicationTypeValue, setApplicationTypeValue] = useState(false);
+  const [statusTypeValue, setStatusTypeValue] = useState(false);
 
   const dispatch = useDispatch();
   // const theme = useTheme();
@@ -47,6 +55,8 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
       FilterValue: '',
       Filter: '',
       FilterId: '',
+      Status: '',
+      StatusId: '',
       collegeApproval: '',
       collegeApprovalId: '',
       collegeApprovalFilter: '',
@@ -69,51 +79,10 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
     if (exportData?.data?.health_professional_details) {
       trackData.search = getValues().ActivateLicenceId;
       trackData.value = getValues().ActivateLicenceFilter;
-      dispatch(getDoctorTrackApplicationData(profileId, trackData));
+      searchParams(trackData);
     }
     if (trackApplication) {
-      if (
-        getValues().FilterValue.toLowerCase() === 'HP Registration'.toLowerCase() ||
-        getValues().FilterValue.toLowerCase() === 'PENDING'.toLowerCase()
-      ) {
-        trackData.value = 1;
-      }
-      if (
-        getValues().FilterValue.toLowerCase() === 'HP Modification'.toLowerCase() ||
-        getValues().FilterValue.toLowerCase() === 'APPROVED'.toLowerCase()
-      ) {
-        trackData.value = 2;
-      }
-      if (
-        getValues().FilterValue.toLowerCase() === 'Temporary Suspension'.toLowerCase() ||
-        getValues().FilterValue.toLowerCase() === 'QUERY RAISED'.toLowerCase()
-      ) {
-        trackData.value = 3;
-      }
-      if (
-        getValues().FilterValue.toLowerCase() === 'Permanent Suspension'.toLowerCase() ||
-        getValues().FilterValue.toLowerCase() === 'REJECTED'.toLowerCase()
-      ) {
-        trackData.value = 4;
-      }
-      if (
-        getValues().FilterValue.toLowerCase() === 'Activate License'.toLowerCase() ||
-        getValues().FilterValue.toLowerCase() === 'SUSPENDED'.toLowerCase()
-      ) {
-        trackData.value = 5;
-      }
-      if (
-        getValues().FilterValue.toLowerCase() === 'College Registration'.toLowerCase() ||
-        getValues().FilterValue.toLowerCase() === 'BLACKLISTED'.toLowerCase()
-      ) {
-        trackData.value = 6;
-      }
-      if (getValues().FilterValue.toLowerCase() === 'Foreign HP Registration'.toLowerCase()) {
-        trackData.value = 7;
-      }
-      if (getValues().FilterValue.toLowerCase() === 'Qualification Workflow'.toLowerCase()) {
-        trackData.value = 8;
-      }
+      trackData.value = getValues().StatusId;
       trackData.search = getValues().FilterId;
       dispatch(getDoctorTrackApplicationData(profileId, trackData));
     }
@@ -133,57 +102,59 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
     });
   };
 
+  const onApplicationChange = (currentValue) => {
+    setValue('FilterId', currentValue.id);
+
+    if (getValues().FilterId === 'workFlowStatusId') {
+      setApplicationTypeValue(false);
+      setStatusTypeValue(true);
+    }
+    if (getValues().FilterId === 'applicationTypeId') {
+      setApplicationTypeValue(true);
+      setStatusTypeValue(false);
+    }
+  };
   return (
     <Box data-testid="table-search" mb={2}>
-      <Grid container sx={{ alignItems: 'flex-end' }}>
-        <Grid
-          item
-          md={trackApplication ? 5 : activateLicence ? 4 : 2}
-          xs={12}
-          mb={{ xs: 1, sm: 0 }}
-        ></Grid>
-
-        <Grid item md={trackApplication ? 7 : activateLicence ? 8 : 10} xs={12}>
+      <Grid container>
+        <Grid item xs={11}>
           <Grid container item xs={12} sx={{ alignItems: 'center', display: 'flex', gap: 1 }}>
             {trackApplication === true && (
               <>
-                <Grid item md={3} xs={12} ml="auto">
+                <Grid item md={3} xs={12}>
                   <SearchableDropdown
                     fullWidth
                     name="Filter"
-                    items={createEditFieldData(filterDropDownData)}
-                    placeholder=""
+                    placeholder="Please Select"
                     clearErrors={clearErrors}
                     {...register('Filter')}
-                    onChange={(currentValue) => {
-                      setValue('FilterId', currentValue.id);
-                    }}
+                    items={createEditFieldData(filterDropDownData)}
+                    onChange={(currentValue) => onApplicationChange(currentValue)}
                   />
                 </Grid>
                 <Grid item md={3} xs={12}>
-                  <TextField
-                    sx={{
-                      color: 'inputTextColor.main',
-                      '.MuiOutlinedInput-root': {
-                        borderRadius: '3px',
-                      },
-                      input: {
-                        letterSpacing: 0,
-                      },
-                    }}
-                    variant="outlined"
-                    name={'FilterValue'}
-                    placeholder="Enter Keywords"
+                  <SearchableDropdown
                     fullWidth
-                    defaultValue={getValues().FilterValue}
-                    {...register('FilterValue', {})}
-                    error={errors.FilterValue?.message}
+                    name="Status"
+                    items={
+                      applicationTypeValue
+                        ? createEditFieldData(applicationType)
+                        : statusTypeValue
+                        ? createEditFieldData(applicationStatus)
+                        : createEditFieldData(emptyData)
+                    }
+                    placeholder="Please Select"
+                    clearErrors={clearErrors}
+                    {...register('Status')}
+                    onChange={(currentValue) => {
+                      setValue('StatusId', currentValue.id);
+                    }}
                   />
                 </Grid>
               </>
             )}
             {trackApplication !== true && (
-              <Grid item md={3} xs={12} ml="auto">
+              <Grid item md={3} xs={12}>
                 {exportData?.data?.health_professional_details ? (
                   <SearchableDropdown
                     fullWidth
@@ -201,7 +172,7 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
                     fullWidth
                     name="dashBoardCard"
                     items={createEditFieldData(DashBoardCardsFieldList)}
-                    placeholder=""
+                    placeholder="Please Select"
                     clearErrors={clearErrors}
                     {...register('dashBoardCard')}
                     onChange={(currentValue) => {
@@ -213,7 +184,7 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
                     fullWidth
                     name="collegeApproval"
                     items={createEditFieldData(CollegeApprovalFieldList)}
-                    placeholder=""
+                    placeholder="Please Select"
                     clearErrors={clearErrors}
                     {...register('collegeApproval')}
                     onChange={(currentValue) => {
@@ -277,7 +248,7 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
                   fullWidth
                   name="registrationCouncil"
                   items={createEditFieldData(councilNames)}
-                  placeholder="Filter by Council"
+                  placeholder="Please Select"
                   clearErrors={clearErrors}
                   {...register('registrationCouncil')}
                   onChange={(currentValue) => {
@@ -307,10 +278,10 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
                 </Button>
               </Grid>
             )}
-            <Grid item md="auto" xs={12}>
-              <ExportFiles exportData={exportData} flag={flag} />
-            </Grid>
           </Grid>
+        </Grid>
+        <Grid item xs={12} md="auto">
+          <ExportFiles exportData={exportData} flag={flag} />
         </Grid>
       </Grid>
     </Box>
