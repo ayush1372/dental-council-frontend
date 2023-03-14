@@ -3,26 +3,32 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
 import { yearsData } from '../../../constants/common-data';
+// import { createSelectFieldData } from '../../../helpers/functions/common-functions';
+// import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
 import { searchDoctorDetails } from '../../../store/actions/doctor-search-actions';
 import { Button, Select } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
 
 const YearOfRegistration = ({ setDoSearch, setSearchData, setScrollDown }) => {
   const dispatch = useDispatch();
+
   const {
     formState: { errors },
     getValues,
     handleSubmit,
     register,
+    // clearErrors,
+    // setValue,
   } = useForm({
     mode: 'onChange',
     defaultValues: {
       YearofRegistration: '',
+      YearofRegistrationId: '',
     },
   });
   const onsubmit = () => {
     const searchValues = {
-      registrationYear: getValues().YearofRegistration,
+      registrationYear: getValues().YearofRegistrationId,
       page: 0,
       size: 9,
     };
@@ -57,6 +63,18 @@ const YearOfRegistration = ({ setDoSearch, setSearchData, setScrollDown }) => {
         </Typography>
       </Grid>
       <Grid item xs={8}>
+        {/* <SearchableDropdown
+          fullWidth
+          name="YearofRegistration"
+          items={yearsData}
+          placeholder="Select Year of Registration"
+          clearErrors={clearErrors}
+          error={errors.YearofRegistration?.message}
+          {...register('YearofRegistration')}
+          onChange={(currentValue) => {
+            setValue('YearofRegistrationId', currentValue.id);
+          }}
+        /> */}
         <Select
           sx={{
             color: 'inputTextColor.main',
