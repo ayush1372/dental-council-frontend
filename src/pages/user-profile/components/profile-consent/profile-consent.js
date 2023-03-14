@@ -9,7 +9,9 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
+import { doctorTabs } from '../../../../helpers/components/sidebar-drawer-list-item';
 import { updateProfileConsent } from '../../../../store/actions/doctor-user-profile-actions';
+import { changeUserActiveTab } from '../../../../store/reducers/common-reducers';
 import { Button, Checkbox } from '../../../../ui/core';
 import successToast from '../../../../ui/core/toaster';
 
@@ -38,6 +40,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
     if (consent) {
       setConfirmationModal(true);
     }
+    dispatch(changeUserActiveTab(doctorTabs[1].tabName));
   };
   const handleYesClick = () => {
     const payload = {
