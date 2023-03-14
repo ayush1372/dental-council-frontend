@@ -153,17 +153,26 @@ const RegistrationDetailsContent = () => {
               *
             </Typography>
           </Typography>
-          <Typography variant="subtitle2" color="primary.main">
-            <IconButton
-              onClick={(e) => {
-                e.preventDefault();
-                setAttachmentViewProfile(true);
-              }}
-            >
-              <AttachFileIcon fontSize="10px" />
-            </IconButton>
-            View attachment
-          </Typography>
+          <Grid display="flex" alignItems="center">
+            <Typography variant="subtitle2" color="primary.main">
+              <IconButton
+                onClick={(e) => {
+                  e.preventDefault();
+                  setAttachmentViewProfile(true);
+                }}
+              >
+                <AttachFileIcon fontSize="10px" />
+              </IconButton>
+              View attachment
+            </Typography>
+            {userActiveTab === 'dashboard' && (
+              <ContactSupportOutlinedIcon
+                color="primary"
+                onClick={() => setOpenModal(true)}
+                fontSize="width30"
+              />
+            )}
+          </Grid>
         </Grid>
         {/* <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
