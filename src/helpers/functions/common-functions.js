@@ -168,3 +168,18 @@ export const parserJWT = (token) => {
 export const millisecondToDate = (millisecond) => {
   return new Date(parserJWT(millisecond)?.exp * 1000);
 };
+
+function yaerData() {
+  var ans = [];
+  var date = new Date();
+  var presentYear = date.getFullYear();
+  for (var i = 1900; i <= presentYear; i++) {
+    var entry_struct = {};
+    entry_struct['value'] = i.toString();
+    entry_struct['label'] = i;
+    ans.push(entry_struct);
+  }
+  return ans;
+}
+
+export const getYearData = yaerData();

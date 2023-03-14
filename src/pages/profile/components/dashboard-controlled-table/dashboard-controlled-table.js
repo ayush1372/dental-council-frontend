@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import GenericTable from '../../../../shared/generic-component/generic-table';
 import { getDashboardTableData } from '../../../../store/actions/dashboard-actions';
+import { setSelectedAcademicStatus } from '../../../../store/reducers/common-reducers';
 import TableSearch from '../table-search/table-search';
 
 function createData(
@@ -162,6 +163,7 @@ function DashboardControlledTable(props) {
       sort_by: '',
       sort_order: '',
     };
+    dispatch(setSelectedAcademicStatus(props?.selectedCardDataData?.responseKey));
     dispatch(getDashboardTableData(requestObj));
   };
 

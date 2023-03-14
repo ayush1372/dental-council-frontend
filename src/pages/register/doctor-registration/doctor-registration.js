@@ -162,7 +162,7 @@ const DoctorRegistrationWelcomePage = () => {
         <ErrorModalPopup
           open={setRejectPopup}
           setOpen={() => setRejectPopup(false)}
-          text="Data not found please entered the valid details "
+          text="No details found. Please verify your input or get yourself registered through your respective SMC!"
         />
       )}
     </>

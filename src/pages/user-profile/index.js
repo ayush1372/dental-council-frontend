@@ -44,11 +44,13 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
 
   useEffect(() => {
     if (personalDetails?.hp_profile_status_id === 1) {
-      setIsApplicationPending(true);
+      setIsApplicationPending(false);
     }
   }, [personalDetails?.hp_profile_status_id]);
   const { activeStep, handleNext, handleBack, resetStep, completed, progress } = useWizard(
-    loggedInUserType === 'Doctor' ? 0 : 1,
+    loggedInUserType === 'Doctor' || loggedInUserType === 'SMC' || loggedInUserType === 'NMC'
+      ? 0
+      : 1,
     [],
     [25, 25, 25]
   );
