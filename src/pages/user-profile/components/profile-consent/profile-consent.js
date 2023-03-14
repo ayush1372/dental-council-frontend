@@ -9,7 +9,9 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
+import { doctorTabs, smcTabs } from '../../../../helpers/components/sidebar-drawer-list-item';
 import { updateProfileConsent } from '../../../../store/actions/doctor-user-profile-actions';
+import { changeUserActiveTab } from '../../../../store/reducers/common-reducers';
 import { Button, Checkbox } from '../../../../ui/core';
 import successToast from '../../../../ui/core/toaster';
 
@@ -46,10 +48,12 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
     };
 
     dispatch(updateProfileConsent(payload))
-      .then(() => {
+      .then((e) => {
+        e.preventDefault();
         setConfirmationModal(false);
         setIsReadMode(true);
         resetStep(0);
+        dispatch(changeUserActiveTab(doctorTabs[1].tabName));
       })
       .catch((error) => {
         setConfirmationModal(false);
@@ -278,10 +282,12 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
                   Cancel
                 </Button>
                 <Button
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.preventDefault();
                     setConfirmationModal(false);
                     setIsReadMode(true);
                     resetStep(0);
+                    dispatch(changeUserActiveTab(smcTabs[2].tabName));
                   }}
                   color="secondary"
                   variant="contained"

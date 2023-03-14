@@ -72,7 +72,12 @@ export default function KycErrorPopup({ open, setOpen, text }) {
                       <TableCell align="center">{row.field}</TableCell>
                       <TableCell align="center">{row.registered_value}</TableCell>
                       <TableCell align="center">{row.kyc_value}</TableCell>
-                      <TableCell align="center">{row.status}</TableCell>
+                      <TableCell
+                        align="center"
+                        sx={{ color: row.status === 'Success' ? 'green' : 'red' }}
+                      >
+                        {row.status}
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

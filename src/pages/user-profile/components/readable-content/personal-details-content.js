@@ -108,7 +108,7 @@ const PersonalDetails = ({ personalDetails }) => {
 
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
-              {full_name ? full_name : ''}
+              Dr. {full_name ? full_name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon

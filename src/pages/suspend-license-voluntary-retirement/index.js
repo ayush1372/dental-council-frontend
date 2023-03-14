@@ -108,18 +108,19 @@ export function SuspendLicenseVoluntaryRetirement({
       dispatch(getInitiateWorkFlow(workFlowData))
         .then((response) => {
           showSuccessPopup(true);
+          closeActionModal(false);
           if (response) {
             userActiveTab === 'voluntary-suspend-license' &&
               dispatch(changeUserActiveTab('my-profile'));
           }
         })
-        .catch((error) => {
-          successToast(
-            'ERR_INT: ' + error?.data?.response?.data?.error,
-            'UpdateError',
-            'error',
-            'top-center'
-          );
+        .catch(() => {
+          // successToast(
+          //   'ERR_INT: ' + error?.data?.response?.data?.error,
+          //   'UpdateError',
+          //   'error',
+          //   'top-center'
+          // );
           closeActionModal(false);
           handleClose();
         });

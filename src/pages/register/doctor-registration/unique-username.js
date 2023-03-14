@@ -64,17 +64,14 @@ const UniqueUserNameForDoctorRegistration = () => {
         >
           <Box>
             <Box pt={2} pb={4}>
-              <Typography variant="h2" color="primary">
-                Create your unique username
-              </Typography>
-              <Typography variant="body3" color="primary.main">
-                Create new Username and confirm it. This new Username will be used for login.
+              <Typography variant="h2" color="textPrimary.main">
+                Create Username
               </Typography>
             </Box>
 
             <Box pb={1}>
               <Typography variant="body3" color="textSecondary.main">
-                Create your Username
+                Create Username
                 <Typography component="span" color="error.main">
                   *
                 </Typography>
@@ -99,7 +96,8 @@ const UniqueUserNameForDoctorRegistration = () => {
             <Box display="flex" justifyContent="space-between" alignItems="center">
               <InfoOutlinedIcon sx={{ fontSize: '15px', verticalAlign: 'middle' }} />
               <Typography variant="body3" color="primary" component={'div'}>
-                You can use letters, numbers & symbols
+                You can use letters, numbers & symbols. Minimum length of the username should be 8
+                character.
               </Typography>
             </Box>
 
@@ -148,7 +146,7 @@ const UniqueUserNameForDoctorRegistration = () => {
                   backgroundColor: theme.palette.secondary.main,
                 }}
               >
-                Continue to set your password
+                Continue to set password
               </Button>
               <Button
                 variant="outlined"

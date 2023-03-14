@@ -40,6 +40,9 @@ const ReadRegisterAndAcademicDetails = ({
   const [successPopupMessage, setSuccessPopupMessage] = useState('');
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  // const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+
+  // const dispatch = useDispatch();
 
   const accordions = [
     {

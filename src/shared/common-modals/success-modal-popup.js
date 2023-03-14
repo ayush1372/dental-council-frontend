@@ -49,8 +49,7 @@ export default function SuccessModalPopup({
         sx={{
           backgroundColor: theme.palette.white.main,
           borderRadius: '10px',
-          height: '350px',
-          p: '30px',
+          p: 3,
         }}
       >
         <Box mb={1} display="flex" justifyContent="center">
