@@ -137,16 +137,9 @@ const NewPasswordSetup = () => {
         <SuccessModalPopup
           open={showSuccess}
           setOpen={() => setShowSuccess(false)}
-          text={`Your password for `}
+          text={`Your password for ${uniqueHpId} has been successfully created `}
           successRegistration={true}
-        >
-          <Typography variant="body1" fontWeight="600">
-            {uniqueHpId}
-          </Typography>
-          <Typography variant="body1" component="span">
-            {` has been successfully created`}
-          </Typography>
-        </SuccessModalPopup>
+        />
       )}
     </Box>
   );
