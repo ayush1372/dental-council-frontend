@@ -182,7 +182,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
           container
           alignItems="center"
           columnGap={1}
-          bgcolor="success.light"
+          bgcolor="success.background"
           p={3}
           borderRadius="5px"
         >
@@ -200,7 +200,9 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
             </Typography>
           </Grid>
           <Grid item sx="auto" display="flex" alignItems="center">
-            <InfoOutlinedIcon sx={{ height: '14px', width: '14px', color: 'messageBlue.main' }} />
+            <InfoOutlinedIcon
+              sx={{ height: '14px', width: '14px', color: 'messageBlue.main', mr: 1 }}
+            />
             <Typography component="span" variant="body8" color="messageBlue.main">
               Know more about HPR
             </Typography>
