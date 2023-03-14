@@ -42,7 +42,7 @@ export default function KycErrorPopup({ open, setOpen, text }) {
             justifyContent="center"
             mt={2}
           >
-            Details Mismatched !
+            Details Mismatched!
           </Typography>
           <Typography
             display="flex"
@@ -80,7 +80,7 @@ export default function KycErrorPopup({ open, setOpen, text }) {
             </TableContainer>
           </Box>
           <Button
-            sx={{ width: { xs: '100%', sm: '408px' }, mt: 5, ml: 15 }}
+            sx={{ width: { xs: '100%', sm: '408px' }, mt: 5, ml: 19 }}
             variant="contained"
             color="warning"
             onClick={handleCloseModal}
