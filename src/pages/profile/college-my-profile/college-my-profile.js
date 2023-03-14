@@ -26,11 +26,17 @@ const CollegeMyProfile = () => {
   useEffect(() => {
     const getCommonData = () => {
       const userType = userGroupType(loginData?.data?.user_group_id);
-
       if (userType === 'College Dean') {
-        dispatch(getCollegeDeanProfileData(loginData?.data?.profile_id));
+        dispatch(
+          getCollegeDeanProfileData(loginData?.data?.parent_profile_id, loginData?.data?.profile_id)
+        );
       } else if (userType === 'College Registrar') {
-        dispatch(getCollegeRegistrarProfileData(loginData?.data?.profile_id));
+        dispatch(
+          getCollegeRegistrarProfileData(
+            loginData?.data?.parent_profile_id,
+            loginData?.data?.profile_id
+          )
+        );
       } else if (userType === 'College Admin') {
         dispatch(getCollegeAdminProfileData(loginData?.data?.profile_id));
       }
