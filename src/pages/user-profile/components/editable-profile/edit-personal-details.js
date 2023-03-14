@@ -350,8 +350,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     doctorProfileValues.communication_address.pincode = PostalCode;
     doctorProfileValues.communication_address.address_line1 = Address;
     doctorProfileValues.communication_address.email = EmailAddress;
-    doctorProfileValues.communication_address.mobile =
-      mobileNo !== undefined ? mobileNo : '';
+    doctorProfileValues.communication_address.mobile = mobileNo !== undefined ? mobileNo : '';
     doctorProfileValues.communication_address.country.id = Country;
     doctorProfileValues.communication_address.state.id = State;
     doctorProfileValues.communication_address.district.id = District;
@@ -436,9 +435,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             </Typography>
             <TextField
               variant="outlined"
-              name={'Name'}
-              placeholder="Your first name"
-              // required={true}
+              name={`Dr. ${'Name'}`}
+              placeholder="First name"
+              //required={true}
               fullWidth
               defaultValue={getValues().Name}
               {...register('Name', {
@@ -464,7 +463,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             <TextField
               variant="outlined"
               name={'FatherName'}
-              placeholder="Your father's name"
+              placeholder="Father's name"
               fullWidth
               defaultValue={getValues().FatherName}
               {...register('FatherName', {
@@ -483,7 +482,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             <TextField
               variant="outlined"
               name={'MotherName'}
-              placeholder="Your mother's name"
+              placeholder="Mother's name"
               fullWidth
               defaultValue={getValues().MotherName}
               {...register('MotherName', {
@@ -504,7 +503,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             <TextField
               variant="outlined"
               name={'SpouseName'}
-              placeholder="Your spouse name"
+              placeholder="Spouse name"
               fullWidth
               defaultValue={getValues().SpouseName}
               {...register('SpouseName', {
@@ -684,7 +683,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             <TextField
               variant="outlined"
               name={'Address'}
-              placeholder="Your address"
+              placeholder="Address"
               required={false}
               fullWidth
               defaultValue={getValues().Address}
@@ -737,7 +736,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               <TextField
                 variant="outlined"
                 name={'House'}
-                placeholder="Your House address"
+                placeholder="House address"
                 disabled={isSameAddress ? true : false}
                 sx={{
                   input: {
@@ -803,7 +802,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               <TextField
                 variant="outlined"
                 name={'Landmark'}
-                placeholder="Your Landmark"
+                placeholder="Landmark"
                 disabled={isSameAddress}
                 sx={{
                   input: {
@@ -836,7 +835,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               <TextField
                 variant="outlined"
                 name={'Locality'}
-                placeholder="Your Locality"
+                placeholder="Locality"
                 disabled={isSameAddress}
                 sx={{
                   input: {
@@ -1039,7 +1038,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               <TextField
                 variant="outlined"
                 name={'PostalCode'}
-                placeholder="Your postal code"
+                placeholder="Postal code"
                 required={true}
                 fullWidth
                 sx={{
