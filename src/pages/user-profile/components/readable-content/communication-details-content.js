@@ -28,7 +28,7 @@ const CommunicationAddress = ({ personalDetails }) => {
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={3}>
           <Typography variant="body5" color="grey.label">
             House
             <Typography component="span" color="error.main">
@@ -71,9 +71,6 @@ const CommunicationAddress = ({ personalDetails }) => {
         <Grid item xs={12} md={3}>
           <Typography variant="body5" color="grey.label">
             Landmark
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
@@ -89,14 +86,9 @@ const CommunicationAddress = ({ personalDetails }) => {
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-      </Grid>
-      <Grid container item spacing={2}>
         <Grid item xs={12} md={3}>
           <Typography variant="bod5" color="grey.label">
             City/Town/Village
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
@@ -112,6 +104,8 @@ const CommunicationAddress = ({ personalDetails }) => {
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
+      </Grid>
+      <Grid container item spacing={2}>
         <Grid item xs={12} md={3}>
           <Typography variant="body5" color="grey.label">
             District
@@ -172,9 +166,6 @@ const CommunicationAddress = ({ personalDetails }) => {
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-      </Grid>
-
-      <Grid container item spacing={2}>
         <Grid item xs={12} md={3}>
           <Typography variant="body5" color="grey.label">
             Country
@@ -196,6 +187,9 @@ const CommunicationAddress = ({ personalDetails }) => {
           </Grid>
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
+      </Grid>
+
+      <Grid container item spacing={2}>
         <Grid item xs={12} md={3}>
           <Typography variant="body5" color="grey.label">
             Pincode

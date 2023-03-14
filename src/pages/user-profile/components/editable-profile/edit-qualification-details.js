@@ -4,8 +4,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { Divider, Grid, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { monthsData } from '../../../../constants/common-data';
-import { getYearData } from '../../../../helpers/functions/common-functions';
+import { monthsData, yearsData } from '../../../../constants/common-data';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
 import { getCollegesList } from '../../../../store/actions/common-actions';
 import { RadioGroup, Select, TextField } from '../../../../ui/core';
@@ -385,7 +384,7 @@ const EditQualificationDetails = ({
             <Select
               variant="outlined"
               name="year"
-              options={getYearData}
+              options={yearsData}
               // label={'Year of awarding Degree/Diploma'}
               required={true}
               placeholder={'Year of awarding'}

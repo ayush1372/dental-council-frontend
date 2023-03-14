@@ -182,7 +182,14 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
           borderRadius="5px"
         >
           <Grid item sx="auto" display="flex" alignItems="center">
-            <Checkbox sx={{ width: '18px', height: '18px' }} name="HPR" />
+            <Checkbox
+              sx={{ width: '18px', height: '18px' }}
+              name="HPR"
+              {...register('HPR', {
+                required: 'HPR is Required',
+              })}
+              error={errors.HPR?.message}
+            />
             <Typography component="div" variant="body7">
               Save my time,share my details with HPR
             </Typography>
