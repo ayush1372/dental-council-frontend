@@ -1,6 +1,6 @@
 import { get_year_data } from '../helpers/functions/common-functions';
 export const accesstokenHprId =
-  'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI1WVpwM043VlFCdEE1cDZwcktkdXYyV0NaTTZVVlFVLWZTcEZJb0tiQU9ZIn0.eyJleHAiOjE2Nzg3MzUyMjMsImlhdCI6MTY3ODY5OTIyMywianRpIjoiY2NlMjI1NGMtYTY1Mi00MTM2LThhOWYtNTM1NTBjMzU0YTdlIiwiaXNzIjoiaHR0cHM6Ly9wcmVwcm9kLmFiZG0uZ292LmluL2F1dGgvcmVhbG1zL2NlbnRyYWwtcmVnaXN0cnkiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiZmUzZTEwMDctNjZlMi00OTkzLWFmYTktYjMyYjM1NDk1NDIwIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiaHBfaWQiLCJzZXNzaW9uX3N0YXRlIjoiNmY0ZjM5ZjEtYTA5Mi00ZDFiLTk5YWQtZGNjNTQ5NDkzNzc3IiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwOi8vbG9jYWxob3N0OjkwMDciXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwiaGVhbHRoSWQiLCJocF9pZCJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfSwiaHBfaWQiOnsicm9sZXMiOlsidW1hX3Byb3RlY3Rpb24iXX19LCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwiY2xpZW50SWQiOiJocF9pZCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiY2xpZW50SG9zdCI6IjEwLjIzMy42OC4xNjkiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtaHBfaWQiLCJjbGllbnRBZGRyZXNzIjoiMTAuMjMzLjY4LjE2OSJ9.c3Cc8rSixZi3TxWbFROI3nliDzcbYJHr9udumDj4N745pAmhaCuOP4bNn2kmGZ0DiLcA9wAoMO-adSD9eHkSLQDmGZ2Ym8e7lEO3FN0ot41HeNK3SzJut9IU_vJm8PK-S-6zksCtTTSUgr3Gz4HZV8rPRQTj1qbBNgAeQl9lgkgbYxPFwchC0-WIOPGqsFB4LhmLo3b0aOz40eox1FOyjejEkwgiR3NsKPu52c_n2dvzYmUUP4iJwLXKVNTnFrmYauBPV540wsuxSHL486dSe-mldwviv_IEvWaklNk0_BtR12_zR_cSzxKGn0eBtOi_bywE-SeOusCjuWTQ_NN-Ow';
+  'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI1WVpwM043VlFCdEE1cDZwcktkdXYyV0NaTTZVVlFVLWZTcEZJb0tiQU9ZIn0.eyJleHAiOjE2Nzg4MTk3NTYsImlhdCI6MTY3ODc4Mzc1NiwianRpIjoiMjE1NGJiYWUtNDEzZC00N2QzLThiODYtNTM5NTE0ZmNhNGJhIiwiaXNzIjoiaHR0cHM6Ly9wcmVwcm9kLmFiZG0uZ292LmluL2F1dGgvcmVhbG1zL2NlbnRyYWwtcmVnaXN0cnkiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiZmUzZTEwMDctNjZlMi00OTkzLWFmYTktYjMyYjM1NDk1NDIwIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiaHBfaWQiLCJzZXNzaW9uX3N0YXRlIjoiMDgyN2U1MmYtMTQwYS00YjllLWI2MTctODUxZWMyZWJmNGQ2IiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwOi8vbG9jYWxob3N0OjkwMDciXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwiaGVhbHRoSWQiLCJocF9pZCJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfSwiaHBfaWQiOnsicm9sZXMiOlsidW1hX3Byb3RlY3Rpb24iXX19LCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwiY2xpZW50SWQiOiJocF9pZCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiY2xpZW50SG9zdCI6IjEwLjIzMy43MC4xMTMiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtaHBfaWQiLCJjbGllbnRBZGRyZXNzIjoiMTAuMjMzLjcwLjExMyJ9.e6OPcln2HpANy1-RsuNcK8iQyLwJbyR9DObwa0Y1zjR3k7YTBpQq-M9RLJpemLpVzSsRI0JjD2f5qYP9UP_krRdBdfyITT10y6yX4pv-DJ6Eby4VvPsdtZLVgqBfqlVvDn-GJ8mF-4pLLoTuANkFzWH_HAn8jHnIBfvD4ObUGvsGw6dtUWk_pSN1quZsmw3ZnmuGaq79O2GjvV3f9jULcPDoKOAtpsykrAQCKr1dobvsCub_cXbatvTjLkn30rcAQM-g60tjXMBz71h9fW8bOqVebw8O8YIlhgifquF5w-kWfBP8KURFOeWzqF32k4Y4aq3xGDeK2SSk4y2ZRupAHg';
 export const StateNames = [
   { id: '1', name: 'Andhra Pradesh' },
   { id: '2', name: 'Maharastra' },
@@ -532,21 +532,28 @@ export const applicationStatus = [
   { id: 7, name: 'QUERY RAISED' },
 ];
 export const filterDropDownData = [
-  { id: 'application_type_id', name: 'Type of Application ' },
-  { id: 'work_flow_status_id', name: ' Current Status' },
+  { id: 'applicationTypeId', name: 'Type of Application ' },
+  { id: 'workFlowStatusId', name: ' Current Status' },
+];
+export const emptyData = [
+  {
+    id: '1',
+    name: '-',
+  },
 ];
 
 export const CollegeApprovalFieldList = [
-  { id: 'college_name', name: 'College Name' },
-  { id: 'council_name', name: 'Council Name' },
+  { id: 'collegeName', name: 'College Name' },
+  { id: 'councilName', name: 'Name of State Council ' },
 ];
 
 export const ActivateLicenceFieldList = [
-  { id: 'health_professional_name', name: 'Health Professional Name' },
+  { id: 'healthProfessionalName', name: 'Applicant Name' },
+  { id: 'registrationNumber', name: 'Registration No' },
 ];
 
 export const DashBoardCardsFieldList = [
-  { id: 'registration_no', name: 'Registration Number' },
-  { id: 'applicant_full_name', name: 'Applicant Full Name' },
-  { id: 'council_name', name: 'Council Name' },
+  { id: 'registrationNumber', name: 'Registration No' },
+  { id: 'applicantFullName', name: 'Name of Applicant' },
+  { id: 'councilName', name: 'Name of State Council' },
 ];

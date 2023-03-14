@@ -42,7 +42,6 @@ const SelectField = (
           </Typography>
         </Box>
       )}
-
       <MuiSelect
         IconComponent={KeyboardArrowDownIcon}
         fullWidth
@@ -53,11 +52,12 @@ const SelectField = (
         error={error ? true : false}
         defaultValue={defaultValue}
       >
-        {options.map((item) => (
-          <MenuItem key={item.label} data-testid={dataTestOptionId} value={item.value}>
-            {item.label}
-          </MenuItem>
-        ))}
+        {options?.length > 0 &&
+          options?.map((item) => (
+            <MenuItem key={item.label} data-testid={dataTestOptionId} value={item.value}>
+              {item.label}
+            </MenuItem>
+          ))}
       </MuiSelect>
       {error && (
         // <Typography variant="body2" color="error">

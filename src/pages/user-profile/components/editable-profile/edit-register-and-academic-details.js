@@ -348,7 +348,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
-              Is registration permanent for renewable?
+              Is This Registration Permanent Or Renewable?
               <Typography component="span" color="error.main">
                 *
               </Typography>

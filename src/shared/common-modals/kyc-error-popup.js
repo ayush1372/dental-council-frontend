@@ -42,7 +42,7 @@ export default function KycErrorPopup({ open, setOpen, text }) {
             justifyContent="center"
             mt={2}
           >
-            Error
+            Details Mismatched!
           </Typography>
           <Typography
             display="flex"
@@ -61,7 +61,7 @@ export default function KycErrorPopup({ open, setOpen, text }) {
                 <TableHead>
                   <TableRow>
                     <TableCell align="center">Field</TableCell>
-                    <TableCell align="center">Registered V alue</TableCell>
+                    <TableCell align="center">Registered Value</TableCell>
                     <TableCell align="center">KYC Value</TableCell>
                     <TableCell align="center">Status</TableCell>
                   </TableRow>
@@ -80,7 +80,7 @@ export default function KycErrorPopup({ open, setOpen, text }) {
             </TableContainer>
           </Box>
           <Button
-            sx={{ width: { xs: '100%', sm: '408px' }, mt: 5, ml: 15 }}
+            sx={{ width: { xs: '100%', sm: '408px' }, mt: 5, ml: 19 }}
             variant="contained"
             color="warning"
             onClick={handleCloseModal}
