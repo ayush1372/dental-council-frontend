@@ -739,7 +739,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 variant="outlined"
                 name={'House'}
                 placeholder="Your House address"
-                disabled={isSameAddress ? false : true}
+                disabled={isSameAddress ? true : false}
                 sx={{
                   input: {
                     backgroundColor: isSameAddress ? 'grey2.main' : '',
