@@ -686,18 +686,19 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               placeholder="Address"
               required={false}
               fullWidth
+              disabled
               defaultValue={getValues().Address}
               {...register('Address', {
-                //required: 'Address is Required',
                 maxLength: {
                   value: 300,
                   message: 'Length should be less than 300.',
                 },
               })}
-              InputProps={{
-                readOnly: loggedInUserType === 'SMC' ? false : true,
+              sx={{
+                input: {
+                  backgroundColor: 'grey2.main',
+                },
               }}
-              //error={errors.Address?.message}
             />
           </Grid>
 
