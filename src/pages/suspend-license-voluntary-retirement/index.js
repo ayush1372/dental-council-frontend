@@ -108,6 +108,7 @@ export function SuspendLicenseVoluntaryRetirement({
       dispatch(getInitiateWorkFlow(workFlowData))
         .then((response) => {
           showSuccessPopup(true);
+          closeActionModal(false);
           if (response) {
             userActiveTab === 'voluntary-suspend-license' &&
               dispatch(changeUserActiveTab('my-profile'));
