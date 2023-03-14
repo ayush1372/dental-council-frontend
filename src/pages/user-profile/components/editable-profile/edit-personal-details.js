@@ -966,7 +966,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                     required: 'District is required',
                   }
                 )}
-                options={createSelectFieldData(districtsList, 'id')}
+                options={createSelectFieldData(districtsList, 'iso_code')}
                 MenuProps={{
                   style: {
                     maxHeight: 250,
@@ -993,7 +993,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 defaultValue={getValues().SubDistrict}
                 value={getValues().SubDistrict}
                 {...register('SubDistrict')}
-                options={createSelectFieldData(subDistrictList, 'id')}
+                options={createSelectFieldData(subDistrictList, 'iso_code')}
                 MenuProps={{
                   style: {
                     maxHeight: 250,
