@@ -48,9 +48,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
     }
   }, [personalDetails?.work_flow_status_id]);
   const { activeStep, handleNext, handleBack, resetStep, completed, progress } = useWizard(
-    loggedInUserType === 'Doctor' || loggedInUserType === 'SMC' || loggedInUserType === 'NMC'
-      ? 0
-      : 1,
+    ['Doctor', 'SMC', 'NMC'].includes(loggedInUserType) ? 0 : 1,
     [],
     [25, 25, 25]
   );
