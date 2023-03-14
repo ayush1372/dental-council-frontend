@@ -190,7 +190,7 @@ export const getDoctorTrackApplicationData = (doctor_profile_id, trackData) => a
     })
       .then((response) => {
         dispatch(
-          updateTrackApplicationTableData(response || [])
+          updateTrackApplicationTableData(response)
           // updateTrackApplicationTableData(response.data?.health_professional_applications || [])
         );
         return resolve(response);

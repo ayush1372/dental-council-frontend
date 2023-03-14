@@ -79,7 +79,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
     if (exportData?.data?.health_professional_details) {
       trackData.search = getValues().ActivateLicenceId;
       trackData.value = getValues().ActivateLicenceFilter;
-      dispatch(getDoctorTrackApplicationData(profileId, trackData));
+      searchParams(trackData);
     }
     if (trackApplication) {
       trackData.value = getValues().StatusId;
@@ -125,7 +125,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                   <SearchableDropdown
                     fullWidth
                     name="Filter"
-                    placeholder=""
+                    placeholder="Please Select"
                     clearErrors={clearErrors}
                     {...register('Filter')}
                     items={createEditFieldData(filterDropDownData)}
@@ -143,7 +143,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                         ? createEditFieldData(applicationStatus)
                         : createEditFieldData(emptyData)
                     }
-                    placeholder=""
+                    placeholder="Please Select"
                     clearErrors={clearErrors}
                     {...register('Status')}
                     onChange={(currentValue) => {
@@ -172,7 +172,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                     fullWidth
                     name="dashBoardCard"
                     items={createEditFieldData(DashBoardCardsFieldList)}
-                    placeholder=""
+                    placeholder="Please Select"
                     clearErrors={clearErrors}
                     {...register('dashBoardCard')}
                     onChange={(currentValue) => {
@@ -184,7 +184,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                     fullWidth
                     name="collegeApproval"
                     items={createEditFieldData(CollegeApprovalFieldList)}
-                    placeholder=""
+                    placeholder="Please Select"
                     clearErrors={clearErrors}
                     {...register('collegeApproval')}
                     onChange={(currentValue) => {
@@ -248,7 +248,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                   fullWidth
                   name="registrationCouncil"
                   items={createEditFieldData(councilNames)}
-                  placeholder="Filter by Council"
+                  placeholder="Please Select"
                   clearErrors={clearErrors}
                   {...register('registrationCouncil')}
                   onChange={(currentValue) => {
