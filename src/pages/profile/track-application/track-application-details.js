@@ -48,8 +48,8 @@ export function TrackApplicationDetails({
         Application Details
       </Typography>
       <Box bgcolor="backgroundColor.light" p={4} borderRadius="5px">
-        <Grid container xs={12} columnSpacing={{ xs: 1, md: 2, lg: 4, xl: 8 }}>
-          <Grid item xs={8} md="auto">
+        <Grid container xs={12} columnSpacing={{ xs: 1, md: 2, lg: 7, xl: 8 }}>
+          <Grid item xs={12} sm={6} md="auto" mb={{ xs: 2, md: 0 }}>
             <Typography variant="body3" color="grey.label">
               Request ID
             </Typography>
@@ -57,7 +57,7 @@ export function TrackApplicationDetails({
               {request_id?.value}
             </Typography>
           </Grid>
-          <Grid item xs={8} md="auto">
+          <Grid item xs={12} sm={6} md="auto" mb={{ xs: 2, md: 0 }}>
             <Typography variant="body3" color="grey.label">
               Type of Application
             </Typography>
@@ -65,7 +65,7 @@ export function TrackApplicationDetails({
               {application_type_name?.value}
             </Typography>
           </Grid>
-          <Grid item xs={8} md="auto">
+          <Grid item xs={12} sm={6} md="auto" mb={{ xs: 2, md: 0 }}>
             <Typography variant="body3" color="grey.label">
               Date of Submission
             </Typography>
@@ -73,7 +73,7 @@ export function TrackApplicationDetails({
               {getDate(created_at?.value || new Date())}
             </Typography>
           </Grid>
-          <Grid item xs={8} md="auto">
+          <Grid item xs={12} sm={6} md="auto" mb={{ xs: 2, md: 0 }}>
             <Typography variant="body3" color="grey.label">
               Current Status
             </Typography>
@@ -109,11 +109,9 @@ export function TrackApplicationDetails({
         </Grid>
       </Box>
       <Divider sx={{ mt: 2 }} />
-      <Grid container>
-        <Grid container item xs={12} mt={8}>
-          <Stepper steps={wizardSteps} selectedRowData={selectedRowData} activeStep={activeStep} />
-        </Grid>
-      </Grid>
+      <Box py={{ xs: 0, sm: 4, lg: 2 }} mt={6} sx={{ overflowX: 'auto' }}>
+        <Stepper steps={wizardSteps} selectedRowData={selectedRowData} activeStep={activeStep} />
+      </Box>
       <Divider fullWidth sx={{ mt: 6 }} />
       <Grid mt={2}>
         <Button color="grey" variant="contained" onClick={showTrackApplicationTable}>

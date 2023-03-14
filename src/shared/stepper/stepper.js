@@ -1,6 +1,6 @@
-// import Check from '@mui/icons-material/Check';/
+import { makeStyles } from '@material-ui/core';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { Grid, Typography } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 import Step from '@mui/material/Step';
 import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
 import StepLabel from '@mui/material/StepLabel';
@@ -13,17 +13,21 @@ import { Chip } from '../../ui/core';
 const QontoConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
     top: 10,
-    left: 'calc(-50% + 16px)',
-    right: 'calc(50% + 16px)',
+    left: 'calc(-92% + 13px)',
+    right: 'calc(92% + 4px)',
+    '@media only screen and (max-width: 1365px)': {
+      left: 'calc(-89% + 10px)',
+      right: 'calc(92% + 3px)',
+    },
   },
   [`&.${stepConnectorClasses.active}`]: {
     [`& .${stepConnectorClasses.line}`]: {
-      borderColor: '#784af4',
+      borderColor: theme.palette.inputFocusColor.main,
     },
   },
   [`&.${stepConnectorClasses.completed}`]: {
     [`& .${stepConnectorClasses.line}`]: {
-      borderColor: 'success.main',
+      borderColor: theme.palette.success.main,
     },
   },
   [`& .${stepConnectorClasses.line}`]: {
@@ -108,43 +112,52 @@ export default function ApplicationStepper({ activeStep = 1, steps, selectedRowD
       label: nmc_status?.value,
     },
   ];
+
+  const theme = useTheme();
+
+  const useStyles = makeStyles(() => ({
+    stepperWrapper: {
+      width: '1000px',
+    },
+    chipBlock: {
+      fontSize: '12px',
+    },
+  }));
+
+  const classes = useStyles(theme);
   return (
-    <Grid container>
-      <Grid item xs={12}>
-        <Stepper activeStep={activeStep} alternativeLabel connector={<QontoConnector />}>
-          {steps.map((label, index) => (
-            <Step key={label}>
-              <StepLabel
-                StepIconComponent={QontoStepIcon}
-                sx={{ fill: index === activeStep ? 'stepIconActive.main' : 'grey1.main' }}
-              >
-                {label}
-                <Grid item xs={'auto'}>
-                  <Typography
-                    variant="body3"
-                    color="grey.label"
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    {stepDescription[index]}
-                  </Typography>
-                  <Grid
-                    mt={index === 0 ? '23px' : 0}
-                    sx={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    <Chip type={stepStatus[index].type} label={stepStatus[index].label} />
-                  </Grid>
-                </Grid>
-              </StepLabel>
-            </Step>
-          ))}
-        </Stepper>
-      </Grid>
-    </Grid>
+    <Stepper
+      className={classes.stepperWrapper}
+      activeStep={activeStep}
+      alternativeLabel
+      connector={<QontoConnector />}
+    >
+      {steps.map((label, index) => (
+        <Step key={label}>
+          <StepLabel
+            StepIconComponent={QontoStepIcon}
+            sx={{
+              fill: index === activeStep ? 'stepIconActive.main' : 'grey1.main',
+              alignItems: 'flex-start',
+            }}
+          >
+            <Typography variant="body3" component="div" textAlign="left">
+              {label}
+            </Typography>
+
+            <Typography component="div" variant="body8" color="grey.label" textAlign="left">
+              {stepDescription[index]}
+            </Typography>
+            <Box textAlign="left">
+              <Chip
+                className={classes.chipBlock}
+                type={stepStatus[index].type}
+                label={stepStatus[index].label}
+              />
+            </Box>
+          </StepLabel>
+        </Step>
+      ))}
+    </Stepper>
   );
 }
