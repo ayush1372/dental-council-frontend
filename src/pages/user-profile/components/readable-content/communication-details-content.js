@@ -15,8 +15,8 @@ const CommunicationAddress = ({ personalDetails }) => {
   };
 
   const { communication_address } = personalDetails || {};
-  const { country, state, district, sub_district, pincode, address_line1, village } =
-    communication_address || {};
+  const { country, state, district, sub_district, pincode, village } = communication_address || {};
+
   // const { full_name } = personal_details || {};
 
   const countryName = country?.name || '';
@@ -37,7 +37,7 @@ const CommunicationAddress = ({ personalDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
-              {address_line1 ? address_line1 : ''}
+              {communication_address?.house}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
@@ -59,7 +59,7 @@ const CommunicationAddress = ({ personalDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
-              {villageName}
+              {communication_address?.street}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
@@ -80,7 +80,7 @@ const CommunicationAddress = ({ personalDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
-              {villageName}
+              {communication_address?.landmark}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
