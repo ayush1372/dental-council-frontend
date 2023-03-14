@@ -2,7 +2,6 @@ import Axios from 'axios';
 
 import { API } from '../api/api-endpoints';
 import authInterceptors from '../api/auth-interceptors';
-import { expireSession } from '../api/session';
 import { millisecondToDate } from '../helpers/functions/common-functions';
 import { setApiLoading } from '../store/reducers/common-reducers';
 import store from '../store/store';
@@ -43,14 +42,6 @@ axios.interceptors.response.use(
           error.config.headers['Authorization'] = 'Bearer ' + response.headers['access-token'];
           return axios.request(error.response.config);
         });
-        // .catch(() => {
-        //   expireSession('ERR_SESSION: Session expired.');
-        // });
-        // } else {
-        //   expireSession('ERR_SESSION: Session expired.');
-        // }
-      } else {
-        expireSession('ERR_SESSION: Session expired.');
       }
     } else {
       return Promise.reject(error);
