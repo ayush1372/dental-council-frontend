@@ -36,17 +36,16 @@ axios.interceptors.response.use(
           headers: {
             Authorization: 'Bearer ' + localStorage.getItem('refreshtoken'),
           },
-        })
-          .then((response) => {
-            localStorage.setItem('accesstoken', response.headers['access-token']);
-            localStorage.setItem('refreshtoken', response.headers['refresh-token']);
-            //passing updated token in headers for authorization
-            error.config.headers['Authorization'] = 'Bearer ' + response.headers['access-token'];
-            return axios.request(error.response.config);
-          })
-          .catch(() => {
-            expireSession('ERR_SESSION: Session expired.');
-          });
+        }).then((response) => {
+          localStorage.setItem('accesstoken', response.headers['access-token']);
+          localStorage.setItem('refreshtoken', response.headers['refresh-token']);
+          //passing updated token in headers for authorization
+          error.config.headers['Authorization'] = 'Bearer ' + response.headers['access-token'];
+          return axios.request(error.response.config);
+        });
+        // .catch(() => {
+        //   expireSession('ERR_SESSION: Session expired.');
+        // });
         // } else {
         //   expireSession('ERR_SESSION: Session expired.');
         // }
