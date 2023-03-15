@@ -48,8 +48,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
     };
 
     dispatch(updateProfileConsent(payload))
-      .then((e) => {
-        e.preventDefault();
+      .then(() => {
         setConfirmationModal(false);
         setIsReadMode(true);
         resetStep(0);
