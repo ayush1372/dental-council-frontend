@@ -228,7 +228,7 @@ function FetchDoctorDetails() {
         txnId: aadhaarTxnId,
       })
     ).then((response) => {
-      if (response?.data?.hprIdNumber === null || response?.data?.hprIdNumber === '') {
+      if (response?.data?.new === true) {
         setShowCreateHprIdPage(true);
         dispatch(
           getHprIdSuggestions({
@@ -236,7 +236,7 @@ function FetchDoctorDetails() {
           })
         );
       } else {
-        if (response?.data?.hprId && response?.data?.hprIdNumber) {
+        if (response?.data?.hprIdNumber.length > 0) {
           setShowSuccess(true);
         }
       }
