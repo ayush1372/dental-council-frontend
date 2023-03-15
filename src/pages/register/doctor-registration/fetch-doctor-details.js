@@ -24,6 +24,7 @@ import {
   sendAaadharOtp,
   validateOtpAadhaar,
 } from '../../../store/actions/user-aadhaar-actions';
+import { storeMobileDetails } from '../../../store/reducers/doctor-registration-reducer';
 import { Button, TextField } from '../../../ui/core';
 import AadhaarInputField from '../../../ui/core/aadhaar-input-field/aadhaar-input-field';
 import CreateHprId from './unique-username';
@@ -149,6 +150,7 @@ function FetchDoctorDetails() {
         mobileNumber: getValues().MobileNumber,
       })
     );
+    dispatch(storeMobileDetails(getValues().MobileNumber));
   };
 
   useEffect(() => {
@@ -506,7 +508,7 @@ function FetchDoctorDetails() {
               text={`Your username ${existUSerName.replace(
                 '@hpr.abdm',
                 ''
-              )} has been already created. Please proceed to set the password for logging in to your NMR Profile`}
+              )} has been already created. Please proceed to login in to your NMR Profile`}
               isHpIdCreated={true}
             />
           )}
