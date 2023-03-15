@@ -275,7 +275,7 @@ export const Login = ({ loginName }) => {
               required
               fullWidth
               label={'User ID'}
-              placeholder={'Please enter your User ID'}
+              placeholder={'Please enter User ID'}
               name={'userID'}
               {...register('userID', {
                 required: 'Please enter an User ID',
@@ -288,7 +288,7 @@ export const Login = ({ loginName }) => {
               required
               fullWidth
               label={'Password'}
-              placeholder={'Please enter your Password'}
+              placeholder={'Please enter Password'}
               type={'Password'}
               inputProps={{ maxLength: 12 }}
               name={'password'}
@@ -309,7 +309,7 @@ export const Login = ({ loginName }) => {
               register={register}
               getValues={getValues}
               errors={errors}
-              label={'Enter your Mobile Number'}
+              label={'Enter Mobile Number'}
               showVerify
               verifyOnClick={sendNotificationOTPHandler}
             />

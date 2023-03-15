@@ -45,7 +45,7 @@ const RegistrationDetailsContent = () => {
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {smcName ? smcName : ''}
             </Typography>
 
@@ -67,7 +67,7 @@ const RegistrationDetailsContent = () => {
             </Typography>
           </Typography>
           <Grid display="flex">
-            <Typography color="primary.main" variant="subtitle2">
+            <Typography color="textPrimary.main" variant="subtitle2">
               {registration_number ? registration_number : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -87,7 +87,7 @@ const RegistrationDetailsContent = () => {
             </Typography>
           </Typography>
           <Grid display="flex">
-            <Typography color="primary.main" variant="subtitle2">
+            <Typography color="textPrimary.main" variant="subtitle2">
               {registration_date
                 ? registration_date?.length > 10
                   ? registration_date?.substring(0, 10)
@@ -113,7 +113,7 @@ const RegistrationDetailsContent = () => {
             </Typography>
           </Typography>
           <Grid display="flex">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {is_renewable === '1' ? 'Permanent' : is_renewable === '0' ? 'Renewable' : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -130,7 +130,7 @@ const RegistrationDetailsContent = () => {
             Due Date of Renewal
           </Typography>
           <Grid display="flex">
-            <Typography color="primary.main" variant="subtitle2">
+            <Typography color="textPrimary.main" variant="subtitle2">
               {renewable_registration_date
                 ? renewable_registration_date?.length > 10
                   ? renewable_registration_date?.substring(0, 10)
@@ -156,7 +156,7 @@ const RegistrationDetailsContent = () => {
           <Grid display="flex" alignItems="center">
             <Typography
               variant="subtitle2"
-              color="primary.main"
+              color="textPrimary.main"
               onClick={(e) => {
                 e.preventDefault();
                 setAttachmentViewProfile(true);
@@ -176,31 +176,6 @@ const RegistrationDetailsContent = () => {
             )}
           </Grid>
         </Grid>
-        {/* <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
-            Registration Certificate
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
-          </Typography>
-          <Grid display="flex">
-            <Typography variant="subtitle2" color="primary.main">
-              {is_name_change === '0' ? 'Yes' : is_name_change === '1' ? 'No' : ''}
-            </Typography>
-            {userActiveTab === 'dashboard' && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => setOpenModal(true)}
-                fontSize="width30"
-              />
-            )}
-          </Grid>
-        </Grid>
-      </Grid>
-      {/* <Grid container item spacing={2}>
-        <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor"></Typography>
-        </Grid> */}
       </Grid>
       {attachmentViewProfile && (
         <AttachmentViewPopup
