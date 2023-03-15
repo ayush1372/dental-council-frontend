@@ -24,8 +24,8 @@ export default function SuccessModalPopup({
   };
   const theme = useTheme();
   const dispatch = useDispatch();
-  const navigateSetpassword = () => {
-    navigate('/reset-password');
+  const navigateToLogin = () => {
+    navigate('/login-page', { state: { loginFormname: 'Doctor' } });
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
@@ -87,24 +87,20 @@ export default function SuccessModalPopup({
             {text}
           </Typography>
           <Button
-            sx={{ width: { xs: '100%', sm: '408px' }, mt: 5 }}
+            sx={{ mt: 5 }}
             variant="contained"
             color="warning"
             onClick={
               handleClose
                 ? handleCloseModalALL
                 : isHpIdCreated
-                ? navigateSetpassword
+                ? navigateToLogin
                 : successRegistration
                 ? navigateLogin
                 : handleCloseModal
             }
           >
-            {successRegistration
-              ? 'Continue to login'
-              : existHprId
-              ? 'Continue to set password'
-              : 'Ok'}
+            {successRegistration ? 'Continue to login' : existHprId ? 'Continue to login' : 'Ok'}
           </Button>
         </Box>
       </Container>

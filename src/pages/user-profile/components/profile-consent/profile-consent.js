@@ -48,8 +48,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
     };
 
     dispatch(updateProfileConsent(payload))
-      .then((e) => {
-        e.preventDefault();
+      .then(() => {
         setConfirmationModal(false);
         setIsReadMode(true);
         resetStep(0);
@@ -114,7 +113,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
           container
           alignItems="center"
           columnGap={1}
-          bgcolor="success.light"
+          bgcolor="success.background"
           p={3}
           borderRadius="5px"
         >
@@ -122,17 +121,19 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
             <Checkbox
               sx={{ width: '18px', height: '18px' }}
               name="HPR"
-              // {...register('consent', {
-              //   required: 'Consent is Required',
-              // })}
-              // error={errors.consent?.message}
+              {...register('HPR', {
+                required: 'HPR is Required',
+              })}
+              error={errors.HPR?.message}
             />
             <Typography component="div" variant="body7">
               Save my time,share my details with HPR
             </Typography>
           </Grid>
           <Grid item sx="auto" display="flex" alignItems="center">
-            <InfoOutlinedIcon sx={{ height: '14px', width: '14px', color: 'messageBlue.main' }} />
+            <InfoOutlinedIcon
+              sx={{ height: '14px', width: '14px', color: 'messageBlue.main', mr: 1 }}
+            />
             <Typography component="span" variant="body8" color="messageBlue.main">
               Know more about HPR
             </Typography>

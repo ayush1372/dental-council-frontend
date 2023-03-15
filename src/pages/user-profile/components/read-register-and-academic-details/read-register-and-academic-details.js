@@ -205,6 +205,7 @@ const ReadRegisterAndAcademicDetails = ({
         </Box>
       )}
       <Dialog
+        scroll="body"
         open={confirmationModal}
         onClose={() => {
           setConfirmationModal(false);
@@ -218,17 +219,17 @@ const ReadRegisterAndAcademicDetails = ({
         <Box
           p={2}
           width={selected === 'verify' ? '500px' : selected === 'forward' ? '700px' : '630px'}
-          height={
-            selected === 'reject'
-              ? '500px'
-              : selected === 'verify'
-              ? '380px'
-              : selected === 'forward'
-              ? '300px'
-              : selected === 'raise'
-              ? '650px'
-              : '720px'
-          }
+          // height={
+          //   selected === 'reject'
+          //     ? '500px'
+          //     : selected === 'verify'
+          //     ? '380px'
+          //     : selected === 'forward'
+          //     ? '100px'
+          //     : selected === 'raise'
+          //     ? '650px'
+          //     : '720px'
+          // }
           borderRadius={'40px'}
         >
           <Box align="right">
