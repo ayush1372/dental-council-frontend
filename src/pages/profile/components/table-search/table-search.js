@@ -206,7 +206,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                     type="text"
                     name="ActivateLicenceFilter"
                     required={false}
-                    placeholder={'enter keywords'}
+                    placeholder={'Enter keywords'}
                     defaultValue={getValues().ActivateLicenceFilter}
                     error={errors.ActivateLicenceFilter?.message}
                     {...register('ActivateLicenceFilter')}
@@ -219,7 +219,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                     id="outlined-basic"
                     variant="outlined"
                     name={'dashBoardCardFilter'}
-                    placeholder={'enter keywords'}
+                    placeholder={'Enter keywords'}
                     defaultValue={getValues().dashBoardCardFilter}
                     {...register('dashBoardCardFilter', {})}
                     error={errors.dashBoardCardFilter?.message}
@@ -234,7 +234,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                     type="text"
                     name="collegeApprovalFilter"
                     required={false}
-                    placeholder={'enter keywords'}
+                    placeholder={'Enter keywords'}
                     defaultValue={getValues().collegeApprovalFilter}
                     error={errors.collegeApprovalFilter?.message}
                     {...register('collegeApprovalFilter')}
