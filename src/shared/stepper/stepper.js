@@ -119,9 +119,6 @@ export default function ApplicationStepper({ activeStep = 1, steps, selectedRowD
     stepperWrapper: {
       width: '1000px',
     },
-    chipBlock: {
-      fontSize: '12px',
-    },
   }));
 
   const classes = useStyles(theme);
@@ -150,9 +147,8 @@ export default function ApplicationStepper({ activeStep = 1, steps, selectedRowD
             </Typography>
             <Box textAlign="left">
               <Chip
-                className={classes.chipBlock}
                 type={stepStatus[index].type}
-                label={stepStatus[index].label}
+                label={<Typography variant="body4">{stepStatus[index].label}</Typography>}
               />
             </Box>
           </StepLabel>

@@ -37,6 +37,13 @@ export const getDashboardTableData = (body) => async (dispatch) => {
       path += '&value=' + body.value;
     }
   }
+  if (body.offset !== undefined && body.offset !== null && body.offset !== '') {
+    if (path === '') {
+      path += 'offset=' + body.offset;
+    } else {
+      path += '&offset=' + body.offset;
+    }
+  }
   if (body.page_no !== undefined && body.page_no !== null && body.page_no !== '') {
     if (path === '') {
       path += 'pageNo=' + body.page_no;

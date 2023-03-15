@@ -26,6 +26,19 @@ export function get_year_data(startYear = 1900) {
   ans.reverse();
   return ans;
 }
+export function year_data(startYear = 1900) {
+  var ans = [];
+  var date = new Date();
+  var presentYear = date.getFullYear();
+  for (var i = startYear; i <= presentYear; i++) {
+    var entry_struct = {};
+    entry_struct['name'] = i.toString();
+    entry_struct['id'] = i;
+    ans.push(entry_struct);
+  }
+  ans.reverse();
+  return ans;
+}
 
 export const createSelectFieldData = (arrayOfStrings, valueKey = 'id') => {
   if (arrayOfStrings && arrayOfStrings.length > 0) {

@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { Box, Grid } from '@mui/material';
 // import { useTheme } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import {
   ActivateLicenceFieldList,
@@ -15,11 +15,9 @@ import {
   emptyData,
   filterDropDownData,
 } from '../../../../../src/constants/common-data';
-// import { RegistrationCouncilNames } from '../../../../constants/common-data';
 import { createEditFieldData } from '../../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../../shared/autocomplete/searchable-dropdown';
 import ExportFiles from '../../../../shared/export-component/export-file';
-import { getDoctorTrackApplicationData } from '../../../../store/actions/doctor-user-profile-actions';
 import { Button, TextField } from '../../../../ui/core';
 
 export function TableSearch({ trackApplication, searchParams, exportData, flag }) {
@@ -30,8 +28,6 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
   const [applicationTypeValue, setApplicationTypeValue] = useState(false);
   const [statusTypeValue, setStatusTypeValue] = useState(false);
 
-  const dispatch = useDispatch();
-  // const theme = useTheme();
   let trackData = {
     pageNo: 1,
     offset: 10,
@@ -73,7 +69,6 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
       trackData.value = getValues().dashBoardCardFilter;
       trackData.search = getValues().dashBoardCardId;
       searchParams(trackData);
-      // dispatch(getDoctorTrackApplicationData(profileId, trackData));
     }
 
     if (exportData?.data?.health_professional_details) {
@@ -90,10 +85,9 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
     if (exportData?.data?.college_details) {
       trackData.search = getValues().collegeApprovalId;
       trackData.value = getValues().collegeApprovalFilter;
-      dispatch(getDoctorTrackApplicationData(profileId, trackData));
+      // dispatch(getDoctorTrackApplicationData(profileId, trackData));
     }
 
-    // searchParams(data);
     reset({
       filterByName: '',
       filterByRegNo: '',
