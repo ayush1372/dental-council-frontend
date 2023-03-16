@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 
 import { Box, Grid, TablePagination } from '@mui/material';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import GenericTable from '../../../shared/generic-component/generic-table';
+import { getDoctorTrackApplicationData } from '../../../store/actions/doctor-user-profile-actions';
 import TableSearch from '../components/table-search/table-search';
 
 function createData(
@@ -46,7 +47,7 @@ function TrackAppicationTable({
   setShowUserProfile,
   getTableData,
   profileId,
-  tableData,
+
   setRowData,
 }) {
   const dispatch = useDispatch();
@@ -54,7 +55,7 @@ function TrackAppicationTable({
   const [orderBy, setOrderBy] = React.useState({});
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
-
+  const tableData = useSelector((state) => state.common.trackApplicationTableData);
   // const theme = useTheme();
   let trackData = {
     pageNo: 1,
@@ -100,7 +101,7 @@ function TrackAppicationTable({
       sorting: true,
       type: 'date',
     },
-    { title: 'Pendency', name: 'pendency', sorting: true, type: 'string' },
+    { title: 'Pendency days', name: 'pendency', sorting: true, type: 'string' },
     { title: 'Action', name: 'view', sorting: false, type: 'string' },
   ];
 
@@ -192,13 +193,17 @@ function TrackAppicationTable({
     dispatch(getTableData(profileId, finalTrackData));
   };
 
+  const searchParams = (data, profileId) => {
+    dispatch(getDoctorTrackApplicationData(profileId, data));
+  };
+
   return (
     <Grid>
       {/* <Typography variant="h2" py={3} bgcolor={`${theme.palette.white.main}`} mb={2} px={3}>
         Track Application
       </Typography>    */}
       <TableSearch
-        //  searchParams={searchParams}
+        searchParams={searchParams}
         trackApplication={userType}
         exportData={tableData?.data?.data?.health_professional_applications}
         flag={'trackApplicationData'}

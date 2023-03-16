@@ -233,15 +233,21 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const selectedSubDistrict = watch('SubDistrict');
 
   useEffect(() => {
-    fetchDistricts(selectedState);
+    if (selectedState !== undefined) {
+      fetchDistricts(selectedState);
+    }
   }, [selectedState]);
 
   useEffect(() => {
-    fetchSubDistricts(selectedDistrict);
+    if (selectedDistrict !== undefined) {
+      fetchSubDistricts(selectedDistrict);
+    }
   }, [selectedDistrict]);
 
   useEffect(() => {
-    fetchCities(selectedSubDistrict);
+    if (selectedSubDistrict !== undefined) {
+      fetchCities(selectedSubDistrict);
+    }
   }, [selectedSubDistrict]);
 
   useEffect(() => {
@@ -866,6 +872,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             </Grid>
             <Grid item xs={12} md={4}>
               <Select
+                style={{ backgroundColor: '#F0F0F0' }}
                 fullWidth
                 error={errors.Country?.message}
                 name="Country"
@@ -875,11 +882,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 {...register('Country', {
                   required: 'Country is required',
                 })}
-                sx={{
-                  input: {
-                    backgroundColor: isSameAddress ? 'grey2.main' : '',
-                  },
-                }}
                 disabled
                 options={
                   countriesList?.length > 0
@@ -908,6 +910,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 )}
               </Typography>
               <Select
+                style={{ backgroundColor: isSameAddress ? '#F0F0F0' : '' }}
                 fullWidth
                 error={errors.State?.message}
                 name="State"
@@ -915,11 +918,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 value={getValues().State}
                 required={isSameAddress ? false : true}
                 disabled={isSameAddress}
-                sx={{
-                  input: {
-                    backgroundColor: isSameAddress ? 'grey2.main' : '',
-                  },
-                }}
                 {...register(
                   'State',
                   isSameAddress
@@ -949,17 +947,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 )}
               </Typography>
               <Select
+                style={{ backgroundColor: isSameAddress ? '#F0F0F0' : '' }}
                 fullWidth
                 error={errors.District?.message}
                 name="District"
                 defaultValue={getValues().District}
                 required={isSameAddress ? false : true}
                 disabled={isSameAddress}
-                sx={{
-                  input: {
-                    backgroundColor: isSameAddress ? 'grey2.main' : '',
-                  },
-                }}
                 {...register(
                   'District',
                   !isSameAddress && {
@@ -980,16 +974,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 Sub District
               </Typography>
               <Select
+                style={{ backgroundColor: isSameAddress ? '#F0F0F0' : '' }}
                 fullWidth
                 error={errors.SubDistrict?.message}
                 name="SubDistrict"
                 placeholder="Sub District"
                 disabled={isSameAddress}
-                sx={{
-                  input: {
-                    backgroundColor: isSameAddress ? 'grey2.main' : '',
-                  },
-                }}
                 defaultValue={getValues().SubDistrict}
                 value={getValues().SubDistrict}
                 {...register('SubDistrict')}
@@ -1007,16 +997,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 City/Town/Village
               </Typography>
               <Select
+                style={{ backgroundColor: isSameAddress ? '#F0F0F0' : '' }}
                 fullWidth
-                // error={errors.Area?.message}
-                sx={{
-                  input: {
-                    backgroundColor: isSameAddress ? 'grey2.main' : '',
-                  },
-                }}
                 name="Area"
                 defaultValue={getValues().Area}
-                // value={getValues().Area}
                 disabled={isSameAddress}
                 required={true}
                 {...register('Area')}
@@ -1044,17 +1028,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 placeholder="Postal code"
                 required={true}
                 fullWidth
-                sx={{
-                  input: {
-                    backgroundColor: isSameAddress ? 'grey2.main' : '',
-                  },
-                }}
+                style={{ backgroundColor: isSameAddress ? '#F0F0F0' : '' }}
                 defaultValue={
                   isSameAddress ? personalDetails?.kyc_address?.pincode : getValues().PostalCode
                 }
-                // onChange={(e) => {
-                //   alert(e.target.value);
-                // }}
                 disabled={isSameAddress}
                 {...register('PostalCode', {
                   required: 'PostalCode is Required',

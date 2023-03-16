@@ -9,6 +9,8 @@ import { useSelector } from 'react-redux';
 export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOption, open }) {
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const theme = useTheme();
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   return (
     <List sx={{ p: 0 }}>
       {DrawerOptions?.map((item, index) => (
@@ -29,6 +31,15 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
           }}
         >
           <ListItemButton
+            disabled={
+              loggedInUserType === 'Doctor' &&
+              !personalDetails?.nmr_id &&
+              (item.tabName === 'voluntary-suspend-license' ||
+                item.tabName === 'additional-qualifications' ||
+                item.tabName === 'work-details')
+                ? true
+                : false
+            }
             sx={{
               minHeight: 48,
               justifyContent: open ? 'initial' : 'center',
