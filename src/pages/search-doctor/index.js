@@ -35,7 +35,7 @@ const SearchDoctor = () => {
   return (
     <Container maxWidth="lg">
       <Box>
-        <Box sx={{ boxShadow: '0px 3px 6px #00000014;' }} mt={6}>
+        <Box sx={{ boxShadow: '2' }} mt={6}>
           <Tabs
             value={tabValue}
             onChange={handleTabChange}
@@ -45,6 +45,7 @@ const SearchDoctor = () => {
                   borderBottom: '5px solid',
                   borderBottomColor: 'grey1.main',
                   backgroundColor: 'backgroundColor.light',
+                  flexGrow: 1,
                 },
                 'button.Mui-selected': {
                   backgroundColor: 'white.main',
@@ -66,7 +67,7 @@ const SearchDoctor = () => {
             ))}
           </Tabs>
         </Box>
-        <Box sx={{ boxShadow: '0px 3px 6px #00000014;' }} p={2}>
+        <Box sx={{ boxShadow: '2' }} p={2}>
           <Component
             setDoSearch={setDoSearch}
             setSearchData={setSearchData}
