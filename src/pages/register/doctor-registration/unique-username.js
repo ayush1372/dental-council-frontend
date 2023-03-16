@@ -1,5 +1,14 @@
+import { useState } from 'react';
+
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { Box, Container, Link, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Container,
+  //  Link,
+  TextField,
+  Typography,
+} from '@mui/material';
+import Link from '@mui/material/Link';
 import { useTheme } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,16 +18,11 @@ import { createUniqueHprId } from '../../../store/actions/doctor-registration-ac
 import { Button } from '../../../ui/core';
 
 const UniqueUserNameForDoctorRegistration = () => {
+  const [suggestion, setSuggestion] = useState('');
   const dispatch = useDispatch();
   const aadhaarTxnId = useSelector((state) => state?.AadhaarTransactionId?.aadharData?.data?.txnId);
   const firstSuggestion = useSelector(
-    (state) => state?.doctorRegistration?.hprIdSuggestionsDetailsData?.data[0]
-  );
-  const secondSuggestion = useSelector(
-    (state) => state?.doctorRegistration?.hprIdSuggestionsDetailsData?.data[1]
-  );
-  const thirdSuggestion = useSelector(
-    (state) => state?.doctorRegistration?.hprIdSuggestionsDetailsData?.data[2]
+    (state) => state?.doctorRegistration?.hprIdSuggestionsDetailsData?.data
   );
   const theme = useTheme();
   const navigate = useNavigate();
@@ -37,7 +41,10 @@ const UniqueUserNameForDoctorRegistration = () => {
       UniqueUserNameForDoctor: '',
     },
   });
-
+  const handleSuggestion = (item) => {
+    // alert(item)
+    setSuggestion(item);
+  };
   const onSubmit = () => {
     let data = {
       email: null,
@@ -49,6 +56,10 @@ const UniqueUserNameForDoctorRegistration = () => {
     });
   };
 
+  const handleSuggestionName = (e) => {
+    setSuggestion(e.target.value);
+  };
+
   return (
     <Box>
       <Box my={9}>
@@ -58,7 +69,7 @@ const UniqueUserNameForDoctorRegistration = () => {
             pt: 4,
             width: {
               xs: '100%',
-              sm: '679px',
+              sm: '712px',
             },
           }}
         >
@@ -85,16 +96,19 @@ const UniqueUserNameForDoctorRegistration = () => {
                   {...register('UniqueUserNameForDoctor', {
                     required: 'UniqueUserNameForDoctor Number is required',
                   })}
+                  value={suggestion}
                   // items={UniqueUserNameForDoctor}
-                  // onChange={(e) => {
-                  //   e.target.value > 4 ? setDisbale(true) : setDisbale(false);
-                  // }}
+                  onChange={(e) => handleSuggestionName(e)}
                   clearErrors={clearErrors}
                 />
               </Box>
             </Box>
-            <Box display="flex" justifyContent="space-between" alignItems="flex-start">
-              <InfoOutlinedIcon sx={{ fontSize: '15px', verticalAlign: 'middle' }} />
+            <Box
+              display="flex"
+              justifyContent="space-between"
+              alignItems={{ xs: 'flex-start', sm: 'center' }}
+            >
+              <InfoOutlinedIcon sx={{ fontSize: '15px', mr: '2px' }} />
               <Typography variant="body3" color="primary" component={'div'}>
                 You can use letters, numbers & symbols. Minimum length of the username should be 8
                 character.
@@ -102,41 +116,39 @@ const UniqueUserNameForDoctorRegistration = () => {
             </Box>
 
             <Box pt={2} pb={4}>
-              <Typography>Suggestions:</Typography>
-              <Link
-                sx={{ cursor: 'pointer' }}
-                color="secondary.main"
-                fontSize="14px"
-                mr={1}
-                onClick={() => {
-                  getValues().UniqueUserNameForDoctor = firstSuggestion;
-                }}
-              >
-                {firstSuggestion}
-                <span>,</span>
-              </Link>
-              <Link
-                sx={{ cursor: 'pointer' }}
-                onClick={() => (getValues().UniqueUserNameForDoctor = secondSuggestion)}
-                color="secondary.main"
-                fontSize="14px"
-                mr={1}
-              >
-                {secondSuggestion}
-                <span>,</span>
-              </Link>
-              <Link
-                sx={{ cursor: 'pointer' }}
-                onClick={() => (getValues().UniqueUserNameForDoctor = thirdSuggestion)}
-                color="secondary.main"
-                fontSize="14px"
-              >
-                {thirdSuggestion}
-              </Link>
+              <Typography>Suggestions: </Typography>
+              {firstSuggestion
+                ? firstSuggestion.map((item, index) => {
+                    return index < 6 ? (
+                      index + 1 === 5 ? (
+                        <Link
+                          sx={{ cursor: 'pointer' }}
+                          onClick={() => handleSuggestion(item)}
+                          color="secondary.main"
+                          fontSize="14px"
+                        >
+                          {`${item}`}
+                        </Link>
+                      ) : (
+                        <Link
+                          sx={{ cursor: 'pointer' }}
+                          onClick={() => handleSuggestion(item)}
+                          color="secondary.main"
+                          fontSize="14px"
+                        >
+                          {`${item}, ` + ' '}
+                        </Link>
+                      )
+                    ) : (
+                      ''
+                    );
+                  })
+                : ''}
             </Box>
 
             <Box display="flex" pb={6}>
               <Button
+                disabled={suggestion.length > 4 ? false : true}
                 onClick={handleSubmit(onSubmit)}
                 variant="contained"
                 size="medium"
@@ -148,14 +160,7 @@ const UniqueUserNameForDoctorRegistration = () => {
               >
                 Continue to set password
               </Button>
-              <Button
-                variant="outlined"
-                size="medium"
-                sx={{
-                  backgroundColor: theme.palette.grey.main,
-                  color: 'black',
-                }}
-              >
+              <Button variant="contained" color="grey">
                 Cancel
               </Button>
             </Box>
