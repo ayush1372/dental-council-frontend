@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { API, API_HPRID } from '../../api/api-endpoints';
 import { accesstokenHprId } from '../../constants/common-data';
 import { GET, POST } from '../../constants/requests';
@@ -116,7 +115,6 @@ export const checkHpidExists = (txnId) => async (dispatch) => {
     })
       .then((response) => {
         dispatch(hpIdExistsDetails(response));
-        console.log('exists', response);
 
         return resolve(response);
       })

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloseIcon from '@mui/icons-material/Close';
@@ -10,22 +10,41 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
 import { doctorTabs, smcTabs } from '../../../../helpers/components/sidebar-drawer-list-item';
-import { getEsignFormDetails } from '../../../../store/actions/doctor-user-profile-actions';
+import {
+  getEsignFormDetails,
+  getRegistrationDetailsData,
+} from '../../../../store/actions/doctor-user-profile-actions';
 import { updateProfileConsent } from '../../../../store/actions/doctor-user-profile-actions';
 import { changeUserActiveTab } from '../../../../store/reducers/common-reducers';
 import { Button, Checkbox } from '../../../../ui/core';
 import successToast from '../../../../ui/core/toaster';
 
 const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType }) => {
+  const [degreeCertificate, setDegreeCertificate] = useState(false);
+  const [registrationFile, setRegistrationFile] = useState(false);
   const dispatch = useDispatch();
   const personalDetails = useSelector((state) => state?.doctorUserProfileReducer?.personalDetails);
+  const doctorRegDetails = useSelector(
+    (state) => state?.doctorUserProfileReducer?.registrationDetails
+  );
   const eSignResponse = useSelector((state) => state?.doctorUserProfileReducer?.esignDetails?.data);
-  const stateData = useSelector((state) => state?.doctorUserProfileReducer);
-
   const [confirmationModal, setConfirmationModal] = useState(false);
 
   const { loginData } = useSelector((state) => state?.loginReducer);
-
+  useEffect(() => {
+    dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id)).then((response) => {
+      if (response?.data?.qualification_detail_response_tos[0]?.degree_certificate) {
+        setDegreeCertificate(true);
+      }
+    });
+  }, []);
+  useEffect(() => {
+    dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id)).then((response) => {
+      if (response?.data?.registration_detail_to?.registration_certificate) {
+        setRegistrationFile(true);
+      }
+    });
+  }, []);
   const {
     formState: { errors },
     register,
@@ -69,18 +88,20 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
         );
       });
   };
+
   function eSignHandler() {
     let data = {
       signingPlace: personalDetails?.communication_address?.village?.name,
       nmrDetails: {
         nmrPersonalDetail: {
           firstName: personalDetails?.personal_details?.first_name || '',
-          userId: stateData?.personalDetails?.request_id || '', //cs-1013: need to change this path when backend fixes done
+          userId: doctorRegDetails?.hp_profile_id || '',
           middleName: personalDetails?.personal_details?.middle_name || '',
           lastName: personalDetails?.personal_details?.last_name || '',
-          qualification: personalDetails?.personal_details?.first_name || '', //cs-1013: need to change this path when backend fixes done
-          mobileNumber: personalDetails?.personal_details?.mobile || '9999999999',
-          emailId: personalDetails?.personal_details?.email || 'mohith2lntinfotech.com',
+          qualification:
+            doctorRegDetails?.qualification_detail_response_tos[0]?.course.course_name || '',
+          mobileNumber: personalDetails?.kyc_address?.mobile || '',
+          emailId: personalDetails?.kyc_address?.email || '',
         },
         nmrPersonalCommunication: {
           address: personalDetails?.communication_address?.address_line1 || '',
@@ -91,18 +112,17 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
           pincode: personalDetails?.communication_address?.pincode || '',
         },
         nmrOfficeCommunication: {
-          //this object paylaod need to send exact path later
           address: personalDetails?.communication_address?.address_line1 || '',
-          country: 'India',
-          stateUT: personalDetails?.communication_address?.address_line1 || '',
-          district: personalDetails?.communication_address?.address_line1 || '',
-          city: personalDetails?.communication_address?.address_line1 || '',
-          subDistrict: 'Krishna', //cs-1013:need to change this path when backend fixes done*
-          pincode: personalDetails?.communication_address?.address_line1 || '',
+          country: personalDetails?.communication_address?.country?.name || '',
+          stateUT: personalDetails?.communication_address?.state?.name || '',
+          district: personalDetails?.communication_address?.district?.name || '',
+          city: personalDetails?.communication_address?.village?.name || '',
+          subDistrict: personalDetails?.communication_address?.sub_district?.name || '',
+          pincode: personalDetails?.communication_address?.pincode || '',
         },
-        isRegCerAttached: 'No', //cs-1013:need to change this path when backend fixes done*
-        isDegreeCardAttached: 'No', //cs-1013:need to change this path when backend fixes done*
-        isOtherDocumentAttached: 'No', //cs-1013:need to change this path when backend fixes done*
+        isRegCerAttached: registrationFile ? 'Yes' : 'No',
+        isDegreeCardAttached: degreeCertificate ? 'Yes' : 'No',
+        isOtherDocumentAttached: 'No', //cs-1013:needs to changed when workdetails API integrated*
       },
     };
     dispatch(getEsignFormDetails(data));
@@ -114,7 +134,15 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
     <>
       <ToastContainer></ToastContainer>
       <Box bgcolor="white.main" py={2} px={{ xs: 1, md: 4 }} mt={2} boxShadow={1}>
-        <Typography component="div" color="primary.main" variant="body1" mb={2}>
+        <Typography
+          // id="name"
+          // value="123"
+          component="div"
+          color="primary.main"
+          variant="body1"
+          mb={2}
+          // onClick={(e) => console.log('event of ', e)}
+        >
           Consent
           <Typography component="span" color="error.main">
             *
@@ -148,13 +176,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
             </Typography>
           </Grid>
         </Grid>
-        {/* <Box
-          bgcolor="backgroundColor.light"
-          p={3}
-          display="flex"
-          justifyContent="flex-start"
-          alignItems="center"
-        > */}
+
         <Grid
           container
           alignItems="center"
@@ -207,7 +229,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
               Back
             </Button>
           </Grid>
-          {/* <Grid item xs={12} md="auto" display="flex" justifyContent="flex-end">
+          <Grid item xs={12} md="auto" display="flex" justifyContent="flex-end">
             <Button
               variant="outlined"
               color="secondary"
@@ -224,35 +246,9 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
             >
               Print & Save as PDF
             </Button>
-          </Grid> */}
-          {loggedInUserType !== 'SMC' && (
-            <Grid
-              item
-              xs={12}
-              md="auto"
-              ml={{ xs: 0, md: 1 }}
-              display="flex"
-              justifyContent="flex-end"
-            >
-              <Button
-                onClick={eSignHandler}
-                color="secondary"
-                variant="contained"
-                sx={{
-                  margin: {
-                    xs: '5px 0',
-                    md: '0',
-                  },
-                  width: {
-                    xs: '100%',
-                    md: 'fit-content',
-                  },
-                }}
-              >
-                E-sign Profile
-              </Button>
-            </Grid>
-          )}
+          </Grid>
+        </Grid>
+        {loggedInUserType !== 'SMC' && (
           <Grid
             item
             xs={12}
@@ -262,6 +258,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
             justifyContent="flex-end"
           >
             <Button
+              onClick={eSignHandler}
               color="secondary"
               variant="contained"
               sx={{
@@ -274,11 +271,29 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
                   md: 'fit-content',
                 },
               }}
-              onClick={handleSubmit(handleSubmitDetails)}
             >
-              Finalize profile
+              E-sign Profile
             </Button>
           </Grid>
+        )}
+        <Grid item xs={12} md="auto" ml={{ xs: 0, md: 1 }} display="flex" justifyContent="flex-end">
+          <Button
+            color="secondary"
+            variant="contained"
+            sx={{
+              margin: {
+                xs: '5px 0',
+                md: '0',
+              },
+              width: {
+                xs: '100%',
+                md: 'fit-content',
+              },
+            }}
+            onClick={handleSubmit(handleSubmitDetails)}
+          >
+            Finalize profile
+          </Button>
         </Grid>
 
         <div>
