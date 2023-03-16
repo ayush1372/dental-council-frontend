@@ -68,6 +68,12 @@ export const loginAction = (body) => async (dispatch) => {
     })
       .then((response) => {
         dispatch(loginUser(response));
+        JSON.stringify(
+          localStorage.setItem('accesstoken', response.responseHeader['access-token'])
+        );
+        JSON.stringify(
+          localStorage.setItem('refreshtoken', response.responseHeader['refresh-token'])
+        );
         return resolve(response);
       })
       .catch((error) => {

@@ -77,9 +77,16 @@ export const Login = ({ loginName }) => {
     const userType = userGroupType(response?.data?.user_group_id);
 
     if (userType === 'College Dean') {
-      dispatch(getCollegeDeanProfileData(response?.data?.profile_id));
+      dispatch(
+        getCollegeDeanProfileData(response?.data?.parent_profile_id, response?.data?.profile_id)
+      );
     } else if (userType === 'College Registrar') {
-      dispatch(getCollegeRegistrarProfileData(response?.data?.profile_id));
+      dispatch(
+        getCollegeRegistrarProfileData(
+          response?.data?.parent_profile_id,
+          response?.data?.profile_id
+        )
+      );
     } else if (userType === 'College Admin') {
       dispatch(getCollegeAdminProfileData(response?.data?.profile_id));
     } else if (userType === 'State Medical Council') {
@@ -135,8 +142,8 @@ export const Login = ({ loginName }) => {
                 navigate(`/profile`);
                 getCommonData(resp);
               })
-              .catch((error) => {
-                successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+              .catch(() => {
+                // successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
               });
           } else {
             successToast(
@@ -177,8 +184,8 @@ export const Login = ({ loginName }) => {
                 navigate(`/profile`);
                 getCommonData(resp);
               })
-              .catch((error) => {
-                successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+              .catch(() => {
+                // successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
               });
           } else {
             successToast(
@@ -264,10 +271,11 @@ export const Login = ({ loginName }) => {
         {selectedLoginOption === 'userName' ? (
           <>
             <TextField
+              sx={{ mb: 2 }}
               required
               fullWidth
               label={'User ID'}
-              placeholder={'Please enter your User ID'}
+              placeholder={'Please enter User ID'}
               name={'userID'}
               {...register('userID', {
                 required: 'Please enter an User ID',
@@ -280,7 +288,7 @@ export const Login = ({ loginName }) => {
               required
               fullWidth
               label={'Password'}
-              placeholder={'Please enter your Password'}
+              placeholder={'Please enter Password'}
               type={'Password'}
               inputProps={{ maxLength: 12 }}
               name={'password'}
@@ -301,7 +309,7 @@ export const Login = ({ loginName }) => {
               register={register}
               getValues={getValues}
               errors={errors}
-              label={'Enter your Mobile Number'}
+              label={'Enter Mobile Number'}
               showVerify
               verifyOnClick={sendNotificationOTPHandler}
             />

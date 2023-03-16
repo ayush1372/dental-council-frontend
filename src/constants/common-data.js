@@ -1,6 +1,6 @@
 import { get_year_data } from '../helpers/functions/common-functions';
 export const accesstokenHprId =
-  'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI1WVpwM043VlFCdEE1cDZwcktkdXYyV0NaTTZVVlFVLWZTcEZJb0tiQU9ZIn0.eyJleHAiOjE2NzgyMDQzMzEsImlhdCI6MTY3ODE2ODMzMSwianRpIjoiZWI2M2I2YWEtYjY4MS00ZjVjLTkxYmYtNWQwNjA4NDk4OTEzIiwiaXNzIjoiaHR0cHM6Ly9wcmVwcm9kLmFiZG0uZ292LmluL2F1dGgvcmVhbG1zL2NlbnRyYWwtcmVnaXN0cnkiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiZmUzZTEwMDctNjZlMi00OTkzLWFmYTktYjMyYjM1NDk1NDIwIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiaHBfaWQiLCJzZXNzaW9uX3N0YXRlIjoiNzAyM2IxYmMtOGQ4Ni00Y2M4LWJlYWYtMjFkNmMxNjY4NjgwIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwOi8vbG9jYWxob3N0OjkwMDciXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwiaGVhbHRoSWQiLCJocF9pZCJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfSwiaHBfaWQiOnsicm9sZXMiOlsidW1hX3Byb3RlY3Rpb24iXX19LCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwiY2xpZW50SWQiOiJocF9pZCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiY2xpZW50SG9zdCI6IjEwLjIzMy43MC4xMTMiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtaHBfaWQiLCJjbGllbnRBZGRyZXNzIjoiMTAuMjMzLjcwLjExMyJ9.L4-rDUIUCdbYkegze6qswj_zND9LLA4bMIQSx4HSBAyVR5_L056DZHDILw-sVpN4BwIcPvQU1rSgi5XyJ-6wN4IP7hB4eqe_7fmDJcxbBFtwba_gTyTtLmYkakvjebIePdAlbRYIAYie-h7UylCocJxBcb_p9cO59xN9AciplA4K914C6Kze3NeFqCDEIOqjk2ORaPhNl6rbRZdrKxKLfcZFJJw2nNR_zfVUqgLNao2R7JMhpUdxtSVVKU1NOAnmuYM6xp97hvry_qXsiB2WD06QAWvw752yh2lRIqUed601sIan875-Bjt1Rdj70SIwTFD_QwWU30eVf2Lryo3_pA';
+  'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI1WVpwM043VlFCdEE1cDZwcktkdXYyV0NaTTZVVlFVLWZTcEZJb0tiQU9ZIn0.eyJleHAiOjE2Nzg5ODM4NzIsImlhdCI6MTY3ODk0Nzg3MiwianRpIjoiNDIyMzFlY2EtMDA2ZC00ZTg5LWE2N2YtNGMxMDRjZmE5N2UyIiwiaXNzIjoiaHR0cHM6Ly9wcmVwcm9kLmFiZG0uZ292LmluL2F1dGgvcmVhbG1zL2NlbnRyYWwtcmVnaXN0cnkiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiZmUzZTEwMDctNjZlMi00OTkzLWFmYTktYjMyYjM1NDk1NDIwIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiaHBfaWQiLCJzZXNzaW9uX3N0YXRlIjoiYjZlMTU5NDktNjc5ZC00ZWE3LWI4YTUtYWI3NDBjM2QyMTc0IiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwOi8vbG9jYWxob3N0OjkwMDciXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwiaGVhbHRoSWQiLCJocF9pZCJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfSwiaHBfaWQiOnsicm9sZXMiOlsidW1hX3Byb3RlY3Rpb24iXX19LCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwiY2xpZW50SWQiOiJocF9pZCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiY2xpZW50SG9zdCI6IjEwLjIzMy43MC4xMTMiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtaHBfaWQiLCJjbGllbnRBZGRyZXNzIjoiMTAuMjMzLjcwLjExMyJ9.ZupVPuQofLUdLcmKYG0SWENOg-xiOFjuJs9N4PifX8DCuSAx6COnVHCDh7-xWh78YJxwt79S_zXjOrs0UC1NSTKuM5kyMa_30vp6Pilg1SNCyhLE5y24JygwCFitTb8B-rQKXn60pNtyuueGkX5BDTfF8KdVNENZ50yk-KFT5E3Kc0Fwx13Gh-q9xk1wNpJleNy-XuuSnTjeTOhDQfAIryNCqx5whlZNuib0w5bYtAJPkCi_AOhE5_Z2GQ2ak4wuiDqHzedh0ZOQN3xLu2DYVUDkAFCDHrU47xiRlq8cfiMRU8bhuCrK6XMMMnz9bmbzfeOdUnft0iLfFoJNfNL-ow';
 export const StateNames = [
   { id: '1', name: 'Andhra Pradesh' },
   { id: '2', name: 'Maharastra' },
@@ -410,6 +410,13 @@ export const ActivateLicence = [
   { header: 'Remark', key: 'remarks' },
   { header: 'RequestId', key: 'request_id' },
 ];
+export const TrackApplication = [
+  { header: 'Request ID', key: 'request_id' },
+  { header: 'Type of Application', key: 'application_type_name' },
+  { header: 'Date of Submission', key: 'created_at' },
+  { header: 'Current Status', key: 'doctor_status' },
+  { header: 'Pendency', key: 'pendency' },
+];
 
 export const searchDoctorResult = [
   {
@@ -503,4 +510,48 @@ export const searchDoctorResult = [
       },
     ],
   },
+];
+
+export const applicationType = [
+  { id: 1, name: 'HP Registration' },
+  { id: 2, name: 'HP Modification' },
+  { id: 3, name: 'Temporary Suspension' },
+  { id: 4, name: 'Permanent Suspension' },
+  { id: 5, name: 'Activate License' },
+  { id: 6, name: 'College Registration' },
+  { id: 7, name: 'Foreign HP Registration' },
+  { id: 8, name: 'Qualification Workflow' },
+];
+export const applicationStatus = [
+  { id: 1, name: 'PENDING' },
+  { id: 2, name: 'APPROVED' },
+  { id: 3, name: 'QUERY RAISED' },
+  { id: 4, name: 'REJECTED' },
+  { id: 5, name: 'SUSPENDED' },
+  { id: 6, name: 'BLACKLISTED' },
+];
+export const filterDropDownData = [
+  { id: 'applicationTypeId', name: 'Type of Application ' },
+  { id: 'workFlowStatusId', name: ' Current Status' },
+];
+export const emptyData = [
+  {
+    id: '1',
+    name: '-',
+  },
+];
+
+export const CollegeApprovalFieldList = [
+  { id: 'collegeName', name: 'College Name' },
+  { id: 'councilName', name: 'Name of State Council ' },
+];
+
+export const ActivateLicenceFieldList = [
+  { id: 'healthProfessionalName', name: 'Applicant Name' },
+  { id: 'registrationNumber', name: 'Registration No' },
+];
+
+export const DashBoardCardsFieldList = [
+  { id: 'registrationNumber', name: 'Registration No' },
+  { id: 'applicantFullName', name: 'Name of Applicant' },
 ];

@@ -50,6 +50,7 @@ export const palette = (mode) => {
       main: '#36B37E',
       light: '#53CB9863',
       dark: '#2B8D63',
+      background: '#E7F6F0',
     },
     messageBlue: {
       main: '#6554c0',

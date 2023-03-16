@@ -2,15 +2,29 @@ import { Box, Button, Divider, Grid, Typography } from '@mui/material';
 
 import { monthsData } from '../../../constants/common-data';
 import Stepper from '../../../shared/stepper/stepper';
-const wizardSteps = ['Application Submitted', 'At SMC', 'At NMC', 'Application Approved/Rejected'];
+const wizardSteps = [
+  'Application Submitted',
+  'Pending At SMC',
+  'Pending At College',
+  'Pending At SMC',
+  'Pending At NMC',
+];
 export function TrackApplicationDetails({
   showViewProfile,
   setShowTrackApplicationTable,
   setShowTrackApplication,
   selectedRowData,
 }) {
-  const { pendency, request_id, application_type_name, created_at, smc_status, nmc_status } =
-    selectedRowData;
+  const {
+    pendency,
+    request_id,
+    application_type_name,
+    created_at,
+    smc_status,
+    nmc_status,
+    collegeVerificationStatus,
+    NMCVerificationStatus,
+  } = selectedRowData;
   const showTrackApplicationTable = () => {
     setShowTrackApplicationTable(true);
     setShowTrackApplication(false);
@@ -34,8 +48,8 @@ export function TrackApplicationDetails({
         Application Details
       </Typography>
       <Box bgcolor="backgroundColor.light" p={4} borderRadius="5px">
-        <Grid container xs={12} columnSpacing={{ xs: 1, md: 2, lg: 4, xl: 8 }}>
-          <Grid item xs={8} md="auto">
+        <Grid container xs={12} columnSpacing={{ xs: 1, md: 2, lg: 7, xl: 8 }}>
+          <Grid item xs={12} sm={6} md="auto" mb={{ xs: 2, md: 0 }}>
             <Typography variant="body3" color="grey.label">
               Request ID
             </Typography>
@@ -43,7 +57,7 @@ export function TrackApplicationDetails({
               {request_id?.value}
             </Typography>
           </Grid>
-          <Grid item xs={8} md="auto">
+          <Grid item xs={12} sm={6} md="auto" mb={{ xs: 2, md: 0 }}>
             <Typography variant="body3" color="grey.label">
               Type of Application
             </Typography>
@@ -51,7 +65,7 @@ export function TrackApplicationDetails({
               {application_type_name?.value}
             </Typography>
           </Grid>
-          <Grid item xs={8} md="auto">
+          <Grid item xs={12} sm={6} md="auto" mb={{ xs: 2, md: 0 }}>
             <Typography variant="body3" color="grey.label">
               Date of Submission
             </Typography>
@@ -59,12 +73,29 @@ export function TrackApplicationDetails({
               {getDate(created_at?.value || new Date())}
             </Typography>
           </Grid>
-          <Grid item xs={8} md="auto">
+          <Grid item xs={12} sm={6} md="auto" mb={{ xs: 2, md: 0 }}>
             <Typography variant="body3" color="grey.label">
               Current Status
             </Typography>
             <Typography variant="subtitle2" color="primary.main">
-              Pending At SMC
+              {/* Pending At SMC */}
+
+              {smc_status?.value === 'PENDING' &&
+              NMCVerificationStatus?.value === 'NOT YET RECEIVED' &&
+              collegeVerificationStatus?.value === 'NOT YET RECEIVED' &&
+              nmc_status?.value === 'NOT YET RECEIVED'
+                ? 'Pending At SMC'
+                : smc_status?.value === 'APPROVED' &&
+                  NMCVerificationStatus?.value === 'PENDING' &&
+                  collegeVerificationStatus?.value === 'NOT YET RECEIVED' &&
+                  nmc_status?.value === 'NOT YET RECEIVED'
+                ? 'Pending At Registrar'
+                : smc_status?.value === 'APPROVED' &&
+                  NMCVerificationStatus?.value === 'APPROVED' &&
+                  collegeVerificationStatus?.value === 'PENDING' &&
+                  nmc_status?.value === 'NOT YET RECEIVED'
+                ? 'Pending At Dean'
+                : 'Pending At NMC'}
             </Typography>
           </Grid>
           <Grid item xs={8} md="auto">
@@ -78,11 +109,9 @@ export function TrackApplicationDetails({
         </Grid>
       </Box>
       <Divider sx={{ mt: 2 }} />
-      <Grid container>
-        <Grid container item xs={12} mt={8}>
-          <Stepper steps={wizardSteps} selectedRowData={selectedRowData} activeStep={activeStep} />
-        </Grid>
-      </Grid>
+      <Box py={{ xs: 0, sm: 4, lg: 2 }} mt={6} sx={{ overflowX: 'auto' }}>
+        <Stepper steps={wizardSteps} selectedRowData={selectedRowData} activeStep={activeStep} />
+      </Box>
       <Divider fullWidth sx={{ mt: 6 }} />
       <Grid mt={2}>
         <Button color="grey" variant="contained" onClick={showTrackApplicationTable}>

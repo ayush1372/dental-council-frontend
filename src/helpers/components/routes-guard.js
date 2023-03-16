@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import { Home } from '../../pages';
 import { MainLayout } from '../../ui/layout';
 import { lazyRetry } from '../../utilities/lazyload';
+import ProtectedRoute from './protected-route';
 import { SuspenseBoundary } from './suspense-boundary';
 
 const loadComponent = (component) => lazyRetry(() => import(`../../pages/${component}`));
@@ -25,7 +26,9 @@ export function RoutesGuard({ root = false, navMeta }) {
               path={nav.path}
               element={
                 <SuspenseBoundary>
-                  <Component />
+                  <ProtectedRoute isPrivate={nav.isPrivate}>
+                    <Component />
+                  </ProtectedRoute>
                 </SuspenseBoundary>
               }
             >

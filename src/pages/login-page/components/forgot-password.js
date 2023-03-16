@@ -96,7 +96,7 @@ const ForgotPassword = ({ handleConfirmPassword, otpData }) => {
       </Divider>
       <Box mt={2}>
         <Typography variant="body1">
-          Enter your Mobile Number
+          Enter Mobile Number
           <Typography component="span" color="error.main">
             *
           </Typography>

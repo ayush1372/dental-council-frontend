@@ -3,20 +3,26 @@ import { useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
-import { useParams } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { encryptData } from '../../../helpers/functions/common-functions';
-import { forgotPassword } from '../../../store/actions/forgot-password-actions';
+import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
+import { setUserPassword } from '../../../store/actions/doctor-registration-actions';
 import { Button, TextField } from '../../../ui/core';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
-import SuccessModal from '../../register/doctor-registration/success-popup';
 
-const NewPasswordSetup = ({ handlePasswordSetup }) => {
-  const [showSuccess, setShowSuccess] = useState();
-  const params = useParams();
+const NewPasswordSetup = () => {
+  const [showSuccess, setShowSuccess] = useState(false);
+
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const registrationNumber = useSelector(
+    (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.registration_number
+  );
+  const uniqueHpId = useSelector((state) =>
+    state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId.replace('@hpr.abdm', '')
+  );
+  const mobilenumber = useSelector((state) => state?.doctorRegistration?.storeMobileDetailsData);
   const {
     register,
     handleSubmit,
@@ -31,20 +37,33 @@ const NewPasswordSetup = ({ handlePasswordSetup }) => {
     },
   });
   const onSubmit = () => {
-    handlePasswordSetup();
-    const data = {
-      token: params.request_id,
-      password: encryptData(getValues().password, process.env.REACT_APP_PASS_SITE_KEY),
+    const reqObj = {
+      mobile: mobilenumber,
+      username: uniqueHpId,
+      registration_number: registrationNumber,
+      password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
     };
-    dispatch(forgotPassword(data)).then(() => {
+    dispatch(setUserPassword(reqObj)).then(() => {
       setShowSuccess(true);
     });
   };
+
   return (
-    <Box data-testid="new-password-setup" p={4} bgcolor="white.main" boxShadow="4">
-      <Typography mt={2} variant="h2" component="div" textAlign="center" data-testid="Password">
-        Enter New Password
+    <Box data-testid="new-password-setup" p={4} bgcolor="white.main" boxShadow="4" width="40%">
+      <Typography mt={2} variant="h4" component="div" textAlign="center" data-testid="Password">
+        {`Welcome  ${uniqueHpId} ! `}
       </Typography>
+      <Typography
+        mt={2}
+        variant="body1"
+        component="div"
+        textAlign="center"
+        data-testid="Password"
+        pb={1}
+      >
+        {`Please set your password `}
+      </Typography>
+
       <Box>
         <Box mt={2}>
           <Typography variant="body1">
@@ -93,7 +112,7 @@ const NewPasswordSetup = ({ handlePasswordSetup }) => {
               required: 'Provide Confirm Password',
               validate: (val) => {
                 if (watch('password') !== val) {
-                  return 'Your passwords do no match';
+                  return 'Entered passwords does not match';
                 }
               },
             })}
@@ -116,7 +135,14 @@ const NewPasswordSetup = ({ handlePasswordSetup }) => {
           </Button>
         </Box>
       </Box>
-      {showSuccess && <SuccessModal />}
+      {showSuccess && (
+        <SuccessModalPopup
+          open={showSuccess}
+          setOpen={() => setShowSuccess(false)}
+          text={`Your password for ${uniqueHpId} has been successfully created `}
+          successRegistration={true}
+        />
+      )}
     </Box>
   );
 };

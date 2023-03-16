@@ -18,6 +18,7 @@ import MenuItem from '@mui/material/MenuItem';
 import PopupState, { bindMenu, bindTrigger } from 'material-ui-popup-state';
 import { useSelector } from 'react-redux';
 
+import SuccessModalPopup from '../../../../shared/common-modals/success-modal-popup';
 import SuspendLicenseVoluntaryRetirement from '../../../suspend-license-voluntary-retirement';
 import QualificationDetailsContent from '../readable-content/qualification-details-content';
 import RegistrationDetailsContent from '../readable-content/registration-details-content';
@@ -34,9 +35,14 @@ const ReadRegisterAndAcademicDetails = ({
   const [selected, setSelected] = useState('');
   const [confirmationModal, setConfirmationModal] = useState(false);
 
-  const { userActiveTab } = useSelector((state) => state.common);
+  const { userActiveTab, selectedAcademicStatus } = useSelector((state) => state.common);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [successPopupMessage, setSuccessPopupMessage] = useState('');
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  // const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+
+  // const dispatch = useDispatch();
 
   const accordions = [
     {
@@ -141,7 +147,7 @@ const ReadRegisterAndAcademicDetails = ({
           >
             Back
           </Button>
-          {userActiveTab === 'dashboard' && (
+          {userActiveTab === 'dashboard' && selectedAcademicStatus?.toUpperCase() === 'PENDING' && (
             <Box mt={2}>
               <PopupState>
                 {(popupState) => (
@@ -199,6 +205,7 @@ const ReadRegisterAndAcademicDetails = ({
         </Box>
       )}
       <Dialog
+        scroll="body"
         open={confirmationModal}
         onClose={() => {
           setConfirmationModal(false);
@@ -212,17 +219,17 @@ const ReadRegisterAndAcademicDetails = ({
         <Box
           p={2}
           width={selected === 'verify' ? '500px' : selected === 'forward' ? '700px' : '630px'}
-          height={
-            selected === 'reject'
-              ? '500px'
-              : selected === 'verify'
-              ? '380px'
-              : selected === 'forward'
-              ? '300px'
-              : selected === 'raise'
-              ? '650px'
-              : '720px'
-          }
+          // height={
+          //   selected === 'reject'
+          //     ? '500px'
+          //     : selected === 'verify'
+          //     ? '380px'
+          //     : selected === 'forward'
+          //     ? '100px'
+          //     : selected === 'raise'
+          //     ? '650px'
+          //     : '720px'
+          // }
           borderRadius={'40px'}
         >
           <Box align="right">
@@ -242,6 +249,9 @@ const ReadRegisterAndAcademicDetails = ({
                 handleSubmitDetails={handleSubmitDetails}
                 activeStep={activeStep}
                 handleClose={handleClose}
+                closeActionModal={setConfirmationModal}
+                showSuccessPopup={setShowSuccessPopup}
+                setSuccessPopupMessage={setSuccessPopupMessage}
               />
             </Box>
           ) : (
@@ -249,6 +259,14 @@ const ReadRegisterAndAcademicDetails = ({
           )}
         </Box>
       </Dialog>
+      {showSuccessPopup && (
+        <SuccessModalPopup
+          open={true}
+          setOpen={() => setShowSuccessPopup(false)}
+          text={successPopupMessage}
+          SuspensionCall={true}
+        />
+      )}
     </Box>
   );
 };

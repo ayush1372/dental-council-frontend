@@ -5,6 +5,7 @@ import { Grid, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
+import { convertGender } from '../../../../utilities/common-validations';
 
 const PersonalDetails = ({ personalDetails }) => {
   const { userActiveTab } = useSelector((state) => state.common);
@@ -21,17 +22,17 @@ const PersonalDetails = ({ personalDetails }) => {
     date_of_birth,
     father_name,
     gender,
-    language,
+    // language,
     // middle_name,
     mother_name,
     country_nationality,
     // salutation,
-    schedule,
+    // schedule,
     spouse_name,
   } = personal_details || {};
 
   const nationality = country_nationality?.name || '';
-  const nameSchedule = schedule?.name || '';
+  // const nameSchedule = schedule?.name || '';
 
   return (
     <Grid container spacing={2} mt={2}>
@@ -107,7 +108,7 @@ const PersonalDetails = ({ personalDetails }) => {
 
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
-              {full_name ? full_name : ''}
+              Dr. {full_name ? full_name : ''}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
@@ -185,7 +186,7 @@ const PersonalDetails = ({ personalDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
-              {gender ? gender : ''}
+              {gender && convertGender(gender)}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
@@ -242,7 +243,7 @@ const PersonalDetails = ({ personalDetails }) => {
         </Grid>
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
 
-        <Grid item xs={12} md={3}>
+        {/* <Grid item xs={12} md={3}>
           <Typography variant="body5" color="grey.label">
             Languages
             <Typography component="span" color="error.main">
@@ -261,11 +262,11 @@ const PersonalDetails = ({ personalDetails }) => {
               />
             )}{' '}
           </Grid>
-        </Grid>
+        </Grid> */}
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
       </Grid>
       <Grid container item spacing={2}>
-        <Grid item xs={12} md={4}>
+        {/* <Grid item xs={12} md={4}>
           <Typography variant="body5" color="grey.label">
             Schedule
             <Typography component="span" color="error.main">
@@ -285,7 +286,7 @@ const PersonalDetails = ({ personalDetails }) => {
             )}{' '}
           </Grid>
         </Grid>
-        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
+        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />} */}
       </Grid>
     </Grid>
   );

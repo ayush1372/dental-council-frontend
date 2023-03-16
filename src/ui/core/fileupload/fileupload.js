@@ -171,7 +171,7 @@ export const UploadFile = (props) => {
                       <UploadFileIcon color="primary" fontSize="large" />
                       <div className={styles.fileDetailsArea}>
                         <Typography color="string">{file.fileName}</Typography>
-                        {uploadStatus === 'successful' ? (
+                        {fileData.length === 1 || uploadStatus === 'successful' ? (
                           <div className={styles.timeInfo}>
                             {moment(file.timeInfo).format('DD MMMM, YYYY')} at{' '}
                             {moment(file.timeInfo).format('HH:mm A')}
@@ -186,7 +186,7 @@ export const UploadFile = (props) => {
                           </Typography>
                         )}
                       </div>
-                      {uploadStatus === 'successful' ? (
+                      {fileData.length === 1 || uploadStatus === 'successful' ? (
                         <div className={styles.actionArea}>
                           {' '}
                           <DeleteOutlineIcon color="error" />{' '}

@@ -2,25 +2,46 @@ import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined';
 import { Box, Container, Modal, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router';
 
 import { getCardCount } from '../../store/actions/dashboard-actions';
+import { setBreadcrumbsActivetab } from '../../store/reducers/common-reducers';
 import { Button } from '../../ui/core';
 
-export default function SuccessModalPopup({ open, setOpen, text, handleClose, SuspensionCall }) {
+export default function SuccessModalPopup({
+  open,
+  setOpen,
+  text,
+  handleClose,
+  SuspensionCall,
+  isHpIdCreated,
+  successRegistration,
+  existHprId,
+}) {
+  const navigate = useNavigate();
   const handleCloseModal = () => {
     setOpen(false);
   };
   const theme = useTheme();
   const dispatch = useDispatch();
-
+  const navigateToLogin = () => {
+    navigate('/login-page', { state: { loginFormname: 'Doctor' } });
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
   const handleCloseModalALL = () => {
     setOpen(false);
     handleClose();
+    dispatch(setBreadcrumbsActivetab('DASHBOARD'));
     if (SuspensionCall) {
       dispatch(getCardCount());
     }
   };
-
+  const navigateLogin = () => {
+    navigate('/login-page', { state: { loginFormname: 'Doctor' } });
+  };
   return (
     <Modal open={open} onClose={handleClose} sx={{ mt: 15 }}>
       <Container
@@ -28,8 +49,7 @@ export default function SuccessModalPopup({ open, setOpen, text, handleClose, Su
         sx={{
           backgroundColor: theme.palette.white.main,
           borderRadius: '10px',
-          height: '350px',
-          p: '30px',
+          p: 3,
         }}
       >
         <Box mb={1} display="flex" justifyContent="center">
@@ -67,12 +87,20 @@ export default function SuccessModalPopup({ open, setOpen, text, handleClose, Su
             {text}
           </Typography>
           <Button
-            sx={{ width: { xs: '100%', sm: '408px' }, mt: 5 }}
+            sx={{ mt: 5 }}
             variant="contained"
             color="warning"
-            onClick={handleClose ? handleCloseModalALL : handleCloseModal}
+            onClick={
+              handleClose
+                ? handleCloseModalALL
+                : isHpIdCreated
+                ? navigateToLogin
+                : successRegistration
+                ? navigateLogin
+                : handleCloseModal
+            }
           >
-            Ok
+            {successRegistration ? 'Continue to login' : existHprId ? 'Continue to login' : 'Ok'}
           </Button>
         </Box>
       </Container>

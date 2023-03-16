@@ -2,7 +2,6 @@ import Axios from 'axios';
 
 import { API } from '../api/api-endpoints';
 import authInterceptors from '../api/auth-interceptors';
-// import { expireSession } from '../api/session';
 import { millisecondToDate } from '../helpers/functions/common-functions';
 import { setApiLoading } from '../store/reducers/common-reducers';
 import store from '../store/store';
@@ -36,22 +35,13 @@ axios.interceptors.response.use(
           headers: {
             Authorization: 'Bearer ' + localStorage.getItem('refreshtoken'),
           },
-        })
-          .then((response) => {
-            localStorage.setItem('accesstoken', response.headers['access-token']);
-            localStorage.setItem('refreshtoken', response.headers['refresh-token']);
-            //passing updated token in headers for authorization
-            error.config.headers['Authorization'] = 'Bearer ' + response.headers['access-token'];
-            return axios.request(error.response.config);
-          })
-          .catch(() => {
-            // expireSession('ERR_SESSION: Session expired.');
-          });
-        // } else {
-        //   expireSession('ERR_SESSION: Session expired.');
-        // }
-      } else {
-        // expireSession('ERR_SESSION: Session expired.');
+        }).then((response) => {
+          localStorage.setItem('accesstoken', response.headers['access-token']);
+          localStorage.setItem('refreshtoken', response.headers['refresh-token']);
+          //passing updated token in headers for authorization
+          error.config.headers['Authorization'] = 'Bearer ' + response.headers['access-token'];
+          return axios.request(error.response.config);
+        });
       }
     } else {
       return Promise.reject(error);

@@ -9,6 +9,10 @@ import {
   smcTabs,
 } from '../components/sidebar-drawer-list-item';
 
+export function dateFormat(s) {
+  var b = s.split(/\D/);
+  return b.reverse().join('-');
+}
 export function get_year_data(startYear = 1900) {
   var ans = [];
   var date = new Date();
@@ -71,13 +75,26 @@ export const userGroupType = (userGroupID) => {
 
 export const userGroupTypeForSession = (userGroupID) => {
   const userGroupTypeObj = {
-    ROLE_HEALTH_PROFESSIONAL: 'Health Professional',
-    ROLE_SMC: 'State Medical Council',
-    ROLE_NMC: 'National Medical Council',
-    ROLE_COLLEGE_DEAN: 'College Dean',
-    ROLE_COLLEGE_REGISTRAR: 'College Registrar',
-    ROLE_COLLEGE_ADMIN: 'College Admin',
-    ROLE_NBE: 'NBE',
+    ROLE_HEALTH_PROFESSIONAL: 1,
+    ROLE_SMC: 2,
+    ROLE_NMC: 3,
+    ROLE_COLLEGE_DEAN: 4,
+    ROLE_COLLEGE_REGISTRAR: 5,
+    ROLE_COLLEGE_ADMIN: 6,
+    ROLE_NBE: 7,
+  };
+  return userGroupTypeObj[userGroupID];
+};
+
+export const userGroupTypeId = (userGroupID) => {
+  const userGroupTypeObj = {
+    1: 'Doctor',
+    2: 'SMC',
+    3: 'NMC',
+    4: 'College',
+    5: 'College',
+    6: 'College',
+    7: 'NBE',
   };
   return userGroupTypeObj[userGroupID];
 };
@@ -124,6 +141,10 @@ export const workSheetTheme = {
   bgColor: { argb: '#ffffcc00' },
 };
 
+export const replaceString = (original = '', replacement = '', withReplace = '') => {
+  return original.replace(replacement, withReplace);
+};
+
 export const parserJWT = (token) => {
   let base64Url = token?.split('.')[1];
   let base64 = base64Url?.replace(/-/g, '+').replace(/_/g, '/');
@@ -147,3 +168,18 @@ export const parserJWT = (token) => {
 export const millisecondToDate = (millisecond) => {
   return new Date(parserJWT(millisecond)?.exp * 1000);
 };
+
+function yaerData() {
+  var ans = [];
+  var date = new Date();
+  var presentYear = date.getFullYear();
+  for (var i = 1900; i <= presentYear; i++) {
+    var entry_struct = {};
+    entry_struct['value'] = i.toString();
+    entry_struct['label'] = i;
+    ans.push(entry_struct);
+  }
+  return ans;
+}
+
+export const getYearData = yaerData();

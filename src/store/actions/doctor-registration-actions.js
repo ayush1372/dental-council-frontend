@@ -1,14 +1,16 @@
+/* eslint-disable no-console */
 import { API, API_HPRID } from '../../api/api-endpoints';
 import { accesstokenHprId } from '../../constants/common-data';
 import { GET, POST } from '../../constants/requests';
 import { gatewayApiUseAxiosCall, hpIdUseAxiosCall, useAxiosCall } from '../../hooks/use-axios';
 import {
-  createhprIdData,
   getAccessToken,
+  getkycDetails,
   getMobileOtp,
   hpIdExistsDetails,
   hprIdSuggestionsDetails,
   sendResetPasswordLinkDetails,
+  setUserPasswordData,
   smcRegistrationDetail,
   storeMobileDetails,
   storeMobileOtpData,
@@ -22,7 +24,7 @@ export const fetchSmcRegistrationDetails = (registrationData) => async (dispatch
       url: API.doctorRegistration.smcRegistrationDetail
         .replace('{smcId}', registrationData?.smcId)
         .replace('{registrationNumber}', registrationData?.registrationNumber),
-
+      headers: { 'Content-Type': 'application/json' },
       data: registrationData,
     })
       .then((response) => {
@@ -43,6 +45,22 @@ export const getSessionAccessToken = (body) => async (dispatch) => {
     })
       .then((response) => {
         dispatch(getAccessToken(response));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+export const checkKycDetails = (body) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.kyc.kycCheck.replace('{registrationNumber}', body.registrationNumber),
+      data: body,
+    })
+      .then((response) => {
+        dispatch(getkycDetails(response));
         return resolve(response);
       })
       .catch((error) => {
@@ -98,6 +116,8 @@ export const checkHpidExists = (txnId) => async (dispatch) => {
     })
       .then((response) => {
         dispatch(hpIdExistsDetails(response));
+        console.log('exists', response);
+
         return resolve(response);
       })
       .catch((error) => {
@@ -110,7 +130,7 @@ export const getHprIdSuggestions = (txnId) => async (dispatch) => {
     hpIdUseAxiosCall({
       method: POST,
       url: API_HPRID.hpId.hpIdSuggestion,
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + accesstokenHprId },
       data: txnId,
     })
       .then((response) => {
@@ -149,7 +169,25 @@ export const createUniqueHprId = (data) => async (dispatch) => {
       data: data,
     })
       .then((response) => {
-        dispatch(createhprIdData(response));
+        dispatch(hpIdExistsDetails(response));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const setUserPassword = (data) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.doctorRegistration.setUserPassword,
+      // headers: { Authorization: 'Bearer ' + accesstokenHprId },
+      data: data,
+    })
+      .then((response) => {
+        dispatch(setUserPasswordData(response));
         return resolve(response);
       })
       .catch((error) => {
