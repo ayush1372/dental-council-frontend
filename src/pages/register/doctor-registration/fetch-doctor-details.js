@@ -227,8 +227,8 @@ function FetchDoctorDetails() {
     };
     if (otpValue.length === 6) {
       dispatch(verifyMobileOtp(data)).then(() => {
-        setShowOtpMobile(false);
         setisOtpValidMobile(true);
+        setShowOtpMobile(false);
         handleClear();
         //mob field should be disabled after successfull otp
       });
