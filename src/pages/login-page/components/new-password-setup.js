@@ -4,6 +4,7 @@ import { Box, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { encryptData } from '../../../helpers/functions/common-functions';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
@@ -13,6 +14,7 @@ import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 const NewPasswordSetup = () => {
   const [showSuccess, setShowSuccess] = useState(false);
+  let navigate = useNavigate();
 
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -48,6 +50,9 @@ const NewPasswordSetup = () => {
     });
   };
 
+  const onCancel = () => {
+    navigate('/');
+  };
   return (
     <Box data-testid="new-password-setup" p={4} bgcolor="white.main" boxShadow="4" width="40%">
       <Typography mt={2} variant="h4" component="div" textAlign="center" data-testid="Password">
@@ -121,16 +126,17 @@ const NewPasswordSetup = () => {
 
         <Box align="end" mt={3}>
           <Button
-            size="medium"
+            onClick={onCancel}
             variant="contained"
+            color="grey"
+            // disabled={!enableSubmit}
             sx={{
-              backgroundColor: 'secondary.lightOrange',
-              '&:hover': {
-                backgroundColor: 'secondary.lightOrange',
-              },
+              mr: 2,
             }}
-            onClick={handleSubmit(onSubmit)}
           >
+            Cancel
+          </Button>
+          <Button variant="contained" color="secondary" onClick={handleSubmit(onSubmit)}>
             {t('Submit')}
           </Button>
         </Box>
