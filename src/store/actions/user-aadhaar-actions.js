@@ -1,7 +1,7 @@
 import { API_HPRID } from '../../api/api-endpoints';
 import { accesstokenHprId } from '../../constants/common-data';
 import { POST } from '../../constants/requests';
-import { hpIdUseAxiosCall } from '../../hooks/use-axios';
+import { hpIdDemographicUseAxiosCall, hpIdUseAxiosCall } from '../../hooks/use-axios';
 import {
   aadhaarNumberData,
   aadhaarOtpDetails,
@@ -31,7 +31,7 @@ export const sendAaadharOtp = (aadhaar) => async (dispatch) => {
 };
 export const getDemographicAuthMobile = (data) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
-    hpIdUseAxiosCall({
+    hpIdDemographicUseAxiosCall({
       method: POST,
       url: API_HPRID.hpId.demographicAuthMobile,
       data: data,

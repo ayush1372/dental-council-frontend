@@ -115,6 +115,31 @@ export const hpIdUseAxiosCall = async (payload = axiosProps) => {
       .finally(() => setLoadingState(false));
   });
 };
+export const hpIdDemographicUseAxiosCall = async (payload = axiosProps) => {
+  setLoadingState(true);
+  payload.headers =
+    payload.headers !== undefined ? Object.assign(payload.headers, appheader) : appheader;
+
+  return await new Promise((resolve, reject) => {
+    hpIdAxios(payload)
+      .then((response) => {
+        return resolve({
+          data: response.data,
+          responseHeader: response.headers,
+          isLoading: false,
+          isError: false,
+        });
+      })
+      .catch((error) => {
+        return reject({
+          data: error,
+          isLoading: false,
+          isError: true,
+        });
+      })
+      .finally(() => setLoadingState(false));
+  });
+};
 export const gatewayApiUseAxiosCall = async (payload = axiosProps) => {
   setLoadingState(true);
   payload.headers =

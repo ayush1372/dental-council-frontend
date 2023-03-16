@@ -13,7 +13,6 @@ import {
   setUserPasswordData,
   smcRegistrationDetail,
   storeMobileDetails,
-  storeMobileOtpData,
 } from '../reducers/doctor-registration-reducer';
 import { typeOfOtp } from '../reducers/user-aadhaar-verify-reducer';
 
@@ -88,7 +87,7 @@ export const generateMobileOtp = (body) => async (dispatch) => {
       });
   });
 };
-export const verifyMobileOtp = (body) => async (dispatch) => {
+export const verifyMobileOtp = (body) => async () => {
   return await new Promise((resolve, reject) => {
     hpIdUseAxiosCall({
       method: POST,
@@ -97,8 +96,6 @@ export const verifyMobileOtp = (body) => async (dispatch) => {
       headers: { Authorization: 'Bearer ' + accesstokenHprId },
     })
       .then((response) => {
-        dispatch(storeMobileOtpData(response));
-
         return resolve(response);
       })
       .catch((error) => {
