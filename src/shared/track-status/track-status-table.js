@@ -14,6 +14,7 @@ import { Button } from '../../ui/core';
 
 function createData(
   SNo,
+  request_id,
   registrationNo,
   nameofApplicant,
   nameofStateCouncil,
@@ -27,6 +28,7 @@ function createData(
 ) {
   return {
     SNo,
+    request_id,
     registrationNo,
     nameofApplicant,
     nameofStateCouncil,
@@ -63,6 +65,12 @@ function TrackStatusTable(props) {
   const dataHeader = [
     { title: 'S.No.', name: 'SNo', sorting: true, type: 'string' },
     {
+      title: 'Request ID',
+      name: 'requestId',
+      sorting: true,
+      type: 'string',
+    },
+    {
       title: 'IMR ID/ Registration No.',
       name: 'registrationNo',
       sorting: true,
@@ -94,7 +102,7 @@ function TrackStatusTable(props) {
       type: 'string',
     },
     { title: 'Date of Submission', name: 'dateofSubmission', sorting: true, type: 'string' },
-    { title: 'Pendency', name: 'pendency', sorting: true, type: 'string' },
+    { title: 'Pendency days', name: 'pendency', sorting: true, type: 'string' },
     { title: 'Pending with user', name: 'pending', sorting: true, type: 'string' },
     loggedInUserType !== 'College' && {
       title:
@@ -123,6 +131,10 @@ function TrackStatusTable(props) {
     (application, index) => {
       return createData(
         { type: 'SNo', value: index + 1 },
+        {
+          type: 'requestId',
+          value: application?.request_id,
+        },
         {
           type: 'registrationNo',
           value: application?.registration_no,

@@ -110,7 +110,7 @@ export function CollegeRegistration() {
   const { otpPopup, handleClickOpen, otpMobileVerify, otpEmailVerify, handleClose } = ModalOTP({
     afterConfirm: onContinue,
     reSentOtp: onOtpResendClick,
-    headerText: `We just sent an OTP on your registered  ${headerText} linked with your Aadhaar.`,
+    headerText: `Please enter the OTP sent on your registered  ${headerText} linked with your Aadhaar.`,
   });
 
   const getOtp = (type) => {

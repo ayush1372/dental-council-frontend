@@ -4,7 +4,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { Divider, Grid, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { monthsData, yearsData } from '../../../../constants/common-data';
+import { yearsData } from '../../../../constants/common-data';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
 import { getCollegesList } from '../../../../store/actions/common-actions';
 import { RadioGroup, Select, TextField } from '../../../../ui/core';
@@ -367,7 +367,7 @@ const EditQualificationDetails = ({
               {...register(`qualification[${index}].month`, {
                 required: 'awarding is required',
               })}
-              options={monthsData}
+              options={yearsData}
             />
           </Grid>
           <Grid item xs={12} md={6}>
