@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { Box, Grid, TablePagination, Typography } from '@mui/material';
+import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 
 import GenericTable from '../../../../shared/generic-component/generic-table';
@@ -99,7 +100,15 @@ function DashboardControlledTable(props) {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
+
   const newRowsData = dashboardTableDetails?.data?.dashboard_tolist?.map((application, index) => {
+    const formattedDate = moment(application?.created_at).format('DD-MM-YYYY');
+    const capitalize = (str) => {
+      if (!str) {
+        return '';
+      }
+      return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    };
     return createData(
       { type: 'SNo', value: index + 1 },
       {
@@ -114,13 +123,13 @@ function DashboardControlledTable(props) {
         type: 'nameofStateCouncil',
         value: application?.council_name,
       },
-      { type: 'councilVerificationStatus', value: application?.smc_status },
+      { type: 'councilVerificationStatus', value: capitalize(application?.smc_status) },
       {
         type: 'collegeVerificationStatus',
-        value: application?.college_dean_status,
+        value: capitalize(application?.college_dean_status),
       },
-      { type: 'NMCVerificationStatus', value: application?.nmc_status },
-      { type: 'dateofSubmission', value: application?.created_at },
+      { type: 'NMCVerificationStatus', value: capitalize(application?.nmc_status) },
+      { type: 'dateofSubmission', value: formattedDate },
       { type: 'pendency', value: application?.pendency },
       { type: 'view', value: 'View', onClickCallback: viewCallback },
       { type: 'profileID', value: application?.hp_profile_id }
