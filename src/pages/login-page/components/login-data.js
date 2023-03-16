@@ -317,7 +317,7 @@ export const Login = ({ loginName }) => {
               <Box mt={2}>
                 <Typography variant="body1">
                   {' '}
-                  We just sent an OTP on your Mobile Number{' '}
+                  Please enter an OTP sent on your Mobile Number{' '}
                   {getValues().mobileNo.replace(/^.{6}/g, 'XXXXXX')}.
                 </Typography>
                 {otpform}
