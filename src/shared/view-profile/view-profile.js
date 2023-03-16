@@ -215,13 +215,15 @@ export function ViewProfile(props) {
             <Typography variant="body3" color="grey.label">
               Mobile Number
             </Typography>
-            <Typography variant="subtitle2" color="textPrimary.main">
-              {mobileNumber ? mobileNumber : ''}
-              <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
-              <Typography component="span" variant="subtitle2" color="primary.main" ml={1}>
-                Change
+            {mobileNumber && (
+              <Typography variant="subtitle2" color="textPrimary.main">
+                {mobileNumber}
+                <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
+                <Typography component="span" variant="subtitle2" color="primary.main" ml={1}>
+                  Change
+                </Typography>
               </Typography>
-            </Typography>
+            )}
           </Grid>
           <Grid item xs={12} sm={6} md="auto" lg="auto" pl={2}>
             <Typography variant="body3" color="grey.label">

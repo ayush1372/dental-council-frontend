@@ -22,6 +22,7 @@ const NewPasswordSetup = () => {
   const uniqueHpId = useSelector((state) =>
     state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId.replace('@hpr.abdm', '')
   );
+  const mobilenumber = useSelector((state) => state?.doctorRegistration?.storeMobileDetailsData);
   const {
     register,
     handleSubmit,
@@ -37,6 +38,7 @@ const NewPasswordSetup = () => {
   });
   const onSubmit = () => {
     const reqObj = {
+      mobile: mobilenumber,
       username: uniqueHpId,
       registration_number: registrationNumber,
       password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),

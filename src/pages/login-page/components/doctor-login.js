@@ -348,7 +348,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
               required
               fullWidth
               label={'Password'}
-              placeholder={'Please enter your Password'}
+              placeholder={'Please enter Password'}
               type={'Password'}
               inputProps={{ maxLength: 12 }}
               name={'password'}
@@ -369,7 +369,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
               register={register}
               getValues={getValues}
               errors={errors}
-              label={'Enter your Mobile Number'}
+              label={'Enter Mobile Number'}
               showVerify
               verifyOnClick={sendNotificationOTPHandler}
             />
