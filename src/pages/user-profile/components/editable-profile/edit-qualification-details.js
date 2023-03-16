@@ -30,10 +30,6 @@ const EditQualificationDetails = ({
     (state) => state?.common
   );
 
-  // const handleRegistration = (event) => {
-  //   setValue(`qualification.${index}.${event.target.name}`, event.target.value);
-  // };
-
   const handleQualificationFrom = (event) => {
     setValue(event.target.name, event.target.value);
   };
@@ -114,12 +110,12 @@ const EditQualificationDetails = ({
 
       {qualificationfrom === 'International' && (
         <Grid container item spacing={2} display="flex" alignItems="center" mb={2}>
-          <Grid item xs={4}>
+          <Grid item xs={12} sm={6} md={5} lg={4}>
             <Typography color="grey2.lighter" variant="body1">
               FMGE QUALIFICATION DETAILS
             </Typography>
           </Grid>
-          <Grid item xs={8}>
+          <Grid item xs={12} sm={6} md={7} lg={8}>
             <Divider />
           </Grid>
         </Grid>
@@ -219,18 +215,17 @@ const EditQualificationDetails = ({
       )}
 
       <Grid container item spacing={2} display="flex" alignItems="center" mb={2}>
-        <Grid item xs={3}>
+        <Grid item xs={12} sm={4}>
           <Typography color="grey2.lighter" variant="body1">
             BASIC QUALIFICATION
           </Typography>
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={12} sm={8}>
           <Divider />
         </Grid>
       </Grid>
       <Grid container item spacing={2}>
-        <Grid item xs={12} md={5} xl={4}>
-          {/* {getValues()[qualification[0]] !== undefined && ( */}
+        <Grid item xs={12} md={6} lg={4}>
           <Select
             fullWidth
             error={errors?.qualification?.[index]?.qualification?.message}
@@ -269,8 +264,7 @@ const EditQualificationDetails = ({
           {/* )} */}
         </Grid>
         {qualificationfrom === 'International' && (
-          <Grid item xs={12} md={3} xl={4}>
-            {/* {getValues()[qualification[1]] !== undefined && ( */}
+          <Grid item xs={12} md={6} lg={4}>
             <Select
               fullWidth
               error={errors?.qualification?.[index]?.country?.message}
@@ -297,11 +291,10 @@ const EditQualificationDetails = ({
                 },
               }}
             />
-            {/* )} */}
           </Grid>
         )}
 
-        <Grid item xs={12} md={4} xl={4}>
+        <Grid item xs={12} md={6} lg={4}>
           <Select
             fullWidth
             error={errors?.qualification?.[index]?.state?.message}
@@ -321,8 +314,7 @@ const EditQualificationDetails = ({
             }}
           />
         </Grid>
-        <Grid item xs={12} md={4}>
-          {/* {getValues()[qualification[4]] !== undefined && ( */}
+        <Grid item xs={12} md={6} lg={4}>
           <Select
             fullWidth
             error={errors?.qualification?.[index]?.university?.message}
@@ -343,8 +335,7 @@ const EditQualificationDetails = ({
           />
           {/* )} */}
         </Grid>
-        <Grid item xs={12} md={4}>
-          {/* {getValues()[`qualification[${index}].college`] !== undefined && ( */}
+        <Grid item xs={12} md={6} lg={4}>
           <Select
             fullWidth
             error={errors?.qualification?.[index]?.college?.message}
@@ -365,14 +356,13 @@ const EditQualificationDetails = ({
           />
           {/* )} */}
         </Grid>
-        <Grid container item xs={12} md={8} xl={4} columnSpacing={2}>
+        <Grid container item xs={12} md={6} lg={4} columnSpacing={2}>
           <Typography pl={2}>Month & Year of awarding Degree</Typography>
           <Grid item xs={12} md={6} mb={{ xs: 2, md: 0 }}>
             <Select
               fullWidth
               error={errors?.qualification?.[index]?.month?.message}
               name="Month"
-              // label="Month & Year of awarding Degree/Diploma"
               defaultValue={fields[index].month}
               {...register(`qualification[${index}].month`, {
                 required: 'awarding is required',
@@ -385,7 +375,6 @@ const EditQualificationDetails = ({
               variant="outlined"
               name="year"
               options={yearsData}
-              // label={'Year of awarding Degree/Diploma'}
               required={true}
               placeholder={'Year of awarding'}
               fullWidth
@@ -400,33 +389,8 @@ const EditQualificationDetails = ({
         </Grid>
       </Grid>
 
-      {/* <Grid item xs={12} md={8}>
-          <RadioGroup
-            onChange={handleRegistration}
-            name={'nameindegree'}
-            size="small"
-            defaultValue={fields[index].nameindegree}
-            items={[
-              {
-                value: 1,
-                label: 'Yes',
-              },
-              {
-                value: 0,
-                label: 'No',
-              },
-            ]}
-            label="Is your name in degree, different from your name in Aadhaar?"
-            required={true}
-            error={errors?.qualification?.[index]?.nameindegree?.message}
-          />
-        </Grid> */}
-
       <Grid container item spacing={2} mt={1}>
-        <Grid item xs={12} md={6}>
-          <Typography variant="body1" sx={{ fontSize: '16px' }} color="text.primary">
-            Upload Qualification Degree <Typography color="error"> *</Typography>
-          </Typography>
+        <Grid item xs={12} md={8}>
           <UploadFile
             uploadFiles="single"
             sizeAllowed={1}
@@ -436,6 +400,7 @@ const EditQualificationDetails = ({
             fileData={qualificationFilesData}
             setFileData={handleQualificationFilesData}
             isDigiLockcerVisible={true}
+            uploadFileLabel="Upload Qualification Degree "
           />
         </Grid>
       </Grid>

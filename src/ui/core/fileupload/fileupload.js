@@ -4,7 +4,6 @@ import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ReplayIcon from '@mui/icons-material/Replay';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
-import { InputLabel } from '@mui/material';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Typography from '@mui/material/Typography';
@@ -18,13 +17,13 @@ export const UploadFile = (props) => {
   const {
     showBrowse,
     uploadFiles,
-    label,
     fileData,
     setFileData,
     sizeAllowed,
     fileTypes,
     fileMessage,
     isDigiLockcerVisible = false,
+    uploadFileLabel,
   } = props;
   const [uploadPercentage, setUploadPercentage] = useState('');
   // const [fileData, setFileData] = useState([]);
@@ -91,23 +90,37 @@ export const UploadFile = (props) => {
   };
   return (
     <>
-      <Box display="flex" justifyContent="space-between">
-        <Box>
-          <InputLabel id="demo-simple-select-label">
-            <Typography color="text.primary"> {label}</Typography>{' '}
-          </InputLabel>
-        </Box>
-        {isDigiLockcerVisible && (
-          <Typography
-            component="div"
-            color="primary.main"
-            width="fit-content"
-            display="flex"
-            alignItems="center"
-          >
-            <ControlPointIcon fontSize="18px" sx={{ marginRight: '5px' }} />
-            <Typography variant="body1">Pull from Digilocker</Typography>
+      <Box>
+        {!isDigiLockcerVisible && (
+          <Typography color="text.primary" component="div">
+            {uploadFileLabel} <Typography color="error"> *</Typography>
           </Typography>
+        )}
+
+        {isDigiLockcerVisible && (
+          <Box display="flex" justifyContent="space-between" flexWrap="wrap">
+            <Typography
+              color="text.primary"
+              component="div"
+              flexBasis={{ xs: '100%', sm: 0 }}
+              flexGrow="1"
+            >
+              {uploadFileLabel}
+              <Typography component="span" color="error">
+                *
+              </Typography>
+            </Typography>
+            <Box
+              component="div"
+              color="primary.main"
+              display="flex"
+              alignItems="center"
+              justifyContent="flex-end"
+            >
+              <ControlPointIcon fontSize="18px" sx={{ marginRight: '5px' }} />
+              <Typography variant="body1">Pull from Digilocker</Typography>
+            </Box>
+          </Box>
         )}
       </Box>
       <div className={styles.inputDiv}>

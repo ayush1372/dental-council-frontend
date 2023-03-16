@@ -183,10 +183,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     });
   };
 
-  // const [test, setTest] = useState(true);
-
   useEffect(() => {
-    // if (test) {
     dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id))
       .then((response) => {
         viewCertificate.qualification =
@@ -209,8 +206,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
       .catch((allFailMsg) => {
         successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
       });
-    // setTest(false);
-    // }
   }, []);
 
   const CloseAttachmentPopup = () => {
@@ -396,14 +391,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 {...register('RenewalDate', {
                   required: 'Registration Date is Required',
                 })}
-                // sx={{
-                //   input: {
-                //     backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
-                //   },
-                // }}
-                // InputProps={{
-                //   readOnly: loggedInUserType === 'SMC' ? false : true,
-                // }}
                 inputProps={{
                   min: new Date().toISOString().split('T')[0],
                 }}
@@ -413,13 +400,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
         </Grid>
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={6}>
-            <Typography variant="subtitle2" color="inputTextColor.main" mb={1}>
-              Upload the registration certificate
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
-            </Typography>
-
             <UploadFile
               uploadFiles="single"
               sizeAllowed={1}
@@ -428,6 +408,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                Maximum size allowed for the attachment is 5MB.`}
               fileData={registrationFileData}
               setFileData={setRegistrationFileData}
+              uploadFileLabel="Upload the registration certificate"
             />
           </Grid>
         </Grid>
