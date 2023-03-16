@@ -373,8 +373,8 @@ function FetchDoctorDetails() {
                 >
                   <Box pt={1}>
                     <Typography variant="body1">
-                      We just sent an OTP on your mobile number {mobileNumber} which is registered
-                      with Aadhaar.
+                      Please enter the OTP sent on your mobile number {mobileNumber} which is
+                      registered with Aadhaar.
                     </Typography>
                     {otpform}
                   </Box>
@@ -457,7 +457,7 @@ function FetchDoctorDetails() {
                 >
                   <Box>
                     <Typography variant="body1">
-                      We just sent an OTP on your Mobile Number.
+                      Please enter the OTP sent on your Mobile Number.
                     </Typography>
                     {otpform}
                   </Box>
