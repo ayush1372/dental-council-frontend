@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+/* eslint-disable no-console */
+import { useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Alert, Container, Divider, IconButton, InputAdornment, Typography } from '@mui/material';
@@ -27,13 +28,14 @@ import {
 import { storeMobileDetails } from '../../../store/reducers/doctor-registration-reducer';
 import { Button, TextField } from '../../../ui/core';
 import AadhaarInputField from '../../../ui/core/aadhaar-input-field/aadhaar-input-field';
+import successToast from '../../../ui/core/toaster';
 import CreateHprId from './unique-username';
 function FetchDoctorDetails() {
   const [showCreateHprIdPage, setShowCreateHprIdPage] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showOtpMobile, setShowOtpMobile] = useState(false);
   const [showOtpAadhar, setshowOtpAadhar] = useState(false);
-  const [demographicValue, setDemographicValue] = useState(false);
+  // const [demographicValue, setDemographicValue] = useState(false);
 
   const [isOtpValidMobile, setisOtpValidMobile] = useState(false);
   const [isOtpValidAadhar, setisOtpValidAadhar] = useState(false);
@@ -62,9 +64,9 @@ function FetchDoctorDetails() {
     (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.hp_name
   );
 
-  const demographicAuthMobileVerify = useSelector(
-    (state) => state?.AadhaarTransactionId?.demographicAuthMobileDetailsData
-  );
+  // const demographicAuthMobileVerify = useSelector(
+  //   (state) => state?.AadhaarTransactionId?.demographicAuthMobileDetailsData
+  // );
   const existUSerName = useSelector(
     (state) => state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId
   );
@@ -144,44 +146,79 @@ function FetchDoctorDetails() {
   };
 
   const handleVerifyMobile = () => {
+    dispatch(storeMobileDetails(getValues().MobileNumber));
     dispatch(
       getDemographicAuthMobile({
         txnId: aadhaarTxnId,
         mobileNumber: getValues().MobileNumber,
       })
-    );
-    dispatch(storeMobileDetails(getValues().MobileNumber));
+    )
+      .then((response) => {
+        // console.log('auth resp', response);
+        if (response?.data?.verified) {
+          setisOtpValidMobile(true);
+          //any popup? to show here that ' is kyc details and mobile num are matching ? '
+        } else {
+          console.log('err message else');
+          // let data = {
+          //   mobile: getValues().MobileNumber,
+          //   txnId: aadhaarTxnId,
+          // };
+          // dispatch(generateMobileOtp(data))
+          //   .then(() => {
+          //     setShowOtpMobile(true);
+          //   })
+          //   .catch((error) => {
+          //     successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+          //   });
+        }
+      })
+      .catch((err) => {
+        let data = {
+          mobile: getValues().MobileNumber,
+          txnId: aadhaarTxnId,
+        };
+        dispatch(generateMobileOtp(data))
+          .then(() => {
+            setShowOtpMobile(true);
+          })
+          .catch((error) => {
+            successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+          });
+        console.log('err message', err?.data?.details[0]?.message);
+        console.log('err message', err?.data?.message);
+      });
   };
 
-  useEffect(() => {
-    if (demographicAuthMobileVerify?.data?.verified) {
-      dispatch(
-        checkHpidExists({
-          txnId: aadhaarTxnId,
-        })
-      ).then((response) => {
-        if (response?.data?.hprIdNumber === null || response?.data?.hprIdNumber === '') {
-          setShowCreateHprIdPage(true);
-          dispatch(
-            getHprIdSuggestions({
-              txnId: aadhaarTxnId,
-            })
-          );
-        } else {
-          if (response?.data?.hprId && response?.data?.hprIdNumber) {
-            setShowSuccess(true);
-          }
-        }
-      });
-    } else if (demographicValue) {
-      let data = {
-        mobile: getValues().MobileNumber,
-        txnId: aadhaarTxnId,
-      };
-      dispatch(generateMobileOtp(data));
-    }
-    setDemographicValue(true);
-  }, [demographicAuthMobileVerify?.data?.verified]);
+  // useEffect(() => {
+  //   if (demographicAuthMobileVerify?.data?.verified) {
+  //     dispatch(
+  //       checkHpidExists({
+  //         txnId: aadhaarTxnId,
+  //       })
+  //     ).then((response) => {
+  //       if (response?.data?.hprIdNumber === null || response?.data?.hprIdNumber === '') {
+  //         setShowCreateHprIdPage(true);
+  //         dispatch(
+  //           getHprIdSuggestions({
+  //             txnId: aadhaarTxnId,
+  //           })
+  //         );
+  //       } else {
+  //         if (response?.data?.hprId && response?.data?.hprIdNumber) {
+  //           setShowSuccess(true);
+  //         }
+  //       }
+  //     });
+  //   } else if (demographicValue) {
+  //     let data = {
+  //       mobile: getValues().MobileNumber,
+  //       txnId: aadhaarTxnId,
+  //     };
+  //     dispatch(generateMobileOtp(data));
+  //   }
+  //   setDemographicValue(true);
+  // }, [demographicAuthMobileVerify?.data?.verified]);
 
   const handleValidateMobile = () => {
     let data = {
@@ -190,9 +227,10 @@ function FetchDoctorDetails() {
     };
     if (otpValue.length === 6) {
       dispatch(verifyMobileOtp(data)).then(() => {
-        setisOtpValidMobile(true);
         setShowOtpMobile(false);
+        setisOtpValidMobile(true);
         handleClear();
+        //mob field should be disabled after successfull otp
       });
     }
   };
@@ -228,7 +266,7 @@ function FetchDoctorDetails() {
         txnId: aadhaarTxnId,
       })
     ).then((response) => {
-      if (response?.data?.new === true) {
+      if (response?.data?.hprIdNumber === null || response?.data?.hprIdNumber === '') {
         setShowCreateHprIdPage(true);
         dispatch(
           getHprIdSuggestions({
@@ -236,7 +274,7 @@ function FetchDoctorDetails() {
           })
         );
       } else {
-        if (response?.data?.hprIdNumber.length > 0) {
+        if (response?.data?.hprId && response?.data?.hprIdNumber) {
           setShowSuccess(true);
         }
       }
@@ -385,6 +423,7 @@ function FetchDoctorDetails() {
                       variant="contained"
                       color="secondary"
                       onClick={handleValidateAadhar}
+                      disabled={isOtpValidMobile}
                     >
                       Validate
                     </Button>
@@ -432,7 +471,7 @@ function FetchDoctorDetails() {
                     }}
                   />
                   <Box>
-                    {!showOtpMobile && !isOtpValidMobile && (
+                    {!showOtpMobile && (
                       <Button
                         variant="contained"
                         color="secondary"
