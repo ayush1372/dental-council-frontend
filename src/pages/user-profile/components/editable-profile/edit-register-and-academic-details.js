@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Box, Grid, Typography } from '@mui/material';
+import moment from 'moment';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -227,6 +228,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   const handleRegistration = (event) => {
     setValue(event.target.name, event.target.value, true);
   };
+  const formattedDate = moment(getValues().RegistrationDate).format('DD-MM-YYYY');
 
   useEffect(() => {
     const details =
@@ -335,7 +337,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               name={'RegistrationDate'}
               required={true}
               fullWidth
-              defaultValue={getValues().RegistrationDate}
+              defaultValue={formattedDate}
               {...register('RegistrationDate', {
                 required: 'Registration Date is Required',
               })}
