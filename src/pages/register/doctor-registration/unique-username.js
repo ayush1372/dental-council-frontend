@@ -93,7 +93,7 @@ const UniqueUserNameForDoctorRegistration = () => {
                 />
               </Box>
             </Box>
-            <Box display="flex" justifyContent="space-between" alignItems="center">
+            <Box display="flex" justifyContent="space-between" alignItems="flex-start">
               <InfoOutlinedIcon sx={{ fontSize: '15px', verticalAlign: 'middle' }} />
               <Typography variant="body3" color="primary" component={'div'}>
                 You can use letters, numbers & symbols. Minimum length of the username should be 8

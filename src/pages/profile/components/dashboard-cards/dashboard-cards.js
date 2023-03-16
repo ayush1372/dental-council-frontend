@@ -174,17 +174,17 @@ export default function Dashboard() {
 
   const getTextLabelIcons = (item) => {
     if (item?.name?.includes('Pending') || item?.name?.includes('Received')) {
-      return 'Applications which are in pending stage.';
+      return 'Total number of pending applications';
     } else if (item?.name?.includes('Approved')) {
-      return 'Total number of applications after Approved';
+      return 'Total number of approved applications';
     } else if (item?.name?.includes('Verified') || item?.name?.includes('Approved')) {
-      return 'Total number of applications approved by production.';
+      return 'Total number of verified applications';
     } else if (item?.name?.includes('Raised')) {
-      return 'Total number of applications raised a query.';
+      return 'Total number of query raised on applications';
     } else if (item?.name?.includes('Rejected') || item?.name?.includes('Blacklisted')) {
-      return 'Total number of applications which are rejected';
+      return 'Total number of rejected applications';
     } else if (item?.name?.includes('Total')) {
-      return 'Total number of requests';
+      return 'Total number of applications';
     }
   };
 

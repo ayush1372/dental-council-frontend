@@ -48,7 +48,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography color="primary.main" variant="subtitle2">
+            <Typography color="textPrimary.main" variant="subtitle2">
               {courseName}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -71,7 +71,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {countryName}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -92,7 +92,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography color="primary.main" variant="subtitle2">
+            <Typography color="textPrimary.main" variant="subtitle2">
               {stateName}
             </Typography>
             {userActiveTab === 'dashboard' && (
@@ -114,7 +114,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {collegeName}
             </Typography>
 
@@ -136,7 +136,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
             </Typography>
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {universityName}
             </Typography>{' '}
             {userActiveTab === 'dashboard' && (
@@ -154,7 +154,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
             Month & Year of awarding Degree
           </Typography>
           <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
+            <Typography variant="subtitle2" color="textPrimary.main">
               {qualification_month ? qualification_month : ''} ,{' '}
               {qualification_year ? qualification_year : ''}
             </Typography>{' '}
@@ -176,34 +176,36 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               *
             </Typography>
           </Typography>
-          <Typography
-            variant="subtitle2"
-            color="primary.main"
-            onClick={(e) => {
-              e.preventDefault();
-              setAttachmentViewProfile(true);
-            }}
-          >
-            <IconButton>
-              <AttachFileIcon fontSize="10px" />
-            </IconButton>
-            View attachment
-          </Typography>
+          <Grid display="flex" alignItems="center">
+            <Typography
+              variant="subtitle2"
+              color="textPrimary.main"
+              onClick={(e) => {
+                e.preventDefault();
+                setAttachmentViewProfile(true);
+              }}
+            >
+              <IconButton>
+                <AttachFileIcon fontSize="10px" />
+              </IconButton>
+              View attachment
+            </Typography>
 
-          {attachmentViewProfile && (
-            <AttachmentViewPopup
-              certificate={degree_certificate}
-              closePopup={CloseAttachmentPopup}
-              alt={'Qualification Certificate'}
-            />
-          )}
-          {userActiveTab === 'dashboard' && (
-            <ContactSupportOutlinedIcon
-              color="primary"
-              onClick={() => setOpenModal(true)}
-              fontSize="width30"
-            />
-          )}
+            {attachmentViewProfile && (
+              <AttachmentViewPopup
+                certificate={degree_certificate}
+                closePopup={CloseAttachmentPopup}
+                alt={'Qualification Certificate'}
+              />
+            )}
+            {userActiveTab === 'dashboard' && (
+              <ContactSupportOutlinedIcon
+                color="primary"
+                onClick={() => setOpenModal(true)}
+                fontSize="width30"
+              />
+            )}
+          </Grid>
         </Grid>
       </Grid>
     </Grid>
