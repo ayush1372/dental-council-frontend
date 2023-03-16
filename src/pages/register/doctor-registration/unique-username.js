@@ -38,6 +38,9 @@ const UniqueUserNameForDoctorRegistration = () => {
   const handleSuggestion = (item) => {
     setSuggestion(item);
   };
+  const handleCancel = () => {
+    window.location.reload();
+  };
   const onSubmit = () => {
     let data = {
       email: null,
@@ -151,7 +154,7 @@ const UniqueUserNameForDoctorRegistration = () => {
               >
                 Continue to set password
               </Button>
-              <Button variant="contained" color="grey">
+              <Button variant="contained" color="grey" onClick={handleCancel}>
                 Cancel
               </Button>
             </Box>
