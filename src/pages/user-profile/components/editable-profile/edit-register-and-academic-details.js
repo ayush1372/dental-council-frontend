@@ -40,7 +40,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   );
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
-  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const { personalDetails, updatedPersonalDetails } = useSelector(
+    (state) => state?.doctorUserProfileReducer
+  );
   const { registration_detail_to, qualification_detail_response_tos } = registrationDetails || {};
   const {
     registration_date,
@@ -160,6 +162,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     fetchUpdateDoctorRegistrationDetails(finalResult, moveToNext);
   };
 
+  // eslint-disable-next-line no-console
+  console.log('personalDetails', personalDetails, updatedPersonalDetails);
+
   const fetchUpdateDoctorRegistrationDetails = (finalResult, moveToNext = false) => {
     const formData = new FormData();
 
@@ -175,7 +180,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
       updateDoctorRegistrationDetails(
         formData,
         loggedInUserType === 'Doctor'
-          ? registrationDetails?.hp_profile_id
+          ? updatedPersonalDetails?.hp_profile_id
           : loggedInUserType === 'SMC' && personalDetails?.hp_profile_id
       )
     ).then(() => {
