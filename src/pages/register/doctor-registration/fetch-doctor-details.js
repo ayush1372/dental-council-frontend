@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -28,7 +29,9 @@ import { storeMobileDetails } from '../../../store/reducers/doctor-registration-
 import { Button, TextField } from '../../../ui/core';
 import AadhaarInputField from '../../../ui/core/aadhaar-input-field/aadhaar-input-field';
 import CreateHprId from './unique-username';
-function FetchDoctorDetails() {
+function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
+  console.log('aadhaar page', aadhaarFormValues, imrDataNotFound);
+  console.log('aadhaarFormValues', aadhaarFormValues);
   const [showCreateHprIdPage, setShowCreateHprIdPage] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showOtpMobile, setShowOtpMobile] = useState(false);
@@ -110,35 +113,36 @@ function FetchDoctorDetails() {
 
         setshowOtpAadhar(false);
         handleClear();
-
-        dispatch(
-          checkKycDetails({
-            registrationNumber: registrationNumber || '',
-            txn_id: response.data.txnId || '',
-            mobile_number: response.data.mobileNumber || '',
-            photo: response.data.photo || '',
-            gender: response.data.gender || '',
-            name: response.data.name || '',
-            email: response.data.email || '',
-            pincode: response.data.pincode || '',
-            birth_date: dateFormat(response.data.birthdate) || '',
-            care_of: response.data.careOf || '',
-            house: response.data.house || '',
-            street: response.data.street || '',
-            kycLandMark: response.data.landmark || '',
-            locality: response.data.locality || '',
-            village_town_city: response.data.villageTownCity || '',
-            sub_dist: response.data.subDist || '',
-            district: response.data.district || '',
-            state: response.data.state || '',
-            post_office: response.data.postOffice || '',
-            address: response.data.address || '',
-          })
-        ).then((response) => {
-          if (response.data.kyc_fuzzy_match_status === 'Fail') {
-            setKycError(true);
-          }
-        });
+        if (!imrDataNotFound) {
+          dispatch(
+            checkKycDetails({
+              registrationNumber: registrationNumber || '',
+              txn_id: response.data.txnId || '',
+              mobile_number: response.data.mobileNumber || '',
+              photo: response.data.photo || '',
+              gender: response.data.gender || '',
+              name: response.data.name || '',
+              email: response.data.email || '',
+              pincode: response.data.pincode || '',
+              birth_date: dateFormat(response.data.birthdate) || '',
+              care_of: response.data.careOf || '',
+              house: response.data.house || '',
+              street: response.data.street || '',
+              kycLandMark: response.data.landmark || '',
+              locality: response.data.locality || '',
+              village_town_city: response.data.villageTownCity || '',
+              sub_dist: response.data.subDist || '',
+              district: response.data.district || '',
+              state: response.data.state || '',
+              post_office: response.data.postOffice || '',
+              address: response.data.address || '',
+            })
+          ).then((response) => {
+            if (response.data.kyc_fuzzy_match_status === 'Fail') {
+              setKycError(true);
+            }
+          });
+        }
       });
     }
   };
@@ -301,7 +305,7 @@ function FetchDoctorDetails() {
                     Name
                   </Typography>
                   <Typography variant="subtitle2" component="div" color="primary">
-                    {hpName ? hpName : ''}
+                    {hpName ? hpName : '-'}
                   </Typography>
                 </Box>
                 <Box>
@@ -314,7 +318,7 @@ function FetchDoctorDetails() {
                     Registration Number
                   </Typography>
                   <Typography variant="subtitle2" component="div" color="primary">
-                    {registrationNumber ? registrationNumber : ''}
+                    {aadhaarFormValues ? aadhaarFormValues?.RegistrationNumber : registrationNumber}
                   </Typography>
                 </Box>
               </Box>
@@ -323,7 +327,7 @@ function FetchDoctorDetails() {
                   Council
                 </Typography>
                 <Typography variant="subtitle2" component="div" color="primary">
-                  {councilName ? councilName : ''}
+                  {aadhaarFormValues ? aadhaarFormValues?.RegistrationCouncil : councilName}
                 </Typography>
               </Box>
               <Divider sx={{ marginBottom: '25px' }} variant="fullWidth" />

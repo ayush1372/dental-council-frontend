@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 
 import { Box, Container, Typography } from '@mui/material';
@@ -14,6 +15,7 @@ import { Button, TextField } from '../../../ui/core';
 import FetchDoctorDetails from './fetch-doctor-details';
 const DoctorRegistrationWelcomePage = () => {
   const [isNext, setIsNext] = useState(false);
+  const [imrDataNotFound, setImrDataNotFound] = useState(false);
   const [rejectPopup, setRejectPopup] = useState(false);
   const {
     register,
@@ -34,7 +36,9 @@ const DoctorRegistrationWelcomePage = () => {
   });
   const { councilNames } = useSelector((state) => state.common);
   const dispatch = useDispatch();
-
+  const handleAadhaarPage = (data) => {
+    setImrDataNotFound(data);
+  };
   useEffect(() => {
     dispatch(getRegistrationCouncilList());
   }, []);
@@ -155,14 +159,18 @@ const DoctorRegistrationWelcomePage = () => {
             </Container>
           </Box>
         ) : (
-          <FetchDoctorDetails />
+          <FetchDoctorDetails imrDataNotFound={imrDataNotFound} aadhaarFormValues={getValues()} />
         )}
       </Box>
       {rejectPopup && (
         <ErrorModalPopup
           open={setRejectPopup}
           setOpen={() => setRejectPopup(false)}
-          text="No details found. Please verify your input or get yourself registered through your respective SMC!"
+          imrData={true}
+          handleAadhaarPage={handleAadhaarPage}
+          isNext={isNext}
+          setIsNext={setIsNext}
+          text="Your data is not found in the IMR. Do you want to continue the registration in the IMR ? "
         />
       )}
     </>
