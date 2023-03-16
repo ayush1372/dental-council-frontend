@@ -50,7 +50,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
   const { activeStep, handleNext, handleBack, resetStep, completed, progress } = useWizard(
     ['Doctor', 'SMC', 'NMC'].includes(loggedInUserType) ? 0 : 1,
     [],
-    [25, 25, 25]
+    [0, 25, 25, 25, 25]
   );
 
   const renderSuccess = () => {
