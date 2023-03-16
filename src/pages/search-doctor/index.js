@@ -39,6 +39,7 @@ const SearchDoctor = () => {
           <Tabs
             value={tabValue}
             onChange={handleTabChange}
+            variant="scrollable"
             sx={{
               '.MuiTabs-flexContainer': {
                 button: {
