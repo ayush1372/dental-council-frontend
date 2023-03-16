@@ -7,7 +7,6 @@ import { useTheme } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
 
 export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOption, open }) {
-  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const theme = useTheme();
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
@@ -48,14 +47,6 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
             onClick={() => {
               handleSwitch(item.tabName);
             }}
-            disabled={
-              personalDetails?.nmr_id?.length === undefined &&
-              (item.tabName === 'voluntary-suspend-license' ||
-                item.tabName === 'additional-qualifications' ||
-                item.tabName === 'work-details')
-                ? true
-                : false
-            }
           >
             <ListItemIcon
               sx={{
