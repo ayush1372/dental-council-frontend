@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import { Box, Grid, Typography } from '@mui/material';
-// import { Container } from '@mui/system';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,7 +8,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { natureOfWork, workStatusOptions } from '../../../../constants/common-data';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
 import SuccessModalPopup from '../../../../shared/common-modals/success-modal-popup';
-//  import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
 import {
   getCitiesList,
   getDistrictList,
@@ -207,80 +205,10 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
       });
   };
 
-  // const onHandleOption = () => {
-  //   onHandleOptionNext();
-  //   fetchUpdateDoctorWorkDetails(workProfileDetails);
-  // };
-
   return (
     <Box>
-      {/* <Typography variant="h2" color="textPrimary.main">
-        Work Details
-      </Typography> */}
       <Grid container mt={2}>
-        {/* layer 1 */}
-        {/* <Grid container item spacing={2}>
-          <Grid item xs={12}>
-            <Typography
-              bgcolor="grey1.light"
-              p={1}
-              component="div"
-              color="tabHighlightedBackgroundColor.main"
-              variant="h3"
-            >
-              Speciality Details*
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Select
-              fullWidth
-              error={errors.Speciality?.message}
-              name="Speciality"
-              label="Broad Speciality"
-              defaultValue={getValues().Speciality}
-              required={true}
-              {...register('Speciality', {
-                required: 'This field is required',
-              })}
-              options={createSelectFieldData(specialitiesList.data)}
-            />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Typography variant="subtitle2" color="inputTextColor.main">
-              Super Specialty
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
-            </Typography>
-            <AutoComplete
-              name="subSpeciality"
-              options={subSpecialityOptions || []}
-              value={getValues().subSpeciality}
-              error={subSpecialities?.length === 0 && errors.subSpeciality?.message}
-              multiple={true}
-              {...register('subSpeciality', {
-                required: 'This field is required',
-              })}
-              onChange={(value) => {
-                setValue('subSpeciality', value);
-                setSubSpecialities(value);
-              }}
-            />
-          </Grid>
-        </Grid> */}
-        {/* layer 2 */}
         <Grid container>
-          {/* <Grid item xs={12}>
-            <Typography
-              bgcolor="grey1.light"
-              p={1}
-              component="div"
-              color="tabHighlightedBackgroundColor.main"
-              variant="h3"
-            >
-              Work Details*
-            </Typography>
-          </Grid> */}
           <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
               Are you currently working
@@ -345,14 +273,6 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
 
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={12}>
-            <Typography variant="subtitle2" color="inputTextColor.main">
-              Upload the proof of work for govt.such as Appointment letter, Last pay slip, Recent
-              transfer order etc.
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
-            </Typography>
-
             <UploadFile
               uploadFiles="single"
               sizeAllowed={1}
@@ -361,6 +281,8 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
                Maximum size allowed for the attachment is 5MB.`}
               fileData={workProof}
               setFileData={setWorkProof}
+              uploadFileLabel="Upload the proof of work for govt.such as Appointment letter, Last pay slip, Recent
+              transfer order etc."
             />
           </Grid>
         </Grid>
@@ -377,26 +299,6 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
               Current Work Details*
             </Typography>
           </Grid>
-          {/* <Grid item xs={12} md={4}>
-            <RadioGroup
-              onChange={handleselection}
-              name={'selection'}
-              size="small"
-              defaultValue={getValues().selection}
-              items={[
-                {
-                  value: 0,
-                  label: 'Facility',
-                },
-                {
-                  value: 1,
-                  label: 'Organization',
-                },
-              ]}
-              required={true}
-              error={errors.selection?.message}
-            />
-          </Grid> */}
         </Grid>
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={5} lg={4}>
@@ -715,7 +617,6 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
       </Grid>
       <Grid container display="flex" justifyContent="space-between" alignItems="center" mt={5}>
         <Grid item xs={12} md={8} lg={6}>
-          {/* // onClick={handleSubmit(onHandleOption)} */}
           <Button
             onClick={handleSubmit(handleSave)}
             variant="outlined"
@@ -752,26 +653,6 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
             {t('Cancel')}
           </Button>
         </Grid>
-
-        {/* <Grid item xs={12} md="auto" display="flex" justifyContent="end" lg={2}>
-          <Button
-            onClick={handleSubmit(onHandleOption)}
-            variant="contained"
-            color="secondary"
-            sx={{
-              margin: {
-                xs: '5px 0',
-                md: '0',
-              },
-              width: {
-                xs: '100%',
-                md: 'fit-content',
-              },
-            }}
-          >
-            {t('Save & Next')}
-          </Button>
-        </Grid> */}
       </Grid>
 
       {showSuccessModal && (
