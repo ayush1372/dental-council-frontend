@@ -321,8 +321,8 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
             {otpFormEnabled && (
               <Box mt={2}>
                 <Typography variant="body1">
-                  We just sent an OTP on your Registered Mobile Number {maskedMobileNumber} Linked
-                  with your NMR ID.
+                  Please enter the OTP sent on your Registered Mobile Number {maskedMobileNumber}{' '}
+                  Linked with your NMR ID.
                 </Typography>
                 {otpform}
               </Box>
@@ -376,7 +376,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
             {otpFormEnabled && (
               <Box mt={2}>
                 <Typography variant="body1">
-                  We just sent an OTP on your Mobile Number{' '}
+                  Please enter the OTP sent on your Mobile Number{' '}
                   {getValues().mobileNo.replace(/^.{6}/g, 'XXXXXX')}.
                 </Typography>
                 {otpform}
