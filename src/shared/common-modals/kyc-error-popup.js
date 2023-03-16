@@ -22,17 +22,17 @@ export default function KycErrorPopup({ open, setOpen, text }) {
   );
 
   return (
-    <Modal open={open} sx={{ mt: 15 }}>
+    <Modal open={open} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <Container
         maxWidth="sm"
         sx={{
           backgroundColor: theme.palette.white.main,
           borderRadius: '10px',
-          height: '500px',
+
           p: '15px',
         }}
       >
-        <Box display="flex" flexDirection="column">
+        <Box>
           <Typography
             data-testid="popup-input-success-text"
             variant="h2"
@@ -84,14 +84,23 @@ export default function KycErrorPopup({ open, setOpen, text }) {
               </Table>
             </TableContainer>
           </Box>
-          <Button
+          {/* <Button
             sx={{ width: { xs: '100%', sm: '408px' }, mt: 5, ml: 19 }}
             variant="contained"
             color="warning"
             onClick={handleCloseModal}
           >
             Ok
-          </Button>
+          </Button> */}
+
+          <Box mt={2} display={'flex'} justifyContent={'center'}>
+            <Button variant="contained" color="secondary" sx={{ mr: 2 }} onClick={handleCloseModal}>
+              YES
+            </Button>
+            <Button variant="contained" color="grey">
+              NO
+            </Button>
+          </Box>
         </Box>
       </Container>
     </Modal>

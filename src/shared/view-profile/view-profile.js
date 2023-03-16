@@ -27,8 +27,6 @@ export function ViewProfile(props) {
   const mobileNumber = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.communication_address?.mobile
   );
-  // eslint-disable-next-line no-console
-  console.log('added mobile no', mobileNumber);
 
   const [emailNotification, setEmailNotification] = useState();
   const [mobileNotification, setMobileNotification] = useState();
