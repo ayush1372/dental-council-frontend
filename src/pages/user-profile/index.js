@@ -52,7 +52,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
       ? 0
       : 1,
     [],
-    [25, 25, 25]
+    [0, 25, 25, 25, 25]
   );
 
   const renderSuccess = () => {
