@@ -1,8 +1,7 @@
-/* eslint-disable no-console */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { Alert, Container, Divider, IconButton, InputAdornment, Typography } from '@mui/material';
+import { Alert, Container, Divider, IconButton, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
@@ -35,7 +34,6 @@ function FetchDoctorDetails() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [showOtpMobile, setShowOtpMobile] = useState(false);
   const [showOtpAadhar, setshowOtpAadhar] = useState(false);
-  // const [demographicValue, setDemographicValue] = useState(false);
 
   const [isOtpValidMobile, setisOtpValidMobile] = useState(false);
   const [isOtpValidAadhar, setisOtpValidAadhar] = useState(false);
@@ -64,9 +62,10 @@ function FetchDoctorDetails() {
     (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.hp_name
   );
 
-  // const demographicAuthMobileVerify = useSelector(
-  //   (state) => state?.AadhaarTransactionId?.demographicAuthMobileDetailsData
-  // );
+  const demographicAuthMobileVerify = useSelector(
+    (state) => state?.AadhaarTransactionId?.demographicAuthMobileDetailsData
+  );
+
   const existUSerName = useSelector(
     (state) => state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId
   );
@@ -152,74 +151,26 @@ function FetchDoctorDetails() {
         txnId: aadhaarTxnId,
         mobileNumber: getValues().MobileNumber,
       })
-    )
-      .then((response) => {
-        // console.log('auth resp', response);
-        if (response?.data?.verified) {
-          setisOtpValidMobile(true);
-          //any popup? to show here that ' is kyc details and mobile num are matching ? '
-        } else {
-          console.log('err message else');
-          // let data = {
-          //   mobile: getValues().MobileNumber,
-          //   txnId: aadhaarTxnId,
-          // };
-          // dispatch(generateMobileOtp(data))
-          //   .then(() => {
-          //     setShowOtpMobile(true);
-          //   })
-          //   .catch((error) => {
-          //     successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-          //   });
-        }
-      })
-      .catch((err) => {
-        let data = {
-          mobile: getValues().MobileNumber,
-          txnId: aadhaarTxnId,
-        };
-        dispatch(generateMobileOtp(data))
-          .then(() => {
-            setShowOtpMobile(true);
-          })
-          .catch((error) => {
-            successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-          });
-        console.log('err message', err?.data?.details[0]?.message);
-        console.log('err message', err?.data?.message);
-      });
+    ).catch(() => {
+      let data = {
+        mobile: getValues().MobileNumber,
+        txnId: aadhaarTxnId,
+      };
+      dispatch(generateMobileOtp(data))
+        .then(() => {
+          setShowOtpMobile(true);
+        })
+        .catch((error) => {
+          successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+        });
+    });
   };
-
-  // useEffect(() => {
-  //   if (demographicAuthMobileVerify?.data?.verified) {
-  //     dispatch(
-  //       checkHpidExists({
-  //         txnId: aadhaarTxnId,
-  //       })
-  //     ).then((response) => {
-  //       if (response?.data?.hprIdNumber === null || response?.data?.hprIdNumber === '') {
-  //         setShowCreateHprIdPage(true);
-  //         dispatch(
-  //           getHprIdSuggestions({
-  //             txnId: aadhaarTxnId,
-  //           })
-  //         );
-  //       } else {
-  //         if (response?.data?.hprId && response?.data?.hprIdNumber) {
-  //           setShowSuccess(true);
-  //         }
-  //       }
-  //     });
-  //   } else if (demographicValue) {
-  //     let data = {
-  //       mobile: getValues().MobileNumber,
-  //       txnId: aadhaarTxnId,
-  //     };
-  //     dispatch(generateMobileOtp(data));
-  //   }
-  //   setDemographicValue(true);
-  // }, [demographicAuthMobileVerify?.data?.verified]);
-
+  useEffect(() => {
+    if (demographicAuthMobileVerify?.data?.verified) {
+      setisOtpValidMobile(true);
+      //any popup? to show here that ' is kyc details and mobile num are matching ? '
+    }
+  }, [demographicAuthMobileVerify?.data?.verified]);
   const handleValidateMobile = () => {
     let data = {
       txnId: mobileTxnId,
@@ -382,6 +333,7 @@ function FetchDoctorDetails() {
                     disabled={showOtpAadhar || isOtpValidAadhar}
                   />
                 </Box>
+
                 <Box p="35px 32px 0px 32px">
                   {isOtpValidAadhar ? <CheckCircleIcon color="success" /> : ''}
                 </Box>
@@ -450,6 +402,7 @@ function FetchDoctorDetails() {
                     type="text"
                     onInput={(e) => handleInput(e)}
                     name={'MobileNumber'}
+                    disabled={isOtpValidMobile}
                     placeholder={t('Enter mobile number')}
                     defaultValue={getValues().MobileNumber}
                     error={errors.MobileNumber?.message}
@@ -460,18 +413,12 @@ function FetchDoctorDetails() {
                         message: 'Enter Valid Mobile Number',
                       },
                     })}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end" sx={{ pr: 1 }}>
-                          <IconButton aria-label="toggle password visibility" edge="end">
-                            {isOtpValidMobile ? <CheckCircleIcon color="success" /> : ''}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
                   />
+                  <IconButton aria-label="toggle password visibility" edge="end">
+                    {isOtpValidMobile ? <CheckCircleIcon color="success" /> : ''}
+                  </IconButton>
                   <Box>
-                    {!showOtpMobile && (
+                    {!showOtpMobile && !isOtpValidMobile && (
                       <Button
                         variant="contained"
                         color="secondary"

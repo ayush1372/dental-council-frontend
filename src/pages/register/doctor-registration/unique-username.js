@@ -1,13 +1,7 @@
 import { useState } from 'react';
 
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import {
-  Box,
-  Container,
-  //  Link,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, Container, TextField, Typography } from '@mui/material';
 import Link from '@mui/material/Link';
 import { useTheme } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
@@ -42,7 +36,6 @@ const UniqueUserNameForDoctorRegistration = () => {
     },
   });
   const handleSuggestion = (item) => {
-    // alert(item)
     setSuggestion(item);
   };
   const onSubmit = () => {
@@ -97,7 +90,6 @@ const UniqueUserNameForDoctorRegistration = () => {
                     required: 'UniqueUserNameForDoctor Number is required',
                   })}
                   value={suggestion}
-                  // items={UniqueUserNameForDoctor}
                   onChange={(e) => handleSuggestionName(e)}
                   clearErrors={clearErrors}
                 />
@@ -152,7 +144,6 @@ const UniqueUserNameForDoctorRegistration = () => {
                 onClick={handleSubmit(onSubmit)}
                 variant="contained"
                 size="medium"
-                // disable={!disable}
                 sx={{
                   mr: 3,
                   backgroundColor: theme.palette.secondary.main,

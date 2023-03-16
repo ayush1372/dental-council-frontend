@@ -54,7 +54,6 @@ export const {
   smcRegistrationDetail,
   getAccessToken,
   getMobileOtp,
-  storeMobileOtpData,
   hpIdExistsDetails,
   hprIdSuggestionsDetails,
   sendResetPasswordLinkDetails,
