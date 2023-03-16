@@ -7,7 +7,7 @@ import { verboseLog } from '../../../config/debug';
 import styles from './chip.module.scss';
 
 export const Chip = ({ submitted, pending, reject, approved, type, ...prop }) => {
-  verboseLog(type, 'type');
+  verboseLog(prop, 'type');
   return (
     <StyledEngineProvider injectFirst>
       <MuiChip

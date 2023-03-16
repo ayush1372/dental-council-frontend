@@ -126,7 +126,11 @@ function DashboardControlledTable(props) {
       { type: 'councilVerificationStatus', value: capitalize(application?.smc_status) },
       {
         type: 'collegeVerificationStatus',
-        value: capitalize(application?.college_dean_status),
+        value:
+          application?.college_dean_status === 'NOT YET RECEIVED' &&
+          application?.college_registrar_status === 'NOT YET RECEIVED'
+            ? capitalize('NOT YET RECEIVED')
+            : capitalize('PENDING'),
       },
       { type: 'NMCVerificationStatus', value: capitalize(application?.nmc_status) },
       { type: 'dateofSubmission', value: formattedDate },
@@ -168,7 +172,7 @@ function DashboardControlledTable(props) {
       nmr_id: searchQueryParams ? searchQueryParams?.filterByRegNo : '',
       search: searchQueryParams ? searchQueryParams?.search : '',
       page_no: pageNo,
-      size: noOfRecords,
+      offset: noOfRecords,
       sort_by: '',
       sort_order: '',
     };
@@ -177,6 +181,7 @@ function DashboardControlledTable(props) {
   };
 
   const searchParams = (data) => {
+    dispatch(getDashboardTableData(data));
     setSearchQueryParams(data);
   };
 
