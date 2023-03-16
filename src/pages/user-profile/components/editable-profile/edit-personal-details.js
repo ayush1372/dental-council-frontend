@@ -233,15 +233,21 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const selectedSubDistrict = watch('SubDistrict');
 
   useEffect(() => {
-    fetchDistricts(selectedState);
+    if (selectedState !== undefined) {
+      fetchDistricts(selectedState);
+    }
   }, [selectedState]);
 
   useEffect(() => {
-    fetchSubDistricts(selectedDistrict);
+    if (selectedDistrict !== undefined) {
+      fetchSubDistricts(selectedDistrict);
+    }
   }, [selectedDistrict]);
 
   useEffect(() => {
-    fetchCities(selectedSubDistrict);
+    if (selectedSubDistrict !== undefined) {
+      fetchCities(selectedSubDistrict);
+    }
   }, [selectedSubDistrict]);
 
   useEffect(() => {
