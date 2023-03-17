@@ -6,6 +6,8 @@ import {
   getPersonalDetails,
   getProfileImage,
   getRegistrationDetails,
+  getUpdatedPersonalDetails,
+  getUpdatedRegistrationDetails,
   getWorkProfileDetails,
 } from '../reducers/doctor-user-profile-reducer';
 
@@ -81,7 +83,7 @@ export const getNewDoctorPersonalDetailsData = (body) => async (dispatch) => {
   });
 };
 
-export const updateDoctorPersonalDetails = (body, doctor_profile_id) => async () => {
+export const updateDoctorPersonalDetails = (body, doctor_profile_id) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: PUT,
@@ -92,6 +94,7 @@ export const updateDoctorPersonalDetails = (body, doctor_profile_id) => async ()
       data: body,
     })
       .then((response) => {
+        dispatch(getUpdatedPersonalDetails(response.data));
         return resolve(response);
       })
       .catch((error) => {
@@ -100,7 +103,7 @@ export const updateDoctorPersonalDetails = (body, doctor_profile_id) => async ()
   });
 };
 
-export const updateDoctorRegistrationDetails = (body, doctor_profile_id) => async () => {
+export const updateDoctorRegistrationDetails = (body, doctor_profile_id) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: PUT,
@@ -111,6 +114,7 @@ export const updateDoctorRegistrationDetails = (body, doctor_profile_id) => asyn
       data: body,
     })
       .then((response) => {
+        dispatch(getUpdatedRegistrationDetails(response.data));
         return resolve(response);
       })
       .catch((error) => {

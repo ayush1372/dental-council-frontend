@@ -4,9 +4,10 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { Divider, Grid, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { yearsData } from '../../../../constants/common-data';
+import { monthsData, yearsData } from '../../../../constants/common-data';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
-import { getCollegesList } from '../../../../store/actions/common-actions';
+import { getCollegesList, getUniversitiesList } from '../../../../store/actions/common-actions';
+// import { getUniversities } from '../../../../store/reducers/common-reducers';
 import { RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
 
@@ -34,25 +35,28 @@ const EditQualificationDetails = ({
     setValue(event.target.name, event.target.value);
   };
 
-  const selectedCollege = watch(`qualification[${index}].university`);
+  //  const selectedCollege = watch(`qualification[${index}].university`);
   const qualificationfrom = watch(`qualification[${index}].qualificationfrom`);
   const watchCollege = watch(`qualification[${index}].college`);
-  const fetchColleges = (collegeId) => {
-    if (collegeId) {
-      dispatch(getCollegesList(collegeId)).then((dataResponse) => {
+  const selectedState = watch(`qualification[${index}].state`);
+
+  const fetchColleges = (selectedState) => {
+    if (selectedState) {
+      dispatch(getCollegesList(selectedState)).then((dataResponse) => {
         setColleges(dataResponse.data);
       });
     }
   };
 
   useEffect(() => {
-    fetchColleges(selectedCollege);
-  }, [selectedCollege]);
+    fetchColleges(selectedState);
+  }, [selectedState]);
 
   useEffect(() => {
     if (watchCollege) {
       const obj = colleges?.find((x) => x.id === watchCollege);
       setValue(`qualification[${index}].collegeObj`, obj);
+      dispatch(getUniversitiesList(watchCollege));
     }
   }, [watchCollege]);
 
@@ -317,27 +321,6 @@ const EditQualificationDetails = ({
         <Grid item xs={12} md={6} lg={4}>
           <Select
             fullWidth
-            error={errors?.qualification?.[index]?.university?.message}
-            name="University"
-            label="University"
-            defaultValue={fields[index].university}
-            required={true}
-            {...register(`qualification[${index}].university`, {
-              required: 'University is required',
-            })}
-            options={createSelectFieldData(universitiesList.data, 'id') || []}
-            MenuProps={{
-              style: {
-                maxHeight: 250,
-                maxWidth: 130,
-              },
-            }}
-          />
-          {/* )} */}
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <Select
-            fullWidth
             error={errors?.qualification?.[index]?.college?.message}
             name="College"
             label="Name of the college"
@@ -356,6 +339,28 @@ const EditQualificationDetails = ({
           />
           {/* )} */}
         </Grid>
+        <Grid item xs={12} md={6} lg={4}>
+          <Select
+            fullWidth
+            error={errors?.qualification?.[index]?.university?.message}
+            name="University"
+            label="University"
+            defaultValue={fields[index].university}
+            required={true}
+            {...register(`qualification[${index}].university`, {
+              required: 'University is required',
+            })}
+            options={createSelectFieldData(universitiesList.data, 'id') || []}
+            MenuProps={{
+              style: {
+                maxHeight: 250,
+                maxWidth: 130,
+              },
+            }}
+          />
+
+          {/* )} */}
+        </Grid>
         <Grid container item xs={12} md={6} lg={4} columnSpacing={2}>
           <Typography pl={2}>Month & Year of awarding Degree</Typography>
           <Grid item xs={12} md={6} mb={{ xs: 2, md: 0 }}>
@@ -367,7 +372,7 @@ const EditQualificationDetails = ({
               {...register(`qualification[${index}].month`, {
                 required: 'awarding is required',
               })}
-              options={yearsData}
+              options={monthsData}
             />
           </Grid>
           <Grid item xs={12} md={6}>

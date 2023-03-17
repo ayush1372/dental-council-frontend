@@ -133,8 +133,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
           ? ''
           : loggedInUserType === 'Doctor'
           ? gender === 'female'
-            ? 'female'
-            : 'male'
+            ? 'F'
+            : 'M'
           : '',
       // Schedule: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? scheduleId : '',
       Name: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? full_name : '',
@@ -359,9 +359,15 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     doctorProfileValues.communication_address.mobile = mobileNo !== undefined ? mobileNo : '';
     doctorProfileValues.communication_address.country.id = Country;
     doctorProfileValues.communication_address.state.id = State;
-    doctorProfileValues.communication_address.district.id = District;
-    doctorProfileValues.communication_address.sub_district.id = SubDistrict;
-    doctorProfileValues.communication_address.village.id = Area;
+    if (doctorProfileValues?.communication_address?.district?.id) {
+      doctorProfileValues.communication_address.district.id = District;
+    }
+    if (doctorProfileValues?.communication_address?.sub_district?.id) {
+      doctorProfileValues.communication_address.sub_district.id = SubDistrict;
+    }
+    if (doctorProfileValues?.communication_address?.village?.id) {
+      doctorProfileValues.communication_address.village.id = Area;
+    }
     doctorProfileValues.communication_address.landmark = Landmark;
     doctorProfileValues.communication_address.locality = Locality;
     doctorProfileValues.communication_address.street = Street;
@@ -565,11 +571,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 defaultValue={getValues().Gender}
                 items={[
                   {
-                    value: 'male',
+                    value: 'M',
                     label: 'Male',
                   },
                   {
-                    value: 'female',
+                    value: 'F',
                     label: 'Female',
                   },
                   {
