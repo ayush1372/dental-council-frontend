@@ -8,8 +8,12 @@ import { useNavigate } from 'react-router-dom';
 
 import { encryptData } from '../../../helpers/functions/common-functions';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
-import { setUserPassword } from '../../../store/actions/doctor-registration-actions';
+import {
+  createHealthProfessional,
+  setUserPassword,
+} from '../../../store/actions/doctor-registration-actions';
 import { Button, TextField } from '../../../ui/core';
+import successToast from '../../../ui/core/toaster';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 const NewPasswordSetup = () => {
@@ -23,6 +27,19 @@ const NewPasswordSetup = () => {
   );
   const uniqueHpId = useSelector((state) =>
     state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId.replace('@hpr.abdm', '')
+  );
+
+  const kycstatus = useSelector(
+    (state) => state?.doctorRegistration?.getkycDetailsData?.data?.kyc_fuzzy_match_status
+  );
+  const imrDetailsData = useSelector(
+    (state) => state?.doctorRegistration?.UserNotFoundDetailsData?.imrDataNotFound
+  );
+  const imrUserNotFounddata = useSelector(
+    (state) => state?.doctorRegistration?.UserNotFoundDetailsData?.aadhaarFormValues
+  );
+  const userKycData = useSelector(
+    (state) => state?.AadhaarTransactionId?.aadhaarOtpDetailsData?.data
   );
   const mobilenumber = useSelector((state) => state?.doctorRegistration?.storeMobileDetailsData);
   const {
@@ -38,16 +55,57 @@ const NewPasswordSetup = () => {
       confirmPassword: '',
     },
   });
+
   const onSubmit = () => {
-    const reqObj = {
-      mobile: mobilenumber,
-      username: uniqueHpId,
-      registration_number: registrationNumber,
-      password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
-    };
-    dispatch(setUserPassword(reqObj)).then(() => {
-      setShowSuccess(true);
-    });
+    if (kycstatus !== 'Success' || imrDetailsData) {
+      let reqObj = {
+        registration_number: imrUserNotFounddata?.RegistrationNumber,
+        smc_id: imrUserNotFounddata?.RegistrationCouncilId,
+        mobile_number: mobilenumber,
+        gender: userKycData?.gender,
+        name: userKycData?.name,
+        pincode: userKycData?.pincode,
+        birthdate: userKycData?.birthdate,
+        village_town_city: userKycData?.villageTownCity,
+        district: userKycData?.district,
+        state: userKycData?.state,
+        address: userKycData?.address,
+      };
+
+      dispatch(createHealthProfessional(reqObj))
+        .then(() => {
+          const reqPayload = {
+            mobile: mobilenumber?.mobile,
+            username: uniqueHpId,
+            registration_number: imrUserNotFounddata?.RegistrationNumber,
+            password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
+          };
+          dispatch(setUserPassword(reqPayload))
+            .then(() => {
+              setShowSuccess(true);
+            })
+            .catch((error) => {
+              successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+            });
+        })
+        .catch((error) => {
+          successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+        });
+    } else {
+      const reqPayload = {
+        mobile: mobilenumber,
+        username: uniqueHpId,
+        registration_number: registrationNumber,
+        password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
+      };
+      dispatch(setUserPassword(reqPayload))
+        .then(() => {
+          setShowSuccess(true);
+        })
+        .catch((error) => {
+          successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+        });
+    }
   };
 
   const onCancel = () => {
@@ -129,7 +187,6 @@ const NewPasswordSetup = () => {
             onClick={onCancel}
             variant="contained"
             color="grey"
-            // disabled={!enableSubmit}
             sx={{
               mr: 2,
             }}

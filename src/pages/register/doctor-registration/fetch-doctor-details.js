@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -25,14 +24,15 @@ import {
   sendAaadharOtp,
   validateOtpAadhaar,
 } from '../../../store/actions/user-aadhaar-actions';
-import { storeMobileDetails } from '../../../store/reducers/doctor-registration-reducer';
+import {
+  storeMobileDetails,
+  UserNotFoundDetails,
+} from '../../../store/reducers/doctor-registration-reducer';
 import { Button, TextField } from '../../../ui/core';
 import AadhaarInputField from '../../../ui/core/aadhaar-input-field/aadhaar-input-field';
 import successToast from '../../../ui/core/toaster';
 import CreateHprId from './unique-username';
 function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
-  console.log('aadhaar page', aadhaarFormValues, imrDataNotFound);
-  console.log('aadhaarFormValues', aadhaarFormValues);
   const [showCreateHprIdPage, setShowCreateHprIdPage] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showOtpMobile, setShowOtpMobile] = useState(false);
@@ -48,11 +48,13 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
   const registrationNumber = useSelector(
     (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.registration_number
   );
+  const kycstatus = useSelector(
+    (state) => state?.doctorRegistration?.getkycDetailsData?.data?.kyc_fuzzy_match_status
+  );
   const aadhaarTxnId = useSelector((state) => state?.AadhaarTransactionId?.aadharData?.data?.txnId);
   const mobileNumber = useSelector(
     (state) => state?.AadhaarTransactionId?.aadharData?.data?.mobileNumber
   );
-
   const mobileTxnId = useSelector(
     (state) => state?.doctorRegistration?.getMobileOtpDetails?.data?.txnId
   );
@@ -185,7 +187,6 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
         setisOtpValidMobile(true);
         setShowOtpMobile(false);
         handleClear();
-        //mob field should be disabled after successfull otp
       });
     }
   };
@@ -216,6 +217,9 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
     }
   };
   const onSubmit = () => {
+    if (imrDataNotFound || kycstatus !== 'Success') {
+      dispatch(UserNotFoundDetails({ imrDataNotFound, aadhaarFormValues }));
+    }
     dispatch(
       checkHpidExists({
         txnId: aadhaarTxnId,
@@ -243,12 +247,12 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
         <KycErrorPopup
           open={kycError}
           setOpen={() => setKycError(false)}
-          text="The registration details are not matching with the KYC details. Please validate Registration/KYC details!"
+          text="Your NMR and Aadhar details does not matched. Do you want to continue the registration in the NMR ? "
         />
       )}
 
       {showCreateHprIdPage ? (
-        <CreateHprId />
+        <CreateHprId aadhaarFormValues={aadhaarFormValues} imrDataNotFound={imrDataNotFound} />
       ) : (
         <>
           <Container
@@ -476,7 +480,6 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
                 <Button
                   onClick={onCancel}
                   variant="outlined"
-                  // disabled={!enableSubmit}
                   sx={{
                     backgroundColor: 'grey.main',
                     color: 'black.textBlack',
@@ -498,7 +501,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
               text={`Your username ${existUSerName.replace(
                 '@hpr.abdm',
                 ''
-              )} has been already created. Please proceed to login in to your NMR Profile`}
+              )} has been already created. Please proceed to set your password`}
               isHpIdCreated={true}
             />
           )}

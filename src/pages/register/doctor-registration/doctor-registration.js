@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 
 import { Box, Container, Typography } from '@mui/material';
@@ -34,6 +33,7 @@ const DoctorRegistrationWelcomePage = () => {
       RegistrationNumber: '',
     },
   });
+
   const { councilNames } = useSelector((state) => state.common);
   const dispatch = useDispatch();
   const handleAadhaarPage = (data) => {
@@ -41,6 +41,7 @@ const DoctorRegistrationWelcomePage = () => {
   };
   useEffect(() => {
     dispatch(getRegistrationCouncilList());
+    setImrDataNotFound(false);
   }, []);
 
   const onSubmit = () => {
@@ -170,7 +171,7 @@ const DoctorRegistrationWelcomePage = () => {
           handleAadhaarPage={handleAadhaarPage}
           isNext={isNext}
           setIsNext={setIsNext}
-          text="Your data is not found in the IMR. Do you want to continue the registration in the IMR ? "
+          text="Your data is not found in the NMR. Do you want to continue the registration in the NMR ? "
         />
       )}
     </>

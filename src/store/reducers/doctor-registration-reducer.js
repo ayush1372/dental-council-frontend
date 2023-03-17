@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -6,11 +7,12 @@ const initialState = {
   getMobileOtpDetails: { data: [], isLoading: Boolean(true), isError: false },
   hpIdExistsDetailsData: { data: [], isLoading: Boolean(true), isError: false },
   hprIdSuggestionsDetailsData: { data: [], isLoading: Boolean(true), isError: false },
-  sendResetPasswordLinkDetailsData: { data: [], isLoading: Boolean(true), isError: false },
   hprIdDataDetails: { data: [], isLoading: Boolean(true), isError: false },
   storeMobileDetailsData: { data: [], isLoading: Boolean(true), isError: false },
   typeOfOtpDetailsData: { data: [], isLoading: Boolean(true), isError: false },
   getkycDetailsData: { data: [], isLoading: Boolean(true), isError: false },
+  healthProfessionalDetailsData: { data: [], isLoading: Boolean(true), isError: false },
+  UserNotFoundDetailsData: { data: [] },
 };
 
 export const registrationData = createSlice({
@@ -32,9 +34,6 @@ export const registrationData = createSlice({
     hprIdSuggestionsDetails: (state, action) => {
       state.hprIdSuggestionsDetailsData = action.payload;
     },
-    sendResetPasswordLinkDetails: (state, action) => {
-      state.sendResetPasswordLinkDetailsData = action.payload;
-    },
     createhprIdData: (state, action) => {
       state.hprIdDataDetails = action.payload;
     },
@@ -47,6 +46,12 @@ export const registrationData = createSlice({
     setUserPasswordData: (state, action) => {
       state.getAccessTokenDetails = action.payload;
     },
+    healthProfessionalDetails: (state, action) => {
+      state.healthProfessionalDetailsData = action.payload;
+    },
+    UserNotFoundDetails: (state, action) => {
+      state.UserNotFoundDetailsData = action.payload;
+    },
   },
 });
 
@@ -56,11 +61,12 @@ export const {
   getMobileOtp,
   hpIdExistsDetails,
   hprIdSuggestionsDetails,
-  sendResetPasswordLinkDetails,
   createhprIdData,
   storeMobileDetails,
   getkycDetails,
   setUserPasswordData,
+  healthProfessionalDetails,
+  UserNotFoundDetails,
 } = registrationData.actions;
 
 export default registrationData.reducer;

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { Box, Container, Modal, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useNavigate } from 'react-router';
@@ -10,11 +9,9 @@ export default function ErrorModalPopup({
   setOpen,
   text,
   imrData,
-  isNext,
   setIsNext,
   handleAadhaarPage,
 }) {
-  console.log('isNext', isNext);
   const theme = useTheme();
   const navigate = useNavigate();
   const handleCloseModal = () => {
@@ -26,7 +23,6 @@ export default function ErrorModalPopup({
     setIsNext(true);
     setOpen(false);
   };
-  // console.log('aadhaar page', isNext)
   const handleNo = () => {
     navigate('/');
   };
@@ -50,7 +46,7 @@ export default function ErrorModalPopup({
               alignItems="center"
               justifyContent="center"
             >
-              Error
+              Error !
             </Typography>
             <Typography
               display="flex"
@@ -64,9 +60,22 @@ export default function ErrorModalPopup({
               {text}
             </Typography>
             {imrData ? (
-              <Box>
-                <Button onClick={handleYes}>Yes</Button>
-                <Button onClick={handleNo}>No</Button>
+              <Box pl={15} mt={3}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="small"
+                  sx={{
+                    mr: 3,
+                    backgroundColor: theme.palette.secondary.main,
+                  }}
+                  onClick={handleYes}
+                >
+                  Yes
+                </Button>
+                <Button variant="contained" color="primary" size="small" onClick={handleNo}>
+                  No
+                </Button>
               </Box>
             ) : (
               <Button sx={{ mt: 3 }} variant="contained" color="warning" onClick={handleCloseModal}>
