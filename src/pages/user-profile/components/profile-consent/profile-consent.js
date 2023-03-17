@@ -314,8 +314,8 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
               </Box>
               <Box mt={4}>
                 <Typography color="textPrimary.main">
-                  Your profile details have been updated. Do you want your profile to be submitted
-                  for Verification ?
+                  Your Application has been updated and will be submitted for verification. For more
+                  details, you will be redirected to Track Application Tab on clicking Ok button
                 </Typography>
               </Box>
               <Box display={'flex'} justifyContent={'flex-end'} mt={1}>
@@ -329,7 +329,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
                     margin: '0 4px',
                   }}
                 >
-                  No
+                  Cancel
                 </Button>
                 <Button
                   onClick={handleYesClick}
@@ -339,7 +339,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
                     margin: '0 4px',
                   }}
                 >
-                  Yes
+                  Ok
                 </Button>
               </Box>
             </Box>
