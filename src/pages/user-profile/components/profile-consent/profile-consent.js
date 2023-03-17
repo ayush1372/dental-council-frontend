@@ -15,7 +15,13 @@ import { changeUserActiveTab } from '../../../../store/reducers/common-reducers'
 import { Button, Checkbox } from '../../../../ui/core';
 import successToast from '../../../../ui/core/toaster';
 
-const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType }) => {
+const ProfileConsent = ({
+  handleBack,
+  setIsReadMode,
+  resetStep,
+  loggedInUserType,
+  setShowStaticFormProgress,
+}) => {
   const dispatch = useDispatch();
   const [confirmationModal, setConfirmationModal] = useState(false);
 
@@ -52,6 +58,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
 
     dispatch(updateProfileConsent(payload))
       .then(() => {
+        setShowStaticFormProgress(true);
         setConfirmationModal(false);
         setIsReadMode(true);
         resetStep(0);
