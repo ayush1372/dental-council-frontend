@@ -8,15 +8,18 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { Button } from '../../ui/core';
 export default function KycErrorPopup({ open, setOpen, text }) {
+  const navigate = useNavigate();
   const theme = useTheme();
   const handleNoClick = () => {
-    setOpen(false);
-    window.location.reload();
+    navigate('/');
   };
-  const handleYesClick = () => {};
+  const handleYesClick = () => {
+    setOpen(false);
+  };
 
   const fuzzyDetails = useSelector(
     (state) => state?.doctorRegistration?.getkycDetailsData?.data?.fuzzy_parameters
