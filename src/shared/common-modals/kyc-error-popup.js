@@ -26,17 +26,17 @@ export default function KycErrorPopup({ open, setOpen, text }) {
   );
 
   return (
-    <Modal open={open} sx={{ mt: 15 }}>
+    <Modal open={open} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
       <Container
         maxWidth="sm"
         sx={{
           backgroundColor: theme.palette.white.main,
           borderRadius: '10px',
-          height: '500px',
+
           p: '15px',
         }}
       >
-        <Box display="flex" flexDirection="column">
+        <Box>
           <Typography
             data-testid="popup-input-success-text"
             variant="h2"

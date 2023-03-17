@@ -31,7 +31,7 @@ const ReadRegisterAndAcademicDetails = ({
   setShowViewPorfile,
   setShowTable,
 }) => {
-  const [accordionKey, setAccordionKey] = useState('accordion-0');
+  const [accordionKeys, setAccordionKeys] = useState(['accordion-0', 'accordion-1', 'accordion-2']);
   const [selected, setSelected] = useState('');
   const [confirmationModal, setConfirmationModal] = useState(false);
 
@@ -54,8 +54,12 @@ const ReadRegisterAndAcademicDetails = ({
       body: QualificationDetailsContent,
     },
   ];
-  const handleChange = (accordionValue) => (_event, isExpanded) => {
-    setAccordionKey(isExpanded ? accordionValue : null);
+  const handleChange = (accordionValue) => () => {
+    if (accordionKeys.includes(accordionValue)) {
+      setAccordionKeys(accordionKeys.filter((a) => a !== accordionValue));
+    } else {
+      setAccordionKeys([...accordionKeys, accordionValue]);
+    }
   };
   const selectionChangeHandler = (event) => {
     const { myValue } = event.currentTarget.dataset;
@@ -83,8 +87,8 @@ const ReadRegisterAndAcademicDetails = ({
           return (
             <Accordion
               square="false"
-              key={0}
-              expanded={accordionKey === key}
+              key={key}
+              defaultExpanded
               onChange={handleChange(key)}
               sx={{
                 '.Mui-expanded.MuiAccordionSummary-root': {
@@ -94,12 +98,14 @@ const ReadRegisterAndAcademicDetails = ({
                     color: 'white.main',
                   },
                   '.MuiAccordionSummary-expandIconWrapper svg': {
-                    fill: '#ffff !important',
+                    fill: 'white.main',
                   },
                 },
               }}
             >
-              <AccordionSummary expandIcon={accordionKey === key ? <RemoveIcon /> : <AddIcon />}>
+              <AccordionSummary
+                expandIcon={accordionKeys.includes(key) ? <RemoveIcon /> : <AddIcon />}
+              >
                 <Typography variant="body1" color="primary.main">
                   {accordion.title}
                 </Typography>
@@ -219,17 +225,6 @@ const ReadRegisterAndAcademicDetails = ({
         <Box
           p={2}
           width={selected === 'verify' ? '500px' : selected === 'forward' ? '700px' : '630px'}
-          // height={
-          //   selected === 'reject'
-          //     ? '500px'
-          //     : selected === 'verify'
-          //     ? '380px'
-          //     : selected === 'forward'
-          //     ? '100px'
-          //     : selected === 'raise'
-          //     ? '650px'
-          //     : '720px'
-          // }
           borderRadius={'40px'}
         >
           <Box align="right">

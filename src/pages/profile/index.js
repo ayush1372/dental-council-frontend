@@ -16,7 +16,6 @@ import {
   getRegistrationCouncilList,
   getSpecialitiesList,
   getStatesList,
-  getUniversitiesList,
 } from '../../store/actions/common-actions';
 import { changeUserActiveTab, userLoggedInType } from '../../store/reducers/common-reducers';
 import MiniDrawer from './components/profile-sidebar/profile-sidebar';
@@ -61,7 +60,6 @@ export function Profile() {
 
     dispatch(getLanguagesList());
     dispatch(getCoursesList());
-    dispatch(getUniversitiesList());
     dispatch(getSpecialitiesList());
     dispatch(getStatesList());
     dispatch(getCountriesList());
