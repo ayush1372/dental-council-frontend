@@ -20,7 +20,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
   const [confirmationModal, setConfirmationModal] = useState(false);
 
   // const { loginData } = useSelector((state) => state?.loginReducer);
-  const { personalDetails, updatedRegistrationDetails } = useSelector(
+  const { personalDetails, updatedPersonalDetails } = useSelector(
     (state) => state?.doctorUserProfileReducer
   );
 
@@ -46,7 +46,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
   };
   const handleYesClick = () => {
     const payload = {
-      hp_profile_id: updatedRegistrationDetails?.profile_id,
+      hp_profile_id: updatedPersonalDetails?.hp_profile_id,
       application_type_id: personalDetails?.nmr_id ? 2 : 1,
     };
 

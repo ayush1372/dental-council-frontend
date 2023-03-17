@@ -133,9 +133,11 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
     // this below code is storing qualification details
     const { qualification } = getValues();
+
     let updatedObj = [];
     if (qualification?.length > 0) {
       updatedObj = qualification?.map((q) => ({
+        // id: updatedRegistrationDetails?.qualification_detail_response_tos[0]?.id ? updatedRegistrationDetails?.qualification_detail_response_tos[0].id : '' ,
         country: countriesList.find((x) => x.id === q?.country),
         course: coursesList.data?.find((x) => x.id === q?.qualification),
         university: universitiesList.data?.find((x) => x.id === q?.university),
@@ -162,9 +164,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     fetchUpdateDoctorRegistrationDetails(finalResult, moveToNext);
   };
 
-  // eslint-disable-next-line no-console
-  console.log('personalDetails', personalDetails, updatedPersonalDetails);
-
   const fetchUpdateDoctorRegistrationDetails = (finalResult, moveToNext = false) => {
     const formData = new FormData();
 
@@ -189,7 +188,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   };
 
   useEffect(() => {
-    dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id))
+    dispatch(getRegistrationDetailsData(updatedPersonalDetails?.hp_profile_id))
       .then((response) => {
         viewCertificate.qualification =
           response?.data?.qualification_detail_response_tos[0]?.degree_certificate;
