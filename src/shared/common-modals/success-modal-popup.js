@@ -9,7 +9,7 @@ import {
   doctorTabs,
   nmcTabs,
   smcTabs,
-} from '../../../../helpers/components/sidebar-drawer-list-item';
+} from '../../helpers/components/sidebar-drawer-list-item';
 import { getCardCount } from '../../store/actions/dashboard-actions';
 import { changeUserActiveTab } from '../../store/reducers/common-reducers';
 import { setBreadcrumbsActivetab } from '../../store/reducers/common-reducers';
