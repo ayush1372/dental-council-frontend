@@ -724,7 +724,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             <Box p={2} display="flex">
               <Checkbox
                 defaultChecked={personalDetails?.communication_address?.is_same_address || false}
-                // error={errors.Address?.message}
                 onChange={(e) => {
                   setIsSameAddress(e.target.checked);
                 }}
@@ -737,9 +736,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               <Grid item xs={12} md={4}>
                 <Typography variant="subtitle2" color="inputTextColor.main">
                   House
-                  <Typography component="span" color="error.main">
-                    *
-                  </Typography>
+                  {!isSameAddress && (
+                    <Typography component="span" color="error.main">
+                      *
+                    </Typography>
+                  )}
                 </Typography>
                 <TextField
                   variant="outlined"
@@ -759,13 +760,16 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                       : personalDetails?.communication_address?.house
                   }
                   value={isSameAddress ? personalDetails?.kyc_address?.house : getValues().Address}
-                  {...register('House', {
-                    required: 'House is Required',
-                    maxLength: {
-                      value: 300,
-                      message: 'Length should be less than 300.',
-                    },
-                  })}
+                  {...register(
+                    'House',
+                    !isSameAddress && {
+                      required: 'House is Required',
+                      maxLength: {
+                        value: 300,
+                        message: 'Length should be less than 300.',
+                      },
+                    }
+                  )}
                   error={errors.House?.message}
                 />
               </Grid>
@@ -778,7 +782,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                   name={'Street'}
                   placeholder="Enter Street"
                   disabled={isSameAddress}
-                  // required={false}
                   fullWidth
                   sx={{
                     input: {
@@ -790,9 +793,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                       ? personalDetails?.kyc_address?.street
                       : personalDetails?.communication_address?.street
                   }
-                  // value={isSameAddress ? personalDetails?.kyc_address?.street : getValues().street}
                   {...register('Street', {
-                    // required: 'Street is Required',
                     maxLength: {
                       value: 300,
                       message: 'Length should be less than 300.',
@@ -851,7 +852,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                     backgroundColor: isSameAddress ? 'grey2.main' : '',
                   },
                 }}
-                // required={false}
                 fullWidth
                 defaultValue={
                   isSameAddress
@@ -861,13 +861,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 value={
                   isSameAddress ? personalDetails?.kyc_address?.locality : getValues().locality
                 }
-                {...register('Locality', {
-                  // required: 'Locality is Required',
-                  // maxLength: {
-                  //   value: 300,
-                  //   message: 'Length should be less than 300.',
-                  // },
-                })}
+                {...register('Locality', {})}
               />
             </Grid>
             <Grid item xs={12} md={4}>
@@ -878,7 +872,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 name="Country"
                 label="Country"
                 defaultValue={getValues().Country}
-                required={true}
+                required={isSameAddress ? false : true}
                 {...register('Country', {
                   required: 'Country is required',
                 })}
@@ -1018,28 +1012,34 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 Pincode
-                <Typography component="span" color="error.main">
-                  *
-                </Typography>
+                {!isSameAddress && (
+                  <Typography component="span" color="error.main">
+                    *
+                  </Typography>
+                )}
               </Typography>
               <TextField
                 variant="outlined"
                 name={'PostalCode'}
                 placeholder="Postal code"
-                required={true}
+                required={isSameAddress ? false : true}
                 fullWidth
                 style={{ backgroundColor: isSameAddress ? '#F0F0F0' : '' }}
                 defaultValue={
                   isSameAddress ? personalDetails?.kyc_address?.pincode : getValues().PostalCode
                 }
                 disabled={isSameAddress}
-                {...register('PostalCode', {
-                  required: 'PostalCode is Required',
-                  pattern: {
-                    value: /^[0-9]{6}$/,
-                    message: 'Should only contains 6 digits',
-                  },
-                })}
+                {...register(
+                  'PostalCode',
+                  !isSameAddress && {
+                    required: 'PostalCode is Required',
+
+                    pattern: {
+                      value: /^[0-9]{6}$/,
+                      message: 'Should only contains 6 digits',
+                    },
+                  }
+                )}
                 error={errors.PostalCode?.message}
               />
             </Grid>
