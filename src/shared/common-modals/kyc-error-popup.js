@@ -12,10 +12,11 @@ import { useSelector } from 'react-redux';
 import { Button } from '../../ui/core';
 export default function KycErrorPopup({ open, setOpen, text }) {
   const theme = useTheme();
-  const handleCloseModal = () => {
+  const handleNoClick = () => {
     setOpen(false);
     window.location.reload();
   };
+  const handleYesClick = () => {};
 
   const fuzzyDetails = useSelector(
     (state) => state?.doctorRegistration?.getkycDetailsData?.data?.fuzzy_parameters
@@ -94,10 +95,10 @@ export default function KycErrorPopup({ open, setOpen, text }) {
           </Button> */}
 
           <Box mt={2} display={'flex'} justifyContent={'center'}>
-            <Button variant="contained" color="secondary" sx={{ mr: 2 }} onClick={handleCloseModal}>
+            <Button variant="contained" color="secondary" sx={{ mr: 2 }} onClick={handleYesClick}>
               YES
             </Button>
-            <Button variant="contained" color="grey">
+            <Button variant="contained" color="grey" onClick={handleNoClick}>
               NO
             </Button>
           </Box>
