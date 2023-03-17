@@ -100,11 +100,11 @@ export const getLanguagesList = () => async (dispatch) => {
   });
 };
 
-export const getUniversitiesList = () => async (dispatch) => {
+export const getUniversitiesList = (selectedCollegeID) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,
-      url: API.common.universities,
+      url: `${API.common.universities}?collegeId=${selectedCollegeID}`,
     })
       .then((response) => {
         dispatch(getUniversities(response.data));
@@ -132,11 +132,11 @@ export const getCoursesList = () => async (dispatch) => {
   });
 };
 
-export const getCollegesList = (university_id) => async (dispatch) => {
+export const getCollegesList = (selectedState) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,
-      url: API.common.colleges.replace('{university_id}', university_id),
+      url: `${API.common.colleges}?stateId=${selectedState}`,
     })
       .then((response) => {
         dispatch(getColleges(response.data));

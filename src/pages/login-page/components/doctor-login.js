@@ -13,7 +13,6 @@ import CaptchaComponent from '../../../shared/captcha-component/captcha-componen
 import OtpForm from '../../../shared/otp-form/otp-component';
 import {
   getRegistrationCouncilList,
-  getUniversitiesList,
   sendNotificationOtp,
 } from '../../../store/actions/common-actions';
 // import { , verifyNotificationOtp } from '../../../store/actions/common-actions';
@@ -121,7 +120,6 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
                 dispatch(login());
                 dispatch(userLoggedInType(loginName));
                 dispatch(getRegistrationCouncilList());
-                dispatch(getUniversitiesList());
                 navigate(`/profile`);
               })
               .catch(() => {
@@ -162,7 +160,6 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
                 dispatch(login());
                 dispatch(userLoggedInType(loginName));
                 dispatch(getRegistrationCouncilList());
-                dispatch(getUniversitiesList());
                 navigate(`/profile`);
               })
               .catch(() => {

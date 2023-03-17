@@ -15,11 +15,20 @@ import { changeUserActiveTab } from '../../../../store/reducers/common-reducers'
 import { Button, Checkbox } from '../../../../ui/core';
 import successToast from '../../../../ui/core/toaster';
 
-const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType }) => {
+const ProfileConsent = ({
+  handleBack,
+  setIsReadMode,
+  resetStep,
+  loggedInUserType,
+  setShowStaticFormProgress,
+}) => {
   const dispatch = useDispatch();
   const [confirmationModal, setConfirmationModal] = useState(false);
 
-  const { loginData } = useSelector((state) => state?.loginReducer);
+  // const { loginData } = useSelector((state) => state?.loginReducer);
+  const { personalDetails, updatedPersonalDetails } = useSelector(
+    (state) => state?.doctorUserProfileReducer
+  );
 
   const {
     formState: { errors },
@@ -43,12 +52,13 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
   };
   const handleYesClick = () => {
     const payload = {
-      hp_profile_id: loginData?.data?.profile_id,
-      application_type_id: 1,
+      hp_profile_id: updatedPersonalDetails?.hp_profile_id,
+      application_type_id: personalDetails?.nmr_id ? 2 : 1,
     };
 
     dispatch(updateProfileConsent(payload))
       .then(() => {
+        setShowStaticFormProgress(true);
         setConfirmationModal(false);
         setIsReadMode(true);
         resetStep(0);
@@ -311,8 +321,8 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
               </Box>
               <Box mt={4}>
                 <Typography color="textPrimary.main">
-                  Your profile details have been updated. Do you want your profile to be submitted
-                  for Verification ?
+                  Your Application has been updated and will be submitted for verification. For more
+                  details, you will be redirected to Track Application Tab on clicking Ok button
                 </Typography>
               </Box>
               <Box display={'flex'} justifyContent={'flex-end'} mt={1}>
@@ -326,7 +336,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
                     margin: '0 4px',
                   }}
                 >
-                  No
+                  Cancel
                 </Button>
                 <Button
                   onClick={handleYesClick}
@@ -336,7 +346,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
                     margin: '0 4px',
                   }}
                 >
-                  Yes
+                  Ok
                 </Button>
               </Box>
             </Box>
