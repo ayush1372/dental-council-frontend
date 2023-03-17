@@ -13,7 +13,7 @@ import PersonalDetailsContent from '../readable-content/personal-details-content
 const ReadPersonalDetails = ({ handleNext, showActions = true }) => {
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { t } = useTranslation();
-  const [accordionKey, setAccordionKey] = useState('accordion-0');
+  const [accordionKeys, setAccordionKeys] = useState(['accordion-0', 'accordion-1', 'accordion-2']);
   const accordions = [
     {
       title: 'Personal Details',
@@ -28,10 +28,13 @@ const ReadPersonalDetails = ({ handleNext, showActions = true }) => {
       body: CommunicationAddressContent,
     },
   ];
-  const handleChange = (accordionValue) => (_event, isExpanded) => {
-    setAccordionKey(isExpanded ? accordionValue : null);
+  const handleChange = (accordionValue) => () => {
+    if (accordionKeys.includes(accordionValue)) {
+      setAccordionKeys(accordionKeys.filter((a) => a !== accordionValue));
+    } else {
+      setAccordionKeys([...accordionKeys, accordionValue]);
+    }
   };
-
   return (
     <Box>
       <Box>
@@ -41,8 +44,8 @@ const ReadPersonalDetails = ({ handleNext, showActions = true }) => {
           return (
             <Accordion
               square="false"
-              key={0}
-              expanded={accordionKey === key}
+              key={key}
+              defaultExpanded
               onChange={handleChange(key)}
               sx={{
                 '.Mui-expanded.MuiAccordionSummary-root': {
@@ -57,7 +60,9 @@ const ReadPersonalDetails = ({ handleNext, showActions = true }) => {
                 },
               }}
             >
-              <AccordionSummary expandIcon={accordionKey === key ? <RemoveIcon /> : <AddIcon />}>
+              <AccordionSummary
+                expandIcon={accordionKeys.includes(key) ? <RemoveIcon /> : <AddIcon />}
+              >
                 <Typography variant="body1" color="primary">
                   {accordion.title}
                 </Typography>
