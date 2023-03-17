@@ -113,7 +113,6 @@ export const checkHpidExists = (txnId) => async (dispatch) => {
     })
       .then((response) => {
         dispatch(hpIdExistsDetails(response));
-        console.log('exists', response);
 
         return resolve(response);
       })
