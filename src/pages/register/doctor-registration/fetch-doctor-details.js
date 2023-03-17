@@ -247,7 +247,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
         <KycErrorPopup
           open={kycError}
           setOpen={() => setKycError(false)}
-          text="Your NMR and Aadhar details does not matched. Do you want to continue the registration in the NMR ? "
+          text="Your NMR and Aadhar details does not match. Do you want to continue the registration in the NMR ? "
         />
       )}
 
