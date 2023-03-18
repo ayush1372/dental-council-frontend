@@ -40,8 +40,7 @@ const ReadRegisterAndAcademicDetails = ({
   const [successPopupMessage, setSuccessPopupMessage] = useState('');
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
-  // const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
-
+  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   // const dispatch = useDispatch();
 
   const accordions = [
@@ -192,12 +191,13 @@ const ReadRegisterAndAcademicDetails = ({
                       <MenuItem onClick={selectionChangeHandler} data-my-value={'reject'}>
                         Reject
                       </MenuItem>
-                      {loggedInUserType === 'NMC' && (
+                      {personalDetails.nmr_id !== undefined && (
                         <MenuItem onClick={selectionChangeHandler} data-my-value={'suspend'}>
                           Permanent suspend
                         </MenuItem>
                       )}
-                      {loggedInUserType === 'NMC' && (
+
+                      {personalDetails.nmr_id !== undefined && (
                         <MenuItem onClick={selectionChangeHandler} data-my-value={'blacklist'}>
                           Temporary suspend
                         </MenuItem>

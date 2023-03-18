@@ -154,6 +154,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
               password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
               user_type: usertypeId,
               captcha_trans_id: generateCaptcha?.transaction_id,
+              login_type: loginTypeID,
             };
             dispatch(loginAction(requestObj))
               .then(() => {

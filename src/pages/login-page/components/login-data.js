@@ -113,6 +113,7 @@ export const Login = ({ loginName }) => {
         loginTypeID = 0;
         break;
     }
+
     if (selectedLoginOption === 'mobileNumber') {
       dispatch(
         validateCaptchaImage({
@@ -172,6 +173,7 @@ export const Login = ({ loginName }) => {
               password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
               user_type: usertypeId,
               captcha_trans_id: generateCaptcha?.transaction_id,
+              login_type: loginTypeID,
             };
             dispatch(loginAction(requestObj))
               .then((resp) => {

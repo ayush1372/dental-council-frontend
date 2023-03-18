@@ -914,8 +914,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 fullWidth
                 error={errors.State?.message}
                 name="State"
-                defaultValue={getValues().State}
-                value={getValues().State}
+                defaultValue={
+                  isSameAddress ? personalDetails?.kyc_address?.State : getValues().State
+                }
+                value={isSameAddress ? personalDetails?.kyc_address?.State : getValues().State}
                 required={isSameAddress ? false : true}
                 disabled={isSameAddress}
                 {...register(
@@ -951,7 +953,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 fullWidth
                 error={errors.District?.message}
                 name="District"
-                defaultValue={getValues().District}
+                defaultValue={
+                  isSameAddress ? personalDetails?.kyc_address?.District : getValues().District
+                }
                 required={isSameAddress ? false : true}
                 disabled={isSameAddress}
                 {...register(
@@ -980,8 +984,16 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 name="SubDistrict"
                 placeholder="Sub District"
                 disabled={isSameAddress}
-                defaultValue={getValues().SubDistrict}
-                value={getValues().SubDistrict}
+                defaultValue={
+                  isSameAddress
+                    ? personalDetails?.kyc_address?.SubDistrict
+                    : getValues().SubDistrict
+                }
+                value={
+                  isSameAddress
+                    ? personalDetails?.kyc_address?.SubDistrict
+                    : getValues().SubDistrict
+                }
                 {...register('SubDistrict')}
                 options={createSelectFieldData(subDistrictList, 'iso_code')}
                 MenuProps={{
@@ -1000,7 +1012,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 style={{ backgroundColor: isSameAddress ? '#F0F0F0' : '' }}
                 fullWidth
                 name="Area"
-                defaultValue={getValues().Area}
+                defaultValue={isSameAddress ? personalDetails?.kyc_address?.Area : getValues().Area}
+                value={isSameAddress ? personalDetails?.kyc_address?.Area : getValues().Area}
                 disabled={isSameAddress}
                 required={true}
                 {...register('Area')}

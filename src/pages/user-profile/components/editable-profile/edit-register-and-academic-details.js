@@ -291,11 +291,17 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               error={errors?.RegisteredWithCouncil?.message}
               sx={{
                 input: {
-                  backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
+                  backgroundColor:
+                    loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                      ? ''
+                      : 'grey2.main',
                 },
               }}
               InputProps={{
-                readOnly: loggedInUserType === 'SMC' ? false : true,
+                readOnly:
+                  loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                    ? false
+                    : true,
               }}
             />
           </Grid>
@@ -316,11 +322,17 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               defaultValue={getValues().RegistrationNumber}
               sx={{
                 input: {
-                  backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
+                  backgroundColor:
+                    loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                      ? ''
+                      : 'grey2.main',
                 },
               }}
               InputProps={{
-                readOnly: loggedInUserType === 'SMC' ? false : true,
+                readOnly:
+                  loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                    ? false
+                    : true,
               }}
             />
           </Grid>
@@ -337,17 +349,31 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               name={'RegistrationDate'}
               required={true}
               fullWidth
+              type="date"
               defaultValue={getValues().RegistrationDate}
               {...register('RegistrationDate', {
                 required: 'Registration Date is Required',
               })}
               sx={{
+                height: '48px',
+                width: '60%',
                 input: {
-                  backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
+                  color: 'black',
+                  textTransform: 'uppercase',
+                  backgroundColor:
+                    loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                      ? ''
+                      : 'grey2.main',
                 },
               }}
               InputProps={{
-                readOnly: loggedInUserType === 'SMC' ? false : true,
+                readOnly:
+                  loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                    ? false
+                    : true,
+              }}
+              InputLabelProps={{
+                shrink: true,
               }}
             />
           </Grid>

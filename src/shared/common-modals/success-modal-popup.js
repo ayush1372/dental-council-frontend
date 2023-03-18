@@ -1,10 +1,17 @@
 import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined';
 import { Box, Container, Modal, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 
+import {
+  colgTabs,
+  doctorTabs,
+  nmcTabs,
+  smcTabs,
+} from '../../helpers/components/sidebar-drawer-list-item';
 import { getCardCount } from '../../store/actions/dashboard-actions';
+import { changeUserActiveTab } from '../../store/reducers/common-reducers';
 import { setBreadcrumbsActivetab } from '../../store/reducers/common-reducers';
 import { Button } from '../../ui/core';
 
@@ -18,12 +25,14 @@ export default function SuccessModalPopup({
   successRegistration,
   existHprId,
 }) {
+  const theme = useTheme();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const loggedInUserType = useSelector((state) => state?.common?.loggedInUserType);
+
   const handleCloseModal = () => {
     setOpen(false);
   };
-  const theme = useTheme();
-  const dispatch = useDispatch();
   const navigateToSetPassword = () => {
     navigate('/reset-password');
     window.scrollTo({
@@ -31,12 +40,32 @@ export default function SuccessModalPopup({
       behavior: 'smooth',
     });
   };
+
   const handleCloseModalALL = () => {
     setOpen(false);
     handleClose();
     dispatch(setBreadcrumbsActivetab('DASHBOARD'));
     if (SuspensionCall) {
+      let ActiveTab;
+      switch (loggedInUserType) {
+        case 'SMC':
+          ActiveTab = smcTabs[0].tabName;
+          break;
+        case 'Doctor':
+          ActiveTab = doctorTabs[1].tabName;
+          break;
+        case 'NMC':
+          ActiveTab = nmcTabs[0].tabName;
+          break;
+        case 'College':
+          ActiveTab = colgTabs[0].tabName;
+          break;
+        default:
+          ActiveTab = '';
+          break;
+      }
       dispatch(getCardCount());
+      dispatch(changeUserActiveTab(ActiveTab));
     }
   };
   const navigateLogin = () => {
