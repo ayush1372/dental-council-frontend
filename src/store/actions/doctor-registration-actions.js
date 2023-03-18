@@ -7,9 +7,9 @@ import {
   getAccessToken,
   getkycDetails,
   getMobileOtp,
+  healthProfessionalDetails,
   hpIdExistsDetails,
   hprIdSuggestionsDetails,
-  sendResetPasswordLinkDetails,
   setUserPasswordData,
   smcRegistrationDetail,
   storeMobileDetails,
@@ -138,24 +138,6 @@ export const getHprIdSuggestions = (txnId) => async (dispatch) => {
       });
   });
 };
-
-export const sendResetPasswordLink = (data) => async (dispatch) => {
-  return await new Promise((resolve, reject) => {
-    useAxiosCall({
-      method: POST,
-      url: API.doctorRegistration.passwordLink,
-      data: data,
-    })
-      .then((response) => {
-        dispatch(sendResetPasswordLinkDetails(response));
-        return resolve(response);
-      })
-      .catch((error) => {
-        return reject(error);
-      });
-  });
-};
-
 export const createUniqueHprId = (data) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     hpIdUseAxiosCall({
@@ -173,7 +155,6 @@ export const createUniqueHprId = (data) => async (dispatch) => {
       });
   });
 };
-
 export const setUserPassword = (data) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
@@ -184,6 +165,23 @@ export const setUserPassword = (data) => async (dispatch) => {
     })
       .then((response) => {
         dispatch(setUserPasswordData(response));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+export const createHealthProfessional = (data) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.doctorRegistration.healthProfesssional,
+      // headers: { Authorization: 'Bearer ' + accesstokenHprId },
+      data: data,
+    })
+      .then((response) => {
+        dispatch(healthProfessionalDetails(response));
         return resolve(response);
       })
       .catch((error) => {
