@@ -28,6 +28,9 @@ const NewPasswordSetup = () => {
   const uniqueHpId = useSelector((state) =>
     state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId.replace('@hpr.abdm', '')
   );
+  const demographicAuthMobileVerify = useSelector(
+    (state) => state?.AadhaarTransactionId?.demographicAuthMobileDetailsData
+  );
 
   const kycstatus = useSelector(
     (state) => state?.doctorRegistration?.getkycDetailsData?.data?.kyc_fuzzy_match_status
@@ -61,7 +64,9 @@ const NewPasswordSetup = () => {
       let reqObj = {
         registration_number: imrUserNotFounddata?.RegistrationNumber,
         smc_id: imrUserNotFounddata?.RegistrationCouncilId,
-        mobile_number: mobilenumber,
+        mobile_number: demographicAuthMobileVerify?.data?.verified
+          ? mobilenumber
+          : mobilenumber?.mobile,
         gender: userKycData?.gender,
         name: userKycData?.name,
         pincode: userKycData?.pincode,
@@ -72,15 +77,17 @@ const NewPasswordSetup = () => {
         address: userKycData?.address,
       };
 
-      dispatch(createHealthProfessional(reqObj))
+      dispatch(createHealthProfessional(reqObj)) //new api 1st
         .then(() => {
           const reqPayload = {
-            mobile: mobilenumber?.mobile,
+            mobile: demographicAuthMobileVerify?.data?.verified
+              ? mobilenumber
+              : mobilenumber?.mobile,
             username: uniqueHpId,
             registration_number: imrUserNotFounddata?.RegistrationNumber,
             password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
           };
-          dispatch(setUserPassword(reqPayload))
+          dispatch(setUserPassword(reqPayload)) // user api 2nd
             .then(() => {
               setShowSuccess(true);
             })

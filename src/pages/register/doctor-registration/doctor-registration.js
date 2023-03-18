@@ -4,6 +4,7 @@ import { Box, Container, Typography } from '@mui/material';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 
 import { createEditFieldData } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
@@ -11,6 +12,7 @@ import ErrorModalPopup from '../../../shared/common-modals/error-modal-popup';
 import { getRegistrationCouncilList } from '../../../store/actions/common-actions';
 import { fetchSmcRegistrationDetails } from '../../../store/actions/doctor-registration-actions';
 import { Button, TextField } from '../../../ui/core';
+import successToast from '../../../ui/core/toaster';
 import FetchDoctorDetails from './fetch-doctor-details';
 const DoctorRegistrationWelcomePage = () => {
   const [isNext, setIsNext] = useState(false);
@@ -53,8 +55,18 @@ const DoctorRegistrationWelcomePage = () => {
       .then(() => {
         setIsNext(true);
       })
-      .catch(() => {
-        setRejectPopup(true);
+      .catch((err) => {
+        if (err?.data?.response?.data?.status === 400 && err?.data?.response?.data?.error) {
+          successToast(
+            'ERROR: ' + err?.data?.response?.data?.error,
+            'auth-error',
+            'error',
+            'top-center'
+          );
+          reset();
+        } else {
+          setRejectPopup(true);
+        }
       });
   };
   const onReset = () => {
@@ -62,6 +74,8 @@ const DoctorRegistrationWelcomePage = () => {
   };
   return (
     <>
+      <ToastContainer></ToastContainer>
+
       <Box>
         {isNext === false ? (
           <Box my={9}>

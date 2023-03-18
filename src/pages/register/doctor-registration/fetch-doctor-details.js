@@ -174,7 +174,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
   useEffect(() => {
     if (demographicAuthMobileVerify?.data?.verified) {
       setisOtpValidMobile(true);
-      //any popup? to show here that ' is kyc details and mobile num are matching ? '
+      //any popup? to show here that ' is kyc details and mobile num are matching ? ' *
     }
   }, [demographicAuthMobileVerify?.data?.verified]);
   const handleValidateMobile = () => {
