@@ -28,7 +28,6 @@ const UniqueUserNameForDoctorRegistration = () => {
     getValues,
     handleSubmit,
     clearErrors,
-    reset,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
@@ -50,7 +49,6 @@ const UniqueUserNameForDoctorRegistration = () => {
       hprId: suggestion,
     };
     dispatch(createUniqueHprId(data)).then(() => {
-      reset();
       navigate(`/reset-password`);
     });
   };
