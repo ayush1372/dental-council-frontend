@@ -1,16 +1,31 @@
 import { Box, Container, Modal, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import { useNavigate } from 'react-router';
 
 import { Button } from '../../ui/core';
 
-export default function ErrorModalPopup({ open, setOpen, text }) {
+export default function ErrorModalPopup({
+  open,
+  setOpen,
+  text,
+  imrData,
+  setIsNext,
+  handleAadhaarPage,
+}) {
   const theme = useTheme();
-
+  const navigate = useNavigate();
   const handleCloseModal = () => {
     setOpen(false);
     window.location.reload();
   };
-
+  const handleYes = () => {
+    handleAadhaarPage(true);
+    setIsNext(true);
+    setOpen(false);
+  };
+  const handleNo = () => {
+    navigate('/');
+  };
   return (
     <Modal open={open} sx={{ mt: 15 }}>
       <Container
@@ -31,7 +46,7 @@ export default function ErrorModalPopup({ open, setOpen, text }) {
               alignItems="center"
               justifyContent="center"
             >
-              Error
+              Error !
             </Typography>
             <Typography
               display="flex"
@@ -44,9 +59,29 @@ export default function ErrorModalPopup({ open, setOpen, text }) {
             >
               {text}
             </Typography>
-            <Button sx={{ mt: 3 }} variant="contained" color="warning" onClick={handleCloseModal}>
-              Ok
-            </Button>
+            {imrData ? (
+              <Box pl={15} mt={3}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  size="small"
+                  sx={{
+                    mr: 3,
+                    backgroundColor: theme.palette.secondary.main,
+                  }}
+                  onClick={handleYes}
+                >
+                  Yes
+                </Button>
+                <Button variant="contained" color="primary" size="small" onClick={handleNo}>
+                  No
+                </Button>
+              </Box>
+            ) : (
+              <Button sx={{ mt: 3 }} variant="contained" color="warning" onClick={handleCloseModal}>
+                Ok
+              </Button>
+            )}
           </Box>
         </Box>
       </Container>

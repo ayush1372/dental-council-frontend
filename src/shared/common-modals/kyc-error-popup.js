@@ -8,15 +8,18 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 
 import { Button } from '../../ui/core';
 export default function KycErrorPopup({ open, setOpen, text }) {
+  const navigate = useNavigate();
   const theme = useTheme();
-  const handleNoClick = () => {
+  const handleYesClick = () => {
     setOpen(false);
-    window.location.reload();
   };
-  const handleYesClick = () => {};
+  const handleNo = () => {
+    navigate('/');
+  };
 
   const fuzzyDetails = useSelector(
     (state) => state?.doctorRegistration?.getkycDetailsData?.data?.fuzzy_parameters
@@ -45,17 +48,7 @@ export default function KycErrorPopup({ open, setOpen, text }) {
           >
             Details Mismatched!
           </Typography>
-          <Typography
-            display="flex"
-            alignItems="center"
-            textAlign="center"
-            mt={2}
-            data-testid="popup-input-text"
-            component="div"
-            flexDirection="column"
-          >
-            {text}
-          </Typography>
+
           <Box mt={3}>
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -84,22 +77,25 @@ export default function KycErrorPopup({ open, setOpen, text }) {
                 </TableBody>
               </Table>
             </TableContainer>
+            <Typography
+              pt={2}
+              display="flex"
+              alignItems="center"
+              textAlign="center"
+              mt={2}
+              data-testid="popup-input-text"
+              component="div"
+              flexDirection="column"
+            >
+              {text}
+            </Typography>
           </Box>
-          {/* <Button
-            sx={{ width: { xs: '100%', sm: '408px' }, mt: 5, ml: 19 }}
-            variant="contained"
-            color="warning"
-            onClick={handleCloseModal}
-          >
-            Ok
-          </Button> */}
-
-          <Box mt={2} display={'flex'} justifyContent={'center'}>
-            <Button variant="contained" color="secondary" sx={{ mr: 2 }} onClick={handleYesClick}>
-              YES
+          <Box display="flex" justifyContent="right" mt={3}>
+            <Button variant="contained" color="primary" onClick={handleYesClick}>
+              Yes
             </Button>
-            <Button variant="contained" color="grey" onClick={handleNoClick}>
-              NO
+            <Button variant="contained" color="secondary" onClick={handleNo} mt={5} sx={{ ml: 3 }}>
+              No
             </Button>
           </Box>
         </Box>

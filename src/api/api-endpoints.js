@@ -64,8 +64,8 @@ export const API = {
   doctorRegistration: {
     smcRegistrationDetail:
       'api/v1/abdm/nmr/health-professional?smcId={smcId}&registrationNumber={registrationNumber}',
-    passwordLink: 'api/v1/abdm/nmr/user/password-link',
     setUserPassword: 'api/v1/abdm/nmr/health-professional/user',
+    healthProfesssional: '/api/v1/abdm/nmr/health-professional',
   },
   nbe: {
     getNBEProfileData: 'api/v1/abdm/nmr/nbe/user/{id}',
@@ -80,14 +80,14 @@ export const API = {
 };
 export const API_HPRID = {
   hpId: {
-    checkHprIdExists: 'api/v2/registration/aadhaar/checkHpIdAccountExist',
-    hpIdSuggestion: 'api/v1/registration/aadhaar/hpid/suggestion',
     sessionApi: 'gateway/v0.5/sessions',
     sendAadhaarOtp: 'api/v1/registration/aadhaar/generateOtp',
     verifyAadhaarOtp: 'api/v1/registration/aadhaar/verifyOTP',
     generateMobileOtp: 'api/v1/registration/aadhaar/generateMobileOTP',
     verifyMobileOtp: '/api/v1/registration/aadhaar/verifyMobileOTP',
-    createHprId: 'api/v1/registration/aadhaar/createHprIdWithPreVerified',
     demographicAuthMobile: 'api/v1/registration/aadhaar/demographicAuthViaMobile',
+    checkHprIdExists: 'api/v2/registration/aadhaar/checkHpIdAccountExist',
+    hpIdSuggestion: 'api/v1/registration/aadhaar/hpid/suggestion',
+    createHprId: 'api/v1/registration/aadhaar/createHprIdWithPreVerified',
   },
 };
