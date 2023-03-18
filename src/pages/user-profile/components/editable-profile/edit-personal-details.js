@@ -321,10 +321,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       MotherName,
       SpouseName,
       Gender,
-      // Schedule,
       Nationality,
       PostalCode,
       Address,
+      House,
       EmailAddress,
       mobileNo,
       Name,
@@ -345,13 +345,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     doctorProfileValues.personal_details.father_name = FatherName;
     doctorProfileValues.personal_details.mother_name = MotherName;
     doctorProfileValues.personal_details.spouse_name = SpouseName;
-    // doctorProfileValues.personal_details.schedule.name = Schedule;
     doctorProfileValues.personal_details.date_of_birth = DateOfBirth;
     doctorProfileValues.personal_details.full_name = Name;
     doctorProfileValues.personal_details.country_nationality =
       nationalities.find((x) => x.id === Nationality) || {};
     doctorProfileValues.personal_details.gender = Gender;
-    // doctorProfileValues.personal_details.schedule = schedules.find((x) => x.id === Schedule) || {};
 
     doctorProfileValues.communication_address.pincode = PostalCode;
     doctorProfileValues.communication_address.address_line1 = Address;
@@ -371,6 +369,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     doctorProfileValues.communication_address.landmark = Landmark;
     doctorProfileValues.communication_address.locality = Locality;
     doctorProfileValues.communication_address.street = Street;
+    doctorProfileValues.communication_address.house = House;
     doctorProfileValues.communication_address.is_same_address = isSameAddress;
     doctorProfileValues.communication_address.address_type = { id: 4, name: 'communication' };
 
@@ -449,11 +448,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               variant="outlined"
               name={`Dr. ${'Name'}`}
               placeholder="First name"
-              //required={true}
               fullWidth
               defaultValue={getValues().Name}
               {...register('Name', {
-                // required: 'Missing field',
                 maxLength: {
                   value: 100,
                   message: 'Length should be less than 100.',
@@ -465,7 +462,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 },
               }}
               InputProps={{ readOnly: loggedInUserType === 'SMC' ? false : true }}
-              // error={errors.Name?.message}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -751,21 +747,18 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 <TextField
                   variant="outlined"
                   name={'House'}
-                  placeholder="House address"
-                  disabled={isSameAddress ? true : false}
+                  fullWidth
+                  placeholder="House Address"
+                  disabled={isSameAddress}
+                  required={isSameAddress ? false : true}
                   sx={{
                     input: {
                       backgroundColor: isSameAddress ? 'grey2.main' : '',
                     },
                   }}
-                  required={isSameAddress ? false : true}
-                  fullWidth
                   defaultValue={
-                    isSameAddress
-                      ? personalDetails?.kyc_address?.house
-                      : personalDetails?.communication_address?.house
+                    isSameAddress ? personalDetails?.kyc_address?.house : getValues()?.House
                   }
-                  value={isSameAddress ? personalDetails?.kyc_address?.house : getValues().Address}
                   {...register(
                     'House',
                     !isSameAddress && {
