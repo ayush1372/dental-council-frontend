@@ -90,12 +90,14 @@ export default function KycErrorPopup({ open, setOpen, text }) {
               {text}
             </Typography>
           </Box>
-          <Button variant="contained" color="primary" onClick={handleYesClick}>
-            Yes
-          </Button>
-          <Button variant="contained" color="secondary" onClick={handleNo} mt={5}>
-            No
-          </Button>
+          <Box display="flex" justifyContent="right" mt={3}>
+            <Button variant="contained" color="primary" onClick={handleYesClick}>
+              Yes
+            </Button>
+            <Button variant="contained" color="secondary" onClick={handleNo} mt={5} sx={{ ml: 3 }}>
+              No
+            </Button>
+          </Box>
         </Box>
       </Container>
     </Modal>
