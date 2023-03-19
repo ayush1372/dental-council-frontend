@@ -133,7 +133,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
         loggedInUserType === 'SMC'
           ? ''
           : loggedInUserType === 'Doctor'
-          ? gender === 'female'
+          ? gender === 'F'
             ? 'F'
             : 'M'
           : '',
