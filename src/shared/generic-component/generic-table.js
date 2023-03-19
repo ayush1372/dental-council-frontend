@@ -221,6 +221,12 @@ export default function GenericTable(props) {
                                         option?.onClick(e, row, option.dataValue) ||
                                         selectionChangeHandler(e, row)
                                       }
+                                      disabled={
+                                        props?.data?.NMRID?.value !== undefined ||
+                                        props?.data?.NMRID?.value !== null
+                                          ? false
+                                          : true
+                                      }
                                     >
                                       {option.keyName}
                                     </MenuItem>
