@@ -80,7 +80,7 @@ export const API = {
 };
 export const API_HPRID = {
   hpId: {
-    sessionApi: 'gateway/v0.5/sessions',
+    sessionApi: '/api/v1/abdm/nmr/sessions',
     sendAadhaarOtp: 'api/v1/registration/aadhaar/generateOtp',
     verifyAadhaarOtp: 'api/v1/registration/aadhaar/verifyOTP',
     generateMobileOtp: 'api/v1/registration/aadhaar/generateMobileOTP',

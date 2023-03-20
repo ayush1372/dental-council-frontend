@@ -25,9 +25,13 @@ export default function ErrorModalPopup({
   };
   const handleNo = () => {
     navigate('/');
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
   return (
-    <Modal open={open} sx={{ mt: 15 }}>
+    <Modal open={open} sx={{ mt: 30 }}>
       <Container
         maxWidth="xs"
         sx={{
@@ -43,15 +47,13 @@ export default function ErrorModalPopup({
               variant="h2"
               color="error.main"
               display="flex"
-              alignItems="center"
-              justifyContent="center"
+              alignItems="felx-start"
             >
               Error !
             </Typography>
             <Typography
               display="flex"
-              alignItems="center"
-              textAlign="center"
+              textAlign="left"
               mt={2}
               data-testid="popup-input-text"
               component="div"
@@ -60,20 +62,24 @@ export default function ErrorModalPopup({
               {text}
             </Typography>
             {imrData ? (
-              <Box pl={15} mt={3}>
+              <Box pl={15} mt={3} display="flex" justifyContent="right">
                 <Button
                   variant="contained"
-                  color="primary"
+                  color="secondary"
                   size="small"
                   sx={{
                     mr: 3,
-                    backgroundColor: theme.palette.secondary.main,
                   }}
                   onClick={handleYes}
                 >
                   Yes
                 </Button>
-                <Button variant="contained" color="primary" size="small" onClick={handleNo}>
+                <Button
+                  variant="outlined"
+                  size="small"
+                  onClick={handleNo}
+                  sx={{ backgroundColor: 'grey.main', color: 'black.textBlack', border: 'none' }}
+                >
                   No
                 </Button>
               </Box>
