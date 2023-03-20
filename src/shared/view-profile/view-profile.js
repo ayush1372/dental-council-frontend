@@ -18,9 +18,7 @@ export function ViewProfile(props) {
         ?.registration_number
   );
 
-  const nmrIdData = useSelector(
-    (state) => state?.doctorUserProfileReducer?.personalDetails?.nmr_ID
-  );
+  const { nmr_id } = useSelector((state) => state?.doctorUserProfileReducer?.personalDetails);
 
   const emailId = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.communication_address?.email
@@ -146,7 +144,7 @@ export function ViewProfile(props) {
               NMR ID
             </Typography>
             <Typography variant="subtitle2" color="textPrimary.main">
-              {nmrIdData ? nmrIdData : '-'}
+              {nmr_id ? nmr_id : '-'}
             </Typography>{' '}
           </Grid>
 

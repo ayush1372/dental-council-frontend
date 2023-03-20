@@ -52,7 +52,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     country_nationality,
     date_of_birth,
     gender,
-    // schedule,
     full_name,
     language,
   } = personal_details || {};
@@ -63,7 +62,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     sub_district,
     village,
     pincode,
-    //address_line1,
     email,
     mobile,
     landmark,
@@ -74,14 +72,21 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const { registration_number, nmr_id, year_of_info } = imr_details || {};
 
   const countryNationalityId = country_nationality?.id;
-  // const scheduleId = schedule?.id;
-  const countryId = country?.id;
+  const countryId = isSameAddress
+    ? personalDetails?.kyc_address?.country?.id
+    : country !== undefined
+    ? country?.id
+    : 356;
   const stateId = isSameAddress ? personalDetails?.kyc_address?.state?.id : state?.id;
-  const districtId = isSameAddress ? personalDetails?.kyc_address?.district?.id : district?.id;
+  const districtId = isSameAddress
+    ? personalDetails?.kyc_address?.district?.iso_code
+    : district?.iso_code;
   const subdistrictId = isSameAddress
-    ? personalDetails?.kyc_address?.sub_district?.id
-    : sub_district?.id;
+    ? personalDetails?.kyc_address?.sub_district?.iso_code
+    : sub_district?.iso_code;
   const citiesId = isSameAddress ? personalDetails?.kyc_address?.village?.id : village?.id;
+  const [districtListData, setDistrictListData] = useState('');
+  const [subDistrictListData, setSubDistrictListData] = useState('');
 
   const {
     formState: { errors },
@@ -132,7 +137,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
         loggedInUserType === 'SMC'
           ? ''
           : loggedInUserType === 'Doctor'
-          ? gender === 'female'
+          ? gender === 'F'
             ? 'F'
             : 'M'
           : '',
@@ -188,15 +193,17 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       District: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? districtId : '',
       SubDistrict:
         loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? subdistrictId : '',
-      Country: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? countryId : '',
+      Country: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? countryId : 356,
       Area: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? citiesId : '',
       PostalCode:
         loggedInUserType === 'SMC'
           ? ''
           : loggedInUserType === 'Doctor'
           ? isSameAddress
-            ? personalDetails?.kyc_address?.pincode
-            : pincode
+            ? ''
+            : pincode !== undefined
+            ? pincode
+            : ''
           : '',
     },
   });
@@ -204,7 +211,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const fetchDistricts = (stateId) => {
     if (stateId) {
       dispatch(getDistrictList(stateId))
-        .then(() => {})
+        .then((response) => {
+          setDistrictListData(response?.data);
+        })
         .catch((allFailMsg) => {
           successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
         });
@@ -213,7 +222,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const fetchSubDistricts = (districtId) => {
     if (districtId) {
       dispatch(getSubDistrictsList(districtId))
-        .then(() => {})
+        .then((response) => {
+          setSubDistrictListData(response?.data);
+        })
         .catch((allFailMsg) => {
           successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
         });
@@ -253,8 +264,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   useEffect(() => {
     if (isSameAddress) {
       setValue('State', personalDetails?.kyc_address?.state?.id);
-      setValue('District', personalDetails?.kyc_address?.district?.id);
-      setValue('SubDistrict', personalDetails?.kyc_address?.sub_district?.id);
+      setValue('District', personalDetails?.kyc_address?.district?.iso_code);
+      setValue('SubDistrict', personalDetails?.kyc_address?.sub_district?.iso_code);
       setValue('Area', personalDetails?.kyc_address?.village?.id);
       setValue('House', personalDetails?.kyc_address?.house);
       setValue('Street', personalDetails?.kyc_address?.street);
@@ -263,14 +274,14 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       setValue('PostalCode', personalDetails?.kyc_address?.pincode);
     } else {
       setValue('State', personalDetails?.communication_address?.state?.id);
-      setValue('District', personalDetails?.communication_address?.District?.id);
-      setValue('SubDistrict', personalDetails?.communication_address?.sub_district?.id);
+      setValue('District', personalDetails?.communication_address?.district?.iso_code);
+      setValue('SubDistrict', personalDetails?.communication_address?.sub_district?.iso_code);
       setValue('Area', personalDetails?.communication_address?.village?.id);
       setValue('House', personalDetails?.communication_address?.house);
       setValue('Street', personalDetails?.communication_address?.street);
       setValue('Landmark', personalDetails?.communication_address?.landmark);
       setValue('Locality', personalDetails?.communication_address?.locality);
-      setValue('PostalCode', personalDetails?.kyc_address?.pincode);
+      setValue('PostalCode', personalDetails?.communication_address?.pincode);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSameAddress]);
@@ -313,6 +324,26 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     },
   ];
 
+  const getDistrictData = (District) => {
+    let DistrictData = [];
+    districtListData?.map((elementData) => {
+      if (elementData.iso_code === District) {
+        DistrictData.push(elementData);
+      }
+    });
+    return DistrictData[0];
+  };
+
+  const getSubDistrictData = (subDistrict) => {
+    let subDistrictData = [];
+    subDistrictListData?.map((elementData) => {
+      if (elementData.iso_code === subDistrict) {
+        subDistrictData.push(elementData);
+      }
+    });
+    return subDistrictData[0];
+  };
+
   async function onHandleSave() {
     const {
       MiddleName,
@@ -321,10 +352,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       MotherName,
       SpouseName,
       Gender,
-      // Schedule,
       Nationality,
       PostalCode,
       Address,
+      House,
       EmailAddress,
       mobileNo,
       Name,
@@ -345,13 +376,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     doctorProfileValues.personal_details.father_name = FatherName;
     doctorProfileValues.personal_details.mother_name = MotherName;
     doctorProfileValues.personal_details.spouse_name = SpouseName;
-    // doctorProfileValues.personal_details.schedule.name = Schedule;
     doctorProfileValues.personal_details.date_of_birth = DateOfBirth;
     doctorProfileValues.personal_details.full_name = Name;
     doctorProfileValues.personal_details.country_nationality =
       nationalities.find((x) => x.id === Nationality) || {};
     doctorProfileValues.personal_details.gender = Gender;
-    // doctorProfileValues.personal_details.schedule = schedules.find((x) => x.id === Schedule) || {};
 
     doctorProfileValues.communication_address.pincode = PostalCode;
     doctorProfileValues.communication_address.address_line1 = Address;
@@ -360,10 +389,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     doctorProfileValues.communication_address.country.id = Country;
     doctorProfileValues.communication_address.state.id = State;
     if (doctorProfileValues?.communication_address?.district?.id) {
-      doctorProfileValues.communication_address.district.id = District;
+      doctorProfileValues.communication_address.district = getDistrictData(District);
     }
     if (doctorProfileValues?.communication_address?.sub_district?.id) {
-      doctorProfileValues.communication_address.sub_district.id = SubDistrict;
+      doctorProfileValues.communication_address.sub_district = getSubDistrictData(SubDistrict);
     }
     if (doctorProfileValues?.communication_address?.village?.id) {
       doctorProfileValues.communication_address.village.id = Area;
@@ -371,6 +400,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     doctorProfileValues.communication_address.landmark = Landmark;
     doctorProfileValues.communication_address.locality = Locality;
     doctorProfileValues.communication_address.street = Street;
+    doctorProfileValues.communication_address.house = House;
     doctorProfileValues.communication_address.is_same_address = isSameAddress;
     doctorProfileValues.communication_address.address_type = { id: 4, name: 'communication' };
 
@@ -449,11 +479,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               variant="outlined"
               name={`Dr. ${'Name'}`}
               placeholder="First name"
-              //required={true}
               fullWidth
               defaultValue={getValues().Name}
               {...register('Name', {
-                // required: 'Missing field',
                 maxLength: {
                   value: 100,
                   message: 'Length should be less than 100.',
@@ -465,7 +493,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 },
               }}
               InputProps={{ readOnly: loggedInUserType === 'SMC' ? false : true }}
-              // error={errors.Name?.message}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -751,21 +778,18 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 <TextField
                   variant="outlined"
                   name={'House'}
-                  placeholder="House address"
-                  disabled={isSameAddress ? true : false}
+                  fullWidth
+                  placeholder="House Address"
+                  disabled={isSameAddress}
+                  required={isSameAddress ? false : true}
                   sx={{
                     input: {
                       backgroundColor: isSameAddress ? 'grey2.main' : '',
                     },
                   }}
-                  required={isSameAddress ? false : true}
-                  fullWidth
                   defaultValue={
-                    isSameAddress
-                      ? personalDetails?.kyc_address?.house
-                      : personalDetails?.communication_address?.house
+                    isSameAddress ? personalDetails?.kyc_address?.house : getValues()?.House
                   }
-                  value={isSameAddress ? personalDetails?.kyc_address?.house : getValues().Address}
                   {...register(
                     'House',
                     !isSameAddress && {
@@ -878,6 +902,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 name="Country"
                 label="Country"
                 defaultValue={getValues().Country}
+                value={getValues().Country}
                 required={isSameAddress ? false : true}
                 {...register('Country', {
                   required: 'Country is required',
@@ -914,8 +939,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 fullWidth
                 error={errors.State?.message}
                 name="State"
-                defaultValue={getValues().State}
-                value={getValues().State}
+                defaultValue={
+                  isSameAddress ? personalDetails?.kyc_address?.state?.id : getValues().State
+                }
+                value={isSameAddress ? personalDetails?.kyc_address?.state?.id : getValues().State}
                 required={isSameAddress ? false : true}
                 disabled={isSameAddress}
                 {...register(
@@ -951,7 +978,16 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 fullWidth
                 error={errors.District?.message}
                 name="District"
-                defaultValue={getValues().District}
+                defaultValue={
+                  isSameAddress
+                    ? personalDetails?.kyc_address?.district?.iso_code
+                    : getValues().District
+                }
+                value={
+                  isSameAddress
+                    ? personalDetails?.kyc_address?.district?.iso_code
+                    : getValues().District
+                }
                 required={isSameAddress ? false : true}
                 disabled={isSameAddress}
                 {...register(
@@ -980,8 +1016,16 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 name="SubDistrict"
                 placeholder="Sub District"
                 disabled={isSameAddress}
-                defaultValue={getValues().SubDistrict}
-                value={getValues().SubDistrict}
+                defaultValue={
+                  isSameAddress
+                    ? personalDetails?.kyc_address?.sub_district?.iso_code
+                    : getValues().SubDistrict
+                }
+                value={
+                  isSameAddress
+                    ? personalDetails?.kyc_address?.sub_district?.iso_code
+                    : getValues().SubDistrict
+                }
                 {...register('SubDistrict')}
                 options={createSelectFieldData(subDistrictList, 'iso_code')}
                 MenuProps={{
@@ -1000,7 +1044,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 style={{ backgroundColor: isSameAddress ? '#F0F0F0' : '' }}
                 fullWidth
                 name="Area"
-                defaultValue={getValues().Area}
+                defaultValue={
+                  isSameAddress ? personalDetails?.kyc_address?.village?.id : getValues().Area
+                }
+                value={isSameAddress ? personalDetails?.kyc_address?.village?.id : getValues().Area}
                 disabled={isSameAddress}
                 required={true}
                 {...register('Area')}
