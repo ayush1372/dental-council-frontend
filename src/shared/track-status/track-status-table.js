@@ -24,7 +24,8 @@ function createData(
   dateofSubmission,
   pendency,
   pending,
-  view
+  view,
+  NMRID
 ) {
   return {
     SNo,
@@ -39,6 +40,7 @@ function createData(
     pendency,
     pending,
     view,
+    NMRID,
   };
 }
 function TrackStatusTable(props) {
@@ -167,6 +169,7 @@ function TrackStatusTable(props) {
         { type: 'pendency', value: application?.pendency },
         { type: 'pending', value: '-' },
         { type: 'HPProfileId', value: application?.hp_profile_id },
+        { type: 'NMRID', value: application?.nmr_id },
         {
           type:
             loggedInUserType === 'NMC'

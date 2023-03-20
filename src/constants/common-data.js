@@ -2,7 +2,7 @@ import { get_year_data } from '../helpers/functions/common-functions';
 import { year_data } from '../helpers/functions/common-functions';
 
 export const accesstokenHprId =
-  'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI1WVpwM043VlFCdEE1cDZwcktkdXYyV0NaTTZVVlFVLWZTcEZJb0tiQU9ZIn0.eyJleHAiOjE2NzkwNzU4NDMsImlhdCI6MTY3OTAzOTg0MywianRpIjoiMjgxODZiMzItMGM1ZC00MTg1LWE0OGUtMjY2MGRkOTMyYzE3IiwiaXNzIjoiaHR0cHM6Ly9wcmVwcm9kLmFiZG0uZ292LmluL2F1dGgvcmVhbG1zL2NlbnRyYWwtcmVnaXN0cnkiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiZmUzZTEwMDctNjZlMi00OTkzLWFmYTktYjMyYjM1NDk1NDIwIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiaHBfaWQiLCJzZXNzaW9uX3N0YXRlIjoiNzhhZDVjM2UtMGNiYS00MWVlLWE4MDAtY2VkZTc2NjYxZDFhIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwOi8vbG9jYWxob3N0OjkwMDciXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwiaGVhbHRoSWQiLCJocF9pZCJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfSwiaHBfaWQiOnsicm9sZXMiOlsidW1hX3Byb3RlY3Rpb24iXX19LCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwiY2xpZW50SWQiOiJocF9pZCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiY2xpZW50SG9zdCI6IjEwLjIzMy43MC4xMTMiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtaHBfaWQiLCJjbGllbnRBZGRyZXNzIjoiMTAuMjMzLjcwLjExMyJ9.LiwI3qp8InWgKWypV6KrNp5N5AazESfZj6bmDI-3YvFlEnukO7Zm6wD5fkQ6nX_h8LPgdFqbbKbHGtfP9HMsommJPJWpwxHxSHrSZKVhkBr9DjmyeN8pNY7VrLBJf98m1W68xZcLchKLIGTxzP7hGLQvQLs_3z8EIfuw4z7vr0lfijHzQuYaIS_Rv_2mWFb1sGqzfovUmX8FUsI_UVZ-KH8DzzyQ-8r3CG8Uks-qUVMGPwn1ZFptRRCugUafCYngcaO8bdkFvfHw8B0RG5SsaCHNB0CqQhxlCBsKgSS64T3rMW4xMsW7X2HXLiJOOSrUdUM8e0BQEuGx42GYoBZgnA';
+  'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI1WVpwM043VlFCdEE1cDZwcktkdXYyV0NaTTZVVlFVLWZTcEZJb0tiQU9ZIn0.eyJleHAiOjE2NzkzMjg1ODUsImlhdCI6MTY3OTI5MjU4NSwianRpIjoiOTdmNmFhNDktZDc1NC00NjMxLThhZTQtNmVkNTZlYjE2YmEyIiwiaXNzIjoiaHR0cHM6Ly9wcmVwcm9kLmFiZG0uZ292LmluL2F1dGgvcmVhbG1zL2NlbnRyYWwtcmVnaXN0cnkiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiZmUzZTEwMDctNjZlMi00OTkzLWFmYTktYjMyYjM1NDk1NDIwIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiaHBfaWQiLCJzZXNzaW9uX3N0YXRlIjoiMTRhYmRhNjMtMmI0Mi00MTk0LTlhOWEtYjJmODM3NjZmNmYzIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwOi8vbG9jYWxob3N0OjkwMDciXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwiaGVhbHRoSWQiLCJocF9pZCJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfSwiaHBfaWQiOnsicm9sZXMiOlsidW1hX3Byb3RlY3Rpb24iXX19LCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwiY2xpZW50SWQiOiJocF9pZCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiY2xpZW50SG9zdCI6IjEwLjIzMy43MC4xMTMiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtaHBfaWQiLCJjbGllbnRBZGRyZXNzIjoiMTAuMjMzLjcwLjExMyJ9.ZZ5V6MMjabRvhriMSfs8aypNQYruYto1CpApzjrkD4oPKpIE2TKiXRvhVABGfcLLCWokbX4XnFMo6fiYr7vxQB0CPJ_lJsl9bRaTcLtO2RZb1PX41YvZ848ndii_sQjHqBKejMFBor3S9npbmKOjoSJ1HaB-q-6Ea5uGqeylPWqge7M_jc2k6qusHd2PpHJAyEd05jKiC8OYk1B00A9IRq69jLr8mw3ZFF62s1mfZWnu-NjCugac09vBmH47Y3cL5bTFKKfItWbLbOGHyYFdblttkBLgFr7_GnJb44bm2upPUC38gEAFXLhPvmxzIb-Drgz4r0Ly10P-ywA1Gx2scQ';
 export const StateNames = [
   { id: '1', name: 'Andhra Pradesh' },
   { id: '2', name: 'Maharastra' },
@@ -358,7 +358,7 @@ export const workStatusOptions = [
 // dashboard count mapping
 // mapping BE keys -> card titles on FE
 export const registrationRequestMapper = {
-  'Total HP Registration Requests': 'Total Registration request',
+  'Total Registration Requests': 'Total Registration request',
   Rejected: 'Rejected',
   Approved: 'Approved',
   'Query Raised': 'Query Raised',
@@ -367,7 +367,7 @@ export const registrationRequestMapper = {
   Pending: 'Pending',
 };
 export const updationRequestMapper = {
-  'Total HP Modification Requests': 'Total Updation request',
+  'Total Modification Requests': 'Total Updation request',
   Rejected: 'Request Rejected',
   Approved: 'Update Request Approved',
   'Query Raised': 'Query Raised on Update Request',
@@ -377,13 +377,13 @@ export const updationRequestMapper = {
 };
 
 export const suspensionRequestMapper = {
-  'Total Consolidated Suspension Requests': 'Total Suspension request',
-  Rejected: 'Rejected',
-  Approved: 'Approved',
-  'Query Raised': 'Query Raised',
+  'Total Suspension Requests': 'Total Suspension request',
+  'Permanent Suspension Requests Received': 'Permanent Suspension Requests Received',
+  'Temporary Suspension Requests Approved': 'Temporary Suspension Requests Approved',
+  'Permanent Suspension Requests Approved': 'Permanent Suspension Requests Approved',
   Suspended: 'Suspended',
   Blacklisted: 'Blacklisted',
-  Pending: 'Pending',
+  'Temporary Suspension Requests Received': 'Temporary Suspension Requests Received',
 };
 
 export const DashboardData = [

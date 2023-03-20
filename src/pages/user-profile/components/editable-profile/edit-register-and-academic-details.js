@@ -28,6 +28,7 @@ const qualificationObjTemplate = [
     nameindegree: '',
     files: '',
     qualificationfrom: '',
+    id: '',
   },
 ];
 
@@ -40,7 +41,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   );
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
-  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const { personalDetails, updatedPersonalDetails } = useSelector(
+    (state) => state?.doctorUserProfileReducer
+  );
   const { registration_detail_to, qualification_detail_response_tos } = registrationDetails || {};
   const {
     registration_date,
@@ -131,11 +134,15 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
     // this below code is storing qualification details
     const { qualification } = getValues();
+
     let updatedObj = [];
     if (qualification?.length > 0) {
       updatedObj = qualification?.map((q) => ({
-        country: countriesList.find((x) => x.id === q?.country),
-        course: coursesList.data?.find((x) => x.id === q?.qualification),
+        id: qualification_detail_response_tos[0]?.id
+          ? qualification_detail_response_tos[0]?.id
+          : '',
+        country: countriesList.find((x) => x.id === q?.country.id),
+        course: coursesList.data?.find((x) => x.id === q?.qualification.id),
         university: universitiesList.data?.find((x) => x.id === q?.university),
         state: statesList?.find((x) => x.id === q?.state),
         college: collegesList.data?.find((x) => x.id === q?.college),
@@ -175,7 +182,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
       updateDoctorRegistrationDetails(
         formData,
         loggedInUserType === 'Doctor'
-          ? registrationDetails?.hp_profile_id
+          ? updatedPersonalDetails?.hp_profile_id
           : loggedInUserType === 'SMC' && personalDetails?.hp_profile_id
       )
     ).then(() => {
@@ -184,7 +191,13 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   };
 
   useEffect(() => {
-    dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id))
+    dispatch(
+      getRegistrationDetailsData(
+        updatedPersonalDetails?.hp_profile_id === undefined
+          ? personalDetails?.hp_profile_id
+          : updatedPersonalDetails?.hp_profile_id
+      )
+    )
       .then((response) => {
         viewCertificate.qualification =
           response?.data?.qualification_detail_response_tos[0]?.degree_certificate;
@@ -284,11 +297,17 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               error={errors?.RegisteredWithCouncil?.message}
               sx={{
                 input: {
-                  backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
+                  backgroundColor:
+                    loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                      ? ''
+                      : 'grey2.main',
                 },
               }}
               InputProps={{
-                readOnly: loggedInUserType === 'SMC' ? false : true,
+                readOnly:
+                  loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                    ? false
+                    : true,
               }}
             />
           </Grid>
@@ -309,11 +328,17 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               defaultValue={getValues().RegistrationNumber}
               sx={{
                 input: {
-                  backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
+                  backgroundColor:
+                    loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                      ? ''
+                      : 'grey2.main',
                 },
               }}
               InputProps={{
-                readOnly: loggedInUserType === 'SMC' ? false : true,
+                readOnly:
+                  loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                    ? false
+                    : true,
               }}
             />
           </Grid>
@@ -330,17 +355,31 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               name={'RegistrationDate'}
               required={true}
               fullWidth
+              type="date"
               defaultValue={getValues().RegistrationDate}
               {...register('RegistrationDate', {
                 required: 'Registration Date is Required',
               })}
               sx={{
+                height: '48px',
+                width: '60%',
                 input: {
-                  backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
+                  color: 'black',
+                  textTransform: 'uppercase',
+                  backgroundColor:
+                    loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                      ? ''
+                      : 'grey2.main',
                 },
               }}
               InputProps={{
-                readOnly: loggedInUserType === 'SMC' ? false : true,
+                readOnly:
+                  loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                    ? false
+                    : true,
+              }}
+              InputLabelProps={{
+                shrink: true,
               }}
             />
           </Grid>

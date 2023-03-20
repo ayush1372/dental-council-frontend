@@ -24,12 +24,15 @@ import {
   sendAaadharOtp,
   validateOtpAadhaar,
 } from '../../../store/actions/user-aadhaar-actions';
-import { storeMobileDetails } from '../../../store/reducers/doctor-registration-reducer';
+import {
+  storeMobileDetails,
+  UserNotFoundDetails,
+} from '../../../store/reducers/doctor-registration-reducer';
 import { Button, TextField } from '../../../ui/core';
 import AadhaarInputField from '../../../ui/core/aadhaar-input-field/aadhaar-input-field';
 import successToast from '../../../ui/core/toaster';
 import CreateHprId from './unique-username';
-function FetchDoctorDetails() {
+function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
   const [showCreateHprIdPage, setShowCreateHprIdPage] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showOtpMobile, setShowOtpMobile] = useState(false);
@@ -45,11 +48,13 @@ function FetchDoctorDetails() {
   const registrationNumber = useSelector(
     (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.registration_number
   );
+  const kycstatus = useSelector(
+    (state) => state?.doctorRegistration?.getkycDetailsData?.data?.kyc_fuzzy_match_status
+  );
   const aadhaarTxnId = useSelector((state) => state?.AadhaarTransactionId?.aadharData?.data?.txnId);
   const mobileNumber = useSelector(
     (state) => state?.AadhaarTransactionId?.aadharData?.data?.mobileNumber
   );
-
   const mobileTxnId = useSelector(
     (state) => state?.doctorRegistration?.getMobileOtpDetails?.data?.txnId
   );
@@ -111,35 +116,36 @@ function FetchDoctorDetails() {
 
         setshowOtpAadhar(false);
         handleClear();
-
-        dispatch(
-          checkKycDetails({
-            registrationNumber: registrationNumber || '',
-            txn_id: response.data.txnId || '',
-            mobile_number: response.data.mobileNumber || '',
-            photo: response.data.photo || '',
-            gender: response.data.gender || '',
-            name: response.data.name || '',
-            email: response.data.email || '',
-            pincode: response.data.pincode || '',
-            birth_date: dateFormat(response.data.birthdate) || '',
-            care_of: response.data.careOf || '',
-            house: response.data.house || '',
-            street: response.data.street || '',
-            kycLandMark: response.data.landmark || '',
-            locality: response.data.locality || '',
-            village_town_city: response.data.villageTownCity || '',
-            sub_dist: response.data.subDist || '',
-            district: response.data.district || '',
-            state: response.data.state || '',
-            post_office: response.data.postOffice || '',
-            address: response.data.address || '',
-          })
-        ).then((response) => {
-          if (response.data.kyc_fuzzy_match_status === 'Fail') {
-            setKycError(true);
-          }
-        });
+        if (!imrDataNotFound) {
+          dispatch(
+            checkKycDetails({
+              registrationNumber: registrationNumber || '',
+              txn_id: response.data.txnId || '',
+              mobile_number: response.data.mobileNumber || '',
+              photo: response.data.photo || '',
+              gender: response.data.gender || '',
+              name: response.data.name || '',
+              email: response.data.email || '',
+              pincode: response.data.pincode || '',
+              birth_date: dateFormat(response.data.birthdate) || '',
+              care_of: response.data.careOf || '',
+              house: response.data.house || '',
+              street: response.data.street || '',
+              kycLandMark: response.data.landmark || '',
+              locality: response.data.locality || '',
+              village_town_city: response.data.villageTownCity || '',
+              sub_dist: response.data.subDist || '',
+              district: response.data.district || '',
+              state: response.data.state || '',
+              post_office: response.data.postOffice || '',
+              address: response.data.address || '',
+            })
+          ).then((response) => {
+            if (response.data.kyc_fuzzy_match_status === 'Fail') {
+              setKycError(true);
+            }
+          });
+        }
       });
     }
   };
@@ -168,7 +174,7 @@ function FetchDoctorDetails() {
   useEffect(() => {
     if (demographicAuthMobileVerify?.data?.verified) {
       setisOtpValidMobile(true);
-      //any popup? to show here that ' is kyc details and mobile num are matching ? '
+      //any popup? to show here that ' is kyc details and mobile num are matching ? ' *
     }
   }, [demographicAuthMobileVerify?.data?.verified]);
   const handleValidateMobile = () => {
@@ -181,7 +187,6 @@ function FetchDoctorDetails() {
         setisOtpValidMobile(true);
         setShowOtpMobile(false);
         handleClear();
-        //mob field should be disabled after successfull otp
       });
     }
   };
@@ -212,6 +217,9 @@ function FetchDoctorDetails() {
     }
   };
   const onSubmit = () => {
+    if (imrDataNotFound || kycstatus !== 'Success') {
+      dispatch(UserNotFoundDetails({ imrDataNotFound, aadhaarFormValues }));
+    }
     dispatch(
       checkHpidExists({
         txnId: aadhaarTxnId,
@@ -239,12 +247,12 @@ function FetchDoctorDetails() {
         <KycErrorPopup
           open={kycError}
           setOpen={() => setKycError(false)}
-          text="The registration details are not matching with the KYC details. Please validate Registration/KYC details!"
+          text="Your NMR and Aadhar details doesn't match. Do you want to continue the registration in the NMR?"
         />
       )}
 
       {showCreateHprIdPage ? (
-        <CreateHprId />
+        <CreateHprId aadhaarFormValues={aadhaarFormValues} imrDataNotFound={imrDataNotFound} />
       ) : (
         <>
           <Container
@@ -290,7 +298,7 @@ function FetchDoctorDetails() {
                     Name
                   </Typography>
                   <Typography variant="subtitle2" component="div" color="primary">
-                    {hpName ? hpName : ''}
+                    {hpName ? hpName : '-'}
                   </Typography>
                 </Box>
                 <Box>
@@ -303,7 +311,7 @@ function FetchDoctorDetails() {
                     Registration Number
                   </Typography>
                   <Typography variant="subtitle2" component="div" color="primary">
-                    {registrationNumber ? registrationNumber : ''}
+                    {aadhaarFormValues ? aadhaarFormValues?.RegistrationNumber : registrationNumber}
                   </Typography>
                 </Box>
               </Box>
@@ -312,7 +320,7 @@ function FetchDoctorDetails() {
                   Council
                 </Typography>
                 <Typography variant="subtitle2" component="div" color="primary">
-                  {councilName ? councilName : ''}
+                  {aadhaarFormValues ? aadhaarFormValues?.RegistrationCouncil : councilName}
                 </Typography>
               </Box>
               <Divider sx={{ marginBottom: '25px' }} variant="fullWidth" />
@@ -472,7 +480,6 @@ function FetchDoctorDetails() {
                 <Button
                   onClick={onCancel}
                   variant="outlined"
-                  // disabled={!enableSubmit}
                   sx={{
                     backgroundColor: 'grey.main',
                     color: 'black.textBlack',
@@ -494,7 +501,7 @@ function FetchDoctorDetails() {
               text={`Your username ${existUSerName.replace(
                 '@hpr.abdm',
                 ''
-              )} has been already created. Please proceed to login in to your NMR Profile`}
+              )} has been already created. Please proceed to set your password`}
               isHpIdCreated={true}
             />
           )}

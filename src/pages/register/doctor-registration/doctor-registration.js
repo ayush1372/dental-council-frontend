@@ -4,6 +4,7 @@ import { Box, Container, Typography } from '@mui/material';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 
 import { createEditFieldData } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
@@ -11,9 +12,11 @@ import ErrorModalPopup from '../../../shared/common-modals/error-modal-popup';
 import { getRegistrationCouncilList } from '../../../store/actions/common-actions';
 import { fetchSmcRegistrationDetails } from '../../../store/actions/doctor-registration-actions';
 import { Button, TextField } from '../../../ui/core';
+import successToast from '../../../ui/core/toaster';
 import FetchDoctorDetails from './fetch-doctor-details';
 const DoctorRegistrationWelcomePage = () => {
   const [isNext, setIsNext] = useState(false);
+  const [imrDataNotFound, setImrDataNotFound] = useState(false);
   const [rejectPopup, setRejectPopup] = useState(false);
   const {
     register,
@@ -32,11 +35,15 @@ const DoctorRegistrationWelcomePage = () => {
       RegistrationNumber: '',
     },
   });
+
   const { councilNames } = useSelector((state) => state.common);
   const dispatch = useDispatch();
-
+  const handleAadhaarPage = (data) => {
+    setImrDataNotFound(data);
+  };
   useEffect(() => {
     dispatch(getRegistrationCouncilList());
+    setImrDataNotFound(false);
   }, []);
 
   const onSubmit = () => {
@@ -48,8 +55,18 @@ const DoctorRegistrationWelcomePage = () => {
       .then(() => {
         setIsNext(true);
       })
-      .catch(() => {
-        setRejectPopup(true);
+      .catch((err) => {
+        if (err?.data?.response?.data?.status === 400 && err?.data?.response?.data?.error) {
+          successToast(
+            'ERROR: ' + err?.data?.response?.data?.error,
+            'auth-error',
+            'error',
+            'top-center'
+          );
+          reset();
+        } else {
+          setRejectPopup(true);
+        }
       });
   };
   const onReset = () => {
@@ -57,6 +74,8 @@ const DoctorRegistrationWelcomePage = () => {
   };
   return (
     <>
+      <ToastContainer></ToastContainer>
+
       <Box>
         {isNext === false ? (
           <Box my={9}>
@@ -76,13 +95,13 @@ const DoctorRegistrationWelcomePage = () => {
                     Register Your Profile
                   </Typography>
                   <Typography variant="body3" color="textSecondary.main">
-                    Select registration council from dropdown and enter your registration number
+                    Select registration council from dropdown and enter registration number
                   </Typography>
                 </Box>
 
                 <Box pb={4}>
                   <Typography variant="body1" color="textSecondary.main">
-                    Select Registered Council
+                    Registered Council
                     <Typography component="span" color="error.main">
                       *
                     </Typography>
@@ -105,7 +124,7 @@ const DoctorRegistrationWelcomePage = () => {
                 </Box>
                 <Box pb={5}>
                   <Typography variant="body1" color="textSecondary.main">
-                    Enter Registration Number
+                    Registration Number
                     <Typography component="span" color="error.main">
                       *
                     </Typography>
@@ -155,14 +174,18 @@ const DoctorRegistrationWelcomePage = () => {
             </Container>
           </Box>
         ) : (
-          <FetchDoctorDetails />
+          <FetchDoctorDetails imrDataNotFound={imrDataNotFound} aadhaarFormValues={getValues()} />
         )}
       </Box>
       {rejectPopup && (
         <ErrorModalPopup
           open={setRejectPopup}
           setOpen={() => setRejectPopup(false)}
-          text="No details found. Please verify your input or get yourself registered through your respective SMC!"
+          imrData={true}
+          handleAadhaarPage={handleAadhaarPage}
+          isNext={isNext}
+          setIsNext={setIsNext}
+          text="Your data is not found in the NMR. Do you want to continue the registration in the NMR ? "
         />
       )}
     </>

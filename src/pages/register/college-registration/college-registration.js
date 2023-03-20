@@ -15,7 +15,6 @@ import { registerCollegeDetails } from '../../../store/actions/college-actions';
 import {
   getRegistrationCouncilList,
   getStatesList,
-  getUniversitiesList,
   sendNotificationOtp,
   verifyNotificationOtp,
 } from '../../../store/actions/common-actions';
@@ -40,7 +39,6 @@ export function CollegeRegistration() {
   useEffect(() => {
     dispatch(getStatesList());
     dispatch(getRegistrationCouncilList());
-    dispatch(getUniversitiesList());
   }, []);
 
   const onContinue = (otpNumber) => {
@@ -132,7 +130,7 @@ export function CollegeRegistration() {
           successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
         });
     } else if (type === 'email' && otpEmailVerify) {
-      setHeaderText(`Email Id ******${getValues().email.substr(getValues().email.length - 15)}.`);
+      setHeaderText(`Email Id XXXXXX${getValues().email.substr(getValues().email.length - 15)}.`);
       dispatch(sendNotificationOtp({ contact: getValues().email, type: type }))
         .then((response) => {
           setTransactionID(response?.data?.transaction_id);
