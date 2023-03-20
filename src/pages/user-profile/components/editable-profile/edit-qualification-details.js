@@ -27,6 +27,14 @@ const EditQualificationDetails = ({
 }) => {
   const dispatch = useDispatch();
   const [colleges, setColleges] = useState([]);
+  // eslint-disable-next-line no-unused-vars
+  const [degree, setDegree] = useState([
+    {
+      label: 'MBBS - Bachelor of Medicine and Bachelor of Surgery ',
+      value: 'MBBS - Bachelor of Medicine and Bachelor of Surgery ',
+      id: 69,
+    },
+  ]);
   const { countriesList, coursesList, universitiesList, statesList } = useSelector(
     (state) => state?.common
   );
@@ -72,6 +80,17 @@ const EditQualificationDetails = ({
       unregister(removalArray);
     }
   }, [qualificationfrom]);
+
+  useEffect(() => {
+    setValue(`qualification[${index}].qualification`, degree[0]);
+    if (qualificationfrom !== 'International') {
+      setValue(`qualification[${index}].country`, {
+        id: 356,
+        name: 'India',
+        nationality: 'Indian',
+      });
+    }
+  }, []);
 
   return (
     <>
@@ -235,7 +254,8 @@ const EditQualificationDetails = ({
             error={errors?.qualification?.[index]?.qualification?.message}
             name="Qualification"
             label="Name of the Degree"
-            defaultValue={'MBBS - Bachelor of Medicine and Bachelor of Surgery '}
+            defaultValue={degree[0]?.label}
+            value={degree[0]?.label}
             required={true}
             {...register(`qualification[${index}].qualification`, {
               required: 'degree is required',
@@ -244,13 +264,7 @@ const EditQualificationDetails = ({
             options={
               qualificationfrom === 'International'
                 ? createSelectFieldData(coursesList.data)
-                : [
-                    {
-                      label: 'MBBS - Bachelor of Medicine and Bachelor of Surgery ',
-                      value: 'MBBS - Bachelor of Medicine and Bachelor of Surgery ',
-                      id: '69',
-                    },
-                  ]
+                : degree
             }
             MenuProps={{
               style: {
@@ -265,7 +279,6 @@ const EditQualificationDetails = ({
             }}
             InputProps={{ readOnly: true }}
           />
-          {/* )} */}
         </Grid>
         {qualificationfrom === 'International' && (
           <Grid item xs={12} md={6} lg={4}>
