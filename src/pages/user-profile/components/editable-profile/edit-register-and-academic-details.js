@@ -191,7 +191,13 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   };
 
   useEffect(() => {
-    dispatch(getRegistrationDetailsData(updatedPersonalDetails?.hp_profile_id))
+    dispatch(
+      getRegistrationDetailsData(
+        updatedPersonalDetails?.hp_profile_id === undefined
+          ? personalDetails?.hp_profile_id
+          : updatedPersonalDetails?.hp_profile_id
+      )
+    )
       .then((response) => {
         viewCertificate.qualification =
           response?.data?.qualification_detail_response_tos[0]?.degree_certificate;
