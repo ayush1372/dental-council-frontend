@@ -45,7 +45,8 @@ const UniqueUserNameForDoctorRegistration = () => {
     let data = {
       email: null,
       txnId: aadhaarTxnId,
-      hprId: `${getValues().UniqueUserNameForDoctor}@hpr.abdm`,
+      // hprId: `${getValues().UniqueUserNameForDoctor}@hpr.abdm`,
+      hprId: suggestion,
     };
     dispatch(createUniqueHprId(data)).then(() => {
       navigate(`/reset-password`);
@@ -88,11 +89,16 @@ const UniqueUserNameForDoctorRegistration = () => {
                   fullWidth
                   name="UniqueUserName"
                   defaultValue={getInputValue()}
-                  error={errors.UniqueUserNameForDoctor?.message}
-                  {...register('UniqueUserNameForDoctor', {
-                    required: 'UniqueUserNameForDoctor Number is required',
-                  })}
-                  value={suggestion}
+                  error={suggestion ? '' : errors.UniqueUserNameForDoctor?.message}
+                  {...register(
+                    'UniqueUserNameForDoctor',
+                    suggestion
+                      ? ''
+                      : {
+                          required: 'UniqueUserNameForDoctor Number is required',
+                        }
+                  )}
+                  value={suggestion ? suggestion : getValues().UniqueUserNameForDoctor}
                   onChange={(e) => handleSuggestionName(e)}
                   clearErrors={clearErrors}
                 />

@@ -41,6 +41,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
 
   const [isApplicationPending, setIsApplicationPending] = useState(true);
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const [showStaticFormProgress, setShowStaticFormProgress] = useState(false);
 
   useEffect(() => {
     if (personalDetails?.work_flow_status_id === 1) {
@@ -198,37 +199,20 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
             py={2}
           >
             <Grid item xs={12} md={6}>
-              <Typography
-                component="div"
-                variant="h2"
-                color="inputTextColor.main"
-                sx={{
-                  textAlign: {
-                    xs: 'center',
-                    md: 'start',
-                  },
-                }}
-              >
-                {isReadMode && 'My Profile'}
-              </Typography>
-              <Box display="flex" gap={1}>
+              <Box display="flex" gap={1} alignItems={'center'} justifyContent="center">
                 {' '}
-                {!isReadMode && (
-                  <Typography
-                    variant="h2"
-                    component="span"
-                    width={{ sm: '200px', lg: '170px', xl: '140px' }}
-                  >
-                    {' '}
-                    Edit Profile
-                  </Typography>
-                )}
-                {!isReadMode && (
-                  <ProgressBar
-                    progress={!isReadMode && progress}
-                    completed={!isReadMode && completed}
-                  />
-                )}
+                <Typography
+                  variant="h2"
+                  component="span"
+                  width={{ sm: '200px', lg: '170px', xl: '140px' }}
+                >
+                  {' '}
+                  {isReadMode ? 'My Profile' : 'Edit Profile'}
+                </Typography>
+                <ProgressBar
+                  progress={showStaticFormProgress || personalDetails?.nmr_id ? 75 : progress}
+                  completed={completed}
+                />
               </Box>
               {!isReadMode && (
                 <BreadcrumbContainer
@@ -328,6 +312,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
         </Box>
         {!isReadMode && activeStep === 2 && (
           <ProfileConsent
+            setShowStaticFormProgress={setShowStaticFormProgress}
             handleBack={handleBack}
             resetStep={resetStep}
             setIsReadMode={setIsReadMode}

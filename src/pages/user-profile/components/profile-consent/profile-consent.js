@@ -15,11 +15,20 @@ import { changeUserActiveTab } from '../../../../store/reducers/common-reducers'
 import { Button, Checkbox } from '../../../../ui/core';
 import successToast from '../../../../ui/core/toaster';
 
-const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType }) => {
+const ProfileConsent = ({
+  handleBack,
+  setIsReadMode,
+  resetStep,
+  loggedInUserType,
+  setShowStaticFormProgress,
+}) => {
   const dispatch = useDispatch();
   const [confirmationModal, setConfirmationModal] = useState(false);
 
-  const { loginData } = useSelector((state) => state?.loginReducer);
+  // const { loginData } = useSelector((state) => state?.loginReducer);
+  const { personalDetails, updatedPersonalDetails } = useSelector(
+    (state) => state?.doctorUserProfileReducer
+  );
 
   const {
     formState: { errors },
@@ -43,12 +52,13 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
   };
   const handleYesClick = () => {
     const payload = {
-      hp_profile_id: loginData?.data?.profile_id,
-      application_type_id: 1,
+      hp_profile_id: updatedPersonalDetails?.hp_profile_id,
+      application_type_id: personalDetails?.nmr_id ? 2 : 1,
     };
 
     dispatch(updateProfileConsent(payload))
       .then(() => {
+        setShowStaticFormProgress(true);
         setConfirmationModal(false);
         setIsReadMode(true);
         resetStep(0);

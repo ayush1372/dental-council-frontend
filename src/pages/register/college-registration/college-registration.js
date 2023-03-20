@@ -15,7 +15,6 @@ import { registerCollegeDetails } from '../../../store/actions/college-actions';
 import {
   getRegistrationCouncilList,
   getStatesList,
-  getUniversitiesList,
   sendNotificationOtp,
   verifyNotificationOtp,
 } from '../../../store/actions/common-actions';
@@ -40,7 +39,6 @@ export function CollegeRegistration() {
   useEffect(() => {
     dispatch(getStatesList());
     dispatch(getRegistrationCouncilList());
-    dispatch(getUniversitiesList());
   }, []);
 
   const onContinue = (otpNumber) => {
