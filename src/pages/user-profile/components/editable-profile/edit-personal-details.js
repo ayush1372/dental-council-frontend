@@ -72,7 +72,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   const { registration_number, nmr_id, year_of_info } = imr_details || {};
 
   const countryNationalityId = country_nationality?.id;
-  const countryId = country?.id;
+  const countryId = isSameAddress
+    ? personalDetails?.kyc_address?.country?.id
+    : country !== undefined
+    ? country?.id
+    : 356;
   const stateId = isSameAddress ? personalDetails?.kyc_address?.state?.id : state?.id;
   const districtId = isSameAddress
     ? personalDetails?.kyc_address?.district?.iso_code
@@ -133,7 +137,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
         loggedInUserType === 'SMC'
           ? ''
           : loggedInUserType === 'Doctor'
-          ? gender === 'female'
+          ? gender === 'F'
             ? 'F'
             : 'M'
           : '',
@@ -189,15 +193,17 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       District: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? districtId : '',
       SubDistrict:
         loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? subdistrictId : '',
-      Country: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? countryId : '',
+      Country: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? countryId : 356,
       Area: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? citiesId : '',
       PostalCode:
         loggedInUserType === 'SMC'
           ? ''
           : loggedInUserType === 'Doctor'
           ? isSameAddress
-            ? personalDetails?.kyc_address?.pincode
-            : pincode
+            ? ''
+            : pincode !== undefined
+            ? pincode
+            : ''
           : '',
     },
   });
@@ -275,7 +281,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       setValue('Street', personalDetails?.communication_address?.street);
       setValue('Landmark', personalDetails?.communication_address?.landmark);
       setValue('Locality', personalDetails?.communication_address?.locality);
-      setValue('PostalCode', personalDetails?.kyc_address?.pincode);
+      setValue('PostalCode', personalDetails?.communication_address?.pincode);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSameAddress]);
@@ -896,6 +902,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 name="Country"
                 label="Country"
                 defaultValue={getValues().Country}
+                value={getValues().Country}
                 required={isSameAddress ? false : true}
                 {...register('Country', {
                   required: 'Country is required',
@@ -976,6 +983,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                     ? personalDetails?.kyc_address?.district?.iso_code
                     : getValues().District
                 }
+                value={
+                  isSameAddress
+                    ? personalDetails?.kyc_address?.district?.iso_code
+                    : getValues().District
+                }
                 required={isSameAddress ? false : true}
                 disabled={isSameAddress}
                 {...register(
@@ -1011,7 +1023,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 }
                 value={
                   isSameAddress
-                    ? personalDetails?.kyc_address?.sub_district
+                    ? personalDetails?.kyc_address?.sub_district?.iso_code
                     : getValues().SubDistrict
                 }
                 {...register('SubDistrict')}
