@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { API, API_HPRID } from '../../api/api-endpoints';
 import { accesstokenHprId } from '../../constants/common-data';
 import { GET, POST } from '../../constants/requests';
