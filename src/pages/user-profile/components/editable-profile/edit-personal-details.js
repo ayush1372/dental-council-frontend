@@ -68,6 +68,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     locality,
     street,
     house,
+    id,
   } = communication_address || {};
   const { registration_number, nmr_id, year_of_info } = imr_details || {};
 
@@ -205,6 +206,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             ? pincode
             : ''
           : '',
+      CommunicationID: id,
     },
   });
 
@@ -324,6 +326,16 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     },
   ];
 
+  const getStateData = (State) => {
+    let stateData = [];
+    statesList?.map((elementData) => {
+      if (elementData.id === State) {
+        stateData.push(elementData);
+      }
+    });
+    return stateData[0];
+  };
+
   const getDistrictData = (District) => {
     let DistrictData = [];
     districtListData?.map((elementData) => {
@@ -342,6 +354,16 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       }
     });
     return subDistrictData[0];
+  };
+
+  const getVillageData = (village) => {
+    let villageData = [];
+    citiesList?.map((elementData) => {
+      if (elementData.id === village) {
+        villageData.push(elementData);
+      }
+    });
+    return villageData[0];
   };
 
   async function onHandleSave() {
@@ -368,6 +390,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
       Landmark,
       Locality,
       Street,
+      CommunicationID,
     } = getValues();
 
     const doctorProfileValues = JSON.parse(JSON.stringify(personalDetails));
@@ -386,23 +409,22 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     doctorProfileValues.communication_address.address_line1 = Address;
     doctorProfileValues.communication_address.email = EmailAddress;
     doctorProfileValues.communication_address.mobile = mobileNo !== undefined ? mobileNo : '';
-    doctorProfileValues.communication_address.country.id = Country;
-    doctorProfileValues.communication_address.state.id = State;
-    if (doctorProfileValues?.communication_address?.district?.id) {
-      doctorProfileValues.communication_address.district = getDistrictData(District);
-    }
-    if (doctorProfileValues?.communication_address?.sub_district?.id) {
-      doctorProfileValues.communication_address.sub_district = getSubDistrictData(SubDistrict);
-    }
-    if (doctorProfileValues?.communication_address?.village?.id) {
-      doctorProfileValues.communication_address.village.id = Area;
-    }
+
+    doctorProfileValues.communication_address.country = { id: Country, name: 'India' };
+    doctorProfileValues.communication_address.state = getStateData(State);
+    doctorProfileValues.communication_address.district = getDistrictData(District);
+    doctorProfileValues.communication_address.sub_district = getSubDistrictData(SubDistrict);
+    doctorProfileValues.communication_address.village = getVillageData(Area);
+
     doctorProfileValues.communication_address.landmark = Landmark;
     doctorProfileValues.communication_address.locality = Locality;
     doctorProfileValues.communication_address.street = Street;
     doctorProfileValues.communication_address.house = House;
     doctorProfileValues.communication_address.is_same_address = isSameAddress;
     doctorProfileValues.communication_address.address_type = { id: 4, name: 'communication' };
+    if (doctorProfileValues?.communication_address?.id) {
+      doctorProfileValues.communication_address.id = CommunicationID;
+    }
 
     dispatch(getPersonalDetails({ ...JSON.parse(JSON.stringify(doctorProfileValues)) }));
 
@@ -947,11 +969,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 disabled={isSameAddress}
                 {...register(
                   'State',
-                  isSameAddress
-                    ? ''
-                    : {
-                        required: 'State/Union territory is required',
-                      }
+                  !isSameAddress &&
+                    getValues()?.District.length <= 0 && {
+                      required: 'State/Union territory is required',
+                    }
                 )}
                 options={createSelectFieldData(statesList)}
                 MenuProps={{
@@ -992,9 +1013,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 disabled={isSameAddress}
                 {...register(
                   'District',
-                  !isSameAddress && {
-                    required: 'District is required',
-                  }
+                  !isSameAddress &&
+                    getValues()?.District.length <= 0 && {
+                      required: 'District is required',
+                    }
                 )}
                 options={createSelectFieldData(districtsList, 'iso_code')}
                 MenuProps={{

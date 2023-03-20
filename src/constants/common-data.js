@@ -358,7 +358,7 @@ export const workStatusOptions = [
 // dashboard count mapping
 // mapping BE keys -> card titles on FE
 export const registrationRequestMapper = {
-  'Total HP Registration Requests': 'Total Registration request',
+  'Total Registration Requests': 'Total Registration request',
   Rejected: 'Rejected',
   Approved: 'Approved',
   'Query Raised': 'Query Raised',
@@ -367,7 +367,7 @@ export const registrationRequestMapper = {
   Pending: 'Pending',
 };
 export const updationRequestMapper = {
-  'Total HP Modification Requests': 'Total Updation request',
+  'Total Modification Requests': 'Total Updation request',
   Rejected: 'Request Rejected',
   Approved: 'Update Request Approved',
   'Query Raised': 'Query Raised on Update Request',
@@ -377,13 +377,13 @@ export const updationRequestMapper = {
 };
 
 export const suspensionRequestMapper = {
-  'Total Consolidated Suspension Requests': 'Total Suspension request',
-  Rejected: 'Rejected',
-  Approved: 'Approved',
-  'Query Raised': 'Query Raised',
+  'Total Suspension Requests': 'Total Suspension request',
+  'Permanent Suspension Requests Received': 'Permanent Suspension Requests Received',
+  'Temporary Suspension Requests Approved': 'Temporary Suspension Requests Approved',
+  'Permanent Suspension Requests Approved': 'Permanent Suspension Requests Approved',
   Suspended: 'Suspended',
   Blacklisted: 'Blacklisted',
-  Pending: 'Pending',
+  'Temporary Suspension Requests Received': 'Temporary Suspension Requests Received',
 };
 
 export const DashboardData = [
