@@ -301,14 +301,20 @@ const EditQualificationDetails = ({
         <Grid item xs={12} md={6} lg={4}>
           <Select
             fullWidth
-            error={errors?.qualification?.[index]?.state?.message}
+            error={
+              getValues().qualification[index].state === '' &&
+              errors?.qualification?.[index]?.state?.message
+            }
             name="state"
             label="State (in which college is located)"
             defaultValue={fields[index].state}
             required={true}
-            {...register(`qualification[${index}].state`, {
-              required: 'State is Required',
-            })}
+            {...register(
+              `qualification[${index}].state`,
+              getValues().qualification[index].state === '' && {
+                required: 'State is Required',
+              }
+            )}
             options={createSelectFieldData(statesList)}
             MenuProps={{
               style: {
@@ -321,14 +327,20 @@ const EditQualificationDetails = ({
         <Grid item xs={12} md={6} lg={4}>
           <Select
             fullWidth
-            error={errors?.qualification?.[index]?.college?.message}
+            error={
+              getValues().qualification[index].college === '' &&
+              errors?.qualification?.[index]?.college?.message
+            }
             name="College"
             label="Name of the college"
             defaultValue={fields[index].college}
             required={true}
-            {...register(`qualification[${index}].college`, {
-              required: 'college is required',
-            })}
+            {...register(
+              `qualification[${index}].college`,
+              getValues().qualification[index].college === '' && {
+                required: 'college is required',
+              }
+            )}
             options={createSelectFieldData(colleges)}
             MenuProps={{
               style: {
@@ -342,14 +354,20 @@ const EditQualificationDetails = ({
         <Grid item xs={12} md={6} lg={4}>
           <Select
             fullWidth
-            error={errors?.qualification?.[index]?.university?.message}
+            error={
+              getValues().qualification[index].university === '' &&
+              errors?.qualification?.[index]?.university?.message
+            }
             name="University"
             label="University"
             defaultValue={fields[index].university}
             required={true}
-            {...register(`qualification[${index}].university`, {
-              required: 'University is required',
-            })}
+            {...register(
+              `qualification[${index}].university`,
+              getValues().qualification[index].university === '' && {
+                required: 'University is required',
+              }
+            )}
             options={createSelectFieldData(universitiesList.data, 'id') || []}
             MenuProps={{
               style: {
@@ -366,12 +384,18 @@ const EditQualificationDetails = ({
           <Grid item xs={12} md={6} mb={{ xs: 2, md: 0 }}>
             <Select
               fullWidth
-              error={errors?.qualification?.[index]?.month?.message}
+              error={
+                getValues().qualification[index].month === '' &&
+                errors?.qualification?.[index]?.month?.message
+              }
               name="Month"
               defaultValue={fields[index].month}
-              {...register(`qualification[${index}].month`, {
-                required: 'awarding is required',
-              })}
+              {...register(
+                `qualification[${index}].month`,
+                getValues().qualification[index].month === '' && {
+                  required: 'awarding is required',
+                }
+              )}
               options={monthsData}
             />
           </Grid>
@@ -383,12 +407,18 @@ const EditQualificationDetails = ({
               required={true}
               placeholder={'Year of awarding'}
               fullWidth
-              error={errors?.qualification?.[index]?.year?.message}
+              error={
+                getValues().qualification[index].year === '' &&
+                errors?.qualification?.[index]?.year?.message
+              }
               defaultValue={fields[index].year}
-              {...register(`qualification[${index}].year`, {
-                required: 'awarding is Required',
-                pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
-              })}
+              {...register(
+                `qualification[${index}].year`,
+                getValues().qualification[index].year === '' && {
+                  required: 'awarding is Required',
+                  pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
+                }
+              )}
             />
           </Grid>
         </Grid>
