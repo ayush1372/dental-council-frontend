@@ -286,7 +286,7 @@ const EditQualificationDetails = ({
               fullWidth
               error={errors?.qualification?.[index]?.country?.message}
               name="country"
-              label="Country name"
+              label="Country Name"
               defaultValue={fields[index].country}
               required={true}
               {...register(`qualification[${index}].country`, {
@@ -345,7 +345,7 @@ const EditQualificationDetails = ({
               errors?.qualification?.[index]?.college?.message
             }
             name="College"
-            label="Name of the college"
+            label="Name of the College"
             defaultValue={fields[index].college}
             required={true}
             {...register(
@@ -418,7 +418,7 @@ const EditQualificationDetails = ({
               name="year"
               options={yearsData}
               required={true}
-              placeholder={'Year of awarding'}
+              placeholder={'Year of Awarding'}
               fullWidth
               error={
                 getValues().qualification[index].year === '' &&
