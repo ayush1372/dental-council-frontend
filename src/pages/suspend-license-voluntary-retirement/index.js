@@ -6,7 +6,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import ErrorIcon from '@mui/icons-material/Error';
 import HelpIcon from '@mui/icons-material/Help';
 import { Box, Dialog, Grid, Typography } from '@mui/material';
-import moment from 'moment';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -262,15 +261,8 @@ export function SuspendLicenseVoluntaryRetirement({
                   shrink: true,
                 }}
                 required={true}
-                defaultValue={
-                  getValues().fromDate ? moment(getValues().fromDate).format('DD-MM-YYYY') : ''
-                }
+                defaultValue={getValues().fromDate}
                 error={errors.fromDate?.message}
-                InputProps={{
-                  inputProps: {
-                    max: moment().format('YYYY-MM-DD'),
-                  },
-                }}
                 {...register('fromDate', {
                   required: 'Enter From Date ',
                   onChange: (e) => autoFromDateSelected(e),
