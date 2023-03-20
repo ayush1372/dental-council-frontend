@@ -6,13 +6,16 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
+// import { createEditFieldData } from '../../../../helpers/functions/common-functions';
+import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
+// import { SearchableDropdown } from '../../../../shared/autocomplete/searchable-dropdown';
 import AttachmentViewPopup from '../../../../shared/query-modal-popup/attachement-view-popup';
 import {
   getRegistrationDetailsData,
   updateDoctorRegistrationDetails,
 } from '../../../../store/actions/doctor-user-profile-actions';
 import { getRegistrationDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
-import { Button, RadioGroup, TextField } from '../../../../ui/core';
+import { Button, RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
 import successToast from '../../../../ui/core/toaster';
 import EditQualificationDetails from './edit-qualification-details';
@@ -33,17 +36,18 @@ const qualificationObjTemplate = [
 ];
 
 const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
-  const { t } = useTranslation();
-  const loggedInUserType = useSelector((state) => state?.common?.loggedInUserType);
   const dispatch = useDispatch();
-  const { countriesList, coursesList, universitiesList, statesList, collegesList } = useSelector(
-    (state) => state?.common
-  );
+  const { t } = useTranslation();
+
+  const loggedInUserType = useSelector((state) => state?.common?.loggedInUserType);
+  const { countriesList, coursesList, universitiesList, statesList, collegesList, councilNames } =
+    useSelector((state) => state?.common);
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
-  const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
   const { personalDetails, updatedPersonalDetails } = useSelector(
     (state) => state?.doctorUserProfileReducer
   );
+
+  const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
   const { registration_detail_to, qualification_detail_response_tos } = registrationDetails || {};
   const {
     registration_date,
@@ -66,7 +70,19 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     qualification: degree_certificate,
   });
 
+  // eslint-disable-next-line no-unused-vars
   const smcName = state_medical_council?.name || '';
+  // eslint-disable-next-line array-callback-return
+
+  let registeredCouncil = [];
+
+  // TO identify the default registered Council
+  councilNames.forEach((councilData) => {
+    if (councilData?.name === state_medical_council?.name) {
+      registeredCouncil.push(councilData);
+    }
+    return;
+  });
 
   const {
     formState: { errors },
@@ -76,12 +92,12 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     setValue,
     unregister,
     control,
+    // clearErrors,
     watch,
   } = useForm({
     mode: 'onChange',
     defaultValues: {
-      RegisteredWithCouncil:
-        loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? smcName : '',
+      RegisteredWithCouncil: registeredCouncil[0],
       RegistrationNumber:
         loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? registration_number : '',
       RegistrationDate:
@@ -125,10 +141,12 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     let registration_detail = {};
     let qualification_details = {};
 
+    // eslint-disable-next-line no-console
+    console.log(RegisteredWithCouncil);
+
     registration_detail.registration_date = RegistrationDate;
     registration_detail.registration_number = RegistrationNumber;
-    registration_detail.state_medical_council = { id: 14 };
-    registration_detail.state_medical_council.name = RegisteredWithCouncil;
+    registration_detail.state_medical_council = RegisteredWithCouncil;
     registration_detail.is_renewable = registration;
     registration_detail.renewable_registration_date = RenewalDate;
 
@@ -254,6 +272,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
     update(0, { ...obj });
   }, [registrationDetails]);
+
+  useEffect(() => {
+    setValue('RegisteredWithCouncil', registeredCouncil[0]);
+  }, []);
   return (
     <Box
       boxShadow={1}
@@ -285,29 +307,27 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               </Typography>
             </Typography>
 
-            <TextField
-              variant="outlined"
-              name={'RegisteredWithCouncil'}
-              required={true}
+            <Select
+              // style={{ backgroundColor: isSameAddress ? '#F0F0F0' : '' }}
               fullWidth
-              defaultValue={getValues().RegisteredWithCouncil}
-              {...register('RegisteredWithCouncil', {
-                required: 'Registered with council is Required',
-              })}
-              error={errors?.RegisteredWithCouncil?.message}
-              sx={{
-                input: {
-                  backgroundColor:
-                    loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-                      ? ''
-                      : 'grey2.main',
+              // error={errors.State?.message}
+              name="RegisteredWithCouncil"
+              defaultValue={registeredCouncil[0]?.name}
+              // value={getValues().RegisteredWithCouncil}
+              required={true}
+              disabled={loggedInUserType === 'SMC' || !personalDetails?.personal_details?.is_new}
+              {...register(
+                'RegisteredWithCouncil'
+                // getValues()?.RegisteredWithCouncil?.length <= 0 && {
+                //   required: 'State/Union territory is required',
+                // }
+              )}
+              options={createSelectFieldData(councilNames)}
+              MenuProps={{
+                style: {
+                  maxHeight: 250,
+                  maxWidth: 130,
                 },
-              }}
-              InputProps={{
-                readOnly:
-                  loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-                    ? false
-                    : true,
               }}
             />
           </Grid>

@@ -970,7 +970,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 {...register(
                   'State',
                   !isSameAddress &&
-                    getValues()?.District.length <= 0 && {
+                    getValues()?.District?.length <= 0 && {
                       required: 'State/Union territory is required',
                     }
                 )}
