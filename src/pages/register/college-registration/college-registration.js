@@ -132,7 +132,7 @@ export function CollegeRegistration() {
           successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
         });
     } else if (type === 'email' && otpEmailVerify) {
-      setHeaderText(`Email Id ******${getValues().email.substr(getValues().email.length - 15)}.`);
+      setHeaderText(`Email Id XXXXXX${getValues().email.substr(getValues().email.length - 15)}.`);
       dispatch(sendNotificationOtp({ contact: getValues().email, type: type }))
         .then((response) => {
           setTransactionID(response?.data?.transaction_id);
