@@ -3,7 +3,7 @@ import { Link, List, ListItem, ListItemText, Typography } from '@mui/material';
 export const ImportantLinks = () => {
   const Links = [
     { title: 'Ministry of Health & Family Welfare', url: 'https://www.mohfw.gov.in' },
-    { title: 'ABHA', url: '/' },
+    { title: 'ABHA', url: 'https://abha.abdm.gov.in/' },
     { title: 'Healthcare Professionals Registry(HPR)', url: 'https://hpr.abdm.gov.in/en' },
     { title: 'Healthcare Family Registry (HFR)', url: 'https://facility.abdm.gov.in' },
     { title: 'Grievance Portal', url: 'https://grievance.abdm.gov.in/' },
