@@ -410,6 +410,12 @@ const EditQualificationDetails = ({
                 }
               )}
               options={monthsData}
+              MenuProps={{
+                style: {
+                  maxHeight: 250,
+                  maxWidth: 130,
+                },
+              }}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -432,6 +438,12 @@ const EditQualificationDetails = ({
                   pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
                 }
               )}
+              MenuProps={{
+                style: {
+                  maxHeight: 250,
+                  maxWidth: 130,
+                },
+              }}
             />
           </Grid>
         </Grid>
