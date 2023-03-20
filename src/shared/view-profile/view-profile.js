@@ -214,11 +214,7 @@ export function ViewProfile(props) {
             <Typography variant="body3" color="grey.label">
               Mobile Number
             </Typography>
-            {/* {(mobileNumber === 'undefined' || mobileNumber === null || mobileNumber === '') && (
-              <Typography variant="subtitle2" color="textPrimary.main">
-                bhnnn
-              </Typography>
-            )} */}
+
             {mobileNumber ? (
               <Typography variant="subtitle2" color="textPrimary.main">
                 {mobileNumber}

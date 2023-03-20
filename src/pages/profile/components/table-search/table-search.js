@@ -1,5 +1,5 @@
 // import SearchIcon from '@mui/icons-material/Search';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Box, Grid } from '@mui/material';
 // import { useTheme } from '@mui/material/styles';
@@ -27,6 +27,17 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
 
   const [applicationTypeValue, setApplicationTypeValue] = useState(false);
   const [statusTypeValue, setStatusTypeValue] = useState(false);
+  const [filterId, setFilterId] = useState('');
+  useEffect(() => {
+    if (filterId === 'workFlowStatusId') {
+      setApplicationTypeValue(false);
+      setStatusTypeValue(true);
+    }
+    if (filterId === 'applicationTypeId') {
+      setApplicationTypeValue(true);
+      setStatusTypeValue(false);
+    }
+  }, [filterId]);
 
   let trackData = {
     pageNo: 1,
@@ -50,7 +61,6 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
       search: '',
       FilterValue: '',
       Filter: '',
-      FilterId: '',
       Status: '',
       StatusId: '',
       collegeApproval: '',
@@ -78,7 +88,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
     }
     if (trackApplication) {
       trackData.value = getValues().StatusId;
-      trackData.search = getValues().FilterId;
+      trackData.search = filterId;
 
       searchParams(trackData, profileId);
     }
@@ -98,16 +108,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
   };
 
   const onApplicationChange = (currentValue) => {
-    setValue('FilterId', currentValue.id);
-
-    if (getValues().FilterId === 'workFlowStatusId') {
-      setApplicationTypeValue(false);
-      setStatusTypeValue(true);
-    }
-    if (getValues().FilterId === 'applicationTypeId') {
-      setApplicationTypeValue(true);
-      setStatusTypeValue(false);
-    }
+    setFilterId(currentValue.id);
   };
   return (
     <Box data-testid="table-search" mb={2}>
