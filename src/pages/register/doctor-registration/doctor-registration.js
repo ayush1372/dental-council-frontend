@@ -95,13 +95,13 @@ const DoctorRegistrationWelcomePage = () => {
                     Register Your Profile
                   </Typography>
                   <Typography variant="body3" color="textSecondary.main">
-                    Select registration council from dropdown and enter your registration number
+                    Select registration council from dropdown and enter registration number
                   </Typography>
                 </Box>
 
                 <Box pb={4}>
                   <Typography variant="body1" color="textSecondary.main">
-                    Select Registered Council
+                    Registered Council
                     <Typography component="span" color="error.main">
                       *
                     </Typography>
@@ -124,7 +124,7 @@ const DoctorRegistrationWelcomePage = () => {
                 </Box>
                 <Box pb={5}>
                   <Typography variant="body1" color="textSecondary.main">
-                    Enter Registration Number
+                    Registration Number
                     <Typography component="span" color="error.main">
                       *
                     </Typography>
