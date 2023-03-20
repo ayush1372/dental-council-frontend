@@ -217,8 +217,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
                 />
               )}
             </Grid>
-
-            {loggedInUserType === 'Doctor' && (
+            {/* {loggedInUserType === 'Doctor' && (
               <Grid
                 item
                 xs={12}
@@ -230,7 +229,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
                   },
                 }}
               ></Grid>
-            )}
+            )} */}
             {isReadMode && isApplicationPending && (
               <Grid
                 item
