@@ -40,7 +40,7 @@ const RegistrationDetailsContent = () => {
       <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
-            Registered With Council
+            Registered with council
             <Typography component="span" color="error.main">
               *
             </Typography>
@@ -142,7 +142,7 @@ const RegistrationDetailsContent = () => {
         </Grid>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
-            Upload the Registration Certificate
+            Upload the registration certificate
             <Typography component="span" color="error.main">
               *
             </Typography>
