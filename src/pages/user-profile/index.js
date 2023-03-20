@@ -198,18 +198,13 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
             px={3}
             py={2}
           >
-            <Grid item xs={12} md={6}>
-              <Box display="flex" gap={1} alignItems={'center'} justifyContent="center">
-                {' '}
-                <Typography
-                  variant="h2"
-                  component="span"
-                  width={{ sm: '200px', lg: '170px', xl: '140px' }}
-                >
-                  {' '}
+            <Grid item xs={12} sm="auto">
+              <Box display="flex" gap={1.5} alignItems={'center'} width="100%">
+                <Typography variant="h2" component="span" flexBasis="0" flexGrow="1">
                   {isReadMode ? 'My Profile' : 'Edit Profile'}
                 </Typography>
                 <ProgressBar
+                  width="302px"
                   progress={showStaticFormProgress || personalDetails?.nmr_id ? 75 : progress}
                   completed={completed}
                 />
@@ -239,8 +234,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
             {isReadMode && isApplicationPending && (
               <Grid
                 item
-                xs={12}
-                md="auto"
+                xs="auto"
                 sx={{
                   marginBottom: {
                     xs: '10px',
