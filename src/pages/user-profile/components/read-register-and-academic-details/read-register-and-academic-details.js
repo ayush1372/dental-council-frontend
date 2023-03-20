@@ -97,7 +97,7 @@ const ReadRegisterAndAcademicDetails = ({
                     color: 'white.main',
                   },
                   '.MuiAccordionSummary-expandIconWrapper svg': {
-                    fill: 'white.main',
+                    fill: '#ffff !important',
                   },
                 },
               }}
