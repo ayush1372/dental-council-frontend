@@ -63,11 +63,11 @@ LinearProgressWithLabel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-const ProgressBar = ({ activeStep, steps, progress }) => {
+const ProgressBar = ({ activeStep, steps, progress, width = '' }) => {
   verboseLog('steps', steps);
 
   return (
-    <Box backgroundColor="white" width="100%">
+    <Box backgroundColor="white" width={width}>
       {progress !== false ? (
         <LinearProgressWithLabel activeStep={activeStep} value={progress} pb={2} />
       ) : (

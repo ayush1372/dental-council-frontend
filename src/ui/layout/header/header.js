@@ -11,6 +11,7 @@ import { TopBar } from './components/top-bar/top-bar';
 export const Header = () => {
   const dispatch = useDispatch();
   const { menuOpen } = useSelector((state) => state.navMenu);
+  const loggedIn = useSelector((state) => state.common.isloggedIn);
   const menuToggleHandler = () => {
     dispatch(menuToggle(!menuOpen));
   };
@@ -18,7 +19,7 @@ export const Header = () => {
     <Box data-testid="Login">
       <TopBar />
       <LogoWrapper menuToggleHandler={menuToggleHandler} />
-      <Navbar />
+      {loggedIn ? null : <Navbar />}
     </Box>
   );
 };

@@ -876,7 +876,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                       : personalDetails?.communication_address?.landmark
                   }
                   value={
-                    isSameAddress ? personalDetails?.kyc_address?.landmark : getValues().landmark
+                    isSameAddress ? personalDetails?.kyc_address?.landmark : getValues()?.landmark
                   }
                   {...register('Landmark', {
                     maxLength: {
@@ -911,7 +911,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                     : personalDetails?.communication_address?.locality
                 }
                 value={
-                  isSameAddress ? personalDetails?.kyc_address?.locality : getValues().locality
+                  isSameAddress ? personalDetails?.kyc_address?.locality : getValues()?.locality
                 }
                 {...register('Locality', {})}
               />
@@ -962,17 +962,18 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 error={errors.State?.message}
                 name="State"
                 defaultValue={
-                  isSameAddress ? personalDetails?.kyc_address?.state?.id : getValues().State
+                  isSameAddress ? personalDetails?.kyc_address?.state?.id : getValues()?.State
                 }
-                value={isSameAddress ? personalDetails?.kyc_address?.state?.id : getValues().State}
+                value={isSameAddress ? personalDetails?.kyc_address?.state?.id : getValues()?.State}
                 required={isSameAddress ? false : true}
                 disabled={isSameAddress}
                 {...register(
                   'State',
-                  !isSameAddress &&
-                    getValues()?.District.length <= 0 && {
-                      required: 'State/Union territory is required',
-                    }
+                  !isSameAddress
+                    ? getValues()?.District?.length <= 0 && {
+                        required: 'State/Union territory is required',
+                      }
+                    : ''
                 )}
                 options={createSelectFieldData(statesList)}
                 MenuProps={{
@@ -1002,19 +1003,19 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 defaultValue={
                   isSameAddress
                     ? personalDetails?.kyc_address?.district?.iso_code
-                    : getValues().District
+                    : getValues()?.District
                 }
                 value={
                   isSameAddress
                     ? personalDetails?.kyc_address?.district?.iso_code
-                    : getValues().District
+                    : getValues()?.District
                 }
                 required={isSameAddress ? false : true}
                 disabled={isSameAddress}
                 {...register(
                   'District',
                   !isSameAddress &&
-                    getValues()?.District.length <= 0 && {
+                    getValues()?.District?.length <= 0 && {
                       required: 'District is required',
                     }
                 )}
@@ -1041,12 +1042,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 defaultValue={
                   isSameAddress
                     ? personalDetails?.kyc_address?.sub_district?.iso_code
-                    : getValues().SubDistrict
+                    : getValues()?.SubDistrict
                 }
                 value={
                   isSameAddress
                     ? personalDetails?.kyc_address?.sub_district?.iso_code
-                    : getValues().SubDistrict
+                    : getValues()?.SubDistrict
                 }
                 {...register('SubDistrict')}
                 options={createSelectFieldData(subDistrictList, 'iso_code')}
@@ -1067,9 +1068,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 fullWidth
                 name="Area"
                 defaultValue={
-                  isSameAddress ? personalDetails?.kyc_address?.village?.id : getValues().Area
+                  isSameAddress ? personalDetails?.kyc_address?.village?.id : getValues()?.Area
                 }
-                value={isSameAddress ? personalDetails?.kyc_address?.village?.id : getValues().Area}
+                value={
+                  isSameAddress ? personalDetails?.kyc_address?.village?.id : getValues()?.Area
+                }
                 disabled={isSameAddress}
                 required={true}
                 {...register('Area')}
@@ -1101,7 +1104,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 fullWidth
                 style={{ backgroundColor: isSameAddress ? '#F0F0F0' : '' }}
                 defaultValue={
-                  isSameAddress ? personalDetails?.kyc_address?.pincode : getValues().PostalCode
+                  isSameAddress ? personalDetails?.kyc_address?.pincode : getValues()?.PostalCode
                 }
                 disabled={isSameAddress}
                 {...register(
