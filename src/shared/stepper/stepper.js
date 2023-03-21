@@ -79,11 +79,53 @@ function QontoStepIcon(props) {
   );
 }
 export default function ApplicationStepper({ activeStep = 1, steps, selectedRowData }) {
-  const { created_at, doctor_status, nmc_status, collegeVerificationStatus, smc_status } =
-    selectedRowData;
+  const {
+    created_at,
+    smc_action_date,
+    college_registrar_action_date,
+    college_dean_action_date,
+    nmc_action_date,
+    doctor_status,
+    nmc_status,
+    collegeVerificationStatus,
+    smc_status,
+  } = selectedRowData;
+
   let applicationSubmittedDate = new Date(created_at?.value).toDateString();
-  const stepDescription = [
+  let applicationAtSMC;
+  if (smc_action_date?.value) {
+    applicationAtSMC = new Date(smc_action_date?.value).toDateString();
+  } else {
+    applicationAtSMC = '';
+  }
+  let applicationAtNMC;
+  if (nmc_action_date?.value) {
+    applicationAtNMC = new Date(nmc_action_date?.value).toDateString();
+  } else {
+    applicationAtNMC = '';
+  }
+
+  let finalCollegeDate;
+  if (college_dean_action_date?.value) {
+    finalCollegeDate = new Date(college_dean_action_date?.value).toDateString();
+  }
+  if (college_registrar_action_date?.value) {
+    finalCollegeDate = new Date(college_registrar_action_date?.value).toDateString();
+  }
+  if (college_dean_action_date?.value && college_registrar_action_date?.value) {
+    finalCollegeDate = new Date(college_dean_action_date?.value).toDateString();
+  }
+
+  const finalDates = [
     applicationSubmittedDate,
+    applicationAtSMC,
+    finalCollegeDate,
+    applicationAtSMC,
+    applicationAtNMC,
+  ];
+
+  const stepDescription = [
+    '',
     'SMC will verify the application and take action.',
     'College will verify the application and take action.',
     'SMC will verify the application and take action.',
@@ -144,6 +186,8 @@ export default function ApplicationStepper({ activeStep = 1, steps, selectedRowD
 
             <Typography component="div" variant="body8" color="grey.label" textAlign="left">
               {stepDescription[index]}
+              <br />
+              {finalDates[index]}
             </Typography>
             <Box textAlign="left">
               <Chip

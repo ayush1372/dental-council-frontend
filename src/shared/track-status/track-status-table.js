@@ -14,7 +14,7 @@ import { Button } from '../../ui/core';
 
 function createData(
   SNo,
-  request_id,
+  requestId,
   registrationNo,
   nameofApplicant,
   nameofStateCouncil,
@@ -29,7 +29,7 @@ function createData(
 ) {
   return {
     SNo,
-    request_id,
+    requestId,
     registrationNo,
     nameofApplicant,
     nameofStateCouncil,
@@ -153,12 +153,20 @@ function TrackStatusTable(props) {
         { type: 'councilVerificationStatus', value: application?.smc_status },
         {
           type: 'collegeVerificationStatus',
-          value: 'verfied',
+          // value: 'VERIFIED',
+          value:
+            application?.college_dean_status === ('NOT YET RECEIVED' || 'PENDING') &&
+            application?.college_registrar_status === 'APPROVED'
+              ? 'PENDING'
+              : application?.college_dean_status === 'NOT YET RECEIVED' &&
+                application?.college_registrar_status === 'APPROVED'
+              ? 'APPROVED'
+              : 'NOT YET RECEIVED',
         },
         { type: 'NMCVerificationStatus', value: application?.nmc_status },
 
         { type: 'dateofSubmission', value: application?.created_at },
-        { type: 'pendency', value: '-' },
+        { type: 'pendency', value: application?.pendency },
         { type: 'pending', value: '-' },
         { type: 'HPProfileId', value: application?.hp_profile_id },
         { type: 'NMRID', value: application?.nmr_id },
