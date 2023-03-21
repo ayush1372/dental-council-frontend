@@ -41,7 +41,11 @@ export function year_data(startYear = 1900) {
 }
 
 export const capitalize = (stringValue) => {
-  return stringValue[0].toUpperCase() + stringValue.slice(1).toLowerCase();
+  if (stringValue === 'undefined' || stringValue === null || stringValue === '') {
+    return '';
+  } else {
+    return stringValue[0].toUpperCase() + stringValue.slice(1).toLowerCase();
+  }
 };
 
 export const createSelectFieldData = (arrayOfStrings, valueKey) => {

@@ -12,7 +12,7 @@ export default function BreadcrumbsCompnent(props) {
           },
         }}
       >
-        <Typography id="1" variant="body1" color="primary.main">
+        <Typography id="1" variant="body1" color="primary.main" sx={{ cursor: 'pointer' }}>
           Dashboard
         </Typography>
         {(props.showTable || props.showViewProfile) && (
@@ -20,12 +20,18 @@ export default function BreadcrumbsCompnent(props) {
             id="2"
             variant="body1"
             color={props.showViewProfile ? 'primary.main' : 'black.main'}
+            sx={{ cursor: 'pointer' }}
           >
             Applications List
           </Typography>
         )}
         {props.showViewProfile && (
-          <Typography id="3" variant="body1" color="breadCrumbActiveColor.main">
+          <Typography
+            id="3"
+            variant="body1"
+            color="breadCrumbActiveColor.main"
+            sx={{ cursor: 'pointer' }}
+          >
             View Profile
           </Typography>
         )}
