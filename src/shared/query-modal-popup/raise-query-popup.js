@@ -31,7 +31,7 @@ export default function RaiseQueryPopup(props) {
               variant="h2"
               mt="18px"
               sx={{
-                color: 'primary.main',
+                color: 'textPrimary',
                 display: 'flex',
                 flexFlow: 'column',
                 alignItems: 'center',
@@ -42,7 +42,7 @@ export default function RaiseQueryPopup(props) {
             </Typography>
             <Box>
               <Box>
-                <Typography variant="body3" color="inputTextColor.main" component="span">
+                <Typography variant="body1" color="inputTextColor.main" component="span">
                   Details of Query
                 </Typography>
                 <Typography component="span" color="error.main">

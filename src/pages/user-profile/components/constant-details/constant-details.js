@@ -125,34 +125,35 @@ const ConstantDetails = () => {
           xs={12}
           sm={6}
           md={3}
-          lg="auto"
-          xl={2}
           px={2}
+          mb={{ xs: 1, lg: 0 }}
         >
           <Typography variant="body3" color="grey.label">
             Mobile Number
           </Typography>
-          <Typography variant="subtitle2" color="textPrimary.main">
-            {mobileNumber ? mobileNumber : ''}
+          <Box display="flex" alignItems="center">
+            <Typography variant="subtitle2" color="textPrimary.main" width="auto" mr={0.5}>
+              {mobileNumber ? mobileNumber : ''}
+            </Typography>
             <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
-            <Typography component="span" variant="subtitle2" color="primary.main" ml={1}>
+            <Typography component="span" variant="subtitle2" color="primary.main" ml={0.5}>
               Change
             </Typography>
-          </Typography>
+          </Box>
         </Grid>
-        <Grid item xs={12} sm={6} md="auto" lg="auto" pl={2}>
-          <Typography variant="body3" color="grey.label">
+        <Grid item xs={12} lg={6} px={2}>
+          <Typography component="div" variant="body3" color="grey.label">
             Email
           </Typography>
-          <Grid>
-            <Typography
-              variant="subtitle2"
-              color="textPrimary.main"
-              sx={{ wordBreak: 'break-word' }}
-            >
+          <Box display="flex" alignItems="center">
+            <Typography variant="subtitle2" color="textPrimary.main" width="auto" mr={0.5}>
               {emailId ? emailId : ''}
             </Typography>
-          </Grid>
+            <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
+            <Typography component="span" variant="subtitle2" color="primary.main" ml={0.5}>
+              Change
+            </Typography>
+          </Box>
         </Grid>
       </Grid>
     </Box>

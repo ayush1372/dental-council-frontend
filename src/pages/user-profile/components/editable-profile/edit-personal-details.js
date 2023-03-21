@@ -305,6 +305,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
         dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id))
           .then(() => {
             handleNext();
+            window.scrollTo({
+              top: 0,
+              behavior: 'smooth',
+            });
           })
           .catch((allFailMsg) => {
             successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
@@ -1111,9 +1115,16 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                   'PostalCode',
                   !isSameAddress && {
                     required: 'PostalCode is Required',
-
-                    pattern: {
-                      value: /^[0-9]{6}$/,
+                    onChange: (event) => {
+                      const pincode = event.target.value.replace(/[^0-9]/g, '');
+                      setValue('PostalCode', pincode);
+                    },
+                    minLength: {
+                      value: 6,
+                      message: 'Should contains 6 digits',
+                    },
+                    maxLength: {
+                      value: 6,
                       message: 'Should only contains 6 digits',
                     },
                   }
