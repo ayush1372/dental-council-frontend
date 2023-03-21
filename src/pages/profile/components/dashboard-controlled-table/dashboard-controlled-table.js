@@ -127,10 +127,13 @@ function DashboardControlledTable(props) {
       {
         type: 'collegeVerificationStatus',
         value:
-          application?.college_dean_status === 'NOT YET RECEIVED' &&
-          application?.college_registrar_status === 'NOT YET RECEIVED'
-            ? capitalize('NOT YET RECEIVED')
-            : capitalize('PENDING'),
+          application?.college_dean_status === ('NOT YET RECEIVED' || 'PENDING') &&
+          application?.college_registrar_status === 'Approved'
+            ? 'Pending'
+            : application?.college_dean_status === 'APPROVED' &&
+              application?.college_registrar_status === 'APPROVED'
+            ? 'Approved'
+            : 'Not yet received',
       },
       { type: 'NMCVerificationStatus', value: capitalize(application?.nmc_status) },
       { type: 'dateofSubmission', value: formattedDate },
@@ -156,7 +159,7 @@ function DashboardControlledTable(props) {
 
   useEffect(() => {
     getTableData(1, 10);
-  }, [searchQueryParams]);
+  }, []);
 
   const getTableData = (pageNo, noOfRecords) => {
     const requestObj = {
@@ -181,8 +184,29 @@ function DashboardControlledTable(props) {
   };
 
   const searchParams = (data) => {
-    dispatch(getDashboardTableData(data));
     setSearchQueryParams(data);
+
+    let reqObj = {
+      work_flow_status_id: '',
+      application_type_id: props?.selectedCardDataData?.applicationTypeID
+        ? props?.selectedCardDataData?.applicationTypeID.toString()
+        : '',
+      user_group_status: props?.selectedCardDataData?.responseKey
+        ? props?.selectedCardDataData?.responseKey
+        : '',
+      smc_id: searchQueryParams ? searchQueryParams?.RegistrationCouncilId : '',
+      name: searchQueryParams ? searchQueryParams?.filterByName : '',
+      nmr_id: searchQueryParams ? searchQueryParams?.filterByRegNo : '',
+      // search: searchQueryParams ? searchQueryParams?.search : '',
+      page_no: data.pageNo,
+      offset: data.offset,
+      sort_by: '',
+      sort_order: '',
+      search: data.search,
+      value: data.value,
+    };
+
+    dispatch(getDashboardTableData(reqObj));
   };
 
   return (

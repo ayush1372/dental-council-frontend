@@ -18,6 +18,10 @@ function createData(
   collegeVerificationStatus,
   NMCVerificationStatus,
   created_at,
+  smc_action_date,
+  college_registrar_action_date,
+  college_dean_action_date,
+  nmc_action_date,
   smc_status,
   nmc_status,
   pendency,
@@ -34,6 +38,10 @@ function createData(
     collegeVerificationStatus,
     NMCVerificationStatus,
     created_at,
+    smc_action_date,
+    college_registrar_action_date,
+    college_dean_action_date,
+    nmc_action_date,
     smc_status,
     nmc_status,
     pendency,
@@ -56,6 +64,7 @@ function TrackAppicationTable({
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
   const tableData = useSelector((state) => state.common.trackApplicationTableData);
+
   // const theme = useTheme();
   let trackData = {
     pageNo: 1,
@@ -126,6 +135,7 @@ function TrackAppicationTable({
     (data, index) => {
       return createData(
         { type: 'SNo', value: index + 1 },
+
         {
           type: 'registration_no',
           value: data?.request_id,
@@ -144,17 +154,38 @@ function TrackAppicationTable({
           type: 'application_type_name',
           value: data?.application_type_name,
         },
+
         {
           type: 'nameofStateCouncil',
           value: data?.council_name,
         },
-        { type: 'doctor_status', value: data?.doctor_status },
+        // { type: 'doctor_status', value: data?.doctor_status },
+        {
+          type: 'doctor_status',
+          value:
+            data?.work_flow_status_id === 1
+              ? 'PENDING'
+              : data?.work_flow_status_id === 2
+              ? 'APPROVED'
+              : data?.work_flow_status_id === 3
+              ? 'QUERY RAISED'
+              : data?.work_flow_status_id === 4
+              ? 'REJECTED'
+              : data?.work_flow_status_id === 5
+              ? 'SUSPENDED'
+              : 'BLACKLISTED',
+        },
+
         {
           type: 'collegeVerificationStatus',
           value: data?.college_dean_status,
         },
         { type: 'NMCVerificationStatus', value: data?.college_registrar_status },
         { type: 'created_at', value: data?.created_at },
+        { type: 'smc_action_date', value: data?.smc_action_date },
+        { type: 'college_registrar_action_date', value: data?.college_registrar_action_date },
+        { type: 'college_dean_action_date', value: data?.college_dean_action_date },
+        { type: 'nmc_action_date', value: data?.nmc_action_date },
         {
           type: 'smc_status',
           value: data?.smc_status,
@@ -164,6 +195,7 @@ function TrackAppicationTable({
           value: data?.nmc_status,
         },
         { type: 'pendency', value: data?.pendency },
+
         { type: 'view', value: data?.view || 'view more', onClickCallback: viewCallback }
       );
     }

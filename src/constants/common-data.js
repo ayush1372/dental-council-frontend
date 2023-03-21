@@ -555,6 +555,11 @@ export const ActivateLicenceFieldList = [
 ];
 
 export const DashBoardCardsFieldList = [
-  { id: 'registrationNumber', name: 'Registration No' },
   { id: 'applicantFullName', name: 'Name of Applicant' },
+  { id: 'registrationNumber', name: 'Registration No' },
+  { id: 'councilName', name: 'Name of Council' },
+  { id: 'emailId', name: 'Email ID' },
+  { id: 'gender', name: 'Gender' },
+  { id: 'mobileNumber', name: 'Mobile Number' },
+  { id: 'yearOfRegistration', name: 'Year of Registration' },
 ];
