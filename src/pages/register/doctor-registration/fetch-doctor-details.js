@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -17,6 +18,7 @@ import {
   checkKycDetails,
   generateMobileOtp,
   getHprIdSuggestions,
+  getSessionAccessToken,
   verifyMobileOtp,
 } from '../../../store/actions/doctor-registration-actions';
 import {
@@ -95,9 +97,15 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
     handleVerifyAadhar(aadharDataFields);
   };
   const handleVerifyAadhar = (value) => {
-    dispatch(sendAaadharOtp(value)).then(() => {
-      setshowOtpAadhar(true);
-      setisOtpValidMobile(false);
+    let reqObj = {
+      clientId: process.env.REACT_APP_SESSION_CLIENT_ID,
+      clientSecret: process.env.REACT_APP_SESSION_CLIENT_SECRET,
+    };
+    dispatch(getSessionAccessToken(reqObj)).then(() => {
+      dispatch(sendAaadharOtp(value)).then(() => {
+        setshowOtpAadhar(true);
+        setisOtpValidMobile(false);
+      });
     });
   };
   const onCancel = () => {
@@ -174,10 +182,11 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
   useEffect(() => {
     if (demographicAuthMobileVerify?.data?.verified) {
       setisOtpValidMobile(true);
-      //any popup? to show here that ' is kyc details and mobile num are matching ? ' *
     }
   }, [demographicAuthMobileVerify?.data?.verified]);
+
   const handleValidateMobile = () => {
+    console.log('enable isOtpMob', isOtpValidMobile);
     let data = {
       txnId: mobileTxnId,
       otp: otpValue,
@@ -239,7 +248,6 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
       }
     });
   };
-
   return (
     <>
       <ToastContainer></ToastContainer>
@@ -483,9 +491,11 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
                   sx={{
                     backgroundColor: 'grey.main',
                     color: 'black.textBlack',
+                    border: 'none',
                     width: '105px',
                     height: '48px',
                   }}
+                  // variant="contained" color="grey"
                 >
                   Cancel
                 </Button>

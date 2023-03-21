@@ -1,9 +1,9 @@
 import { API, API_HPRID } from '../../api/api-endpoints';
 import { accesstokenHprId } from '../../constants/common-data';
 import { GET, POST } from '../../constants/requests';
-import { gatewayApiUseAxiosCall, hpIdUseAxiosCall, useAxiosCall } from '../../hooks/use-axios';
+import { hpIdUseAxiosCall, useAxiosCall } from '../../hooks/use-axios';
 import {
-  getAccessToken,
+  // getAccessToken,
   getkycDetails,
   getMobileOtp,
   healthProfessionalDetails,
@@ -34,15 +34,17 @@ export const fetchSmcRegistrationDetails = (registrationData) => async (dispatch
       });
   });
 };
-export const getSessionAccessToken = (body) => async (dispatch) => {
+export const getSessionAccessToken = (body) => async () => {
   return await new Promise((resolve, reject) => {
-    gatewayApiUseAxiosCall({
+    useAxiosCall({
       method: POST,
       url: API_HPRID.hpId.sessionApi,
       data: body,
     })
       .then((response) => {
-        dispatch(getAccessToken(response));
+        // JSON.stringify(
+        //   localStorage.setItem('sessiontoekn', response.responseHeader['session-token'])
+        // );
         return resolve(response);
       })
       .catch((error) => {
@@ -176,7 +178,6 @@ export const createHealthProfessional = (data) => async (dispatch) => {
     useAxiosCall({
       method: POST,
       url: API.doctorRegistration.healthProfesssional,
-      // headers: { Authorization: 'Bearer ' + accesstokenHprId },
       data: data,
     })
       .then((response) => {
