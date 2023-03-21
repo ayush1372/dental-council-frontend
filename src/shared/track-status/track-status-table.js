@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import TableSearch from '../../../src/pages/profile/components/table-search/table-search';
 import UserProfile from '../../../src/pages/user-profile';
 import { verboseLog } from '../../config/debug';
-import { Capitalize } from '../../helpers/functions/common-functions';
+import { capitalize } from '../../helpers/functions/common-functions';
 import GenericTable from '../../shared/generic-component/generic-table';
 import ViewProfile from '../../shared/view-profile/view-profile';
 import { trackStatus } from '../../store/actions/common-actions';
@@ -151,7 +151,7 @@ function TrackStatusTable(props) {
           type: 'nameofStateCouncil',
           value: application.council_name,
         },
-        { type: 'councilVerificationStatus', value: Capitalize(application?.smc_status) },
+        { type: 'councilVerificationStatus', value: capitalize(application?.smc_status) },
         {
           type: 'collegeVerificationStatus',
 
@@ -164,7 +164,7 @@ function TrackStatusTable(props) {
               ? 'Approved'
               : 'Not yet received',
         },
-        { type: 'NMCVerificationStatus', value: Capitalize(application?.nmc_status) },
+        { type: 'NMCVerificationStatus', value: capitalize(application?.nmc_status) },
 
         { type: 'dateofSubmission', value: application?.created_at },
         { type: 'pendency', value: application?.pendency },
