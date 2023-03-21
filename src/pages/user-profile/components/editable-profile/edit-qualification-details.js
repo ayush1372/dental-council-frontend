@@ -92,6 +92,7 @@ const EditQualificationDetails = ({
         nationality: 'Indian',
       });
     }
+    setValue(`qualification[${index}].qualificationfrom`, fields[index].qualificationfrom);
   }, []);
 
   return (
