@@ -159,7 +159,23 @@ function TrackAppicationTable({
           type: 'nameofStateCouncil',
           value: data?.council_name,
         },
-        { type: 'doctor_status', value: data?.doctor_status },
+        // { type: 'doctor_status', value: data?.doctor_status },
+        {
+          type: 'doctor_status',
+          value:
+            data?.work_flow_status_id === 1
+              ? 'PENDING'
+              : data?.work_flow_status_id === 2
+              ? 'APPROVED'
+              : data?.work_flow_status_id === 3
+              ? 'QUERY RAISED'
+              : data?.work_flow_status_id === 4
+              ? 'REJECTED'
+              : data?.work_flow_status_id === 5
+              ? 'SUSPENDED'
+              : 'BLACKLISTED',
+        },
+
         {
           type: 'collegeVerificationStatus',
           value: data?.college_dean_status,

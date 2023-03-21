@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import TableSearch from '../../../src/pages/profile/components/table-search/table-search';
 import UserProfile from '../../../src/pages/user-profile';
 import { verboseLog } from '../../config/debug';
+import { Capitalize } from '../../helpers/functions/common-functions';
 import GenericTable from '../../shared/generic-component/generic-table';
 import ViewProfile from '../../shared/view-profile/view-profile';
 import { trackStatus } from '../../store/actions/common-actions';
@@ -150,20 +151,20 @@ function TrackStatusTable(props) {
           type: 'nameofStateCouncil',
           value: application.council_name,
         },
-        { type: 'councilVerificationStatus', value: application?.smc_status },
+        { type: 'councilVerificationStatus', value: Capitalize(application?.smc_status) },
         {
           type: 'collegeVerificationStatus',
-          // value: 'VERIFIED',
+
           value:
             application?.college_dean_status === ('NOT YET RECEIVED' || 'PENDING') &&
-            application?.college_registrar_status === 'APPROVED'
-              ? 'PENDING'
-              : application?.college_dean_status === 'NOT YET RECEIVED' &&
+            application?.college_registrar_status === 'Approved'
+              ? 'Pending'
+              : application?.college_dean_status === 'APPROVED' &&
                 application?.college_registrar_status === 'APPROVED'
-              ? 'APPROVED'
-              : 'NOT YET RECEIVED',
+              ? 'Approved'
+              : 'Not yet received',
         },
-        { type: 'NMCVerificationStatus', value: application?.nmc_status },
+        { type: 'NMCVerificationStatus', value: Capitalize(application?.nmc_status) },
 
         { type: 'dateofSubmission', value: application?.created_at },
         { type: 'pendency', value: application?.pendency },
