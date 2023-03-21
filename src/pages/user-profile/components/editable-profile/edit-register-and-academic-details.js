@@ -159,11 +159,13 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
     if (qualification?.length > 0) {
       updatedObj = qualification?.map((q) => ({
-        id: qualification_detail_response_tos[1]?.id
-          ? qualification_detail_response_tos[1]?.id
+        id: qualification_detail_response_tos[0]?.id
+          ? qualification_detail_response_tos[0]?.id
           : '',
         country: countriesList.find((x) => x.id === q?.country?.id),
-        course: coursesList.data?.find((x) => x.id === q?.qualification?.id),
+        course: isInternational
+          ? coursesList.data?.find((x) => x.id === q?.qualification)
+          : coursesList.data?.find((x) => x.id === q?.qualification?.id),
         university: isInternational
           ? { name: q?.FEuniversity }
           : universitiesList.data?.find((x) => x.id === q?.university),
@@ -277,9 +279,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     const fmgeDetails = registrationDetails?.nbe_response_to || {};
     const obj = { ...qualificationObjTemplate[0] };
 
-    // eslint-disable-next-line no-console
-    console.log('details', details);
-
     const isInternational = details?.qualification_from === 'International';
     // basic qualification
     obj.university = isInternational ? details?.university?.name : details?.university?.id;
@@ -336,30 +335,58 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 *
               </Typography>
             </Typography>
-
-            <Select
-              // style={{ backgroundColor: isSameAddress ? '#F0F0F0' : '' }}
-              fullWidth
-              // error={errors.State?.message}
-              name="RegisteredWithCouncil"
-              defaultValue={registeredCouncil[0]?.name}
-              // value={getValues().RegisteredWithCouncil}
-              required={true}
-              disabled={loggedInUserType === 'SMC' || !personalDetails?.personal_details?.is_new}
-              {...register(
-                'RegisteredWithCouncil'
-                // getValues()?.RegisteredWithCouncil?.length <= 0 && {
-                //   required: 'State/Union territory is required',
-                // }
-              )}
-              options={createSelectFieldData(councilNames)}
-              MenuProps={{
-                style: {
-                  maxHeight: 250,
-                  maxWidth: 130,
-                },
-              }}
-            />
+            {personalDetails?.personal_details?.is_new ? (
+              <Select
+                // style={{ backgroundColor: isSameAddress ? '#F0F0F0' : '' }}
+                fullWidth
+                // error={errors.State?.message}
+                name="RegisteredWithCouncil"
+                defaultValue={registeredCouncil[0]?.name}
+                // value={getValues().RegisteredWithCouncil}
+                required={true}
+                disabled={loggedInUserType === 'SMC' || !personalDetails?.personal_details?.is_new}
+                {...register(
+                  'RegisteredWithCouncil'
+                  // getValues()?.RegisteredWithCouncil?.length <= 0 && {
+                  //   required: 'State/Union territory is required',
+                  // }
+                )}
+                options={createSelectFieldData(councilNames)}
+                MenuProps={{
+                  style: {
+                    maxHeight: 250,
+                    maxWidth: 130,
+                  },
+                }}
+              />
+            ) : (
+              <TextField
+                variant="outlined"
+                name={'RegisteredWithCouncil'}
+                required={true}
+                fullWidth
+                // defaultValue={getValues()?.RegisteredWithCouncil?.name}
+                value={getValues()?.RegisteredWithCouncil?.name}
+                {...register('RegisteredWithCouncil', {
+                  required: 'Registered with council is Required',
+                })}
+                error={errors?.RegisteredWithCouncil?.message}
+                sx={{
+                  input: {
+                    backgroundColor:
+                      loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                        ? ''
+                        : 'grey2.main',
+                  },
+                }}
+                InputProps={{
+                  readOnly:
+                    loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                      ? false
+                      : true,
+                }}
+              />
+            )}
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
