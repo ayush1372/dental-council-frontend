@@ -327,6 +327,41 @@ const EditQualificationDetails = ({
             }}
             InputProps={{ readOnly: true }}
           />
+          {/* <Select
+            fullWidth
+            error={errors?.qualification?.[index]?.qualification?.message}
+            name="Qualification"
+            label="Name Of The Degree"
+            defaultValue={
+              qualificationfrom === 'International' ? fields[index].qualification : degree[0]?.label
+            }
+            // value={degree[0]?.label}
+            required={true}
+            {...register(`qualification[${index}].qualification`, {
+              required: 'degree is required',
+            })}
+            disabled={qualificationfrom === 'International' ? false : true}
+            options={
+              qualificationfrom === 'International'
+                ? createSelectFieldData(coursesList.data)
+                : degree
+            }
+            MenuProps={{
+              style: {
+                maxHeight: 250,
+                maxWidth: 130,
+              },
+            }}
+            sx={{
+              '.MuiSelect-select':
+                qualificationfrom !== 'International'
+                  ? {
+                      backgroundColor: 'grey2.main',
+                    }
+                  : '',
+            }}
+            InputProps={{ readOnly: true }}
+          /> */}
         </Grid>
         {qualificationfrom === 'International' && (
           <Grid item xs={12} md={6} lg={4}>
