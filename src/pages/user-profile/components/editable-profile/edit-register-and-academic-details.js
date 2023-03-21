@@ -162,7 +162,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
         id: qualification_detail_response_tos[0]?.id
           ? qualification_detail_response_tos[0]?.id
           : '',
-        country: countriesList.find((x) => x.id === q?.country?.id),
+        country: isInternational
+          ? countriesList.find((x) => x.id === q?.country)
+          : countriesList.find((x) => x.id === q?.country?.id),
         course: isInternational
           ? coursesList.data?.find((x) => x.id === q?.qualification)
           : coursesList.data?.find((x) => x.id === q?.qualification?.id),

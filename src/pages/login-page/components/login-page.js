@@ -22,6 +22,7 @@ export function LoginPage() {
       College: 'College',
       SMC: 'SMC',
       NMC: 'NMC',
+      NBE: 'NBE',
     }),
     []
   );
