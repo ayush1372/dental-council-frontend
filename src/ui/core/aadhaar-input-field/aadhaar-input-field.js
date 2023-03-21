@@ -67,7 +67,7 @@ export const AadhaarInputField = (props) => {
       <Box>
         <Box component={'div'}>
           <Typography variant="subtitle2" component={'span'}>
-            {'Enter your Aadhaar Number'}
+            {'Enter Aadhaar Number'}
           </Typography>
           <Typography variant="body2" color="error">
             {'*'}

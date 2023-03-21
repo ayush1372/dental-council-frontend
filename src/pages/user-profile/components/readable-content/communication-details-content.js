@@ -115,7 +115,7 @@ const CommunicationAddress = ({ personalDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
-              {districtName}
+              {districtName.charAt(0).toUpperCase() + districtName.slice(1).toLowerCase()}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
@@ -126,6 +126,7 @@ const CommunicationAddress = ({ personalDetails }) => {
             )}{' '}
           </Grid>
         </Grid>
+
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={3}>
           <Typography variant="body5" color="grey.label">
@@ -154,7 +155,7 @@ const CommunicationAddress = ({ personalDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
-              {stateName}
+              {stateName.charAt(0).toUpperCase() + stateName.slice(1).toLowerCase()}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon

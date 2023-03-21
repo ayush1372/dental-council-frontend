@@ -734,9 +734,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               Address as per KYC
             </Typography>
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12}>
             <Typography variant="body1" color="inputTextColor.main">
-              Aadhaar verified Address
+              Aadhaar Verified Address
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -758,6 +758,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               sx={{
                 input: {
                   backgroundColor: 'grey2.main',
+                  whiteSpace: 'nowrap',
+                  wordWrap: 'break-word',
                 },
               }}
             />
