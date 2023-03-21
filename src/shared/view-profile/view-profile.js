@@ -10,6 +10,7 @@ import { enableUserNotification } from '../../store/actions/common-actions';
 
 export function ViewProfile(props) {
   const dispatch = useDispatch();
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
 
   const registration_number = useSelector(
     (state) =>
@@ -212,18 +213,19 @@ export function ViewProfile(props) {
             <Typography variant="body3" color="grey.label">
               Mobile Number
             </Typography>
-            {/* {(mobileNumber === 'undefined' || mobileNumber === null || mobileNumber === '') && (
-              <Typography variant="subtitle2" color="textPrimary.main">
-                bhnnn
-              </Typography>
-            )} */}
+
             {mobileNumber ? (
               <Typography variant="subtitle2" color="textPrimary.main">
                 {mobileNumber}
                 <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
-                <Typography component="span" variant="subtitle2" color="primary.main" ml={1}>
-                  Change
-                </Typography>
+
+                {loggedInUserType === 'Doctor' ? (
+                  <Typography component="span" variant="subtitle2" color="primary.main" ml={1}>
+                    Change
+                  </Typography>
+                ) : (
+                  ''
+                )}
               </Typography>
             ) : (
               <Typography variant="subtitle2" color="textPrimary.main">
@@ -235,7 +237,7 @@ export function ViewProfile(props) {
             <Typography variant="body3" color="grey.label">
               Email
             </Typography>
-            <Grid>
+            <Box display="flex" alignItems="center">
               <Typography
                 variant="subtitle2"
                 color="textPrimary.main"
@@ -243,7 +245,8 @@ export function ViewProfile(props) {
               >
                 {emailId ? emailId : ''}
               </Typography>
-            </Grid>
+              <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
+            </Box>
           </Grid>
         </Grid>
       </Box>

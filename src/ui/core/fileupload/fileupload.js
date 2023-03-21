@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import ReplayIcon from '@mui/icons-material/Replay';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import Box from '@mui/material/Box';
@@ -203,7 +204,20 @@ export const UploadFile = (props) => {
                       {fileData.length === 1 || uploadStatus === 'successful' ? (
                         <div className={styles.actionArea}>
                           {' '}
-                          <DeleteOutlineIcon color="error" />{' '}
+                          <RemoveRedEyeOutlinedIcon
+                            color="primary"
+                            onClick={(e) => {
+                              e.preventDefault();
+                            }}
+                          />
+                          {'   '}
+                          <DeleteOutlineIcon
+                            color="error"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setFileData([]);
+                            }}
+                          />{' '}
                         </div>
                       ) : uploadStatus === 'failed' ? (
                         <div className={styles.actionArea}>
