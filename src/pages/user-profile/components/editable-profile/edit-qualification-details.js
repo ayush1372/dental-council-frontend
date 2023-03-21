@@ -184,11 +184,16 @@ const EditQualificationDetails = ({
               name="MarksObtained"
               label="Marks Obtained"
               required={true}
+              type="number"
               fullWidth
               error={errors?.qualification?.[index]?.marksobtained?.message}
               defaultValue={getValues()[`qualification[${index}].marksobtained`]}
               {...register(`qualification[${index}].marksobtained`, {
                 required: 'Marks Obtained is Required',
+                pattern: {
+                  value: /^(\d{3})$/i,
+                  message: 'Enter number',
+                },
               })}
               InputProps={{ maxlength: 4 }}
             />
