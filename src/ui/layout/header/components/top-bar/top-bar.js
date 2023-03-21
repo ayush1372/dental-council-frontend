@@ -7,6 +7,7 @@ import IconButton from '@mui/material/IconButton';
 import { useTheme } from '@mui/material/styles';
 import CN from 'clsx';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { FontSize } from '../../../../../helpers/components/fontsize-toggle';
@@ -20,9 +21,11 @@ export const TopBar = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { palette } = useTheme();
+  const userLoggedIn = useSelector((state) => state.common.isloggedIn);
+
   return (
     <Box className={styles.topBarWrapper} backgroundColor="backgroundColor.main">
-      <Container>
+      <Container maxWidth={userLoggedIn ? '1920px' : 'lg'}>
         <Grid container justifyContent="space-between" alignItems="start">
           <Grid alignSelf="center" item xs={12} sm={5}>
             <Box display="flex" alignItems="center">
