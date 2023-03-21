@@ -11,6 +11,7 @@ export default function ErrorModalPopup({
   imrData,
   setIsNext,
   handleAadhaarPage,
+  accountExist,
 }) {
   const theme = useTheme();
   const navigate = useNavigate();
@@ -83,10 +84,23 @@ export default function ErrorModalPopup({
                   No
                 </Button>
               </Box>
+            ) : accountExist ? (
+              <Box display="flex" justifyContent="right">
+                <Button
+                  size="small"
+                  sx={{
+                    mt: 3,
+                    width: '20%',
+                  }}
+                  variant="contained"
+                  color="warning"
+                  onClick={handleCloseModal}
+                >
+                  Ok
+                </Button>
+              </Box>
             ) : (
-              <Button sx={{ mt: 3 }} variant="contained" color="warning" onClick={handleCloseModal}>
-                Ok
-              </Button>
+              ''
             )}
           </Box>
         </Box>
