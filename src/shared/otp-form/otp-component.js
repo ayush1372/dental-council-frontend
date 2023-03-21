@@ -113,7 +113,7 @@ export const OtpForm = ({ otpInvalidError = false, resendAction = undefined, res
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Box>
           <Typography variant="body1" align="center" color="textPrimary.main">
-            {`Didn't recieve code? `}
+            {`Didn't recieve OTP? `}
             {/* {t('resend_in')} */}
           </Typography>
           <Button
