@@ -530,45 +530,47 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           </Button>
         </Grid>
         <Grid item xs={12} md="auto" display="flex" justifyContent="end" lg={4}>
-          <Button
-            onClick={handleSubmit(onHandleSave)}
-            size="medium"
-            variant="outlined"
-            color="secondary"
-            sx={{
-              margin: {
-                xs: '5px 0',
-                md: '0',
-              },
-              width: {
-                xs: '100%',
-                md: 'fit-content',
-                height: '52px',
-              },
-            }}
-          >
-            {t('Save')}
-          </Button>
-        </Grid>
-        <Grid item xs={12} md="auto" display="flex" justifyContent="end" lg={2}>
-          <Button
-            size="medium"
-            onClick={handleSubmit(onHandleOptionNext)}
-            variant="contained"
-            color="secondary"
-            sx={{
-              margin: {
-                xs: '5px 0',
-                md: '0',
-              },
-              width: {
-                xs: '100%',
-                md: 'fit-content',
-              },
-            }}
-          >
-            {t('Save & Next')}
-          </Button>
+          <Grid item xs={12} md="auto" display="flex" justifyContent="end" ml={{ xs: 0, md: 2 }}>
+            <Button
+              onClick={handleSubmit(onHandleSave)}
+              size="medium"
+              variant="outlined"
+              color="secondary"
+              sx={{
+                margin: {
+                  xs: '5px 0',
+                  md: '0',
+                },
+                width: {
+                  xs: '100%',
+                  md: 'fit-content',
+                  height: '52px',
+                },
+              }}
+            >
+              {t('Save')}
+            </Button>
+          </Grid>
+          <Grid item xs={12} md="auto" display="flex" ml={{ xs: 0, md: 2 }}>
+            <Button
+              size="medium"
+              onClick={handleSubmit(onHandleOptionNext)}
+              variant="contained"
+              color="secondary"
+              sx={{
+                margin: {
+                  xs: '5px 0',
+                  md: '0',
+                },
+                width: {
+                  xs: '100%',
+                  md: 'fit-content',
+                },
+              }}
+            >
+              {t('Save & Next')}
+            </Button>
+          </Grid>
         </Grid>
       </Grid>
       {attachmentViewProfile && (
