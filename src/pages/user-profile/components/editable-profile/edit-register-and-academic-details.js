@@ -438,7 +438,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           )}
         </Grid>
         <Grid container item spacing={2} mt={1}>
-          <Grid item xs={12} md={8} xl={6}>
+          <Grid item xs={12}>
             <UploadFile
               uploadFiles="single"
               sizeAllowed={1}
