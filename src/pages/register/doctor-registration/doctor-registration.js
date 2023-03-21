@@ -12,12 +12,12 @@ import ErrorModalPopup from '../../../shared/common-modals/error-modal-popup';
 import { getRegistrationCouncilList } from '../../../store/actions/common-actions';
 import { fetchSmcRegistrationDetails } from '../../../store/actions/doctor-registration-actions';
 import { Button, TextField } from '../../../ui/core';
-import successToast from '../../../ui/core/toaster';
 import FetchDoctorDetails from './fetch-doctor-details';
 const DoctorRegistrationWelcomePage = () => {
   const [isNext, setIsNext] = useState(false);
   const [imrDataNotFound, setImrDataNotFound] = useState(false);
   const [rejectPopup, setRejectPopup] = useState(false);
+  const [accountExists, setAccountExists] = useState(false);
   const {
     register,
     handleSubmit,
@@ -57,13 +57,7 @@ const DoctorRegistrationWelcomePage = () => {
       })
       .catch((err) => {
         if (err?.data?.response?.data?.status === 400 && err?.data?.response?.data?.error) {
-          successToast(
-            'ERROR: ' + err?.data?.response?.data?.error,
-            'auth-error',
-            'error',
-            'top-center'
-          );
-          reset();
+          setAccountExists(true);
         } else {
           setRejectPopup(true);
         }
@@ -187,6 +181,14 @@ const DoctorRegistrationWelcomePage = () => {
           setIsNext={setIsNext}
           text={` Your data is not found in the NMR.
            Do you want to continue the registration in the NMR ? `}
+        />
+      )}
+      {accountExists && (
+        <ErrorModalPopup
+          open={setAccountExists}
+          setOpen={() => setAccountExists(false)}
+          accountExist={true}
+          text={`Your account already exists. Please login with your credentails`}
         />
       )}
     </>
