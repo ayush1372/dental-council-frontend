@@ -40,8 +40,6 @@ export function year_data(startYear = 1900) {
   return ans;
 }
 export const capitalize = (stringValue) => {
-  // eslint-disable-next-line no-console
-  console.log('hello', stringValue);
   return stringValue[0].toUpperCase() + stringValue.slice(1).toLowerCase();
 };
 
