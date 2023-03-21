@@ -1,5 +1,5 @@
 // import SearchIcon from '@mui/icons-material/Search';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Box, Grid } from '@mui/material';
 // import { useTheme } from '@mui/material/styles';
@@ -21,12 +21,24 @@ import ExportFiles from '../../../../shared/export-component/export-file';
 import { Button, TextField } from '../../../../ui/core';
 
 export function TableSearch({ trackApplication, searchParams, exportData, flag }) {
-  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
-  const { councilNames } = useSelector((state) => state.common);
+  // const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  // const { councilNames } = useSelector((state) => state.common);
   const profileId = useSelector((state) => state.loginReducer.loginData.data.profile_id);
 
   const [applicationTypeValue, setApplicationTypeValue] = useState(false);
   const [statusTypeValue, setStatusTypeValue] = useState(false);
+  const [filterId, setFilterId] = useState('');
+  const [dashBoardCardId, setDashBoardCardId] = useState('');
+  useEffect(() => {
+    if (filterId === 'workFlowStatusId') {
+      setApplicationTypeValue(false);
+      setStatusTypeValue(true);
+    }
+    if (filterId === 'applicationTypeId') {
+      setApplicationTypeValue(true);
+      setStatusTypeValue(false);
+    }
+  }, [filterId]);
 
   let trackData = {
     pageNo: 1,
@@ -50,7 +62,6 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
       search: '',
       FilterValue: '',
       Filter: '',
-      FilterId: '',
       Status: '',
       StatusId: '',
       collegeApproval: '',
@@ -60,14 +71,14 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
       ActivateLicenceId: '',
       ActivateLicenceFilter: '',
       dashBoardCard: '',
-      dashBoardCardId: '',
+      // dashBoardCardId: '',
       dashBoardCardFilter: '',
     },
   });
   const onClickSearchButtonHandler = () => {
     if (exportData?.data?.dashboard_tolist) {
       trackData.value = getValues().dashBoardCardFilter;
-      trackData.search = getValues().dashBoardCardId;
+      trackData.search = dashBoardCardId;
       searchParams(trackData);
     }
 
@@ -78,7 +89,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
     }
     if (trackApplication) {
       trackData.value = getValues().StatusId;
-      trackData.search = getValues().FilterId;
+      trackData.search = filterId;
 
       searchParams(trackData, profileId);
     }
@@ -98,16 +109,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
   };
 
   const onApplicationChange = (currentValue) => {
-    setValue('FilterId', currentValue.id);
-
-    if (getValues().FilterId === 'workFlowStatusId') {
-      setApplicationTypeValue(false);
-      setStatusTypeValue(true);
-    }
-    if (getValues().FilterId === 'applicationTypeId') {
-      setApplicationTypeValue(true);
-      setStatusTypeValue(false);
-    }
+    setFilterId(currentValue.id);
   };
   return (
     <Box data-testid="table-search" mb={2}>
@@ -171,7 +173,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                     clearErrors={clearErrors}
                     {...register('dashBoardCard')}
                     onChange={(currentValue) => {
-                      setValue('dashBoardCardId', currentValue.id);
+                      setDashBoardCardId(currentValue.id);
                     }}
                   />
                 ) : (
@@ -237,8 +239,8 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                 )}
               </Grid>
             )}
-            {(loggedInUserType === 'College' || loggedInUserType === 'NMC') && (
-              <Grid item md={3} xs={12}>
+            {/* {(loggedInUserType === 'College' || loggedInUserType === 'NMC') && (
+               <Grid item md={3} xs={12}>
                 <SearchableDropdown
                   fullWidth
                   name="registrationCouncil"
@@ -250,8 +252,8 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                     setValue('RegistrationCouncilId', currentValue.id);
                   }}
                 />
-              </Grid>
-            )}
+              </Grid> 
+             )} */}
             {(trackApplication !== true || trackApplication === true) && (
               <Grid item md="auto" xs={12}>
                 <Button

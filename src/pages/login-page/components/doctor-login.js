@@ -404,7 +404,11 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
       <Box textAlign={'center'}>
         <Typography variant="body1">
           {`Don't have account?`}{' '}
-          <Link color={theme.palette.secondary.main} sx={{ cursor: 'pointer' }}>
+          <Link
+            color={theme.palette.secondary.main}
+            sx={{ cursor: 'pointer' }}
+            onClick={() => navigate('/register/doctor-registration')}
+          >
             Register Here
           </Link>
         </Typography>

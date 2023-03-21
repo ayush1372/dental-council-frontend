@@ -140,7 +140,7 @@ const ExportFiles = ({ exportData, flag }) => {
       >
         <List>
           <ListItem disablePadding>
-            <ListItemButton disablePadding>
+            <ListItemButton onClick={handleClose}>
               <ListItemText
                 primary="Export as xlsx"
                 onClick={() => {

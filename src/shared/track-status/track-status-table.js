@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import TableSearch from '../../../src/pages/profile/components/table-search/table-search';
 import UserProfile from '../../../src/pages/user-profile';
 import { verboseLog } from '../../config/debug';
+import { capitalize } from '../../helpers/functions/common-functions';
 import GenericTable from '../../shared/generic-component/generic-table';
 import ViewProfile from '../../shared/view-profile/view-profile';
 import { trackStatus } from '../../store/actions/common-actions';
@@ -14,7 +15,7 @@ import { Button } from '../../ui/core';
 
 function createData(
   SNo,
-  request_id,
+  requestId,
   registrationNo,
   nameofApplicant,
   nameofStateCouncil,
@@ -29,7 +30,7 @@ function createData(
 ) {
   return {
     SNo,
-    request_id,
+    requestId,
     registrationNo,
     nameofApplicant,
     nameofStateCouncil,
@@ -150,15 +151,23 @@ function TrackStatusTable(props) {
           type: 'nameofStateCouncil',
           value: application.council_name,
         },
-        { type: 'councilVerificationStatus', value: application?.smc_status },
+        { type: 'councilVerificationStatus', value: capitalize(application?.smc_status) },
         {
           type: 'collegeVerificationStatus',
-          value: 'verfied',
+
+          value:
+            application?.college_dean_status === ('NOT YET RECEIVED' || 'PENDING') &&
+            application?.college_registrar_status === 'Approved'
+              ? 'Pending'
+              : application?.college_dean_status === 'APPROVED' &&
+                application?.college_registrar_status === 'APPROVED'
+              ? 'Approved'
+              : 'Not yet received',
         },
-        { type: 'NMCVerificationStatus', value: application?.nmc_status },
+        { type: 'NMCVerificationStatus', value: capitalize(application?.nmc_status) },
 
         { type: 'dateofSubmission', value: application?.created_at },
-        { type: 'pendency', value: '-' },
+        { type: 'pendency', value: application?.pendency },
         { type: 'pending', value: '-' },
         { type: 'HPProfileId', value: application?.hp_profile_id },
         { type: 'NMRID', value: application?.nmr_id },
