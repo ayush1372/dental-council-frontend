@@ -26,7 +26,7 @@ const ProfileConsent = ({
   const [confirmationModal, setConfirmationModal] = useState(false);
 
   // const { loginData } = useSelector((state) => state?.loginReducer);
-  const { personalDetails, updatedPersonalDetails } = useSelector(
+  const { personalDetails, updatedPersonalDetails, selectedQualificationTypeValue } = useSelector(
     (state) => state?.doctorUserProfileReducer
   );
 
@@ -53,7 +53,11 @@ const ProfileConsent = ({
   const handleYesClick = () => {
     const payload = {
       hp_profile_id: updatedPersonalDetails?.hp_profile_id,
-      application_type_id: personalDetails?.nmr_id ? 2 : 1,
+      application_type_id: personalDetails?.nmr_id
+        ? 2
+        : selectedQualificationTypeValue === 'International'
+        ? 7
+        : 1,
     };
 
     dispatch(updateProfileConsent(payload))

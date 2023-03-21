@@ -32,6 +32,8 @@ const qualificationObjTemplate = [
     files: '',
     qualificationfrom: '',
     id: '',
+    FEstate: '',
+    FEcollege: '',
   },
 ];
 
@@ -141,9 +143,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     let registration_detail = {};
     let qualification_details = {};
 
-    // eslint-disable-next-line no-console
-    console.log(RegisteredWithCouncil);
-
     registration_detail.registration_date = RegistrationDate;
     registration_detail.registration_number = RegistrationNumber;
     registration_detail.state_medical_council = RegisteredWithCouncil;
@@ -153,28 +152,48 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     // this below code is storing qualification details
     const { qualification } = getValues();
 
+    const isInternational = qualification?.[0]?.qualificationfrom === 'International';
     let updatedObj = [];
+    let fmgeObj = {};
+
     if (qualification?.length > 0) {
       updatedObj = qualification?.map((q) => ({
         id: qualification_detail_response_tos[0]?.id
           ? qualification_detail_response_tos[0]?.id
           : '',
-        country: countriesList.find((x) => x.id === q?.country.id),
-        course: coursesList.data?.find((x) => x.id === q?.qualification.id),
-        university: universitiesList.data?.find((x) => x.id === q?.university),
-        state: statesList?.find((x) => x.id === q?.state),
-        college: collegesList.data?.find((x) => x.id === q?.college),
+        country: countriesList.find((x) => x.id === q?.country?.id),
+        course: coursesList.data?.find((x) => x.id === q?.qualification?.id),
+        university: isInternational
+          ? { name: q?.university }
+          : universitiesList.data?.find((x) => x.id === q?.university),
+        state: isInternational
+          ? { name: qualification[0]?.FEstate }
+          : statesList?.find((x) => x.id === q?.state),
+        college: isInternational
+          ? { name: qualification[0]?.FEcollege }
+          : collegesList.data?.find((x) => x.id === q?.college),
         qualification_year: q?.year,
         qualification_month: q?.month,
         qualification_from: q?.qualificationfrom,
       }));
+      if (isInternational) {
+        fmgeObj = {
+          roll_no: qualification[0]?.rollno,
+          passport_number: qualification[0]?.passportNumber,
+          marks_obtained: qualification[0]?.marksobtained,
+          user_result: qualification[0]?.result,
+          month_of_passing: qualification[0]?.monthfmge,
+          year_of_passing: qualification[0]?.yearfmge,
+        };
+      }
     }
 
     qualification_details = [...updatedObj];
 
-    finalResult = { registration_detail, qualification_details };
+    finalResult = { registration_detail, qualification_details, hp_nbe_details: { ...fmgeObj } };
     cloneObj.registration_detail_to = registration_detail;
     cloneObj.qualification_detail_response_tos = [{ ...(qualification_details?.[0] || {}) }];
+    cloneObj.nbe_response_to = { ...fmgeObj };
 
     dispatch(
       getRegistrationDetails({
@@ -255,20 +274,32 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   };
 
   useEffect(() => {
-    const details =
-      registrationDetails && Object.values(registrationDetails).length > 3
-        ? registrationDetails.qualification_detail_response_tos[0]
-        : {};
+    const details = registrationDetails?.qualification_detail_response_tos?.[0] || {};
+    const fmgeDetails = registrationDetails?.nbe_response_to || {};
     const obj = { ...qualificationObjTemplate[0] };
-    obj.university = details?.university?.id;
+
+    // eslint-disable-next-line no-console
+    console.log('details', details);
+
+    const isInternational = details?.qualification_from === 'International';
+    // basic qualification
+    obj.university = isInternational ? details?.university?.name : details?.university?.id;
     obj.qualification = details?.course?.id;
-    obj.college = details?.college?.id;
+    obj.college = isInternational ? details?.FEcollege?.name : details?.college?.id;
     obj.year = details?.qualification_year;
     obj.country = details?.country?.id;
-    obj.state = details?.state?.id;
+    obj.state = isInternational ? details?.FEstate?.name : details?.state?.id;
     obj.qualificationfrom = details?.qualification_from;
     obj.month = details?.qualification_month;
     obj.nameindegree = details?.is_name_change;
+
+    // FMGE qualification
+    obj.rollno = fmgeDetails?.roll_no;
+    obj.passportNumber = fmgeDetails?.passport_number;
+    obj.marksobtained = fmgeDetails?.marks_obtained;
+    obj.result = fmgeDetails?.user_result;
+    obj.monthfmge = fmgeDetails?.month_of_passing;
+    obj.yearfmge = fmgeDetails?.year_of_passing;
 
     update(0, { ...obj });
   }, [registrationDetails]);

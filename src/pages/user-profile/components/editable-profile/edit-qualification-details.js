@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { monthsData, yearsData } from '../../../../constants/common-data';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
 import { getCollegesList, getUniversitiesList } from '../../../../store/actions/common-actions';
+import { selectedQualificationType } from '../../../../store/reducers/doctor-user-profile-reducer';
 // import { getUniversities } from '../../../../store/reducers/common-reducers';
 import { RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
@@ -41,6 +42,7 @@ const EditQualificationDetails = ({
 
   const handleQualificationFrom = (event) => {
     setValue(event.target.name, event.target.value);
+    dispatch(selectedQualificationType(event.target.value));
   };
 
   //  const selectedCollege = watch(`qualification[${index}].university`);
@@ -161,37 +163,58 @@ const EditQualificationDetails = ({
             />
           </Grid>
           <Grid item xs={12} md={4}>
+            <TextField
+              variant="outlined"
+              name="PassportNumber"
+              label="Passport Number."
+              placeholder="Enter Passport Number"
+              required={true}
+              fullWidth
+              error={errors?.qualification?.[index]?.passportNumber?.message}
+              defaultValue={getValues()[`qualification[${index}].passportNumber`]}
+              {...register(`qualification[${index}].passportNumber`, {
+                required: 'Passport Number is Required',
+              })}
+            />
+          </Grid>
+
+          <Grid item xs={12} md={4}>
+            <TextField
+              variant="outlined"
+              name="MarksObtained"
+              label="Marks Obtained"
+              required={true}
+              fullWidth
+              error={errors?.qualification?.[index]?.marksobtained?.message}
+              defaultValue={getValues()[`qualification[${index}].marksobtained`]}
+              {...register(`qualification[${index}].marksobtained`, {
+                required: 'Marks Obtained is Required',
+              })}
+              InputProps={{ maxlength: 4 }}
+            />
+          </Grid>
+
+          <Grid item xs={12} md={4}>
             <Select
               fullWidth
               error={errors?.qualification?.[index]?.result?.message}
               name="Result"
               label="Result"
-              defaultValue={getValues()[`qualification[${index}].result`]}
+              defaultValue={fields[index].result}
               required={true}
               {...register(`qualification[${index}].result`, {
                 required: 'degree is required',
               })}
-              options={[]}
-              MenuProps={{
-                style: {
-                  maxHeight: 250,
-                  maxWidth: 130,
+              options={[
+                {
+                  value: 'pass',
+                  label: 'Pass',
                 },
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Select
-              fullWidth
-              error={errors?.qualification?.[index]?.yearfmge?.message}
-              name="YearFMGE"
-              label="Year (FMGE qualified)"
-              defaultValue={getValues()[`qualification[${index}].yearfmge`]}
-              required={true}
-              {...register(`qualification[${index}].yearfmge`, {
-                required: 'degree is required',
-              })}
-              options={[]}
+                {
+                  value: 'fail',
+                  label: 'Fail',
+                },
+              ]}
               MenuProps={{
                 style: {
                   maxHeight: 250,
@@ -206,12 +229,12 @@ const EditQualificationDetails = ({
               error={errors?.qualification?.[index]?.monthfmge?.message}
               name="MonthFMGE"
               label="Month (FMGE qualified)"
-              defaultValue={getValues()[`qualification[${index}].monthfmge`]}
+              defaultValue={fields[index].monthfmge}
               required={true}
               {...register(`qualification[${index}].monthfmge`, {
-                required: 'degree is required',
+                required: 'Degree is required',
               })}
-              options={[]}
+              options={monthsData}
               MenuProps={{
                 style: {
                   maxHeight: 250,
@@ -221,7 +244,27 @@ const EditQualificationDetails = ({
             />
           </Grid>
           <Grid item xs={12} md={4}>
-            <TextField
+            <Select
+              fullWidth
+              error={errors?.qualification?.[index]?.yearfmge?.message}
+              name="YearFMGE"
+              label="Year (FMGE qualified)"
+              defaultValue={fields[index].yearfmge}
+              required={true}
+              {...register(`qualification[${index}].yearfmge`, {
+                required: 'degree is required',
+              })}
+              options={yearsData}
+              MenuProps={{
+                style: {
+                  maxHeight: 250,
+                  maxWidth: 130,
+                },
+              }}
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            {/* <TextField
               variant="outlined"
               name="MarksObtained"
               label="Marks Obtained"
@@ -232,7 +275,7 @@ const EditQualificationDetails = ({
               {...register(`qualification[${index}].marksobtained`, {
                 required: 'awarding is Required',
               })}
-            />
+            /> */}
           </Grid>
         </Grid>
       )}
@@ -253,9 +296,11 @@ const EditQualificationDetails = ({
             fullWidth
             error={errors?.qualification?.[index]?.qualification?.message}
             name="Qualification"
-            label="Name of the Degree"
-            defaultValue={degree[0]?.label}
-            value={degree[0]?.label}
+            label="Name Of The Degree"
+            defaultValue={
+              qualificationfrom === 'International' ? fields[index].qualification : degree[0]?.label
+            }
+            // value={degree[0]?.label}
             required={true}
             {...register(`qualification[${index}].qualification`, {
               required: 'degree is required',
@@ -273,9 +318,12 @@ const EditQualificationDetails = ({
               },
             }}
             sx={{
-              '.MuiSelect-select': {
-                backgroundColor: 'grey2.main',
-              },
+              '.MuiSelect-select':
+                qualificationfrom !== 'International'
+                  ? {
+                      backgroundColor: 'grey2.main',
+                    }
+                  : '',
             }}
             InputProps={{ readOnly: true }}
           />
@@ -292,15 +340,7 @@ const EditQualificationDetails = ({
               {...register(`qualification[${index}].country`, {
                 required: 'country is Required',
               })}
-              options={
-                countriesList?.length > 0
-                  ? createSelectFieldData(
-                      countriesList?.filter(function (item) {
-                        return item.name === 'India';
-                      }, 'id')
-                    )
-                  : []
-              }
+              options={countriesList?.length > 0 ? createSelectFieldData(countriesList, 'id') : []}
               MenuProps={{
                 style: {
                   maxHeight: 250,
@@ -312,88 +352,131 @@ const EditQualificationDetails = ({
         )}
 
         <Grid item xs={12} md={6} lg={4}>
-          <Select
-            fullWidth
-            error={
-              getValues().qualification[index].state === '' &&
-              errors?.qualification?.[index]?.state?.message
-            }
-            name="state"
-            label="State (in which college is located)"
-            defaultValue={fields[index].state}
-            required={true}
-            {...register(
-              `qualification[${index}].state`,
-              getValues().qualification[index].state === '' && {
+          {qualificationfrom === 'International' ? (
+            <TextField
+              fullWidth
+              error={errors?.qualification?.[index]?.state?.message}
+              name="FEstate"
+              label="State (in which college is located)"
+              defaultValue={fields[index].state}
+              required={true}
+              {...register('FEstate', {
                 required: 'State is Required',
+              })}
+            />
+          ) : (
+            <Select
+              fullWidth
+              error={
+                getValues().qualification[index].state === '' &&
+                errors?.qualification?.[index]?.state?.message
               }
-            )}
-            options={createSelectFieldData(statesList)}
-            MenuProps={{
-              style: {
-                maxHeight: 250,
-                maxWidth: 130,
-              },
-            }}
-          />
+              name="state"
+              label="State (in which college is located)"
+              defaultValue={fields[index].state}
+              required={true}
+              {...register(
+                `qualification[${index}].state`,
+                getValues().qualification[index].state === '' && {
+                  required: 'State is Required',
+                }
+              )}
+              options={createSelectFieldData(statesList)}
+              MenuProps={{
+                style: {
+                  maxHeight: 250,
+                  maxWidth: 130,
+                },
+              }}
+            />
+          )}
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
-          <Select
-            fullWidth
-            error={
-              getValues().qualification[index].college === '' &&
-              errors?.qualification?.[index]?.college?.message
-            }
-            name="College"
-            label="Name of the College"
-            defaultValue={fields[index].college}
-            required={true}
-            {...register(
-              `qualification[${index}].college`,
-              getValues().qualification[index].college === '' && {
+          {qualificationfrom === 'International' ? (
+            <TextField
+              fullWidth
+              error={errors?.qualification?.[index]?.college?.message}
+              name="FEcollege"
+              label="Name of the college"
+              defaultValue={fields[index].college}
+              required={true}
+              {...register(`FEcollege`, {
                 required: 'college is required',
+              })}
+            />
+          ) : (
+            <Select
+              fullWidth
+              error={
+                getValues().qualification[index].college === '' &&
+                errors?.qualification?.[index]?.college?.message
               }
-            )}
-            options={createSelectFieldData(colleges)}
-            MenuProps={{
-              style: {
-                maxHeight: 250,
-                maxWidth: 130,
-              },
-            }}
-          />
+              name="College"
+              label="Name of the College"
+              defaultValue={fields[index].college}
+              required={true}
+              {...register(
+                `qualification[${index}].college`,
+                getValues().qualification[index].college === '' && {
+                  required: 'college is required',
+                }
+              )}
+              options={createSelectFieldData(colleges)}
+              MenuProps={{
+                style: {
+                  maxHeight: 250,
+                  maxWidth: 130,
+                },
+              }}
+            />
+          )}
+
           {/* )} */}
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
-          <Select
-            fullWidth
-            error={
-              getValues().qualification[index].university === '' &&
-              errors?.qualification?.[index]?.university?.message
-            }
-            name="University"
-            label="University"
-            defaultValue={fields[index].university}
-            required={true}
-            {...register(
-              `qualification[${index}].university`,
-              getValues().qualification[index].university === '' && {
-                required: 'University is required',
+          {qualificationfrom === 'International' ? (
+            <TextField
+              fullWidth
+              error={errors?.qualification?.[index]?.university?.message}
+              name="University"
+              label="University"
+              defaultValue={fields[index].university}
+              required={true}
+              {...register(`qualification[${index}].university`, {
+                required: 'University is Required',
+              })}
+            />
+          ) : (
+            <Select
+              fullWidth
+              error={
+                getValues().qualification[index].university === '' &&
+                errors?.qualification?.[index]?.university?.message
               }
-            )}
-            options={createSelectFieldData(universitiesList.data, 'id') || []}
-            MenuProps={{
-              style: {
-                maxHeight: 250,
-                maxWidth: 130,
-              },
-            }}
-          />
+              name="University"
+              label="University"
+              defaultValue={fields[index].university}
+              required={true}
+              {...register(
+                `qualification[${index}].university`,
+                getValues().qualification[index].university === '' && {
+                  required: 'University is required',
+                }
+              )}
+              options={createSelectFieldData(universitiesList.data, 'id') || []}
+              MenuProps={{
+                style: {
+                  maxHeight: 250,
+                  maxWidth: 130,
+                },
+              }}
+            />
+          )}
 
           {/* )} */}
         </Grid>
         <Grid container item xs={12} md={6} lg={4} columnSpacing={2}>
-          <Typography pl={2}>Month & Year of awarding Degree</Typography>
+          <Typography pl={2}>Month & Year Of Awarding Degree</Typography>
           <Grid item xs={12} md={6} mb={{ xs: 2, md: 0 }}>
             <Select
               fullWidth
