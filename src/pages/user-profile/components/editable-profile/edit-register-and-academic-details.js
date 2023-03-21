@@ -6,13 +6,16 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
+// import { createEditFieldData } from '../../../../helpers/functions/common-functions';
+import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
+// import { SearchableDropdown } from '../../../../shared/autocomplete/searchable-dropdown';
 import AttachmentViewPopup from '../../../../shared/query-modal-popup/attachement-view-popup';
 import {
   getRegistrationDetailsData,
   updateDoctorRegistrationDetails,
 } from '../../../../store/actions/doctor-user-profile-actions';
 import { getRegistrationDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
-import { Button, RadioGroup, TextField } from '../../../../ui/core';
+import { Button, RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
 import successToast from '../../../../ui/core/toaster';
 import EditQualificationDetails from './edit-qualification-details';
@@ -29,21 +32,25 @@ const qualificationObjTemplate = [
     files: '',
     qualificationfrom: '',
     id: '',
+    FEstate: '',
+    FEcollege: '',
+    FEuniversity: '',
   },
 ];
 
 const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
-  const { t } = useTranslation();
-  const loggedInUserType = useSelector((state) => state?.common?.loggedInUserType);
   const dispatch = useDispatch();
-  const { countriesList, coursesList, universitiesList, statesList, collegesList } = useSelector(
-    (state) => state?.common
-  );
+  const { t } = useTranslation();
+
+  const loggedInUserType = useSelector((state) => state?.common?.loggedInUserType);
+  const { countriesList, coursesList, universitiesList, statesList, collegesList, councilNames } =
+    useSelector((state) => state?.common);
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
-  const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
   const { personalDetails, updatedPersonalDetails } = useSelector(
     (state) => state?.doctorUserProfileReducer
   );
+
+  const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
   const { registration_detail_to, qualification_detail_response_tos } = registrationDetails || {};
   const {
     registration_date,
@@ -66,7 +73,19 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     qualification: degree_certificate,
   });
 
+  // eslint-disable-next-line no-unused-vars
   const smcName = state_medical_council?.name || '';
+  // eslint-disable-next-line array-callback-return
+
+  let registeredCouncil = [];
+
+  // TO identify the default registered Council
+  councilNames.forEach((councilData) => {
+    if (councilData?.name === state_medical_council?.name) {
+      registeredCouncil.push(councilData);
+    }
+    return;
+  });
 
   const {
     formState: { errors },
@@ -76,12 +95,12 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     setValue,
     unregister,
     control,
+    // clearErrors,
     watch,
   } = useForm({
     mode: 'onChange',
     defaultValues: {
-      RegisteredWithCouncil:
-        loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? smcName : '',
+      RegisteredWithCouncil: registeredCouncil[0],
       RegistrationNumber:
         loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? registration_number : '',
       RegistrationDate:
@@ -127,36 +146,57 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
     registration_detail.registration_date = RegistrationDate;
     registration_detail.registration_number = RegistrationNumber;
-    registration_detail.state_medical_council = { id: 14 };
-    registration_detail.state_medical_council.name = RegisteredWithCouncil;
+    registration_detail.state_medical_council = RegisteredWithCouncil;
     registration_detail.is_renewable = registration;
     registration_detail.renewable_registration_date = RenewalDate;
 
     // this below code is storing qualification details
     const { qualification } = getValues();
 
+    const isInternational = qualification?.[0]?.qualificationfrom === 'International';
     let updatedObj = [];
+    let fmgeObj = {};
+
     if (qualification?.length > 0) {
       updatedObj = qualification?.map((q) => ({
         id: qualification_detail_response_tos[0]?.id
           ? qualification_detail_response_tos[0]?.id
           : '',
-        country: countriesList.find((x) => x.id === q?.country.id),
-        course: coursesList.data?.find((x) => x.id === q?.qualification.id),
-        university: universitiesList.data?.find((x) => x.id === q?.university),
-        state: statesList?.find((x) => x.id === q?.state),
-        college: collegesList.data?.find((x) => x.id === q?.college),
+        country: isInternational
+          ? countriesList.find((x) => x.id === q?.country)
+          : countriesList.find((x) => x.id === q?.country?.id),
+        course: isInternational
+          ? coursesList.data?.find((x) => x.id === q?.qualification)
+          : coursesList.data?.find((x) => x.id === q?.qualification?.id),
+        university: isInternational
+          ? { name: q?.FEuniversity }
+          : universitiesList.data?.find((x) => x.id === q?.university),
+        state: isInternational ? { name: q?.FEstate } : statesList?.find((x) => x.id === q?.state),
+        college: isInternational
+          ? { name: q?.FEcollege }
+          : collegesList.data?.find((x) => x.id === q?.college),
         qualification_year: q?.year,
         qualification_month: q?.month,
         qualification_from: q?.qualificationfrom,
       }));
+      if (isInternational) {
+        fmgeObj = {
+          roll_no: qualification[0]?.rollno,
+          passport_number: qualification[0]?.passportNumber,
+          marks_obtained: qualification[0]?.marksobtained,
+          user_result: qualification[0]?.result,
+          month_of_passing: qualification[0]?.monthfmge,
+          year_of_passing: qualification[0]?.yearfmge,
+        };
+      }
     }
 
     qualification_details = [...updatedObj];
 
-    finalResult = { registration_detail, qualification_details };
+    finalResult = { registration_detail, qualification_details, hp_nbe_details: { ...fmgeObj } };
     cloneObj.registration_detail_to = registration_detail;
     cloneObj.qualification_detail_response_tos = [{ ...(qualification_details?.[0] || {}) }];
+    cloneObj.nbe_response_to = { ...fmgeObj };
 
     dispatch(
       getRegistrationDetails({
@@ -237,23 +277,36 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   };
 
   useEffect(() => {
-    const details =
-      registrationDetails && Object.values(registrationDetails).length > 3
-        ? registrationDetails.qualification_detail_response_tos[0]
-        : {};
+    const details = registrationDetails?.qualification_detail_response_tos?.[0] || {};
+    const fmgeDetails = registrationDetails?.nbe_response_to || {};
     const obj = { ...qualificationObjTemplate[0] };
-    obj.university = details?.university?.id;
+
+    const isInternational = details?.qualification_from === 'International';
+    // basic qualification
+    obj.university = isInternational ? details?.university?.name : details?.university?.id;
     obj.qualification = details?.course?.id;
-    obj.college = details?.college?.id;
+    obj.college = isInternational ? details?.FEcollege?.name : details?.college?.id;
     obj.year = details?.qualification_year;
     obj.country = details?.country?.id;
-    obj.state = details?.state?.id;
+    obj.state = isInternational ? details?.FEstate?.name : details?.state?.id;
     obj.qualificationfrom = details?.qualification_from;
     obj.month = details?.qualification_month;
     obj.nameindegree = details?.is_name_change;
 
+    // FMGE qualification
+    obj.rollno = fmgeDetails?.roll_no;
+    obj.passportNumber = fmgeDetails?.passport_number;
+    obj.marksobtained = fmgeDetails?.marks_obtained;
+    obj.result = fmgeDetails?.user_result;
+    obj.monthfmge = fmgeDetails?.month_of_passing;
+    obj.yearfmge = fmgeDetails?.year_of_passing;
+
     update(0, { ...obj });
   }, [registrationDetails]);
+
+  useEffect(() => {
+    setValue('RegisteredWithCouncil', registeredCouncil[0]);
+  }, []);
   return (
     <Box
       boxShadow={1}
@@ -284,32 +337,58 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 *
               </Typography>
             </Typography>
-
-            <TextField
-              variant="outlined"
-              name={'RegisteredWithCouncil'}
-              required={true}
-              fullWidth
-              defaultValue={getValues().RegisteredWithCouncil}
-              {...register('RegisteredWithCouncil', {
-                required: 'Registered with council is Required',
-              })}
-              error={errors?.RegisteredWithCouncil?.message}
-              sx={{
-                input: {
-                  backgroundColor:
+            {personalDetails?.personal_details?.is_new ? (
+              <Select
+                // style={{ backgroundColor: isSameAddress ? '#F0F0F0' : '' }}
+                fullWidth
+                // error={errors.State?.message}
+                name="RegisteredWithCouncil"
+                defaultValue={registeredCouncil[0]?.name}
+                // value={getValues().RegisteredWithCouncil}
+                required={true}
+                disabled={loggedInUserType === 'SMC' || !personalDetails?.personal_details?.is_new}
+                {...register(
+                  'RegisteredWithCouncil'
+                  // getValues()?.RegisteredWithCouncil?.length <= 0 && {
+                  //   required: 'State/Union territory is required',
+                  // }
+                )}
+                options={createSelectFieldData(councilNames)}
+                MenuProps={{
+                  style: {
+                    maxHeight: 250,
+                    maxWidth: 130,
+                  },
+                }}
+              />
+            ) : (
+              <TextField
+                variant="outlined"
+                name={'RegisteredWithCouncil'}
+                required={true}
+                fullWidth
+                // defaultValue={getValues()?.RegisteredWithCouncil?.name}
+                value={getValues()?.RegisteredWithCouncil?.name}
+                {...register('RegisteredWithCouncil', {
+                  required: 'Registered with council is Required',
+                })}
+                error={errors?.RegisteredWithCouncil?.message}
+                sx={{
+                  input: {
+                    backgroundColor:
+                      loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                        ? ''
+                        : 'grey2.main',
+                  },
+                }}
+                InputProps={{
+                  readOnly:
                     loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-                      ? ''
-                      : 'grey2.main',
-                },
-              }}
-              InputProps={{
-                readOnly:
-                  loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-                    ? false
-                    : true,
-              }}
-            />
+                      ? false
+                      : true,
+                }}
+              />
+            )}
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
