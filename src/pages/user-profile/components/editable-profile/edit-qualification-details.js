@@ -356,11 +356,11 @@ const EditQualificationDetails = ({
             <TextField
               fullWidth
               error={errors?.qualification?.[index]?.state?.message}
-              name="FEstate"
+              name="state"
               label="State (in which college is located)"
               defaultValue={fields[index].state}
               required={true}
-              {...register('FEstate', {
+              {...register(`qualification[${index}].FEstate`, {
                 required: 'State is Required',
               })}
             />
@@ -396,11 +396,11 @@ const EditQualificationDetails = ({
             <TextField
               fullWidth
               error={errors?.qualification?.[index]?.college?.message}
-              name="FEcollege"
+              name="college"
               label="Name of the college"
               defaultValue={fields[index].college}
               required={true}
-              {...register(`FEcollege`, {
+              {...register(`qualification[${index}].FEcollege`, {
                 required: 'college is required',
               })}
             />
@@ -442,7 +442,7 @@ const EditQualificationDetails = ({
               label="University"
               defaultValue={fields[index].university}
               required={true}
-              {...register(`qualification[${index}].university`, {
+              {...register(`qualification[${index}].FEuniversity`, {
                 required: 'University is Required',
               })}
             />

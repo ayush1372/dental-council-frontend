@@ -34,6 +34,7 @@ const qualificationObjTemplate = [
     id: '',
     FEstate: '',
     FEcollege: '',
+    FEuniversity: '',
   },
 ];
 
@@ -158,19 +159,17 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
     if (qualification?.length > 0) {
       updatedObj = qualification?.map((q) => ({
-        id: qualification_detail_response_tos[0]?.id
-          ? qualification_detail_response_tos[0]?.id
+        id: qualification_detail_response_tos[1]?.id
+          ? qualification_detail_response_tos[1]?.id
           : '',
         country: countriesList.find((x) => x.id === q?.country?.id),
         course: coursesList.data?.find((x) => x.id === q?.qualification?.id),
         university: isInternational
-          ? { name: q?.university }
+          ? { name: q?.FEuniversity }
           : universitiesList.data?.find((x) => x.id === q?.university),
-        state: isInternational
-          ? { name: qualification[0]?.FEstate }
-          : statesList?.find((x) => x.id === q?.state),
+        state: isInternational ? { name: q?.FEstate } : statesList?.find((x) => x.id === q?.state),
         college: isInternational
-          ? { name: qualification[0]?.FEcollege }
+          ? { name: q?.FEcollege }
           : collegesList.data?.find((x) => x.id === q?.college),
         qualification_year: q?.year,
         qualification_month: q?.month,
