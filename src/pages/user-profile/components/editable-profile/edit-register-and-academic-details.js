@@ -460,6 +460,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               InputLabelProps={{
                 shrink: true,
               }}
+              inputProps={{
+                max: new Date().toISOString().split('T')[0],
+              }}
             />
           </Grid>
         </Grid>
