@@ -142,7 +142,7 @@ export default function ApplicationStepper({ activeStep = 1, steps, selectedRowD
       label: smc_status?.value,
     },
     {
-      type: collegeVerificationStatus?.value.toLowerCase(),
+      type: collegeVerificationStatus?.value?.toLowerCase(),
       label: collegeVerificationStatus?.value,
     },
     {
