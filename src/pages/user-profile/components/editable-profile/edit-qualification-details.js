@@ -197,8 +197,8 @@ const EditQualificationDetails = ({
               {...register(`qualification[${index}].marksobtained`, {
                 required: 'Marks Obtained is Required',
                 pattern: {
-                  value: /^(\d{3})$/i,
-                  message: 'Enter number',
+                  value: /^([1-9][0-9]?$|^100)$/i,
+                  message: 'Enter correct marks obtained',
                 },
               })}
               InputProps={{ maxlength: 4 }}
@@ -365,14 +365,23 @@ const EditQualificationDetails = ({
           <Grid item xs={12} md={6} lg={4}>
             <Select
               fullWidth
-              error={errors?.qualification?.[index]?.country?.message}
+              error={
+                getValues()?.qualification[index]?.country?.length === 0
+                  ? errors?.qualification?.[index]?.country?.message
+                  : ''
+              }
               name="country"
               label="Country Name"
               defaultValue={fields[index].country}
               required={true}
-              {...register(`qualification[${index}].country`, {
-                required: 'country is Required',
-              })}
+              {...register(
+                `qualification[${index}].country`,
+                getValues()?.qualification[index]?.qualification?.length === 0
+                  ? {
+                      required: 'Country is required',
+                    }
+                  : ''
+              )}
               options={countriesList?.length > 0 ? createSelectFieldData(countriesList, 'id') : []}
               MenuProps={{
                 style: {

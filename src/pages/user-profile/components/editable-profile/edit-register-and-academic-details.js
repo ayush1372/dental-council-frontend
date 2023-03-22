@@ -74,7 +74,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   let registeredCouncil = [];
 
   // TO identify the default registered Council
-  councilNames.forEach((councilData) => {
+  councilNames?.forEach((councilData) => {
     if (
       councilData?.name === state_medical_council?.name ||
       councilData?.name === state_medical_council?.id
