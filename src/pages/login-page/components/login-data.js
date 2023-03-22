@@ -202,6 +202,9 @@ export const Login = ({ loginName }) => {
       successToast('Wrong Login Attempt', 'login-error', 'error', 'top-center');
     }
   };
+  const handleCancelClick = () => {
+    navigate('/');
+  };
 
   return (
     <Box p={4} bgcolor="white.main" boxShadow="4">
@@ -339,7 +342,13 @@ export const Login = ({ loginName }) => {
         >
           Login
         </Button>
-        <Button variant="contained" color="grey" fullWidth sx={{ ml: 1 }}>
+        <Button
+          variant="contained"
+          color="grey"
+          fullWidth
+          sx={{ ml: 1 }}
+          onClick={handleCancelClick}
+        >
           Cancel
         </Button>
       </Box>
