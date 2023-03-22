@@ -240,7 +240,7 @@ export const UploadFile = (props) => {
         )}
       </Box>
       <div className={styles.inputDiv}>
-        <Grid container mt={1} spacing={1}>
+        <Grid container mt={1} spacing={1} sx={{ alignItems: 'flex-start' }}>
           <Grid item sm={6}>
             <div className={styles.fileUploadArea}>
               <div>
@@ -260,10 +260,10 @@ export const UploadFile = (props) => {
               />
             </div>
           </Grid>
-          <Grid item sm={4}>
+          <Grid item sm={6}>
             {uploadFileError !== '' && <div className={styles.fileError}> {uploadFileError}</div>}
             {showBrowse && (
-              <div className={styles.browseFileArea}>
+              <div>
                 <label className={styles.modalLabelHeading}>Browse Files</label>
                 <div className={styles.browseFileContainer}>
                   <input
