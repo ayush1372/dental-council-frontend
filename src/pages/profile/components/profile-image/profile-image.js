@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 import { makeStyles } from '@material-ui/core';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
@@ -21,7 +22,10 @@ export default function ProfileImage(props) {
 
   const profileId = useSelector((state) => state.loginReducer.loginData.data.profile_id);
   const profileImage = useSelector(
-    (state) => state.doctorUserProfileReducer.profileImage.data.profile_picture
+    (state) => state.doctorUserProfileReducer?.personalDetails?.personal_details?.profile_photo
+  );
+  const updatedProfileImage = useSelector(
+    (state) => state.doctorUserProfileReducer?.profileImage?.data?.profile_picture
   );
   const dispatch = useDispatch();
   const [imageChanged, setImageChanged] = useState(false);
@@ -45,7 +49,7 @@ export default function ProfileImage(props) {
     },
   }));
   const classes = useStyles(theme);
-
+  useEffect(() => {}, [profileImage, imageChanged]);
   const changeImage = (e) => {
     const requestObjNew = new FormData();
     if (
@@ -54,7 +58,6 @@ export default function ProfileImage(props) {
       e.target.files[0].type === 'image/png'
     ) {
       if (e.target.files[0].size > 5000000) {
-        setImageChanged(!imageChanged);
         setImageErrorMessage('Maximum allowed file size is 5MB');
         setImageTypeError(true);
       } else {
@@ -70,10 +73,9 @@ export default function ProfileImage(props) {
               'top-center'
             );
           });
-        setImageChanged(!imageChanged);
+        setImageChanged(true);
       }
     } else {
-      setImageChanged(!imageChanged);
       setImageErrorMessage('Allowed file types are JPEG/PNG');
       setImageTypeError(true);
     }
@@ -93,7 +95,13 @@ export default function ProfileImage(props) {
           <Box maxWidth="110px" width="100%" position="relative">
             <FormGroup className="update-image"></FormGroup>
             <img
-              src={profileImage ? 'data:image/*;base64,' + profileImage : avtarImg}
+              src={
+                profileImage
+                  ? imageChanged
+                    ? 'data:image/*;base64,' + updatedProfileImage
+                    : 'data:image/*;base64,' + profileImage
+                  : avtarImg
+              }
               className={styles.profileImage}
               alt=""
             />
