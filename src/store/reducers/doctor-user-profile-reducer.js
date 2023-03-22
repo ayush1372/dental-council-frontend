@@ -7,6 +7,7 @@ const initialState = {
   profileImage: { data: [], isLoading: Boolean(true), isError: false },
   updatedPersonalDetails: { data: [], isLoading: Boolean(true), isError: false },
   updatedRegistrationDetails: { data: [], isLoading: Boolean(true), isError: false },
+  selectedQualificationTypeValue: '',
 };
 
 const doctorUserProfileReducer = createSlice({
@@ -31,6 +32,9 @@ const doctorUserProfileReducer = createSlice({
     getUpdatedRegistrationDetails: (state, action) => {
       state.updatedRegistrationDetails = action.payload;
     },
+    selectedQualificationType: (state, action) => {
+      state.selectedQualificationTypeValue = action.payload;
+    },
   },
 });
 
@@ -41,6 +45,7 @@ export const {
   getProfileImage,
   getUpdatedPersonalDetails,
   getUpdatedRegistrationDetails,
+  selectedQualificationType,
 } = doctorUserProfileReducer.actions;
 
 export default doctorUserProfileReducer.reducer;

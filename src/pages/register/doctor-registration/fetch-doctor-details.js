@@ -267,24 +267,28 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
               },
             }}
           >
-            <Box sx={{ width: '100%', height: '53px', marginBottom: '30px', marginTop: '32px ' }}>
-              <Alert
-                sx={{
-                  m: 2,
-                  marginLeft: '0px',
-                  borderRadius: '5px',
-                  width: {
-                    xs: '100%',
-                    md: '680px',
-                  },
-                  boxShadow: '1',
-                  color: 'inputSuccessTextColor.main',
-                  backgroundColor: 'inputSuccessBackgroundColor.main',
-                }}
-              >
-                Record fetched successfully. Please verify your details to proceed further.
-              </Alert>
-            </Box>
+            {hpName !== null || undefined ? (
+              ''
+            ) : (
+              <Box sx={{ width: '100%', height: '53px', marginBottom: '30px', marginTop: '32px ' }}>
+                <Alert
+                  sx={{
+                    m: 2,
+                    marginLeft: '0px',
+                    borderRadius: '5px',
+                    width: {
+                      xs: '100%',
+                      md: '680px',
+                    },
+                    boxShadow: '1',
+                    color: 'inputSuccessTextColor.main',
+                    backgroundColor: 'inputSuccessBackgroundColor.main',
+                  }}
+                >
+                  Record fetched successfully. Please verify your details to proceed further.
+                </Alert>
+              </Box>
+            )}
 
             <Box p="30px 32px 0px 32px" width={{ xs: '100%', md: '679px' }} sx={{ boxShadow: '2' }}>
               <Box mb={4}>
@@ -376,18 +380,16 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
                     </Typography>
                     {otpform}
                   </Box>
-                  <Box>
-                    <Button
-                      sx={{ width: '114px', height: '53px', marginTop: '47px' }}
-                      component="span"
-                      variant="contained"
-                      color="secondary"
-                      onClick={handleValidateAadhar}
-                      disabled={isOtpValidMobile}
-                    >
-                      Validate
-                    </Button>
-                  </Box>
+                  <Button
+                    sx={{ width: '114px', height: '53px', marginTop: '77px' }}
+                    component="span"
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleValidateAadhar}
+                    disabled={isOtpValidMobile}
+                  >
+                    Validate
+                  </Button>
                 </Box>
               )}
 
@@ -455,17 +457,16 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
                     </Typography>
                     {otpform}
                   </Box>
-                  <Box>
-                    <Button
-                      sx={{ width: '114px', height: '53px', marginTop: '47px' }}
-                      component="span"
-                      variant="contained"
-                      color="secondary"
-                      onClick={handleValidateMobile}
-                    >
-                      Validate
-                    </Button>
-                  </Box>
+
+                  <Button
+                    sx={{ width: '114px', height: '53px', marginTop: '44px', marginLeft: '65px' }}
+                    component="span"
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleValidateMobile}
+                  >
+                    Validate
+                  </Button>
                 </Box>
               )}
               <Box sx={{ paddingBottom: '40px', marginTop: { xs: '10px', sm: 0 } }}>

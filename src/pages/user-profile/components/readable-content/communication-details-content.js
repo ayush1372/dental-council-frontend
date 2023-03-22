@@ -4,6 +4,7 @@ import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlin
 import { Grid, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
+import { capitalize } from '../../../../helpers/functions/common-functions';
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
 const CommunicationAddress = ({ personalDetails }) => {
@@ -115,7 +116,7 @@ const CommunicationAddress = ({ personalDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
-              {districtName}
+              {capitalize(districtName)}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
@@ -126,6 +127,7 @@ const CommunicationAddress = ({ personalDetails }) => {
             )}{' '}
           </Grid>
         </Grid>
+
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={3}>
           <Typography variant="body5" color="grey.label">
@@ -154,7 +156,7 @@ const CommunicationAddress = ({ personalDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
-              {stateName}
+              {capitalize(stateName)}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
