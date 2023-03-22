@@ -19,9 +19,9 @@ const IMRDetails = ({ personalDetails }) => {
   return (
     <Grid container spacing={2} mt={1}>
       <Grid container item spacing={2}>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12}>
           <Typography variant="body5" color="grey.label">
-            Aadhaar verified Address
+            Aadhaar Verified Address
             <Typography component="span" color="error.main">
               *
             </Typography>
