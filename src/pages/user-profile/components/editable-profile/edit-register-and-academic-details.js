@@ -243,6 +243,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
   useEffect(() => {
     setValue('RegisteredWithCouncil', registeredCouncil[0]);
+
     dispatch(
       getRegistrationDetailsData(
         updatedPersonalDetails?.hp_profile_id === undefined
@@ -350,7 +351,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               <Select
                 fullWidth
                 name="RegisteredWithCouncil"
-                defaultValue={registeredCouncil[0]?.name}
+                defaultValue={registeredCouncil[0]?.id}
                 required={true}
                 disabled={loggedInUserType === 'SMC' || !personalDetails?.personal_details?.is_new}
                 {...register('RegisteredWithCouncil')}
@@ -554,6 +555,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               setValue={setValue}
               getValues={getValues}
               fields={fields}
+              qualification={qualification}
               watch={watch}
               register={register}
               unregister={unregister}
