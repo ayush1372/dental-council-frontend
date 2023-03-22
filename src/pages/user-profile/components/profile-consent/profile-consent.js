@@ -129,11 +129,15 @@ const ProfileConsent = ({
           columnGap={1}
           bgcolor="success.background"
           p={3}
+          mb={2}
+          display="flex"
+          border="1px solid"
+          borderColor="inputBorderColor.main"
           borderRadius="5px"
         >
           <Grid item sx="auto" display="flex" alignItems="center">
             <Checkbox
-              sx={{ width: '18px', height: '18px' }}
+              sx={{ width: '18px', height: '18px', marginLeft: 1 }}
               name="HPR"
               {...register('HPR', {
                 required: 'HPR is Required',
@@ -141,7 +145,7 @@ const ProfileConsent = ({
               error={errors.HPR?.message}
             />
             <Typography component="div" variant="body7">
-              Save my time,share my details with HPR
+              Save my time, share my details with HPR
             </Typography>
           </Grid>
           <Grid item sx="auto" display="flex" alignItems="center">
@@ -325,8 +329,9 @@ const ProfileConsent = ({
               </Box>
               <Box mt={4}>
                 <Typography color="textPrimary.main">
-                  Your Application has been updated and will be submitted for verification. For more
-                  details, you will be redirected to Track Application Tab on clicking Ok button
+                  Your Application has been updated and will be submitted for verification.
+                  <br /> For more details, you will be redirected to Track Application Tab on
+                  clicking<b> Ok</b> button.
                 </Typography>
               </Box>
               <Box display={'flex'} justifyContent={'flex-end'} mt={1}>
