@@ -575,7 +575,7 @@ const EditQualificationDetails = ({
         <Grid item xs={12}>
           <UploadFile
             uploadFiles="single"
-            sizeAllowed={1}
+            sizeAllowed={5}
             fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
             fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
                  Maximum size allowed for the attachment is 5MB.`}

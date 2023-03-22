@@ -13,6 +13,15 @@ export function dateFormat(s) {
   var b = s.split(/\D/);
   return b.reverse().join('-');
 }
+export function base64ToBlob(base64, type = 'application/octet-stream') {
+  const binStr = atob(base64);
+  const len = binStr.length;
+  const arr = new Uint8Array(len);
+  for (let i = 0; i < len; i++) {
+    arr[i] = binStr.charCodeAt(i);
+  }
+  return new Blob([arr], { type });
+}
 export function get_year_data(startYear = 1900) {
   var ans = [];
   var date = new Date();

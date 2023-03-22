@@ -255,19 +255,21 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
         viewCertificate.qualification =
           response?.data?.qualification_detail_response_tos[0]?.degree_certificate;
         setViewCertificate();
-        const QualificationFile = new File(
-          [response?.data?.qualification_detail_response_tos[0]?.degree_certificate],
-          'Qualification Certificate',
-          { type: 'image/png' }
-        );
-        const RegistrationFile = new File(
-          [response?.data?.registration_detail_to?.registration_certificate],
-          'Registration Certificate',
-          { type: 'image/png' }
-        );
+        const QualificationFile = [
+          {
+            fileName: response?.data?.qualification_detail_response_tos[0]?.file_name,
+            fileBlob: response?.data?.qualification_detail_response_tos[0]?.degree_certificate,
+          },
+        ];
+        const RegistrationFile = [
+          {
+            fileName: response?.data?.registration_detail_to?.file_name,
+            fileBlob: response?.data?.registration_detail_to?.registration_certificate,
+          },
+        ];
 
-        setRegistrationFileData([{ file: RegistrationFile }]);
-        setQualificationFilesData([{ file: QualificationFile }]);
+        setRegistrationFileData(RegistrationFile);
+        setQualificationFilesData(QualificationFile);
       })
       .catch((allFailMsg) => {
         successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
@@ -522,7 +524,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           <Grid item xs={12}>
             <UploadFile
               uploadFiles="single"
-              sizeAllowed={1}
+              sizeAllowed={5}
               fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
               fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
                Maximum size allowed for the attachment is 5MB.`}
