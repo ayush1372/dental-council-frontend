@@ -453,6 +453,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 },
               }}
               InputProps={{
+                inputProps: { max: new Date().toISOString().split('T')[0] },
                 readOnly:
                   loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
                     ? false
