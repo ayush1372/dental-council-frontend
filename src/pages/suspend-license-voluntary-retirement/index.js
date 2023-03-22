@@ -361,7 +361,7 @@ export function SuspendLicenseVoluntaryRetirement({
           {selectedValue === 'verify'
             ? 'Are you sure you want to approve the details of the doctor?'
             : selectedValue === 'forward'
-            ? 'Are you sure you want to forward doctor details to College?'
+            ? 'Are you sure you want to forward doctor details to College/NBE?'
             : ''}
         </Typography>
       </Box>

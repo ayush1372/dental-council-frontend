@@ -93,7 +93,7 @@ function TrackStatusTable(props) {
       type: 'string',
     },
     {
-      title: 'College Verification Status',
+      title: 'College/NBE Verification Status',
       name: 'collegeVerificationStatus',
       sorting: true,
       type: 'string',

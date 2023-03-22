@@ -325,9 +325,7 @@ const EditQualificationDetails = ({
             }
             name="Qualification"
             label="Name Of The Degree"
-            defaultValue={
-              qualificationfrom === 'International' ? fields[index].qualification : degree[0]?.label
-            }
+            defaultValue={degree[0]?.label}
             // value={degree[0]?.label}
             required={true}
             {...register(

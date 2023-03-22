@@ -11,6 +11,7 @@ import TableSearch from '../table-search/table-search';
 
 function createData(
   SNo,
+  requestId,
   registrationNo,
   nameofApplicant,
   nameofStateCouncil,
@@ -24,6 +25,7 @@ function createData(
 ) {
   return {
     SNo,
+    requestId,
     registrationNo,
     nameofApplicant,
     nameofStateCouncil,
@@ -50,6 +52,12 @@ function DashboardControlledTable(props) {
   const dataHeader = [
     { title: 'S.No.', name: 'SNo', sorting: true, type: 'string' },
     {
+      title: 'Request ID',
+      name: 'requestId',
+      sorting: true,
+      type: 'string',
+    },
+    {
       title: 'IMR ID/ Registration No.',
       name: 'registrationNo',
       sorting: true,
@@ -69,7 +77,7 @@ function DashboardControlledTable(props) {
       type: 'string',
     },
     {
-      title: 'College Verification Status',
+      title: 'College/NBE Verification Status',
       name: 'collegeVerificationStatus',
       sorting: true,
       type: 'string',
@@ -111,6 +119,10 @@ function DashboardControlledTable(props) {
     };
     return createData(
       { type: 'SNo', value: index + 1 },
+      {
+        type: 'requestId',
+        value: application?.request_id,
+      },
       {
         type: 'registrationNo',
         value: application?.registration_no,
