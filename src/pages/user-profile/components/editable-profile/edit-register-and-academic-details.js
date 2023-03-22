@@ -6,9 +6,7 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
-// import { createEditFieldData } from '../../../../helpers/functions/common-functions';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
-// import { SearchableDropdown } from '../../../../shared/autocomplete/searchable-dropdown';
 import AttachmentViewPopup from '../../../../shared/query-modal-popup/attachement-view-popup';
 import {
   getRegistrationDetailsData,
@@ -73,15 +71,14 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     qualification: degree_certificate,
   });
 
-  // eslint-disable-next-line no-unused-vars
-  const smcName = state_medical_council?.name || '';
-  // eslint-disable-next-line array-callback-return
-
   let registeredCouncil = [];
 
   // TO identify the default registered Council
   councilNames.forEach((councilData) => {
-    if (councilData?.name === state_medical_council?.name) {
+    if (
+      councilData?.name === state_medical_council?.name ||
+      councilData?.name === state_medical_council?.id
+    ) {
       registeredCouncil.push(councilData);
     }
     return;
@@ -95,7 +92,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     setValue,
     unregister,
     control,
-    // clearErrors,
     watch,
   } = useForm({
     mode: 'onChange',
@@ -129,6 +125,21 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
   const isRenewable = watch('registration');
 
+  const getRegistrationCouncilData = (RegisteredWithCouncil) => {
+    let councilData = [];
+    councilNames?.map((elementData) => {
+      if (
+        elementData?.id === RegisteredWithCouncil ||
+        elementData?.id === RegisteredWithCouncil ||
+        RegisteredWithCouncil?.id === elementData?.id ||
+        RegisteredWithCouncil?.name === elementData?.name
+      ) {
+        councilData.push(elementData);
+      }
+    });
+    return councilData[0];
+  };
+
   const onHandleSave = (moveToNext = false) => {
     const {
       RegisteredWithCouncil,
@@ -146,7 +157,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
     registration_detail.registration_date = RegistrationDate;
     registration_detail.registration_number = RegistrationNumber;
-    registration_detail.state_medical_council = RegisteredWithCouncil;
+    registration_detail.state_medical_council = getRegistrationCouncilData(RegisteredWithCouncil);
     registration_detail.is_renewable = registration;
     registration_detail.renewable_registration_date = RenewalDate;
 
@@ -231,6 +242,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   };
 
   useEffect(() => {
+    setValue('RegisteredWithCouncil', registeredCouncil[0]);
     dispatch(
       getRegistrationDetailsData(
         updatedPersonalDetails?.hp_profile_id === undefined
@@ -304,9 +316,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     update(0, { ...obj });
   }, [registrationDetails]);
 
-  useEffect(() => {
-    setValue('RegisteredWithCouncil', registeredCouncil[0]);
-  }, []);
   return (
     <Box
       boxShadow={1}
@@ -339,20 +348,12 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
             </Typography>
             {personalDetails?.personal_details?.is_new ? (
               <Select
-                // style={{ backgroundColor: isSameAddress ? '#F0F0F0' : '' }}
                 fullWidth
-                // error={errors.State?.message}
                 name="RegisteredWithCouncil"
                 defaultValue={registeredCouncil[0]?.name}
-                // value={getValues().RegisteredWithCouncil}
                 required={true}
                 disabled={loggedInUserType === 'SMC' || !personalDetails?.personal_details?.is_new}
-                {...register(
-                  'RegisteredWithCouncil'
-                  // getValues()?.RegisteredWithCouncil?.length <= 0 && {
-                  //   required: 'State/Union territory is required',
-                  // }
-                )}
+                {...register('RegisteredWithCouncil')}
                 options={createSelectFieldData(councilNames)}
                 MenuProps={{
                   style: {
@@ -367,7 +368,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 name={'RegisteredWithCouncil'}
                 required={true}
                 fullWidth
-                // defaultValue={getValues()?.RegisteredWithCouncil?.name}
                 value={getValues()?.RegisteredWithCouncil?.name}
                 {...register('RegisteredWithCouncil', {
                   required: 'Registered with council is Required',
@@ -565,18 +565,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
             />
           );
         })}
-        {/* {
-          <Typography
-            variant="subtitle2"
-            color="primary.main"
-            onClick={(e) => {
-              e.preventDefault();
-              setAttachmentViewProfile(true);
-            }}
-          >
-            View attachment
-          </Typography>
-        } */}
       </Grid>
       {false && (
         <Box width="100%">
