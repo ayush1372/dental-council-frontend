@@ -111,7 +111,7 @@ function TrackAppicationTable({
       sorting: true,
       type: 'date',
     },
-    { title: 'Pendency days', name: 'pendency', sorting: true, type: 'string' },
+    { title: 'Pendency (in days)', name: 'pendency', sorting: true, type: 'string' },
     { title: 'Action', name: 'view', sorting: false, type: 'string' },
   ];
 
