@@ -232,6 +232,7 @@ const ReadRegisterAndAcademicDetails = ({
           </Box>
           {loggedInUserType === 'NMC' ||
           loggedInUserType === 'SMC' ||
+          loggedInUserType === 'NBE' ||
           loggedInUserType === 'College' ? (
             <Box
               display={'flex'}

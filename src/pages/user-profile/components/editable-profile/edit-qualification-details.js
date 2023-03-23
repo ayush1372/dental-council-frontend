@@ -23,6 +23,7 @@ const EditQualificationDetails = ({
   unregister,
   remove,
   watch,
+  qualification,
   qualificationFilesData,
   handleQualificationFilesData,
 }) => {
@@ -114,11 +115,15 @@ const EditQualificationDetails = ({
           <Typography component="div" variant="body1" color="inputTextColor">
             Qualification From
           </Typography>
+          {
+            // eslint-disable-next-line no-console
+            console.log(qualification)
+          }
           <RadioGroup
             onChange={handleQualificationFrom}
             name={`qualification[${index}].qualificationfrom`}
             size="small"
-            defaultValue={fields[index].qualificationfrom}
+            defaultValue={qualification?.qualificationfrom}
             items={[
               {
                 value: 'India',
@@ -192,8 +197,8 @@ const EditQualificationDetails = ({
               {...register(`qualification[${index}].marksobtained`, {
                 required: 'Marks Obtained is Required',
                 pattern: {
-                  value: /^(\d{3})$/i,
-                  message: 'Enter number',
+                  value: /^([1-9][0-9]?$|^100)$/i,
+                  message: 'Enter correct marks obtained',
                 },
               })}
               InputProps={{ maxlength: 4 }}
@@ -203,14 +208,23 @@ const EditQualificationDetails = ({
           <Grid item xs={12} md={4}>
             <Select
               fullWidth
-              error={errors?.qualification?.[index]?.result?.message}
+              error={
+                getValues()?.qualification[index]?.result?.length === 0
+                  ? errors?.qualification?.[index]?.result?.message
+                  : ''
+              }
               name="Result"
               label="Result"
               defaultValue={fields[index].result}
               required={true}
-              {...register(`qualification[${index}].result`, {
-                required: 'degree is required',
-              })}
+              {...register(
+                `qualification[${index}].result`,
+                getValues()?.qualification[index]?.result?.length === 0
+                  ? {
+                      required: 'degree is required',
+                    }
+                  : ''
+              )}
               options={[
                 {
                   value: 'pass',
@@ -232,14 +246,23 @@ const EditQualificationDetails = ({
           <Grid item xs={12} md={4}>
             <Select
               fullWidth
-              error={errors?.qualification?.[index]?.monthfmge?.message}
+              error={
+                getValues()?.qualification[index]?.monthfmge?.length === 0
+                  ? errors?.qualification?.[index]?.monthfmge?.message
+                  : ''
+              }
               name="MonthFMGE"
               label="Month (FMGE qualified)"
               defaultValue={fields[index].monthfmge}
               required={true}
-              {...register(`qualification[${index}].monthfmge`, {
-                required: 'Degree is required',
-              })}
+              {...register(
+                `qualification[${index}].monthfmge`,
+                getValues()?.qualification[index]?.monthfmge?.length === 0
+                  ? {
+                      required: 'Month-FMGE qualified is required',
+                    }
+                  : ''
+              )}
               options={monthsData}
               MenuProps={{
                 style: {
@@ -252,14 +275,23 @@ const EditQualificationDetails = ({
           <Grid item xs={12} md={4}>
             <Select
               fullWidth
-              error={errors?.qualification?.[index]?.yearfmge?.message}
+              error={
+                getValues()?.qualification[index]?.yearfmge?.length === 0
+                  ? errors?.qualification?.[index]?.yearfmge?.message
+                  : ''
+              }
               name="YearFMGE"
               label="Year (FMGE qualified)"
               defaultValue={fields[index].yearfmge}
               required={true}
-              {...register(`qualification[${index}].yearfmge`, {
-                required: 'degree is required',
-              })}
+              {...register(
+                `qualification[${index}].yearfmge`,
+                getValues()?.qualification[index]?.yearfmge?.length === 0
+                  ? {
+                      required: 'Year-FMGE qualified is required',
+                    }
+                  : ''
+              )}
               options={yearsData}
               MenuProps={{
                 style: {
@@ -268,20 +300,6 @@ const EditQualificationDetails = ({
                 },
               }}
             />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            {/* <TextField
-              variant="outlined"
-              name="MarksObtained"
-              label="Marks Obtained"
-              required={true}
-              fullWidth
-              error={errors?.qualification?.[index]?.marksobtained?.message}
-              defaultValue={getValues()[`qualification[${index}].marksobtained`]}
-              {...register(`qualification[${index}].marksobtained`, {
-                required: 'awarding is Required',
-              })}
-            /> */}
           </Grid>
         </Grid>
       )}
@@ -300,17 +318,24 @@ const EditQualificationDetails = ({
         <Grid item xs={12} md={6} lg={4}>
           <Select
             fullWidth
-            error={errors?.qualification?.[index]?.qualification?.message}
+            error={
+              getValues()?.qualification[index]?.qualification?.length === 0
+                ? errors?.qualification?.[index]?.qualification?.message
+                : ''
+            }
             name="Qualification"
             label="Name Of The Degree"
-            defaultValue={
-              qualificationfrom === 'International' ? fields[index].qualification : degree[0]?.label
-            }
+            defaultValue={degree[0]?.label}
             // value={degree[0]?.label}
             required={true}
-            {...register(`qualification[${index}].qualification`, {
-              required: 'degree is required',
-            })}
+            {...register(
+              `qualification[${index}].qualification`,
+              getValues()?.qualification[index]?.qualification?.length === 0
+                ? {
+                    required: 'Qualification Details is required',
+                  }
+                : ''
+            )}
             disabled={qualificationfrom === 'International' ? false : true}
             options={
               qualificationfrom === 'International'
@@ -338,14 +363,23 @@ const EditQualificationDetails = ({
           <Grid item xs={12} md={6} lg={4}>
             <Select
               fullWidth
-              error={errors?.qualification?.[index]?.country?.message}
+              error={
+                getValues()?.qualification[index]?.country?.length === 0
+                  ? errors?.qualification?.[index]?.country?.message
+                  : ''
+              }
               name="country"
               label="Country Name"
               defaultValue={fields[index].country}
               required={true}
-              {...register(`qualification[${index}].country`, {
-                required: 'country is Required',
-              })}
+              {...register(
+                `qualification[${index}].country`,
+                getValues()?.qualification[index]?.qualification?.length === 0
+                  ? {
+                      required: 'Country is required',
+                    }
+                  : ''
+              )}
               options={countriesList?.length > 0 ? createSelectFieldData(countriesList, 'id') : []}
               MenuProps={{
                 style: {
@@ -491,7 +525,7 @@ const EditQualificationDetails = ({
                 errors?.qualification?.[index]?.month?.message
               }
               name="Month"
-              defaultValue={fields[index].month}
+              defaultValue={qualification?.month}
               {...register(
                 `qualification[${index}].month`,
                 getValues().qualification[index].month === '' && {
@@ -515,14 +549,11 @@ const EditQualificationDetails = ({
               required={true}
               placeholder={'Year of Awarding'}
               fullWidth
-              error={
-                getValues().qualification[index].year === '' &&
-                errors?.qualification?.[index]?.year?.message
-              }
-              defaultValue={fields[index].year}
+              error={qualification?.year === '' && errors?.qualification?.[index]?.year?.message}
+              defaultValue={qualification?.year}
               {...register(
                 `qualification[${index}].year`,
-                getValues().qualification[index].year === '' && {
+                (qualification?.year === '' || getValues()?.qualification[0]?.year) && {
                   required: 'awarding is Required',
                   pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
                 }
@@ -542,7 +573,7 @@ const EditQualificationDetails = ({
         <Grid item xs={12}>
           <UploadFile
             uploadFiles="single"
-            sizeAllowed={1}
+            sizeAllowed={5}
             fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
             fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
                  Maximum size allowed for the attachment is 5MB.`}

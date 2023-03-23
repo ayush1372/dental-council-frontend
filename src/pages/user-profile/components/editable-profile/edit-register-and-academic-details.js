@@ -74,7 +74,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   let registeredCouncil = [];
 
   // TO identify the default registered Council
-  councilNames.forEach((councilData) => {
+  councilNames?.forEach((councilData) => {
     if (
       councilData?.name === state_medical_council?.name ||
       councilData?.name === state_medical_council?.id
@@ -243,6 +243,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
   useEffect(() => {
     setValue('RegisteredWithCouncil', registeredCouncil[0]);
+
     dispatch(
       getRegistrationDetailsData(
         updatedPersonalDetails?.hp_profile_id === undefined
@@ -254,19 +255,21 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
         viewCertificate.qualification =
           response?.data?.qualification_detail_response_tos[0]?.degree_certificate;
         setViewCertificate();
-        const QualificationFile = new File(
-          [response?.data?.qualification_detail_response_tos[0]?.degree_certificate],
-          'Qualification Certificate',
-          { type: 'image/png' }
-        );
-        const RegistrationFile = new File(
-          [response?.data?.registration_detail_to?.registration_certificate],
-          'Registration Certificate',
-          { type: 'image/png' }
-        );
+        const QualificationFile = [
+          {
+            fileName: response?.data?.qualification_detail_response_tos[0]?.file_name,
+            fileBlob: response?.data?.qualification_detail_response_tos[0]?.degree_certificate,
+          },
+        ];
+        const RegistrationFile = [
+          {
+            fileName: response?.data?.registration_detail_to?.file_name,
+            fileBlob: response?.data?.registration_detail_to?.registration_certificate,
+          },
+        ];
 
-        setRegistrationFileData([{ file: RegistrationFile }]);
-        setQualificationFilesData([{ file: QualificationFile }]);
+        setRegistrationFileData(RegistrationFile);
+        setQualificationFilesData(QualificationFile);
       })
       .catch((allFailMsg) => {
         successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
@@ -350,7 +353,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               <Select
                 fullWidth
                 name="RegisteredWithCouncil"
-                defaultValue={registeredCouncil[0]?.name}
+                defaultValue={registeredCouncil[0]?.id}
                 required={true}
                 disabled={loggedInUserType === 'SMC' || !personalDetails?.personal_details?.is_new}
                 {...register('RegisteredWithCouncil')}
@@ -452,6 +455,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 },
               }}
               InputProps={{
+                inputProps: { max: new Date().toISOString().split('T')[0] },
                 readOnly:
                   loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
                     ? false
@@ -520,7 +524,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           <Grid item xs={12}>
             <UploadFile
               uploadFiles="single"
-              sizeAllowed={1}
+              sizeAllowed={5}
               fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
               fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
                Maximum size allowed for the attachment is 5MB.`}
@@ -554,6 +558,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               setValue={setValue}
               getValues={getValues}
               fields={fields}
+              qualification={qualification}
               watch={watch}
               register={register}
               unregister={unregister}

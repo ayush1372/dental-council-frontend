@@ -3,11 +3,14 @@ import { useEffect, useState } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 // import TuneIcon from '@mui/icons-material/Tune';
 import { Box, Grid, Typography, useTheme } from '@mui/material';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
 import { useDispatch, useSelector } from 'react-redux';
 
 import useWizard from '../../hooks/use-wizard';
 import ReactivateLicencePopup from '../../shared/reactivate-licence-popup/re-activate-licence-popup';
 import SuccessPopup from '../../shared/reactivate-licence-popup/success-popup';
+import { enableUserNotification } from '../../store/actions/common-actions';
 import { getCountriesList, getStatesList } from '../../store/actions/common-actions';
 import {
   getPersonalDetailsData,
@@ -42,6 +45,27 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
   const [isApplicationPending, setIsApplicationPending] = useState(true);
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const [showStaticFormProgress, setShowStaticFormProgress] = useState(false);
+
+  const [emailNotification, setEmailNotification] = useState();
+  const [mobileNotification, setMobileNotification] = useState();
+
+  const handleNotification = (eventData, mode) => {
+    if (mode === 'email') {
+      setEmailNotification(eventData?.target?.checked);
+    }
+    if (mode === 'sms') {
+      setMobileNotification(eventData?.target?.checked);
+    }
+    let updatedNotificationData = {
+      notification_toggles: [
+        {
+          mode: mode,
+          is_enabled: eventData.target.checked,
+        },
+      ],
+    };
+    dispatch(enableUserNotification(updatedNotificationData));
+  };
 
   useEffect(() => {
     if (personalDetails?.work_flow_status_id === 1) {
@@ -208,6 +232,53 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
                   progress={showStaticFormProgress || personalDetails?.nmr_id ? 75 : progress}
                   completed={completed}
                 />
+
+                {!isReadMode && (
+                  <Box align="right" display={'flex'} flexDirection={{ xs: 'column', md: 'row' }}>
+                    <FormControlLabel
+                      sx={{
+                        width: {
+                          xs: 'fit-content',
+                          md: '250px',
+                        },
+                      }}
+                      value="email"
+                      control={
+                        <Switch
+                          color="primary"
+                          checked={emailNotification}
+                          onChange={(e) => {
+                            handleNotification(e, 'email');
+                          }}
+                        />
+                      }
+                      label="Email Notifications"
+                      labelPlacement="start"
+                    />
+                    <FormControlLabel
+                      sx={{
+                        width: {
+                          xs: 'fit-content',
+                          md: '250px',
+                        },
+                        marginLeft: 0,
+                        marginRight: -3,
+                      }}
+                      value="sms"
+                      control={
+                        <Switch
+                          color="primary"
+                          checked={mobileNotification}
+                          onChange={(e) => {
+                            handleNotification(e, 'sms');
+                          }}
+                        />
+                      }
+                      label="Mobile Notifications"
+                      labelPlacement="start"
+                    />
+                  </Box>
+                )}
               </Box>
               {!isReadMode && (
                 <BreadcrumbContainer

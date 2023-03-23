@@ -15,6 +15,7 @@ import {
   getSubDistrictsList,
 } from '../../../../store/actions/common-actions';
 import {
+  getPersonalDetailsData,
   getRegistrationDetailsData,
   updateDoctorPersonalDetails,
 } from '../../../../store/actions/doctor-user-profile-actions';
@@ -34,10 +35,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   );
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
 
-  // eslint-disable-next-line no-unused-vars
-  // const [languages, setLanguages] = useState([]);
   const [isSameAddress, setIsSameAddress] = useState(
-    personalDetails?.communication_address?.is_same_address || false
+    personalDetails?.communication_address?.is_same_address === 'true' ? true : false
   );
   const { personal_details, communication_address, imr_details } = personalDetails || {};
   const {
@@ -264,6 +263,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   }, [selectedSubDistrict]);
 
   useEffect(() => {
+    dispatch(getPersonalDetailsData(personalDetails?.hp_profile_id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     if (isSameAddress) {
       setValue('State', personalDetails?.kyc_address?.state?.id);
       setValue('District', personalDetails?.kyc_address?.district?.iso_code);
@@ -362,11 +366,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
 
   const getVillageData = (village) => {
     let villageData = [];
-    citiesList?.map((elementData) => {
-      if (elementData.id === village) {
-        villageData.push(elementData);
-      }
-    });
+    Array.isArray(citiesList) &&
+      citiesList?.map((elementData) => {
+        if (elementData.id === village) {
+          villageData.push(elementData);
+        }
+      });
     return villageData[0];
   };
 
@@ -440,9 +445,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     return doctorProfileValues;
   }
   async function onHandleOptionNext() {
-    await onHandleSave().then((response) => {
-      fetchUpdatedDoctorUserProfileData(response);
-    });
+    await onHandleSave()
+      .then((response) => {
+        fetchUpdatedDoctorUserProfileData(response);
+      })
+      .catch((allFailMsg) => {
+        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      });
   }
 
   const handleGender = (event) => {
@@ -738,9 +747,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               Address as per KYC
             </Typography>
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12}>
             <Typography variant="body1" color="inputTextColor.main">
-              Aadhaar verified Address
+              Aadhaar Verified Address
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -762,6 +771,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               sx={{
                 input: {
                   backgroundColor: 'grey2.main',
+                  whiteSpace: 'nowrap',
+                  wordWrap: 'break-word',
                 },
               }}
             />
@@ -782,7 +793,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             </Grid>
             <Box p={2} display="flex">
               <Checkbox
-                defaultChecked={personalDetails?.communication_address?.is_same_address || false}
+                value={isSameAddress}
                 onChange={(e) => {
                   setIsSameAddress(e.target.checked);
                 }}
@@ -818,15 +829,17 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                   }
                   {...register(
                     'House',
-                    !isSameAddress && {
-                      required: 'House is Required',
-                      maxLength: {
-                        value: 300,
-                        message: 'Length should be less than 300.',
-                      },
-                    }
+                    !isSameAddress
+                      ? {
+                          required: 'House is Required',
+                          maxLength: {
+                            value: 300,
+                            message: 'Length should be less than 300.',
+                          },
+                        }
+                      : ''
                   )}
-                  error={errors.House?.message}
+                  error={!isSameAddress ? errors.House?.message : ''}
                 />
               </Grid>
               <Grid item xs={12} md={4}>
