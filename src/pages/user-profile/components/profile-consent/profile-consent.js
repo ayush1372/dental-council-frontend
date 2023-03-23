@@ -26,7 +26,7 @@ const ProfileConsent = ({
   const [confirmationModal, setConfirmationModal] = useState(false);
 
   // const { loginData } = useSelector((state) => state?.loginReducer);
-  const { personalDetails, updatedPersonalDetails } = useSelector(
+  const { personalDetails, updatedPersonalDetails, selectedQualificationTypeValue } = useSelector(
     (state) => state?.doctorUserProfileReducer
   );
 
@@ -53,7 +53,11 @@ const ProfileConsent = ({
   const handleYesClick = () => {
     const payload = {
       hp_profile_id: updatedPersonalDetails?.hp_profile_id,
-      application_type_id: personalDetails?.nmr_id ? 2 : 1,
+      application_type_id: personalDetails?.nmr_id
+        ? 2
+        : selectedQualificationTypeValue === 'International'
+        ? 7
+        : 1,
     };
 
     dispatch(updateProfileConsent(payload))
@@ -125,19 +129,21 @@ const ProfileConsent = ({
           columnGap={1}
           bgcolor="success.background"
           p={3}
+          mb={2}
+          display="flex"
+          border="1px solid"
+          borderColor="inputBorderColor.main"
           borderRadius="5px"
         >
           <Grid item sx="auto" display="flex" alignItems="center">
             <Checkbox
-              sx={{ width: '18px', height: '18px' }}
+              sx={{ width: '18px', height: '18px', marginLeft: 1 }}
               name="HPR"
-              {...register('HPR', {
-                required: 'HPR is Required',
-              })}
+              {...register('HPR')}
               error={errors.HPR?.message}
             />
             <Typography component="div" variant="body7">
-              Save my time,share my details with HPR
+              Save my time, share my details with HPR
             </Typography>
           </Grid>
           <Grid item sx="auto" display="flex" alignItems="center">
@@ -321,8 +327,9 @@ const ProfileConsent = ({
               </Box>
               <Box mt={4}>
                 <Typography color="textPrimary.main">
-                  Your Application has been updated and will be submitted for verification. For more
-                  details, you will be redirected to Track Application Tab on clicking Ok button
+                  Your Application has been updated and will be submitted for verification.
+                  <br /> For more details, you will be redirected to Track Application Tab on
+                  clicking<b> Ok</b> button.
                 </Typography>
               </Box>
               <Box display={'flex'} justifyContent={'flex-end'} mt={1}>

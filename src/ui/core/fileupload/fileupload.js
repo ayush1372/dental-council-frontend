@@ -1,14 +1,16 @@
+/* eslint-disable quotes */
 import { useState } from 'react';
 
 import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
 import ReplayIcon from '@mui/icons-material/Replay';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { Box, Grid, Typography } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import moment from 'moment';
+import { AiOutlineEye } from 'react-icons/ai';
 
+import { base64ToBlob } from '../../../helpers/functions/common-functions';
 import { Button } from '../button/button.js';
 
 import styles from './fileupload.module.scss';
@@ -37,7 +39,121 @@ export const UploadFile = (props) => {
     setBrowsedFileData(e);
     setBrowsedFileName(e.target.files[0].name);
   };
-
+  function downloadFile(file) {
+    if (file?.fileBlob) {
+      const newTab = window.open();
+      const image = new Image();
+      const url = file?.fileName;
+      const blob = file?.fileBlob;
+      if (url && url !== null && url?.includes('.png')) {
+        image.src = 'data:image/png;base64,' + blob;
+        image.width = '1250';
+        newTab.document.write(image.outerHTML);
+      }
+      if (url && url !== null && url?.includes('.jfif')) {
+        newTab.document.body.innerHTML =
+          "<iframe src='data:image/jfif;base64," + blob + "' width='100%' height='100%'></iframe>";
+      }
+      if (url && url !== null && url?.includes('.jpg')) {
+        image.src = 'data:image/jpg;base64,' + blob;
+        image.width = '1250';
+        newTab.document.write(image.outerHTML);
+      }
+      if (url && url !== null && url?.includes('.jpeg')) {
+        image.src = 'data:image/jpeg;base64,' + blob;
+        image.width = '1250';
+        newTab.document.write(image.outerHTML);
+      }
+      if (url && url !== null && url?.includes('.PNG')) {
+        image.src = 'data:image/PNG;base64,' + blob;
+        image.width = '1250';
+        newTab.document.write(image.outerHTML);
+      }
+      if (url && url !== null && url?.includes('.JFIF')) {
+        image.src = 'data:image/JFIF;base64,' + blob;
+        image.width = '1250';
+        newTab.document.write(image.outerHTML);
+      }
+      if (url && url !== null && url?.includes('.JPG')) {
+        image.src = 'data:image/JPG;base64,' + blob;
+        image.width = '1250';
+        newTab.document.write(image.outerHTML);
+      }
+      if (url && url !== null && url?.includes('.JPEG')) {
+        image.src = 'data:image/JPEG;base64,' + blob;
+        image.width = '1250';
+        newTab.document.write(image.outerHTML);
+      }
+      if ((url && url !== null && url?.includes('.pdf')) || url?.includes('.PDF')) {
+        const blob1 = base64ToBlob(blob, 'application/pdf');
+        const url1 = URL.createObjectURL(blob1);
+        newTab.document.write("<iframe width='100%' height='100%' src='" + url1 + "'></iframe>");
+      }
+      if (
+        (url && url !== null && url?.includes('.doc')) ||
+        url?.includes('.docs') ||
+        url?.includes('.DOC') ||
+        url?.includes('.DOCS')
+      ) {
+        newTab.document.body.innerHTML =
+          "<iframe src='data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64," +
+          blob +
+          "' width='100%' height='100%'></iframe>";
+      }
+      if (
+        (url && url !== null && url?.includes('.xlsx')) ||
+        url?.includes('.XLSX') ||
+        url?.includes('.xls') ||
+        url?.includes('.csv') ||
+        url?.includes('.XLS')
+      ) {
+        newTab.document.body.innerHTML =
+          "<iframe src='data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64," +
+          blob +
+          "' width='100%' height='100%'></iframe>";
+      }
+      if (
+        (url && url !== null && url?.includes('.ppt')) ||
+        url?.includes('.pptx') ||
+        url?.includes('.PPT') ||
+        url?.includes('.PPTX')
+      ) {
+        newTab.document.body.innerHTML =
+          "<iframe src='data:application/vnd.openxmlformats-officedocument.presentationml.presentation;base64," +
+          blob +
+          "' width='100%' height='100%'></iframe>";
+      }
+      if ((url && url !== null && url?.includes('.txt')) || url?.includes('.text')) {
+        newTab.document.body.innerHTML =
+          "<iframe src='data:application/txt;base64," +
+          blob +
+          "' width='100%' height='100%'></iframe>";
+      }
+      if ((url && url !== null && url?.includes('.gif')) || url?.includes('.GIF')) {
+        newTab.document.body.innerHTML =
+          "<iframe src='data:image/gif;base64," + blob + "' width='100%' height='100%'></iframe>";
+      }
+    } else {
+      const reader = new FileReader();
+      const newTab = window.open();
+      reader.readAsDataURL(file?.file);
+      reader.onload = function () {
+        const type = reader?.result.includes('data:application/pdf;');
+        if (type === true) {
+          const pdfBase64 = reader?.result?.substring(reader?.result.indexOf(',') + 1);
+          const blob1 = base64ToBlob(pdfBase64, 'application/pdf');
+          const url = URL.createObjectURL(blob1);
+          newTab.document.write("<iframe width='100%' height='100%' src='" + url + "'></iframe>");
+        } else {
+          const image = new Image();
+          image.src = reader?.result;
+          image.width = '1250';
+          newTab.document.write(image.outerHTML);
+        }
+      };
+      reader.onerror = function () {};
+    }
+  }
   //To add the file in the file array
   const handleChange = (e) => {
     setUploadFileError('');
@@ -124,8 +240,8 @@ export const UploadFile = (props) => {
         )}
       </Box>
       <div className={styles.inputDiv}>
-        <Grid container mt={1} spacing={1}>
-          <Grid  item sm={6}>
+        <Grid container mt={1} spacing={1} sx={{ alignItems: 'flex-start' }}>
+          <Grid item sm={6}>
             <div className={styles.fileUploadArea}>
               <div>
                 <UploadFileIcon color="primary" />
@@ -144,10 +260,10 @@ export const UploadFile = (props) => {
               />
             </div>
           </Grid>
-          <Grid  item sm={6}>
+          <Grid item sm={6}>
             {uploadFileError !== '' && <div className={styles.fileError}> {uploadFileError}</div>}
             {showBrowse && (
-              <div className={styles.browseFileArea}>
+              <div>
                 <label className={styles.modalLabelHeading}>Browse Files</label>
                 <div className={styles.browseFileContainer}>
                   <input
@@ -174,7 +290,7 @@ export const UploadFile = (props) => {
             <div className={styles.uploadFileArea}>
               {uploadFiles === 'single' && fileData.length === 1 && (
                 <Typography color="#a9a9a9" variant="caption">
-                  UPLOADED
+                  01 FILE UPLOADED
                 </Typography>
               )}
               {uploadFiles === 'multiple' && fileData.length > 0 && (
@@ -207,12 +323,6 @@ export const UploadFile = (props) => {
                           {fileData.length === 1 || uploadStatus === 'successful' ? (
                             <div className={styles.actionArea}>
                               {' '}
-                              <RemoveRedEyeOutlinedIcon
-                                color="primary"
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                }}
-                              />
                               {'   '}
                               <DeleteOutlineIcon
                                 color="error"
@@ -221,6 +331,13 @@ export const UploadFile = (props) => {
                                   setFileData([]);
                                 }}
                               />{' '}
+                              {(file?.file || file?.fileBlob) && (
+                                <AiOutlineEye
+                                  fill="#264488"
+                                  size={20}
+                                  onClick={() => downloadFile(file)}
+                                />
+                              )}
                             </div>
                           ) : uploadStatus === 'failed' ? (
                             <div className={styles.actionArea}>

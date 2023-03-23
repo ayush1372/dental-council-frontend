@@ -20,6 +20,7 @@ export function SuspendLicenseVoluntaryRetirement({
   handleClose,
   closeActionModal,
   showSuccessPopup,
+  setActionVerified,
   setSuccessPopupMessage,
   selectedSuspendLicenseProfile,
 }) {
@@ -108,6 +109,7 @@ export function SuspendLicenseVoluntaryRetirement({
       dispatch(getInitiateWorkFlow(workFlowData))
         .then((response) => {
           showSuccessPopup(true);
+          setActionVerified(true);
           closeActionModal(false);
           if (response) {
             userActiveTab === 'voluntary-suspend-license' &&
@@ -361,7 +363,7 @@ export function SuspendLicenseVoluntaryRetirement({
           {selectedValue === 'verify'
             ? 'Are you sure you want to approve the details of the doctor?'
             : selectedValue === 'forward'
-            ? 'Are you sure you want to forward doctor details to College?'
+            ? 'Are you sure you want to forward doctor details to College/NBE?'
             : ''}
         </Typography>
       </Box>
