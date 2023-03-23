@@ -69,7 +69,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
 
   useEffect(() => {
     if (personalDetails?.work_flow_status_id === 1) {
-      setIsApplicationPending(true);
+      setIsApplicationPending(false);
     }
   }, [personalDetails?.work_flow_status_id]);
   const { activeStep, handleNext, handleBack, resetStep, completed, progress } = useWizard(
