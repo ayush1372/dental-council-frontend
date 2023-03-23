@@ -23,7 +23,7 @@ const Nav = ({ menuToggleHandler }) => {
       justifyContent: 'flex-start',
       alignItems: 'center',
       position: 'relative',
-      padding: '20px',
+      padding: '17px 20px',
       lineHeight: '1',
       borderBottom: '4px solid',
       borderBottomColor: theme.palette.primary.main,
@@ -43,7 +43,7 @@ const Nav = ({ menuToggleHandler }) => {
       },
 
       [theme.breakpoints.down('lg')]: {
-        padding: '20px 24px',
+        padding: '12px',
       },
       [theme.breakpoints.down('md')]: {
         width: '100%',
