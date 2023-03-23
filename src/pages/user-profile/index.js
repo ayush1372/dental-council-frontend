@@ -69,7 +69,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
 
   useEffect(() => {
     if (personalDetails?.work_flow_status_id === 1) {
-      setIsApplicationPending(false);
+      setIsApplicationPending(true);
     }
   }, [personalDetails?.work_flow_status_id]);
   const { activeStep, handleNext, handleBack, resetStep, completed, progress } = useWizard(
@@ -103,6 +103,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
 
   const openDoctorEditProfile = () => {
     setIsReadMode(false);
+    resetStep();
     fetchCountries();
     fetchStates();
   };
