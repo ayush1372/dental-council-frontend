@@ -47,6 +47,7 @@ const ButtonGroupWizard = ({
             data-testid={dataTestidNext}
             disabled={loading || disabledNext}
             sx={{
+              width: '50%',
               margin: {
                 width: '100%',
                 xs: '5px 0',

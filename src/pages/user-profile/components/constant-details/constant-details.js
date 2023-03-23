@@ -132,13 +132,21 @@ const ConstantDetails = () => {
             Mobile Number
           </Typography>
           <Box display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="textPrimary.main" width="auto" mr={0.5}>
-              {mobileNumber ? mobileNumber : ''}
-            </Typography>
-            <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
-            <Typography component="span" variant="subtitle2" color="primary.main" ml={0.5}>
-              Change
-            </Typography>
+            {mobileNumber ? (
+              <>
+                <Typography variant="subtitle2" color="textPrimary.main" width="auto" mr={0.5}>
+                  {mobileNumber ? mobileNumber : ''}
+                </Typography>
+                <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
+                <Typography component="span" variant="subtitle2" color="primary.main" ml={0.5}>
+                  Change
+                </Typography>
+              </>
+            ) : (
+              <Typography variant="subtitle2" color="textPrimary.main" mr={0.5}>
+                -
+              </Typography>
+            )}
           </Box>
         </Grid>
         <Grid item xs={12} sm={6} md={3} px={2} mb={{ xs: 1, lg: 0 }}>
@@ -146,13 +154,21 @@ const ConstantDetails = () => {
             Email
           </Typography>
           <Box display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="textPrimary.main" width="auto" mr={0.5}>
-              {emailId ? emailId : ''}
-            </Typography>
-            {emailId && <img width="13px" height="13px" src={IconVerified} alt="verified icon" />}
-            <Typography component="span" variant="subtitle2" color="primary.main" ml={0.5}>
-              Change
-            </Typography>
+            {emailId ? (
+              <>
+                <Typography variant="subtitle2" color="textPrimary.main" width="auto" mr={0.5}>
+                  {emailId ? emailId : ''}
+                </Typography>
+                <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
+                <Typography component="span" variant="subtitle2" color="primary.main" ml={0.5}>
+                  Change
+                </Typography>
+              </>
+            ) : (
+              <Typography variant="subtitle2" color="textPrimary.main" mr={0.5}>
+                -
+              </Typography>
+            )}
           </Box>
         </Grid>
       </Grid>
