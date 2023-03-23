@@ -75,7 +75,7 @@ const ReadPersonalDetails = ({ handleNext, showActions = true }) => {
         })}
       </Box>
       {showActions && (
-        <Box px={3} display="flex" justifyContent="flex-end">
+        <Box px={3}>
           <ButtonGroupWizard handleNext={handleNext} labelNext={t('Next')} hidePrevious={true} />
         </Box>
       )}
