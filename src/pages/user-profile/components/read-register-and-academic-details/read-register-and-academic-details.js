@@ -34,6 +34,7 @@ const ReadRegisterAndAcademicDetails = ({
   const [accordionKeys, setAccordionKeys] = useState(['accordion-0', 'accordion-1', 'accordion-2']);
   const [selected, setSelected] = useState('');
   const [confirmationModal, setConfirmationModal] = useState(false);
+  const [actionVerified, setActionVerified] = useState(false);
 
   const { userActiveTab, selectedAcademicStatus } = useSelector((state) => state.common);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
@@ -172,6 +173,7 @@ const ReadRegisterAndAcademicDetails = ({
                           md: 'fit-content',
                         },
                       }}
+                      disabled={actionVerified}
                     >
                       Action <MoreHorizIcon />
                     </Button>
@@ -248,6 +250,7 @@ const ReadRegisterAndAcademicDetails = ({
                 closeActionModal={setConfirmationModal}
                 showSuccessPopup={setShowSuccessPopup}
                 setSuccessPopupMessage={setSuccessPopupMessage}
+                setActionVerified={setActionVerified}
               />
             </Box>
           ) : (
