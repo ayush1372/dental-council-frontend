@@ -149,7 +149,7 @@ const ConstantDetails = () => {
             <Typography variant="subtitle2" color="textPrimary.main" width="auto" mr={0.5}>
               {emailId ? emailId : ''}
             </Typography>
-            <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
+            {emailId && <img width="13px" height="13px" src={IconVerified} alt="verified icon" />}
             <Typography component="span" variant="subtitle2" color="primary.main" ml={0.5}>
               Change
             </Typography>

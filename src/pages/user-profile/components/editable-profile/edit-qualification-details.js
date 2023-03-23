@@ -516,7 +516,9 @@ const EditQualificationDetails = ({
           {/* )} */}
         </Grid>
         <Grid container item xs={12} md={6} lg={4} columnSpacing={2}>
-          <Typography pl={2}>Month & Year Of Awarding Degree</Typography>
+          <Typography pl={2} fontWeight="500" color="inputTextColor.main">
+            Month & Year Of Awarding Degree
+          </Typography>
           <Grid item xs={12} md={6} mb={{ xs: 2, md: 0 }}>
             <Select
               fullWidth
