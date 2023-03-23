@@ -1,9 +1,7 @@
 import { API, API_HPRID } from '../../api/api-endpoints';
-import { accesstokenHprId } from '../../constants/common-data';
 import { GET, POST } from '../../constants/requests';
 import { hpIdUseAxiosCall, useAxiosCall } from '../../hooks/use-axios';
 import {
-  // getAccessToken,
   getkycDetails,
   getMobileOtp,
   healthProfessionalDetails,
@@ -42,9 +40,7 @@ export const getSessionAccessToken = (body) => async () => {
       data: body,
     })
       .then((response) => {
-        // JSON.stringify(
-        //   localStorage.setItem('sessiontoekn', response.responseHeader['session-token'])
-        // );
+        JSON.stringify(localStorage.setItem('hpridaccesstoken', response.data['accessToken']));
         return resolve(response);
       })
       .catch((error) => {
@@ -75,7 +71,7 @@ export const generateMobileOtp = (body) => async (dispatch) => {
       method: POST,
       url: API_HPRID.hpId.generateMobileOtp,
       data: body,
-      headers: { Authorization: 'Bearer ' + accesstokenHprId },
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('hpridaccesstoken') },
     })
       .then((response) => {
         dispatch(getMobileOtp(response));
@@ -94,7 +90,7 @@ export const verifyMobileOtp = (body) => async () => {
       method: POST,
       url: API_HPRID.hpId.verifyMobileOtp,
       data: body,
-      headers: { Authorization: 'Bearer ' + accesstokenHprId },
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('hpridaccesstoken') },
     })
       .then((response) => {
         return resolve(response);
@@ -110,7 +106,7 @@ export const checkHpidExists = (txnId) => async (dispatch) => {
       method: POST,
       url: API_HPRID.hpId.checkHprIdExists,
       data: txnId,
-      headers: { Authorization: 'Bearer ' + accesstokenHprId },
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('hpridaccesstoken') },
     })
       .then((response) => {
         dispatch(hpIdExistsDetails(response));
@@ -127,7 +123,7 @@ export const getHprIdSuggestions = (txnId) => async (dispatch) => {
     hpIdUseAxiosCall({
       method: POST,
       url: API_HPRID.hpId.hpIdSuggestion,
-      headers: { Authorization: 'Bearer ' + accesstokenHprId },
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('hpridaccesstoken') },
       data: txnId,
     })
       .then((response) => {
@@ -144,7 +140,7 @@ export const createUniqueHprId = (data) => async (dispatch) => {
     hpIdUseAxiosCall({
       method: POST,
       url: API_HPRID.hpId.createHprId,
-      headers: { Authorization: 'Bearer ' + accesstokenHprId },
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('hpridaccesstoken') },
       data: data,
     })
       .then((response) => {
@@ -161,7 +157,6 @@ export const setUserPassword = (data) => async (dispatch) => {
     useAxiosCall({
       method: POST,
       url: API.doctorRegistration.setUserPassword,
-      // headers: { Authorization: 'Bearer ' + accesstokenHprId },
       data: data,
     })
       .then((response) => {

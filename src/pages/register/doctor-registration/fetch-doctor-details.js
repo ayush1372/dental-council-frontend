@@ -104,7 +104,6 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
     dispatch(getSessionAccessToken(reqObj)).then(() => {
       dispatch(sendAaadharOtp(value)).then(() => {
         setshowOtpAadhar(true);
-        setisOtpValidMobile(false);
       });
     });
   };
@@ -483,6 +482,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
                   color="secondary"
                   sx={{ marginRight: '10px', width: '105px', height: '48px' }}
                   onClick={handleSubmit(onSubmit)}
+                  disabled={!isOtpValidMobile}
                 >
                   Submit
                 </Button>
@@ -496,7 +496,6 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
                     width: '105px',
                     height: '48px',
                   }}
-                  // variant="contained" color="grey"
                 >
                   Cancel
                 </Button>
