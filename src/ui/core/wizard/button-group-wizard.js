@@ -39,7 +39,7 @@ const ButtonGroupWizard = ({
         </Grid>
       )}
       {!hideNext && (
-        <Grid item xs={12} md={3}>
+        <Grid item xs={12} md="auto">
           <Button
             variant="contained"
             color="secondary"
