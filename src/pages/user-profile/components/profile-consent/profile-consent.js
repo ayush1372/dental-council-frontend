@@ -139,9 +139,7 @@ const ProfileConsent = ({
             <Checkbox
               sx={{ width: '18px', height: '18px', marginLeft: 1 }}
               name="HPR"
-              {...register('HPR', {
-                required: 'HPR is Required',
-              })}
+              {...register('HPR')}
               error={errors.HPR?.message}
             />
             <Typography component="div" variant="body7">
