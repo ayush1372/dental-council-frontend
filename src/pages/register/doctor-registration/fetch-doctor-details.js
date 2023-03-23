@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -185,7 +184,6 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
   }, [demographicAuthMobileVerify?.data?.verified]);
 
   const handleValidateMobile = () => {
-    console.log('enable isOtpMob', isOtpValidMobile);
     let data = {
       txnId: mobileTxnId,
       otp: otpValue,
