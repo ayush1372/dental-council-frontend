@@ -103,6 +103,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
 
   const openDoctorEditProfile = () => {
     setIsReadMode(false);
+    resetStep();
     fetchCountries();
     fetchStates();
   };
