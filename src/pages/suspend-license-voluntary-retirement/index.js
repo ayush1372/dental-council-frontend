@@ -20,6 +20,7 @@ export function SuspendLicenseVoluntaryRetirement({
   handleClose,
   closeActionModal,
   showSuccessPopup,
+  setActionVerified,
   setSuccessPopupMessage,
   selectedSuspendLicenseProfile,
 }) {
@@ -108,6 +109,7 @@ export function SuspendLicenseVoluntaryRetirement({
       dispatch(getInitiateWorkFlow(workFlowData))
         .then((response) => {
           showSuccessPopup(true);
+          setActionVerified(true);
           closeActionModal(false);
           if (response) {
             userActiveTab === 'voluntary-suspend-license' &&

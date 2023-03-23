@@ -78,6 +78,7 @@ function TrackAppicationTable({
   useEffect(() => {
     // if (orderBy && getTableData && page !== null && profileId)
     dispatch(getTableData(profileId, trackData));
+    window.scrollTo(0, 0);
   }, []);
 
   const viewNameOfApplicant = (event, row) => {
