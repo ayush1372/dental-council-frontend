@@ -34,7 +34,12 @@ const SelectField = (
     <StyledEngineProvider injectFirst>
       {label && (
         <Box>
-          <Typography variant="subtitle2" component={'span'} color="inputTextColor.main">
+          <Typography
+            variant="subtitle2"
+            fontWeight="500"
+            component={'span'}
+            color="inputTextColor.main"
+          >
             {label}
           </Typography>
           <Typography variant="body2" color="error">
