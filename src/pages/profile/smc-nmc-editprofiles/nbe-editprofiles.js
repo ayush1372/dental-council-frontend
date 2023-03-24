@@ -94,6 +94,7 @@ const NbeEditProfile = (props) => {
               required: 'User ID is required',
 
               pattern: {
+                value: /^[a-zA-Z0-9@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
                 message: 'Provide a Valid User ID',
               },
             })}
