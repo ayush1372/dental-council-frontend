@@ -1,15 +1,15 @@
-import { useState } from 'react';
+// import { useState } from 'react';
 
 import { Box, Grid, Typography, useTheme } from '@mui/material';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
-import { useDispatch, useSelector } from 'react-redux';
+// import FormControlLabel from '@mui/material/FormControlLabel';
+// import Switch from '@mui/material/Switch';
+import { useSelector } from 'react-redux';
 
 import IconVerified from '../../assets/images/ico-verified.svg';
-import { enableUserNotification } from '../../store/actions/common-actions';
+// import { enableUserNotification } from '../../store/actions/common-actions';
 
 export function ViewProfile(props) {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
 
   const registration_number = useSelector(
@@ -27,26 +27,26 @@ export function ViewProfile(props) {
     (state) => state?.doctorUserProfileReducer?.personalDetails?.communication_address?.mobile
   );
 
-  const [emailNotification, setEmailNotification] = useState();
-  const [mobileNotification, setMobileNotification] = useState();
+  // const [emailNotification, setEmailNotification] = useState();
+  // const [mobileNotification, setMobileNotification] = useState();
 
-  const handleNotification = (eventData, mode) => {
-    if (mode === 'email') {
-      setEmailNotification(eventData?.target?.checked);
-    }
-    if (mode === 'sms') {
-      setMobileNotification(eventData?.target?.checked);
-    }
-    let updatedNotificationData = {
-      notification_toggles: [
-        {
-          mode: mode,
-          is_enabled: eventData.target.checked,
-        },
-      ],
-    };
-    dispatch(enableUserNotification(updatedNotificationData));
-  };
+  // const handleNotification = (eventData, mode) => {
+  //   if (mode === 'email') {
+  //     setEmailNotification(eventData?.target?.checked);
+  //   }
+  //   if (mode === 'sms') {
+  //     setMobileNotification(eventData?.target?.checked);
+  //   }
+  //   let updatedNotificationData = {
+  //     notification_toggles: [
+  //       {
+  //         mode: mode,
+  //         is_enabled: eventData.target.checked,
+  //       },
+  //     ],
+  //   };
+  //   dispatch(enableUserNotification(updatedNotificationData));
+  // };
 
   const theme = useTheme();
 
@@ -62,7 +62,7 @@ export function ViewProfile(props) {
         >
           View Profile
         </Typography>
-        <Box align="right" display={'flex'} flexDirection={{ xs: 'column', md: 'row' }}>
+        {/* <Box align="right" display={'flex'} flexDirection={{ xs: 'column', md: 'row' }}>
           <FormControlLabel
             sx={{
               width: {
@@ -105,7 +105,7 @@ export function ViewProfile(props) {
             label="Mobile Notifications"
             labelPlacement="start"
           />
-        </Box>
+        </Box> */}
       </Box>
 
       <Box bgcolor="white.main" py={3} mb={2} boxShadow="1">
