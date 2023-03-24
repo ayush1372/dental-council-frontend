@@ -52,7 +52,7 @@ const EditQualificationDetails = ({
   const selectedState = watch(`qualification[${index}].state`);
 
   const fetchColleges = (selectedState) => {
-    if (selectedState) {
+    if (selectedState && qualificationfrom !== 'International') {
       dispatch(getCollegesList(selectedState)).then((dataResponse) => {
         setColleges(dataResponse.data);
       });
@@ -64,7 +64,7 @@ const EditQualificationDetails = ({
   }, [selectedState]);
 
   useEffect(() => {
-    if (watchCollege) {
+    if (watchCollege && qualificationfrom !== 'International') {
       const obj = colleges?.find((x) => x.id === watchCollege);
       setValue(`qualification[${index}].collegeObj`, obj);
       dispatch(getUniversitiesList(watchCollege));
@@ -85,13 +85,15 @@ const EditQualificationDetails = ({
   }, [qualificationfrom]);
 
   useEffect(() => {
-    setValue(`qualification[${index}].qualification`, degree[0]);
     if (qualificationfrom !== 'International') {
       setValue(`qualification[${index}].country`, {
         id: 356,
         name: 'India',
         nationality: 'Indian',
       });
+      setValue(`qualification[${index}].qualification`, degree[0]);
+    } else {
+      setValue(`qualification[${index}].qualification`, qualification?.qualification);
     }
     setValue(`qualification[${index}].qualificationfrom`, fields[index].qualificationfrom);
   }, []);
@@ -115,10 +117,6 @@ const EditQualificationDetails = ({
           <Typography component="div" variant="body1" color="inputTextColor">
             Qualification From
           </Typography>
-          {
-            // eslint-disable-next-line no-console
-            console.log(qualification)
-          }
           <RadioGroup
             onChange={handleQualificationFrom}
             name={`qualification[${index}].qualificationfrom`}
@@ -326,7 +324,11 @@ const EditQualificationDetails = ({
             name="Qualification"
             label="Name Of The Degree"
             defaultValue={degree[0]?.label}
-            // value={degree[0]?.label}
+            value={
+              qualificationfrom === 'International'
+                ? getValues()?.qualification[index]?.qualification
+                : degree[0]?.label
+            }
             required={true}
             {...register(
               `qualification[${index}].qualification`,
@@ -370,7 +372,7 @@ const EditQualificationDetails = ({
               }
               name="country"
               label="Country Name"
-              defaultValue={fields[index].country}
+              defaultValue={qualification?.country}
               required={true}
               {...register(
                 `qualification[${index}].country`,
@@ -390,7 +392,6 @@ const EditQualificationDetails = ({
             />
           </Grid>
         )}
-
         <Grid item xs={12} md={6} lg={4}>
           {qualificationfrom === 'International' ? (
             <TextField
@@ -400,7 +401,7 @@ const EditQualificationDetails = ({
               label="State (in which college is located)"
               defaultValue={fields[index].state}
               required={true}
-              {...register(`qualification[${index}].FEstate`, {
+              {...register(`qualification[${index}].state`, {
                 required: 'State is Required',
               })}
             />
@@ -438,9 +439,9 @@ const EditQualificationDetails = ({
               error={errors?.qualification?.[index]?.college?.message}
               name="college"
               label="Name of the college"
-              defaultValue={fields[index].college}
+              defaultValue={qualification?.college}
               required={true}
-              {...register(`qualification[${index}].FEcollege`, {
+              {...register(`qualification[${index}].college`, {
                 required: 'college is required',
               })}
             />
@@ -470,8 +471,6 @@ const EditQualificationDetails = ({
               }}
             />
           )}
-
-          {/* )} */}
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
           {qualificationfrom === 'International' ? (
@@ -480,9 +479,9 @@ const EditQualificationDetails = ({
               error={errors?.qualification?.[index]?.university?.message}
               name="University"
               label="University"
-              defaultValue={fields[index].university}
+              defaultValue={qualification?.university}
               required={true}
-              {...register(`qualification[${index}].FEuniversity`, {
+              {...register(`qualification[${index}].university`, {
                 required: 'University is Required',
               })}
             />
@@ -512,11 +511,11 @@ const EditQualificationDetails = ({
               }}
             />
           )}
-
-          {/* )} */}
         </Grid>
         <Grid container item xs={12} md={6} lg={4} columnSpacing={2}>
-          <Typography pl={2}>Month & Year Of Awarding Degree</Typography>
+          <Typography pl={2} fontWeight="500" color="inputTextColor.main">
+            Month & Year Of Awarding Degree
+          </Typography>
           <Grid item xs={12} md={6} mb={{ xs: 2, md: 0 }}>
             <Select
               fullWidth

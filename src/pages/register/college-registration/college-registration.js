@@ -455,6 +455,10 @@ export function CollegeRegistration() {
             placeholder={'Enter College Pin Code'}
             {...register('CollegePincode', {
               required: 'College PinCode  is required',
+              pattern: {
+                value: /^[0-9]{6}$/i,
+                message: 'Please Enter Valid Pincode',
+              },
             })}
           />
         </Grid>

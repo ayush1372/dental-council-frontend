@@ -86,6 +86,10 @@ const AdvanceSearch = ({ setDoSearch, setSearchData, setScrollDown }) => {
           fullWidth
           defaultValue={getValues().DoctorName}
           {...register('DoctorName', {
+            pattern: {
+              value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
+              message: 'Please Enter Valid Name',
+            },
             // required: 'Doctor Name is Required',
             // maxLength: {
             //   value: 100,

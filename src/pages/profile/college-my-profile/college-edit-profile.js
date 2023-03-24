@@ -231,6 +231,10 @@ const CollegeEditProfile = () => {
             error={errors.CollegeName?.message}
             {...register('CollegeName', {
               required: 'College Name is required',
+              pattern: {
+                value: /^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/i,
+                message: 'Please Enter Valid College Name',
+              },
             })}
           />
         </Grid>
@@ -251,6 +255,10 @@ const CollegeEditProfile = () => {
             error={errors.CollegeId?.message}
             {...register('CollegeId', {
               required: 'College ID is required',
+              pattern: {
+                value: /^[a-zA-Z0-9@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
+                message: 'Provide a Valid College ID',
+              },
             })}
           />
         </Grid>
@@ -279,8 +287,8 @@ const CollegeEditProfile = () => {
             {...register('CollegePhoneNumber', {
               required: 'Mobile Number is required',
               pattern: {
-                value: /^\d{10}$/i,
-                message: 'Provide a Valid Phone Number',
+                value: /^[0-9]{10}$/i,
+                message: 'Enter  Valid Phone Number',
               },
             })}
             InputProps={{
@@ -429,6 +437,10 @@ const CollegeEditProfile = () => {
             error={errors.CollegePincode?.message}
             {...register('CollegePincode', {
               required: 'College PIN Code is required',
+              pattern: {
+                value: /^[0-9]{6}$/i,
+                message: 'Please Enter Valid Pincode',
+              },
             })}
           />
         </Grid>
