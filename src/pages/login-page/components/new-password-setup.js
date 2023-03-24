@@ -28,6 +28,7 @@ const NewPasswordSetup = () => {
   const uniqueHpId = useSelector((state) =>
     state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId.replace('@hpr.abdm', '')
   );
+  const hprIdData = useSelector((state) => state?.doctorRegistration?.hpIdExistsDetailsData?.data);
   const demographicAuthMobileVerify = useSelector(
     (state) => state?.AadhaarTransactionId?.demographicAuthMobileDetailsData
   );
@@ -75,6 +76,11 @@ const NewPasswordSetup = () => {
         district: userKycData?.district,
         state: userKycData?.state,
         address: userKycData?.address,
+        house: userKycData?.house,
+        locality: userKycData?.locality,
+        landmark: userKycData?.landmark,
+        photo: userKycData?.photo,
+        street: userKycData?.street,
       };
 
       dispatch(createHealthProfessional(reqObj)) //new api 1st
@@ -104,6 +110,8 @@ const NewPasswordSetup = () => {
         username: uniqueHpId,
         registration_number: registrationNumber,
         password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
+        hprIdNumber: hprIdData?.hprIdNumber,
+        isNew: hprIdData?.new,
       };
       dispatch(setUserPassword(reqPayload))
         .then(() => {
