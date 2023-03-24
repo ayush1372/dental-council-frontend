@@ -302,7 +302,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     obj.qualification = details?.course?.id;
     obj.college = isInternational ? details?.college?.name : details?.college?.id;
     obj.year = details?.qualification_year;
-    obj.country = isInternational ? details?.country?.name : details?.country?.id;
+    obj.country = details?.country?.id;
     obj.state = isInternational ? details?.state?.name : details?.state?.id;
     obj.qualificationfrom = details?.qualification_from;
     obj.month = details?.qualification_month;
