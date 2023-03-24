@@ -443,8 +443,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 required: 'Registration Date is Required',
               })}
               sx={{
-                height: '48px',
-                width: '60%',
                 input: {
                   color: 'black',
                   textTransform: 'uppercase',
