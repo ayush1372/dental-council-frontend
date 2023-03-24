@@ -361,6 +361,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
                       variant="contained"
                       color="secondary"
                       width="95px"
+                      handleUserAadhaarNumber
                       onClick={handleUserAadhaarNumber}
                     >
                       Verify

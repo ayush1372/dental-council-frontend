@@ -9,7 +9,7 @@ import { Box, Dialog, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getInitiateWorkFlow } from '../../store/actions/common-actions';
+import { suspendDoctor } from '../../store/actions/common-actions';
 import { changeUserActiveTab } from '../../store/reducers/common-reducers';
 import { Button, Checkbox, RadioGroup, TextField } from '../../ui/core';
 import successToast from '../../ui/core/toaster';
@@ -17,17 +17,10 @@ import successToast from '../../ui/core/toaster';
 export function SuspendLicenseVoluntaryRetirement({
   tabName,
   selectedValue,
-  handleClose,
-  closeActionModal,
-  showSuccessPopup,
-  setActionVerified,
-  setSuccessPopupMessage,
   selectedSuspendLicenseProfile,
 }) {
   const dispatch = useDispatch();
-
-  const { loginData } = useSelector((state) => state.loginReducer);
-  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const { loginData } = useSelector((state) => state?.loginReducer);
   const [selectedSuspension, setSelectedSuspension] = useState('voluntary-suspension-check');
   const [selectedFromDate, setSelectedFromDate] = useState();
   const { userActiveTab } = useSelector((state) => state.common);
@@ -52,82 +45,52 @@ export function SuspendLicenseVoluntaryRetirement({
           : '',
     },
   });
-
-  const onSubmit = () => {
-    setConformSuspend(true);
-    setConfirmationModal(true);
-    let action_id;
-    switch (selectedValue) {
-      case 'forward':
-        action_id = 2;
-        setSuccessPopupMessage('Forwarded Successfully');
-        break;
-      case 'raise':
-        action_id = 3;
-        setSuccessPopupMessage('Query Raised Successfully');
-        break;
-      case 'verify':
-        action_id = 4;
-        setSuccessPopupMessage('Approved Successfully');
-        break;
-      case 'reject':
-        action_id = 5;
-        setSuccessPopupMessage('Rejected Successfully');
-        break;
-      case 'suspend':
-        action_id = 6;
-        setSuccessPopupMessage('Temporarily Suspended');
-        break;
-      case 'blacklist':
-        action_id = 7;
-        setSuccessPopupMessage('Permanently Suspended');
-        break;
-      default:
-        action_id = 1;
-        break;
-    }
-
-    let workFlowData = {
-      request_id: personalDetails?.request_id,
-      application_type_id: personalDetails.application_type_id
-        ? personalDetails?.application_type_id
-        : 1,
-      actor_id: loginData?.data?.user_group_id,
-      action_id: action_id,
-      hp_profile_id: personalDetails?.hp_profile_id
-        ? personalDetails?.hp_profile_id
-        : userActiveTab === 'voluntary-suspend-license'
-        ? loginData?.data?.profile_id
-        : userActiveTab === 'track-status'
-        ? selectedSuspendLicenseProfile?.view?.value
-        : '',
-      start_date: getValues()?.fromDate ? getValues()?.fromDate : '',
-      to_date: getValues()?.toDate ? getValues()?.toDate : '',
-      remarks: getValues()?.remark ? getValues()?.remark : '',
+  const suspendLicenseStatus = () => {
+    const { fromDate, toDate, remark } = getValues();
+    let suspendDoctorBody = {
+      hp_profile_id:
+        userActiveTab === 'voluntary-suspend-license'
+          ? loginData?.data?.profile_id
+          : userActiveTab === 'track-status' && selectedSuspendLicenseProfile?.view?.value,
+      application_type_id:
+        selectedSuspension === 'voluntary-suspension-check'
+          ? 3
+          : selectedSuspension === 'permanent-suspension-check'
+          ? 4
+          : selectedValue === 'suspend'
+          ? 4
+          : selectedValue === 'blacklist'
+          ? 3
+          : '',
+      action_id:
+        selectedValue === 'suspend'
+          ? 7
+          : selectedValue === 'blacklist'
+          ? 6
+          : userActiveTab === 'voluntary-suspend-license' && 1,
+      from_date: fromDate,
+      to_date: toDate,
+      remarks: remark,
     };
     try {
-      dispatch(getInitiateWorkFlow(workFlowData))
-        .then((response) => {
-          showSuccessPopup(true);
-          setActionVerified(true);
-          closeActionModal(false);
+      ((confirmationModal && userActiveTab === 'voluntary-suspend-license') ||
+        userActiveTab === 'track-status') &&
+        dispatch(suspendDoctor(suspendDoctorBody)).then((response) => {
           if (response) {
+            setConfirmationModal(false);
             userActiveTab === 'voluntary-suspend-license' &&
               dispatch(changeUserActiveTab('my-profile'));
           }
-        })
-        .catch(() => {
-          // successToast(
-          //   'ERR_INT: ' + error?.data?.response?.data?.error,
-          //   'UpdateError',
-          //   'error',
-          //   'top-center'
-          // );
-          closeActionModal(false);
         });
     } catch (allFailMsg) {
       successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
     }
+  };
+
+  const onSubmit = () => {
+    setConformSuspend(true);
+    setConfirmationModal(true);
+    suspendLicenseStatus();
   };
 
   const handlevoluntarySuspendLicenseChange = (event) => {
@@ -142,6 +105,9 @@ export function SuspendLicenseVoluntaryRetirement({
     setSelectedFromDate(temp2);
   };
 
+  const handleClose = () => {
+    setConfirmationModal(false);
+  };
   return (
     <Box data-testid="suspend-license-voluntary-retirement" width="100%">
       {!tabName && selectedValue !== 'forward' && (
@@ -173,9 +139,9 @@ export function SuspendLicenseVoluntaryRetirement({
             ? 'Voluntary Retirement'
             : tabName === 'suspend-license'
             ? 'Suspend License'
-            : // : tabName === 'voluntary-suspend-license'
-              // ? 'Voluntary Suspend License'
-              ''}
+            : tabName === 'voluntary-suspend-license'
+            ? 'Voluntary Suspend License'
+            : ''}
         </Typography>
       )}
 
@@ -493,7 +459,6 @@ export function SuspendLicenseVoluntaryRetirement({
               color="secondary"
               variant="contained"
               sx={{ marginLeft: 2 }}
-              // onClick={handleSubmit(onSubmit)}
               onClick={handleSubmit(onSubmit)}
             >
               Submit
@@ -503,7 +468,13 @@ export function SuspendLicenseVoluntaryRetirement({
           )}
           {selectedValue === 'verify' || selectedValue === 'forward' ? (
             <Box align={selectedValue === 'forward' ? 'right' : 'center'}>
-              <Button color="grey" variant="contained" sx={{ marginLeft: 2 }} onClick={handleClose}>
+              <Button
+                color="grey"
+                variant="contained"
+                sx={{ marginLeft: 2 }}
+                onClick={handleClose}
+                // onClick={handelCancelDetails}
+              >
                 No
               </Button>
               <Button
@@ -565,7 +536,9 @@ export function SuspendLicenseVoluntaryRetirement({
                 No
               </Button>
               <Button
-                onClick={handleSubmit(onSubmit)}
+                onClick={() => {
+                  suspendLicenseStatus();
+                }}
                 color="secondary"
                 variant="contained"
                 sx={{
