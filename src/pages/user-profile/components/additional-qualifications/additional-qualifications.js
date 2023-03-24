@@ -47,14 +47,14 @@ const AdditionalQualifications = () => {
 
   const handleQualificationFilesData = (fileName, files) => {
     qualificationFilesData[fileName] = files;
-    setQualificationFilesData({ ...qualificationFilesData });
+    setQualificationFilesData([{ ...qualificationFilesData }]);
   };
 
   // this below code is storing qualification details
-  // const { qualification } = getValues();
+  const { qualification } = getValues();
   const onSubmit = () => {
-    // // eslint-disable-next-line no-console
-    // console.log('123', qualification, qualificationFilesData);
+    // eslint-disable-next-line no-console
+    console.log('123', qualification, qualificationFilesData);
   };
 
   return (
