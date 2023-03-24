@@ -517,6 +517,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               fullWidth
               defaultValue={getValues().Name}
               {...register('Name', {
+                pattern: {
+                  value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
+                  message: 'Please Enter Valid Name',
+                },
                 maxLength: {
                   value: 100,
                   message: 'Length should be less than 100.',
@@ -541,6 +545,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               fullWidth
               defaultValue={getValues().FatherName}
               {...register('FatherName', {
+                pattern: {
+                  value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
+                  message: 'Please Enter Valid Father Name',
+                },
                 maxLength: {
                   value: 100,
                   message: 'Length should be less than 100.',
@@ -560,6 +568,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               fullWidth
               defaultValue={getValues().MotherName}
               {...register('MotherName', {
+                pattern: {
+                  value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
+                  message: 'Please Enter Valid Mother Name',
+                },
                 maxLength: {
                   value: 100,
                   message: 'Length should be less than 100.',
@@ -581,6 +593,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               fullWidth
               defaultValue={getValues().SpouseName}
               {...register('SpouseName', {
+                pattern: {
+                  value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
+
+                  message: 'Please Enter Valid Spouse Name',
+                },
                 maxLength: {
                   value: 100,
                   message: 'Length should be less than 100.',

@@ -98,6 +98,10 @@ const SmcEditProfile = (props) => {
             error={errors.first_name?.message}
             {...register('first_name', {
               required: ' Name is required',
+              pattern: {
+                value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
+                message: 'Enter Valid Name',
+              },
             })}
           />
         </Grid>
@@ -118,6 +122,10 @@ const SmcEditProfile = (props) => {
             error={errors.mobile_no?.message}
             {...register('mobile_no', {
               required: 'Phone Number is required',
+              pattern: {
+                value: /^[0-9]{10}$/i,
+                message: 'Enter  Valid Phone Number',
+              },
             })}
           />
         </Grid>
@@ -167,8 +175,8 @@ const SmcEditProfile = (props) => {
             error={errors.user_id?.message}
             {...register('user_id', {
               required: 'User ID is required',
-
               pattern: {
+                value: /^[a-zA-Z0-9@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
                 message: 'Provide a Valid User ID',
               },
             })}

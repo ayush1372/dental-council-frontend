@@ -259,6 +259,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
               <Grid
                 item
                 xs="auto"
+                ml="auto"
                 sx={{
                   marginBottom: {
                     xs: '10px',
