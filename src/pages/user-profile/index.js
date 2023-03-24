@@ -103,6 +103,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
 
   const openDoctorEditProfile = () => {
     setIsReadMode(false);
+    resetStep();
     fetchCountries();
     fetchStates();
   };
@@ -232,53 +233,6 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
                   progress={showStaticFormProgress || personalDetails?.nmr_id ? 75 : progress}
                   completed={completed}
                 />
-
-                {!isReadMode && (
-                  <Box align="right" display={'flex'} flexDirection={{ xs: 'column', md: 'row' }}>
-                    <FormControlLabel
-                      sx={{
-                        width: {
-                          xs: 'fit-content',
-                          md: '250px',
-                        },
-                      }}
-                      value="email"
-                      control={
-                        <Switch
-                          color="primary"
-                          checked={emailNotification}
-                          onChange={(e) => {
-                            handleNotification(e, 'email');
-                          }}
-                        />
-                      }
-                      label="Email Notifications"
-                      labelPlacement="start"
-                    />
-                    <FormControlLabel
-                      sx={{
-                        width: {
-                          xs: 'fit-content',
-                          md: '250px',
-                        },
-                        marginLeft: 0,
-                        marginRight: -3,
-                      }}
-                      value="sms"
-                      control={
-                        <Switch
-                          color="primary"
-                          checked={mobileNotification}
-                          onChange={(e) => {
-                            handleNotification(e, 'sms');
-                          }}
-                        />
-                      }
-                      label="Mobile Notifications"
-                      labelPlacement="start"
-                    />
-                  </Box>
-                )}
               </Box>
               {!isReadMode && (
                 <BreadcrumbContainer
@@ -305,6 +259,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
               <Grid
                 item
                 xs="auto"
+                ml="auto"
                 sx={{
                   marginBottom: {
                     xs: '10px',
@@ -325,6 +280,57 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
                 </Button>
               </Grid>
             )}
+            <Grid item xs={12} lg="auto">
+              {!isReadMode && (
+                <Box
+                  display={'flex'}
+                  flexDirection={{ xs: 'column', sm: 'row' }}
+                  mt={{ xs: 2, lg: 0 }}
+                >
+                  <FormControlLabel
+                    sx={{
+                      width: {
+                        xs: 'auto',
+                      },
+                      ml: 0,
+                      mr: { xs: 0, sm: 2 },
+                    }}
+                    value="email"
+                    control={
+                      <Switch
+                        color="primary"
+                        checked={emailNotification}
+                        onChange={(e) => {
+                          handleNotification(e, 'email');
+                        }}
+                      />
+                    }
+                    label="Email Notifications"
+                    labelPlacement="start"
+                  />
+                  <FormControlLabel
+                    sx={{
+                      width: {
+                        xs: 'auto',
+                      },
+                      ml: 0,
+                    }}
+                    value="sms"
+                    control={
+                      <Switch
+                        color="primary"
+                        checked={mobileNotification}
+                        onChange={(e) => {
+                          handleNotification(e, 'sms');
+                        }}
+                      />
+                    }
+                    label="Mobile Notifications"
+                    labelPlacement="start"
+                  />
+                </Box>
+              )}
+            </Grid>
           </Grid>
         ) : null}
         {!isReadMode && <ConstantDetails />}
