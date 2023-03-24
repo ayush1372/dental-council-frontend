@@ -288,27 +288,27 @@ export const UploadFile = (props) => {
               </div>
             )}
             <div className={styles.uploadFileArea}>
-              {uploadFiles === 'single' && fileData.length === 1 && (
+              {uploadFiles === 'single' && fileData?.length === 1 && (
                 <Typography color="#a9a9a9" variant="caption">
                   01 FILE UPLOADED
                 </Typography>
               )}
-              {uploadFiles === 'multiple' && fileData.length > 0 && (
-                <Typography color="#a9a9a9">{`${fileData.length} FILES UPLOADED`}</Typography>
+              {uploadFiles === 'multiple' && fileData?.length > 0 && (
+                <Typography color="#a9a9a9">{`${fileData?.length} FILES UPLOADED`}</Typography>
               )}
               <table>
-                {fileData.map((file) => {
+                {fileData?.map((file) => {
                   return (
-                    <tr key={file.id}>
-                      <td key={file.id}>
+                    <tr key={file?.id}>
+                      <td key={file?.id}>
                         <div className={styles.fileDetailsContainer}>
                           <UploadFileIcon color="primary" fontSize="large" />
                           <div className={styles.fileDetailsArea}>
-                            <Typography color="string">{file.fileName}</Typography>
-                            {fileData.length === 1 || uploadStatus === 'successful' ? (
-                              <div className={styles.timeInfo}>
-                                {moment(file.timeInfo).format('DD MMMM, YYYY')} at{' '}
-                                {moment(file.timeInfo).format('HH:mm A')}
+                            <Typography color="string">{file?.fileName}</Typography>
+                            {fileData?.length === 1 || uploadStatus === 'successful' ? (
+                              <div className={styles?.timeInfo}>
+                                {moment(file?.timeInfo).format('DD MMMM, YYYY')} at{' '}
+                                {moment(file?.timeInfo).format('HH:mm A')}
                               </div>
                             ) : uploadStatus === 'failed' ? (
                               <Typography color="#ff0000" variant="body2">
@@ -320,7 +320,7 @@ export const UploadFile = (props) => {
                               </Typography>
                             )}
                           </div>
-                          {fileData.length === 1 || uploadStatus === 'successful' ? (
+                          {fileData?.length === 1 || uploadStatus === 'successful' ? (
                             <div className={styles.actionArea}>
                               {' '}
                               {'   '}

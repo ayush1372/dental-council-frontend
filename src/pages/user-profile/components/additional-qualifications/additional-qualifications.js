@@ -23,9 +23,7 @@ const qualificationObjTemplate = [
 ];
 
 const AdditionalQualifications = () => {
-  const [qualificationFilesData, setQualificationFilesData] = useState({
-    'qualification0.files': [],
-  });
+  const [qualificationFilesData, setQualificationFilesData] = useState([]);
   const {
     formState: { errors },
     getValues,
@@ -52,6 +50,13 @@ const AdditionalQualifications = () => {
     setQualificationFilesData({ ...qualificationFilesData });
   };
 
+  // this below code is storing qualification details
+  // const { qualification } = getValues();
+  const onSubmit = () => {
+    // // eslint-disable-next-line no-console
+    // console.log('123', qualification, qualificationFilesData);
+  };
+
   return (
     <Box p={3}>
       <Box>
@@ -64,7 +69,7 @@ const AdditionalQualifications = () => {
         </Typography> */}
       </Box>
       <Box mt={1}>
-        {fields.map((qualification, index) => {
+        {fields?.map((qualification, index) => {
           const showDeleteIcon = index > 0;
           return (
             <EditQualificationDetails
@@ -88,7 +93,7 @@ const AdditionalQualifications = () => {
       </Box>
 
       <Box mt={2} display="flex" width="100%">
-        <Button variant="contained" color="secondary" onClick={handleSubmit}>
+        <Button variant="contained" color="secondary" onClick={handleSubmit(onSubmit)}>
           Submit
         </Button>
         <Button variant="contained" color="grey" sx={{ marginLeft: '20px' }}>

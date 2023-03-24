@@ -115,10 +115,7 @@ const EditQualificationDetails = ({
           <Typography component="div" variant="body1" color="inputTextColor">
             Qualification From
           </Typography>
-          {
-            // eslint-disable-next-line no-console
-            console.log(qualification)
-          }
+
           <RadioGroup
             onChange={handleQualificationFrom}
             name={`qualification[${index}].qualificationfrom`}
@@ -516,7 +513,12 @@ const EditQualificationDetails = ({
           {/* )} */}
         </Grid>
         <Grid container item xs={12} md={6} lg={4} columnSpacing={2}>
-          <Typography pl={2}>Month & Year Of Awarding Degree</Typography>
+          <Typography pl={2}>
+            Month & Year Of Awarding Degree
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
+          </Typography>
           <Grid item xs={12} md={6} mb={{ xs: 2, md: 0 }}>
             <Select
               fullWidth
