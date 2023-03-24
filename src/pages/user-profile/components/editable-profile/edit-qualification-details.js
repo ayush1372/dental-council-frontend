@@ -85,13 +85,15 @@ const EditQualificationDetails = ({
   }, [qualificationfrom]);
 
   useEffect(() => {
-    setValue(`qualification[${index}].qualification`, degree[0]);
     if (qualificationfrom !== 'International') {
       setValue(`qualification[${index}].country`, {
         id: 356,
         name: 'India',
         nationality: 'Indian',
       });
+      setValue(`qualification[${index}].qualification`, degree[0]);
+    } else {
+      setValue(`qualification[${index}].qualification`, qualification?.qualification);
     }
     setValue(`qualification[${index}].qualificationfrom`, fields[index].qualificationfrom);
   }, []);
@@ -322,7 +324,11 @@ const EditQualificationDetails = ({
             name="Qualification"
             label="Name Of The Degree"
             defaultValue={degree[0]?.label}
-            // value={degree[0]?.label}
+            value={
+              qualificationfrom === 'International'
+                ? getValues()?.qualification[index]?.qualification
+                : degree[0]?.label
+            }
             required={true}
             {...register(
               `qualification[${index}].qualification`,
