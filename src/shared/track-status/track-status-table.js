@@ -105,7 +105,7 @@ function TrackStatusTable(props) {
       type: 'string',
     },
     { title: 'Date of Submission', name: 'dateofSubmission', sorting: true, type: 'string' },
-    { title: 'Pendency days', name: 'pendency', sorting: true, type: 'string' },
+    { title: 'Pendency (in days)', name: 'pendency', sorting: true, type: 'string' },
     { title: 'Pending with user', name: 'pending', sorting: true, type: 'string' },
     loggedInUserType !== 'College' && {
       title:

@@ -122,8 +122,13 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
                 dispatch(getRegistrationCouncilList());
                 navigate(`/profile`);
               })
-              .catch(() => {
-                // successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+              .catch((error) => {
+                successToast(
+                  'ERROR: ' + error?.data?.response?.data?.message,
+                  'auth-error',
+                  'error',
+                  'top-center'
+                );
               });
           } else {
             successToast(
@@ -163,8 +168,13 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
                 dispatch(getRegistrationCouncilList());
                 navigate(`/profile`);
               })
-              .catch(() => {
-                // successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+              .catch((error) => {
+                successToast(
+                  'ERROR: ' + error?.data?.response?.data?.message,
+                  'auth-error',
+                  'error',
+                  'top-center'
+                );
               });
           } else {
             successToast(

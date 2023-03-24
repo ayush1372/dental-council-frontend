@@ -141,8 +141,13 @@ export const Login = ({ loginName }) => {
                 navigate(`/profile`);
                 getCommonData(resp);
               })
-              .catch(() => {
-                // successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+              .catch((error) => {
+                successToast(
+                  'ERROR: ' + error?.data?.response?.data?.message,
+                  'auth-error',
+                  'error',
+                  'top-center'
+                );
               });
           } else {
             successToast(
@@ -183,8 +188,13 @@ export const Login = ({ loginName }) => {
                 navigate(`/profile`);
                 getCommonData(resp);
               })
-              .catch(() => {
-                // successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+              .catch((error) => {
+                successToast(
+                  'ERROR: ' + error?.data?.response?.data?.message,
+                  'auth-error',
+                  'error',
+                  'top-center'
+                );
               });
           } else {
             successToast(
