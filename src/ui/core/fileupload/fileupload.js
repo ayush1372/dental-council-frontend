@@ -208,7 +208,7 @@ export const UploadFile = (props) => {
     <>
       <Box>
         {!isDigiLockcerVisible && (
-          <Typography color="text.primary" component="div">
+          <Typography color="inputTextColor.main" fontWeight="500" component="div">
             {uploadFileLabel} <Typography color="error"> *</Typography>
           </Typography>
         )}
@@ -216,7 +216,8 @@ export const UploadFile = (props) => {
         {isDigiLockcerVisible && (
           <Box display="flex" justifyContent="space-between" flexWrap="wrap">
             <Typography
-              color="text.primary"
+              color="inputTextColor.main"
+              fontWeight="500"
               component="div"
               flexBasis={{ xs: '100%', sm: 0 }}
               flexGrow="1"
@@ -289,7 +290,7 @@ export const UploadFile = (props) => {
             )}
             <div className={styles.uploadFileArea}>
               {uploadFiles === 'single' && fileData.length === 1 && (
-                <Typography color="#a9a9a9" variant="caption">
+                <Typography color="grey1.main" variant="caption">
                   01 FILE UPLOADED
                 </Typography>
               )}
@@ -304,26 +305,24 @@ export const UploadFile = (props) => {
                         <div className={styles.fileDetailsContainer}>
                           <UploadFileIcon color="primary" fontSize="large" />
                           <div className={styles.fileDetailsArea}>
-                            <Typography color="string">{file.fileName}</Typography>
+                            <Typography color="inputTextColor.main">{file.fileName}</Typography>
                             {fileData.length === 1 || uploadStatus === 'successful' ? (
                               <div className={styles.timeInfo}>
                                 {moment(file.timeInfo).format('DD MMMM, YYYY')} at{' '}
                                 {moment(file.timeInfo).format('HH:mm A')}
                               </div>
                             ) : uploadStatus === 'failed' ? (
-                              <Typography color="#ff0000" variant="body2">
+                              <Typography color="error.main" variant="body2">
                                 Upload Failed
                               </Typography>
                             ) : (
-                              <Typography color="#ff0000" variant="body2">
+                              <Typography color="error.main" variant="body2">
                                 Uploading
                               </Typography>
                             )}
                           </div>
                           {fileData.length === 1 || uploadStatus === 'successful' ? (
                             <div className={styles.actionArea}>
-                              {' '}
-                              {'   '}
                               <DeleteOutlineIcon
                                 color="error"
                                 onClick={(e) => {
