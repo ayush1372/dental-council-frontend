@@ -39,7 +39,7 @@ const ButtonGroupWizard = ({
         </Grid>
       )}
       {!hideNext && (
-        <Grid item xs={12} md={1}>
+        <Grid item xs={12} md="auto">
           <Button
             variant="contained"
             color="secondary"
@@ -47,7 +47,6 @@ const ButtonGroupWizard = ({
             data-testid={dataTestidNext}
             disabled={loading || disabledNext}
             sx={{
-              width: '100%',
               margin: {
                 width: '100%',
                 xs: '5px 0',
