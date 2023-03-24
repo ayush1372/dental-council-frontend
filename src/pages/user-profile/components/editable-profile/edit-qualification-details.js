@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -50,7 +51,8 @@ const EditQualificationDetails = ({
   const qualificationfrom = watch(`qualification[${index}].qualificationfrom`);
   const watchCollege = watch(`qualification[${index}].college`);
   const selectedState = watch(`qualification[${index}].state`);
-
+  const { userActiveTab } = useSelector((state) => state.common);
+  console.log('user active tab', userActiveTab);
   const fetchColleges = (selectedState) => {
     if (selectedState) {
       dispatch(getCollegesList(selectedState)).then((dataResponse) => {
@@ -333,7 +335,11 @@ const EditQualificationDetails = ({
                   }
                 : ''
             )}
-            disabled={qualificationfrom === 'International' ? false : true}
+            disabled={
+              qualificationfrom === 'International' || userActiveTab === 'additional-qualifications'
+                ? false
+                : true
+            }
             options={
               qualificationfrom === 'International'
                 ? createSelectFieldData(coursesList.data)

@@ -221,3 +221,20 @@ export const updateProfileConsent = (payload) => async () => {
       });
   });
 };
+
+export const additionalQualificationsData = (payload) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.DoctorUserProfileData.additionalQualifications,
+      headers: { 'Content-Type': 'application/json' },
+      data: payload,
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};

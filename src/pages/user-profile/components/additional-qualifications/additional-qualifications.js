@@ -1,9 +1,12 @@
+/* eslint-disable no-console */
 import { useState } from 'react';
 
 // import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Box } from '@mui/material';
 import { useFieldArray, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router';
 
+import { additionalQualificationsData } from '../../../../store/actions/doctor-user-profile-actions';
 import { Button } from '../../../../ui/core';
 import EditQualificationDetails from '../editable-profile/edit-qualification-details';
 
@@ -21,8 +24,8 @@ const qualificationObjTemplate = [
     qualificationfrom: '',
   },
 ];
-
 const AdditionalQualifications = () => {
+  const dispatch = useNavigate();
   const [qualificationFilesData, setQualificationFilesData] = useState([]);
   const {
     formState: { errors },
@@ -53,8 +56,9 @@ const AdditionalQualifications = () => {
   // this below code is storing qualification details
   const { qualification } = getValues();
   const onSubmit = () => {
-    // eslint-disable-next-line no-console
-    console.log('123', qualification, qualificationFilesData);
+    console.log('CLICKED');
+    dispatch(additionalQualificationsData(qualification));
+    console.log('123', qualification, 'files data', qualificationFilesData);
   };
 
   return (
