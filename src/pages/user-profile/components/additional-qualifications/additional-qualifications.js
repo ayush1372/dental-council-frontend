@@ -36,6 +36,10 @@ const AdditionalQualifications = () => {
   const [qualificationFilesData, setQualificationFilesData] = useState(
     degree_certificate ? [{ file: degree_certificate }] : []
   );
+  // eslint-disable-next-line no-unused-vars
+  const { statesList, collegesList, universitiesList, coursesList } = useSelector(
+    (state) => state?.common
+  );
 
   const dispatch = useDispatch();
   // const [qualificationFilesData, setQualificationFilesData] = useState([]);
@@ -64,11 +68,69 @@ const AdditionalQualifications = () => {
     setQualificationFilesData(files);
   };
 
+  const getStateData = (State) => {
+    let stateData = [];
+    statesList?.map((elementData) => {
+      if (elementData.id === State) {
+        stateData.push(elementData);
+      }
+    });
+    return stateData[0];
+  };
+  const getCollegeData = (college) => {
+    let collegeData = [];
+    Array.isArray(collegesList) &&
+      collegesList?.map((elementData) => {
+        if (elementData.id === college) {
+          collegeData.push(elementData);
+        }
+      });
+    return collegeData[0];
+  };
+
+  const getUniversityData = (university) => {
+    let universityData = [];
+    Array.isArray(universitiesList) &&
+      universitiesList?.map((elementData) => {
+        if (elementData.id === university) {
+          universityData.push(elementData);
+        }
+      });
+    return universityData[0];
+  };
+  const getCourseData = (course) => {
+    let courseData = [];
+    Array.isArray(coursesList) &&
+      coursesList?.map((elementData) => {
+        if (elementData.id === course) {
+          courseData.push(elementData);
+        }
+      });
+    return courseData[0];
+  };
+
   // this below code is storing qualification details
   const { qualification } = getValues();
   const onSubmit = () => {
     const formData = new FormData();
-    const doctorRegistrationDetailsJson = JSON.stringify(qualification);
+    // eslint-disable-next-line no-console
+    console.log('qualification', qualification);
+    let updatedQualificationDetails = {
+      country: qualification?.country,
+      state: getStateData(qualification?.state),
+      college: getCollegeData(qualification?.college),
+      university: getUniversityData(qualification?.university),
+      course: getCourseData(qualification?.nameindegree),
+      qualification_year: qualification?.year,
+      qualification_month: qualification?.month,
+      is_name_change: '',
+      is_verified: '',
+      request_id: '',
+      qualification_from: qualification?.qualificationfrom,
+    };
+    // eslint-disable-next-line no-console
+    console.log('qualification 123', updatedQualificationDetails);
+    const doctorRegistrationDetailsJson = JSON.stringify(updatedQualificationDetails);
     const doctorRegistrationDetailsBlob = new Blob([doctorRegistrationDetailsJson], {
       type: 'application/json',
     });
@@ -80,15 +142,6 @@ const AdditionalQualifications = () => {
 
   return (
     <Box p={3}>
-      <Box>
-        {/* <Typography variant="h3" color="textPrimary.main">
-          Additional Qualifications
-        </Typography> */}
-        {/* <Typography variant="body4" color="messageBlue.main" display="flex" alignItems="center">
-          <InfoOutlinedIcon fontSize="18px" />
-          User can add up to 7 qualification degrees
-        </Typography> */}
-      </Box>
       <Box mt={1}>
         {fields?.map((qualification, index) => {
           const showDeleteIcon = index > 0;
