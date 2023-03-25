@@ -89,6 +89,11 @@ export function SuspendLicenseVoluntaryRetirement({
         break;
     }
 
+    if (getValues()?.voluntarySuspendLicense === 'permanent-suspension-check') {
+      setSuccessPopupMessage('Permanently Suspended');
+    } else if (getValues()?.voluntarySuspendLicense === 'voluntary-suspension-check') {
+      setSuccessPopupMessage('Temporarily Suspended');
+    }
     let suspendDoctorBody = {
       hp_profile_id:
         userActiveTab === 'voluntary-suspend-license'
@@ -97,7 +102,12 @@ export function SuspendLicenseVoluntaryRetirement({
       application_type_id: personalDetails?.application_type_id
         ? personalDetails?.application_type_id
         : 1,
-      action_id: action_id,
+      action_id:
+        getValues()?.voluntarySuspendLicense === 'permanent-suspension-check'
+          ? (action_id = 6)
+          : getValues()?.voluntarySuspendLicense === 'voluntary-suspension-check'
+          ? (action_id = 7)
+          : (action_id = 1),
       from_date: getValues()?.fromDate ? getValues()?.fromDate : '',
       to_date: getValues()?.toDate ? getValues()?.toDate : '',
       remarks: getValues()?.remark ? getValues()?.remark : '',
