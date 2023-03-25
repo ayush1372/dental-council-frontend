@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Box, Grid, Link, Typography, useTheme } from '@mui/material';
 import { useForm } from 'react-hook-form';
@@ -41,6 +41,7 @@ export const Login = ({ loginName }) => {
   const {
     register,
     getValues,
+    setValue,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
@@ -215,7 +216,10 @@ export const Login = ({ loginName }) => {
   const handleCancelClick = () => {
     navigate('/');
   };
-
+  useEffect(() => {
+    setValue('userID', '');
+    setValue('password', '');
+  }, [loginName]);
   return (
     <Box p={4} bgcolor="white.main" boxShadow="4">
       <Typography variant="h2" color="primary.dark" mb={5}>
