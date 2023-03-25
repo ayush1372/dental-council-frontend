@@ -10,12 +10,21 @@ import { createEditFieldData } from '../../../helpers/functions/common-functions
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import { registerCollegeDetails } from '../../../store/actions/college-actions';
-import { getRegistrationCouncilList, getStatesList } from '../../../store/actions/common-actions';
+import {
+  getDistrictList,
+  getRegistrationCouncilList,
+  getStatesList,
+  getSubDistrictsList,
+  getUniversitiesList,
+} from '../../../store/actions/common-actions';
 import { Button } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
 
 function NMCCollegeRegistration() {
-  const { statesList, councilNames, universitiesList } = useSelector((state) => state.common);
+  const [submit, setSubmit] = useState(false);
+  const { statesList, councilNames, districtsList, subDistrictList, universitiesList } =
+    useSelector((state) => state.common);
+
   const registrationSuccess = useSelector((state) => state.college.collegeRegisterDetails.data);
 
   const [successModalPopup, setSuccessModalPopup] = useState(false);
@@ -60,17 +69,8 @@ function NMCCollegeRegistration() {
       Email: '',
     },
   });
-
-  const handleInput = (e) => {
-    e.preventDefault();
-    if (e.target.value.length > 0) {
-      e.target.value = isNaN(e.target.value)
-        ? e.target.value.toString().slice(0, -1)
-        : Math.max(0, parseInt(e.target.value)).toString().slice(0, 10);
-    }
-  };
-
   const onsubmit = () => {
+    setSubmit(true);
     const collegeDetailValues = {
       id: null,
       name: getValues().CollegeNameID,
@@ -94,7 +94,6 @@ function NMCCollegeRegistration() {
         if (registrationSuccess) {
           setSuccessModalPopup(true);
         }
-        reset();
       })
       .catch((error) => {
         successToast(
@@ -104,7 +103,53 @@ function NMCCollegeRegistration() {
           'top-center'
         );
       });
+    reset();
   };
+  useEffect(() => {
+    setValue('CollegeName', '');
+    setValue('CollegeNameID', '');
+    setValue('CollegeCode', '');
+    setValue('CollegeID', '');
+    setValue('MobileNumber', '');
+    setValue('CouncilName', '');
+    setValue('CouncilID', '');
+    setValue('UniversityName', '');
+    setValue('UniversityID', '');
+    setValue('Website', '');
+    setValue('AddressLine1', '');
+    setValue('AddressLine2', '');
+    setValue('StateName', '');
+    setValue('StateID', '');
+    setValue('District', '');
+    setValue('DistrictID', '');
+    setValue('Town', '');
+    setValue('TownID', '');
+    setValue('Pincode', '');
+    setValue('Email', '');
+  }, [submit]);
+
+  const handleInput = (e) => {
+    e.preventDefault();
+    if (e.target.value.length > 0) {
+      e.target.value = isNaN(e.target.value)
+        ? e.target.value.toString().slice(0, -1)
+        : Math.max(0, parseInt(e.target.value)).toString().slice(0, 10);
+    }
+  };
+  const onCollegeCodeChange = (currentValue) => {
+    setValue('CollegeID', currentValue.id);
+    dispatch(getUniversitiesList(currentValue.id));
+  };
+
+  const onStateChange = (currentValue) => {
+    setValue('StateID', currentValue.id);
+    dispatch(getDistrictList(currentValue.id));
+  };
+  const onDistrictChange = (currentValue) => {
+    setValue('DistrictID', currentValue.id);
+    dispatch(getSubDistrictsList(currentValue.id));
+  };
+
   return (
     <Container sx={{ mt: 5 }}>
       <Grid container item spacing={2}>
@@ -126,7 +171,7 @@ function NMCCollegeRegistration() {
             fullWidth
             name="CollegeName"
             items={createEditFieldData(councilNames)}
-            placeholder="Select  CollegeName"
+            placeholder="Select  College"
             clearErrors={clearErrors}
             error={errors.CollegeName?.message}
             {...register('CollegeName', {
@@ -154,7 +199,7 @@ function NMCCollegeRegistration() {
               required: 'CollegeCode is required',
             })}
             onChange={(currentValue) => {
-              setValue('CollegeID', currentValue.id);
+              onCollegeCodeChange(currentValue);
             }}
           />
         </Grid>
@@ -171,7 +216,7 @@ function NMCCollegeRegistration() {
             fullWidth
             name="MobileNumber"
             required
-            placeholder={t('MobileNumber')}
+            placeholder={t('Enter MobileNumber')}
             onInput={(e) => handleInput(e)}
             error={errors.MobileNumber?.message}
             {...register('MobileNumber', {
@@ -195,7 +240,7 @@ function NMCCollegeRegistration() {
               fullWidth
               name="CouncilName"
               items={createEditFieldData(councilNames)}
-              placeholder="Select   Council"
+              placeholder="Select Council"
               clearErrors={clearErrors}
               error={errors.CouncilName?.message}
               {...register('CouncilName', {
@@ -221,7 +266,7 @@ function NMCCollegeRegistration() {
             name="UniversityName"
             clearErrors={clearErrors}
             items={createEditFieldData(universitiesList.data)}
-            placeholder="Select University Name"
+            placeholder="Select University"
             error={errors.UniversityName?.message}
             {...register('UniversityName', {
               required: 'University Name is required',
@@ -297,13 +342,13 @@ function NMCCollegeRegistration() {
             name="StateName"
             items={createEditFieldData(statesList)}
             clearErrors={clearErrors}
-            placeholder={'select state name'}
+            placeholder={'Select State '}
             error={errors.StateName?.message}
             {...register('StateName', {
               required: 'State Name is required',
             })}
             onChange={(currentValue) => {
-              setValue('StateID', currentValue.id);
+              onStateChange(currentValue);
             }}
           />
         </Grid>
@@ -318,15 +363,18 @@ function NMCCollegeRegistration() {
             <SearchableDropdown
               fullWidth
               name="District"
-              items={createEditFieldData(councilNames)}
+              items={createEditFieldData(districtsList)}
               placeholder="Select  District"
               clearErrors={clearErrors}
               error={errors.District?.message}
               {...register('District', {
                 required: 'District  is required',
               })}
+              //   onChange={(currentValue) => {
+              //     setValue('DistrictID', currentValue.id);
+              //   }}
               onChange={(currentValue) => {
-                setValue('DistrictID', currentValue.id);
+                onDistrictChange(currentValue);
               }}
             />
           </Box>
@@ -344,8 +392,8 @@ function NMCCollegeRegistration() {
             fullWidth
             name="Town"
             clearErrors={clearErrors}
-            items={createEditFieldData(universitiesList.data)}
-            placeholder="Select Town Name"
+            items={createEditFieldData(subDistrictList)}
+            placeholder="Select Town "
             error={errors.Town?.message}
             {...register('Town', {
               required: 'Town Name is required',
@@ -365,9 +413,11 @@ function NMCCollegeRegistration() {
           </Typography>
           <TextField
             fullWidth
+            type="number"
+            name="Pincode"
             required
-            name={'Pincode'}
             placeholder={'Enter  Pin Code'}
+            error={errors.Pincode?.message}
             {...register('Pincode', {
               required: 'PinCode  is required',
               pattern: {

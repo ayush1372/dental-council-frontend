@@ -11,6 +11,7 @@ import ChangePassword from '../../pages/profile/change-password/change-password'
 import CollegeDean from '../../pages/profile/college-dean/college-dean';
 import CollegeMyProfile from '../../pages/profile/college-my-profile/college-my-profile';
 import CollegeRegistrar from '../../pages/profile/college-registrar/college-registrar';
+import CollegeVerifier from '../../pages/profile/college-verifier/college-verifier';
 import CollegeApproval from '../../pages/profile/components/college-approval-cards/college-approval-cards';
 import Dashboard from '../../pages/profile/components/dashboard-cards/dashboard-cards';
 import NewDoctorRegistration from '../../pages/profile/new-doctor-registration/new-doctor-registration';
@@ -214,6 +215,7 @@ export const colgTabs = [
     icon: <AppRegistrationIcon />,
     element: <CollegeDean />,
   },
+
   {
     option: 5,
     name: 'Change Password',
@@ -275,5 +277,12 @@ export const colgDeanRegTabs = [
     tabName: 'change-password',
     icon: <PasswordIcon />,
     element: <ChangePassword tabName={SideDrawerListItem} />,
+  },
+  {
+    option: 3,
+    name: 'Create Verifier',
+    tabName: 'Create Verifier',
+    icon: <AppRegistrationIcon />,
+    element: <CollegeVerifier />,
   },
 ];
