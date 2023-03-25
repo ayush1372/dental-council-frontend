@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Box } from '@mui/material';
@@ -123,23 +123,26 @@ const AdditionalQualifications = () => {
   const onSubmit = () => {
     const formData = new FormData();
     let qualification_detail_response_tos = [],
-      test = [];
-    let updatedQualificationDetails = {
-      country: qualification[0]?.country,
-      state: getStateData(qualification[0]?.state),
-      college: getCollegeData(qualification[0]?.college),
-      university: getUniversityData(qualification[0]?.university),
-      course: getCourseData(qualification[0]?.qualification),
-      qualification_year: qualification[0]?.year,
-      qualification_month: qualification[0]?.month,
-      is_name_change: 0,
-      is_verified: 0,
-      request_id: '',
-      qualification_from: qualification[0]?.qualificationfrom,
-    };
-    test.push(updatedQualificationDetails);
+      updatedQualificationDetailsArray = [];
+    let updatedQualificationDetails;
+    qualification?.forEach((qualification) => {
+      updatedQualificationDetails = {
+        country: qualification?.country,
+        state: getStateData(qualification?.state),
+        college: getCollegeData(qualification?.college),
+        university: getUniversityData(qualification?.university),
+        course: getCourseData(qualification?.qualification),
+        qualification_year: qualification?.year,
+        qualification_month: qualification?.month,
+        is_name_change: 0,
+        is_verified: 0,
+        request_id: '',
+        qualification_from: qualification?.qualificationfrom,
+      };
+      updatedQualificationDetailsArray.push(updatedQualificationDetails);
+    });
     qualification_detail_response_tos = {
-      qualification_detail_request_tos: test,
+      qualification_detail_request_tos: updatedQualificationDetailsArray,
     };
 
     const doctorRegistrationDetailsJson = JSON.stringify(qualification_detail_response_tos);
@@ -151,6 +154,10 @@ const AdditionalQualifications = () => {
 
     dispatch(additionalQualificationsData(formData, personalDetails?.hp_profile_id));
   };
+
+  useEffect(() => {
+    setQualificationFilesData([]);
+  }, []);
 
   return (
     <Box p={3}>
@@ -193,6 +200,8 @@ const AdditionalQualifications = () => {
           color="primary"
           onClick={() => {
             append({ ...qualificationObjTemplate });
+            // eslint-disable-next-line no-console
+            console.log('qualificationFilesData', qualification);
           }}
         >
           Add Additional Qualification
