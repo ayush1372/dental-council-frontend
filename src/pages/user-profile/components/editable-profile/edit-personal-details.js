@@ -615,16 +615,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
             </Typography>
             <Select
               fullWidth
+              sx={{ backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main' }}
               error={errors.Nationality?.message}
               name="Nationality"
               defaultValue={getValues().Nationality}
               disabled
               required={true}
-              sx={{
-                input: {
-                  backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
-                },
-              }}
               {...register('Nationality', {
                 required: 'Nationality is required',
               })}
