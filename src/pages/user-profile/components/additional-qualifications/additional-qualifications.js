@@ -79,8 +79,8 @@ const AdditionalQualifications = () => {
   };
   const getCollegeData = (college) => {
     let collegeData = [];
-    Array.isArray(collegesList) &&
-      collegesList?.map((elementData) => {
+    Array.isArray(collegesList?.data) &&
+      collegesList?.data?.map((elementData) => {
         if (elementData.id === college) {
           collegeData.push(elementData);
         }
@@ -90,8 +90,8 @@ const AdditionalQualifications = () => {
 
   const getUniversityData = (university) => {
     let universityData = [];
-    Array.isArray(universitiesList) &&
-      universitiesList?.map((elementData) => {
+    Array.isArray(universitiesList?.data) &&
+      universitiesList?.data?.map((elementData) => {
         if (elementData.id === university) {
           universityData.push(elementData);
         }
@@ -100,8 +100,8 @@ const AdditionalQualifications = () => {
   };
   const getCourseData = (course) => {
     let courseData = [];
-    Array.isArray(coursesList) &&
-      coursesList?.map((elementData) => {
+    Array.isArray(coursesList?.data) &&
+      coursesList?.data?.map((elementData) => {
         if (elementData.id === course) {
           courseData.push(elementData);
         }
@@ -116,20 +116,19 @@ const AdditionalQualifications = () => {
     // eslint-disable-next-line no-console
     console.log('qualification', qualification);
     let updatedQualificationDetails = {
-      country: qualification?.country,
-      state: getStateData(qualification?.state),
-      college: getCollegeData(qualification?.college),
-      university: getUniversityData(qualification?.university),
-      course: getCourseData(qualification?.nameindegree),
-      qualification_year: qualification?.year,
-      qualification_month: qualification?.month,
+      country: qualification[0]?.country,
+      state: getStateData(qualification[0]?.state),
+      college: getCollegeData(qualification[0]?.college),
+      university: getUniversityData(qualification[0]?.university),
+      course: getCourseData(qualification[0]?.nameindegree),
+      qualification_year: qualification[0]?.year,
+      qualification_month: qualification[0]?.month,
       is_name_change: '',
       is_verified: '',
       request_id: '',
-      qualification_from: qualification?.qualificationfrom,
+      qualification_from: qualification[0]?.qualificationfrom,
     };
-    // eslint-disable-next-line no-console
-    console.log('qualification 123', updatedQualificationDetails);
+
     const doctorRegistrationDetailsJson = JSON.stringify(updatedQualificationDetails);
     const doctorRegistrationDetailsBlob = new Blob([doctorRegistrationDetailsJson], {
       type: 'application/json',
