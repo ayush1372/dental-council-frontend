@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useState } from 'react';
 
 import { Box, Typography } from '@mui/material';
@@ -33,7 +32,6 @@ const NewPasswordSetup = () => {
     (state) => state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId
   );
   const hprIdData = useSelector((state) => state?.doctorRegistration?.hpIdExistsDetailsData?.data);
-  console.log('hpr id data', hprIdData, hprIdData?.new);
   const demographicAuthMobileVerify = useSelector(
     (state) => state?.AadhaarTransactionId?.demographicAuthMobileDetailsData
   );
@@ -124,7 +122,6 @@ const NewPasswordSetup = () => {
         new: isNewFlag,
         hpr_id: hrp_id,
       };
-      console.log('user api payload==>', reqPayload);
       dispatch(setUserPassword(reqPayload))
         .then(() => {
           setShowSuccess(true);
