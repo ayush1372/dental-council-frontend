@@ -295,7 +295,7 @@ export const UploadFile = (props) => {
                 </Typography>
               )}
               {uploadFiles === 'multiple' && fileData?.length > 0 && (
-                <Typography color="#a9a9a9">{`${fileData?.length} FILES UPLOADED`}</Typography>
+                <Typography color="grey1.main">{`${fileData?.length} FILES UPLOADED`}</Typography>
               )}
               <table>
                 {fileData?.map((file) => {
