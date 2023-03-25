@@ -137,7 +137,7 @@ export function SuspendLicenseVoluntaryRetirement({
           ? selectedSuspendLicenseProfile?.view?.value
           : '',
         start_date: getValues()?.fromDate ? getValues()?.fromDate : '',
-        to_date: getValues()?.toDate ? getValues()?.toDate : '',
+        end_date: getValues()?.toDate ? getValues()?.toDate : '',
         remarks: getValues()?.remark ? getValues()?.remark : '',
       };
       try {
