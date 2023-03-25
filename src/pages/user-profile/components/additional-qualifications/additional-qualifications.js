@@ -50,26 +50,24 @@ const AdditionalQualifications = () => {
     name: 'qualification',
   });
 
-  const handleQualificationFilesData = (fileName, files) => {
-    qualificationFilesData[fileName] = files;
-    setQualificationFilesData([{ ...qualificationFilesData }]);
+  const handleQualificationFilesData = (files) => {
+    setQualificationFilesData(files);
   };
 
   // this below code is storing qualification details
   const { qualification } = getValues();
+
   const onSubmit = () => {
     const formData = new FormData();
-
     const doctorRegistrationDetailsJson = JSON.stringify(qualification);
     const doctorRegistrationDetailsBlob = new Blob([doctorRegistrationDetailsJson], {
       type: 'application/json',
     });
     formData.append('data', doctorRegistrationDetailsBlob);
-    formData.append('degreeCertificate', qualificationFilesData[0].file);
+    console.log('qualificationFilesData before form data', qualificationFilesData);
+    formData.append('degreeCertificate', qualificationFilesData[0]?.file);
 
-    console.log('CLICKED');
     dispatch(additionalQualificationsData(formData, personalDetails?.hp_profile_id));
-    console.log('123', qualification, 'files data', qualificationFilesData);
   };
 
   return (
