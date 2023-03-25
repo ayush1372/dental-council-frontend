@@ -105,7 +105,6 @@ function TrackAppicationTable({
     },
 
     { title: 'Date of Submission', name: 'created_at', sorting: true, type: 'date' },
-
     {
       title: 'Current Status',
       name: 'doctor_status',

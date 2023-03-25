@@ -29,7 +29,6 @@ import PreviewProfile from './components/preview-profile/preview-profile';
 import ProfileConsent from './components/profile-consent/profile-consent';
 import RegisterAndAcademicDetails from './components/register-and-academic-details/register-and-academic-details';
 // import WorkProfile from './components/work-profile/work-profile';
-
 const readWizardSteps = ['Personal Details', 'Registration & Academic Details']; //, 'Work Profile'
 
 export const UserProfile = ({ showViewProfile, selectedRowData }) => {
@@ -49,7 +48,6 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
 
   const [emailNotification, setEmailNotification] = useState();
   const [mobileNotification, setMobileNotification] = useState();
-  const tableData = useSelector((state) => state.common.trackApplicationTableData);
 
   const handleNotification = (eventData, mode) => {
     if (mode === 'email') {
@@ -235,8 +233,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
                   progress={
                     showStaticFormProgress ||
                     personalDetails?.nmr_id ||
-                    tableData?.data?.data?.health_professional_applications[0]?.hp_profile_id ===
-                      personalDetails?.hp_profile_id
+                    personalDetails?.work_flow_status_id === 1
                       ? 75
                       : progress
                   }
@@ -264,35 +261,32 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
                 }}
               ></Grid>
             )} */}
-            {isReadMode &&
-            tableData?.data?.data?.health_professional_applications[0]?.hp_profile_id ===
-              personalDetails?.hp_profile_id
-              ? !isReadMode
-              : isReadMode &&
-                isApplicationPending && (
-                  <Grid
-                    item
-                    xs="auto"
-                    sx={{
-                      marginBottom: {
-                        xs: '10px',
-                        md: '0',
-                      },
-                    }}
-                  >
-                    <Button
-                      startIcon={<EditIcon sx={{ mr: 1 }} />}
-                      variant="contained"
-                      color="secondary"
-                      onClick={openDoctorEditProfile}
-                      sx={{
-                        width: '100%',
-                      }}
-                    >
-                      Edit Profile
-                    </Button>
-                  </Grid>
-                )}
+            {isReadMode && isApplicationPending && (
+              <Grid
+                item
+                xs="auto"
+                ml="auto"
+                sx={{
+                  marginBottom: {
+                    xs: '10px',
+                    md: '0',
+                  },
+                }}
+              >
+                <Button
+                  startIcon={<EditIcon sx={{ mr: 1 }} />}
+                  variant="contained"
+                  color="secondary"
+                  onClick={openDoctorEditProfile}
+                  sx={{
+                    width: '100%',
+                  }}
+                >
+                  Edit Profile
+                </Button>
+              </Grid>
+            )}
+
             <Grid item xs={12} lg="auto">
               {!isReadMode && (
                 <Box

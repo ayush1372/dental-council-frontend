@@ -359,9 +359,6 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
                 },
               })}
             />
-            <Typography display={'flex'} justifyContent="flex-end" color="#FFA500">
-              Forgot Username?
-            </Typography>
             <TextField
               sx={{ mb: 2 }}
               required
@@ -379,9 +376,6 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
                 },
               })}
             />
-            <Typography display={'flex'} justifyContent="flex-end" color="#FFA500">
-              Forgot Password?
-            </Typography>
           </>
         ) : selectedLoginOption === 'mobileNumber' ? (
           <>

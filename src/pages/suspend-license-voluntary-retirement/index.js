@@ -33,6 +33,7 @@ export function SuspendLicenseVoluntaryRetirement({
   const { userActiveTab } = useSelector((state) => state.common);
   const [conformSuspend, setConformSuspend] = useState(false);
   const [confirmationModal, setConfirmationModal] = useState(false);
+  // const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
 
   const {
     register,
@@ -563,7 +564,12 @@ export function SuspendLicenseVoluntaryRetirement({
               <Typography color="textPrimary.main" variant="h3" p={1}>
                 Alert!
               </Typography>
-              <CloseIcon onClick={handleClose} />
+              <CloseIcon
+                onClick={() => {
+                  setConformSuspend(false);
+                  setConfirmationModal(false);
+                }}
+              />
             </Box>
             <Box mt={2}>
               <Typography color="textPrimary.main">
