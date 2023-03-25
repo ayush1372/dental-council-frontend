@@ -180,11 +180,11 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           ? coursesList.data?.find((x) => x.id === q?.qualification)
           : coursesList.data?.find((x) => x.id === q?.qualification?.id),
         university: isInternational
-          ? { name: q?.FEuniversity }
+          ? { name: q?.university }
           : universitiesList.data?.find((x) => x.id === q?.university),
-        state: isInternational ? { name: q?.FEstate } : statesList?.find((x) => x.id === q?.state),
+        state: isInternational ? { name: q?.state } : statesList?.find((x) => x.id === q?.state),
         college: isInternational
-          ? { name: q?.FEcollege }
+          ? { name: q?.college }
           : collegesList.data?.find((x) => x.id === q?.college),
         qualification_year: q?.year,
         qualification_month: q?.month,
@@ -300,10 +300,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     // basic qualification
     obj.university = isInternational ? details?.university?.name : details?.university?.id;
     obj.qualification = details?.course?.id;
-    obj.college = isInternational ? details?.FEcollege?.name : details?.college?.id;
+    obj.college = isInternational ? details?.college?.name : details?.college?.id;
     obj.year = details?.qualification_year;
     obj.country = details?.country?.id;
-    obj.state = isInternational ? details?.FEstate?.name : details?.state?.id;
+    obj.state = isInternational ? details?.state?.name : details?.state?.id;
     obj.qualificationfrom = details?.qualification_from;
     obj.month = details?.qualification_month;
     obj.nameindegree = details?.is_name_change;
@@ -312,9 +312,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     obj.rollno = fmgeDetails?.roll_no;
     obj.passportNumber = fmgeDetails?.passport_number;
     obj.marksobtained = fmgeDetails?.marks_obtained;
-    obj.result = fmgeDetails?.user_result;
-    obj.monthfmge = fmgeDetails?.month_of_passing;
-    obj.yearfmge = fmgeDetails?.year_of_passing;
+    obj.result = fmgeDetails?.result;
+    obj.monthfmge = fmgeDetails?.month;
+    obj.yearfmge = fmgeDetails?.year;
 
     update(0, { ...obj });
   }, [registrationDetails]);
@@ -443,8 +443,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 required: 'Registration Date is Required',
               })}
               sx={{
-                height: '48px',
-                width: '60%',
                 input: {
                   color: 'black',
                   textTransform: 'uppercase',
@@ -463,6 +461,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               }}
               InputLabelProps={{
                 shrink: true,
+              }}
+              inputProps={{
+                max: new Date().toISOString().split('T')[0],
               }}
             />
           </Grid>
