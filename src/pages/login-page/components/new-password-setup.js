@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useState } from 'react';
 
 import { Box, Typography } from '@mui/material';
@@ -28,7 +29,11 @@ const NewPasswordSetup = () => {
   const uniqueHpId = useSelector((state) =>
     state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId.replace('@hpr.abdm', '')
   );
+  const hrp_id = useSelector(
+    (state) => state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId
+  );
   const hprIdData = useSelector((state) => state?.doctorRegistration?.hpIdExistsDetailsData?.data);
+  console.log('hpr id data', hprIdData, hprIdData?.new);
   const demographicAuthMobileVerify = useSelector(
     (state) => state?.AadhaarTransactionId?.demographicAuthMobileDetailsData
   );
@@ -85,6 +90,7 @@ const NewPasswordSetup = () => {
 
       dispatch(createHealthProfessional(reqObj)) //new api 1st
         .then(() => {
+          const isNewFlag = hprIdData?.new;
           const reqPayload = {
             mobile: demographicAuthMobileVerify?.data?.verified
               ? mobilenumber
@@ -92,6 +98,9 @@ const NewPasswordSetup = () => {
             username: uniqueHpId,
             registration_number: imrUserNotFounddata?.RegistrationNumber,
             password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
+            hpr_id_number: hprIdData?.hprIdNumber,
+            new: isNewFlag,
+            hpr_id: hrp_id,
           };
           dispatch(setUserPassword(reqPayload)) // user api 2nd
             .then(() => {
@@ -105,14 +114,17 @@ const NewPasswordSetup = () => {
           successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
         });
     } else {
+      const isNewFlag = hprIdData?.new;
       const reqPayload = {
         mobile: mobilenumber,
         username: uniqueHpId,
         registration_number: registrationNumber,
         password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
-        hprIdNumber: hprIdData?.hprIdNumber,
-        isNew: hprIdData?.new,
+        hpr_id_number: hprIdData?.hprIdNumber,
+        new: isNewFlag,
+        hpr_id: hrp_id,
       };
+      console.log('user api payload==>', reqPayload);
       dispatch(setUserPassword(reqPayload))
         .then(() => {
           setShowSuccess(true);
