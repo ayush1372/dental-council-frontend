@@ -18,7 +18,6 @@ const qualificationObjTemplate = [
     university: '',
     month: '',
     year: '',
-    nameindegree: '',
     files: '',
     qualificationfrom: '',
   },
@@ -113,13 +112,13 @@ const AdditionalQualifications = () => {
   const { qualification } = getValues();
   const onSubmit = () => {
     const formData = new FormData();
-
+    let qualification_detail_response_tos = [];
     let updatedQualificationDetails = {
       country: qualification[0]?.country,
       state: getStateData(qualification[0]?.state),
       college: getCollegeData(qualification[0]?.college),
       university: getUniversityData(qualification[0]?.university),
-      course: getCourseData(qualification[0]?.nameindegree),
+      course: getCourseData(qualification[0]?.qualification),
       qualification_year: qualification[0]?.year,
       qualification_month: qualification[0]?.month,
       is_name_change: '',
@@ -128,7 +127,9 @@ const AdditionalQualifications = () => {
       qualification_from: qualification[0]?.qualificationfrom,
     };
 
-    const doctorRegistrationDetailsJson = JSON.stringify(updatedQualificationDetails);
+    qualification_detail_response_tos.push(updatedQualificationDetails);
+
+    const doctorRegistrationDetailsJson = JSON.stringify(qualification_detail_response_tos);
     const doctorRegistrationDetailsBlob = new Blob([doctorRegistrationDetailsJson], {
       type: 'application/json',
     });
@@ -155,8 +156,10 @@ const AdditionalQualifications = () => {
               watch={watch}
               register={register}
               unregister={unregister}
+              qualification={qualification}
               qualificationFilesData={qualificationFilesData}
               handleQualificationFilesData={handleQualificationFilesData}
+              isAdditionalQualification={true}
               update={update}
               remove={remove}
             />
