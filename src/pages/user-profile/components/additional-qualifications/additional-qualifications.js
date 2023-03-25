@@ -81,7 +81,10 @@ const AdditionalQualifications = () => {
     Array.isArray(collegesList?.data) &&
       collegesList?.data?.map((elementData) => {
         if (elementData.id === college) {
-          collegeData.push(elementData);
+          collegeData.push({
+            id: elementData?.id,
+            name: elementData?.name,
+          });
         }
       });
     return collegeData[0];
@@ -92,7 +95,11 @@ const AdditionalQualifications = () => {
     Array.isArray(universitiesList?.data) &&
       universitiesList?.data?.map((elementData) => {
         if (elementData.id === university) {
-          universityData.push(elementData);
+          universityData.push({
+            id: elementData?.id,
+            name: elementData?.name,
+            nationality: '',
+          });
         }
       });
     return universityData[0];
@@ -102,7 +109,10 @@ const AdditionalQualifications = () => {
     Array.isArray(coursesList?.data) &&
       coursesList?.data?.map((elementData) => {
         if (elementData.id === course) {
-          courseData.push(elementData);
+          courseData.push({
+            course_name: elementData?.name,
+            id: elementData?.id,
+          });
         }
       });
     return courseData[0];
@@ -112,7 +122,8 @@ const AdditionalQualifications = () => {
   const { qualification } = getValues();
   const onSubmit = () => {
     const formData = new FormData();
-    let qualification_detail_response_tos = [];
+    let qualification_detail_response_tos = [],
+      test = [];
     let updatedQualificationDetails = {
       country: qualification[0]?.country,
       state: getStateData(qualification[0]?.state),
@@ -121,20 +132,22 @@ const AdditionalQualifications = () => {
       course: getCourseData(qualification[0]?.qualification),
       qualification_year: qualification[0]?.year,
       qualification_month: qualification[0]?.month,
-      is_name_change: '',
-      is_verified: '',
+      is_name_change: 0,
+      is_verified: 0,
       request_id: '',
       qualification_from: qualification[0]?.qualificationfrom,
     };
-
-    qualification_detail_response_tos.push(updatedQualificationDetails);
+    test.push(updatedQualificationDetails);
+    qualification_detail_response_tos = {
+      qualification_detail_request_tos: test,
+    };
 
     const doctorRegistrationDetailsJson = JSON.stringify(qualification_detail_response_tos);
     const doctorRegistrationDetailsBlob = new Blob([doctorRegistrationDetailsJson], {
       type: 'application/json',
     });
     formData.append('data', doctorRegistrationDetailsBlob);
-    formData.append('degreeCertificate', qualificationFilesData[0]?.file);
+    formData.append('degreeCertificates', qualificationFilesData[0]?.file);
 
     dispatch(additionalQualificationsData(formData, personalDetails?.hp_profile_id));
   };
