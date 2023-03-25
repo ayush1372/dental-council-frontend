@@ -29,11 +29,13 @@ const EditQualificationDetails = ({
 }) => {
   const dispatch = useDispatch();
   const [colleges, setColleges] = useState([]);
+  const [courseID, setCourseID] = useState(
+    qualification?.qualification ? qualification?.qualification : ''
+  );
   // eslint-disable-next-line no-unused-vars
   const [degree, setDegree] = useState([
     {
-      label: 'MBBS - Bachelor of Medicine and Bachelor of Surgery ',
-      value: 'MBBS - Bachelor of Medicine and Bachelor of Surgery ',
+      name: 'MBBS - Bachelor of Medicine and Bachelor of Surgery ',
       id: 69,
     },
   ]);
@@ -92,9 +94,7 @@ const EditQualificationDetails = ({
         name: 'India',
         nationality: 'Indian',
       });
-      setValue(`qualification[${index}].qualification`, degree[0]);
-    } else {
-      setValue(`qualification[${index}].qualification`, qualification?.qualification);
+      setValue(`qualification[${index}].qualification`, 69);
     }
     setValue(`qualification[${index}].qualificationfrom`, fields[index].qualificationfrom);
   }, []);
@@ -326,52 +326,71 @@ const EditQualificationDetails = ({
       </Grid>
       <Grid container item spacing={2}>
         <Grid item xs={12} md={6} lg={4}>
-          <Select
-            fullWidth
-            error={
-              getValues()?.qualification[index]?.qualification?.length === 0
-                ? errors?.qualification?.[index]?.qualification?.message
-                : ''
-            }
-            name="Qualification"
-            label="Name Of The Degree"
-            defaultValue={degree[0]?.label}
-            value={
-              qualificationfrom === 'International'
-                ? getValues()?.qualification[index]?.qualification
-                : degree[0]?.label
-            }
-            required={true}
-            {...register(
-              `qualification[${index}].qualification`,
-              getValues()?.qualification[index]?.qualification?.length === 0
-                ? {
-                    required: 'Qualification Details is required',
-                  }
-                : ''
-            )}
-            disabled={qualificationfrom === 'International' ? false : true}
-            options={
-              qualificationfrom === 'International'
-                ? createSelectFieldData(coursesList.data)
-                : degree
-            }
-            MenuProps={{
-              style: {
-                maxHeight: 250,
-                maxWidth: 130,
-              },
-            }}
-            sx={{
-              '.MuiSelect-select':
-                qualificationfrom !== 'International'
+          {qualificationfrom === 'International' ? (
+            <Select
+              fullWidth
+              error={
+                getValues()?.qualification[index]?.qualification?.length === 0
+                  ? errors?.qualification?.[index]?.qualification?.message
+                  : ''
+              }
+              name="Qualification"
+              label="Name Of The Degree"
+              value={courseID}
+              required={true}
+              {...register(
+                `qualification[${index}].qualification`,
+                {
+                  onChange: (e) => {
+                    setValue(`qualification[${index}].qualification`, e.target.value);
+                    setCourseID(e.target.value);
+                  },
+                },
+                getValues()?.qualification[index]?.qualification?.length === 0
                   ? {
-                      backgroundColor: 'grey2.main',
+                      required: 'Qualification Details is required',
                     }
-                  : '',
-            }}
-            InputProps={{ readOnly: true }}
-          />
+                  : ''
+              )}
+              disabled={false}
+              options={createSelectFieldData(coursesList.data)}
+              MenuProps={{
+                style: {
+                  maxHeight: 250,
+                  maxWidth: 130,
+                },
+              }}
+            />
+          ) : (
+            <Select
+              fullWidth
+              error={
+                getValues()?.qualification[index]?.qualification?.length === 0
+                  ? errors?.qualification?.[index]?.qualification?.message
+                  : ''
+              }
+              name="Qualification"
+              label="Name Of The Degree"
+              defaultValue={degree[0]?.id}
+              value={degree[0]?.id}
+              required={true}
+              {...register(`qualification[${index}].qualification`)}
+              disabled={true}
+              options={createSelectFieldData(coursesList.data)}
+              MenuProps={{
+                style: {
+                  maxHeight: 250,
+                  maxWidth: 130,
+                },
+              }}
+              sx={{
+                '.MuiSelect-select': {
+                  backgroundColor: 'grey2.main',
+                },
+              }}
+              InputProps={{ readOnly: true }}
+            />
+          )}
         </Grid>
         {qualificationfrom === 'International' && (
           <Grid item xs={12} md={6} lg={4}>
