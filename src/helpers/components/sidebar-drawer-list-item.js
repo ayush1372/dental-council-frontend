@@ -17,6 +17,8 @@ import NewDoctorRegistration from '../../pages/profile/new-doctor-registration/n
 import MyProfile from '../../pages/profile/smc-nmc-profile/my-profile';
 import VoluntarySuspendLicense from '../../pages/profile/sub-pages/voluntary-suspend-license/voluntary-suspend-license';
 import TrackApplication from '../../pages/profile/track-application/track-application';
+// import CollegeRegistration from '../../pages/register/college-registration/college-registration';
+import NMCCollegeRegistration from '../../pages/register/college-registration/nmc-college-registration';
 import UserProfile from '../../pages/user-profile';
 import AdditionalQualifications from '../../pages/user-profile/components/additional-qualifications/additional-qualifications';
 import WorkProfile from '../../pages/user-profile/components/work-profile';
@@ -162,6 +164,13 @@ export const nmcTabs = [
   },
   {
     option: 5,
+    name: 'College Registration',
+    tabName: 'college-registration',
+    icon: <AppRegistrationIcon />,
+    element: <NMCCollegeRegistration />,
+  },
+  {
+    option: 6,
     name: 'Change Password',
     tabName: 'change-password',
     icon: <PasswordIcon />,
