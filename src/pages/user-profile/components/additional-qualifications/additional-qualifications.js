@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useState } from 'react';
 
 // import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
@@ -26,9 +25,20 @@ const qualificationObjTemplate = [
 ];
 
 const AdditionalQualifications = () => {
+  // const [data, setData] = useState({});
+  const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+
+  const { qualification_detail_response_tos } = registrationDetails || {};
+
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const { degree_certificate } = qualification_detail_response_tos?.[0] || {};
+
+  const [qualificationFilesData, setQualificationFilesData] = useState(
+    degree_certificate ? [{ file: degree_certificate }] : []
+  );
+
   const dispatch = useDispatch();
-  const [qualificationFilesData, setQualificationFilesData] = useState([]);
+  // const [qualificationFilesData, setQualificationFilesData] = useState([]);
   const {
     formState: { errors },
     getValues,
@@ -56,7 +66,6 @@ const AdditionalQualifications = () => {
 
   // this below code is storing qualification details
   const { qualification } = getValues();
-
   const onSubmit = () => {
     const formData = new FormData();
     const doctorRegistrationDetailsJson = JSON.stringify(qualification);
@@ -64,7 +73,6 @@ const AdditionalQualifications = () => {
       type: 'application/json',
     });
     formData.append('data', doctorRegistrationDetailsBlob);
-    console.log('qualificationFilesData before form data', qualificationFilesData);
     formData.append('degreeCertificate', qualificationFilesData[0]?.file);
 
     dispatch(additionalQualificationsData(formData, personalDetails?.hp_profile_id));
