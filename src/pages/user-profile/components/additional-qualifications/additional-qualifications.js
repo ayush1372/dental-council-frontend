@@ -113,8 +113,7 @@ const AdditionalQualifications = () => {
   const { qualification } = getValues();
   const onSubmit = () => {
     const formData = new FormData();
-    // eslint-disable-next-line no-console
-    console.log('qualification', qualification);
+
     let updatedQualificationDetails = {
       country: qualification[0]?.country,
       state: getStateData(qualification[0]?.state),
