@@ -340,11 +340,7 @@ const EditQualificationDetails = ({
                   }
                 : ''
             )}
-            disabled={
-              qualificationfrom === 'International' || userActiveTab === 'additional-qualifications'
-                ? false
-                : true
-            }
+            disabled={qualificationfrom === 'International' ? false : true}
             options={
               qualificationfrom === 'International'
                 ? createSelectFieldData(coursesList.data)

@@ -4,7 +4,7 @@ import { useState } from 'react';
 // import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Box } from '@mui/material';
 import { useFieldArray, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { additionalQualificationsData } from '../../../../store/actions/doctor-user-profile-actions';
 import { Button } from '../../../../ui/core';
@@ -24,8 +24,10 @@ const qualificationObjTemplate = [
     qualificationfrom: '',
   },
 ];
+
 const AdditionalQualifications = () => {
-  const dispatch = useNavigate();
+  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const dispatch = useDispatch();
   const [qualificationFilesData, setQualificationFilesData] = useState([]);
   const {
     formState: { errors },
@@ -56,8 +58,17 @@ const AdditionalQualifications = () => {
   // this below code is storing qualification details
   const { qualification } = getValues();
   const onSubmit = () => {
+    const formData = new FormData();
+
+    const doctorRegistrationDetailsJson = JSON.stringify(qualification);
+    const doctorRegistrationDetailsBlob = new Blob([doctorRegistrationDetailsJson], {
+      type: 'application/json',
+    });
+    formData.append('data', doctorRegistrationDetailsBlob);
+    formData.append('degreeCertificate', qualificationFilesData[0].file);
+
     console.log('CLICKED');
-    dispatch(additionalQualificationsData(qualification));
+    dispatch(additionalQualificationsData(formData, personalDetails?.hp_profile_id));
     console.log('123', qualification, 'files data', qualificationFilesData);
   };
 
