@@ -150,170 +150,172 @@ const EditQualificationDetails = ({
         </Grid>
       </Grid>
 
-      {qualificationfrom === 'International' && (
-        <Grid container item spacing={2} display="flex" alignItems="center" mb={2}>
-          <Grid item xs={12} sm={6} md={5} lg={4}>
-            <Typography color="grey2.lighter" variant="body1">
-              FMGE QUALIFICATION DETAILS
-            </Typography>
+      {qualificationfrom === 'International' ||
+        (!isAdditionalQualification && (
+          <Grid container item spacing={2} display="flex" alignItems="center" mb={2}>
+            <Grid item xs={12} sm={6} md={5} lg={4}>
+              <Typography color="grey2.lighter" variant="body1">
+                FMGE QUALIFICATION DETAILS
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md={7} lg={8}>
+              <Divider />
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={6} md={7} lg={8}>
-            <Divider />
-          </Grid>
-        </Grid>
-      )}
+        ))}
 
-      {qualificationfrom === 'International' && (
-        <Grid container item spacing={2}>
-          <Grid item xs={12} md={4}>
-            <TextField
-              variant="outlined"
-              name="RollNo"
-              label="Roll No."
-              required={true}
-              fullWidth
-              error={errors?.qualification?.[index]?.rollno?.message}
-              defaultValue={getValues()[`qualification[${index}].rollno`]}
-              {...register(`qualification[${index}].rollno`, {
-                required: 'awarding is Required',
-              })}
-            />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <TextField
-              variant="outlined"
-              name="PassportNumber"
-              label="Passport Number."
-              placeholder="Enter Passport Number"
-              required={true}
-              fullWidth
-              error={errors?.qualification?.[index]?.passportNumber?.message}
-              defaultValue={getValues()[`qualification[${index}].passportNumber`]}
-              {...register(`qualification[${index}].passportNumber`, {
-                required: 'Passport Number is Required',
-              })}
-            />
-          </Grid>
+      {qualificationfrom === 'International' ||
+        (!isAdditionalQualification && (
+          <Grid container item spacing={2}>
+            <Grid item xs={12} md={4}>
+              <TextField
+                variant="outlined"
+                name="RollNo"
+                label="Roll No."
+                required={true}
+                fullWidth
+                error={errors?.qualification?.[index]?.rollno?.message}
+                defaultValue={getValues()[`qualification[${index}].rollno`]}
+                {...register(`qualification[${index}].rollno`, {
+                  required: 'awarding is Required',
+                })}
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <TextField
+                variant="outlined"
+                name="PassportNumber"
+                label="Passport Number."
+                placeholder="Enter Passport Number"
+                required={true}
+                fullWidth
+                error={errors?.qualification?.[index]?.passportNumber?.message}
+                defaultValue={getValues()[`qualification[${index}].passportNumber`]}
+                {...register(`qualification[${index}].passportNumber`, {
+                  required: 'Passport Number is Required',
+                })}
+              />
+            </Grid>
 
-          <Grid item xs={12} md={4}>
-            <TextField
-              variant="outlined"
-              name="MarksObtained"
-              label="Marks Obtained"
-              required={true}
-              type="number"
-              fullWidth
-              error={errors?.qualification?.[index]?.marksobtained?.message}
-              defaultValue={getValues()[`qualification[${index}].marksobtained`]}
-              {...register(`qualification[${index}].marksobtained`, {
-                required: 'Marks Obtained is Required',
-                pattern: {
-                  value: /^([1-9][0-9]?$|^100)$/i,
-                  message: 'Enter correct marks obtained',
-                },
-              })}
-              InputProps={{ maxlength: 4 }}
-            />
-          </Grid>
+            <Grid item xs={12} md={4}>
+              <TextField
+                variant="outlined"
+                name="MarksObtained"
+                label="Marks Obtained"
+                required={true}
+                type="number"
+                fullWidth
+                error={errors?.qualification?.[index]?.marksobtained?.message}
+                defaultValue={getValues()[`qualification[${index}].marksobtained`]}
+                {...register(`qualification[${index}].marksobtained`, {
+                  required: 'Marks Obtained is Required',
+                  pattern: {
+                    value: /^([1-9][0-9]?$|^100)$/i,
+                    message: 'Enter correct marks obtained',
+                  },
+                })}
+                InputProps={{ maxlength: 4 }}
+              />
+            </Grid>
 
-          <Grid item xs={12} md={4}>
-            <Select
-              fullWidth
-              error={
-                getValues()?.qualification[index]?.result?.length === 0
-                  ? errors?.qualification?.[index]?.result?.message
-                  : ''
-              }
-              name="Result"
-              label="Result"
-              defaultValue={fields[index].result}
-              required={true}
-              {...register(
-                `qualification[${index}].result`,
-                getValues()?.qualification[index]?.result?.length === 0
-                  ? {
-                      required: 'degree is required',
-                    }
-                  : ''
-              )}
-              options={[
-                {
-                  value: 'pass',
-                  label: 'Pass',
-                },
-                {
-                  value: 'fail',
-                  label: 'Fail',
-                },
-              ]}
-              MenuProps={{
-                style: {
-                  maxHeight: 250,
-                  maxWidth: 130,
-                },
-              }}
-            />
+            <Grid item xs={12} md={4}>
+              <Select
+                fullWidth
+                error={
+                  getValues()?.qualification[index]?.result?.length === 0
+                    ? errors?.qualification?.[index]?.result?.message
+                    : ''
+                }
+                name="Result"
+                label="Result"
+                defaultValue={fields[index].result}
+                required={true}
+                {...register(
+                  `qualification[${index}].result`,
+                  getValues()?.qualification[index]?.result?.length === 0
+                    ? {
+                        required: 'degree is required',
+                      }
+                    : ''
+                )}
+                options={[
+                  {
+                    value: 'pass',
+                    label: 'Pass',
+                  },
+                  {
+                    value: 'fail',
+                    label: 'Fail',
+                  },
+                ]}
+                MenuProps={{
+                  style: {
+                    maxHeight: 250,
+                    maxWidth: 130,
+                  },
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Select
+                fullWidth
+                error={
+                  getValues()?.qualification[index]?.monthfmge?.length === 0
+                    ? errors?.qualification?.[index]?.monthfmge?.message
+                    : ''
+                }
+                name="MonthFMGE"
+                label="Month (FMGE qualified)"
+                defaultValue={fields[index].monthfmge}
+                required={true}
+                {...register(
+                  `qualification[${index}].monthfmge`,
+                  getValues()?.qualification[index]?.monthfmge?.length === 0
+                    ? {
+                        required: 'Month-FMGE qualified is required',
+                      }
+                    : ''
+                )}
+                options={monthsData}
+                MenuProps={{
+                  style: {
+                    maxHeight: 250,
+                    maxWidth: 130,
+                  },
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Select
+                fullWidth
+                error={
+                  getValues()?.qualification[index]?.yearfmge?.length === 0
+                    ? errors?.qualification?.[index]?.yearfmge?.message
+                    : ''
+                }
+                name="YearFMGE"
+                label="Year (FMGE qualified)"
+                defaultValue={fields[index].yearfmge}
+                required={true}
+                {...register(
+                  `qualification[${index}].yearfmge`,
+                  getValues()?.qualification[index]?.yearfmge?.length === 0
+                    ? {
+                        required: 'Year-FMGE qualified is required',
+                      }
+                    : ''
+                )}
+                options={yearsData}
+                MenuProps={{
+                  style: {
+                    maxHeight: 250,
+                    maxWidth: 130,
+                  },
+                }}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12} md={4}>
-            <Select
-              fullWidth
-              error={
-                getValues()?.qualification[index]?.monthfmge?.length === 0
-                  ? errors?.qualification?.[index]?.monthfmge?.message
-                  : ''
-              }
-              name="MonthFMGE"
-              label="Month (FMGE qualified)"
-              defaultValue={fields[index].monthfmge}
-              required={true}
-              {...register(
-                `qualification[${index}].monthfmge`,
-                getValues()?.qualification[index]?.monthfmge?.length === 0
-                  ? {
-                      required: 'Month-FMGE qualified is required',
-                    }
-                  : ''
-              )}
-              options={monthsData}
-              MenuProps={{
-                style: {
-                  maxHeight: 250,
-                  maxWidth: 130,
-                },
-              }}
-            />
-          </Grid>
-          <Grid item xs={12} md={4}>
-            <Select
-              fullWidth
-              error={
-                getValues()?.qualification[index]?.yearfmge?.length === 0
-                  ? errors?.qualification?.[index]?.yearfmge?.message
-                  : ''
-              }
-              name="YearFMGE"
-              label="Year (FMGE qualified)"
-              defaultValue={fields[index].yearfmge}
-              required={true}
-              {...register(
-                `qualification[${index}].yearfmge`,
-                getValues()?.qualification[index]?.yearfmge?.length === 0
-                  ? {
-                      required: 'Year-FMGE qualified is required',
-                    }
-                  : ''
-              )}
-              options={yearsData}
-              MenuProps={{
-                style: {
-                  maxHeight: 250,
-                  maxWidth: 130,
-                },
-              }}
-            />
-          </Grid>
-        </Grid>
-      )}
+        ))}
 
       <Grid container item spacing={2} display="flex" alignItems="center" mb={2}>
         <Grid item xs={12} sm={4}>
