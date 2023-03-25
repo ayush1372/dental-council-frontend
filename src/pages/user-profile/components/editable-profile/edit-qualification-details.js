@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import CancelIcon from '@mui/icons-material/Cancel';
 import { Divider, Grid, Typography } from '@mui/material';
@@ -53,6 +53,8 @@ const EditQualificationDetails = ({
   const selectedState = watch(`qualification[${index}].state`);
   const { userActiveTab } = useSelector((state) => state.common);
   console.log('user active tab', userActiveTab);
+  const selectedYear = watch(`qualification[${index}].year`);
+
   const fetchColleges = (selectedState) => {
     if (selectedState && qualificationfrom !== 'International') {
       dispatch(getCollegesList(selectedState)).then((dataResponse) => {
@@ -99,6 +101,17 @@ const EditQualificationDetails = ({
     }
     setValue(`qualification[${index}].qualificationfrom`, fields[index].qualificationfrom);
   }, []);
+
+  const customMonthsData = useMemo(() => {
+    const date = new Date();
+    const fullYear = date.getFullYear();
+    const monthIndex = date.getMonth();
+    if (selectedYear === `${fullYear}`) {
+      return monthsData.slice(0, monthIndex + 1);
+    }
+
+    return monthsData;
+  }, [selectedYear]);
 
   return (
     <>
@@ -536,7 +549,7 @@ const EditQualificationDetails = ({
                   required: 'awarding is required',
                 }
               )}
-              options={monthsData}
+              options={customMonthsData}
               MenuProps={{
                 style: {
                   maxHeight: 250,
