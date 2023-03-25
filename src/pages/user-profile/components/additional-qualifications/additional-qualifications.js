@@ -26,9 +26,20 @@ const qualificationObjTemplate = [
 ];
 
 const AdditionalQualifications = () => {
+  // const [data, setData] = useState({});
+  const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+
+  const { qualification_detail_response_tos } = registrationDetails || {};
+
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const { degree_certificate } = qualification_detail_response_tos?.[0] || {};
+
+  const [qualificationFilesData, setQualificationFilesData] = useState(
+    degree_certificate ? [{ file: degree_certificate }] : []
+  );
+
   const dispatch = useDispatch();
-  const [qualificationFilesData, setQualificationFilesData] = useState([]);
+  // const [qualificationFilesData, setQualificationFilesData] = useState([]);
   const {
     formState: { errors },
     getValues,
@@ -53,25 +64,28 @@ const AdditionalQualifications = () => {
   const handleQualificationFilesData = (fileName, files) => {
     qualificationFilesData[fileName] = files;
     setQualificationFilesData([{ ...qualificationFilesData }]);
+    console.log('files data1', ...qualificationFilesData);
   };
-
+  console.log('files data1', ...qualificationFilesData);
   // this below code is storing qualification details
   const { qualification } = getValues();
+  const formData = new FormData();
   const onSubmit = () => {
-    const formData = new FormData();
-
     const doctorRegistrationDetailsJson = JSON.stringify(qualification);
+    console.log('doctorRegistrationDetailsJson', doctorRegistrationDetailsJson);
     const doctorRegistrationDetailsBlob = new Blob([doctorRegistrationDetailsJson], {
       type: 'application/json',
     });
     formData.append('data', doctorRegistrationDetailsBlob);
     formData.append('degreeCertificate', qualificationFilesData[0].file);
+    console.log('file data', qualificationFilesData[0].file);
 
-    console.log('CLICKED');
+    console.log('CLICKED', personalDetails?.hp_profile_id, formData);
+    // setData(formData);
     dispatch(additionalQualificationsData(formData, personalDetails?.hp_profile_id));
     console.log('123', qualification, 'files data', qualificationFilesData);
   };
-
+  console.log('clicked1', formData);
   return (
     <Box p={3}>
       <Box>

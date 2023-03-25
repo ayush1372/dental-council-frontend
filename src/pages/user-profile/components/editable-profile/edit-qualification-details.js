@@ -353,9 +353,13 @@ const EditQualificationDetails = ({
                   }
                 : ''
             )}
-            disabled={qualificationfrom === 'International' ? false : true}
+            disabled={
+              qualificationfrom === 'International' || userActiveTab === 'additional-qualifications'
+                ? false
+                : true
+            }
             options={
-              qualificationfrom === 'International'
+              qualificationfrom === 'International' || userActiveTab === 'additional-qualifications'
                 ? createSelectFieldData(coursesList.data)
                 : degree
             }
