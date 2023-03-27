@@ -151,7 +151,10 @@ function TrackStatusTable(props) {
           type: 'nameofStateCouncil',
           value: application.council_name,
         },
-        { type: 'councilVerificationStatus', value: capitalize(application?.smc_status) },
+        {
+          type: 'councilVerificationStatus',
+          value: application?.smc_status ? capitalize(application?.smc_status) : '',
+        },
         {
           type: 'collegeVerificationStatus',
 
@@ -164,7 +167,10 @@ function TrackStatusTable(props) {
               ? 'Approved'
               : 'Not yet received',
         },
-        { type: 'NMCVerificationStatus', value: capitalize(application?.nmc_status) },
+        {
+          type: 'NMCVerificationStatus',
+          value: application?.nmc_status ? capitalize(application?.nmc_status) : '',
+        },
 
         { type: 'dateofSubmission', value: application?.created_at },
         { type: 'pendency', value: application?.pendency },

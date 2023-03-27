@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import CancelIcon from '@mui/icons-material/Cancel';
 import { Divider, Grid, Typography } from '@mui/material';
@@ -29,11 +29,13 @@ const EditQualificationDetails = ({
 }) => {
   const dispatch = useDispatch();
   const [colleges, setColleges] = useState([]);
+  const [courseID, setCourseID] = useState(
+    qualification?.qualification ? qualification?.qualification : ''
+  );
   // eslint-disable-next-line no-unused-vars
   const [degree, setDegree] = useState([
     {
-      label: 'MBBS - Bachelor of Medicine and Bachelor of Surgery ',
-      value: 'MBBS - Bachelor of Medicine and Bachelor of Surgery ',
+      name: 'MBBS - Bachelor of Medicine and Bachelor of Surgery ',
       id: 69,
     },
   ]);
@@ -50,6 +52,7 @@ const EditQualificationDetails = ({
   const qualificationfrom = watch(`qualification[${index}].qualificationfrom`);
   const watchCollege = watch(`qualification[${index}].college`);
   const selectedState = watch(`qualification[${index}].state`);
+  const selectedYear = watch(`qualification[${index}].year`);
 
   const fetchColleges = (selectedState) => {
     if (selectedState && qualificationfrom !== 'International') {
@@ -85,16 +88,27 @@ const EditQualificationDetails = ({
   }, [qualificationfrom]);
 
   useEffect(() => {
-    setValue(`qualification[${index}].qualification`, degree[0]);
     if (qualificationfrom !== 'International') {
       setValue(`qualification[${index}].country`, {
         id: 356,
         name: 'India',
         nationality: 'Indian',
       });
+      setValue(`qualification[${index}].qualification`, 69);
     }
     setValue(`qualification[${index}].qualificationfrom`, fields[index].qualificationfrom);
   }, []);
+
+  const customMonthsData = useMemo(() => {
+    const date = new Date();
+    const fullYear = date.getFullYear();
+    const monthIndex = date.getMonth();
+    if (selectedYear === `${fullYear}`) {
+      return monthsData.slice(0, monthIndex + 1);
+    }
+
+    return monthsData;
+  }, [selectedYear]);
 
   return (
     <>
@@ -312,48 +326,71 @@ const EditQualificationDetails = ({
       </Grid>
       <Grid container item spacing={2}>
         <Grid item xs={12} md={6} lg={4}>
-          <Select
-            fullWidth
-            error={
-              getValues()?.qualification[index]?.qualification?.length === 0
-                ? errors?.qualification?.[index]?.qualification?.message
-                : ''
-            }
-            name="Qualification"
-            label="Name Of The Degree"
-            defaultValue={degree[0]?.label}
-            // value={degree[0]?.label}
-            required={true}
-            {...register(
-              `qualification[${index}].qualification`,
-              getValues()?.qualification[index]?.qualification?.length === 0
-                ? {
-                    required: 'Qualification Details is required',
-                  }
-                : ''
-            )}
-            disabled={qualificationfrom === 'International' ? false : true}
-            options={
-              qualificationfrom === 'International'
-                ? createSelectFieldData(coursesList.data)
-                : degree
-            }
-            MenuProps={{
-              style: {
-                maxHeight: 250,
-                maxWidth: 130,
-              },
-            }}
-            sx={{
-              '.MuiSelect-select':
-                qualificationfrom !== 'International'
+          {qualificationfrom === 'International' ? (
+            <Select
+              fullWidth
+              error={
+                getValues()?.qualification[index]?.qualification?.length === 0
+                  ? errors?.qualification?.[index]?.qualification?.message
+                  : ''
+              }
+              name="Qualification"
+              label="Name Of The Degree"
+              value={courseID}
+              required={true}
+              {...register(
+                `qualification[${index}].qualification`,
+                {
+                  onChange: (e) => {
+                    setValue(`qualification[${index}].qualification`, e.target.value);
+                    setCourseID(e.target.value);
+                  },
+                },
+                getValues()?.qualification[index]?.qualification?.length === 0
                   ? {
-                      backgroundColor: 'grey2.main',
+                      required: 'Qualification Details is required',
                     }
-                  : '',
-            }}
-            InputProps={{ readOnly: true }}
-          />
+                  : ''
+              )}
+              disabled={false}
+              options={createSelectFieldData(coursesList.data)}
+              MenuProps={{
+                style: {
+                  maxHeight: 250,
+                  maxWidth: 130,
+                },
+              }}
+            />
+          ) : (
+            <Select
+              fullWidth
+              error={
+                getValues()?.qualification[index]?.qualification?.length === 0
+                  ? errors?.qualification?.[index]?.qualification?.message
+                  : ''
+              }
+              name="Qualification"
+              label="Name Of The Degree"
+              defaultValue={degree[0]?.id}
+              value={degree[0]?.id}
+              required={true}
+              {...register(`qualification[${index}].qualification`)}
+              disabled={true}
+              options={createSelectFieldData(coursesList.data)}
+              MenuProps={{
+                style: {
+                  maxHeight: 250,
+                  maxWidth: 130,
+                },
+              }}
+              sx={{
+                '.MuiSelect-select': {
+                  backgroundColor: 'grey2.main',
+                },
+              }}
+              InputProps={{ readOnly: true }}
+            />
+          )}
         </Grid>
         {qualificationfrom === 'International' && (
           <Grid item xs={12} md={6} lg={4}>
@@ -525,7 +562,7 @@ const EditQualificationDetails = ({
                   required: 'awarding is required',
                 }
               )}
-              options={monthsData}
+              options={customMonthsData}
               MenuProps={{
                 style: {
                   maxHeight: 250,
