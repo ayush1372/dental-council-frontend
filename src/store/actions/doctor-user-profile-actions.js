@@ -224,7 +224,6 @@ export const updateProfileConsent = (payload) => async () => {
 };
 
 export const additionalQualificationsData = (formData, healthProfessionalId) => async () => {
-  console.log('form data', formData);
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: POST,

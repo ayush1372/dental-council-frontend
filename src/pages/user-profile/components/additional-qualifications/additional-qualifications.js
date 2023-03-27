@@ -5,6 +5,7 @@ import { Box } from '@mui/material';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
+import SuccessModalPopup from '../../../../shared/common-modals/success-modal-popup';
 import { additionalQualificationsData } from '../../../../store/actions/doctor-user-profile-actions';
 import { Button } from '../../../../ui/core';
 import EditQualificationDetails from '../editable-profile/edit-qualification-details';
@@ -35,6 +36,7 @@ const AdditionalQualifications = () => {
   const [qualificationFilesData, setQualificationFilesData] = useState(
     degree_certificate ? [{ file: degree_certificate }] : []
   );
+  const [successModalPopup, setSuccessModalPopup] = useState(false);
   // eslint-disable-next-line no-unused-vars
   const { statesList, collegesList, universitiesList, coursesList } = useSelector(
     (state) => state?.common
@@ -152,7 +154,9 @@ const AdditionalQualifications = () => {
     formData.append('data', doctorRegistrationDetailsBlob);
     formData.append('degreeCertificates', qualificationFilesData[0]?.file);
 
-    dispatch(additionalQualificationsData(formData, personalDetails?.hp_profile_id));
+    dispatch(additionalQualificationsData(formData, personalDetails?.hp_profile_id)).then(() => {
+      setSuccessModalPopup(true);
+    });
   };
 
   useEffect(() => {
@@ -200,14 +204,19 @@ const AdditionalQualifications = () => {
           color="primary"
           onClick={() => {
             append({ ...qualificationObjTemplate });
-            if (qualification[qualification?.length - 1][0]) {
-              delete qualification[qualification?.length - 1][0];
-            }
           }}
         >
           Add Additional Qualification
         </Button>
       </Box>
+
+      {successModalPopup && (
+        <SuccessModalPopup
+          open={successModalPopup}
+          setOpen={() => setSuccessModalPopup(false)}
+          text={'Added Qualification Successfully!'}
+        />
+      )}
     </Box>
   );
 };
