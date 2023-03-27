@@ -16,6 +16,8 @@ const RegistrationDetailsContent = () => {
 
   const [openModal, setOpenModal] = useState(false);
   const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
+  const [queryRaisedField, setQueryRaisedField] = useState('');
+
   const ClosePopup = () => {
     setOpenModal(false);
   };
@@ -53,13 +55,22 @@ const RegistrationDetailsContent = () => {
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
                 color="primary"
-                onClick={() => setOpenModal(true)}
+                onClick={() => {
+                  setOpenModal(true);
+                  setQueryRaisedField('Registered with council');
+                }}
                 fontSize="width30"
               />
             )}
           </Grid>
         </Grid>
-        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
+        {openModal && (
+          <RaiseQueryPopup
+            ClosePopup={ClosePopup}
+            queryRaisedField={queryRaisedField}
+            setQueryRaisedFor={setQueryRaisedField}
+          />
+        )}
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
             Registration Number
@@ -74,7 +85,10 @@ const RegistrationDetailsContent = () => {
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
                 color="primary"
-                onClick={() => setOpenModal(true)}
+                onClick={() => {
+                  setOpenModal(true);
+                  setQueryRaisedField('Registration Number');
+                }}
                 fontSize="width30"
               />
             )}
@@ -94,7 +108,10 @@ const RegistrationDetailsContent = () => {
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
                 color="primary"
-                onClick={() => setOpenModal(true)}
+                onClick={() => {
+                  setOpenModal(true);
+                  setQueryRaisedField('Registration Date');
+                }}
                 fontSize="width30"
               />
             )}
@@ -116,7 +133,10 @@ const RegistrationDetailsContent = () => {
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
                 color="primary"
-                onClick={() => setOpenModal(true)}
+                onClick={() => {
+                  setOpenModal(true);
+                  setQueryRaisedField('Registration');
+                }}
                 fontSize="width30"
               />
             )}
@@ -134,7 +154,10 @@ const RegistrationDetailsContent = () => {
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
                 color="primary"
-                onClick={() => setOpenModal(true)}
+                onClick={() => {
+                  setOpenModal(true);
+                  setQueryRaisedField('Due Date of Renewal');
+                }}
                 fontSize="width30"
               />
             )}
@@ -164,7 +187,10 @@ const RegistrationDetailsContent = () => {
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
                 color="primary"
-                onClick={() => setOpenModal(true)}
+                onClick={() => {
+                  setOpenModal(true);
+                  setQueryRaisedField('View attachment');
+                }}
                 fontSize="width30"
               />
             )}
