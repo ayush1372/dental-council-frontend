@@ -285,7 +285,7 @@ export function SuspendLicenseVoluntaryRetirement({
                 sx={{
                   height: '48px',
                   input: {
-                    color: 'grey1.dark',
+                    color: 'black',
                     textTransform: 'uppercase',
                   },
                 }}
@@ -313,7 +313,7 @@ export function SuspendLicenseVoluntaryRetirement({
                 name="toDate"
                 sx={{
                   input: {
-                    color: 'grey1.dark',
+                    color: 'black',
                     textTransform: 'uppercase',
                   },
                 }}
