@@ -25,6 +25,7 @@ const EditQualificationDetails = ({
   watch,
   qualification,
   qualificationFilesData,
+  isAdditionalQualification,
   handleQualificationFilesData,
 }) => {
   const dispatch = useDispatch();
@@ -75,7 +76,7 @@ const EditQualificationDetails = ({
   }, [watchCollege]);
 
   useEffect(() => {
-    if (qualificationfrom !== 'International') {
+    if (qualificationfrom !== 'International' || !isAdditionalQualification) {
       const removalArray = [
         `qualification[${index}].rollno`,
         `qualification[${index}].result`,
@@ -88,7 +89,7 @@ const EditQualificationDetails = ({
   }, [qualificationfrom]);
 
   useEffect(() => {
-    if (qualificationfrom !== 'International') {
+    if (qualificationfrom !== 'International' || !isAdditionalQualification) {
       setValue(`qualification[${index}].country`, {
         id: 356,
         name: 'India',
@@ -326,7 +327,7 @@ const EditQualificationDetails = ({
       </Grid>
       <Grid container item spacing={2}>
         <Grid item xs={12} md={6} lg={4}>
-          {qualificationfrom === 'International' ? (
+          {qualificationfrom === 'International' || isAdditionalQualification ? (
             <Select
               fullWidth
               error={
@@ -546,6 +547,9 @@ const EditQualificationDetails = ({
         <Grid container item xs={12} md={6} lg={4} columnSpacing={2}>
           <Typography pl={2} fontWeight="500" color="inputTextColor.main">
             Month & Year Of Awarding Degree
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
           <Grid item xs={12} md={6} mb={{ xs: 2, md: 0 }}>
             <Select
