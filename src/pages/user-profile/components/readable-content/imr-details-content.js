@@ -1,19 +1,6 @@
-import { useState } from 'react';
-
-import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
 import { Grid, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
-
-import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
 const IMRDetails = ({ personalDetails }) => {
-  const { userActiveTab } = useSelector((state) => state.common);
-
-  const [openModal, setOpenModal] = useState(false);
-  const ClosePopup = () => {
-    setOpenModal(false);
-  };
-
   const { kyc_address } = personalDetails || {};
 
   return (
@@ -30,62 +17,8 @@ const IMRDetails = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {kyc_address?.address_line1 ? kyc_address?.address_line1 : ''}
             </Typography>
-            {userActiveTab === 'dashboard' && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => setOpenModal(true)}
-                fontSize="width30"
-              />
-            )}{' '}
           </Grid>
         </Grid>
-        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-
-        {/*
-        Author:Krishnakanth,purpose: imr id,registration number
-        */
-        /* <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
-            Year of Info
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
-          </Typography>
-          <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
-              {year_of_info ? year_of_info : ''}
-            </Typography>
-            {userActiveTab === 'dashboard' && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => setOpenModal(true)}
-                fontSize="width30"
-              />
-            )}{' '}
-          </Grid>
-        </Grid>
-        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-        <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
-            Registration Number
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
-          </Typography>
-          <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
-              {registration_number ? registration_number : ''}
-            </Typography>
-            {userActiveTab === 'dashboard' && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => setOpenModal(true)}
-                fontSize="width30"
-              />
-            )}{' '}
-          </Grid>
-        </Grid>
-        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />} */}
       </Grid>
     </Grid>
   );

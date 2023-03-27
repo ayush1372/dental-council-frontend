@@ -9,16 +9,20 @@ import AttachmentViewPopup from '../../../../shared/query-modal-popup/attachemen
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
 const QualificationDetailsContent = ({ registrationDetails }) => {
-  const [openModal, setOpenModal] = useState(false);
-  const ClosePopup = () => {
-    setOpenModal(false);
-  };
-  const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
   const { userActiveTab } = useSelector((state) => state.common);
+
+  const [openModal, setOpenModal] = useState(false);
+  const [queryRaisedField, setQueryRaisedField] = useState('');
+  const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
+
   const { qualification_detail_response_tos } = registrationDetails || {};
 
   const CloseAttachmentPopup = () => {
     setAttachmentViewProfile(false);
+  };
+
+  const ClosePopup = () => {
+    setOpenModal(false);
   };
 
   return qualification_detail_response_tos?.map((element, index) => {
@@ -46,15 +50,15 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               {userActiveTab === 'dashboard' && (
                 <ContactSupportOutlinedIcon
                   color="primary"
-                  onClick={() => setOpenModal(true)}
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('Name of the Degree Obtained');
+                  }}
                   fontSize="width30"
                 />
               )}
             </Grid>
           </Grid>
-
-          {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-
           <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="grey.label">
               Country Name
@@ -69,13 +73,15 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               {userActiveTab === 'dashboard' && (
                 <ContactSupportOutlinedIcon
                   color="primary"
-                  onClick={() => setOpenModal(true)}
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('Country Name');
+                  }}
                   fontSize="width30"
                 />
               )}
             </Grid>
           </Grid>
-
           <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="grey.label">
               State
@@ -90,7 +96,10 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               {userActiveTab === 'dashboard' && (
                 <ContactSupportOutlinedIcon
                   color="primary"
-                  onClick={() => setOpenModal(true)}
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('State');
+                  }}
                   fontSize="width30"
                 />
               )}
@@ -113,13 +122,15 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               {userActiveTab === 'dashboard' && (
                 <ContactSupportOutlinedIcon
                   color="primary"
-                  onClick={() => setOpenModal(true)}
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('Name of the College');
+                  }}
                   fontSize="width30"
                 />
               )}
             </Grid>
           </Grid>
-
           <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="grey.label">
               University
@@ -134,13 +145,15 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               {userActiveTab === 'dashboard' && (
                 <ContactSupportOutlinedIcon
                   color="primary"
-                  onClick={() => setOpenModal(true)}
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('University');
+                  }}
                   fontSize="width30"
                 />
               )}
             </Grid>
           </Grid>
-
           <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="grey.label">
               Month & Year of Awarding Degree
@@ -153,7 +166,10 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               {userActiveTab === 'dashboard' && (
                 <ContactSupportOutlinedIcon
                   color="primary"
-                  onClick={() => setOpenModal(true)}
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('Month & Year of Awarding Degree');
+                  }}
                   fontSize="width30"
                 />
               )}
@@ -182,24 +198,34 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                 </IconButton>
                 View Attachment
               </Typography>
-
-              {attachmentViewProfile && (
-                <AttachmentViewPopup
-                  certificate={element?.degree_certificate}
-                  closePopup={CloseAttachmentPopup}
-                  alt={'Qualification Certificate'}
-                />
-              )}
               {userActiveTab === 'dashboard' && (
                 <ContactSupportOutlinedIcon
                   color="primary"
-                  onClick={() => setOpenModal(true)}
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('Upload Qualification Degree');
+                  }}
                   fontSize="width30"
                 />
               )}
             </Grid>
           </Grid>
         </Grid>
+        {openModal && (
+          <RaiseQueryPopup
+            ClosePopup={ClosePopup}
+            setOpenModal={setOpenModal}
+            queryRaisedField={queryRaisedField}
+            setQueryRaisedFor={setQueryRaisedField}
+          />
+        )}
+        {attachmentViewProfile && (
+          <AttachmentViewPopup
+            certificate={element?.degree_certificate}
+            closePopup={CloseAttachmentPopup}
+            alt={'Qualification Certificate'}
+          />
+        )}
       </Grid>
     );
   });

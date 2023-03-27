@@ -15,6 +15,7 @@ import loginReducer from './reducers/login-reducer';
 import navMenu from './reducers/nav-menu-reducer';
 import nbeReducers from './reducers/nbe-reducers';
 import nmcReducer from './reducers/nmc-reducer';
+import raiseQueryReducer from './reducers/raise-query-reducer';
 import smcReducer from './reducers/smc-reducer';
 import AadhaarTransactionId from './reducers/user-aadhaar-verify-reducer';
 
@@ -33,6 +34,7 @@ const store = configureStore({
     smc: smcReducer,
     nmc: nmcReducer,
     nbe: nbeReducers,
+    raiseQuery: raiseQueryReducer,
     forgotpassword: forgotPasswordReducer,
     searchDoctor: searchDoctorReducer,
   },
