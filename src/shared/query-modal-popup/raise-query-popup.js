@@ -46,18 +46,19 @@ const RaiseQueryPopup = ({ ClosePopup, queryRaisedField }) => {
         value: getValues()?.raiseQuery,
       },
     ];
-    queryRaisedFor?.map((fieldData) => {
+    queryRaisedFor?.map((fieldData, index) => {
       if (fieldData?.filedName === queryRaisedField) {
-        queryRaisedResponse.push({
+        queryRaisedResponse[index] = {
           filedName: queryRaisedField,
           value: getValues()?.raiseQuery,
-        });
+        };
       } else {
         queryRaisedResponse?.push(fieldData);
       }
     });
 
     dispatch(getRaiseQueryData({ queryRaisedFor: queryRaisedResponse }));
+    handleClose();
   };
 
   return (
@@ -118,15 +119,11 @@ const RaiseQueryPopup = ({ ClosePopup, queryRaisedField }) => {
                 sx={{
                   mr: 1,
                 }}
+                onClick={handleClose}
               >
                 Cancel
               </Button>
-              <Button
-                onClose={handleClose}
-                variant="contained"
-                color="secondary"
-                onClick={handleSubmit(onHandleSave)}
-              >
+              <Button variant="contained" color="secondary" onClick={handleSubmit(onHandleSave)}>
                 Submit
               </Button>
             </Box>

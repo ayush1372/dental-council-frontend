@@ -64,13 +64,6 @@ const RegistrationDetailsContent = () => {
             )}
           </Grid>
         </Grid>
-        {openModal && (
-          <RaiseQueryPopup
-            ClosePopup={ClosePopup}
-            queryRaisedField={queryRaisedField}
-            setQueryRaisedFor={setQueryRaisedField}
-          />
-        )}
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
             Registration Number
@@ -197,6 +190,14 @@ const RegistrationDetailsContent = () => {
           </Grid>
         </Grid>
       </Grid>
+      {openModal && (
+        <RaiseQueryPopup
+          ClosePopup={ClosePopup}
+          setOpenModal={setOpenModal}
+          queryRaisedField={queryRaisedField}
+          setQueryRaisedFor={setQueryRaisedField}
+        />
+      )}
       {attachmentViewProfile && (
         <AttachmentViewPopup
           certificate={registration_certificate}
