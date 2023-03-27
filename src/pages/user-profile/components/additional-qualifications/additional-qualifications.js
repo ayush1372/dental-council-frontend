@@ -200,8 +200,9 @@ const AdditionalQualifications = () => {
           color="primary"
           onClick={() => {
             append({ ...qualificationObjTemplate });
-            // eslint-disable-next-line no-console
-            console.log('qualificationFilesData', qualification);
+            if (qualification[qualification?.length - 1][0]) {
+              delete qualification[qualification?.length - 1][0];
+            }
           }}
         >
           Add Additional Qualification
