@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 
 import { Box, Grid, TablePagination } from '@mui/material';
+import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 
 // import TableSearch from '../../../src/pages/profile/components/table-search/table-search';
@@ -132,6 +133,8 @@ function TrackStatusTable(props) {
 
   const newRowsData = props?.trackStatusData?.health_professional_applications?.map(
     (application, index) => {
+      const formattedDate = moment(application?.created_at).format('DD-MM-YYYY:HH:MM:SS.SSSSSS');
+
       return createData(
         { type: 'SNo', value: index + 1 },
         {
@@ -172,7 +175,7 @@ function TrackStatusTable(props) {
           value: application?.nmc_status ? capitalize(application?.nmc_status) : '',
         },
 
-        { type: 'dateofSubmission', value: application?.created_at },
+        { type: 'dateofSubmission', value: formattedDate },
         { type: 'pendency', value: application?.pendency },
         { type: 'pending', value: '-' },
         { type: 'HPProfileId', value: application?.hp_profile_id },

@@ -230,7 +230,13 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
                 </Typography>
                 <ProgressBar
                   width="302px"
-                  progress={showStaticFormProgress || personalDetails?.nmr_id ? 75 : progress}
+                  progress={
+                    showStaticFormProgress ||
+                    personalDetails?.nmr_id ||
+                    personalDetails?.work_flow_status_id === 1
+                      ? 75
+                      : progress
+                  }
                   completed={completed}
                 />
               </Box>
@@ -280,6 +286,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
                 </Button>
               </Grid>
             )}
+
             <Grid item xs={12} lg="auto">
               {!isReadMode && (
                 <Box
