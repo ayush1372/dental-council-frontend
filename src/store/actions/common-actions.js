@@ -249,6 +249,7 @@ export const getInitiateWorkFlow = (body) => async () => {
     useAxiosCall({
       method: PATCH,
       url: API.DoctorUserProfileData.initiateWorkFlow,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
       data: body,
     })
       .then((response) => {

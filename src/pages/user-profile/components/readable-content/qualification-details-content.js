@@ -31,7 +31,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
   const stateName = state?.name || '';
   const collegeName = college?.name || '';
   const universityName = university?.name || '';
-  const courseName = course?.course_name || '';
+  const courseName = course?.course_name || course?.name || '';
 
   const CloseAttachmentPopup = () => {
     setAttachmentViewProfile(false);

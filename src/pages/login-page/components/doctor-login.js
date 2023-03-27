@@ -194,6 +194,10 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
   };
   const handleCancelClick = () => {
     navigate('/');
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
 
   return (
@@ -356,6 +360,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
               })}
             />
             <TextField
+              sx={{ mb: 2 }}
               required
               fullWidth
               label={'Password'}
