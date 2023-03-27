@@ -238,6 +238,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
       )
     ).then(() => {
       if (moveToNext) handleNext();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
     });
   };
 

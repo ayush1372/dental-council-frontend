@@ -215,6 +215,10 @@ export const Login = ({ loginName }) => {
   };
   const handleCancelClick = () => {
     navigate('/');
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
   useEffect(() => {
     setValue('userID', '');

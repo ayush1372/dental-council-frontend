@@ -239,16 +239,14 @@ export function ViewProfile(props) {
             </Typography>
             <Box display="flex" alignItems="center">
               {emailId ? (
-                <>
-                  <Typography
-                    variant="subtitle2"
-                    color="textPrimary.main"
-                    sx={{ wordBreak: 'break-word' }}
-                  >
-                    {emailId ? emailId : ''}
-                  </Typography>
+                <Typography
+                  variant="subtitle2"
+                  color="textPrimary.main"
+                  sx={{ wordBreak: 'break-word' }}
+                >
+                  {emailId}
                   <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
-                </>
+                </Typography>
               ) : (
                 <Typography variant="subtitle2" color="textPrimary.main">
                   -
