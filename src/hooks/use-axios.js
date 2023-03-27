@@ -24,24 +24,27 @@ axios.interceptors.response.use(
     // when api getting 401
     if (error.response.status === 401) {
       // const accessToken = localStorage.getItem('userToken');
-      const refreshToken = localStorage.getItem('refreshtoken');
-
-      //if refresh token expire logout the user, if not check access token
-      if (millisecondToDate(refreshToken) > new Date()) {
-        //if access token expire logout the user, if not refresh token api
-        // if (new Date() >= millisecondToDate(accessToken)) {
-        //refresh token api
-        return Axios.post(process.env.REACT_APP_V1_API_URL + API.login.refreshToken, '', {
-          headers: {
-            Authorization: 'Bearer ' + localStorage.getItem('refreshtoken'),
-          },
-        }).then((response) => {
-          localStorage.setItem('accesstoken', response.headers['access-token']);
-          localStorage.setItem('refreshtoken', response.headers['refresh-token']);
-          //passing updated token in headers for authorization
-          error.config.headers['Authorization'] = 'Bearer ' + response.headers['access-token'];
-          return axios.request(error.response.config);
-        });
+      if (localStorage.getItem('accesstoken')) {
+        const refreshToken = localStorage.getItem('refreshtoken');
+        //if refresh token expire logout the user, if not check access token
+        if (millisecondToDate(refreshToken) > new Date()) {
+          //if access token expire logout the user, if not refresh token api
+          // if (new Date() >= millisecondToDate(accessToken)) {
+          //refresh token api
+          return Axios.post(process.env.REACT_APP_V1_API_URL + API.login.refreshToken, '', {
+            headers: {
+              Authorization: 'Bearer ' + localStorage.getItem('refreshtoken'),
+            },
+          }).then((response) => {
+            localStorage.setItem('accesstoken', response.headers['access-token']);
+            localStorage.setItem('refreshtoken', response.headers['refresh-token']);
+            //passing updated token in headers for authorization
+            error.config.headers['Authorization'] = 'Bearer ' + response.headers['access-token'];
+            return axios.request(error.response.config);
+          });
+        }
+      } else {
+        return Promise.reject(error);
       }
     } else {
       return Promise.reject(error);
@@ -106,6 +109,31 @@ export const hpIdUseAxiosCall = async (payload = axiosProps) => {
       })
       .catch((error) => {
         authInterceptors(error);
+        return reject({
+          data: error,
+          isLoading: false,
+          isError: true,
+        });
+      })
+      .finally(() => setLoadingState(false));
+  });
+};
+export const hpIdDemographicUseAxiosCall = async (payload = axiosProps) => {
+  setLoadingState(true);
+  payload.headers =
+    payload.headers !== undefined ? Object.assign(payload.headers, appheader) : appheader;
+
+  return await new Promise((resolve, reject) => {
+    hpIdAxios(payload)
+      .then((response) => {
+        return resolve({
+          data: response.data,
+          responseHeader: response.headers,
+          isLoading: false,
+          isError: false,
+        });
+      })
+      .catch((error) => {
         return reject({
           data: error,
           isLoading: false,

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Box, Grid, Link, Typography, useTheme } from '@mui/material';
 import { useForm } from 'react-hook-form';
@@ -18,7 +18,6 @@ import {
 } from '../../../store/actions/college-actions';
 import {
   getRegistrationCouncilList,
-  getUniversitiesList,
   sendNotificationOtp,
 } from '../../../store/actions/common-actions';
 import { loginAction, validateCaptchaImage } from '../../../store/actions/login-action';
@@ -42,6 +41,7 @@ export const Login = ({ loginName }) => {
   const {
     register,
     getValues,
+    setValue,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
@@ -114,6 +114,7 @@ export const Login = ({ loginName }) => {
         loginTypeID = 0;
         break;
     }
+
     if (selectedLoginOption === 'mobileNumber') {
       dispatch(
         validateCaptchaImage({
@@ -138,12 +139,16 @@ export const Login = ({ loginName }) => {
                 dispatch(login());
                 dispatch(userLoggedInType(loginName));
                 dispatch(getRegistrationCouncilList());
-                dispatch(getUniversitiesList());
                 navigate(`/profile`);
                 getCommonData(resp);
               })
-              .catch(() => {
-                // successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+              .catch((error) => {
+                successToast(
+                  'ERROR: ' + error?.data?.response?.data?.message,
+                  'auth-error',
+                  'error',
+                  'top-center'
+                );
               });
           } else {
             successToast(
@@ -174,18 +179,23 @@ export const Login = ({ loginName }) => {
               password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
               user_type: usertypeId,
               captcha_trans_id: generateCaptcha?.transaction_id,
+              login_type: loginTypeID,
             };
             dispatch(loginAction(requestObj))
               .then((resp) => {
                 dispatch(login());
                 dispatch(userLoggedInType(loginName));
                 dispatch(getRegistrationCouncilList());
-                dispatch(getUniversitiesList());
                 navigate(`/profile`);
                 getCommonData(resp);
               })
-              .catch(() => {
-                // successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+              .catch((error) => {
+                successToast(
+                  'ERROR: ' + error?.data?.response?.data?.message,
+                  'auth-error',
+                  'error',
+                  'top-center'
+                );
               });
           } else {
             successToast(
@@ -203,7 +213,17 @@ export const Login = ({ loginName }) => {
       successToast('Wrong Login Attempt', 'login-error', 'error', 'top-center');
     }
   };
-
+  const handleCancelClick = () => {
+    navigate('/');
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+  useEffect(() => {
+    setValue('userID', '');
+    setValue('password', '');
+  }, [loginName]);
   return (
     <Box p={4} bgcolor="white.main" boxShadow="4">
       <Typography variant="h2" color="primary.dark" mb={5}>
@@ -317,7 +337,7 @@ export const Login = ({ loginName }) => {
               <Box mt={2}>
                 <Typography variant="body1">
                   {' '}
-                  We just sent an OTP on your Mobile Number{' '}
+                  Please enter an OTP sent on your Mobile Number{' '}
                   {getValues().mobileNo.replace(/^.{6}/g, 'XXXXXX')}.
                 </Typography>
                 {otpform}
@@ -340,7 +360,13 @@ export const Login = ({ loginName }) => {
         >
           Login
         </Button>
-        <Button variant="contained" color="grey" fullWidth sx={{ ml: 1 }}>
+        <Button
+          variant="contained"
+          color="grey"
+          fullWidth
+          sx={{ ml: 1 }}
+          onClick={handleCancelClick}
+        >
           Cancel
         </Button>
       </Box>

@@ -16,6 +16,8 @@ export const API = {
     eSign: 'api/v1/abdm/nmr/e-signature',
     profileConsent: 'api/v1/abdm/nmr/health-professional/register',
     createPersonalDetails: '/api/v1/abdm/nmr/health-professional/personal',
+    additionalQualifications:
+      '/api/v1/abdm/nmr/health-professional/{healthProfessionalId}/qualifications',
   },
   common: {
     states: 'api/v1/abdm/nmr/countries/356/states',
@@ -26,8 +28,8 @@ export const API = {
     sendOtp: 'api/v1/abdm/nmr/notification/send-otp',
     verifyOtp: 'api/v1/abdm/nmr/notification/verify-otp',
     languages: 'api/v1/abdm/nmr/languages',
-    universities: 'api/v1/abdm/nmr/universities',
-    colleges: 'api/v1/abdm/nmr/universities/{university_id}/colleges',
+    universities: 'api/v1/abdm/nmr/university',
+    colleges: 'api/v1/abdm/nmr/college',
     courses: 'api/v1/abdm/nmr/courses',
     specialities: 'api/v1/abdm/nmr/specialities',
     councilNames: 'api/v1/abdm/nmr/state-medical-councils',
@@ -65,8 +67,8 @@ export const API = {
   doctorRegistration: {
     smcRegistrationDetail:
       'api/v1/abdm/nmr/health-professional?smcId={smcId}&registrationNumber={registrationNumber}',
-    passwordLink: 'api/v1/abdm/nmr/user/password-link',
     setUserPassword: 'api/v1/abdm/nmr/health-professional/user',
+    healthProfesssional: '/api/v1/abdm/nmr/health-professional',
   },
   nbe: {
     getNBEProfileData: 'api/v1/abdm/nmr/nbe/user/{id}',
@@ -81,14 +83,14 @@ export const API = {
 };
 export const API_HPRID = {
   hpId: {
-    checkHprIdExists: 'api/v2/registration/aadhaar/checkHpIdAccountExist',
-    hpIdSuggestion: 'api/v1/registration/aadhaar/hpid/suggestion',
-    sessionApi: 'gateway/v0.5/sessions',
+    sessionApi: '/api/v1/abdm/nmr/sessions',
     sendAadhaarOtp: 'api/v1/registration/aadhaar/generateOtp',
     verifyAadhaarOtp: 'api/v1/registration/aadhaar/verifyOTP',
     generateMobileOtp: 'api/v1/registration/aadhaar/generateMobileOTP',
     verifyMobileOtp: '/api/v1/registration/aadhaar/verifyMobileOTP',
-    createHprId: 'api/v1/registration/aadhaar/createHprIdWithPreVerified',
     demographicAuthMobile: 'api/v1/registration/aadhaar/demographicAuthViaMobile',
+    checkHprIdExists: 'api/v2/registration/aadhaar/checkHpIdAccountExist',
+    hpIdSuggestion: 'api/v1/registration/aadhaar/hpid/suggestion',
+    createHprId: 'api/v1/registration/aadhaar/createHprIdWithPreVerified',
   },
 };

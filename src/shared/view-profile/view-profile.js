@@ -10,6 +10,7 @@ import { enableUserNotification } from '../../store/actions/common-actions';
 
 export function ViewProfile(props) {
   const dispatch = useDispatch();
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
 
   const registration_number = useSelector(
     (state) =>
@@ -17,9 +18,7 @@ export function ViewProfile(props) {
         ?.registration_number
   );
 
-  const nmrIdData = useSelector(
-    (state) => state?.doctorUserProfileReducer?.personalDetails?.nmr_ID
-  );
+  const { nmr_id } = useSelector((state) => state?.doctorUserProfileReducer?.personalDetails);
 
   const emailId = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.communication_address?.email
@@ -108,6 +107,7 @@ export function ViewProfile(props) {
           />
         </Box>
       </Box>
+
       <Box bgcolor="white.main" py={3} mb={2} boxShadow="1">
         <Grid container>
           <Grid
@@ -129,26 +129,24 @@ export function ViewProfile(props) {
             </Typography>
           </Grid>
 
-          {nmrIdData && (
-            <Grid
-              borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
-              item
-              xs={12}
-              sm={6}
-              md={3}
-              lg="auto"
-              xl={2}
-              px={2}
-              mb={{ xs: 1, lg: 0 }}
-            >
-              <Typography variant="body3" color="grey.label">
-                NMR ID
-              </Typography>
-              <Typography variant="subtitle2" color="textPrimary.main">
-                {nmrIdData ? nmrIdData : ''}
-              </Typography>{' '}
-            </Grid>
-          )}
+          <Grid
+            borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
+            item
+            xs={12}
+            sm={6}
+            md={3}
+            lg="auto"
+            xl={2}
+            px={2}
+            mb={{ xs: 1, lg: 0 }}
+          >
+            <Typography variant="body3" color="grey.label">
+              NMR ID
+            </Typography>
+            <Typography variant="subtitle2" color="textPrimary.main">
+              {nmr_id ? nmr_id : '-'}
+            </Typography>{' '}
+          </Grid>
 
           {/* <Grid
           borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
@@ -159,7 +157,7 @@ export function ViewProfile(props) {
           lg="auto"
           px={2}
           mb={{ xs: 1, lg: 0 }}
-        >
+         >
             <Typography variant="body3" color="grey.label">
               Work Detail Verification Status
             </Typography>
@@ -215,13 +213,23 @@ export function ViewProfile(props) {
             <Typography variant="body3" color="grey.label">
               Mobile Number
             </Typography>
-            {mobileNumber && (
+
+            {mobileNumber ? (
               <Typography variant="subtitle2" color="textPrimary.main">
                 {mobileNumber}
                 <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
-                <Typography component="span" variant="subtitle2" color="primary.main" ml={1}>
-                  Change
-                </Typography>
+
+                {loggedInUserType === 'Doctor' ? (
+                  <Typography component="span" variant="subtitle2" color="primary.main" ml={1}>
+                    Change
+                  </Typography>
+                ) : (
+                  ''
+                )}
+              </Typography>
+            ) : (
+              <Typography variant="subtitle2" color="textPrimary.main">
+                -
               </Typography>
             )}
           </Grid>
@@ -229,15 +237,22 @@ export function ViewProfile(props) {
             <Typography variant="body3" color="grey.label">
               Email
             </Typography>
-            <Grid>
-              <Typography
-                variant="subtitle2"
-                color="textPrimary.main"
-                sx={{ wordBreak: 'break-word' }}
-              >
-                {emailId ? emailId : ''}
-              </Typography>
-            </Grid>
+            <Box display="flex" alignItems="center">
+              {emailId ? (
+                <Typography
+                  variant="subtitle2"
+                  color="textPrimary.main"
+                  sx={{ wordBreak: 'break-word' }}
+                >
+                  {emailId}
+                  <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
+                </Typography>
+              ) : (
+                <Typography variant="subtitle2" color="textPrimary.main">
+                  -
+                </Typography>
+              )}
+            </Box>
           </Grid>
         </Grid>
       </Box>

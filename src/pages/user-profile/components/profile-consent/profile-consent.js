@@ -19,18 +19,22 @@ import { changeUserActiveTab } from '../../../../store/reducers/common-reducers'
 import { Button, Checkbox } from '../../../../ui/core';
 import successToast from '../../../../ui/core/toaster';
 
-const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType }) => {
+const ProfileConsent = ({
+  handleBack,
+  setIsReadMode,
+  resetStep,
+  loggedInUserType,
+  setShowStaticFormProgress,
+}) => {
+  const dispatch = useDispatch();
   const [degreeCertificate, setDegreeCertificate] = useState(false);
   const [registrationFile, setRegistrationFile] = useState(false);
-  const dispatch = useDispatch();
-  const personalDetails = useSelector((state) => state?.doctorUserProfileReducer?.personalDetails);
   const doctorRegDetails = useSelector(
     (state) => state?.doctorUserProfileReducer?.registrationDetails
   );
   const eSignResponse = useSelector((state) => state?.doctorUserProfileReducer?.esignDetails?.data);
   const [confirmationModal, setConfirmationModal] = useState(false);
 
-  const { loginData } = useSelector((state) => state?.loginReducer);
   useEffect(() => {
     dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id)).then((response) => {
       if (response?.data?.qualification_detail_response_tos[0]?.degree_certificate) {
@@ -45,6 +49,11 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
       }
     });
   }, []);
+  // const { loginData } = useSelector((state) => state?.loginReducer);
+  const { personalDetails, updatedPersonalDetails, selectedQualificationTypeValue } = useSelector(
+    (state) => state?.doctorUserProfileReducer
+  );
+
   const {
     formState: { errors },
     register,
@@ -67,12 +76,17 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
   };
   const handleYesClick = () => {
     const payload = {
-      hp_profile_id: loginData?.data?.profile_id,
-      application_type_id: 1,
+      hp_profile_id: updatedPersonalDetails?.hp_profile_id,
+      application_type_id: personalDetails?.nmr_id
+        ? 2
+        : selectedQualificationTypeValue === 'International'
+        ? 7
+        : 1,
     };
 
     dispatch(updateProfileConsent(payload))
       .then(() => {
+        setShowStaticFormProgress(true);
         setConfirmationModal(false);
         setIsReadMode(true);
         resetStep(0);
@@ -183,19 +197,21 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
           columnGap={1}
           bgcolor="success.background"
           p={3}
+          mb={2}
+          display="flex"
+          border="1px solid"
+          borderColor="inputBorderColor.main"
           borderRadius="5px"
         >
           <Grid item sx="auto" display="flex" alignItems="center">
             <Checkbox
-              sx={{ width: '18px', height: '18px' }}
+              sx={{ width: '18px', height: '18px', marginLeft: 1 }}
               name="HPR"
-              {...register('HPR', {
-                required: 'HPR is Required',
-              })}
+              {...register('HPR')}
               error={errors.HPR?.message}
             />
             <Typography component="div" variant="body7">
-              Save my time,share my details with HPR
+              Save my time, share my details with HPR
             </Typography>
           </Grid>
           <Grid item sx="auto" display="flex" alignItems="center">
@@ -396,8 +412,9 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
               </Box>
               <Box mt={4}>
                 <Typography color="textPrimary.main">
-                  Your profile details have been updated. Do you want your profile to be submitted
-                  for Verification ?
+                  Your Application has been updated and will be submitted for verification.
+                  <br /> For more details, you will be redirected to Track Application Tab on
+                  clicking<b> Ok</b> button.
                 </Typography>
               </Box>
               <Box display={'flex'} justifyContent={'flex-end'} mt={1}>
@@ -411,7 +428,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
                     margin: '0 4px',
                   }}
                 >
-                  No
+                  Cancel
                 </Button>
                 <Button
                   onClick={handleYesClick}
@@ -421,7 +438,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
                     margin: '0 4px',
                   }}
                 >
-                  Yes
+                  Ok
                 </Button>
               </Box>
             </Box>

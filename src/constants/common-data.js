@@ -1,6 +1,8 @@
 import { get_year_data } from '../helpers/functions/common-functions';
+import { year_data } from '../helpers/functions/common-functions';
+
 export const accesstokenHprId =
-  'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI1WVpwM043VlFCdEE1cDZwcktkdXYyV0NaTTZVVlFVLWZTcEZJb0tiQU9ZIn0.eyJleHAiOjE2Nzg5ODM4NzIsImlhdCI6MTY3ODk0Nzg3MiwianRpIjoiNDIyMzFlY2EtMDA2ZC00ZTg5LWE2N2YtNGMxMDRjZmE5N2UyIiwiaXNzIjoiaHR0cHM6Ly9wcmVwcm9kLmFiZG0uZ292LmluL2F1dGgvcmVhbG1zL2NlbnRyYWwtcmVnaXN0cnkiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiZmUzZTEwMDctNjZlMi00OTkzLWFmYTktYjMyYjM1NDk1NDIwIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiaHBfaWQiLCJzZXNzaW9uX3N0YXRlIjoiYjZlMTU5NDktNjc5ZC00ZWE3LWI4YTUtYWI3NDBjM2QyMTc0IiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwOi8vbG9jYWxob3N0OjkwMDciXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwiaGVhbHRoSWQiLCJocF9pZCJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfSwiaHBfaWQiOnsicm9sZXMiOlsidW1hX3Byb3RlY3Rpb24iXX19LCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwiY2xpZW50SWQiOiJocF9pZCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiY2xpZW50SG9zdCI6IjEwLjIzMy43MC4xMTMiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtaHBfaWQiLCJjbGllbnRBZGRyZXNzIjoiMTAuMjMzLjcwLjExMyJ9.ZupVPuQofLUdLcmKYG0SWENOg-xiOFjuJs9N4PifX8DCuSAx6COnVHCDh7-xWh78YJxwt79S_zXjOrs0UC1NSTKuM5kyMa_30vp6Pilg1SNCyhLE5y24JygwCFitTb8B-rQKXn60pNtyuueGkX5BDTfF8KdVNENZ50yk-KFT5E3Kc0Fwx13Gh-q9xk1wNpJleNy-XuuSnTjeTOhDQfAIryNCqx5whlZNuib0w5bYtAJPkCi_AOhE5_Z2GQ2ak4wuiDqHzedh0ZOQN3xLu2DYVUDkAFCDHrU47xiRlq8cfiMRU8bhuCrK6XMMMnz9bmbzfeOdUnft0iLfFoJNfNL-ow';
+  'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI1WVpwM043VlFCdEE1cDZwcktkdXYyV0NaTTZVVlFVLWZTcEZJb0tiQU9ZIn0.eyJleHAiOjE2Nzk1OTg2NjksImlhdCI6MTY3OTU2MjY2OSwianRpIjoiN2ZhM2Q5YWEtOGQ0Mi00MGE1LWIxMTktOWZlZTcwM2UxMWE2IiwiaXNzIjoiaHR0cHM6Ly9wcmVwcm9kLmFiZG0uZ292LmluL2F1dGgvcmVhbG1zL2NlbnRyYWwtcmVnaXN0cnkiLCJhdWQiOiJhY2NvdW50Iiwic3ViIjoiZmUzZTEwMDctNjZlMi00OTkzLWFmYTktYjMyYjM1NDk1NDIwIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiaHBfaWQiLCJzZXNzaW9uX3N0YXRlIjoiYTBiZTAxMmMtMjdkOS00OTgzLTg0ZmYtODYyM2MxZWZhOGUzIiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyJodHRwOi8vbG9jYWxob3N0OjkwMDciXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwiaGVhbHRoSWQiLCJocF9pZCJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfSwiaHBfaWQiOnsicm9sZXMiOlsidW1hX3Byb3RlY3Rpb24iXX19LCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwiY2xpZW50SWQiOiJocF9pZCIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwiY2xpZW50SG9zdCI6IjEwLjIzMy42OC4xNjkiLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlLWFjY291bnQtaHBfaWQiLCJjbGllbnRBZGRyZXNzIjoiMTAuMjMzLjY4LjE2OSJ9.CwhM-rLE9rayJHaqiQAERawdPw37yzw8DabsLQHw7djHKEQOPXJ0PBTeRP33zzZb5LUI5WedHM5ihOror7sQAZvNCJymenzpl3AhBPuWkEOWrjpf_gmxCEIJp7MzQBS-bD1zC8A9HmP9vp9SIEl2q9f6czwPH4yfMijcP4wGPpvADsx3EdI0Z1gR7ev71gBXo-Fdu1yQibpuB08O935Jv6s7rS_8dYJy6J_nUP2dcGjcyGrlImuYMzVPLhVcjlDnTIGyCWrgJC-tPK2Se4qjojGbjrydJ1GoFAaIfc-D36qymmeMFENLNVbq93DQUV6e9zierhKlKY8mX4dahNzc7g';
 export const StateNames = [
   { id: '1', name: 'Andhra Pradesh' },
   { id: '2', name: 'Maharastra' },
@@ -86,6 +88,7 @@ export const UniversityNames = [
 ];
 
 export const yearsData = get_year_data();
+export const yeardata = year_data();
 
 export const monthsData = [
   { value: 'January', label: 'January' },
@@ -355,7 +358,7 @@ export const workStatusOptions = [
 // dashboard count mapping
 // mapping BE keys -> card titles on FE
 export const registrationRequestMapper = {
-  'Total HP Registration Requests': 'Total Registration request',
+  'Total Registration Requests': 'Total Registration request',
   Rejected: 'Rejected',
   Approved: 'Approved',
   'Query Raised': 'Query Raised',
@@ -364,7 +367,7 @@ export const registrationRequestMapper = {
   Pending: 'Pending',
 };
 export const updationRequestMapper = {
-  'Total HP Modification Requests': 'Total Updation request',
+  'Total Modification Requests': 'Total Updation request',
   Rejected: 'Request Rejected',
   Approved: 'Update Request Approved',
   'Query Raised': 'Query Raised on Update Request',
@@ -374,13 +377,13 @@ export const updationRequestMapper = {
 };
 
 export const suspensionRequestMapper = {
-  'Total Consolidated Suspension Requests': 'Total Suspension request',
-  Rejected: 'Rejected',
-  Approved: 'Approved',
-  'Query Raised': 'Query Raised',
+  'Total Suspension Requests': 'Total Suspension request',
+  'Permanent Suspension Requests Received': 'Permanent Suspension Requests Received',
+  'Temporary Suspension Requests Approved': 'Temporary Suspension Requests Approved',
+  'Permanent Suspension Requests Approved': 'Permanent Suspension Requests Approved',
   Suspended: 'Suspended',
   Blacklisted: 'Blacklisted',
-  Pending: 'Pending',
+  'Temporary Suspension Requests Received': 'Temporary Suspension Requests Received',
 };
 
 export const DashboardData = [
@@ -552,6 +555,11 @@ export const ActivateLicenceFieldList = [
 ];
 
 export const DashBoardCardsFieldList = [
-  { id: 'registrationNumber', name: 'Registration No' },
   { id: 'applicantFullName', name: 'Name of Applicant' },
+  { id: 'registrationNumber', name: 'Registration No' },
+  { id: 'councilName', name: 'Name of Council' },
+  { id: 'emailId', name: 'Email ID' },
+  { id: 'gender', name: 'Gender' },
+  { id: 'mobileNumber', name: 'Mobile Number' },
+  { id: 'yearOfRegistration', name: 'Year of Registration' },
 ];

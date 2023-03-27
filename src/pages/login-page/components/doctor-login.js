@@ -13,7 +13,6 @@ import CaptchaComponent from '../../../shared/captcha-component/captcha-componen
 import OtpForm from '../../../shared/otp-form/otp-component';
 import {
   getRegistrationCouncilList,
-  getUniversitiesList,
   sendNotificationOtp,
 } from '../../../store/actions/common-actions';
 // import { , verifyNotificationOtp } from '../../../store/actions/common-actions';
@@ -121,11 +120,15 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
                 dispatch(login());
                 dispatch(userLoggedInType(loginName));
                 dispatch(getRegistrationCouncilList());
-                dispatch(getUniversitiesList());
                 navigate(`/profile`);
               })
-              .catch(() => {
-                // successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+              .catch((error) => {
+                successToast(
+                  'ERROR: ' + error?.data?.response?.data?.message,
+                  'auth-error',
+                  'error',
+                  'top-center'
+                );
               });
           } else {
             successToast(
@@ -156,17 +159,22 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
               password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
               user_type: usertypeId,
               captcha_trans_id: generateCaptcha?.transaction_id,
+              login_type: loginTypeID,
             };
             dispatch(loginAction(requestObj))
               .then(() => {
                 dispatch(login());
                 dispatch(userLoggedInType(loginName));
                 dispatch(getRegistrationCouncilList());
-                dispatch(getUniversitiesList());
                 navigate(`/profile`);
               })
-              .catch(() => {
-                // successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+              .catch((error) => {
+                successToast(
+                  'ERROR: ' + error?.data?.response?.data?.message,
+                  'auth-error',
+                  'error',
+                  'top-center'
+                );
               });
           } else {
             successToast(
@@ -183,6 +191,13 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
     } else {
       successToast('Wrong Login Attempt', 'login-error', 'error', 'top-center');
     }
+  };
+  const handleCancelClick = () => {
+    navigate('/');
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
 
   return (
@@ -321,8 +336,8 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
             {otpFormEnabled && (
               <Box mt={2}>
                 <Typography variant="body1">
-                  We just sent an OTP on your Registered Mobile Number {maskedMobileNumber} Linked
-                  with your NMR ID.
+                  Please enter the OTP sent on your Registered Mobile Number {maskedMobileNumber}{' '}
+                  Linked with your NMR ID.
                 </Typography>
                 {otpform}
               </Box>
@@ -345,6 +360,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
               })}
             />
             <TextField
+              sx={{ mb: 2 }}
               required
               fullWidth
               label={'Password'}
@@ -376,7 +392,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
             {otpFormEnabled && (
               <Box mt={2}>
                 <Typography variant="body1">
-                  We just sent an OTP on your Mobile Number{' '}
+                  Please enter the OTP sent on your Mobile Number{' '}
                   {getValues().mobileNo.replace(/^.{6}/g, 'XXXXXX')}.
                 </Typography>
                 {otpform}
@@ -399,14 +415,24 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
         >
           Login
         </Button>
-        <Button variant="contained" color="grey" fullWidth sx={{ ml: 1 }}>
+        <Button
+          variant="contained"
+          color="grey"
+          fullWidth
+          sx={{ ml: 1 }}
+          onClick={handleCancelClick}
+        >
           Cancel
         </Button>
       </Box>
       <Box textAlign={'center'}>
         <Typography variant="body1">
           {`Don't have account?`}{' '}
-          <Link color={theme.palette.secondary.main} sx={{ cursor: 'pointer' }}>
+          <Link
+            color={theme.palette.secondary.main}
+            sx={{ cursor: 'pointer' }}
+            onClick={() => navigate('/register/doctor-registration')}
+          >
             Register Here
           </Link>
         </Typography>

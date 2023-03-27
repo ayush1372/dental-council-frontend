@@ -112,6 +112,14 @@ const themeWrapper = (mode, appFontType) => {
           },
         },
       },
+      MuiChip: {
+        styleOverrides: {
+          root: {},
+          sizeSmall: {
+            fontSize: '12px',
+          },
+        },
+      },
     },
 
     // STYLE FOR BORDER RADIUS

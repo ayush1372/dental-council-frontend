@@ -50,13 +50,6 @@ export const doctorTabs = [
     element: <VoluntarySuspendLicense tabName={SideDrawerListItem} />,
   },
   {
-    option: 3,
-    name: 'Change Password',
-    tabName: 'change-password',
-    icon: <PasswordIcon />,
-    element: <ChangePassword tabName={SideDrawerListItem} />,
-  },
-  {
     option: 4,
     name: 'Additional Qualifications',
     tabName: 'additional-qualifications',
@@ -70,6 +63,13 @@ export const doctorTabs = [
     icon: <AccountCircleIcon />,
     element: <WorkProfile />,
   },
+  // {
+  //   option: 3,
+  //   name: 'Change Password',
+  //   tabName: 'change-password',
+  //   icon: <PasswordIcon />,
+  //   element: <ChangePassword tabName={SideDrawerListItem} />,
+  // },
 ];
 
 export const smcTabs = [

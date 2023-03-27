@@ -2,14 +2,16 @@ import { Fragment, useState } from 'react';
 
 import { makeStyles } from '@material-ui/core';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { Box, Typography, useTheme } from '@mui/material';
+import clsx from 'clsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 import { navbar_routes } from '../../../../../constants/navigation-meta';
 import { menuToggle } from '../../../../../store/reducers/nav-menu-reducer';
 import Dropdown from './dropdown';
-const Nav = ({ navbar_routes, menuToggleHandler }) => {
+const Nav = ({ menuToggleHandler }) => {
   const [openDropdown, setOpenDropdown] = useState(null);
 
   const theme = useTheme();
@@ -21,7 +23,7 @@ const Nav = ({ navbar_routes, menuToggleHandler }) => {
       justifyContent: 'flex-start',
       alignItems: 'center',
       position: 'relative',
-      padding: '20px',
+      padding: '17px 20px',
       lineHeight: '1',
       borderBottom: '4px solid',
       borderBottomColor: theme.palette.primary.main,
@@ -41,7 +43,7 @@ const Nav = ({ navbar_routes, menuToggleHandler }) => {
       },
 
       [theme.breakpoints.down('lg')]: {
-        padding: '20px 24px',
+        padding: '12px',
       },
       [theme.breakpoints.down('md')]: {
         width: '100%',
@@ -57,6 +59,18 @@ const Nav = ({ navbar_routes, menuToggleHandler }) => {
           backgroundColor: 'none',
           borderBottom: 'none',
         },
+      },
+    },
+    search: {
+      backgroundColor: theme.palette.secondary.main,
+      borderBottom: `4px solid ${theme.palette.secondary.main}`,
+      marginLeft: 'auto',
+      borderRight: 0,
+
+      '&.active': {
+        backgroundColor: theme.palette.secondary.main,
+        borderBottom: '4px solid',
+        borderBottomColor: theme.palette.secondary.main,
       },
     },
   }));
@@ -102,18 +116,21 @@ const Nav = ({ navbar_routes, menuToggleHandler }) => {
       position="relative"
       px={{ xs: 0, md: 3 }}
     >
-      {navbar_routes.map(({ label, link, tree }) => {
+      {navbar_routes.map(({ label, link, tree, search }) => {
         const isOpen = openDropdown === label;
         return (
           <Fragment key={label}>
             {link ? (
               <NavLink
-                className={classes.navMenu}
+                className={clsx(classes.navMenu, {
+                  [classes.search]: search,
+                })}
                 to={link}
                 onClick={() => {
                   dispatch(menuToggle(!menuOpen));
                 }}
               >
+                {search ? <SearchOutlinedIcon fontSize="small" sx={{ marginRight: 1 }} /> : ''}
                 <Typography variant="body3">{label}</Typography>
               </NavLink>
             ) : (

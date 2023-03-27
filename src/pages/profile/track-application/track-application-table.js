@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
 
 import { Box, Grid, TablePagination } from '@mui/material';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import GenericTable from '../../../shared/generic-component/generic-table';
+import { getDoctorTrackApplicationData } from '../../../store/actions/doctor-user-profile-actions';
 import TableSearch from '../components/table-search/table-search';
 
 function createData(
@@ -17,6 +18,10 @@ function createData(
   collegeVerificationStatus,
   NMCVerificationStatus,
   created_at,
+  smc_action_date,
+  college_registrar_action_date,
+  college_dean_action_date,
+  nmc_action_date,
   smc_status,
   nmc_status,
   pendency,
@@ -33,6 +38,10 @@ function createData(
     collegeVerificationStatus,
     NMCVerificationStatus,
     created_at,
+    smc_action_date,
+    college_registrar_action_date,
+    college_dean_action_date,
+    nmc_action_date,
     smc_status,
     nmc_status,
     pendency,
@@ -46,7 +55,7 @@ function TrackAppicationTable({
   setShowUserProfile,
   getTableData,
   profileId,
-  tableData,
+
   setRowData,
 }) {
   const dispatch = useDispatch();
@@ -54,6 +63,7 @@ function TrackAppicationTable({
   const [orderBy, setOrderBy] = React.useState({});
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
+  const tableData = useSelector((state) => state.common.trackApplicationTableData);
 
   // const theme = useTheme();
   let trackData = {
@@ -68,6 +78,7 @@ function TrackAppicationTable({
   useEffect(() => {
     // if (orderBy && getTableData && page !== null && profileId)
     dispatch(getTableData(profileId, trackData));
+    window.scrollTo(0, 0);
   }, []);
 
   const viewNameOfApplicant = (event, row) => {
@@ -100,7 +111,7 @@ function TrackAppicationTable({
       sorting: true,
       type: 'date',
     },
-    { title: 'Pendency', name: 'pendency', sorting: true, type: 'string' },
+    { title: 'Pendency (in days)', name: 'pendency', sorting: true, type: 'string' },
     { title: 'Action', name: 'view', sorting: false, type: 'string' },
   ];
 
@@ -125,6 +136,7 @@ function TrackAppicationTable({
     (data, index) => {
       return createData(
         { type: 'SNo', value: index + 1 },
+
         {
           type: 'registration_no',
           value: data?.request_id,
@@ -143,17 +155,38 @@ function TrackAppicationTable({
           type: 'application_type_name',
           value: data?.application_type_name,
         },
+
         {
           type: 'nameofStateCouncil',
           value: data?.council_name,
         },
         { type: 'doctor_status', value: data?.doctor_status },
+        // {
+        //   type: 'doctor_status',
+        //   value:
+        //     data?.work_flow_status_id === 1
+        //       ? 'PENDING'
+        //       : data?.work_flow_status_id === 2
+        //       ? 'APPROVED'
+        //       : data?.work_flow_status_id === 3
+        //       ? 'QUERY RAISED'
+        //       : data?.work_flow_status_id === 4
+        //       ? 'REJECTED'
+        //       : data?.work_flow_status_id === 5
+        //       ? 'SUSPENDED'
+        //       : 'BLACKLISTED',
+        // },
+
         {
           type: 'collegeVerificationStatus',
           value: data?.college_dean_status,
         },
         { type: 'NMCVerificationStatus', value: data?.college_registrar_status },
         { type: 'created_at', value: data?.created_at },
+        { type: 'smc_action_date', value: data?.smc_action_date },
+        { type: 'college_registrar_action_date', value: data?.college_registrar_action_date },
+        { type: 'college_dean_action_date', value: data?.college_dean_action_date },
+        { type: 'nmc_action_date', value: data?.nmc_action_date },
         {
           type: 'smc_status',
           value: data?.smc_status,
@@ -163,6 +196,7 @@ function TrackAppicationTable({
           value: data?.nmc_status,
         },
         { type: 'pendency', value: data?.pendency },
+
         { type: 'view', value: data?.view || 'view more', onClickCallback: viewCallback }
       );
     }
@@ -192,13 +226,17 @@ function TrackAppicationTable({
     dispatch(getTableData(profileId, finalTrackData));
   };
 
+  const searchParams = (data, profileId) => {
+    dispatch(getDoctorTrackApplicationData(profileId, data));
+  };
+
   return (
     <Grid>
       {/* <Typography variant="h2" py={3} bgcolor={`${theme.palette.white.main}`} mb={2} px={3}>
         Track Application
       </Typography>    */}
       <TableSearch
-        //  searchParams={searchParams}
+        searchParams={searchParams}
         trackApplication={userType}
         exportData={tableData?.data?.data?.health_professional_applications}
         flag={'trackApplicationData'}

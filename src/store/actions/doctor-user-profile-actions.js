@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { API } from '../../api/api-endpoints';
 import { GET, POST, PUT } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
@@ -7,6 +8,8 @@ import {
   getPersonalDetails,
   getProfileImage,
   getRegistrationDetails,
+  getUpdatedPersonalDetails,
+  getUpdatedRegistrationDetails,
   getWorkProfileDetails,
 } from '../reducers/doctor-user-profile-reducer';
 
@@ -82,7 +85,7 @@ export const getNewDoctorPersonalDetailsData = (body) => async (dispatch) => {
   });
 };
 
-export const updateDoctorPersonalDetails = (body, doctor_profile_id) => async () => {
+export const updateDoctorPersonalDetails = (body, doctor_profile_id) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: PUT,
@@ -93,6 +96,7 @@ export const updateDoctorPersonalDetails = (body, doctor_profile_id) => async ()
       data: body,
     })
       .then((response) => {
+        dispatch(getUpdatedPersonalDetails(response.data));
         return resolve(response);
       })
       .catch((error) => {
@@ -101,7 +105,7 @@ export const updateDoctorPersonalDetails = (body, doctor_profile_id) => async ()
   });
 };
 
-export const updateDoctorRegistrationDetails = (body, doctor_profile_id) => async () => {
+export const updateDoctorRegistrationDetails = (body, doctor_profile_id) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: PUT,
@@ -112,6 +116,7 @@ export const updateDoctorRegistrationDetails = (body, doctor_profile_id) => asyn
       data: body,
     })
       .then((response) => {
+        dispatch(getUpdatedRegistrationDetails(response.data));
         return resolve(response);
       })
       .catch((error) => {
@@ -223,6 +228,26 @@ export const updateProfileConsent = (payload) => async () => {
       url: API.DoctorUserProfileData.profileConsent,
       headers: { 'Content-Type': 'application/json' },
       data: payload,
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const additionalQualificationsData = (formData, healthProfessionalId) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.DoctorUserProfileData.additionalQualifications.replace(
+        '{healthProfessionalId}',
+        healthProfessionalId
+      ),
+      headers: { 'Content-Type': 'application/json' },
+      data: formData,
     })
       .then((response) => {
         return resolve(response);

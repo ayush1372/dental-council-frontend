@@ -31,7 +31,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
   const stateName = state?.name || '';
   const collegeName = college?.name || '';
   const universityName = university?.name || '';
-  const courseName = course?.course_name || '';
+  const courseName = course?.course_name || course?.name || '';
 
   const CloseAttachmentPopup = () => {
     setAttachmentViewProfile(false);
@@ -108,7 +108,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
       <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
-            Name of the college
+            Name of the College
             <Typography component="span" color="error.main">
               *
             </Typography>
@@ -151,7 +151,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
 
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
-            Month & Year of awarding Degree
+            Month & Year of Awarding Degree
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
@@ -188,7 +188,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               <IconButton>
                 <AttachFileIcon fontSize="10px" />
               </IconButton>
-              View attachment
+              View Attachment
             </Typography>
 
             {attachmentViewProfile && (

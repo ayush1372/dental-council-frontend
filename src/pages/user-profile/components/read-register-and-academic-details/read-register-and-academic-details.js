@@ -31,17 +31,17 @@ const ReadRegisterAndAcademicDetails = ({
   setShowViewPorfile,
   setShowTable,
 }) => {
-  const [accordionKey, setAccordionKey] = useState('accordion-0');
+  const [accordionKeys, setAccordionKeys] = useState(['accordion-0', 'accordion-1', 'accordion-2']);
   const [selected, setSelected] = useState('');
   const [confirmationModal, setConfirmationModal] = useState(false);
+  const [actionVerified, setActionVerified] = useState(false);
 
   const { userActiveTab, selectedAcademicStatus } = useSelector((state) => state.common);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [successPopupMessage, setSuccessPopupMessage] = useState('');
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
-  // const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
-
+  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   // const dispatch = useDispatch();
 
   const accordions = [
@@ -54,8 +54,12 @@ const ReadRegisterAndAcademicDetails = ({
       body: QualificationDetailsContent,
     },
   ];
-  const handleChange = (accordionValue) => (_event, isExpanded) => {
-    setAccordionKey(isExpanded ? accordionValue : null);
+  const handleChange = (accordionValue) => () => {
+    if (accordionKeys.includes(accordionValue)) {
+      setAccordionKeys(accordionKeys.filter((a) => a !== accordionValue));
+    } else {
+      setAccordionKeys([...accordionKeys, accordionValue]);
+    }
   };
   const selectionChangeHandler = (event) => {
     const { myValue } = event.currentTarget.dataset;
@@ -83,8 +87,8 @@ const ReadRegisterAndAcademicDetails = ({
           return (
             <Accordion
               square="false"
-              key={0}
-              expanded={accordionKey === key}
+              key={key}
+              defaultExpanded
               onChange={handleChange(key)}
               sx={{
                 '.Mui-expanded.MuiAccordionSummary-root': {
@@ -99,7 +103,9 @@ const ReadRegisterAndAcademicDetails = ({
                 },
               }}
             >
-              <AccordionSummary expandIcon={accordionKey === key ? <RemoveIcon /> : <AddIcon />}>
+              <AccordionSummary
+                expandIcon={accordionKeys.includes(key) ? <RemoveIcon /> : <AddIcon />}
+              >
                 <Typography variant="body1" color="primary.main">
                   {accordion.title}
                 </Typography>
@@ -167,6 +173,7 @@ const ReadRegisterAndAcademicDetails = ({
                           md: 'fit-content',
                         },
                       }}
+                      disabled={actionVerified}
                     >
                       Action <MoreHorizIcon />
                     </Button>
@@ -186,12 +193,13 @@ const ReadRegisterAndAcademicDetails = ({
                       <MenuItem onClick={selectionChangeHandler} data-my-value={'reject'}>
                         Reject
                       </MenuItem>
-                      {loggedInUserType === 'NMC' && (
+                      {personalDetails.nmr_id !== undefined && (
                         <MenuItem onClick={selectionChangeHandler} data-my-value={'suspend'}>
                           Permanent suspend
                         </MenuItem>
                       )}
-                      {loggedInUserType === 'NMC' && (
+
+                      {personalDetails.nmr_id !== undefined && (
                         <MenuItem onClick={selectionChangeHandler} data-my-value={'blacklist'}>
                           Temporary suspend
                         </MenuItem>
@@ -219,17 +227,6 @@ const ReadRegisterAndAcademicDetails = ({
         <Box
           p={2}
           width={selected === 'verify' ? '500px' : selected === 'forward' ? '700px' : '630px'}
-          // height={
-          //   selected === 'reject'
-          //     ? '500px'
-          //     : selected === 'verify'
-          //     ? '380px'
-          //     : selected === 'forward'
-          //     ? '100px'
-          //     : selected === 'raise'
-          //     ? '650px'
-          //     : '720px'
-          // }
           borderRadius={'40px'}
         >
           <Box align="right">
@@ -237,6 +234,7 @@ const ReadRegisterAndAcademicDetails = ({
           </Box>
           {loggedInUserType === 'NMC' ||
           loggedInUserType === 'SMC' ||
+          loggedInUserType === 'NBE' ||
           loggedInUserType === 'College' ? (
             <Box
               display={'flex'}
@@ -252,6 +250,7 @@ const ReadRegisterAndAcademicDetails = ({
                 closeActionModal={setConfirmationModal}
                 showSuccessPopup={setShowSuccessPopup}
                 setSuccessPopupMessage={setSuccessPopupMessage}
+                setActionVerified={setActionVerified}
               />
             </Box>
           ) : (

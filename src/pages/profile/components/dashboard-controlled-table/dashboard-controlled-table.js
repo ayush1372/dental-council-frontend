@@ -11,6 +11,7 @@ import TableSearch from '../table-search/table-search';
 
 function createData(
   SNo,
+  requestId,
   registrationNo,
   nameofApplicant,
   nameofStateCouncil,
@@ -24,6 +25,7 @@ function createData(
 ) {
   return {
     SNo,
+    requestId,
     registrationNo,
     nameofApplicant,
     nameofStateCouncil,
@@ -50,6 +52,12 @@ function DashboardControlledTable(props) {
   const dataHeader = [
     { title: 'S.No.', name: 'SNo', sorting: true, type: 'string' },
     {
+      title: 'Request ID',
+      name: 'requestId',
+      sorting: true,
+      type: 'string',
+    },
+    {
       title: 'IMR ID/ Registration No.',
       name: 'registrationNo',
       sorting: true,
@@ -69,7 +77,7 @@ function DashboardControlledTable(props) {
       type: 'string',
     },
     {
-      title: 'College Verification Status',
+      title: 'College/NBE Verification Status',
       name: 'collegeVerificationStatus',
       sorting: true,
       type: 'string',
@@ -81,7 +89,7 @@ function DashboardControlledTable(props) {
       type: 'string',
     },
     { title: 'Date of Submission', name: 'dateofSubmission', sorting: true, type: 'date' },
-    { title: 'Pendency', name: 'pendency', sorting: true, type: 'string' },
+    { title: 'Pendency (in days)', name: 'pendency', sorting: true, type: 'string' },
     { title: 'View', name: 'view', sorting: false, type: 'string' },
   ];
 
@@ -112,6 +120,10 @@ function DashboardControlledTable(props) {
     return createData(
       { type: 'SNo', value: index + 1 },
       {
+        type: 'requestId',
+        value: application?.request_id,
+      },
+      {
         type: 'registrationNo',
         value: application?.registration_no,
       },
@@ -126,7 +138,14 @@ function DashboardControlledTable(props) {
       { type: 'councilVerificationStatus', value: capitalize(application?.smc_status) },
       {
         type: 'collegeVerificationStatus',
-        value: capitalize(application?.college_dean_status),
+        value:
+          application?.college_dean_status === ('NOT YET RECEIVED' || 'PENDING') &&
+          application?.college_registrar_status === 'Approved'
+            ? 'Pending'
+            : application?.college_dean_status === 'APPROVED' &&
+              application?.college_registrar_status === 'APPROVED'
+            ? 'Approved'
+            : 'Not yet received',
       },
       { type: 'NMCVerificationStatus', value: capitalize(application?.nmc_status) },
       { type: 'dateofSubmission', value: formattedDate },
@@ -152,7 +171,7 @@ function DashboardControlledTable(props) {
 
   useEffect(() => {
     getTableData(1, 10);
-  }, [searchQueryParams]);
+  }, []);
 
   const getTableData = (pageNo, noOfRecords) => {
     const requestObj = {
@@ -168,7 +187,7 @@ function DashboardControlledTable(props) {
       nmr_id: searchQueryParams ? searchQueryParams?.filterByRegNo : '',
       search: searchQueryParams ? searchQueryParams?.search : '',
       page_no: pageNo,
-      size: noOfRecords,
+      offset: noOfRecords,
       sort_by: '',
       sort_order: '',
     };
@@ -178,6 +197,28 @@ function DashboardControlledTable(props) {
 
   const searchParams = (data) => {
     setSearchQueryParams(data);
+
+    let reqObj = {
+      work_flow_status_id: '',
+      application_type_id: props?.selectedCardDataData?.applicationTypeID
+        ? props?.selectedCardDataData?.applicationTypeID.toString()
+        : '',
+      user_group_status: props?.selectedCardDataData?.responseKey
+        ? props?.selectedCardDataData?.responseKey
+        : '',
+      smc_id: searchQueryParams ? searchQueryParams?.RegistrationCouncilId : '',
+      name: searchQueryParams ? searchQueryParams?.filterByName : '',
+      nmr_id: searchQueryParams ? searchQueryParams?.filterByRegNo : '',
+      // search: searchQueryParams ? searchQueryParams?.search : '',
+      page_no: data.pageNo,
+      offset: data.offset,
+      sort_by: '',
+      sort_order: '',
+      search: data.search,
+      value: data.value,
+    };
+
+    dispatch(getDashboardTableData(reqObj));
   };
 
   return (

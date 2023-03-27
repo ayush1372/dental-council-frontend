@@ -4,6 +4,7 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
 import { Grid, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
+import moment from 'moment';
 import { useSelector } from 'react-redux';
 
 import AttachmentViewPopup from '../../../../shared/query-modal-popup/attachement-view-popup';
@@ -88,11 +89,7 @@ const RegistrationDetailsContent = () => {
           </Typography>
           <Grid display="flex">
             <Typography color="textPrimary.main" variant="subtitle2">
-              {registration_date
-                ? registration_date?.length > 10
-                  ? registration_date?.substring(0, 10)
-                  : registration_date
-                : ''}
+              {registration_date && moment(registration_date).format('DD-MM-YYYY')}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
@@ -131,11 +128,8 @@ const RegistrationDetailsContent = () => {
           </Typography>
           <Grid display="flex">
             <Typography color="textPrimary.main" variant="subtitle2">
-              {renewable_registration_date
-                ? renewable_registration_date?.length > 10
-                  ? renewable_registration_date?.substring(0, 10)
-                  : renewable_registration_date
-                : ''}
+              {renewable_registration_date &&
+                moment(renewable_registration_date).format('DD-MM-YYYY')}{' '}
             </Typography>
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon

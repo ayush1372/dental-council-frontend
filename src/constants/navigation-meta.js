@@ -125,11 +125,11 @@ const NAV_META = [
 
 export const navbar_routes = [
   {
-    label: 'About NMR',
-    link: '/about-us',
+    label: 'Home',
+    link: '/',
   },
   {
-    label: 'NMR ACT',
+    label: 'About NMC',
     link: null,
     tree: [
       {
@@ -179,6 +179,7 @@ export const navbar_routes = [
     label: 'Search Doctor',
     link: '/search-doctor',
     tree: null,
+    search: true,
   },
 ];
 

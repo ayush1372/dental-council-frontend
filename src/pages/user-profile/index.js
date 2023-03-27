@@ -3,11 +3,14 @@ import { useEffect, useState } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 // import TuneIcon from '@mui/icons-material/Tune';
 import { Box, Grid, Typography, useTheme } from '@mui/material';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
 import { useDispatch, useSelector } from 'react-redux';
 
 import useWizard from '../../hooks/use-wizard';
 import ReactivateLicencePopup from '../../shared/reactivate-licence-popup/re-activate-licence-popup';
 import SuccessPopup from '../../shared/reactivate-licence-popup/success-popup';
+import { enableUserNotification } from '../../store/actions/common-actions';
 import { getCountriesList, getStatesList } from '../../store/actions/common-actions';
 import {
   getPersonalDetailsData,
@@ -41,6 +44,28 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
 
   const [isApplicationPending, setIsApplicationPending] = useState(true);
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const [showStaticFormProgress, setShowStaticFormProgress] = useState(false);
+
+  const [emailNotification, setEmailNotification] = useState();
+  const [mobileNotification, setMobileNotification] = useState();
+
+  const handleNotification = (eventData, mode) => {
+    if (mode === 'email') {
+      setEmailNotification(eventData?.target?.checked);
+    }
+    if (mode === 'sms') {
+      setMobileNotification(eventData?.target?.checked);
+    }
+    let updatedNotificationData = {
+      notification_toggles: [
+        {
+          mode: mode,
+          is_enabled: eventData.target.checked,
+        },
+      ],
+    };
+    dispatch(enableUserNotification(updatedNotificationData));
+  };
 
   useEffect(() => {
     if (personalDetails?.work_flow_status_id === 1) {
@@ -78,6 +103,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
 
   const openDoctorEditProfile = () => {
     setIsReadMode(false);
+    resetStep();
     fetchCountries();
     fetchStates();
   };
@@ -197,38 +223,22 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
             px={3}
             py={2}
           >
-            <Grid item xs={12} md={6}>
-              <Typography
-                component="div"
-                variant="h2"
-                color="inputTextColor.main"
-                sx={{
-                  textAlign: {
-                    xs: 'center',
-                    md: 'start',
-                  },
-                }}
-              >
-                {isReadMode && 'My Profile'}
-              </Typography>
-              <Box display="flex" gap={1}>
-                {' '}
-                {!isReadMode && (
-                  <Typography
-                    variant="h2"
-                    component="span"
-                    width={{ sm: '200px', lg: '170px', xl: '140px' }}
-                  >
-                    {' '}
-                    Edit Profile
-                  </Typography>
-                )}
-                {!isReadMode && (
-                  <ProgressBar
-                    progress={!isReadMode && progress}
-                    completed={!isReadMode && completed}
-                  />
-                )}
+            <Grid item xs={12} sm="auto">
+              <Box display="flex" gap={1.5} alignItems={'center'} width="100%">
+                <Typography variant="h2" component="span" flexBasis="0" flexGrow="1">
+                  {isReadMode ? 'My Profile' : 'Edit Profile'}
+                </Typography>
+                <ProgressBar
+                  width="302px"
+                  progress={
+                    showStaticFormProgress ||
+                    personalDetails?.nmr_id ||
+                    personalDetails?.work_flow_status_id === 1
+                      ? 75
+                      : progress
+                  }
+                  completed={completed}
+                />
               </Box>
               {!isReadMode && (
                 <BreadcrumbContainer
@@ -238,8 +248,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
                 />
               )}
             </Grid>
-
-            {loggedInUserType === 'Doctor' && (
+            {/* {loggedInUserType === 'Doctor' && (
               <Grid
                 item
                 xs={12}
@@ -251,12 +260,12 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
                   },
                 }}
               ></Grid>
-            )}
+            )} */}
             {isReadMode && isApplicationPending && (
               <Grid
                 item
-                xs={12}
-                md="auto"
+                xs="auto"
+                ml="auto"
                 sx={{
                   marginBottom: {
                     xs: '10px',
@@ -277,6 +286,58 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
                 </Button>
               </Grid>
             )}
+
+            <Grid item xs={12} lg="auto">
+              {!isReadMode && (
+                <Box
+                  display={'flex'}
+                  flexDirection={{ xs: 'column', sm: 'row' }}
+                  mt={{ xs: 2, lg: 0 }}
+                >
+                  <FormControlLabel
+                    sx={{
+                      width: {
+                        xs: 'auto',
+                      },
+                      ml: 0,
+                      mr: { xs: 0, sm: 2 },
+                    }}
+                    value="email"
+                    control={
+                      <Switch
+                        color="primary"
+                        checked={emailNotification}
+                        onChange={(e) => {
+                          handleNotification(e, 'email');
+                        }}
+                      />
+                    }
+                    label="Email Notifications"
+                    labelPlacement="start"
+                  />
+                  <FormControlLabel
+                    sx={{
+                      width: {
+                        xs: 'auto',
+                      },
+                      ml: 0,
+                    }}
+                    value="sms"
+                    control={
+                      <Switch
+                        color="primary"
+                        checked={mobileNotification}
+                        onChange={(e) => {
+                          handleNotification(e, 'sms');
+                        }}
+                      />
+                    }
+                    label="Mobile Notifications"
+                    labelPlacement="start"
+                  />
+                </Box>
+              )}
+            </Grid>
           </Grid>
         ) : null}
         {!isReadMode && <ConstantDetails />}
@@ -328,6 +389,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
         </Box>
         {!isReadMode && activeStep === 2 && (
           <ProfileConsent
+            setShowStaticFormProgress={setShowStaticFormProgress}
             handleBack={handleBack}
             resetStep={resetStep}
             setIsReadMode={setIsReadMode}

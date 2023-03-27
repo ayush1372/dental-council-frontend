@@ -135,12 +135,16 @@ const ExportFiles = ({ exportData, flag }) => {
         onClose={handleClose}
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'left',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
         }}
       >
         <List>
           <ListItem disablePadding>
-            <ListItemButton disablePadding>
+            <ListItemButton onClick={handleClose}>
               <ListItemText
                 primary="Export as xlsx"
                 onClick={() => {
