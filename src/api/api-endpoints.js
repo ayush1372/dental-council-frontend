@@ -15,6 +15,8 @@ export const API = {
     trackApplicationData: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/applications',
     profileConsent: 'api/v1/abdm/nmr/health-professional/register',
     createPersonalDetails: '/api/v1/abdm/nmr/health-professional/personal',
+    additionalQualifications:
+      '/api/v1/abdm/nmr/health-professional/{healthProfessionalId}/qualifications',
   },
   common: {
     states: 'api/v1/abdm/nmr/countries/356/states',
