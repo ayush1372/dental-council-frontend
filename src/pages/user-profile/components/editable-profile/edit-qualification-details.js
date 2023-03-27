@@ -375,7 +375,16 @@ const EditQualificationDetails = ({
               defaultValue={degree[0]?.id}
               value={degree[0]?.id}
               required={true}
-              {...register(`qualification[${index}].qualification`)}
+              {...register(
+                `qualification[${index}].qualification`,
+
+                {
+                  onload: (e) => {
+                    setValue(`qualification[${index}].qualification`, e.target.value);
+                    setCourseID(e.target.value);
+                  },
+                }
+              )}
               disabled={true}
               options={createSelectFieldData(coursesList.data)}
               MenuProps={{
