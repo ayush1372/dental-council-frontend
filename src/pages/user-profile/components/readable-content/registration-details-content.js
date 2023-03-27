@@ -182,7 +182,7 @@ const RegistrationDetailsContent = () => {
                 color="primary"
                 onClick={() => {
                   setOpenModal(true);
-                  setQueryRaisedField('View attachment');
+                  setQueryRaisedField('Upload the registration certificate');
                 }}
                 fontSize="width30"
               />

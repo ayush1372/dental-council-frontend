@@ -86,7 +86,7 @@ const RaiseQueryPopup = ({ ClosePopup, queryRaisedField }) => {
                 justifyContent: 'center',
               }}
             >
-              Raise a Query
+              Raise a Query for the Field - {queryRaisedField}
             </Typography>
             <Box>
               <Box>
