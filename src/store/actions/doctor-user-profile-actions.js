@@ -215,6 +215,7 @@ export const getEsignFormDetails = (data) => async (dispatch) => {
     })
       .then((response) => {
         dispatch(getEsignDetails(response));
+        return resolve(response);
       })
       .catch((error) => {
         return reject(error);

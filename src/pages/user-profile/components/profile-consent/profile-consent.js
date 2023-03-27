@@ -34,6 +34,7 @@ const ProfileConsent = ({
   );
   const eSignResponse = useSelector((state) => state?.doctorUserProfileReducer?.esignDetails?.data);
   const [confirmationModal, setConfirmationModal] = useState(false);
+  const { loginData } = useSelector((state) => state.loginReducer);
 
   useEffect(() => {
     dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id)).then((response) => {
@@ -68,12 +69,12 @@ const ProfileConsent = ({
   const handleClose = () => {
     setConfirmationModal(false);
   };
-  const handleSubmitDetails = () => {
-    const { consent } = getValues();
-    if (consent) {
-      setConfirmationModal(true);
-    }
-  };
+  // const handleSubmitDetails = () => {
+  //   const { consent } = getValues();
+  //   if (consent) {
+  //     setConfirmationModal(true);
+  //   }
+  // };
   const handleYesClick = () => {
     const payload = {
       hp_profile_id: updatedPersonalDetails?.hp_profile_id,
@@ -105,7 +106,9 @@ const ProfileConsent = ({
 
   function eSignHandler() {
     let data = {
-      signingPlace: personalDetails?.communication_address?.village?.name,
+      signingPlace:
+        personalDetails?.communication_address?.village?.name ||
+        personalDetails?.communication_address?.district?.name,
       nmrDetails: {
         nmrPersonalDetail: {
           firstName: personalDetails?.personal_details?.first_name || '',
@@ -114,8 +117,8 @@ const ProfileConsent = ({
           lastName: personalDetails?.personal_details?.last_name || '',
           qualification:
             doctorRegDetails?.qualification_detail_response_tos[0]?.course.course_name || '',
-          mobileNumber: personalDetails?.kyc_address?.mobile || '',
-          emailId: personalDetails?.kyc_address?.email || '',
+          mobileNumber: personalDetails?.communication_address?.mobile || '',
+          emailId: personalDetails?.communication_address?.email || '',
         },
         nmrPersonalCommunication: {
           address: personalDetails?.communication_address?.address_line1 || '',
@@ -139,12 +142,65 @@ const ProfileConsent = ({
         isOtherDocumentAttached: 'No', //cs-1013:needs to changed when workdetails API integrated*
       },
     };
-    dispatch(getEsignFormDetails(data));
-
-    document.getElementById('formid')?.submit();
+    dispatch(getEsignFormDetails(data))
+      .then(() => {
+        const payload = {
+          hp_profile_id: loginData?.data?.profile_id,
+          application_type_id: 1,
+        };
+        dispatch(updateProfileConsent(payload))
+          .then(() => {
+            setIsReadMode(true);
+            resetStep(0);
+            dispatch(changeUserActiveTab(doctorTabs[1].tabName));
+            document.getElementById('formid')?.submit();
+          })
+          .catch((error) => {
+            setConfirmationModal(false);
+            document.getElementById('formid')?.submit();
+            successToast(
+              'ERROR: ' + error.data.response.data.error,
+              'auth-error',
+              'error',
+              'top-center'
+            );
+          });
+      })
+      .catch(() => {
+        successToast('Server Error', 'auth-error', 'error', 'top-center');
+      });
   }
-
-  return (
+  const handleEsign = () => {
+    document.getElementById('formid')?.submit();
+  };
+  useEffect(() => {}, [eSignResponse, getValues().consent]);
+  return eSignResponse?.asp_txn_id ? (
+    <div>
+      <form
+        id="formid"
+        target="_blank"
+        method="POST"
+        action="https://es-staging.cdac.in/esignlevel2/2.1/form/signdoc"
+      >
+        <input
+          type="hidden"
+          id="eSignRequest"
+          name="eSignRequest"
+          value={eSignResponse.esp_request}
+        />
+        <input type="hidden" id="aspTxnID" name="aspTxnID" value={eSignResponse.asp_txn_id} />
+        <input
+          type="hidden"
+          id="Content-Type"
+          name="Content-Type"
+          value={eSignResponse.content_type}
+        />
+        <button type="submit" hidden onClick={handleEsign()}>
+          Submit
+        </button>
+      </form>
+    </div>
+  ) : (
     <>
       <ToastContainer></ToastContainer>
       <Box bgcolor="white.main" py={2} px={{ xs: 1, md: 4 }} mt={2} boxShadow={1}>
@@ -274,7 +330,7 @@ const ProfileConsent = ({
             justifyContent="flex-end"
           >
             <Button
-              onClick={eSignHandler}
+              onClick={handleSubmit(eSignHandler)}
               color="secondary"
               variant="contained"
               sx={{
@@ -292,7 +348,7 @@ const ProfileConsent = ({
             </Button>
           </Grid>
         )}
-        <Grid item xs={12} md="auto" ml={{ xs: 0, md: 1 }} display="flex" justifyContent="flex-end">
+        {/* <Grid item xs={12} md="auto" ml={{ xs: 0, md: 1 }} display="flex" justifyContent="flex-end">
           <Button
             color="secondary"
             variant="contained"
@@ -310,9 +366,9 @@ const ProfileConsent = ({
           >
             Finalize profile
           </Button>
-        </Grid>
+        </Grid> */}
 
-        <div>
+        {/* <div>
           <form
             id="formid"
             target="_blank"
@@ -333,7 +389,7 @@ const ProfileConsent = ({
               value={eSignResponse.content_type}
             />
           </form>
-        </div>
+        </div> */}
 
         <Dialog
           open={confirmationModal}
