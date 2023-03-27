@@ -8,14 +8,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
 import AttachmentViewPopup from '../../../../shared/query-modal-popup/attachement-view-popup';
-import {
-  getRegistrationDetailsData,
-  updateDoctorRegistrationDetails,
-} from '../../../../store/actions/doctor-user-profile-actions';
+import { updateDoctorRegistrationDetails } from '../../../../store/actions/doctor-user-profile-actions';
 import { getRegistrationDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
 import { Button, RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
-import successToast from '../../../../ui/core/toaster';
+// import successToast from '../../../../ui/core/toaster';
 import EditQualificationDetails from './edit-qualification-details';
 const qualificationObjTemplate = [
   {
@@ -63,10 +60,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   const [registrationFileData, setRegistrationFileData] = useState(
     registration_certificate ? [{ file: registration_certificate }] : []
   );
-  const [qualificationFilesData, setQualificationFilesData] = useState(
-    degree_certificate ? [{ file: degree_certificate }] : []
-  );
-  const [viewCertificate, setViewCertificate] = useState({
+  const [qualificationFilesData, setQualificationFilesData] = useState({
+    'qualification.0.files': degree_certificate ? [{ file: degree_certificate }] : [],
+  });
+  const [viewCertificate] = useState({
     registration: registration_certificate,
     qualification: degree_certificate,
   });
@@ -176,9 +173,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
         country: isInternational
           ? countriesList.find((x) => x.id === q?.country)
           : countriesList.find((x) => x.id === q?.country?.id),
-        course: isInternational
-          ? coursesList.data?.find((x) => x.id === q?.qualification)
-          : coursesList.data?.find((x) => x.id === q?.qualification?.id),
+        course: coursesList.data?.find((x) => x.id === q?.qualification),
         university: isInternational
           ? { name: q?.university }
           : universitiesList.data?.find((x) => x.id === q?.university),
@@ -225,10 +220,14 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     const doctorRegistrationDetailsBlob = new Blob([doctorRegistrationDetailsJson], {
       type: 'application/json',
     });
-    formData.append('data', doctorRegistrationDetailsBlob);
-    formData.append('degreeCertificate', qualificationFilesData[0].file);
 
-    formData.append('registrationCertificate', registrationFileData[0].file);
+    const registrationFile = registrationFileData[0]?.file;
+    const qualificationFile = Object.values(qualificationFilesData)[0]?.[0]?.file;
+
+    formData.append('data', doctorRegistrationDetailsBlob);
+    formData.append('degreeCertificate', qualificationFile);
+
+    formData.append('registrationCertificate', registrationFile);
     dispatch(
       updateDoctorRegistrationDetails(
         formData,
@@ -244,41 +243,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
       });
     });
   };
-
-  useEffect(() => {
-    setValue('RegisteredWithCouncil', registeredCouncil[0]);
-
-    dispatch(
-      getRegistrationDetailsData(
-        updatedPersonalDetails?.hp_profile_id === undefined
-          ? personalDetails?.hp_profile_id
-          : updatedPersonalDetails?.hp_profile_id
-      )
-    )
-      .then((response) => {
-        viewCertificate.qualification =
-          response?.data?.qualification_detail_response_tos[0]?.degree_certificate;
-        setViewCertificate();
-        const QualificationFile = [
-          {
-            fileName: response?.data?.qualification_detail_response_tos[0]?.file_name,
-            fileBlob: response?.data?.qualification_detail_response_tos[0]?.degree_certificate,
-          },
-        ];
-        const RegistrationFile = [
-          {
-            fileName: response?.data?.registration_detail_to?.file_name,
-            fileBlob: response?.data?.registration_detail_to?.registration_certificate,
-          },
-        ];
-
-        setRegistrationFileData(RegistrationFile);
-        setQualificationFilesData(QualificationFile);
-      })
-      .catch((allFailMsg) => {
-        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-      });
-  }, []);
 
   const CloseAttachmentPopup = () => {
     setAttachmentViewProfile(false);
@@ -322,6 +286,11 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
     update(0, { ...obj });
   }, [registrationDetails]);
+
+  const handleQualificationFilesData = (fileName, files) => {
+    qualificationFilesData[fileName] = files;
+    setQualificationFilesData({ ...qualificationFilesData });
+  };
 
   return (
     <Box
@@ -568,7 +537,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               register={register}
               unregister={unregister}
               qualificationFilesData={qualificationFilesData}
-              handleQualificationFilesData={setQualificationFilesData}
+              handleQualificationFilesData={handleQualificationFilesData}
             />
           );
         })}

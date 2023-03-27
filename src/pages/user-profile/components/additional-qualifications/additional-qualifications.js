@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 // import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Box } from '@mui/material';
@@ -34,13 +34,16 @@ const AdditionalQualifications = () => {
 
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { degree_certificate } = qualification_detail_response_tos?.[0] || {};
+  const [qualificationFilesData, setQualificationFilesData] = useState({
+    'qualification.0.files': degree_certificate ? [{ file: degree_certificate }] : [],
+  });
 
-  const [qualificationFilesData, setQualificationFilesData] = useState(
-    degree_certificate ? [{ file: degree_certificate }] : []
-  );
+  // const [qualificationFilesData, setQualificationFilesData] = useState(
+  //   degree_certificate ? [{ file: degree_certificate }] : []
+  // );
   const [successModalPopup, setSuccessModalPopup] = useState(false);
   // eslint-disable-next-line no-unused-vars
-  const { statesList, collegesList, universitiesList, coursesList } = useSelector(
+  const { statesList, collegesList, universitiesList, coursesList, countriesList } = useSelector(
     (state) => state?.common
   );
   const { specialitiesList } = useSelector((state) => state?.common);
@@ -68,69 +71,78 @@ const AdditionalQualifications = () => {
     name: 'qualification',
   });
 
-  const handleQualificationFilesData = (files) => {
-    setQualificationFilesData(files);
+  const handleQualificationFilesData = (fileName, files) => {
+    qualificationFilesData[fileName] = files;
+    setQualificationFilesData({ ...qualificationFilesData });
   };
 
-  const getStateData = (State) => {
-    let stateData = [];
-    statesList?.map((elementData) => {
-      if (elementData.id === State) {
-        stateData.push(elementData);
-      }
-    });
-    return stateData[0];
+  const getStateData = (stateId) => {
+    return statesList?.find((obj) => obj.id === stateId);
+    // let stateData = [];
+    // statesList?.map((elementData) => {
+    //   if (elementData.id === State) {
+    //     stateData.push(elementData);
+    //   }
+    // });
+    // return stateData[0];
   };
-  const getCollegeData = (college) => {
-    let collegeData = [];
-    Array.isArray(collegesList?.data) &&
-      collegesList?.data?.map((elementData) => {
-        if (elementData.id === college) {
-          collegeData.push({
-            id: elementData?.id,
-            name: elementData?.name,
-          });
-        }
-      });
-    return collegeData[0];
+  const getCollegeData = (collegeId) => {
+    return collegesList?.data?.find((obj) => obj.id === collegeId);
+
+    // let collegeData = [];
+    // Array.isArray(collegesList?.data) &&
+    //   collegesList?.data?.map((elementData) => {
+    //     if (elementData.id === college) {
+    //       collegeData.push({
+    //         id: elementData?.id,
+    //         name: elementData?.name,
+    //       });
+    //     }
+    //   });
+    // return collegeData[0];
   };
   const broadSpeciality = (broadSpl) => {
-    let broadSpecialityData = [];
-    Array.isArray(specialitiesList?.data) &&
-      specialitiesList?.data?.map((elementData) => {
-        if (elementData.id === broadSpl) {
-          broadSpecialityData.push(elementData?.id);
-        }
-      });
-    return broadSpecialityData[0];
+    return specialitiesList?.data?.find((obj) => obj.id === broadSpl);
+    // let broadSpecialityData = [];
+    // Array.isArray(specialitiesList?.data) &&
+    //   specialitiesList?.data?.map((elementData) => {
+    //     if (elementData.id === broadSpl) {
+    //       broadSpecialityData.push(elementData?.id);
+    //     }
+    //   });
+    // return broadSpecialityData[0];
   };
 
   const getUniversityData = (university) => {
-    let universityData = [];
-    Array.isArray(universitiesList?.data) &&
-      universitiesList?.data?.map((elementData) => {
-        if (elementData.id === university) {
-          universityData.push({
-            id: elementData?.id,
-            name: elementData?.name,
-            nationality: '',
-          });
-        }
-      });
-    return universityData[0];
+    return universitiesList?.data?.find((obj) => obj.id === university);
+
+    // let universityData = [];
+    // Array.isArray(universitiesList?.data) &&
+    //   universitiesList?.data?.map((elementData) => {
+    //     if (elementData.id === university) {
+    //       universityData.push({
+    //         id: elementData?.id,
+    //         name: elementData?.name,
+    //         nationality: '',
+    //       });
+    //     }
+    //   });
+    // return universityData[0];
   };
   const getCourseData = (course) => {
-    let courseData = [];
-    Array.isArray(coursesList?.data) &&
-      coursesList?.data?.map((elementData) => {
-        if (elementData.id === course) {
-          courseData.push({
-            course_name: elementData?.name,
-            id: elementData?.id,
-          });
-        }
-      });
-    return courseData[0];
+    return coursesList?.data?.find((obj) => obj.id === course);
+
+    // let courseData = [];
+    // Array.isArray(coursesList?.data) &&
+    //   coursesList?.data?.map((elementData) => {
+    //     if (elementData.id === course) {
+    //       courseData.push({
+    //         course_name: elementData?.name,
+    //         id: elementData?.id,
+    //       });
+    //     }
+    //   });
+    // return courseData[0];
   };
 
   // this below code is storing qualification details
@@ -138,14 +150,15 @@ const AdditionalQualifications = () => {
   const isInternational = qualification?.[0]?.qualificationfrom === 'International';
 
   const onSubmit = () => {
-    console.log('CLICKED');
     const formData = new FormData();
     let qualification_detail_response_tos = [],
       updatedQualificationDetailsArray = [];
     let updatedQualificationDetails;
     qualification?.forEach((qualification) => {
       updatedQualificationDetails = {
-        country: qualification?.country,
+        country: isInternational
+          ? countriesList.find((obj) => obj.id === qualification?.country)
+          : qualification?.country,
         state: isInternational
           ? { name: qualification?.state }
           : getStateData(qualification?.state),
@@ -171,12 +184,14 @@ const AdditionalQualifications = () => {
       qualification_detail_request_tos: updatedQualificationDetailsArray,
     };
 
+    const firstFile = Object.values(qualificationFilesData)?.[0]?.[0]?.file;
+
     const doctorRegistrationDetailsJson = JSON.stringify(qualification_detail_response_tos);
     const doctorRegistrationDetailsBlob = new Blob([doctorRegistrationDetailsJson], {
       type: 'application/json',
     });
     formData.append('data', doctorRegistrationDetailsBlob);
-    formData.append('degreeCertificates', qualificationFilesData[0]?.file);
+    formData.append('degreeCertificates', firstFile);
 
     dispatch(additionalQualificationsData(formData, personalDetails?.hp_profile_id))
       .then(() => {
@@ -191,10 +206,6 @@ const AdditionalQualifications = () => {
         );
       });
   };
-
-  useEffect(() => {
-    setQualificationFilesData([]);
-  }, []);
 
   return (
     <Box p={3}>
@@ -219,6 +230,7 @@ const AdditionalQualifications = () => {
               isAdditionalQualification={true}
               update={update}
               remove={remove}
+              showBroadSpeciality={true}
             />
           );
         })}

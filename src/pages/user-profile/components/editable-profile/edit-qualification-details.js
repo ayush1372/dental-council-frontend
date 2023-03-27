@@ -28,6 +28,7 @@ const EditQualificationDetails = ({
   qualificationFilesData,
   isAdditionalQualification,
   handleQualificationFilesData,
+  showBroadSpeciality = false,
 }) => {
   const dispatch = useDispatch();
   const [colleges, setColleges] = useState([]);
@@ -50,7 +51,6 @@ const EditQualificationDetails = ({
     dispatch(selectedQualificationType(event.target.value));
   };
   const { specialitiesList } = useSelector((state) => state?.common);
-  console.log('data123', specialitiesList);
   //  const selectedCollege = watch(`qualification[${index}].university`);
   const qualificationfrom = watch(`qualification[${index}].qualificationfrom`);
   const watchCollege = watch(`qualification[${index}].college`);
@@ -607,28 +607,44 @@ const EditQualificationDetails = ({
             />
           </Grid>
         </Grid>
-        <Grid item xs={12} md={4}>
-          <Select
-            fullWidth
-            error={errors.Speciality?.message}
-            name="Speciality"
-            label="Broad Speciality"
-            defaultValue={getValues().Speciality}
-            required={true}
-            {...register('Speciality', { required: 'Missing field' })}
-            options={createSelectFieldData(specialitiesList.data)}
-          />
-        </Grid>
-        {/* <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor.main">
-            {' '}
-            Super Specialty{' '}
-            <Typography component="span" color="error.main">
+        {showBroadSpeciality && (
+          <Grid item xs={12} md={4}>
+            <Select
+              fullWidth
+              error={errors.Speciality?.message}
+              name="Speciality"
+              label="Broad Speciality"
+              defaultValue={getValues().Speciality}
+              required={true}
+              {...register('Speciality', { required: 'Missing field' })}
+              options={createSelectFieldData(specialitiesList.data)}
+            />
+          </Grid>
+        )}
+        {showBroadSpeciality && (
+          <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="inputTextColor.main">
               {' '}
-              *{' '}
+              Super Specialty{' '}
+              <Typography component="span" color="error.main">
+                {' '}
+                *{' '}
+              </Typography>
             </Typography>
-          </Typography>
-          <AutoComplete
+            <TextField
+              fullWidth
+              error={errors.subSpeciality?.message}
+              name="subSpeciality"
+              // label="University"
+              placeholder="Enter Super Peciality"
+              defaultValue={qualification?.subSpeciality}
+              required={true}
+              {...register(`qualification[${index}].subSpeciality`, {
+                required: 'subSpeciality is Required',
+              })}
+            />
+
+            {/* <AutoComplete
             name="subSpeciality"
             options={subSpecialityOptions}
             value={getValues().subSpeciality}
@@ -639,8 +655,9 @@ const EditQualificationDetails = ({
               setValue('subSpeciality', value);
               setSubSpecialities(value);
             }}
-          />
-        </Grid> */}
+          /> */}
+          </Grid>
+        )}
       </Grid>
 
       <Grid container item spacing={2} mt={1}>
@@ -651,8 +668,10 @@ const EditQualificationDetails = ({
             fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
             fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
                  Maximum size allowed for the attachment is 5MB.`}
-            fileData={qualificationFilesData}
-            setFileData={handleQualificationFilesData}
+            fileData={qualificationFilesData[`qualification.${index}.files`] || []}
+            setFileData={(files) => {
+              handleQualificationFilesData(`qualification.${index}.files`, files);
+            }}
             isDigiLockcerVisible={true}
             uploadFileLabel="Upload Qualification Degree "
           />

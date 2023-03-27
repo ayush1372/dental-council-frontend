@@ -2,6 +2,7 @@
 import { API } from '../../api/api-endpoints';
 import { GET, POST, PUT } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
+import successToast from '../../ui/core/toaster';
 import { updateTrackApplicationTableData } from '../reducers/common-reducers';
 import {
   getPersonalDetails,
@@ -44,6 +45,8 @@ export const getRegistrationDetailsData = (doctor_profile_id) => async (dispatch
         return resolve(response);
       })
       .catch((error) => {
+        successToast('ERR_INT: ' + error, 'auth-error', 'error', 'top-center');
+
         return reject(error);
       });
   });
