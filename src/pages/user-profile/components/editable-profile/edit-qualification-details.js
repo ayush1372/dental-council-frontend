@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useEffect, useMemo, useState } from 'react';
 
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -6,12 +7,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { monthsData, yearsData } from '../../../../constants/common-data';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
+// import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
 import { getCollegesList, getUniversitiesList } from '../../../../store/actions/common-actions';
 import { selectedQualificationType } from '../../../../store/reducers/doctor-user-profile-reducer';
 // import { getUniversities } from '../../../../store/reducers/common-reducers';
 import { RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
-
 const EditQualificationDetails = ({
   index,
   showDeleteIcon,
@@ -48,7 +49,8 @@ const EditQualificationDetails = ({
     setValue(event.target.name, event.target.value);
     dispatch(selectedQualificationType(event.target.value));
   };
-
+  const { specialitiesList } = useSelector((state) => state?.common);
+  console.log('data123', specialitiesList);
   //  const selectedCollege = watch(`qualification[${index}].university`);
   const qualificationfrom = watch(`qualification[${index}].qualificationfrom`);
   const watchCollege = watch(`qualification[${index}].college`);
@@ -150,7 +152,7 @@ const EditQualificationDetails = ({
         </Grid>
       </Grid>
 
-      {qualificationfrom === 'International' && (
+      {qualificationfrom === 'International' && !isAdditionalQualification ? (
         <Grid container item spacing={2} display="flex" alignItems="center" mb={2}>
           <Grid item xs={12} sm={6} md={5} lg={4}>
             <Typography color="grey2.lighter" variant="body1">
@@ -161,9 +163,11 @@ const EditQualificationDetails = ({
             <Divider />
           </Grid>
         </Grid>
+      ) : (
+        ''
       )}
 
-      {qualificationfrom === 'International' && (
+      {qualificationfrom === 'International' && !isAdditionalQualification ? (
         <Grid container item spacing={2}>
           <Grid item xs={12} md={4}>
             <TextField
@@ -313,6 +317,8 @@ const EditQualificationDetails = ({
             />
           </Grid>
         </Grid>
+      ) : (
+        ''
       )}
 
       <Grid container item spacing={2} display="flex" alignItems="center" mb={2}>
@@ -601,6 +607,40 @@ const EditQualificationDetails = ({
             />
           </Grid>
         </Grid>
+        <Grid item xs={12} md={4}>
+          <Select
+            fullWidth
+            error={errors.Speciality?.message}
+            name="Speciality"
+            label="Broad Speciality"
+            defaultValue={getValues().Speciality}
+            required={true}
+            {...register('Speciality', { required: 'Missing field' })}
+            options={createSelectFieldData(specialitiesList.data)}
+          />
+        </Grid>
+        {/* <Grid item xs={12} md={4}>
+          <Typography variant="subtitle2" color="inputTextColor.main">
+            {' '}
+            Super Specialty{' '}
+            <Typography component="span" color="error.main">
+              {' '}
+              *{' '}
+            </Typography>
+          </Typography>
+          <AutoComplete
+            name="subSpeciality"
+            options={subSpecialityOptions}
+            value={getValues().subSpeciality}
+            error={subSpecialities?.length === 0 && errors.subSpeciality?.message}
+            multiple={true}
+            {...register('subSpeciality', { required: 'Missing field' })}
+            onChange={(value) => {
+              setValue('subSpeciality', value);
+              setSubSpecialities(value);
+            }}
+          />
+        </Grid> */}
       </Grid>
 
       <Grid container item spacing={2} mt={1}>
