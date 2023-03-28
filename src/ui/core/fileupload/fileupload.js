@@ -294,14 +294,14 @@ export const UploadFile = (props) => {
                   01 FILE UPLOADED
                 </Typography>
               )}
-              {uploadFiles === 'multiple' && fileData.length > 0 && (
-                <Typography color="#a9a9a9">{`${fileData.length} FILES UPLOADED`}</Typography>
+              {uploadFiles === 'multiple' && fileData?.length > 0 && (
+                <Typography color="grey1.main">{`${fileData?.length} FILES UPLOADED`}</Typography>
               )}
               <table>
-                {fileData.map((file) => {
+                {fileData?.map((file) => {
                   return (
-                    <tr key={file.id}>
-                      <td key={file.id}>
+                    <tr key={file?.id}>
+                      <td key={file?.id}>
                         <div className={styles.fileDetailsContainer}>
                           <UploadFileIcon color="primary" fontSize="large" />
                           <div className={styles.fileDetailsArea}>
@@ -321,7 +321,7 @@ export const UploadFile = (props) => {
                               </Typography>
                             )}
                           </div>
-                          {fileData.length === 1 || uploadStatus === 'successful' ? (
+                          {fileData?.length === 1 || uploadStatus === 'successful' ? (
                             <div className={styles.actionArea}>
                               <DeleteOutlineIcon
                                 color="error"

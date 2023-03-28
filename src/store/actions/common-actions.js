@@ -367,6 +367,24 @@ export const suspendDoctor = (body) => async () => {
   });
 };
 
+//To Raise the query for the profile.
+export const raiseQuery = (body) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.common.queryRaise,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      data: body,
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
 export const enableUserNotification = (body) => async () => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({

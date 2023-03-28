@@ -9,8 +9,7 @@ import { Box, Dialog, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getInitiateWorkFlow } from '../../store/actions/common-actions';
-import { suspendDoctor } from '../../store/actions/common-actions';
+import { getInitiateWorkFlow, raiseQuery, suspendDoctor } from '../../store/actions/common-actions';
 import { Button, Checkbox, RadioGroup, TextField } from '../../ui/core';
 import successToast from '../../ui/core/toaster';
 
@@ -26,14 +25,17 @@ export function SuspendLicenseVoluntaryRetirement({
 }) {
   const dispatch = useDispatch();
 
+  const { userActiveTab } = useSelector((state) => state.common);
   const { loginData } = useSelector((state) => state?.loginReducer);
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const { queryRaisedFor } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
+  const user_group_id = useSelector((state) => state.loginReducer?.loginData?.data);
+
   const [selectedSuspension, setSelectedSuspension] = useState('voluntary-suspension-check');
   const [selectedFromDate, setSelectedFromDate] = useState();
-  const { userActiveTab } = useSelector((state) => state.common);
   const [conformSuspend, setConformSuspend] = useState(false);
   const [confirmationModal, setConfirmationModal] = useState(false);
-  // const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  const [queries, setQueries] = useState([]);
 
   const {
     register,
@@ -99,15 +101,22 @@ export function SuspendLicenseVoluntaryRetirement({
         userActiveTab === 'voluntary-suspend-license'
           ? loginData?.data?.profile_id
           : userActiveTab === 'track-status' && selectedSuspendLicenseProfile?.view?.value,
-      application_type_id: personalDetails?.application_type_id
-        ? personalDetails?.application_type_id
-        : 1,
+      application_type_id:
+        selectedSuspension === 'voluntary-suspension-check'
+          ? 3
+          : selectedSuspension === 'permanent-suspension-check'
+          ? 4
+          : selectedValue === 'suspend'
+          ? 4
+          : selectedValue === 'blacklist'
+          ? 3
+          : '',
       action_id:
-        getValues()?.voluntarySuspendLicense === 'permanent-suspension-check'
-          ? (action_id = 6)
-          : getValues()?.voluntarySuspendLicense === 'voluntary-suspension-check'
-          ? (action_id = 7)
-          : (action_id = 1),
+        selectedValue === 'suspend'
+          ? 7
+          : selectedValue === 'blacklist'
+          ? 6
+          : userActiveTab === 'voluntary-suspend-license' && 1,
       from_date: getValues()?.fromDate ? getValues()?.fromDate : '',
       to_date: getValues()?.toDate ? getValues()?.toDate : '',
       remarks: getValues()?.remark ? getValues()?.remark : '',
@@ -131,6 +140,18 @@ export function SuspendLicenseVoluntaryRetirement({
       to_date: getValues()?.toDate ? getValues()?.toDate : '',
       remarks: getValues()?.remark ? getValues()?.remark : '',
     };
+    let raiseQueryBody = {
+      queries: queries,
+      hpProfileId: personalDetails?.hp_profile_id ? personalDetails?.hp_profile_id : '',
+      commonComment: getValues().remark,
+
+      groupId: user_group_id?.user_group_id,
+      requestId: personalDetails?.request_id ? personalDetails?.request_id : '',
+      applicationTypeId: personalDetails?.application_type_id
+        ? personalDetails?.application_type_id
+        : 1,
+    };
+
     try {
       if (
         (confirmationModal && userActiveTab === 'voluntary-suspend-license') ||
@@ -143,17 +164,31 @@ export function SuspendLicenseVoluntaryRetirement({
           }
         });
       } else {
-        dispatch(getInitiateWorkFlow(workFlowData))
-          .then((response) => {
-            if (response) {
-              showSuccessPopup(true);
-              setActionVerified(true);
+        if (selectedValue === 'raise') {
+          dispatch(raiseQuery(raiseQueryBody))
+            .then((response) => {
+              if (response) {
+                showSuccessPopup(true);
+                setActionVerified(true);
+                closeActionModal(false);
+              }
+            })
+            .catch(() => {
               closeActionModal(false);
-            }
-          })
-          .catch(() => {
-            closeActionModal(false);
-          });
+            });
+        } else {
+          dispatch(getInitiateWorkFlow(workFlowData))
+            .then((response) => {
+              if (response) {
+                showSuccessPopup(true);
+                setActionVerified(true);
+                closeActionModal(false);
+              }
+            })
+            .catch(() => {
+              closeActionModal(false);
+            });
+        }
       }
     } catch (allFailMsg) {
       successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
@@ -424,24 +459,33 @@ export function SuspendLicenseVoluntaryRetirement({
           <Typography>Raise a Query for the following*</Typography>
           <Box display={'flex'}>
             <Box my={4} color="inputTextColor.main">
-              <Checkbox
-                sx={{ padding: '0 8px 0 0' }}
-                name="notification"
-                {...register('notification', {
-                  required: 'This field is required',
-                })}
-                label={'Country name'}
-                error={errors.notification?.message}
-              />
-              <Checkbox
-                sx={{ padding: '0 8px 0 0' }}
-                name="notification"
-                {...register('notification', {
-                  required: 'This field is required',
-                })}
-                label={'Name of the college'}
-                error={errors.notification?.message}
-              />
+              {queryRaisedFor?.map((fieldData, index) => {
+                return (
+                  <Checkbox
+                    key={index}
+                    sx={{ padding: '0 8px 0 0' }}
+                    name={fieldData?.filedName}
+                    value={fieldData?.value}
+                    onChange={(e) => {
+                      // eslint-disable-next-line no-console
+                      console.log(index);
+                      let updatedQuery = queries;
+                      if (e.target.checked) {
+                        updatedQuery?.push({
+                          fieldName: e?.target?.name,
+                          queryComment: e?.target.value,
+                        });
+                      } else {
+                        updatedQuery?.splice(index, 1);
+                      }
+
+                      setQueries(updatedQuery);
+                    }}
+                    label={fieldData?.filedName}
+                    error={errors.notification?.message}
+                  />
+                );
+              })}
             </Box>
           </Box>
         </Box>

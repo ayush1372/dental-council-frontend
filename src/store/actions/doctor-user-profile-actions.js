@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { API } from '../../api/api-endpoints';
 import { GET, POST, PUT } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
@@ -212,6 +213,26 @@ export const updateProfileConsent = (payload) => async () => {
       url: API.DoctorUserProfileData.profileConsent,
       headers: { 'Content-Type': 'application/json' },
       data: payload,
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const additionalQualificationsData = (formData, healthProfessionalId) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.DoctorUserProfileData.additionalQualifications.replace(
+        '{healthProfessionalId}',
+        healthProfessionalId
+      ),
+      headers: { 'Content-Type': 'application/json' },
+      data: formData,
     })
       .then((response) => {
         return resolve(response);
