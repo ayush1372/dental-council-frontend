@@ -405,11 +405,19 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
             <TextField
               variant="outlined"
               name={'RegistrationNumber'}
-              Registration
-              Number
-              required={true}
+              // Registration
+              type="number"
+              required
               fullWidth
               defaultValue={getValues().RegistrationNumber}
+              error={errors.RegistrationNumber?.message}
+              {...register('RegistrationNumber', {
+                required: 'Registration number is required',
+                pattern: {
+                  value: /^[0-9]{100}$/i,
+                  message: 'Please Enter Valid Registration number',
+                },
+              })}
               sx={{
                 input: {
                   backgroundColor:
@@ -441,8 +449,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               fullWidth
               type="date"
               defaultValue={getValues().RegistrationDate}
+              error={errors.RegistrationDate?.message}
               {...register('RegistrationDate', {
-                required: 'Registration Date is Required',
+                required: 'Registration date is required',
               })}
               sx={{
                 input: {
