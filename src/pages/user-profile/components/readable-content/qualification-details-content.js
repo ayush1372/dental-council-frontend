@@ -9,7 +9,7 @@ import AttachmentViewPopup from '../../../../shared/query-modal-popup/attachemen
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
 const QualificationDetailsContent = ({ registrationDetails }) => {
-  const { userActiveTab } = useSelector((state) => state.common);
+  const { data } = useSelector((state) => state.loginReducer?.loginData);
 
   const [openModal, setOpenModal] = useState(false);
   const [queryRaisedField, setQueryRaisedField] = useState('');
@@ -47,7 +47,10 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               <Typography color="textPrimary.main" variant="subtitle2">
                 {element?.course?.course_name}
               </Typography>
-              {userActiveTab === 'dashboard' && (
+              {(data?.user_type === 1 ||
+                data?.user_type === 3 ||
+                data?.user_type === 4 ||
+                data?.user_type === 5) && (
                 <ContactSupportOutlinedIcon
                   color="primary"
                   onClick={() => {
@@ -70,7 +73,10 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               <Typography variant="subtitle2" color="textPrimary.main">
                 {element?.country?.name}
               </Typography>
-              {userActiveTab === 'dashboard' && (
+              {(data?.user_type === 1 ||
+                data?.user_type === 3 ||
+                data?.user_type === 4 ||
+                data?.user_type === 5) && (
                 <ContactSupportOutlinedIcon
                   color="primary"
                   onClick={() => {
@@ -93,7 +99,10 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               <Typography color="textPrimary.main" variant="subtitle2">
                 {element?.state?.name}
               </Typography>
-              {userActiveTab === 'dashboard' && (
+              {(data?.user_type === 1 ||
+                data?.user_type === 3 ||
+                data?.user_type === 4 ||
+                data?.user_type === 5) && (
                 <ContactSupportOutlinedIcon
                   color="primary"
                   onClick={() => {
@@ -119,7 +128,10 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                 {element?.college?.name}
               </Typography>
 
-              {userActiveTab === 'dashboard' && (
+              {(data?.user_type === 1 ||
+                data?.user_type === 3 ||
+                data?.user_type === 4 ||
+                data?.user_type === 5) && (
                 <ContactSupportOutlinedIcon
                   color="primary"
                   onClick={() => {
@@ -142,7 +154,10 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               <Typography variant="subtitle2" color="textPrimary.main">
                 {element?.university?.name}
               </Typography>{' '}
-              {userActiveTab === 'dashboard' && (
+              {(data?.user_type === 1 ||
+                data?.user_type === 3 ||
+                data?.user_type === 4 ||
+                data?.user_type === 5) && (
                 <ContactSupportOutlinedIcon
                   color="primary"
                   onClick={() => {
@@ -163,7 +178,10 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                 {element?.qualification_month ? element?.qualification_month : ''} ,{' '}
                 {element?.qualification_year ? element?.qualification_year : ''}
               </Typography>{' '}
-              {userActiveTab === 'dashboard' && (
+              {(data?.user_type === 1 ||
+                data?.user_type === 3 ||
+                data?.user_type === 4 ||
+                data?.user_type === 5) && (
                 <ContactSupportOutlinedIcon
                   color="primary"
                   onClick={() => {
@@ -198,7 +216,10 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                 </IconButton>
                 View Attachment
               </Typography>
-              {userActiveTab === 'dashboard' && (
+              {(data?.user_type === 1 ||
+                data?.user_type === 3 ||
+                data?.user_type === 4 ||
+                data?.user_type === 5) && (
                 <ContactSupportOutlinedIcon
                   color="primary"
                   onClick={() => {

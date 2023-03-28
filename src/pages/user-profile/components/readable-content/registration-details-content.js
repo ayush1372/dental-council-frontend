@@ -11,7 +11,7 @@ import AttachmentViewPopup from '../../../../shared/query-modal-popup/attachemen
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
 const RegistrationDetailsContent = () => {
-  const { userActiveTab } = useSelector((state) => state.common);
+  const { data } = useSelector((state) => state.loginReducer?.loginData);
   const { registrationDetails } = useSelector((state) => state.doctorUserProfileReducer);
 
   const [openModal, setOpenModal] = useState(false);
@@ -52,7 +52,7 @@ const RegistrationDetailsContent = () => {
               {smcName ? smcName : ''}
             </Typography>
 
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -75,7 +75,7 @@ const RegistrationDetailsContent = () => {
             <Typography color="textPrimary.main" variant="subtitle2">
               {registration_number ? registration_number : ''}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -98,7 +98,7 @@ const RegistrationDetailsContent = () => {
             <Typography color="textPrimary.main" variant="subtitle2">
               {registration_date && moment(registration_date).format('DD-MM-YYYY')}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -123,7 +123,7 @@ const RegistrationDetailsContent = () => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {is_renewable === '1' ? 'Permanent' : is_renewable === '0' ? 'Renewable' : ''}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -144,7 +144,7 @@ const RegistrationDetailsContent = () => {
               {renewable_registration_date &&
                 moment(renewable_registration_date).format('DD-MM-YYYY')}{' '}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -177,7 +177,7 @@ const RegistrationDetailsContent = () => {
               </IconButton>
               View attachment
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {

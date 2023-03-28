@@ -8,7 +8,7 @@ import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-po
 import { convertGender } from '../../../../utilities/common-validations';
 
 const PersonalDetails = ({ personalDetails }) => {
-  const { userActiveTab } = useSelector((state) => state.common);
+  const { data } = useSelector((state) => state.loginReducer?.loginData);
 
   const [queryRaisedField, setQueryRaisedField] = useState('');
   const [openModal, setOpenModal] = useState(false);
@@ -46,7 +46,7 @@ const PersonalDetails = ({ personalDetails }) => {
               <Typography p={1} variant="subtitle2" color="inputTextColor.light">
                 xxxx-xxxx-{aadhaar_token ? aadhaar_token : 'XXXX'}
               </Typography>
-              {userActiveTab === 'dashboard' && (
+              {(data?.user_type === 3 || data?.user_type === 4) && (
                 <ContactSupportOutlinedIcon
                   color="primary"
                   onClick={() => setOpenModal(true)}
@@ -82,7 +82,7 @@ const PersonalDetails = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               Dr. {full_name ? full_name : ''}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -103,7 +103,7 @@ const PersonalDetails = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {father_name ? father_name : ''}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -124,7 +124,7 @@ const PersonalDetails = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {mother_name ? mother_name : ''}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -145,7 +145,7 @@ const PersonalDetails = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {spouse_name ? spouse_name : ''}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -172,7 +172,7 @@ const PersonalDetails = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {gender && convertGender(gender)}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -197,7 +197,7 @@ const PersonalDetails = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {date_of_birth ? date_of_birth : ''}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -222,7 +222,7 @@ const PersonalDetails = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {nationality}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {

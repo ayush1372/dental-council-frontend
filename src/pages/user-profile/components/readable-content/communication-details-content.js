@@ -1,14 +1,15 @@
 import { useState } from 'react';
 
 import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
-import { Grid, Typography } from '@mui/material';
+import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
+import { Grid, Tooltip, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 import { capitalize } from '../../../../helpers/functions/common-functions';
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
 const CommunicationAddress = ({ personalDetails }) => {
-  const { userActiveTab } = useSelector((state) => state.common);
+  const { data } = useSelector((state) => state.loginReducer?.loginData);
 
   const [openModal, setOpenModal] = useState(false);
   const [queryRaisedField, setQueryRaisedField] = useState('');
@@ -36,11 +37,14 @@ const CommunicationAddress = ({ personalDetails }) => {
               *
             </Typography>
           </Typography>
+          <Tooltip title="Correct the house name">
+            <RemoveRedEyeOutlinedIcon></RemoveRedEyeOutlinedIcon>
+          </Tooltip>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {communication_address?.house}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -50,6 +54,9 @@ const CommunicationAddress = ({ personalDetails }) => {
                 fontSize="width30"
               />
             )}{' '}
+            <Tooltip title="Correct the house name">
+              <RemoveRedEyeOutlinedIcon></RemoveRedEyeOutlinedIcon>
+            </Tooltip>
           </Grid>
         </Grid>
 
@@ -61,7 +68,7 @@ const CommunicationAddress = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {communication_address?.street}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -81,7 +88,7 @@ const CommunicationAddress = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {communication_address?.landmark}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -101,7 +108,7 @@ const CommunicationAddress = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {villageName}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -126,7 +133,7 @@ const CommunicationAddress = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {capitalize(districtName)}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -146,7 +153,7 @@ const CommunicationAddress = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {subDistrictName}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -169,7 +176,7 @@ const CommunicationAddress = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {capitalize(stateName)}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -192,7 +199,7 @@ const CommunicationAddress = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {countryName}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -218,7 +225,7 @@ const CommunicationAddress = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {pincode ? pincode : ''}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
