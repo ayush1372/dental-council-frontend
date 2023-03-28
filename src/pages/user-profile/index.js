@@ -287,57 +287,55 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
               </Grid>
             )}
 
-            <Grid item xs={12} lg="auto">
-              {!isReadMode && (
-                <Box
-                  display={'flex'}
-                  flexDirection={{ xs: 'column', sm: 'row' }}
-                  mt={{ xs: 2, lg: 0 }}
-                >
-                  <FormControlLabel
-                    sx={{
-                      width: {
-                        xs: 'auto',
-                      },
-                      ml: 0,
-                      mr: { xs: 0, sm: 2 },
-                    }}
-                    value="email"
-                    control={
-                      <Switch
-                        color="primary"
-                        checked={emailNotification}
-                        onChange={(e) => {
-                          handleNotification(e, 'email');
-                        }}
-                      />
-                    }
-                    label="Email Notifications"
-                    labelPlacement="start"
-                  />
-                  <FormControlLabel
-                    sx={{
-                      width: {
-                        xs: 'auto',
-                      },
-                      ml: 0,
-                    }}
-                    value="sms"
-                    control={
-                      <Switch
-                        color="primary"
-                        checked={mobileNotification}
-                        onChange={(e) => {
-                          handleNotification(e, 'sms');
-                        }}
-                      />
-                    }
-                    label="Mobile Notifications"
-                    labelPlacement="start"
-                  />
-                </Box>
-              )}
-            </Grid>
+            {!isReadMode && (
+              <Box
+                display={'flex'}
+                flexDirection={{ xs: 'column', sm: 'row' }}
+                mt={{ xs: 2, lg: 0 }}
+              >
+                <FormControlLabel
+                  sx={{
+                    width: {
+                      xs: 'auto',
+                    },
+                    ml: 0,
+                    mr: { xs: 0, sm: 2 },
+                  }}
+                  value="email"
+                  control={
+                    <Switch
+                      color="primary"
+                      checked={emailNotification}
+                      onChange={(e) => {
+                        handleNotification(e, 'email');
+                      }}
+                    />
+                  }
+                  label="Email Notifications"
+                  labelPlacement="start"
+                />
+                <FormControlLabel
+                  sx={{
+                    width: {
+                      xs: 'auto',
+                    },
+                    ml: 0,
+                  }}
+                  value="sms"
+                  control={
+                    <Switch
+                      color="primary"
+                      checked={mobileNotification}
+                      onChange={(e) => {
+                        handleNotification(e, 'sms');
+                      }}
+                    />
+                  }
+                  label="Mobile Notifications"
+                  labelPlacement="start"
+                />
+              </Box>
+            )}
           </Grid>
         ) : null}
         {!isReadMode && <ConstantDetails />}

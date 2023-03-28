@@ -587,7 +587,7 @@ export function SuspendLicenseVoluntaryRetirement({
                   selectedSuspension === 'voluntary-suspension-check'
                     ? 'voluntary suspend'
                     : 'permanent suspend'
-                } this application`}
+                } this license?`}
               </Typography>
             </Box>
             <Box display={'flex'} justifyContent={'flex-end'} mt={1}>
