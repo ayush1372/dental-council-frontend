@@ -50,12 +50,12 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               <Typography component="span" color="error.main">
                 *
               </Typography>
+              {getQueryRaised('Name of the Degree Obtained') !== undefined && (
+                <Tooltip title={getQueryRaised('Name of the Degree Obtained')}>
+                  <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                </Tooltip>
+              )}
             </Typography>
-            {getQueryRaised('Name of the Degree Obtained') !== undefined && (
-              <Tooltip title={getQueryRaised('Name of the Degree Obtained')}>
-                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
-              </Tooltip>
-            )}
             <Grid display="flex" alignItems="center">
               <Typography color="textPrimary.main" variant="subtitle2">
                 {element?.course?.course_name}
@@ -81,12 +81,12 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               <Typography component="span" color="error.main">
                 *
               </Typography>
+              {getQueryRaised('Country Name') !== undefined && (
+                <Tooltip title={getQueryRaised('Country Name')}>
+                  <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                </Tooltip>
+              )}
             </Typography>
-            {getQueryRaised('Country Name') !== undefined && (
-              <Tooltip title={getQueryRaised('Country Name')}>
-                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
-              </Tooltip>
-            )}
             <Grid display="flex" alignItems="center">
               <Typography variant="subtitle2" color="textPrimary.main">
                 {element?.country?.name}
@@ -112,12 +112,12 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               <Typography component="span" color="error.main">
                 *
               </Typography>
+              {getQueryRaised('State') !== undefined && (
+                <Tooltip title={getQueryRaised('State')}>
+                  <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                </Tooltip>
+              )}
             </Typography>
-            {getQueryRaised('State') !== undefined && (
-              <Tooltip title={getQueryRaised('State')}>
-                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
-              </Tooltip>
-            )}
             <Grid display="flex" alignItems="center">
               <Typography color="textPrimary.main" variant="subtitle2">
                 {element?.state?.name}
@@ -145,12 +145,12 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               <Typography component="span" color="error.main">
                 *
               </Typography>
+              {getQueryRaised('Name of the College') !== undefined && (
+                <Tooltip title={getQueryRaised('Name of the College')}>
+                  <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                </Tooltip>
+              )}
             </Typography>
-            {getQueryRaised('Name of the College') !== undefined && (
-              <Tooltip title={getQueryRaised('Name of the College')}>
-                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
-              </Tooltip>
-            )}
             <Grid display="flex" alignItems="center">
               <Typography variant="subtitle2" color="textPrimary.main">
                 {element?.college?.name}
@@ -177,12 +177,12 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               <Typography component="span" color="error.main">
                 *
               </Typography>
+              {getQueryRaised('University') !== undefined && (
+                <Tooltip title={getQueryRaised('University')}>
+                  <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                </Tooltip>
+              )}
             </Typography>
-            {getQueryRaised('University') !== undefined && (
-              <Tooltip title={getQueryRaised('University')}>
-                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
-              </Tooltip>
-            )}
             <Grid display="flex" alignItems="center">
               <Typography variant="subtitle2" color="textPrimary.main">
                 {element?.university?.name}
@@ -239,12 +239,12 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
               <Typography component="span" color="error.main">
                 *
               </Typography>
+              {getQueryRaised('Upload Qualification Degree') !== undefined && (
+                <Tooltip title={getQueryRaised('Upload Qualification Degree')}>
+                  <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                </Tooltip>
+              )}
             </Typography>
-            {getQueryRaised('Upload Qualification Degree') !== undefined && (
-              <Tooltip title={getQueryRaised('Upload Qualification Degree')}>
-                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
-              </Tooltip>
-            )}
             <Grid display="flex" alignItems="center">
               <Typography
                 variant="subtitle2"

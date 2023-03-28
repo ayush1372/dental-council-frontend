@@ -83,12 +83,12 @@ const PersonalDetails = ({ personalDetails }) => {
             <Typography component="span" color="error.main">
               *
             </Typography>
+            {getQueryRaised('Name') !== undefined && (
+              <Tooltip title={getQueryRaised('Name')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
+            )}
           </Typography>
-          {getQueryRaised('Name') !== undefined && (
-            <Tooltip title={getQueryRaised('Name')}>
-              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
-            </Tooltip>
-          )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               Dr. {full_name ? full_name : ''}
@@ -181,7 +181,6 @@ const PersonalDetails = ({ personalDetails }) => {
           </Grid>
         </Grid>
       </Grid>
-
       <Grid container item spacing={2}>
         <Grid item xs={12} md={3}>
           <Typography variant="body5" color="grey.label">
@@ -189,12 +188,12 @@ const PersonalDetails = ({ personalDetails }) => {
             <Typography component="span" color="error.main">
               *
             </Typography>
+            {getQueryRaised('Gender') !== undefined && (
+              <Tooltip title={getQueryRaised('Gender')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
+            )}
           </Typography>
-          {getQueryRaised('Gender') !== undefined && (
-            <Tooltip title={getQueryRaised('Gender')}>
-              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
-            </Tooltip>
-          )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {gender && convertGender(gender)}
@@ -218,12 +217,12 @@ const PersonalDetails = ({ personalDetails }) => {
             <Typography component="span" color="error.main">
               *
             </Typography>
+            {getQueryRaised('Date of Birth') !== undefined && (
+              <Tooltip title={getQueryRaised('Date of Birth')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
+            )}
           </Typography>
-          {getQueryRaised('Date of Birth') !== undefined && (
-            <Tooltip title={getQueryRaised('Date of Birth')}>
-              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
-            </Tooltip>
-          )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {date_of_birth ? date_of_birth : ''}
@@ -247,12 +246,12 @@ const PersonalDetails = ({ personalDetails }) => {
             <Typography component="span" color="error.main">
               *
             </Typography>
+            {getQueryRaised('Nationality') !== undefined && (
+              <Tooltip title={getQueryRaised('Nationality')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
+            )}
           </Typography>
-          {getQueryRaised('Nationality') !== undefined && (
-            <Tooltip title={getQueryRaised('Nationality')}>
-              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
-            </Tooltip>
-          )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {nationality}

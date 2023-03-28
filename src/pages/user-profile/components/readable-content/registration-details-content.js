@@ -54,12 +54,12 @@ const RegistrationDetailsContent = () => {
             <Typography component="span" color="error.main">
               *
             </Typography>
+            {getQueryRaised('Registered with council') !== undefined && (
+              <Tooltip title={getQueryRaised('Registered with council')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
+            )}
           </Typography>
-          {getQueryRaised('Registered with council') !== undefined && (
-            <Tooltip title={getQueryRaised('Registered with council')}>
-              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
-            </Tooltip>
-          )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {smcName ? smcName : ''}
@@ -83,12 +83,12 @@ const RegistrationDetailsContent = () => {
             <Typography component="span" color="error.main">
               *
             </Typography>
+            {getQueryRaised('Registration Number') !== undefined && (
+              <Tooltip title={getQueryRaised('Registration Number')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
+            )}
           </Typography>
-          {getQueryRaised('Registration Number') !== undefined && (
-            <Tooltip title={getQueryRaised('Registration Number')}>
-              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
-            </Tooltip>
-          )}
           <Grid display="flex">
             <Typography color="textPrimary.main" variant="subtitle2">
               {registration_number ? registration_number : ''}
@@ -111,12 +111,12 @@ const RegistrationDetailsContent = () => {
             <Typography component="span" color="error.main">
               *
             </Typography>
+            {getQueryRaised('Registration Date') !== undefined && (
+              <Tooltip title={getQueryRaised('Registration Date')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
+            )}
           </Typography>
-          {getQueryRaised('Registration Date') !== undefined && (
-            <Tooltip title={getQueryRaised('Registration Date')}>
-              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
-            </Tooltip>
-          )}
           <Grid display="flex">
             <Typography color="textPrimary.main" variant="subtitle2">
               {registration_date && moment(registration_date).format('DD-MM-YYYY')}
@@ -141,12 +141,12 @@ const RegistrationDetailsContent = () => {
             <Typography component="span" color="error.main">
               *
             </Typography>
+            {getQueryRaised('Registration') !== undefined && (
+              <Tooltip title={getQueryRaised('Registration')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
+            )}
           </Typography>
-          {getQueryRaised('Registration') !== undefined && (
-            <Tooltip title={getQueryRaised('Registration')}>
-              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
-            </Tooltip>
-          )}
           <Grid display="flex">
             <Typography variant="subtitle2" color="textPrimary.main">
               {is_renewable === '1' ? 'Permanent' : is_renewable === '0' ? 'Renewable' : ''}
@@ -195,12 +195,12 @@ const RegistrationDetailsContent = () => {
             <Typography component="span" color="error.main">
               *
             </Typography>
+            {getQueryRaised('Upload the registration certificate') !== undefined && (
+              <Tooltip title={getQueryRaised('Upload the registration certificate')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
+            )}
           </Typography>
-          {getQueryRaised('Upload the registration certificate') !== undefined && (
-            <Tooltip title={getQueryRaised('Upload the registration certificate')}>
-              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
-            </Tooltip>
-          )}
           <Grid display="flex" alignItems="center">
             <Typography
               variant="subtitle2"

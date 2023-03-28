@@ -43,12 +43,12 @@ const CommunicationAddress = ({ personalDetails }) => {
             <Typography component="span" color="error.main">
               *
             </Typography>
+            {getQueryRaised('House') !== undefined && (
+              <Tooltip title={getQueryRaised('House')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
+            )}
           </Typography>
-          {getQueryRaised('House') !== undefined && (
-            <Tooltip title={getQueryRaised('House')}>
-              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
-            </Tooltip>
-          )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {communication_address?.house}
@@ -149,12 +149,12 @@ const CommunicationAddress = ({ personalDetails }) => {
             <Typography component="span" color="error.main">
               *
             </Typography>
+            {getQueryRaised('District') !== undefined && (
+              <Tooltip title={getQueryRaised('District')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
+            )}
           </Typography>
-          {getQueryRaised('District') !== undefined && (
-            <Tooltip title={getQueryRaised('District')}>
-              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
-            </Tooltip>
-          )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {capitalize(districtName)}
@@ -202,12 +202,12 @@ const CommunicationAddress = ({ personalDetails }) => {
             <Typography component="span" color="error.main">
               *
             </Typography>
+            {getQueryRaised('State/Union Territory') !== undefined && (
+              <Tooltip title={getQueryRaised('State/Union Territory')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
+            )}
           </Typography>
-          {getQueryRaised('State/Union Territory') !== undefined && (
-            <Tooltip title={getQueryRaised('State/Union Territory')}>
-              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
-            </Tooltip>
-          )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {capitalize(stateName)}
@@ -230,12 +230,12 @@ const CommunicationAddress = ({ personalDetails }) => {
             <Typography component="span" color="error.main">
               *
             </Typography>
+            {getQueryRaised('Country') !== undefined && (
+              <Tooltip title={getQueryRaised('Country')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
+            )}
           </Typography>
-          {getQueryRaised('Country') !== undefined && (
-            <Tooltip title={getQueryRaised('Country')}>
-              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
-            </Tooltip>
-          )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {countryName}
@@ -261,12 +261,12 @@ const CommunicationAddress = ({ personalDetails }) => {
             <Typography component="span" color="error.main">
               *
             </Typography>
+            {getQueryRaised('Pincode') !== undefined && (
+              <Tooltip title={getQueryRaised('Pincode')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
+            )}
           </Typography>
-          {getQueryRaised('Pincode') !== undefined && (
-            <Tooltip title={getQueryRaised('Pincode')}>
-              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
-            </Tooltip>
-          )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {pincode ? pincode : ''}
