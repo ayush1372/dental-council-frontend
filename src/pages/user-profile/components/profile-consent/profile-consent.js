@@ -16,6 +16,7 @@ import {
 } from '../../../../store/actions/doctor-user-profile-actions';
 import { updateProfileConsent } from '../../../../store/actions/doctor-user-profile-actions';
 import { changeUserActiveTab } from '../../../../store/reducers/common-reducers';
+import { getEsignDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
 import { Button, Checkbox } from '../../../../ui/core';
 import successToast from '../../../../ui/core/toaster';
 
@@ -117,8 +118,8 @@ const ProfileConsent = ({
           lastName: personalDetails?.personal_details?.last_name || '',
           qualification:
             doctorRegDetails?.qualification_detail_response_tos[0]?.course.course_name || '',
-          mobileNumber: personalDetails?.communication_address?.mobile || '',
-          emailId: personalDetails?.communication_address?.email || '',
+          mobileNumber: personalDetails?.kyc_address?.mobile || '',
+          emailId: personalDetails?.kyc_address?.email || '',
         },
         nmrPersonalCommunication: {
           address: personalDetails?.communication_address?.address_line1 || '',
@@ -150,14 +151,18 @@ const ProfileConsent = ({
         };
         dispatch(updateProfileConsent(payload))
           .then(() => {
+            document.getElementById('formid')?.submit();
             setIsReadMode(true);
             resetStep(0);
+            handleEsign();
+            dispatch(getEsignDetails());
+
             dispatch(changeUserActiveTab(doctorTabs[1].tabName));
-            document.getElementById('formid')?.submit();
           })
           .catch((error) => {
             setConfirmationModal(false);
             document.getElementById('formid')?.submit();
+            dispatch(getEsignDetails([]));
             successToast(
               'ERROR: ' + error.data.response.data.error,
               'auth-error',
@@ -211,7 +216,6 @@ const ProfileConsent = ({
           color="primary.main"
           variant="body1"
           mb={2}
-          // onClick={(e) => console.log('event of ', e)}
         >
           Consent
           <Typography component="span" color="error.main">
