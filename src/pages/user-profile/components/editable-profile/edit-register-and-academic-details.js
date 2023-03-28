@@ -63,10 +63,11 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   const [registrationFileData, setRegistrationFileData] = useState(
     registration_certificate ? [{ file: registration_certificate }] : []
   );
-  const [qualificationFilesData, setQualificationFilesData] = useState(
-    degree_certificate ? [{ file: degree_certificate }] : []
-  );
-  const [viewCertificate, setViewCertificate] = useState({
+  const [qualificationFilesData, setQualificationFilesData] = useState({
+    'qualification.0.files': degree_certificate ? [{ file: degree_certificate }] : [],
+  });
+
+  const [viewCertificate] = useState({
     registration: registration_certificate,
     qualification: degree_certificate,
   });
@@ -223,10 +224,14 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     const doctorRegistrationDetailsBlob = new Blob([doctorRegistrationDetailsJson], {
       type: 'application/json',
     });
-    formData.append('data', doctorRegistrationDetailsBlob);
-    formData.append('degreeCertificate', qualificationFilesData[0].file);
 
-    formData.append('registrationCertificate', registrationFileData[0].file);
+    const registrationFile = registrationFileData[0]?.file;
+    const qualificationFile = Object.values(qualificationFilesData)[0]?.[0]?.file;
+
+    formData.append('data', doctorRegistrationDetailsBlob);
+    formData.append('degreeCertificate', qualificationFile);
+
+    formData.append('registrationCertificate', registrationFile);
     dispatch(
       updateDoctorRegistrationDetails(
         formData,
@@ -253,31 +258,30 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           : updatedPersonalDetails?.hp_profile_id
       )
     )
-      .then((response) => {
-        viewCertificate.qualification =
-          response?.data?.qualification_detail_response_tos[0]?.degree_certificate;
-        setViewCertificate();
-        const QualificationFile = [
-          {
-            fileName:
-              response?.data?.qualification_detail_response_tos[0]?.file_name +
-              '.' +
-              response?.data?.qualification_detail_response_tos[0]?.file_type,
-            fileBlob: response?.data?.qualification_detail_response_tos[0]?.degree_certificate,
-          },
-        ];
-        const RegistrationFile = [
-          {
-            fileName:
-              response?.data?.registration_detail_to?.file_name +
-              '.' +
-              response?.data?.registration_detail_to?.file_type,
-            fileBlob: response?.data?.registration_detail_to?.registration_certificate,
-          },
-        ];
-
-        setRegistrationFileData(RegistrationFile);
-        setQualificationFilesData(QualificationFile);
+      .then(() => {
+        // viewCertificate.qualification =
+        //   response?.data?.qualification_detail_response_tos[0]?.degree_certificate;
+        // setViewCertificate();
+        // const QualificationFile = [
+        //   {
+        //     fileName:
+        //       response?.data?.qualification_detail_response_tos[0]?.file_name +
+        //       '.' +
+        //       response?.data?.qualification_detail_response_tos[0]?.file_type,
+        //     fileBlob: response?.data?.qualification_detail_response_tos[0]?.degree_certificate,
+        //   },
+        // ];
+        // const RegistrationFile = [
+        //   {
+        //     fileName:
+        //       response?.data?.registration_detail_to?.file_name +
+        //       '.' +
+        //       response?.data?.registration_detail_to?.file_type,
+        //     fileBlob: response?.data?.registration_detail_to?.registration_certificate,
+        //   },
+        // ];
+        // setRegistrationFileData(RegistrationFile);
+        // setQualificationFilesData(QualificationFile);
       })
       .catch((allFailMsg) => {
         successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
@@ -326,6 +330,11 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
     update(0, { ...obj });
   }, [registrationDetails]);
+
+  const handleQualificationFilesData = (fileName, files) => {
+    qualificationFilesData[fileName] = files;
+    setQualificationFilesData({ ...qualificationFilesData });
+  };
 
   return (
     <Box
@@ -420,7 +429,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               {...register('RegistrationNumber', {
                 required: 'Registration number is required',
                 pattern: {
-                  value: /^[0-9]{100}$/i,
+                  // value: /^[0-9]{100}$/i,
                   message: 'Please Enter Valid Registration number',
                 },
               })}
@@ -581,7 +590,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               register={register}
               unregister={unregister}
               qualificationFilesData={qualificationFilesData}
-              handleQualificationFilesData={setQualificationFilesData}
+              handleQualificationFilesData={handleQualificationFilesData}
             />
           );
         })}
