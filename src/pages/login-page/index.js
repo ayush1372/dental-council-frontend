@@ -21,7 +21,7 @@ const LoginWrapper = () => {
   };
   useEffect(() => {
     resetStep();
-  }, [location.state.loginFormname]);
+  }, [location.state?.loginFormname]);
 
   return (
     <Box sx={{ mt: 5, mb: 5, maxWidth: '648px', margin: '40px auto' }}>

@@ -262,6 +262,7 @@ const ActivateLicence = (props) => {
           </Grid>
           <Grid mt={3}>
             <TableSearch
+              data-testid="tab-heading"
               searchParams={searchParams}
               exportData={activateLicenseList}
               flag={'ActivateList'}

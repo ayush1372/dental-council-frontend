@@ -3,19 +3,132 @@
 exports[`About component snapshot 1`] = `
 <div>
   <div
-    class="main"
     data-testid="homepage"
   >
-    <header>
-      <h1>
-        Welcome to ReactJS boilerplate
-      </h1>
-      <p>
-        <b>
-          Author: Chetan Bura
-        </b>
-      </p>
-    </header>
+    <div
+      class="heroBannerBox MuiBox-root css-17beg01"
+    >
+      <div
+        class="MuiContainer-root MuiContainer-maxWidthLg bannerWrapper css-1oqqzyl-MuiContainer-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-[object Object] css-19gt0pv-MuiGrid-root"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+          >
+            <img
+              alt="Hero Banner"
+              class="bannerImage"
+              src="hero-banner-image.png"
+            />
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-6 css-1b3l6lk-MuiGrid-root"
+          >
+            <h2
+              class="MuiTypography-root MuiTypography-h2 css-1spe9q3-MuiTypography-root"
+            >
+              Ayushman Bharat Digital Mission
+            </h2>
+            <h1
+              class="MuiTypography-root MuiTypography-h1 css-1i7tk0r-MuiTypography-root"
+            >
+              National Medical Register (NMR)
+            </h1>
+            <div
+              class="MuiTypography-root MuiTypography-body1 css-1bnvjpp-MuiTypography-root"
+            >
+              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages.
+            </div>
+            <div
+              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
+            >
+              (This data is for sample purposes only.)
+            </div>
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSecondary MuiButton-sizeMedium MuiButton-containedSizeMedium css-1w2jffa-MuiButtonBase-root-MuiButton-root"
+              tabindex="0"
+              type="button"
+            >
+              Login/Register as Doctor
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="MuiContainer-root MuiContainer-maxWidthLg css-1oqqzyl-MuiContainer-root"
+    >
+      <div
+        class="MuiBox-root css-9unzsg"
+      >
+        <a
+          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-dum8ct-MuiTypography-root-MuiLink-root"
+          href="https://nha.gov.in/"
+          rel="noreferrer"
+          target="_blank"
+        >
+          <img
+            alt="NHA English Logo"
+            src="nha-english-logo.png"
+          />
+        </a>
+        <a
+          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-dum8ct-MuiTypography-root-MuiLink-root"
+          href="https://www.mohfw.gov.in/"
+          rel="noreferrer"
+          target="_blank"
+        >
+          <img
+            alt="NHA English Logo"
+            height="90px"
+            src="ministry-of-health-India-logo.svg"
+          />
+        </a>
+        <a
+          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-dum8ct-MuiTypography-root-MuiLink-root"
+          href="https://www.meity.gov.in/"
+          rel="noreferrer"
+          target="_blank"
+        >
+          <img
+            alt="NHA English Logo"
+            src="ministry-of-electronics-it.png"
+          />
+        </a>
+        <a
+          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-dum8ct-MuiTypography-root-MuiLink-root"
+          href="https://www.india.gov.in/"
+          rel="noreferrer"
+          target="_blank"
+        >
+          <img
+            alt="NHA English Logo"
+            height="90px"
+            src="Indiagovin.png"
+          />
+        </a>
+        <a
+          class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-dum8ct-MuiTypography-root-MuiLink-root"
+          href="https://www.digitalindia.gov.in/"
+          rel="noreferrer"
+          target="_blank"
+        >
+          <img
+            alt="NHA English Logo"
+            height="90px"
+            src="digital-India.png"
+          />
+        </a>
+      </div>
+    </div>
+    <div
+      class="Toastify"
+    />
   </div>
 </div>
 `;
