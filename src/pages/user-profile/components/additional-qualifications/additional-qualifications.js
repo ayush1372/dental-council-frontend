@@ -43,10 +43,14 @@ const AdditionalQualifications = () => {
   // );
   const [successModalPopup, setSuccessModalPopup] = useState(false);
   // eslint-disable-next-line no-unused-vars
-  const { statesList, collegesList, universitiesList, coursesList, countriesList } = useSelector(
-    (state) => state?.common
-  );
-  const { specialitiesList } = useSelector((state) => state?.common);
+  const {
+    statesList,
+    collegesList,
+    universitiesList,
+    coursesList,
+    countriesList,
+    specialitiesList,
+  } = useSelector((state) => state?.common);
 
   const dispatch = useDispatch();
   // const [qualificationFilesData, setQualificationFilesData] = useState([]);

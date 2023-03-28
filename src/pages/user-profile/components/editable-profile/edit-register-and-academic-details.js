@@ -8,11 +8,14 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
 import AttachmentViewPopup from '../../../../shared/query-modal-popup/attachement-view-popup';
-import { updateDoctorRegistrationDetails } from '../../../../store/actions/doctor-user-profile-actions';
+import {
+  getRegistrationDetailsData,
+  updateDoctorRegistrationDetails,
+} from '../../../../store/actions/doctor-user-profile-actions';
 import { getRegistrationDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
 import { Button, RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
-// import successToast from '../../../../ui/core/toaster';
+import successToast from '../../../../ui/core/toaster';
 import EditQualificationDetails from './edit-qualification-details';
 const qualificationObjTemplate = [
   {
@@ -63,7 +66,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   const [qualificationFilesData, setQualificationFilesData] = useState({
     'qualification.0.files': degree_certificate ? [{ file: degree_certificate }] : [],
   });
-  const [viewCertificate] = useState({
+
+  const [viewCertificate, setViewCertificate] = useState({
     registration: registration_certificate,
     qualification: degree_certificate,
   });
@@ -243,6 +247,41 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
       });
     });
   };
+
+  useEffect(() => {
+    setValue('RegisteredWithCouncil', registeredCouncil[0]);
+
+    dispatch(
+      getRegistrationDetailsData(
+        updatedPersonalDetails?.hp_profile_id === undefined
+          ? personalDetails?.hp_profile_id
+          : updatedPersonalDetails?.hp_profile_id
+      )
+    )
+      .then((response) => {
+        viewCertificate.qualification =
+          response?.data?.qualification_detail_response_tos[0]?.degree_certificate;
+        setViewCertificate();
+        const QualificationFile = [
+          {
+            fileName: response?.data?.qualification_detail_response_tos[0]?.file_name,
+            fileBlob: response?.data?.qualification_detail_response_tos[0]?.degree_certificate,
+          },
+        ];
+        const RegistrationFile = [
+          {
+            fileName: response?.data?.registration_detail_to?.file_name,
+            fileBlob: response?.data?.registration_detail_to?.registration_certificate,
+          },
+        ];
+
+        setRegistrationFileData(RegistrationFile);
+        setQualificationFilesData(QualificationFile);
+      })
+      .catch((allFailMsg) => {
+        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      });
+  }, []);
 
   const CloseAttachmentPopup = () => {
     setAttachmentViewProfile(false);
