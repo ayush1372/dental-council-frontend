@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Box } from '@mui/material';
@@ -62,6 +62,7 @@ const AdditionalQualifications = () => {
     unregister,
     setValue,
     control,
+    reset,
     watch,
   } = useForm({
     mode: 'onChange',
@@ -76,6 +77,7 @@ const AdditionalQualifications = () => {
   });
 
   const handleQualificationFilesData = (fileName, files) => {
+    //setQualificationFilesData(files);
     qualificationFilesData[fileName] = files;
     setQualificationFilesData({ ...qualificationFilesData });
   };
@@ -153,6 +155,10 @@ const AdditionalQualifications = () => {
   const { qualification } = getValues();
   const isInternational = qualification?.[0]?.qualificationfrom === 'International';
 
+  useEffect(() => {
+    setQualificationFilesData([]);
+  }, []);
+
   const onSubmit = () => {
     const formData = new FormData();
     let qualification_detail_response_tos = [],
@@ -188,18 +194,27 @@ const AdditionalQualifications = () => {
       qualification_detail_request_tos: updatedQualificationDetailsArray,
     };
 
-    const firstFile = Object.values(qualificationFilesData)?.[0]?.[0]?.file;
+    let filesArray = [];
+    Object.values(qualificationFilesData)?.forEach((data) => {
+      filesArray.push(data[0]?.file);
+    });
+    // const firstFile = Object.values(qualificationFilesData)?.[0]?.[0]?.file;
+    // filesArray?.push(firstFile);
 
     const doctorRegistrationDetailsJson = JSON.stringify(qualification_detail_response_tos);
     const doctorRegistrationDetailsBlob = new Blob([doctorRegistrationDetailsJson], {
       type: 'application/json',
     });
+    const filesBlob = new Blob([filesArray], {
+      type: 'application/json',
+    });
     formData.append('data', doctorRegistrationDetailsBlob);
-    formData.append('degreeCertificates', firstFile);
+    formData.append('degreeCertificates', filesBlob);
 
     dispatch(additionalQualificationsData(formData, personalDetails?.hp_profile_id))
       .then(() => {
         setSuccessModalPopup(true);
+        reset();
       })
       .catch((error) => {
         successToast(

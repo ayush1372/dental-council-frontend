@@ -39,15 +39,14 @@ const EditQualificationDetails = ({
       id: 69,
     },
   ]);
-  const { countriesList, coursesList, universitiesList, statesList } = useSelector(
-    (state) => state?.common
-  );
+  const { countriesList, coursesList, universitiesList, statesList, specialitiesList } =
+    useSelector((state) => state?.common);
 
   const handleQualificationFrom = (event) => {
     setValue(event.target.name, event.target.value);
     dispatch(selectedQualificationType(event.target.value));
   };
-  const { specialitiesList } = useSelector((state) => state?.common);
+
   const qualificationfrom = watch(`qualification[${index}].qualificationfrom`);
   const watchCollege = watch(`qualification[${index}].college`);
   const selectedState = watch(`qualification[${index}].state`);
