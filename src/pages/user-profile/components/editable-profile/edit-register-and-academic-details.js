@@ -67,7 +67,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     'qualification.0.files': degree_certificate ? [{ file: degree_certificate }] : [],
   });
 
-  const [viewCertificate, setViewCertificate] = useState({
+  const [viewCertificate] = useState({
     registration: registration_certificate,
     qualification: degree_certificate,
   });
@@ -258,31 +258,30 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           : updatedPersonalDetails?.hp_profile_id
       )
     )
-      .then((response) => {
-        viewCertificate.qualification =
-          response?.data?.qualification_detail_response_tos[0]?.degree_certificate;
-        setViewCertificate();
-        const QualificationFile = [
-          {
-            fileName:
-              response?.data?.qualification_detail_response_tos[0]?.file_name +
-              '.' +
-              response?.data?.qualification_detail_response_tos[0]?.file_type,
-            fileBlob: response?.data?.qualification_detail_response_tos[0]?.degree_certificate,
-          },
-        ];
-        const RegistrationFile = [
-          {
-            fileName:
-              response?.data?.registration_detail_to?.file_name +
-              '.' +
-              response?.data?.registration_detail_to?.file_type,
-            fileBlob: response?.data?.registration_detail_to?.registration_certificate,
-          },
-        ];
-
-        setRegistrationFileData(RegistrationFile);
-        setQualificationFilesData(QualificationFile);
+      .then(() => {
+        // viewCertificate.qualification =
+        //   response?.data?.qualification_detail_response_tos[0]?.degree_certificate;
+        // setViewCertificate();
+        // const QualificationFile = [
+        //   {
+        //     fileName:
+        //       response?.data?.qualification_detail_response_tos[0]?.file_name +
+        //       '.' +
+        //       response?.data?.qualification_detail_response_tos[0]?.file_type,
+        //     fileBlob: response?.data?.qualification_detail_response_tos[0]?.degree_certificate,
+        //   },
+        // ];
+        // const RegistrationFile = [
+        //   {
+        //     fileName:
+        //       response?.data?.registration_detail_to?.file_name +
+        //       '.' +
+        //       response?.data?.registration_detail_to?.file_type,
+        //     fileBlob: response?.data?.registration_detail_to?.registration_certificate,
+        //   },
+        // ];
+        // setRegistrationFileData(RegistrationFile);
+        // setQualificationFilesData(QualificationFile);
       })
       .catch((allFailMsg) => {
         successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
@@ -430,7 +429,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               {...register('RegistrationNumber', {
                 required: 'Registration number is required',
                 pattern: {
-                  value: /^[0-9]{100}$/i,
+                  // value: /^[0-9]{100}$/i,
                   message: 'Please Enter Valid Registration number',
                 },
               })}

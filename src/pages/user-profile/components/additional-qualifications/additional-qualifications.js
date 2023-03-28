@@ -84,71 +84,22 @@ const AdditionalQualifications = () => {
 
   const getStateData = (stateId) => {
     return statesList?.find((obj) => obj.id === stateId);
-    // let stateData = [];
-    // statesList?.map((elementData) => {
-    //   if (elementData.id === State) {
-    //     stateData.push(elementData);
-    //   }
-    // });
-    // return stateData[0];
   };
+
   const getCollegeData = (collegeId) => {
     return collegesList?.data?.find((obj) => obj.id === collegeId);
-
-    // let collegeData = [];
-    // Array.isArray(collegesList?.data) &&
-    //   collegesList?.data?.map((elementData) => {
-    //     if (elementData.id === college) {
-    //       collegeData.push({
-    //         id: elementData?.id,
-    //         name: elementData?.name,
-    //       });
-    //     }
-    //   });
-    // return collegeData[0];
   };
+
   const broadSpeciality = (broadSpl) => {
     return specialitiesList?.data?.find((obj) => obj.id === broadSpl);
-    // let broadSpecialityData = [];
-    // Array.isArray(specialitiesList?.data) &&
-    //   specialitiesList?.data?.map((elementData) => {
-    //     if (elementData.id === broadSpl) {
-    //       broadSpecialityData.push(elementData?.id);
-    //     }
-    //   });
-    // return broadSpecialityData[0];
   };
 
   const getUniversityData = (university) => {
     return universitiesList?.data?.find((obj) => obj.id === university);
-
-    // let universityData = [];
-    // Array.isArray(universitiesList?.data) &&
-    //   universitiesList?.data?.map((elementData) => {
-    //     if (elementData.id === university) {
-    //       universityData.push({
-    //         id: elementData?.id,
-    //         name: elementData?.name,
-    //         nationality: '',
-    //       });
-    //     }
-    //   });
-    // return universityData[0];
   };
+
   const getCourseData = (course) => {
     return coursesList?.data?.find((obj) => obj.id === course);
-
-    // let courseData = [];
-    // Array.isArray(coursesList?.data) &&
-    //   coursesList?.data?.map((elementData) => {
-    //     if (elementData.id === course) {
-    //       courseData.push({
-    //         course_name: elementData?.name,
-    //         id: elementData?.id,
-    //       });
-    //     }
-    //   });
-    // return courseData[0];
   };
 
   // this below code is storing qualification details
@@ -205,11 +156,12 @@ const AdditionalQualifications = () => {
     const doctorRegistrationDetailsBlob = new Blob([doctorRegistrationDetailsJson], {
       type: 'application/json',
     });
-    const filesBlob = new Blob([filesArray], {
-      type: 'application/json',
-    });
+    // const filesBlob = new Blob([filesArray]);
+
     formData.append('data', doctorRegistrationDetailsBlob);
-    formData.append('degreeCertificates', filesBlob);
+    filesArray.forEach((file) => {
+      formData.append('degreeCertificates', file);
+    });
 
     dispatch(additionalQualificationsData(formData, personalDetails?.hp_profile_id))
       .then(() => {
