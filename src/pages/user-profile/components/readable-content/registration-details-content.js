@@ -2,7 +2,8 @@ import { useState } from 'react';
 
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
-import { Grid, Typography } from '@mui/material';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import { Grid, Tooltip, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
@@ -13,6 +14,7 @@ import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-po
 const RegistrationDetailsContent = () => {
   const { data } = useSelector((state) => state.loginReducer?.loginData);
   const { registrationDetails } = useSelector((state) => state.doctorUserProfileReducer);
+  const { raisedQueryData } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
 
   const [openModal, setOpenModal] = useState(false);
   const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
@@ -37,6 +39,12 @@ const RegistrationDetailsContent = () => {
     setAttachmentViewProfile(false);
   };
 
+  //Helper Method to get the data of the query raised against the field
+  const getQueryRaised = (fieldName) => {
+    let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
+    return query?.query_comment;
+  };
+
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2} mt={1}>
@@ -47,6 +55,11 @@ const RegistrationDetailsContent = () => {
               *
             </Typography>
           </Typography>
+          {getQueryRaised('Registered with council') !== undefined && (
+            <Tooltip title={getQueryRaised('Registered with council')}>
+              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+            </Tooltip>
+          )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {smcName ? smcName : ''}
@@ -71,6 +84,11 @@ const RegistrationDetailsContent = () => {
               *
             </Typography>
           </Typography>
+          {getQueryRaised('Registration Number') !== undefined && (
+            <Tooltip title={getQueryRaised('Registration Number')}>
+              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+            </Tooltip>
+          )}
           <Grid display="flex">
             <Typography color="textPrimary.main" variant="subtitle2">
               {registration_number ? registration_number : ''}
@@ -94,6 +112,11 @@ const RegistrationDetailsContent = () => {
               *
             </Typography>
           </Typography>
+          {getQueryRaised('Registration Date') !== undefined && (
+            <Tooltip title={getQueryRaised('Registration Date')}>
+              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+            </Tooltip>
+          )}
           <Grid display="flex">
             <Typography color="textPrimary.main" variant="subtitle2">
               {registration_date && moment(registration_date).format('DD-MM-YYYY')}
@@ -119,6 +142,11 @@ const RegistrationDetailsContent = () => {
               *
             </Typography>
           </Typography>
+          {getQueryRaised('Registration') !== undefined && (
+            <Tooltip title={getQueryRaised('Registration')}>
+              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+            </Tooltip>
+          )}
           <Grid display="flex">
             <Typography variant="subtitle2" color="textPrimary.main">
               {is_renewable === '1' ? 'Permanent' : is_renewable === '0' ? 'Renewable' : ''}
@@ -139,6 +167,11 @@ const RegistrationDetailsContent = () => {
           <Typography variant="subtitle2" color="grey.label">
             Due Date of Renewal
           </Typography>
+          {getQueryRaised('Due Date of Renewal') !== undefined && (
+            <Tooltip title={getQueryRaised('Due Date of Renewal')}>
+              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+            </Tooltip>
+          )}
           <Grid display="flex">
             <Typography color="textPrimary.main" variant="subtitle2">
               {renewable_registration_date &&
@@ -163,6 +196,11 @@ const RegistrationDetailsContent = () => {
               *
             </Typography>
           </Typography>
+          {getQueryRaised('Upload the registration certificate') !== undefined && (
+            <Tooltip title={getQueryRaised('Upload the registration certificate')}>
+              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+            </Tooltip>
+          )}
           <Grid display="flex" alignItems="center">
             <Typography
               variant="subtitle2"

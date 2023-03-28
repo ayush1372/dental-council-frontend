@@ -2,7 +2,8 @@ import { useState } from 'react';
 
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
-import { Grid, IconButton, Typography } from '@mui/material';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import { Grid, IconButton, Tooltip, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 import AttachmentViewPopup from '../../../../shared/query-modal-popup/attachement-view-popup';
@@ -10,6 +11,7 @@ import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-po
 
 const QualificationDetailsContent = ({ registrationDetails }) => {
   const { data } = useSelector((state) => state.loginReducer?.loginData);
+  const { raisedQueryData } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
 
   const [openModal, setOpenModal] = useState(false);
   const [queryRaisedField, setQueryRaisedField] = useState('');
@@ -23,6 +25,12 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
 
   const ClosePopup = () => {
     setOpenModal(false);
+  };
+
+  //Helper Method to get the data of the query raised against the field
+  const getQueryRaised = (fieldName) => {
+    let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
+    return query?.query_comment;
   };
 
   return qualification_detail_response_tos?.map((element, index) => {
@@ -43,6 +51,11 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                 *
               </Typography>
             </Typography>
+            {getQueryRaised('Name of the Degree Obtained') !== undefined && (
+              <Tooltip title={getQueryRaised('Name of the Degree Obtained')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
+            )}
             <Grid display="flex" alignItems="center">
               <Typography color="textPrimary.main" variant="subtitle2">
                 {element?.course?.course_name}
@@ -69,6 +82,11 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                 *
               </Typography>
             </Typography>
+            {getQueryRaised('Country Name') !== undefined && (
+              <Tooltip title={getQueryRaised('Country Name')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
+            )}
             <Grid display="flex" alignItems="center">
               <Typography variant="subtitle2" color="textPrimary.main">
                 {element?.country?.name}
@@ -95,6 +113,11 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                 *
               </Typography>
             </Typography>
+            {getQueryRaised('State') !== undefined && (
+              <Tooltip title={getQueryRaised('State')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
+            )}
             <Grid display="flex" alignItems="center">
               <Typography color="textPrimary.main" variant="subtitle2">
                 {element?.state?.name}
@@ -123,6 +146,11 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                 *
               </Typography>
             </Typography>
+            {getQueryRaised('Name of the College') !== undefined && (
+              <Tooltip title={getQueryRaised('Name of the College')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
+            )}
             <Grid display="flex" alignItems="center">
               <Typography variant="subtitle2" color="textPrimary.main">
                 {element?.college?.name}
@@ -150,6 +178,11 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                 *
               </Typography>
             </Typography>
+            {getQueryRaised('University') !== undefined && (
+              <Tooltip title={getQueryRaised('University')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
+            )}
             <Grid display="flex" alignItems="center">
               <Typography variant="subtitle2" color="textPrimary.main">
                 {element?.university?.name}
@@ -173,6 +206,11 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
             <Typography variant="subtitle2" color="grey.label">
               Month & Year of Awarding Degree
             </Typography>
+            {getQueryRaised('Month & Year of Awarding Degree') !== undefined && (
+              <Tooltip title={getQueryRaised('Month & Year of Awarding Degree')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
+            )}
             <Grid display="flex" alignItems="center">
               <Typography variant="subtitle2" color="textPrimary.main">
                 {element?.qualification_month ? element?.qualification_month : ''} ,{' '}
@@ -202,6 +240,11 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                 *
               </Typography>
             </Typography>
+            {getQueryRaised('Upload Qualification Degree') !== undefined && (
+              <Tooltip title={getQueryRaised('Upload Qualification Degree')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
+            )}
             <Grid display="flex" alignItems="center">
               <Typography
                 variant="subtitle2"

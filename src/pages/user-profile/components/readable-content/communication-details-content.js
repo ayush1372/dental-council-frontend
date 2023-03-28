@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
-import RemoveRedEyeOutlinedIcon from '@mui/icons-material/RemoveRedEyeOutlined';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Grid, Tooltip, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
@@ -10,6 +10,7 @@ import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-po
 
 const CommunicationAddress = ({ personalDetails }) => {
   const { data } = useSelector((state) => state.loginReducer?.loginData);
+  const { raisedQueryData } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
 
   const [openModal, setOpenModal] = useState(false);
   const [queryRaisedField, setQueryRaisedField] = useState('');
@@ -27,6 +28,12 @@ const CommunicationAddress = ({ personalDetails }) => {
     setOpenModal(false);
   };
 
+  //Helper Method to get the data of the query raised against the field
+  const getQueryRaised = (fieldName) => {
+    let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
+    return query?.query_comment;
+  };
+
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
@@ -37,9 +44,11 @@ const CommunicationAddress = ({ personalDetails }) => {
               *
             </Typography>
           </Typography>
-          <Tooltip title="Correct the house name">
-            <RemoveRedEyeOutlinedIcon></RemoveRedEyeOutlinedIcon>
-          </Tooltip>
+          {getQueryRaised('House') !== undefined && (
+            <Tooltip title={getQueryRaised('House')}>
+              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+            </Tooltip>
+          )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {communication_address?.house}
@@ -54,9 +63,6 @@ const CommunicationAddress = ({ personalDetails }) => {
                 fontSize="width30"
               />
             )}{' '}
-            <Tooltip title="Correct the house name">
-              <RemoveRedEyeOutlinedIcon></RemoveRedEyeOutlinedIcon>
-            </Tooltip>
           </Grid>
         </Grid>
 
@@ -64,6 +70,11 @@ const CommunicationAddress = ({ personalDetails }) => {
           <Typography variant="body5" color="grey.label">
             Street
           </Typography>
+          {getQueryRaised('Street') !== undefined && (
+            <Tooltip title={getQueryRaised('Street')}>
+              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+            </Tooltip>
+          )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {communication_address?.street}
@@ -84,6 +95,11 @@ const CommunicationAddress = ({ personalDetails }) => {
           <Typography variant="body5" color="grey.label">
             Landmark
           </Typography>
+          {getQueryRaised('Landmark') !== undefined && (
+            <Tooltip title={getQueryRaised('Landmark')}>
+              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+            </Tooltip>
+          )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {communication_address?.landmark}
@@ -104,6 +120,11 @@ const CommunicationAddress = ({ personalDetails }) => {
           <Typography variant="bod5" color="grey.label">
             City/Town/Village
           </Typography>
+          {getQueryRaised('City/Town/Village') !== undefined && (
+            <Tooltip title={getQueryRaised('City/Town/Village')}>
+              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+            </Tooltip>
+          )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {villageName}
@@ -129,6 +150,11 @@ const CommunicationAddress = ({ personalDetails }) => {
               *
             </Typography>
           </Typography>
+          {getQueryRaised('District') !== undefined && (
+            <Tooltip title={getQueryRaised('District')}>
+              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+            </Tooltip>
+          )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {capitalize(districtName)}
@@ -149,6 +175,11 @@ const CommunicationAddress = ({ personalDetails }) => {
           <Typography variant="body5" color="grey.label">
             Sub District
           </Typography>
+          {getQueryRaised('Sub District') !== undefined && (
+            <Tooltip title={getQueryRaised('Sub District')}>
+              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+            </Tooltip>
+          )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {subDistrictName}
@@ -172,6 +203,11 @@ const CommunicationAddress = ({ personalDetails }) => {
               *
             </Typography>
           </Typography>
+          {getQueryRaised('State/Union Territory') !== undefined && (
+            <Tooltip title={getQueryRaised('State/Union Territory')}>
+              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+            </Tooltip>
+          )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {capitalize(stateName)}
@@ -195,6 +231,11 @@ const CommunicationAddress = ({ personalDetails }) => {
               *
             </Typography>
           </Typography>
+          {getQueryRaised('Country') !== undefined && (
+            <Tooltip title={getQueryRaised('Country')}>
+              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+            </Tooltip>
+          )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {countryName}
@@ -221,6 +262,11 @@ const CommunicationAddress = ({ personalDetails }) => {
               *
             </Typography>
           </Typography>
+          {getQueryRaised('Pincode') !== undefined && (
+            <Tooltip title={getQueryRaised('Pincode')}>
+              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+            </Tooltip>
+          )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {pincode ? pincode : ''}
