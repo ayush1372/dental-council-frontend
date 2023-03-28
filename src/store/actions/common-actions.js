@@ -395,7 +395,7 @@ export const getRaisedQuery = (profileID) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,
-      url: API.common.queryRaise.replace('health-professional', profileID),
+      url: API.common.raisedQuery.replace('{healthProfessionalId}', profileID),
     })
       .then((response) => {
         dispatch(getRaiseQueryData({ raisedQueryData: response?.data }));

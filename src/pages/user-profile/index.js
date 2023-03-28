@@ -13,7 +13,6 @@ import SuccessPopup from '../../shared/reactivate-licence-popup/success-popup';
 import {
   enableUserNotification,
   getCountriesList,
-  getRaisedQuery,
   getStatesList,
 } from '../../store/actions/common-actions';
 import {
@@ -125,16 +124,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
         showViewProfile ? selectedRowData?.profileID?.value : loginData?.data?.profile_id
       )
     )
-      .then((response) => {
-        if (response) {
-          if (
-            response?.data?.work_profile_status_id &&
-            response?.data?.work_profile_status_id === 3
-          ) {
-            dispatch(getRaisedQuery(response?.data?.hp_profile_id));
-          }
-        }
-      })
+      .then(() => {})
       .catch((allFailMsg) => {
         successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
       });

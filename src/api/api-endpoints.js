@@ -39,6 +39,7 @@ export const API = {
     healthProfessionalApplicationStatus: 'api/v1/abdm/nmr/health-professional/applications/status',
     suspend: 'api/v1/abdm/nmr/health-professional/applications/suspend',
     queryRaise: 'api/v1/abdm/nmr/health-professional/queries',
+    raisedQuery: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/queries',
     enableNotification: '/api/v1/abdm/nmr/user/enable-notification',
     LGDService: '/api/v1/abdm/nmr/health-professional/lgd/search?pinCode=',
   },
