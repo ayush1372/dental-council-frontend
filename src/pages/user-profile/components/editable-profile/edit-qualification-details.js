@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useEffect, useMemo, useState } from 'react';
 
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -7,10 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { monthsData, yearsData } from '../../../../constants/common-data';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
-// import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
 import { getCollegesList, getUniversitiesList } from '../../../../store/actions/common-actions';
 import { selectedQualificationType } from '../../../../store/reducers/doctor-user-profile-reducer';
-// import { getUniversities } from '../../../../store/reducers/common-reducers';
 import { RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
 const EditQualificationDetails = ({
@@ -51,7 +48,6 @@ const EditQualificationDetails = ({
     dispatch(selectedQualificationType(event.target.value));
   };
   const { specialitiesList } = useSelector((state) => state?.common);
-  //  const selectedCollege = watch(`qualification[${index}].university`);
   const qualificationfrom = watch(`qualification[${index}].qualificationfrom`);
   const watchCollege = watch(`qualification[${index}].college`);
   const selectedState = watch(`qualification[${index}].state`);
@@ -644,7 +640,6 @@ const EditQualificationDetails = ({
               fullWidth
               error={errors.subSpeciality?.message}
               name="subSpeciality"
-              // label="University"
               placeholder="Enter Super Peciality"
               defaultValue={qualification?.subSpeciality}
               required={true}
@@ -652,19 +647,6 @@ const EditQualificationDetails = ({
                 required: 'subSpeciality is Required',
               })}
             />
-
-            {/* <AutoComplete
-            name="subSpeciality"
-            options={subSpecialityOptions}
-            value={getValues().subSpeciality}
-            error={subSpecialities?.length === 0 && errors.subSpeciality?.message}
-            multiple={true}
-            {...register('subSpeciality', { required: 'Missing field' })}
-            onChange={(value) => {
-              setValue('subSpeciality', value);
-              setSubSpecialities(value);
-            }}
-          /> */}
           </Grid>
         )}
       </Grid>
