@@ -12,6 +12,7 @@ import {
   getUpdatedRegistrationDetails,
   getWorkProfileDetails,
 } from '../reducers/doctor-user-profile-reducer';
+import { getRaisedQuery } from './common-actions';
 
 export const getPersonalDetailsData = (doctor_profile_id) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
@@ -23,6 +24,9 @@ export const getPersonalDetailsData = (doctor_profile_id) => async (dispatch) =>
       ),
     })
       .then((response) => {
+        if (response?.data?.work_flow_status_id === 3) {
+          dispatch(getRaisedQuery(response?.data?.hp_profile_id));
+        }
         dispatch(getPersonalDetails(response.data));
         return resolve(response);
       })

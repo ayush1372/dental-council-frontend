@@ -19,6 +19,7 @@ import {
   updateCouncilNames,
   verifyNotificationData,
 } from '../reducers/common-reducers';
+import { getRaiseQueryData } from '../reducers/raise-query-reducer';
 
 export const getStatesList = () => async (dispatch) => {
   return await new Promise((resolve, reject) => {
@@ -381,6 +382,23 @@ export const raiseQuery = (body) => async () => {
       data: body,
     })
       .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+//To Get the details of raised query for the doctor profile.
+export const getRaisedQuery = (profileID) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: GET,
+      url: API.common.raisedQuery.replace('{healthProfessionalId}', profileID),
+    })
+      .then((response) => {
+        dispatch(getRaiseQueryData({ raisedQueryData: response?.data }));
         return resolve(response);
       })
       .catch((error) => {
