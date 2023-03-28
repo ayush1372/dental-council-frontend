@@ -21,10 +21,10 @@ export function ViewProfile(props) {
   const { nmr_id } = useSelector((state) => state?.doctorUserProfileReducer?.personalDetails);
 
   const emailId = useSelector(
-    (state) => state?.doctorUserProfileReducer?.personalDetails?.communication_address?.email
+    (state) => state?.doctorUserProfileReducer?.personalDetails?.personal_details?.email
   );
   const mobileNumber = useSelector(
-    (state) => state?.doctorUserProfileReducer?.personalDetails?.communication_address?.mobile
+    (state) => state?.doctorUserProfileReducer?.personalDetails?.personal_details?.mobile
   );
 
   // const [emailNotification, setEmailNotification] = useState();
