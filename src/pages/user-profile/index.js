@@ -10,8 +10,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import useWizard from '../../hooks/use-wizard';
 import ReactivateLicencePopup from '../../shared/reactivate-licence-popup/re-activate-licence-popup';
 import SuccessPopup from '../../shared/reactivate-licence-popup/success-popup';
-import { enableUserNotification } from '../../store/actions/common-actions';
-import { getCountriesList, getStatesList } from '../../store/actions/common-actions';
+import {
+  enableUserNotification,
+  getCountriesList,
+  getRaisedQuery,
+  getStatesList,
+} from '../../store/actions/common-actions';
 import {
   getPersonalDetailsData,
   getRegistrationDetailsData,
@@ -35,19 +39,18 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const [isReadMode, setIsReadMode] = useState(true);
-  const [showReactivateLicense, setShowReactivateLicense] = useState(false);
-  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
-
-  const [wizardSteps, setWizardSteps] = useState(readWizardSteps);
-  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
-  const { loginData } = useSelector((state) => state?.loginReducer);
-
-  const [isApplicationPending, setIsApplicationPending] = useState(true);
-  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
-  const [showStaticFormProgress, setShowStaticFormProgress] = useState(false);
 
   const [emailNotification, setEmailNotification] = useState();
   const [mobileNotification, setMobileNotification] = useState();
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [wizardSteps, setWizardSteps] = useState(readWizardSteps);
+  const [isApplicationPending, setIsApplicationPending] = useState(true);
+  const [showReactivateLicense, setShowReactivateLicense] = useState(false);
+  const [showStaticFormProgress, setShowStaticFormProgress] = useState(false);
+
+  const { loginData } = useSelector((state) => state?.loginReducer);
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
 
   const handleNotification = (eventData, mode) => {
     if (mode === 'email') {
@@ -122,7 +125,16 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
         showViewProfile ? selectedRowData?.profileID?.value : loginData?.data?.profile_id
       )
     )
-      .then(() => {})
+      .then((response) => {
+        if (response) {
+          if (
+            response?.data?.work_profile_status_id &&
+            response?.data?.work_profile_status_id === 3
+          ) {
+            dispatch(getRaisedQuery(response?.data?.hp_profile_id));
+          }
+        }
+      })
       .catch((allFailMsg) => {
         successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
       });
