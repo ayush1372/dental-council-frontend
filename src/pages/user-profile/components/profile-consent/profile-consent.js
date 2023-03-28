@@ -35,7 +35,6 @@ const ProfileConsent = ({
   );
   const eSignResponse = useSelector((state) => state?.doctorUserProfileReducer?.esignDetails?.data);
   const [confirmationModal, setConfirmationModal] = useState(false);
-  const { loginData } = useSelector((state) => state.loginReducer);
 
   useEffect(() => {
     dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id)).then((response) => {
@@ -146,8 +145,12 @@ const ProfileConsent = ({
     dispatch(getEsignFormDetails(data))
       .then(() => {
         const payload = {
-          hp_profile_id: loginData?.data?.profile_id,
-          application_type_id: 1,
+          hp_profile_id: updatedPersonalDetails?.hp_profile_id,
+          application_type_id: personalDetails?.nmr_id
+            ? 2
+            : selectedQualificationTypeValue === 'International'
+            ? 7
+            : 1,
         };
         dispatch(updateProfileConsent(payload))
           .then(() => {
@@ -305,7 +308,7 @@ const ProfileConsent = ({
               Back
             </Button>
           </Grid>
-          <Grid item xs={12} md="auto" display="flex" justifyContent="flex-end">
+          {/* <Grid item xs={12} md="auto" display="flex" justifyContent="flex-end">
             <Button
               variant="outlined"
               color="secondary"
@@ -322,7 +325,7 @@ const ProfileConsent = ({
             >
               Print & Save as PDF
             </Button>
-          </Grid>
+          </Grid> */}
         </Grid>
         {loggedInUserType !== 'SMC' && (
           <Grid
