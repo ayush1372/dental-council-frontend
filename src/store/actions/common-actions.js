@@ -133,10 +133,14 @@ export const getCoursesList = () => async (dispatch) => {
 };
 
 export const getCollegesList = (selectedState) => async (dispatch) => {
+  let path = '';
+  if (selectedState !== undefined && selectedState !== null && selectedState !== '') {
+    path = '?stateId=' + selectedState;
+  }
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,
-      url: `${API.common.colleges}?stateId=${selectedState}`,
+      url: `${API.common.colleges}${path}`,
     })
       .then((response) => {
         dispatch(getColleges(response.data));

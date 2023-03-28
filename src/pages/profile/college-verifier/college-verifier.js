@@ -85,11 +85,11 @@ function CollegeVerifier() {
   return (
     <Container sx={{ mt: 5 }}>
       <Grid container item spacing={2}>
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <Typography variant="h2" color="textPrimary.main">
             Create Verifier
           </Typography>
-        </Grid>
+        </Grid> */}
 
         <Grid item xs={12} md={6} lg={4}>
           <Typography variant="body3" color="inputTextColor.main">
