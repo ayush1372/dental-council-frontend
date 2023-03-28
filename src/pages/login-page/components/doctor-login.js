@@ -27,7 +27,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
   const { generateCaptcha } = useSelector((state) => state.loginReducer);
   const theme = useTheme();
   const dispatch = useDispatch();
-  const [selectedLoginOption, setSelectedLoginOption] = useState('userName');
+  const [selectedLoginOption, setSelectedLoginOption] = useState('mobileNumber');
   const [transaction_id, setTransaction_id] = useState('');
   const [otpFormEnabled, setOtpFormEnable] = useState(false);
   const [maskedMobileNumber, setMaskedMobileNumber] = useState('');
@@ -194,6 +194,10 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
   };
   const handleCancelClick = () => {
     navigate('/');
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
 
   return (
@@ -206,6 +210,32 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
       </Typography>
 
       <Grid container xs={12} columnSpacing={1} mt={1}>
+        <Grid item xs={12} sm={4.5}>
+          <Button
+            fullWidth
+            variant="outlined"
+            startIcon={<img src={MobileIcon} alt={'profile_icon'} />}
+            onClick={() => {
+              setSelectedLoginOption('mobileNumber');
+              handleClear();
+              setOtpFormEnable(false);
+            }}
+            sx={{
+              border: `2px solid ${
+                selectedLoginOption === 'mobileNumber'
+                  ? theme.palette.secondary.main
+                  : theme.palette.grey.main
+              }`,
+              '&:hover': {
+                backgroundColor: 'transparent !important',
+              },
+            }}
+          >
+            <Typography variant="body1" color="textPrimary.main">
+              Mobile Number
+            </Typography>
+          </Button>
+        </Grid>
         <Grid item xs={12} sm={3.5}>
           <Button
             fullWidth
@@ -255,32 +285,6 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
           >
             <Typography variant="body1" color="textPrimary.main" textAlign={'left'} ml={1}>
               NMR ID
-            </Typography>
-          </Button>
-        </Grid>
-        <Grid item xs={12} sm={4.5}>
-          <Button
-            fullWidth
-            variant="outlined"
-            startIcon={<img src={MobileIcon} alt={'profile_icon'} />}
-            onClick={() => {
-              setSelectedLoginOption('mobileNumber');
-              handleClear();
-              setOtpFormEnable(false);
-            }}
-            sx={{
-              border: `2px solid ${
-                selectedLoginOption === 'mobileNumber'
-                  ? theme.palette.secondary.main
-                  : theme.palette.grey.main
-              }`,
-              '&:hover': {
-                backgroundColor: 'transparent !important',
-              },
-            }}
-          >
-            <Typography variant="body1" color="textPrimary.main">
-              Mobile Number
             </Typography>
           </Button>
         </Grid>
@@ -356,6 +360,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
               })}
             />
             <TextField
+              sx={{ mb: 2 }}
               required
               fullWidth
               label={'Password'}

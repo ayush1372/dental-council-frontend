@@ -53,7 +53,9 @@ export const capitalize = (stringValue) => {
   if (stringValue === 'undefined' || stringValue === null || stringValue === '') {
     return '';
   } else {
-    return stringValue[0].toUpperCase() + stringValue.slice(1).toLowerCase();
+    return (
+      stringValue?.length > 0 && stringValue[0].toUpperCase() + stringValue.slice(1).toLowerCase()
+    );
   }
 };
 

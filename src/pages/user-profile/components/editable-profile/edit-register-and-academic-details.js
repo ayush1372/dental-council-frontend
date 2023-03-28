@@ -176,9 +176,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
         country: isInternational
           ? countriesList.find((x) => x.id === q?.country)
           : countriesList.find((x) => x.id === q?.country?.id),
-        course: isInternational
-          ? coursesList.data?.find((x) => x.id === q?.qualification)
-          : coursesList.data?.find((x) => x.id === q?.qualification?.id),
+        course: coursesList.data?.find((x) => x.id === q?.qualification),
         university: isInternational
           ? { name: q?.university }
           : universitiesList.data?.find((x) => x.id === q?.university),
@@ -238,6 +236,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
       )
     ).then(() => {
       if (moveToNext) handleNext();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
     });
   };
 

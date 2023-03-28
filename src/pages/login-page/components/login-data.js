@@ -34,7 +34,7 @@ export const Login = ({ loginName }) => {
   const { generateCaptcha } = useSelector((state) => state.loginReducer);
   const theme = useTheme();
   const dispatch = useDispatch();
-  const [selectedLoginOption, setSelectedLoginOption] = useState('userName');
+  const [selectedLoginOption, setSelectedLoginOption] = useState('mobileNumber');
   const [transaction_id, setTransaction_id] = useState('');
   const [otpFormEnabled, setOtpFormEnable] = useState(false);
   const navigate = useNavigate();
@@ -215,6 +215,10 @@ export const Login = ({ loginName }) => {
   };
   const handleCancelClick = () => {
     navigate('/');
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
   useEffect(() => {
     setValue('userID', '');
@@ -230,32 +234,6 @@ export const Login = ({ loginName }) => {
       </Typography>
 
       <Grid container xs={12} columnSpacing={1} mt={1}>
-        <Grid item xs={12} sm={6}>
-          <Button
-            fullWidth
-            variant="outlined"
-            startIcon={<img src={ProfileIcon} alt={'profile_icon'} />}
-            onClick={() => {
-              setSelectedLoginOption('userName');
-              handleClear();
-              setOtpFormEnable(false);
-            }}
-            sx={{
-              border: `2px solid ${
-                selectedLoginOption === 'userName'
-                  ? theme.palette.secondary.main
-                  : theme.palette.grey.main
-              }`,
-              '&:hover': {
-                backgroundColor: 'transparent !important',
-              },
-            }}
-          >
-            <Typography variant="body1" color="textPrimary.main" textAlign={'left'} ml={1}>
-              User ID
-            </Typography>
-          </Button>
-        </Grid>
         <Grid item xs={12} sm={6}>
           <Button
             fullWidth
@@ -282,6 +260,32 @@ export const Login = ({ loginName }) => {
             </Typography>
           </Button>
         </Grid>
+        <Grid item xs={12} sm={6}>
+          <Button
+            fullWidth
+            variant="outlined"
+            startIcon={<img src={ProfileIcon} alt={'profile_icon'} />}
+            onClick={() => {
+              setSelectedLoginOption('userName');
+              handleClear();
+              setOtpFormEnable(false);
+            }}
+            sx={{
+              border: `2px solid ${
+                selectedLoginOption === 'userName'
+                  ? theme.palette.secondary.main
+                  : theme.palette.grey.main
+              }`,
+              '&:hover': {
+                backgroundColor: 'transparent !important',
+              },
+            }}
+          >
+            <Typography variant="body1" color="textPrimary.main" textAlign={'left'} ml={1}>
+              Username
+            </Typography>
+          </Button>
+        </Grid>
       </Grid>
       <Box my={4}>
         {selectedLoginOption === 'userName' ? (
@@ -290,13 +294,13 @@ export const Login = ({ loginName }) => {
               sx={{ mb: 2 }}
               required
               fullWidth
-              label={'User ID'}
-              placeholder={'Please enter User ID'}
+              label={'Username'}
+              placeholder={'Please enter Username'}
               name={'userID'}
               {...register('userID', {
-                required: 'Please enter an User ID',
+                required: 'Please enter an Username',
                 pattern: {
-                  message: 'Please enter an valid User ID',
+                  message: 'Please enter an valid Username',
                 },
               })}
             />

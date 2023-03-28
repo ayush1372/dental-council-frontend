@@ -15,6 +15,8 @@ export const API = {
     trackApplicationData: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/applications',
     profileConsent: 'api/v1/abdm/nmr/health-professional/register',
     createPersonalDetails: '/api/v1/abdm/nmr/health-professional/personal',
+    additionalQualifications:
+      '/api/v1/abdm/nmr/health-professional/{healthProfessionalId}/qualifications',
   },
   common: {
     states: 'api/v1/abdm/nmr/countries/356/states',
@@ -35,6 +37,7 @@ export const API = {
     activateLicense: 'api/v1/abdm/nmr/health-professional/applications/re-activate',
     healthProfessionalApplicationStatus: 'api/v1/abdm/nmr/health-professional/applications/status',
     suspend: 'api/v1/abdm/nmr/health-professional/applications/suspend',
+    queryRaise: 'api/v1/abdm/nmr/health-professional/queries',
     enableNotification: '/api/v1/abdm/nmr/user/enable-notification',
     LGDService: '/api/v1/abdm/nmr/health-professional/lgd/search?pinCode=',
   },

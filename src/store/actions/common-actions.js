@@ -253,6 +253,7 @@ export const getInitiateWorkFlow = (body) => async () => {
     useAxiosCall({
       method: PATCH,
       url: API.DoctorUserProfileData.initiateWorkFlow,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
       data: body,
     })
       .then((response) => {
@@ -358,6 +359,24 @@ export const suspendDoctor = (body) => async () => {
     useAxiosCall({
       method: POST,
       url: API.common.suspend,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      data: body,
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+//To Raise the query for the profile.
+export const raiseQuery = (body) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.common.queryRaise,
       headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
       data: body,
     })
