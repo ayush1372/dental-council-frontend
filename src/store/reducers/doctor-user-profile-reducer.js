@@ -5,6 +5,7 @@ const initialState = {
   registrationDetails: { data: [], isLoading: Boolean(true), isError: false },
   workProfileDetails: { data: [], isLoading: Boolean(true), isError: false },
   profileImage: { data: [], isLoading: Boolean(true), isError: false },
+  esignDetails: { data: [], isLoading: Boolean(true), isError: false },
   updatedPersonalDetails: { data: [], isLoading: Boolean(true), isError: false },
   updatedRegistrationDetails: { data: [], isLoading: Boolean(true), isError: false },
   selectedQualificationTypeValue: '',
@@ -26,6 +27,9 @@ const doctorUserProfileReducer = createSlice({
     getProfileImage: (state, action) => {
       state.profileImage = action.payload;
     },
+    getEsignDetails: (state, action) => {
+      state.esignDetails = action.payload;
+    },
     getUpdatedPersonalDetails: (state, action) => {
       state.updatedPersonalDetails = action.payload;
     },
@@ -43,6 +47,7 @@ export const {
   getRegistrationDetails,
   getWorkProfileDetails,
   getProfileImage,
+  getEsignDetails,
   getUpdatedPersonalDetails,
   getUpdatedRegistrationDetails,
   selectedQualificationType,
