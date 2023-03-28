@@ -10,55 +10,30 @@ import { convertGender } from '../../../../utilities/common-validations';
 const PersonalDetails = ({ personalDetails }) => {
   const { userActiveTab } = useSelector((state) => state.common);
 
+  const [queryRaisedField, setQueryRaisedField] = useState('');
   const [openModal, setOpenModal] = useState(false);
-  const ClosePopup = () => {
-    setOpenModal(false);
-  };
+
   const { personal_details } = personalDetails || {};
   const {
     full_name,
-    // last_name,
     aadhaar_token,
     date_of_birth,
     father_name,
     gender,
-    // language,
-    // middle_name,
     mother_name,
     country_nationality,
-    // salutation,
-    // schedule,
     spouse_name,
   } = personal_details || {};
 
   const nationality = country_nationality?.name || '';
-  // const nameSchedule = schedule?.name || '';
+
+  const ClosePopup = () => {
+    setOpenModal(false);
+  };
 
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
-        {/* <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
-            Salutation
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
-          </Typography>
-          <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
-              {salutation ? salutation : ''}
-            </Typography>
-            {userActiveTab === 'dashboard' && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => setOpenModal(true)}
-                fontSize="width30"
-              />
-            )}{' '}
-          </Grid>
-        </Grid> */}
-        {/* {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />} */}
-
         {false && (
           <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="grey.label">
@@ -81,7 +56,7 @@ const PersonalDetails = ({ personalDetails }) => {
             </Grid>
           </Grid>
         )}
-        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
+
         {false && (
           <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="grey.label">
@@ -89,9 +64,6 @@ const PersonalDetails = ({ personalDetails }) => {
               <Typography component="span" color="error.main">
                 *
               </Typography>
-            </Typography>
-            <Typography variant="subtitle2" color="primary.main">
-              {/* {salutation ? salutation : ''} */}
             </Typography>
           </Grid>
         )}
@@ -113,7 +85,10 @@ const PersonalDetails = ({ personalDetails }) => {
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
                 color="primary"
-                onClick={() => setOpenModal(true)}
+                onClick={() => {
+                  setOpenModal(true);
+                  setQueryRaisedField('Name');
+                }}
                 fontSize="width30"
               />
             )}{' '}
@@ -131,7 +106,10 @@ const PersonalDetails = ({ personalDetails }) => {
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
                 color="primary"
-                onClick={() => setOpenModal(true)}
+                onClick={() => {
+                  setOpenModal(true);
+                  setQueryRaisedField('Fathers Name');
+                }}
                 fontSize="width30"
               />
             )}{' '}
@@ -149,7 +127,10 @@ const PersonalDetails = ({ personalDetails }) => {
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
                 color="primary"
-                onClick={() => setOpenModal(true)}
+                onClick={() => {
+                  setOpenModal(true);
+                  setQueryRaisedField('Mothers Name');
+                }}
                 fontSize="width30"
               />
             )}{' '}
@@ -167,7 +148,10 @@ const PersonalDetails = ({ personalDetails }) => {
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
                 color="primary"
-                onClick={() => setOpenModal(true)}
+                onClick={() => {
+                  setOpenModal(true);
+                  setQueryRaisedField('Spouse Name');
+                }}
                 fontSize="width30"
               />
             )}{' '}
@@ -191,7 +175,10 @@ const PersonalDetails = ({ personalDetails }) => {
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
                 color="primary"
-                onClick={() => setOpenModal(true)}
+                onClick={() => {
+                  setOpenModal(true);
+                  setQueryRaisedField('Gender');
+                }}
                 fontSize="width30"
               />
             )}{' '}
@@ -213,7 +200,10 @@ const PersonalDetails = ({ personalDetails }) => {
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
                 color="primary"
-                onClick={() => setOpenModal(true)}
+                onClick={() => {
+                  setOpenModal(true);
+                  setQueryRaisedField('Date of Birth');
+                }}
                 fontSize="width30"
               />
             )}
@@ -235,59 +225,25 @@ const PersonalDetails = ({ personalDetails }) => {
             {userActiveTab === 'dashboard' && (
               <ContactSupportOutlinedIcon
                 color="primary"
-                onClick={() => setOpenModal(true)}
+                onClick={() => {
+                  setOpenModal(true);
+                  setQueryRaisedField('Nationality');
+                }}
                 fontSize="width30"
               />
             )}{' '}
           </Grid>
         </Grid>
-        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-
-        {/* <Grid item xs={12} md={3}>
-          <Typography variant="body5" color="grey.label">
-            Languages
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
-          </Typography>
-          <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="textPrimary.main">
-              {language && language[0]?.name ? language[0]?.name : ''}
-            </Typography>
-            {userActiveTab === 'dashboard' && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => setOpenModal(true)}
-                fontSize="width30"
-              />
-            )}{' '}
-          </Grid>
-        </Grid> */}
-        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
       </Grid>
-      <Grid container item spacing={2}>
-        {/* <Grid item xs={12} md={4}>
-          <Typography variant="body5" color="grey.label">
-            Schedule
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
-          </Typography>
-          <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="textPrimary.main">
-              {nameSchedule}
-            </Typography>
-            {userActiveTab === 'dashboard' && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => setOpenModal(true)}
-                fontSize="width30"
-              />
-            )}{' '}
-          </Grid>
-        </Grid>
-        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />} */}
-      </Grid>
+      <Grid container item spacing={2}></Grid>
+      {openModal && (
+        <RaiseQueryPopup
+          ClosePopup={ClosePopup}
+          setOpenModal={setOpenModal}
+          queryRaisedField={queryRaisedField}
+          setQueryRaisedFor={setQueryRaisedField}
+        />
+      )}
     </Grid>
   );
 };

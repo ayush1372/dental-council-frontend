@@ -137,7 +137,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                 {searchDetailsById?.data?.data?.registration_number || ''}
               </Typography>
             </Grid>
-            <Grid
+            {/* <Grid
               item
               pl={3}
               py={2}
@@ -157,8 +157,8 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
               <Typography component="div" variant="body1" color="textSecondary.main">
                 {searchDetailsById?.data?.data?.date_of_registration || ''}
               </Typography>
-            </Grid>
-            {/* <Grid item pl={3} py={2} xs={12} sm={6} md={3}>
+            </Grid> */}
+            <Grid item pl={3} py={2} xs={12} sm={6} md={3}>
               <Typography
                 component="div"
                 variant="body1"
@@ -170,7 +170,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
               <Typography component="div" variant="body1" color="textSecondary.main">
                 {searchDetailsById?.data?.data?.year_of_info || ''}
               </Typography>
-            </Grid> */}
+            </Grid>
           </Grid>
           <Grid container rowSpacing={3}>
             <Grid item xs={12} sm={6} md={4}>
