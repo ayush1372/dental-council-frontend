@@ -259,13 +259,19 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
         setViewCertificate();
         const QualificationFile = [
           {
-            fileName: response?.data?.qualification_detail_response_tos[0]?.file_name,
+            fileName:
+              response?.data?.qualification_detail_response_tos[0]?.file_name +
+              '.' +
+              response?.data?.qualification_detail_response_tos[0]?.file_type,
             fileBlob: response?.data?.qualification_detail_response_tos[0]?.degree_certificate,
           },
         ];
         const RegistrationFile = [
           {
-            fileName: response?.data?.registration_detail_to?.file_name,
+            fileName:
+              response?.data?.registration_detail_to?.file_name +
+              '.' +
+              response?.data?.registration_detail_to?.file_type,
             fileBlob: response?.data?.registration_detail_to?.registration_certificate,
           },
         ];
@@ -405,11 +411,19 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
             <TextField
               variant="outlined"
               name={'RegistrationNumber'}
-              Registration
-              Number
-              required={true}
+              // Registration
+              type="number"
+              required
               fullWidth
               defaultValue={getValues().RegistrationNumber}
+              error={errors.RegistrationNumber?.message}
+              {...register('RegistrationNumber', {
+                required: 'Registration number is required',
+                pattern: {
+                  value: /^[0-9]{100}$/i,
+                  message: 'Please Enter Valid Registration number',
+                },
+              })}
               sx={{
                 input: {
                   backgroundColor:
@@ -441,8 +455,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               fullWidth
               type="date"
               defaultValue={getValues().RegistrationDate}
+              error={errors.RegistrationDate?.message}
               {...register('RegistrationDate', {
-                required: 'Registration Date is Required',
+                required: 'Registration date is required',
               })}
               sx={{
                 input: {

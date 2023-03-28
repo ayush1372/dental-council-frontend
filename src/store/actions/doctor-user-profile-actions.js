@@ -4,6 +4,7 @@ import { GET, POST, PUT } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import { updateTrackApplicationTableData } from '../reducers/common-reducers';
 import {
+  getEsignDetails,
   getPersonalDetails,
   getProfileImage,
   getRegistrationDetails,
@@ -205,7 +206,22 @@ export const getDoctorTrackApplicationData = (doctor_profile_id, trackData) => a
       });
   });
 };
-
+export const getEsignFormDetails = (data) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.DoctorUserProfileData.eSign,
+      data: data,
+    })
+      .then((response) => {
+        dispatch(getEsignDetails(response));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
 export const updateProfileConsent = (payload) => async () => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
