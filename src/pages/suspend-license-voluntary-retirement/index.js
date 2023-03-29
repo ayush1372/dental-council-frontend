@@ -345,37 +345,42 @@ export function SuspendLicenseVoluntaryRetirement({
               />
             </Grid>
             <Grid item xs={12} md={6} my={{ xs: 1, md: 0 }}>
-              <Typography component={'p'} variant="body1">
-                Select To Date
-              </Typography>
-              <TextField
-                fullWidth
-                data-testid="toDate"
-                id="toDate"
-                type="date"
-                name="toDate"
-                sx={{
-                  input: {
-                    color: 'black',
-                    textTransform: 'uppercase',
-                  },
-                }}
-                InputLabelProps={{
-                  shrink: true,
-                  sx: { height: '40px' },
-                }}
-                disabled={
-                  selectedSuspension === 'permanent-suspension-check' || selectedValue === 'suspend'
-                    ? true
-                    : false
-                }
-                required={true}
-                defaultValue={getValues().toDate}
-                error={errors.toDate?.message}
-                {...register('toDate', {
-                  required: 'Enter to date',
-                })}
-              />
+              {selectedValue === 'blacklist' && (
+                <>
+                  <Typography component={'p'} variant="body1">
+                    Select To Date
+                  </Typography>
+                  <TextField
+                    fullWidth
+                    data-testid="toDate"
+                    id="toDate"
+                    type="date"
+                    name="toDate"
+                    sx={{
+                      input: {
+                        color: 'black',
+                        textTransform: 'uppercase',
+                      },
+                    }}
+                    InputLabelProps={{
+                      shrink: true,
+                      sx: { height: '40px' },
+                    }}
+                    disabled={
+                      selectedSuspension === 'permanent-suspension-check' ||
+                      selectedValue === 'suspend'
+                        ? true
+                        : false
+                    }
+                    required={true}
+                    defaultValue={getValues().toDate}
+                    error={errors.toDate?.message}
+                    {...register('toDate', {
+                      required: 'Enter to date',
+                    })}
+                  />
+                </>
+              )}
             </Grid>
           </Grid>
         </Box>
@@ -479,8 +484,6 @@ export function SuspendLicenseVoluntaryRetirement({
                     name={fieldData?.filedName}
                     value={fieldData?.value}
                     onChange={(e) => {
-                      // eslint-disable-next-line no-console
-                      console.log(index);
                       let updatedQuery = queries;
                       if (e.target.checked) {
                         updatedQuery?.push({
