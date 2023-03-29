@@ -118,7 +118,9 @@ export function SuspendLicenseVoluntaryRetirement({
           ? 7
           : selectedValue === 'blacklist'
           ? 6
-          : userActiveTab === 'voluntary-suspend-license' && 1,
+          : userActiveTab === 'voluntary-suspend-license'
+          ? 1
+          : '',
       from_date: getValues()?.fromDate ? getValues()?.fromDate : '',
       to_date: getValues()?.toDate ? getValues()?.toDate : '',
       remarks: getValues()?.remark ? getValues()?.remark : '',
@@ -207,7 +209,9 @@ export function SuspendLicenseVoluntaryRetirement({
   const autoFromDateSelected = (event) => {
     const temp1 = +event.target.value.substring(0, 4) + 99 + '';
     const temp2 = event.target.value.replace(event.target.value.substring(0, 4), temp1);
-    selectedSuspension === 'permanent-suspension-check' && setValue('toDate', temp2);
+    if (selectedSuspension === 'permanent-suspension-check' || selectedValue === 'suspend') {
+      setValue('toDate', temp2);
+    }
     setSelectedFromDate(temp2);
   };
 
@@ -360,7 +364,11 @@ export function SuspendLicenseVoluntaryRetirement({
                   shrink: true,
                   sx: { height: '40px' },
                 }}
-                disabled={selectedSuspension === 'permanent-suspension-check' ? true : false}
+                disabled={
+                  selectedSuspension === 'permanent-suspension-check' || selectedValue === 'suspend'
+                    ? true
+                    : false
+                }
                 required={true}
                 defaultValue={getValues().toDate}
                 error={errors.toDate?.message}
