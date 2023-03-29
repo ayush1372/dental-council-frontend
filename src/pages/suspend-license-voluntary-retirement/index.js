@@ -91,11 +91,6 @@ export function SuspendLicenseVoluntaryRetirement({
         break;
     }
 
-    if (getValues()?.voluntarySuspendLicense === 'permanent-suspension-check') {
-      setSuccessPopupMessage('Permanently Suspended');
-    } else if (getValues()?.voluntarySuspendLicense === 'voluntary-suspension-check') {
-      setSuccessPopupMessage('Temporarily Suspended');
-    }
     let suspendDoctorBody = {
       hp_profile_id:
         userActiveTab === 'voluntary-suspend-license' ||
@@ -165,6 +160,11 @@ export function SuspendLicenseVoluntaryRetirement({
       ) {
         dispatch(suspendDoctor(suspendDoctorBody)).then((response) => {
           if (response) {
+            if (getValues()?.voluntarySuspendLicense === 'permanent-suspension-check') {
+              setSuccessPopupMessage('Permanently Suspended');
+            } else if (getValues()?.voluntarySuspendLicense === 'voluntary-suspension-check') {
+              setSuccessPopupMessage('Temporarily Suspended');
+            }
             showSuccessPopup(true);
             setConfirmationModal(false);
           }
