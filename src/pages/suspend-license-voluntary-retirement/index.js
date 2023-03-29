@@ -158,17 +158,21 @@ export function SuspendLicenseVoluntaryRetirement({
         selectedValue === 'suspend' ||
         selectedValue === 'blacklist'
       ) {
-        dispatch(suspendDoctor(suspendDoctorBody)).then((response) => {
-          if (response) {
-            if (getValues()?.voluntarySuspendLicense === 'permanent-suspension-check') {
-              setSuccessPopupMessage('Permanently Suspended');
-            } else if (getValues()?.voluntarySuspendLicense === 'voluntary-suspension-check') {
-              setSuccessPopupMessage('Temporarily Suspended');
+        dispatch(suspendDoctor(suspendDoctorBody))
+          .then((response) => {
+            if (response) {
+              if (getValues()?.voluntarySuspendLicense === 'permanent-suspension-check') {
+                setSuccessPopupMessage('Permanently Suspended');
+              } else if (getValues()?.voluntarySuspendLicense === 'voluntary-suspension-check') {
+                setSuccessPopupMessage('Temporarily Suspended');
+              }
+              showSuccessPopup(true);
+              setConfirmationModal(false);
             }
-            showSuccessPopup(true);
-            setConfirmationModal(false);
-          }
-        });
+          })
+          .catch(() => {
+            closeActionModal(false);
+          });
       } else {
         if (selectedValue === 'raise') {
           dispatch(raiseQuery(raiseQueryBody))
