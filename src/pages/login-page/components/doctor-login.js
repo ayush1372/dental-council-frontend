@@ -337,7 +337,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
               <Box mt={2}>
                 <Typography variant="body1">
                   Please enter the OTP sent on your Registered Mobile Number {maskedMobileNumber}{' '}
-                  Linked with your NMR ID.
+                  linked with your NMR ID.
                 </Typography>
                 {otpform}
               </Box>
