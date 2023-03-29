@@ -349,7 +349,9 @@ export function SuspendLicenseVoluntaryRetirement({
               />
             </Grid>
             <Grid item xs={12} md={6} my={{ xs: 1, md: 0 }}>
-              {selectedValue === 'blacklist' && (
+              {((tabName === 'voluntary-suspend-license' &&
+                selectedSuspension !== 'permanent-suspension-check') ||
+                selectedValue === 'blacklist') && (
                 <>
                   <Typography component={'p'} variant="body1">
                     Select To Date
