@@ -11,7 +11,11 @@ import {
   smcTabs,
 } from '../../helpers/components/sidebar-drawer-list-item';
 import { getCardCount } from '../../store/actions/dashboard-actions';
-import { changeUserActiveTab } from '../../store/reducers/common-reducers';
+import {
+  changeUserActiveTab,
+  logout,
+  resetCommonReducer,
+} from '../../store/reducers/common-reducers';
 import { setBreadcrumbsActivetab } from '../../store/reducers/common-reducers';
 import { Button } from '../../ui/core';
 
@@ -52,7 +56,7 @@ export default function SuccessModalPopup({
           ActiveTab = smcTabs[0].tabName;
           break;
         case 'Doctor':
-          ActiveTab = doctorTabs[1].tabName;
+          ActiveTab = doctorTabs[0].tabName;
           break;
         case 'NMC':
           ActiveTab = nmcTabs[0].tabName;
@@ -64,8 +68,19 @@ export default function SuccessModalPopup({
           ActiveTab = '';
           break;
       }
-      dispatch(getCardCount());
-      dispatch(changeUserActiveTab(ActiveTab));
+      if (loggedInUserType === 'Doctor') {
+        localStorage.clear();
+        dispatch(logout());
+        dispatch(resetCommonReducer());
+        navigate('/');
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
+      } else {
+        dispatch(getCardCount());
+        dispatch(changeUserActiveTab(ActiveTab));
+      }
     }
   };
   const navigateLogin = () => {

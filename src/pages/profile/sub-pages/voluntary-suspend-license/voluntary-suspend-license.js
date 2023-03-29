@@ -30,6 +30,7 @@ export function VoluntarySuspendLicense() {
           setOpen={() => setShowSuccessPopup(false)}
           text={successPopupMessage}
           SuspensionCall={true}
+          handleClose={() => setShowSuccessPopup(false)}
         />
       )}
     </Box>
