@@ -13,6 +13,7 @@ export const API = {
     profileImage: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/profile-picture',
     initiateWorkFlow: 'api/v1/abdm/nmr/health-professional/applications/status',
     trackApplicationData: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/applications',
+    eSign: 'api/v1/abdm/nmr/e-signature',
     profileConsent: 'api/v1/abdm/nmr/health-professional/register',
     createPersonalDetails: '/api/v1/abdm/nmr/health-professional/personal',
     additionalQualifications:
@@ -38,6 +39,7 @@ export const API = {
     healthProfessionalApplicationStatus: 'api/v1/abdm/nmr/health-professional/applications/status',
     suspend: 'api/v1/abdm/nmr/health-professional/applications/suspend',
     queryRaise: 'api/v1/abdm/nmr/health-professional/queries',
+    raisedQuery: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/queries',
     enableNotification: '/api/v1/abdm/nmr/user/enable-notification',
     LGDService: '/api/v1/abdm/nmr/health-professional/lgd/search?pinCode=',
   },
