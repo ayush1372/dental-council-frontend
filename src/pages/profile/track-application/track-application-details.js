@@ -1,4 +1,5 @@
-import { Box, Button, Divider, Grid, Typography } from '@mui/material';
+import { Button, Divider, Grid, Typography } from '@mui/material';
+import { Box } from '@mui/system';
 
 import { monthsData } from '../../../constants/common-data';
 import Stepper from '../../../shared/stepper/stepper';
@@ -47,71 +48,96 @@ export function TrackApplicationDetails({
       >
         Application Details
       </Typography>
-      <Box bgcolor="backgroundColor.light" p={4} borderRadius="5px">
-        <Grid container xs={12} columnSpacing={{ xs: 1, md: 2, lg: 7, xl: 8 }}>
-          <Grid item xs={12} sm={6} md="auto" mb={{ xs: 2, md: 0 }}>
-            <Typography variant="body3" color="grey.label">
-              Request ID
-            </Typography>
-            <Typography variant="subtitle2" color="textPrimary.main">
-              {request_id?.value}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6} md="auto" mb={{ xs: 2, md: 0 }}>
-            <Typography variant="body3" color="grey.label">
-              Type of Application
-            </Typography>
-            <Typography variant="subtitle2" color="textPrimary.main">
-              {application_type_name?.value}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6} md="auto" mb={{ xs: 2, md: 0 }}>
-            <Typography variant="body3" color="grey.label">
-              Date of Submission
-            </Typography>
-            <Typography variant="subtitle2" color="textPrimary.main">
-              {getDate(created_at?.value || new Date())}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6} md="auto" mb={{ xs: 2, md: 0 }}>
-            <Typography variant="body3" color="grey.label">
-              Current Status
-            </Typography>
-            <Typography variant="subtitle2" color="primary.main">
-              {/* Pending At SMC */}
 
-              {smc_status?.value === 'PENDING' &&
-              NMCVerificationStatus?.value === 'NOT YET RECEIVED' &&
-              collegeVerificationStatus?.value === 'NOT YET RECEIVED' &&
-              nmc_status?.value === 'NOT YET RECEIVED'
-                ? 'Pending At SMC'
-                : smc_status?.value === 'APPROVED' &&
-                  NMCVerificationStatus?.value === 'PENDING' &&
-                  collegeVerificationStatus?.value === 'NOT YET RECEIVED' &&
-                  nmc_status?.value === 'NOT YET RECEIVED'
-                ? 'Pending At Registrar'
-                : smc_status?.value === 'APPROVED' &&
-                  NMCVerificationStatus?.value === 'APPROVED' &&
-                  collegeVerificationStatus?.value === 'PENDING' &&
-                  nmc_status?.value === 'NOT YET RECEIVED'
-                ? 'Pending At Dean'
-                : 'Pending At NMC'}
+      <Grid container>
+        <Grid item xs={12} md={9}>
+          {/* Apllication status bar starts */}
+          <Box>
+            <Typography varaiant="body1" component="div" color="textPrimary.main">
+              Application Approved by NMC
             </Typography>
-          </Grid>
-          <Grid item xs={8} md="auto">
-            <Typography variant="body3" color="grey.label">
-              Pendency (days)
+            <Typography component="div" variant="body1" color="textPrimary.main">
+              NMC will review the application and approve it once it match with expected criteria
             </Typography>
-            <Typography variant="subtitle2" color="textPrimary.main">
-              {pendency?.value}
-            </Typography>
+          </Box>
+          {/* Apllication status bar end */}
+          {/* Application stepper starts */}
+          <Box>
+            stepper
+            <Box py={{ xs: 0, sm: 4, lg: 2 }} mt={6} sx={{ overflowX: 'auto' }}>
+              <Stepper
+                steps={wizardSteps}
+                selectedRowData={selectedRowData}
+                activeStep={activeStep}
+              />
+            </Box>{' '}
+          </Box>
+          {/* Application stepper ends */}
+        </Grid>
+        <Grid item xs={12} md={3}>
+          APP info
+          <Grid container xs={6} columnSpacing={{ xs: 1, md: 2, lg: 7, xl: 8 }}>
+            <Grid item xs={12} sm={6} md="auto" mb={{ xs: 2, md: 0 }}>
+              <Typography variant="body3" color="grey.label">
+                Request ID
+              </Typography>
+              <Typography variant="subtitle2" color="textPrimary.main">
+                {request_id?.value}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md="auto" mb={{ xs: 2, md: 0 }}>
+              <Typography variant="body3" color="grey.label">
+                Type of Application
+              </Typography>
+              <Typography variant="subtitle2" color="textPrimary.main">
+                {application_type_name?.value}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md="auto" mb={{ xs: 2, md: 0 }}>
+              <Typography variant="body3" color="grey.label">
+                Date of Submission
+              </Typography>
+              <Typography variant="subtitle2" color="textPrimary.main">
+                {getDate(created_at?.value || new Date())}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md="auto" mb={{ xs: 2, md: 0 }}>
+              <Typography variant="body3" color="grey.label">
+                Current Status
+              </Typography>
+              <Typography variant="subtitle2" color="primary.main">
+                {/* Pending At SMC */}
+
+                {smc_status?.value === 'PENDING' &&
+                NMCVerificationStatus?.value === 'NOT YET RECEIVED' &&
+                collegeVerificationStatus?.value === 'NOT YET RECEIVED' &&
+                nmc_status?.value === 'NOT YET RECEIVED'
+                  ? 'Pending At SMC'
+                  : smc_status?.value === 'APPROVED' &&
+                    NMCVerificationStatus?.value === 'PENDING' &&
+                    collegeVerificationStatus?.value === 'NOT YET RECEIVED' &&
+                    nmc_status?.value === 'NOT YET RECEIVED'
+                  ? 'Pending At Registrar'
+                  : smc_status?.value === 'APPROVED' &&
+                    NMCVerificationStatus?.value === 'APPROVED' &&
+                    collegeVerificationStatus?.value === 'PENDING' &&
+                    nmc_status?.value === 'NOT YET RECEIVED'
+                  ? 'Pending At Dean'
+                  : 'Pending At NMC'}
+              </Typography>
+            </Grid>
+            <Grid item xs={8} md="auto">
+              <Typography variant="body3" color="grey.label">
+                Pendency (days)
+              </Typography>
+              <Typography variant="subtitle2" color="textPrimary.main">
+                {pendency?.value}
+              </Typography>
+            </Grid>
           </Grid>
         </Grid>
-      </Box>
-      <Divider sx={{ mt: 2 }} />
-      <Box py={{ xs: 0, sm: 4, lg: 2 }} mt={6} sx={{ overflowX: 'auto' }}>
-        <Stepper steps={wizardSteps} selectedRowData={selectedRowData} activeStep={activeStep} />
-      </Box>
+      </Grid>
+
       <Divider fullWidth sx={{ mt: 6 }} />
       <Grid mt={2}>
         <Button color="grey" variant="contained" onClick={showTrackApplicationTable}>
