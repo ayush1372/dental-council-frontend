@@ -1,14 +1,16 @@
 import { useState } from 'react';
 
 import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
-import { Grid, Typography } from '@mui/material';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import { Grid, Tooltip, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 import { convertGender } from '../../../../utilities/common-validations';
 
 const PersonalDetails = ({ personalDetails }) => {
-  const { userActiveTab } = useSelector((state) => state.common);
+  const { data } = useSelector((state) => state.loginReducer?.loginData);
+  const { raisedQueryData } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
 
   const [queryRaisedField, setQueryRaisedField] = useState('');
   const [openModal, setOpenModal] = useState(false);
@@ -31,6 +33,12 @@ const PersonalDetails = ({ personalDetails }) => {
     setOpenModal(false);
   };
 
+  //Helper Method to get the data of the query raised against the field
+  const getQueryRaised = (fieldName) => {
+    let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
+    return query?.query_comment;
+  };
+
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
@@ -46,7 +54,7 @@ const PersonalDetails = ({ personalDetails }) => {
               <Typography p={1} variant="subtitle2" color="inputTextColor.light">
                 xxxx-xxxx-{aadhaar_token ? aadhaar_token : 'XXXX'}
               </Typography>
-              {userActiveTab === 'dashboard' && (
+              {(data?.user_type === 3 || data?.user_type === 4) && (
                 <ContactSupportOutlinedIcon
                   color="primary"
                   onClick={() => setOpenModal(true)}
@@ -68,7 +76,6 @@ const PersonalDetails = ({ personalDetails }) => {
           </Grid>
         )}
       </Grid>
-      {/* //firstname */}
       <Grid container item spacing={2}>
         <Grid item xs={12} md={3}>
           <Typography variant="body5" color="grey.label">
@@ -76,13 +83,17 @@ const PersonalDetails = ({ personalDetails }) => {
             <Typography component="span" color="error.main">
               *
             </Typography>
+            {getQueryRaised('Name') !== undefined && (
+              <Tooltip title={getQueryRaised('Name')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
+            )}
           </Typography>
-
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               Dr. {full_name ? full_name : ''}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -94,16 +105,20 @@ const PersonalDetails = ({ personalDetails }) => {
             )}{' '}
           </Grid>
         </Grid>
-        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={3}>
           <Typography variant="body5" color="grey.label">
             Father&apos;s Name
           </Typography>
+          {getQueryRaised('Fathers Name') !== undefined && (
+            <Tooltip title={getQueryRaised('Fathers Name')}>
+              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+            </Tooltip>
+          )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {father_name ? father_name : ''}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -115,16 +130,20 @@ const PersonalDetails = ({ personalDetails }) => {
             )}{' '}
           </Grid>
         </Grid>
-        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={3}>
           <Typography variant="body5" color="grey.label">
             Mother&apos;s Name
           </Typography>
+          {getQueryRaised('Mothers Name') !== undefined && (
+            <Tooltip title={getQueryRaised('Mothers Name')}>
+              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+            </Tooltip>
+          )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {mother_name ? mother_name : ''}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -136,16 +155,20 @@ const PersonalDetails = ({ personalDetails }) => {
             )}{' '}
           </Grid>
         </Grid>
-        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={3}>
           <Typography variant="body5" color="grey.label">
             Spouse Name
           </Typography>
+          {getQueryRaised('Spouse Name') !== undefined && (
+            <Tooltip title={getQueryRaised('Spouse Name')}>
+              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+            </Tooltip>
+          )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {spouse_name ? spouse_name : ''}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -157,9 +180,7 @@ const PersonalDetails = ({ personalDetails }) => {
             )}{' '}
           </Grid>
         </Grid>
-        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
       </Grid>
-
       <Grid container item spacing={2}>
         <Grid item xs={12} md={3}>
           <Typography variant="body5" color="grey.label">
@@ -167,12 +188,17 @@ const PersonalDetails = ({ personalDetails }) => {
             <Typography component="span" color="error.main">
               *
             </Typography>
+            {getQueryRaised('Gender') !== undefined && (
+              <Tooltip title={getQueryRaised('Gender')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
+            )}
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {gender && convertGender(gender)}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -184,7 +210,6 @@ const PersonalDetails = ({ personalDetails }) => {
             )}{' '}
           </Grid>
         </Grid>
-        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
 
         <Grid item xs={12} md={3}>
           <Typography variant="body5" color="grey.label">
@@ -192,12 +217,17 @@ const PersonalDetails = ({ personalDetails }) => {
             <Typography component="span" color="error.main">
               *
             </Typography>
+            {getQueryRaised('Date of Birth') !== undefined && (
+              <Tooltip title={getQueryRaised('Date of Birth')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
+            )}
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {date_of_birth ? date_of_birth : ''}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -209,7 +239,6 @@ const PersonalDetails = ({ personalDetails }) => {
             )}
           </Grid>
         </Grid>
-        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
 
         <Grid item xs={12} md={3}>
           <Typography variant="body5" color="grey.label">
@@ -217,12 +246,17 @@ const PersonalDetails = ({ personalDetails }) => {
             <Typography component="span" color="error.main">
               *
             </Typography>
+            {getQueryRaised('Nationality') !== undefined && (
+              <Tooltip title={getQueryRaised('Nationality')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
+            )}
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {nationality}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {

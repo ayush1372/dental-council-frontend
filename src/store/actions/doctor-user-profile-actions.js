@@ -4,6 +4,7 @@ import { GET, POST, PUT } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import { updateTrackApplicationTableData } from '../reducers/common-reducers';
 import {
+  getEsignDetails,
   getPersonalDetails,
   getProfileImage,
   getRegistrationDetails,
@@ -11,6 +12,7 @@ import {
   getUpdatedRegistrationDetails,
   getWorkProfileDetails,
 } from '../reducers/doctor-user-profile-reducer';
+import { getRaisedQuery } from './common-actions';
 
 export const getPersonalDetailsData = (doctor_profile_id) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
@@ -22,6 +24,9 @@ export const getPersonalDetailsData = (doctor_profile_id) => async (dispatch) =>
       ),
     })
       .then((response) => {
+        if (response?.data?.work_flow_status_id === 3) {
+          dispatch(getRaisedQuery(response?.data?.hp_profile_id));
+        }
         dispatch(getPersonalDetails(response.data));
         return resolve(response);
       })
@@ -205,7 +210,22 @@ export const getDoctorTrackApplicationData = (doctor_profile_id, trackData) => a
       });
   });
 };
-
+export const getEsignFormDetails = (data) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.DoctorUserProfileData.eSign,
+      data: data,
+    })
+      .then((response) => {
+        dispatch(getEsignDetails(response));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
 export const updateProfileConsent = (payload) => async () => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({

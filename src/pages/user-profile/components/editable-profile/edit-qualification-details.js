@@ -8,10 +8,8 @@ import { monthsData, yearsData } from '../../../../constants/common-data';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
 import { getCollegesList, getUniversitiesList } from '../../../../store/actions/common-actions';
 import { selectedQualificationType } from '../../../../store/reducers/doctor-user-profile-reducer';
-// import { getUniversities } from '../../../../store/reducers/common-reducers';
 import { RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
-
 const EditQualificationDetails = ({
   index,
   showDeleteIcon,
@@ -27,6 +25,7 @@ const EditQualificationDetails = ({
   qualificationFilesData,
   isAdditionalQualification,
   handleQualificationFilesData,
+  showBroadSpeciality = false,
 }) => {
   const dispatch = useDispatch();
   const [colleges, setColleges] = useState([]);
@@ -40,16 +39,14 @@ const EditQualificationDetails = ({
       id: 69,
     },
   ]);
-  const { countriesList, coursesList, universitiesList, statesList } = useSelector(
-    (state) => state?.common
-  );
+  const { countriesList, coursesList, universitiesList, statesList, specialitiesList } =
+    useSelector((state) => state?.common);
 
   const handleQualificationFrom = (event) => {
     setValue(event.target.name, event.target.value);
     dispatch(selectedQualificationType(event.target.value));
   };
 
-  //  const selectedCollege = watch(`qualification[${index}].university`);
   const qualificationfrom = watch(`qualification[${index}].qualificationfrom`);
   const watchCollege = watch(`qualification[${index}].college`);
   const selectedState = watch(`qualification[${index}].state`);
@@ -150,7 +147,7 @@ const EditQualificationDetails = ({
         </Grid>
       </Grid>
 
-      {qualificationfrom === 'International' && (
+      {qualificationfrom === 'International' && !isAdditionalQualification ? (
         <Grid container item spacing={2} display="flex" alignItems="center" mb={2}>
           <Grid item xs={12} sm={6} md={5} lg={4}>
             <Typography color="grey2.lighter" variant="body1">
@@ -161,9 +158,11 @@ const EditQualificationDetails = ({
             <Divider />
           </Grid>
         </Grid>
+      ) : (
+        ''
       )}
 
-      {qualificationfrom === 'International' && (
+      {qualificationfrom === 'International' && !isAdditionalQualification ? (
         <Grid container item spacing={2}>
           <Grid item xs={12} md={4}>
             <TextField
@@ -313,6 +312,8 @@ const EditQualificationDetails = ({
             />
           </Grid>
         </Grid>
+      ) : (
+        ''
       )}
 
       <Grid container item spacing={2} display="flex" alignItems="center" mb={2}>
@@ -610,6 +611,43 @@ const EditQualificationDetails = ({
             />
           </Grid>
         </Grid>
+        {showBroadSpeciality && (
+          <Grid item xs={12} md={4}>
+            <Select
+              fullWidth
+              error={errors.Speciality?.message}
+              name="Speciality"
+              label="Broad Speciality"
+              defaultValue={getValues().Speciality}
+              required={true}
+              {...register('Speciality', { required: 'Missing field' })}
+              options={createSelectFieldData(specialitiesList.data)}
+            />
+          </Grid>
+        )}
+        {showBroadSpeciality && (
+          <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="inputTextColor.main">
+              {' '}
+              Super Specialty{' '}
+              <Typography component="span" color="error.main">
+                {' '}
+                *{' '}
+              </Typography>
+            </Typography>
+            <TextField
+              fullWidth
+              error={errors.subSpeciality?.message}
+              name="subSpeciality"
+              placeholder="Enter Super Peciality"
+              defaultValue={qualification?.subSpeciality}
+              required={true}
+              {...register(`qualification[${index}].subSpeciality`, {
+                required: 'subSpeciality is Required',
+              })}
+            />
+          </Grid>
+        )}
       </Grid>
 
       <Grid container item spacing={2} mt={1}>
@@ -620,8 +658,10 @@ const EditQualificationDetails = ({
             fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
             fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
                  Maximum size allowed for the attachment is 5MB.`}
-            fileData={qualificationFilesData}
-            setFileData={handleQualificationFilesData}
+            fileData={qualificationFilesData[`qualification.${index}.files`] || []}
+            setFileData={(files) => {
+              handleQualificationFilesData(`qualification.${index}.files`, files);
+            }}
             isDigiLockcerVisible={true}
             uploadFileLabel="Upload Qualification Degree "
           />
