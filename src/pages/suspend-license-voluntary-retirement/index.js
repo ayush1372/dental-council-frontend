@@ -158,17 +158,21 @@ export function SuspendLicenseVoluntaryRetirement({
         selectedValue === 'suspend' ||
         selectedValue === 'blacklist'
       ) {
-        dispatch(suspendDoctor(suspendDoctorBody)).then((response) => {
-          if (response) {
-            if (getValues()?.voluntarySuspendLicense === 'permanent-suspension-check') {
-              setSuccessPopupMessage('Permanently Suspended');
-            } else if (getValues()?.voluntarySuspendLicense === 'voluntary-suspension-check') {
-              setSuccessPopupMessage('Temporarily Suspended');
+        dispatch(suspendDoctor(suspendDoctorBody))
+          .then((response) => {
+            if (response) {
+              if (getValues()?.voluntarySuspendLicense === 'permanent-suspension-check') {
+                setSuccessPopupMessage('Permanently Suspended');
+              } else if (getValues()?.voluntarySuspendLicense === 'voluntary-suspension-check') {
+                setSuccessPopupMessage('Temporarily Suspended');
+              }
+              showSuccessPopup(true);
+              setConfirmationModal(false);
             }
-            showSuccessPopup(true);
-            setConfirmationModal(false);
-          }
-        });
+          })
+          .catch(() => {
+            closeActionModal(false);
+          });
       } else {
         if (selectedValue === 'raise') {
           dispatch(raiseQuery(raiseQueryBody))
@@ -345,7 +349,9 @@ export function SuspendLicenseVoluntaryRetirement({
               />
             </Grid>
             <Grid item xs={12} md={6} my={{ xs: 1, md: 0 }}>
-              {selectedValue === 'blacklist' && (
+              {((tabName === 'voluntary-suspend-license' &&
+                selectedSuspension !== 'permanent-suspension-check') ||
+                selectedValue === 'blacklist') && (
                 <>
                   <Typography component={'p'} variant="body1">
                     Select To Date

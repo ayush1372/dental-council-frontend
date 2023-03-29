@@ -166,7 +166,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                 Year of Registration
               </Typography>
               <Typography component="div" variant="body1" color="textSecondary.main">
-                {searchDetailsById?.data?.data?.year_of_info || '-'}
+                {searchDetailsById?.data?.data?.registration_year || '-'}
               </Typography>
             </Grid>
           </Grid>

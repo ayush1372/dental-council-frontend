@@ -61,7 +61,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                   <Typography color="textPrimary.main" variant="subtitle2">
                     {element?.course?.course_name}
                   </Typography>
-                  {(data?.user_type === 1 ||
+                  {(data?.user_type === 2 ||
                     data?.user_type === 3 ||
                     data?.user_type === 4 ||
                     data?.user_type === 5) && (
@@ -92,7 +92,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                   <Typography variant="subtitle2" color="textPrimary.main">
                     {element?.country?.name}
                   </Typography>
-                  {(data?.user_type === 1 ||
+                  {(data?.user_type === 2 ||
                     data?.user_type === 3 ||
                     data?.user_type === 4 ||
                     data?.user_type === 5) && (
@@ -123,7 +123,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                   <Typography color="textPrimary.main" variant="subtitle2">
                     {element?.state?.name}
                   </Typography>
-                  {(data?.user_type === 1 ||
+                  {(data?.user_type === 2 ||
                     data?.user_type === 3 ||
                     data?.user_type === 4 ||
                     data?.user_type === 5) && (
@@ -157,7 +157,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                     {element?.college?.name}
                   </Typography>
 
-                  {(data?.user_type === 1 ||
+                  {(data?.user_type === 2 ||
                     data?.user_type === 3 ||
                     data?.user_type === 4 ||
                     data?.user_type === 5) && (
@@ -188,7 +188,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                   <Typography variant="subtitle2" color="textPrimary.main">
                     {element?.university?.name}
                   </Typography>{' '}
-                  {(data?.user_type === 1 ||
+                  {(data?.user_type === 2 ||
                     data?.user_type === 3 ||
                     data?.user_type === 4 ||
                     data?.user_type === 5) && (
@@ -217,7 +217,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                     {element?.qualification_month ? element?.qualification_month : ''} ,{' '}
                     {element?.qualification_year ? element?.qualification_year : ''}
                   </Typography>{' '}
-                  {(data?.user_type === 1 ||
+                  {(data?.user_type === 2 ||
                     data?.user_type === 3 ||
                     data?.user_type === 4 ||
                     data?.user_type === 5) && (
@@ -260,7 +260,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                     </IconButton>
                     View Attachment
                   </Typography>
-                  {(data?.user_type === 1 ||
+                  {(data?.user_type === 2 ||
                     data?.user_type === 3 ||
                     data?.user_type === 4 ||
                     data?.user_type === 5) && (
