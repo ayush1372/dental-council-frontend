@@ -98,7 +98,9 @@ export function SuspendLicenseVoluntaryRetirement({
     }
     let suspendDoctorBody = {
       hp_profile_id:
-        userActiveTab === 'voluntary-suspend-license'
+        userActiveTab === 'voluntary-suspend-license' ||
+        selectedValue === 'suspend' ||
+        selectedValue === 'blacklist'
           ? loginData?.data?.profile_id
           : userActiveTab === 'track-status' && selectedSuspendLicenseProfile?.view?.value,
       application_type_id:
@@ -155,7 +157,9 @@ export function SuspendLicenseVoluntaryRetirement({
     try {
       if (
         (confirmationModal && userActiveTab === 'voluntary-suspend-license') ||
-        userActiveTab === 'track-status'
+        userActiveTab === 'track-status' ||
+        selectedValue === 'suspend' ||
+        selectedValue === 'blacklist'
       ) {
         dispatch(suspendDoctor(suspendDoctorBody)).then((response) => {
           if (response) {
