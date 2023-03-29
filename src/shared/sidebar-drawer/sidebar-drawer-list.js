@@ -39,7 +39,7 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
               (item.tabName === 'voluntary-suspend-license' ||
                 item.tabName === 'additional-qualifications' ||
                 item.tabName === 'work-details')
-                ? false
+                ? true
                 : false
             }
             sx={{
