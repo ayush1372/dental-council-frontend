@@ -4,6 +4,9 @@ export const TableSortLabel = (palette) => ({
       '&:hover': {
         color: palette.white.main,
       },
+      '.MuiSvgIcon-root.MuiSvgIcon-root': {
+        opacity: 1,
+      },
       '&.Mui-active': {
         color: palette.white.main,
         '&.MuiButtonBase-root': {
