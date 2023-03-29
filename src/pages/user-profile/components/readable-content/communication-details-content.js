@@ -1,14 +1,16 @@
 import { useState } from 'react';
 
 import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
-import { Grid, Typography } from '@mui/material';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import { Grid, Tooltip, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 import { capitalize } from '../../../../helpers/functions/common-functions';
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
 const CommunicationAddress = ({ personalDetails }) => {
-  const { userActiveTab } = useSelector((state) => state.common);
+  const { data } = useSelector((state) => state.loginReducer?.loginData);
+  const { raisedQueryData } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
 
   const [openModal, setOpenModal] = useState(false);
   const [queryRaisedField, setQueryRaisedField] = useState('');
@@ -26,6 +28,12 @@ const CommunicationAddress = ({ personalDetails }) => {
     setOpenModal(false);
   };
 
+  //Helper Method to get the data of the query raised against the field
+  const getQueryRaised = (fieldName) => {
+    let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
+    return query?.query_comment;
+  };
+
   return (
     <Grid container spacing={2} mt={2}>
       <Grid container item spacing={2}>
@@ -35,12 +43,17 @@ const CommunicationAddress = ({ personalDetails }) => {
             <Typography component="span" color="error.main">
               *
             </Typography>
+            {getQueryRaised('House') !== undefined && (
+              <Tooltip title={getQueryRaised('House')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
+            )}
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {communication_address?.house}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -57,11 +70,16 @@ const CommunicationAddress = ({ personalDetails }) => {
           <Typography variant="body5" color="grey.label">
             Street
           </Typography>
+          {getQueryRaised('Street') !== undefined && (
+            <Tooltip title={getQueryRaised('Street')}>
+              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+            </Tooltip>
+          )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {communication_address?.street}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -77,11 +95,16 @@ const CommunicationAddress = ({ personalDetails }) => {
           <Typography variant="body5" color="grey.label">
             Landmark
           </Typography>
+          {getQueryRaised('Landmark') !== undefined && (
+            <Tooltip title={getQueryRaised('Landmark')}>
+              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+            </Tooltip>
+          )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {communication_address?.landmark}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -97,11 +120,16 @@ const CommunicationAddress = ({ personalDetails }) => {
           <Typography variant="bod5" color="grey.label">
             City/Town/Village
           </Typography>
+          {getQueryRaised('City/Town/Village') !== undefined && (
+            <Tooltip title={getQueryRaised('City/Town/Village')}>
+              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+            </Tooltip>
+          )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {villageName}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -121,12 +149,17 @@ const CommunicationAddress = ({ personalDetails }) => {
             <Typography component="span" color="error.main">
               *
             </Typography>
+            {getQueryRaised('District') !== undefined && (
+              <Tooltip title={getQueryRaised('District')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
+            )}
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {capitalize(districtName)}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -142,11 +175,16 @@ const CommunicationAddress = ({ personalDetails }) => {
           <Typography variant="body5" color="grey.label">
             Sub District
           </Typography>
+          {getQueryRaised('Sub District') !== undefined && (
+            <Tooltip title={getQueryRaised('Sub District')}>
+              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+            </Tooltip>
+          )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {subDistrictName}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -164,12 +202,17 @@ const CommunicationAddress = ({ personalDetails }) => {
             <Typography component="span" color="error.main">
               *
             </Typography>
+            {getQueryRaised('State/Union Territory') !== undefined && (
+              <Tooltip title={getQueryRaised('State/Union Territory')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
+            )}
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {capitalize(stateName)}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -187,12 +230,17 @@ const CommunicationAddress = ({ personalDetails }) => {
             <Typography component="span" color="error.main">
               *
             </Typography>
+            {getQueryRaised('Country') !== undefined && (
+              <Tooltip title={getQueryRaised('Country')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
+            )}
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {countryName}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -213,12 +261,17 @@ const CommunicationAddress = ({ personalDetails }) => {
             <Typography component="span" color="error.main">
               *
             </Typography>
+            {getQueryRaised('Pincode') !== undefined && (
+              <Tooltip title={getQueryRaised('Pincode')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
+            )}
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {pincode ? pincode : ''}
             </Typography>
-            {userActiveTab === 'dashboard' && (
+            {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
