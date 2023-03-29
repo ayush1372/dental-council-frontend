@@ -98,7 +98,9 @@ export function SuspendLicenseVoluntaryRetirement({
     }
     let suspendDoctorBody = {
       hp_profile_id:
-        userActiveTab === 'voluntary-suspend-license'
+        userActiveTab === 'voluntary-suspend-license' ||
+        selectedValue === 'suspend' ||
+        selectedValue === 'blacklist'
           ? loginData?.data?.profile_id
           : userActiveTab === 'track-status' && selectedSuspendLicenseProfile?.view?.value,
       application_type_id:
@@ -116,7 +118,9 @@ export function SuspendLicenseVoluntaryRetirement({
           ? 7
           : selectedValue === 'blacklist'
           ? 6
-          : userActiveTab === 'voluntary-suspend-license' && 1,
+          : userActiveTab === 'voluntary-suspend-license'
+          ? 1
+          : '',
       from_date: getValues()?.fromDate ? getValues()?.fromDate : '',
       to_date: getValues()?.toDate ? getValues()?.toDate : '',
       remarks: getValues()?.remark ? getValues()?.remark : '',
@@ -155,7 +159,9 @@ export function SuspendLicenseVoluntaryRetirement({
     try {
       if (
         (confirmationModal && userActiveTab === 'voluntary-suspend-license') ||
-        userActiveTab === 'track-status'
+        userActiveTab === 'track-status' ||
+        selectedValue === 'suspend' ||
+        selectedValue === 'blacklist'
       ) {
         dispatch(suspendDoctor(suspendDoctorBody)).then((response) => {
           if (response) {
@@ -203,7 +209,9 @@ export function SuspendLicenseVoluntaryRetirement({
   const autoFromDateSelected = (event) => {
     const temp1 = +event.target.value.substring(0, 4) + 99 + '';
     const temp2 = event.target.value.replace(event.target.value.substring(0, 4), temp1);
-    selectedSuspension === 'permanent-suspension-check' && setValue('toDate', temp2);
+    if (selectedSuspension === 'permanent-suspension-check' || selectedValue === 'suspend') {
+      setValue('toDate', temp2);
+    }
     setSelectedFromDate(temp2);
   };
 
@@ -356,7 +364,11 @@ export function SuspendLicenseVoluntaryRetirement({
                   shrink: true,
                   sx: { height: '40px' },
                 }}
-                disabled={selectedSuspension === 'permanent-suspension-check' ? true : false}
+                disabled={
+                  selectedSuspension === 'permanent-suspension-check' || selectedValue === 'suspend'
+                    ? true
+                    : false
+                }
                 required={true}
                 defaultValue={getValues().toDate}
                 error={errors.toDate?.message}
