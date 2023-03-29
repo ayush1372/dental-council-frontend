@@ -77,11 +77,8 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
       setIsApplicationPending(false);
     }
   }, [personalDetails?.work_flow_status_id]);
-  const { activeStep, handleNext, handleBack, resetStep, completed, progress } = useWizard(
-    ['Doctor', 'SMC', 'NMC'].includes(loggedInUserType) ? 0 : 1,
-    [],
-    [0, 25, 25, 25, 25]
-  );
+  const { activeStep, handleNext, handleBack, resetStep, completed, progress, handleStep } =
+    useWizard(['Doctor', 'SMC', 'NMC'].includes(loggedInUserType) ? 0 : 1, [], [0, 25, 25, 25, 25]);
 
   const renderSuccess = () => {
     setShowReactivateLicense(false);
@@ -354,6 +351,8 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
           handleNext={handleNext}
           steps={wizardSteps}
           progress={false}
+          isStepClickEnable={['SMC', 'NMC', 'College'].includes(loggedInUserType)}
+          handleStep={handleStep}
         ></Wizard>
 
         <Box bgcolor="white.main">
