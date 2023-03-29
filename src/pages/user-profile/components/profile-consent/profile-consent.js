@@ -111,31 +111,55 @@ const ProfileConsent = ({
         personalDetails?.communication_address?.district?.name,
       nmrDetails: {
         nmrPersonalDetail: {
-          firstName: personalDetails?.personal_details?.first_name || '',
-          userId: doctorRegDetails?.hp_profile_id || '',
-          middleName: personalDetails?.personal_details?.middle_name || '',
-          lastName: personalDetails?.personal_details?.last_name || '',
+          fullName: personalDetails?.personal_details?.full_name || '',
+          fatherName: personalDetails?.personal_details?.father_name || '',
+          motherName: personalDetails?.personal_details?.mother_name || '',
+          spouseName: personalDetails?.personal_details?.spouse_name || '',
+          gender: personalDetails?.personal_details?.gender || '',
+          dob: personalDetails?.personal_details?.date_of_birth || '',
+          nationality: 'Indian',
           qualification:
             doctorRegDetails?.qualification_detail_response_tos[0]?.course.course_name || '',
           mobileNumber: personalDetails?.kyc_address?.mobile || '',
           emailId: personalDetails?.kyc_address?.email || '',
         },
-        nmrPersonalCommunication: {
-          address: personalDetails?.communication_address?.address_line1 || '',
-          country: personalDetails?.communication_address?.country?.name || '',
-          stateUT: personalDetails?.communication_address?.state?.name || '',
-          district: personalDetails?.communication_address?.district?.name || '',
-          city: personalDetails?.communication_address?.village?.name || '',
-          pincode: personalDetails?.communication_address?.pincode || '',
+        nmrKycAddressTO: {
+          address: personalDetails?.kyc_address?.address_line1 || '',
         },
-        nmrOfficeCommunication: {
-          address: personalDetails?.communication_address?.address_line1 || '',
-          country: personalDetails?.communication_address?.country?.name || '',
-          stateUT: personalDetails?.communication_address?.state?.name || '',
-          district: personalDetails?.communication_address?.district?.name || '',
-          city: personalDetails?.communication_address?.village?.name || '',
-          subDistrict: personalDetails?.communication_address?.sub_district?.name || '',
-          pincode: personalDetails?.communication_address?.pincode || '',
+        nmrPersonalCommunication: {
+          house: personalDetails?.kyc_address?.house,
+          street: personalDetails?.kyc_address?.street,
+          landmark: personalDetails?.kyc_address?.landmark,
+          locality: personalDetails?.kyc_address?.locality,
+          subDistrict: personalDetails?.kyc_address?.sub_district?.name,
+          country: personalDetails?.kyc_address?.country?.name || '',
+          state: personalDetails?.kyc_address?.state?.name || '',
+          district: personalDetails?.kyc_address?.district?.name || '',
+          city: personalDetails?.kyc_address?.village?.name || '',
+          postalCode: personalDetails?.kyc_address?.pincode || '',
+        },
+        nmrRegistrationDetailsTO: {
+          councilName: doctorRegDetails?.registration_detail_to?.state_medical_council?.name || '',
+          registrationNumber: doctorRegDetails?.registration_detail_to?.registration_number,
+          registrationDate: doctorRegDetails?.registration_detail_to?.registration_date,
+          registrationType:
+            doctorRegDetails?.registration_detail_to?.is_renewable === '0'
+              ? 'Renewable'
+              : 'Permanent',
+          dueDate: doctorRegDetails?.registration_detail_to?.renewable_registration_date,
+        },
+        nmrQualificationDetailsTO: {
+          qualificationFrom:
+            doctorRegDetails?.qualification_detail_response_tos[0]?.qualification_from || '',
+          nameOfDegree:
+            doctorRegDetails?.qualification_detail_response_tos[0]?.course.course_name || '',
+          country: doctorRegDetails?.qualification_detail_response_tos[0]?.country.name || '',
+          state: doctorRegDetails?.qualification_detail_response_tos[0]?.state.name || '',
+          college: doctorRegDetails?.qualification_detail_response_tos[0]?.college.name || '',
+          university:
+            doctorRegDetails?.qualification_detail_response_tos[0]?.university?.name || '',
+          monthAndYearOfAwarding:
+            doctorRegDetails?.qualification_detail_response_tos[0]?.qualification_month || '',
         },
         isRegCerAttached: registrationFile ? 'Yes' : 'No',
         isDegreeCardAttached: degreeCertificate ? 'Yes' : 'No',
@@ -164,7 +188,6 @@ const ProfileConsent = ({
           })
           .catch((error) => {
             setConfirmationModal(false);
-            document.getElementById('formid')?.submit();
             dispatch(getEsignDetails([]));
             successToast(
               'ERROR: ' + error.data.response.data.error,
