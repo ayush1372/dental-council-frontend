@@ -320,7 +320,7 @@ export function SuspendLicenseVoluntaryRetirement({
                 sx={{
                   height: '48px',
                   input: {
-                    color: 'grey1.dark',
+                    color: 'black',
                     textTransform: 'uppercase',
                   },
                 }}
@@ -348,7 +348,7 @@ export function SuspendLicenseVoluntaryRetirement({
                 name="toDate"
                 sx={{
                   input: {
-                    color: 'grey1.dark',
+                    color: 'black',
                     textTransform: 'uppercase',
                   },
                 }}
@@ -631,7 +631,7 @@ export function SuspendLicenseVoluntaryRetirement({
                   selectedSuspension === 'voluntary-suspension-check'
                     ? 'voluntary suspend'
                     : 'permanent suspend'
-                } this application`}
+                } this license?`}
               </Typography>
             </Box>
             <Box display={'flex'} justifyContent={'flex-end'} mt={1}>
