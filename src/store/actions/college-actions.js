@@ -10,6 +10,7 @@ import {
   getCollegeRegistrarData,
   // updateCollegeAdminProfile
   postInitiateCollegeWorkFlow,
+  updateCollege,
 } from '../reducers/college-reducer';
 
 export const getCollegeAdminProfileData = (id) => async (dispatch) => {
@@ -183,6 +184,23 @@ export const registerCollegeDetails = (collegeDetails) => async (dispatch) => {
     })
       .then((response) => {
         dispatch(collegeRegister(response));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+export const updateCollegeDetail = (collegeDetails) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: PUT,
+      url: API.common.college,
+      data: collegeDetails,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+    })
+      .then((response) => {
+        dispatch(updateCollege(response));
         return resolve(response);
       })
       .catch((error) => {
