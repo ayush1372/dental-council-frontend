@@ -214,16 +214,18 @@ const AdditionalQualifications = () => {
         <Button variant="contained" color="grey" sx={{ marginLeft: '20px' }}>
           Cancel
         </Button>
-        <Button
-          sx={{ ml: 'auto' }}
-          variant="outlined"
-          color="primary"
-          onClick={() => {
-            append({ ...qualificationObjTemplate });
-          }}
-        >
-          Add Additional Qualification
-        </Button>
+        {qualification.length <= 6 && (
+          <Button
+            sx={{ ml: 'auto' }}
+            variant="outlined"
+            color="primary"
+            onClick={() => {
+              append({ ...qualificationObjTemplate });
+            }}
+          >
+            Add Additional Qualification
+          </Button>
+        )}
       </Box>
 
       {successModalPopup && (

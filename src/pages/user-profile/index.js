@@ -50,6 +50,9 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
   const { loginData } = useSelector((state) => state?.loginReducer);
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const logInDoctorStatus = useSelector(
+    (state) => state?.loginReducer?.loginData?.data?.blacklisted
+  );
 
   const handleNotification = (eventData, mode) => {
     if (mode === 'email') {
@@ -155,7 +158,9 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
   useEffect(() => {
     fetchDoctorUserPersonalDetails();
     fetchDoctorUserRegistrationDetails();
-
+    if (personalDetails?.work_flow_status_id === 1) {
+      setIsApplicationPending(false);
+    }
     //commented work flow details
     // fetchDoctorUserWorkProfileDetails();
   }, []);
@@ -263,7 +268,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
                 }}
               ></Grid>
             )} */}
-            {isReadMode && isApplicationPending && (
+            {isReadMode && isApplicationPending && !logInDoctorStatus && (
               <Grid
                 item
                 xs="auto"
