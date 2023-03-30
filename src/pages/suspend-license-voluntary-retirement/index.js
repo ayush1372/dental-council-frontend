@@ -90,6 +90,18 @@ export function SuspendLicenseVoluntaryRetirement({
         setSuccessPopupMessage('User ID suspended successfully');
         break;
     }
+    let temp_application_type_id;
+    if (userActiveTab === 'track-status') {
+      temp_application_type_id =
+        selectedValue === 'suspend' ? 4 : selectedValue === 'blacklist' ? 3 : 1;
+    } else {
+      temp_application_type_id =
+        selectedSuspension === 'voluntary-suspension-check'
+          ? 3
+          : selectedSuspension === 'permanent-suspension-check'
+          ? 4
+          : 1;
+    }
 
     let suspendDoctorBody = {
       hp_profile_id:
@@ -98,16 +110,7 @@ export function SuspendLicenseVoluntaryRetirement({
           : userActiveTab === 'track-status'
           ? selectedSuspendLicenseProfile?.view?.value
           : '',
-      application_type_id:
-        selectedSuspension === 'voluntary-suspension-check'
-          ? 3
-          : selectedSuspension === 'permanent-suspension-check'
-          ? 4
-          : selectedValue === 'suspend'
-          ? 4
-          : selectedValue === 'blacklist'
-          ? 3
-          : '',
+      application_type_id: temp_application_type_id,
       action_id:
         selectedValue === 'suspend'
           ? 7
@@ -161,7 +164,10 @@ export function SuspendLicenseVoluntaryRetirement({
         dispatch(suspendDoctor(suspendDoctorBody))
           .then((response) => {
             if (response) {
-              if (getValues()?.voluntarySuspendLicense === 'permanent-suspension-check') {
+              if (
+                getValues()?.voluntarySuspendLicense === 'permanent-suspension-check' ||
+                selectedValue === 'suspend'
+              ) {
                 setSuccessPopupMessage('Permanently Suspended');
               } else if (getValues()?.voluntarySuspendLicense === 'voluntary-suspension-check') {
                 setSuccessPopupMessage('Temporarily Suspended');
