@@ -217,15 +217,9 @@ export const colgTabs = [
     icon: <AppRegistrationIcon />,
     element: <CollegeDean />,
   },
+
   {
     option: 5,
-    name: 'Create Verifier',
-    tabName: 'Create Verifier',
-    icon: <AppRegistrationIcon />,
-    element: <CollegeVerifier />,
-  },
-  {
-    option: 6,
     name: 'Change Password',
     tabName: 'change-password',
     icon: <PasswordIcon />,
@@ -281,6 +275,13 @@ export const colgDeanRegTabs = [
   },
   {
     option: 2,
+    name: 'Create Verifier',
+    tabName: 'Create Verifier',
+    icon: <AppRegistrationIcon />,
+    element: <CollegeVerifier />,
+  },
+  {
+    option: 3,
     name: 'Change Password',
     tabName: 'change-password',
     icon: <PasswordIcon />,
