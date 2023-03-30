@@ -263,6 +263,7 @@ const ReadRegisterAndAcademicDetails = ({
                 showSuccessPopup={setShowSuccessPopup}
                 setSuccessPopupMessage={setSuccessPopupMessage}
                 setActionVerified={setActionVerified}
+                selectedAcademicStatus={selectedAcademicStatus}
               />
             </Box>
           ) : (

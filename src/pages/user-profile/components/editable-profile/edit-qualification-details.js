@@ -141,7 +141,9 @@ const EditQualificationDetails = ({
             onChange={handleQualificationFrom}
             name={`qualification[${index}].qualificationfrom`}
             size="small"
-            defaultValue={qualification?.qualificationfrom}
+            defaultValue={
+              qualification?.qualificationfrom === '' ? 'India' : qualification?.qualificationfrom
+            }
             items={[
               {
                 value: 'India',
