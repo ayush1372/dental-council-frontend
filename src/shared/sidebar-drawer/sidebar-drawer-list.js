@@ -36,7 +36,10 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
           <ListItemButton
             disabled={
               loggedInUserType === 'Doctor' &&
-              (!personalDetails?.nmr_id || logInDoctorStatus) &&
+              (!personalDetails?.nmr_id ||
+                logInDoctorStatus ||
+                personalDetails?.hp_profile_status_id === 5 ||
+                personalDetails?.hp_profile_status_id === 6) &&
               (item.tabName === 'voluntary-suspend-license' ||
                 item.tabName === 'additional-qualifications' ||
                 item.tabName === 'work-details')

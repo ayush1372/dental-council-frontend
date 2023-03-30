@@ -29,6 +29,10 @@ export default function SuccessModalPopup({
   successRegistration,
   existHprId,
   fromCollegeRegistration,
+  changeUserData,
+  navigateToTrackApplication,
+  fetchDoctorUserPersonalDetails,
+  setChangeUserData,
 }) {
   const theme = useTheme();
   const navigate = useNavigate();
@@ -104,6 +108,11 @@ export default function SuccessModalPopup({
     });
   };
 
+  const closeSuccessModal = () => {
+    setOpen(false);
+    setChangeUserData(false);
+    fetchDoctorUserPersonalDetails && fetchDoctorUserPersonalDetails();
+  };
   return (
     <Modal open={open} onClose={handleClose} sx={{ mt: 15 }}>
       <Container
@@ -160,6 +169,10 @@ export default function SuccessModalPopup({
                 ? navigateLogin
                 : fromCollegeRegistration
                 ? navigateSetPassword
+                : changeUserData
+                ? closeSuccessModal
+                : navigateToTrackApplication
+                ? navigateToTrackApplication()
                 : handleCloseModal
             }
           >
@@ -167,6 +180,8 @@ export default function SuccessModalPopup({
               ? 'Continue to login'
               : existHprId
               ? 'Continue to set your password'
+              : changeUserData
+              ? 'Okay'
               : 'Ok'}
           </Button>
         </Box>
