@@ -30,6 +30,8 @@ export const API = {
     languages: 'api/v1/abdm/nmr/languages',
     universities: 'api/v1/abdm/nmr/university',
     colleges: 'api/v1/abdm/nmr/college',
+    allColleges: 'api/v1/abdm/nmr/colleges',
+    college: 'api/v1/abdm/nmr/colleges/{id}',
     courses: 'api/v1/abdm/nmr/courses',
     specialities: 'api/v1/abdm/nmr/specialities',
     councilNames: 'api/v1/abdm/nmr/state-medical-councils',

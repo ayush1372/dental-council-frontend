@@ -3,7 +3,9 @@ import { GET, PATCH, POST, PUT } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import {
   getActivateLicense,
+  getAllColleges,
   getCities,
+  getCollegeDetail,
   getColleges,
   getCountries,
   getCourses,
@@ -102,10 +104,15 @@ export const getLanguagesList = () => async (dispatch) => {
 };
 
 export const getUniversitiesList = (selectedCollegeID) => async (dispatch) => {
+  let path = '';
+  if (selectedCollegeID !== undefined && selectedCollegeID !== null && selectedCollegeID !== '') {
+    path += 'collegeId=' + selectedCollegeID;
+  }
+
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,
-      url: `${API.common.universities}?collegeId=${selectedCollegeID}`,
+      url: `${API.common.universities}?${path}`,
     })
       .then((response) => {
         dispatch(getUniversities(response.data));
@@ -145,6 +152,38 @@ export const getCollegesList = (selectedState) => async (dispatch) => {
     })
       .then((response) => {
         dispatch(getColleges(response.data));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+export const getAllCollegesList = () => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: GET,
+      url: `${API.common.allColleges}`,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+    })
+      .then((response) => {
+        dispatch(getAllColleges(response.data));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+export const getCollegeData = (id) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: GET,
+      url: API.common.college.replace('{id}', id),
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+    })
+      .then((response) => {
+        dispatch(getCollegeDetail(response.data));
         return resolve(response);
       })
       .catch((error) => {
@@ -235,10 +274,61 @@ export const verifyNotificationOtp = (otpValue) => async (dispatch) => {
 };
 
 export const trackStatus = (trackData) => async (dispatch) => {
+  let path = '';
+  if (trackData.smcId !== undefined && trackData.smcId !== null && trackData.smcId !== '') {
+    if (path === '') {
+      path += 'smcId=' + trackData.smcId;
+    } else {
+      path += '&smcId=' + trackData.smcId;
+    }
+  }
+  if (
+    trackData.registrationNo !== undefined &&
+    trackData.registrationNo !== null &&
+    trackData.registrationNo !== ''
+  ) {
+    if (path === '') {
+      path += 'registrationNo=' + trackData.registrationNo;
+    } else {
+      path += '&registrationNo=' + trackData.registrationNo;
+    }
+  }
+  if (trackData.search !== undefined && trackData.search !== null && trackData.search !== '') {
+    if (path === '') {
+      path += 'search=' + trackData.search;
+    } else {
+      path += '&search=' + trackData.search;
+    }
+  }
+  if (trackData.value !== undefined && trackData.value !== null && trackData.value !== '') {
+    if (path === '') {
+      path += 'value=' + trackData.value;
+    } else {
+      path += '&value=' + trackData.value;
+    }
+  }
+
+  if (trackData.pageNo !== undefined && trackData.pageNo !== null && trackData.pageNo !== '') {
+    path += '&pageNo=' + trackData.pageNo;
+  }
+  if (trackData.offset !== undefined && trackData.offset !== null && trackData.offset !== '') {
+    path += '&offset=' + trackData.offset;
+  }
+  if (trackData.sortBy !== undefined && trackData.sortBy !== null && trackData.sortBy !== '') {
+    path += '&sortBy=' + trackData.sortBy;
+  }
+  if (
+    trackData.sortType !== undefined &&
+    trackData.sortType !== null &&
+    trackData.sortType !== ''
+  ) {
+    path += '&sortType=' + trackData.sortType;
+  }
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,
-      url: `${API.common.trackStatus}?smcId=${trackData.smcId}&registrationNo=${trackData.registrationNo}&pageNo=${trackData.pageNo}&offset=${trackData.offset}&sortBy=${trackData.sortBy}&sortType=${trackData.sortType}`,
+      url: `${API.common.trackStatus}?${path}`,
+      // url: `${API.common.trackStatus}?smcId=${trackData.smcId}&registrationNo=${trackData.registrationNo}&pageNo=${trackData.pageNo}&offset=${trackData.offset}&sortBy=${trackData.sortBy}&sortType=${trackData.sortType}`,
     })
       .then((response) => {
         dispatch(searchTrackStatusData(response));

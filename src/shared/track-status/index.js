@@ -1,19 +1,21 @@
 import { useState } from 'react';
 
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Grid, TextField } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { TrackStatusFieldList } from '../../constants/common-data';
 import { createEditFieldData } from '../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../shared/autocomplete/searchable-dropdown';
 import TrackStatusTable from '../../shared/track-status/track-status-table';
 import { trackStatus } from '../../store/actions/common-actions';
-import { Button, TextField } from '../../ui/core';
+import { Button } from '../../ui/core';
 import successToast from '../../ui/core/toaster';
 export default function TrackStatus() {
   const [showTable, setShowTable] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
   const [trackValues, setTrackValues] = useState({});
+  const [trackStatusId, setTrackStatusId] = useState('');
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const { councilNames, trackStatusData } = useSelector((state) => state.common);
 
@@ -32,13 +34,17 @@ export default function TrackStatus() {
       RegistrationCouncil: '',
       RegistrationCouncilId: '',
       RegistrationNumber: '',
+      trackStatus: '',
+      trackStatusFilter: '',
     },
   });
 
   const onSubmit = () => {
     const trackData = {
       smcId: getValues().RegistrationCouncilId,
-      registrationNo: parseInt(getValues().RegistrationNumber),
+      // registrationNo: parseInt(getValues().RegistrationNumber),
+      search: trackStatusId,
+      value: getValues().trackStatusFilter,
       pageNo: 1,
       offset: 10,
       sortBy: 'createdAt',
@@ -66,14 +72,14 @@ export default function TrackStatus() {
             Track Status
           </Typography> */}
           <Grid container spacing={2} mt={1}>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={3}>
               <Box pb={{ xs: 2, md: 4 }}>
-                <Typography color="inputTextColor.main">
+                {/* <Typography color="inputTextColor.main">
                   Council Name
                   <Typography component="span" color="error.main">
                     *
                   </Typography>
-                </Typography>
+                </Typography> */}
                 <SearchableDropdown
                   sx={{ mt: 1 }}
                   name="RegistrationCouncil"
@@ -95,42 +101,69 @@ export default function TrackStatus() {
                 />
               </Box>
             </Grid>
-            <Grid item xs={12} md={4}>
+
+            <Grid item xs={12} md={3}>
               <Box pb={{ xs: 2, md: 4 }}>
-                <Typography color="inputTextColor.main">
-                  Registration Number
+                {/* <Typography color="inputTextColor.main">
+                  label
                   <Typography component="span" color="error.main">
                     *
                   </Typography>
-                </Typography>
-                <TextField
-                  sx={{ mt: 1, mr: 2 }}
-                  name={'RegistrationNumber'}
+                </Typography> */}
+                <SearchableDropdown
+                  sx={{ mt: 1 }}
                   fullWidth
-                  required
-                  placeholder="Enter Registration Number"
-                  {...register('RegistrationNumber', {
-                    required: 'Registration Number is required',
-                  })}
-                  error={errors.RegistrationNumber?.message}
+                  name="trackStatus"
+                  items={createEditFieldData(TrackStatusFieldList)}
+                  placeholder="Please Select"
+                  clearErrors={clearErrors}
+                  {...register('trackStatus')}
+                  onChange={(currentValue) => {
+                    setTrackStatusId(currentValue.id);
+                  }}
                 />
               </Box>
             </Grid>
-            <Grid item xs={12} md={4} display="flex" alignItems="center">
-              <Button
-                sx={{
-                  width: {
-                    xs: '100%',
-                    md: 'fit-content',
-                  },
-                }}
-                variant="contained"
-                onClick={handleSubmit(onSubmit)}
-                color="secondary"
-                size="medium"
-              >
-                Search
-              </Button>
+            <Grid item xs={12} md={3}>
+              <Box pb={{ xs: 2, md: 4 }}>
+                {/* <Typography color="inputTextColor.main">
+                  label
+                  <Typography component="span" color="error.main">
+                    *
+                  </Typography>
+                </Typography> */}
+                <TextField
+                  sx={{ mt: 1 }}
+                  data-testid="filter_By_RegNo"
+                  inputProps={{ maxLength: 100 }}
+                  fullWidth
+                  id="outlined-basic"
+                  variant="outlined"
+                  name={'trackStatusFilter'}
+                  placeholder={'Enter keywords'}
+                  defaultValue={getValues().trackStatusFilter}
+                  {...register('trackStatusFilter', {})}
+                  error={errors.trackStatusFilter?.message}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={3} display="flex" alignItems="center">
+              <Box pb={{ xs: 2, md: 4 }} sx={{ mt: 1 }}>
+                <Button
+                  sx={{
+                    width: {
+                      xs: '100%',
+                      md: 'fit-content',
+                    },
+                  }}
+                  variant="contained"
+                  onClick={handleSubmit(onSubmit)}
+                  color="secondary"
+                  size="medium"
+                >
+                  Search
+                </Button>
+              </Box>
             </Grid>
           </Grid>
         </Box>
