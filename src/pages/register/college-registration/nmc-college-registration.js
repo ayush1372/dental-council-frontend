@@ -10,6 +10,7 @@ import { createEditFieldData } from '../../../helpers/functions/common-functions
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import {
+  registerCollegeDetail,
   // registerCollegeDetails,
   updateCollegeDetail,
 } from '../../../store/actions/college-actions';
@@ -37,19 +38,24 @@ function NMCCollegeRegistration() {
     universitiesList,
     // getCollegeDetail,
   } = useSelector((state) => state.common);
+  // eslint-disable-next-line no-console
+  console.log('universitiesList===', universitiesList);
+  // eslint-disable-next-line no-console
+  console.log('statesList===', statesList);
 
   let collegesList = [];
   collegesList.push(...allcollegesList.data, { id: 'other', name: 'other' });
 
-  const registrationSuccess = useSelector((state) => state.college.collegeRegisterDetails.data);
+  // const registrationSuccess = useSelector((state) => state.college.registerCollegeDetail.data);
+  // const updateregistration = useSelector((state) => state.college.updateCollegeDetails.data);
 
   const [successModalPopup, setSuccessModalPopup] = useState(false);
   const [showCollegeName, setShowCollegeName] = useState(false);
-  // const [clgName, setClgName] = useState('');
 
   const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(getUniversitiesList());
     dispatch(getAllCollegesList());
     // dispatch(getCollegesList());
     dispatch(getStatesList());
@@ -69,7 +75,7 @@ function NMCCollegeRegistration() {
     defaultValues: {
       CollegeName: '',
       Name: '',
-      // CollegeNameID: '',
+      CollegeNameID: '',
       CollegeCode: '',
       MobileNumber: '',
       CouncilName: '',
@@ -91,41 +97,95 @@ function NMCCollegeRegistration() {
   });
 
   const onsubmit = () => {
-    const collegeDetailValues = {
-      id: getValues().CollegeID,
-      name: getValues().CollegeName,
-      state_id: getValues().StateID,
-      course_id: 0,
-      college_code: getValues().CollegeCode,
-      website: getValues().Website,
-      address_line1: getValues().AddressLine1,
-      address_line2: getValues().AddressLine2,
-      district_id: getValues().DistrictID,
-      village_id: getValues().TownID,
-      pin_code: getValues().Pincode,
-      state_medical_council_id: getValues().CouncilID,
-      university_id: getValues().UniversityID,
-      email_id: getValues().Email,
-      mobile_number: getValues().MobileNumber,
-    };
+    if (showCollegeName === true) {
+      const collegeDetailValues = {
+        id: getValues().CollegeNameID,
+        name: getValues().CollegeName,
+        state_id: getValues().StateID,
+        course_id: null,
+        college_code: getValues().CollegeCode,
+        website: getValues().Website,
+        address_line1: getValues().AddressLine1,
+        address_line2: getValues().AddressLine2,
+        district_id: getValues().DistrictID,
+        village_id: getValues().TownID,
+        pin_code: getValues().Pincode,
+        state_medical_council_id: getValues().CouncilID,
+        university_id: getValues().UniversityID,
+        email_id: getValues().Email,
+        mobile_number: getValues().MobileNumber,
+      };
 
-    dispatch(updateCollegeDetail(collegeDetailValues))
-      .then(() => {
-        document.getElementById('collegeRegistrationId').reset();
-        if (registrationSuccess) {
+      dispatch(registerCollegeDetail(collegeDetailValues))
+        .then(() => {
           setSuccessModalPopup(true);
-        }
-      })
-      .catch((error) => {
-        successToast(
-          error?.data?.response?.data?.error,
-          'RegistrationError',
-          'error',
-          'top-center'
-        );
-      });
-    document.getElementById('collegeRegistrationId').reset();
-    reset();
+          document.getElementById('collegeRegistrationId').reset();
+          setValue('CouncilName', '');
+          setValue('CouncilID', '');
+          setValue('Name', '');
+          setValue('CollegeCode', '');
+          setValue('MobileNumber', '');
+          setValue('Website', '');
+          setValue('AddressLine1', '');
+          setValue('AddressLine2', '');
+          setValue('Pincode', '');
+          setValue('Email', '');
+        })
+        .catch((error) => {
+          successToast(
+            error?.data?.response?.data?.error,
+            'RegistrationError',
+            'error',
+            'top-center'
+          );
+        });
+      document.getElementById('collegeRegistrationId').reset();
+      reset();
+    } else {
+      const collegeDetailValues = {
+        id: getValues().CollegeNameID,
+        name: getValues().CollegeName,
+        state_id: getValues().StateID,
+        course_id: null,
+        college_code: getValues().CollegeCode,
+        website: getValues().Website,
+        address_line1: getValues().AddressLine1,
+        address_line2: getValues().AddressLine2,
+        district_id: getValues().DistrictID,
+        village_id: getValues().TownID,
+        pin_code: getValues().Pincode,
+        state_medical_council_id: getValues().CouncilID,
+        university_id: getValues().UniversityID,
+        email_id: getValues().Email,
+        mobile_number: getValues().MobileNumber,
+      };
+
+      dispatch(updateCollegeDetail(collegeDetailValues))
+        .then(() => {
+          document.getElementById('collegeRegistrationId').reset();
+
+          setSuccessModalPopup(true);
+          reset();
+          setValue('CouncilName', '');
+          setValue('CouncilID', '');
+          setValue('Name', '');
+          setValue('CollegeCode', '');
+          setValue('MobileNumber', '');
+          setValue('Website', '');
+          setValue('AddressLine1', '');
+          setValue('AddressLine2', '');
+          setValue('Pincode', '');
+          setValue('Email', '');
+        })
+        .catch((error) => {
+          successToast(
+            error?.data?.response?.data?.error,
+            'RegistrationError',
+            'error',
+            'top-center'
+          );
+        });
+    }
   };
 
   // const handleInput = (e) => {
@@ -136,20 +196,24 @@ function NMCCollegeRegistration() {
   //     : Math.max(0, parseInt(e.target.value)).toString().slice(0, 10);
   // }
   // };
-  const getSelecetedName = (fieldName, data) => {
+
+  const getSelecetedName = (fieldId, data) => {
     if (data === 'councilData') {
-      let query = councilNames?.find((obj) => obj.id === fieldName);
-      return query?.name;
+      let selectedName = councilNames?.find((obj) => obj.id === fieldId);
+      return selectedName?.name;
     }
     if (data === 'stateData') {
-      let query = statesList?.find((obj) => obj.id === fieldName);
-      return query?.name;
+      let selectedName = statesList?.find((obj) => obj.id === fieldId);
+      return selectedName?.name;
     }
     if (data === 'universityData') {
-      let query = universitiesList?.find((obj) => obj.id === fieldName);
-      return query?.name;
+      // eslint-disable-next-line no-console
+      console.log('universitiesList?.data?', universitiesList?.data);
+      let selectedName = universitiesList?.data?.find((obj) => obj.id === fieldId);
+      return selectedName?.name;
     }
   };
+
   const onNameChange = (currentValue) => {
     if (currentValue.id === 'other') {
       setShowCollegeName(true);
@@ -157,9 +221,30 @@ function NMCCollegeRegistration() {
     } else {
       setShowCollegeName(false);
       setValue('CollegeNameID', currentValue.id);
-      dispatch(getUniversitiesList(currentValue.id));
 
       dispatch(getCollegeData(currentValue.id)).then((response) => {
+        if (response?.data?.college_code) {
+          setValue('CollegeCode', response?.data?.college_code);
+        }
+        if (response?.data?.mobile_number) {
+          setValue('MobileNumber', response?.data?.mobile_number);
+        }
+        if (response?.data?.website) {
+          setValue('Website', response?.data?.website);
+        }
+        if (response?.data?.address_line1) {
+          setValue(' AddressLine1', response?.data?.address_line1);
+        }
+        if (response?.data?.address_line2) {
+          setValue(' AddressLine2', response?.data?.address_line2);
+        }
+        if (response?.data?.pin_code) {
+          setValue('Pincode', response?.data?.pin_code);
+        }
+        if (response?.data?.email_id) {
+          setValue('Email', response?.data?.email_id);
+        }
+
         if (response?.data?.state_medical_council_id) {
           setValue('CouncilID', response?.data?.state_medical_council_id);
           setValue(
@@ -167,9 +252,14 @@ function NMCCollegeRegistration() {
             getSelecetedName(response?.data?.state_medical_council_id, 'councilData')
           );
         }
+        if (response?.data?.district_id) {
+          setValue('DistrictID', response?.data?.district_id);
+        }
         if (response?.data?.state_id) {
           setValue('StateID', response?.data?.state_id);
           setValue('StateName', getSelecetedName(response?.data?.state_id, 'stateData'));
+          // dispatch(getDistrictList(response?.data?.state_id));
+          // getDistrict(response?.data?.state_id);
         }
         if (response?.data?.university_id) {
           setValue('UniversityID', response?.data?.university_id);
@@ -180,9 +270,10 @@ function NMCCollegeRegistration() {
         }
       });
     }
-
-    // dispatch(getUniversitiesList(currentValue.id));
   };
+  // const getDistrict = (id) => {
+  //   dispatch(getDistrictList(id));
+  // };
 
   const onStateChange = (currentValue) => {
     setValue('StateID', currentValue.id);
@@ -245,10 +336,6 @@ function NMCCollegeRegistration() {
               error={errors.Name?.message}
               {...register('Name', {
                 required: 'College name is required',
-                // pattern: {
-                //   value: /^\d{10}$/i,
-                //   message: 'Provide a valid mobile number',
-                // },
               })}
             />
           </Grid>
@@ -259,20 +346,6 @@ function NMCCollegeRegistration() {
             College Code
           </Typography>
 
-          {/* <SearchableDropdown
-            fullWidth
-            name="CollegeCode"
-            items={createEditFieldData(councilNames)}
-            placeholder="Select CollegeCode"
-            clearErrors={clearErrors}
-            error={errors.CollegeCode?.message}
-            {...register('CollegeCode', {
-              required: 'College code is required',
-            })}
-            onChange={(currentValue) => {
-              onCollegeCodeChange(currentValue);
-            }}
-          /> */}
           <TextField
             fullWidth
             name="CollegeCode"
@@ -282,10 +355,6 @@ function NMCCollegeRegistration() {
             error={errors.CollegeCode?.message}
             {...register('CollegeCode', {
               required: 'College code is required',
-              // pattern: {
-              //   value: /^\d{10}$/i,
-              //   message: 'Provide a valid mobile number',
-              // },
             })}
           />
         </Grid>
@@ -297,20 +366,19 @@ function NMCCollegeRegistration() {
               *
             </Typography>
           </Typography>
-
           <TextField
             fullWidth
             name="MobileNumber"
             required
-            placeholder={t('Enter MobileNumber')}
+            placeholder={t('Enter Mobile Number')}
             // onInput={(e) => handleInput(e)}
             error={errors.MobileNumber?.message}
             {...register('MobileNumber', {
               required: 'Mobile number is required',
-              pattern: {
-                value: /^\d{10}$/i,
-                message: 'Provide a valid mobile number',
-              },
+              // pattern: {
+              //   value: /^\d{10}$/i,
+              //   message: 'Provide a valid mobile number',
+              // },
             })}
           />
         </Grid>
@@ -503,10 +571,10 @@ function NMCCollegeRegistration() {
             error={errors.Pincode?.message}
             {...register('Pincode', {
               required: 'Pin code is required',
-              pattern: {
-                value: /^[0-9]{6}$/i,
-                message: 'Please enter valid pincode',
-              },
+              // pattern: {
+              //   value: /^[0-9]{6}$/i,
+              //   message: 'Please enter valid pincode',
+              // },
             })}
           />
         </Grid>
@@ -530,11 +598,11 @@ function NMCCollegeRegistration() {
             error={errors.Email?.message}
             {...register('Email', {
               required: 'Email id is required',
-              pattern: {
-                value:
-                  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-                message: 'Provide valid email id',
-              },
+              // pattern: {
+              //   value:
+              //     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
+              //   message: 'Provide valid email id',
+              // },
             })}
           />
         </Grid>

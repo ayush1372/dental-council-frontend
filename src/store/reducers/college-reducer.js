@@ -11,6 +11,7 @@ const initialState = {
   collegeRegisterDetails: { data: [], isLoading: Boolean(true), isError: false },
   initiateCollegeWorkFlow: { data: [], isLoading: Boolean(true), isError: false },
   updateCollegeDetails: { data: [], isLoading: Boolean(true), isError: false },
+  registerCollegeDetail: { data: [], isLoading: Boolean(true), isError: false },
 };
 
 const collegeReducer = createSlice({
@@ -41,6 +42,9 @@ const collegeReducer = createSlice({
     updateCollege: (state, action) => {
       state.updateCollegeDetails = action.payload;
     },
+    registerCollege: (state, action) => {
+      state.registerCollegeDetail = action.payload;
+    },
     postInitiateCollegeWorkFlow: (state, action) => {
       state.initiateCollegeWorkFlow = action.payload;
     },
@@ -59,6 +63,7 @@ export const {
   postInitiateCollegeWorkFlow,
   resetCollegeWorkflowReducer,
   updateCollege,
+  registerCollege,
 } = collegeReducer.actions;
 
 export default collegeReducer.reducer;

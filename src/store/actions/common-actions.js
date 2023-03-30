@@ -104,10 +104,15 @@ export const getLanguagesList = () => async (dispatch) => {
 };
 
 export const getUniversitiesList = (selectedCollegeID) => async (dispatch) => {
+  let path = '';
+  if (selectedCollegeID !== undefined && selectedCollegeID !== null && selectedCollegeID !== '') {
+    path += 'collegeId=' + selectedCollegeID;
+  }
+
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,
-      url: `${API.common.universities}?collegeId=${selectedCollegeID}`,
+      url: `${API.common.universities}?${path}`,
     })
       .then((response) => {
         dispatch(getUniversities(response.data));
