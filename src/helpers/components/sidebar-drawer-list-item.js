@@ -12,9 +12,9 @@ import CollegeDean from '../../pages/profile/college-dean/college-dean';
 import CollegeMyProfile from '../../pages/profile/college-my-profile/college-my-profile';
 import CollegeRegistrar from '../../pages/profile/college-registrar/college-registrar';
 import CollegeVerifier from '../../pages/profile/college-verifier/college-verifier';
-import CollegeApproval from '../../pages/profile/components/college-approval-cards/college-approval-cards';
+// import CollegeApproval from '../../pages/profile/components/college-approval-cards/college-approval-cards';
 import Dashboard from '../../pages/profile/components/dashboard-cards/dashboard-cards';
-import NewDoctorRegistration from '../../pages/profile/new-doctor-registration/new-doctor-registration';
+// import NewDoctorRegistration from '../../pages/profile/new-doctor-registration/new-doctor-registration';
 import MyProfile from '../../pages/profile/smc-nmc-profile/my-profile';
 import VoluntarySuspendLicense from '../../pages/profile/sub-pages/voluntary-suspend-license/voluntary-suspend-license';
 import TrackApplication from '../../pages/profile/track-application/track-application';
@@ -97,29 +97,29 @@ export const smcTabs = [
     icon: <BadgeIcon />,
     element: <TrackStatus tabName={SideDrawerListItem} />,
   },
+  // {
+  //   option: 3,
+  //   name: 'New Doctor Registration',
+  //   tabName: 'New-doctor-registration',
+  //   icon: <AppRegistrationIcon />,
+  //   element: <NewDoctorRegistration userType={'SMC'} />,
+  // },
   {
     option: 3,
-    name: 'New Doctor Registration',
-    tabName: 'New-doctor-registration',
-    icon: <AppRegistrationIcon />,
-    element: <NewDoctorRegistration userType={'SMC'} />,
-  },
-  {
-    option: 4,
     name: 'Activate Licence',
     tabName: 'Activate Licence',
     icon: <AppRegistrationIcon />,
     element: <ActivateLicence />,
   },
+  // {
+  //   option: 5,
+  //   name: 'College Approval',
+  //   tabName: 'college-approval',
+  //   icon: <AppRegistrationIcon />,
+  //   element: <CollegeApproval />,
+  // },
   {
-    option: 5,
-    name: 'College Approval',
-    tabName: 'college-approval',
-    icon: <AppRegistrationIcon />,
-    element: <CollegeApproval />,
-  },
-  {
-    option: 6,
+    option: 4,
     name: 'Change Password',
     tabName: 'change-password',
     icon: <PasswordIcon />,
@@ -156,22 +156,22 @@ export const nmcTabs = [
     icon: <AppRegistrationIcon />,
     element: <ActivateLicence />,
   },
+  // {
+  //   option: 4,
+  //   name: 'College Approval',
+  //   tabName: 'college-approval',
+  //   icon: <AppRegistrationIcon />,
+  //   element: <CollegeApproval />,
+  // },
   {
     option: 4,
-    name: 'College Approval',
-    tabName: 'college-approval',
-    icon: <AppRegistrationIcon />,
-    element: <CollegeApproval />,
-  },
-  {
-    option: 5,
     name: 'College Registration',
     tabName: 'college-registration',
     icon: <AppRegistrationIcon />,
     element: <NMCCollegeRegistration />,
   },
   {
-    option: 6,
+    option: 5,
     name: 'Change Password',
     tabName: 'change-password',
     icon: <PasswordIcon />,
