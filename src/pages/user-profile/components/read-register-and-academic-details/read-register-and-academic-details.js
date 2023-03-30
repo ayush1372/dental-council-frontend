@@ -264,6 +264,7 @@ const ReadRegisterAndAcademicDetails = ({
           setOpen={() => setShowSuccessPopup(false)}
           text={successPopupMessage}
           SuspensionCall={true}
+          handleClose={() => setShowSuccessPopup(false)}
         />
       )}
     </Box>

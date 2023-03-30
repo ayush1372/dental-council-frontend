@@ -10,8 +10,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import useWizard from '../../hooks/use-wizard';
 import ReactivateLicencePopup from '../../shared/reactivate-licence-popup/re-activate-licence-popup';
 import SuccessPopup from '../../shared/reactivate-licence-popup/success-popup';
-import { enableUserNotification } from '../../store/actions/common-actions';
-import { getCountriesList, getStatesList } from '../../store/actions/common-actions';
+import {
+  enableUserNotification,
+  getCountriesList,
+  getStatesList,
+} from '../../store/actions/common-actions';
 import {
   getPersonalDetailsData,
   getRegistrationDetailsData,
@@ -35,19 +38,21 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const [isReadMode, setIsReadMode] = useState(true);
-  const [showReactivateLicense, setShowReactivateLicense] = useState(false);
-  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
-
-  const [wizardSteps, setWizardSteps] = useState(readWizardSteps);
-  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
-  const { loginData } = useSelector((state) => state?.loginReducer);
-
-  const [isApplicationPending, setIsApplicationPending] = useState(true);
-  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
-  const [showStaticFormProgress, setShowStaticFormProgress] = useState(false);
 
   const [emailNotification, setEmailNotification] = useState();
   const [mobileNotification, setMobileNotification] = useState();
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+  const [wizardSteps, setWizardSteps] = useState(readWizardSteps);
+  const [isApplicationPending, setIsApplicationPending] = useState(true);
+  const [showReactivateLicense, setShowReactivateLicense] = useState(false);
+  const [showStaticFormProgress, setShowStaticFormProgress] = useState(false);
+
+  const { loginData } = useSelector((state) => state?.loginReducer);
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const logInDoctorStatus = useSelector(
+    (state) => state?.loginReducer?.loginData?.data?.blacklisted
+  );
 
   const handleNotification = (eventData, mode) => {
     if (mode === 'email') {
@@ -72,11 +77,8 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
       setIsApplicationPending(false);
     }
   }, [personalDetails?.work_flow_status_id]);
-  const { activeStep, handleNext, handleBack, resetStep, completed, progress } = useWizard(
-    ['Doctor', 'SMC', 'NMC'].includes(loggedInUserType) ? 0 : 1,
-    [],
-    [0, 25, 25, 25, 25]
-  );
+  const { activeStep, handleNext, handleBack, resetStep, completed, progress, handleStep } =
+    useWizard(['Doctor', 'SMC', 'NMC'].includes(loggedInUserType) ? 0 : 1, [], [0, 25, 25, 25, 25]);
 
   const renderSuccess = () => {
     setShowReactivateLicense(false);
@@ -153,7 +155,9 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
   useEffect(() => {
     fetchDoctorUserPersonalDetails();
     fetchDoctorUserRegistrationDetails();
-
+    if (personalDetails?.work_flow_status_id === 1) {
+      setIsApplicationPending(false);
+    }
     //commented work flow details
     // fetchDoctorUserWorkProfileDetails();
   }, []);
@@ -261,7 +265,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
                 }}
               ></Grid>
             )} */}
-            {isReadMode && isApplicationPending && (
+            {isReadMode && isApplicationPending && !logInDoctorStatus && (
               <Grid
                 item
                 xs="auto"
@@ -347,6 +351,8 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
           handleNext={handleNext}
           steps={wizardSteps}
           progress={false}
+          isStepClickEnable={['SMC', 'NMC', 'College'].includes(loggedInUserType)}
+          handleStep={handleStep}
         ></Wizard>
 
         <Box bgcolor="white.main">

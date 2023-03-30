@@ -90,33 +90,35 @@ export function SuspendLicenseVoluntaryRetirement({
         setSuccessPopupMessage('User ID suspended successfully');
         break;
     }
-
-    if (getValues()?.voluntarySuspendLicense === 'permanent-suspension-check') {
-      setSuccessPopupMessage('Permanently Suspended');
-    } else if (getValues()?.voluntarySuspendLicense === 'voluntary-suspension-check') {
-      setSuccessPopupMessage('Temporarily Suspended');
-    }
-    let suspendDoctorBody = {
-      hp_profile_id:
-        userActiveTab === 'voluntary-suspend-license'
-          ? loginData?.data?.profile_id
-          : userActiveTab === 'track-status' && selectedSuspendLicenseProfile?.view?.value,
-      application_type_id:
+    let temp_application_type_id;
+    if (userActiveTab === 'track-status') {
+      temp_application_type_id =
+        selectedValue === 'suspend' ? 4 : selectedValue === 'blacklist' ? 3 : 1;
+    } else {
+      temp_application_type_id =
         selectedSuspension === 'voluntary-suspension-check'
           ? 3
           : selectedSuspension === 'permanent-suspension-check'
           ? 4
-          : selectedValue === 'suspend'
-          ? 4
-          : selectedValue === 'blacklist'
-          ? 3
+          : 1;
+    }
+
+    let suspendDoctorBody = {
+      hp_profile_id:
+        userActiveTab === 'voluntary-suspend-license'
+          ? loginData?.data?.profile_id
+          : userActiveTab === 'track-status'
+          ? selectedSuspendLicenseProfile?.view?.value
           : '',
+      application_type_id: temp_application_type_id,
       action_id:
         selectedValue === 'suspend'
           ? 7
           : selectedValue === 'blacklist'
           ? 6
-          : userActiveTab === 'voluntary-suspend-license' && 1,
+          : userActiveTab === 'voluntary-suspend-license'
+          ? 1
+          : '',
       from_date: getValues()?.fromDate ? getValues()?.fromDate : '',
       to_date: getValues()?.toDate ? getValues()?.toDate : '',
       remarks: getValues()?.remark ? getValues()?.remark : '',
@@ -155,14 +157,28 @@ export function SuspendLicenseVoluntaryRetirement({
     try {
       if (
         (confirmationModal && userActiveTab === 'voluntary-suspend-license') ||
-        userActiveTab === 'track-status'
+        userActiveTab === 'track-status' ||
+        selectedValue === 'suspend' ||
+        selectedValue === 'blacklist'
       ) {
-        dispatch(suspendDoctor(suspendDoctorBody)).then((response) => {
-          if (response) {
-            showSuccessPopup(true);
-            setConfirmationModal(false);
-          }
-        });
+        dispatch(suspendDoctor(suspendDoctorBody))
+          .then((response) => {
+            if (response) {
+              if (
+                getValues()?.voluntarySuspendLicense === 'permanent-suspension-check' ||
+                selectedValue === 'suspend'
+              ) {
+                setSuccessPopupMessage('Permanently Suspended');
+              } else if (getValues()?.voluntarySuspendLicense === 'voluntary-suspension-check') {
+                setSuccessPopupMessage('Temporarily Suspended');
+              }
+              showSuccessPopup(true);
+              setConfirmationModal(false);
+            }
+          })
+          .catch(() => {
+            closeActionModal(false);
+          });
       } else {
         if (selectedValue === 'raise') {
           dispatch(raiseQuery(raiseQueryBody))
@@ -203,7 +219,9 @@ export function SuspendLicenseVoluntaryRetirement({
   const autoFromDateSelected = (event) => {
     const temp1 = +event.target.value.substring(0, 4) + 99 + '';
     const temp2 = event.target.value.replace(event.target.value.substring(0, 4), temp1);
-    selectedSuspension === 'permanent-suspension-check' && setValue('toDate', temp2);
+    if (selectedSuspension === 'permanent-suspension-check' || selectedValue === 'suspend') {
+      setValue('toDate', temp2);
+    }
     setSelectedFromDate(temp2);
   };
 
@@ -320,7 +338,7 @@ export function SuspendLicenseVoluntaryRetirement({
                 sx={{
                   height: '48px',
                   input: {
-                    color: 'grey1.dark',
+                    color: 'black',
                     textTransform: 'uppercase',
                   },
                 }}
@@ -337,33 +355,44 @@ export function SuspendLicenseVoluntaryRetirement({
               />
             </Grid>
             <Grid item xs={12} md={6} my={{ xs: 1, md: 0 }}>
-              <Typography component={'p'} variant="body1">
-                Select To Date
-              </Typography>
-              <TextField
-                fullWidth
-                data-testid="toDate"
-                id="toDate"
-                type="date"
-                name="toDate"
-                sx={{
-                  input: {
-                    color: 'grey1.dark',
-                    textTransform: 'uppercase',
-                  },
-                }}
-                InputLabelProps={{
-                  shrink: true,
-                  sx: { height: '40px' },
-                }}
-                disabled={selectedSuspension === 'permanent-suspension-check' ? true : false}
-                required={true}
-                defaultValue={getValues().toDate}
-                error={errors.toDate?.message}
-                {...register('toDate', {
-                  required: 'Enter to date',
-                })}
-              />
+              {((tabName === 'voluntary-suspend-license' &&
+                selectedSuspension !== 'permanent-suspension-check') ||
+                selectedValue === 'blacklist') && (
+                <>
+                  <Typography component={'p'} variant="body1">
+                    Select To Date
+                  </Typography>
+                  <TextField
+                    fullWidth
+                    data-testid="toDate"
+                    id="toDate"
+                    type="date"
+                    name="toDate"
+                    sx={{
+                      input: {
+                        color: 'black',
+                        textTransform: 'uppercase',
+                      },
+                    }}
+                    InputLabelProps={{
+                      shrink: true,
+                      sx: { height: '40px' },
+                    }}
+                    disabled={
+                      selectedSuspension === 'permanent-suspension-check' ||
+                      selectedValue === 'suspend'
+                        ? true
+                        : false
+                    }
+                    required={true}
+                    defaultValue={getValues().toDate}
+                    error={errors.toDate?.message}
+                    {...register('toDate', {
+                      required: 'Enter to date',
+                    })}
+                  />
+                </>
+              )}
             </Grid>
           </Grid>
         </Box>
@@ -467,8 +496,6 @@ export function SuspendLicenseVoluntaryRetirement({
                     name={fieldData?.filedName}
                     value={fieldData?.value}
                     onChange={(e) => {
-                      // eslint-disable-next-line no-console
-                      console.log(index);
                       let updatedQuery = queries;
                       if (e.target.checked) {
                         updatedQuery?.push({
@@ -631,7 +658,7 @@ export function SuspendLicenseVoluntaryRetirement({
                   selectedSuspension === 'voluntary-suspension-check'
                     ? 'voluntary suspend'
                     : 'permanent suspend'
-                } this application`}
+                } this license?`}
               </Typography>
             </Box>
             <Box display={'flex'} justifyContent={'flex-end'} mt={1}>

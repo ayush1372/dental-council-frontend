@@ -13,6 +13,7 @@ export const API = {
     profileImage: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/profile-picture',
     initiateWorkFlow: 'api/v1/abdm/nmr/health-professional/applications/status',
     trackApplicationData: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/applications',
+    eSign: 'api/v1/abdm/nmr/e-signature',
     profileConsent: 'api/v1/abdm/nmr/health-professional/register',
     createPersonalDetails: '/api/v1/abdm/nmr/health-professional/personal',
     additionalQualifications:
@@ -29,6 +30,8 @@ export const API = {
     languages: 'api/v1/abdm/nmr/languages',
     universities: 'api/v1/abdm/nmr/university',
     colleges: 'api/v1/abdm/nmr/college',
+    allColleges: 'api/v1/abdm/nmr/colleges',
+    college: 'api/v1/abdm/nmr/colleges/{id}',
     courses: 'api/v1/abdm/nmr/courses',
     specialities: 'api/v1/abdm/nmr/specialities',
     councilNames: 'api/v1/abdm/nmr/state-medical-councils',
@@ -38,6 +41,7 @@ export const API = {
     healthProfessionalApplicationStatus: 'api/v1/abdm/nmr/health-professional/applications/status',
     suspend: 'api/v1/abdm/nmr/health-professional/applications/suspend',
     queryRaise: 'api/v1/abdm/nmr/health-professional/queries',
+    raisedQuery: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/queries',
     enableNotification: '/api/v1/abdm/nmr/user/enable-notification',
     LGDService: '/api/v1/abdm/nmr/health-professional/lgd/search?pinCode=',
   },
@@ -49,6 +53,8 @@ export const API = {
     getCollegeDeanProfile: 'api/v1/abdm/nmr/college/{collegeId}/dean/{id}',
     register: 'api/v1/abdm/nmr/college/applications',
     initiateCollegeWorkFlow: 'api/v1/abdm/nmr/college/applications/status',
+    admindesignation: 'api/v1/abdm/nmr/colleges/verifiers/designations',
+    adminVerifier: 'api/v1/abdm/nmr/colleges/{collegeId}/verifiers',
   },
   nmc: {
     getNMCProfileData: 'api/v1/abdm/nmr/nmc/user/{id}',

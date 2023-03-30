@@ -2,14 +2,18 @@ import { API } from '../../api/api-endpoints';
 import { GET, PATCH, POST, PUT } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import {
+  collegeAdminVerifier,
   collegeRegister,
   detailsOfDean,
   detailsOfRegistrar,
   getCollegeAdminData,
+  getCollegeAdminDesignation,
   getCollegeDeanData,
   getCollegeRegistrarData,
   // updateCollegeAdminProfile
   postInitiateCollegeWorkFlow,
+  registerCollege,
+  updateCollege,
 } from '../reducers/college-reducer';
 
 export const getCollegeAdminProfileData = (id) => async (dispatch) => {
@@ -190,6 +194,41 @@ export const registerCollegeDetails = (collegeDetails) => async (dispatch) => {
       });
   });
 };
+export const updateCollegeDetail = (collegeDetails) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: PUT,
+      url: API.common.college.replace('{id}', collegeDetails.id),
+
+      data: collegeDetails,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+    })
+      .then((response) => {
+        dispatch(updateCollege(response));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+export const registerCollegeDetail = (collegeDetails) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.common.allColleges,
+      data: collegeDetails,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+    })
+      .then((response) => {
+        dispatch(registerCollege(response));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
 export const initiateCollegeWorkFlow = (body) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
@@ -206,6 +245,41 @@ export const initiateCollegeWorkFlow = (body) => async (dispatch) => {
       })
       .catch((error) => {
         dispatch(postInitiateCollegeWorkFlow({ data: [], isError: true, isLoading: false }));
+        return reject(error);
+      });
+  });
+};
+
+export const getAdminDesignation = () => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: GET,
+      url: API.college.admindesignation,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+    })
+      .then((response) => {
+        dispatch(getCollegeAdminDesignation(response));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const getAdminVerifier = (body) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.college.adminVerifier.replace('{collegeId}', body?.college_id),
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      data: body,
+    })
+      .then((response) => {
+        dispatch(collegeAdminVerifier(response));
+        return resolve(response);
+      })
+      .catch((error) => {
         return reject(error);
       });
   });
