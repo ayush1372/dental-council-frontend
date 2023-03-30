@@ -38,10 +38,6 @@ function NMCCollegeRegistration() {
     universitiesList,
     // getCollegeDetail,
   } = useSelector((state) => state.common);
-  // eslint-disable-next-line no-console
-  console.log('universitiesList===', universitiesList);
-  // eslint-disable-next-line no-console
-  console.log('statesList===', statesList);
 
   let collegesList = [];
   collegesList.push(...allcollegesList.data, { id: 'other', name: 'other' });
@@ -207,8 +203,6 @@ function NMCCollegeRegistration() {
       return selectedName?.name;
     }
     if (data === 'universityData') {
-      // eslint-disable-next-line no-console
-      console.log('universitiesList?.data?', universitiesList?.data);
       let selectedName = universitiesList?.data?.find((obj) => obj.id === fieldId);
       return selectedName?.name;
     }
@@ -375,10 +369,10 @@ function NMCCollegeRegistration() {
             error={errors.MobileNumber?.message}
             {...register('MobileNumber', {
               required: 'Mobile number is required',
-              // pattern: {
-              //   value: /^\d{10}$/i,
-              //   message: 'Provide a valid mobile number',
-              // },
+              pattern: {
+                value: /^\d{10}$/i,
+                message: 'Provide a valid mobile number',
+              },
             })}
           />
         </Grid>
@@ -571,10 +565,10 @@ function NMCCollegeRegistration() {
             error={errors.Pincode?.message}
             {...register('Pincode', {
               required: 'Pin code is required',
-              // pattern: {
-              //   value: /^[0-9]{6}$/i,
-              //   message: 'Please enter valid pincode',
-              // },
+              pattern: {
+                value: /^[0-9]{6}$/i,
+                message: 'Please enter valid pincode',
+              },
             })}
           />
         </Grid>
@@ -598,11 +592,11 @@ function NMCCollegeRegistration() {
             error={errors.Email?.message}
             {...register('Email', {
               required: 'Email id is required',
-              // pattern: {
-              //   value:
-              //     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-              //   message: 'Provide valid email id',
-              // },
+              pattern: {
+                value:
+                  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
+                message: 'Provide valid email id',
+              },
             })}
           />
         </Grid>
