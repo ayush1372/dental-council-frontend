@@ -135,7 +135,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
         elementData?.id === RegisteredWithCouncil ||
         elementData?.id === RegisteredWithCouncil ||
         RegisteredWithCouncil?.id === elementData?.id ||
-        RegisteredWithCouncil?.name === elementData?.name
+        RegisteredWithCouncil?.name === elementData?.name ||
+        RegisteredWithCouncil === elementData?.name
       ) {
         councilData.push(elementData);
       }
