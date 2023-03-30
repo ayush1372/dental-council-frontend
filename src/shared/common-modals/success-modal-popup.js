@@ -33,7 +33,7 @@ export default function SuccessModalPopup({
   const theme = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const params = useParams();
+
   const loggedInUserType = useSelector((state) => state?.common?.loggedInUserType);
 
   const handleCloseModal = () => {
@@ -94,12 +94,13 @@ export default function SuccessModalPopup({
   };
 
   const navigateSetPassword = () => {
-    navigate('/reset-password');
+    navigate('/');
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
     });
   };
+
   return (
     <Modal open={open} onClose={handleClose} sx={{ mt: 15 }}>
       <Container
