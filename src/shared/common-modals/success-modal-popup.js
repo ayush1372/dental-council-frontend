@@ -28,10 +28,12 @@ export default function SuccessModalPopup({
   isHpIdCreated,
   successRegistration,
   existHprId,
+  fromCollegeRegistration,
 }) {
   const theme = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  // const params = useParams();
   const loggedInUserType = useSelector((state) => state?.common?.loggedInUserType);
 
   const handleCloseModal = () => {
@@ -90,6 +92,14 @@ export default function SuccessModalPopup({
   const navigateLogin = () => {
     navigate('/login-page', { state: { loginFormname: 'Doctor' } });
   };
+
+  const navigateSetPassword = () => {
+    navigate(`/reset-password`);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
   return (
     <Modal open={open} onClose={handleClose} sx={{ mt: 15 }}>
       <Container
@@ -144,6 +154,8 @@ export default function SuccessModalPopup({
                 ? navigateToSetPassword
                 : successRegistration
                 ? navigateLogin
+                : fromCollegeRegistration
+                ? navigateSetPassword
                 : handleCloseModal
             }
           >
