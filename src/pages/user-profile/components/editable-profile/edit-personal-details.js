@@ -838,6 +838,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 defaultChecked={
                   personalDetails?.communication_address?.is_same_address === 'true' ? true : false
                 }
+                checked={isSameAddress}
                 onChange={(e) => {
                   setIsSameAddress(e.target.checked);
                 }}

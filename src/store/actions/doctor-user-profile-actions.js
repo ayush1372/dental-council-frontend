@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { API } from '../../api/api-endpoints';
-import { GET, POST, PUT } from '../../constants/requests';
+import { GET, PATCH, POST, PUT } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import { updateTrackApplicationTableData } from '../reducers/common-reducers';
 import {
@@ -253,6 +253,25 @@ export const additionalQualificationsData = (formData, healthProfessionalId) => 
       ),
       headers: { 'Content-Type': 'application/json' },
       data: formData,
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const updateDoctorContactDetails = (body, doctor_profile_id) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: PATCH,
+      url: API.DoctorUserProfileData.personalDetails.replace(
+        '{healthProfessionalId}',
+        doctor_profile_id
+      ),
+      data: body,
     })
       .then((response) => {
         return resolve(response);
