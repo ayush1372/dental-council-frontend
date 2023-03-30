@@ -34,11 +34,14 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     (state) => state?.common
   );
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const { raisedQueryData } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
 
   const [isSameAddress, setIsSameAddress] = useState(
     personalDetails?.communication_address?.is_same_address === 'true' ? true : false
   );
-  const { personal_details, communication_address, imr_details } = personalDetails || {};
+  const { personal_details, communication_address, imr_details, work_flow_status_id } =
+    personalDetails || {};
+
   const {
     salutation,
     aadhaar_token,
@@ -375,6 +378,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     return villageData[0];
   };
 
+  //Helper Method to get the data of the query raised against the field
+  const getQueryRaised = (fieldName) => {
+    let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
+    return query === undefined;
+  };
+
   async function onHandleSave() {
     const {
       MiddleName,
@@ -555,6 +564,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 },
               })}
               error={errors.FatherName?.message}
+              InputProps={{
+                readOnly: work_flow_status_id === 3 ? getQueryRaised('Fathers Name') : false,
+              }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -578,6 +590,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 },
               })}
               error={errors.MotherName?.message}
+              InputProps={{
+                readOnly: work_flow_status_id === 3 ? getQueryRaised('Mothers Name') : false,
+              }}
             />
           </Grid>
         </Grid>
@@ -604,6 +619,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 },
               })}
               error={errors.SpouseName?.message}
+              InputProps={{
+                readOnly: work_flow_status_id === 3 ? getQueryRaised('Spouse Name') : false,
+              }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -625,7 +643,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 required: 'Nationality is required',
               })}
               InputProps={{
-                readOnly: loggedInUserType === 'SMC' ? false : true,
+                readOnly:
+                  loggedInUserType === 'SMC'
+                    ? false
+                    : work_flow_status_id === 3
+                    ? getQueryRaised('Nationality')
+                    : false,
               }}
               options={createSelectFieldData(nationalities)}
             />
@@ -690,7 +713,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 shrink: true,
               }}
               InputProps={{
-                readOnly: loggedInUserType === 'SMC' ? false : true,
+                readOnly:
+                  loggedInUserType === 'SMC'
+                    ? false
+                    : work_flow_status_id === 3
+                    ? getQueryRaised('Date of Birth')
+                    : true,
               }}
               required={true}
               defaultValue={getValues().dateOfBirth}
@@ -830,7 +858,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                   name={'House'}
                   fullWidth
                   placeholder="House Address"
-                  disabled={isSameAddress}
+                  disabled={
+                    isSameAddress
+                      ? isSameAddress
+                      : work_flow_status_id === 3
+                      ? getQueryRaised('House')
+                      : false
+                  }
                   required={isSameAddress ? false : true}
                   sx={{
                     input: {
@@ -863,7 +897,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                   variant="outlined"
                   name={'Street'}
                   placeholder="Enter Street"
-                  disabled={isSameAddress}
+                  disabled={
+                    isSameAddress
+                      ? isSameAddress
+                      : work_flow_status_id === 3
+                      ? getQueryRaised('Street')
+                      : false
+                  }
                   fullWidth
                   sx={{
                     input: {
@@ -892,7 +932,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                   variant="outlined"
                   name={'Landmark'}
                   placeholder="Landmark"
-                  disabled={isSameAddress}
+                  disabled={
+                    isSameAddress
+                      ? isSameAddress
+                      : work_flow_status_id === 3
+                      ? getQueryRaised('Landmark')
+                      : false
+                  }
                   sx={{
                     input: {
                       backgroundColor: isSameAddress ? 'grey2.main' : '',
@@ -928,7 +974,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 variant="outlined"
                 name={'Locality'}
                 placeholder="Locality"
-                disabled={isSameAddress}
+                disabled={
+                  isSameAddress
+                    ? isSameAddress
+                    : work_flow_status_id === 3
+                    ? getQueryRaised('Locality')
+                    : false
+                }
                 sx={{
                   input: {
                     backgroundColor: isSameAddress ? 'grey2.main' : '',
@@ -996,7 +1048,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 }
                 value={isSameAddress ? personalDetails?.kyc_address?.state?.id : getValues()?.State}
                 required={isSameAddress ? false : true}
-                disabled={isSameAddress}
+                disabled={
+                  isSameAddress
+                    ? isSameAddress
+                    : work_flow_status_id === 3
+                    ? getQueryRaised('State/Union Territory')
+                    : false
+                }
                 {...register(
                   'State',
                   !isSameAddress
@@ -1041,7 +1099,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                     : getValues()?.District
                 }
                 required={isSameAddress ? false : true}
-                disabled={isSameAddress}
+                disabled={
+                  isSameAddress
+                    ? isSameAddress
+                    : work_flow_status_id === 3
+                    ? getQueryRaised('District')
+                    : false
+                }
                 {...register(
                   'District',
                   !isSameAddress &&
@@ -1068,7 +1132,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 error={errors.SubDistrict?.message}
                 name="SubDistrict"
                 placeholder="Sub District"
-                disabled={isSameAddress}
+                disabled={
+                  isSameAddress
+                    ? isSameAddress
+                    : work_flow_status_id === 3
+                    ? getQueryRaised('Sub District')
+                    : false
+                }
                 defaultValue={
                   isSameAddress
                     ? personalDetails?.kyc_address?.sub_district?.iso_code
@@ -1103,7 +1173,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 value={
                   isSameAddress ? personalDetails?.kyc_address?.village?.id : getValues()?.Area
                 }
-                disabled={isSameAddress}
+                disabled={
+                  isSameAddress
+                    ? isSameAddress
+                    : work_flow_status_id === 3
+                    ? getQueryRaised('City/Town/Village')
+                    : false
+                }
                 required={true}
                 {...register('Area')}
                 options={createSelectFieldData(citiesList, 'id')}
@@ -1136,7 +1212,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 defaultValue={
                   isSameAddress ? personalDetails?.kyc_address?.pincode : getValues()?.PostalCode
                 }
-                disabled={isSameAddress}
+                disabled={
+                  isSameAddress
+                    ? isSameAddress
+                    : work_flow_status_id === 3
+                    ? getQueryRaised('Pincode')
+                    : false
+                }
                 {...register(
                   'PostalCode',
                   !isSameAddress && {
