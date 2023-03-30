@@ -47,6 +47,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   const { personalDetails, updatedPersonalDetails } = useSelector(
     (state) => state?.doctorUserProfileReducer
   );
+  const { work_flow_status_id } = personalDetails || {};
+  const { raisedQueryData } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
 
   const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
   const { registration_detail_to, qualification_detail_response_tos } = registrationDetails || {};
@@ -336,6 +338,12 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     setQualificationFilesData({ ...qualificationFilesData });
   };
 
+  //Helper Method to get the data of the query raised against the field
+  const getQueryRaised = (fieldName) => {
+    let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
+    return query === undefined;
+  };
+
   return (
     <Box
       boxShadow={1}
@@ -361,12 +369,13 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
-              Registered With Council
+              Registered with Council
               <Typography component="span" color="error.main">
                 *
               </Typography>
             </Typography>
-            {personalDetails?.personal_details?.is_new ? (
+            {personalDetails?.personal_details?.is_new ||
+            (work_flow_status_id === 3 && !getQueryRaised('Registered with council')) ? (
               <Select
                 fullWidth
                 name="RegisteredWithCouncil"
@@ -420,7 +429,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
             <TextField
               variant="outlined"
               name={'RegistrationNumber'}
-              // Registration
               type="number"
               required
               fullWidth
@@ -428,10 +436,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               error={errors.RegistrationNumber?.message}
               {...register('RegistrationNumber', {
                 required: 'Registration number is required',
-                pattern: {
-                  // value: /^[0-9]{100}$/i,
-                  message: 'Please Enter Valid Registration number',
-                },
+                pattern: { message: 'Please Enter Valid Registration number' },
               })}
               sx={{
                 input: {
@@ -445,6 +450,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 readOnly:
                   loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
                     ? false
+                    : work_flow_status_id === 3
+                    ? !getQueryRaised('Registration Number')
                     : true,
               }}
             />
@@ -483,6 +490,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 readOnly:
                   loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
                     ? false
+                    : work_flow_status_id === 3
+                    ? !getQueryRaised('Registration Date')
                     : true,
               }}
               InputLabelProps={{
@@ -519,6 +528,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               ]}
               required={true}
               error={errors.registration?.message}
+              disabled={work_flow_status_id === 3 ? getQueryRaised('Registration') : false}
             />
           </Grid>
           {isRenewable === '1' && (
@@ -543,6 +553,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 inputProps={{
                   min: new Date().toISOString().split('T')[0],
                 }}
+                disabled={work_flow_status_id === 3 ? getQueryRaised('Due Date of Renewal') : false}
               />
             </Grid>
           )}
@@ -558,6 +569,11 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               fileData={registrationFileData}
               setFileData={setRegistrationFileData}
               uploadFileLabel="Upload the registration certificate"
+              disabled={
+                work_flow_status_id === 3
+                  ? getQueryRaised('Upload the registration certificate')
+                  : false
+              }
             />
           </Grid>
         </Grid>
