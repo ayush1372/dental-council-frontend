@@ -83,26 +83,11 @@ const PersonalDetails = ({ personalDetails }) => {
             <Typography component="span" color="error.main">
               *
             </Typography>
-            {getQueryRaised('Name') !== undefined && (
-              <Tooltip title={getQueryRaised('Name')}>
-                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
-              </Tooltip>
-            )}
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               Dr. {full_name ? full_name : ''}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => {
-                  setOpenModal(true);
-                  setQueryRaisedField('Name');
-                }}
-                fontSize="width30"
-              />
-            )}{' '}
           </Grid>
         </Grid>
         <Grid item xs={12} md={3}>
@@ -188,26 +173,11 @@ const PersonalDetails = ({ personalDetails }) => {
             <Typography component="span" color="error.main">
               *
             </Typography>
-            {getQueryRaised('Gender') !== undefined && (
-              <Tooltip title={getQueryRaised('Gender')}>
-                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
-              </Tooltip>
-            )}
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {gender && convertGender(gender)}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => {
-                  setOpenModal(true);
-                  setQueryRaisedField('Gender');
-                }}
-                fontSize="width30"
-              />
-            )}{' '}
           </Grid>
         </Grid>
 
@@ -217,26 +187,11 @@ const PersonalDetails = ({ personalDetails }) => {
             <Typography component="span" color="error.main">
               *
             </Typography>
-            {getQueryRaised('Date of Birth') !== undefined && (
-              <Tooltip title={getQueryRaised('Date of Birth')}>
-                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
-              </Tooltip>
-            )}
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {date_of_birth ? date_of_birth : ''}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => {
-                  setOpenModal(true);
-                  setQueryRaisedField('Date of Birth');
-                }}
-                fontSize="width30"
-              />
-            )}
           </Grid>
         </Grid>
 
@@ -246,26 +201,11 @@ const PersonalDetails = ({ personalDetails }) => {
             <Typography component="span" color="error.main">
               *
             </Typography>
-            {getQueryRaised('Nationality') !== undefined && (
-              <Tooltip title={getQueryRaised('Nationality')}>
-                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
-              </Tooltip>
-            )}
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {nationality}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => {
-                  setOpenModal(true);
-                  setQueryRaisedField('Nationality');
-                }}
-                fontSize="width30"
-              />
-            )}{' '}
           </Grid>
         </Grid>
       </Grid>
