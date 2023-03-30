@@ -13,6 +13,7 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
   const logInDoctorStatus = useSelector(
     (state) => state?.loginReducer?.loginData?.data?.blacklisted
   );
+
   return (
     <List sx={{ p: 0 }}>
       {DrawerOptions?.map((item, index) => (

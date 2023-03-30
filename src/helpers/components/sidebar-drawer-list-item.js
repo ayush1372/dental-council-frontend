@@ -28,8 +28,10 @@ import { getDoctorTrackApplicationData } from '../../store/actions/doctor-user-p
 
 function SideDrawerListItem() {
   const { userActiveTab } = useSelector((state) => state.common);
+
   return userActiveTab;
 }
+
 export const doctorTabs = [
   {
     option: 0,
@@ -215,9 +217,15 @@ export const colgTabs = [
     icon: <AppRegistrationIcon />,
     element: <CollegeDean />,
   },
-
   {
     option: 5,
+    name: 'Create Verifier',
+    tabName: 'Create Verifier',
+    icon: <AppRegistrationIcon />,
+    element: <CollegeVerifier />,
+  },
+  {
+    option: 6,
     name: 'Change Password',
     tabName: 'change-password',
     icon: <PasswordIcon />,
@@ -277,12 +285,5 @@ export const colgDeanRegTabs = [
     tabName: 'change-password',
     icon: <PasswordIcon />,
     element: <ChangePassword tabName={SideDrawerListItem} />,
-  },
-  {
-    option: 3,
-    name: 'Create Verifier',
-    tabName: 'Create Verifier',
-    icon: <AppRegistrationIcon />,
-    element: <CollegeVerifier />,
   },
 ];

@@ -99,7 +99,6 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
       searchParams(trackData, profileId);
     }
     if (exportData?.data?.college_details) {
-      alert('hi');
       trackData.search = getValues().collegeApprovalId;
       trackData.value = getValues().collegeApprovalFilter;
       searchParams(trackData);

@@ -94,7 +94,7 @@ export default function SuccessModalPopup({
   };
 
   const navigateSetPassword = () => {
-    navigate(`/reset-password`);
+    navigate('/reset-password');
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
