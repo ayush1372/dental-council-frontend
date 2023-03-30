@@ -80,6 +80,10 @@ export default function SuccessModalPopup({
       } else {
         dispatch(getCardCount());
         dispatch(changeUserActiveTab(ActiveTab));
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
       }
     }
   };
