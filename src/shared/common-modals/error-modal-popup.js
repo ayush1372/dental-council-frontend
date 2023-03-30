@@ -46,11 +46,11 @@ export default function ErrorModalPopup({
             <Typography
               data-testid="popup-input-success-text"
               variant="h2"
-              color="error.main"
+              color="primary.main"
               display="flex"
               alignItems="felx-start"
             >
-              Error !
+              Info !
             </Typography>
             <Typography
               display="flex"
