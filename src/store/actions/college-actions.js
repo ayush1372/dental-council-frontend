@@ -2,10 +2,12 @@ import { API } from '../../api/api-endpoints';
 import { GET, PATCH, POST, PUT } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import {
+  collegeAdminVerifier,
   collegeRegister,
   detailsOfDean,
   detailsOfRegistrar,
   getCollegeAdminData,
+  getCollegeAdminDesignation,
   getCollegeDeanData,
   getCollegeRegistrarData,
   // updateCollegeAdminProfile
@@ -243,6 +245,41 @@ export const initiateCollegeWorkFlow = (body) => async (dispatch) => {
       })
       .catch((error) => {
         dispatch(postInitiateCollegeWorkFlow({ data: [], isError: true, isLoading: false }));
+        return reject(error);
+      });
+  });
+};
+
+export const getAdminDesignation = () => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: GET,
+      url: API.college.admindesignation,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+    })
+      .then((response) => {
+        dispatch(getCollegeAdminDesignation(response));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const getAdminVerifier = (body) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.college.adminVerifier.replace('{collegeId}', body?.college_id),
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      data: body,
+    })
+      .then((response) => {
+        dispatch(collegeAdminVerifier(response));
+        return resolve(response);
+      })
+      .catch((error) => {
         return reject(error);
       });
   });
