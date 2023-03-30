@@ -49,7 +49,7 @@ export default function ProfileImage(props) {
     },
   }));
   const classes = useStyles(theme);
-  useEffect(() => {}, [profileImage, imageChanged]);
+  useEffect(() => {}, [profileImage, imageChanged, updatedProfileImage]);
   const changeImage = (e) => {
     const requestObjNew = new FormData();
     if (
@@ -103,7 +103,7 @@ export default function ProfileImage(props) {
                   : avtarImg
               }
               className={styles.profileImage}
-              alt=""
+              alt="avtarImg"
             />
             <FormGroup />
             <Box position="absolute" right="0" bottom="0">
@@ -130,7 +130,13 @@ export default function ProfileImage(props) {
             <img
               alt="avtarImg"
               className={styles.profileImage}
-              src={avtarImg}
+              src={
+                profileImage
+                  ? imageChanged
+                    ? 'data:image/*;base64,' + updatedProfileImage
+                    : 'data:image/*;base64,' + profileImage
+                  : avtarImg
+              }
               data-testid="profileImg"
             />
           </Box>

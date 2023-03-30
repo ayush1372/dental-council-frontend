@@ -20,7 +20,7 @@ const ConstantDetails = () => {
     (state) => state?.doctorUserProfileReducer?.personalDetails?.communication_address?.email
   );
   const mobileNumber = useSelector(
-    (state) => state?.doctorUserProfileReducer?.personalDetails?.communication_address?.mobile
+    (state) => state?.doctorUserProfileReducer?.personalDetails?.personal_details?.mobile
   );
 
   const theme = useTheme();
