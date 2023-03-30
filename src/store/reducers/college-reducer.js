@@ -10,6 +10,8 @@ const initialState = {
   deanDetails: { data: [], isLoading: Boolean(true), isError: false },
   collegeRegisterDetails: { data: [], isLoading: Boolean(true), isError: false },
   initiateCollegeWorkFlow: { data: [], isLoading: Boolean(true), isError: false },
+  collegeAdminVerifier: { data: [], isLoading: Boolean(true), isError: false },
+  collegeAdminDesignation: { data: [], isLoading: Boolean(true), isError: false },
   updateCollegeDetails: { data: [], isLoading: Boolean(true), isError: false },
   registerCollegeDetail: { data: [], isLoading: Boolean(true), isError: false },
 };
@@ -26,6 +28,12 @@ const collegeReducer = createSlice({
     },
     getCollegeDeanData: (state, action) => {
       state.collegeData = action.payload;
+    },
+    collegeAdminVerifier: (state, action) => {
+      state.collegeAdminVerifier = action.payload;
+    },
+    getCollegeAdminDesignation: (state, action) => {
+      state.collegeAdminDesignation = action.payload;
     },
     updateCollegeAdminProfile: (state, action) => {
       state.collegeData = action.payload;
@@ -56,6 +64,8 @@ export const {
   getCollegeAdminData,
   getCollegeRegistrarData,
   getCollegeDeanData,
+  collegeAdminVerifier,
+  getCollegeAdminDesignation,
   updateCollegeAdminProfile,
   detailsOfRegistrar,
   detailsOfDean,
