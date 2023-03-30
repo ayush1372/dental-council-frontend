@@ -2,7 +2,7 @@ import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined';
 import { Box, Container, Modal, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 
 import {
   colgTabs,
@@ -28,6 +28,7 @@ export default function SuccessModalPopup({
   isHpIdCreated,
   successRegistration,
   existHprId,
+  fromCollegeRegistration,
   changeUserData,
   navigateToTrackApplication,
   fetchDoctorUserPersonalDetails,
@@ -36,6 +37,10 @@ export default function SuccessModalPopup({
   const theme = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const params = useParams();
+  // eslint-disable-next-line no-console
+  console.log('params is ', params);
+
   const loggedInUserType = useSelector((state) => state?.common?.loggedInUserType);
 
   const handleCloseModal = () => {
@@ -94,6 +99,15 @@ export default function SuccessModalPopup({
   const navigateLogin = () => {
     navigate('/login-page', { state: { loginFormname: 'Doctor' } });
   };
+
+  const navigateSetPassword = () => {
+    navigate('/');
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
   const closeSuccessModal = () => {
     setOpen(false);
     setChangeUserData(false);
@@ -153,6 +167,8 @@ export default function SuccessModalPopup({
                 ? navigateToSetPassword
                 : successRegistration
                 ? navigateLogin
+                : fromCollegeRegistration
+                ? navigateSetPassword
                 : changeUserData
                 ? closeSuccessModal
                 : navigateToTrackApplication

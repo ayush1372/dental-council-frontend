@@ -5,7 +5,8 @@ import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { TextField } from '../../../../src/ui/core/form/textfield/textfield';
+// import { TextField } from '../../../../src/ui/core/form/textfield/textfield';
+import { TextField } from '../../../../src/ui/core';
 import { createEditFieldData } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
@@ -64,8 +65,8 @@ function NMCCollegeRegistration() {
     getValues,
     setValue,
     clearErrors,
-    reset,
     formState: { errors },
+    reset,
   } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -96,7 +97,7 @@ function NMCCollegeRegistration() {
     if (showCollegeName === true) {
       const collegeDetailValues = {
         id: getValues().CollegeNameID,
-        name: getValues().CollegeName,
+        name: getValues().Name,
         state_id: getValues().StateID,
         course_id: null,
         college_code: getValues().CollegeCode,
@@ -182,16 +183,17 @@ function NMCCollegeRegistration() {
           );
         });
     }
+    reset();
   };
 
-  // const handleInput = (e) => {
-  // e.preventDefault();
-  // if (e.target.value.length > 0) {
-  //   e.target.value = isNaN(e.target.value)
-  //     ? e.target.value.toString().slice(0, -1)
-  //     : Math.max(0, parseInt(e.target.value)).toString().slice(0, 10);
-  // }
-  // };
+  const handleInput = (e) => {
+    e.preventDefault();
+    if (e.target.value.length > 0) {
+      e.target.value = isNaN(e.target.value)
+        ? e.target.value.toString().slice(0, -1)
+        : Math.max(0, parseInt(e.target.value)).toString().slice(0, 10);
+    }
+  };
 
   const getSelecetedName = (fieldId, data) => {
     if (data === 'councilData') {
@@ -227,10 +229,10 @@ function NMCCollegeRegistration() {
           setValue('Website', response?.data?.website);
         }
         if (response?.data?.address_line1) {
-          setValue(' AddressLine1', response?.data?.address_line1);
+          setValue('AddressLine1', response?.data?.address_line1);
         }
         if (response?.data?.address_line2) {
-          setValue(' AddressLine2', response?.data?.address_line2);
+          setValue('AddressLine2', response?.data?.address_line2);
         }
         if (response?.data?.pin_code) {
           setValue('Pincode', response?.data?.pin_code);
@@ -365,7 +367,7 @@ function NMCCollegeRegistration() {
             name="MobileNumber"
             required
             placeholder={t('Enter Mobile Number')}
-            // onInput={(e) => handleInput(e)}
+            onInput={(e) => handleInput(e)}
             error={errors.MobileNumber?.message}
             {...register('MobileNumber', {
               required: 'Mobile number is required',
@@ -451,8 +453,9 @@ function NMCCollegeRegistration() {
             multiline
             rows={1}
             fullWidth
-            name={'AddressLine1'}
+            name="AddressLine1"
             placeholder="Enter Address line1"
+            error={errors.AddressLine1?.message}
             {...register('AddressLine1', {
               required: 'Address line1 is required',
             })}
@@ -469,8 +472,9 @@ function NMCCollegeRegistration() {
           <TextField
             fullWidth
             required
-            name={'AddressLine2'}
+            name="AddressLine2"
             placeholder={'Enter Address Line 2'}
+            error={errors.AddressLine2?.message}
             {...register('AddressLine2', {
               required: 'Address line 2 is required',
             })}
@@ -619,7 +623,9 @@ function NMCCollegeRegistration() {
         <SuccessModalPopup
           open={successModalPopup}
           setOpen={() => setSuccessModalPopup(false)}
-          text={'We have Shared the Password on given Email Id and Mobile No.'}
+          text={'We have Shared the Password link on given Email Id and Mobile No.'}
+          fromCollegeRegistration={true}
+          // successRegistration={true}
         />
       )}
     </Container>
