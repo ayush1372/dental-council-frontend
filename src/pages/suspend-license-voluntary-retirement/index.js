@@ -93,11 +93,11 @@ export function SuspendLicenseVoluntaryRetirement({
 
     let suspendDoctorBody = {
       hp_profile_id:
-        userActiveTab === 'voluntary-suspend-license' ||
-        selectedValue === 'suspend' ||
-        selectedValue === 'blacklist'
+        userActiveTab === 'voluntary-suspend-license'
           ? loginData?.data?.profile_id
-          : userActiveTab === 'track-status' && selectedSuspendLicenseProfile?.view?.value,
+          : userActiveTab === 'track-status'
+          ? selectedSuspendLicenseProfile?.view?.value
+          : '',
       application_type_id:
         selectedSuspension === 'voluntary-suspension-check'
           ? 3
