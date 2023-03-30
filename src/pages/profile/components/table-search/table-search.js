@@ -24,11 +24,6 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
   // const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   // const { councilNames } = useSelector((state) => state.common);
 
-  // eslint-disable-next-line no-console
-  console.log(
-    'exportData?.data?.health_professional_details',
-    exportData?.data?.health_professional_details
-  );
   const profileId = useSelector((state) => state.loginReducer.loginData.data.profile_id);
 
   const [applicationTypeValue, setApplicationTypeValue] = useState(false);

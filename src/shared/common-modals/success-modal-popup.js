@@ -2,7 +2,7 @@ import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined';
 import { Box, Container, Modal, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 
 import {
   colgTabs,
@@ -33,7 +33,7 @@ export default function SuccessModalPopup({
   const theme = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const params = useParams();
+  const params = useParams();
   const loggedInUserType = useSelector((state) => state?.common?.loggedInUserType);
 
   const handleCloseModal = () => {
@@ -94,12 +94,13 @@ export default function SuccessModalPopup({
   };
 
   const navigateSetPassword = () => {
-    navigate(`/reset-password`);
+    navigate('/verifier/reset-password/' + { params });
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
     });
   };
+
   return (
     <Modal open={open} onClose={handleClose} sx={{ mt: 15 }}>
       <Container
