@@ -153,63 +153,75 @@ const ReadRegisterAndAcademicDetails = ({
           >
             Back
           </Button>
-          {userActiveTab === 'dashboard' && selectedAcademicStatus?.toUpperCase() === 'PENDING' && (
-            <Box mt={2}>
-              <PopupState>
-                {(popupState) => (
-                  <React.Fragment>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      {...bindTrigger(popupState)}
-                      sx={{
-                        mr: 2,
-                        mb: {
-                          xs: 1,
-                          md: 0,
-                        },
-                        width: {
-                          xs: '100%',
-                          md: 'fit-content',
-                        },
-                      }}
-                      disabled={actionVerified}
-                    >
-                      Action <MoreHorizIcon />
-                    </Button>
+          {userActiveTab === 'dashboard' &&
+            (selectedAcademicStatus?.toUpperCase() === 'PENDING' ||
+              selectedAcademicStatus === 'Temporary Suspension Requests Received' ||
+              selectedAcademicStatus === 'Permanent Suspension Requests Received') && (
+              <Box mt={2}>
+                <PopupState>
+                  {(popupState) => (
+                    <React.Fragment>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        {...bindTrigger(popupState)}
+                        sx={{
+                          mr: 2,
+                          mb: {
+                            xs: 1,
+                            md: 0,
+                          },
+                          width: {
+                            xs: '100%',
+                            md: 'fit-content',
+                          },
+                        }}
+                        disabled={actionVerified}
+                      >
+                        Action <MoreHorizIcon />
+                      </Button>
 
-                    <Menu {...bindMenu(popupState)}>
-                      <MenuItem onClick={selectionChangeHandler} data-my-value={'verify'}>
-                        Verify
-                      </MenuItem>
-                      <MenuItem onClick={selectionChangeHandler} data-my-value={'raise'}>
-                        Raise a Query
-                      </MenuItem>
-                      {loggedInUserType === 'SMC' && (
-                        <MenuItem onClick={selectionChangeHandler} data-my-value={'forward'}>
-                          Forward
+                      <Menu {...bindMenu(popupState)}>
+                        <MenuItem onClick={selectionChangeHandler} data-my-value={'verify'}>
+                          Verify
                         </MenuItem>
-                      )}
-                      <MenuItem onClick={selectionChangeHandler} data-my-value={'reject'}>
-                        Reject
-                      </MenuItem>
-                      {personalDetails.nmr_id !== undefined && (
-                        <MenuItem onClick={selectionChangeHandler} data-my-value={'suspend'}>
-                          Permanent suspend
+                        {selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
+                          selectedAcademicStatus !== 'Permanent Suspension Requests Received' && (
+                            <MenuItem onClick={selectionChangeHandler} data-my-value={'raise'}>
+                              Raise a Query
+                            </MenuItem>
+                          )}
+                        {loggedInUserType === 'SMC' && (
+                          <MenuItem onClick={selectionChangeHandler} data-my-value={'forward'}>
+                            Forward
+                          </MenuItem>
+                        )}
+                        <MenuItem onClick={selectionChangeHandler} data-my-value={'reject'}>
+                          Reject
                         </MenuItem>
-                      )}
+                        {personalDetails.nmr_id !== undefined &&
+                          loggedInUserType === 'NMC' &&
+                          selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
+                          selectedAcademicStatus !== 'Permanent Suspension Requests Received' && (
+                            <MenuItem onClick={selectionChangeHandler} data-my-value={'suspend'}>
+                              Permanent suspend
+                            </MenuItem>
+                          )}
 
-                      {personalDetails.nmr_id !== undefined && (
-                        <MenuItem onClick={selectionChangeHandler} data-my-value={'blacklist'}>
-                          Temporary suspend
-                        </MenuItem>
-                      )}
-                    </Menu>
-                  </React.Fragment>
-                )}
-              </PopupState>
-            </Box>
-          )}
+                        {personalDetails.nmr_id !== undefined &&
+                          loggedInUserType === 'NMC' &&
+                          selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
+                          selectedAcademicStatus !== 'Permanent Suspension Requests Received' && (
+                            <MenuItem onClick={selectionChangeHandler} data-my-value={'blacklist'}>
+                              Temporary suspend
+                            </MenuItem>
+                          )}
+                      </Menu>
+                    </React.Fragment>
+                  )}
+                </PopupState>
+              </Box>
+            )}
         </Box>
       )}
       <Dialog
@@ -251,6 +263,7 @@ const ReadRegisterAndAcademicDetails = ({
                 showSuccessPopup={setShowSuccessPopup}
                 setSuccessPopupMessage={setSuccessPopupMessage}
                 setActionVerified={setActionVerified}
+                selectedAcademicStatus={selectedAcademicStatus}
               />
             </Box>
           ) : (
