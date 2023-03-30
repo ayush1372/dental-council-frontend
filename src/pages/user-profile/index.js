@@ -156,7 +156,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
     fetchDoctorUserPersonalDetails();
     fetchDoctorUserRegistrationDetails();
     if (personalDetails?.work_flow_status_id === 1) {
-      setIsApplicationPending(true);
+      setIsApplicationPending(false);
     }
     //commented work flow details
     // fetchDoctorUserWorkProfileDetails();
@@ -265,37 +265,31 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
                 }}
               ></Grid>
             )} */}
-            {isReadMode &&
-              isApplicationPending &&
-              !logInDoctorStatus &&
-              !(
-                personalDetails?.hp_profile_status_id === 5 ||
-                personalDetails?.hp_profile_status_id === 6
-              ) && (
-                <Grid
-                  item
-                  xs="auto"
-                  ml="auto"
+            {isReadMode && isApplicationPending && !logInDoctorStatus && (
+              <Grid
+                item
+                xs="auto"
+                ml="auto"
+                sx={{
+                  marginBottom: {
+                    xs: '10px',
+                    md: '0',
+                  },
+                }}
+              >
+                <Button
+                  startIcon={<EditIcon sx={{ mr: 1 }} />}
+                  variant="contained"
+                  color="secondary"
+                  onClick={openDoctorEditProfile}
                   sx={{
-                    marginBottom: {
-                      xs: '10px',
-                      md: '0',
-                    },
+                    width: '100%',
                   }}
                 >
-                  <Button
-                    startIcon={<EditIcon sx={{ mr: 1 }} />}
-                    variant="contained"
-                    color="secondary"
-                    onClick={openDoctorEditProfile}
-                    sx={{
-                      width: '100%',
-                    }}
-                  >
-                    Edit Profile
-                  </Button>
-                </Grid>
-              )}
+                  Edit Profile
+                </Button>
+              </Grid>
+            )}
 
             <Grid item xs={12} lg="auto">
               {!isReadMode && (
