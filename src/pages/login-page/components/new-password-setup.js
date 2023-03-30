@@ -26,7 +26,7 @@ const NewPasswordSetup = () => {
     (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.registration_number
   );
   const uniqueHpId = useSelector((state) =>
-    state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId.replace('@hpr.abdm', '')
+    state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId?.replace('@hpr.abdm', '')
   );
   const hrp_id = useSelector(
     (state) => state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId
@@ -138,7 +138,7 @@ const NewPasswordSetup = () => {
   return (
     <Box data-testid="new-password-setup" p={4} bgcolor="white.main" boxShadow="4" width="40%">
       <Typography mt={2} variant="h4" component="div" textAlign="center" data-testid="Password">
-        {`Welcome  ${uniqueHpId} ! `}
+        {uniqueHpId ? `Welcome ${uniqueHpId} ! ` : 'Welcome !'}
       </Typography>
       <Typography
         mt={2}

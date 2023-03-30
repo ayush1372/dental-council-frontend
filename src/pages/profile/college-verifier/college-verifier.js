@@ -216,8 +216,9 @@ function CollegeVerifier() {
           open={successModalPopup}
           setOpen={() => setSuccessModalPopup(false)}
           text={
-            'Verifier profile has been successfully created". Further details would be sent on verifier registered Email ID'
+            'Verifier profile has been successfully created. Further details would be sent on verifier registered Email ID'
           }
+          fromCollegeRegistration={true}
         />
       )}
     </>

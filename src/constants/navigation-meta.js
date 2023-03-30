@@ -121,6 +121,12 @@ const NAV_META = [
     title: 'Reset Password',
     component: 'reset-password',
   },
+  {
+    path: 'verifier/reset-password/:request_id', ////:request_id',
+    title: 'Reset Password',
+    component: 'reset-password',
+    isPrivate: 'PUBLIC',
+  },
 ];
 
 export const navbar_routes = [
