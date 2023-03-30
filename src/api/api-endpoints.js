@@ -51,6 +51,8 @@ export const API = {
     getCollegeDeanProfile: 'api/v1/abdm/nmr/college/{collegeId}/dean/{id}',
     register: 'api/v1/abdm/nmr/college/applications',
     initiateCollegeWorkFlow: 'api/v1/abdm/nmr/college/applications/status',
+    admindesignation: 'api/v1/abdm/nmr/colleges/verifiers/designations',
+    adminVerifier: 'api/v1/abdm/nmr/colleges/{collegeId}/verifiers',
   },
   nmc: {
     getNMCProfileData: 'api/v1/abdm/nmr/nmc/user/{id}',
