@@ -156,7 +156,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
     fetchDoctorUserPersonalDetails();
     fetchDoctorUserRegistrationDetails();
     if (personalDetails?.work_flow_status_id === 1) {
-      setIsApplicationPending(false);
+      setIsApplicationPending(true);
     }
     //commented work flow details
     // fetchDoctorUserWorkProfileDetails();
@@ -265,31 +265,37 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
                 }}
               ></Grid>
             )} */}
-            {isReadMode && isApplicationPending && !logInDoctorStatus && (
-              <Grid
-                item
-                xs="auto"
-                ml="auto"
-                sx={{
-                  marginBottom: {
-                    xs: '10px',
-                    md: '0',
-                  },
-                }}
-              >
-                <Button
-                  startIcon={<EditIcon sx={{ mr: 1 }} />}
-                  variant="contained"
-                  color="secondary"
-                  onClick={openDoctorEditProfile}
+            {isReadMode &&
+              isApplicationPending &&
+              !logInDoctorStatus &&
+              !(
+                personalDetails?.hp_profile_status_id === 5 ||
+                personalDetails?.hp_profile_status_id === 6
+              ) && (
+                <Grid
+                  item
+                  xs="auto"
+                  ml="auto"
                   sx={{
-                    width: '100%',
+                    marginBottom: {
+                      xs: '10px',
+                      md: '0',
+                    },
                   }}
                 >
-                  Edit Profile
-                </Button>
-              </Grid>
-            )}
+                  <Button
+                    startIcon={<EditIcon sx={{ mr: 1 }} />}
+                    variant="contained"
+                    color="secondary"
+                    onClick={openDoctorEditProfile}
+                    sx={{
+                      width: '100%',
+                    }}
+                  >
+                    Edit Profile
+                  </Button>
+                </Grid>
+              )}
 
             <Grid item xs={12} lg="auto">
               {!isReadMode && (

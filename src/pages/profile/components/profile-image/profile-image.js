@@ -12,7 +12,10 @@ import ReactivationLogo from '../../../../../src/assets/images/reactivate-licens
 import avtarImg from '../../../../assets/images/user.png';
 import ReactivateLicencePopup from '../../../../shared/reactivate-licence-popup/re-activate-licence-popup';
 import SuccessPopup from '../../../../shared/reactivate-licence-popup/success-popup';
-import { getUserProfileImage } from '../../../../store/actions/doctor-user-profile-actions';
+import {
+  getPersonalDetailsData,
+  getUserProfileImage,
+} from '../../../../store/actions/doctor-user-profile-actions';
 import successToast from '../../../../ui/core/toaster';
 
 import styles from './profile-image.module.scss';
@@ -33,9 +36,8 @@ export default function ProfileImage(props) {
   const [imageErrorMessage, setImageErrorMessage] = useState('');
   const [showReactivateLicense, setShowReactivateLicense] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
-  const logInDoctorStatus = useSelector(
-    (state) => state?.loginReducer?.loginData?.data?.blacklisted
-  );
+  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const { loginData } = useSelector((state) => state?.loginReducer);
   const theme = useTheme();
   const useStyles = makeStyles(() => ({
     avtarImage: {
@@ -87,6 +89,14 @@ export default function ProfileImage(props) {
   const closeReactivateLicense = () => {
     setShowReactivateLicense(false);
   };
+  const fetchDoctorUserPersonalDetails = () => {
+    dispatch(getPersonalDetailsData(loginData?.data?.profile_id))
+      .then(() => {})
+      .catch((allFailMsg) => {
+        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      });
+  };
+
   return (
     <Grid container className={styles.profileImageDetailsContainer}>
       <ToastContainer></ToastContainer>
@@ -145,7 +155,8 @@ export default function ProfileImage(props) {
       <Grid textAlign="center" item xs={12} mt={4}>
         <Typography variant="subtitle2">{props.name}</Typography>
       </Grid>
-      {logInDoctorStatus && (
+      {(personalDetails?.hp_profile_status_id === 5 ||
+        personalDetails?.hp_profile_status_id === 6) && (
         <Grid container mt={1}>
           <Grid item xs={12}>
             <Typography
@@ -188,7 +199,9 @@ export default function ProfileImage(props) {
           closeReactivateLicense={closeReactivateLicense}
         />
       )}{' '}
-      {showSuccessPopup && <SuccessPopup />}
+      {showSuccessPopup && (
+        <SuccessPopup fetchDoctorUserPersonalDetails={fetchDoctorUserPersonalDetails} />
+      )}
     </Grid>
   );
 }
