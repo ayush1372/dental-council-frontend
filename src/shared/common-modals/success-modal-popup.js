@@ -101,11 +101,12 @@ export default function SuccessModalPopup({
   };
 
   const navigateSetPassword = () => {
-    navigate('/');
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+    setOpen(false);
+    // navigate('/');
+    // window.scrollTo({
+    //   top: 0,
+    //   behavior: 'smooth',
+    // });
   };
 
   const closeSuccessModal = () => {

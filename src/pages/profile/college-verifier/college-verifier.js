@@ -31,7 +31,7 @@ function CollegeVerifier() {
     getValues,
     setValue,
     clearErrors,
-    // reset,
+    reset,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
@@ -57,6 +57,7 @@ function CollegeVerifier() {
     dispatch(getAdminVerifier(collegeDetailValues))
       .then(() => {
         setSuccessModalPopup(true);
+        reset();
       })
       .catch((error) => {
         successToast(
@@ -75,6 +76,10 @@ function CollegeVerifier() {
         ? e.target.value.toString().slice(0, -1)
         : Math.max(0, parseInt(e.target.value)).toString().slice(0, 10);
     }
+  };
+
+  const onCancel = () => {
+    reset();
   };
 
   return (
@@ -205,7 +210,7 @@ function CollegeVerifier() {
           >
             Submit
           </Button>
-          <Button variant="contained" color="grey" sx={{ mb: 6 }}>
+          <Button variant="contained" color="grey" sx={{ mb: 6 }} onClick={onCancel}>
             Cancel
           </Button>
         </Box>
