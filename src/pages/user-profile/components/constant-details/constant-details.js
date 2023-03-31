@@ -284,7 +284,7 @@ const ConstantDetails = () => {
           </Typography>
           <Box display="flex" alignItems="center">
             {!emailId || emailChange ? (
-              <Box display={'flex'} flexDirection="row">
+              <Box display={'flex'} flexDirection="column">
                 <Paper display={'flex'} alignItems="center" sx={{ p: '2px 4px' }}>
                   <InputBase
                     sx={{ ml: 1, flex: 1 }}
