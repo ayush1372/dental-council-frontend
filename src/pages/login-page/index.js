@@ -57,7 +57,7 @@ const LoginWrapper = () => {
           </Box>
           <Box mt={2} textAlign="center">
             <Typography color="grey.context" variant="h3">
-              Your Password has been <br />
+              Your password has been <br />
               successfully Changed.
             </Typography>
           </Box>
