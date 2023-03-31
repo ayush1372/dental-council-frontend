@@ -31,7 +31,7 @@ const ActivateLicence = (props) => {
   const dispatch = useDispatch();
   const [reactiveLicenseRequestHPApplicationData, setReactiveLicenseRequestHPApplicationData] =
     useState();
-  const [searchQueryParams, setSearchQueryParams] = useState();
+  // const [searchQueryParams, setSearchQueryParams] = useState();
 
   function createData(
     SNo,
@@ -99,6 +99,24 @@ const ActivateLicence = (props) => {
       type: 'string',
     },
   ];
+
+  useEffect(() => {
+    setPage(0);
+    getTableData(1);
+  }, []);
+
+  const getTableData = (pageNo) => {
+    let ActivateLicenseListbody = {
+      pageNo: pageNo,
+      offset: 10,
+    };
+
+    try {
+      dispatch(getActivateLicenseList(ActivateLicenseListbody)).then(() => {});
+    } catch (allFailMsg) {
+      successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    }
+  };
   const viewNameOfApplicant = (event, row) => {
     event.preventDefault();
     event.stopPropagation();
@@ -153,7 +171,21 @@ const ActivateLicence = (props) => {
       : [];
 
   const searchParams = (data) => {
-    setSearchQueryParams(data);
+    let ActivateLicenseListbody = {
+      pageNo: 1,
+      offset: 10,
+    };
+    if (data) {
+      ActivateLicenseListbody.search = data?.search;
+      ActivateLicenseListbody.value = data?.value;
+      try {
+        dispatch(getActivateLicenseList(ActivateLicenseListbody)).then(() => {});
+      } catch (allFailMsg) {
+        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      }
+    }
+
+    // setSearchQueryParams(data);
   };
 
   const handleChangePage = (event, newPage) => {
@@ -188,28 +220,6 @@ const ActivateLicence = (props) => {
         },
       ]
     : undefined;
-
-  useEffect(() => {
-    setPage(0);
-    getTableData(1);
-  }, [searchQueryParams]);
-
-  const getTableData = (pageNo) => {
-    let ActivateLicenseListbody = {
-      pageNo: pageNo,
-      offset: 10,
-      // search: searchQueryParams?.search ? searchQueryParams?.search : '',
-    };
-    if (searchQueryParams) {
-      ActivateLicenseListbody.search = searchQueryParams?.search;
-    }
-
-    try {
-      dispatch(getActivateLicenseList(ActivateLicenseListbody)).then(() => {});
-    } catch (allFailMsg) {
-      successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-    }
-  };
 
   const fetchReActivateLicenseHealthProfessionalId = (selectedRow, selectedStatus) => {
     let reActivateLicenseHealthProfessionalIdBody = {

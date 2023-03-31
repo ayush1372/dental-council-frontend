@@ -1,10 +1,10 @@
 import { API_HPRID } from '../../api/api-endpoints';
-import { accesstokenHprId } from '../../constants/common-data';
 import { POST } from '../../constants/requests';
-import { hpIdUseAxiosCall } from '../../hooks/use-axios';
+import { hpIdDemographicUseAxiosCall, hpIdUseAxiosCall } from '../../hooks/use-axios';
 import {
   aadhaarNumberData,
   aadhaarOtpDetails,
+  demographicAuthMobileDetails,
   typeOfOtp,
 } from '../reducers/user-aadhaar-verify-reducer';
 
@@ -15,7 +15,7 @@ export const sendAaadharOtp = (aadhaar) => async (dispatch) => {
       method: POST,
       url: API_HPRID.hpId.sendAadhaarOtp,
       data: { aadhaar },
-      headers: { Authorization: 'Bearer ' + accesstokenHprId },
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('hpridaccesstoken') },
     })
       .then((response) => {
         dispatch(aadhaarNumberData(response));
@@ -28,13 +28,29 @@ export const sendAaadharOtp = (aadhaar) => async (dispatch) => {
       });
   });
 };
+export const getDemographicAuthMobile = (data) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    hpIdDemographicUseAxiosCall({
+      method: POST,
+      url: API_HPRID.hpId.demographicAuthMobile,
+      data: data,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('hpridaccesstoken') },
+    })
+      .then((response) => {
+        dispatch(demographicAuthMobileDetails(response));
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
 export const validateOtpAadhaar = (dataValues) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     hpIdUseAxiosCall({
       method: POST,
       url: API_HPRID.hpId.verifyAadhaarOtp,
       data: dataValues,
-      headers: { Authorization: 'Bearer ' + accesstokenHprId },
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('hpridaccesstoken') },
     })
       .then((response) => {
         dispatch(aadhaarOtpDetails(response));

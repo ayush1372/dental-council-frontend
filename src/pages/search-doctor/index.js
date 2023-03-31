@@ -23,9 +23,11 @@ const tabNames = {
 
 const SearchDoctor = () => {
   const [doSearch, setDoSearch] = useState(false);
+  const [scrolldown, setScrollDown] = useState(false);
   const [searchData, setSearchData] = useState({});
   const [tabValue, setTabValue] = useState('Advance Search');
   const handleTabChange = (event, newValue) => {
+    setScrollDown(false);
     setTabValue(newValue);
   };
 
@@ -33,16 +35,18 @@ const SearchDoctor = () => {
   return (
     <Container maxWidth="lg">
       <Box>
-        <Box sx={{ boxShadow: '0px 3px 6px #00000014;' }} mt={6}>
+        <Box sx={{ boxShadow: '2' }} mt={6}>
           <Tabs
             value={tabValue}
             onChange={handleTabChange}
+            variant="scrollable"
             sx={{
               '.MuiTabs-flexContainer': {
                 button: {
                   borderBottom: '5px solid',
                   borderBottomColor: 'grey1.main',
                   backgroundColor: 'backgroundColor.light',
+                  flexGrow: 1,
                 },
                 'button.Mui-selected': {
                   backgroundColor: 'white.main',
@@ -55,16 +59,25 @@ const SearchDoctor = () => {
             }}
           >
             {Object.keys(tabNames).map((tabName) => (
-              <Tab value={tabName} label={tabName} key={tabName}></Tab>
+              <Tab
+                value={tabName}
+                label={tabName}
+                key={tabName}
+                sx={{ textTransform: 'none' }}
+              ></Tab>
             ))}
           </Tabs>
         </Box>
-        <Box sx={{ boxShadow: '0px 3px 6px #00000014;' }} p={2}>
-          <Component setDoSearch={setDoSearch} setSearchData={setSearchData} />
+        <Box sx={{ boxShadow: '2' }} p={2}>
+          <Component
+            setDoSearch={setDoSearch}
+            setSearchData={setSearchData}
+            setScrollDown={setScrollDown}
+          />
         </Box>
       </Box>
 
-      {doSearch && <SearchResults searchData={searchData} />}
+      {doSearch && <SearchResults searchData={searchData} scrolldown={scrolldown} />}
     </Container>
   );
 };

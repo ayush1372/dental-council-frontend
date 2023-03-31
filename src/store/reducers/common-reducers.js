@@ -29,6 +29,8 @@ const initialState = {
   activateLicenseList: { data: [], isLoading: Boolean(true), isError: false },
   trackApplicationTableData: { data: [], isLoading: Boolean(true), isError: false },
   changePasswordData: { data: [], isLoading: Boolean(true), isError: false },
+  selectedAcademicStatus: '',
+  breadcrumbsActivetab: '',
 };
 
 export const CommonActivity = createSlice({
@@ -110,6 +112,12 @@ export const CommonActivity = createSlice({
     setNewPassword: (state, action) => {
       state.changePasswordData = action.payload;
     },
+    setSelectedAcademicStatus: (state, action) => {
+      state.selectedAcademicStatus = action.payload;
+    },
+    setBreadcrumbsActivetab: (state, action) => {
+      state.breadcrumbsActivetab = action.payload;
+    },
   },
 });
 
@@ -140,6 +148,8 @@ export const {
   getActivateLicense,
   updateTrackApplicationTableData,
   setNewPassword,
+  setSelectedAcademicStatus,
+  setBreadcrumbsActivetab,
 } = CommonActivity.actions;
 
 export default CommonActivity.reducer;

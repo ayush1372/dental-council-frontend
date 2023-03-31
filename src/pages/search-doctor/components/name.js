@@ -1,4 +1,4 @@
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+// import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
@@ -7,7 +7,7 @@ import { searchDoctorDetails } from '../../../store/actions/doctor-search-action
 import { Button, TextField } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
 
-const Name = ({ setDoSearch, setSearchData }) => {
+const Name = ({ setDoSearch, setSearchData, setScrollDown }) => {
   const dispatch = useDispatch();
   const {
     formState: { errors },
@@ -28,6 +28,10 @@ const Name = ({ setDoSearch, setSearchData }) => {
     };
 
     setDoSearch(true);
+    window.scrollTo({
+      top: 400,
+      behavior: 'smooth',
+    });
 
     dispatch(searchDoctorDetails(searchValues))
       .then(() => {})
@@ -41,6 +45,7 @@ const Name = ({ setDoSearch, setSearchData }) => {
       });
 
     setSearchData(searchValues);
+    setScrollDown(true);
   };
   return (
     <Grid container spacing={2} mt={2}>
@@ -59,12 +64,12 @@ const Name = ({ setDoSearch, setSearchData }) => {
         <Grid>
           <Typography color="inputTextColor.main">
             Doctor Name{' '}
-            <ErrorOutlineIcon
+            {/* <ErrorOutlineIcon
               fontSize="width12"
               sx={{
                 color: 'textPrimary.secondary',
               }}
-            />
+            /> */}
           </Typography>
         </Grid>
         <TextField
@@ -83,6 +88,10 @@ const Name = ({ setDoSearch, setSearchData }) => {
           fullWidth
           defaultValue={getValues().DoctorName}
           {...register('DoctorName', {
+            pattern: {
+              value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
+              message: 'Please Enter Valid Name',
+            },
             // required: 'Doctor Name is Required',
             // maxLength: {
             //   value: 100,

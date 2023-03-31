@@ -1,4 +1,4 @@
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+// import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -9,7 +9,7 @@ import { searchDoctorDetails } from '../../../store/actions/doctor-search-action
 import { Button, Select, TextField } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
 
-const BlacklistedDoctor = ({ setDoSearch, setSearchData }) => {
+const BlacklistedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
   const { councilNames } = useSelector((state) => state.common);
   const dispatch = useDispatch();
   const {
@@ -52,6 +52,7 @@ const BlacklistedDoctor = ({ setDoSearch, setSearchData }) => {
       });
 
     setSearchData(searchValues);
+    setScrollDown(true);
   };
   return (
     <Grid container spacing={2} mt={2}>
@@ -87,6 +88,10 @@ const BlacklistedDoctor = ({ setDoSearch, setSearchData }) => {
           fullWidth
           defaultValue={getValues().DoctorName}
           {...register('DoctorName', {
+            pattern: {
+              value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
+              message: 'Please Enter Valid Name',
+            },
             // required: 'Doctor Name is Required',
             // maxLength: {
             //   value: 100,
@@ -100,12 +105,12 @@ const BlacklistedDoctor = ({ setDoSearch, setSearchData }) => {
         <Grid>
           <Typography color="inputTextColor.main">
             Registration Number{' '}
-            <ErrorOutlineIcon
+            {/* <ErrorOutlineIcon
               fontSize="width12"
               sx={{
                 color: 'textPrimary.secondary',
               }}
-            />
+            /> */}
           </Typography>
         </Grid>
         <TextField

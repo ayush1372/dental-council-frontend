@@ -1,19 +1,49 @@
-import SearchIcon from '@mui/icons-material/Search';
-import { Box, Grid, IconButton, InputAdornment } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+// import SearchIcon from '@mui/icons-material/Search';
+import { useEffect, useState } from 'react';
+
+import { Box, Grid } from '@mui/material';
+// import { useTheme } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
-// import { RegistrationCouncilNames } from '../../../../constants/common-data';
+import {
+  ActivateLicenceFieldList,
+  applicationStatus,
+  applicationType,
+  CollegeApprovalFieldList,
+  DashBoardCardsFieldList,
+  emptyData,
+  filterDropDownData,
+} from '../../../../../src/constants/common-data';
 import { createEditFieldData } from '../../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../../shared/autocomplete/searchable-dropdown';
 import ExportFiles from '../../../../shared/export-component/export-file';
-import { Button, Select, TextField } from '../../../../ui/core';
+import { Button, TextField } from '../../../../ui/core';
 
-export function TableSearch({ trackApplication, activateLicence, searchParams, exportData, flag }) {
-  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
-  const { councilNames } = useSelector((state) => state.common);
-  const theme = useTheme();
+export function TableSearch({ trackApplication, searchParams, exportData, flag }) {
+  // const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  // const { councilNames } = useSelector((state) => state.common);
+  const profileId = useSelector((state) => state.loginReducer.loginData.data.profile_id);
+
+  const [applicationTypeValue, setApplicationTypeValue] = useState(false);
+  const [statusTypeValue, setStatusTypeValue] = useState(false);
+  const [filterId, setFilterId] = useState('');
+  const [dashBoardCardId, setDashBoardCardId] = useState('');
+  useEffect(() => {
+    if (filterId === 'workFlowStatusId') {
+      setApplicationTypeValue(false);
+      setStatusTypeValue(true);
+    }
+    if (filterId === 'applicationTypeId') {
+      setApplicationTypeValue(true);
+      setStatusTypeValue(false);
+    }
+  }, [filterId]);
+
+  let trackData = {
+    pageNo: 1,
+    offset: 10,
+  };
   const {
     register,
     handleSubmit,
@@ -30,10 +60,45 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
       registrationCouncil: '',
       RegistrationCouncilId: '',
       search: '',
+      FilterValue: '',
+      Filter: '',
+      Status: '',
+      StatusId: '',
+      collegeApproval: '',
+      collegeApprovalId: '',
+      collegeApprovalFilter: '',
+      ActivateLicence: '',
+      ActivateLicenceId: '',
+      ActivateLicenceFilter: '',
+      dashBoardCard: '',
+      // dashBoardCardId: '',
+      dashBoardCardFilter: '',
     },
   });
-  const onClickFilterButtonHandler = (data) => {
-    searchParams(data);
+  const onClickSearchButtonHandler = () => {
+    if (exportData?.data?.dashboard_tolist) {
+      trackData.value = getValues().dashBoardCardFilter;
+      trackData.search = dashBoardCardId;
+      searchParams(trackData);
+    }
+
+    if (exportData?.data?.health_professional_details) {
+      trackData.search = getValues().ActivateLicenceId;
+      trackData.value = getValues().ActivateLicenceFilter;
+      searchParams(trackData);
+    }
+    if (trackApplication) {
+      trackData.value = getValues().StatusId;
+      trackData.search = filterId;
+
+      searchParams(trackData, profileId);
+    }
+    if (exportData?.data?.college_details) {
+      trackData.search = getValues().collegeApprovalId;
+      trackData.value = getValues().collegeApprovalFilter;
+      // dispatch(getDoctorTrackApplicationData(profileId, trackData));
+    }
+
     reset({
       filterByName: '',
       filterByRegNo: '',
@@ -43,145 +108,153 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
     });
   };
 
-  const onClickSearchButtonHandler = (data) => {
-    searchParams(data);
-    reset({
-      filterByName: '',
-      filterByRegNo: '',
-      registrationCouncil: '',
-      RegistrationCouncilId: '',
-      search: '',
-    });
+  const onApplicationChange = (currentValue) => {
+    setFilterId(currentValue.id);
   };
-
   return (
     <Box data-testid="table-search" mb={2}>
-      <Grid container sx={{ alignItems: 'flex-end' }}>
-        <Grid
-          item
-          md={trackApplication ? 5 : activateLicence ? 4 : 2}
-          xs={12}
-          mb={{ xs: 1, sm: 0 }}
-        >
-          <TextField
-            sx={{ mt: 1 }}
-            data-testid="freesearch"
-            inputProps={{ maxLength: 100 }}
-            fullWidth={true}
-            id="outlined-basic"
-            variant="outlined"
-            type="text"
-            name="search"
-            required={false}
-            placeholder={'Search'}
-            defaultValue={getValues().search}
-            error={errors.search?.message}
-            // label="Search by Application Type"
-            {...register('search')}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="end" sx={{ backgroundColor: theme.palette.grey.main }}>
-                  <IconButton
-                    sx={{
-                      p: 2,
-                      backgroundColor: theme.palette.grey.main,
-                      borderRadius: '0 5px 5px 0',
-                    }}
-                    onClick={handleSubmit(onClickSearchButtonHandler)}
-                  >
-                    <SearchIcon />
-                  </IconButton>
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Grid>
-
-        <Grid item md={trackApplication ? 7 : activateLicence ? 8 : 10} xs={12}>
+      <Grid container>
+        <Grid item xs={11}>
           <Grid container item xs={12} sx={{ alignItems: 'center', display: 'flex', gap: 1 }}>
             {trackApplication === true && (
               <>
-                <Grid item md={3} xs={12} ml="auto">
-                  <Select
-                    error={errors.Filter?.message}
+                <Grid item md={3} xs={12}>
+                  <SearchableDropdown
+                    fullWidth
                     name="Filter"
-                    defaultValue={getValues().Filter}
-                    placeholder="All Applications"
-                    options={[
-                      {
-                        label: 'Application',
-                        value: 'Application',
-                      },
-                    ]}
+                    placeholder="Please Select"
+                    clearErrors={clearErrors}
+                    {...register('Filter')}
+                    items={createEditFieldData(filterDropDownData)}
+                    onChange={(currentValue) => onApplicationChange(currentValue)}
                   />
                 </Grid>
                 <Grid item md={3} xs={12}>
-                  <Select
-                    error={errors.Date?.message}
-                    name="Date"
-                    defaultValue={getValues().Date}
-                    options={[
-                      {
-                        label: '01-01-0001',
-                        value: '01-01-0001',
-                      },
-                    ]}
+                  <SearchableDropdown
+                    fullWidth
+                    name="Status"
+                    items={
+                      applicationTypeValue
+                        ? createEditFieldData(applicationType)
+                        : statusTypeValue
+                        ? createEditFieldData(applicationStatus)
+                        : createEditFieldData(emptyData)
+                    }
+                    placeholder="Please Select"
+                    clearErrors={clearErrors}
+                    {...register('Status')}
+                    onChange={(currentValue) => {
+                      setValue('StatusId', currentValue.id);
+                    }}
                   />
                 </Grid>
               </>
             )}
             {trackApplication !== true && (
-              <Grid item md={3} xs={12} ml="auto">
-                <TextField
-                  data-testid="filterByName"
-                  inputProps={{ maxLength: 100 }}
-                  fullWidth
-                  id="outlined-basic"
-                  variant="outlined"
-                  type="text"
-                  name="filterByName"
-                  required={false}
-                  placeholder={'Filter by Name'}
-                  defaultValue={getValues().filterByName}
-                  error={errors.filterByName?.message}
-                  {...register('filterByName')}
-                />
+              <Grid item md={3} xs={12}>
+                {exportData?.data?.health_professional_details ? (
+                  <SearchableDropdown
+                    fullWidth
+                    name="ActivateLicence"
+                    items={createEditFieldData(ActivateLicenceFieldList)}
+                    placeholder=""
+                    clearErrors={clearErrors}
+                    {...register('ActivateLicence')}
+                    onChange={(currentValue) => {
+                      setValue('ActivateLicenceId', currentValue.id);
+                    }}
+                  />
+                ) : exportData?.data?.dashboard_tolist ? (
+                  <SearchableDropdown
+                    fullWidth
+                    name="dashBoardCard"
+                    items={createEditFieldData(DashBoardCardsFieldList)}
+                    placeholder="Please Select"
+                    clearErrors={clearErrors}
+                    {...register('dashBoardCard')}
+                    onChange={(currentValue) => {
+                      setDashBoardCardId(currentValue.id);
+                    }}
+                  />
+                ) : (
+                  <SearchableDropdown
+                    fullWidth
+                    name="collegeApproval"
+                    items={createEditFieldData(CollegeApprovalFieldList)}
+                    placeholder="Please Select"
+                    clearErrors={clearErrors}
+                    {...register('collegeApproval')}
+                    onChange={(currentValue) => {
+                      setValue('collegeApprovalId', currentValue.id);
+                    }}
+                  />
+                )}
               </Grid>
             )}
             {trackApplication !== true && (
               <Grid item md={3} xs={12}>
-                <TextField
-                  data-testid="filter_By_RegNo"
-                  inputProps={{ maxLength: 100 }}
-                  fullWidth
-                  id="outlined-basic"
-                  variant="outlined"
-                  type="text"
-                  name="filterByRegNo"
-                  required={false}
-                  placeholder={'Filter by Registration No.'}
-                  defaultValue={getValues().filterByRegNo}
-                  error={errors.filterByRegNo?.message}
-                  {...register('filterByRegNo')}
-                />
+                {exportData?.data?.health_professional_details ? (
+                  <TextField
+                    data-testid="filter_By_RegNo"
+                    inputProps={{ maxLength: 100 }}
+                    fullWidth
+                    id="outlined-basic"
+                    variant="outlined"
+                    type="text"
+                    name="ActivateLicenceFilter"
+                    required={false}
+                    placeholder={'Enter keywords'}
+                    defaultValue={getValues().ActivateLicenceFilter}
+                    error={errors.ActivateLicenceFilter?.message}
+                    {...register('ActivateLicenceFilter')}
+                  />
+                ) : exportData?.data?.dashboard_tolist ? (
+                  <TextField
+                    data-testid="filter_By_RegNo"
+                    inputProps={{ maxLength: 100 }}
+                    fullWidth
+                    id="outlined-basic"
+                    variant="outlined"
+                    name={'dashBoardCardFilter'}
+                    placeholder={'Enter keywords'}
+                    defaultValue={getValues().dashBoardCardFilter}
+                    {...register('dashBoardCardFilter', {})}
+                    error={errors.dashBoardCardFilter?.message}
+                  />
+                ) : (
+                  <TextField
+                    data-testid="filter_By_RegNo"
+                    inputProps={{ maxLength: 100 }}
+                    fullWidth
+                    id="outlined-basic"
+                    variant="outlined"
+                    type="text"
+                    name="collegeApprovalFilter"
+                    required={false}
+                    placeholder={'Enter keywords'}
+                    defaultValue={getValues().collegeApprovalFilter}
+                    error={errors.collegeApprovalFilter?.message}
+                    {...register('collegeApprovalFilter')}
+                  />
+                )}
               </Grid>
             )}
-            {(loggedInUserType === 'College' || loggedInUserType === 'NMC') && (
-              <Grid item md={3} xs={12}>
+            {/* {(loggedInUserType === 'College' || loggedInUserType === 'NMC') && (
+               <Grid item md={3} xs={12}>
                 <SearchableDropdown
                   fullWidth
                   name="registrationCouncil"
                   items={createEditFieldData(councilNames)}
-                  placeholder="Filter by Council"
+                  placeholder="Please Select"
                   clearErrors={clearErrors}
                   {...register('registrationCouncil')}
                   onChange={(currentValue) => {
                     setValue('RegistrationCouncilId', currentValue.id);
                   }}
                 />
-              </Grid>
-            )}
-            {trackApplication !== true && (
+              </Grid> 
+             )} */}
+            {(trackApplication !== true || trackApplication === true) && (
               <Grid item md="auto" xs={12}>
                 <Button
                   data-testid="filterButton"
@@ -196,16 +269,16 @@ export function TableSearch({ trackApplication, activateLicence, searchParams, e
                     },
                   }}
                   variant="contained"
-                  onClick={handleSubmit(onClickFilterButtonHandler)}
+                  onClick={handleSubmit(onClickSearchButtonHandler)}
                 >
-                  Filter
+                  Search
                 </Button>
               </Grid>
             )}
-            <Grid item md="auto" xs={12}>
-              <ExportFiles exportData={exportData} flag={flag} />
-            </Grid>
           </Grid>
+        </Grid>
+        <Grid item xs={12} md="auto">
+          <ExportFiles exportData={exportData} flag={flag} />
         </Grid>
       </Grid>
     </Box>

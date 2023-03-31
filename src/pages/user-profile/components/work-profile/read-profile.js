@@ -1,17 +1,23 @@
+import { useState } from 'react';
+
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import CloseIcon from '@mui/icons-material/Close';
 import EditIcon from '@mui/icons-material/Edit';
 import { Box, Button, Grid, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
+import EditWorkProfile from '../editable-profile/edit-work-profile';
+
 const ReadWorkProfile = ({ handleEdit }) => {
   const { workProfileDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { current_work_details, work_details } = workProfileDetails || {};
   const { is_user_currently_working, work_nature, work_status } = work_details || {};
 
-  //   console.log(current_work_details, is_user_currently_working, work_nature, work_status);
-
-  return (
+  const [showWorkDetails, setShowWorkDetails] = useState(false);
+  const handleOnClick = () => {
+    setShowWorkDetails(true);
+  };
+  return !showWorkDetails ? (
     <>
       {current_work_details?.map((work) => {
         const organizationName = work?.work_organization;
@@ -276,11 +282,13 @@ const ReadWorkProfile = ({ handleEdit }) => {
           justifyContent="center"
           alignItems="center"
         >
-          <AddCircleOutlineRoundedIcon />
+          <AddCircleOutlineRoundedIcon onClick={handleOnClick} />
           Add More Work Details
         </Typography>
       </Box>
     </>
+  ) : (
+    <EditWorkProfile />
   );
 };
 

@@ -1,10 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import EditIcon from '@mui/icons-material/Edit';
 import { Grid, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { userGroupType } from '../../../helpers/functions/common-functions';
+import {
+  getCollegeAdminProfileData,
+  getCollegeDeanProfileData,
+  getCollegeRegistrarProfileData,
+} from '../../../store/actions/college-actions';
 import { Button } from '../../../ui/core';
 import CollegeDean from '../college-dean/college-dean';
 import CollegeRegistrar from '../college-registrar/college-registrar';
@@ -12,10 +17,32 @@ import CollegeEditProfile from './college-edit-profile';
 
 const CollegeMyProfile = () => {
   const [showPage, setShowpage] = useState('Profile');
+  const dispatch = useDispatch();
   const { collegeData } = useSelector((state) => state.college);
   const userData = collegeData?.data;
   const { loginData } = useSelector((state) => state.loginReducer);
   const userType = userGroupType(loginData?.data?.user_group_id);
+
+  useEffect(() => {
+    const getCommonData = () => {
+      const userType = userGroupType(loginData?.data?.user_group_id);
+      if (userType === 'College Dean') {
+        dispatch(
+          getCollegeDeanProfileData(loginData?.data?.parent_profile_id, loginData?.data?.profile_id)
+        );
+      } else if (userType === 'College Registrar') {
+        dispatch(
+          getCollegeRegistrarProfileData(
+            loginData?.data?.parent_profile_id,
+            loginData?.data?.profile_id
+          )
+        );
+      } else if (userType === 'College Admin') {
+        dispatch(getCollegeAdminProfileData(loginData?.data?.profile_id));
+      }
+    };
+    getCommonData();
+  }, [dispatch, loginData?.data?.profile_id, loginData?.data?.user_group_id]);
 
   return (
     <Grid boxShadow={2} mt={2} p={3}>

@@ -34,7 +34,12 @@ const SelectField = (
     <StyledEngineProvider injectFirst>
       {label && (
         <Box>
-          <Typography variant="subtitle2" component={'span'} color="inputTextColor.main">
+          <Typography
+            variant="subtitle2"
+            fontWeight="500"
+            component={'span'}
+            color="inputTextColor.main"
+          >
             {label}
           </Typography>
           <Typography variant="body2" color="error">
@@ -52,11 +57,17 @@ const SelectField = (
         error={error ? true : false}
         defaultValue={defaultValue}
       >
-        {options.map((item) => (
-          <MenuItem key={item.label} data-testid={dataTestOptionId} value={item.value}>
-            {item.label}
-          </MenuItem>
-        ))}
+        {options?.length > 0 &&
+          options?.map((item) => (
+            <MenuItem
+              key={item.label}
+              data-testid={dataTestOptionId}
+              value={item.value}
+              title={item.label}
+            >
+              {item.label}
+            </MenuItem>
+          ))}
       </MuiSelect>
       {error && (
         // <Typography variant="body2" color="error">

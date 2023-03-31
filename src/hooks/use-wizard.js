@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 
-const useWizard = (initStep, steps = [], progressiveValues = [100]) => {
+const useWizard = (initStep, steps = [], progressiveValues = [0]) => {
   const [activeStep, setActiveStep] = useState(initStep || 0);
   const [completed, setCompleted] = useState(false);
-  const [progress, setProgress] = useState(0);
+  const [progress, setProgress] = useState(progressiveValues[0]);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -25,7 +25,7 @@ const useWizard = (initStep, steps = [], progressiveValues = [100]) => {
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
     setProgress((prevProgress) =>
-      prevProgress >= 100 ? 0 : progressiveValues[activeStep + 1] - prevProgress
+      prevProgress >= 100 ? 0 : prevProgress - progressiveValues[activeStep + 1]
     );
   };
 

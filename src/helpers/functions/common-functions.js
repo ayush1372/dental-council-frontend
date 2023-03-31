@@ -9,6 +9,19 @@ import {
   smcTabs,
 } from '../components/sidebar-drawer-list-item';
 
+export function dateFormat(s) {
+  var b = s.split(/\D/);
+  return b.reverse().join('-');
+}
+export function base64ToBlob(base64, type = 'application/octet-stream') {
+  const binStr = atob(base64);
+  const len = binStr.length;
+  const arr = new Uint8Array(len);
+  for (let i = 0; i < len; i++) {
+    arr[i] = binStr.charCodeAt(i);
+  }
+  return new Blob([arr], { type });
+}
 export function get_year_data(startYear = 1900) {
   var ans = [];
   var date = new Date();
@@ -22,12 +35,36 @@ export function get_year_data(startYear = 1900) {
   ans.reverse();
   return ans;
 }
+export function year_data(startYear = 1900) {
+  var ans = [];
+  var date = new Date();
+  var presentYear = date.getFullYear();
+  for (var i = startYear; i <= presentYear; i++) {
+    var entry_struct = {};
+    entry_struct['name'] = i.toString();
+    entry_struct['id'] = i;
+    ans.push(entry_struct);
+  }
+  ans.reverse();
+  return ans;
+}
 
-export const createSelectFieldData = (arrayOfStrings, valueKey = 'id') => {
+export const capitalize = (stringValue) => {
+  if (stringValue === 'undefined' || stringValue === null || stringValue === '') {
+    return '';
+  } else {
+    return (
+      stringValue?.length > 0 && stringValue[0].toUpperCase() + stringValue.slice(1).toLowerCase()
+    );
+  }
+};
+
+export const createSelectFieldData = (arrayOfStrings, valueKey) => {
+  let updatedValueKey = valueKey !== undefined ? valueKey : 'id';
   if (arrayOfStrings && arrayOfStrings.length > 0) {
     return arrayOfStrings?.map((item) => ({
       label: item?.name,
-      value: item[valueKey],
+      value: item[updatedValueKey],
     }));
   } else {
     return [];
@@ -71,13 +108,26 @@ export const userGroupType = (userGroupID) => {
 
 export const userGroupTypeForSession = (userGroupID) => {
   const userGroupTypeObj = {
-    ROLE_HEALTH_PROFESSIONAL: 'Health Professional',
-    ROLE_SMC: 'State Medical Council',
-    ROLE_NMC: 'National Medical Council',
-    ROLE_COLLEGE_DEAN: 'College Dean',
-    ROLE_COLLEGE_REGISTRAR: 'College Registrar',
-    ROLE_COLLEGE_ADMIN: 'College Admin',
-    ROLE_NBE: 'NBE',
+    ROLE_HEALTH_PROFESSIONAL: 1,
+    ROLE_SMC: 2,
+    ROLE_NMC: 3,
+    ROLE_COLLEGE_DEAN: 4,
+    ROLE_COLLEGE_REGISTRAR: 5,
+    ROLE_COLLEGE_ADMIN: 6,
+    ROLE_NBE: 7,
+  };
+  return userGroupTypeObj[userGroupID];
+};
+
+export const userGroupTypeId = (userGroupID) => {
+  const userGroupTypeObj = {
+    1: 'Doctor',
+    2: 'SMC',
+    3: 'NMC',
+    4: 'College',
+    5: 'College',
+    6: 'College',
+    7: 'NBE',
   };
   return userGroupTypeObj[userGroupID];
 };
@@ -146,3 +196,45 @@ export const getProfileId = () => {
     return profile_id;
   }
 };
+export const replaceString = (original = '', replacement = '', withReplace = '') => {
+  return original.replace(replacement, withReplace);
+};
+
+export const parserJWT = (token) => {
+  let base64Url = token?.split('.')[1];
+  let base64 = base64Url?.replace(/-/g, '+').replace(/_/g, '/');
+  if (base64) {
+    let jsonPayload = decodeURIComponent(
+      window
+        ?.atob(base64)
+        ?.split('')
+        ?.map(function (c) {
+          return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        ?.join('')
+    );
+
+    return JSON.parse(jsonPayload);
+  } else {
+    return false;
+  }
+};
+
+export const millisecondToDate = (millisecond) => {
+  return new Date(parserJWT(millisecond)?.exp * 1000);
+};
+
+function yaerData() {
+  var ans = [];
+  var date = new Date();
+  var presentYear = date.getFullYear();
+  for (var i = 1900; i <= presentYear; i++) {
+    var entry_struct = {};
+    entry_struct['value'] = i.toString();
+    entry_struct['label'] = i;
+    ans.push(entry_struct);
+  }
+  return ans;
+}
+
+export const getYearData = yaerData();

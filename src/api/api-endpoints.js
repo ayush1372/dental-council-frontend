@@ -13,8 +13,11 @@ export const API = {
     profileImage: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/profile-picture',
     initiateWorkFlow: 'api/v1/abdm/nmr/health-professional/applications/status',
     trackApplicationData: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/applications',
+    eSign: 'api/v1/abdm/nmr/e-signature',
     profileConsent: 'api/v1/abdm/nmr/health-professional/register',
     createPersonalDetails: '/api/v1/abdm/nmr/health-professional/personal',
+    additionalQualifications:
+      '/api/v1/abdm/nmr/health-professional/{healthProfessionalId}/qualifications',
   },
   common: {
     states: 'api/v1/abdm/nmr/countries/356/states',
@@ -25,8 +28,8 @@ export const API = {
     sendOtp: 'api/v1/abdm/nmr/notification/send-otp',
     verifyOtp: 'api/v1/abdm/nmr/notification/verify-otp',
     languages: 'api/v1/abdm/nmr/languages',
-    universities: 'api/v1/abdm/nmr/universities',
-    colleges: 'api/v1/abdm/nmr/universities/{university_id}/colleges',
+    universities: 'api/v1/abdm/nmr/university',
+    colleges: 'api/v1/abdm/nmr/college',
     courses: 'api/v1/abdm/nmr/courses',
     specialities: 'api/v1/abdm/nmr/specialities',
     councilNames: 'api/v1/abdm/nmr/state-medical-councils',
@@ -35,7 +38,10 @@ export const API = {
     activateLicense: 'api/v1/abdm/nmr/health-professional/applications/re-activate',
     healthProfessionalApplicationStatus: 'api/v1/abdm/nmr/health-professional/applications/status',
     suspend: 'api/v1/abdm/nmr/health-professional/applications/suspend',
+    queryRaise: 'api/v1/abdm/nmr/health-professional/queries',
+    raisedQuery: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/queries',
     enableNotification: '/api/v1/abdm/nmr/user/enable-notification',
+    LGDService: '/api/v1/abdm/nmr/health-professional/lgd/search?pinCode=',
   },
   college: {
     registrar: 'api/v1/abdm/nmr/college/{collegeId}/registrar',
@@ -57,10 +63,14 @@ export const API = {
   smc: {
     getSMCProfileData: 'api/v1/abdm/nmr/smc/user/{id}',
   },
+  kyc: {
+    kycCheck: 'api/v1/abdm/nmr/health-professional/{registrationNumber}/kyc',
+  },
   doctorRegistration: {
     smcRegistrationDetail:
       'api/v1/abdm/nmr/health-professional?smcId={smcId}&registrationNumber={registrationNumber}',
-    passwordLink: 'api/v1/abdm/nmr/user/password-link',
+    setUserPassword: 'api/v1/abdm/nmr/health-professional/user',
+    healthProfesssional: '/api/v1/abdm/nmr/health-professional',
   },
   nbe: {
     getNBEProfileData: 'api/v1/abdm/nmr/nbe/user/{id}',
@@ -75,13 +85,14 @@ export const API = {
 };
 export const API_HPRID = {
   hpId: {
-    checkHprIdExists: 'api/v2/registration/aadhaar/checkHpIdAccountExist',
-    hpIdSuggestion: 'api/v1/registration/aadhaar/hpid/suggestion',
-    sessionApi: 'gateway/v0.5/sessions',
+    sessionApi: '/api/v1/abdm/nmr/sessions',
     sendAadhaarOtp: 'api/v1/registration/aadhaar/generateOtp',
     verifyAadhaarOtp: 'api/v1/registration/aadhaar/verifyOTP',
     generateMobileOtp: 'api/v1/registration/aadhaar/generateMobileOTP',
     verifyMobileOtp: '/api/v1/registration/aadhaar/verifyMobileOTP',
+    demographicAuthMobile: 'api/v1/registration/aadhaar/demographicAuthViaMobile',
+    checkHprIdExists: 'api/v2/registration/aadhaar/checkHpIdAccountExist',
+    hpIdSuggestion: 'api/v1/registration/aadhaar/hpid/suggestion',
     createHprId: 'api/v1/registration/aadhaar/createHprIdWithPreVerified',
   },
 };

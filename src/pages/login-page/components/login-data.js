@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Box, Grid, Link, Typography, useTheme } from '@mui/material';
 import { useForm } from 'react-hook-form';
@@ -18,7 +18,6 @@ import {
 } from '../../../store/actions/college-actions';
 import {
   getRegistrationCouncilList,
-  getUniversitiesList,
   sendNotificationOtp,
 } from '../../../store/actions/common-actions';
 import { loginAction, validateCaptchaImage } from '../../../store/actions/login-action';
@@ -35,13 +34,14 @@ export const Login = ({ loginName }) => {
   const { generateCaptcha } = useSelector((state) => state.loginReducer);
   const theme = useTheme();
   const dispatch = useDispatch();
-  const [selectedLoginOption, setSelectedLoginOption] = useState('userName');
+  const [selectedLoginOption, setSelectedLoginOption] = useState('mobileNumber');
   const [transaction_id, setTransaction_id] = useState('');
   const [otpFormEnabled, setOtpFormEnable] = useState(false);
   const navigate = useNavigate();
   const {
     register,
     getValues,
+    setValue,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
@@ -74,14 +74,19 @@ export const Login = ({ loginName }) => {
   };
 
   const getCommonData = (response) => {
-    // dispatch(getRegistrationCouncilList());
-    // dispatch(getUniversitiesList());
     const userType = userGroupType(response?.data?.user_group_id);
 
     if (userType === 'College Dean') {
-      dispatch(getCollegeDeanProfileData(response?.data?.profile_id));
+      dispatch(
+        getCollegeDeanProfileData(response?.data?.parent_profile_id, response?.data?.profile_id)
+      );
     } else if (userType === 'College Registrar') {
-      dispatch(getCollegeRegistrarProfileData(response?.data?.profile_id));
+      dispatch(
+        getCollegeRegistrarProfileData(
+          response?.data?.parent_profile_id,
+          response?.data?.profile_id
+        )
+      );
     } else if (userType === 'College Admin') {
       dispatch(getCollegeAdminProfileData(response?.data?.profile_id));
     } else if (userType === 'State Medical Council') {
@@ -109,6 +114,7 @@ export const Login = ({ loginName }) => {
         loginTypeID = 0;
         break;
     }
+
     if (selectedLoginOption === 'mobileNumber') {
       dispatch(
         validateCaptchaImage({
@@ -133,12 +139,16 @@ export const Login = ({ loginName }) => {
                 dispatch(login());
                 dispatch(userLoggedInType(loginName));
                 dispatch(getRegistrationCouncilList());
-                dispatch(getUniversitiesList());
                 navigate(`/profile`);
                 getCommonData(resp);
               })
               .catch((error) => {
-                successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+                successToast(
+                  'ERROR: ' + error?.data?.response?.data?.message,
+                  'auth-error',
+                  'error',
+                  'top-center'
+                );
               });
           } else {
             successToast(
@@ -169,18 +179,23 @@ export const Login = ({ loginName }) => {
               password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
               user_type: usertypeId,
               captcha_trans_id: generateCaptcha?.transaction_id,
+              login_type: loginTypeID,
             };
             dispatch(loginAction(requestObj))
               .then((resp) => {
                 dispatch(login());
                 dispatch(userLoggedInType(loginName));
                 dispatch(getRegistrationCouncilList());
-                dispatch(getUniversitiesList());
                 navigate(`/profile`);
                 getCommonData(resp);
               })
               .catch((error) => {
-                successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+                successToast(
+                  'ERROR: ' + error?.data?.response?.data?.message,
+                  'auth-error',
+                  'error',
+                  'top-center'
+                );
               });
           } else {
             successToast(
@@ -198,7 +213,17 @@ export const Login = ({ loginName }) => {
       successToast('Wrong Login Attempt', 'login-error', 'error', 'top-center');
     }
   };
-
+  const handleCancelClick = () => {
+    navigate('/');
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+  useEffect(() => {
+    setValue('userID', '');
+    setValue('password', '');
+  }, [loginName]);
   return (
     <Box p={4} bgcolor="white.main" boxShadow="4">
       <Typography variant="h2" color="primary.dark" mb={5}>
@@ -209,32 +234,6 @@ export const Login = ({ loginName }) => {
       </Typography>
 
       <Grid container xs={12} columnSpacing={1} mt={1}>
-        <Grid item xs={12} sm={6}>
-          <Button
-            fullWidth
-            variant="outlined"
-            startIcon={<img src={ProfileIcon} alt={'profile_icon'} />}
-            onClick={() => {
-              setSelectedLoginOption('userName');
-              handleClear();
-              setOtpFormEnable(false);
-            }}
-            sx={{
-              border: `2px solid ${
-                selectedLoginOption === 'userName'
-                  ? theme.palette.secondary.main
-                  : theme.palette.grey.main
-              }`,
-              '&:hover': {
-                backgroundColor: 'transparent !important',
-              },
-            }}
-          >
-            <Typography variant="body1" color="textPrimary.main" textAlign={'left'} ml={1}>
-              User ID
-            </Typography>
-          </Button>
-        </Grid>
         <Grid item xs={12} sm={6}>
           <Button
             fullWidth
@@ -261,22 +260,47 @@ export const Login = ({ loginName }) => {
             </Typography>
           </Button>
         </Grid>
+        <Grid item xs={12} sm={6}>
+          <Button
+            fullWidth
+            variant="outlined"
+            startIcon={<img src={ProfileIcon} alt={'profile_icon'} />}
+            onClick={() => {
+              setSelectedLoginOption('userName');
+              handleClear();
+              setOtpFormEnable(false);
+            }}
+            sx={{
+              border: `2px solid ${
+                selectedLoginOption === 'userName'
+                  ? theme.palette.secondary.main
+                  : theme.palette.grey.main
+              }`,
+              '&:hover': {
+                backgroundColor: 'transparent !important',
+              },
+            }}
+          >
+            <Typography variant="body1" color="textPrimary.main" textAlign={'left'} ml={1}>
+              Username
+            </Typography>
+          </Button>
+        </Grid>
       </Grid>
       <Box my={4}>
         {selectedLoginOption === 'userName' ? (
           <>
             <TextField
+              sx={{ mb: 2 }}
               required
               fullWidth
-              label={'User ID'}
-              placeholder={'Please enter your User ID'}
-              // inputProps={{ maxLength: 12 }}
+              label={'Username'}
+              placeholder={'Please enter Username'}
               name={'userID'}
               {...register('userID', {
-                required: 'Please enter an User ID',
+                required: 'Please enter an Username',
                 pattern: {
-                  //value: /^\d{12}$/i,
-                  message: 'Please enter an valid User ID',
+                  message: 'Please enter an valid Username',
                 },
               })}
             />
@@ -284,7 +308,7 @@ export const Login = ({ loginName }) => {
               required
               fullWidth
               label={'Password'}
-              placeholder={'Please enter your Password'}
+              placeholder={'Please enter Password'}
               type={'Password'}
               inputProps={{ maxLength: 12 }}
               name={'password'}
@@ -305,13 +329,17 @@ export const Login = ({ loginName }) => {
               register={register}
               getValues={getValues}
               errors={errors}
-              label={'Enter your Mobile Number'}
+              label={'Enter Mobile Number'}
               showVerify
               verifyOnClick={sendNotificationOTPHandler}
             />
             {otpFormEnabled && (
               <Box mt={2}>
-                <Typography variant="body1">We just sent an OTP on your Mobile Number.</Typography>
+                <Typography variant="body1">
+                  {' '}
+                  Please enter an OTP sent on your Mobile Number{' '}
+                  {getValues().mobileNo.replace(/^.{6}/g, 'XXXXXX')}.
+                </Typography>
                 {otpform}
               </Box>
             )}
@@ -332,7 +360,13 @@ export const Login = ({ loginName }) => {
         >
           Login
         </Button>
-        <Button variant="contained" color="grey" fullWidth sx={{ ml: 1 }}>
+        <Button
+          variant="contained"
+          color="grey"
+          fullWidth
+          sx={{ ml: 1 }}
+          onClick={handleCancelClick}
+        >
           Cancel
         </Button>
       </Box>

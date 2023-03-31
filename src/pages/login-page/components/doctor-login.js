@@ -13,7 +13,6 @@ import CaptchaComponent from '../../../shared/captcha-component/captcha-componen
 import OtpForm from '../../../shared/otp-form/otp-component';
 import {
   getRegistrationCouncilList,
-  getUniversitiesList,
   sendNotificationOtp,
 } from '../../../store/actions/common-actions';
 // import { , verifyNotificationOtp } from '../../../store/actions/common-actions';
@@ -28,9 +27,10 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
   const { generateCaptcha } = useSelector((state) => state.loginReducer);
   const theme = useTheme();
   const dispatch = useDispatch();
-  const [selectedLoginOption, setSelectedLoginOption] = useState('nmrId');
+  const [selectedLoginOption, setSelectedLoginOption] = useState('mobileNumber');
   const [transaction_id, setTransaction_id] = useState('');
   const [otpFormEnabled, setOtpFormEnable] = useState(false);
+  const [maskedMobileNumber, setMaskedMobileNumber] = useState('');
   const navigate = useNavigate();
   const {
     register,
@@ -72,6 +72,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
     dispatch(sendNotificationOtp(sendOTPData)).then((response) => {
       if (response) {
         setTransaction_id(response?.data?.transaction_id);
+        setMaskedMobileNumber(response?.data?.sent_on.replace(/^.{6}/g, 'XXXXXX'));
       }
     });
   };
@@ -119,11 +120,15 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
                 dispatch(login());
                 dispatch(userLoggedInType(loginName));
                 dispatch(getRegistrationCouncilList());
-                dispatch(getUniversitiesList());
                 navigate(`/profile`);
               })
               .catch((error) => {
-                successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+                successToast(
+                  'ERROR: ' + error?.data?.response?.data?.message,
+                  'auth-error',
+                  'error',
+                  'top-center'
+                );
               });
           } else {
             successToast(
@@ -154,17 +159,22 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
               password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
               user_type: usertypeId,
               captcha_trans_id: generateCaptcha?.transaction_id,
+              login_type: loginTypeID,
             };
             dispatch(loginAction(requestObj))
               .then(() => {
                 dispatch(login());
                 dispatch(userLoggedInType(loginName));
                 dispatch(getRegistrationCouncilList());
-                dispatch(getUniversitiesList());
                 navigate(`/profile`);
               })
               .catch((error) => {
-                successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+                successToast(
+                  'ERROR: ' + error?.data?.response?.data?.message,
+                  'auth-error',
+                  'error',
+                  'top-center'
+                );
               });
           } else {
             successToast(
@@ -182,10 +192,17 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
       successToast('Wrong Login Attempt', 'login-error', 'error', 'top-center');
     }
   };
+  const handleCancelClick = () => {
+    navigate('/');
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
 
   return (
     <Box p={4} bgcolor="white.main" boxShadow="4">
-      <Typography variant="h2" color="primary.dark" mb={5}>
+      <Typography variant="h2" color="textPrimary.main" mb={5}>
         {loginName} Login
       </Typography>
       <Typography variant="body1" color="textPrimary.main">
@@ -193,58 +210,6 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
       </Typography>
 
       <Grid container xs={12} columnSpacing={1} mt={1}>
-        <Grid item xs={12} sm={3.5}>
-          <Button
-            fullWidth
-            variant="outlined"
-            startIcon={<img src={ProfileIcon} alt={'profile_icon'} />}
-            onClick={() => {
-              setSelectedLoginOption('nmrId');
-              handleClear();
-              setOtpFormEnable(false);
-            }}
-            sx={{
-              border: `2px solid ${
-                selectedLoginOption === 'nmrId'
-                  ? theme.palette.secondary.main
-                  : theme.palette.grey.main
-              }`,
-              '&:hover': {
-                backgroundColor: 'transparent !important',
-              },
-            }}
-          >
-            <Typography variant="body1" color="textPrimary.main" textAlign={'left'} ml={1}>
-              NMR ID
-            </Typography>
-          </Button>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <Button
-            fullWidth
-            variant="outlined"
-            startIcon={<img src={ProfileIcon} alt={'profile_icon'} />}
-            onClick={() => {
-              setSelectedLoginOption('userName');
-              handleClear();
-              setOtpFormEnable(false);
-            }}
-            sx={{
-              border: `2px solid ${
-                selectedLoginOption === 'userName'
-                  ? theme.palette.secondary.main
-                  : theme.palette.grey.main
-              }`,
-              '&:hover': {
-                backgroundColor: 'transparent !important',
-              },
-            }}
-          >
-            <Typography variant="body1" color="textPrimary.main" textAlign={'left'} ml={1}>
-              User ID
-            </Typography>
-          </Button>
-        </Grid>
         <Grid item xs={12} sm={4.5}>
           <Button
             fullWidth
@@ -271,6 +236,58 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
             </Typography>
           </Button>
         </Grid>
+        <Grid item xs={12} sm={3.5}>
+          <Button
+            fullWidth
+            variant="outlined"
+            startIcon={<img src={ProfileIcon} alt={'profile_icon'} />}
+            onClick={() => {
+              setSelectedLoginOption('userName');
+              handleClear();
+              setOtpFormEnable(false);
+            }}
+            sx={{
+              border: `2px solid ${
+                selectedLoginOption === 'userName'
+                  ? theme.palette.secondary.main
+                  : theme.palette.grey.main
+              }`,
+              '&:hover': {
+                backgroundColor: 'transparent !important',
+              },
+            }}
+          >
+            <Typography variant="body1" color="textPrimary.main" textAlign={'left'} ml={1}>
+              Username
+            </Typography>
+          </Button>
+        </Grid>
+        <Grid item xs={12} sm={4}>
+          <Button
+            fullWidth
+            variant="outlined"
+            startIcon={<img src={ProfileIcon} alt={'profile_icon'} />}
+            onClick={() => {
+              setSelectedLoginOption('nmrId');
+              handleClear();
+              setOtpFormEnable(false);
+            }}
+            sx={{
+              border: `2px solid ${
+                selectedLoginOption === 'nmrId'
+                  ? theme.palette.secondary.main
+                  : theme.palette.grey.main
+              }`,
+              '&:hover': {
+                backgroundColor: 'transparent !important',
+              },
+            }}
+          >
+            <Typography variant="body1" color="textPrimary.main" textAlign={'left'} ml={1}>
+              NMR ID
+            </Typography>
+          </Button>
+        </Grid>
       </Grid>
       <Box my={4}>
         {selectedLoginOption === 'nmrId' ? (
@@ -278,7 +295,8 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
             <TextField
               required
               disabled={otpFormEnabled}
-              placeholder={'Please enter your NMR ID'}
+              label={'NMR ID'}
+              placeholder={'Please enter NMR ID'}
               inputProps={{ maxLength: 12 }}
               name={'nmrID'}
               {...register('nmrID', {
@@ -315,11 +333,11 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
                 ),
               }}
             />
-
             {otpFormEnabled && (
               <Box mt={2}>
                 <Typography variant="body1">
-                  We just sent an OTP on your Registered Mobile Number Linked with your NMR ID
+                  Please enter the OTP sent on your Registered Mobile Number {maskedMobileNumber}{' '}
+                  Linked with your NMR ID.
                 </Typography>
                 {otpform}
               </Box>
@@ -328,26 +346,25 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
         ) : selectedLoginOption === 'userName' ? (
           <>
             <TextField
-              sx={{ mb: 4 }}
+              sx={{ mb: 2 }}
               required
               fullWidth
-              label={'User ID'}
-              placeholder={'Please enter your User ID'}
-              // inputProps={{ maxLength: 12 }}
+              label={'Username'}
+              placeholder={'Please enter Username'}
               name={'userID'}
               {...register('userID', {
-                required: 'Please enter an User ID',
+                required: 'Please enter Username',
                 pattern: {
-                  //value: /^\d{12}$/i,
-                  message: 'Please enter an valid User ID',
+                  message: 'Please enter a valid Username',
                 },
               })}
             />
             <TextField
+              sx={{ mb: 2 }}
               required
               fullWidth
               label={'Password'}
-              placeholder={'Please enter your Password'}
+              placeholder={'Please enter Password'}
               type={'Password'}
               inputProps={{ maxLength: 12 }}
               name={'password'}
@@ -368,13 +385,16 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
               register={register}
               getValues={getValues}
               errors={errors}
-              label={'Enter your Mobile Number'}
+              label={'Enter Mobile Number'}
               showVerify
               verifyOnClick={sendNotificationOTPHandler}
             />
             {otpFormEnabled && (
               <Box mt={2}>
-                <Typography variant="body1">We just sent an OTP on your Mobile Number.</Typography>
+                <Typography variant="body1">
+                  Please enter the OTP sent on your Mobile Number{' '}
+                  {getValues().mobileNo.replace(/^.{6}/g, 'XXXXXX')}.
+                </Typography>
                 {otpform}
               </Box>
             )}
@@ -395,14 +415,24 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
         >
           Login
         </Button>
-        <Button variant="contained" color="grey" fullWidth sx={{ ml: 1 }}>
+        <Button
+          variant="contained"
+          color="grey"
+          fullWidth
+          sx={{ ml: 1 }}
+          onClick={handleCancelClick}
+        >
           Cancel
         </Button>
       </Box>
       <Box textAlign={'center'}>
         <Typography variant="body1">
           {`Don't have account?`}{' '}
-          <Link color={theme.palette.secondary.main} sx={{ cursor: 'pointer' }}>
+          <Link
+            color={theme.palette.secondary.main}
+            sx={{ cursor: 'pointer' }}
+            onClick={() => navigate('/register/doctor-registration')}
+          >
             Register Here
           </Link>
         </Typography>

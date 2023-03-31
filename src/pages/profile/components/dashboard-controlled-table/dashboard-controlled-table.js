@@ -1,14 +1,17 @@
 import React, { useEffect } from 'react';
 
 import { Box, Grid, TablePagination, Typography } from '@mui/material';
+import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 
 import GenericTable from '../../../../shared/generic-component/generic-table';
 import { getDashboardTableData } from '../../../../store/actions/dashboard-actions';
+import { setSelectedAcademicStatus } from '../../../../store/reducers/common-reducers';
 import TableSearch from '../table-search/table-search';
 
 function createData(
   SNo,
+  requestId,
   registrationNo,
   nameofApplicant,
   nameofStateCouncil,
@@ -22,6 +25,7 @@ function createData(
 ) {
   return {
     SNo,
+    requestId,
     registrationNo,
     nameofApplicant,
     nameofStateCouncil,
@@ -48,6 +52,12 @@ function DashboardControlledTable(props) {
   const dataHeader = [
     { title: 'S.No.', name: 'SNo', sorting: true, type: 'string' },
     {
+      title: 'Request ID',
+      name: 'requestId',
+      sorting: true,
+      type: 'string',
+    },
+    {
       title: 'IMR ID/ Registration No.',
       name: 'registrationNo',
       sorting: true,
@@ -67,7 +77,7 @@ function DashboardControlledTable(props) {
       type: 'string',
     },
     {
-      title: 'College Verification Status',
+      title: 'College/NBE Verification Status',
       name: 'collegeVerificationStatus',
       sorting: true,
       type: 'string',
@@ -79,7 +89,7 @@ function DashboardControlledTable(props) {
       type: 'string',
     },
     { title: 'Date of Submission', name: 'dateofSubmission', sorting: true, type: 'date' },
-    { title: 'Pendency', name: 'pendency', sorting: true, type: 'string' },
+    { title: 'Pendency (in days)', name: 'pendency', sorting: true, type: 'string' },
     { title: 'View', name: 'view', sorting: false, type: 'string' },
   ];
 
@@ -98,9 +108,21 @@ function DashboardControlledTable(props) {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
+
   const newRowsData = dashboardTableDetails?.data?.dashboard_tolist?.map((application, index) => {
+    const formattedDate = moment(application?.created_at).format('DD-MM-YYYY');
+    const capitalize = (str) => {
+      if (!str) {
+        return '';
+      }
+      return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+    };
     return createData(
       { type: 'SNo', value: index + 1 },
+      {
+        type: 'requestId',
+        value: application?.request_id,
+      },
       {
         type: 'registrationNo',
         value: application?.registration_no,
@@ -113,13 +135,20 @@ function DashboardControlledTable(props) {
         type: 'nameofStateCouncil',
         value: application?.council_name,
       },
-      { type: 'councilVerificationStatus', value: application?.smc_status },
+      { type: 'councilVerificationStatus', value: capitalize(application?.smc_status) },
       {
         type: 'collegeVerificationStatus',
-        value: application?.college_dean_status,
+        value:
+          application?.college_dean_status === ('NOT YET RECEIVED' || 'PENDING') &&
+          application?.college_registrar_status === 'Approved'
+            ? 'Pending'
+            : application?.college_dean_status === 'APPROVED' &&
+              application?.college_registrar_status === 'APPROVED'
+            ? 'Approved'
+            : 'Not yet received',
       },
-      { type: 'NMCVerificationStatus', value: application?.nmc_status },
-      { type: 'dateofSubmission', value: application?.created_at },
+      { type: 'NMCVerificationStatus', value: capitalize(application?.nmc_status) },
+      { type: 'dateofSubmission', value: formattedDate },
       { type: 'pendency', value: application?.pendency },
       { type: 'view', value: 'View', onClickCallback: viewCallback },
       { type: 'profileID', value: application?.hp_profile_id }
@@ -142,7 +171,7 @@ function DashboardControlledTable(props) {
 
   useEffect(() => {
     getTableData(1, 10);
-  }, [searchQueryParams]);
+  }, []);
 
   const getTableData = (pageNo, noOfRecords) => {
     const requestObj = {
@@ -158,15 +187,38 @@ function DashboardControlledTable(props) {
       nmr_id: searchQueryParams ? searchQueryParams?.filterByRegNo : '',
       search: searchQueryParams ? searchQueryParams?.search : '',
       page_no: pageNo,
-      size: noOfRecords,
+      offset: noOfRecords,
       sort_by: '',
       sort_order: '',
     };
+    dispatch(setSelectedAcademicStatus(props?.selectedCardDataData?.responseKey));
     dispatch(getDashboardTableData(requestObj));
   };
 
   const searchParams = (data) => {
     setSearchQueryParams(data);
+
+    let reqObj = {
+      work_flow_status_id: '',
+      application_type_id: props?.selectedCardDataData?.applicationTypeID
+        ? props?.selectedCardDataData?.applicationTypeID.toString()
+        : '',
+      user_group_status: props?.selectedCardDataData?.responseKey
+        ? props?.selectedCardDataData?.responseKey
+        : '',
+      smc_id: searchQueryParams ? searchQueryParams?.RegistrationCouncilId : '',
+      name: searchQueryParams ? searchQueryParams?.filterByName : '',
+      nmr_id: searchQueryParams ? searchQueryParams?.filterByRegNo : '',
+      // search: searchQueryParams ? searchQueryParams?.search : '',
+      page_no: data.pageNo,
+      offset: data.offset,
+      sort_by: '',
+      sort_order: '',
+      search: data.search,
+      value: data.value,
+    };
+
+    dispatch(getDashboardTableData(reqObj));
   };
 
   return (

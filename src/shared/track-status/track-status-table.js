@@ -2,11 +2,13 @@ import React from 'react';
 import { useState } from 'react';
 
 import { Box, Grid, TablePagination } from '@mui/material';
+import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 
 // import TableSearch from '../../../src/pages/profile/components/table-search/table-search';
 import UserProfile from '../../../src/pages/user-profile';
 import { verboseLog } from '../../config/debug';
+import { capitalize } from '../../helpers/functions/common-functions';
 import GenericTable from '../../shared/generic-component/generic-table';
 import ViewProfile from '../../shared/view-profile/view-profile';
 import { trackStatus } from '../../store/actions/common-actions';
@@ -14,6 +16,7 @@ import { Button } from '../../ui/core';
 
 function createData(
   SNo,
+  requestId,
   registrationNo,
   nameofApplicant,
   nameofStateCouncil,
@@ -23,10 +26,12 @@ function createData(
   dateofSubmission,
   pendency,
   pending,
-  view
+  view,
+  NMRID
 ) {
   return {
     SNo,
+    requestId,
     registrationNo,
     nameofApplicant,
     nameofStateCouncil,
@@ -37,6 +42,7 @@ function createData(
     pendency,
     pending,
     view,
+    NMRID,
   };
 }
 function TrackStatusTable(props) {
@@ -63,6 +69,12 @@ function TrackStatusTable(props) {
   const dataHeader = [
     { title: 'S.No.', name: 'SNo', sorting: true, type: 'string' },
     {
+      title: 'Request ID',
+      name: 'requestId',
+      sorting: true,
+      type: 'string',
+    },
+    {
       title: 'IMR ID/ Registration No.',
       name: 'registrationNo',
       sorting: true,
@@ -82,7 +94,7 @@ function TrackStatusTable(props) {
       type: 'string',
     },
     {
-      title: 'College Verification Status',
+      title: 'College/NBE Verification Status',
       name: 'collegeVerificationStatus',
       sorting: true,
       type: 'string',
@@ -94,7 +106,7 @@ function TrackStatusTable(props) {
       type: 'string',
     },
     { title: 'Date of Submission', name: 'dateofSubmission', sorting: true, type: 'string' },
-    { title: 'Pendency', name: 'pendency', sorting: true, type: 'string' },
+    { title: 'Pendency (in days)', name: 'pendency', sorting: true, type: 'string' },
     { title: 'Pending with user', name: 'pending', sorting: true, type: 'string' },
     loggedInUserType !== 'College' && {
       title:
@@ -121,8 +133,14 @@ function TrackStatusTable(props) {
 
   const newRowsData = props?.trackStatusData?.health_professional_applications?.map(
     (application, index) => {
+      const formattedDate = moment(application?.created_at).format('DD-MM-YYYY:HH:MM:SS.SSSSSS');
+
       return createData(
         { type: 'SNo', value: index + 1 },
+        {
+          type: 'requestId',
+          value: application?.request_id,
+        },
         {
           type: 'registrationNo',
           value: application?.registration_no,
@@ -136,17 +154,32 @@ function TrackStatusTable(props) {
           type: 'nameofStateCouncil',
           value: application.council_name,
         },
-        { type: 'councilVerificationStatus', value: application?.smc_status },
+        {
+          type: 'councilVerificationStatus',
+          value: application?.smc_status ? capitalize(application?.smc_status) : '',
+        },
         {
           type: 'collegeVerificationStatus',
-          value: 'verfied',
-        },
-        { type: 'NMCVerificationStatus', value: application?.nmc_status },
 
-        { type: 'dateofSubmission', value: application?.created_at },
-        { type: 'pendency', value: '-' },
+          value:
+            application?.college_dean_status === ('NOT YET RECEIVED' || 'PENDING') &&
+            application?.college_registrar_status === 'Approved'
+              ? 'Pending'
+              : application?.college_dean_status === 'APPROVED' &&
+                application?.college_registrar_status === 'APPROVED'
+              ? 'Approved'
+              : 'Not yet received',
+        },
+        {
+          type: 'NMCVerificationStatus',
+          value: application?.nmc_status ? capitalize(application?.nmc_status) : '',
+        },
+
+        { type: 'dateofSubmission', value: formattedDate },
+        { type: 'pendency', value: application?.pendency },
         { type: 'pending', value: '-' },
         { type: 'HPProfileId', value: application?.hp_profile_id },
+        { type: 'NMRID', value: application?.nmr_id },
         {
           type:
             loggedInUserType === 'NMC'

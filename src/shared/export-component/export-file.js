@@ -11,6 +11,7 @@ import {
   ActivateLicence,
   CollegeApproval,
   DashboardData,
+  TrackApplication,
 } from '../../../src/constants/common-data';
 import { workSheetTheme } from '../../../src/helpers/functions/common-functions';
 import { verboseLog } from '../../config/debug';
@@ -28,6 +29,11 @@ const ExportFiles = ({ exportData, flag }) => {
   const onExportClick = (type) => {
     setDocType(type);
     let data;
+
+    if (flag === 'trackApplicationData') {
+      setColumns(TrackApplication);
+      data = exportData;
+    }
     if (flag === 'ActivateList') {
       setColumns(ActivateLicence);
       data = exportData?.data?.health_professional_details;
@@ -129,12 +135,16 @@ const ExportFiles = ({ exportData, flag }) => {
         onClose={handleClose}
         anchorOrigin={{
           vertical: 'bottom',
-          horizontal: 'left',
+          horizontal: 'right',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
         }}
       >
         <List>
           <ListItem disablePadding>
-            <ListItemButton disablePadding>
+            <ListItemButton onClick={handleClose}>
               <ListItemText
                 primary="Export as xlsx"
                 onClick={() => {

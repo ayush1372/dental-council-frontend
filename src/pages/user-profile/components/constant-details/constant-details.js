@@ -5,18 +5,17 @@ import { useSelector } from 'react-redux';
 import IconVerified from '../../../../assets/images/ico-verified.svg';
 
 const ConstantDetails = () => {
-  // const { imr_details } = ConstantDetails || {};
-  // const { nmrIdData } = imr_details || {};
-  // const { personal_details } = ConstantDetails || {};
-  // // const { gender } = personal_details || {};
-  // const { communication_address } = ConstantDetails || {};
-  // const { email, mobile } = communication_address || {};
   const nmrIdData = useSelector(
-    (state) => state?.doctorUserProfileReducer?.personalDetails?.imr_details?.nmr_id
+    (state) => state?.doctorUserProfileReducer?.personalDetails?.nmr_id
   );
-  const personGender = useSelector(
-    (state) => state?.doctorUserProfileReducer?.personalDetails?.personal_details?.gender
+  const registration_number = useSelector(
+    (state) =>
+      state?.doctorUserProfileReducer?.registrationDetails?.registration_detail_to
+        ?.registration_number
   );
+  // const personGender = useSelector(
+  //   (state) => state?.doctorUserProfileReducer?.personalDetails?.personal_details?.gender
+  // );
   const emailId = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.communication_address?.email
   );
@@ -44,10 +43,31 @@ const ConstantDetails = () => {
             IMR/Registration Number
           </Typography>
           <Typography variant="subtitle2" color="textPrimary.main">
-            {nmrIdData ? nmrIdData : ''}
+            {registration_number ? registration_number : ''}
           </Typography>
         </Grid>
-        <Grid
+        {nmrIdData && (
+          <Grid
+            borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
+            item
+            xs={12}
+            sm={6}
+            md={3}
+            lg="auto"
+            xl={2}
+            px={2}
+            mb={{ xs: 1, lg: 0 }}
+          >
+            <Typography variant="body3" color="grey.label">
+              NMR ID
+            </Typography>
+            <Typography variant="subtitle2" color="textPrimary.main">
+              {nmrIdData ? nmrIdData : ''}
+            </Typography>{' '}
+          </Grid>
+        )}
+
+        {/* <Grid
           borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
           item
           xs={12}
@@ -63,8 +83,8 @@ const ConstantDetails = () => {
           <Typography variant="subtitle2" color="textPrimary.main">
             Submitted
           </Typography>
-        </Grid>
-        <Grid
+        </Grid> */}
+        {/* <Grid
           borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
           item
           xs={12}
@@ -80,8 +100,8 @@ const ConstantDetails = () => {
           <Typography variant="subtitle2" color="textPrimary.main">
             {personGender ? personGender : ''}
           </Typography>
-        </Grid>
-        <Grid
+        </Grid> */}
+        {/* <Grid
           borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
           item
           xs={12}
@@ -98,41 +118,58 @@ const ConstantDetails = () => {
             Verified
             <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
           </Typography>
-        </Grid>
+        </Grid> */}
         <Grid
           borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
           item
           xs={12}
           sm={6}
           md={3}
-          lg="auto"
-          xl={2}
           px={2}
+          mb={{ xs: 1, lg: 0 }}
         >
           <Typography variant="body3" color="grey.label">
             Mobile Number
           </Typography>
-          <Typography variant="subtitle2" color="textPrimary.main">
-            {mobileNumber ? mobileNumber : ''}
-            <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
-            <Typography component="span" variant="subtitle2" color="primary.main" ml={1}>
-              Change
-            </Typography>
-          </Typography>
+          <Box display="flex" alignItems="center">
+            {mobileNumber ? (
+              <>
+                <Typography variant="subtitle2" color="textPrimary.main" width="auto" mr={0.5}>
+                  {mobileNumber ? mobileNumber : ''}
+                </Typography>
+                <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
+                <Typography component="span" variant="subtitle2" color="primary.main" ml={0.5}>
+                  Change
+                </Typography>
+              </>
+            ) : (
+              <Typography variant="subtitle2" color="textPrimary.main" mr={0.5}>
+                -
+              </Typography>
+            )}
+          </Box>
         </Grid>
-        <Grid item xs={12} sm={6} md="auto" lg="auto" pl={2}>
-          <Typography variant="body3" color="grey.label">
+        <Grid item xs={12} sm={6} md={3} px={2} mb={{ xs: 1, lg: 0 }}>
+          <Typography component="div" variant="body3" color="grey.label">
             Email
           </Typography>
-          <Grid>
-            <Typography
-              variant="subtitle2"
-              color="textPrimary.main"
-              sx={{ wordBreak: 'break-word' }}
-            >
-              {emailId ? emailId : ''}
-            </Typography>
-          </Grid>
+          <Box display="flex" alignItems="center">
+            {emailId ? (
+              <>
+                <Typography variant="subtitle2" color="textPrimary.main" width="auto" mr={0.5}>
+                  {emailId ? emailId : ''}
+                </Typography>
+                <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
+                <Typography component="span" variant="subtitle2" color="primary.main" ml={0.5}>
+                  Change
+                </Typography>
+              </>
+            ) : (
+              <Typography variant="subtitle2" color="textPrimary.main" mr={0.5}>
+                -
+              </Typography>
+            )}
+          </Box>
         </Grid>
       </Grid>
     </Box>

@@ -32,10 +32,11 @@ const themeWrapper = (mode, appFontType) => {
     breakpoints: breakpoints,
     shadows: {
       0: 'none',
-      1: '0px 1px 3px #00000029',
-      2: '0px 3px 6px #00000029',
-      3: '0px 2px 10px #00000029',
-      4: '0px 3px 25px #00000029',
+      1: '0 1px 3px #00000029',
+      2: '0 3px 6px #00000029',
+      3: '0 2px 10px #00000029',
+      4: '0 3px 25px #00000029',
+      8: '0 1px 3px #00000029',
     },
 
     components: {
@@ -108,6 +109,14 @@ const themeWrapper = (mode, appFontType) => {
           },
           colorPrimary: {
             color: palette.primary,
+          },
+        },
+      },
+      MuiChip: {
+        styleOverrides: {
+          root: {},
+          sizeSmall: {
+            fontSize: '12px',
           },
         },
       },

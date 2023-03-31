@@ -1,6 +1,6 @@
-// import Check from '@mui/icons-material/Check';/
+import { makeStyles } from '@material-ui/core';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { Grid, Typography } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 import Step from '@mui/material/Step';
 import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
 import StepLabel from '@mui/material/StepLabel';
@@ -13,17 +13,21 @@ import { Chip } from '../../ui/core';
 const QontoConnector = styled(StepConnector)(({ theme }) => ({
   [`&.${stepConnectorClasses.alternativeLabel}`]: {
     top: 10,
-    left: 'calc(-50% + 16px)',
-    right: 'calc(50% + 16px)',
+    left: 'calc(-92% + 13px)',
+    right: 'calc(92% + 4px)',
+    '@media only screen and (max-width: 1365px)': {
+      left: 'calc(-89% + 10px)',
+      right: 'calc(92% + 3px)',
+    },
   },
   [`&.${stepConnectorClasses.active}`]: {
     [`& .${stepConnectorClasses.line}`]: {
-      borderColor: '#784af4',
+      borderColor: theme.palette.inputFocusColor.main,
     },
   },
   [`&.${stepConnectorClasses.completed}`]: {
     [`& .${stepConnectorClasses.line}`]: {
-      borderColor: 'success.main',
+      borderColor: theme.palette.success.main,
     },
   },
   [`& .${stepConnectorClasses.line}`]: {
@@ -75,49 +79,125 @@ function QontoStepIcon(props) {
   );
 }
 export default function ApplicationStepper({ activeStep = 1, steps, selectedRowData }) {
-  const { created_at, doctor_status, nmc_status, smc_status } = selectedRowData;
+  const {
+    created_at,
+    smc_action_date,
+    college_registrar_action_date,
+    college_dean_action_date,
+    nmc_action_date,
+    doctor_status,
+    nmc_status,
+    collegeVerificationStatus,
+    smc_status,
+  } = selectedRowData;
+
+  let applicationSubmittedDate = new Date(created_at?.value).toDateString();
+  let applicationAtSMC;
+  if (smc_action_date?.value) {
+    applicationAtSMC = new Date(smc_action_date?.value).toDateString();
+  } else {
+    applicationAtSMC = '';
+  }
+  let applicationAtNMC;
+  if (nmc_action_date?.value) {
+    applicationAtNMC = new Date(nmc_action_date?.value).toDateString();
+  } else {
+    applicationAtNMC = '';
+  }
+
+  let finalCollegeDate;
+  if (college_dean_action_date?.value) {
+    finalCollegeDate = new Date(college_dean_action_date?.value).toDateString();
+  }
+  if (college_registrar_action_date?.value) {
+    finalCollegeDate = new Date(college_registrar_action_date?.value).toDateString();
+  }
+  if (college_dean_action_date?.value && college_registrar_action_date?.value) {
+    finalCollegeDate = new Date(college_dean_action_date?.value).toDateString();
+  }
+
+  const finalDates = [
+    applicationSubmittedDate,
+    applicationAtSMC,
+    finalCollegeDate,
+    applicationAtSMC,
+    applicationAtNMC,
+  ];
+
+  const stepDescription = [
+    '',
+    'SMC will verify the application and take action.',
+    'College will verify the application and take action.',
+    'SMC will verify the application and take action.',
+    'NMC will verify the Application and take action.',
+  ];
+
+  const stepStatus = [
+    {
+      type: doctor_status?.value.toLowerCase(),
+      label: doctor_status?.value,
+    },
+    {
+      type: smc_status?.value.toLowerCase(),
+      label: smc_status?.value,
+    },
+    {
+      type: collegeVerificationStatus?.value?.toLowerCase(),
+      label: collegeVerificationStatus?.value,
+    },
+    {
+      type: smc_status?.value.toLowerCase(),
+      label: smc_status?.value,
+    },
+    {
+      type: nmc_status?.value.toLowerCase(),
+      label: nmc_status?.value,
+    },
+  ];
+
+  const theme = useTheme();
+
+  const useStyles = makeStyles(() => ({
+    stepperWrapper: {
+      width: '1000px',
+    },
+  }));
+
+  const classes = useStyles(theme);
   return (
-    <Grid container>
-      <Grid item xs={12}>
-        <Stepper activeStep={activeStep} alternativeLabel connector={<QontoConnector />}>
-          {steps.map((label, index) => (
-            <Step key={label}>
-              <StepLabel
-                StepIconComponent={QontoStepIcon}
-                sx={{ fill: index === activeStep ? 'stepIconActive.main' : 'grey1.main' }}
-              >
-                {label}
-              </StepLabel>
-            </Step>
-          ))}
-        </Stepper>
-      </Grid>
-      <Grid item container>
-        <Grid item xs={8} md={3}>
-          <Typography variant="body3" color="grey.label">
-            {new Date(created_at?.value).toDateString()}
-          </Typography>
-          <Chip type={doctor_status?.value.toLowerCase()} label={doctor_status?.value} />
-        </Grid>
-        <Grid item xs={8} md={3}>
-          <Typography variant="body3" color="grey.label">
-            SMC will verify the applcation and take action
-          </Typography>
-          <Chip type={smc_status?.value.toLowerCase()} label={smc_status?.value} sx={{ ml: 1 }} />
-        </Grid>
-        <Grid item xs={8} md={3}>
-          <Typography variant="body3" color="grey.label">
-            NMC will verify the applcation and take action
-          </Typography>
-          <Chip type={nmc_status?.value.toLowerCase()} label={nmc_status?.value} sx={{ ml: 1 }} />
-        </Grid>
-        <Grid item xs={8} md={3}>
-          <Typography variant="body3" color="grey.label">
-            Application can be approved or rejected
-          </Typography>
-          <Chip type="pending" label="Pending" sx={{ ml: 1 }} />
-        </Grid>
-      </Grid>
-    </Grid>
+    <Stepper
+      className={classes.stepperWrapper}
+      activeStep={activeStep}
+      alternativeLabel
+      connector={<QontoConnector />}
+    >
+      {steps.map((label, index) => (
+        <Step key={label}>
+          <StepLabel
+            StepIconComponent={QontoStepIcon}
+            sx={{
+              fill: index === activeStep ? 'stepIconActive.main' : 'grey1.main',
+              alignItems: 'flex-start',
+            }}
+          >
+            <Typography variant="body3" component="div" textAlign="left">
+              {label}
+            </Typography>
+
+            <Typography component="div" variant="body8" color="grey.label" textAlign="left">
+              {stepDescription[index]}
+              <br />
+              {finalDates[index]}
+            </Typography>
+            <Box textAlign="left">
+              <Chip
+                type={stepStatus[index].type}
+                label={<Typography variant="body4">{stepStatus[index].label}</Typography>}
+              />
+            </Box>
+          </StepLabel>
+        </Step>
+      ))}
+    </Stepper>
   );
 }

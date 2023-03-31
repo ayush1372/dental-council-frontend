@@ -2,222 +2,297 @@ import { useState } from 'react';
 
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
-import { Grid, Typography } from '@mui/material';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import { Grid, IconButton, Tooltip, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
+import AttachmentViewPopup from '../../../../shared/query-modal-popup/attachement-view-popup';
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
 const QualificationDetailsContent = ({ registrationDetails }) => {
+  const { data } = useSelector((state) => state.loginReducer?.loginData);
+  const { raisedQueryData } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
+
   const [openModal, setOpenModal] = useState(false);
+  const [queryRaisedField, setQueryRaisedField] = useState('');
+  const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
+
+  const { qualification_detail_response_tos } = registrationDetails || {};
+
+  const CloseAttachmentPopup = () => {
+    setAttachmentViewProfile(false);
+  };
+
   const ClosePopup = () => {
     setOpenModal(false);
   };
-  const { userActiveTab } = useSelector((state) => state.common);
-  const {
-    country,
-    state,
-    college,
-    university,
-    course,
-    qualification_month,
-    qualification_year,
-    // is_name_change,
-  } = registrationDetails?.[0] || {};
 
-  const countryName = country?.name || '';
-  const stateName = state?.name || '';
-  const collegeName = college?.name || '';
-  const universityName = university?.name || '';
-  const courseName = course?.name || '';
+  //Helper Method to get the data of the query raised against the field
+  const getQueryRaised = (fieldName) => {
+    let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
+    return query?.query_comment;
+  };
 
-  return (
-    <Grid container spacing={2} mt={2}>
-      <Grid container item spacing={2} mt={1}>
-        <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
-            Name of the Degree or Diploma Obtained
-            <Typography component="span" color="error.main">
-              *
+  return qualification_detail_response_tos?.map((element, index) => {
+    return (
+      <Grid
+        container
+        spacing={2}
+        mt={2}
+        key={index}
+        borderBottom={qualification_detail_response_tos?.length > 1 ? 1 : 'none'}
+        borderColor={qualification_detail_response_tos?.length > 1 ? 'grey2.light' : 'none'}
+      >
+        <Grid container item spacing={2} mt={1}>
+          <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="grey.label">
+              Name of the Degree Obtained
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+              {getQueryRaised('Name of the Degree Obtained') !== undefined && (
+                <Tooltip title={getQueryRaised('Name of the Degree Obtained')}>
+                  <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                </Tooltip>
+              )}
             </Typography>
-          </Typography>
-          <Grid display="flex" alignItems="center">
-            <Typography color="primary.main" variant="subtitle2">
-              {courseName}
+            <Grid display="flex" alignItems="center">
+              <Typography color="textPrimary.main" variant="subtitle2">
+                {element?.course?.course_name}
+              </Typography>
+              {(data?.user_type === 1 ||
+                data?.user_type === 3 ||
+                data?.user_type === 4 ||
+                data?.user_type === 5) && (
+                <ContactSupportOutlinedIcon
+                  color="primary"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('Name of the Degree Obtained');
+                  }}
+                  fontSize="width30"
+                />
+              )}
+            </Grid>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="grey.label">
+              Country Name
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+              {getQueryRaised('Country Name') !== undefined && (
+                <Tooltip title={getQueryRaised('Country Name')}>
+                  <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                </Tooltip>
+              )}
             </Typography>
-            {userActiveTab === 'dashboard' && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => setOpenModal(true)}
-                fontSize="width30"
-              />
-            )}
+            <Grid display="flex" alignItems="center">
+              <Typography variant="subtitle2" color="textPrimary.main">
+                {element?.country?.name}
+              </Typography>
+              {(data?.user_type === 1 ||
+                data?.user_type === 3 ||
+                data?.user_type === 4 ||
+                data?.user_type === 5) && (
+                <ContactSupportOutlinedIcon
+                  color="primary"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('Country Name');
+                  }}
+                  fontSize="width30"
+                />
+              )}
+            </Grid>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="grey.label">
+              State
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+              {getQueryRaised('State') !== undefined && (
+                <Tooltip title={getQueryRaised('State')}>
+                  <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                </Tooltip>
+              )}
+            </Typography>
+            <Grid display="flex" alignItems="center">
+              <Typography color="textPrimary.main" variant="subtitle2">
+                {element?.state?.name}
+              </Typography>
+              {(data?.user_type === 1 ||
+                data?.user_type === 3 ||
+                data?.user_type === 4 ||
+                data?.user_type === 5) && (
+                <ContactSupportOutlinedIcon
+                  color="primary"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('State');
+                  }}
+                  fontSize="width30"
+                />
+              )}
+            </Grid>
           </Grid>
         </Grid>
-
-        {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
-
-        <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
-            Country Name
-            <Typography component="span" color="error.main">
-              *
+        <Grid container item spacing={2} mt={1}>
+          <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="grey.label">
+              Name of the College
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+              {getQueryRaised('Name of the College') !== undefined && (
+                <Tooltip title={getQueryRaised('Name of the College')}>
+                  <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                </Tooltip>
+              )}
             </Typography>
-          </Typography>
-          <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
-              {countryName}
+            <Grid display="flex" alignItems="center">
+              <Typography variant="subtitle2" color="textPrimary.main">
+                {element?.college?.name}
+              </Typography>
+
+              {(data?.user_type === 1 ||
+                data?.user_type === 3 ||
+                data?.user_type === 4 ||
+                data?.user_type === 5) && (
+                <ContactSupportOutlinedIcon
+                  color="primary"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('Name of the College');
+                  }}
+                  fontSize="width30"
+                />
+              )}
+            </Grid>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="grey.label">
+              University
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+              {getQueryRaised('University') !== undefined && (
+                <Tooltip title={getQueryRaised('University')}>
+                  <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                </Tooltip>
+              )}
             </Typography>
-            {userActiveTab === 'dashboard' && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => setOpenModal(true)}
-                fontSize="width30"
-              />
+            <Grid display="flex" alignItems="center">
+              <Typography variant="subtitle2" color="textPrimary.main">
+                {element?.university?.name}
+              </Typography>{' '}
+              {(data?.user_type === 1 ||
+                data?.user_type === 3 ||
+                data?.user_type === 4 ||
+                data?.user_type === 5) && (
+                <ContactSupportOutlinedIcon
+                  color="primary"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('University');
+                  }}
+                  fontSize="width30"
+                />
+              )}
+            </Grid>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="grey.label">
+              Month & Year of Awarding Degree
+            </Typography>
+            {getQueryRaised('Month & Year of Awarding Degree') !== undefined && (
+              <Tooltip title={getQueryRaised('Month & Year of Awarding Degree')}>
+                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              </Tooltip>
             )}
+            <Grid display="flex" alignItems="center">
+              <Typography variant="subtitle2" color="textPrimary.main">
+                {element?.qualification_month ? element?.qualification_month : ''} ,{' '}
+                {element?.qualification_year ? element?.qualification_year : ''}
+              </Typography>{' '}
+              {(data?.user_type === 1 ||
+                data?.user_type === 3 ||
+                data?.user_type === 4 ||
+                data?.user_type === 5) && (
+                <ContactSupportOutlinedIcon
+                  color="primary"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('Month & Year of Awarding Degree');
+                  }}
+                  fontSize="width30"
+                />
+              )}
+            </Grid>
           </Grid>
         </Grid>
-
-        <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
-            State
-            <Typography component="span" color="error.main">
-              *
+        <Grid container item spacing={2} mt={1}>
+          <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="grey.label">
+              Upload Qualification Degree
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+              {getQueryRaised('Upload Qualification Degree') !== undefined && (
+                <Tooltip title={getQueryRaised('Upload Qualification Degree')}>
+                  <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                </Tooltip>
+              )}
             </Typography>
-          </Typography>
-          <Grid display="flex" alignItems="center">
-            <Typography color="primary.main" variant="subtitle2">
-              {stateName}
-            </Typography>
-            {userActiveTab === 'dashboard' && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => setOpenModal(true)}
-                fontSize="width30"
-              />
-            )}
+            <Grid display="flex" alignItems="center">
+              <Typography
+                variant="subtitle2"
+                color="textPrimary.main"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setAttachmentViewProfile(true);
+                }}
+              >
+                <IconButton>
+                  <AttachFileIcon fontSize="10px" />
+                </IconButton>
+                View Attachment
+              </Typography>
+              {(data?.user_type === 1 ||
+                data?.user_type === 3 ||
+                data?.user_type === 4 ||
+                data?.user_type === 5) && (
+                <ContactSupportOutlinedIcon
+                  color="primary"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('Upload Qualification Degree');
+                  }}
+                  fontSize="width30"
+                />
+              )}
+            </Grid>
           </Grid>
         </Grid>
+        {openModal && (
+          <RaiseQueryPopup
+            ClosePopup={ClosePopup}
+            setOpenModal={setOpenModal}
+            queryRaisedField={queryRaisedField}
+            setQueryRaisedFor={setQueryRaisedField}
+          />
+        )}
+        {attachmentViewProfile && (
+          <AttachmentViewPopup
+            certificate={element?.degree_certificate}
+            closePopup={CloseAttachmentPopup}
+            alt={'Qualification Certificate'}
+          />
+        )}
       </Grid>
-      <Grid container item spacing={2} mt={1}>
-        <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
-            Name of the college
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
-          </Typography>
-          <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
-              {collegeName}
-            </Typography>
-
-            {userActiveTab === 'dashboard' && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => setOpenModal(true)}
-                fontSize="width30"
-              />
-            )}
-          </Grid>
-        </Grid>
-
-        <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
-            University
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
-          </Typography>
-          <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
-              {universityName}
-            </Typography>{' '}
-            {userActiveTab === 'dashboard' && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => setOpenModal(true)}
-                fontSize="width30"
-              />
-            )}
-          </Grid>
-        </Grid>
-
-        <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
-            Month & Year of awarding Degree/Diploma
-          </Typography>
-          <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
-              {qualification_month ? qualification_month : ''}
-            </Typography>{' '}
-            {userActiveTab === 'dashboard' && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => setOpenModal(true)}
-                fontSize="width30"
-              />
-            )}
-          </Grid>
-          <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
-              {qualification_year ? qualification_year : ''}
-            </Typography>{' '}
-            {userActiveTab === 'dashboard' && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => setOpenModal(true)}
-                fontSize="width30"
-              />
-            )}
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid container item spacing={2} mt={1}>
-        {/* <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
-            Year of awarding Degree/Diploma
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
-          </Typography>
-
-          
-        </Grid> */}
-        <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
-            Upload Qualification Degree
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
-          </Typography>
-          <Typography variant="subtitle2" color="primary.main">
-            <AttachFileIcon fontSize="10px" />
-            View attachment
-          </Typography>
-        </Grid>
-        {/* <Grid item xs={12} md={6}>
-          <Typography variant="subtitle2" color="grey.label">
-            Is your name in registration certificate, different from your name in Aadhaar?
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
-          </Typography>
-          <Grid display="flex" alignItems="center">
-            <Typography variant="subtitle2" color="primary.main">
-              {is_name_change === 0 ? 'Yes' : is_name_change === 1 ? 'No' : ''}
-            </Typography>
-            {userActiveTab === 'dashboard' && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => setOpenModal(true)}
-                fontSize="width30"
-              />
-            )}
-          </Grid>
-        </Grid> */}
-      </Grid>
-    </Grid>
-  );
+    );
+  });
 };
 
 export default QualificationDetailsContent;

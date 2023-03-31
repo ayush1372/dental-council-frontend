@@ -1,13 +1,14 @@
-import { Box, Container, Grid, Typography } from '@mui/material';
+import { Box, Button, Container, Grid, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
-import BannerImage from '../../../../assets/images/hero-banner.png';
-import { Button } from '../../../../ui/core';
+import BannerImage from '../../../../assets/images/hero-banner-image.png';
 
 import styles from './hero-banner.module.scss';
 
 export function HeroBanner() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   return (
     <Box
       p={{ md: '70px 0', xs: '30px 0' }}
@@ -21,19 +22,25 @@ export function HeroBanner() {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="h2" color="black" mb={2}>
-              {t(`Ayushmaan Bharat Digital Mission`)}
+              {t(`Ayushman Bharat Digital Mission`)}
             </Typography>
             <Typography variant="h1" color="primary" mb={2}>
-              {t('National Medical Commission (NMC)')}
+              {t('National Medical Register (NMR)')}
             </Typography>
-            <Typography variant="body1" color="textPrimary" component="div">
+            <Typography variant="body1" color="textPrimary" component="div" mb={2}>
               {t(
-                'The National Medical Commission (NMC) has been constituted by an act of Parliament known as National Medical Commission Act, 2019 which came into force on 25.9.2020 by gazette notification dated 24.9.2020. The Board of Governors in supersession of Medical Council of India constituted under section 3A of the Indian Medical Council Act, 1956 stands dissolved thereafter.'
+                `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages.`
               )}
             </Typography>
+            <Typography component="div">(This data is for sample purposes only.)</Typography>
 
-            <Button variant="contained" color="secondary" sx={{ margin: '16px 0 32px' }}>
-              {t('Click here to Login or Register')}
+            <Button
+              variant="contained"
+              color="secondary"
+              sx={{ margin: '16px 0 32px' }}
+              onClick={() => navigate('register/doctor-registration')}
+            >
+              {t('Login/Register as Doctor')}
             </Button>
           </Grid>
         </Grid>

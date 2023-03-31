@@ -1,47 +1,61 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { Alert, Container, Divider, IconButton, InputAdornment, Typography } from '@mui/material';
+import { Alert, Container, Divider, IconButton, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
+import { dateFormat } from '../../../helpers/functions/common-functions';
+import KycErrorPopup from '../../../shared/common-modals/kyc-error-popup';
+import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import OtpForm from '../../../shared/otp-form/otp-component';
-import SuccessPopup from '../../../shared/reactivate-licence-popup/success-popup';
 import {
   checkHpidExists,
+  checkKycDetails,
   generateMobileOtp,
   getHprIdSuggestions,
-  sendResetPasswordLink,
+  getSessionAccessToken,
   verifyMobileOtp,
 } from '../../../store/actions/doctor-registration-actions';
-import { sendAaadharOtp, validateOtpAadhaar } from '../../../store/actions/user-aadhaar-actions';
+import {
+  getDemographicAuthMobile,
+  sendAaadharOtp,
+  validateOtpAadhaar,
+} from '../../../store/actions/user-aadhaar-actions';
+import {
+  storeMobileDetails,
+  UserNotFoundDetails,
+} from '../../../store/reducers/doctor-registration-reducer';
 import { Button, TextField } from '../../../ui/core';
 import AadhaarInputField from '../../../ui/core/aadhaar-input-field/aadhaar-input-field';
+import successToast from '../../../ui/core/toaster';
 import CreateHprId from './unique-username';
-function FetchDoctorDetails() {
+function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
   const [showCreateHprIdPage, setShowCreateHprIdPage] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showOtpMobile, setShowOtpMobile] = useState(false);
   const [showOtpAadhar, setshowOtpAadhar] = useState(false);
 
-  const [isOtpValidEmail, setisOtpValidEmail] = useState(false);
   const [isOtpValidMobile, setisOtpValidMobile] = useState(false);
   const [isOtpValidAadhar, setisOtpValidAadhar] = useState(false);
-  const [enableSubmit, setEnableSubmit] = useState(false);
+  const [kycError, setKycError] = useState(false);
   const dispatch = useDispatch();
-  const userEmail = useSelector(
-    (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.email_id
-  );
 
   const otptype = useSelector((state) => state?.AadhaarTransactionId?.typeOfOtpDetailsData);
 
   const registrationNumber = useSelector(
     (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.registration_number
   );
+  const kycstatus = useSelector(
+    (state) => state?.doctorRegistration?.getkycDetailsData?.data?.kyc_fuzzy_match_status
+  );
   const aadhaarTxnId = useSelector((state) => state?.AadhaarTransactionId?.aadharData?.data?.txnId);
+  const mobileNumber = useSelector(
+    (state) => state?.AadhaarTransactionId?.aadharData?.data?.mobileNumber
+  );
   const mobileTxnId = useSelector(
     (state) => state?.doctorRegistration?.getMobileOtpDetails?.data?.txnId
   );
@@ -49,8 +63,17 @@ function FetchDoctorDetails() {
   const councilName = useSelector(
     (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.council_name
   );
+
   const hpName = useSelector(
     (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.hp_name
+  );
+
+  const demographicAuthMobileVerify = useSelector(
+    (state) => state?.AadhaarTransactionId?.demographicAuthMobileDetailsData
+  );
+
+  const existUSerName = useSelector(
+    (state) => state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId
   );
 
   const {
@@ -73,15 +96,20 @@ function FetchDoctorDetails() {
     handleVerifyAadhar(aadharDataFields);
   };
   const handleVerifyAadhar = (value) => {
-    dispatch(sendAaadharOtp(value)).then(() => {
-      setshowOtpAadhar(true);
-      setisOtpValidMobile(false);
-      setisOtpValidEmail(false);
+    let reqObj = {
+      clientId: process.env.REACT_APP_SESSION_CLIENT_ID,
+      clientSecret: process.env.REACT_APP_SESSION_CLIENT_SECRET,
+    };
+    dispatch(getSessionAccessToken(reqObj)).then(() => {
+      dispatch(sendAaadharOtp(value)).then(() => {
+        setshowOtpAadhar(true);
+      });
     });
   };
+  const onCancel = () => {
+    window.location.reload();
+  };
   const handleValidateAadhar = () => {
-    setisOtpValidAadhar(true);
-    setshowOtpAadhar(false);
     handleClear();
     if (otpValue.length === 6) {
       dispatch(
@@ -89,20 +117,71 @@ function FetchDoctorDetails() {
           txnId: aadhaarTxnId,
           otp: otpValue,
         })
-      );
+      ).then((response) => {
+        setisOtpValidAadhar(true);
+
+        setshowOtpAadhar(false);
+        handleClear();
+        if (!imrDataNotFound) {
+          dispatch(
+            checkKycDetails({
+              registrationNumber: registrationNumber || '',
+              txn_id: response.data.txnId || '',
+              mobile_number: response.data.mobileNumber || '',
+              photo: response.data.photo || '',
+              gender: response.data.gender || '',
+              name: response.data.name || '',
+              email: response.data.email || '',
+              pincode: response.data.pincode || '',
+              birth_date: dateFormat(response.data.birthdate) || '',
+              care_of: response.data.careOf || '',
+              house: response.data.house || '',
+              street: response.data.street || '',
+              kycLandMark: response.data.landmark || '',
+              locality: response.data.locality || '',
+              village_town_city: response.data.villageTownCity || '',
+              sub_dist: response.data.subDist || '',
+              district: response.data.district || '',
+              state: response.data.state || '',
+              post_office: response.data.postOffice || '',
+              address: response.data.address || '',
+            })
+          ).then((response) => {
+            if (response.data.kyc_fuzzy_match_status === 'Fail') {
+              setKycError(true);
+            }
+          });
+        }
+      });
     }
   };
 
   const handleVerifyMobile = () => {
-    let data = {
-      mobile: getValues().MobileNumber,
-      txnId: aadhaarTxnId,
-    };
-    dispatch(generateMobileOtp(data)).then(() => {
-      setShowOtpMobile(true);
-      setisOtpValidMobile(false);
+    dispatch(storeMobileDetails(getValues().MobileNumber));
+    dispatch(
+      getDemographicAuthMobile({
+        txnId: aadhaarTxnId,
+        mobileNumber: getValues().MobileNumber,
+      })
+    ).catch(() => {
+      let data = {
+        mobile: getValues().MobileNumber,
+        txnId: aadhaarTxnId,
+      };
+      dispatch(generateMobileOtp(data))
+        .then(() => {
+          setShowOtpMobile(true);
+        })
+        .catch((error) => {
+          successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+        });
     });
   };
+  useEffect(() => {
+    if (demographicAuthMobileVerify?.data?.verified) {
+      setisOtpValidMobile(true);
+    }
+  }, [demographicAuthMobileVerify?.data?.verified]);
 
   const handleValidateMobile = () => {
     let data = {
@@ -110,13 +189,11 @@ function FetchDoctorDetails() {
       otp: otpValue,
     };
     if (otpValue.length === 6) {
-      dispatch(verifyMobileOtp(data));
-      setisOtpValidMobile(true);
-      setShowOtpMobile(false);
-      handleClear();
-      if (isOtpValidEmail === true) {
-        setEnableSubmit(true);
-      }
+      dispatch(verifyMobileOtp(data)).then(() => {
+        setisOtpValidMobile(true);
+        setShowOtpMobile(false);
+        handleClear();
+      });
     }
   };
 
@@ -146,12 +223,15 @@ function FetchDoctorDetails() {
     }
   };
   const onSubmit = () => {
+    if (imrDataNotFound || kycstatus !== 'Success') {
+      dispatch(UserNotFoundDetails({ imrDataNotFound, aadhaarFormValues }));
+    }
     dispatch(
       checkHpidExists({
         txnId: aadhaarTxnId,
       })
     ).then((response) => {
-      if (response?.data?.hprId === undefined || response?.data?.hprId === null) {
+      if (response?.data?.hprIdNumber === null || response?.data?.hprIdNumber === '') {
         setShowCreateHprIdPage(true);
         dispatch(
           getHprIdSuggestions({
@@ -159,25 +239,25 @@ function FetchDoctorDetails() {
           })
         );
       } else {
-        let data = {
-          email: userEmail,
-          mobile: getValues().MobileNumber,
-          username: response?.data?.hprId,
-          registration_number: registrationNumber,
-        };
-        dispatch(sendResetPasswordLink(data)).then(() => {
+        if (response?.data?.hprId && response?.data?.hprIdNumber) {
           setShowSuccess(true);
-        });
+        }
       }
     });
   };
-
   return (
     <>
       <ToastContainer></ToastContainer>
+      {kycError && (
+        <KycErrorPopup
+          open={kycError}
+          setOpen={() => setKycError(false)}
+          text="Your NMR and Aadhar details doesn't match. Do you want to continue the registration in the NMR?"
+        />
+      )}
 
       {showCreateHprIdPage ? (
-        <CreateHprId />
+        <CreateHprId aadhaarFormValues={aadhaarFormValues} imrDataNotFound={imrDataNotFound} />
       ) : (
         <>
           <Container
@@ -192,28 +272,32 @@ function FetchDoctorDetails() {
               },
             }}
           >
-            <Box sx={{ width: '100%', height: '53px', marginBottom: '30px', marginTop: '32px ' }}>
-              <Alert
-                sx={{
-                  m: 2,
-                  marginLeft: '0px',
-                  borderRadius: '5px',
-                  width: {
-                    xs: '100%',
-                    md: '680px',
-                  },
-                  boxShadow: '1',
-                  color: 'inputSuccessTextColor.main',
-                  backgroundColor: 'inputSuccessBackgroundColor.main',
-                }}
-              >
-                Record fetched successfully. Please verify your details to proceed further.
-              </Alert>
-            </Box>
+            {hpName !== null || undefined ? (
+              ''
+            ) : (
+              <Box sx={{ width: '100%', height: '53px', marginBottom: '30px', marginTop: '32px ' }}>
+                <Alert
+                  sx={{
+                    m: 2,
+                    marginLeft: '0px',
+                    borderRadius: '5px',
+                    width: {
+                      xs: '100%',
+                      md: '680px',
+                    },
+                    boxShadow: '1',
+                    color: 'inputSuccessTextColor.main',
+                    backgroundColor: 'inputSuccessBackgroundColor.main',
+                  }}
+                >
+                  Record fetched successfully. Please verify your details to proceed further.
+                </Alert>
+              </Box>
+            )}
 
             <Box p="30px 32px 0px 32px" width={{ xs: '100%', md: '679px' }} sx={{ boxShadow: '2' }}>
               <Box mb={4}>
-                <Typography variant="h2" color="primary">
+                <Typography variant="h2" color="textSecondary.main">
                   Verify Registration Details
                 </Typography>
               </Box>
@@ -223,7 +307,7 @@ function FetchDoctorDetails() {
                     Name
                   </Typography>
                   <Typography variant="subtitle2" component="div" color="primary">
-                    {hpName ? hpName : ''}
+                    {hpName ? hpName : '-'}
                   </Typography>
                 </Box>
                 <Box>
@@ -236,7 +320,7 @@ function FetchDoctorDetails() {
                     Registration Number
                   </Typography>
                   <Typography variant="subtitle2" component="div" color="primary">
-                    {registrationNumber ? registrationNumber : ''}
+                    {aadhaarFormValues ? aadhaarFormValues?.RegistrationNumber : registrationNumber}
                   </Typography>
                 </Box>
               </Box>
@@ -245,7 +329,7 @@ function FetchDoctorDetails() {
                   Council
                 </Typography>
                 <Typography variant="subtitle2" component="div" color="primary">
-                  {councilName ? councilName : ''}
+                  {aadhaarFormValues ? aadhaarFormValues?.RegistrationCouncil : councilName}
                 </Typography>
               </Box>
               <Divider sx={{ marginBottom: '25px' }} variant="fullWidth" />
@@ -263,8 +347,10 @@ function FetchDoctorDetails() {
                     getValues={getValues}
                     required={true}
                     errors={errors}
+                    disabled={showOtpAadhar || isOtpValidAadhar}
                   />
                 </Box>
+
                 <Box p="35px 32px 0px 32px">
                   {isOtpValidAadhar ? <CheckCircleIcon color="success" /> : ''}
                 </Box>
@@ -292,29 +378,29 @@ function FetchDoctorDetails() {
                     },
                   }}
                 >
-                  <Box>
+                  <Box pt={1}>
                     <Typography variant="body1">
-                      We just sent an OTP on your Mobile Number.
+                      Please enter the OTP sent on your mobile number {mobileNumber} which is
+                      registered with Aadhaar.
                     </Typography>
                     {otpform}
                   </Box>
-                  <Box>
-                    <Button
-                      sx={{ width: '114px', height: '53px', marginTop: '47px' }}
-                      component="span"
-                      variant="contained"
-                      color="secondary"
-                      onClick={handleValidateAadhar}
-                    >
-                      Validate
-                    </Button>
-                  </Box>
+                  <Button
+                    sx={{ width: '114px', height: '53px', marginTop: '77px' }}
+                    component="span"
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleValidateAadhar}
+                    disabled={isOtpValidMobile}
+                  >
+                    Validate
+                  </Button>
                 </Box>
               )}
-              <Divider sx={{ mb: 4, mt: 4 }} variant="fullWidth" />
 
+              <Divider sx={{ mb: 4, mt: 4 }} variant="fullWidth" />
               <Box sx={{ marginTop: '20px', paddingBottom: '48px' }}>
-                <Typography variant="body3">
+                <Typography variant="subtitle2">
                   Mobile Number
                   <Typography component="span" sx={{ color: 'error.main' }}>
                     *
@@ -331,6 +417,7 @@ function FetchDoctorDetails() {
                     type="text"
                     onInput={(e) => handleInput(e)}
                     name={'MobileNumber'}
+                    disabled={isOtpValidMobile}
                     placeholder={t('Enter mobile number')}
                     defaultValue={getValues().MobileNumber}
                     error={errors.MobileNumber?.message}
@@ -341,16 +428,10 @@ function FetchDoctorDetails() {
                         message: 'Enter Valid Mobile Number',
                       },
                     })}
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end" sx={{ pr: 1 }}>
-                          <IconButton aria-label="toggle password visibility" edge="end">
-                            {isOtpValidMobile ? <CheckCircleIcon color="success" /> : ''}
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
                   />
+                  <IconButton aria-label="toggle password visibility" edge="end">
+                    {isOtpValidMobile ? <CheckCircleIcon color="success" /> : ''}
+                  </IconButton>
                   <Box>
                     {!showOtpMobile && !isOtpValidMobile && (
                       <Button
@@ -377,39 +458,39 @@ function FetchDoctorDetails() {
                 >
                   <Box>
                     <Typography variant="body1">
-                      We just sent an OTP on your Mobile Number.
+                      Please enter the OTP sent on your Mobile Number.
                     </Typography>
                     {otpform}
                   </Box>
-                  <Box>
-                    <Button
-                      sx={{ width: '114px', height: '53px', marginTop: '47px' }}
-                      component="span"
-                      variant="contained"
-                      color="secondary"
-                      onClick={handleValidateMobile}
-                    >
-                      Validate
-                    </Button>
-                  </Box>
+
+                  <Button
+                    sx={{ width: '114px', height: '53px', marginTop: '44px', marginLeft: '65px' }}
+                    component="span"
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleValidateMobile}
+                  >
+                    Validate
+                  </Button>
                 </Box>
               )}
-
               <Box sx={{ paddingBottom: '40px', marginTop: { xs: '10px', sm: 0 } }}>
                 <Button
                   variant="contained"
                   color="secondary"
                   sx={{ marginRight: '10px', width: '105px', height: '48px' }}
                   onClick={handleSubmit(onSubmit)}
+                  disabled={!isOtpValidMobile}
                 >
                   Submit
                 </Button>
                 <Button
+                  onClick={onCancel}
                   variant="outlined"
-                  disabled={!enableSubmit}
                   sx={{
                     backgroundColor: 'grey.main',
                     color: 'black.textBlack',
+                    border: 'none',
                     width: '105px',
                     height: '48px',
                   }}
@@ -419,7 +500,19 @@ function FetchDoctorDetails() {
               </Box>
             </Box>
           </Container>
-          {showSuccess && <SuccessPopup />}
+
+          {showSuccess && (
+            <SuccessModalPopup
+              open={showSuccess}
+              setOpen={() => setShowSuccess(false)}
+              existHprId={true}
+              text={`Your username ${existUSerName.replace(
+                '@hpr.abdm',
+                ''
+              )} has been already created. Please proceed to set your password`}
+              isHpIdCreated={true}
+            />
+          )}
         </>
       )}
     </>

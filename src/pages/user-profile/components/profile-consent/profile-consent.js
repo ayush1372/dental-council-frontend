@@ -1,22 +1,59 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloseIcon from '@mui/icons-material/Close';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import { Box, Dialog, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
+import { doctorTabs, smcTabs } from '../../../../helpers/components/sidebar-drawer-list-item';
+import {
+  getEsignFormDetails,
+  getRegistrationDetailsData,
+} from '../../../../store/actions/doctor-user-profile-actions';
 import { updateProfileConsent } from '../../../../store/actions/doctor-user-profile-actions';
+import { changeUserActiveTab } from '../../../../store/reducers/common-reducers';
+import { getEsignDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
 import { Button, Checkbox } from '../../../../ui/core';
 import successToast from '../../../../ui/core/toaster';
 
-const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType }) => {
+const ProfileConsent = ({
+  handleBack,
+  setIsReadMode,
+  resetStep,
+  loggedInUserType,
+  setShowStaticFormProgress,
+}) => {
   const dispatch = useDispatch();
+  const [degreeCertificate, setDegreeCertificate] = useState(false);
+  const [registrationFile, setRegistrationFile] = useState(false);
+  const doctorRegDetails = useSelector(
+    (state) => state?.doctorUserProfileReducer?.registrationDetails
+  );
+  const eSignResponse = useSelector((state) => state?.doctorUserProfileReducer?.esignDetails?.data);
   const [confirmationModal, setConfirmationModal] = useState(false);
 
-  const { loginData } = useSelector((state) => state?.loginReducer);
+  useEffect(() => {
+    dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id)).then((response) => {
+      if (response?.data?.qualification_detail_response_tos[0]?.degree_certificate) {
+        setDegreeCertificate(true);
+      }
+    });
+  }, []);
+  useEffect(() => {
+    dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id)).then((response) => {
+      if (response?.data?.registration_detail_to?.registration_certificate) {
+        setRegistrationFile(true);
+      }
+    });
+  }, []);
+  // const { loginData } = useSelector((state) => state?.loginReducer);
+  const { personalDetails, updatedPersonalDetails, selectedQualificationTypeValue } = useSelector(
+    (state) => state?.doctorUserProfileReducer
+  );
 
   const {
     formState: { errors },
@@ -32,23 +69,29 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
   const handleClose = () => {
     setConfirmationModal(false);
   };
-  const handleSubmitDetails = () => {
-    const { consent } = getValues();
-    if (consent) {
-      setConfirmationModal(true);
-    }
-  };
+  // const handleSubmitDetails = () => {
+  //   const { consent } = getValues();
+  //   if (consent) {
+  //     setConfirmationModal(true);
+  //   }
+  // };
   const handleYesClick = () => {
     const payload = {
-      hp_profile_id: loginData?.data?.profile_id,
-      application_type_id: 1,
+      hp_profile_id: updatedPersonalDetails?.hp_profile_id,
+      application_type_id: personalDetails?.nmr_id
+        ? 2
+        : selectedQualificationTypeValue === 'International'
+        ? 7
+        : 1,
     };
 
     dispatch(updateProfileConsent(payload))
       .then(() => {
+        setShowStaticFormProgress(true);
         setConfirmationModal(false);
         setIsReadMode(true);
         resetStep(0);
+        dispatch(changeUserActiveTab(doctorTabs[1].tabName));
       })
       .catch((error) => {
         setConfirmationModal(false);
@@ -60,39 +103,191 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
         );
       });
   };
-  return (
+
+  function eSignHandler() {
+    let data = {
+      signingPlace:
+        personalDetails?.communication_address?.village?.name ||
+        personalDetails?.communication_address?.district?.name,
+      nmrDetails: {
+        nmrPersonalDetail: {
+          firstName: personalDetails?.personal_details?.first_name || '',
+          userId: doctorRegDetails?.hp_profile_id || '',
+          middleName: personalDetails?.personal_details?.middle_name || '',
+          lastName: personalDetails?.personal_details?.last_name || '',
+          qualification:
+            doctorRegDetails?.qualification_detail_response_tos[0]?.course.course_name || '',
+          mobileNumber: personalDetails?.kyc_address?.mobile || '',
+          emailId: personalDetails?.kyc_address?.email || '',
+        },
+        nmrPersonalCommunication: {
+          address: personalDetails?.communication_address?.address_line1 || '',
+          country: personalDetails?.communication_address?.country?.name || '',
+          stateUT: personalDetails?.communication_address?.state?.name || '',
+          district: personalDetails?.communication_address?.district?.name || '',
+          city: personalDetails?.communication_address?.village?.name || '',
+          pincode: personalDetails?.communication_address?.pincode || '',
+        },
+        nmrOfficeCommunication: {
+          address: personalDetails?.communication_address?.address_line1 || '',
+          country: personalDetails?.communication_address?.country?.name || '',
+          stateUT: personalDetails?.communication_address?.state?.name || '',
+          district: personalDetails?.communication_address?.district?.name || '',
+          city: personalDetails?.communication_address?.village?.name || '',
+          subDistrict: personalDetails?.communication_address?.sub_district?.name || '',
+          pincode: personalDetails?.communication_address?.pincode || '',
+        },
+        isRegCerAttached: registrationFile ? 'Yes' : 'No',
+        isDegreeCardAttached: degreeCertificate ? 'Yes' : 'No',
+        isOtherDocumentAttached: 'No', //cs-1013:needs to changed when workdetails API integrated*
+      },
+    };
+    dispatch(getEsignFormDetails(data))
+      .then(() => {
+        const payload = {
+          hp_profile_id: updatedPersonalDetails?.hp_profile_id,
+          application_type_id: personalDetails?.nmr_id
+            ? 2
+            : selectedQualificationTypeValue === 'International'
+            ? 7
+            : 1,
+        };
+        dispatch(updateProfileConsent(payload))
+          .then(() => {
+            document.getElementById('formid')?.submit();
+            setIsReadMode(true);
+            resetStep(0);
+            handleEsign();
+            dispatch(getEsignDetails());
+
+            dispatch(changeUserActiveTab(doctorTabs[1].tabName));
+          })
+          .catch((error) => {
+            setConfirmationModal(false);
+            document.getElementById('formid')?.submit();
+            dispatch(getEsignDetails([]));
+            successToast(
+              'ERROR: ' + error.data.response.data.error,
+              'auth-error',
+              'error',
+              'top-center'
+            );
+          });
+      })
+      .catch(() => {
+        successToast('Server Error', 'auth-error', 'error', 'top-center');
+      });
+  }
+  const handleEsign = () => {
+    document.getElementById('formid')?.submit();
+  };
+  useEffect(() => {}, [eSignResponse, getValues().consent]);
+  return eSignResponse?.asp_txn_id ? (
+    <div>
+      <form
+        id="formid"
+        target="_blank"
+        method="POST"
+        action="https://es-staging.cdac.in/esignlevel2/2.1/form/signdoc"
+      >
+        <input
+          type="hidden"
+          id="eSignRequest"
+          name="eSignRequest"
+          value={eSignResponse.esp_request}
+        />
+        <input type="hidden" id="aspTxnID" name="aspTxnID" value={eSignResponse.asp_txn_id} />
+        <input
+          type="hidden"
+          id="Content-Type"
+          name="Content-Type"
+          value={eSignResponse.content_type}
+        />
+        <button type="submit" hidden onClick={handleEsign()}>
+          Submit
+        </button>
+      </form>
+    </div>
+  ) : (
     <>
       <ToastContainer></ToastContainer>
       <Box bgcolor="white.main" py={2} px={{ xs: 1, md: 4 }} mt={2} boxShadow={1}>
-        <Typography component="div" color="primary.main" variant="body1">
+        <Typography
+          // id="name"
+          // value="123"
+          component="div"
+          color="primary.main"
+          variant="body1"
+          mb={2}
+        >
           Consent
           <Typography component="span" color="error.main">
             *
           </Typography>
         </Typography>
-        <Box bgcolor="backgroundColor.light" p={2} display="flex">
-          <Checkbox
-            name="consent"
-            {...register('consent', {
-              required: 'Consent is Required',
-            })}
-            error={errors.consent?.message}
-          />
-          <Typography component="div" mt={1} variant="body5">
-            I, the applicant of the above facility hereby verify that the details as submitted on
-            the portal pertaining to the above facility are true to my personal knowledge and
-            nothing material has been concealed or falsely stated. I request you to kindly verify
-            that the health facility as stated actually exists and give approval to that effect so
-            that the facility can be &aposvalidated for existence&apos on the portal.
-            <br /> <br />I am aware that the facility ID and related information can be used and
-            shared with the entities working in the National Digital Health Ecosystem (NDHE) which
-            inter alia includes stakeholders and entities such as healthcare professionals (e.g.
-            doctors), facilities (e.g. hospitals, laboratories) and data fiduciaries (e.g. health
-            programmes), which are registered with or linked to the Ayushman Bharat Digital Mission
-            (ABDM), and various processes there under. I reserve the right to revoke the given
-            consent at any point of time, subject to applicable laws, rules and regulations.
-          </Typography>
-        </Box>
+        <Grid
+          container
+          bgcolor="backgroundColor.light"
+          p={3}
+          mb={2}
+          display="flex"
+          border="1px solid"
+          borderColor="inputBorderColor.main"
+          borderRadius="5px"
+        >
+          <Grid item xs={12} display="flex">
+            <Checkbox
+              sx={{ width: '18px', height: '18px', marginLeft: 1 }}
+              name="consent"
+              {...register('consent', {
+                required: 'Consent is Required',
+              })}
+              error={errors.consent?.message}
+            />
+            <Typography component="div" variant="body7">
+              I hereby declare that I am voluntarily sharing above mentioned particulars and
+              information. I certify that the above information furnished by me is true, complete,
+              and correct to the best of my knowledge. I understand that in the event of my
+              information being found false or incorrect at any stage, I shall be held liable for
+              the same.
+            </Typography>
+          </Grid>
+        </Grid>
+
+        <Grid
+          container
+          alignItems="center"
+          columnGap={1}
+          bgcolor="success.background"
+          p={3}
+          mb={2}
+          display="flex"
+          border="1px solid"
+          borderColor="inputBorderColor.main"
+          borderRadius="5px"
+        >
+          <Grid item sx="auto" display="flex" alignItems="center">
+            <Checkbox
+              sx={{ width: '18px', height: '18px', marginLeft: 1 }}
+              name="HPR"
+              {...register('HPR')}
+              error={errors.HPR?.message}
+            />
+            <Typography component="div" variant="body7">
+              Save my time, share my details with HPR
+            </Typography>
+          </Grid>
+          <Grid item sx="auto" display="flex" alignItems="center">
+            <InfoOutlinedIcon
+              sx={{ height: '14px', width: '14px', color: 'messageBlue.main', mr: 1 }}
+            />
+            <Typography component="span" variant="body8" color="messageBlue.main">
+              Know more about HPR
+            </Typography>
+          </Grid>
+        </Grid>
+
+        {/* </Box> */}
         <Grid container mt={3}>
           <Grid item xs={12} md>
             <Button
@@ -113,7 +308,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
               Back
             </Button>
           </Grid>
-          <Grid item xs={12} md="auto" display="flex" justifyContent="flex-end">
+          {/* <Grid item xs={12} md="auto" display="flex" justifyContent="flex-end">
             <Button
               variant="outlined"
               color="secondary"
@@ -130,34 +325,9 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
             >
               Print & Save as PDF
             </Button>
-          </Grid>
-          {loggedInUserType !== 'SMC' && (
-            <Grid
-              item
-              xs={12}
-              md="auto"
-              ml={{ xs: 0, md: 1 }}
-              display="flex"
-              justifyContent="flex-end"
-            >
-              <Button
-                color="secondary"
-                variant="contained"
-                sx={{
-                  margin: {
-                    xs: '5px 0',
-                    md: '0',
-                  },
-                  width: {
-                    xs: '100%',
-                    md: 'fit-content',
-                  },
-                }}
-              >
-                E-sign Profile
-              </Button>
-            </Grid>
-          )}
+          </Grid> */}
+        </Grid>
+        {loggedInUserType !== 'SMC' && (
           <Grid
             item
             xs={12}
@@ -167,6 +337,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
             justifyContent="flex-end"
           >
             <Button
+              onClick={handleSubmit(eSignHandler)}
               color="secondary"
               variant="contained"
               sx={{
@@ -179,12 +350,53 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
                   md: 'fit-content',
                 },
               }}
-              onClick={handleSubmit(handleSubmitDetails)}
             >
-              Submit
+              E-sign Profile
             </Button>
           </Grid>
-        </Grid>
+        )}
+        {/* <Grid item xs={12} md="auto" ml={{ xs: 0, md: 1 }} display="flex" justifyContent="flex-end">
+          <Button
+            color="secondary"
+            variant="contained"
+            sx={{
+              margin: {
+                xs: '5px 0',
+                md: '0',
+              },
+              width: {
+                xs: '100%',
+                md: 'fit-content',
+              },
+            }}
+            onClick={handleSubmit(handleSubmitDetails)}
+          >
+            Finalize profile
+          </Button>
+        </Grid> */}
+
+        {/* <div>
+          <form
+            id="formid"
+            target="_blank"
+            method="POST"
+            action="https://es-staging.cdac.in/esignlevel2/2.1/form/signdoc"
+          >
+            <input
+              type="hidden"
+              id="eSignRequest"
+              name="eSignRequest"
+              value={eSignResponse.esp_request}
+            />
+            <input type="hidden" id="aspTxnID" name="aspTxnID" value={eSignResponse.asp_txn_id} />
+            <input
+              type="hidden"
+              id="Content-Type"
+              name="Content-Type"
+              value={eSignResponse.content_type}
+            />
+          </form>
+        </div> */}
 
         <Dialog
           open={confirmationModal}
@@ -235,10 +447,12 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
                   Cancel
                 </Button>
                 <Button
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.preventDefault();
                     setConfirmationModal(false);
                     setIsReadMode(true);
                     resetStep(0);
+                    dispatch(changeUserActiveTab(smcTabs[2].tabName));
                   }}
                   color="secondary"
                   variant="contained"
@@ -261,8 +475,9 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
               </Box>
               <Box mt={4}>
                 <Typography color="textPrimary.main">
-                  Your profile details have been updated. Do you want your profile to be submitted
-                  for Verification ?
+                  Your Application has been updated and will be submitted for verification.
+                  <br /> For more details, you will be redirected to Track Application Tab on
+                  clicking<b> Ok</b> button.
                 </Typography>
               </Box>
               <Box display={'flex'} justifyContent={'flex-end'} mt={1}>
@@ -276,7 +491,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
                     margin: '0 4px',
                   }}
                 >
-                  No
+                  Cancel
                 </Button>
                 <Button
                   onClick={handleYesClick}
@@ -286,7 +501,7 @@ const ProfileConsent = ({ handleBack, setIsReadMode, resetStep, loggedInUserType
                     margin: '0 4px',
                   }}
                 >
-                  Yes
+                  Ok
                 </Button>
               </Box>
             </Box>

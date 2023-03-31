@@ -1,17 +1,15 @@
 import { API, API_HPRID } from '../../api/api-endpoints';
-import { accesstokenHprId } from '../../constants/common-data';
 import { GET, POST } from '../../constants/requests';
-import { gatewayApiUseAxiosCall, hpIdUseAxiosCall, useAxiosCall } from '../../hooks/use-axios';
+import { hpIdUseAxiosCall, useAxiosCall } from '../../hooks/use-axios';
 import {
-  createhprIdData,
-  getAccessToken,
+  getkycDetails,
   getMobileOtp,
+  healthProfessionalDetails,
   hpIdExistsDetails,
   hprIdSuggestionsDetails,
-  sendResetPasswordLinkDetails,
+  setUserPasswordData,
   smcRegistrationDetail,
   storeMobileDetails,
-  storeMobileOtpData,
 } from '../reducers/doctor-registration-reducer';
 import { typeOfOtp } from '../reducers/user-aadhaar-verify-reducer';
 
@@ -22,7 +20,7 @@ export const fetchSmcRegistrationDetails = (registrationData) => async (dispatch
       url: API.doctorRegistration.smcRegistrationDetail
         .replace('{smcId}', registrationData?.smcId)
         .replace('{registrationNumber}', registrationData?.registrationNumber),
-
+      headers: { 'Content-Type': 'application/json' },
       data: registrationData,
     })
       .then((response) => {
@@ -34,15 +32,31 @@ export const fetchSmcRegistrationDetails = (registrationData) => async (dispatch
       });
   });
 };
-export const getSessionAccessToken = (body) => async (dispatch) => {
+export const getSessionAccessToken = (body) => async () => {
   return await new Promise((resolve, reject) => {
-    gatewayApiUseAxiosCall({
+    useAxiosCall({
       method: POST,
       url: API_HPRID.hpId.sessionApi,
       data: body,
     })
       .then((response) => {
-        dispatch(getAccessToken(response));
+        JSON.stringify(localStorage.setItem('hpridaccesstoken', response.data['accessToken']));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+export const checkKycDetails = (body) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.kyc.kycCheck.replace('{registrationNumber}', body.registrationNumber),
+      data: body,
+    })
+      .then((response) => {
+        dispatch(getkycDetails(response));
         return resolve(response);
       })
       .catch((error) => {
@@ -57,7 +71,7 @@ export const generateMobileOtp = (body) => async (dispatch) => {
       method: POST,
       url: API_HPRID.hpId.generateMobileOtp,
       data: body,
-      headers: { Authorization: 'Bearer ' + accesstokenHprId },
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('hpridaccesstoken') },
     })
       .then((response) => {
         dispatch(getMobileOtp(response));
@@ -70,17 +84,15 @@ export const generateMobileOtp = (body) => async (dispatch) => {
       });
   });
 };
-export const verifyMobileOtp = (body) => async (dispatch) => {
+export const verifyMobileOtp = (body) => async () => {
   return await new Promise((resolve, reject) => {
     hpIdUseAxiosCall({
       method: POST,
       url: API_HPRID.hpId.verifyMobileOtp,
       data: body,
-      headers: { Authorization: 'Bearer ' + accesstokenHprId },
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('hpridaccesstoken') },
     })
       .then((response) => {
-        dispatch(storeMobileOtpData(response));
-
         return resolve(response);
       })
       .catch((error) => {
@@ -94,10 +106,11 @@ export const checkHpidExists = (txnId) => async (dispatch) => {
       method: POST,
       url: API_HPRID.hpId.checkHprIdExists,
       data: txnId,
-      headers: { Authorization: 'Bearer ' + accesstokenHprId },
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('hpridaccesstoken') },
     })
       .then((response) => {
         dispatch(hpIdExistsDetails(response));
+
         return resolve(response);
       })
       .catch((error) => {
@@ -110,7 +123,7 @@ export const getHprIdSuggestions = (txnId) => async (dispatch) => {
     hpIdUseAxiosCall({
       method: POST,
       url: API_HPRID.hpId.hpIdSuggestion,
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('hpridaccesstoken') },
       data: txnId,
     })
       .then((response) => {
@@ -122,16 +135,16 @@ export const getHprIdSuggestions = (txnId) => async (dispatch) => {
       });
   });
 };
-
-export const sendResetPasswordLink = (data) => async (dispatch) => {
+export const createUniqueHprId = (data) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
-    useAxiosCall({
+    hpIdUseAxiosCall({
       method: POST,
-      url: API.doctorRegistration.passwordLink,
+      url: API_HPRID.hpId.createHprId,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('hpridaccesstoken') },
       data: data,
     })
       .then((response) => {
-        dispatch(sendResetPasswordLinkDetails(response));
+        dispatch(hpIdExistsDetails(response));
         return resolve(response);
       })
       .catch((error) => {
@@ -139,17 +152,31 @@ export const sendResetPasswordLink = (data) => async (dispatch) => {
       });
   });
 };
-
-export const createUniqueHprId = (data) => async (dispatch) => {
+export const setUserPassword = (data) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
-    hpIdUseAxiosCall({
+    useAxiosCall({
       method: POST,
-      url: API_HPRID.hpId.createHprId,
-      headers: { Authorization: 'Bearer ' + accesstokenHprId },
+      url: API.doctorRegistration.setUserPassword,
       data: data,
     })
       .then((response) => {
-        dispatch(createhprIdData(response));
+        dispatch(setUserPasswordData(response));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+export const createHealthProfessional = (data) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.doctorRegistration.healthProfesssional,
+      data: data,
+    })
+      .then((response) => {
+        dispatch(healthProfessionalDetails(response));
         return resolve(response);
       })
       .catch((error) => {

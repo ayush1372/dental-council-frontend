@@ -6,10 +6,12 @@ const initialState = {
   getMobileOtpDetails: { data: [], isLoading: Boolean(true), isError: false },
   hpIdExistsDetailsData: { data: [], isLoading: Boolean(true), isError: false },
   hprIdSuggestionsDetailsData: { data: [], isLoading: Boolean(true), isError: false },
-  sendResetPasswordLinkDetailsData: { data: [], isLoading: Boolean(true), isError: false },
   hprIdDataDetails: { data: [], isLoading: Boolean(true), isError: false },
   storeMobileDetailsData: { data: [], isLoading: Boolean(true), isError: false },
   typeOfOtpDetailsData: { data: [], isLoading: Boolean(true), isError: false },
+  getkycDetailsData: { data: [], isLoading: Boolean(true), isError: false },
+  healthProfessionalDetailsData: { data: [], isLoading: Boolean(true), isError: false },
+  UserNotFoundDetailsData: { data: [] },
 };
 
 export const registrationData = createSlice({
@@ -18,6 +20,9 @@ export const registrationData = createSlice({
   reducers: {
     smcRegistrationDetail: (state, action) => {
       state.getSmcRegistrationDetails = action.payload;
+    },
+    getkycDetails: (state, action) => {
+      state.getkycDetailsData = action.payload;
     },
     getMobileOtp: (state, action) => {
       state.getMobileOtpDetails = action.payload;
@@ -28,9 +33,6 @@ export const registrationData = createSlice({
     hprIdSuggestionsDetails: (state, action) => {
       state.hprIdSuggestionsDetailsData = action.payload;
     },
-    sendResetPasswordLinkDetails: (state, action) => {
-      state.sendResetPasswordLinkDetailsData = action.payload;
-    },
     createhprIdData: (state, action) => {
       state.hprIdDataDetails = action.payload;
     },
@@ -40,6 +42,15 @@ export const registrationData = createSlice({
     getAccessToken: (state, action) => {
       state.getAccessTokenDetails = action.payload;
     },
+    setUserPasswordData: (state, action) => {
+      state.getAccessTokenDetails = action.payload;
+    },
+    healthProfessionalDetails: (state, action) => {
+      state.healthProfessionalDetailsData = action.payload;
+    },
+    UserNotFoundDetails: (state, action) => {
+      state.UserNotFoundDetailsData = action.payload;
+    },
   },
 });
 
@@ -47,12 +58,14 @@ export const {
   smcRegistrationDetail,
   getAccessToken,
   getMobileOtp,
-  storeMobileOtpData,
   hpIdExistsDetails,
   hprIdSuggestionsDetails,
-  sendResetPasswordLinkDetails,
   createhprIdData,
   storeMobileDetails,
+  getkycDetails,
+  setUserPasswordData,
+  healthProfessionalDetails,
+  UserNotFoundDetails,
 } = registrationData.actions;
 
 export default registrationData.reducer;
