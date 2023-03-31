@@ -1,10 +1,14 @@
+/* eslint-disable no-console */
 import React, { useEffect } from 'react';
 
 import { Box, Grid, TablePagination } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import GenericTable from '../../../shared/generic-component/generic-table';
-import { getDoctorTrackApplicationData } from '../../../store/actions/doctor-user-profile-actions';
+import {
+  getDoctorTrackApplicationData,
+  getDoctorTrackApplicationStatus,
+} from '../../../store/actions/doctor-user-profile-actions';
 import TableSearch from '../components/table-search/table-search';
 
 function createData(
@@ -71,10 +75,10 @@ function TrackAppicationTable({
     offset: 10,
   };
 
-  // useEffect(() => {
-  //   if (orderBy && getTableData && page !== null && profileId)
-  //     dispatch(getTableData(profileId, trackData));
-  // }, [orderBy, getTableData, page, profileId]);
+  useEffect(() => {
+    if (orderBy && getTableData && page !== null && profileId)
+      dispatch(getTableData(profileId, trackData));
+  }, [orderBy, getTableData, page, profileId]);
   useEffect(() => {
     // if (orderBy && getTableData && page !== null && profileId)
     dispatch(getTableData(profileId, trackData));
@@ -118,13 +122,25 @@ function TrackAppicationTable({
   const handleDataRowClick = (dataRow) => {
     setRowData(dataRow);
   };
-
+  const nmrIdData = useSelector(
+    (state) =>
+      state?.common?.trackApplicationTableData?.data?.data?.health_professional_applications
+  );
+  // console.log('nmr id data', nmrIdData);
   const viewCallback = (event, row) => {
-    setShowTrackApplication(true);
-    setShowTrackApplicationTable(false);
-    event.preventDefault();
-    event.stopPropagation();
-    setRowData(row);
+    // const nmrId = nmrIdData.find((obj) => obj.request_id === row.request_id);
+    dispatch(getDoctorTrackApplicationStatus(row?.request_id?.value))
+      .then(() => {
+        setShowTrackApplication(true);
+        setShowTrackApplicationTable(false);
+        event.preventDefault();
+        event.stopPropagation();
+        setRowData(row);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log('row==>nmrid', row, nmrIdData);
   };
 
   const handleRequestSort = (event, property) => {

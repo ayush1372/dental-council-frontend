@@ -1,8 +1,13 @@
+/* eslint-disable no-console */
+import { Chip } from '@material-ui/core';
 import { Button, Divider, Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
+import { useSelector } from 'react-redux';
 
 import { monthsData } from '../../../constants/common-data';
+import { typeOfApplication, workflowStatusId } from '../../../helpers/functions/common-functions';
 import Stepper from '../../../shared/stepper/stepper';
+// import VerticalStepper from '../../../shared/stepper/stepper';
 const wizardSteps = [
   'Application Submitted',
   'Pending At SMC',
@@ -10,6 +15,17 @@ const wizardSteps = [
   'Pending At SMC',
   'Pending At NMC',
 ];
+// const wizardSteps2 = [
+//   'Application Approved by NMC',
+//   'Application Approved by SMC',
+//   'Application Details Updated',
+//   'SMC Raised the Query in your Application',
+//   'Application Approved by College',
+//   'Application Details Updated',
+//   'College Rejected Application',
+//   'SMC Forwarded To College',
+//   'Application Submitted',
+// ];
 export function TrackApplicationDetails({
   showViewProfile,
   setShowTrackApplicationTable,
@@ -17,20 +33,34 @@ export function TrackApplicationDetails({
   selectedRowData,
 }) {
   const {
-    pendency,
-    request_id,
-    application_type_name,
-    created_at,
+    // pendency,
+    // request_id,
+    // application_type_name,
+    // created_at,
     smc_status,
     nmc_status,
-    collegeVerificationStatus,
-    NMCVerificationStatus,
+    // collegeVerificationStatus,
+    // NMCVerificationStatus,
   } = selectedRowData;
+  const ApplicationStatus = useSelector(
+    (state) => state?.common?.doctorTrackApplicationTableData?.data?.data
+  );
   const showTrackApplicationTable = () => {
     setShowTrackApplicationTable(true);
     setShowTrackApplication(false);
   };
-
+  const currentStatus = useSelector((state) =>
+    state?.common?.doctorTrackApplicationTableData?.data?.data?.application_details.map(
+      (label) => label?.workflow_status_id
+    )
+  );
+  // const applicationName = useSelector((state) =>
+  //   state.common.trackApplicationTableData?.data?.data?.health_professional_applications.map(
+  //     (data) => data?.application_type_name
+  //   )
+  // );
+  // console.log('tabledata123', tableData);
+  console.log('stepper selectedRowData', selectedRowData);
   const getDate = (date) => {
     const dateObj = new Date(date);
     return `${dateObj.getDate()}-${monthsData[dateObj.getMonth()].value}-${dateObj.getFullYear()}`;
@@ -39,7 +69,7 @@ export function TrackApplicationDetails({
   let activeStep = stepperArray.findIndex((value) => value === 'PENDING');
   activeStep = activeStep > -1 ? activeStep + 1 : 4;
   return (
-    <>
+    <Box>
       <Typography
         id="2"
         variant="h2"
@@ -48,22 +78,34 @@ export function TrackApplicationDetails({
       >
         Application Details
       </Typography>
-
-      <Grid container>
-        <Grid item xs={12} md={9}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={9} sx={{ boxShadow: '1' }}>
           {/* Apllication status bar starts */}
-          <Box>
-            <Typography varaiant="body1" component="div" color="textPrimary.main">
-              Application Approved by NMC
-            </Typography>
-            <Typography component="div" variant="body1" color="textPrimary.main">
-              NMC will review the application and approve it once it match with expected criteria
-            </Typography>
+          <Box display="flex" justifyContent="space-evenly">
+            <Box>
+              <Typography varaiant="body1" component="div" color="textPrimary.main">
+                Application Approved by NMC
+              </Typography>
+              <Typography component="div" variant="body1" color="textPrimary.main">
+                NMC will review the application and approve it once it match with expected criteria
+              </Typography>
+            </Box>
+            <Box>
+              <Chip
+                // type={label?.workflow_status_id}
+                label={
+                  <Typography variant="body4">
+                    {/* {workflowStatusId(label?.workflow_status_id)} */}
+                    NOT APPROVED
+                  </Typography>
+                }
+              />
+            </Box>
           </Box>
           {/* Apllication status bar end */}
           {/* Application stepper starts */}
           <Box>
-            stepper
+            {/* stepper */}
             <Box py={{ xs: 0, sm: 4, lg: 2 }} mt={6} sx={{ overflowX: 'auto' }}>
               <Stepper
                 steps={wizardSteps}
@@ -74,77 +116,54 @@ export function TrackApplicationDetails({
           </Box>
           {/* Application stepper ends */}
         </Grid>
-        <Grid item xs={12} md={3}>
-          APP info
-          <Grid container xs={6} columnSpacing={{ xs: 1, md: 2, lg: 7, xl: 8 }}>
-            <Grid item xs={12} sm={6} md="auto" mb={{ xs: 2, md: 0 }}>
-              <Typography variant="body3" color="grey.label">
-                Request ID
-              </Typography>
-              <Typography variant="subtitle2" color="textPrimary.main">
-                {request_id?.value}
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={6} md="auto" mb={{ xs: 2, md: 0 }}>
-              <Typography variant="body3" color="grey.label">
-                Type of Application
-              </Typography>
-              <Typography variant="subtitle2" color="textPrimary.main">
-                {application_type_name?.value}
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={6} md="auto" mb={{ xs: 2, md: 0 }}>
-              <Typography variant="body3" color="grey.label">
-                Date of Submission
-              </Typography>
-              <Typography variant="subtitle2" color="textPrimary.main">
-                {getDate(created_at?.value || new Date())}
-              </Typography>
-            </Grid>
-            <Grid item xs={12} sm={6} md="auto" mb={{ xs: 2, md: 0 }}>
-              <Typography variant="body3" color="grey.label">
-                Current Status
-              </Typography>
-              <Typography variant="subtitle2" color="primary.main">
-                {/* Pending At SMC */}
+        <Grid item xs={12} md={3} sx={{ boxShadow: '1' }}>
+          Application information
+          <Box>
+            <Typography variant="body3" color="grey.label">
+              Request ID
+            </Typography>
+            <Typography variant="subtitle2" color="textPrimary.main">
+              {ApplicationStatus?.request_id}
+            </Typography>
 
-                {smc_status?.value === 'PENDING' &&
-                NMCVerificationStatus?.value === 'NOT YET RECEIVED' &&
-                collegeVerificationStatus?.value === 'NOT YET RECEIVED' &&
-                nmc_status?.value === 'NOT YET RECEIVED'
-                  ? 'Pending At SMC'
-                  : smc_status?.value === 'APPROVED' &&
-                    NMCVerificationStatus?.value === 'PENDING' &&
-                    collegeVerificationStatus?.value === 'NOT YET RECEIVED' &&
-                    nmc_status?.value === 'NOT YET RECEIVED'
-                  ? 'Pending At Registrar'
-                  : smc_status?.value === 'APPROVED' &&
-                    NMCVerificationStatus?.value === 'APPROVED' &&
-                    collegeVerificationStatus?.value === 'PENDING' &&
-                    nmc_status?.value === 'NOT YET RECEIVED'
-                  ? 'Pending At Dean'
-                  : 'Pending At NMC'}
-              </Typography>
-            </Grid>
-            <Grid item xs={8} md="auto">
-              <Typography variant="body3" color="grey.label">
-                Pendency (days)
-              </Typography>
-              <Typography variant="subtitle2" color="textPrimary.main">
-                {pendency?.value}
-              </Typography>
-            </Grid>
-          </Grid>
+            <Typography variant="body3" color="grey.label">
+              Type of Application
+            </Typography>
+            <Typography variant="subtitle2" color="textPrimary.main">
+              {typeOfApplication(ApplicationStatus?.application_type)}
+            </Typography>
+
+            <Typography variant="body3" color="grey.label">
+              Date of Submission
+            </Typography>
+            <Typography variant="subtitle2" color="textPrimary.main">
+              {getDate(ApplicationStatus?.submission_date)}
+            </Typography>
+
+            <Typography variant="body3" color="grey.label">
+              Current Status
+            </Typography>
+            <Typography variant="subtitle2" color="primary.main">
+              {workflowStatusId(currentStatus)}
+            </Typography>
+
+            <Typography variant="body3" color="grey.label">
+              Pendency (days)
+            </Typography>
+            <Typography variant="subtitle2" color="textPrimary.main">
+              {ApplicationStatus?.pendency}
+            </Typography>
+          </Box>
         </Grid>
       </Grid>
 
       <Divider fullWidth sx={{ mt: 6 }} />
-      <Grid mt={2}>
+      <Box mt={2}>
         <Button color="grey" variant="contained" onClick={showTrackApplicationTable}>
           Back
         </Button>
-      </Grid>
-    </>
+      </Box>
+    </Box>
   );
 }
 

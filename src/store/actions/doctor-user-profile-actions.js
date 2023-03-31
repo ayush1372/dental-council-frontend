@@ -2,7 +2,10 @@
 import { API } from '../../api/api-endpoints';
 import { GET, POST, PUT } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
-import { updateTrackApplicationTableData } from '../reducers/common-reducers';
+import {
+  updateDoctorTrackApplication,
+  updateTrackApplicationTableData,
+} from '../reducers/common-reducers';
 import {
   getPersonalDetails,
   getProfileImage,
@@ -162,6 +165,8 @@ export const getUserProfileImage = (hp_profile_id, file) => async (dispatch) => 
 };
 
 export const getDoctorTrackApplicationData = (doctor_profile_id, trackData) => async (dispatch) => {
+  console.log('mohith', trackData, doctor_profile_id);
+
   let path = '';
   if (trackData.search !== undefined && trackData.search !== null && trackData.search !== '') {
     if (path === '') {
@@ -194,6 +199,7 @@ export const getDoctorTrackApplicationData = (doctor_profile_id, trackData) => a
       )}?${path}`,
     })
       .then((response) => {
+        console.log('response track', response);
         dispatch(
           updateTrackApplicationTableData(response)
           // updateTrackApplicationTableData(response.data?.health_professional_applications || [])
@@ -201,6 +207,29 @@ export const getDoctorTrackApplicationData = (doctor_profile_id, trackData) => a
         return resolve(response);
       })
       .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+export const getDoctorTrackApplicationStatus = (nmr_id) => async (dispatch) => {
+  console.log('payload123', nmr_id);
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: GET,
+      url: `${API.DoctorUserProfileData.trackApplicationStatus.replace('{requestId}', nmr_id)}`,
+    })
+      .then((response) => {
+        console.log('mohith', response);
+
+        dispatch(
+          updateDoctorTrackApplication(response)
+          // updateTrackApplicationTableData(response.data?.health_professional_applications || [])
+        );
+        return resolve(response);
+      })
+      .catch((error) => {
+        console.log('mohith error', error);
+
         return reject(error);
       });
   });
