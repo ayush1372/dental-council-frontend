@@ -5,13 +5,20 @@ import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { TextField } from '../../../../src/ui/core/form/textfield/textfield';
+// import { TextField } from '../../../../src/ui/core/form/textfield/textfield';
+import { TextField } from '../../../../src/ui/core';
 import { createEditFieldData } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
-import { registerCollegeDetails } from '../../../store/actions/college-actions';
 import {
-  getCollegesList,
+  registerCollegeDetail,
+  // registerCollegeDetails,
+  updateCollegeDetail,
+} from '../../../store/actions/college-actions';
+import {
+  // getCollegesList,
+  getAllCollegesList,
+  getCollegeData,
   getDistrictList,
   getRegistrationCouncilList,
   getStatesList,
@@ -23,22 +30,31 @@ import successToast from '../../../ui/core/toaster';
 
 function NMCCollegeRegistration() {
   const {
-    collegesList,
+    // collegesList,
+    allcollegesList,
     statesList,
     councilNames,
     districtsList,
     subDistrictList,
     universitiesList,
+    // getCollegeDetail,
   } = useSelector((state) => state.common);
 
-  const registrationSuccess = useSelector((state) => state.college.collegeRegisterDetails.data);
+  let collegesList = [];
+  collegesList.push(...allcollegesList.data, { id: 'other', name: 'other' });
+
+  // const registrationSuccess = useSelector((state) => state.college.registerCollegeDetail.data);
+  // const updateregistration = useSelector((state) => state.college.updateCollegeDetails.data);
 
   const [successModalPopup, setSuccessModalPopup] = useState(false);
+  const [showCollegeName, setShowCollegeName] = useState(false);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getCollegesList());
+    dispatch(getUniversitiesList());
+    dispatch(getAllCollegesList());
+    // dispatch(getCollegesList());
     dispatch(getStatesList());
     dispatch(getRegistrationCouncilList());
   }, []);
@@ -49,15 +65,15 @@ function NMCCollegeRegistration() {
     getValues,
     setValue,
     clearErrors,
-    reset,
     formState: { errors },
+    reset,
   } = useForm({
     mode: 'onChange',
     defaultValues: {
       CollegeName: '',
+      Name: '',
       CollegeNameID: '',
       CollegeCode: '',
-      CollegeCodeID: '',
       MobileNumber: '',
       CouncilName: '',
       CouncilID: '',
@@ -78,37 +94,95 @@ function NMCCollegeRegistration() {
   });
 
   const onsubmit = () => {
-    const collegeDetailValues = {
-      name: getValues().CollegeName,
-      state_id: getValues().StateID,
-      course_id: null,
-      college_id: getValues().CollegeCodeID,
-      website: getValues().Website,
-      address_line1: getValues().AddressLine1,
-      address_line2: getValues().AddressLine2,
-      district_id: getValues().DistrictID,
-      village_id: getValues().TownID,
-      pin_code: getValues().Pincode,
-      state_medical_council_id: getValues().CouncilID,
-      university_id: getValues().UniversityID,
-      email_id: getValues().Email,
-      mobile_number: getValues().MobileNumber,
-    };
+    if (showCollegeName === true) {
+      const collegeDetailValues = {
+        id: getValues().CollegeNameID,
+        name: getValues().Name,
+        state_id: getValues().StateID,
+        course_id: null,
+        college_code: getValues().CollegeCode,
+        website: getValues().Website,
+        address_line1: getValues().AddressLine1,
+        address_line2: getValues().AddressLine2,
+        district_id: getValues().DistrictID,
+        village_id: getValues().TownID,
+        pin_code: getValues().Pincode,
+        state_medical_council_id: getValues().CouncilID,
+        university_id: getValues().UniversityID,
+        email_id: getValues().Email,
+        mobile_number: getValues().MobileNumber,
+      };
 
-    dispatch(registerCollegeDetails(collegeDetailValues))
-      .then(() => {
-        if (registrationSuccess) {
+      dispatch(registerCollegeDetail(collegeDetailValues))
+        .then(() => {
           setSuccessModalPopup(true);
-        }
-      })
-      .catch((error) => {
-        successToast(
-          error?.data?.response?.data?.error,
-          'RegistrationError',
-          'error',
-          'top-center'
-        );
-      });
+          document.getElementById('collegeRegistrationId').reset();
+          setValue('CouncilName', '');
+          setValue('CouncilID', '');
+          setValue('Name', '');
+          setValue('CollegeCode', '');
+          setValue('MobileNumber', '');
+          setValue('Website', '');
+          setValue('AddressLine1', '');
+          setValue('AddressLine2', '');
+          setValue('Pincode', '');
+          setValue('Email', '');
+        })
+        .catch((error) => {
+          successToast(
+            error?.data?.response?.data?.error,
+            'RegistrationError',
+            'error',
+            'top-center'
+          );
+        });
+      document.getElementById('collegeRegistrationId').reset();
+      reset();
+    } else {
+      const collegeDetailValues = {
+        id: getValues().CollegeNameID,
+        name: getValues().CollegeName,
+        state_id: getValues().StateID,
+        course_id: null,
+        college_code: getValues().CollegeCode,
+        website: getValues().Website,
+        address_line1: getValues().AddressLine1,
+        address_line2: getValues().AddressLine2,
+        district_id: getValues().DistrictID,
+        village_id: getValues().TownID,
+        pin_code: getValues().Pincode,
+        state_medical_council_id: getValues().CouncilID,
+        university_id: getValues().UniversityID,
+        email_id: getValues().Email,
+        mobile_number: getValues().MobileNumber,
+      };
+
+      dispatch(updateCollegeDetail(collegeDetailValues))
+        .then(() => {
+          document.getElementById('collegeRegistrationId').reset();
+
+          setSuccessModalPopup(true);
+          reset();
+          setValue('CouncilName', '');
+          setValue('CouncilID', '');
+          setValue('Name', '');
+          setValue('CollegeCode', '');
+          setValue('MobileNumber', '');
+          setValue('Website', '');
+          setValue('AddressLine1', '');
+          setValue('AddressLine2', '');
+          setValue('Pincode', '');
+          setValue('Email', '');
+        })
+        .catch((error) => {
+          successToast(
+            error?.data?.response?.data?.error,
+            'RegistrationError',
+            'error',
+            'top-center'
+          );
+        });
+    }
     reset();
   };
 
@@ -120,13 +194,82 @@ function NMCCollegeRegistration() {
         : Math.max(0, parseInt(e.target.value)).toString().slice(0, 10);
     }
   };
+
+  const getSelecetedName = (fieldId, data) => {
+    if (data === 'councilData') {
+      let selectedName = councilNames?.find((obj) => obj.id === fieldId);
+      return selectedName?.name;
+    }
+    if (data === 'stateData') {
+      let selectedName = statesList?.find((obj) => obj.id === fieldId);
+      return selectedName?.name;
+    }
+    if (data === 'universityData') {
+      let selectedName = universitiesList?.data?.find((obj) => obj.id === fieldId);
+      return selectedName?.name;
+    }
+  };
+
   const onNameChange = (currentValue) => {
-    setValue('CollegeNameID', currentValue.id);
-    dispatch(getUniversitiesList(currentValue.id));
+    if (currentValue.id === 'other') {
+      setShowCollegeName(true);
+      // reset();
+    } else {
+      setShowCollegeName(false);
+      setValue('CollegeNameID', currentValue.id);
+
+      dispatch(getCollegeData(currentValue.id)).then((response) => {
+        if (response?.data?.college_code) {
+          setValue('CollegeCode', response?.data?.college_code);
+        }
+        if (response?.data?.mobile_number) {
+          setValue('MobileNumber', response?.data?.mobile_number);
+        }
+        if (response?.data?.website) {
+          setValue('Website', response?.data?.website);
+        }
+        if (response?.data?.address_line1) {
+          setValue('AddressLine1', response?.data?.address_line1);
+        }
+        if (response?.data?.address_line2) {
+          setValue('AddressLine2', response?.data?.address_line2);
+        }
+        if (response?.data?.pin_code) {
+          setValue('Pincode', response?.data?.pin_code);
+        }
+        if (response?.data?.email_id) {
+          setValue('Email', response?.data?.email_id);
+        }
+
+        if (response?.data?.state_medical_council_id) {
+          setValue('CouncilID', response?.data?.state_medical_council_id);
+          setValue(
+            'CouncilName',
+            getSelecetedName(response?.data?.state_medical_council_id, 'councilData')
+          );
+        }
+        if (response?.data?.district_id) {
+          setValue('DistrictID', response?.data?.district_id);
+        }
+        if (response?.data?.state_id) {
+          setValue('StateID', response?.data?.state_id);
+          setValue('StateName', getSelecetedName(response?.data?.state_id, 'stateData'));
+          // dispatch(getDistrictList(response?.data?.state_id));
+          // getDistrict(response?.data?.state_id);
+        }
+        if (response?.data?.university_id) {
+          setValue('UniversityID', response?.data?.university_id);
+          setValue(
+            'UniversityName',
+            getSelecetedName(response?.data?.university_id, 'universityData')
+          );
+        }
+      });
+    }
   };
-  const onCollegeCodeChange = (currentValue) => {
-    setValue('CollegeCodeID', currentValue.id);
-  };
+  // const getDistrict = (id) => {
+  //   dispatch(getDistrictList(id));
+  // };
 
   const onStateChange = (currentValue) => {
     setValue('StateID', currentValue.id);
@@ -139,7 +282,7 @@ function NMCCollegeRegistration() {
 
   return (
     <Container sx={{ mt: 5 }}>
-      <Grid container item spacing={2}>
+      <Grid container item spacing={2} id="collegeRegistrationId">
         {/* <Grid item xs={12}>
           <Typography variant="h2" color="textPrimary.main">
             College Registration
@@ -157,7 +300,8 @@ function NMCCollegeRegistration() {
           <SearchableDropdown
             fullWidth
             name="CollegeName"
-            items={createEditFieldData(collegesList.data)}
+            // items={createEditFieldData(allcollegesList.data)}
+            items={createEditFieldData(collegesList)}
             placeholder="Select College"
             clearErrors={clearErrors}
             error={errors.CollegeName?.message}
@@ -165,29 +309,49 @@ function NMCCollegeRegistration() {
               required: 'College name is required',
             })}
             onChange={(currentValue) => {
+              // setClgName(currentValue?.name);
               onNameChange(currentValue);
             }}
           />
         </Grid>
+        {showCollegeName && (
+          <Grid item xs={12} md={6} lg={4}>
+            <Typography variant="body3" color="inputTextColor.main">
+              College Name
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+            </Typography>
+
+            <TextField
+              fullWidth
+              name="Name"
+              required
+              placeholder={t('Enter college name')}
+              // onInput={(e) => handleInput(e)}
+              error={errors.Name?.message}
+              {...register('Name', {
+                required: 'College name is required',
+              })}
+            />
+          </Grid>
+        )}
 
         <Grid item xs={12} md={6} lg={4}>
           <Typography variant="body3" color="inputTextColor.main">
             College Code
           </Typography>
 
-          <SearchableDropdown
+          <TextField
             fullWidth
             name="CollegeCode"
-            items={createEditFieldData(councilNames)}
-            placeholder="Select CollegeCode"
-            clearErrors={clearErrors}
+            required
+            placeholder={t('Enter College Code')}
+            // onInput={(e) => handleInput(e)}
             error={errors.CollegeCode?.message}
             {...register('CollegeCode', {
               required: 'College code is required',
             })}
-            onChange={(currentValue) => {
-              onCollegeCodeChange(currentValue);
-            }}
           />
         </Grid>
 
@@ -198,12 +362,11 @@ function NMCCollegeRegistration() {
               *
             </Typography>
           </Typography>
-
           <TextField
             fullWidth
             name="MobileNumber"
             required
-            placeholder={t('Enter MobileNumber')}
+            placeholder={t('Enter Mobile Number')}
             onInput={(e) => handleInput(e)}
             error={errors.MobileNumber?.message}
             {...register('MobileNumber', {
@@ -290,8 +453,9 @@ function NMCCollegeRegistration() {
             multiline
             rows={1}
             fullWidth
-            name={'AddressLine1'}
+            name="AddressLine1"
             placeholder="Enter Address line1"
+            error={errors.AddressLine1?.message}
             {...register('AddressLine1', {
               required: 'Address line1 is required',
             })}
@@ -308,8 +472,9 @@ function NMCCollegeRegistration() {
           <TextField
             fullWidth
             required
-            name={'AddressLine2'}
+            name="AddressLine2"
             placeholder={'Enter Address Line 2'}
+            error={errors.AddressLine2?.message}
             {...register('AddressLine2', {
               required: 'Address line 2 is required',
             })}
@@ -458,7 +623,9 @@ function NMCCollegeRegistration() {
         <SuccessModalPopup
           open={successModalPopup}
           setOpen={() => setSuccessModalPopup(false)}
-          text={'We have Shared the Password on given Email Id and Mobile No.'}
+          text={'We have Shared the Password link on given Email Id and Mobile No.'}
+          fromCollegeRegistration={true}
+          // successRegistration={true}
         />
       )}
     </Container>

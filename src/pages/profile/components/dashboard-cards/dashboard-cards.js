@@ -147,6 +147,7 @@ export default function Dashboard() {
       setShowTable(false);
       setShowViewPorfile(false);
       setSelectedRowData();
+      dispatch(getCardCount());
     }
   };
 

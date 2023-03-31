@@ -6,7 +6,7 @@ import StepLabel from '@mui/material/StepLabel';
 import { verboseLog } from '../../../config/debug';
 import { Button } from '../button/button';
 
-const WizardSteps = ({ activeStep, steps }) => {
+const WizardSteps = ({ activeStep, steps, isStepClickEnable, handleStep }) => {
   verboseLog('steps', steps);
 
   return (
@@ -36,6 +36,9 @@ const WizardSteps = ({ activeStep, steps }) => {
               '&:hover': {
                 boxShadow: 1,
               },
+            }}
+            onClick={() => {
+              isStepClickEnable && handleStep(index);
             }}
           >
             <StepLabel

@@ -7,8 +7,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Box, Dialog, Grid, Typography, useTheme } from '@mui/material';
 import { useSelector } from 'react-redux';
 
-import { Button } from '../../../ui/core';
-
 import styles from '../search-doctor.module.scss';
 
 const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
@@ -76,14 +74,14 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                 ' ' +
                 searchDetailsById?.data?.data?.full_name || ''}
             </Typography>
-            <Button
+            {/* <Button
               sx={{ marginLeft: 'auto' }}
               color="secondary"
               variant="contained"
               onClick={() => window.print()}
             >
               Print
-            </Button>
+            </Button> */}
             {/* <ShareOutlinedIcon color="inputTextColor.main" sx={{ ml: 2 }} /> */}
           </Box>
           <Typography component="div" variant="h3" color="textSecondary.main">
@@ -113,7 +111,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                 NMR ID
               </Typography>
               <Typography component="div" variant="body1" color="textSecondary.main">
-                {searchDetailsById?.data?.data?.nmr_id || ''}
+                {searchDetailsById?.data?.data?.nmr_id || '-'}
               </Typography>
             </Grid>
             <Grid
@@ -134,7 +132,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                 Registration No.
               </Typography>
               <Typography component="div" variant="body1" color="textSecondary.main">
-                {searchDetailsById?.data?.data?.registration_number || ''}
+                {searchDetailsById?.data?.data?.registration_number || '-'}
               </Typography>
             </Grid>
             {/* <Grid
@@ -168,7 +166,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                 Year of Registration
               </Typography>
               <Typography component="div" variant="body1" color="textSecondary.main">
-                {searchDetailsById?.data?.data?.year_of_info || ''}
+                {searchDetailsById?.data?.data?.registration_year || '-'}
               </Typography>
             </Grid>
           </Grid>
@@ -183,7 +181,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                 Father/Husband Name
               </Typography>
               <Typography component="div" variant="body1" color="textSecondary.main">
-                {searchDetailsById?.data?.data?.father_husband_name || ''}
+                {searchDetailsById?.data?.data?.father_husband_name || '-'}
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
@@ -196,7 +194,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                 Date of Birth
               </Typography>
               <Typography component="div" variant="body1" color="textSecondary.main">
-                {searchDetailsById?.data?.data?.date_of_birth || ''}
+                {searchDetailsById?.data?.data?.date_of_birth || '-'}
               </Typography>
             </Grid>
             {/* <Grid item xs={12} sm={6} md={3}>
@@ -296,7 +294,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                 Qualification year
               </Typography>
               <Typography component="span" variant="body1" color="textSecondary.main">
-                {searchDetailsById?.data?.data?.qualifications[0]?.qualification_year || ''}
+                {searchDetailsById?.data?.data?.qualifications[0]?.qualification_year || '-'}
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
@@ -309,7 +307,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                 Qualification
               </Typography>
               <Typography component="span" variant="body1" color="textSecondary.main">
-                {searchDetailsById?.data?.data?.qualifications[0]?.qualification || ''}
+                {searchDetailsById?.data?.data?.qualifications[0]?.qualification || '-'}
               </Typography>
             </Grid>
 
@@ -323,7 +321,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                 University Name
               </Typography>
               <Typography component="span" variant="body1" color="textSecondary.main">
-                {searchDetailsById?.data?.data?.qualifications[0]?.university_name || ''}
+                {searchDetailsById?.data?.data?.qualifications[0]?.university_name || '-'}
               </Typography>
             </Grid>
           </Grid>

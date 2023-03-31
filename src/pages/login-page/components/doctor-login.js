@@ -83,7 +83,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
       case 'nmrId':
         loginTypeID = 3;
         break;
-      case 'mobile':
+      case 'mobileNumber':
         loginTypeID = 2;
         break;
       case 'userName':
@@ -337,7 +337,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
               <Box mt={2}>
                 <Typography variant="body1">
                   Please enter the OTP sent on your Registered Mobile Number {maskedMobileNumber}{' '}
-                  Linked with your NMR ID.
+                  linked with your NMR ID.
                 </Typography>
                 {otpform}
               </Box>

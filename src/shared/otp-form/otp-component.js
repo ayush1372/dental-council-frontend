@@ -13,7 +13,12 @@ import { SvgImageComponent } from '../../ui/core/svg-icons';
 // import useCountdown from './use-countdown';
 import styles from './otp-component.module.scss';
 
-export const OtpForm = ({ otpInvalidError = false, resendAction = undefined, resendTime = 90 }) => {
+export const OtpForm = ({
+  otpInvalidError = false,
+  resendAction = undefined,
+  resendTime = 90,
+  otpData,
+}) => {
   const { t } = useTranslation();
   const [otp, setOtp] = useState('');
   const [isOtpValid, setOtpValid] = useState(false);
@@ -113,7 +118,7 @@ export const OtpForm = ({ otpInvalidError = false, resendAction = undefined, res
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <Box>
           <Typography variant="body1" align="center" color="textPrimary.main">
-            {`Didn't recieve OTP? `}
+            {`Didn't receive OTP? `}
             {/* {t('resend_in')} */}
           </Typography>
           <Button
@@ -121,6 +126,7 @@ export const OtpForm = ({ otpInvalidError = false, resendAction = undefined, res
             disabled={!isResendEnabled}
             onClick={() => {
               setResetEnabled(!isResendEnabled);
+              otpData?.type && otpData?.reSendOTP(otpData?.type);
               resendAction();
             }}
             sx={{

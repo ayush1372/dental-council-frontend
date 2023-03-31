@@ -160,15 +160,19 @@ function TrackStatusTable(props) {
         },
         {
           type: 'collegeVerificationStatus',
-
           value:
-            application?.college_dean_status === ('NOT YET RECEIVED' || 'PENDING') &&
-            application?.college_registrar_status === 'Approved'
-              ? 'Pending'
-              : application?.college_dean_status === 'APPROVED' &&
-                application?.college_registrar_status === 'APPROVED'
-              ? 'Approved'
-              : 'Not yet received',
+            application?.application_type_id === 7
+              ? capitalize(application?.nbe_status)
+              : capitalize(application?.college_status),
+
+          // value:
+          //   application?.college_dean_status === ('NOT YET RECEIVED' || 'PENDING') &&
+          //   application?.college_registrar_status === 'Approved'
+          //     ? 'Pending'
+          //     : application?.college_dean_status === 'APPROVED' &&
+          //       application?.college_registrar_status === 'APPROVED'
+          //     ? 'Approved'
+          //     : 'Not yet received',
         },
         {
           type: 'NMCVerificationStatus',

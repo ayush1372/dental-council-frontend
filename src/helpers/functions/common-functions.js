@@ -174,28 +174,6 @@ export const workSheetTheme = {
   bgColor: { argb: '#ffffcc00' },
 };
 
-export const getProfileId = () => {
-  if (localStorage.getItem('accesstoken')) {
-    let base64Url = localStorage.getItem('accesstoken')?.split('.')[1];
-    let base64 = base64Url?.replace(/-/g, '+').replace(/_/g, '/');
-    let jsonPayload;
-    if (base64) {
-      jsonPayload = decodeURIComponent(
-        window
-          ?.atob(base64)
-          ?.split('')
-          ?.map(function (c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-          })
-          ?.join('')
-      );
-    }
-
-    const profile_id = JSON.parse(jsonPayload)?.profile_id;
-
-    return profile_id;
-  }
-};
 export const replaceString = (original = '', replacement = '', withReplace = '') => {
   return original.replace(replacement, withReplace);
 };

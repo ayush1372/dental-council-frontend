@@ -10,6 +10,10 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
   const theme = useTheme();
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const logInDoctorStatus = useSelector(
+    (state) => state?.loginReducer?.loginData?.data?.blacklisted
+  );
+
   return (
     <List sx={{ p: 0 }}>
       {DrawerOptions?.map((item, index) => (
@@ -32,7 +36,10 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
           <ListItemButton
             disabled={
               loggedInUserType === 'Doctor' &&
-              !personalDetails?.nmr_id &&
+              (!personalDetails?.nmr_id ||
+                logInDoctorStatus ||
+                personalDetails?.hp_profile_status_id === 5 ||
+                personalDetails?.hp_profile_status_id === 6) &&
               (item.tabName === 'voluntary-suspend-license' ||
                 item.tabName === 'additional-qualifications' ||
                 item.tabName === 'work-details')
