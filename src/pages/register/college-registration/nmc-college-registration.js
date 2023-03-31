@@ -466,17 +466,17 @@ function NMCCollegeRegistration() {
           <Typography variant="body3" color="inputTextColor.main">
             Address line 2
           </Typography>
-          <Typography component="span" color="error.main">
+          {/* <Typography component="span" color="error.main">
             *
-          </Typography>
+          </Typography> */}
           <TextField
             fullWidth
-            required
+            // required
             name="AddressLine2"
             placeholder={'Enter Address Line 2'}
             error={errors.AddressLine2?.message}
             {...register('AddressLine2', {
-              required: 'Address line 2 is required',
+              // required: 'Address line 2 is required',
             })}
           />
         </Grid>
@@ -534,9 +534,9 @@ function NMCCollegeRegistration() {
           <Typography variant="body3" color="inputTextColor.main">
             City/Town/Village
           </Typography>
-          <Typography component="span" color="error.main">
+          {/* <Typography component="span" color="error.main">
             *
-          </Typography>
+          </Typography> */}
           <SearchableDropdown
             fullWidth
             name="Town"
@@ -545,7 +545,7 @@ function NMCCollegeRegistration() {
             placeholder="Select Town "
             error={errors.Town?.message}
             {...register('Town', {
-              required: 'Town name is required',
+              // required: 'Town name is required',
             })}
             onChange={(currentValue) => {
               setValue('TownID', currentValue.id);
