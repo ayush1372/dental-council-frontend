@@ -209,8 +209,9 @@ const ConstantDetails = () => {
           item
           xs={12}
           sm={6}
-          md={3}
-          px={2}
+          md={4}
+          pl={2}
+          pr={2}
           mb={{ xs: 1, lg: 0 }}
         >
           <Typography variant="body3" color="grey.label">
@@ -277,13 +278,13 @@ const ConstantDetails = () => {
             )}
           </Box>
         </Grid>
-        <Grid item xs={12} sm={6} md={3} px={2} mb={{ xs: 1, lg: 0 }}>
+        <Grid item xs={12} sm={6} md={4} mb={{ xs: 1, lg: 0 }} pl={2}>
           <Typography component="div" variant="body3" color="grey.label">
             Email
           </Typography>
           <Box display="flex" alignItems="center">
             {!emailId || emailChange ? (
-              <Box display={'flex'} flexDirection="column">
+              <Box display={'flex'} flexDirection="row">
                 <Paper display={'flex'} alignItems="center" sx={{ p: '2px 4px' }}>
                   <InputBase
                     sx={{ ml: 1, flex: 1 }}
