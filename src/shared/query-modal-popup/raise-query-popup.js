@@ -101,6 +101,7 @@ const RaiseQueryPopup = ({ ClosePopup, queryRaisedField }) => {
                 name={'raiseQuery'}
                 multiline
                 rows={4}
+                inputProps={{ maxLength: 300 }}
                 fullWidth
                 error={errors.raiseQuery?.message}
                 {...register('raiseQuery', {})}
