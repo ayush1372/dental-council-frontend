@@ -70,7 +70,7 @@ const NewPasswordSetup = () => {
     if (params?.request_id) {
       const newPasswordData = {
         token: params?.request_id,
-        password: getValues()?.password,
+        password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
       };
 
       dispatch(forgotPassword(newPasswordData))
