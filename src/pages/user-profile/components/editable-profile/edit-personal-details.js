@@ -564,6 +564,16 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 },
               })}
               error={errors.FatherName?.message}
+              sx={{
+                input: {
+                  backgroundColor:
+                    loggedInUserType === 'SMC'
+                      ? ''
+                      : work_flow_status_id === 3 && getQueryRaised('Fathers Name')
+                      ? 'grey2.main'
+                      : '',
+                },
+              }}
               InputProps={{
                 readOnly: work_flow_status_id === 3 ? getQueryRaised('Fathers Name') : false,
               }}
@@ -592,6 +602,16 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               error={errors.MotherName?.message}
               InputProps={{
                 readOnly: work_flow_status_id === 3 ? getQueryRaised('Mothers Name') : false,
+              }}
+              sx={{
+                input: {
+                  backgroundColor:
+                    loggedInUserType === 'SMC'
+                      ? ''
+                      : work_flow_status_id === 3 && getQueryRaised('Mothers Name')
+                      ? 'grey2.main'
+                      : '',
+                },
               }}
             />
           </Grid>
@@ -622,6 +642,16 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               InputProps={{
                 readOnly: work_flow_status_id === 3 ? getQueryRaised('Spouse Name') : false,
               }}
+              sx={{
+                input: {
+                  backgroundColor:
+                    loggedInUserType === 'SMC'
+                      ? ''
+                      : work_flow_status_id === 3 && getQueryRaised('Spouse Name')
+                      ? 'grey2.main'
+                      : '',
+                },
+              }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -643,12 +673,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 required: 'Nationality is required',
               })}
               InputProps={{
-                readOnly:
-                  loggedInUserType === 'SMC'
-                    ? false
-                    : work_flow_status_id === 3
-                    ? getQueryRaised('Nationality')
-                    : false,
+                readOnly: loggedInUserType === 'SMC' ? false : true,
               }}
               options={createSelectFieldData(nationalities)}
             />
@@ -713,12 +738,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 shrink: true,
               }}
               InputProps={{
-                readOnly:
-                  loggedInUserType === 'SMC'
-                    ? false
-                    : work_flow_status_id === 3
-                    ? getQueryRaised('Date of Birth')
-                    : true,
+                readOnly: loggedInUserType === 'SMC' ? false : true,
               }}
               required={true}
               defaultValue={getValues().dateOfBirth}
@@ -842,6 +862,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 onChange={(e) => {
                   setIsSameAddress(e.target.checked);
                 }}
+                disabled={work_flow_status_id === 3 ? true : false}
               />
               <Typography component="div" mt={1} variant="body7" color="textPrimary.main">
                 Is the communication address same as your address as per your KYC?
@@ -872,7 +893,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                   required={isSameAddress ? false : true}
                   sx={{
                     input: {
-                      backgroundColor: isSameAddress ? 'grey2.main' : '',
+                      backgroundColor: isSameAddress
+                        ? 'grey2.main'
+                        : work_flow_status_id === 3 && getQueryRaised('House')
+                        ? 'grey2.main'
+                        : '',
                     },
                   }}
                   defaultValue={
@@ -911,7 +936,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                   fullWidth
                   sx={{
                     input: {
-                      backgroundColor: isSameAddress ? 'grey2.main' : '',
+                      backgroundColor: isSameAddress
+                        ? 'grey2.main'
+                        : work_flow_status_id === 3 && getQueryRaised('Street')
+                        ? 'grey2.main'
+                        : '',
                     },
                   }}
                   defaultValue={
@@ -945,7 +974,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                   }
                   sx={{
                     input: {
-                      backgroundColor: isSameAddress ? 'grey2.main' : '',
+                      backgroundColor: isSameAddress
+                        ? 'grey2.main'
+                        : work_flow_status_id === 3 && getQueryRaised('Landmark')
+                        ? 'grey2.main'
+                        : '',
                     },
                   }}
                   required={false}
@@ -987,7 +1020,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 }
                 sx={{
                   input: {
-                    backgroundColor: isSameAddress ? 'grey2.main' : '',
+                    backgroundColor: isSameAddress
+                      ? 'grey2.main'
+                      : work_flow_status_id === 3 && getQueryRaised('Locality')
+                      ? 'grey2.main'
+                      : '',
                   },
                 }}
                 fullWidth
@@ -1043,7 +1080,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 )}
               </Typography>
               <Select
-                style={{ backgroundColor: isSameAddress ? '#F0F0F0' : '' }}
+                style={{
+                  backgroundColor: isSameAddress
+                    ? '#F0F0F0'
+                    : work_flow_status_id === 3 && getQueryRaised('State')
+                    ? '#F0F0F0'
+                    : '',
+                }}
                 fullWidth
                 error={errors.State?.message}
                 name="State"
@@ -1088,7 +1131,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 )}
               </Typography>
               <Select
-                style={{ backgroundColor: isSameAddress ? '#F0F0F0' : '' }}
+                style={{
+                  backgroundColor: isSameAddress
+                    ? '#F0F0F0'
+                    : work_flow_status_id === 3 && getQueryRaised('District')
+                    ? '#F0F0F0'
+                    : '',
+                }}
                 fullWidth
                 error={errors.District?.message}
                 name="District"
@@ -1131,7 +1180,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 Sub District
               </Typography>
               <Select
-                style={{ backgroundColor: isSameAddress ? '#F0F0F0' : '' }}
+                style={{
+                  backgroundColor: isSameAddress
+                    ? '#F0F0F0'
+                    : work_flow_status_id === 3 && getQueryRaised('Sub District')
+                    ? '#F0F0F0'
+                    : '',
+                }}
                 fullWidth
                 error={errors.SubDistrict?.message}
                 name="SubDistrict"
@@ -1168,7 +1223,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 City/Town/Village
               </Typography>
               <Select
-                style={{ backgroundColor: isSameAddress ? '#F0F0F0' : '' }}
+                style={{
+                  backgroundColor: isSameAddress
+                    ? '#F0F0F0'
+                    : work_flow_status_id === 3 && getQueryRaised('City/Town/Village')
+                    ? '#F0F0F0'
+                    : '',
+                }}
                 fullWidth
                 name="Area"
                 defaultValue={
@@ -1212,7 +1273,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 placeholder="Postal code"
                 required={isSameAddress ? false : true}
                 fullWidth
-                style={{ backgroundColor: isSameAddress ? '#F0F0F0' : '' }}
+                style={{
+                  backgroundColor: isSameAddress
+                    ? '#F0F0F0'
+                    : work_flow_status_id === 3 && getQueryRaised('Pincode')
+                    ? '#F0F0F0'
+                    : '',
+                }}
                 defaultValue={
                   isSameAddress ? personalDetails?.kyc_address?.pincode : getValues()?.PostalCode
                 }

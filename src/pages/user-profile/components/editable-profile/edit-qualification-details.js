@@ -155,6 +155,7 @@ const EditQualificationDetails = ({
               },
             ]}
             error={errors?.qualification?.[index]?.qualificationfrom?.message}
+            disabled={work_flow_status_id === 3 ? true : false}
           />
         </Grid>
       </Grid>
@@ -188,6 +189,12 @@ const EditQualificationDetails = ({
               {...register(`qualification[${index}].rollno`, {
                 required: 'awarding is Required',
               })}
+              sx={{
+                input: {
+                  backgroundColor:
+                    work_flow_status_id === 3 && getQueryRaised('RollNo') ? 'grey2.main' : '',
+                },
+              }}
               disabled={work_flow_status_id === 3 ? getQueryRaised('RollNo') : false}
             />
           </Grid>
@@ -204,6 +211,14 @@ const EditQualificationDetails = ({
               {...register(`qualification[${index}].passportNumber`, {
                 required: 'Passport Number is Required',
               })}
+              sx={{
+                input: {
+                  backgroundColor:
+                    work_flow_status_id === 3 && getQueryRaised('PassportNumber')
+                      ? 'grey2.main'
+                      : '',
+                },
+              }}
               disabled={work_flow_status_id === 3 ? getQueryRaised('PassportNumber') : false}
             />
           </Grid>
@@ -225,6 +240,14 @@ const EditQualificationDetails = ({
                   message: 'Enter correct marks obtained',
                 },
               })}
+              sx={{
+                input: {
+                  backgroundColor:
+                    work_flow_status_id === 3 && getQueryRaised('MarksObtained')
+                      ? 'grey2.main'
+                      : '',
+                },
+              }}
               InputProps={{ maxlength: 4 }}
               disabled={work_flow_status_id === 3 ? getQueryRaised('MarksObtained') : false}
             />
@@ -266,6 +289,10 @@ const EditQualificationDetails = ({
                   maxWidth: 130,
                 },
               }}
+              style={{
+                backgroundColor:
+                  work_flow_status_id === 3 && getQueryRaised('Result') ? '#F0F0F0' : '',
+              }}
               disabled={work_flow_status_id === 3 ? getQueryRaised('Result') : false}
             />
           </Grid>
@@ -289,6 +316,10 @@ const EditQualificationDetails = ({
                     }
                   : ''
               )}
+              style={{
+                backgroundColor:
+                  work_flow_status_id === 3 && getQueryRaised('MonthFMGE') ? '#F0F0F0' : '',
+              }}
               disabled={work_flow_status_id === 3 ? getQueryRaised('MonthFMGE') : false}
               options={monthsData}
               MenuProps={{
@@ -325,6 +356,10 @@ const EditQualificationDetails = ({
                   maxHeight: 250,
                   maxWidth: 130,
                 },
+              }}
+              style={{
+                backgroundColor:
+                  work_flow_status_id === 3 && getQueryRaised('YearFMGE') ? '#F0F0F0' : '',
               }}
               disabled={work_flow_status_id === 3 ? getQueryRaised('YearFMGE') : false}
             />
@@ -372,6 +407,12 @@ const EditQualificationDetails = ({
                     }
                   : ''
               )}
+              style={{
+                backgroundColor:
+                  work_flow_status_id === 3 && getQueryRaised('Name of the Degree Obtained')
+                    ? '#F0F0F0'
+                    : '',
+              }}
               disabled={
                 work_flow_status_id === 3 ? getQueryRaised('Name of the Degree Obtained') : false
               }
@@ -439,6 +480,10 @@ const EditQualificationDetails = ({
                     }
                   : ''
               )}
+              style={{
+                backgroundColor:
+                  work_flow_status_id === 3 && getQueryRaised('Country Name') ? '#F0F0F0' : '',
+              }}
               disabled={work_flow_status_id === 3 ? getQueryRaised('Country Name') : false}
               options={countriesList?.length > 0 ? createSelectFieldData(countriesList, 'id') : []}
               MenuProps={{
@@ -467,6 +512,12 @@ const EditQualificationDetails = ({
               {...register(`qualification[${index}].state`, {
                 required: 'State is Required',
               })}
+              sx={{
+                input: {
+                  backgroundColor:
+                    work_flow_status_id === 3 && getQueryRaised('State') ? 'grey2.main' : '',
+                },
+              }}
               disabled={work_flow_status_id === 3 ? getQueryRaised('State') : false}
             />
           ) : (
@@ -487,6 +538,10 @@ const EditQualificationDetails = ({
                 }
               )}
               options={createSelectFieldData(statesList)}
+              style={{
+                backgroundColor:
+                  work_flow_status_id === 3 && getQueryRaised('State') ? '#F0F0F0' : '',
+              }}
               disabled={work_flow_status_id === 3 ? getQueryRaised('State') : false}
               MenuProps={{
                 style: {
@@ -509,6 +564,14 @@ const EditQualificationDetails = ({
               {...register(`qualification[${index}].college`, {
                 required: 'college is required',
               })}
+              sx={{
+                input: {
+                  backgroundColor:
+                    work_flow_status_id === 3 && getQueryRaised('Name of the College')
+                      ? 'grey2.main'
+                      : '',
+                },
+              }}
               disabled={work_flow_status_id === 3 ? getQueryRaised('Name of the College') : false}
             />
           ) : (
@@ -529,6 +592,12 @@ const EditQualificationDetails = ({
                 }
               )}
               options={createSelectFieldData(colleges)}
+              style={{
+                backgroundColor:
+                  work_flow_status_id === 3 && getQueryRaised('Name of the College')
+                    ? '#F0F0F0'
+                    : '',
+              }}
               disabled={work_flow_status_id === 3 ? getQueryRaised('Name of the College') : false}
               MenuProps={{
                 style: {
@@ -548,6 +617,12 @@ const EditQualificationDetails = ({
               label="University"
               defaultValue={qualification?.university}
               required={true}
+              sx={{
+                input: {
+                  backgroundColor:
+                    work_flow_status_id === 3 && getQueryRaised('University') ? 'grey2.main' : '',
+                },
+              }}
               disabled={work_flow_status_id === 3 ? getQueryRaised('University') : false}
               {...register(`qualification[${index}].university`, {
                 required: 'University is Required',
@@ -571,6 +646,10 @@ const EditQualificationDetails = ({
                 }
               )}
               options={createSelectFieldData(universitiesList.data, 'id') || []}
+              style={{
+                backgroundColor:
+                  work_flow_status_id === 3 && getQueryRaised('University') ? '#F0F0F0' : '',
+              }}
               disabled={work_flow_status_id === 3 ? getQueryRaised('University') : false}
               MenuProps={{
                 style: {
@@ -603,6 +682,10 @@ const EditQualificationDetails = ({
                   required: 'awarding is required',
                 }
               )}
+              style={{
+                backgroundColor:
+                  work_flow_status_id === 3 && getQueryRaised('Month') ? '#F0F0F0' : '',
+              }}
               disabled={work_flow_status_id === 3 ? getQueryRaised('Month') : false}
               options={customMonthsData}
               MenuProps={{
@@ -635,6 +718,10 @@ const EditQualificationDetails = ({
                   maxHeight: 250,
                   maxWidth: 130,
                 },
+              }}
+              style={{
+                backgroundColor:
+                  work_flow_status_id === 3 && getQueryRaised('year') ? '#F0F0F0' : '',
               }}
               disabled={work_flow_status_id === 3 ? getQueryRaised('year') : false}
             />

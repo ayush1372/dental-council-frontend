@@ -375,14 +375,21 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 *
               </Typography>
             </Typography>
-            {personalDetails?.personal_details?.is_new ||
-            (work_flow_status_id === 3 && !getQueryRaised('Registered with council')) ? (
+            {personalDetails?.personal_details?.is_new ? (
               <Select
                 fullWidth
                 name="RegisteredWithCouncil"
                 defaultValue={registeredCouncil[0]?.id}
                 required={true}
-                disabled={loggedInUserType === 'SMC' || !personalDetails?.personal_details?.is_new}
+                disabled={
+                  loggedInUserType === 'SMC' ||
+                  !personalDetails?.personal_details?.is_new ||
+                  (work_flow_status_id === 3 && getQueryRaised('Registered with council'))
+                }
+                style={{
+                  backgroundColor:
+                    work_flow_status_id === 3 && getQueryRaised('State') ? '#F0F0F0' : '',
+                }}
                 {...register('RegisteredWithCouncil')}
                 options={createSelectFieldData(councilNames)}
                 MenuProps={{
@@ -442,17 +449,19 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               sx={{
                 input: {
                   backgroundColor:
-                    loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                    work_flow_status_id === 3
+                      ? 'grey2.main'
+                      : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
                       ? ''
                       : 'grey2.main',
                 },
               }}
               InputProps={{
                 readOnly:
-                  loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                  work_flow_status_id === 3
+                    ? getQueryRaised('Registration Number')
+                    : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
                     ? false
-                    : work_flow_status_id === 3
-                    ? !getQueryRaised('Registration Number')
                     : true,
               }}
             />
@@ -481,7 +490,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                   color: 'black',
                   textTransform: 'uppercase',
                   backgroundColor:
-                    loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                    work_flow_status_id === 3
+                      ? 'grey2.main'
+                      : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
                       ? ''
                       : 'grey2.main',
                 },
@@ -489,10 +500,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               InputProps={{
                 inputProps: { max: new Date().toISOString().split('T')[0] },
                 readOnly:
-                  loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                  work_flow_status_id === 3
+                    ? getQueryRaised('Registration Date')
+                    : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
                     ? false
-                    : work_flow_status_id === 3
-                    ? !getQueryRaised('Registration Date')
                     : true,
               }}
               InputLabelProps={{
@@ -551,6 +562,18 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 {...register('RenewalDate', {
                   required: 'Registration Date is Required',
                 })}
+                sx={{
+                  input: {
+                    color: 'black',
+                    textTransform: 'uppercase',
+                    backgroundColor:
+                      work_flow_status_id === 3
+                        ? 'grey2.main'
+                        : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                        ? ''
+                        : 'grey2.main',
+                  },
+                }}
                 inputProps={{
                   min: new Date().toISOString().split('T')[0],
                 }}
