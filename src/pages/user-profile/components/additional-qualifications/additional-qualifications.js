@@ -143,7 +143,8 @@ const AdditionalQualifications = () => {
         request_id: '',
         broad_speciality_id: broadSpeciality(qualification?.id),
         super_speciality_name: '',
-        qualification_from: qualification?.qualificationfrom,
+        qualification_from:
+          qualification?.qualificationfrom === '' ? 'India' : qualification?.qualificationfrom,
       };
       updatedQualificationDetailsArray.push(updatedQualificationDetails);
     });
