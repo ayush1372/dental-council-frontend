@@ -85,6 +85,7 @@ const WorkProfile = () => {
             register={register}
             setValue={setValue}
             handleSubmit={handleSubmit}
+            watch={watch}
           />
         )}
       </Grid>

@@ -1,17 +1,23 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import RemoveCircleOutlineRoundedIcon from '@mui/icons-material/RemoveCircleOutlineRounded';
 import { Box, Grid, Tab, Tabs, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { natureOfWork, workStatusOptions } from '../../../../constants/common-data';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
 import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
+import {
+  getCitiesList,
+  getDistrictList,
+  getSubDistrictsList,
+} from '../../../../store/actions/common-actions';
 import { Button, Checkbox, RadioGroup, Select, TextField } from '../../../../ui/core';
 import WorkDetailsTable from './work-details-table';
 
-const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit }) => {
+const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watch }) => {
+  const dispatch = useDispatch();
   const [showTable, setShowTable] = useState(false);
   // const [showHeader, setShowHeader] = useState(true);
   const [workExpierence, setWorkExpierence] = useState(0);
@@ -55,6 +61,35 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit }) =>
     //   });
     setShowTable(true);
   };
+
+  // watches
+  const watchState = watch('state');
+  const watchDistrict = watch('District');
+  const watchSubDistrict = watch('SubDistrict');
+
+  const fetchDisricts = (stateId) => {
+    if (stateId) dispatch(getDistrictList(stateId));
+  };
+
+  const fetchSubDistricts = (districtId) => {
+    if (districtId) dispatch(getSubDistrictsList(districtId));
+  };
+
+  const fetchCities = (subDistrictId) => {
+    if (subDistrictId) dispatch(getCitiesList(subDistrictId));
+  };
+
+  useEffect(() => {
+    fetchDisricts(watchState);
+  }, [watchState]);
+
+  useEffect(() => {
+    fetchSubDistricts(watchDistrict);
+  }, [watchDistrict]);
+
+  useEffect(() => {
+    fetchCities(watchSubDistrict);
+  }, [watchSubDistrict]);
 
   return (
     <>
@@ -148,7 +183,10 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit }) =>
           value={languages}
           error={languages?.length === 0 && errors.LanguageSpoken?.message}
           multiple={true}
-          {...register('LanguageSpoken')}
+          required={true}
+          {...register('LanguageSpoken', {
+            required: 'Language is Required',
+          })}
           onChange={(value) => {
             handleLanguageSpokenChange('LanguageSpoken', value);
           }}
@@ -288,7 +326,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit }) =>
                     *
                   </Typography>
                 </Typography>
-                <Select
+                <TextField
                   fullWidth
                   error={errors.facilityname?.message}
                   name={'facilityname'}
@@ -406,7 +444,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit }) =>
                 required={true}
                 fullWidth
                 placeholder="Street"
-                defaultValue={getValues().Address}
+                defaultValue={getValues().Street}
                 {...register('Street', {
                   required: 'This field is required',
                   maxLength: {
@@ -414,7 +452,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit }) =>
                     message: 'Should be less than 300 characters',
                   },
                 })}
-                error={errors.Address?.message}
+                error={errors.Street?.message}
               />
             </Grid>
           </Grid>
@@ -433,7 +471,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit }) =>
                 required={true}
                 fullWidth
                 placeholder="Landmark"
-                defaultValue={getValues().Address}
+                defaultValue={getValues().Landmark}
                 {...register('Landmark', {
                   required: 'This field is required',
                   maxLength: {
@@ -441,7 +479,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit }) =>
                     message: 'Should be less than 300 characters',
                   },
                 })}
-                error={errors.Address?.message}
+                error={errors.Landmark?.message}
               />
             </Grid>
             <Grid item xs={12} md={4}>
@@ -457,7 +495,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit }) =>
                 required={true}
                 fullWidth
                 placeholder="Locality"
-                defaultValue={getValues().Address}
+                defaultValue={getValues().Locality}
                 {...register('Locality', {
                   required: 'This field is required',
                   maxLength: {
@@ -465,7 +503,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit }) =>
                     message: 'Should be less than 300 characters',
                   },
                 })}
-                error={errors.Address?.message}
+                error={errors.Locality?.message}
               />
             </Grid>
             <Grid item xs={12} md={4}>
@@ -543,8 +581,11 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit }) =>
                 error={errors.SubDistrict?.message}
                 name="SubDistrict"
                 placeholder="Sub District"
+                required={true}
                 defaultValue={getValues().SubDistrict}
-                {...register('SubDistrict')}
+                {...register('SubDistrict', {
+                  required: 'This field is required',
+                })}
                 options={createSelectFieldData(subDistrictList, 'iso_code')}
                 MenuProps={{
                   style: {
