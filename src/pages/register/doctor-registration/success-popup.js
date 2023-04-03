@@ -54,7 +54,7 @@ export default function SuccessModal() {
             component="div"
             flexDirection="column"
           >
-            Your Password been created Successfully
+            Your password been created Successfully
           </Typography>
           <Button
             sx={{ width: { xs: '100%', sm: '408px' }, mt: 5 }}
