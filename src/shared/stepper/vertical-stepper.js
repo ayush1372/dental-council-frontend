@@ -21,7 +21,7 @@ export default function VerticalLinearStepper() {
   );
   const repeatedApplication = () => {
     let count = 0;
-    data?.forEach((currObj) => {
+    ApplicationStatus?.application_details?.forEach((currObj) => {
       if (currObj?.action_id === 1 && currObj?.group_id === 1) {
         count = count + 1;
       }
@@ -59,53 +59,14 @@ export default function VerticalLinearStepper() {
   }));
 
   const classes = useStyles(theme);
-  const data = [
-    {
-      workflow_status_id: 1,
-      action_id: 1,
-      group_id: 1,
-      action_date: '2023-03-29 10:17:09.717197',
-    },
-
-    {
-      workflow_status_id: 1,
-      action_id: 2,
-      group_id: 2,
-      action_date: '2023-03-29 10:19:41.505223',
-      remarks: '',
-    },
-
-    {
-      workflow_status_id: 1,
-      action_id: 4,
-      group_id: 1,
-      action_date: '2023-03-29 10:24:26.177882',
-      remarks: '',
-    },
-
-    {
-      workflow_status_id: 1,
-      action_id: 1,
-      group_id: 1,
-      action_date: '2023-03-29 10:29:31.312718',
-      remarks: '',
-    },
-
-    {
-      workflow_status_id: 2,
-      action_id: 5,
-      group_id: 3,
-      action_date: '2023-03-29 10:30:07.295055',
-      remarks: '',
-    },
-  ];
 
   return (
     <>
-      {data.reverse()?.map((label, index) => (
+      {ApplicationStatus?.application_details?.reverse()?.map((label, index) => (
         <Box className={classes.statusBlock} display="flex" flexDirection="column" key={index}>
           <Box display="flex" alignItems="center">
-            {(label?.action_id === 1 && index === data?.length - 1) ||
+            {(label?.action_id === 1 &&
+              index === ApplicationStatus?.application_details?.length - 1) ||
             label?.action_id === 2 ||
             label?.action_id === 4 ? (
               <CheckCircleIcon
@@ -179,16 +140,19 @@ export default function VerticalLinearStepper() {
           </Box>
           <Box
             borderLeft={
-              (label?.action_id !== 1 && index === data?.length - 1) ||
+              (label?.action_id !== 1 &&
+                index === ApplicationStatus?.application_details?.length - 1) ||
               label?.action_id === 2 ||
               label?.action_id === 4 ||
               ((ApplicationStatus?.application_type === 3 ||
                 ApplicationStatus?.application_type === 4 ||
                 ApplicationStatus?.application_type === 5) &&
-                index !== data?.length - 1 &&
+                index !== ApplicationStatus?.application_details?.length - 1 &&
                 label?.action_id !== 1)
                 ? `2px solid ${theme?.palette?.success?.main}`
-                : label?.action_id === 1 && repeatedApplication() > 1 && index !== data?.length - 1
+                : label?.action_id === 1 &&
+                  repeatedApplication() > 1 &&
+                  index !== ApplicationStatus?.application_details?.length - 1
                 ? `2px solid ${theme?.palette?.primary?.main}`
                 : label?.action_id === 5
                 ? `2px solid ${theme?.palette?.youTubeColor?.main}`
