@@ -30,7 +30,7 @@ export function TrackApplicationDetails({
     const dateObj = new Date(date);
     return `${dateObj.getDate()}-${monthsData[dateObj.getMonth()].value}-${dateObj.getFullYear()}`;
   };
-  const nmcApproveStatus = ApplicationStatus?.application_details.some((label) => {
+  const nmcApproveStatus = ApplicationStatus?.application_details?.some((label) => {
     return label?.action_id === 4 && label?.group_id === 3;
   });
   return (
@@ -66,7 +66,14 @@ export function TrackApplicationDetails({
                   color="textPrimary.main"
                 >
                   Application Approved by NMC
-                  <CheckCircle sx={{ color: nmcApproveStatus ? 'success' : '', height: '16px' }} />
+                  <CheckCircle
+                    sx={{
+                      color: nmcApproveStatus ? 'success' : '',
+                      height: '14px',
+                      width: '16px',
+                      pl: '4px',
+                    }}
+                  />
                 </Typography>
 
                 <Typography component="div" variant="body1" color="textPrimary.main">
@@ -87,7 +94,7 @@ export function TrackApplicationDetails({
             <Box>
               <Box>
                 <VerticalLinearStepper />
-              </Box>{' '}
+              </Box>
             </Box>
           </Box>
         </Grid>

@@ -23,8 +23,8 @@ export default function VerticalLinearStepper() {
   );
   const repeatedApplication = () => {
     let count = 0;
-    ApplicationStatus?.application_details.forEach((currObj) => {
-      if (currObj.action_id === 1 && currObj.group_id === 1) {
+    data?.forEach((currObj) => {
+      if (currObj?.action_id === 1 && currObj?.group_id === 1) {
         count = count + 1;
       }
     });
@@ -57,10 +57,50 @@ export default function VerticalLinearStepper() {
   }));
 
   const classes = useStyles(theme);
+  const data = [
+    {
+      workflow_status_id: 1,
+      action_id: 1,
+      group_id: 1,
+      action_date: '2023-03-29 10:17:09.717197',
+    },
+
+    {
+      workflow_status_id: 1,
+      action_id: 2,
+      group_id: 2,
+      action_date: '2023-03-29 10:19:41.505223',
+      remarks: '',
+    },
+
+    {
+      workflow_status_id: 1,
+      action_id: 4,
+      group_id: 1,
+      action_date: '2023-03-29 10:24:26.177882',
+      remarks: '',
+    },
+
+    {
+      workflow_status_id: 1,
+      action_id: 1,
+      group_id: 1,
+      action_date: '2023-03-29 10:29:31.312718',
+      remarks: '',
+    },
+
+    {
+      workflow_status_id: 2,
+      action_id: 5,
+      group_id: 3,
+      action_date: '2023-03-29 10:30:07.295055',
+      remarks: '',
+    },
+  ];
 
   return (
     <>
-      {ApplicationStatus?.application_details.reverse().map((label, index) => (
+      {data.reverse()?.map((label, index) => (
         <Box className={classes.statusBlock} display="flex" flexDirection="column" key={index}>
           <Box display="flex" alignItems="center">
             {label?.action_id === 1 || label?.action_id === 2 || label?.action_id === 4 ? (
@@ -75,31 +115,35 @@ export default function VerticalLinearStepper() {
               label?.action_id === 1 &&
               label?.group_id === 1 &&
               repeatedApplication() > 1 && (
-                <SubmittedIcon
-                  sx={{
-                    width: '20px',
-                    height: '20px',
-                    color: trackApplicationStatusColor(userActionId(label?.action_id)),
-                  }}
+                <img
+                  width="20px"
+                  height="25px"
+                  src={SubmittedIcon}
+                  alt="submitted icon"
+                  color={
+                    label?.action_id === 1 && label?.group_id === 1 && repeatedApplication() > 1
+                      ? `${theme?.palette?.primary?.main}`
+                      : 'none'
+                  }
                 />
               )
             )}
             {label?.action_id === 5 && (
-              <RejectedIcon
-                sx={{
-                  width: '20px',
-                  height: '20px',
-                  color: trackApplicationStatusColor(userActionId(label?.action_id)),
-                }}
+              <img
+                width="20px"
+                height="30px"
+                src={RejectedIcon}
+                alt="RejectedIcon"
+                color={trackApplicationStatusColor(userActionId(label?.action_id))}
               />
             )}
             {label?.action_id === 3 && (
-              <QueryRaiseIcon
-                sx={{
-                  width: '20px',
-                  height: '20px',
-                  color: trackApplicationStatusColor(userActionId(label?.action_id)),
-                }}
+              <img
+                width="20px"
+                height="25px"
+                src={QueryRaiseIcon}
+                alt="QueryRaiseIcon"
+                color={trackApplicationStatusColor(userActionId(label?.action_id))}
               />
             )}
 

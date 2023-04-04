@@ -157,6 +157,7 @@ export const userActionId = (actionType) => {
     1: 'Submitted',
     2: 'Forwarded',
     3: 'Query Raised',
+    4: 'Approve',
     5: 'Rejected',
     6: 'Temporary suspension',
     7: 'Permanent Suspension',
