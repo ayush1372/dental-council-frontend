@@ -297,10 +297,15 @@ export const Login = ({ loginName }) => {
               label={'Username'}
               placeholder={'Please enter Username'}
               name={'userID'}
+              error={errors.userID?.message}
               {...register('userID', {
                 required: 'Please enter an Username',
                 pattern: {
                   message: 'Please enter an valid Username',
+                },
+                minLength: {
+                  value: 8,
+                  message: 'Should contains 8 character',
                 },
               })}
             />

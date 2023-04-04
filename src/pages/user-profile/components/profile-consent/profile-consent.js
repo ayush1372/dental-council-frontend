@@ -4,7 +4,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloseIcon from '@mui/icons-material/Close';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
-import { Box, Dialog, Grid, Typography } from '@mui/material';
+import { Box, Dialog, Grid, Link, Typography } from '@mui/material';
 import moment from 'moment';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -309,9 +309,17 @@ const ProfileConsent = ({
             <InfoOutlinedIcon
               sx={{ height: '14px', width: '14px', color: 'messageBlue.main', mr: 1 }}
             />
-            <Typography component="span" variant="body8" color="messageBlue.main">
+            <Link
+              href="https://hpr.abdm.gov.in/en"
+              target="_blank"
+              component="a"
+              variant="body8"
+              color="messageBlue.main"
+              fontWeight="500"
+              underline="none"
+            >
               Know more about HPR
-            </Typography>
+            </Link>
           </Grid>
         </Grid>
 

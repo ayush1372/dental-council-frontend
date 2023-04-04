@@ -352,10 +352,15 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
               label={'Username'}
               placeholder={'Please enter Username'}
               name={'userID'}
+              error={errors.userID?.message}
               {...register('userID', {
                 required: 'Please enter Username',
                 pattern: {
                   message: 'Please enter a valid Username',
+                },
+                minLength: {
+                  value: 8,
+                  message: 'Should contains 8 character',
                 },
               })}
             />
