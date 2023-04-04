@@ -6,8 +6,10 @@ import { Box } from '@mui/material';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { doctorTabs } from '../../../../helpers/components/sidebar-drawer-list-item';
 import SuccessModalPopup from '../../../../shared/common-modals/success-modal-popup';
 import { additionalQualificationsData } from '../../../../store/actions/doctor-user-profile-actions';
+import { changeUserActiveTab } from '../../../../store/reducers/common-reducers';
 import { Button } from '../../../../ui/core';
 import successToast from '../../../../ui/core/toaster';
 import EditQualificationDetails from '../editable-profile/edit-qualification-details';
@@ -110,6 +112,10 @@ const AdditionalQualifications = () => {
     setQualificationFilesData([]);
   }, []);
 
+  const navigateToTrackApplication = () => {
+    dispatch(changeUserActiveTab(doctorTabs[1].tabName));
+  };
+
   const onSubmit = () => {
     const formData = new FormData();
     let qualification_detail_response_tos = [],
@@ -137,7 +143,8 @@ const AdditionalQualifications = () => {
         request_id: '',
         broad_speciality_id: broadSpeciality(qualification?.id),
         super_speciality_name: '',
-        qualification_from: qualification?.qualificationfrom,
+        qualification_from:
+          qualification?.qualificationfrom === '' ? 'India' : qualification?.qualificationfrom,
       };
       updatedQualificationDetailsArray.push(updatedQualificationDetails);
     });
@@ -233,6 +240,7 @@ const AdditionalQualifications = () => {
           open={successModalPopup}
           setOpen={() => setSuccessModalPopup(false)}
           text={'Added Qualification Successfully!'}
+          navigateToTrackApplication={navigateToTrackApplication}
         />
       )}
     </Box>

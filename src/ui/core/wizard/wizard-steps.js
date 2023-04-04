@@ -6,7 +6,13 @@ import StepLabel from '@mui/material/StepLabel';
 import { verboseLog } from '../../../config/debug';
 import { Button } from '../button/button';
 
-const WizardSteps = ({ activeStep, steps, isStepClickEnable, handleStep }) => {
+const WizardSteps = ({
+  activeStep,
+  steps,
+  isStepClickEnable,
+  handleStep,
+  showCheckCirlce = false,
+}) => {
   verboseLog('steps', steps);
 
   return (
@@ -43,8 +49,9 @@ const WizardSteps = ({ activeStep, steps, isStepClickEnable, handleStep }) => {
           >
             <StepLabel
               StepIconProps={{
+                completed: showCheckCirlce,
                 icon:
-                  index < activeStep ? (
+                  showCheckCirlce && index < activeStep ? (
                     <CheckCircleIcon sx={{ color: 'success.main', fontSize: '28px' }} />
                   ) : (
                     index + 1

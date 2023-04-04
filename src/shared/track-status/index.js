@@ -72,35 +72,38 @@ export default function TrackStatus() {
             Track Status
           </Typography> */}
           <Grid container spacing={2} mt={1}>
-            <Grid item xs={12} md={3}>
-              <Box pb={{ xs: 2, md: 4 }}>
-                {/* <Typography color="inputTextColor.main">
+            {loggedInUserType !== 'SMC' && (
+              <Grid item xs={12} md={3}>
+                <Box pb={{ xs: 2, md: 4 }}>
+                  {/* <Typography color="inputTextColor.main">
                   Council Name
                   <Typography component="span" color="error.main">
                     *
                   </Typography>
                 </Typography> */}
-                <SearchableDropdown
-                  sx={{ mt: 1 }}
-                  name="RegistrationCouncil"
-                  items={createEditFieldData(councilNames)}
-                  placeholder={
-                    loggedInUserType !== 'SMC'
-                      ? 'Select Council Name'
-                      : 'Maharashtra Medical Council'
-                  }
-                  clearErrors={clearErrors}
-                  error={loggedInUserType !== 'SMC' && errors.RegistrationCouncil?.message}
-                  {...register('RegistrationCouncil', {
-                    required: loggedInUserType !== 'SMC' && 'Council Name is required',
-                  })}
-                  disabled={loggedInUserType === 'SMC'}
-                  onChange={(currentValue) => {
-                    setValue('RegistrationCouncilId', currentValue.id);
-                  }}
-                />
-              </Box>
-            </Grid>
+
+                  <SearchableDropdown
+                    sx={{ mt: 1 }}
+                    name="RegistrationCouncil"
+                    items={createEditFieldData(councilNames)}
+                    placeholder={
+                      loggedInUserType !== 'SMC'
+                        ? 'Select Council Name'
+                        : 'Maharashtra Medical Council'
+                    }
+                    clearErrors={clearErrors}
+                    error={loggedInUserType !== 'SMC' && errors.RegistrationCouncil?.message}
+                    {...register('RegistrationCouncil', {
+                      required: loggedInUserType !== 'SMC' && 'Council Name is required',
+                    })}
+                    disabled={loggedInUserType === 'SMC'}
+                    onChange={(currentValue) => {
+                      setValue('RegistrationCouncilId', currentValue.id);
+                    }}
+                  />
+                </Box>
+              </Grid>
+            )}
 
             <Grid item xs={12} md={3}>
               <Box pb={{ xs: 2, md: 4 }}>

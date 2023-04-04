@@ -83,7 +83,7 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
       case 'nmrId':
         loginTypeID = 3;
         break;
-      case 'mobile':
+      case 'mobileNumber':
         loginTypeID = 2;
         break;
       case 'userName':

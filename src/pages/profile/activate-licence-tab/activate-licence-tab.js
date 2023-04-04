@@ -87,7 +87,7 @@ const ActivateLicence = (props) => {
       type: 'string',
     },
     {
-      title: 'RequestId',
+      title: 'Request ID',
       name: 'RequestId',
       sorting: true,
       type: 'string',

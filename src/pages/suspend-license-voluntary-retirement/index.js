@@ -20,6 +20,7 @@ export function SuspendLicenseVoluntaryRetirement({
   closeActionModal,
   showSuccessPopup,
   setActionVerified,
+  selectedAcademicStatus,
   setSuccessPopupMessage,
   selectedSuspendLicenseProfile,
 }) {
@@ -156,10 +157,12 @@ export function SuspendLicenseVoluntaryRetirement({
 
     try {
       if (
-        (confirmationModal && userActiveTab === 'voluntary-suspend-license') ||
-        userActiveTab === 'track-status' ||
-        selectedValue === 'suspend' ||
-        selectedValue === 'blacklist'
+        ((confirmationModal && userActiveTab === 'voluntary-suspend-license') ||
+          userActiveTab === 'track-status' ||
+          selectedValue === 'suspend' ||
+          selectedValue === 'blacklist') &&
+        selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
+        selectedAcademicStatus !== 'Permanent Suspension Requests Received'
       ) {
         dispatch(suspendDoctor(suspendDoctorBody))
           .then((response) => {
@@ -454,8 +457,14 @@ export function SuspendLicenseVoluntaryRetirement({
           variant="h3"
           // width="320px"
         >
-          {selectedValue === 'verify'
+          {selectedValue === 'verify' &&
+          (selectedAcademicStatus !== 'Temporary Suspension Requests Received' ||
+            selectedAcademicStatus !== 'Permanent Suspension Requests Received')
             ? 'Are you sure you want to approve the details of the doctor?'
+            : selectedValue === 'verify' &&
+              (selectedAcademicStatus === 'Temporary Suspension Requests Received' ||
+                selectedAcademicStatus === 'Permanent Suspension Requests Received')
+            ? 'Are you sure you want to approve suspension request of the doctor.'
             : selectedValue === 'forward'
             ? 'Are you sure you want to forward doctor details to College/NBE?'
             : ''}

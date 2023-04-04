@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Box, Grid, Link, Typography, useTheme } from '@mui/material';
+import { Box, Grid, Typography, useTheme } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -369,14 +369,6 @@ export const Login = ({ loginName }) => {
         >
           Cancel
         </Button>
-      </Box>
-      <Box textAlign={'center'}>
-        <Typography variant="body1">
-          {`Don't have account?`}{' '}
-          <Link color={theme.palette.secondary.main} sx={{ cursor: 'pointer' }}>
-            Register Here
-          </Link>
-        </Typography>
       </Box>
     </Box>
   );

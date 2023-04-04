@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router';
 
 import { Button } from '../../ui/core';
 
-export default function SuccessPopup() {
+export default function SuccessPopup({ fetchDoctorUserPersonalDetails }) {
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(true);
@@ -16,8 +16,8 @@ export default function SuccessPopup() {
   );
   const handleClose = () => {
     setOpen(false);
-    navigate('/');
-    navigate('/');
+    fetchDoctorUserPersonalDetails && fetchDoctorUserPersonalDetails();
+    navigate('/profile');
     window.scrollTo({
       top: 0,
       behavior: 'smooth',

@@ -23,6 +23,7 @@ import { Button, TextField } from '../../../../ui/core';
 export function TableSearch({ trackApplication, searchParams, exportData, flag }) {
   // const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   // const { councilNames } = useSelector((state) => state.common);
+
   const profileId = useSelector((state) => state.loginReducer.loginData.data.profile_id);
 
   const [applicationTypeValue, setApplicationTypeValue] = useState(false);
@@ -90,12 +91,12 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
     if (trackApplication) {
       trackData.value = getValues().StatusId;
       trackData.search = filterId;
-
       searchParams(trackData, profileId);
     }
     if (exportData?.data?.college_details) {
       trackData.search = getValues().collegeApprovalId;
       trackData.value = getValues().collegeApprovalFilter;
+      searchParams(trackData);
       // dispatch(getDoctorTrackApplicationData(profileId, trackData));
     }
 

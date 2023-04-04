@@ -352,6 +352,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
           steps={wizardSteps}
           progress={false}
           isStepClickEnable={['SMC', 'NMC', 'College'].includes(loggedInUserType)}
+          showCheckCirlce={loggedInUserType === 'Doctor'}
           handleStep={handleStep}
         ></Wizard>
 
