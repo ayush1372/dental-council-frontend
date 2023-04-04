@@ -11,6 +11,7 @@ import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocom
 import {
   getCitiesList,
   getDistrictList,
+  getStatesList,
   getSubDistrictsList,
 } from '../../../../store/actions/common-actions';
 import { getFacilitiesData } from '../../../../store/actions/doctor-user-profile-actions';
@@ -19,7 +20,7 @@ import successToast from '../../../../ui/core/toaster';
 import FacilityDetailsTable from './facility-details-table';
 import WorkDetailsTable from './work-details-table';
 
-const WorkDetails = ({ getValues, register, setValue, errors, watch }) => {
+const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watch }) => {
   const dispatch = useDispatch();
   const [showTable, setShowTable] = useState(false);
   // const [showHeader, setShowHeader] = useState(true);
@@ -28,6 +29,33 @@ const WorkDetails = ({ getValues, register, setValue, errors, watch }) => {
   const [facilityChecked, setFacilityChecked] = useState(true);
   const [organizationChecked, setOrganizationChecked] = useState(false);
   const [tabValue, setTabValue] = useState(0);
+
+  const onSubmit = () => {
+    const currentWorkDetails = {
+      work_organization: getValues().workingOrganizationName,
+      organization_type: getValues().organizationType,
+      address: {
+        id: null,
+        address_line1: getValues().Address,
+        street: getValues().Street,
+        landmark: getValues().Landmark,
+        locality: getValues().Locality,
+        country: getCountryData(getValues().Country),
+        state: getStateData(getValues().state),
+        district: getDistrictData(getValues().District),
+        sub_district: getSubDistrictData(getValues().SubDistrict),
+        village: getVillageData(getValues().Area),
+        url: getValues().telecommunicationURL,
+        pincode: getValues().pincode,
+        work_details: {
+          work_nature: getWorkNature(getValues().NatureOfWork),
+          work_status: getWorkStatus(getValues().workStatus),
+        },
+      },
+    };
+    // eslint-disable-next-line no-console
+    console.log('currentWorkDetails', currentWorkDetails);
+  };
 
   const { languagesList, statesList, countriesList, districtsList, subDistrictList, citiesList } =
     useSelector((state) => state?.common);
@@ -44,8 +72,6 @@ const WorkDetails = ({ getValues, register, setValue, errors, watch }) => {
     setTabValue(value);
   };
   const searchFacilitiesHandler = () => {
-    // eslint-disable-next-line no-console
-    console.log('hi');
     const values = getValues();
     const searchFacilities = {
       pincode: values.pincode || '',
@@ -75,9 +101,15 @@ const WorkDetails = ({ getValues, register, setValue, errors, watch }) => {
   };
 
   // watches
+  const watchCountry = watch('Country');
   const watchState = watch('state');
   const watchDistrict = watch('District');
   const watchSubDistrict = watch('SubDistrict');
+  const watchFacilityStateCode = watch('stateLGDCode');
+
+  const fetchState = (countryID) => {
+    if (countryID) dispatch(getStatesList(countryID));
+  };
 
   const fetchDisricts = (stateId) => {
     if (stateId) dispatch(getDistrictList(stateId));
@@ -92,8 +124,17 @@ const WorkDetails = ({ getValues, register, setValue, errors, watch }) => {
   };
 
   useEffect(() => {
+    fetchState(watchCountry);
+  }, [watchCountry]);
+
+  useEffect(() => {
     fetchDisricts(watchState);
   }, [watchState]);
+
+  useEffect(() => {
+    searchFacilitiesHandler();
+    fetchDisricts(watchFacilityStateCode);
+  }, [watchFacilityStateCode]);
 
   useEffect(() => {
     fetchSubDistricts(watchDistrict);
@@ -102,6 +143,79 @@ const WorkDetails = ({ getValues, register, setValue, errors, watch }) => {
   useEffect(() => {
     fetchCities(watchSubDistrict);
   }, [watchSubDistrict]);
+
+  const getCountryData = (country) => {
+    let CountryData = [];
+
+    countriesList?.map((elementData) => {
+      if (elementData.id === country) {
+        CountryData.push(elementData);
+      }
+    });
+
+    return CountryData[0];
+  };
+  const getStateData = (State) => {
+    let stateData = [];
+
+    statesList?.map((elementData) => {
+      if (elementData.id === State) {
+        stateData.push(elementData);
+      }
+    });
+
+    return stateData[0];
+  };
+  const getDistrictData = (District) => {
+    let DistrictData = [];
+    districtsList?.map((elementData) => {
+      if (elementData.id === District) {
+        DistrictData.push(elementData);
+      }
+    });
+    return DistrictData[0];
+  };
+
+  const getSubDistrictData = (subDistrict) => {
+    let subDistrictData = [];
+    subDistrictList?.map((elementData) => {
+      if (elementData.iso_code === subDistrict) {
+        subDistrictData.push(elementData);
+      }
+    });
+    return subDistrictData[0];
+  };
+
+  const getVillageData = (village) => {
+    let villageData = [];
+    Array.isArray(citiesList) &&
+      citiesList?.map((elementData) => {
+        if (elementData.id === village) {
+          villageData.push(elementData);
+        }
+      });
+    return villageData[0];
+  };
+  const getWorkNature = (nature) => {
+    let workNatureData = [];
+    Array.isArray(natureOfWork) &&
+      citiesList?.map((elementData) => {
+        if (elementData.id === nature) {
+          workNatureData.push(elementData);
+        }
+      });
+    return workNatureData[0];
+  };
+  const getWorkStatus = (status) => {
+    let workStatusData = [];
+    Array.isArray(workStatusOptions) &&
+      citiesList?.map((elementData) => {
+        if (elementData.id === status) {
+          workStatusData.push(elementData);
+        }
+      });
+    return workStatusData[0];
+  };
 
   return (
     <>
@@ -309,10 +423,10 @@ const WorkDetails = ({ getValues, register, setValue, errors, watch }) => {
                 <Select
                   fullWidth
                   error={errors.state?.message}
-                  name={'state'}
-                  defaultValue={getValues().state}
+                  name={'stateLGDCode'}
+                  defaultValue={getValues().stateLGDCode}
                   required={true}
-                  {...register('state', {
+                  {...register('stateLGDCode', {
                     required: 'This field is required',
                   })}
                   options={createSelectFieldData(statesList)}
@@ -328,10 +442,10 @@ const WorkDetails = ({ getValues, register, setValue, errors, watch }) => {
                 <Select
                   fullWidth
                   error={errors.District?.message}
-                  name={'District'}
-                  defaultValue={getValues().District}
+                  name={'districtLGDCode'}
+                  defaultValue={getValues().districtLGDCode}
                   required={true}
-                  {...register('District', {
+                  {...register('districtLGDCode', {
                     required: 'This field is required',
                   })}
                   options={createSelectFieldData(districtsList)}
@@ -354,6 +468,9 @@ const WorkDetails = ({ getValues, register, setValue, errors, watch }) => {
                   })}
                   options={[]}
                 />
+              </Grid>
+              <Grid item xs={12} padding="10px 0 !important">
+                <WorkDetailsTable />
               </Grid>
             </Grid>
           )}
@@ -703,7 +820,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, watch }) => {
         >
           <Grid item xs={12} md={8} lg={6} mb={1}>
             <Button
-              // onClick={handleSubmit(onSubmit)}
+              onClick={handleSubmit(onSubmit)}
               variant="contained"
               color="secondary"
               sx={{
