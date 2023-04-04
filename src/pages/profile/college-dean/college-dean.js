@@ -6,23 +6,27 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
-import { sendDeanDetails, updateCollegeDeanData } from '../../../store/actions/college-actions';
+import {
+  collegeProfileData,
+  sendDeanDetails,
+  updateCollegeDeanData,
+} from '../../../store/actions/college-actions';
 import { Button, TextField } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
-import { PasswordRegexValidation } from '../../../utilities/common-validations';
+// import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 export function CollegeDean({ showPage, updateShowPage }) {
   const dispatch = useDispatch();
   const { collegeData } = useSelector((state) => state.college);
   const userData = collegeData?.data;
   const [successModalPopup, setSuccessModalPopup] = useState(false);
+
   const { t } = useTranslation();
 
   const {
     register,
     handleSubmit,
     getValues,
-    reset,
 
     formState: { errors },
   } = useForm({
@@ -30,7 +34,7 @@ export function CollegeDean({ showPage, updateShowPage }) {
     defaultValues: {
       id: showPage === 'edit' ? userData?.id : null,
       deanName: showPage === 'edit' ? userData?.name : '',
-      deanPhoneNumber: showPage === 'edit' ? userData?.phone_number : '',
+      deanPhoneNumber: showPage === 'edit' ? userData?.mobile_number : '',
       deanEmail: showPage === 'edit' ? userData?.email_id : '',
       deanUserId: showPage === 'edit' ? userData?.user_id : '',
       deanPassword: '',
@@ -38,16 +42,20 @@ export function CollegeDean({ showPage, updateShowPage }) {
   });
   const onSubmit = (fieldValues) => {
     let deanData = {
+      id: showPage === 'edit' ? userData?.id : null,
+      college_id: showPage === 'edit' ? userData?.college_id : null,
+      designation: showPage === 'edit' ? userData?.designation : null,
       name: showPage === 'edit' ? fieldValues.deanName : null,
-      phone_number: showPage === 'edit' ? fieldValues.deanPhoneNumber : null,
+      mobile_number: showPage === 'edit' ? fieldValues.deanPhoneNumber : null,
       email_id: showPage === 'edit' ? fieldValues.deanEmail : null,
-      user_id: showPage === 'edit' ? fieldValues?.deanUserId : null,
-      password: showPage === 'edit' ? fieldValues.deanPassword : null,
+      // user_id: showPage === 'edit' ? fieldValues?.deanUserId : null,
+      // password: showPage === 'edit' ? fieldValues.deanPassword : null,
     };
 
     if (showPage === 'edit') {
-      dispatch(updateCollegeDeanData(deanData, fieldValues?.id))
+      dispatch(updateCollegeDeanData(deanData, userData?.college_id, userData?.id))
         .then((response) => {
+          dispatch(collegeProfileData(userData?.college_id, userData?.id));
           if (response?.isError === false) {
             setSuccessModalPopup(true);
           }
@@ -58,8 +66,6 @@ export function CollegeDean({ showPage, updateShowPage }) {
     } else {
       dispatch(sendDeanDetails(deanData));
     }
-
-    reset();
   };
   return (
     <Grid container item spacing={2} p={2}>
@@ -80,7 +86,8 @@ export function CollegeDean({ showPage, updateShowPage }) {
       </Grid>
       <Grid item xs={12} md={6} sm={6} lg={4}>
         <Typography variant="body1" color="inputTextColor.main">
-          <b>{t('College Dean Name')}</b>
+          {/* <b>{t('College Dean Name')}</b> */}
+          <b>{t(' Name')}</b>
         </Typography>
         <Typography component="span" color="error.main">
           *
@@ -104,7 +111,8 @@ export function CollegeDean({ showPage, updateShowPage }) {
       </Grid>
       <Grid item xs={12} md={6} sm={6} lg={4}>
         <Typography variant="body1" color="inputTextColor.main">
-          <b>{t('College Dean Phone Number')}</b>
+          {/* <b>{t('College Dean Phone Number')}</b> */}
+          <b>{t(' Phone Number')}</b>
         </Typography>
         <Typography component="span" color="error.main">
           *
@@ -132,7 +140,8 @@ export function CollegeDean({ showPage, updateShowPage }) {
       </Grid>
       <Grid item xs={12} md={6} sm={6} lg={4}>
         <Typography variant="body1" color="inputTextColor.main">
-          <b>{t('College Dean Email Address')}</b>
+          {/* <b>{t('College Dean Email Address')}</b> */}
+          <b>{t(' Email Address')}</b>
         </Typography>
         <Typography component="span" color="error.main">
           *
@@ -159,7 +168,7 @@ export function CollegeDean({ showPage, updateShowPage }) {
           })}
         />
       </Grid>
-      <Grid item xs={12} md={6} sm={6} lg={4}>
+      {/* <Grid item xs={12} md={6} sm={6} lg={4}>
         <Typography variant="body1" color="inputTextColor.main">
           <b>{t('College Dean User ID')}</b>
         </Typography>
@@ -173,17 +182,17 @@ export function CollegeDean({ showPage, updateShowPage }) {
           variant="outlined"
           type="text"
           name="deanUserId"
-          required="true"
+           required="true"
           placeholder={t('College Dean User ID')}
           margin="dense"
           defaultValue={getValues().deanUserId}
           error={errors.deanUserId?.message}
           {...register('deanUserId', {
-            required: 'Enter valid user ID',
+             required: 'Enter valid user ID',
           })}
         />
-      </Grid>
-      <Grid item xs={12} md={6} sm={6} lg={4}>
+      </Grid> */}
+      {/* <Grid item xs={12} md={6} sm={6} lg={4}>
         <Typography variant="body1" color="inputTextColor.main">
           <b>{t('College Dean Password')}</b>
         </Typography>
@@ -202,10 +211,10 @@ export function CollegeDean({ showPage, updateShowPage }) {
           defaultValue={getValues().deanPassword}
           error={errors.deanPassword?.message}
           {...register('deanPassword', PasswordRegexValidation, {
-            required: 'Enter valid password',
+             required: 'Enter valid password',
           })}
         />
-      </Grid>
+      </Grid> */}
       <Grid container item spacing={2} mt={{ lg: 1 }}>
         <Grid item xs={12} sm="auto">
           <Button fullWidth variant="contained" color="secondary" onClick={handleSubmit(onSubmit)}>

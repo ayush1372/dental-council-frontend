@@ -55,6 +55,8 @@ export const API = {
     initiateCollegeWorkFlow: 'api/v1/abdm/nmr/college/applications/status',
     admindesignation: 'api/v1/abdm/nmr/colleges/verifiers/designations',
     adminVerifier: 'api/v1/abdm/nmr/colleges/{collegeId}/verifiers',
+    collegeProfile: 'api/v1/abdm/nmr/colleges/{collegeId}/verifiers/{verifierId}',
+    updateCollegeProfile: 'api/v1/abdm/nmr/colleges/{collegeId}/verifiers/{verifierId}',
   },
   nmc: {
     getNMCProfileData: 'api/v1/abdm/nmr/nmc/user/{id}',

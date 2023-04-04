@@ -3,6 +3,7 @@ import { GET, PATCH, POST, PUT } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import {
   collegeAdminVerifier,
+  collegeProfile,
   collegeRegister,
   detailsOfDean,
   detailsOfRegistrar,
@@ -140,13 +141,13 @@ export const updateCollegeAdminProfileData = (body) => async () => {
   });
 };
 
-export const updateCollegeDeanData = (body, deanID) => async () => {
-  const endpoint = API.college.getCollegeDeanProfile.replace('{id}', deanID);
+export const updateCollegeDeanData = (body, collegeId, verifierId) => async () => {
+  const endpoint = API.college.updateCollegeProfile.replace('{collegeId}', collegeId);
 
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: PUT,
-      url: endpoint.replace('{collegeId}', deanID),
+      url: endpoint.replace('{verifierId}', verifierId),
       data: body,
       headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
@@ -159,13 +160,13 @@ export const updateCollegeDeanData = (body, deanID) => async () => {
   });
 };
 
-export const updateCollegeRegistrarData = (body, registrarID) => async () => {
-  const endpoint = API.college.getCollegeRegistrarProfile.replace('{id}', registrarID);
+export const updateCollegeRegistrarData = (body, collegeId, verifierId) => async () => {
+  const endpoint = API.college.updateCollegeProfile.replace('{collegeId}', collegeId);
 
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: PUT,
-      url: endpoint.replace('{collegeId}', registrarID),
+      url: endpoint.replace('{verifierId}', verifierId),
       data: body,
       headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
@@ -222,6 +223,23 @@ export const registerCollegeDetail = (collegeDetails) => async (dispatch) => {
     })
       .then((response) => {
         dispatch(registerCollege(response));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+export const collegeProfileData = (collegeId, verifierId) => async (dispatch) => {
+  const endpoint = API.college.collegeProfile.replace('{collegeId}', collegeId);
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: GET,
+      url: endpoint.replace('{verifierId}', verifierId),
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+    })
+      .then((response) => {
+        dispatch(collegeProfile(response));
         return resolve(response);
       })
       .catch((error) => {

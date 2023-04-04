@@ -4,12 +4,14 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Grid, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { userGroupType } from '../../../helpers/functions/common-functions';
+// import { userGroupType } from '../../../helpers/functions/common-functions';
 import {
-  getCollegeAdminProfileData,
-  getCollegeDeanProfileData,
-  getCollegeRegistrarProfileData,
+  collegeProfileData,
+  // getCollegeAdminProfileData,
+  // getCollegeDeanProfileData,
+  // getCollegeRegistrarProfileData,
 } from '../../../store/actions/college-actions';
+import { getCollegeData } from '../../../store/actions/common-actions';
 import { Button } from '../../../ui/core';
 import CollegeDean from '../college-dean/college-dean';
 import CollegeRegistrar from '../college-registrar/college-registrar';
@@ -18,27 +20,57 @@ import CollegeEditProfile from './college-edit-profile';
 const CollegeMyProfile = () => {
   const [showPage, setShowpage] = useState('Profile');
   const dispatch = useDispatch();
+
   const { collegeData } = useSelector((state) => state.college);
+  const { getCollegeDetail } = useSelector((state) => state.common);
+
   const userData = collegeData?.data;
+
   const { loginData } = useSelector((state) => state.loginReducer);
-  const userType = userGroupType(loginData?.data?.user_group_id);
+
+  // const userType = userGroupType(loginData?.data?.user_group_id);
+  let userType = loginData?.data?.user_sub_type;
+  if (userType === 1) {
+    userType = 'College Admin';
+  }
+  if (userType === 2) {
+    userType = 'College Registrar';
+  }
+  if (userType === 3) {
+    userType = 'College Dean';
+  }
 
   useEffect(() => {
     const getCommonData = () => {
-      const userType = userGroupType(loginData?.data?.user_group_id);
+      // const userType = userGroupType(loginData?.data?.user_group_id);
+      let userType = loginData?.data?.user_sub_type;
+
+      if (userType === 1) {
+        userType = 'College Admin';
+      } else if (userType === 2) {
+        userType = 'College Registrar';
+      } else if (userType === 3) {
+        userType = 'College Dean';
+      }
+
       if (userType === 'College Dean') {
         dispatch(
-          getCollegeDeanProfileData(loginData?.data?.parent_profile_id, loginData?.data?.profile_id)
+          // getCollegeDeanProfileData(loginData?.data?.parent_profile_id, loginData?.data?.profile_id)
+          collegeProfileData(loginData?.data?.parent_profile_id, loginData?.data?.profile_id)
         );
       } else if (userType === 'College Registrar') {
         dispatch(
-          getCollegeRegistrarProfileData(
-            loginData?.data?.parent_profile_id,
-            loginData?.data?.profile_id
-          )
+          collegeProfileData(loginData?.data?.parent_profile_id, loginData?.data?.profile_id)
         );
+        // dispatch(
+        //   getCollegeRegistrarProfileData(
+        //     loginData?.data?.parent_profile_id,
+        //     loginData?.data?.profile_id
+        //   )
+        // );
       } else if (userType === 'College Admin') {
-        dispatch(getCollegeAdminProfileData(loginData?.data?.profile_id));
+        // dispatch(getCollegeAdminProfileData(loginData?.data?.profile_id));
+        dispatch(getCollegeData(loginData?.data?.profile_id));
       }
     };
     getCommonData();
@@ -52,6 +84,11 @@ const CollegeMyProfile = () => {
             <Grid item xs={12} sm="auto" sx={{ mr: { xs: 0, sm: 'auto' } }}>
               <Typography variant="h2" color="textPrimary.main">
                 My Profile
+                {userType === 'College Admin'
+                  ? '(Admin)'
+                  : userType === 'College Registrar'
+                  ? '(Registrar)'
+                  : '(Dean)'}
               </Typography>
             </Grid>
 
@@ -74,11 +111,16 @@ const CollegeMyProfile = () => {
           <Grid container spacing={2} mt={3}>
             <Grid item xs={12} md={4} sm={6}>
               <Typography variant="body3" color="grey.label">
-                College Name
+                Name
               </Typography>
 
               <Typography variant="subtitle2" color="primary.main">
-                {userData?.name ? userData?.name : ''}
+                {/* {getCollegeDetail?.data?.name ? getCollegeDetail?.data?.name : ''} */}
+                {userData?.name
+                  ? userData?.name
+                  : loginData?.data?.user_sub_type === 1
+                  ? getCollegeDetail?.data?.name
+                  : ''}
               </Typography>
             </Grid>
             {userData?.college_code ? (
@@ -96,19 +138,29 @@ const CollegeMyProfile = () => {
             )}
             <Grid item xs={12} md={4} sm={6}>
               <Typography variant="body3" color="grey.label">
-                College Phone Number
+                Phone Number
               </Typography>
 
               <Typography variant="subtitle2" color="primary.main">
-                {userData?.phone_number ? userData?.phone_number : ''}
+                {/* {getCollegeDetail?.data?.mobile_number ? getCollegeDetail?.data?.mobile_number : ''} */}
+                {userData?.mobile_number
+                  ? userData?.mobile_number
+                  : loginData?.data?.user_sub_type === 1
+                  ? getCollegeDetail?.data?.mobile_number
+                  : ''}
               </Typography>
             </Grid>
             <Grid item xs={12} md={4} sm={6}>
               <Typography variant="body3" color="grey.label">
-                College Email ID
+                Email ID
               </Typography>
               <Typography variant="subtitle2" color="primary.main">
-                {userData?.email_id ? userData?.email_id : ''}
+                {/* {getCollegeDetail?.data?.email_id ? getCollegeDetail?.data?.email_id : ''} */}
+                {userData?.email_id
+                  ? userData?.email_id
+                  : loginData?.data?.user_sub_type === 1
+                  ? getCollegeDetail?.data?.email_id
+                  : ''}
               </Typography>
             </Grid>
             {userData?.department_name ? (
