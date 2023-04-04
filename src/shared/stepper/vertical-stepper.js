@@ -103,7 +103,6 @@ export default function VerticalLinearStepper() {
       {data.reverse()?.map((label, index) => (
         <Box className={classes.statusBlock} display="flex" flexDirection="column" key={index}>
           <Box display="flex" alignItems="center">
-            {console.log('test', label?.action_id === 1 && index === data?.length - 1)}
             {(label?.action_id === 1 && index === data?.length - 1) ||
             label?.action_id === 2 ||
             label?.action_id === 4 ? (
@@ -178,13 +177,17 @@ export default function VerticalLinearStepper() {
           </Box>
           <Box
             borderLeft={
-              index < ApplicationStatus?.length - 1 ||
+              (label?.action_id !== 1 && index === data?.length - 1) ||
               label?.action_id === 2 ||
               label?.action_id === 4 ||
-              ApplicationStatus?.application_type === 3 ||
-              ApplicationStatus?.application_type === 4 ||
-              ApplicationStatus?.application_type === 5
+              ((ApplicationStatus?.application_type === 3 ||
+                ApplicationStatus?.application_type === 4 ||
+                ApplicationStatus?.application_type === 5) &&
+                index !== data?.length - 1 &&
+                label?.action_id !== 1)
                 ? `2px solid ${theme?.palette?.success?.main}`
+                : label?.action_id === 1 && repeatedApplication() > 1 && index !== data?.length - 1
+                ? `2px solid ${theme?.palette?.primary?.main}`
                 : label?.action_id === 5
                 ? `2px solid ${theme?.palette?.youTubeColor?.main}`
                 : label?.action_id === 3
