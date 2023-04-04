@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useEffect } from 'react';
 
 import { Box, Grid, TablePagination } from '@mui/material';
@@ -9,6 +8,7 @@ import {
   getDoctorTrackApplicationData,
   getDoctorTrackApplicationStatus,
 } from '../../../store/actions/doctor-user-profile-actions';
+import successToast from '../../../ui/core/toaster';
 import TableSearch from '../components/table-search/table-search';
 
 function createData(
@@ -69,7 +69,6 @@ function TrackAppicationTable({
   const [page, setPage] = React.useState(0);
   const tableData = useSelector((state) => state.common.trackApplicationTableData);
 
-  // const theme = useTheme();
   let trackData = {
     pageNo: 1,
     offset: 10,
@@ -80,7 +79,6 @@ function TrackAppicationTable({
       dispatch(getTableData(profileId, trackData));
   }, [orderBy, getTableData, page, profileId]);
   useEffect(() => {
-    // if (orderBy && getTableData && page !== null && profileId)
     dispatch(getTableData(profileId, trackData));
     window.scrollTo(0, 0);
   }, []);
@@ -122,25 +120,22 @@ function TrackAppicationTable({
   const handleDataRowClick = (dataRow) => {
     setRowData(dataRow);
   };
-  const nmrIdData = useSelector(
-    (state) =>
-      state?.common?.trackApplicationTableData?.data?.data?.health_professional_applications
-  );
-  // console.log('nmr id data', nmrIdData);
   const viewCallback = (event, row) => {
-    // const nmrId = nmrIdData.find((obj) => obj.request_id === row.request_id);
     dispatch(getDoctorTrackApplicationStatus(row?.request_id?.value))
       .then(() => {
         setShowTrackApplication(true);
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
         setShowTrackApplicationTable(false);
         event.preventDefault();
         event.stopPropagation();
         setRowData(row);
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
       });
-    console.log('row==>nmrid', row, nmrIdData);
   };
 
   const handleRequestSort = (event, property) => {
@@ -177,21 +172,6 @@ function TrackAppicationTable({
           value: data?.council_name,
         },
         { type: 'doctor_status', value: data?.doctor_status },
-        // {
-        //   type: 'doctor_status',
-        //   value:
-        //     data?.work_flow_status_id === 1
-        //       ? 'PENDING'
-        //       : data?.work_flow_status_id === 2
-        //       ? 'APPROVED'
-        //       : data?.work_flow_status_id === 3
-        //       ? 'QUERY RAISED'
-        //       : data?.work_flow_status_id === 4
-        //       ? 'REJECTED'
-        //       : data?.work_flow_status_id === 5
-        //       ? 'SUSPENDED'
-        //       : 'BLACKLISTED',
-        // },
 
         {
           type: 'collegeVerificationStatus',

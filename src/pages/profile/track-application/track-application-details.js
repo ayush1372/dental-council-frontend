@@ -1,51 +1,19 @@
-/* eslint-disable no-console */
 import { Chip } from '@material-ui/core';
+import CheckCircle from '@mui/icons-material/CheckCircle';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { Button, Divider, Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useSelector } from 'react-redux';
 
 import APPLICATIONICONBW from '../../../assets/images/application-approved-icon-BW.svg';
-// import APPLICATIONICONCOLOR from '../../../assets/images/application-approved-icon-color.svg';
 import { monthsData } from '../../../constants/common-data';
 import { typeOfApplication, workflowStatusId } from '../../../helpers/functions/common-functions';
 import VerticalLinearStepper from '../../../shared/stepper/vertical-stepper';
-// import Stepper from '../../../shared/stepper/stepper';
-// import VerticalStepper from '../../../shared/stepper/stepper';
-// const wizardSteps = [
-//   'Application Submitted',
-//   'Pending At SMC',
-//   'Pending At College',
-//   'Pending At SMC',
-//   'Pending At NMC',
-// ];
-// const wizardSteps2 = [
-//   'Application Approved by NMC',
-//   'Application Approved by SMC',
-//   'Application Details Updated',
-//   'SMC Raised the Query in your Application',
-//   'Application Approved by College',
-//   'Application Details Updated',
-//   'College Rejected Application',
-//   'SMC Forwarded To College',
-//   'Application Submitted',
-// ];
 export function TrackApplicationDetails({
   showViewProfile,
   setShowTrackApplicationTable,
   setShowTrackApplication,
-  selectedRowData,
 }) {
-  // eslint-disable-next-line no-empty-pattern
-  const {
-    // pendency,
-    // request_id,
-    // application_type_name,
-    // created_at,
-    // smc_status,
-    // nmc_status,
-    // collegeVerificationStatus,
-    // NMCVerificationStatus,
-  } = selectedRowData;
   const ApplicationStatus = useSelector(
     (state) => state?.common?.doctorTrackApplicationTableData?.data?.data
   );
@@ -58,20 +26,13 @@ export function TrackApplicationDetails({
       (label) => label?.workflow_status_id
     )
   );
-  // const applicationName = useSelector((state) =>
-  //   state.common.trackApplicationTableData?.data?.data?.health_professional_applications.map(
-  //     (data) => data?.application_type_name
-  //   )
-  // );
-  // console.log('tabledata123', tableData);
-  console.log('stepper selectedRowData', selectedRowData);
   const getDate = (date) => {
     const dateObj = new Date(date);
     return `${dateObj.getDate()}-${monthsData[dateObj.getMonth()].value}-${dateObj.getFullYear()}`;
   };
-  // const stepperArray = [smc_status?.value, nmc_status?.value];
-  // let activeStep = stepperArray.findIndex((value) => value === 'PENDING');
-  // activeStep = activeStep > -1 ? activeStep + 1 : 4;
+  const nmcApproveStatus = ApplicationStatus?.application_details.some((label) => {
+    return label?.action_id === 4 && label?.group_id === 3;
+  });
   return (
     <Box>
       <Typography
@@ -91,6 +52,9 @@ export function TrackApplicationDetails({
             mb={2}
             display="flex"
             justifyContent="space-between"
+            sx={{
+              opacity: nmcApproveStatus ? '1' : '0.4',
+            }}
           >
             <Box display="flex">
               <img src={APPLICATIONICONBW} alt="application icon" />
@@ -102,42 +66,34 @@ export function TrackApplicationDetails({
                   color="textPrimary.main"
                 >
                   Application Approved by NMC
+                  <CheckCircle sx={{ color: nmcApproveStatus ? 'success' : '', height: '16px' }} />
                 </Typography>
 
                 <Typography component="div" variant="body1" color="textPrimary.main">
-                  NMC will review the application and approve it once it match with expected
-                  criteria
+                  Your application has been approved by all authorities.
                 </Typography>
               </Box>
             </Box>
             <Chip
-              // type={label?.workflow_status_id}
+              type={nmcApproveStatus ? 'approved' : ''}
               label={
                 <Typography variant="body4">
-                  {/* {workflowStatusId(label?.workflow_status_id)} */}
-                  NOT APPROVED
+                  {nmcApproveStatus ? 'APPROVED' : 'NOT APPROVED'}
                 </Typography>
               }
             />
           </Box>
           <Box boxShadow="1" p={2} borderRadius="5px">
             <Box>
-              {/* stepper */}
               <Box>
-                {/* <Stepper
-                steps={wizardSteps}
-                selectedRowData={selectedRowData}
-                activeStep={activeStep}
-              /> */}
                 <VerticalLinearStepper />
               </Box>{' '}
             </Box>
           </Box>
-          {/* Application stepper ends */}
         </Grid>
         <Grid item xs={12} md={3}>
           <Box boxShadow="1" p={2} borderRadius="5px">
-            <Typography variant="body1" fontWeight="600">
+            <Typography variant="body1" fontWeight="600" color="textPrimary.main">
               Application information
             </Typography>
             <Grid container spacing={2} mt={1}>
@@ -153,12 +109,16 @@ export function TrackApplicationDetails({
                 <Typography variant="body3" color="grey.label">
                   Type of Application
                 </Typography>
-                <Typography variant="subtitle2" color="textPrimary.main">
+                <Typography
+                  variant="subtitle2"
+                  color="textPrimary.main"
+                  sx={{ wordBreak: 'break-all' }}
+                >
                   {typeOfApplication(ApplicationStatus?.application_type)}
                 </Typography>
               </Grid>
               <Grid item xs={12} xl={6}>
-                <Typography variant="body3" color="grey.label">
+                <Typography variant="body3" component="div" color="grey.label">
                   Date of Submission
                 </Typography>
                 <Typography variant="subtitle2" color="textPrimary.main">
@@ -177,7 +137,8 @@ export function TrackApplicationDetails({
                 <Typography variant="body3" color="grey.label">
                   Current Status
                 </Typography>
-                <Typography variant="subtitle2" color="primary.main">
+                <Typography variant="subtitle2" component="div" color="primary.main">
+                  <FiberManualRecordIcon sx={{ fontSize: '8px' }} />
                   {workflowStatusId(currentStatus)}
                 </Typography>
               </Grid>
@@ -185,7 +146,6 @@ export function TrackApplicationDetails({
           </Box>
         </Grid>
       </Grid>
-
       <Divider fullWidth sx={{ mt: 6 }} />
       <Box mt={2}>
         <Button color="grey" variant="contained" onClick={showTrackApplicationTable}>
