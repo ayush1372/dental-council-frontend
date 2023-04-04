@@ -132,7 +132,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
   }, [watchState]);
 
   useEffect(() => {
-    searchFacilitiesHandler();
+    // searchFacilitiesHandler();
     fetchDisricts(watchFacilityStateCode);
   }, [watchFacilityStateCode]);
 
