@@ -254,7 +254,7 @@ function NMCCollegeRegistration() {
         if (response?.data?.state_id) {
           setValue('StateID', response?.data?.state_id);
           setValue('StateName', getSelecetedName(response?.data?.state_id, 'stateData'));
-          // dispatch(getDistrictList(response?.data?.state_id));
+          dispatch(getDistrictList(response?.data?.state_id));
           // getDistrict(response?.data?.state_id);
         }
         if (response?.data?.university_id) {

@@ -14,6 +14,7 @@ const initialState = {
   collegeAdminDesignation: { data: [], isLoading: Boolean(true), isError: false },
   updateCollegeDetails: { data: [], isLoading: Boolean(true), isError: false },
   registerCollegeDetail: { data: [], isLoading: Boolean(true), isError: false },
+  collegeProfileDetails: { data: [], isLoading: Boolean(true), isError: false },
 };
 
 const collegeReducer = createSlice({
@@ -50,6 +51,9 @@ const collegeReducer = createSlice({
     updateCollege: (state, action) => {
       state.updateCollegeDetails = action.payload;
     },
+    collegeProfile: (state, action) => {
+      state.collegeData = action.payload;
+    },
     registerCollege: (state, action) => {
       state.registerCollegeDetail = action.payload;
     },
@@ -74,6 +78,7 @@ export const {
   resetCollegeWorkflowReducer,
   updateCollege,
   registerCollege,
+  collegeProfile,
 } = collegeReducer.actions;
 
 export default collegeReducer.reducer;
