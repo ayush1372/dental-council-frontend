@@ -1,5 +1,3 @@
-/* eslint-disable no-console */
-
 import { makeStyles } from '@material-ui/core';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Box, Typography, useTheme } from '@mui/material';
@@ -33,8 +31,12 @@ export default function VerticalLinearStepper() {
 
   const getDate = (date) => {
     const dateObj = new Date(date);
-    console.log('date123', dateObj.getHours(), dateObj.getMinutes());
     return `${dateObj.getDate()}-${monthsData[dateObj.getMonth()].value}-${dateObj.getFullYear()}`;
+  };
+  const getTime = (date) => {
+    const dateObj = new Date(date);
+
+    return ` ${dateObj.getHours()}:${dateObj.getMinutes()}`;
   };
 
   const theme = useTheme();
@@ -203,7 +205,7 @@ export default function VerticalLinearStepper() {
               {label?.remarks}
             </Typography>
             <Typography component="div" variant="body3" fontWeight="500">
-              {getDate(label?.action_date)}
+              {`${getDate(label?.action_date)} - ${getTime(label?.action_date)}  `}
             </Typography>
           </Box>
         </Box>
