@@ -16,6 +16,7 @@ import {
 import { getFacilitiesData } from '../../../../store/actions/doctor-user-profile-actions';
 import { Button, Checkbox, RadioGroup, Select, TextField } from '../../../../ui/core';
 import successToast from '../../../../ui/core/toaster';
+import FacilityDetailsTable from './facility-details-table';
 import WorkDetailsTable from './work-details-table';
 
 const WorkDetails = ({ getValues, register, setValue, errors, watch }) => {
@@ -735,6 +736,24 @@ const WorkDetails = ({ getValues, register, setValue, errors, watch }) => {
             >
               Cancel
             </Button>
+          </Grid>
+        </Grid>
+      )}
+      {!showTable && tabValue === 0 && (
+        <Grid container>
+          <Grid item xs={12}>
+            <Typography
+              bgcolor="grey1.light"
+              p={1}
+              component="div"
+              color="tabHighlightedBackgroundColor.main"
+              variant="h3"
+            >
+              Declared Place Of Work
+            </Typography>
+          </Grid>
+          <Grid item xs={12} padding="10px 0 !important">
+            <FacilityDetailsTable />
           </Grid>
         </Grid>
       )}
