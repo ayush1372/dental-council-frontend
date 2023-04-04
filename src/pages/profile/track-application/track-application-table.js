@@ -4,7 +4,11 @@ import { Box, Grid, TablePagination } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import GenericTable from '../../../shared/generic-component/generic-table';
-import { getDoctorTrackApplicationData } from '../../../store/actions/doctor-user-profile-actions';
+import {
+  getDoctorTrackApplicationData,
+  getDoctorTrackApplicationStatus,
+} from '../../../store/actions/doctor-user-profile-actions';
+import successToast from '../../../ui/core/toaster';
 import TableSearch from '../components/table-search/table-search';
 
 function createData(
@@ -65,18 +69,16 @@ function TrackAppicationTable({
   const [page, setPage] = React.useState(0);
   const tableData = useSelector((state) => state.common.trackApplicationTableData);
 
-  // const theme = useTheme();
   let trackData = {
     pageNo: 1,
     offset: 10,
   };
 
-  // useEffect(() => {
-  //   if (orderBy && getTableData && page !== null && profileId)
-  //     dispatch(getTableData(profileId, trackData));
-  // }, [orderBy, getTableData, page, profileId]);
   useEffect(() => {
-    // if (orderBy && getTableData && page !== null && profileId)
+    if (orderBy && getTableData && page !== null && profileId)
+      dispatch(getTableData(profileId, trackData));
+  }, [orderBy, getTableData, page, profileId]);
+  useEffect(() => {
     dispatch(getTableData(profileId, trackData));
     window.scrollTo(0, 0);
   }, []);
@@ -118,13 +120,22 @@ function TrackAppicationTable({
   const handleDataRowClick = (dataRow) => {
     setRowData(dataRow);
   };
-
   const viewCallback = (event, row) => {
-    setShowTrackApplication(true);
-    setShowTrackApplicationTable(false);
-    event.preventDefault();
-    event.stopPropagation();
-    setRowData(row);
+    dispatch(getDoctorTrackApplicationStatus(row?.request_id?.value))
+      .then(() => {
+        setShowTrackApplication(true);
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
+        setShowTrackApplicationTable(false);
+        event.preventDefault();
+        event.stopPropagation();
+        setRowData(row);
+      })
+      .catch((error) => {
+        successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+      });
   };
 
   const handleRequestSort = (event, property) => {
