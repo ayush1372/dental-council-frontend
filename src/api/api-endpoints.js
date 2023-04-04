@@ -81,6 +81,7 @@ export const API = {
   },
   forgotPassword: {
     setPassword: '/api/v1/abdm/nmr/user/set-password',
+    reSetPassword: 'api/v1/abdm/nmr/user/reset-password',
   },
   searchDoctor: {
     searchDoctorDetails: 'api/v1/abdm/nmr/health-professional/search',

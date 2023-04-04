@@ -126,7 +126,8 @@ export const OtpForm = ({
             disabled={!isResendEnabled}
             onClick={() => {
               setResetEnabled(!isResendEnabled);
-              otpData?.type && otpData?.reSendOTP(otpData?.type);
+              otpData?.reSendOTP && otpData?.reSendOTP(otpData?.type);
+              otpData?.reSetPasswordOtp && otpData?.reSetPasswordOtp('reSetPassword');
               resendAction();
             }}
             sx={{

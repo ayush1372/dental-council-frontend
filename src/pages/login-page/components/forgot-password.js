@@ -8,10 +8,10 @@ import { sendNotificationOtp } from '../../../store/actions/common-actions';
 import { Button, TextField } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 
-const ForgotPassword = ({ handleConfirmPassword, otpData }) => {
+const ForgotPassword = ({ handleConfirmPassword, otpData, userData }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const doctorTitle = 'Enter NMR ID/User ID/Reg ID/Email ID';
+  const doctorTitle = 'Enter NMR ID/Email ID';
   const userTitle = 'Enter User ID/Email ID';
   const { state } = useLocation();
   const { loginFormname } = state;
@@ -34,24 +34,36 @@ const ForgotPassword = ({ handleConfirmPassword, otpData }) => {
   const isIdActive = (!watchMobileNum && !watchId) || !watchMobileNum;
   const isMobileNumActive = (!watchMobileNum && !watchId) || !watchId;
 
-  const onSubmit = () => {
-    if (watchMobileNum || watchId) {
-      handleConfirmPassword();
-    } else {
+  const onSubmit = (reSetPassword) => {
+    if (!watchMobileNum || !watchId) {
       handleSubmit()();
     }
-    let otpValue = {};
 
-    if (getValues().mobileNo) {
-      otpValue = { contact: getValues().mobileNo, type: 'sms' };
-      otpData(otpValue);
+    let sendNotificationOtpBody = {};
+    if (getValues()?.mobileNo) {
+      sendNotificationOtpBody = { contact: getValues().mobileNo, type: 'sms' };
+    } else if (getValues()?.Id?.includes('@')) {
+      sendNotificationOtpBody = { contact: getValues().Id, type: 'email' };
     } else {
-      otpValue = { contact: getValues().Id, type: 'email' };
-      otpData(otpValue);
+      sendNotificationOtpBody = { contact: getValues().Id, type: 'nmr_id' };
     }
 
-    dispatch(sendNotificationOtp(otpValue));
-    otpData(otpValue);
+    dispatch(sendNotificationOtp(sendNotificationOtpBody));
+    otpData(sendNotificationOtpBody);
+    if (userData?.page === 'forgotPasswordPage') {
+      let otpValue = {
+        contact: getValues()?.mobileNo
+          ? getValues().mobileNo
+          : getValues()?.Id?.includes('@')
+          ? getValues().Id
+          : getValues().Id,
+        type: getValues().mobileNo ? 'sms' : getValues()?.Id?.includes('@') ? 'email' : 'nmr_id',
+        page: userData?.page,
+        reSetPasswordOtp: onSubmit,
+      };
+      otpData(otpValue);
+    }
+    reSetPassword !== 'reSetPassword' && handleConfirmPassword();
   };
 
   return (

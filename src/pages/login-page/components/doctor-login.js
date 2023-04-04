@@ -22,7 +22,7 @@ import { Button, TextField } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 import successToast from '../../../ui/core/toaster';
 
-export const DoctorLogin = ({ loginName = 'Doctor' }) => {
+export const DoctorLogin = ({ loginName = 'Doctor', handleForgotPassword }) => {
   const [captchaAnswer, setcaptachaAnswer] = useState();
   const { generateCaptcha } = useSelector((state) => state.loginReducer);
   const theme = useTheme();
@@ -376,6 +376,15 @@ export const DoctorLogin = ({ loginName = 'Doctor' }) => {
                 },
               })}
             />
+            <Typography
+              display={'flex'}
+              justifyContent="flex-end"
+              color="#FFA500"
+              onClick={() => handleForgotPassword()}
+              sx={{ cursor: 'pointer' }}
+            >
+              Forgot Password?
+            </Typography>
           </>
         ) : selectedLoginOption === 'mobileNumber' ? (
           <>
