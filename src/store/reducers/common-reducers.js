@@ -116,11 +116,9 @@ export const CommonActivity = createSlice({
       state.activateLicenseList = action.payload;
     },
     updateTrackApplicationTableData: (state, action) => {
-      //old api track status
       state.trackApplicationTableData.data = action.payload;
     },
     updateDoctorTrackApplication: (state, action) => {
-      //new api track status
       state.doctorTrackApplicationTableData.data = action.payload;
     },
     setNewPassword: (state, action) => {

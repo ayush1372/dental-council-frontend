@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { API } from '../../api/api-endpoints';
 import { GET, PATCH, POST, PUT } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
@@ -171,8 +170,6 @@ export const getUserProfileImage = (hp_profile_id, file) => async (dispatch) => 
 };
 
 export const getDoctorTrackApplicationData = (doctor_profile_id, trackData) => async (dispatch) => {
-  console.log('mohith', trackData, doctor_profile_id);
-
   let path = '';
   if (trackData.search !== undefined && trackData.search !== null && trackData.search !== '') {
     if (path === '') {
@@ -205,7 +202,6 @@ export const getDoctorTrackApplicationData = (doctor_profile_id, trackData) => a
       )}?${path}`,
     })
       .then((response) => {
-        console.log('response track', response);
         dispatch(
           updateTrackApplicationTableData(response)
           // updateTrackApplicationTableData(response.data?.health_professional_applications || [])
@@ -218,19 +214,13 @@ export const getDoctorTrackApplicationData = (doctor_profile_id, trackData) => a
   });
 };
 export const getDoctorTrackApplicationStatus = (nmr_id) => async (dispatch) => {
-  console.log('payload123', nmr_id);
   return await new Promise((resolve) => {
     useAxiosCall({
       method: GET,
       url: `${API.DoctorUserProfileData.trackApplicationStatus.replace('{requestId}', nmr_id)}`,
     })
       .then((response) => {
-        console.log('mohith', response);
-
-        dispatch(
-          updateDoctorTrackApplication(response)
-          // updateTrackApplicationTableData(response.data?.health_professional_applications || [])
-        );
+        dispatch(updateDoctorTrackApplication(response));
         return resolve(response);
       })
       .catch((error) => {

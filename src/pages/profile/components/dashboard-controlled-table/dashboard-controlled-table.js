@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import React, { useEffect } from 'react';
 
 import { Box, Grid, TablePagination, Typography } from '@mui/material';
@@ -95,10 +94,8 @@ function DashboardControlledTable(props) {
   ];
 
   const viewCallback = (event, row) => {
-    console.log('row data', row);
     event.preventDefault();
     event.stopPropagation();
-    // setRowData(row);
     props.setShowViewPorfile(true);
     props.setShowDashboard(false);
     props.setShowTable(false);
