@@ -119,7 +119,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, watch }) => {
           options={createSelectFieldData(natureOfWork)}
         />
       </Grid>
-      <Grid item xs={12} md={4} lg={12}>
+      <Grid item xs={12} md={4}>
         <Typography variant="subtitle2" color="inputTextColor.main">
           Choose work status
           <Typography component="span" color="error.main">
