@@ -103,7 +103,10 @@ export default function VerticalLinearStepper() {
       {data.reverse()?.map((label, index) => (
         <Box className={classes.statusBlock} display="flex" flexDirection="column" key={index}>
           <Box display="flex" alignItems="center">
-            {label?.action_id === 1 || label?.action_id === 2 || label?.action_id === 4 ? (
+            {console.log('test', label?.action_id === 1 && index === data?.length - 1)}
+            {(label?.action_id === 1 && index === data?.length - 1) ||
+            label?.action_id === 2 ||
+            label?.action_id === 4 ? (
               <CheckCircleIcon
                 sx={{
                   width: '20px',
