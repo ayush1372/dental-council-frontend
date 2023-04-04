@@ -1,12 +1,14 @@
 /* eslint-disable no-console */
 import { API } from '../../api/api-endpoints';
-import { GET, POST, PUT } from '../../constants/requests';
+import { GET, PATCH, POST, PUT } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
+import successToast from '../../ui/core/toaster';
 import {
   updateDoctorTrackApplication,
   updateTrackApplicationTableData,
 } from '../reducers/common-reducers';
 import {
+  getEsignDetails,
   getPersonalDetails,
   getProfileImage,
   getRegistrationDetails,
@@ -14,6 +16,7 @@ import {
   getUpdatedRegistrationDetails,
   getWorkProfileDetails,
 } from '../reducers/doctor-user-profile-reducer';
+import { getRaisedQuery } from './common-actions';
 
 export const getPersonalDetailsData = (doctor_profile_id) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
@@ -25,6 +28,9 @@ export const getPersonalDetailsData = (doctor_profile_id) => async (dispatch) =>
       ),
     })
       .then((response) => {
+        if (response?.data?.work_flow_status_id === 3) {
+          dispatch(getRaisedQuery(response?.data?.hp_profile_id));
+        }
         dispatch(getPersonalDetails(response.data));
         return resolve(response);
       })
@@ -213,7 +219,7 @@ export const getDoctorTrackApplicationData = (doctor_profile_id, trackData) => a
 };
 export const getDoctorTrackApplicationStatus = (nmr_id) => async (dispatch) => {
   console.log('payload123', nmr_id);
-  return await new Promise((resolve, reject) => {
+  return await new Promise((resolve) => {
     useAxiosCall({
       method: GET,
       url: `${API.DoctorUserProfileData.trackApplicationStatus.replace('{requestId}', nmr_id)}`,
@@ -228,13 +234,26 @@ export const getDoctorTrackApplicationStatus = (nmr_id) => async (dispatch) => {
         return resolve(response);
       })
       .catch((error) => {
-        console.log('mohith error', error);
-
+        successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+      });
+  });
+};
+export const getEsignFormDetails = (data) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.DoctorUserProfileData.eSign,
+      data: data,
+    })
+      .then((response) => {
+        dispatch(getEsignDetails(response));
+        return resolve(response);
+      })
+      .catch((error) => {
         return reject(error);
       });
   });
 };
-
 export const updateProfileConsent = (payload) => async () => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
@@ -262,6 +281,25 @@ export const additionalQualificationsData = (formData, healthProfessionalId) => 
       ),
       headers: { 'Content-Type': 'application/json' },
       data: formData,
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const updateDoctorContactDetails = (body, doctor_profile_id) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: PATCH,
+      url: API.DoctorUserProfileData.personalDetails.replace(
+        '{healthProfessionalId}',
+        doctor_profile_id
+      ),
+      data: body,
     })
       .then((response) => {
         return resolve(response);

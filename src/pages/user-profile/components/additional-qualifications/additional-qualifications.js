@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 
 // import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
@@ -5,9 +6,12 @@ import { Box } from '@mui/material';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { doctorTabs } from '../../../../helpers/components/sidebar-drawer-list-item';
 import SuccessModalPopup from '../../../../shared/common-modals/success-modal-popup';
 import { additionalQualificationsData } from '../../../../store/actions/doctor-user-profile-actions';
+import { changeUserActiveTab } from '../../../../store/reducers/common-reducers';
 import { Button } from '../../../../ui/core';
+import successToast from '../../../../ui/core/toaster';
 import EditQualificationDetails from '../editable-profile/edit-qualification-details';
 
 const qualificationObjTemplate = [
@@ -32,15 +36,23 @@ const AdditionalQualifications = () => {
 
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { degree_certificate } = qualification_detail_response_tos?.[0] || {};
+  const [qualificationFilesData, setQualificationFilesData] = useState({
+    'qualification.0.files': degree_certificate ? [{ file: degree_certificate }] : [],
+  });
 
-  const [qualificationFilesData, setQualificationFilesData] = useState(
-    degree_certificate ? [{ file: degree_certificate }] : []
-  );
+  // const [qualificationFilesData, setQualificationFilesData] = useState(
+  //   degree_certificate ? [{ file: degree_certificate }] : []
+  // );
   const [successModalPopup, setSuccessModalPopup] = useState(false);
   // eslint-disable-next-line no-unused-vars
-  const { statesList, collegesList, universitiesList, coursesList } = useSelector(
-    (state) => state?.common
-  );
+  const {
+    statesList,
+    collegesList,
+    universitiesList,
+    coursesList,
+    countriesList,
+    specialitiesList,
+  } = useSelector((state) => state?.common);
 
   const dispatch = useDispatch();
   // const [qualificationFilesData, setQualificationFilesData] = useState([]);
@@ -52,6 +64,7 @@ const AdditionalQualifications = () => {
     unregister,
     setValue,
     control,
+    reset,
     watch,
   } = useForm({
     mode: 'onChange',
@@ -65,63 +78,44 @@ const AdditionalQualifications = () => {
     name: 'qualification',
   });
 
-  const handleQualificationFilesData = (files) => {
-    setQualificationFilesData(files);
+  const handleQualificationFilesData = (fileName, files) => {
+    //setQualificationFilesData(files);
+    qualificationFilesData[fileName] = files;
+    setQualificationFilesData({ ...qualificationFilesData });
   };
 
-  const getStateData = (State) => {
-    let stateData = [];
-    statesList?.map((elementData) => {
-      if (elementData.id === State) {
-        stateData.push(elementData);
-      }
-    });
-    return stateData[0];
+  const getStateData = (stateId) => {
+    return statesList?.find((obj) => obj.id === stateId);
   };
-  const getCollegeData = (college) => {
-    let collegeData = [];
-    Array.isArray(collegesList?.data) &&
-      collegesList?.data?.map((elementData) => {
-        if (elementData.id === college) {
-          collegeData.push({
-            id: elementData?.id,
-            name: elementData?.name,
-          });
-        }
-      });
-    return collegeData[0];
+
+  const getCollegeData = (collegeId) => {
+    return collegesList?.data?.find((obj) => obj.id === collegeId);
+  };
+
+  const broadSpeciality = (broadSpl) => {
+    return specialitiesList?.data?.find((obj) => obj.id === broadSpl);
   };
 
   const getUniversityData = (university) => {
-    let universityData = [];
-    Array.isArray(universitiesList?.data) &&
-      universitiesList?.data?.map((elementData) => {
-        if (elementData.id === university) {
-          universityData.push({
-            id: elementData?.id,
-            name: elementData?.name,
-            nationality: '',
-          });
-        }
-      });
-    return universityData[0];
+    return universitiesList?.data?.find((obj) => obj.id === university);
   };
+
   const getCourseData = (course) => {
-    let courseData = [];
-    Array.isArray(coursesList?.data) &&
-      coursesList?.data?.map((elementData) => {
-        if (elementData.id === course) {
-          courseData.push({
-            course_name: elementData?.name,
-            id: elementData?.id,
-          });
-        }
-      });
-    return courseData[0];
+    return coursesList?.data?.find((obj) => obj.id === course);
   };
 
   // this below code is storing qualification details
   const { qualification } = getValues();
+  const isInternational = qualification?.[0]?.qualificationfrom === 'International';
+
+  useEffect(() => {
+    setQualificationFilesData([]);
+  }, []);
+
+  const navigateToTrackApplication = () => {
+    dispatch(changeUserActiveTab(doctorTabs[1].tabName));
+  };
+
   const onSubmit = () => {
     const formData = new FormData();
     let qualification_detail_response_tos = [],
@@ -129,17 +123,28 @@ const AdditionalQualifications = () => {
     let updatedQualificationDetails;
     qualification?.forEach((qualification) => {
       updatedQualificationDetails = {
-        country: qualification?.country,
-        state: getStateData(qualification?.state),
-        college: getCollegeData(qualification?.college),
-        university: getUniversityData(qualification?.university),
+        country: isInternational
+          ? countriesList.find((obj) => obj.id === qualification?.country)
+          : qualification?.country,
+        state: isInternational
+          ? { name: qualification?.state }
+          : getStateData(qualification?.state),
+        college: isInternational
+          ? { name: qualification?.college }
+          : getCollegeData(qualification?.college),
+        university: isInternational
+          ? { name: qualification?.university }
+          : getUniversityData(qualification?.university),
         course: getCourseData(qualification?.qualification),
         qualification_year: qualification?.year,
         qualification_month: qualification?.month,
         is_name_change: 0,
         is_verified: 0,
         request_id: '',
-        qualification_from: qualification?.qualificationfrom,
+        broad_speciality_id: broadSpeciality(qualification?.id),
+        super_speciality_name: '',
+        qualification_from:
+          qualification?.qualificationfrom === '' ? 'India' : qualification?.qualificationfrom,
       };
       updatedQualificationDetailsArray.push(updatedQualificationDetails);
     });
@@ -147,21 +152,38 @@ const AdditionalQualifications = () => {
       qualification_detail_request_tos: updatedQualificationDetailsArray,
     };
 
+    let filesArray = [];
+    Object.values(qualificationFilesData)?.forEach((data) => {
+      filesArray.push(data[0]?.file);
+    });
+    // const firstFile = Object.values(qualificationFilesData)?.[0]?.[0]?.file;
+    // filesArray?.push(firstFile);
+
     const doctorRegistrationDetailsJson = JSON.stringify(qualification_detail_response_tos);
     const doctorRegistrationDetailsBlob = new Blob([doctorRegistrationDetailsJson], {
       type: 'application/json',
     });
+    // const filesBlob = new Blob([filesArray]);
+
     formData.append('data', doctorRegistrationDetailsBlob);
-    formData.append('degreeCertificates', qualificationFilesData[0]?.file);
-
-    dispatch(additionalQualificationsData(formData, personalDetails?.hp_profile_id)).then(() => {
-      setSuccessModalPopup(true);
+    filesArray.forEach((file) => {
+      formData.append('degreeCertificates', file);
     });
-  };
 
-  useEffect(() => {
-    setQualificationFilesData([]);
-  }, []);
+    dispatch(additionalQualificationsData(formData, personalDetails?.hp_profile_id))
+      .then(() => {
+        setSuccessModalPopup(true);
+        reset();
+      })
+      .catch((error) => {
+        successToast(
+          'ERROR: ' + error?.data?.response?.data?.message,
+          'auth-error',
+          'error',
+          'top-center'
+        );
+      });
+  };
 
   return (
     <Box p={3}>
@@ -186,6 +208,7 @@ const AdditionalQualifications = () => {
               isAdditionalQualification={true}
               update={update}
               remove={remove}
+              showBroadSpeciality={true}
             />
           );
         })}
@@ -198,16 +221,18 @@ const AdditionalQualifications = () => {
         <Button variant="contained" color="grey" sx={{ marginLeft: '20px' }}>
           Cancel
         </Button>
-        <Button
-          sx={{ ml: 'auto' }}
-          variant="outlined"
-          color="primary"
-          onClick={() => {
-            append({ ...qualificationObjTemplate });
-          }}
-        >
-          Add Additional Qualification
-        </Button>
+        {qualification.length <= 6 && (
+          <Button
+            sx={{ ml: 'auto' }}
+            variant="outlined"
+            color="primary"
+            onClick={() => {
+              append({ ...qualificationObjTemplate });
+            }}
+          >
+            Add Additional Qualification
+          </Button>
+        )}
       </Box>
 
       {successModalPopup && (
@@ -215,6 +240,7 @@ const AdditionalQualifications = () => {
           open={successModalPopup}
           setOpen={() => setSuccessModalPopup(false)}
           text={'Added Qualification Successfully!'}
+          navigateToTrackApplication={navigateToTrackApplication}
         />
       )}
     </Box>

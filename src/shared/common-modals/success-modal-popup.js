@@ -11,7 +11,11 @@ import {
   smcTabs,
 } from '../../helpers/components/sidebar-drawer-list-item';
 import { getCardCount } from '../../store/actions/dashboard-actions';
-import { changeUserActiveTab } from '../../store/reducers/common-reducers';
+import {
+  changeUserActiveTab,
+  logout,
+  resetCommonReducer,
+} from '../../store/reducers/common-reducers';
 import { setBreadcrumbsActivetab } from '../../store/reducers/common-reducers';
 import { Button } from '../../ui/core';
 
@@ -24,10 +28,16 @@ export default function SuccessModalPopup({
   isHpIdCreated,
   successRegistration,
   existHprId,
+  fromCollegeRegistration,
+  changeUserData,
+  navigateToTrackApplication,
+  fetchDoctorUserPersonalDetails,
+  setChangeUserData,
 }) {
   const theme = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const loggedInUserType = useSelector((state) => state?.common?.loggedInUserType);
 
   const handleCloseModal = () => {
@@ -52,7 +62,7 @@ export default function SuccessModalPopup({
           ActiveTab = smcTabs[0].tabName;
           break;
         case 'Doctor':
-          ActiveTab = doctorTabs[1].tabName;
+          ActiveTab = doctorTabs[0].tabName;
           break;
         case 'NMC':
           ActiveTab = nmcTabs[0].tabName;
@@ -64,12 +74,42 @@ export default function SuccessModalPopup({
           ActiveTab = '';
           break;
       }
-      dispatch(getCardCount());
-      dispatch(changeUserActiveTab(ActiveTab));
+      if (loggedInUserType === 'Doctor') {
+        localStorage.clear();
+        dispatch(logout());
+        dispatch(resetCommonReducer());
+        navigate('/');
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
+      } else {
+        dispatch(getCardCount());
+        dispatch(changeUserActiveTab(ActiveTab));
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
+      }
     }
   };
   const navigateLogin = () => {
     navigate('/login-page', { state: { loginFormname: 'Doctor' } });
+  };
+
+  const navigateSetPassword = () => {
+    setOpen(false);
+    // navigate('/');
+    // window.scrollTo({
+    //   top: 0,
+    //   behavior: 'smooth',
+    // });
+  };
+
+  const closeSuccessModal = () => {
+    setOpen(false);
+    setChangeUserData(false);
+    fetchDoctorUserPersonalDetails && fetchDoctorUserPersonalDetails();
   };
   return (
     <Modal open={open} onClose={handleClose} sx={{ mt: 15 }}>
@@ -125,6 +165,12 @@ export default function SuccessModalPopup({
                 ? navigateToSetPassword
                 : successRegistration
                 ? navigateLogin
+                : fromCollegeRegistration
+                ? navigateSetPassword
+                : changeUserData
+                ? closeSuccessModal
+                : navigateToTrackApplication
+                ? navigateToTrackApplication()
                 : handleCloseModal
             }
           >
@@ -132,6 +178,8 @@ export default function SuccessModalPopup({
               ? 'Continue to login'
               : existHprId
               ? 'Continue to set your password'
+              : changeUserData
+              ? 'Okay'
               : 'Ok'}
           </Button>
         </Box>

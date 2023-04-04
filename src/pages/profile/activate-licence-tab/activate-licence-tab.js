@@ -87,7 +87,7 @@ const ActivateLicence = (props) => {
       type: 'string',
     },
     {
-      title: 'RequestId',
+      title: 'Request ID',
       name: 'RequestId',
       sorting: true,
       type: 'string',
@@ -262,6 +262,7 @@ const ActivateLicence = (props) => {
           </Grid>
           <Grid mt={3}>
             <TableSearch
+              data-testid="tab-heading"
               searchParams={searchParams}
               exportData={activateLicenseList}
               flag={'ActivateList'}

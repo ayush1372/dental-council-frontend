@@ -13,10 +13,19 @@ export default function Wizard({
   handleNext,
   progress,
   steps,
+  isStepClickEnable,
+  handleStep,
+  showCheckCirlce,
 }) {
   return (
     <Box width="100%" bgcolor={'white'}>
-      <WizardSteps steps={steps} activeStep={activeStep} />
+      <WizardSteps
+        steps={steps}
+        activeStep={activeStep}
+        isStepClickEnable={isStepClickEnable}
+        handleStep={handleStep}
+        showCheckCirlce={showCheckCirlce}
+      />
       <ProgressBar
         steps={steps}
         activeStep={activeStep}

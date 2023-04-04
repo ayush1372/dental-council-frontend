@@ -21,7 +21,7 @@ const LoginWrapper = () => {
   };
   useEffect(() => {
     resetStep();
-  }, [location.state.loginFormname]);
+  }, [location.state?.loginFormname]);
 
   return (
     <Box sx={{ mt: 5, mb: 5, maxWidth: '648px', margin: '40px auto' }}>
@@ -57,7 +57,7 @@ const LoginWrapper = () => {
           </Box>
           <Box mt={2} textAlign="center">
             <Typography color="grey.context" variant="h3">
-              Your Password has been <br />
+              Your password has been <br />
               successfully Changed.
             </Typography>
           </Box>

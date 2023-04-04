@@ -1,14 +1,20 @@
 import '@testing-library/jest-dom';
 
 import { render, screen } from '@testing-library/react';
+import { Provider } from 'react-redux';
 
 import avtarImg from '../../../../assets/images/user.png';
+import store from '../../../../store/store';
 import ProfileImage from './profile-image';
 
 describe('Logged in user profile image', () => {
   // render the component
   beforeEach(() => {
-    render(<ProfileImage />);
+    render(
+      <Provider store={store}>
+        <ProfileImage />
+      </Provider>
+    );
   });
 
   describe('profile image', () => {

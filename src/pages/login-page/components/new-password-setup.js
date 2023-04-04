@@ -4,7 +4,7 @@ import { Box, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { encryptData } from '../../../helpers/functions/common-functions';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
@@ -12,13 +12,16 @@ import {
   createHealthProfessional,
   setUserPassword,
 } from '../../../store/actions/doctor-registration-actions';
+import { forgotPassword } from '../../../store/actions/forgot-password-actions';
 import { Button, TextField } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 const NewPasswordSetup = () => {
   const [showSuccess, setShowSuccess] = useState(false);
+  const [collegeRegisterSuccess, setCollegeRegisterSuccess] = useState(false);
   let navigate = useNavigate();
+  const params = useParams();
 
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -26,7 +29,7 @@ const NewPasswordSetup = () => {
     (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.registration_number
   );
   const uniqueHpId = useSelector((state) =>
-    state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId.replace('@hpr.abdm', '')
+    state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId?.replace('@hpr.abdm', '')
   );
   const hrp_id = useSelector(
     (state) => state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId
@@ -64,6 +67,22 @@ const NewPasswordSetup = () => {
   });
 
   const onSubmit = () => {
+    if (params?.request_id) {
+      const newPasswordData = {
+        token: params?.request_id,
+        password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
+      };
+
+      dispatch(forgotPassword(newPasswordData))
+        .then(() => {
+          setCollegeRegisterSuccess(true);
+          setShowSuccess(true);
+        })
+        .catch((error) => {
+          successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+        });
+      return;
+    }
     if (kycstatus !== 'Success' || imrDetailsData) {
       let reqObj = {
         registration_number: imrUserNotFounddata?.RegistrationNumber,
@@ -138,7 +157,7 @@ const NewPasswordSetup = () => {
   return (
     <Box data-testid="new-password-setup" p={4} bgcolor="white.main" boxShadow="4" width="40%">
       <Typography mt={2} variant="h4" component="div" textAlign="center" data-testid="Password">
-        {`Welcome  ${uniqueHpId} ! `}
+        {uniqueHpId ? `Welcome ${uniqueHpId} ! ` : 'Welcome !'}
       </Typography>
       <Typography
         mt={2}
@@ -226,7 +245,11 @@ const NewPasswordSetup = () => {
         <SuccessModalPopup
           open={showSuccess}
           setOpen={() => setShowSuccess(false)}
-          text={`Your password for ${uniqueHpId} has been successfully created `}
+          text={
+            collegeRegisterSuccess
+              ? 'Your password has been successfully created.'
+              : `Your password for ${uniqueHpId} has been successfully created.`
+          }
           successRegistration={true}
         />
       )}

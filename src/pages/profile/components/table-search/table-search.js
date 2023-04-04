@@ -23,6 +23,7 @@ import { Button, TextField } from '../../../../ui/core';
 export function TableSearch({ trackApplication, searchParams, exportData, flag }) {
   // const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   // const { councilNames } = useSelector((state) => state.common);
+
   const profileId = useSelector((state) => state.loginReducer.loginData.data.profile_id);
 
   const [applicationTypeValue, setApplicationTypeValue] = useState(false);
@@ -90,12 +91,12 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
     if (trackApplication) {
       trackData.value = getValues().StatusId;
       trackData.search = filterId;
-
       searchParams(trackData, profileId);
     }
     if (exportData?.data?.college_details) {
       trackData.search = getValues().collegeApprovalId;
       trackData.value = getValues().collegeApprovalFilter;
+      searchParams(trackData);
       // dispatch(getDoctorTrackApplicationData(profileId, trackData));
     }
 
@@ -115,13 +116,20 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
     <Box data-testid="table-search" mb={2}>
       <Grid container>
         <Grid item xs={11}>
-          <Grid container item xs={12} sx={{ alignItems: 'center', display: 'flex', gap: 1 }}>
+          <Grid
+            container
+            item
+            xs={12}
+            data-testid="filterByName"
+            sx={{ alignItems: 'center', display: 'flex', gap: 1 }}
+          >
             {trackApplication === true && (
               <>
                 <Grid item md={3} xs={12}>
                   <SearchableDropdown
                     fullWidth
                     name="Filter"
+                    data-testid="filterByName"
                     placeholder="Please Select"
                     clearErrors={clearErrors}
                     {...register('Filter')}
@@ -133,6 +141,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                   <SearchableDropdown
                     fullWidth
                     name="Status"
+                    data-testid="freesearch"
                     items={
                       applicationTypeValue
                         ? createEditFieldData(applicationType)
@@ -179,6 +188,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                 ) : (
                   <SearchableDropdown
                     fullWidth
+                    data-testid="freesearch"
                     name="collegeApproval"
                     items={createEditFieldData(CollegeApprovalFieldList)}
                     placeholder="Please Select"

@@ -21,6 +21,8 @@ const initialState = {
   languagesList: { data: [], isLoading: Boolean(true), isError: false },
   universitiesList: { data: [], isLoading: Boolean(true), isError: false },
   collegesList: { data: [], isLoading: Boolean(true), isError: false },
+  allcollegesList: { data: [], isLoading: Boolean(true), isError: false },
+  getCollegeDetail: { data: [], isLoading: Boolean(true), isError: false },
   coursesList: { data: [], isLoading: Boolean(true), isError: false },
   specialitiesList: { data: [], isLoading: Boolean(true), isError: false },
   councilNames: { data: [], isLoading: Boolean(true), isError: false },
@@ -89,6 +91,12 @@ export const CommonActivity = createSlice({
     getColleges: (state, action) => {
       state.collegesList.data = action.payload;
     },
+    getAllColleges: (state, action) => {
+      state.allcollegesList.data = action.payload;
+    },
+    getCollegeDetail: (state, action) => {
+      state.getCollegeDetail.data = action.payload;
+    },
     getCourses: (state, action) => {
       state.coursesList.data = action.payload;
     },
@@ -145,6 +153,8 @@ export const {
   verifyNotificationData,
   getLanguages,
   getColleges,
+  getAllColleges,
+  getCollegeDetail,
   getUniversities,
   getCourses,
   getSpecialities,

@@ -103,7 +103,7 @@ export default function ProfileImage(props) {
                   : avtarImg
               }
               className={styles.profileImage}
-              alt=""
+              alt="avtarImg"
             />
             <FormGroup />
             <Box position="absolute" right="0" bottom="0">

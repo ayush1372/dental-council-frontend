@@ -59,7 +59,12 @@ const SelectField = (
       >
         {options?.length > 0 &&
           options?.map((item) => (
-            <MenuItem key={item.label} data-testid={dataTestOptionId} value={item.value}>
+            <MenuItem
+              key={item.label}
+              data-testid={dataTestOptionId}
+              value={item.value}
+              title={item.label}
+            >
               {item.label}
             </MenuItem>
           ))}

@@ -240,6 +240,9 @@ const SmcEditProfile = (props) => {
               md: 'fit-content',
             },
           }}
+          onClick={() => {
+            props.sentDetails('Profile');
+          }}
         >
           Cancel
         </Button>
