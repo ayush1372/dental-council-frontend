@@ -6,24 +6,24 @@
 }
 
 .submitted {
-  color: map-get(v.$palette, 'primary');
-  background-color: map-get(v.$palette, 'submittedBg');
+  color: map-get(v.$palette, 'primary') !important;
+  background-color: map-get(v.$palette, 'submittedBg') !important;
 }
 .dotSubmitted {
   fill: map-get(v.$palette, 'primary');
 }
 
 .approved {
-  color: map-get(v.$palette, 'approvedText');
-  background-color: map-get(v.$palette, 'approvedBg');
+  color: map-get(v.$palette, 'approvedText') !important;
+  background-color: map-get(v.$palette, 'approvedBg') !important;
 }
 .dotApproved {
   fill: map-get(v.$palette, 'approvedText');
 }
 
 .reject {
-  color: map-get(v.$palette, 'error');
-  background-color: map-get(v.$palette, 'rejectBg');
+  color: map-get(v.$palette, 'error') !important;
+  background-color: map-get(v.$palette, 'rejectBg') !important;
 }
 .dotReject {
   fill: map-get(v.$palette, 'error');
@@ -35,4 +35,12 @@
 }
 .dotPending {
   fill: map-get(v.$palette, 'pendingText');
+}
+
+.queryRaised {
+  color: map-get(v.$palette, 'secondary') !important;
+  background-color: map-get(v.$palette, 'queryraisedBg') !important;
+}
+.dotQueryRaised {
+  fill: map-get(v.$palette, 'secondary');
 }
