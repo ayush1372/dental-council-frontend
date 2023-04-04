@@ -48,6 +48,7 @@ function NMCCollegeRegistration() {
 
   const [successModalPopup, setSuccessModalPopup] = useState(false);
   const [showCollegeName, setShowCollegeName] = useState(false);
+  const [collegeResponse, setCollegeResponse] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -68,7 +69,7 @@ function NMCCollegeRegistration() {
     formState: { errors },
     reset,
   } = useForm({
-    mode: 'onChange',
+    mode: 'onSubmit',
     defaultValues: {
       CollegeName: '',
       Name: '',
@@ -219,15 +220,13 @@ function NMCCollegeRegistration() {
       setValue('CollegeNameID', currentValue.id);
 
       dispatch(getCollegeData(currentValue.id)).then((response) => {
-        if (response?.data?.college_code) {
-          setValue('CollegeCode', response?.data?.college_code);
-        }
-        if (response?.data?.mobile_number) {
-          setValue('MobileNumber', response?.data?.mobile_number);
-        }
-        if (response?.data?.website) {
-          setValue('Website', response?.data?.website);
-        }
+        setCollegeResponse(response);
+        response?.data?.college_code && setValue('CollegeCode', response?.data?.college_code);
+
+        response?.data?.mobile_number && setValue('MobileNumber', response?.data?.mobile_number);
+
+        response?.data?.website && setValue('Website', response?.data?.website);
+
         if (response?.data?.address_line1) {
           setValue('AddressLine1', response?.data?.address_line1);
         }
@@ -254,7 +253,7 @@ function NMCCollegeRegistration() {
         if (response?.data?.state_id) {
           setValue('StateID', response?.data?.state_id);
           setValue('StateName', getSelecetedName(response?.data?.state_id, 'stateData'));
-          dispatch(getDistrictList(response?.data?.state_id));
+          // dispatch(getDistrictList(response?.data?.state_id));
           // getDistrict(response?.data?.state_id);
         }
         if (response?.data?.university_id) {
@@ -308,6 +307,7 @@ function NMCCollegeRegistration() {
             {...register('CollegeName', {
               required: 'College name is required',
             })}
+            value={getSelecetedName(collegeResponse?.data?.state_id, 'stateData') || null}
             onChange={(currentValue) => {
               // setClgName(currentValue?.name);
               onNameChange(currentValue);
