@@ -5,6 +5,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import { Box, Dialog, Grid, Typography } from '@mui/material';
+import moment from 'moment';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
@@ -141,7 +142,9 @@ const ProfileConsent = ({
         nmrRegistrationDetailsTO: {
           councilName: doctorRegDetails?.registration_detail_to?.state_medical_council?.name || '',
           registrationNumber: doctorRegDetails?.registration_detail_to?.registration_number,
-          registrationDate: doctorRegDetails?.registration_detail_to?.registration_date,
+          registrationDate: moment(
+            doctorRegDetails?.registration_detail_to?.registration_date
+          ).format('DD-MM-YYYY'),
           registrationType:
             doctorRegDetails?.registration_detail_to?.is_renewable === '0'
               ? 'Renewable'
@@ -159,7 +162,8 @@ const ProfileConsent = ({
           university:
             doctorRegDetails?.qualification_detail_response_tos[0]?.university?.name || '',
           monthAndYearOfAwarding:
-            doctorRegDetails?.qualification_detail_response_tos[0]?.qualification_month || '',
+            doctorRegDetails?.qualification_detail_response_tos[0]?.qualification_month +
+              doctorRegDetails?.qualification_detail_response_tos[0]?.qualification_year || '',
         },
         isRegCerAttached: registrationFile ? 'Yes' : 'No',
         isDegreeCardAttached: degreeCertificate ? 'Yes' : 'No',
@@ -167,7 +171,7 @@ const ProfileConsent = ({
       },
     };
     dispatch(getEsignFormDetails(data))
-      .then(() => {
+      .then((response) => {
         const payload = {
           hp_profile_id: updatedPersonalDetails?.hp_profile_id,
           application_type_id: personalDetails?.nmr_id
@@ -175,6 +179,7 @@ const ProfileConsent = ({
             : selectedQualificationTypeValue === 'International'
             ? 7
             : 1,
+          transaction_id: response?.data?.asp_txn_id,
         };
         dispatch(updateProfileConsent(payload))
           .then(() => {
