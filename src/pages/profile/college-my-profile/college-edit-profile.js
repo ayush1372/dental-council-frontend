@@ -18,7 +18,7 @@ import {
 import { Button, TextField } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
 
-const CollegeEditProfile = () => {
+const CollegeEditProfile = (props) => {
   const { collegeData } = useSelector((state) => state.college);
   const { statesList, councilNames, universitiesList } = useSelector((state) => state.common);
   const registrationSuccess = useSelector((state) => state.college.collegeRegisterDetails.data);
@@ -531,6 +531,9 @@ const CollegeEditProfile = () => {
                 xs: '100%',
                 // md: 'fit-content',
               },
+            }}
+            onClick={() => {
+              props.sentDetails('Profile');
             }}
           >
             Cancel
