@@ -33,7 +33,7 @@ export default function VerticalLinearStepper() {
 
   const getDate = (date) => {
     const dateObj = new Date(date);
-    console.log('date123', dateObj);
+    console.log('date123', dateObj.getHours(), dateObj.getMinutes());
     return `${dateObj.getDate()}-${monthsData[dateObj.getMonth()].value}-${dateObj.getFullYear()}`;
   };
 
