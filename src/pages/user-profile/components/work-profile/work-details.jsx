@@ -46,6 +46,10 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
         village: getVillageData(getValues().Area),
         url: getValues().telecommunicationURL,
         pincode: getValues().pincode,
+        work_details: {
+          work_nature: getWorkNature(getValues().NatureOfWork),
+          work_status: getWorkStatus(getValues().workStatus),
+        },
       },
     };
     // eslint-disable-next-line no-console
@@ -67,8 +71,6 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
     setTabValue(value);
   };
   const searchFacilitiesHandler = () => {
-    // eslint-disable-next-line no-console
-    console.log('hi');
     const values = getValues();
     const searchFacilities = {
       pincode: values.pincode || '',
@@ -129,6 +131,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
   }, [watchState]);
 
   useEffect(() => {
+    searchFacilitiesHandler();
     fetchDisricts(watchFacilityStateCode);
   }, [watchFacilityStateCode]);
 
@@ -191,6 +194,26 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
         }
       });
     return villageData[0];
+  };
+  const getWorkNature = (nature) => {
+    let workNatureData = [];
+    Array.isArray(natureOfWork) &&
+      citiesList?.map((elementData) => {
+        if (elementData.id === nature) {
+          workNatureData.push(elementData);
+        }
+      });
+    return workNatureData[0];
+  };
+  const getWorkStatus = (status) => {
+    let workStatusData = [];
+    Array.isArray(workStatusOptions) &&
+      citiesList?.map((elementData) => {
+        if (elementData.id === status) {
+          workStatusData.push(elementData);
+        }
+      });
+    return workStatusData[0];
   };
 
   return (
