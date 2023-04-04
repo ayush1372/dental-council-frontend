@@ -15,6 +15,7 @@ export default function Wizard({
   steps,
   isStepClickEnable,
   handleStep,
+  showCheckCirlce,
 }) {
   return (
     <Box width="100%" bgcolor={'white'}>
@@ -23,6 +24,7 @@ export default function Wizard({
         activeStep={activeStep}
         isStepClickEnable={isStepClickEnable}
         handleStep={handleStep}
+        showCheckCirlce={showCheckCirlce}
       />
       <ProgressBar
         steps={steps}

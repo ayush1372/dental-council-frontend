@@ -7,12 +7,14 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import {
+  collegeProfileData,
+  // collegeProfileData,
   sendRegistrarDetails,
   updateCollegeRegistrarData,
 } from '../../../store/actions/college-actions';
 import { Button, TextField } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
-import { PasswordRegexValidation } from '../../../utilities/common-validations';
+// import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 export function CollegeRegistrar({ showPage, updateShowPage }) {
   const { t } = useTranslation();
@@ -25,14 +27,14 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
     register,
     handleSubmit,
     getValues,
-    reset,
+
     formState: { errors },
   } = useForm({
     mode: 'onChange',
     defaultValues: {
       id: showPage === 'edit' ? userData?.id : null,
       registrarName: showPage === 'edit' ? userData?.name : '',
-      registrarPhoneNumber: showPage === 'edit' ? userData?.phone_number : '',
+      registrarPhoneNumber: showPage === 'edit' ? userData?.mobile_number : '',
       registrarEmail: showPage === 'edit' ? userData?.email_id : '',
       registrarUserId: showPage === 'edit' ? userData?.user_id : '',
       registrarPassword: '',
@@ -41,15 +43,22 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
 
   const onSubmit = (fieldData) => {
     let registrarData = {
-      name: showPage === 'edit' ? fieldData.registrarName : null,
-      phone_number: showPage === 'edit' ? fieldData.registrarPhoneNumber : null,
-      email_id: showPage === 'edit' ? fieldData.registrarPhoneNumber : null,
-      user_id: showPage === 'edit' ? fieldData?.registrarUserId : null,
-      password: showPage === 'edit' ? fieldData.registrarPassword : null,
+      // name: showPage === 'edit' ? fieldData.registrarName : null,
+      // phone_number: showPage === 'edit' ? fieldData.registrarPhoneNumber : null,
+      // email_id: showPage === 'edit' ? fieldData.registrarPhoneNumber : null,
+      // user_id: showPage === 'edit' ? fieldData?.registrarUserId : null,
+      // password: showPage === 'edit' ? fieldData.registrarPassword : null,
+      id: showPage === 'edit' ? userData?.id : null,
+      college_id: showPage === 'edit' ? userData?.college_id : null,
+      designation: showPage === 'edit' ? userData?.designation : null,
+      name: showPage === 'edit' ? fieldData?.registrarName : null,
+      mobile_number: showPage === 'edit' ? fieldData?.registrarPhoneNumber : null,
+      email_id: showPage === 'edit' ? fieldData?.registrarEmail : null,
     };
     if (showPage === 'edit') {
-      dispatch(updateCollegeRegistrarData(registrarData, fieldData?.id))
+      dispatch(updateCollegeRegistrarData(registrarData, userData?.college_id, userData?.id))
         .then((response) => {
+          dispatch(collegeProfileData(userData?.college_id, userData?.id));
           if (response?.isError === false) {
             setSuccessModalPopup(true);
           }
@@ -60,7 +69,6 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
     } else {
       dispatch(sendRegistrarDetails(registrarData, userData?.id));
     }
-    reset();
   };
 
   return (
@@ -84,7 +92,8 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
       </Grid>
       <Grid item xs={12} md={6} sm={6} lg={4}>
         <Typography variant="body1" color="inputTextColor.main">
-          <b>{t('College Registrar Name')}</b>
+          {/* <b>{t('College Registrar Name')}</b> */}
+          <b>{t(' Name')}</b>
         </Typography>
         <Typography component="span" color="error.main">
           *
@@ -108,7 +117,8 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
       </Grid>
       <Grid item xs={12} md={6} sm={6} lg={4}>
         <Typography variant="body1" color="inputTextColor.main">
-          <b>{t('College Registrar Phone Number')}</b>
+          {/* <b>{t('College Registrar Phone Number')}</b> */}
+          <b>{t(' Phone Number')}</b>
         </Typography>
         <Typography component="span" color="error.main">
           *
@@ -136,7 +146,8 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
       </Grid>
       <Grid item xs={12} md={6} sm={6} lg={4}>
         <Typography variant="body1" color="inputTextColor.main">
-          <b>{t('College Registrar Email Address')}</b>
+          {/* <b>{t('College Registrar Email Address')}</b> */}
+          <b>{t(' Email Address')}</b>
         </Typography>
         <Typography component="span" color="error.main">
           *
@@ -163,7 +174,7 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
           })}
         />
       </Grid>
-      <Grid item xs={12} md={6} sm={6} lg={4}>
+      {/* <Grid item xs={12} md={6} sm={6} lg={4}>
         <Typography variant="body1" color="inputTextColor.main">
           <b>{t('College Registrar User ID')}</b>
         </Typography>
@@ -186,8 +197,8 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
             required: 'Enter valid user ID',
           })}
         />
-      </Grid>
-      <Grid item xs={12} md={6} sm={6} lg={4}>
+      </Grid> */}
+      {/* <Grid item xs={12} md={6} sm={6} lg={4}>
         <Typography variant="body1" color="inputTextColor.main">
           <b>{t('College Registrar Password')}</b>
         </Typography>
@@ -209,7 +220,7 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
             required: 'Enter valid password',
           })}
         />
-      </Grid>
+      </Grid> */}
       <Grid container item spacing={2} mt={{ lg: 1 }}>
         <Grid item xs={12} sm="auto">
           <Button fullWidth variant="contained" color="secondary" onClick={handleSubmit(onSubmit)}>

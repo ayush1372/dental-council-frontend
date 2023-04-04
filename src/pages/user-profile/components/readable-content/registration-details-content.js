@@ -149,7 +149,7 @@ const RegistrationDetailsContent = () => {
           </Typography>
           <Grid display="flex">
             <Typography variant="subtitle2" color="textPrimary.main">
-              {is_renewable === '1' ? 'Permanent' : is_renewable === '0' ? 'Renewable' : ''}
+              {is_renewable === '0' ? 'Permanent' : is_renewable === '1' ? 'Renewable' : ''}
             </Typography>
             {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
@@ -174,8 +174,9 @@ const RegistrationDetailsContent = () => {
           )}
           <Grid display="flex">
             <Typography color="textPrimary.main" variant="subtitle2">
-              {renewable_registration_date &&
-                moment(renewable_registration_date).format('DD-MM-YYYY')}{' '}
+              {renewable_registration_date && is_renewable === '1'
+                ? moment(renewable_registration_date).format('DD-MM-YYYY')
+                : '-'}
             </Typography>
             {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon

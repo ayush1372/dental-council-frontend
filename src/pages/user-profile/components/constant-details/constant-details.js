@@ -281,7 +281,11 @@ const ConstantDetails = () => {
         <Grid item xs={12} sm={6} md={4} mb={{ xs: 1, lg: 0 }} pl={2}>
           <Typography component="div" variant="body3" color="grey.label">
             Email
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
+
           <Box display="flex" alignItems="center">
             {!emailId || emailChange ? (
               <Box display={'flex'} flexDirection="column">
