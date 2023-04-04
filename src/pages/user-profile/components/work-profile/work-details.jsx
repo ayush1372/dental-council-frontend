@@ -103,7 +103,6 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
   const watchDistrict = watch('District');
   const watchSubDistrict = watch('SubDistrict');
   const watchFacilityStateCode = watch('stateLGDCode');
-  const watchFacilityDistrictCode = watch('districtLGDCode');
 
   const fetchState = (countryID) => {
     if (countryID) dispatch(getStatesList(countryID));
@@ -127,11 +126,15 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
 
   useEffect(() => {
     fetchDisricts(watchState);
-  }, [watchState, watchFacilityStateCode]);
+  }, [watchState]);
+
+  useEffect(() => {
+    fetchDisricts(watchFacilityStateCode);
+  }, [watchFacilityStateCode]);
 
   useEffect(() => {
     fetchSubDistricts(watchDistrict);
-  }, [watchDistrict, watchFacilityDistrictCode]);
+  }, [watchDistrict]);
 
   useEffect(() => {
     fetchCities(watchSubDistrict);
@@ -162,7 +165,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
   const getDistrictData = (District) => {
     let DistrictData = [];
     districtsList?.map((elementData) => {
-      if (elementData.iso_code === District) {
+      if (elementData.id === District) {
         DistrictData.push(elementData);
       }
     });
