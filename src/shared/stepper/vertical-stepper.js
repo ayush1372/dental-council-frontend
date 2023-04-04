@@ -137,11 +137,11 @@ export default function VerticalLinearStepper() {
               ApplicationStatus?.application_type === 3 ||
               ApplicationStatus?.application_type === 4 ||
               ApplicationStatus?.application_type === 5
-                ? `2px solid ${theme.palette.success.main}`
+                ? `2px solid ${theme?.palette?.success?.main}`
                 : label?.action_id === 5
-                ? `2px solid ${theme.palette.youTubeColor.main}`
+                ? `2px solid ${theme?.palette?.youTubeColor?.main}`
                 : label?.action_id === 3
-                ? `2px solid ${theme.palette.secondary.main}`
+                ? `2px solid ${theme?.palette?.secondary?.main}`
                 : 'none'
             }
             pl={2}
