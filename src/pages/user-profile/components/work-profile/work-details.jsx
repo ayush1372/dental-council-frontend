@@ -13,10 +13,12 @@ import {
   getDistrictList,
   getSubDistrictsList,
 } from '../../../../store/actions/common-actions';
+import { getFacilitiesData } from '../../../../store/actions/doctor-user-profile-actions';
 import { Button, Checkbox, RadioGroup, Select, TextField } from '../../../../ui/core';
+import successToast from '../../../../ui/core/toaster';
 import WorkDetailsTable from './work-details-table';
 
-const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watch }) => {
+const WorkDetails = ({ getValues, register, setValue, errors, watch }) => {
   const dispatch = useDispatch();
   const [showTable, setShowTable] = useState(false);
   // const [showHeader, setShowHeader] = useState(true);
@@ -40,25 +42,34 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
   const handleTabChange = (_, value) => {
     setTabValue(value);
   };
-  const onSubmit = () => {
-    // const trackData = {
-    //   smcId: getValues().RegistrationCouncilId,
-    //   registrationNo: parseInt(getValues().RegistrationNumber),
-    //   pageNo: 1,
-    //   offset: 10,
-    //   sortBy: 'createdAt',
-    //   sortType: 'desc',
-    // };
-    // dispatch(trackStatus(trackData))
-    //   .then(() => {})
-    //   .catch((error) => {
-    //     successToast(
-    //       error?.data?.response?.data?.error,
-    //       'RegistrationError',
-    //       'error',
-    //       'top-center'
-    //     );
-    //   });
+  const searchFacilitiesHandler = () => {
+    // eslint-disable-next-line no-console
+    console.log('hi');
+    const values = getValues();
+    const searchFacilities = {
+      pincode: values.pincode || '',
+      page: values.page || 0,
+      facilityId: values.facilityId || '',
+      facilityName: values.facilityName || '',
+      ownershipCode: values.facilityName || '',
+      stateLGDCode: values.stateLGDCode || '',
+      districtLGDCode: values.districtLGDCode || '',
+      subDistrictLGDCode: values.subDistrictLGDCode || '',
+      resultsPerPage: values.resultsPerPage || 1,
+    };
+    dispatch(getFacilitiesData(searchFacilities))
+      .then((response) => {
+        // eslint-disable-next-line no-console
+        console.log(response?.data);
+      })
+      .catch((error) => {
+        successToast(
+          error?.data?.response?.data?.error,
+          'RegistrationError',
+          'error',
+          'top-center'
+        );
+      });
     setShowTable(true);
   };
 
@@ -183,9 +194,9 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
           value={languages}
           error={languages?.length === 0 && errors.LanguageSpoken?.message}
           multiple={true}
-          required={true}
+          // required={true}
           {...register('LanguageSpoken', {
-            required: 'Language is Required',
+            // required: 'Language is Required',
           })}
           onChange={(value) => {
             handleLanguageSpokenChange('LanguageSpoken', value);
@@ -254,19 +265,25 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
                 <Box>
                   <TextField
                     fullWidth
-                    error={errors?.facilityid?.message}
-                    name="FACILITYID"
+                    error={errors?.facilityId?.message}
+                    name="facilityId"
                     label="Enter Facility Id(If Known)"
                     placeholder="Facility Id"
-                    defaultValue={getValues()?.facilityid}
+                    defaultValue={getValues()?.facilityId}
                     required={true}
-                    {...register(`facilityid`, {
+                    {...register(`facilityId`, {
                       required: 'Facility is Required',
                     })}
                   />
                 </Box>
                 <Box ml={1}>
-                  <Button variant="contained" color="secondary" onClick={onSubmit}>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => {
+                      searchFacilitiesHandler();
+                    }}
+                  >
                     Search
                   </Button>
                 </Box>
@@ -328,10 +345,10 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
                 </Typography>
                 <TextField
                   fullWidth
-                  error={errors.facilityname?.message}
-                  name={'facilityname'}
-                  defaultValue={getValues().facilityname}
-                  {...register('facilityname', {
+                  error={errors.facilityName?.message}
+                  name={'facilityName'}
+                  defaultValue={getValues().facilityName}
+                  {...register('facilityName', {
                     required: 'This field is required',
                   })}
                   options={[]}
@@ -632,13 +649,13 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
 
               <TextField
                 variant="outlined"
-                name={'Pincode'}
+                name={'pincode'}
                 required={true}
-                placeholder="Pincode"
+                placeholder="pincode"
                 fullWidth
                 error={errors.Pincode?.message}
-                defaultValue={getValues().Pincode}
-                {...register('Pincode', {
+                defaultValue={getValues().pincode}
+                {...register('pincode', {
                   required: 'This field is required',
                   pattern: {
                     value: /^[0-9]{6}$/,
@@ -685,7 +702,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
         >
           <Grid item xs={12} md={8} lg={6} mb={1}>
             <Button
-              onClick={handleSubmit(onSubmit)}
+              // onClick={handleSubmit(onSubmit)}
               variant="contained"
               color="secondary"
               sx={{

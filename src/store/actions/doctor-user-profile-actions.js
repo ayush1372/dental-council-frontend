@@ -148,6 +148,23 @@ export const updateDoctorWorkDetails = (body, doctor_profile_id) => async () => 
   });
 };
 
+export const getFacilitiesData = (facilitiesBody) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.DoctorUserProfileData.searchFacilities,
+      headers: { 'Content-Type': 'application/json' },
+      data: facilitiesBody,
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
 export const getUserProfileImage = (hp_profile_id, file) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
