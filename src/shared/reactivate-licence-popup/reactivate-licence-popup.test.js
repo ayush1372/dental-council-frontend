@@ -1,12 +1,18 @@
 import '@testing-library/jest-dom';
 
 import { render, screen } from '@testing-library/react';
+import { Provider } from 'react-redux';
 
+import store from '../../store/store';
 import ReactivateLicencePopup from './re-activate-licence-popup';
 
 describe('Reactivate License', () => {
   beforeEach(() => {
-    render(<ReactivateLicencePopup />);
+    render(
+      <Provider store={store}>
+        <ReactivateLicencePopup />
+      </Provider>
+    );
   });
 
   test('from date field should not be undefined', () => {
