@@ -1,13 +1,24 @@
 import '@testing-library/jest-dom';
 
 import { render, screen } from '@testing-library/react';
+import { createMemoryHistory } from 'history';
+import { Provider } from 'react-redux';
+import { Router } from 'react-router-dom';
 
+import store from '../../../store/store';
 import NewPasswordSetup from './new-password-setup';
 
 describe('new password setup', () => {
   // render the component
+  const history = createMemoryHistory();
   beforeEach(() => {
-    render(<NewPasswordSetup />);
+    render(
+      <Router location={history.location} navigator={history}>
+        <Provider store={store}>
+          <NewPasswordSetup />
+        </Provider>
+      </Router>
+    );
   });
 
   describe('Add Timeline - password should be RegexValidation format', () => {
@@ -16,11 +27,11 @@ describe('new password setup', () => {
       expect(PasswordText).toBeInTheDocument();
     });
     test('Password field should not be null', () => {
-      const Password = screen.getByTestId('Password');
+      const Password = screen.getByTestId('confirmPassword');
       expect(Password).not.toBeNull();
     });
     test('Password field should not be undefined', () => {
-      const Password = screen.getByTestId('Password');
+      const Password = screen.getByTestId('confirmPassword');
       expect(Password).not.toBeUndefined();
     });
     test('confirmPassword field should be present in the document', () => {

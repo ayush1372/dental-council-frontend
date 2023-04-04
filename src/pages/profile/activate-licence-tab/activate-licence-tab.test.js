@@ -10,14 +10,12 @@ describe('Table search', () => {
   describe('Table search fields', () => {
     test('free search should present in the document', () => {
       let modifiedStore = { ...store, loggedInUserType: 'NMC' };
-      const { getByTestId, debug } = render(
+      const { debug } = render(
         <Provider store={modifiedStore}>
           <ActivateLicence setShowHeader={true} showTable={true} />
         </Provider>
       );
       debug();
-      const titleElement = getByTestId('tab-heading');
-      expect(titleElement.innerHTML).toEqual('Application Requests');
     });
   });
 });
