@@ -11,6 +11,7 @@ import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocom
 import {
   getCitiesList,
   getDistrictList,
+  getStatesList,
   getSubDistrictsList,
 } from '../../../../store/actions/common-actions';
 import { getFacilitiesData } from '../../../../store/actions/doctor-user-profile-actions';
@@ -97,11 +98,16 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
   };
 
   // watches
+  const watchCountry = watch('Country');
   const watchState = watch('state');
   const watchDistrict = watch('District');
   const watchSubDistrict = watch('SubDistrict');
   const watchFacilityStateCode = watch('stateLGDCode');
   const watchFacilityDistrictCode = watch('districtLGDCode');
+
+  const fetchState = (countryID) => {
+    if (countryID) dispatch(getStatesList(countryID));
+  };
 
   const fetchDisricts = (stateId) => {
     if (stateId) dispatch(getDistrictList(stateId));
@@ -114,6 +120,10 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
   const fetchCities = (subDistrictId) => {
     if (subDistrictId) dispatch(getCitiesList(subDistrictId));
   };
+
+  useEffect(() => {
+    fetchState(watchCountry);
+  }, [watchCountry]);
 
   useEffect(() => {
     fetchDisricts(watchState);
