@@ -11,8 +11,9 @@ import { generateCaptchaImage, getCaptchaEnabledFlagValue } from '../../store/ac
 import { Button } from '../../ui/core';
 import successToast from '../../ui/core/toaster';
 import ConfirmOTP from './components/confirm-otp';
-import { DoctorLogin } from './components/doctor-login';
+// import { DoctorLogin } from './components/doctor-login';
 import ForgotPassword from './components/forgot-password';
+import LoginPage from './components/login-page';
 import NewPasswordSetup from './components/new-password-setup';
 const LoginWrapper = () => {
   const location = useLocation();
@@ -66,7 +67,7 @@ const LoginWrapper = () => {
   return (
     <Box sx={{ mt: 5, mb: 5, maxWidth: '648px', margin: '40px auto' }}>
       {activeStep === 0 && (
-        <DoctorLogin handleForgotPassword={handleNext} loginName={loginFormNames[loginFormname]} />
+        <LoginPage handleForgotPassword={handleNext} loginName={loginFormNames[loginFormname]} />
       )}
       {activeStep === 1 && (
         <ForgotPassword

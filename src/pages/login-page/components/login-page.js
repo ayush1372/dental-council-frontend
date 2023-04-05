@@ -9,7 +9,8 @@ import {
   getCaptchaEnabledFlagValue,
 } from '../../../store/actions/login-action';
 import successToast from '../../../ui/core/toaster';
-import LoginWrapper from '../index';
+// import LoginWrapper from '../index';
+import { DoctorLogin } from './doctor-login';
 import { Login } from './login-data';
 
 export function LoginPage() {
@@ -51,7 +52,7 @@ export function LoginPage() {
   }, [loginFormNames[loginFormname]]);
 
   return loginFormNames[loginFormname] === 'Doctor' ? (
-    <LoginWrapper loginName={loginFormNames[loginFormname]} />
+    <DoctorLogin loginName={loginFormNames[loginFormname]} />
   ) : (
     <Login loginName={loginFormNames[loginFormname]} />
   );
