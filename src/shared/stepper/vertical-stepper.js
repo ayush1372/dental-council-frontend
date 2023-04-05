@@ -118,7 +118,9 @@ export default function VerticalLinearStepper() {
                 : (ApplicationStatus?.application_type === 3 ||
                     ApplicationStatus?.application_type === 4 ||
                     ApplicationStatus?.application_type === 5) &&
-                  label?.workflow_status_id === 2 &&
+                  (label?.workflow_status_id === 2 ||
+                    label?.workflow_status_id === 5 ||
+                    label?.workflow_status_id === 6) &&
                   label?.action_id === 1
                 ? `Submitted and Auto Approved`
                 : `${userActionId(label?.action_id)} by ${userGroupTypeId(label?.group_id)}`}
@@ -134,7 +136,7 @@ export default function VerticalLinearStepper() {
                   ? 'reject'
                   : userActionId(label?.action_id) === 'Query Raised'
                   ? 'queryRaised'
-                  : ''
+                  : null
               }
             />
           </Box>
@@ -166,10 +168,10 @@ export default function VerticalLinearStepper() {
             pb={1}
           >
             <Typography component="div" variant="body3" fontWeight="500">
-              {label?.remarks}
+              {`${label?.remarks}`}
             </Typography>
             <Typography component="div" variant="body3" fontWeight="500">
-              {`${getDate(label?.action_date)} - ${getTime(label?.action_date)}  `}
+              {`${getDate(label?.action_date)} - ${getTime(label?.action_date)}`}
             </Typography>
           </Box>
         </Box>

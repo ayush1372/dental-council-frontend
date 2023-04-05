@@ -1,4 +1,3 @@
-import { Chip } from '@material-ui/core';
 import CheckCircle from '@mui/icons-material/CheckCircle';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { Button, Divider, Grid, Typography } from '@mui/material';
@@ -9,6 +8,7 @@ import APPLICATIONICONBW from '../../../assets/images/application-approved-icon-
 import { monthsData } from '../../../constants/common-data';
 import { typeOfApplication, workflowStatusId } from '../../../helpers/functions/common-functions';
 import VerticalLinearStepper from '../../../shared/stepper/vertical-stepper';
+import { Chip } from '../../../ui/core';
 export function TrackApplicationDetails({
   showViewProfile,
   setShowTrackApplicationTable,
@@ -83,11 +83,7 @@ export function TrackApplicationDetails({
             </Box>
             <Chip
               type={nmcApproveStatus ? 'approved' : ''}
-              label={
-                <Typography variant="body4">
-                  {nmcApproveStatus ? 'APPROVED' : 'NOT APPROVED'}
-                </Typography>
-              }
+              label={nmcApproveStatus ? 'APPROVED' : 'NOT APPROVED'}
             />
           </Box>
           <Box boxShadow="1" p={2} borderRadius="5px">
