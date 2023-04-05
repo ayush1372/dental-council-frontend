@@ -87,7 +87,7 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData }) => {
           type="text"
           name="Id"
           required="true"
-          placeholder={t('Enter NMR ID/Reg ID/Email ID')}
+          placeholder={t(loginFormname === 'Doctor' ? doctorTitle : userTitle)}
           margin="dense"
           defaultValue={getValues().Id}
           error={isIdActive && errors.Id?.message}
