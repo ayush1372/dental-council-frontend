@@ -14,7 +14,10 @@ import {
   getStatesList,
   getSubDistrictsList,
 } from '../../../../store/actions/common-actions';
-import { getFacilitiesData } from '../../../../store/actions/doctor-user-profile-actions';
+import {
+  getFacilitiesData,
+  updateDoctorWorkDetails,
+} from '../../../../store/actions/doctor-user-profile-actions';
 import { Button, Checkbox, RadioGroup, Select, TextField } from '../../../../ui/core';
 import successToast from '../../../../ui/core/toaster';
 import { getFacilityDistrictList } from './district-api';
@@ -23,14 +26,17 @@ import WorkDetailsTable from './work-details-table';
 
 const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watch }) => {
   const dispatch = useDispatch();
-  const [showTable, setShowTable] = useState(false);
-  // const [showHeader, setShowHeader] = useState(true);
-  const [workExpierence, setWorkExpierence] = useState(0);
+
+  const [tabValue, setTabValue] = useState(0);
   const [languages, setLanguages] = useState([]);
+  const [showTable, setShowTable] = useState(false);
+  const [workExpierence, setWorkExpierence] = useState(0);
+  const [facilityDistrict, setFacilityDistrict] = useState([]);
   const [facilityChecked, setFacilityChecked] = useState(true);
   const [organizationChecked, setOrganizationChecked] = useState(false);
-  const [tabValue, setTabValue] = useState(0);
-  const [facilityDistrict, setFacilityDistrict] = useState([]);
+
+  const { loginData } = useSelector((state) => state.loginReducer);
+  const { registrationDetails } = useSelector((state) => state.doctorUserProfileReducer);
 
   // eslint-disable-next-line no-unused-vars
   const [facilityResponseData, setFacilityResponseData] = useState([
@@ -60,33 +66,58 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
 
   const onSubmit = () => {
     const currentWorkDetails = {
-      work_organization: getValues().workingOrganizationName,
-      organization_type: getValues().organizationType,
-      address: {
-        id: null,
-        address_line1: getValues().Address,
-        street: getValues().Street,
-        landmark: getValues().Landmark,
-        locality: getValues().Locality,
-        country: getCountryData(getValues().Country),
-        state: getStateData(getValues().state),
-        district: getDistrictData(getValues().District),
-        sub_district: getSubDistrictData(getValues().SubDistrict),
-        village: getVillageData(getValues().Area),
-        url: getValues().telecommunicationURL,
-        pincode: getValues().pincode,
+      data: {
         work_details: {
+          is_user_currently_working: 0,
           work_nature: getWorkNature(getValues().NatureOfWork),
           work_status: getWorkStatus(getValues().workStatus),
         },
+        current_work_details: [
+          {
+            work_organization: getValues().workingOrganizationName,
+            organization_type: getValues().organizationType,
+            address: {
+              id: null,
+              address_line1: getValues().Address,
+              street: getValues().Street,
+              landmark: getValues().Landmark,
+              locality: getValues().Locality,
+              country: getCountryData(getValues().Country),
+              state: getStateData(getValues().state),
+              district: getDistrictData(getValues().District),
+              sub_district: getSubDistrictData(getValues().SubDistrict),
+              village: getVillageData(getValues().Area),
+              url: getValues().telecommunicationURL,
+              pincode: getValues().pincode,
+            },
+            experience_in_years: workExpierence,
+          },
+        ],
+        registration_no: registrationDetails?.registration_detail_to?.registration_number,
+        languages_known_ids: getLanguageData(getValues().LanguageSpoken),
       },
     };
     // eslint-disable-next-line no-console
     console.log('currentWorkDetails', currentWorkDetails);
+
+    dispatch(updateDoctorWorkDetails(currentWorkDetails, loginData?.data?.profile_id))
+      .then(() => {
+        // setSuccessModalPopup(true);
+        // reset();
+      })
+      .catch((error) => {
+        successToast(
+          error?.data?.response?.data?.error,
+          'RegistrationError',
+          'error',
+          'top-center'
+        );
+      });
   };
 
   const { languagesList, statesList, countriesList, districtsList, subDistrictList, citiesList } =
     useSelector((state) => state?.common);
+
   const handleWorkStatus = (event) => {
     setValue(event.target.name, event.target.value);
   };
@@ -233,22 +264,43 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
   const getWorkNature = (nature) => {
     let workNatureData = [];
     Array.isArray(natureOfWork) &&
-      citiesList?.map((elementData) => {
+      natureOfWork?.map((elementData) => {
         if (elementData.id === nature) {
           workNatureData.push(elementData);
         }
       });
     return workNatureData[0];
   };
-  const getWorkStatus = (status) => {
+
+  const getWorkStatus = (workstatus) => {
     let workStatusData = [];
-    Array.isArray(workStatusOptions) &&
-      citiesList?.map((elementData) => {
-        if (elementData.id === status) {
-          workStatusData.push(elementData);
+    workStatusOptions?.map((elementData) => {
+      if (elementData.id === Number(workstatus)) {
+        if (elementData.name === 'Government only') {
+          workStatusData.push({ id: elementData.id, name: 'G' });
         }
-      });
+        if (elementData.name === 'Private Practice only') {
+          workStatusData.push({ id: elementData.id, name: 'P' });
+        }
+        if (elementData.name === 'Both') {
+          workStatusData.push({ id: elementData.id, name: 'PP' });
+        }
+      }
+    });
+
     return workStatusData[0];
+  };
+  const getLanguageData = (language) => {
+    let languageData = [];
+    Array.isArray(languagesList?.data) &&
+      languagesList?.data?.map((elementData) => {
+        language?.map((langdata) => {
+          if (elementData.id === langdata.id) {
+            languageData.push(elementData.id);
+          }
+        });
+      });
+    return languageData;
   };
 
   return (
@@ -278,12 +330,15 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
 
         <RadioGroup
           onChange={handleWorkStatus}
-          name={'workStatus'}
+          name="workStatus"
           size="small"
           defaultValue={getValues().workStatus}
           items={createSelectFieldData(workStatusOptions)}
           required={true}
           error={errors.workStatus?.message}
+          {...register('workStatus', {
+            required: 'This field is required',
+          })}
         />
       </Grid>{' '}
       <Grid item xs={12} md={4}>
@@ -921,7 +976,9 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
               Declared Place Of Work
             </Typography>
           </Grid>
-          <Grid item xs={12} padding="10px 0 !important"></Grid>
+          <Grid item xs={12} padding="10px 0 !important">
+            <FacilityDetailsTable />
+          </Grid>
         </Grid>
       )} */}
     </>
