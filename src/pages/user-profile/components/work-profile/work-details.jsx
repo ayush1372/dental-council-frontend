@@ -17,7 +17,8 @@ import {
 import { getFacilitiesData } from '../../../../store/actions/doctor-user-profile-actions';
 import { Button, Checkbox, RadioGroup, Select, TextField } from '../../../../ui/core';
 import successToast from '../../../../ui/core/toaster';
-import FacilityDetailsTable from './facility-details-table';
+import { getFacilityDistrictList } from './district-api';
+// import FacilityDetailsTable from './facility-details-table';
 import WorkDetailsTable from './work-details-table';
 
 const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watch }) => {
@@ -29,6 +30,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
   const [facilityChecked, setFacilityChecked] = useState(true);
   const [organizationChecked, setOrganizationChecked] = useState(false);
   const [tabValue, setTabValue] = useState(0);
+  const [facilityResponseData, setFacilityResponseData] = useState([]);
 
   const onSubmit = () => {
     const currentWorkDetails = {
@@ -71,23 +73,23 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
   const handleTabChange = (_, value) => {
     setTabValue(value);
   };
+
   const searchFacilitiesHandler = () => {
     const values = getValues();
     const searchFacilities = {
-      pincode: values.pincode || '',
-      page: values.page || 0,
+      page: 0,
+      ownershipCode: '',
+      resultsPerPage: 10,
       facilityId: values.facilityId || '',
       facilityName: values.facilityName || '',
-      ownershipCode: values.facilityName || '',
       stateLGDCode: values.stateLGDCode || '',
       districtLGDCode: values.districtLGDCode || '',
-      subDistrictLGDCode: values.subDistrictLGDCode || '',
-      resultsPerPage: values.resultsPerPage || 1,
     };
     dispatch(getFacilitiesData(searchFacilities))
       .then((response) => {
         // eslint-disable-next-line no-console
         console.log(response?.data);
+        setFacilityResponseData(response?.data);
       })
       .catch((error) => {
         successToast(
@@ -111,8 +113,12 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
     if (countryID) dispatch(getStatesList(countryID));
   };
 
-  const fetchDisricts = (stateId) => {
-    if (stateId) dispatch(getDistrictList(stateId));
+  const fetchDistricts = (stateId, facility) => {
+    if (stateId && facility) {
+      dispatch(getFacilityDistrictList(stateId));
+    } else {
+      if (stateId) dispatch(getDistrictList(stateId));
+    }
   };
 
   const fetchSubDistricts = (districtId) => {
@@ -128,12 +134,12 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
   }, [watchCountry]);
 
   useEffect(() => {
-    fetchDisricts(watchState);
+    fetchDistricts(watchState, false);
   }, [watchState]);
 
   useEffect(() => {
     // searchFacilitiesHandler();
-    fetchDisricts(watchFacilityStateCode);
+    fetchDistricts(watchFacilityStateCode, true);
   }, [watchFacilityStateCode]);
 
   useEffect(() => {
@@ -309,10 +315,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
           value={languages}
           error={languages?.length === 0 && errors.LanguageSpoken?.message}
           multiple={true}
-          // required={true}
-          {...register('LanguageSpoken', {
-            // required: 'Language is Required',
-          })}
+          {...register('LanguageSpoken', {})}
           onChange={(value) => {
             handleLanguageSpokenChange('LanguageSpoken', value);
           }}
@@ -405,7 +408,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
               </Grid>
               {showTable && (
                 <Grid item xs={12} padding="10px 0 !important">
-                  <WorkDetailsTable />
+                  <WorkDetailsTable FacilityData={facilityResponseData} />
                 </Grid>
               )}
             </Grid>
@@ -856,7 +859,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
           </Grid>
         </Grid>
       )}
-      {!showTable && tabValue === 0 && (
+      {/* {!showTable && tabValue === 0 && (
         <Grid container>
           <Grid item xs={12}>
             <Typography
@@ -869,11 +872,9 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
               Declared Place Of Work
             </Typography>
           </Grid>
-          <Grid item xs={12} padding="10px 0 !important">
-            <FacilityDetailsTable />
-          </Grid>
+          <Grid item xs={12} padding="10px 0 !important"></Grid>
         </Grid>
-      )}
+      )} */}
     </>
   );
 };

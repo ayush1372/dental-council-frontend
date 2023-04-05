@@ -31,39 +31,34 @@ function createData(
   };
 }
 
-function WorkDetailsTable(props) {
+function WorkDetailsTable({ FacilityData, trackStatusData }) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState({});
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
   const [selectedRowData, setRowData] = React.useState({});
-  //   const dispatch = useDispatch();
-  verboseLog('selectedRowData', selectedRowData, props);
+  verboseLog('selectedRowData', selectedRowData, FacilityData, trackStatusData);
 
   const dataHeader = [
     {
       title: 'Name',
       name: 'name',
-      //   sorting: true,
       type: 'string',
     },
     {
       title: 'Address',
       name: 'address',
-      //   sorting: true,
       type: 'string',
     },
     {
       title: 'State',
       name: 'state',
-      //   sorting: true,
       type: 'string',
     },
     { title: 'District', name: 'district', type: 'string' },
     {
       title: 'Type',
       name: 'type',
-      //   sorting: true,
       type: 'string',
     },
     { title: 'System of Medicine', name: 'systemOfMedicine', type: 'string' },
@@ -81,22 +76,34 @@ function WorkDetailsTable(props) {
     setOrderBy(property);
   };
 
-  const newRowsData = [
+  [
     {
-      name: 'krishna',
-      address: 'eluru',
-      state: 'andhra',
-      district: 'eluru',
-      type: 'nursing',
-      systemOfMedicine: 'nursing',
-      department: 'nursing',
-      designation: 'senior',
+      facilityId: 'IN0910000076',
+      facilityName: 'King Georges Medical University Lucknow',
+      ownership: 'Government',
+      ownershipCode: 'G',
+      stateName: 'UTTAR PRADESH',
+      stateLGDCode: '9',
+      districtName: 'LUCKNOW',
+      subDistrictName: 'Malihabad',
+      districtLGDCode: '162',
+      subDistrictLGDCode: '819',
+      villageCityTownLGDCode: '',
+      address: 'main road, ',
+      pincode: '110092',
+      latitude: '28.6958080000001',
+      longitude: '77.2061630000001',
+      systemOfMedicineCode: 'M',
+      systemOfMedicine: 'Modern Medicine(Allopathy)',
+      facilityTypeCode: '5',
+      facilityStatus: 'Submitted',
+      facilityType: 'Hospital',
     },
-  ].map((application) => {
+  ]?.map((application) => {
     return createData(
       {
         type: 'name',
-        value: application?.name,
+        value: application?.facilityName,
       },
       {
         type: 'address',
@@ -104,15 +111,15 @@ function WorkDetailsTable(props) {
       },
       {
         type: 'state',
-        value: application?.state,
+        value: application?.stateName,
       },
       {
         type: 'district',
-        value: application.district,
+        value: application.districtName,
       },
       {
         type: 'type',
-        value: application?.type,
+        value: application?.facilityType,
       },
 
       { type: 'systemOfMedicine', value: application?.systemOfMedicine },
@@ -121,17 +128,6 @@ function WorkDetailsTable(props) {
     );
   });
 
-  //   const handleChangePage = (event, newPage) => {
-  //     setPage(newPage);
-  //     // props.getTableData(newPage + 1);
-  //     window.scrollTo({
-  //       top: 0,
-  //       behavior: 'smooth',
-  //     });
-  //     let finalSearchData = { ...props.trackValues, pageNo: newPage };
-  //     dispatch(trackStatus(finalSearchData));
-  //   };
-
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
@@ -139,27 +135,23 @@ function WorkDetailsTable(props) {
 
   return (
     <Grid sx={{ mx: 2 }} p={'0px'}>
-      {/* <TableSearch trackApplication /> */}
-
       <GenericTable
         order={order}
         orderBy={orderBy}
         onRequestSort={handleRequestSort}
         tableHeader={dataHeader}
-        data={newRowsData}
+        data={FacilityData ? FacilityData : []}
         handleRowClick={handleDataRowClick}
         rowsPerPage={rowsPerPage}
         page={page}
       />
-
       <Box>
         <TablePagination
           rowsPerPageOptions={[]}
           component="div"
-          count={props?.trackStatusData?.total_no_of_records || '0'}
+          count={trackStatusData?.total_no_of_records || '0'}
           rowsPerPage={rowsPerPage}
           page={page}
-          //   onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
           sx={{
             display: 'flex',
