@@ -244,9 +244,9 @@ export function SuspendLicenseVoluntaryRetirement({
         </Box>
       )}
       {selectedValue === 'forward' && (
-        <Box display={'flex'} alignItems="flex-start">
+        <Box align={'center'}>
           <Box>
-            <ErrorIcon color="error" fontSize="width24" />
+            <ErrorIcon color="error" sx={{ fontSize: '50px' }} />
           </Box>
           <Box>
             <Typography variant="h3">ALERT!</Typography>
@@ -453,9 +453,8 @@ export function SuspendLicenseVoluntaryRetirement({
         <Typography
           mt={2}
           color="grey.context"
-          textAlign={selectedValue === 'verify' ? 'center' : ''}
+          textAlign={selectedValue === 'verify' || selectedValue === 'forward' ? 'center' : ''}
           variant="h3"
-          // width="320px"
         >
           {selectedValue === 'verify' &&
           (selectedAcademicStatus !== 'Temporary Suspension Requests Received' ||
@@ -618,7 +617,7 @@ export function SuspendLicenseVoluntaryRetirement({
             ''
           )}
           {selectedValue === 'verify' || selectedValue === 'forward' ? (
-            <Box align={selectedValue === 'forward' ? 'right' : 'center'}>
+            <Box align="center">
               <Button color="grey" variant="contained" sx={{ marginLeft: 2 }} onClick={handleClose}>
                 No
               </Button>
