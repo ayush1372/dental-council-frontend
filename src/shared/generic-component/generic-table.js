@@ -269,7 +269,11 @@ export default function GenericTable(props) {
                         </Link>
                       </TableCell>
                     );
-                  } else if (item.title === 'Department' || item.title === 'Designation') {
+                  } else if (
+                    item.title === 'Department' ||
+                    item.title === 'Designation' ||
+                    item.title === 'Select'
+                  ) {
                     return (
                       <TableCell maxWidth={`${tableCellWidth}%`} key={index} align="left">
                         <Typography bgcolor="grey1.light" p={1} component="div" variant="subtitle">

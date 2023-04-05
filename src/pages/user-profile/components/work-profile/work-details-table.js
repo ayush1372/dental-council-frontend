@@ -1,13 +1,12 @@
 import React from 'react';
 
-// import { useState } from 'react';
 import { Box, Grid, TablePagination } from '@mui/material';
+import { Checkbox } from '@mui/material';
 
 // import { Button } from '../../../../ui/core';
 import { verboseLog } from '../../../../config/debug';
-// import { useDispatch, useSelector } from 'react-redux';
 import GenericTable from '../../../../shared/generic-component/generic-table';
-// import { Checkbox } from '../../../../ui/core';
+import { TextField } from '../../../../ui/core';
 
 function createData(
   name,
@@ -17,7 +16,8 @@ function createData(
   type,
   systemOfMedicine,
   department,
-  designation
+  designation,
+  select
 ) {
   return {
     name,
@@ -28,6 +28,7 @@ function createData(
     systemOfMedicine,
     department,
     designation,
+    select,
   };
 }
 
@@ -64,6 +65,7 @@ function WorkDetailsTable({ FacilityData, trackStatusData }) {
     { title: 'System of Medicine', name: 'systemOfMedicine', type: 'string' },
     { title: 'Department', name: 'department', type: 'string' },
     { title: 'Designation', name: 'designation', type: 'string' },
+    { title: 'Select', name: 'select', type: 'string' },
   ];
 
   const handleDataRowClick = (dataRow) => {
@@ -76,7 +78,7 @@ function WorkDetailsTable({ FacilityData, trackStatusData }) {
     setOrderBy(property);
   };
 
-  [
+  const newRowsData = [
     {
       facilityId: 'IN0910000076',
       facilityName: 'King Georges Medical University Lucknow',
@@ -123,8 +125,46 @@ function WorkDetailsTable({ FacilityData, trackStatusData }) {
       },
 
       { type: 'systemOfMedicine', value: application?.systemOfMedicine },
-      { type: 'department', value: application?.department },
-      { type: 'designation', value: application?.designation }
+      {
+        type: 'department',
+        value: (
+          <TextField
+            variant="outlined"
+            name={'department'}
+            fullWidth
+            defaultValue={'department'}
+            onChange={(e) => {
+              alert(e.target.value);
+            }}
+          />
+        ),
+      },
+      {
+        type: 'designation',
+        value: (
+          <TextField
+            variant="outlined"
+            name={'designation'}
+            fullWidth
+            defaultValue={'designation'}
+            onChange={(e) => {
+              alert(e.target.value);
+            }}
+          />
+        ),
+      },
+      {
+        type: 'select',
+        value: (
+          <Checkbox
+            defaultChecked={true}
+            // checked={true}
+            onChange={(e) => {
+              alert(e.target.checked);
+            }}
+          />
+        ),
+      }
     );
   });
 
@@ -140,7 +180,7 @@ function WorkDetailsTable({ FacilityData, trackStatusData }) {
         orderBy={orderBy}
         onRequestSort={handleRequestSort}
         tableHeader={dataHeader}
-        data={FacilityData ? FacilityData : []}
+        data={newRowsData}
         handleRowClick={handleDataRowClick}
         rowsPerPage={rowsPerPage}
         page={page}

@@ -30,7 +30,33 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
   const [facilityChecked, setFacilityChecked] = useState(true);
   const [organizationChecked, setOrganizationChecked] = useState(false);
   const [tabValue, setTabValue] = useState(0);
-  const [facilityResponseData, setFacilityResponseData] = useState([]);
+  const [facilityDistrict, setFacilityDistrict] = useState([]);
+
+  // eslint-disable-next-line no-unused-vars
+  const [facilityResponseData, setFacilityResponseData] = useState([
+    {
+      facilityId: 'IN0910000076',
+      facilityName: 'King Georges Medical University Lucknow',
+      ownership: 'Government',
+      ownershipCode: 'G',
+      stateName: 'UTTAR PRADESH',
+      stateLGDCode: '9',
+      districtName: 'LUCKNOW',
+      subDistrictName: 'Malihabad',
+      districtLGDCode: '162',
+      subDistrictLGDCode: '819',
+      villageCityTownLGDCode: '',
+      address: 'main road, ',
+      pincode: '110092',
+      latitude: '28.6958080000001',
+      longitude: '77.2061630000001',
+      systemOfMedicineCode: 'M',
+      systemOfMedicine: 'Modern Medicine(Allopathy)',
+      facilityTypeCode: '5',
+      facilityStatus: 'Submitted',
+      facilityType: 'Hospital',
+    },
+  ]);
 
   const onSubmit = () => {
     const currentWorkDetails = {
@@ -115,7 +141,9 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
 
   const fetchDistricts = (stateId, facility) => {
     if (stateId && facility) {
-      dispatch(getFacilityDistrictList(stateId));
+      dispatch(getFacilityDistrictList(stateId)).then((response) => {
+        return setFacilityDistrict(response?.data);
+      });
     } else {
       if (stateId) dispatch(getDistrictList(stateId));
     }
@@ -401,14 +429,19 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
                     onClick={() => {
                       searchFacilitiesHandler();
                     }}
+                    disabled={getValues()?.facilityId?.length < 12}
                   >
                     Search
                   </Button>
+                  {
+                    // eslint-disable-next-line no-console
+                    console.log(getValues()?.facilityId?.length < 12)
+                  }
                 </Box>
               </Grid>
               {showTable && (
                 <Grid item xs={12} padding="10px 0 !important">
-                  <WorkDetailsTable FacilityData={facilityResponseData} />
+                  <WorkDetailsTable FacilityData={facilityResponseData} register={register} />
                 </Grid>
               )}
             </Grid>
@@ -416,7 +449,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
 
           {tabValue === 1 && (
             <Grid container spacing={2} mt={2} ml={1}>
-              <Grid item xs={12} md={4} lg={4}>
+              <Grid item xs={12} md={3} lg={3}>
                 <Typography variant="subtitle2" color="inputTextColor.main">
                   State
                   <Typography component="span" color="error.main">
@@ -435,7 +468,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
                   options={createSelectFieldData(statesList)}
                 />
               </Grid>
-              <Grid item xs={12} md={4} lg={4}>
+              <Grid item xs={12} md={3} lg={3}>
                 <Typography variant="subtitle2" color="inputTextColor.main">
                   District
                   <Typography component="span" color="error.main">
@@ -451,15 +484,12 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
                   {...register('districtLGDCode', {
                     required: 'This field is required',
                   })}
-                  options={createSelectFieldData(districtsList)}
+                  options={createSelectFieldData(facilityDistrict)}
                 />
               </Grid>
-              <Grid item xs={12} md={4} lg={4}>
+              <Grid item xs={12} md={3} lg={3}>
                 <Typography variant="subtitle2" color="inputTextColor.main">
                   Facility Name
-                  <Typography component="span" color="error.main">
-                    *
-                  </Typography>
                 </Typography>
                 <TextField
                   fullWidth
@@ -472,9 +502,28 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
                   options={[]}
                 />
               </Grid>
-              <Grid item xs={12} padding="10px 0 !important">
-                <WorkDetailsTable />
+              <Grid item xs={12} md={3} lg={3} mt={3}>
+                <Box ml={1}>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={() => {
+                      searchFacilitiesHandler();
+                    }}
+                    disabled={
+                      getValues()?.stateLGDCode?.length === 0 ||
+                      getValues()?.districtLGDCode?.length === 0
+                    }
+                  >
+                    Search
+                  </Button>
+                </Box>
               </Grid>
+              {showTable && (
+                <Grid item xs={12} padding="10px 0 !important">
+                  <WorkDetailsTable FacilityData={facilityResponseData} register={register} />
+                </Grid>
+              )}
             </Grid>
           )}
           {tabValue === 2 && (
