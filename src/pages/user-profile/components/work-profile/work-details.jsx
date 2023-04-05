@@ -21,7 +21,7 @@ import {
 import { Button, Checkbox, RadioGroup, Select, TextField } from '../../../../ui/core';
 import successToast from '../../../../ui/core/toaster';
 import { getFacilityDistrictList } from './district-api';
-// import FacilityDetailsTable from './facility-details-table';
+import FacilityDetailsTable from './facility-details-table';
 import WorkDetailsTable from './work-details-table';
 
 const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watch }) => {
@@ -34,6 +34,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
   const [facilityDistrict, setFacilityDistrict] = useState([]);
   const [facilityChecked, setFacilityChecked] = useState(true);
   const [organizationChecked, setOrganizationChecked] = useState(false);
+  const [declaredFacilityDistrict, setDeclaredFacilityDistrict] = useState([]);
 
   const { loginData } = useSelector((state) => state.loginReducer);
   const { registrationDetails } = useSelector((state) => state.doctorUserProfileReducer);
@@ -484,19 +485,20 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
                     onClick={() => {
                       searchFacilitiesHandler();
                     }}
-                    disabled={getValues()?.facilityId?.length < 12}
                   >
                     Search
                   </Button>
-                  {
-                    // eslint-disable-next-line no-console
-                    console.log(getValues()?.facilityId?.length < 12)
-                  }
                 </Box>
               </Grid>
               {showTable && (
                 <Grid item xs={12} padding="10px 0 !important">
-                  <WorkDetailsTable FacilityData={facilityResponseData} register={register} />
+                  <WorkDetailsTable
+                    FacilityData={facilityResponseData}
+                    register={register}
+                    setFacilityResponseData={setFacilityResponseData}
+                    setDeclaredFacilityDistrict={setDeclaredFacilityDistrict}
+                    declaredFacilityDistrict={declaredFacilityDistrict}
+                  />
                 </Grid>
               )}
             </Grid>
@@ -576,7 +578,13 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
               </Grid>
               {showTable && (
                 <Grid item xs={12} padding="10px 0 !important">
-                  <WorkDetailsTable FacilityData={facilityResponseData} register={register} />
+                  <WorkDetailsTable
+                    FacilityData={facilityResponseData}
+                    register={register}
+                    setFacilityResponseData={setFacilityResponseData}
+                    setDeclaredFacilityDistrict={setDeclaredFacilityDistrict}
+                    declaredFacilityDistrict={declaredFacilityDistrict}
+                  />
                 </Grid>
               )}
             </Grid>
@@ -916,6 +924,24 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
           </Grid>
         </>
       )}
+      {declaredFacilityDistrict?.length > 0 && (
+        <Grid container>
+          <Grid item xs={12}>
+            <Typography
+              bgcolor="grey1.light"
+              p={1}
+              component="div"
+              color="tabHighlightedBackgroundColor.main"
+              variant="h3"
+            >
+              Declared Place Of Work
+            </Typography>
+          </Grid>
+          <Grid item xs={12} padding="10px 0 !important">
+            <FacilityDetailsTable declaredFacilityDistrict={declaredFacilityDistrict} />
+          </Grid>
+        </Grid>
+      )}
       {(organizationChecked || facilityChecked) && (
         <Grid
           container
@@ -963,24 +989,6 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
           </Grid>
         </Grid>
       )}
-      {/* {!showTable && tabValue === 0 && (
-        <Grid container>
-          <Grid item xs={12}>
-            <Typography
-              bgcolor="grey1.light"
-              p={1}
-              component="div"
-              color="tabHighlightedBackgroundColor.main"
-              variant="h3"
-            >
-              Declared Place Of Work
-            </Typography>
-          </Grid>
-          <Grid item xs={12} padding="10px 0 !important">
-            <FacilityDetailsTable />
-          </Grid>
-        </Grid>
-      )} */}
     </>
   );
 };

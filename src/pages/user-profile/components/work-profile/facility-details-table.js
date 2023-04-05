@@ -35,7 +35,7 @@ function createData(
   };
 }
 
-function FacilityDetailsTable(props) {
+function FacilityDetailsTable({ declaredFacilityDistrict, trackStatusData }) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState({});
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -43,7 +43,7 @@ function FacilityDetailsTable(props) {
   const [selectedRowData, setRowData] = React.useState({});
   const [confirmationModal, setConfirmationModal] = useState(false);
   //   const dispatch = useDispatch();
-  verboseLog('selectedRowData', selectedRowData, props);
+  verboseLog('selectedRowData', selectedRowData);
 
   const handleStatusClick = () => {
     setConfirmationModal(true);
@@ -76,8 +76,8 @@ function FacilityDetailsTable(props) {
       type: 'string',
     },
     { title: 'System of Medicine', name: 'systemOfMedicine', type: 'string' },
-    { title: 'Department', name: 'department', type: 'string' },
-    { title: 'Designation', name: 'designation', type: 'string' },
+    { title: 'Department', name: 'department', type: 'string', flag: 'declareFacility' },
+    { title: 'Designation', name: 'designation', type: 'string', flag: 'declareFacility' },
     { title: 'Status', name: 'status', type: 'string' },
   ];
 
@@ -91,22 +91,11 @@ function FacilityDetailsTable(props) {
     setOrderBy(property);
   };
 
-  const newRowsData = [
-    {
-      name: 'krishna',
-      address: 'eluru',
-      state: 'andhra',
-      district: 'eluru',
-      type: 'nursing',
-      systemOfMedicine: 'nursing',
-      department: 'nursing',
-      designation: 'senior',
-    },
-  ].map((application) => {
+  const newRowsData = declaredFacilityDistrict.map((application) => {
     return createData(
       {
         type: 'name',
-        value: application?.name,
+        value: application?.facilityName,
       },
       {
         type: 'address',
@@ -114,15 +103,15 @@ function FacilityDetailsTable(props) {
       },
       {
         type: 'state',
-        value: application?.state,
+        value: application?.stateName,
       },
       {
         type: 'district',
-        value: application.district,
+        value: application.districtName,
       },
       {
         type: 'type',
-        value: application?.type,
+        value: application?.facilityType,
       },
 
       { type: 'systemOfMedicine', value: application?.systemOfMedicine },
@@ -131,17 +120,6 @@ function FacilityDetailsTable(props) {
       { type: 'status', onClickCallback: handleStatusClick }
     );
   });
-
-  //   const handleChangePage = (event, newPage) => {
-  //     setPage(newPage);
-  //     // props.getTableData(newPage + 1);
-  //     window.scrollTo({
-  //       top: 0,
-  //       behavior: 'smooth',
-  //     });
-  //     let finalSearchData = { ...props.trackValues, pageNo: newPage };
-  //     dispatch(trackStatus(finalSearchData));
-  //   };
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
@@ -168,7 +146,7 @@ function FacilityDetailsTable(props) {
           <TablePagination
             rowsPerPageOptions={[]}
             component="div"
-            count={props?.trackStatusData?.total_no_of_records || '0'}
+            count={trackStatusData?.total_no_of_records || '0'}
             rowsPerPage={rowsPerPage}
             page={page}
             //   onPageChange={handleChangePage}

@@ -32,9 +32,16 @@ function createData(
   };
 }
 
-function WorkDetailsTable({ FacilityData, trackStatusData }) {
+function WorkDetailsTable({
+  FacilityData,
+  trackStatusData,
+  setFacilityResponseData,
+  declaredFacilityDistrict,
+  setDeclaredFacilityDistrict,
+}) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState({});
+  const [currentRowIndex, setCurrentRowIndex] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
   const [selectedRowData, setRowData] = React.useState({});
@@ -76,6 +83,10 @@ function WorkDetailsTable({ FacilityData, trackStatusData }) {
     const isAsc = orderBy.name === property.name && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
+  };
+
+  const viewCallback = (rowIndex) => {
+    setCurrentRowIndex(rowIndex);
   };
 
   const newRowsData = [
@@ -134,10 +145,12 @@ function WorkDetailsTable({ FacilityData, trackStatusData }) {
             fullWidth
             defaultValue={'department'}
             onChange={(e) => {
-              alert(e.target.value);
+              FacilityData[currentRowIndex].department = e.target.value;
+              setFacilityResponseData([...FacilityData]);
             }}
           />
         ),
+        onClickCallback: viewCallback,
       },
       {
         type: 'designation',
@@ -148,22 +161,30 @@ function WorkDetailsTable({ FacilityData, trackStatusData }) {
             fullWidth
             defaultValue={'designation'}
             onChange={(e) => {
-              alert(e.target.value);
+              FacilityData[currentRowIndex].designation = e.target.value;
+              setFacilityResponseData([...FacilityData]);
             }}
           />
         ),
+        onClickCallback: viewCallback,
       },
       {
         type: 'select',
         value: (
           <Checkbox
             defaultChecked={true}
-            // checked={true}
             onChange={(e) => {
-              alert(e.target.checked);
+              if (e.target.checked) {
+                declaredFacilityDistrict.push(FacilityData[currentRowIndex]);
+                setDeclaredFacilityDistrict([...declaredFacilityDistrict]);
+              } else {
+                declaredFacilityDistrict.splice(currentRowIndex, 1);
+                setDeclaredFacilityDistrict([...declaredFacilityDistrict]);
+              }
             }}
           />
         ),
+        onClickCallback: viewCallback,
       }
     );
   });
