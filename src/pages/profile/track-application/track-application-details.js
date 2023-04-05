@@ -1,4 +1,3 @@
-import { Chip } from '@material-ui/core';
 import CheckCircle from '@mui/icons-material/CheckCircle';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { Button, Divider, Grid, Typography } from '@mui/material';
@@ -9,6 +8,7 @@ import APPLICATIONICONBW from '../../../assets/images/application-approved-icon-
 import { monthsData } from '../../../constants/common-data';
 import { typeOfApplication, workflowStatusId } from '../../../helpers/functions/common-functions';
 import VerticalLinearStepper from '../../../shared/stepper/vertical-stepper';
+import { Chip } from '../../../ui/core';
 export function TrackApplicationDetails({
   showViewProfile,
   setShowTrackApplicationTable,
@@ -21,10 +21,8 @@ export function TrackApplicationDetails({
     setShowTrackApplicationTable(true);
     setShowTrackApplication(false);
   };
-  const currentStatus = useSelector((state) =>
-    state?.common?.doctorTrackApplicationTableData?.data?.data?.application_details.map(
-      (label) => label?.workflow_status_id
-    )
+  const currentStatus = useSelector(
+    (state) => state?.common?.doctorTrackApplicationTableData?.data?.data?.current_status
   );
   const getDate = (date) => {
     const dateObj = new Date(date);
@@ -83,11 +81,7 @@ export function TrackApplicationDetails({
             </Box>
             <Chip
               type={nmcApproveStatus ? 'approved' : ''}
-              label={
-                <Typography variant="body4">
-                  {nmcApproveStatus ? 'APPROVED' : 'NOT APPROVED'}
-                </Typography>
-              }
+              label={nmcApproveStatus ? 'APPROVED' : 'NOT APPROVED'}
             />
           </Box>
           <Box boxShadow="1" p={2} borderRadius="5px">
@@ -101,7 +95,7 @@ export function TrackApplicationDetails({
         <Grid item xs={12} md={3}>
           <Box boxShadow="1" p={2} borderRadius="5px">
             <Typography variant="body1" fontWeight="600" color="textPrimary.main">
-              Application information
+              Application Information
             </Typography>
             <Grid container spacing={2} mt={1}>
               <Grid item xs={12} xl={6}>
@@ -109,7 +103,7 @@ export function TrackApplicationDetails({
                   Request ID
                 </Typography>
                 <Typography variant="subtitle2" color="textPrimary.main">
-                  {ApplicationStatus?.request_id}
+                  {ApplicationStatus?.request_id ? ApplicationStatus?.request_id : ''}
                 </Typography>
               </Grid>
               <Grid item xs={12} xl={6}>
@@ -121,7 +115,9 @@ export function TrackApplicationDetails({
                   color="textPrimary.main"
                   sx={{ wordBreak: 'break-all' }}
                 >
-                  {typeOfApplication(ApplicationStatus?.application_type)}
+                  {typeOfApplication(ApplicationStatus?.application_type)
+                    ? typeOfApplication(ApplicationStatus?.application_type)
+                    : ''}
                 </Typography>
               </Grid>
               <Grid item xs={12} xl={6}>
@@ -129,15 +125,17 @@ export function TrackApplicationDetails({
                   Date of Submission
                 </Typography>
                 <Typography variant="subtitle2" color="textPrimary.main">
-                  {getDate(ApplicationStatus?.submission_date)}
+                  {getDate(ApplicationStatus?.submission_date)
+                    ? getDate(ApplicationStatus?.submission_date)
+                    : ''}
                 </Typography>
               </Grid>
               <Grid item xs={12} xl={6}>
                 <Typography variant="body3" color="grey.label">
-                  Pendency (days)
+                  Pendency days
                 </Typography>
                 <Typography variant="subtitle2" color="textPrimary.main">
-                  {ApplicationStatus?.pendency}
+                  {ApplicationStatus?.pendency ? ApplicationStatus?.pendency : ''}
                 </Typography>
               </Grid>
               <Grid item xs={12} mt={3}>
@@ -146,7 +144,7 @@ export function TrackApplicationDetails({
                 </Typography>
                 <Typography variant="subtitle2" component="div" color="primary.main">
                   <FiberManualRecordIcon sx={{ fontSize: '8px' }} />
-                  {workflowStatusId(currentStatus)}
+                  {workflowStatusId(currentStatus) ? workflowStatusId(currentStatus) : ''}
                 </Typography>
               </Grid>
             </Grid>
