@@ -40,30 +40,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
   const { registrationDetails } = useSelector((state) => state.doctorUserProfileReducer);
 
   // eslint-disable-next-line no-unused-vars
-  const [facilityResponseData, setFacilityResponseData] = useState([
-    {
-      facilityId: 'IN0910000076',
-      facilityName: 'King Georges Medical University Lucknow',
-      ownership: 'Government',
-      ownershipCode: 'G',
-      stateName: 'UTTAR PRADESH',
-      stateLGDCode: '9',
-      districtName: 'LUCKNOW',
-      subDistrictName: 'Malihabad',
-      districtLGDCode: '162',
-      subDistrictLGDCode: '819',
-      villageCityTownLGDCode: '',
-      address: 'main road, ',
-      pincode: '110092',
-      latitude: '28.6958080000001',
-      longitude: '77.2061630000001',
-      systemOfMedicineCode: 'M',
-      systemOfMedicine: 'Modern Medicine(Allopathy)',
-      facilityTypeCode: '5',
-      facilityStatus: 'Submitted',
-      facilityType: 'Hospital',
-    },
-  ]);
+  const [facilityResponseData, setFacilityResponseData] = useState([]);
 
   const onSubmit = () => {
     const currentWorkDetails = {
@@ -148,9 +125,9 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
     };
     dispatch(getFacilitiesData(searchFacilities))
       .then((response) => {
-        // eslint-disable-next-line no-console
-        console.log(response?.data);
-        setFacilityResponseData(response?.data);
+        if (response?.data?.message === 'Request processed successfully') {
+          setFacilityResponseData(response?.data?.facilities);
+        }
       })
       .catch((error) => {
         successToast(
