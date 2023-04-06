@@ -62,7 +62,7 @@ export default function SuccessModal() {
             color="warning"
             onClick={handleClose}
           >
-            Ok
+            Login with New Password
           </Button>
         </Box>
       </Container>

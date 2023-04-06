@@ -19,6 +19,7 @@ export const API = {
     createPersonalDetails: '/api/v1/abdm/nmr/health-professional/personal',
     additionalQualifications:
       '/api/v1/abdm/nmr/health-professional/{healthProfessionalId}/qualifications',
+    searchFacilities: '/api/v1/abdm/nmr/facilities/search',
   },
   common: {
     states: 'api/v1/abdm/nmr/countries/356/states',
@@ -84,6 +85,7 @@ export const API = {
   },
   forgotPassword: {
     setPassword: '/api/v1/abdm/nmr/user/set-password',
+    reSetPassword: 'api/v1/abdm/nmr/user/reset-password',
   },
   searchDoctor: {
     searchDoctorDetails: 'api/v1/abdm/nmr/health-professional/search',
