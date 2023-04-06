@@ -35,7 +35,7 @@ function createData(
   };
 }
 
-function FacilityDetailsTable({ declaredFacilityDistrict, trackStatusData }) {
+function FacilityDetailsTable({ declaredFacilityData, trackStatusData }) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState({});
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -91,7 +91,7 @@ function FacilityDetailsTable({ declaredFacilityDistrict, trackStatusData }) {
     setOrderBy(property);
   };
 
-  const newRowsData = declaredFacilityDistrict.map((application) => {
+  const newRowsData = declaredFacilityData.map((application) => {
     return createData(
       {
         type: 'name',

@@ -34,36 +34,13 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
   const [facilityDistrict, setFacilityDistrict] = useState([]);
   const [facilityChecked, setFacilityChecked] = useState(true);
   const [organizationChecked, setOrganizationChecked] = useState(false);
-  const [declaredFacilityDistrict, setDeclaredFacilityDistrict] = useState([]);
+  const [declaredFacilityData, setDeclaredFacilityDistrict] = useState([]);
 
   const { loginData } = useSelector((state) => state.loginReducer);
   const { registrationDetails } = useSelector((state) => state.doctorUserProfileReducer);
 
   // eslint-disable-next-line no-unused-vars
-  const [facilityResponseData, setFacilityResponseData] = useState([
-    {
-      facilityId: 'IN0910000076',
-      facilityName: 'King Georges Medical University Lucknow',
-      ownership: 'Government',
-      ownershipCode: 'G',
-      stateName: 'UTTAR PRADESH',
-      stateLGDCode: '9',
-      districtName: 'LUCKNOW',
-      subDistrictName: 'Malihabad',
-      districtLGDCode: '162',
-      subDistrictLGDCode: '819',
-      villageCityTownLGDCode: '',
-      address: 'main road, ',
-      pincode: '110092',
-      latitude: '28.6958080000001',
-      longitude: '77.2061630000001',
-      systemOfMedicineCode: 'M',
-      systemOfMedicine: 'Modern Medicine(Allopathy)',
-      facilityTypeCode: '5',
-      facilityStatus: 'Submitted',
-      facilityType: 'Hospital',
-    },
-  ]);
+  const [facilityResponseData, setFacilityResponseData] = useState([]);
 
   const onSubmit = () => {
     const currentWorkDetails = {
@@ -75,22 +52,25 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
         },
         current_work_details: [
           {
-            work_organization: getValues().workingOrganizationName,
+            facility_id: declaredFacilityData?.facilityId || '',
+            facility_type_id: declaredFacilityData?.facilityTypeCode || '',
             organization_type: getValues().organizationType,
+            work_organization: getValues().workingOrganizationName,
+            url: getValues().telecommunicationURL,
             address: {
               id: null,
+              country: getCountryData(getValues().Country),
+              state: getStateData(getValues().state),
+              district: getDistrictData(getValues().District),
+              village: getVillageData(getValues().Area),
+              sub_district: getSubDistrictData(getValues().SubDistrict),
+              pincode: getValues().pincode,
               address_line1: getValues().Address,
               street: getValues().Street,
               landmark: getValues().Landmark,
               locality: getValues().Locality,
-              country: getCountryData(getValues().Country),
-              state: getStateData(getValues().state),
-              district: getDistrictData(getValues().District),
-              sub_district: getSubDistrictData(getValues().SubDistrict),
-              village: getVillageData(getValues().Area),
-              url: getValues().telecommunicationURL,
-              pincode: getValues().pincode,
             },
+            registration_no: registrationDetails?.registration_detail_to?.registration_number,
             experience_in_years: workExpierence,
           },
         ],
@@ -129,6 +109,8 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
   };
 
   const handleTabChange = (_, value) => {
+    setFacilityResponseData([]);
+    setDeclaredFacilityDistrict([]);
     setTabValue(value);
   };
 
@@ -136,7 +118,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
     const values = getValues();
     const searchFacilities = {
       page: 0,
-      ownershipCode: '',
+      ownershipCode: 'G',
       resultsPerPage: 10,
       facilityId: values.facilityId || '',
       facilityName: values.facilityName || '',
@@ -145,9 +127,9 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
     };
     dispatch(getFacilitiesData(searchFacilities))
       .then((response) => {
-        // // eslint-disable-next-line no-console
-        // console.log(response?.data);
-        setFacilityResponseData(response?.data);
+        if (response?.data?.message === 'Request processed successfully') {
+          setFacilityResponseData(response?.data?.facilities);
+        }
       })
       .catch((error) => {
         successToast(
@@ -497,7 +479,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
                     register={register}
                     setFacilityResponseData={setFacilityResponseData}
                     setDeclaredFacilityDistrict={setDeclaredFacilityDistrict}
-                    declaredFacilityDistrict={declaredFacilityDistrict}
+                    declaredFacilityData={declaredFacilityData}
                   />
                 </Grid>
               )}
@@ -583,7 +565,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
                     register={register}
                     setFacilityResponseData={setFacilityResponseData}
                     setDeclaredFacilityDistrict={setDeclaredFacilityDistrict}
-                    declaredFacilityDistrict={declaredFacilityDistrict}
+                    declaredFacilityData={declaredFacilityData}
                   />
                 </Grid>
               )}
@@ -924,7 +906,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
           </Grid>
         </>
       )}
-      {declaredFacilityDistrict?.length > 0 && (
+      {declaredFacilityData?.length > 0 && (
         <Grid container>
           <Grid item xs={12}>
             <Typography
@@ -938,7 +920,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
             </Typography>
           </Grid>
           <Grid item xs={12} padding="10px 0 !important">
-            <FacilityDetailsTable declaredFacilityDistrict={declaredFacilityDistrict} />
+            <FacilityDetailsTable declaredFacilityData={declaredFacilityData} />
           </Grid>
         </Grid>
       )}
