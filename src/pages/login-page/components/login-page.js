@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 
-import TaskAltIcon from '@mui/icons-material/TaskAlt';
-import { Box, Dialog, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
@@ -11,7 +10,6 @@ import {
   generateCaptchaImage,
   getCaptchaEnabledFlagValue,
 } from '../../../store/actions/login-action';
-import { Button } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
 // import LoginWrapper from '../index';
 import ConfirmOTP from './confirm-otp';
@@ -21,6 +19,7 @@ import ForgotPassword from './forgot-password';
 import { Login } from './login-data';
 // import LoginPage from './components/login-page';
 import NewPasswordSetup from './new-password-setup';
+import SuccessModal from './success-popup';
 
 export function LoginPage() {
   const dispatch = useDispatch();
@@ -100,55 +99,14 @@ export function LoginPage() {
         />
       )}
 
-      <Dialog
-        sx={{
-          '.MuiPaper-root': {
-            borderRadius: '10px',
-          },
-        }}
-        open={showPopup}
-        onClose={() => {
-          setShowPopup(false);
-        }}
-      >
-        <Box p={2} width="504px" height="400">
-          <Box display={'flex'} flexDirection="column" width="100%">
-            <Box display={'flex'} justifyContent="center">
-              <TaskAltIcon color="success" fontSize="width80" />
-            </Box>
-            <Typography
-              color="success.main"
-              variant="h3"
-              component="div"
-              display={'flex'}
-              justifyContent="center"
-            >
-              Success!
-            </Typography>
-          </Box>
-          <Box mt={2} textAlign="center">
-            <Typography color="grey.context" variant="h3">
-              Your password has been <br />
-              successfully Changed.
-            </Typography>
-          </Box>
-          <Box display={'flex'} mt={1} justifyContent="center">
-            <Button
-              onClick={() => {
-                resetStep();
-                setShowPopup(false);
-              }}
-              color="secondary"
-              variant="contained"
-              sx={{
-                margin: '0 4px',
-              }}
-            >
-              Login with New Password
-            </Button>
-          </Box>
-        </Box>
-      </Dialog>
+      {showPopup && (
+        <SuccessModal
+          open={showPopup}
+          setOpen={() => setShowPopup(false)}
+          text={' Your password has been successfully Changed.'}
+          successRegistration={true}
+        />
+      )}
     </Box>
   );
 }
