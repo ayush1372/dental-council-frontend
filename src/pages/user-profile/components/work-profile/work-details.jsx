@@ -98,8 +98,8 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
         languages_known_ids: getLanguageData(getValues().LanguageSpoken),
       },
     };
-    // eslint-disable-next-line no-console
-    console.log('currentWorkDetails', currentWorkDetails);
+    // // eslint-disable-next-line no-console
+    // console.log('currentWorkDetails', currentWorkDetails);
 
     dispatch(updateDoctorWorkDetails(currentWorkDetails, loginData?.data?.profile_id))
       .then(() => {
@@ -145,8 +145,8 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
     };
     dispatch(getFacilitiesData(searchFacilities))
       .then((response) => {
-        // eslint-disable-next-line no-console
-        console.log(response?.data);
+        // // eslint-disable-next-line no-console
+        // console.log(response?.data);
         setFacilityResponseData(response?.data);
       })
       .catch((error) => {
