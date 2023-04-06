@@ -96,7 +96,6 @@ function DashboardControlledTable(props) {
   const viewCallback = (event, row) => {
     event.preventDefault();
     event.stopPropagation();
-    // setRowData(row);
     props.setShowViewPorfile(true);
     props.setShowDashboard(false);
     props.setShowTable(false);

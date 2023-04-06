@@ -105,6 +105,16 @@ export const userGroupType = (userGroupID) => {
   };
   return userGroupTypeObj[userGroupID];
 };
+export const userGroupId = (userGroupID) => {
+  const userGroupTypeObj = {
+    1: 'Health Professional',
+    2: 'State Medical Council',
+    3: 'National Medical Council',
+    4: 'College',
+    7: 'NBE',
+  };
+  return userGroupTypeObj[userGroupID];
+};
 
 export const userGroupTypeForSession = (userGroupID) => {
   const userGroupTypeObj = {
@@ -139,6 +149,65 @@ export const userActionType = (actionType) => {
     'Query Raised': 3,
     Approved: 4,
     Rejected: 5,
+  };
+  return actionTypeObj[actionType];
+};
+export const userActionId = (actionType) => {
+  const actionTypeObj = {
+    1: 'Submitted',
+    2: 'Forwarded',
+    3: 'Query Raised',
+    4: 'Approve',
+    5: 'Rejected',
+    6: 'Temporary suspension',
+    7: 'Permanent Suspension',
+  };
+  return actionTypeObj[actionType];
+};
+export const trackApplicationLabel = (userGroupID) => {
+  const userGroupTypeObj = {
+    Submitted: 'Completed',
+    Forwarded: 'Completed',
+    'Query Raised': 'Query Raised',
+    Approve: 'Completed',
+    Rejected: 'Rejected',
+  };
+  return userGroupTypeObj[userGroupID];
+};
+
+export const trackApplicationStatusColor = (actionType) => {
+  const actionTypeObj = {
+    Submitted: 'green',
+    Forwarded: 'green',
+    'Query Raised': 'orange',
+    Approve: 'green',
+    Rejected: 'red',
+    'Temporary suspension': 'red',
+    'Permanent Suspension': 'red',
+  };
+  return actionTypeObj[actionType];
+};
+export const workflowStatusId = (actionType) => {
+  const actionTypeObj = {
+    1: ' Pending',
+    2: ' Approved',
+    3: ' Query Raised',
+    4: ' Rejected',
+    5: ' Suspend',
+    6: ' Blacklisted',
+  };
+  return actionTypeObj[actionType];
+};
+export const typeOfApplication = (actionType) => {
+  const actionTypeObj = {
+    1: 'HP Registration',
+    2: 'HP Modification',
+    3: 'Temporary Suspension',
+    4: 'Permanent Suspension',
+    5: 'Activate Licence',
+    6: 'College Registration',
+    7: 'Foreign HP Registration',
+    8: 'Qualification Work flow',
   };
   return actionTypeObj[actionType];
 };
