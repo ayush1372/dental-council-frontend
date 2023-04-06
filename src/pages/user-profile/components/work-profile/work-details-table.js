@@ -36,7 +36,7 @@ function WorkDetailsTable({
   FacilityData,
   trackStatusData,
   setFacilityResponseData,
-  declaredFacilityDistrict,
+  declaredFacilityData,
   setDeclaredFacilityDistrict,
 }) {
   const [order, setOrder] = React.useState('asc');
@@ -175,11 +175,11 @@ function WorkDetailsTable({
             defaultChecked={true}
             onChange={(e) => {
               if (e.target.checked) {
-                declaredFacilityDistrict.push(FacilityData[currentRowIndex]);
-                setDeclaredFacilityDistrict([...declaredFacilityDistrict]);
+                declaredFacilityData.push(FacilityData[currentRowIndex]);
+                setDeclaredFacilityDistrict([...declaredFacilityData]);
               } else {
-                declaredFacilityDistrict.splice(currentRowIndex, 1);
-                setDeclaredFacilityDistrict([...declaredFacilityDistrict]);
+                declaredFacilityData.splice(currentRowIndex, 1);
+                setDeclaredFacilityDistrict([...declaredFacilityData]);
               }
             }}
           />

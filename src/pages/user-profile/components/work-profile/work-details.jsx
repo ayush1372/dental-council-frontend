@@ -34,7 +34,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
   const [facilityDistrict, setFacilityDistrict] = useState([]);
   const [facilityChecked, setFacilityChecked] = useState(true);
   const [organizationChecked, setOrganizationChecked] = useState(false);
-  const [declaredFacilityDistrict, setDeclaredFacilityDistrict] = useState([]);
+  const [declaredFacilityData, setDeclaredFacilityDistrict] = useState([]);
 
   const { loginData } = useSelector((state) => state.loginReducer);
   const { registrationDetails } = useSelector((state) => state.doctorUserProfileReducer);
@@ -75,22 +75,25 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
         },
         current_work_details: [
           {
-            work_organization: getValues().workingOrganizationName,
+            facility_id: declaredFacilityData?.facilityId || '',
+            facility_type_id: declaredFacilityData?.facilityTypeCode || '',
             organization_type: getValues().organizationType,
+            work_organization: getValues().workingOrganizationName,
+            url: getValues().telecommunicationURL,
             address: {
               id: null,
+              country: getCountryData(getValues().Country),
+              state: getStateData(getValues().state),
+              district: getDistrictData(getValues().District),
+              village: getVillageData(getValues().Area),
+              sub_district: getSubDistrictData(getValues().SubDistrict),
+              pincode: getValues().pincode,
               address_line1: getValues().Address,
               street: getValues().Street,
               landmark: getValues().Landmark,
               locality: getValues().Locality,
-              country: getCountryData(getValues().Country),
-              state: getStateData(getValues().state),
-              district: getDistrictData(getValues().District),
-              sub_district: getSubDistrictData(getValues().SubDistrict),
-              village: getVillageData(getValues().Area),
-              url: getValues().telecommunicationURL,
-              pincode: getValues().pincode,
             },
+            registration_no: registrationDetails?.registration_detail_to?.registration_number,
             experience_in_years: workExpierence,
           },
         ],
@@ -497,7 +500,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
                     register={register}
                     setFacilityResponseData={setFacilityResponseData}
                     setDeclaredFacilityDistrict={setDeclaredFacilityDistrict}
-                    declaredFacilityDistrict={declaredFacilityDistrict}
+                    declaredFacilityData={declaredFacilityData}
                   />
                 </Grid>
               )}
@@ -583,7 +586,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
                     register={register}
                     setFacilityResponseData={setFacilityResponseData}
                     setDeclaredFacilityDistrict={setDeclaredFacilityDistrict}
-                    declaredFacilityDistrict={declaredFacilityDistrict}
+                    declaredFacilityData={declaredFacilityData}
                   />
                 </Grid>
               )}
@@ -924,7 +927,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
           </Grid>
         </>
       )}
-      {declaredFacilityDistrict?.length > 0 && (
+      {declaredFacilityData?.length > 0 && (
         <Grid container>
           <Grid item xs={12}>
             <Typography
@@ -938,7 +941,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
             </Typography>
           </Grid>
           <Grid item xs={12} padding="10px 0 !important">
-            <FacilityDetailsTable declaredFacilityDistrict={declaredFacilityDistrict} />
+            <FacilityDetailsTable declaredFacilityData={declaredFacilityData} />
           </Grid>
         </Grid>
       )}
