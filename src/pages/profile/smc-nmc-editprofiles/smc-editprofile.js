@@ -10,11 +10,13 @@ import { SearchableDropdown } from '../../../shared/autocomplete/searchable-drop
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import { getUpdatedsmcProfileData } from '../../../store/actions/smc-actions';
 import { Button, TextField } from '../../../ui/core';
+
 const SmcEditProfile = (props) => {
   const userData = useSelector((state) => state?.smc?.smcProfileData?.data);
+  const { councilNames } = useSelector((state) => state.common);
+
   const [successModalPopup, setSuccessModalPopup] = useState(false);
 
-  const { councilNames } = useSelector((state) => state.common);
   const {
     register,
     handleSubmit,
@@ -45,24 +47,24 @@ const SmcEditProfile = (props) => {
   });
   const dispatch = useDispatch();
 
-  let smcUpdatedData = {
-    id: userData?.id,
-    user_id: getValues().user_id,
-    first_name: getValues().first_name,
-    last_name: getValues().last_name,
-    middle_name: getValues().middle_name,
-    state_medical_council: {
-      id: getValues().RegistrationCouncil?.id,
-      code: getValues().RegistrationCouncil?.code,
-      name: getValues().RegistrationCouncil?.name,
-    },
-    ndhm_enrollment: getValues().ndhm_enrollment,
-    enrolled_number: getValues().enrolled_number,
-    display_name: getValues().first_name,
-    email_id: getValues().email_id,
-    mobile_no: getValues().mobile_no,
-  };
   const onsubmit = () => {
+    let smcUpdatedData = {
+      id: userData?.id,
+      user_id: getValues().user_id,
+      first_name: getValues().first_name,
+      last_name: getValues().last_name,
+      middle_name: getValues().middle_name,
+      state_medical_council: {
+        id: getValues().RegistrationCouncil?.id,
+        code: getValues().RegistrationCouncil?.code,
+        name: getValues().RegistrationCouncil?.name,
+      },
+      ndhm_enrollment: getValues().ndhm_enrollment,
+      enrolled_number: getValues().enrolled_number,
+      display_name: getValues().first_name,
+      email_id: getValues().email_id,
+      mobile_no: getValues().mobile_no,
+    };
     dispatch(getUpdatedsmcProfileData(smcUpdatedData)).then((response) => {
       if (response?.data?.email_id.length > 0) {
         setSuccessModalPopup(true);
@@ -147,7 +149,6 @@ const SmcEditProfile = (props) => {
             error={errors.email_id?.message}
             {...register('email_id', {
               required: 'Email ID is required',
-
               pattern: {
                 value:
                   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
@@ -218,10 +219,8 @@ const SmcEditProfile = (props) => {
           color="secondary"
           sx={{
             mr: 2,
-
             width: {
               xs: '100%',
-
               md: 'fit-content',
             },
           }}
@@ -236,7 +235,6 @@ const SmcEditProfile = (props) => {
           sx={{
             width: {
               xs: '100%',
-
               md: 'fit-content',
             },
           }}
