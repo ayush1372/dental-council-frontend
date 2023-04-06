@@ -456,15 +456,7 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
               {...register('Country', {
                 required: 'Country is required',
               })}
-              options={
-                countriesList?.length > 0
-                  ? createSelectFieldData(
-                      countriesList?.filter(function (item) {
-                        return item.name === 'India';
-                      })
-                    )
-                  : []
-              }
+              options={countriesList?.length > 0 ? createSelectFieldData(countriesList, 'id') : []}
               MenuProps={{
                 style: {
                   maxHeight: 250,
@@ -494,7 +486,7 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
               options={createSelectFieldData(statesList)}
             />
           </Grid>
-          <Grid item xs={12} md={3} lg={4}>
+          <Grid item xs={12} md={4} lg={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
               District
               <Typography component="span" color="error.main">
@@ -564,9 +556,9 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
               }}
             />
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={3}>
             <Typography variant="subtitle2" color="inputTextColor.main">
-              Pincode
+              Postal code
               <Typography component="span" color="error.main">
                 *
               </Typography>

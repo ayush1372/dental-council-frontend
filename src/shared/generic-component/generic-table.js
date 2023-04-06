@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useState } from 'react';
 
 import MoreVertSharpIcon from '@mui/icons-material/MoreVertSharp';
-import { Box, Link, Paper, Table, TableSortLabel } from '@mui/material';
+import { Box, Link, Paper, Table, TableSortLabel, Typography } from '@mui/material';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import TableBody from '@mui/material/TableBody';
@@ -267,6 +267,57 @@ export default function GenericTable(props) {
                         >
                           {row[item.name]?.value}
                         </Link>
+                      </TableCell>
+                    );
+                  } else if (
+                    (item.title === 'Department' && item.flag !== 'declareFacility') ||
+                    (item.title === 'Designation' && item.flag !== 'declareFacility') ||
+                    item.title === 'Select'
+                  ) {
+                    return (
+                      <TableCell maxWidth={`${tableCellWidth}%`} key={index} align="left">
+                        <Typography
+                          bgcolor="grey1.light"
+                          p={1}
+                          component="div"
+                          variant="subtitle"
+                          onClick={() => row[item.name]?.onClickCallback(rowIndex)}
+                        >
+                          {row[item.name]?.value}
+                        </Typography>
+                      </TableCell>
+                    );
+                  } else if (
+                    (item.title === 'Department' && item.flag === 'declareFacility') ||
+                    (item.title === 'Designation' && item.flag === 'declareFacility')
+                  ) {
+                    return (
+                      <Tooltip key={index} title={row[item.name]?.value}>
+                        <TableCell
+                          key={index}
+                          className={row.read?.value === false ? 'style-bold' : ''}
+                          sx={{
+                            whiteSpace: 'nowrap',
+                            textOverflow: 'ellipsis',
+                            maxWidth: '112px',
+                            overflow: 'hidden',
+                          }}
+                          align="left"
+                        >
+                          {row[item.name]?.value}
+                        </TableCell>
+                      </Tooltip>
+                    );
+                  } else if (item.title === 'Status' && userActiveTab === 'work-details') {
+                    return (
+                      <TableCell maxWidth={`${tableCellWidth}%`} key={index} align="left">
+                        <Button
+                          onClick={(event) => row[item.name].onClickCallback(event, row)}
+                          variant="contained"
+                          color="secondary"
+                        >
+                          DeLink
+                        </Button>
                       </TableCell>
                     );
                   } else {
