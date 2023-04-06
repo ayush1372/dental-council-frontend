@@ -17,7 +17,7 @@ import {
 import { Button } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
 
-const ConfirmOTP = ({ handleConfirmOTP, otpData }) => {
+const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep }) => {
   const { t } = useTranslation();
   const [isOtpValid, setIsOtpValid] = useState(true);
   const dispatch = useDispatch();
@@ -44,62 +44,65 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData }) => {
       });
   };
   const onHandleVerify = () => {
-    if (otpData.page === 'doctorConstantDetailsPage') {
+    if (getOtpValidation()) {
+      setIsOtpValid(false);
+    } else {
       if (getOtpValidation()) {
         setIsOtpValid(false);
-      } else {
-        if (getOtpValidation()) {
-          setIsOtpValid(false);
-          handleConfirmOTP();
-        }
+        handleConfirmOTP();
       }
+    }
 
-      try {
-        dispatch(
-          verifyNotificationOtp({
+    try {
+      dispatch(
+        verifyNotificationOtp({
+          transaction_id: sendNotificationOtpData.data?.transaction_id,
+          contact: otpData?.contact,
+          type: otpData?.type,
+          otp: encryptData(otpValue, process.env.REACT_APP_PASS_SITE_KEY),
+        })
+      ).then((response) => {
+        if (otpData?.page === 'doctorConstantDetailsPage') {
+          let updateDoctorContactDetailsBody = {
             transaction_id: sendNotificationOtpData.data?.transaction_id,
-            contact: otpData?.contact,
-            type: otpData?.type,
-            otp: encryptData(otpValue, process.env.REACT_APP_PASS_SITE_KEY),
-          })
-        ).then(() => {
-          if (otpData?.page === 'doctorConstantDetailsPage') {
-            let updateDoctorContactDetailsBody = {
-              transaction_id: sendNotificationOtpData.data?.transaction_id,
-            };
-            if (otpData?.type === 'sms') {
-              updateDoctorContactDetailsBody.mobile_number = otpData.contact;
-            } else {
-              updateDoctorContactDetailsBody.email = otpData.contact;
-            }
-            try {
-              dispatch(
-                updateDoctorContactDetails(
-                  updateDoctorContactDetailsBody,
-                  loginData?.data?.profile_id
-                )
-              ).then((response) => {
-                if (response?.data?.message === 'Success') {
-                  otpData?.handleClose();
-                  otpData.setMobileNumberChange(false);
-                  otpData.setEmailChange(false);
-                  setChangeUserData(true);
-                  fetchDoctorUserPersonalDetails();
-                }
-              });
-            } catch (allFailMsg) {
-              successToast(
-                'ERR_INT: ' + allFailMsg?.data?.message,
-                'auth-error',
-                'error',
-                'top-center'
-              );
-            }
+          };
+          if (otpData?.type === 'sms') {
+            updateDoctorContactDetailsBody.mobile_number = otpData.contact;
+          } else {
+            updateDoctorContactDetailsBody.email = otpData.contact;
           }
-        });
-      } catch (allFailMsg) {
-        successToast('ERR_INT: ' + allFailMsg?.data?.message, 'auth-error', 'error', 'top-center');
-      }
+          try {
+            dispatch(
+              updateDoctorContactDetails(
+                updateDoctorContactDetailsBody,
+                loginData?.data?.profile_id
+              )
+            ).then((response) => {
+              if (response?.data?.message === 'Success') {
+                otpData?.handleClose();
+                otpData.setMobileNumberChange(false);
+                otpData.setEmailChange(false);
+                setChangeUserData(true);
+                fetchDoctorUserPersonalDetails();
+              }
+            });
+          } catch (allFailMsg) {
+            successToast(
+              'ERR_INT: ' + allFailMsg?.data?.message,
+              'auth-error',
+              'error',
+              'top-center'
+            );
+          }
+        }
+        if (otpData?.page === 'forgotPasswordPage') {
+          if (response?.data?.message?.status === 'Success') {
+            handleConfirmOTP();
+          }
+        }
+      });
+    } catch (allFailMsg) {
+      successToast('ERR_INT: ' + allFailMsg?.data?.message, 'auth-error', 'error', 'top-center');
     }
   };
 
@@ -138,13 +141,23 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData }) => {
             },
           }}
         >
-          {otpData.page === 'doctorConstantDetailsPage' ? (
+          {otpData?.page === 'doctorConstantDetailsPage' ? (
             <Typography variant="h5" textAlign="center">
               {otpData.page === 'doctorConstantDetailsPage' && otpData?.type === 'sms'
                 ? `Please enter the OTP sent on your Mobile Number XXXXXX${otpData?.contact.slice(
                     -4
                   )}.`
                 : otpData.page === 'doctorConstantDetailsPage' &&
+                  otpData?.type === 'email' &&
+                  `Please enter the OTP sent on your Email ID XXXXXX${otpData?.contact.slice(-12)}`}
+            </Typography>
+          ) : otpData?.page === 'forgotPasswordPage' ? (
+            <Typography variant="body" textAlign="center">
+              {otpData.page === 'forgotPasswordPage' && otpData?.type === 'sms'
+                ? `Please enter OTP sent on your We just sent an OTP on your mobile number XXXXXX${otpData?.contact.slice(
+                    -4
+                  )}.`
+                : otpData.page === 'forgotPasswordPage' &&
                   otpData?.type === 'email' &&
                   `Please enter the OTP sent on your Email ID XXXXXX${otpData?.contact.slice(-12)}`}
             </Typography>
@@ -161,6 +174,18 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData }) => {
           </Box>
         </Box>
         <Box align="end" mt={3}>
+          <Button
+            onClick={() => {
+              resetStep(0);
+            }}
+            variant="contained"
+            color="grey"
+            sx={{
+              mr: 2,
+            }}
+          >
+            Cancel
+          </Button>
           <Button
             size="medium"
             variant="contained"

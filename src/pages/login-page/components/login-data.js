@@ -29,7 +29,7 @@ import { Button, TextField } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 import successToast from '../../../ui/core/toaster';
 
-export const Login = ({ loginName }) => {
+export const Login = ({ loginName, handleForgotPassword }) => {
   const [captchaAnswer, setcaptachaAnswer] = useState();
   const { generateCaptcha } = useSelector((state) => state.loginReducer);
   const theme = useTheme();
@@ -310,6 +310,7 @@ export const Login = ({ loginName }) => {
               })}
             />
             <TextField
+              sx={{ mb: 2 }}
               required
               fullWidth
               label={'Password'}
@@ -325,6 +326,17 @@ export const Login = ({ loginName }) => {
                 },
               })}
             />
+            <Typography
+              display={'flex'}
+              justifyContent="flex-end"
+              color="#FFA500"
+              onClick={() => handleForgotPassword()}
+              sx={{
+                cursor: 'pointer',
+              }}
+            >
+              Forgot Password?
+            </Typography>
           </>
         ) : selectedLoginOption === 'mobileNumber' ? (
           <>
