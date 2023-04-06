@@ -1,6 +1,6 @@
 import CheckCircle from '@mui/icons-material/CheckCircle';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import { Button, Divider, Grid, Typography } from '@mui/material';
+import { Button, Divider, Grid, Typography, useTheme } from '@mui/material';
 import { Box } from '@mui/system';
 import { useSelector } from 'react-redux';
 
@@ -14,13 +14,15 @@ export function TrackApplicationDetails({
   setShowTrackApplicationTable,
   setShowTrackApplication,
 }) {
-  const ApplicationStatus = useSelector(
+  const applicationStatus = useSelector(
     (state) => state?.common?.doctorTrackApplicationTableData?.data?.data
   );
   const showTrackApplicationTable = () => {
     setShowTrackApplicationTable(true);
     setShowTrackApplication(false);
   };
+  const theme = useTheme();
+
   const currentStatus = useSelector(
     (state) => state?.common?.doctorTrackApplicationTableData?.data?.data?.current_status
   );
@@ -28,7 +30,7 @@ export function TrackApplicationDetails({
     const dateObj = new Date(date);
     return `${dateObj.getDate()}-${monthsData[dateObj.getMonth()].value}-${dateObj.getFullYear()}`;
   };
-  const nmcApproveStatus = ApplicationStatus?.application_details?.some((label) => {
+  const nmcApproveStatus = applicationStatus?.application_details?.some((label) => {
     return label?.action_id === 4 && label?.group_id === 3;
   });
   return (
@@ -63,19 +65,24 @@ export function TrackApplicationDetails({
                   component="div"
                   color="textPrimary.main"
                 >
-                  Application Approved by NMC
+                  {nmcApproveStatus
+                    ? 'Application approved by NMC'
+                    : 'Application pending verification by NMC'}
                   <CheckCircle
                     sx={{
-                      color: nmcApproveStatus ? 'success' : '',
+                      color: nmcApproveStatus ? `${theme.palette.success.main}` : '',
                       height: '14px',
                       width: '16px',
                       pl: '4px',
+                      visibility: !nmcApproveStatus ? 'hidden' : '',
                     }}
                   />
                 </Typography>
 
                 <Typography component="div" variant="body1" color="textPrimary.main">
-                  Your application has been approved by all authorities.
+                  {nmcApproveStatus
+                    ? 'Your application has been approved by all authorities.'
+                    : 'Your application is pending verification by NMC'}
                 </Typography>
               </Box>
             </Box>
@@ -103,7 +110,7 @@ export function TrackApplicationDetails({
                   Request ID
                 </Typography>
                 <Typography variant="subtitle2" color="textPrimary.main">
-                  {ApplicationStatus?.request_id ? ApplicationStatus?.request_id : ''}
+                  {`${applicationStatus?.request_id ? applicationStatus?.request_id : ''}`}
                 </Typography>
               </Grid>
               <Grid item xs={12} xl={6}>
@@ -115,9 +122,11 @@ export function TrackApplicationDetails({
                   color="textPrimary.main"
                   sx={{ wordBreak: 'break-all' }}
                 >
-                  {typeOfApplication(ApplicationStatus?.application_type)
-                    ? typeOfApplication(ApplicationStatus?.application_type)
-                    : ''}
+                  {`${
+                    typeOfApplication(applicationStatus?.application_type)
+                      ? typeOfApplication(applicationStatus?.application_type)
+                      : ''
+                  }`}
                 </Typography>
               </Grid>
               <Grid item xs={12} xl={6}>
@@ -125,9 +134,11 @@ export function TrackApplicationDetails({
                   Date of Submission
                 </Typography>
                 <Typography variant="subtitle2" color="textPrimary.main">
-                  {getDate(ApplicationStatus?.submission_date)
-                    ? getDate(ApplicationStatus?.submission_date)
-                    : ''}
+                  {`${
+                    getDate(applicationStatus?.submission_date)
+                      ? getDate(applicationStatus?.submission_date)
+                      : ''
+                  }`}
                 </Typography>
               </Grid>
               <Grid item xs={12} xl={6}>
@@ -135,7 +146,7 @@ export function TrackApplicationDetails({
                   Pendency days
                 </Typography>
                 <Typography variant="subtitle2" color="textPrimary.main">
-                  {ApplicationStatus?.pendency ? ApplicationStatus?.pendency : ''}
+                  {`${applicationStatus?.pendency}`}
                 </Typography>
               </Grid>
               <Grid item xs={12} mt={3}>
@@ -144,7 +155,7 @@ export function TrackApplicationDetails({
                 </Typography>
                 <Typography variant="subtitle2" component="div" color="primary.main">
                   <FiberManualRecordIcon sx={{ fontSize: '8px' }} />
-                  {workflowStatusId(currentStatus) ? workflowStatusId(currentStatus) : ''}
+                  {`${workflowStatusId(currentStatus) ? workflowStatusId(currentStatus) : ''}`}
                 </Typography>
               </Grid>
             </Grid>
