@@ -20,7 +20,11 @@ import {
   getRegistrationCouncilList,
   sendNotificationOtp,
 } from '../../../store/actions/common-actions';
-import { loginAction, validateCaptchaImage } from '../../../store/actions/login-action';
+import {
+  generateCaptchaImage,
+  loginAction,
+  validateCaptchaImage,
+} from '../../../store/actions/login-action';
 import { getNBEProfileData } from '../../../store/actions/nbe-actions';
 import { getNMCProfileData } from '../../../store/actions/nmc-actions';
 import { getSMCProfileData } from '../../../store/actions/smc-actions';
@@ -145,6 +149,14 @@ export const Login = ({ loginName, handleForgotPassword }) => {
                 getCommonData(resp);
               })
               .catch((error) => {
+                dispatch(generateCaptchaImage()).catch((error) => {
+                  successToast(
+                    'ERROR: ' + error?.data?.message,
+                    'auth-error',
+                    'error',
+                    'top-center'
+                  );
+                });
                 successToast(
                   'ERROR: ' + error?.data?.response?.data?.message,
                   'auth-error',
@@ -153,6 +165,9 @@ export const Login = ({ loginName, handleForgotPassword }) => {
                 );
               });
           } else {
+            dispatch(generateCaptchaImage()).catch((error) => {
+              successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+            });
             successToast(
               'ERROR: Invalid captcha, please try with new captcha',
               'auth-error',
@@ -192,6 +207,14 @@ export const Login = ({ loginName, handleForgotPassword }) => {
                 getCommonData(resp);
               })
               .catch((error) => {
+                dispatch(generateCaptchaImage()).catch((error) => {
+                  successToast(
+                    'ERROR: ' + error?.data?.message,
+                    'auth-error',
+                    'error',
+                    'top-center'
+                  );
+                });
                 successToast(
                   'ERROR: ' + error?.data?.response?.data?.message,
                   'auth-error',
@@ -200,6 +223,9 @@ export const Login = ({ loginName, handleForgotPassword }) => {
                 );
               });
           } else {
+            dispatch(generateCaptchaImage()).catch((error) => {
+              successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+            });
             successToast(
               'ERROR: Invalid captcha, please try with new captcha',
               'auth-error',
