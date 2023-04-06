@@ -3,7 +3,6 @@ import React from 'react';
 import { Box, Grid, TablePagination } from '@mui/material';
 import { Checkbox } from '@mui/material';
 
-// import { Button } from '../../../../ui/core';
 import { verboseLog } from '../../../../config/debug';
 import GenericTable from '../../../../shared/generic-component/generic-table';
 import { TextField } from '../../../../ui/core';
@@ -39,12 +38,13 @@ function WorkDetailsTable({
   declaredFacilityData,
   setDeclaredFacilityDistrict,
 }) {
+  const [page, setPage] = React.useState(0);
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState({});
-  const [currentRowIndex, setCurrentRowIndex] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [page, setPage] = React.useState(0);
   const [selectedRowData, setRowData] = React.useState({});
+  const [currentRowIndex, setCurrentRowIndex] = React.useState(0);
+
   verboseLog('selectedRowData', selectedRowData, FacilityData, trackStatusData);
 
   const dataHeader = [

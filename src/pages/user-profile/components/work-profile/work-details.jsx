@@ -118,7 +118,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
     const values = getValues();
     const searchFacilities = {
       page: 0,
-      ownershipCode: '',
+      ownershipCode: 'G',
       resultsPerPage: 10,
       facilityId: values.facilityId || '',
       facilityName: values.facilityName || '',
