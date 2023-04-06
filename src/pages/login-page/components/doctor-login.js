@@ -21,6 +21,7 @@ import { login, userLoggedInType } from '../../../store/reducers/common-reducers
 import { Button, TextField } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 import successToast from '../../../ui/core/toaster';
+import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 export const DoctorLogin = ({ loginName = 'Doctor', handleForgotPassword }) => {
   const [captchaAnswer, setcaptachaAnswer] = useState();
@@ -375,11 +376,8 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleForgotPassword }) => {
               inputProps={{ maxLength: 12 }}
               name={'password'}
               {...register('password', {
-                required: 'Please enter an Password',
-                pattern: {
-                  // value: /^\d{12}$/i,
-                  message: 'Please enter an valid Password',
-                },
+                PasswordRegexValidation,
+                // required: 'Please enter an Password',
               })}
             />
             <Typography
