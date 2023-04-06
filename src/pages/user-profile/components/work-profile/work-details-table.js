@@ -3,7 +3,6 @@ import React from 'react';
 import { Box, Grid, TablePagination } from '@mui/material';
 import { Checkbox } from '@mui/material';
 
-// import { Button } from '../../../../ui/core';
 import { verboseLog } from '../../../../config/debug';
 import GenericTable from '../../../../shared/generic-component/generic-table';
 import { TextField } from '../../../../ui/core';
@@ -36,15 +35,16 @@ function WorkDetailsTable({
   FacilityData,
   trackStatusData,
   setFacilityResponseData,
-  declaredFacilityDistrict,
+  declaredFacilityData,
   setDeclaredFacilityDistrict,
 }) {
+  const [page, setPage] = React.useState(0);
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState({});
-  const [currentRowIndex, setCurrentRowIndex] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [page, setPage] = React.useState(0);
   const [selectedRowData, setRowData] = React.useState({});
+  const [currentRowIndex, setCurrentRowIndex] = React.useState(0);
+
   verboseLog('selectedRowData', selectedRowData, FacilityData, trackStatusData);
 
   const dataHeader = [
@@ -89,30 +89,7 @@ function WorkDetailsTable({
     setCurrentRowIndex(rowIndex);
   };
 
-  const newRowsData = [
-    {
-      facilityId: 'IN0910000076',
-      facilityName: 'King Georges Medical University Lucknow',
-      ownership: 'Government',
-      ownershipCode: 'G',
-      stateName: 'UTTAR PRADESH',
-      stateLGDCode: '9',
-      districtName: 'LUCKNOW',
-      subDistrictName: 'Malihabad',
-      districtLGDCode: '162',
-      subDistrictLGDCode: '819',
-      villageCityTownLGDCode: '',
-      address: 'main road, ',
-      pincode: '110092',
-      latitude: '28.6958080000001',
-      longitude: '77.2061630000001',
-      systemOfMedicineCode: 'M',
-      systemOfMedicine: 'Modern Medicine(Allopathy)',
-      facilityTypeCode: '5',
-      facilityStatus: 'Submitted',
-      facilityType: 'Hospital',
-    },
-  ]?.map((application) => {
+  const newRowsData = FacilityData?.map((application) => {
     return createData(
       {
         type: 'name',
@@ -143,7 +120,7 @@ function WorkDetailsTable({
             variant="outlined"
             name={'department'}
             fullWidth
-            defaultValue={'department'}
+            defaultValue={''}
             onChange={(e) => {
               FacilityData[currentRowIndex].department = e.target.value;
               setFacilityResponseData([...FacilityData]);
@@ -159,7 +136,7 @@ function WorkDetailsTable({
             variant="outlined"
             name={'designation'}
             fullWidth
-            defaultValue={'designation'}
+            defaultValue={''}
             onChange={(e) => {
               FacilityData[currentRowIndex].designation = e.target.value;
               setFacilityResponseData([...FacilityData]);
@@ -172,14 +149,14 @@ function WorkDetailsTable({
         type: 'select',
         value: (
           <Checkbox
-            defaultChecked={true}
+            defaultChecked={false}
             onChange={(e) => {
               if (e.target.checked) {
-                declaredFacilityDistrict.push(FacilityData[currentRowIndex]);
-                setDeclaredFacilityDistrict([...declaredFacilityDistrict]);
+                declaredFacilityData.push(FacilityData[currentRowIndex]);
+                setDeclaredFacilityDistrict([...declaredFacilityData]);
               } else {
-                declaredFacilityDistrict.splice(currentRowIndex, 1);
-                setDeclaredFacilityDistrict([...declaredFacilityDistrict]);
+                declaredFacilityData.splice(currentRowIndex, 1);
+                setDeclaredFacilityDistrict([...declaredFacilityData]);
               }
             }}
           />
