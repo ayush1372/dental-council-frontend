@@ -19,7 +19,8 @@ export default function Wizard({
 }) {
   return (
     <Box width="100%" bgcolor={'white'}>
-      <WizardSteps
+      <WizardSteps steps={steps} activeStep={activeStep} />
+      <ProgressBar
         steps={steps}
         activeStep={activeStep}
         isStepClickEnable={isStepClickEnable}
