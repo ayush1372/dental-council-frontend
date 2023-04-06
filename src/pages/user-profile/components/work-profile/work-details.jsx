@@ -109,6 +109,8 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
   };
 
   const handleTabChange = (_, value) => {
+    setFacilityResponseData([]);
+    setDeclaredFacilityDistrict([]);
     setTabValue(value);
   };
 

@@ -120,7 +120,7 @@ function WorkDetailsTable({
             variant="outlined"
             name={'department'}
             fullWidth
-            defaultValue={'department'}
+            defaultValue={''}
             onChange={(e) => {
               FacilityData[currentRowIndex].department = e.target.value;
               setFacilityResponseData([...FacilityData]);
@@ -136,7 +136,7 @@ function WorkDetailsTable({
             variant="outlined"
             name={'designation'}
             fullWidth
-            defaultValue={'designation'}
+            defaultValue={''}
             onChange={(e) => {
               FacilityData[currentRowIndex].designation = e.target.value;
               setFacilityResponseData([...FacilityData]);
@@ -149,7 +149,7 @@ function WorkDetailsTable({
         type: 'select',
         value: (
           <Checkbox
-            defaultChecked={true}
+            defaultChecked={false}
             onChange={(e) => {
               if (e.target.checked) {
                 declaredFacilityData.push(FacilityData[currentRowIndex]);
