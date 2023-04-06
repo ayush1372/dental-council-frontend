@@ -114,16 +114,46 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
     setTabValue(value);
   };
 
+  const getStateISOCode = (State) => {
+    let stateData = [];
+
+    statesList?.map((elementData) => {
+      if (elementData.id === State) {
+        stateData.push(elementData);
+      }
+    });
+
+    return stateData[0]?.iso_code;
+  };
+  const getDistrictISOCode = (District) => {
+    let DistrictData = [];
+    facilityDistrict?.map((elementData) => {
+      if (elementData.id === District) {
+        DistrictData.push(elementData);
+      }
+    });
+    return DistrictData[0]?.iso_code;
+  };
+
   const searchFacilitiesHandler = () => {
     const values = getValues();
+
+    let ownerCode =
+      values?.workStatus === '3'
+        ? 'G'
+        : values?.workStatus === '2'
+        ? 'P'
+        : values?.workStatus === '1'
+        ? 'PP'
+        : '';
     const searchFacilities = {
       page: 0,
-      ownershipCode: 'G',
+      ownershipCode: ownerCode,
       resultsPerPage: 10,
       facilityId: values.facilityId || '',
       facilityName: values.facilityName || '',
-      stateLGDCode: values.stateLGDCode || '',
-      districtLGDCode: values.districtLGDCode || '',
+      stateLGDCode: getStateISOCode(values.stateLGDCode) || '',
+      districtLGDCode: getDistrictISOCode(values.districtLGDCode) || '',
     };
     dispatch(getFacilitiesData(searchFacilities))
       .then((response) => {
