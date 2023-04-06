@@ -127,8 +127,10 @@ export default function VerticalLinearStepper() {
                       label?.workflow_status_id === 5 ||
                       label?.workflow_status_id === 6) &&
                     label?.action_id === 1
-                  ? `Submitted and Auto Approved`
-                  : `${userActionId(label?.action_id)} by ${userGroupTypeId(label?.group_id)}`}
+                  ? `Application Submitted and Auto Approved`
+                  : `Application ${userActionId(label?.action_id)} by ${userGroupTypeId(
+                      label?.group_id
+                    )}`}
               </Typography>
               <Chip
                 label={trackApplicationLabel(userActionId(label?.action_id))}
