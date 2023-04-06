@@ -147,8 +147,8 @@ const ProfileConsent = ({
           ).format('DD-MM-YYYY'),
           registrationType:
             doctorRegDetails?.registration_detail_to?.is_renewable === '0'
-              ? 'Renewable'
-              : 'Permanent',
+              ? 'Permanent'
+              : 'Renewable',
           dueDate: doctorRegDetails?.registration_detail_to?.renewable_registration_date,
         },
         nmrQualificationDetailsTO: {
