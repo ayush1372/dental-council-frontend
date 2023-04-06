@@ -42,6 +42,7 @@ export const Login = ({ loginName }) => {
     register,
     getValues,
     setValue,
+    handleSubmit,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
@@ -320,7 +321,7 @@ export const Login = ({ loginName }) => {
               {...register('password', {
                 required: 'Please enter an Password',
                 pattern: {
-                  value: /^\d{12}$/i,
+                  // value: /^\d{12}$/i,
                   message: 'Please enter an valid Password',
                 },
               })}
@@ -360,7 +361,7 @@ export const Login = ({ loginName }) => {
           color="secondary"
           fullWidth
           sx={{ mr: 1 }}
-          onClick={handleLogin}
+          onClick={handleSubmit(handleLogin)}
           disabled={!otpFormEnabled && selectedLoginOption !== 'userName'}
         >
           Login
