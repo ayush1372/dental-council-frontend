@@ -45,9 +45,9 @@ export function CollegeDean({ showPage, updateShowPage }) {
       id: showPage === 'edit' ? userData?.id : null,
       college_id: showPage === 'edit' ? userData?.college_id : null,
       designation: showPage === 'edit' ? userData?.designation : null,
-      name: showPage === 'edit' ? fieldValues.deanName : null,
-      mobile_number: showPage === 'edit' ? fieldValues.deanPhoneNumber : null,
-      email_id: showPage === 'edit' ? fieldValues.deanEmail : null,
+      name: showPage === 'edit' ? fieldValues?.deanName : null,
+      mobile_number: showPage === 'edit' ? fieldValues?.deanPhoneNumber : null,
+      email_id: showPage === 'edit' ? fieldValues?.deanEmail : null,
       // user_id: showPage === 'edit' ? fieldValues?.deanUserId : null,
       // password: showPage === 'edit' ? fieldValues.deanPassword : null,
     };

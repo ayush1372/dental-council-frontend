@@ -24,11 +24,12 @@ import {
 } from '../reducers/common-reducers';
 import { getRaiseQueryData } from '../reducers/raise-query-reducer';
 
-export const getStatesList = () => async (dispatch) => {
+export const getStatesList = (countryId) => async (dispatch) => {
+  let id = countryId !== undefined ? countryId : 356;
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,
-      url: API.common.states,
+      url: API.common.states.replace('356', id),
     })
       .then((response) => {
         dispatch(getStates(response.data));

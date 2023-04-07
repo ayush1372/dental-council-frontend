@@ -51,9 +51,9 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
       id: showPage === 'edit' ? userData?.id : null,
       college_id: showPage === 'edit' ? userData?.college_id : null,
       designation: showPage === 'edit' ? userData?.designation : null,
-      name: showPage === 'edit' ? fieldData.registrarName : null,
-      mobile_number: showPage === 'edit' ? fieldData.registrarPhoneNumber : null,
-      email_id: showPage === 'edit' ? fieldData.registrarEmail : null,
+      name: showPage === 'edit' ? fieldData?.registrarName : null,
+      mobile_number: showPage === 'edit' ? fieldData?.registrarPhoneNumber : null,
+      email_id: showPage === 'edit' ? fieldData?.registrarEmail : null,
     };
     if (showPage === 'edit') {
       dispatch(updateCollegeRegistrarData(registrarData, userData?.college_id, userData?.id))

@@ -1,8 +1,11 @@
-/* eslint-disable no-console */
 import { API } from '../../api/api-endpoints';
 import { GET, PATCH, POST, PUT } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
-import { updateTrackApplicationTableData } from '../reducers/common-reducers';
+import successToast from '../../ui/core/toaster';
+import {
+  updateDoctorTrackApplication,
+  updateTrackApplicationTableData,
+} from '../reducers/common-reducers';
 import {
   getEsignDetails,
   getPersonalDetails,
@@ -148,6 +151,23 @@ export const updateDoctorWorkDetails = (body, doctor_profile_id) => async () => 
   });
 };
 
+export const getFacilitiesData = (facilitiesBody) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.DoctorUserProfileData.searchFacilities,
+      headers: { 'Content-Type': 'application/json' },
+      data: facilitiesBody,
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
 export const getUserProfileImage = (hp_profile_id, file) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
@@ -207,6 +227,21 @@ export const getDoctorTrackApplicationData = (doctor_profile_id, trackData) => a
       })
       .catch((error) => {
         return reject(error);
+      });
+  });
+};
+export const getDoctorTrackApplicationStatus = (nmr_id) => async (dispatch) => {
+  return await new Promise((resolve) => {
+    useAxiosCall({
+      method: GET,
+      url: `${API.DoctorUserProfileData.trackApplicationStatus.replace('{requestId}', nmr_id)}`,
+    })
+      .then((response) => {
+        dispatch(updateDoctorTrackApplication(response));
+        return resolve(response);
+      })
+      .catch((error) => {
+        successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
       });
   });
 };

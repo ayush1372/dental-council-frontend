@@ -96,6 +96,10 @@ const UniqueUserNameForDoctorRegistration = () => {
                       ? ''
                       : {
                           required: 'UniqueUserNameForDoctor Number is required',
+                          minLength: {
+                            value: 8,
+                            message: 'Should contains 8 character',
+                          },
                         }
                   )}
                   value={suggestion ? suggestion : getValues().UniqueUserNameForDoctor}

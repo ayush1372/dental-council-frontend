@@ -28,8 +28,9 @@ import { login, userLoggedInType } from '../../../store/reducers/common-reducers
 import { Button, TextField } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 import successToast from '../../../ui/core/toaster';
+import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
-export const Login = ({ loginName }) => {
+export const Login = ({ loginName, handleForgotPassword }) => {
   const [captchaAnswer, setcaptachaAnswer] = useState();
   const { generateCaptcha } = useSelector((state) => state.loginReducer);
   const theme = useTheme();
@@ -42,6 +43,7 @@ export const Login = ({ loginName }) => {
     register,
     getValues,
     setValue,
+    handleSubmit,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
@@ -297,14 +299,20 @@ export const Login = ({ loginName }) => {
               label={'Username'}
               placeholder={'Please enter Username'}
               name={'userID'}
+              error={errors.userID?.message}
               {...register('userID', {
                 required: 'Please enter an Username',
                 pattern: {
                   message: 'Please enter an valid Username',
                 },
+                minLength: {
+                  value: 8,
+                  message: 'Should contains 8 character',
+                },
               })}
             />
             <TextField
+              sx={{ mb: 2 }}
               required
               fullWidth
               label={'Password'}
@@ -313,13 +321,20 @@ export const Login = ({ loginName }) => {
               inputProps={{ maxLength: 12 }}
               name={'password'}
               {...register('password', {
-                required: 'Please enter an Password',
-                pattern: {
-                  value: /^\d{12}$/i,
-                  message: 'Please enter an valid Password',
-                },
+                PasswordRegexValidation,
               })}
             />
+            <Typography
+              display={'flex'}
+              justifyContent="flex-end"
+              color="#FFA500"
+              onClick={() => handleForgotPassword()}
+              sx={{
+                cursor: 'pointer',
+              }}
+            >
+              Forgot Password?
+            </Typography>
           </>
         ) : selectedLoginOption === 'mobileNumber' ? (
           <>
@@ -355,7 +370,7 @@ export const Login = ({ loginName }) => {
           color="secondary"
           fullWidth
           sx={{ mr: 1 }}
-          onClick={handleLogin}
+          onClick={handleSubmit(handleLogin)}
           disabled={!otpFormEnabled && selectedLoginOption !== 'userName'}
         >
           Login

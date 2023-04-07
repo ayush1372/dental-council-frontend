@@ -13,11 +13,13 @@ export const API = {
     profileImage: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/profile-picture',
     initiateWorkFlow: 'api/v1/abdm/nmr/health-professional/applications/status',
     trackApplicationData: 'api/v1/abdm/nmr/health-professional/{healthProfessionalId}/applications',
+    trackApplicationStatus: 'api/v1/abdm/nmr/applications/{requestId}',
     eSign: 'api/v1/abdm/nmr/e-signature',
     profileConsent: 'api/v1/abdm/nmr/health-professional/register',
     createPersonalDetails: '/api/v1/abdm/nmr/health-professional/personal',
     additionalQualifications:
       '/api/v1/abdm/nmr/health-professional/{healthProfessionalId}/qualifications',
+    searchFacilities: '/api/v1/abdm/nmr/facilities/search',
   },
   common: {
     states: 'api/v1/abdm/nmr/countries/356/states',
@@ -83,6 +85,7 @@ export const API = {
   },
   forgotPassword: {
     setPassword: '/api/v1/abdm/nmr/user/set-password',
+    reSetPassword: 'api/v1/abdm/nmr/user/reset-password',
   },
   searchDoctor: {
     searchDoctorDetails: 'api/v1/abdm/nmr/health-professional/search',

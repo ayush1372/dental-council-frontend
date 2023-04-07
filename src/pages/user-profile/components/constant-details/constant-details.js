@@ -1,8 +1,7 @@
 // import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useState } from 'react';
 
-import { Box, Dialog, Grid, Typography, useTheme } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
+import { Box, Dialog, Grid, Link, Typography, useTheme } from '@mui/material';
 import InputBase from '@mui/material/InputBase';
 import Paper from '@mui/material/Paper';
 import { useForm } from 'react-hook-form';
@@ -118,8 +117,7 @@ const ConstantDetails = () => {
           item
           xs={12}
           sm={6}
-          md={3}
-          lg="auto"
+          lg={3}
           xl={2}
           px={2}
           mb={{ xs: 1, lg: 0 }}
@@ -137,8 +135,7 @@ const ConstantDetails = () => {
             item
             xs={12}
             sm={6}
-            md={3}
-            lg="auto"
+            lg={3}
             xl={2}
             px={2}
             mb={{ xs: 1, lg: 0 }}
@@ -200,7 +197,6 @@ const ConstantDetails = () => {
             Aadhaar
           </Typography>
           <Typography variant="subtitle2" color="textPrimary.main">
-            Verified
             <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
           </Typography>
         </Grid> */}
@@ -209,7 +205,7 @@ const ConstantDetails = () => {
           item
           xs={12}
           sm={6}
-          md={4}
+          lg={4}
           pl={2}
           pr={2}
           mb={{ xs: 1, lg: 0 }}
@@ -238,15 +234,15 @@ const ConstantDetails = () => {
                     onInput={(e) => handleInput(e)}
                     error={errors.mobileNo?.message}
                   />
-                  <IconButton
+                  <Link
                     color="primary"
-                    sx={{ p: '10px' }}
+                    sx={{ p: '10px', cursor: 'pointer' }}
                     onClick={() => {
                       handleSubmit(onSubmit('sms'));
                     }}
                   >
                     Get Verified
-                  </IconButton>
+                  </Link>
                 </Paper>
 
                 {validDetails?.mobileNo && (
@@ -278,10 +274,14 @@ const ConstantDetails = () => {
             )}
           </Box>
         </Grid>
-        <Grid item xs={12} sm={6} md={4} mb={{ xs: 1, lg: 0 }} pl={2}>
+        <Grid item xs={12} sm={6} lg={4} mb={{ xs: 1, lg: 0 }} pl={2}>
           <Typography component="div" variant="body3" color="grey.label">
             Email
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
+
           <Box display="flex" alignItems="center">
             {!emailId || emailChange ? (
               <Box display={'flex'} flexDirection="column">
@@ -304,15 +304,16 @@ const ConstantDetails = () => {
                     onInput={(e) => checkEmail(e)}
                   />
 
-                  <IconButton
+                  <Link
                     color="primary"
-                    sx={{ p: '10px' }}
+                    cursor="pointer"
+                    sx={{ p: '10px', cursor: 'pointer' }}
                     onClick={() => {
                       handleSubmit(onSubmit('email'));
                     }}
                   >
                     Get Verified
-                  </IconButton>
+                  </Link>
                 </Paper>
                 {validDetails?.email && (
                   <Typography color="error" mt={1}>
