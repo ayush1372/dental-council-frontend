@@ -100,6 +100,7 @@ export default function GenericTable(props) {
   }
 
   const createSortHandler = (property) => (event) => {
+    props.handleSorting(property);
     onRequestSort(event, property);
   };
   const handleClose = () => {
