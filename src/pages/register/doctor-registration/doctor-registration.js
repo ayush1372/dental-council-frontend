@@ -8,6 +8,7 @@ import { ToastContainer } from 'react-toastify';
 
 import { createEditFieldData } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
+import DatafoundModalPopup from '../../../shared/common-modals/data-found-modal';
 import ErrorModalPopup from '../../../shared/common-modals/error-modal-popup';
 import { getRegistrationCouncilList } from '../../../store/actions/common-actions';
 import { fetchSmcRegistrationDetails } from '../../../store/actions/doctor-registration-actions';
@@ -17,6 +18,7 @@ const DoctorRegistrationWelcomePage = () => {
   const [isNext, setIsNext] = useState(false);
   const [imrDataNotFound, setImrDataNotFound] = useState(false);
   const [rejectPopup, setRejectPopup] = useState(false);
+  const [datafoundModalPopup, setDatafoundModalPopup] = useState(false);
   const [accountExists, setAccountExists] = useState(false);
   const {
     register,
@@ -40,6 +42,7 @@ const DoctorRegistrationWelcomePage = () => {
   const dispatch = useDispatch();
   const handleAadhaarPage = (data) => {
     setImrDataNotFound(data);
+    setDatafoundModalPopup(false);
   };
   useEffect(() => {
     dispatch(getRegistrationCouncilList());
@@ -53,7 +56,8 @@ const DoctorRegistrationWelcomePage = () => {
     };
     dispatch(fetchSmcRegistrationDetails(registrationData))
       .then(() => {
-        setIsNext(true);
+        // setIsNext(true);
+        setDatafoundModalPopup(true);
       })
       .catch((err) => {
         if (err?.data?.response?.data?.status === 400 && err?.data?.response?.data?.error) {
@@ -181,6 +185,17 @@ const DoctorRegistrationWelcomePage = () => {
           setIsNext={setIsNext}
           text={` Your data is not found in the NMR.
            Do you want to continue the registration in the NMR ? `}
+        />
+      )}
+      {datafoundModalPopup && (
+        <DatafoundModalPopup
+          open={setRejectPopup}
+          setOpen={() => setRejectPopup(false)}
+          imrData={true}
+          handleAadhaarPage={handleAadhaarPage}
+          isNext={isNext}
+          setIsNext={setIsNext}
+          text={`We found below details as per provided information. If the details are correct, click yes to continue registration. `}
         />
       )}
       {accountExists && (
