@@ -44,39 +44,37 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
 
   const onSubmit = () => {
     const currentWorkDetails = {
-      data: {
-        work_details: {
-          is_user_currently_working: 0,
-          work_nature: getWorkNature(getValues().NatureOfWork),
-          work_status: getWorkStatus(getValues().workStatus),
-        },
-        current_work_details: [
-          {
-            facility_id: declaredFacilityData?.facilityId || '',
-            facility_type_id: declaredFacilityData?.facilityTypeCode || '',
-            organization_type: getValues().organizationType,
-            work_organization: getValues().workingOrganizationName,
-            url: getValues().telecommunicationURL,
-            address: {
-              id: null,
-              country: getCountryData(getValues().Country),
-              state: getStateData(getValues().state),
-              district: getDistrictData(getValues().District),
-              village: getVillageData(getValues().Area),
-              sub_district: getSubDistrictData(getValues().SubDistrict),
-              pincode: getValues().pincode,
-              address_line1: getValues().Address,
-              street: getValues().Street,
-              landmark: getValues().Landmark,
-              locality: getValues().Locality,
-            },
-            registration_no: registrationDetails?.registration_detail_to?.registration_number,
-            experience_in_years: workExpierence,
-          },
-        ],
-        registration_no: registrationDetails?.registration_detail_to?.registration_number,
-        languages_known_ids: getLanguageData(getValues().LanguageSpoken),
+      work_details: {
+        is_user_currently_working: 0,
+        work_nature: getWorkNature(getValues().NatureOfWork),
+        work_status: getWorkStatus(getValues().workStatus),
       },
+      current_work_details: [
+        {
+          facility_id: declaredFacilityData?.facilityId || '',
+          facility_type_id: declaredFacilityData?.facilityTypeCode || '',
+          organization_type: getValues().organizationType,
+          work_organization: getValues().workingOrganizationName,
+          url: getValues().telecommunicationURL,
+          address: {
+            id: null,
+            country: getCountryData(getValues().Country),
+            state: getStateData(getValues().state),
+            district: getDistrictData(getValues().District),
+            village: getVillageData(getValues().Area),
+            sub_district: getSubDistrictData(getValues().SubDistrict),
+            pincode: getValues().pincode,
+            address_line1: getValues().Address,
+            street: getValues().Street,
+            landmark: getValues().Landmark,
+            locality: getValues().Locality,
+          },
+          registration_no: registrationDetails?.registration_detail_to?.registration_number,
+          experience_in_years: workExpierence,
+        },
+      ],
+      registration_no: registrationDetails?.registration_detail_to?.registration_number,
+      languages_known_ids: getLanguageData(getValues().LanguageSpoken),
     };
     // // eslint-disable-next-line no-console
     // console.log('currentWorkDetails', currentWorkDetails);
