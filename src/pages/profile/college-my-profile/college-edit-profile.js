@@ -30,7 +30,7 @@ import { Button, TextField } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
 
 const CollegeEditProfile = (props) => {
-  const { collegeData } = useSelector((state) => state.college);
+  // const { collegeData } = useSelector((state) => state.college);
   const [districtList, setDistrictList] = useState([]);
 
   const { statesList, councilNames, universitiesList, subDistrictList, districtsList } =
@@ -38,7 +38,7 @@ const CollegeEditProfile = (props) => {
   const registrationSuccess = useSelector((state) => state.college.collegeRegisterDetails.data);
   const { getCollegeDetail } = useSelector((state) => state.common);
   const [successModalPopup, setSuccessModalPopup] = useState(false);
-  const userData = collegeData?.data;
+  const userData = getCollegeDetail?.data;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -65,33 +65,34 @@ const CollegeEditProfile = (props) => {
       CollegeEmailId: userData?.email_id,
       CollegeName: userData?.name,
       CollegeId: userData?.college_code,
-      CollegePhoneNumber: userData?.phone_number,
+      CollegePhoneNumber: userData?.mobile_number,
       CollegeAddress: userData?.address,
       CollegePincode: userData?.pin_code,
       UniversityName: '',
-      UniversityId: '',
+      UniversityId: userData?.university_id,
       RegistrationCouncil: '',
-      RegistrationCouncilId: '',
+      CouncilID: '',
       StateName: '',
-      StateId: '',
+      StateId: userData?.state_id,
       CollegeWebsite: userData?.website,
     },
   });
-
   const onhandleSubmitClick = () => {
     const updatedCollegeDetails = {
       id: userData?.id,
-      name: getValues().CollegeName,
-      college_code: getValues().CollegeId,
-      phone_number: getValues().CollegePhoneNumber,
-      email_id: getValues().CollegeEmailId,
-      user_id: userData?.user_id,
-      council_id: getValues().RegistrationCouncilId,
-      university_id: getValues().UniversityId,
+      name: getValues()?.CollegeName || '',
+      state_id: getValues()?.StateId,
+      college_code: getValues()?.CollegeId,
       website: getValues().CollegeWebsite,
-      address: getValues().CollegeAddress,
-      pin_code: getValues().CollegePincode,
-      state_id: getValues().StateId,
+      address_line1: getValues()?.AddressLine1 || '',
+      address_line2: getValues()?.AddressLine2 || '',
+      district_id: getValues()?.DistrictID,
+      village_id: subDistrictList.find((x) => x.name === getValues()?.Area)?.id,
+      pin_code: getValues()?.CollegePincode,
+      state_medical_council_id: getValues()?.CouncilID,
+      mobile_number: getValues()?.CollegePhoneNumber,
+      email_id: getValues()?.CollegeEmailId,
+      university_id: getValues()?.UniversityId,
     };
 
     dispatch(updateCollegeAdminProfileData(updatedCollegeDetails))
@@ -132,20 +133,12 @@ const CollegeEditProfile = (props) => {
     return councilNames?.find((obj) => obj?.id === state_medical_council_id);
   };
   const getDistrictNameData = (district_id) => {
-    // eslint-disable-next-line no-console
-    console.log(
-      'district',
-      districtList?.find((obj) => obj?.id === district_id)
-    );
     return districtList?.find((obj) => obj?.id === district_id);
   };
 
   const getUniversityData = (university_id) => {
     return universitiesList?.data?.find((obj) => obj?.id === university_id);
   };
-
-  // eslint-disable-next-line no-console
-  console.log('test4', councilNames);
 
   return (
     <Grid>
@@ -192,14 +185,14 @@ const CollegeEditProfile = (props) => {
             <TextField
               fullWidth
               disabled
-              name="CollegeCode"
+              name="CollegeId"
               required
               placeholder={'Enter College Code'}
               defaultValue={getCollegeDetail?.data?.college_code}
               error={errors.CollegePhoneNumber?.message}
-              {...register('CollegeCode', {
-                required: 'College code is required',
-              })}
+              // {...register('CollegeId', {
+              //   required: 'College code is required',
+              // })}
             />
           </Grid>
 
@@ -417,18 +410,15 @@ const CollegeEditProfile = (props) => {
             <Box>
               <SearchableDropdown
                 fullWidth
-                name="Town"
+                name="Area"
                 clearErrors={clearErrors}
                 items={createEditFieldData(subDistrictList)}
-                placeholder="Select Town "
+                placeholder="Select Area"
                 defaultValue={getValues().Area}
-                error={errors.Town?.message}
-                {...register('Town', {
-                  // required: 'Town name is required',
+                error={errors.Area?.message}
+                {...register('Area', {
+                  required: 'Town name is required',
                 })}
-                onChange={(currentValue) => {
-                  setValue('TownID', currentValue.id);
-                }}
               />
             </Box>
             <Grid />
