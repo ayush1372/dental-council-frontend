@@ -31,7 +31,9 @@ const WizardSteps = ({
                 index === activeStep
                   ? 'inputFocusColor.main'
                   : index < activeStep
-                  ? 'success.main'
+                  ? isStepClickEnable
+                    ? 'inputFocusColor.main'
+                    : 'success.main'
                   : 'inputBorderColor.main',
               borderBottomWidth: '4px',
               borderRadius: '0px',
@@ -49,7 +51,7 @@ const WizardSteps = ({
           >
             <StepLabel
               StepIconProps={{
-                completed: showCheckCirlce,
+                completed: false,
                 icon:
                   showCheckCirlce && index < activeStep ? (
                     <CheckCircleIcon sx={{ color: 'success.main', fontSize: '28px' }} />
