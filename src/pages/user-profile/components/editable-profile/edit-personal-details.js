@@ -903,19 +903,20 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                   defaultValue={
                     isSameAddress ? personalDetails?.kyc_address?.house : getValues()?.House
                   }
+                  value={getValues()?.House}
                   {...register(
                     'House',
-                    !isSameAddress
-                      ? {
+                    isSameAddress
+                      ? ''
+                      : getValues()?.House?.length <= 0 && {
                           required: 'House is Required',
                           maxLength: {
                             value: 300,
                             message: 'Length should be less than 300.',
                           },
                         }
-                      : ''
                   )}
-                  error={!isSameAddress ? errors.House?.message : ''}
+                  error={errors.House?.message}
                 />
               </Grid>
               <Grid item xs={12} md={4}>
