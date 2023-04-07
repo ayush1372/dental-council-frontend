@@ -18,6 +18,7 @@ import {
   searchTrackStatusData,
   sendNotificationData,
   setNewPassword,
+  updateCollegeDetail,
   updateCouncilNames,
   verifyNotificationData,
 } from '../reducers/common-reducers';
@@ -184,6 +185,23 @@ export const getCollegeData = (id) => async (dispatch) => {
     })
       .then((response) => {
         dispatch(getCollegeDetail(response.data));
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const updateCollegeData = (id) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: PUT,
+      url: API.common.college.replace('{id}', id),
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+    })
+      .then((response) => {
+        dispatch(updateCollegeDetail(response.data));
         return resolve(response);
       })
       .catch((error) => {

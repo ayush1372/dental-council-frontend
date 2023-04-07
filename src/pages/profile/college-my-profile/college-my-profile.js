@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 
 import EditIcon from '@mui/icons-material/Edit';
@@ -11,7 +12,14 @@ import {
   // getCollegeDeanProfileData,
   // getCollegeRegistrarProfileData,
 } from '../../../store/actions/college-actions';
-import { getCollegeData } from '../../../store/actions/common-actions';
+import {
+  getCollegeData,
+  getDistrictList,
+  getUniversitiesList,
+} from '../../../store/actions/common-actions';
+// import {
+//   //  getCollegeDetail
+//   } from '../../../store/actions/common-actions';
 import { Button } from '../../../ui/core';
 import CollegeDean from '../college-dean/college-dean';
 import CollegeRegistrar from '../college-registrar/college-registrar';
@@ -19,10 +27,18 @@ import CollegeEditProfile from './college-edit-profile';
 
 const CollegeMyProfile = () => {
   const [showPage, setShowpage] = useState('Profile');
+  const [districtList, setDistrictList] = useState([]);
   const dispatch = useDispatch();
 
   const { collegeData } = useSelector((state) => state.college);
-  const { getCollegeDetail } = useSelector((state) => state.common);
+  const {
+    getCollegeDetail,
+    statesList,
+    universitiesList,
+    councilNames,
+    // districtsList,
+    // subDistrictList,
+  } = useSelector((state) => state.common);
 
   const userData = collegeData?.data;
 
@@ -39,6 +55,33 @@ const CollegeMyProfile = () => {
   if (userType === 3) {
     userType = 'College Dean';
   }
+
+  const getStateData = (stateId) => {
+    const userState = statesList?.find((obj) => obj?.id === stateId);
+    return userState?.name;
+  };
+
+  const getUniversityData = (university_id) => {
+    const userUniversity = universitiesList?.data?.find((obj) => obj.id === university_id);
+    return userUniversity?.name;
+  };
+
+  const getCouncilNameData = (state_medical_council_id) => {
+    const userCouncilName = councilNames?.find((obj) => obj.id === state_medical_council_id);
+    return userCouncilName?.name;
+  };
+
+  const getDistrictNameData = (district_id) => {
+    const userDistrictName = districtList?.find((obj) => obj.id === district_id);
+    return userDistrictName?.name;
+  };
+
+  useEffect(() => {
+    dispatch(getUniversitiesList());
+    dispatch(getDistrictList(getCollegeDetail?.data?.state_id)).then((res) => {
+      setDistrictList(res?.data);
+    });
+  }, []);
 
   useEffect(() => {
     const getCommonData = () => {
@@ -109,52 +152,179 @@ const CollegeMyProfile = () => {
           </Grid>
 
           <Grid container spacing={2} mt={3}>
-            <Grid item xs={12} md={4} sm={6}>
-              <Typography variant="body3" color="grey.label">
-                Name
-              </Typography>
-
-              <Typography variant="subtitle2" color="primary.main">
-                {/* {getCollegeDetail?.data?.name ? getCollegeDetail?.data?.name : ''} */}
-                {userData?.name
-                  ? userData?.name
-                  : loginData?.data?.user_sub_type === 1
-                  ? getCollegeDetail?.data?.name
-                  : ''}
-              </Typography>
-            </Grid>
-            {userData?.college_code ? (
+            {loginData?.data?.user_sub_type === 1 ? (
               <Grid item xs={12} md={4} sm={6}>
                 <Typography variant="body3" color="grey.label">
-                  College ID
+                  Name
                 </Typography>
 
-                <Typography variant="subtitle2" color="primary.main">
-                  {userData?.college_code}
+                <Typography variant="subtitle2" color="inputTextColor.main">
+                  {getCollegeDetail?.data?.name}
                 </Typography>
               </Grid>
             ) : (
               ''
             )}
-            <Grid item xs={12} md={4} sm={6}>
-              <Typography variant="body3" color="grey.label">
-                Phone Number
-              </Typography>
 
-              <Typography variant="subtitle2" color="primary.main">
-                {/* {getCollegeDetail?.data?.mobile_number ? getCollegeDetail?.data?.mobile_number : ''} */}
-                {userData?.mobile_number
-                  ? userData?.mobile_number
-                  : loginData?.data?.user_sub_type === 1
-                  ? getCollegeDetail?.data?.mobile_number
-                  : ''}
-              </Typography>
-            </Grid>
+            {loginData?.data?.user_sub_type === 1 ? (
+              <Grid item xs={12} md={4} sm={6}>
+                <Typography variant="body3" color="grey.label">
+                  College Code
+                </Typography>
+
+                <Typography variant="subtitle2" color="inputTextColor.main">
+                  {getCollegeDetail?.data?.college_code}
+                </Typography>
+              </Grid>
+            ) : (
+              ''
+            )}
+
+            {loginData?.data?.user_sub_type === 1 ? (
+              <Grid item xs={12} md={4} sm={6}>
+                <Typography variant="body3" color="grey.label">
+                  Mobile
+                </Typography>
+
+                <Typography variant="subtitle2" color="inputTextColor.main">
+                  {/* {getCollegeDetail?.data?.mobile_number ? getCollegeDetail?.data?.mobile_number : ''} */}
+                  {getCollegeDetail?.data?.mobile_number}
+                </Typography>
+              </Grid>
+            ) : (
+              ''
+            )}
+
+            {loginData?.data?.user_sub_type === 1 ? (
+              <Grid item xs={12} md={4} sm={6}>
+                <Typography variant="body3" color="grey.label">
+                  Council Name
+                </Typography>
+
+                <Typography variant="subtitle2" color="inputTextColor.main">
+                  {/* {getCollegeDetail?.data?.mobile_number ? getCollegeDetail?.data?.mobile_number : ''} */}
+                  {/* {getCollegeDetail?.data.mobile_number} */}
+                  {getCouncilNameData(getCollegeDetail?.data?.state_medical_council_id)}
+                </Typography>
+              </Grid>
+            ) : (
+              ''
+            )}
+
+            {loginData?.data?.user_sub_type === 1 ? (
+              <Grid item xs={12} md={4} sm={6}>
+                <Typography variant="body3" color="grey.label">
+                  Select University Name
+                </Typography>
+
+                <Typography variant="subtitle2" color="inputTextColor.main">
+                  {getUniversityData(getCollegeDetail?.data?.university_id)}
+                </Typography>
+              </Grid>
+            ) : (
+              ''
+            )}
+
+            {loginData?.data?.user_sub_type === 1 ? (
+              <Grid item xs={12} md={4} sm={6}>
+                <Typography variant="body3" color="grey.label">
+                  Website
+                </Typography>
+
+                <Typography variant="subtitle2" color="inputTextColor.main">
+                  {getCollegeDetail?.data.website}
+                </Typography>
+              </Grid>
+            ) : (
+              ''
+            )}
+
+            {loginData?.data?.user_sub_type === 1 ? (
+              <Grid item xs={12} md={4} sm={6}>
+                <Typography variant="body3" color="grey.label">
+                  Address line 1
+                </Typography>
+
+                <Typography variant="subtitle2" color="inputTextColor.main">
+                  {getCollegeDetail?.data.address_line1}
+                </Typography>
+              </Grid>
+            ) : (
+              ''
+            )}
+
+            {loginData?.data?.user_sub_type === 1 ? (
+              <Grid item xs={12} md={4} sm={6}>
+                <Typography variant="body3" color="grey.label">
+                  Address line 2
+                </Typography>
+
+                <Typography variant="subtitle2" color="inputTextColor.main">
+                  {getCollegeDetail?.data.address_line2}
+                </Typography>
+              </Grid>
+            ) : (
+              ''
+            )}
+
+            {loginData?.data?.user_sub_type === 1 ? (
+              <Grid item xs={12} md={4} sm={6}>
+                <Typography variant="body3" color="grey.label">
+                  State Name
+                </Typography>
+                <Typography variant="subtitle2" color="inputTextColor.main">
+                  {/* {console.log('test', getStateData(getCollegeDetail?.data.state_id))} */}
+                  {getStateData(getCollegeDetail?.data.state_id)}
+                </Typography>
+              </Grid>
+            ) : (
+              ''
+            )}
+
+            {loginData?.data?.user_sub_type === 1 ? (
+              <Grid item xs={12} md={4} sm={6}>
+                <Typography variant="body3" color="grey.label">
+                  District
+                </Typography>
+                <Typography variant="subtitle2" color="inputTextColor.main">
+                  {getDistrictNameData(getCollegeDetail?.data.district_id)}
+                </Typography>
+              </Grid>
+            ) : (
+              ''
+            )}
+
+            {loginData?.data?.user_sub_type === 1 ? (
+              <Grid item xs={12} md={4} sm={6}>
+                <Typography variant="body3" color="grey.label">
+                  City/Town/Village
+                </Typography>
+                <Typography variant="subtitle2" color="inputTextColor.main">
+                  {getCollegeDetail?.data.state_id}
+                </Typography>
+              </Grid>
+            ) : (
+              ''
+            )}
+
+            {loginData?.data?.user_sub_type === 1 ? (
+              <Grid item xs={12} md={4} sm={6}>
+                <Typography variant="body3" color="grey.label">
+                  Postal Code
+                </Typography>
+                <Typography variant="subtitle2" color="inputTextColor.main">
+                  {getCollegeDetail?.data.pin_code}
+                </Typography>
+              </Grid>
+            ) : (
+              ''
+            )}
+
             <Grid item xs={12} md={4} sm={6}>
               <Typography variant="body3" color="grey.label">
                 Email ID
               </Typography>
-              <Typography variant="subtitle2" color="primary.main">
+              <Typography variant="subtitle2" color="inputTextColor.main">
                 {/* {getCollegeDetail?.data?.email_id ? getCollegeDetail?.data?.email_id : ''} */}
                 {userData?.email_id
                   ? userData?.email_id
@@ -187,18 +357,7 @@ const CollegeMyProfile = () => {
             ) : (
               ''
             )}
-            {userData?.website ? (
-              <Grid item xs={12} md={4} sm={6}>
-                <Typography variant="body3" color="grey.label">
-                  College Website
-                </Typography>
-                <Typography variant="subtitle2" color="primary.main">
-                  {userData.website}
-                </Typography>
-              </Grid>
-            ) : (
-              ''
-            )}
+
             {userData?.address ? (
               <Grid item xs={12} md={4} sm={6}>
                 <Typography variant="body3" color="grey.label">
@@ -229,7 +388,7 @@ const CollegeMyProfile = () => {
                   College University Name
                 </Typography>
                 <Typography variant="subtitle2" color="primary.main">
-                  {userData.university_name}
+                  {/* {getCollegeData(getCollegeDetail?.data?.college_id)} */}
                 </Typography>
               </Grid>
             ) : (

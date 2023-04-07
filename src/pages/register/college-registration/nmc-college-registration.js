@@ -534,9 +534,6 @@ function NMCCollegeRegistration() {
           <Typography variant="body3" color="inputTextColor.main">
             City/Town/Village
           </Typography>
-          {/* <Typography component="span" color="error.main">
-            *
-          </Typography> */}
           <SearchableDropdown
             fullWidth
             name="Town"

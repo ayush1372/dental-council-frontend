@@ -23,6 +23,7 @@ const initialState = {
   collegesList: { data: [], isLoading: Boolean(true), isError: false },
   allcollegesList: { data: [], isLoading: Boolean(true), isError: false },
   getCollegeDetail: { data: [], isLoading: Boolean(true), isError: false },
+  updateCollegeDetail: { data: [], isLoading: Boolean(true), isError: false },
   coursesList: { data: [], isLoading: Boolean(true), isError: false },
   specialitiesList: { data: [], isLoading: Boolean(true), isError: false },
   councilNames: { data: [], isLoading: Boolean(true), isError: false },
@@ -96,6 +97,9 @@ export const CommonActivity = createSlice({
     getCollegeDetail: (state, action) => {
       state.getCollegeDetail.data = action.payload;
     },
+    updateCollegeDetail: (state, action) => {
+      state.updateCollegeDetail.data = action.payload;
+    },
     getCourses: (state, action) => {
       state.coursesList.data = action.payload;
     },
@@ -149,6 +153,7 @@ export const {
   getColleges,
   getAllColleges,
   getCollegeDetail,
+  updateCollegeDetail,
   getUniversities,
   getCourses,
   getSpecialities,

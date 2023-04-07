@@ -107,7 +107,7 @@ const RaiseQueryPopup = ({ ClosePopup, queryRaisedField }) => {
                   required: 'This field is required',
                   validate: (value) => {
                     const wordCount = value?.trim()?.split(/\s+/)?.length;
-                    if (wordCount > 151) {
+                    if (wordCount > 150) {
                       return 'Maximum word limit exceeded (150 words)';
                     }
                     return true;
