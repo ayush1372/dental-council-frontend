@@ -195,8 +195,7 @@ const DoctorRegistrationWelcomePage = () => {
           handleAadhaarPage={handleAadhaarPage}
           isNext={isNext}
           setIsNext={setIsNext}
-          text={` Your data is found in the NMR with below details.
-           Do you want to continue the registration in the NMR ? `}
+          text={`We found below details as per provided information. If the details are correct, click yes to continue registration. `}
         />
       )}
       {accountExists && (
