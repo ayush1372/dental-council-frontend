@@ -80,6 +80,7 @@ const WorkProfile = () => {
         )}
         {currentlyWorking === 'yes' && (
           <WorkDetails
+            currentWorkingSelection={currentlyWorking}
             errors={errors}
             getValues={getValues}
             register={register}
