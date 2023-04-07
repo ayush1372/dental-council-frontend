@@ -298,7 +298,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
             <Box p="30px 32px 0px 32px" width={{ xs: '100%', md: '679px' }} sx={{ boxShadow: '2' }}>
               <Box mb={4}>
                 <Typography variant="h2" color="textSecondary.main">
-                  Verify Registration Details
+                  Registration Details
                 </Typography>
               </Box>
               <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
