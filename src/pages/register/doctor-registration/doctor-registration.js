@@ -52,7 +52,7 @@ const DoctorRegistrationWelcomePage = () => {
   const onSubmit = () => {
     let registrationData = {
       smcId: getValues().RegistrationCouncilId,
-      registrationNumber: parseInt(getValues().RegistrationNumber),
+      registrationNumber: getValues().RegistrationNumber,
     };
     dispatch(fetchSmcRegistrationDetails(registrationData))
       .then(() => {
