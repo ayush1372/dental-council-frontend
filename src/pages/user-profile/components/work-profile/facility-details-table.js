@@ -35,7 +35,7 @@ function createData(
   };
 }
 
-function FacilityDetailsTable({ declaredFacilityDistrict, trackStatusData }) {
+function FacilityDetailsTable({ declaredFacilityData, trackStatusData }) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState({});
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -91,27 +91,27 @@ function FacilityDetailsTable({ declaredFacilityDistrict, trackStatusData }) {
     setOrderBy(property);
   };
 
-  const newRowsData = declaredFacilityDistrict.map((application) => {
+  const newRowsData = declaredFacilityData?.current_work_details?.map((application) => {
     return createData(
       {
         type: 'name',
-        value: application?.facilityName,
+        value: application?.work_organization,
       },
       {
         type: 'address',
-        value: application?.address,
+        value: application?.address?.address_line1,
       },
       {
         type: 'state',
-        value: application?.stateName,
+        value: application?.address?.state?.name,
       },
       {
         type: 'district',
-        value: application.districtName,
+        value: application?.address?.district?.name,
       },
       {
         type: 'type',
-        value: application?.facilityType,
+        value: application?.organization_type,
       },
 
       { type: 'systemOfMedicine', value: application?.systemOfMedicine },

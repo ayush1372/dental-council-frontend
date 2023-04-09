@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { natureOfWork, workStatusOptions } from '../../../../constants/common-data';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
 import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
+import SuccessModalPopup from '../../../../shared/common-modals/success-modal-popup';
 import {
   getCitiesList,
   getDistrictList,
@@ -16,15 +17,23 @@ import {
 } from '../../../../store/actions/common-actions';
 import {
   getFacilitiesData,
+  getWorkProfileDetailsData,
   updateDoctorWorkDetails,
 } from '../../../../store/actions/doctor-user-profile-actions';
 import { Button, Checkbox, RadioGroup, Select, TextField } from '../../../../ui/core';
-import successToast from '../../../../ui/core/toaster';
 import { getFacilityDistrictList } from './district-api';
 import FacilityDetailsTable from './facility-details-table';
 import WorkDetailsTable from './work-details-table';
 
-const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watch }) => {
+const WorkDetails = ({
+  getValues,
+  register,
+  setValue,
+  errors,
+  handleSubmit,
+  watch,
+  currentWorkingSelection,
+}) => {
   const dispatch = useDispatch();
 
   const [tabValue, setTabValue] = useState(0);
@@ -33,87 +42,108 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
   const [workExpierence, setWorkExpierence] = useState(0);
   const [facilityDistrict, setFacilityDistrict] = useState([]);
   const [facilityChecked, setFacilityChecked] = useState(true);
+  const [successModalPopup, setSuccessModalPopup] = useState(false);
   const [organizationChecked, setOrganizationChecked] = useState(false);
-  const [declaredFacilityDistrict, setDeclaredFacilityDistrict] = useState([]);
+  const [declaredFacilityData, setDeclaredFacilityDistrict] = useState([]);
+  const [defaultFacilityData, setDefaultFacilityDistrict] = useState([]);
 
   const { loginData } = useSelector((state) => state.loginReducer);
   const { registrationDetails } = useSelector((state) => state.doctorUserProfileReducer);
 
   // eslint-disable-next-line no-unused-vars
-  const [facilityResponseData, setFacilityResponseData] = useState([
-    {
-      facilityId: 'IN0910000076',
-      facilityName: 'King Georges Medical University Lucknow',
-      ownership: 'Government',
-      ownershipCode: 'G',
-      stateName: 'UTTAR PRADESH',
-      stateLGDCode: '9',
-      districtName: 'LUCKNOW',
-      subDistrictName: 'Malihabad',
-      districtLGDCode: '162',
-      subDistrictLGDCode: '819',
-      villageCityTownLGDCode: '',
-      address: 'main road, ',
-      pincode: '110092',
-      latitude: '28.6958080000001',
-      longitude: '77.2061630000001',
-      systemOfMedicineCode: 'M',
-      systemOfMedicine: 'Modern Medicine(Allopathy)',
-      facilityTypeCode: '5',
-      facilityStatus: 'Submitted',
-      facilityType: 'Hospital',
-    },
-  ]);
+  const [facilityResponseData, setFacilityResponseData] = useState([]);
+
+  useEffect(() => {
+    dispatch(getWorkProfileDetailsData(loginData?.data?.profile_id)).then((response) => {
+      if (response?.data) {
+        setDefaultFacilityDistrict(response?.data);
+      }
+    });
+  }, []);
 
   const onSubmit = () => {
     const currentWorkDetails = {
-      data: {
-        work_details: {
-          is_user_currently_working: 0,
-          work_nature: getWorkNature(getValues().NatureOfWork),
-          work_status: getWorkStatus(getValues().workStatus),
-        },
-        current_work_details: [
-          {
-            work_organization: getValues().workingOrganizationName,
-            organization_type: getValues().organizationType,
-            address: {
-              id: null,
-              address_line1: getValues().Address,
-              street: getValues().Street,
-              landmark: getValues().Landmark,
-              locality: getValues().Locality,
-              country: getCountryData(getValues().Country),
-              state: getStateData(getValues().state),
-              district: getDistrictData(getValues().District),
-              sub_district: getSubDistrictData(getValues().SubDistrict),
-              village: getVillageData(getValues().Area),
-              url: getValues().telecommunicationURL,
-              pincode: getValues().pincode,
-            },
-            experience_in_years: workExpierence,
-          },
-        ],
-        registration_no: registrationDetails?.registration_detail_to?.registration_number,
-        languages_known_ids: getLanguageData(getValues().LanguageSpoken),
+      work_details: {
+        is_user_currently_working: currentWorkingSelection === 'yes' ? 0 : 1,
+        work_status: getWorkStatus(getValues().workStatus),
+        work_nature: getWorkNature(getValues().NatureOfWork),
       },
+      current_work_details: [
+        {
+          facility_id: '',
+          facility_type_id: '',
+          organization_type: getValues().organizationType,
+          work_organization: getValues().workingOrganizationName,
+          url: getValues().telecommunicationURL,
+          address: {
+            id: null,
+            country: getCountryData(getValues().Country),
+            state: getStateData(getValues().state),
+            district: getDistrictData(getValues().District),
+            village: getVillageData(getValues().Area),
+            sub_district: getSubDistrictData(getValues().SubDistrict),
+            pincode: getValues().pincode,
+            address_line1: getValues().Address,
+            street: getValues().Street,
+            landmark: getValues().Landmark,
+            locality: getValues().Locality,
+          },
+          registration_no: registrationDetails?.registration_detail_to?.registration_number,
+          experience_in_years: workExpierence,
+        },
+      ],
+      registration_no: registrationDetails?.registration_detail_to?.registration_number,
+      languages_known_ids: getLanguageData(getValues().LanguageSpoken),
     };
-    // // eslint-disable-next-line no-console
-    // console.log('currentWorkDetails', currentWorkDetails);
+    if (declaredFacilityData?.length > 0) {
+      let facilityDetailsDeclared = {
+        facility_id: declaredFacilityData[0]?.facilityId,
+        facility_type_id: declaredFacilityData[0]?.facilityTypeCode,
+        organization_type: getValues().organizationType,
+        work_organization: getValues().workingOrganizationName,
+        url: getValues().telecommunicationURL,
+        address: {
+          id: null,
 
-    dispatch(updateDoctorWorkDetails(currentWorkDetails, loginData?.data?.profile_id))
-      .then(() => {
-        // setSuccessModalPopup(true);
-        // reset();
-      })
-      .catch((error) => {
-        successToast(
-          error?.data?.response?.data?.error,
-          'RegistrationError',
-          'error',
-          'top-center'
-        );
-      });
+          pincode: declaredFacilityData[0]?.pincode,
+          systemOfMedicine: declaredFacilityData[0]?.systemOfMedicine,
+          country: {
+            id: 386,
+            name: 'india',
+          },
+          state: {
+            iso_code: declaredFacilityData[0]?.stateLGDCode,
+            name: declaredFacilityData[0]?.stateName,
+          },
+          district: {
+            iso_code: declaredFacilityData[0]?.districtLGDCode,
+            name: declaredFacilityData[0]?.districtName,
+          },
+          village: {
+            iso_code: declaredFacilityData[0]?.villageCityTownLGDCode,
+            name: declaredFacilityData[0]?.villageCityTownName,
+          },
+          sub_district: {
+            iso_code: declaredFacilityData[0]?.subDistrictLGDCode,
+            name: declaredFacilityData[0]?.subDistrictName,
+          },
+          address_line1: declaredFacilityData[0]?.Address,
+          street: getValues().Street,
+          landmark: getValues().Landmark,
+        },
+        registration_no: registrationDetails?.registration_detail_to?.registration_number,
+        experience_in_years: workExpierence,
+      };
+      currentWorkDetails?.current_work_details.push(facilityDetailsDeclared);
+    }
+
+    if (!organizationChecked) {
+      currentWorkDetails?.current_work_details.splice(0, 1);
+    }
+
+    dispatch(updateDoctorWorkDetails(currentWorkDetails, loginData?.data?.profile_id)).then(() => {
+      setSuccessModalPopup(true);
+    });
   };
 
   const { languagesList, statesList, countriesList, districtsList, subDistrictList, citiesList } =
@@ -129,34 +159,57 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
   };
 
   const handleTabChange = (_, value) => {
+    setFacilityResponseData([]);
+    setDeclaredFacilityDistrict([]);
     setTabValue(value);
+  };
+
+  const getStateISOCode = (State) => {
+    let stateData = [];
+
+    statesList?.map((elementData) => {
+      if (elementData.id === State) {
+        stateData.push(elementData);
+      }
+    });
+
+    return stateData[0]?.iso_code;
+  };
+  const getDistrictISOCode = (District) => {
+    let DistrictData = [];
+    facilityDistrict?.map((elementData) => {
+      if (elementData.id === District) {
+        DistrictData.push(elementData);
+      }
+    });
+    return DistrictData[0]?.iso_code;
   };
 
   const searchFacilitiesHandler = () => {
     const values = getValues();
+
+    let ownerCode =
+      values?.workStatus === '3'
+        ? 'G'
+        : values?.workStatus === '2'
+        ? 'P'
+        : values?.workStatus === '1'
+        ? 'PP'
+        : '';
     const searchFacilities = {
       page: 0,
-      ownershipCode: '',
+      ownershipCode: ownerCode,
       resultsPerPage: 10,
       facilityId: values.facilityId || '',
       facilityName: values.facilityName || '',
-      stateLGDCode: values.stateLGDCode || '',
-      districtLGDCode: values.districtLGDCode || '',
+      stateLGDCode: getStateISOCode(values.stateLGDCode) || '',
+      districtLGDCode: getDistrictISOCode(values.districtLGDCode) || '',
     };
-    dispatch(getFacilitiesData(searchFacilities))
-      .then((response) => {
-        // // eslint-disable-next-line no-console
-        // console.log(response?.data);
-        setFacilityResponseData(response?.data);
-      })
-      .catch((error) => {
-        successToast(
-          error?.data?.response?.data?.error,
-          'RegistrationError',
-          'error',
-          'top-center'
-        );
-      });
+    dispatch(getFacilitiesData(searchFacilities)).then((response) => {
+      if (response?.data?.message === 'Request processed successfully') {
+        setFacilityResponseData(response?.data?.facilities);
+      }
+    });
     setShowTable(true);
   };
 
@@ -223,32 +276,34 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
   };
   const getStateData = (State) => {
     let stateData = [];
-
-    statesList?.map((elementData) => {
-      if (elementData.id === State) {
-        stateData.push(elementData);
-      }
-    });
+    Array.isArray(statesList) &&
+      statesList?.map((elementData) => {
+        if (elementData.id === State) {
+          stateData.push(elementData);
+        }
+      });
 
     return stateData[0];
   };
   const getDistrictData = (District) => {
     let DistrictData = [];
-    districtsList?.map((elementData) => {
-      if (elementData.id === District) {
-        DistrictData.push(elementData);
-      }
-    });
+    Array.isArray(districtsList) &&
+      districtsList?.map((elementData) => {
+        if (elementData.id === District) {
+          DistrictData.push(elementData);
+        }
+      });
     return DistrictData[0];
   };
 
   const getSubDistrictData = (subDistrict) => {
     let subDistrictData = [];
-    subDistrictList?.map((elementData) => {
-      if (elementData.iso_code === subDistrict) {
-        subDistrictData.push(elementData);
-      }
-    });
+    Array.isArray(subDistrictList) &&
+      subDistrictList?.map((elementData) => {
+        if (elementData.iso_code === subDistrict) {
+          subDistrictData.push(elementData);
+        }
+      });
     return subDistrictData[0];
   };
 
@@ -316,7 +371,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
           required={true}
           placeholder={'Nature Of Work'}
           {...register('NatureOfWork', {
-            required: 'This field is required',
+            // required: 'This field is required',
           })}
           options={createSelectFieldData(natureOfWork)}
         />
@@ -497,7 +552,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
                     register={register}
                     setFacilityResponseData={setFacilityResponseData}
                     setDeclaredFacilityDistrict={setDeclaredFacilityDistrict}
-                    declaredFacilityDistrict={declaredFacilityDistrict}
+                    declaredFacilityData={declaredFacilityData}
                   />
                 </Grid>
               )}
@@ -520,7 +575,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
                   defaultValue={getValues().stateLGDCode}
                   required={true}
                   {...register('stateLGDCode', {
-                    required: 'This field is required',
+                    // required: 'This field is required',
                   })}
                   options={createSelectFieldData(statesList)}
                 />
@@ -539,7 +594,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
                   defaultValue={getValues().districtLGDCode}
                   required={true}
                   {...register('districtLGDCode', {
-                    required: 'This field is required',
+                    // required: 'This field is required',
                   })}
                   options={createSelectFieldData(facilityDistrict)}
                 />
@@ -583,7 +638,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
                     register={register}
                     setFacilityResponseData={setFacilityResponseData}
                     setDeclaredFacilityDistrict={setDeclaredFacilityDistrict}
-                    declaredFacilityDistrict={declaredFacilityDistrict}
+                    declaredFacilityData={declaredFacilityData}
                   />
                 </Grid>
               )}
@@ -627,7 +682,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
                 fullWidth
                 defaultValue={getValues().workingOrganizationName}
                 {...register('workingOrganizationName', {
-                  required: 'This field is required',
+                  // required: 'This field is required',
                   maxLength: {
                     value: 300,
                     message: 'Length should be less than 300.',
@@ -765,7 +820,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
                 defaultValue={getValues().Country}
                 required={true}
                 {...register('Country', {
-                  required: 'Country is required',
+                  // required: 'Country is required',
                 })}
                 options={
                   countriesList?.length > 0 ? createSelectFieldData(countriesList, 'id') : []
@@ -794,7 +849,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
                 defaultValue={getValues().state}
                 required={true}
                 {...register('state', {
-                  required: 'This field is required',
+                  // required: 'This field is required',
                 })}
                 options={createSelectFieldData(statesList)}
               />
@@ -813,7 +868,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
                 defaultValue={getValues().District}
                 required={true}
                 {...register('District', {
-                  required: 'This field is required',
+                  // required: 'This field is required',
                 })}
                 options={createSelectFieldData(districtsList)}
               />
@@ -834,7 +889,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
                 required={true}
                 defaultValue={getValues().SubDistrict}
                 {...register('SubDistrict', {
-                  required: 'This field is required',
+                  // required: 'This field is required',
                 })}
                 options={createSelectFieldData(subDistrictList, 'iso_code')}
                 MenuProps={{
@@ -861,7 +916,7 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
                 defaultValue={getValues().Area}
                 required={true}
                 {...register('Area', {
-                  required: 'City/Town/Village is required',
+                  // required: 'City/Town/Village is required',
                 })}
                 options={createSelectFieldData(citiesList)}
                 MenuProps={{
@@ -924,24 +979,6 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
           </Grid>
         </>
       )}
-      {declaredFacilityDistrict?.length > 0 && (
-        <Grid container>
-          <Grid item xs={12}>
-            <Typography
-              bgcolor="grey1.light"
-              p={1}
-              component="div"
-              color="tabHighlightedBackgroundColor.main"
-              variant="h3"
-            >
-              Declared Place Of Work
-            </Typography>
-          </Grid>
-          <Grid item xs={12} padding="10px 0 !important">
-            <FacilityDetailsTable declaredFacilityDistrict={declaredFacilityDistrict} />
-          </Grid>
-        </Grid>
-      )}
       {(organizationChecked || facilityChecked) && (
         <Grid
           container
@@ -986,6 +1023,36 @@ const WorkDetails = ({ getValues, register, setValue, errors, handleSubmit, watc
             >
               Cancel
             </Button>
+          </Grid>
+          {successModalPopup && (
+            <SuccessModalPopup
+              open={successModalPopup}
+              workDetails={true}
+              setOpen={() => setSuccessModalPopup(false)}
+              text={'Your Work-Details has been submitted successfully.'}
+            />
+          )}
+        </Grid>
+      )}
+      {
+        // eslint-disable-next-line no-console
+        console.log(defaultFacilityData?.current_work_details?.length > 0)
+      }
+      {defaultFacilityData?.current_work_details?.length > 0 && (
+        <Grid container>
+          <Grid item xs={12}>
+            <Typography
+              bgcolor="grey1.light"
+              p={1}
+              component="div"
+              color="tabHighlightedBackgroundColor.main"
+              variant="h3"
+            >
+              Declared Place Of Work
+            </Typography>
+          </Grid>
+          <Grid item xs={12} padding="10px 0 !important">
+            <FacilityDetailsTable declaredFacilityData={defaultFacilityData} />
           </Grid>
         </Grid>
       )}
