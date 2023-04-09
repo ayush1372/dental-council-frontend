@@ -1354,7 +1354,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                     },
                   }}
                   fullWidth
-                  value={getSubDistrictData(getValues()?.Area)?.name}
+                  value={getVillageData(getValues()?.Area)?.name}
                 />
               ) : (
                 <Select
