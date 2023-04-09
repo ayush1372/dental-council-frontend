@@ -47,14 +47,16 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
             borderColor={qualification_detail_response_tos?.length > 1 ? 'grey2.light' : 'none'}
             // backgroundColor={element.request_id === requestId ? 'red' : ''}
           >
-            {element.is_verified && qualification_detail_response_tos?.length > 1 ? (
+            {element.is_verified ? (
               <Typography ml={2} spacing={2} color="success.main">
                 Approved
               </Typography>
-            ) : (
+            ) : index !== 0 ? (
               <Typography ml={2} spacing={2} color="error.main">
                 Pending Approval
               </Typography>
+            ) : (
+              ''
             )}
             <Grid container item spacing={2}>
               <Grid item xs={12} md={4}>
