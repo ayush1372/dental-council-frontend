@@ -342,31 +342,34 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
 
   const getStateData = (State) => {
     let stateData = [];
-    statesList?.map((elementData) => {
-      if (elementData.id === State) {
-        stateData.push(elementData);
-      }
-    });
+    Array.isArray(statesList) &&
+      statesList?.map((elementData) => {
+        if (elementData.id === State) {
+          stateData.push(elementData);
+        }
+      });
     return stateData[0];
   };
 
   const getDistrictData = (District) => {
     let DistrictData = [];
-    districtListData?.map((elementData) => {
-      if (elementData.iso_code === District) {
-        DistrictData.push(elementData);
-      }
-    });
+    Array.isArray(districtListData) &&
+      districtListData?.map((elementData) => {
+        if (elementData.iso_code === District) {
+          DistrictData.push(elementData);
+        }
+      });
     return DistrictData[0];
   };
 
   const getSubDistrictData = (subDistrict) => {
     let subDistrictData = [];
-    subDistrictListData?.map((elementData) => {
-      if (elementData.iso_code === subDistrict) {
-        subDistrictData.push(elementData);
-      }
-    });
+    Array.isArray(subDistrictListData) &&
+      subDistrictListData?.map((elementData) => {
+        if (elementData.iso_code === subDistrict) {
+          subDistrictData.push(elementData);
+        }
+      });
     return subDistrictData[0];
   };
 
@@ -1044,35 +1047,61 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
               />
             </Grid>
             <Grid item xs={12} md={4}>
-              <Select
-                style={{ backgroundColor: '#F0F0F0' }}
-                fullWidth
-                error={errors.Country?.message}
-                name="Country"
-                label="Country"
-                defaultValue={getValues().Country}
-                value={getValues().Country}
-                required={isSameAddress ? false : true}
-                {...register('Country', {
-                  required: 'Country is required',
-                })}
-                disabled
-                options={
-                  countriesList?.length > 0
-                    ? createSelectFieldData(
-                        countriesList?.filter(function (item) {
-                          return item.name === 'India';
-                        })
-                      )
-                    : []
-                }
-                MenuProps={{
-                  style: {
-                    maxHeight: 250,
-                    maxWidth: 130,
-                  },
-                }}
-              />
+              {isSameAddress || (work_flow_status_id === 3 && getQueryRaised('Country')) ? (
+                <TextField
+                  variant="outlined"
+                  name={'Country'}
+                  label="Country"
+                  disabled={
+                    isSameAddress
+                      ? isSameAddress
+                      : work_flow_status_id === 3
+                      ? getQueryRaised('Country')
+                      : false
+                  }
+                  sx={{
+                    input: {
+                      backgroundColor: isSameAddress
+                        ? 'grey2.main'
+                        : work_flow_status_id === 3 && getQueryRaised('Country')
+                        ? 'grey2.main'
+                        : '',
+                    },
+                  }}
+                  fullWidth
+                  value={'India'}
+                />
+              ) : (
+                <Select
+                  style={{ backgroundColor: '#F0F0F0' }}
+                  fullWidth
+                  error={errors.Country?.message}
+                  name="Country"
+                  label="Country"
+                  defaultValue={getValues().Country}
+                  value={getValues().Country}
+                  required={isSameAddress ? false : true}
+                  {...register('Country', {
+                    required: 'Country is required',
+                  })}
+                  disabled
+                  options={
+                    countriesList?.length > 0
+                      ? createSelectFieldData(
+                          countriesList?.filter(function (item) {
+                            return item.name === 'India';
+                          })
+                        )
+                      : []
+                  }
+                  MenuProps={{
+                    style: {
+                      maxHeight: 250,
+                      maxWidth: 130,
+                    },
+                  }}
+                />
+              )}
             </Grid>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
@@ -1083,45 +1112,72 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                   </Typography>
                 )}
               </Typography>
-              <Select
-                style={{
-                  backgroundColor: isSameAddress
-                    ? '#F0F0F0'
-                    : work_flow_status_id === 3 && getQueryRaised('State')
-                    ? '#F0F0F0'
-                    : '',
-                }}
-                fullWidth
-                error={errors.State?.message}
-                name="State"
-                defaultValue={
-                  isSameAddress ? personalDetails?.kyc_address?.state?.id : getValues()?.State
-                }
-                value={isSameAddress ? personalDetails?.kyc_address?.state?.id : getValues()?.State}
-                required={isSameAddress ? false : true}
-                disabled={
-                  isSameAddress
-                    ? isSameAddress
-                    : work_flow_status_id === 3
-                    ? getQueryRaised('State/Union Territory')
-                    : false
-                }
-                {...register(
-                  'State',
-                  !isSameAddress
-                    ? getValues()?.District?.length <= 0 && {
-                        required: 'State/Union territory is required',
-                      }
-                    : ''
-                )}
-                options={createSelectFieldData(statesList)}
-                MenuProps={{
-                  style: {
-                    maxHeight: 250,
-                    maxWidth: 130,
-                  },
-                }}
-              />
+              {isSameAddress || (work_flow_status_id === 3 && getQueryRaised('State')) ? (
+                <TextField
+                  variant="outlined"
+                  name={'State'}
+                  disabled={
+                    isSameAddress
+                      ? isSameAddress
+                      : work_flow_status_id === 3
+                      ? getQueryRaised('State')
+                      : false
+                  }
+                  sx={{
+                    input: {
+                      backgroundColor: isSameAddress
+                        ? 'grey2.main'
+                        : work_flow_status_id === 3 && getQueryRaised('State')
+                        ? 'grey2.main'
+                        : '',
+                    },
+                  }}
+                  fullWidth
+                  value={getStateData(getValues()?.State)?.name}
+                />
+              ) : (
+                <Select
+                  style={{
+                    backgroundColor: isSameAddress
+                      ? '#F0F0F0'
+                      : work_flow_status_id === 3 && getQueryRaised('State')
+                      ? '#F0F0F0'
+                      : '',
+                  }}
+                  fullWidth
+                  error={errors.State?.message}
+                  name="State"
+                  defaultValue={
+                    isSameAddress ? personalDetails?.kyc_address?.state?.id : getValues()?.State
+                  }
+                  value={
+                    isSameAddress ? personalDetails?.kyc_address?.state?.id : getValues()?.State
+                  }
+                  required={isSameAddress ? false : true}
+                  disabled={
+                    isSameAddress
+                      ? isSameAddress
+                      : work_flow_status_id === 3
+                      ? getQueryRaised('State/Union Territory')
+                      : false
+                  }
+                  {...register(
+                    'State',
+                    !isSameAddress
+                      ? getValues()?.District?.length <= 0 && {
+                          required: 'State/Union territory is required',
+                        }
+                      : ''
+                  )}
+                  options={createSelectFieldData(statesList)}
+                  MenuProps={{
+                    style: {
+                      maxHeight: 250,
+                      maxWidth: 130,
+                    },
+                  }}
+                />
+              )}
             </Grid>
           </Grid>
           <Grid container item spacing={2}>
@@ -1134,131 +1190,207 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                   </Typography>
                 )}
               </Typography>
-              <Select
-                style={{
-                  backgroundColor: isSameAddress
-                    ? '#F0F0F0'
-                    : work_flow_status_id === 3 && getQueryRaised('District')
-                    ? '#F0F0F0'
-                    : '',
-                }}
-                fullWidth
-                error={errors.District?.message}
-                name="District"
-                defaultValue={
-                  isSameAddress
-                    ? personalDetails?.kyc_address?.district?.iso_code
-                    : getValues()?.District
-                }
-                value={
-                  isSameAddress
-                    ? personalDetails?.kyc_address?.district?.iso_code
-                    : getValues()?.District
-                }
-                required={isSameAddress ? false : true}
-                disabled={
-                  isSameAddress
-                    ? isSameAddress
-                    : work_flow_status_id === 3
-                    ? getQueryRaised('District')
-                    : false
-                }
-                {...register(
-                  'District',
-                  !isSameAddress &&
-                    getValues()?.District?.length <= 0 && {
-                      required: 'District is required',
-                    }
-                )}
-                options={createSelectFieldData(districtsList, 'iso_code')}
-                MenuProps={{
-                  style: {
-                    maxHeight: 250,
-                    maxWidth: 130,
-                  },
-                }}
-              />
+              {isSameAddress || (work_flow_status_id === 3 && getQueryRaised('District')) ? (
+                <TextField
+                  variant="outlined"
+                  name={'District'}
+                  disabled={
+                    isSameAddress
+                      ? isSameAddress
+                      : work_flow_status_id === 3
+                      ? getQueryRaised('District')
+                      : false
+                  }
+                  sx={{
+                    input: {
+                      backgroundColor: isSameAddress
+                        ? 'grey2.main'
+                        : work_flow_status_id === 3 && getQueryRaised('District')
+                        ? 'grey2.main'
+                        : '',
+                    },
+                  }}
+                  fullWidth
+                  value={getDistrictData(getValues()?.District)?.name}
+                />
+              ) : (
+                <Select
+                  style={{
+                    backgroundColor: isSameAddress
+                      ? '#F0F0F0'
+                      : work_flow_status_id === 3 && getQueryRaised('District')
+                      ? '#F0F0F0'
+                      : '',
+                  }}
+                  fullWidth
+                  error={errors.District?.message}
+                  name="District"
+                  defaultValue={
+                    isSameAddress
+                      ? personalDetails?.kyc_address?.district?.iso_code
+                      : getValues()?.District
+                  }
+                  value={
+                    isSameAddress
+                      ? personalDetails?.kyc_address?.district?.iso_code
+                      : getValues()?.District
+                  }
+                  required={isSameAddress ? false : true}
+                  disabled={
+                    isSameAddress
+                      ? isSameAddress
+                      : work_flow_status_id === 3
+                      ? getQueryRaised('District')
+                      : false
+                  }
+                  {...register(
+                    'District',
+                    !isSameAddress &&
+                      getValues()?.District?.length <= 0 && {
+                        required: 'District is required',
+                      }
+                  )}
+                  options={createSelectFieldData(districtsList, 'iso_code')}
+                  MenuProps={{
+                    style: {
+                      maxHeight: 250,
+                      maxWidth: 130,
+                    },
+                  }}
+                />
+              )}
             </Grid>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 Sub District
               </Typography>
-              <Select
-                style={{
-                  backgroundColor: isSameAddress
-                    ? '#F0F0F0'
-                    : work_flow_status_id === 3 && getQueryRaised('Sub District')
-                    ? '#F0F0F0'
-                    : '',
-                }}
-                fullWidth
-                error={errors.SubDistrict?.message}
-                name="SubDistrict"
-                placeholder="Sub District"
-                disabled={
-                  isSameAddress
-                    ? isSameAddress
-                    : work_flow_status_id === 3
-                    ? getQueryRaised('Sub District')
-                    : false
-                }
-                defaultValue={
-                  isSameAddress
-                    ? personalDetails?.kyc_address?.sub_district?.iso_code
-                    : getValues()?.SubDistrict
-                }
-                value={
-                  isSameAddress
-                    ? personalDetails?.kyc_address?.sub_district?.iso_code
-                    : getValues()?.SubDistrict
-                }
-                {...register('SubDistrict')}
-                options={createSelectFieldData(subDistrictList, 'iso_code')}
-                MenuProps={{
-                  style: {
-                    maxHeight: 250,
-                    maxWidth: 130,
-                  },
-                }}
-              />
+              {isSameAddress || (work_flow_status_id === 3 && getQueryRaised('SubDistrict')) ? (
+                <TextField
+                  variant="outlined"
+                  name={'SubDistrict'}
+                  disabled={
+                    isSameAddress
+                      ? isSameAddress
+                      : work_flow_status_id === 3
+                      ? getQueryRaised('SubDistrict')
+                      : false
+                  }
+                  sx={{
+                    input: {
+                      backgroundColor: isSameAddress
+                        ? 'grey2.main'
+                        : work_flow_status_id === 3 && getQueryRaised('SubDistrict')
+                        ? 'grey2.main'
+                        : '',
+                    },
+                  }}
+                  fullWidth
+                  value={getSubDistrictData(getValues()?.SubDistrict)?.name}
+                />
+              ) : (
+                <Select
+                  style={{
+                    backgroundColor: isSameAddress
+                      ? '#F0F0F0'
+                      : work_flow_status_id === 3 && getQueryRaised('Sub District')
+                      ? '#F0F0F0'
+                      : '',
+                  }}
+                  fullWidth
+                  error={errors.SubDistrict?.message}
+                  name="SubDistrict"
+                  placeholder="Sub District"
+                  disabled={
+                    isSameAddress
+                      ? isSameAddress
+                      : work_flow_status_id === 3
+                      ? getQueryRaised('Sub District')
+                      : false
+                  }
+                  defaultValue={
+                    isSameAddress
+                      ? personalDetails?.kyc_address?.sub_district?.iso_code
+                      : getValues()?.SubDistrict
+                  }
+                  value={
+                    isSameAddress
+                      ? personalDetails?.kyc_address?.sub_district?.iso_code
+                      : getValues()?.SubDistrict
+                  }
+                  {...register('SubDistrict')}
+                  options={createSelectFieldData(subDistrictList, 'iso_code')}
+                  MenuProps={{
+                    style: {
+                      maxHeight: 250,
+                      maxWidth: 130,
+                    },
+                  }}
+                />
+              )}
             </Grid>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 City/Town/Village
               </Typography>
-              <Select
-                style={{
-                  backgroundColor: isSameAddress
-                    ? '#F0F0F0'
-                    : work_flow_status_id === 3 && getQueryRaised('City/Town/Village')
-                    ? '#F0F0F0'
-                    : '',
-                }}
-                fullWidth
-                name="Area"
-                defaultValue={
-                  isSameAddress ? personalDetails?.kyc_address?.village?.id : getValues()?.Area
-                }
-                value={
-                  isSameAddress ? personalDetails?.kyc_address?.village?.id : getValues()?.Area
-                }
-                disabled={
-                  isSameAddress
-                    ? isSameAddress
-                    : work_flow_status_id === 3
-                    ? getQueryRaised('City/Town/Village')
-                    : false
-                }
-                required={true}
-                {...register('Area')}
-                options={createSelectFieldData(citiesList, 'id')}
-                MenuProps={{
-                  style: {
-                    maxHeight: 250,
-                    maxWidth: 130,
-                  },
-                }}
-              />
+              {isSameAddress ||
+              (work_flow_status_id === 3 && getQueryRaised('City/Town/Village')) ? (
+                <TextField
+                  variant="outlined"
+                  name={'Area'}
+                  disabled={
+                    isSameAddress
+                      ? isSameAddress
+                      : work_flow_status_id === 3
+                      ? getQueryRaised('City/Town/Village')
+                      : false
+                  }
+                  sx={{
+                    input: {
+                      backgroundColor: isSameAddress
+                        ? 'grey2.main'
+                        : work_flow_status_id === 3 && getQueryRaised('City/Town/Village')
+                        ? 'grey2.main'
+                        : '',
+                    },
+                  }}
+                  fullWidth
+                  value={getVillageData(getValues()?.Area)?.name}
+                />
+              ) : (
+                <Select
+                  style={{
+                    backgroundColor: isSameAddress
+                      ? '#F0F0F0'
+                      : work_flow_status_id === 3 && getQueryRaised('City/Town/Village')
+                      ? '#F0F0F0'
+                      : '',
+                  }}
+                  fullWidth
+                  name="Area"
+                  defaultValue={
+                    isSameAddress ? personalDetails?.kyc_address?.village?.id : getValues()?.Area
+                  }
+                  value={
+                    isSameAddress ? personalDetails?.kyc_address?.village?.id : getValues()?.Area
+                  }
+                  disabled={
+                    isSameAddress
+                      ? isSameAddress
+                      : work_flow_status_id === 3
+                      ? getQueryRaised('City/Town/Village')
+                      : false
+                  }
+                  required={true}
+                  {...register('Area')}
+                  options={createSelectFieldData(citiesList, 'id')}
+                  MenuProps={{
+                    style: {
+                      maxHeight: 250,
+                      maxWidth: 130,
+                    },
+                  }}
+                />
+              )}
             </Grid>
           </Grid>
           <Grid container item spacing={2}>
