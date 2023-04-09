@@ -708,10 +708,11 @@ const EditQualificationDetails = ({
               defaultValue={qualification?.year}
               {...register(
                 `qualification[${index}].year`,
-                (qualification?.year === '' || getValues()?.qualification[0]?.year) && {
-                  required: 'awarding is Required',
-                  pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
-                }
+                (qualification?.year === '' || getValues()?.qualification[index]?.year) &&
+                  getValues().qualification[index].year?.length <= 0 && {
+                    required: 'awarding year is Required',
+                    pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
+                  }
               )}
               MenuProps={{
                 style: {
@@ -740,7 +741,7 @@ const EditQualificationDetails = ({
                 'Speciality',
 
                 showBroadSpeciality &&
-                  getValues()?.Speciality?.year?.length <= 0 && {
+                  getValues()?.Speciality?.length <= 0 && {
                     required: 'Speciality is Required',
                   }
               )}
