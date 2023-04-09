@@ -1,7 +1,7 @@
 /* eslint-disable quotes */
 import { useState } from 'react';
 
-import ControlPointIcon from '@mui/icons-material/ControlPoint';
+// import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ReplayIcon from '@mui/icons-material/Replay';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
@@ -234,8 +234,8 @@ export const UploadFile = (props) => {
               alignItems="center"
               justifyContent="flex-end"
             >
-              <ControlPointIcon fontSize="18px" sx={{ marginRight: '5px' }} />
-              <Typography variant="body1">Pull from Digilocker</Typography>
+              {/* <ControlPointIcon fontSize="18px" sx={{ marginRight: '5px' }} />
+              <Typography variant="body1">Pull from Digilocker</Typography> */}
             </Box>
           </Box>
         )}

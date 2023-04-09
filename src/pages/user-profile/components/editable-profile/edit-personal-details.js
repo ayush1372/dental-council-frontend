@@ -267,6 +267,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
 
   useEffect(() => {
     dispatch(getPersonalDetailsData(personalDetails?.hp_profile_id));
+    setIsSameAddress(
+      personalDetails?.communication_address?.is_same_address === 'true' ? true : false
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -903,7 +906,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                   defaultValue={
                     isSameAddress ? personalDetails?.kyc_address?.house : getValues()?.House
                   }
-                  value={getValues()?.House}
+                  // value={getValues()?.House}
                   {...register(
                     'House',
                     isSameAddress

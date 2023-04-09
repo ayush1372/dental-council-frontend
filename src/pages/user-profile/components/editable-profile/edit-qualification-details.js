@@ -678,7 +678,7 @@ const EditQualificationDetails = ({
               defaultValue={qualification?.month}
               {...register(
                 `qualification[${index}].month`,
-                getValues().qualification[index].month === '' && {
+                getValues().qualification[index].month?.length <= 0 && {
                   required: 'awarding is required',
                 }
               )}
@@ -736,7 +736,14 @@ const EditQualificationDetails = ({
               label="Broad Speciality"
               defaultValue={getValues().Speciality}
               required={true}
-              {...register('Speciality', { required: 'Missing field' })}
+              {...register(
+                'Speciality',
+
+                showBroadSpeciality &&
+                  getValues()?.Speciality?.year?.length <= 0 && {
+                    required: 'Speciality is Required',
+                  }
+              )}
               options={createSelectFieldData(specialitiesList.data)}
             />
           </Grid>
