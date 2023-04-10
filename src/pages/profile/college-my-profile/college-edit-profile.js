@@ -1,36 +1,23 @@
 import { useEffect, useState } from 'react';
 
-// import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import {
-  Box,
-  Container,
-  Grid,
-  //  IconButton,
-  // InputAdornment,
-  Typography,
-} from '@mui/material';
+import { Box, Container, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { createEditFieldData } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
-// import ModalOTP from '../../../shared/otp-modal/otp-modal';
 import { updateCollegeAdminProfileData } from '../../../store/actions/college-actions';
-// import { updateCollegeData } from '../../../store/actions/common-actions';
 import {
   getDistrictList,
   getStatesList,
   getSubDistrictsList,
   getUniversitiesList,
-  // sendNotificationOtp,
-  // verifyNotificationOtp,
 } from '../../../store/actions/common-actions';
 import { Button, TextField } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
 
 const CollegeEditProfile = (props) => {
-  // const { collegeData } = useSelector((state) => state.college);
   const [districtList, setDistrictList] = useState([]);
 
   const { statesList, councilNames, universitiesList, subDistrictList, districtsList } =
@@ -116,13 +103,13 @@ const CollegeEditProfile = (props) => {
   };
 
   const onStateChange = (currentValue) => {
-    setValue('StateID', currentValue.id);
-    dispatch(getDistrictList(currentValue.id));
+    setValue('StateID', currentValue?.id);
+    dispatch(getDistrictList(currentValue?.id));
   };
 
   const onDistrictChange = (currentValue) => {
-    setValue('DistrictID', currentValue.id);
-    dispatch(getSubDistrictsList(currentValue.id));
+    setValue('DistrictID', currentValue?.id);
+    dispatch(getSubDistrictsList(currentValue?.id));
   };
 
   const getStateData = (stateId) => {
@@ -190,9 +177,6 @@ const CollegeEditProfile = (props) => {
               placeholder={'Enter College Code'}
               defaultValue={getCollegeDetail?.data?.college_code}
               error={errors.CollegePhoneNumber?.message}
-              // {...register('CollegeId', {
-              //   required: 'College code is required',
-              // })}
             />
           </Grid>
 
@@ -202,11 +186,7 @@ const CollegeEditProfile = (props) => {
               <Typography component="span" color="error.main">
                 *
               </Typography>
-              <Typography component="span">
-                {/* <IconButton aria-label="toggle password visibility" edge="end">
-                {verifyMobile && <CheckCircleIcon color="success" />}
-              </IconButton> */}
-              </Typography>
+              <Typography component="span"></Typography>
             </Typography>
             <TextField
               fullWidth
@@ -223,23 +203,7 @@ const CollegeEditProfile = (props) => {
                   message: 'Provide a valid mobile number',
                 },
               })}
-              // InputProps={{
-              //   endAdornment: (
-              //     <InputAdornment position="end">
-              //       <Button
-              //         variant="contained"
-              //         sx={{
-              //           p: '15px 10px 12px 10px',
-              //         }}
-              //         onClick={() => getOtp('sms')}
-              //       >
-              //         Get OTP
-              //       </Button>
-              //     </InputAdornment>
-              //   ),
-              // }}
             />
-            {/* {otpPopup} */}
           </Grid>
         </Grid>
 
@@ -264,7 +228,7 @@ const CollegeEditProfile = (props) => {
                 required: ' Council name is required',
               })}
               onChange={(currentValue) => {
-                setValue('CouncilID', currentValue.id);
+                setValue('CouncilID', currentValue?.id);
               }}
             />
           </Grid>
@@ -281,12 +245,12 @@ const CollegeEditProfile = (props) => {
               disabled
               name="UniversityName"
               clearErrors={clearErrors}
-              items={createEditFieldData(universitiesList.data)}
+              items={createEditFieldData(universitiesList?.data)}
               placeholder="Select University"
               defaultValues={getUniversityData(getCollegeDetail?.data?.university_id)}
               value={getUniversityData(getCollegeDetail?.data?.university_id)}
               onChange={(currentValue) => {
-                setValue('UniversityID', currentValue.id);
+                setValue('UniversityID', currentValue?.id);
               }}
             />
           </Grid>
@@ -301,9 +265,7 @@ const CollegeEditProfile = (props) => {
               name={'Website'}
               placeholder={'Enter College Website'}
               defaultValue={getCollegeDetail?.data?.website}
-              {...register('Website', {
-                // required: 'Website  is required',
-              })}
+              {...register('Website', {})}
             />
           </Grid>
         </Grid>
@@ -338,7 +300,6 @@ const CollegeEditProfile = (props) => {
 
             <TextField
               fullWidth
-              // required
               name="AddressLine2"
               placeholder={'Enter Address Line 2'}
               defaultValue={getCollegeDetail?.data?.address_line2}
@@ -461,16 +422,7 @@ const CollegeEditProfile = (props) => {
               <Typography component="span" color="error.main">
                 *
               </Typography>
-              <Typography component="span">
-                {/* <IconButton aria-label="toggle password visibility" edge="end">
-                {verifyEmail &&
-                !errors.CollegeEmailId?.message &&
-                getValues().CollegeEmailId.length !== 0
-                  ? // <CheckCircleIcon color="success" />
-                    ''
-                  : ''}
-              </IconButton> */}
-              </Typography>
+              <Typography component="span"></Typography>
             </Typography>
             <TextField
               sx={{
@@ -522,11 +474,9 @@ const CollegeEditProfile = (props) => {
               sx={{
                 m: {
                   xs: '5px 0px',
-                  // md: '0px',
                 },
                 width: {
                   xs: '100%',
-                  // md: 'fit-content',
                 },
               }}
               onClick={() => {
