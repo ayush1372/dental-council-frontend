@@ -121,8 +121,8 @@ const ProfileConsent = ({
           nationality: 'Indian',
           qualification:
             doctorRegDetails?.qualification_detail_response_tos[0]?.course.course_name || '',
-          mobileNumber: personalDetails?.kyc_address?.mobile || '',
-          emailId: personalDetails?.kyc_address?.email || '',
+          mobileNumber: personalDetails?.personal_details?.mobile || '',
+          emailId: personalDetails?.personal_details?.email || '',
         },
         nmrKycAddressTO: {
           address: personalDetails?.kyc_address?.address_line1 || '',

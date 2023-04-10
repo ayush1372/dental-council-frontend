@@ -106,6 +106,17 @@ function DashboardControlledTable(props) {
     const isAsc = orderBy.name === property.name && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
+    // const reqObj = {
+    //   application_type_id: props?.selectedCardDataData?.applicationTypeID
+    //     ? props?.selectedCardDataData?.applicationTypeID.toString()
+    //     : '',
+    //   user_group_status: props?.selectedCardDataData?.responseKey
+    //     ? props?.selectedCardDataData?.responseKey
+    //     : '',
+    //   sortBy: property.name,
+    //   sortOrder: isAsc ? 'desc' : 'asc',
+    // };
+    // dispatch(getDashboardTableData(reqObj));
   };
 
   const newRowsData = dashboardTableDetails?.data?.dashboard_tolist?.map((application, index) => {
@@ -223,7 +234,6 @@ function DashboardControlledTable(props) {
 
     dispatch(getDashboardTableData(reqObj));
   };
-
   return (
     <Grid sx={{ m: 2 }}>
       <Typography variant="h2" py={2}>

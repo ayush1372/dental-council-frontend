@@ -23,6 +23,7 @@ export default function SuccessModalPopup({
   open,
   setOpen,
   text,
+  workDetails,
   handleClose,
   SuspensionCall,
   isHpIdCreated,
@@ -41,6 +42,9 @@ export default function SuccessModalPopup({
   const loggedInUserType = useSelector((state) => state?.common?.loggedInUserType);
 
   const handleCloseModal = () => {
+    if (workDetails) {
+      dispatch(changeUserActiveTab(doctorTabs[0].tabName));
+    }
     setOpen(false);
   };
   const navigateToSetPassword = () => {

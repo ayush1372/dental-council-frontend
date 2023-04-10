@@ -91,27 +91,27 @@ function FacilityDetailsTable({ declaredFacilityData, trackStatusData }) {
     setOrderBy(property);
   };
 
-  const newRowsData = declaredFacilityData.map((application) => {
+  const newRowsData = declaredFacilityData?.current_work_details?.map((application) => {
     return createData(
       {
         type: 'name',
-        value: application?.facilityName,
+        value: application?.work_organization,
       },
       {
         type: 'address',
-        value: application?.address,
+        value: application?.address?.address_line1,
       },
       {
         type: 'state',
-        value: application?.stateName,
+        value: application?.address?.state?.name,
       },
       {
         type: 'district',
-        value: application.districtName,
+        value: application?.address?.district?.name,
       },
       {
         type: 'type',
-        value: application?.facilityType,
+        value: application?.organization_type,
       },
 
       { type: 'systemOfMedicine', value: application?.systemOfMedicine },

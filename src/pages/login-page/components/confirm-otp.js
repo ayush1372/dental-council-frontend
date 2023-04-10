@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import BookOnlineIcon from '@mui/icons-material/BookOnline';
+// import BookOnlineIcon from '@mui/icons-material/BookOnline';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
@@ -110,15 +110,15 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep }) => {
     <Box p={4} bgcolor="white.main" boxShadow="4">
       {otpData.page === 'doctorConstantDetailsPage' ? (
         <>
-          <Box display={'flex'} justifyContent="center" mb={3}>
-            <Typography variant="h2" component="div" flex-grow={11} align="center">
+          <Box display={'flex'} justifyContent="flex-end" mb={3}>
+            {/* <Typography variant="h2" component="div" flex-grow={11} align="center">
               <BookOnlineIcon
                 sx={{
                   color: 'primary.main',
                   fontSize: '40px',
                 }}
               />
-            </Typography>
+            </Typography> */}
             <Box flex-grow={1}>
               <CloseIcon onClick={otpData.handleClose} />
             </Box>
@@ -142,7 +142,7 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep }) => {
           }}
         >
           {otpData?.page === 'doctorConstantDetailsPage' ? (
-            <Typography variant="h5" textAlign="center">
+            <Typography textAlign="center">
               {otpData.page === 'doctorConstantDetailsPage' && otpData?.type === 'sms'
                 ? `Please enter the OTP sent on your Mobile Number XXXXXX${otpData?.contact.slice(
                     -4
