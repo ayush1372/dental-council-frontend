@@ -678,7 +678,7 @@ const EditQualificationDetails = ({
               defaultValue={qualification?.month}
               {...register(
                 `qualification[${index}].month`,
-                getValues().qualification[index].month === '' && {
+                getValues().qualification[index].month?.length <= 0 && {
                   required: 'awarding is required',
                 }
               )}
@@ -708,10 +708,11 @@ const EditQualificationDetails = ({
               defaultValue={qualification?.year}
               {...register(
                 `qualification[${index}].year`,
-                (qualification?.year === '' || getValues()?.qualification[0]?.year) && {
-                  required: 'awarding is Required',
-                  pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
-                }
+                (qualification?.year === '' || getValues()?.qualification[index]?.year) &&
+                  getValues().qualification[index].year?.length <= 0 && {
+                    required: 'awarding year is Required',
+                    pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
+                  }
               )}
               MenuProps={{
                 style: {
@@ -736,7 +737,14 @@ const EditQualificationDetails = ({
               label="Broad Speciality"
               defaultValue={getValues().Speciality}
               required={true}
-              {...register('Speciality', { required: 'Missing field' })}
+              {...register(
+                'Speciality',
+
+                showBroadSpeciality &&
+                  getValues()?.Speciality?.length <= 0 && {
+                    required: 'Speciality is Required',
+                  }
+              )}
               options={createSelectFieldData(specialitiesList.data)}
             />
           </Grid>

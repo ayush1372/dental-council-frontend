@@ -19,6 +19,8 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
 
   const { qualification_detail_response_tos } = registrationDetails || {};
 
+  // let requestId = registrationDetails?.request_id;
+
   const CloseAttachmentPopup = () => {
     setAttachmentViewProfile(false);
   };
@@ -43,8 +45,20 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
             key={index}
             borderBottom={qualification_detail_response_tos?.length > 1 ? 1 : 'none'}
             borderColor={qualification_detail_response_tos?.length > 1 ? 'grey2.light' : 'none'}
+            // backgroundColor={element.request_id === requestId ? 'red' : ''}
           >
-            <Grid container item spacing={2} mt={1}>
+            {element.is_verified ? (
+              <Typography ml={2} spacing={2} color="success.main">
+                Approved
+              </Typography>
+            ) : index !== 0 ? (
+              <Typography ml={2} spacing={2} color="error.main">
+                Pending Approval
+              </Typography>
+            ) : (
+              ''
+            )}
+            <Grid container item spacing={2}>
               <Grid item xs={12} md={4}>
                 <Typography variant="subtitle2" color="grey.label">
                   Name of the Degree Obtained

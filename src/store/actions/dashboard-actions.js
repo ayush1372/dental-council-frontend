@@ -106,20 +106,20 @@ export const getDashboardTableData = (body) => async (dispatch) => {
     }
   }
 
-  if (body.sort_by !== undefined && body.sort_by !== null && body.sort_by !== '') {
-    if (path === '') {
-      path += 'sortBy=' + body.sort_by;
-    } else {
-      path += '&sortBy=' + body.sort_by;
-    }
-  }
-  if (body.sort_order !== undefined && body.sort_order !== null && body.sort_order !== '') {
-    if (path === '') {
-      path += 'sortOrder=' + body.sort_order;
-    } else {
-      path += '&sortOrder=' + body.sort_order;
-    }
-  }
+  // if (body.sortBy !== undefined && body.sortBy !== null && body.sortBy !== '') {
+  //   if (path === '') {
+  //     path += 'sortBy=' + body.sortBy;
+  //   } else {
+  //     path += '&sortBy=' + body.sortBy;
+  //   }
+  // }
+  // if (body.sortOrder !== undefined && body.sortOrder !== null && body.sortOrder !== '') {
+  //   if (path === '') {
+  //     path += 'sortOrder=' + body.sortOrder;
+  //   } else {
+  //     path += '&sortOrder=' + body.sortOrder;
+  //   }
+  // }
 
   return await new Promise((resolve, reject) => {
     useAxiosCall({
