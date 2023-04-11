@@ -1,8 +1,9 @@
+/* eslint-disable no-console */
 import { Box, Divider, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { sendNotificationOtp } from '../../../store/actions/common-actions';
 import { Button, TextField } from '../../../ui/core';
@@ -11,10 +12,11 @@ import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 const ForgotPassword = ({ handleConfirmPassword, otpData, userData }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const doctorTitle = 'Enter NMR ID/Email ID';
+  const doctorTitle = 'Enter Email ID';
   const userTitle = 'Enter User ID/Email ID';
   const { state } = useLocation();
   const { loginFormname } = state;
+  let navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -36,7 +38,7 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData }) => {
 
   const onSubmit = (reSetPassword) => {
     if (!watchMobileNum || !watchId) {
-      handleSubmit()();
+      handleSubmit();
     }
 
     let sendNotificationOtpBody = {};
@@ -64,6 +66,10 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData }) => {
       otpData(otpValue);
     }
     reSetPassword !== 'reSetPassword' && handleConfirmPassword();
+  };
+
+  const onCancel = () => {
+    navigate('/');
   };
 
   return (
@@ -124,6 +130,16 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData }) => {
         />
       </Box>
       <Box align="end" mt={3}>
+        <Button
+          onClick={onCancel}
+          variant="contained"
+          color="grey"
+          sx={{
+            mr: 2,
+          }}
+        >
+          Cancel
+        </Button>
         <Button
           variant="contained"
           sx={{
