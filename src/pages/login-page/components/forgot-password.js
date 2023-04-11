@@ -1,22 +1,21 @@
-/* eslint-disable no-console */
 import { Box, Divider, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 import { sendNotificationOtp } from '../../../store/actions/common-actions';
 import { Button, TextField } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
+import successToast from '../../../ui/core/toaster';
 
-const ForgotPassword = ({ handleConfirmPassword, otpData, userData }) => {
+const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const doctorTitle = 'Enter Email ID';
   const userTitle = 'Enter User ID/Email ID';
   const { state } = useLocation();
   const { loginFormname } = state;
-  let navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -37,8 +36,9 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData }) => {
   const isMobileNumActive = (!watchMobileNum && !watchId) || !watchId;
 
   const onSubmit = (reSetPassword) => {
-    if (!watchMobileNum || !watchId) {
-      handleSubmit();
+    if (!watchMobileNum && !watchId) {
+      handleSubmit()();
+      return;
     }
 
     let sendNotificationOtpBody = {};
@@ -49,8 +49,11 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData }) => {
     } else {
       sendNotificationOtpBody = { contact: getValues().Id, type: 'nmr_id' };
     }
-
-    dispatch(sendNotificationOtp(sendNotificationOtpBody));
+    try {
+      dispatch(sendNotificationOtp(sendNotificationOtpBody)).then();
+    } catch (allFailMsg) {
+      successToast('ERR_INT: ' + allFailMsg?.data?.message, 'auth-error', 'error', 'top-center');
+    }
     otpData(sendNotificationOtpBody);
     if (userData?.page === 'forgotPasswordPage') {
       let otpValue = {
@@ -68,16 +71,11 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData }) => {
     reSetPassword !== 'reSetPassword' && handleConfirmPassword();
   };
 
-  const onCancel = () => {
-    navigate('/');
-  };
-
   return (
     <Box p={4} bgcolor="white.main" boxShadow="4">
       <Typography variant="h2" component="div" textAlign="center">
         Forgot Password
       </Typography>
-
       <Box mt={2}>
         <Typography variant="body1">
           {loginFormname === 'Doctor' ? doctorTitle : userTitle}
@@ -131,7 +129,9 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData }) => {
       </Box>
       <Box align="end" mt={3}>
         <Button
-          onClick={onCancel}
+          onClick={() => {
+            resetStep(0);
+          }}
           variant="contained"
           color="grey"
           sx={{
