@@ -753,7 +753,7 @@ const EditQualificationDetails = ({
           <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
               {' '}
-              Super Specialty{' '}
+              Super Speciality{' '}
               <Typography component="span" color="error.main">
                 {' '}
                 *{' '}
@@ -763,7 +763,7 @@ const EditQualificationDetails = ({
               fullWidth
               error={errors.subSpeciality?.message}
               name="subSpeciality"
-              placeholder="Enter Super Peciality"
+              placeholder="Enter Super Speciality"
               defaultValue={qualification?.subSpeciality}
               required={true}
               {...register(`qualification[${index}].subSpeciality`, {
