@@ -141,7 +141,7 @@ const PersonalDetails = ({ personalDetails }) => {
           )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
-              {mother_name ? mother_name : ''}
+              {mother_name === '' || mother_name === undefined ? '-' : mother_name}
             </Typography>
             {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
@@ -166,7 +166,7 @@ const PersonalDetails = ({ personalDetails }) => {
           )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
-              {spouse_name ? spouse_name : ''}
+              {spouse_name === '' || spouse_name === undefined ? '-' : spouse_name}
             </Typography>
             {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon

@@ -51,7 +51,9 @@ const CommunicationAddress = ({ personalDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
-              {communication_address?.house}
+              {communication_address?.house === '' || communication_address?.house === undefined
+                ? '-'
+                : communication_address?.house}
             </Typography>
             {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
@@ -77,7 +79,9 @@ const CommunicationAddress = ({ personalDetails }) => {
           )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
-              {communication_address?.street}
+              {communication_address?.street === '' || communication_address?.street === undefined
+                ? '-'
+                : communication_address?.street}
             </Typography>
             {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
@@ -102,7 +106,10 @@ const CommunicationAddress = ({ personalDetails }) => {
           )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
-              {communication_address?.landmark}
+              {communication_address?.landmark === '' ||
+              communication_address?.landmark === undefined
+                ? '-'
+                : communication_address?.landmark}
             </Typography>
             {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
@@ -127,7 +134,7 @@ const CommunicationAddress = ({ personalDetails }) => {
           )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
-              {villageName}
+              {villageName === '' || villageName === undefined ? '-' : villageName}
             </Typography>
             {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
@@ -182,7 +189,7 @@ const CommunicationAddress = ({ personalDetails }) => {
           )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
-              {subDistrictName}
+              {subDistrictName === '' || subDistrictName === undefined ? '-' : subDistrictName}
             </Typography>
             {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
@@ -269,7 +276,7 @@ const CommunicationAddress = ({ personalDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
-              {pincode ? pincode : ''}
+              {pincode === '' || pincode === undefined ? '-' : pincode}
             </Typography>
             {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
