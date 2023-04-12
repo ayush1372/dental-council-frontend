@@ -3,12 +3,12 @@ import { useState } from 'react';
 import { Box, Container, Tab, Tabs } from '@mui/material';
 
 import AdvanceSearch from './components/advance-search';
-import BlacklistedDoctor from './components/blacklisted-doctor';
+// import BlacklistedDoctor from './components/blacklisted-doctor';
 import SearchResults from './components/doctor-search-results';
 import Name from './components/name';
 import RegistrationNumber from './components/registration-number';
 import StateMedicalCouncil from './components/state-medical-council';
-// import SuspendedDoctor from './components/suspended-doctor';
+import SuspendedDoctor from './components/suspended-doctor';
 import YearOfRegistration from './components/year-of-registraation';
 
 const tabNames = {
@@ -17,8 +17,8 @@ const tabNames = {
   'Registration Number': RegistrationNumber,
   'State Medical Council': StateMedicalCouncil,
   'Advance Search': AdvanceSearch,
-  'Blacklisted Doctor': BlacklistedDoctor,
-  // 'Suspended Doctor': SuspendedDoctor,
+  // 'Blacklisted Doctor': BlacklistedDoctor,
+  'Suspended Doctor': SuspendedDoctor,
 };
 
 const SearchDoctor = () => {
