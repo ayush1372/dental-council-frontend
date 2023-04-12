@@ -85,7 +85,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                         setOpenModal(true);
                         setQueryRaisedField('Name of the Degree Obtained');
                       }}
-                      fontSize="width30"
+                      fontSize="width24"
                     />
                   )}
                 </Grid>
@@ -116,7 +116,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                         setOpenModal(true);
                         setQueryRaisedField('Country Name');
                       }}
-                      fontSize="width30"
+                      fontSize="width24"
                     />
                   )}
                 </Grid>
@@ -147,7 +147,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                         setOpenModal(true);
                         setQueryRaisedField('State');
                       }}
-                      fontSize="width30"
+                      fontSize="width24"
                     />
                   )}
                 </Grid>
@@ -181,7 +181,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                         setOpenModal(true);
                         setQueryRaisedField('Name of the College');
                       }}
-                      fontSize="width30"
+                      fontSize="width24"
                     />
                   )}
                 </Grid>
@@ -212,7 +212,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                         setOpenModal(true);
                         setQueryRaisedField('University');
                       }}
-                      fontSize="width30"
+                      fontSize="width24"
                     />
                   )}
                 </Grid>
@@ -241,7 +241,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                         setOpenModal(true);
                         setQueryRaisedField('Month & Year of Awarding Degree');
                       }}
-                      fontSize="width30"
+                      fontSize="width24"
                     />
                   )}
                 </Grid>
@@ -284,7 +284,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                         setOpenModal(true);
                         setQueryRaisedField('Upload Qualification Degree');
                       }}
-                      fontSize="width30"
+                      fontSize="width24"
                     />
                   )}
                 </Grid>
