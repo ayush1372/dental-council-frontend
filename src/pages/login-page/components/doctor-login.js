@@ -465,7 +465,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleForgotPassword }) => {
       </Box>
       <Box textAlign={'center'}>
         <Typography variant="body1">
-          {`Don't have account?`}{' '}
+          {`Don't have an account?`}{' '}
           <Link
             color={theme.palette.secondary.main}
             sx={{ cursor: 'pointer' }}
