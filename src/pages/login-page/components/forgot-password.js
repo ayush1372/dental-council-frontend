@@ -7,11 +7,12 @@ import { useLocation } from 'react-router-dom';
 import { sendNotificationOtp } from '../../../store/actions/common-actions';
 import { Button, TextField } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
+import successToast from '../../../ui/core/toaster';
 
-const ForgotPassword = ({ handleConfirmPassword, otpData, userData }) => {
+const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const doctorTitle = 'Enter NMR ID/Email ID';
+  const doctorTitle = 'Enter Email ID';
   const userTitle = 'Enter User ID/Email ID';
   const { state } = useLocation();
   const { loginFormname } = state;
@@ -35,8 +36,9 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData }) => {
   const isMobileNumActive = (!watchMobileNum && !watchId) || !watchId;
 
   const onSubmit = (reSetPassword) => {
-    if (!watchMobileNum || !watchId) {
+    if (!watchMobileNum && !watchId) {
       handleSubmit()();
+      return;
     }
 
     let sendNotificationOtpBody = {};
@@ -47,8 +49,11 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData }) => {
     } else {
       sendNotificationOtpBody = { contact: getValues().Id, type: 'nmr_id' };
     }
-
-    dispatch(sendNotificationOtp(sendNotificationOtpBody));
+    try {
+      dispatch(sendNotificationOtp(sendNotificationOtpBody)).then();
+    } catch (allFailMsg) {
+      successToast('ERR_INT: ' + allFailMsg?.data?.message, 'auth-error', 'error', 'top-center');
+    }
     otpData(sendNotificationOtpBody);
     if (userData?.page === 'forgotPasswordPage') {
       let otpValue = {
@@ -71,7 +76,6 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData }) => {
       <Typography variant="h2" component="div" textAlign="center">
         Forgot Password
       </Typography>
-
       <Box mt={2}>
         <Typography variant="body1">
           {loginFormname === 'Doctor' ? doctorTitle : userTitle}
@@ -92,7 +96,7 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData }) => {
           defaultValue={getValues().Id}
           error={isIdActive && errors.Id?.message}
           {...register('Id', {
-            required: 'Provide valid ID',
+            required: 'Email ID is required',
           })}
           disabled={!isIdActive}
         />
@@ -124,6 +128,18 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData }) => {
         />
       </Box>
       <Box align="end" mt={3}>
+        <Button
+          onClick={() => {
+            resetStep(0);
+          }}
+          variant="contained"
+          color="grey"
+          sx={{
+            mr: 2,
+          }}
+        >
+          Cancel
+        </Button>
         <Button
           variant="contained"
           sx={{
