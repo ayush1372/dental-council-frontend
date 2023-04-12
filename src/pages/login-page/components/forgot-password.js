@@ -96,7 +96,7 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep })
           defaultValue={getValues().Id}
           error={isIdActive && errors.Id?.message}
           {...register('Id', {
-            required: 'Provide valid ID',
+            required: 'Email ID is required',
           })}
           disabled={!isIdActive}
         />
