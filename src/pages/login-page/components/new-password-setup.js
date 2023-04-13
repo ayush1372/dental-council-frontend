@@ -196,7 +196,7 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep }) => {
         width={otpData?.page === 'forgotPasswordPage' ? '100%' : '40%'}
       >
         <Typography mt={2} variant="h4" component="div" textAlign="center" data-testid="Password">
-          {uniqueHpId ? `Welcome ${uniqueHpId} ! ` : 'Welcome !'}
+          {uniqueHpId ? `Welcome, ${uniqueHpId} ! ` : 'Welcome !'}
         </Typography>
         <Typography
           mt={2}
