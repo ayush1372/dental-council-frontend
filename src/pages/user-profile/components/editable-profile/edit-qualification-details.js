@@ -46,6 +46,8 @@ const EditQualificationDetails = ({
     (state) => state?.doctorUserProfileReducer?.personalDetails
   );
 
+  const [universitiesListData, setUniversitiesListData] = useState(universitiesList?.data);
+
   const handleQualificationFrom = (event) => {
     setValue(event.target.name, event.target.value);
     dispatch(selectedQualificationType(event.target.value));
@@ -65,9 +67,16 @@ const EditQualificationDetails = ({
       });
     }
   };
+  useEffect(() => {
+    setUniversitiesListData(universitiesList?.data);
+  }, [universitiesList]);
 
   useEffect(() => {
     fetchColleges(selectedState);
+
+    setValue(`qualification[${index}].university`, '');
+    setValue(`qualification[${index}].college`, '');
+    setUniversitiesListData([]);
   }, [selectedState]);
 
   useEffect(() => {
@@ -644,11 +653,11 @@ const EditQualificationDetails = ({
               required={true}
               {...register(
                 `qualification[${index}].university`,
-                getValues().qualification[index].university === '' && {
+                getValues()?.qualification[index]?.university === '' && {
                   required: 'University is required',
                 }
               )}
-              options={createSelectFieldData(universitiesList.data, 'id') || []}
+              options={createSelectFieldData(universitiesListData, 'id') || []}
               style={{
                 backgroundColor:
                   work_flow_status_id === 3 && getQueryRaised('University') ? '#F0F0F0' : '',
