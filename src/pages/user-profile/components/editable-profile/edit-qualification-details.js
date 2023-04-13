@@ -162,12 +162,12 @@ const EditQualificationDetails = ({
 
       {qualificationfrom === 'International' && !isAdditionalQualification ? (
         <Grid container item spacing={2} display="flex" alignItems="center" mb={2}>
-          <Grid item xs={12} sm={6} md={5} lg={4}>
+          <Grid item xs="auto">
             <Typography color="grey2.lighter" variant="body1">
               FMGE QUALIFICATION DETAILS
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={7} lg={8}>
+          <Grid item xs>
             <Divider />
           </Grid>
         </Grid>
@@ -370,12 +370,12 @@ const EditQualificationDetails = ({
       )}
 
       <Grid container item spacing={2} display="flex" alignItems="center" mb={2}>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs="auto">
           <Typography color="grey2.lighter" variant="body1" pt={2}>
             {isAdditionalQualification ? 'ADDITIONAL' : 'BASIC'} QUALIFICATION
           </Typography>
         </Grid>
-        <Grid item xs={12} sm={8}>
+        <Grid item xs>
           <Divider />
         </Grid>
       </Grid>
@@ -433,7 +433,7 @@ const EditQualificationDetails = ({
                   : ''
               }
               name="Qualification"
-              label="Name Of The Degree"
+              label="Name of the Degree"
               defaultValue={degree[0]?.id}
               value={degree[0]?.id}
               required={true}
@@ -754,10 +754,6 @@ const EditQualificationDetails = ({
             <Typography variant="subtitle2" color="inputTextColor.main">
               {' '}
               Super Specialty{' '}
-              <Typography component="span" color="error.main">
-                {' '}
-                *{' '}
-              </Typography>
             </Typography>
             <TextField
               fullWidth
@@ -765,10 +761,7 @@ const EditQualificationDetails = ({
               name="subSpeciality"
               placeholder="Enter Super Peciality"
               defaultValue={qualification?.subSpeciality}
-              required={true}
-              {...register(`qualification[${index}].subSpeciality`, {
-                required: 'subSpeciality is Required',
-              })}
+              {...register(`qualification[${index}].subSpeciality`, {})}
             />
           </Grid>
         )}

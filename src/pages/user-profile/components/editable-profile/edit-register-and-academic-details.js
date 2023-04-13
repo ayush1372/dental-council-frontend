@@ -518,7 +518,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
-              Is This Registration Permanent Or Renewable?
+              Is this Registration Permanent or Renewable?
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -592,7 +592,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                Maximum size allowed for the attachment is 5MB.`}
               fileData={registrationFileData}
               setFileData={setRegistrationFileData}
-              uploadFileLabel="Upload the registration certificate"
+              uploadFileLabel="Upload the Registration Certificate"
               disabled={
                 work_flow_status_id === 3
                   ? getQueryRaised('Upload the registration certificate')
