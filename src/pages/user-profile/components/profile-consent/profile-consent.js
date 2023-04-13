@@ -149,7 +149,9 @@ const ProfileConsent = ({
             doctorRegDetails?.registration_detail_to?.is_renewable === '0'
               ? 'Permanent'
               : 'Renewable',
-          dueDate: doctorRegDetails?.registration_detail_to?.renewable_registration_date,
+          dueDate: moment(
+            doctorRegDetails?.registration_detail_to?.renewable_registration_date
+          ).format('DD-MM-YYYY'),
         },
         nmrQualificationDetailsTO: {
           qualificationFrom:
@@ -163,6 +165,7 @@ const ProfileConsent = ({
             doctorRegDetails?.qualification_detail_response_tos[0]?.university?.name || '',
           monthAndYearOfAwarding:
             doctorRegDetails?.qualification_detail_response_tos[0]?.qualification_month +
+              ' ' +
               doctorRegDetails?.qualification_detail_response_tos[0]?.qualification_year || '',
         },
         isRegCerAttached: registrationFile ? 'Yes' : 'No',
