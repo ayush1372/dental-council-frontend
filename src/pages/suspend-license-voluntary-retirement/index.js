@@ -467,7 +467,7 @@ export function SuspendLicenseVoluntaryRetirement({
                 selectedAcademicStatus === 'Permanent Suspension Requests Received')
             ? 'Are you sure you want to approve suspension request of the doctor.'
             : selectedValue === 'forward'
-            ? 'Are you sure you want to forward doctor details to College/NBE?'
+            ? 'Are you sure you want to forward the doctor details to College/NBE?'
             : ''}
         </Typography>
       </Box>
