@@ -707,15 +707,17 @@ const EditQualificationDetails = ({
               required={true}
               placeholder={'Year of Awarding'}
               fullWidth
-              error={qualification?.year === '' && errors?.qualification?.[index]?.year?.message}
+              error={
+                getValues().qualification[index].year === '' &&
+                errors?.qualification?.[index]?.year?.message
+              }
               defaultValue={qualification?.year}
               {...register(
                 `qualification[${index}].year`,
-                (qualification?.year === '' || getValues()?.qualification[index]?.year) &&
-                  getValues().qualification[index].year?.length <= 0 && {
-                    required: 'awarding year is Required',
-                    pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
-                  }
+                getValues().qualification[index].year?.length <= 0 && {
+                  required: 'awarding year is Required',
+                  pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
+                }
               )}
               MenuProps={{
                 style: {
