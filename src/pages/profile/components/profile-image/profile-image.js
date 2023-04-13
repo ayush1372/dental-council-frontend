@@ -12,7 +12,10 @@ import ReactivationLogo from '../../../../../src/assets/images/reactivate-licens
 import avtarImg from '../../../../assets/images/user.png';
 import ReactivateLicencePopup from '../../../../shared/reactivate-licence-popup/re-activate-licence-popup';
 import SuccessPopup from '../../../../shared/reactivate-licence-popup/success-popup';
-import { getUserProfileImage } from '../../../../store/actions/doctor-user-profile-actions';
+import {
+  getPersonalDetailsData,
+  getUserProfileImage,
+} from '../../../../store/actions/doctor-user-profile-actions';
 import successToast from '../../../../ui/core/toaster';
 
 import styles from './profile-image.module.scss';
@@ -64,7 +67,11 @@ export default function ProfileImage(props) {
         setImageTypeError(false);
         requestObjNew.append('file', e.target.files[0]);
         dispatch(getUserProfileImage(profileId, requestObjNew))
-          .then(() => {})
+          .then((response) => {
+            if (response) {
+              dispatch(getPersonalDetailsData(profileId));
+            }
+          })
           .catch((errorMsg) => {
             successToast(
               'ERR_INT: ' + errorMsg + imageTypeError + imageErrorMessage,

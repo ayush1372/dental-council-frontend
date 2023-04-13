@@ -238,7 +238,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                 )}
                 <Grid display="flex" alignItems="center">
                   <Typography variant="subtitle2" color="textPrimary.main">
-                    {element?.qualification_month ? element?.qualification_month : ''} ,{' '}
+                    {element?.qualification_month ? element?.qualification_month : ''},{' '}
                     {element?.qualification_year ? element?.qualification_year : ''}
                   </Typography>{' '}
                   {(data?.user_type === 2 ||
