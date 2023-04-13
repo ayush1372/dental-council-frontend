@@ -72,7 +72,7 @@ const RegistrationDetailsContent = () => {
                   setOpenModal(true);
                   setQueryRaisedField('Registered with council');
                 }}
-                fontSize="width30"
+                fontSize="width24"
               />
             )}
           </Grid>
@@ -100,7 +100,7 @@ const RegistrationDetailsContent = () => {
                   setOpenModal(true);
                   setQueryRaisedField('Registration Number');
                 }}
-                fontSize="width30"
+                fontSize="width24"
               />
             )}
           </Grid>
@@ -128,7 +128,7 @@ const RegistrationDetailsContent = () => {
                   setOpenModal(true);
                   setQueryRaisedField('Registration Date');
                 }}
-                fontSize="width30"
+                fontSize="width24"
               />
             )}
           </Grid>
@@ -158,7 +158,7 @@ const RegistrationDetailsContent = () => {
                   setOpenModal(true);
                   setQueryRaisedField('Registration');
                 }}
-                fontSize="width30"
+                fontSize="width24"
               />
             )}
           </Grid>
@@ -185,7 +185,7 @@ const RegistrationDetailsContent = () => {
                   setOpenModal(true);
                   setQueryRaisedField('Due Date of Renewal');
                 }}
-                fontSize="width30"
+                fontSize="width24"
               />
             )}
           </Grid>
@@ -223,7 +223,7 @@ const RegistrationDetailsContent = () => {
                   setOpenModal(true);
                   setQueryRaisedField('Upload the registration certificate');
                 }}
-                fontSize="width30"
+                fontSize="width24"
               />
             )}
           </Grid>

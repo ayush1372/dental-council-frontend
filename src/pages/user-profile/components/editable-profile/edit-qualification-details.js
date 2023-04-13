@@ -375,7 +375,7 @@ const EditQualificationDetails = ({
       <Grid container item spacing={2} display="flex" alignItems="center" mb={2}>
         <Grid item xs="auto">
           <Typography color="grey2.lighter" variant="body1" pt={2}>
-            {isAdditionalQualification ? 'ADDITIONAL' : 'BASIC'} QUALIFICATION
+            {isAdditionalQualification ? '' : 'BASIC'} QUALIFICATION
           </Typography>
         </Grid>
         <Grid item xs>

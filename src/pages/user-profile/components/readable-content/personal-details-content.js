@@ -58,7 +58,7 @@ const PersonalDetails = ({ personalDetails }) => {
                 <ContactSupportOutlinedIcon
                   color="primary"
                   onClick={() => setOpenModal(true)}
-                  fontSize="width30"
+                  fontSize="width24"
                 />
               )}{' '}
             </Grid>
@@ -100,7 +100,7 @@ const PersonalDetails = ({ personalDetails }) => {
                   setOpenModal(true);
                   setQueryRaisedField('Name');
                 }}
-                fontSize="width30"
+                fontSize="width24"
               />
             )}{' '}
           </Grid>
@@ -125,7 +125,7 @@ const PersonalDetails = ({ personalDetails }) => {
                   setOpenModal(true);
                   setQueryRaisedField('Fathers Name');
                 }}
-                fontSize="width30"
+                fontSize="width24"
               />
             )}{' '}
           </Grid>
@@ -150,7 +150,7 @@ const PersonalDetails = ({ personalDetails }) => {
                   setOpenModal(true);
                   setQueryRaisedField('Mothers Name');
                 }}
-                fontSize="width30"
+                fontSize="width24"
               />
             )}{' '}
           </Grid>
@@ -175,7 +175,7 @@ const PersonalDetails = ({ personalDetails }) => {
                   setOpenModal(true);
                   setQueryRaisedField('Spouse Name');
                 }}
-                fontSize="width30"
+                fontSize="width24"
               />
             )}{' '}
           </Grid>
@@ -205,7 +205,7 @@ const PersonalDetails = ({ personalDetails }) => {
                   setOpenModal(true);
                   setQueryRaisedField('Gender');
                 }}
-                fontSize="width30"
+                fontSize="width24"
               />
             )}{' '}
           </Grid>
@@ -234,7 +234,7 @@ const PersonalDetails = ({ personalDetails }) => {
                   setOpenModal(true);
                   setQueryRaisedField('Date of Birth');
                 }}
-                fontSize="width30"
+                fontSize="width24"
               />
             )}
           </Grid>
@@ -263,7 +263,7 @@ const PersonalDetails = ({ personalDetails }) => {
                   setOpenModal(true);
                   setQueryRaisedField('Nationality');
                 }}
-                fontSize="width30"
+                fontSize="width24"
               />
             )}{' '}
           </Grid>
