@@ -1,6 +1,5 @@
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { Box, IconButton, InputAdornment, StyledEngineProvider, Typography } from '@mui/material';
+import { Box, InputAdornment, StyledEngineProvider, Typography } from '@mui/material';
 
 import { Button } from '../button/button';
 import { TextField } from '../form/textfield/textfield';
@@ -13,7 +12,7 @@ export function MobileNumber(props) {
     getValues,
     errors,
     showVerify,
-    showCircleCheckIcon = true,
+    // showCircleCheckIcon = true,
     verifyOnClick,
     disabled,
     label,
@@ -81,24 +80,6 @@ export function MobileNumber(props) {
                   className={styles.countryCode}
                 >
                   +91
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    edge="end"
-                    sx={{
-                      marginRight: 0,
-                    }}
-                  >
-                    {showCircleCheckIcon &&
-                      (getValues()?.mobileNo?.length === 10 ? (
-                        <CheckCircleIcon color="success" />
-                      ) : (
-                        <CheckCircleIcon />
-                      ))}
-                  </IconButton>
                 </InputAdornment>
               ),
             }}
