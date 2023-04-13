@@ -330,16 +330,18 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleForgotPassword }) => {
               {...register('nmrID', {
                 required: 'Please enter an NMR ID',
                 pattern: {
-                  value: /^\d{12}$/i,
+                  value: /^\d{12}$/,
                   message: 'Please enter an valid NMR ID',
                 },
               })}
+              min={12}
               sx={{
                 '& .Mui-disabled': {
                   pointerEvents: 'auto !important',
                 },
                 width: '100%',
               }}
+              error={errors.nmrID?.message}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="start" sx={{ mr: 0 }}>
