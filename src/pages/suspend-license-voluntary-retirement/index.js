@@ -259,9 +259,7 @@ export function SuspendLicenseVoluntaryRetirement({
             ? 'Voluntary Retirement'
             : tabName === 'suspend-license'
             ? 'Suspend License'
-            : // : tabName === 'voluntary-suspend-license'
-              // ? 'Voluntary Suspend License'
-              ''}
+            : ''}
         </Typography>
       )}
 

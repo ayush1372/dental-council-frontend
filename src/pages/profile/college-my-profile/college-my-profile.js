@@ -31,20 +31,14 @@ const CollegeMyProfile = () => {
   const dispatch = useDispatch();
 
   const { collegeData } = useSelector((state) => state.college);
-  const {
-    getCollegeDetail,
-    statesList,
-    universitiesList,
-    councilNames,
-    // districtsList,
-    // subDistrictList,
-  } = useSelector((state) => state.common);
+  const { getCollegeDetail, statesList, universitiesList, councilNames } = useSelector(
+    (state) => state.common
+  );
 
   const userData = collegeData?.data;
 
   const { loginData } = useSelector((state) => state.loginReducer);
 
-  // const userType = userGroupType(loginData?.data?.user_group_id);
   let userType = loginData?.data?.user_sub_type;
   if (userType === 1) {
     userType = 'College Admin';
@@ -85,7 +79,6 @@ const CollegeMyProfile = () => {
 
   useEffect(() => {
     const getCommonData = () => {
-      // const userType = userGroupType(loginData?.data?.user_group_id);
       let userType = loginData?.data?.user_sub_type;
 
       if (userType === 1) {
@@ -98,21 +91,13 @@ const CollegeMyProfile = () => {
 
       if (userType === 'College Dean') {
         dispatch(
-          // getCollegeDeanProfileData(loginData?.data?.parent_profile_id, loginData?.data?.profile_id)
           collegeProfileData(loginData?.data?.parent_profile_id, loginData?.data?.profile_id)
         );
       } else if (userType === 'College Registrar') {
         dispatch(
           collegeProfileData(loginData?.data?.parent_profile_id, loginData?.data?.profile_id)
         );
-        // dispatch(
-        //   getCollegeRegistrarProfileData(
-        //     loginData?.data?.parent_profile_id,
-        //     loginData?.data?.profile_id
-        //   )
-        // );
       } else if (userType === 'College Admin') {
-        // dispatch(getCollegeAdminProfileData(loginData?.data?.profile_id));
         dispatch(getCollegeData(loginData?.data?.profile_id));
       }
     };
@@ -187,7 +172,6 @@ const CollegeMyProfile = () => {
                 </Typography>
 
                 <Typography variant="subtitle2" color="inputTextColor.main">
-                  {/* {getCollegeDetail?.data?.mobile_number ? getCollegeDetail?.data?.mobile_number : ''} */}
                   {getCollegeDetail?.data?.mobile_number}
                 </Typography>
               </Grid>
@@ -202,8 +186,6 @@ const CollegeMyProfile = () => {
                 </Typography>
 
                 <Typography variant="subtitle2" color="inputTextColor.main">
-                  {/* {getCollegeDetail?.data?.mobile_number ? getCollegeDetail?.data?.mobile_number : ''} */}
-                  {/* {getCollegeDetail?.data.mobile_number} */}
                   {getCouncilNameData(getCollegeDetail?.data?.state_medical_council_id)}
                 </Typography>
               </Grid>
@@ -273,7 +255,6 @@ const CollegeMyProfile = () => {
                   State Name
                 </Typography>
                 <Typography variant="subtitle2" color="inputTextColor.main">
-                  {/* {console.log('test', getStateData(getCollegeDetail?.data.state_id))} */}
                   {getStateData(getCollegeDetail?.data.state_id)}
                 </Typography>
               </Grid>
@@ -325,7 +306,6 @@ const CollegeMyProfile = () => {
                 Email ID
               </Typography>
               <Typography variant="subtitle2" color="inputTextColor.main">
-                {/* {getCollegeDetail?.data?.email_id ? getCollegeDetail?.data?.email_id : ''} */}
                 {userData?.email_id
                   ? userData?.email_id
                   : loginData?.data?.user_sub_type === 1
@@ -387,9 +367,7 @@ const CollegeMyProfile = () => {
                 <Typography variant="body3" color="grey.label">
                   College University Name
                 </Typography>
-                <Typography variant="subtitle2" color="primary.main">
-                  {/* {getCollegeData(getCollegeDetail?.data?.college_id)} */}
-                </Typography>
+                <Typography variant="subtitle2" color="primary.main"></Typography>
               </Grid>
             ) : (
               ''
