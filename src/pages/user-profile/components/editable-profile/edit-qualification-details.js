@@ -51,6 +51,8 @@ const EditQualificationDetails = ({
     dispatch(selectedQualificationType(event.target.value));
   };
 
+  const noPointer = { cursor: 'pointer' };
+
   const qualificationfrom = watch(`qualification[${index}].qualificationfrom`);
   const watchCollege = watch(`qualification[${index}].college`);
   const selectedState = watch(`qualification[${index}].state`);
@@ -129,6 +131,7 @@ const EditQualificationDetails = ({
             onClick={() => {
               remove(index);
             }}
+            style={noPointer}
           />
         </Grid>
       )}
