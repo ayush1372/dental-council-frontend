@@ -423,7 +423,6 @@ export function SuspendLicenseVoluntaryRetirement({
               type="text"
               multiline
               minRows={4}
-              // inputProps={{ maxLength: 300 }}
               name="remark"
               required={true}
               placeholder={
@@ -439,12 +438,10 @@ export function SuspendLicenseVoluntaryRetirement({
               error={errors.remark?.message}
               {...register('remark', {
                 required: 'Enter remarks',
-                validate: (value) => {
-                  const wordCount = value?.trim()?.split(/\s+/)?.length;
-                  if (wordCount > 300) {
-                    return 'Maximum word limit exceeded (300 words)';
-                  }
-                  return true;
+
+                pattern: {
+                  value: /^(?:\b\w+\b[\s\r\n]*){1,3}$/,
+                  message: 'Maximum word limit exceeded',
                 },
               })}
             />
