@@ -753,13 +753,17 @@ const EditQualificationDetails = ({
           <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
               {' '}
-              Super Specialty{' '}
+              Super Speciality{' '}
+              <Typography component="span" color="error.main">
+                {' '}
+                *{' '}
+              </Typography>
             </Typography>
             <TextField
               fullWidth
               error={errors.subSpeciality?.message}
               name="subSpeciality"
-              placeholder="Enter Super Peciality"
+              placeholder="Enter Super Speciality"
               defaultValue={qualification?.subSpeciality}
               {...register(`qualification[${index}].subSpeciality`, {})}
             />
