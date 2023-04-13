@@ -68,6 +68,9 @@ const DoctorRegistrationWelcomePage = () => {
       });
   };
   const onReset = () => {
+    setValue('RegistrationCouncilId', '');
+    setValue('RegistrationNumber', '');
+
     reset();
   };
   return (
@@ -115,7 +118,7 @@ const DoctorRegistrationWelcomePage = () => {
                         required: 'Registration Council is required',
                       })}
                       onChange={(currentValue) => {
-                        setValue('RegistrationCouncilId', currentValue.id);
+                        setValue('RegistrationCouncilId', currentValue?.id);
                       }}
                     />
                   </Box>
