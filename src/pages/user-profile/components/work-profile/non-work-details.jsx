@@ -33,9 +33,12 @@ const NonWorkDetails = ({ getValues, register, errors, handleSubmit, watch }) =>
           label="Please select the reason for presently not working"
           defaultValue={getValues().reason}
           required={true}
-          {...register('reason', {
-            required: 'This field is required',
-          })}
+          {...register(
+            'reason',
+            getValues()?.reason?.length <= 0 && {
+              required: 'This field is required',
+            }
+          )}
           options={reasonOptions}
         />
       </Grid>
