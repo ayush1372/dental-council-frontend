@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import BookOnlineIcon from '@mui/icons-material/BookOnline';
 // import BookOnlineIcon from '@mui/icons-material/BookOnline';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, Typography } from '@mui/material';
@@ -14,10 +15,10 @@ import {
   getPersonalDetailsData,
   updateDoctorContactDetails,
 } from '../../../store/actions/doctor-user-profile-actions';
+import { retrieveUserName } from '../../../store/actions/forgot-username-actions';
 import { Button } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
-
-const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep }) => {
+const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup }) => {
   const { t } = useTranslation();
   const [isOtpValid, setIsOtpValid] = useState(true);
   const dispatch = useDispatch();
@@ -100,6 +101,29 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep }) => {
             handleConfirmOTP();
           }
         }
+        if (otpData?.page === 'forgetUserName') {
+          if (response?.data?.message?.status === 'Success') {
+            let retrieveUserNameBody = {
+              transaction_id: sendNotificationOtpData.data?.transaction_id,
+              contact: otpData?.contact,
+            };
+            try {
+              dispatch(retrieveUserName(retrieveUserNameBody)).then((response) => {
+                if (response) {
+                  handlePasswordSetup();
+                  handleConfirmOTP();
+                }
+              });
+            } catch (allFailMsg) {
+              successToast(
+                'ERR_INT: ' + allFailMsg?.data?.message,
+                'auth-error',
+                'error',
+                'top-center'
+              );
+            }
+          }
+        }
       });
     } catch (allFailMsg) {
       successToast('ERR_INT: ' + allFailMsg?.data?.message, 'auth-error', 'error', 'top-center');
@@ -108,17 +132,19 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep }) => {
 
   return (
     <Box p={4} bgcolor="white.main" boxShadow="4">
-      {otpData.page === 'doctorConstantDetailsPage' ? (
+      {otpData.page === 'doctorConstantDetailsPage' || otpData.page === 'forgetUserName' ? (
         <>
           <Box display={'flex'} justifyContent="flex-end" mb={3}>
-            {/* <Typography variant="h2" component="div" flex-grow={11} align="center">
-              <BookOnlineIcon
-                sx={{
-                  color: 'primary.main',
-                  fontSize: '40px',
-                }}
-              />
-            </Typography> */}
+            {otpData.page === 'forgetUserName' && (
+              <Typography variant="h2" component="div" flex-grow={11} align="center">
+                <BookOnlineIcon
+                  sx={{
+                    color: 'primary.main',
+                    fontSize: '40px',
+                  }}
+                />
+              </Typography>
+            )}
             <Box flex-grow={1}>
               <CloseIcon onClick={otpData.handleClose} />
             </Box>
@@ -138,75 +164,119 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep }) => {
             width: {
               xs: '100%',
               md: 'fit-content',
+              display: 'contents',
             },
           }}
         >
           {otpData?.page === 'doctorConstantDetailsPage' ? (
             <Typography textAlign="center">
               {otpData.page === 'doctorConstantDetailsPage' && otpData?.type === 'sms'
-                ? `Please enter the OTP sent on your Mobile Number XXXXXX${otpData?.contact.slice(
+                ? `Please enter the OTP sent on your Mobile Number XXXXXX${otpData?.contact?.slice(
                     -4
                   )}.`
                 : otpData.page === 'doctorConstantDetailsPage' &&
                   otpData?.type === 'email' &&
-                  `Please enter the OTP sent on your Email ID XXXXXX${otpData?.contact.slice(-12)}`}
+                  `Please enter the OTP sent on your Email ID XXXXXX${otpData?.contact?.slice(
+                    -12
+                  )}`}
             </Typography>
           ) : otpData?.page === 'forgotPasswordPage' ? (
             <Typography variant="body" textAlign="center">
               {otpData.page === 'forgotPasswordPage' && otpData?.type === 'sms'
-                ? `Please enter OTP sent on your We just sent an OTP on your mobile number XXXXXX${otpData?.contact.slice(
+                ? `Please enter OTP sent on your We just sent an OTP on your mobile number XXXXXX${otpData?.contact?.slice(
                     -4
                   )}.`
                 : otpData.page === 'forgotPasswordPage' &&
                   otpData?.type === 'email' &&
-                  `Please enter the OTP sent on your Email ID XXXXXX${otpData?.contact.slice(-12)}`}
+                  `Please enter the OTP sent on your Email ID XXXXXX${otpData?.contact?.slice(
+                    -12
+                  )}`}
+            </Typography>
+          ) : otpData?.page === 'forgetUserName' ? (
+            <Typography variant="body" display={'flex'} justifyContent="center">
+              {otpData.page === 'forgetUserName' && otpData?.type === 'sms'
+                ? `We have just sent an OTP on given Mobile No. XXXXXX${otpData?.contact?.slice(
+                    -4
+                  )}.`
+                : ''}
             </Typography>
           ) : (
             <Typography variant="body1">
               We have sent an OTP on your registered{' '}
               {otpData?.type === 'sms'
-                ? `Mobile Number XXXXXX${otpData?.contact.slice(-4)} linked with your Aadhaar.`
-                : `Email ID XXXXXX${otpData?.contact.slice(-12)}`}{' '}
+                ? `Mobile Number XXXXXX${otpData?.contact?.slice(-4)} linked with your Aadhaar.`
+                : `Email ID XXXXXX${otpData?.contact?.slice(-12)}`}{' '}
             </Typography>
           )}
-          <Box display={'flex'} justifyContent="center">
+        </Box>
+
+        <Box display={'flex'} justifyContent="center" flexDirection="column" alignItems="center">
+          {otpData?.page === 'forgetUserName' && (
+            <Typography variant="body1" ml="14vw" mt="1vw">
+              Verification code
+            </Typography>
+          )}
+          <Box display={'flex'} justifyContent="space-between">
             {otpform}
           </Box>
         </Box>
-        <Box align="end" mt={3}>
-          <Button
-            onClick={() => {
-              resetStep(0);
-            }}
-            variant="contained"
-            color="grey"
-            sx={{
-              mr: 2,
-            }}
-          >
-            Cancel
-          </Button>
-          <Button
-            size="medium"
-            variant="contained"
-            sx={{
-              backgroundColor: 'secondary.lightOrange',
-              '&:hover': {
+        {otpData?.page === 'forgetUserName' ? (
+          <Box display={'flex'} justifyContent="center">
+            <Button
+              size="medium"
+              variant="contained"
+              sx={{
                 backgroundColor: 'secondary.lightOrange',
-              },
-            }}
-            onClick={onHandleVerify}
-          >
-            {t('Continue')}
-          </Button>
-        </Box>
+                '&:hover': {
+                  backgroundColor: 'secondary.lightOrange',
+                },
+                width: '100%',
+              }}
+              onClick={onHandleVerify}
+            >
+              {t('Continue')}
+            </Button>
+          </Box>
+        ) : (
+          <Box mt={3} textAlign="center">
+            <Button
+              onClick={() => {
+                resetStep(0);
+              }}
+              variant="contained"
+              color="grey"
+              sx={{
+                mr: 2,
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              size="medium"
+              variant="contained"
+              sx={{
+                backgroundColor: 'secondary.lightOrange',
+                '&:hover': {
+                  backgroundColor: 'secondary.lightOrange',
+                },
+              }}
+              onClick={onHandleVerify}
+            >
+              {t('Continue')}
+            </Button>
+          </Box>
+        )}
       </Box>
       {changeUserData && (
         <SuccessModalPopup
           open={changeUserData}
           setOpen={() => setChangeUserData(false)}
           text={`Your ${
-            otpData?.type === 'sms' ? 'Mobile Number' : otpData?.type === 'email' && 'Email Address'
+            otpData?.page === 'forgetUserName'
+              ? `UserName is "Anand"  Please use this User Name to Log In`
+              : otpData?.type === 'sms'
+              ? 'Mobile Number'
+              : otpData?.type === 'email' && 'Email Address'
           } has been successfully changed `}
           changeUserData={changeUserData}
           fetchDoctorUserPersonalDetails={fetchDoctorUserPersonalDetails}

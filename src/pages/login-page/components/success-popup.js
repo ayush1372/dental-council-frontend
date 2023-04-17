@@ -3,13 +3,15 @@ import { useState } from 'react';
 import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined';
 import { Box, Container, Modal, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import { useSelector } from 'react-redux';
 
 import { Button } from '../../../ui/core';
 
-export default function SuccessModal() {
+export default function SuccessModal({ text, userData, resetStep }) {
   const [open, setOpen] = useState(true);
   const handleClose = () => setOpen(false);
   const theme = useTheme();
+  const retrieveUserName = useSelector((state) => state?.forgotUserName?.status?.data);
 
   return (
     <Modal open={open} onClose={handleClose} sx={{ mt: 15 }}>
@@ -54,15 +56,23 @@ export default function SuccessModal() {
             component="div"
             flexDirection="column"
           >
-            Your password been created Successfully
+            {userData?.page === 'forgetUserName'
+              ? ` Your UserName is" ${retrieveUserName} "Please use this User Name to Log In`
+              : text}
           </Typography>
           <Button
             sx={{ width: { xs: '100%', sm: '408px' }, mt: 5 }}
             variant="contained"
             color="warning"
-            onClick={handleClose}
+            onClick={
+              userData?.page === 'forgetUserName'
+                ? () => {
+                    resetStep(0);
+                  }
+                : handleClose
+            }
           >
-            Login with New Password
+            {userData?.page === 'forgetUserName' ? 'Okay' : 'Login with New Password'}
           </Button>
         </Box>
       </Container>
