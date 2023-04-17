@@ -50,7 +50,7 @@ const RegistrationDetailsContent = () => {
       <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
-            Registered with council
+            Registered with Council
             <Typography component="span" color="error.main">
               *
             </Typography>
@@ -72,7 +72,7 @@ const RegistrationDetailsContent = () => {
                   setOpenModal(true);
                   setQueryRaisedField('Registered with council');
                 }}
-                fontSize="width30"
+                fontSize="width24"
               />
             )}
           </Grid>
@@ -100,7 +100,7 @@ const RegistrationDetailsContent = () => {
                   setOpenModal(true);
                   setQueryRaisedField('Registration Number');
                 }}
-                fontSize="width30"
+                fontSize="width24"
               />
             )}
           </Grid>
@@ -128,7 +128,7 @@ const RegistrationDetailsContent = () => {
                   setOpenModal(true);
                   setQueryRaisedField('Registration Date');
                 }}
-                fontSize="width30"
+                fontSize="width24"
               />
             )}
           </Grid>
@@ -158,7 +158,7 @@ const RegistrationDetailsContent = () => {
                   setOpenModal(true);
                   setQueryRaisedField('Registration');
                 }}
-                fontSize="width30"
+                fontSize="width24"
               />
             )}
           </Grid>
@@ -185,14 +185,14 @@ const RegistrationDetailsContent = () => {
                   setOpenModal(true);
                   setQueryRaisedField('Due Date of Renewal');
                 }}
-                fontSize="width30"
+                fontSize="width24"
               />
             )}
           </Grid>
         </Grid>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
-            Upload the registration certificate
+            Upload the Registration Certificate
             <Typography component="span" color="error.main">
               *
             </Typography>
@@ -223,7 +223,7 @@ const RegistrationDetailsContent = () => {
                   setOpenModal(true);
                   setQueryRaisedField('Upload the registration certificate');
                 }}
-                fontSize="width30"
+                fontSize="width24"
               />
             )}
           </Grid>

@@ -46,10 +46,14 @@ const EditQualificationDetails = ({
     (state) => state?.doctorUserProfileReducer?.personalDetails
   );
 
+  const [universitiesListData, setUniversitiesListData] = useState(universitiesList?.data);
+
   const handleQualificationFrom = (event) => {
     setValue(event.target.name, event.target.value);
     dispatch(selectedQualificationType(event.target.value));
   };
+
+  const noPointer = { cursor: 'pointer' };
 
   const qualificationfrom = watch(`qualification[${index}].qualificationfrom`);
   const watchCollege = watch(`qualification[${index}].college`);
@@ -63,9 +67,16 @@ const EditQualificationDetails = ({
       });
     }
   };
+  useEffect(() => {
+    setUniversitiesListData(universitiesList?.data);
+  }, [universitiesList]);
 
   useEffect(() => {
     fetchColleges(selectedState);
+
+    setValue(`qualification[${index}].university`, '');
+    setValue(`qualification[${index}].college`, '');
+    setUniversitiesListData([]);
   }, [selectedState]);
 
   useEffect(() => {
@@ -129,6 +140,7 @@ const EditQualificationDetails = ({
             onClick={() => {
               remove(index);
             }}
+            style={noPointer}
           />
         </Grid>
       )}
@@ -162,12 +174,12 @@ const EditQualificationDetails = ({
 
       {qualificationfrom === 'International' && !isAdditionalQualification ? (
         <Grid container item spacing={2} display="flex" alignItems="center" mb={2}>
-          <Grid item xs={12} sm={6} md={5} lg={4}>
+          <Grid item xs="auto">
             <Typography color="grey2.lighter" variant="body1">
               FMGE QUALIFICATION DETAILS
             </Typography>
           </Grid>
-          <Grid item xs={12} sm={6} md={7} lg={8}>
+          <Grid item xs>
             <Divider />
           </Grid>
         </Grid>
@@ -370,12 +382,12 @@ const EditQualificationDetails = ({
       )}
 
       <Grid container item spacing={2} display="flex" alignItems="center" mb={2}>
-        <Grid item xs={12} sm={4}>
+        <Grid item xs="auto">
           <Typography color="grey2.lighter" variant="body1" pt={2}>
-            {isAdditionalQualification ? 'ADDITIONAL' : 'BASIC'} QUALIFICATION
+            {isAdditionalQualification ? '' : 'BASIC'} QUALIFICATION
           </Typography>
         </Grid>
-        <Grid item xs={12} sm={8}>
+        <Grid item xs>
           <Divider />
         </Grid>
       </Grid>
@@ -433,7 +445,7 @@ const EditQualificationDetails = ({
                   : ''
               }
               name="Qualification"
-              label="Name Of The Degree"
+              label="Name of the Degree"
               defaultValue={degree[0]?.id}
               value={degree[0]?.id}
               required={true}
@@ -641,11 +653,11 @@ const EditQualificationDetails = ({
               required={true}
               {...register(
                 `qualification[${index}].university`,
-                getValues().qualification[index].university === '' && {
+                getValues()?.qualification[index]?.university === '' && {
                   required: 'University is required',
                 }
               )}
-              options={createSelectFieldData(universitiesList.data, 'id') || []}
+              options={createSelectFieldData(universitiesListData, 'id') || []}
               style={{
                 backgroundColor:
                   work_flow_status_id === 3 && getQueryRaised('University') ? '#F0F0F0' : '',
@@ -704,15 +716,17 @@ const EditQualificationDetails = ({
               required={true}
               placeholder={'Year of Awarding'}
               fullWidth
-              error={qualification?.year === '' && errors?.qualification?.[index]?.year?.message}
+              error={
+                getValues().qualification[index].year === '' &&
+                errors?.qualification?.[index]?.year?.message
+              }
               defaultValue={qualification?.year}
               {...register(
                 `qualification[${index}].year`,
-                (qualification?.year === '' || getValues()?.qualification[index]?.year) &&
-                  getValues().qualification[index].year?.length <= 0 && {
-                    required: 'awarding year is Required',
-                    pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
-                  }
+                getValues().qualification[index].year?.length <= 0 && {
+                  required: 'awarding year is Required',
+                  pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
+                }
               )}
               MenuProps={{
                 style: {
@@ -765,10 +779,7 @@ const EditQualificationDetails = ({
               name="subSpeciality"
               placeholder="Enter Super Speciality"
               defaultValue={qualification?.subSpeciality}
-              required={true}
-              {...register(`qualification[${index}].subSpeciality`, {
-                required: 'subSpeciality is Required',
-              })}
+              {...register(`qualification[${index}].subSpeciality`, {})}
             />
           </Grid>
         )}

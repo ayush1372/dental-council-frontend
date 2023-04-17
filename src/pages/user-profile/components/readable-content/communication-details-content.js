@@ -62,7 +62,7 @@ const CommunicationAddress = ({ personalDetails }) => {
                   setOpenModal(true);
                   setQueryRaisedField('House');
                 }}
-                fontSize="width30"
+                fontSize="width24"
               />
             )}{' '}
           </Grid>
@@ -90,7 +90,7 @@ const CommunicationAddress = ({ personalDetails }) => {
                   setOpenModal(true);
                   setQueryRaisedField('Street');
                 }}
-                fontSize="width30"
+                fontSize="width24"
               />
             )}{' '}
           </Grid>
@@ -118,7 +118,7 @@ const CommunicationAddress = ({ personalDetails }) => {
                   setOpenModal(true);
                   setQueryRaisedField('Landmark');
                 }}
-                fontSize="width30"
+                fontSize="width24"
               />
             )}{' '}
           </Grid>
@@ -143,7 +143,7 @@ const CommunicationAddress = ({ personalDetails }) => {
                   setOpenModal(true);
                   setQueryRaisedField('City/Town/Village');
                 }}
-                fontSize="width30"
+                fontSize="width24"
               />
             )}{' '}
           </Grid>
@@ -173,7 +173,7 @@ const CommunicationAddress = ({ personalDetails }) => {
                   setOpenModal(true);
                   setQueryRaisedField('District');
                 }}
-                fontSize="width30"
+                fontSize="width24"
               />
             )}{' '}
           </Grid>
@@ -198,7 +198,7 @@ const CommunicationAddress = ({ personalDetails }) => {
                   setOpenModal(true);
                   setQueryRaisedField('Sub District');
                 }}
-                fontSize="width30"
+                fontSize="width24"
               />
             )}{' '}
           </Grid>
@@ -226,7 +226,7 @@ const CommunicationAddress = ({ personalDetails }) => {
                   setOpenModal(true);
                   setQueryRaisedField('State/Union Territory');
                 }}
-                fontSize="width30"
+                fontSize="width24"
               />
             )}{' '}
           </Grid>
@@ -254,7 +254,7 @@ const CommunicationAddress = ({ personalDetails }) => {
                   setOpenModal(true);
                   setQueryRaisedField('Country');
                 }}
-                fontSize="width30"
+                fontSize="width24"
               />
             )}{' '}
           </Grid>
@@ -285,7 +285,7 @@ const CommunicationAddress = ({ personalDetails }) => {
                   setOpenModal(true);
                   setQueryRaisedField('Pincode');
                 }}
-                fontSize="width30"
+                fontSize="width24"
               />
             )}{' '}
           </Grid>

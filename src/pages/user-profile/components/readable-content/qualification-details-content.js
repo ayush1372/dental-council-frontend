@@ -78,16 +78,18 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                   {(data?.user_type === 2 ||
                     data?.user_type === 3 ||
                     data?.user_type === 4 ||
-                    data?.user_type === 5) && (
-                    <ContactSupportOutlinedIcon
-                      color="primary"
-                      onClick={() => {
-                        setOpenModal(true);
-                        setQueryRaisedField('Name of the Degree Obtained');
-                      }}
-                      fontSize="width30"
-                    />
-                  )}
+                    data?.user_type === 5) &&
+                    element.is_verified !== 1 &&
+                    index !== 0 && (
+                      <ContactSupportOutlinedIcon
+                        color="primary"
+                        onClick={() => {
+                          setOpenModal(true);
+                          setQueryRaisedField('Name of the Degree Obtained');
+                        }}
+                        fontSize="width24"
+                      />
+                    )}
                 </Grid>
               </Grid>
               <Grid item xs={12} md={4}>
@@ -109,16 +111,18 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                   {(data?.user_type === 2 ||
                     data?.user_type === 3 ||
                     data?.user_type === 4 ||
-                    data?.user_type === 5) && (
-                    <ContactSupportOutlinedIcon
-                      color="primary"
-                      onClick={() => {
-                        setOpenModal(true);
-                        setQueryRaisedField('Country Name');
-                      }}
-                      fontSize="width30"
-                    />
-                  )}
+                    data?.user_type === 5) &&
+                    element.is_verified !== 1 &&
+                    index !== 0 && (
+                      <ContactSupportOutlinedIcon
+                        color="primary"
+                        onClick={() => {
+                          setOpenModal(true);
+                          setQueryRaisedField('Country Name');
+                        }}
+                        fontSize="width24"
+                      />
+                    )}
                 </Grid>
               </Grid>
               <Grid item xs={12} md={4}>
@@ -140,16 +144,18 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                   {(data?.user_type === 2 ||
                     data?.user_type === 3 ||
                     data?.user_type === 4 ||
-                    data?.user_type === 5) && (
-                    <ContactSupportOutlinedIcon
-                      color="primary"
-                      onClick={() => {
-                        setOpenModal(true);
-                        setQueryRaisedField('State');
-                      }}
-                      fontSize="width30"
-                    />
-                  )}
+                    data?.user_type === 5) &&
+                    element.is_verified !== 1 &&
+                    index !== 0 && (
+                      <ContactSupportOutlinedIcon
+                        color="primary"
+                        onClick={() => {
+                          setOpenModal(true);
+                          setQueryRaisedField('State');
+                        }}
+                        fontSize="width24"
+                      />
+                    )}
                 </Grid>
               </Grid>
             </Grid>
@@ -174,16 +180,18 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                   {(data?.user_type === 2 ||
                     data?.user_type === 3 ||
                     data?.user_type === 4 ||
-                    data?.user_type === 5) && (
-                    <ContactSupportOutlinedIcon
-                      color="primary"
-                      onClick={() => {
-                        setOpenModal(true);
-                        setQueryRaisedField('Name of the College');
-                      }}
-                      fontSize="width30"
-                    />
-                  )}
+                    data?.user_type === 5) &&
+                    element.is_verified !== 1 &&
+                    index !== 0 && (
+                      <ContactSupportOutlinedIcon
+                        color="primary"
+                        onClick={() => {
+                          setOpenModal(true);
+                          setQueryRaisedField('Name of the College');
+                        }}
+                        fontSize="width24"
+                      />
+                    )}
                 </Grid>
               </Grid>
               <Grid item xs={12} md={4}>
@@ -205,16 +213,18 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                   {(data?.user_type === 2 ||
                     data?.user_type === 3 ||
                     data?.user_type === 4 ||
-                    data?.user_type === 5) && (
-                    <ContactSupportOutlinedIcon
-                      color="primary"
-                      onClick={() => {
-                        setOpenModal(true);
-                        setQueryRaisedField('University');
-                      }}
-                      fontSize="width30"
-                    />
-                  )}
+                    data?.user_type === 5) &&
+                    element.is_verified !== 1 &&
+                    index !== 0 && (
+                      <ContactSupportOutlinedIcon
+                        color="primary"
+                        onClick={() => {
+                          setOpenModal(true);
+                          setQueryRaisedField('University');
+                        }}
+                        fontSize="width24"
+                      />
+                    )}
                 </Grid>
               </Grid>
               <Grid item xs={12} md={4}>
@@ -228,22 +238,24 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                 )}
                 <Grid display="flex" alignItems="center">
                   <Typography variant="subtitle2" color="textPrimary.main">
-                    {element?.qualification_month ? element?.qualification_month : ''} ,{' '}
+                    {element?.qualification_month ? element?.qualification_month : ''},{' '}
                     {element?.qualification_year ? element?.qualification_year : ''}
                   </Typography>{' '}
                   {(data?.user_type === 2 ||
                     data?.user_type === 3 ||
                     data?.user_type === 4 ||
-                    data?.user_type === 5) && (
-                    <ContactSupportOutlinedIcon
-                      color="primary"
-                      onClick={() => {
-                        setOpenModal(true);
-                        setQueryRaisedField('Month & Year of Awarding Degree');
-                      }}
-                      fontSize="width30"
-                    />
-                  )}
+                    data?.user_type === 5) &&
+                    element.is_verified !== 1 &&
+                    index !== 0 && (
+                      <ContactSupportOutlinedIcon
+                        color="primary"
+                        onClick={() => {
+                          setOpenModal(true);
+                          setQueryRaisedField('Month & Year of Awarding Degree');
+                        }}
+                        fontSize="width24"
+                      />
+                    )}
                 </Grid>
               </Grid>
             </Grid>
@@ -277,16 +289,18 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                   {(data?.user_type === 2 ||
                     data?.user_type === 3 ||
                     data?.user_type === 4 ||
-                    data?.user_type === 5) && (
-                    <ContactSupportOutlinedIcon
-                      color="primary"
-                      onClick={() => {
-                        setOpenModal(true);
-                        setQueryRaisedField('Upload Qualification Degree');
-                      }}
-                      fontSize="width30"
-                    />
-                  )}
+                    data?.user_type === 5) &&
+                    element.is_verified !== 1 &&
+                    index !== 0 && (
+                      <ContactSupportOutlinedIcon
+                        color="primary"
+                        onClick={() => {
+                          setOpenModal(true);
+                          setQueryRaisedField('Upload Qualification Degree');
+                        }}
+                        fontSize="width24"
+                      />
+                    )}
                 </Grid>
               </Grid>
             </Grid>

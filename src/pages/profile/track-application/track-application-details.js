@@ -1,5 +1,4 @@
 import CheckCircle from '@mui/icons-material/CheckCircle';
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { Button, Divider, Grid, Typography, useTheme } from '@mui/material';
 import { Box } from '@mui/system';
 import { useSelector } from 'react-redux';
@@ -154,7 +153,6 @@ export function TrackApplicationDetails({
                   Current Status
                 </Typography>
                 <Typography variant="subtitle2" component="div" color="primary.main">
-                  <FiberManualRecordIcon sx={{ fontSize: '8px' }} />
                   {`${workflowStatusId(currentStatus) ? workflowStatusId(currentStatus) : ''}`}
                 </Typography>
               </Grid>

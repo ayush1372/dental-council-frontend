@@ -185,6 +185,14 @@ const AdditionalQualifications = () => {
       });
   };
 
+  const handleClose = () => {
+    dispatch(changeUserActiveTab(doctorTabs[0].tabName));
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <Box p={3}>
       <Box mt={1}>
@@ -218,7 +226,7 @@ const AdditionalQualifications = () => {
         <Button variant="contained" color="secondary" onClick={handleSubmit(onSubmit)}>
           Submit
         </Button>
-        <Button variant="contained" color="grey" sx={{ marginLeft: '20px' }}>
+        <Button variant="contained" color="grey" sx={{ marginLeft: '20px' }} onClick={handleClose}>
           Cancel
         </Button>
         {qualification.length <= 6 && (
