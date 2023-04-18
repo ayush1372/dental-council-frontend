@@ -105,12 +105,9 @@ const RaiseQueryPopup = ({ ClosePopup, queryRaisedField }) => {
                 error={errors?.raiseQuery?.message}
                 {...register('raiseQuery', {
                   required: 'This field is required',
-                  validate: (value) => {
-                    const wordCount = value?.trim()?.split(/\s+/)?.length;
-                    if (wordCount > 151) {
-                      return 'Maximum word limit exceeded (150 words)';
-                    }
-                    return true;
+                  pattern: {
+                    value: /^(?:\s*\w+\b){1,150}\s*$/,
+                    message: 'Maximum word limit exceeded',
                   },
                 })}
                 placeholder="Write a reason here . . ."

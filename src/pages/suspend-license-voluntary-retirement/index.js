@@ -259,9 +259,7 @@ export function SuspendLicenseVoluntaryRetirement({
             ? 'Voluntary Retirement'
             : tabName === 'suspend-license'
             ? 'Suspend License'
-            : // : tabName === 'voluntary-suspend-license'
-              // ? 'Voluntary Suspend License'
-              ''}
+            : ''}
         </Typography>
       )}
 
@@ -423,7 +421,6 @@ export function SuspendLicenseVoluntaryRetirement({
               type="text"
               multiline
               minRows={4}
-              inputProps={{ maxLength: 150 }}
               name="remark"
               required={true}
               placeholder={
@@ -439,6 +436,11 @@ export function SuspendLicenseVoluntaryRetirement({
               error={errors.remark?.message}
               {...register('remark', {
                 required: 'Enter remarks',
+
+                pattern: {
+                  value: /^(?:\b\w+\b[\s\r\n]*){1,300}$/,
+                  message: 'Maximum word limit exceeded',
+                },
               })}
             />
           </Grid>
