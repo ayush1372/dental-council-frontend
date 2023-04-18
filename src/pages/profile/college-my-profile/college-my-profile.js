@@ -1,25 +1,15 @@
-/* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 
 import EditIcon from '@mui/icons-material/Edit';
 import { Grid, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
-// import { userGroupType } from '../../../helpers/functions/common-functions';
-import {
-  collegeProfileData,
-  // getCollegeAdminProfileData,
-  // getCollegeDeanProfileData,
-  // getCollegeRegistrarProfileData,
-} from '../../../store/actions/college-actions';
+import { collegeProfileData } from '../../../store/actions/college-actions';
 import {
   getCollegeData,
   getDistrictList,
   getUniversitiesList,
 } from '../../../store/actions/common-actions';
-// import {
-//   //  getCollegeDetail
-//   } from '../../../store/actions/common-actions';
 import { Button } from '../../../ui/core';
 import CollegeDean from '../college-dean/college-dean';
 import CollegeRegistrar from '../college-registrar/college-registrar';

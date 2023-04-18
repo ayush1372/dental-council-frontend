@@ -438,7 +438,7 @@ export function SuspendLicenseVoluntaryRetirement({
                 required: 'Enter remarks',
 
                 pattern: {
-                  value: /^(?:\b\w+\b[\s\r\n]*){1,3}$/,
+                  value: /^(?:\b\w+\b[\s\r\n]*){1,300}$/,
                   message: 'Maximum word limit exceeded',
                 },
               })}
