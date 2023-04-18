@@ -1,7 +1,6 @@
 import { useState } from 'react';
 
 import BookOnlineIcon from '@mui/icons-material/BookOnline';
-// import BookOnlineIcon from '@mui/icons-material/BookOnline';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
