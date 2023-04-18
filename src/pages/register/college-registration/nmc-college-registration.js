@@ -5,18 +5,12 @@ import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
-// import { TextField } from '../../../../src/ui/core/form/textfield/textfield';
 import { TextField } from '../../../../src/ui/core';
 import { createEditFieldData } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
+import { registerCollegeDetail, updateCollegeDetail } from '../../../store/actions/college-actions';
 import {
-  registerCollegeDetail,
-  // registerCollegeDetails,
-  updateCollegeDetail,
-} from '../../../store/actions/college-actions';
-import {
-  // getCollegesList,
   getAllCollegesList,
   getCollegeData,
   getDistrictList,
@@ -30,21 +24,16 @@ import successToast from '../../../ui/core/toaster';
 
 function NMCCollegeRegistration() {
   const {
-    // collegesList,
     allcollegesList,
     statesList,
     councilNames,
     districtsList,
     subDistrictList,
     universitiesList,
-    // getCollegeDetail,
   } = useSelector((state) => state.common);
 
   let collegesList = [];
   collegesList.push(...allcollegesList.data, { id: 'other', name: 'other' });
-
-  // const registrationSuccess = useSelector((state) => state.college.registerCollegeDetail.data);
-  // const updateregistration = useSelector((state) => state.college.updateCollegeDetails.data);
 
   const [successModalPopup, setSuccessModalPopup] = useState(false);
   const [showCollegeName, setShowCollegeName] = useState(false);
@@ -55,7 +44,6 @@ function NMCCollegeRegistration() {
   useEffect(() => {
     dispatch(getUniversitiesList());
     dispatch(getAllCollegesList());
-    // dispatch(getCollegesList());
     dispatch(getStatesList());
     dispatch(getRegistrationCouncilList());
   }, []);
@@ -253,8 +241,6 @@ function NMCCollegeRegistration() {
         if (response?.data?.state_id) {
           setValue('StateID', response?.data?.state_id);
           setValue('StateName', getSelecetedName(response?.data?.state_id, 'stateData'));
-          // dispatch(getDistrictList(response?.data?.state_id));
-          // getDistrict(response?.data?.state_id);
         }
         if (response?.data?.university_id) {
           setValue('UniversityID', response?.data?.university_id);
@@ -266,10 +252,6 @@ function NMCCollegeRegistration() {
       });
     }
   };
-  // const getDistrict = (id) => {
-  //   dispatch(getDistrictList(id));
-  // };
-
   const onStateChange = (currentValue) => {
     setValue('StateID', currentValue.id);
     dispatch(getDistrictList(currentValue.id));
@@ -282,12 +264,6 @@ function NMCCollegeRegistration() {
   return (
     <Container sx={{ mt: 5 }}>
       <Grid container item spacing={2} id="collegeRegistrationId">
-        {/* <Grid item xs={12}>
-          <Typography variant="h2" color="textPrimary.main">
-            College Registration
-          </Typography>
-        </Grid> */}
-
         <Grid item xs={12} md={6} lg={4}>
           <Typography variant="body3" color="inputTextColor.main">
             Name
@@ -299,7 +275,6 @@ function NMCCollegeRegistration() {
           <SearchableDropdown
             fullWidth
             name="CollegeName"
-            // items={createEditFieldData(allcollegesList.data)}
             items={createEditFieldData(collegesList)}
             placeholder="Select College"
             clearErrors={clearErrors}
@@ -309,7 +284,6 @@ function NMCCollegeRegistration() {
             })}
             value={getSelecetedName(collegeResponse?.data?.state_id, 'stateData') || null}
             onChange={(currentValue) => {
-              // setClgName(currentValue?.name);
               onNameChange(currentValue);
             }}
           />
@@ -328,7 +302,6 @@ function NMCCollegeRegistration() {
               name="Name"
               required
               placeholder={t('Enter college name')}
-              // onInput={(e) => handleInput(e)}
               error={errors.Name?.message}
               {...register('Name', {
                 required: 'College name is required',
@@ -347,7 +320,6 @@ function NMCCollegeRegistration() {
             name="CollegeCode"
             required
             placeholder={t('Enter College Code')}
-            // onInput={(e) => handleInput(e)}
             error={errors.CollegeCode?.message}
             {...register('CollegeCode', {
               required: 'College code is required',
@@ -436,9 +408,7 @@ function NMCCollegeRegistration() {
             fullWidth
             name={'Website'}
             placeholder={'Enter College Website'}
-            {...register('Website', {
-              // required: 'Website  is required',
-            })}
+            {...register('Website', {})}
           />
         </Grid>
 
@@ -466,18 +436,12 @@ function NMCCollegeRegistration() {
           <Typography variant="body3" color="inputTextColor.main">
             Address line 2
           </Typography>
-          {/* <Typography component="span" color="error.main">
-            *
-          </Typography> */}
           <TextField
             fullWidth
-            // required
             name="AddressLine2"
             placeholder={'Enter Address Line 2'}
             error={errors.AddressLine2?.message}
-            {...register('AddressLine2', {
-              // required: 'Address line 2 is required',
-            })}
+            {...register('AddressLine2', {})}
           />
         </Grid>
 
@@ -534,9 +498,6 @@ function NMCCollegeRegistration() {
           <Typography variant="body3" color="inputTextColor.main">
             City/Town/Village
           </Typography>
-          {/* <Typography component="span" color="error.main">
-            *
-          </Typography> */}
           <SearchableDropdown
             fullWidth
             name="Town"
@@ -615,9 +576,6 @@ function NMCCollegeRegistration() {
         >
           Submit
         </Button>
-        {/* <Button variant="contained" color="grey" sx={{ mb: 6 }} onClick={onCancelClick}>
-          Cancel
-        </Button> */}
       </Box>
       {successModalPopup && (
         <SuccessModalPopup
@@ -625,7 +583,6 @@ function NMCCollegeRegistration() {
           setOpen={() => setSuccessModalPopup(false)}
           text={'We have Shared the Password link on given Email Id and Mobile No.'}
           fromCollegeRegistration={true}
-          // successRegistration={true}
         />
       )}
     </Container>
