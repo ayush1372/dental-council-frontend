@@ -72,7 +72,7 @@ export const API = {
     getSMCProfileData: 'api/v1/abdm/nmr/smc/user/{id}',
   },
   kyc: {
-    kycCheck: 'api/v1/abdm/nmr/health-professional/{registrationNumber}/kyc',
+    kycCheck: 'api/v1/abdm/nmr/health-professional/{registrationNumber}/kyc?councilId={councilId}',
   },
   doctorRegistration: {
     smcRegistrationDetail:
