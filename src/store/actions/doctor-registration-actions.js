@@ -48,11 +48,13 @@ export const getSessionAccessToken = (body) => async () => {
       });
   });
 };
-export const checkKycDetails = (body) => async (dispatch) => {
+export const checkKycDetails = (body, councilId) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: POST,
-      url: API.kyc.kycCheck.replace('{registrationNumber}', body.registrationNumber),
+      url: API.kyc.kycCheck
+        .replace('{registrationNumber}', body.registrationNumber)
+        .replace('{councilId}', councilId),
       data: body,
     })
       .then((response) => {
