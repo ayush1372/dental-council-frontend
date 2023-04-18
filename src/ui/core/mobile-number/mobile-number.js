@@ -18,6 +18,7 @@ export function MobileNumber(props) {
     label,
     showhint = true,
     required,
+    otpSend,
   } = props;
   const handleInput = (e) => {
     e.preventDefault();
@@ -90,6 +91,7 @@ export function MobileNumber(props) {
               sx={{ height: '56px' }}
               color="primary"
               onClick={verifyOnClick}
+              disabled={otpSend}
             >
               GetOTP
             </Button>

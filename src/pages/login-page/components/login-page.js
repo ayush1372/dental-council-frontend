@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
 import useWizard from '../../../hooks/use-wizard';
+// import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import {
   generateCaptchaImage,
   getCaptchaEnabledFlagValue,
@@ -27,7 +28,9 @@ export function LoginPage() {
   const { loginFormname } = state;
   const { activeStep, handleNext, resetStep } = useWizard(0, []);
   const [showPopup, setShowPopup] = useState(false);
+  const [showUserNamePopUp, setShowUserNamePopUp] = useState(false);
   const [data, setData] = useState({ contact: '', type: '', page: 'forgotPasswordPage' });
+
   const loginFormNames = useMemo(
     () => ({
       Doctor: 'Doctor',
@@ -67,12 +70,16 @@ export function LoginPage() {
   }, [loginFormNames[loginFormname]]);
 
   const handlePasswordSetup = () => {
-    setShowPopup(true);
+    data?.page === 'forgetUserName' ? setShowUserNamePopUp(true) : setShowPopup(true);
   };
   return (
     <Box sx={{ mt: 5, mb: 5, maxWidth: '648px', margin: '40px auto' }}>
       {activeStep === 0 && loginFormNames[loginFormname] === 'Doctor' ? (
-        <DoctorLogin loginName={loginFormNames[loginFormname]} handleForgotPassword={handleNext} />
+        <DoctorLogin
+          loginName={loginFormNames[loginFormname]}
+          handleNext={handleNext}
+          otpData={setData}
+        />
       ) : (
         activeStep === 0 &&
         loginFormNames[loginFormname] !== 'Doctor' && (
@@ -85,26 +92,43 @@ export function LoginPage() {
           otpData={setData}
           userData={data}
           activeStep={activeStep}
-        />
-      )}
-      {activeStep === 2 && (
-        <ConfirmOTP handleConfirmOTP={handleNext} otpData={data} resetStep={resetStep} />
-      )}
-      {activeStep === 3 && (
-        <NewPasswordSetup
-          handlePasswordSetup={handlePasswordSetup}
-          otpData={data}
-          setShowSuccessPopUp={setShowPopup}
           resetStep={resetStep}
         />
       )}
+      {activeStep === 2 && (
+        <ConfirmOTP
+          handleConfirmOTP={handleNext}
+          otpData={data}
+          resetStep={resetStep}
+          handlePasswordSetup={handlePasswordSetup}
+        />
+      )}
+      {activeStep === 3 && data?.page === 'forgetUserName' && showUserNamePopUp ? (
+        <SuccessModal
+          open={showUserNamePopUp}
+          setOpen={() => setShowUserNamePopUp(false)}
+          successRegistration={true}
+          userData={data}
+          resetStep={resetStep}
+        />
+      ) : (
+        activeStep === 3 && (
+          <NewPasswordSetup
+            handlePasswordSetup={handlePasswordSetup}
+            otpData={data}
+            setShowSuccessPopUp={setShowPopup}
+            resetStep={resetStep}
+          />
+        )
+      )}
 
-      {showPopup && (
+      {showPopup && data?.page !== 'forgetUserName' && (
         <SuccessModal
           open={showPopup}
           setOpen={() => setShowPopup(false)}
           text={' Your password has been successfully Changed.'}
           successRegistration={true}
+          resetStep={resetStep}
         />
       )}
     </Box>

@@ -76,6 +76,19 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
     (state) => state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId
   );
 
+  const { councilNames } = useSelector((state) => state.common);
+
+  const getCouncilID = (name) => {
+    let councilData = [];
+    Array.isArray(councilNames) &&
+      councilNames?.map((elementData) => {
+        if (elementData.name === name) {
+          councilData.push(elementData);
+        }
+      });
+    return councilData[0]?.id;
+  };
+
   const {
     register,
     handleSubmit,
@@ -109,6 +122,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
   const onCancel = () => {
     window.location.reload();
   };
+
   const handleValidateAadhar = () => {
     handleClear();
     if (otpValue.length === 6) {
@@ -123,29 +137,33 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
         setshowOtpAadhar(false);
         handleClear();
         if (!imrDataNotFound) {
+          let councilID = getCouncilID(councilName);
           dispatch(
-            checkKycDetails({
-              registrationNumber: registrationNumber || '',
-              txn_id: response.data.txnId || '',
-              mobile_number: response.data.mobileNumber || '',
-              photo: response.data.photo || '',
-              gender: response.data.gender || '',
-              name: response.data.name || '',
-              email: response.data.email || '',
-              pincode: response.data.pincode || '',
-              birth_date: dateFormat(response.data.birthdate) || '',
-              care_of: response.data.careOf || '',
-              house: response.data.house || '',
-              street: response.data.street || '',
-              kycLandMark: response.data.landmark || '',
-              locality: response.data.locality || '',
-              village_town_city: response.data.villageTownCity || '',
-              sub_dist: response.data.subDist || '',
-              district: response.data.district || '',
-              state: response.data.state || '',
-              post_office: response.data.postOffice || '',
-              address: response.data.address || '',
-            })
+            checkKycDetails(
+              {
+                registrationNumber: registrationNumber || '',
+                txn_id: response.data.txnId || '',
+                mobile_number: response.data.mobileNumber || '',
+                photo: response.data.photo || '',
+                gender: response.data.gender || '',
+                name: response.data.name || '',
+                email: response.data.email || '',
+                pincode: response.data.pincode || '',
+                birth_date: dateFormat(response.data.birthdate) || '',
+                care_of: response.data.careOf || '',
+                house: response.data.house || '',
+                street: response.data.street || '',
+                kycLandMark: response.data.landmark || '',
+                locality: response.data.locality || '',
+                village_town_city: response.data.villageTownCity || '',
+                sub_dist: response.data.subDist || '',
+                district: response.data.district || '',
+                state: response.data.state || '',
+                post_office: response.data.postOffice || '',
+                address: response.data.address || '',
+              },
+              councilID
+            )
           ).then((response) => {
             if (response.data.kyc_fuzzy_match_status === 'Fail') {
               setKycError(true);

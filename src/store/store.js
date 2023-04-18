@@ -11,6 +11,7 @@ import doctorRegistration from './reducers/doctor-registration-reducer';
 import searchDoctorReducer from './reducers/doctor-search-reducer';
 import doctorUserProfileReducer from './reducers/doctor-user-profile-reducer';
 import forgotPasswordReducer from './reducers/forgot-password-reducer';
+import forgotUserName from './reducers/forgot-username-reducer';
 import loginReducer from './reducers/login-reducer';
 import navMenu from './reducers/nav-menu-reducer';
 import nbeReducers from './reducers/nbe-reducers';
@@ -36,6 +37,7 @@ const store = configureStore({
     nbe: nbeReducers,
     raiseQuery: raiseQueryReducer,
     forgotpassword: forgotPasswordReducer,
+    forgotUserName: forgotUserName,
     searchDoctor: searchDoctorReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware(thunk).concat(logger),
