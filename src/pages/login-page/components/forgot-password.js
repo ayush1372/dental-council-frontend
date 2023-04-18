@@ -40,6 +40,10 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep })
       handleSubmit()();
       return;
     }
+    if (watchMobileNum?.length < 10 && watchId.length < 7) {
+      handleSubmit()();
+      return;
+    }
 
     let sendNotificationOtpBody = {};
     if (getValues()?.mobileNo) {
@@ -68,48 +72,72 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep })
       };
       otpData(otpValue);
     }
+    if (userData?.page === 'forgetUserName') {
+      let otpValue = {
+        contact: getValues()?.mobileNo
+          ? getValues().mobileNo
+          : getValues()?.Id?.includes('@')
+          ? getValues().Id
+          : getValues().Id,
+        type: getValues().mobileNo ? 'sms' : getValues()?.Id?.includes('@') ? 'email' : 'nmr_id',
+        page: userData?.page,
+        reSetPasswordOtp: onSubmit,
+        handleClose: () => {
+          resetStep(0);
+        },
+      };
+      otpData(otpValue);
+    }
     reSetPassword !== 'reSetPassword' && handleConfirmPassword();
   };
 
   return (
     <Box p={4} bgcolor="white.main" boxShadow="4">
-      <Typography variant="h2" component="div" textAlign="center">
-        Forgot Password
-      </Typography>
-      <Box mt={2}>
-        <Typography variant="body1">
-          {loginFormname === 'Doctor' ? doctorTitle : userTitle}
-          <Typography component="span" color="error.main">
-            *
-          </Typography>
-        </Typography>
-        <TextField
-          inputProps={{ maxLength: 100 }}
-          fullWidth
-          id="outlined-basic"
-          variant="outlined"
-          type="text"
-          name="Id"
-          required="true"
-          placeholder={t(loginFormname === 'Doctor' ? doctorTitle : userTitle)}
-          margin="dense"
-          defaultValue={getValues().Id}
-          error={isIdActive && errors.Id?.message}
-          {...register('Id', {
-            required: 'Email ID is required',
-          })}
-          disabled={!isIdActive}
-        />
-      </Box>
-      <Divider
-        sx={{
-          paddingTop: '15px',
-        }}
+      <Typography
+        variant="h2"
+        component="div"
+        textAlign={userData?.page === 'forgetUserName' ? 'left' : 'center'}
       >
-        <Typography variant="body1" color="inputTextColor.main">
-          OR
-        </Typography>
-      </Divider>
+        {userData?.page === 'forgetUserName' ? 'Forgot Username' : 'Forgot Password'}
+      </Typography>
+      {userData?.page !== 'forgetUserName' && (
+        <>
+          <Box mt={2}>
+            <Typography variant="body1">
+              {loginFormname === 'Doctor' ? doctorTitle : userTitle}
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+            </Typography>
+            <TextField
+              inputProps={{ maxLength: 100 }}
+              fullWidth
+              id="outlined-basic"
+              variant="outlined"
+              type="text"
+              name="Id"
+              required="true"
+              placeholder={t(loginFormname === 'Doctor' ? doctorTitle : userTitle)}
+              margin="dense"
+              defaultValue={getValues().Id}
+              error={isIdActive && errors.Id?.message}
+              {...register('Id', {
+                required: 'Provide valid ID',
+              })}
+              disabled={!isIdActive}
+            />
+          </Box>
+          <Divider
+            sx={{
+              paddingTop: '15px',
+            }}
+          >
+            <Typography variant="body1" color="inputTextColor.main">
+              OR
+            </Typography>
+          </Divider>
+        </>
+      )}
       <Box mt={2}>
         <Typography variant="body1">
           Enter Mobile Number

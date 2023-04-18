@@ -27,7 +27,7 @@ import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 import successToast from '../../../ui/core/toaster';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
-export const DoctorLogin = ({ loginName = 'Doctor', handleForgotPassword }) => {
+export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
   const [captchaAnswer, setcaptachaAnswer] = useState();
   const { generateCaptcha } = useSelector((state) => state.loginReducer);
   const theme = useTheme();
@@ -36,6 +36,8 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleForgotPassword }) => {
   const [transaction_id, setTransaction_id] = useState('');
   const [otpFormEnabled, setOtpFormEnable] = useState(false);
   const [maskedMobileNumber, setMaskedMobileNumber] = useState('');
+  const [otpSend, setOtpSend] = useState(false);
+
   const navigate = useNavigate();
   const {
     register,
@@ -79,6 +81,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleForgotPassword }) => {
       if (response) {
         setTransaction_id(response?.data?.transaction_id);
         setMaskedMobileNumber(response?.data?.sent_on.replace(/^.{6}/g, 'XXXXXX'));
+        setOtpSend(true);
       }
     });
   };
@@ -227,7 +230,14 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleForgotPassword }) => {
       behavior: 'smooth',
     });
   };
-
+  const handleUserForgetUserName = () => {
+    otpData({ ...otpData, page: 'forgetUserName' });
+    handleNext();
+  };
+  const handleUserForgotPassword = () => {
+    otpData({ ...otpData, page: 'forgotPasswordPage' });
+    handleNext();
+  };
   return (
     <Box p={4} bgcolor="white.main" boxShadow="4">
       <Typography variant="h2" color="textPrimary.main" mb={5}>
@@ -397,6 +407,15 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleForgotPassword }) => {
                 },
               })}
             />
+            <Typography
+              display={'flex'}
+              justifyContent="flex-end"
+              color="#FFA500"
+              onClick={handleUserForgetUserName}
+              sx={{ cursor: 'pointer' }}
+            >
+              Forgot UserName ?
+            </Typography>
             <TextField
               sx={{ mb: 2 }}
               required
@@ -414,10 +433,10 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleForgotPassword }) => {
               display={'flex'}
               justifyContent="flex-end"
               color="#FFA500"
-              onClick={() => handleForgotPassword()}
+              onClick={handleUserForgotPassword}
               sx={{ cursor: 'pointer' }}
             >
-              Forgot Password?
+              Forgot Password ?
             </Typography>
           </>
         ) : selectedLoginOption === 'mobileNumber' ? (
@@ -431,6 +450,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleForgotPassword }) => {
               label={'Enter Mobile Number'}
               showVerify
               verifyOnClick={sendNotificationOTPHandler}
+              otpSend={otpSend}
             />
             {otpFormEnabled && (
               <Box mt={2}>

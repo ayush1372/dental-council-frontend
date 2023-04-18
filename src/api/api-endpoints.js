@@ -83,6 +83,9 @@ export const API = {
   nbe: {
     getNBEProfileData: 'api/v1/abdm/nmr/nbe/user/{id}',
   },
+  forgotUserName: {
+    retrieveUser: 'api/v1/abdm/nmr/retrieve-user',
+  },
   forgotPassword: {
     setPassword: '/api/v1/abdm/nmr/user/set-password',
     reSetPassword: 'api/v1/abdm/nmr/user/reset-password',
