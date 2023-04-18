@@ -47,6 +47,7 @@ const UniqueUserNameForDoctorRegistration = () => {
       txnId: aadhaarTxnId,
       // hprId: `${getValues().UniqueUserNameForDoctor}@hpr.abdm`,
       hprId: suggestion,
+      notifyUser: false,
     };
     dispatch(createUniqueHprId(data)).then(() => {
       navigate(`/reset-password`);
