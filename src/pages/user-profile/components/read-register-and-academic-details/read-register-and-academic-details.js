@@ -180,11 +180,34 @@ const ReadRegisterAndAcademicDetails = ({
                       >
                         Action <MoreHorizIcon />
                       </Button>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={selectionChangeHandler}
+                        data-my-value={'verify'}
+                        sx={{
+                          mr: 2,
+                          mb: {
+                            xs: 1,
+                            md: 0,
+                          },
+                          width: {
+                            xs: '100%',
+                            md: 'fit-content',
+                          },
+                        }}
+                      >
+                        {loggedInUserType === 'SMC' ||
+                        loggedInUserType === 'College' ||
+                        loggedInUserType === 'NBE'
+                          ? 'Verify'
+                          : 'Approve'}
+                      </Button>
 
                       <Menu {...bindMenu(popupState)}>
-                        <MenuItem onClick={selectionChangeHandler} data-my-value={'verify'}>
+                        {/* <MenuItem onClick={selectionChangeHandler} data-my-value={'verify'}>
                           Verify
-                        </MenuItem>
+                        </MenuItem> */}
                         {selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
                           selectedAcademicStatus !== 'Permanent Suspension Requests Received' && (
                             <MenuItem onClick={selectionChangeHandler} data-my-value={'raise'}>
