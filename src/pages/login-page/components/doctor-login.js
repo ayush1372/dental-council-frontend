@@ -365,7 +365,10 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
                         cursor: 'pointer',
                       }}
                       color={'white.main'}
-                      onClick={() => sendNotificationOTPHandler(!otpFormEnabled, 'NMR')}
+                      onClick={() => {
+                        getValues()?.nmrID?.length === 12 &&
+                          sendNotificationOTPHandler(!otpFormEnabled, 'NMR');
+                      }}
                     >
                       {otpFormEnabled ? 'Re-Enter' : 'Verify'}
                     </Typography>
