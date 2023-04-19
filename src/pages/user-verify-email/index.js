@@ -1,16 +1,15 @@
 import { useEffect, useState } from 'react';
 
 import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined';
-import { Box, Container, Modal, Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useDispatch } from 'react-redux';
 
 import { userVerifyEmail } from '../../store/actions/doctor-user-profile-actions';
 import successToast from '../../ui/core/toaster';
 const UserVerifyUser = () => {
-  const [userVerify, setUserVerify] = useState(false);
-  const [open, setOpen] = useState(false);
-  const handleClose = () => setOpen(false);
+  const [emailVerify, setEmailVerify] = useState(false);
+  // const handleClose = () => setOpen(false);
   const theme = useTheme();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -19,21 +18,22 @@ const UserVerifyUser = () => {
     };
     try {
       dispatch(userVerifyEmail(userVerifyEmailBody)).then(() => {
-        setUserVerify(true);
+        setEmailVerify(true);
       });
     } catch (allFailMsg) {
       successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
     }
   }, []);
   return (
-    <Modal open={userVerify || open} onClose={handleClose} sx={{ mt: 15 }}>
+    emailVerify && (
       <Container
         maxWidth="xs"
         sx={{
-          backgroundColor: theme.palette.white.main,
+          backgroundColor: theme.palette.grey.main,
           borderRadius: '10px',
           height: '300px',
           p: '30px',
+          margin: '15px auto',
         }}
       >
         <Box mb={1} display="flex" justifyContent="center">
@@ -72,7 +72,7 @@ const UserVerifyUser = () => {
           </Typography>
         </Box>
       </Container>
-    </Modal>
+    )
   );
 };
 export default UserVerifyUser;

@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import IconVerified from '../../../../assets/images/ico-verified.svg';
 import { sendNotificationOtp } from '../../../../store/actions/common-actions';
+import { verifyEmail } from '../../../../store/actions/doctor-user-profile-actions';
 import successToast from '../../../../ui/core/toaster';
 import ConfirmOTP from '../../../login-page/components/confirm-otp';
 const ConstantDetails = () => {
@@ -27,7 +28,10 @@ const ConstantDetails = () => {
   //   (state) => state?.doctorUserProfileReducer?.personalDetails?.personal_details?.gender
   // );
   const emailId = useSelector(
-    (state) => state?.doctorUserProfileReducer?.personalDetails?.communication_address?.email
+    (state) => state?.doctorUserProfileReducer?.personalDetails?.personal_details?.email
+  );
+  const emailIdVerify = useSelector(
+    (state) => state?.doctorUserProfileReducer?.personalDetails?.email_verified
   );
   const mobileNumber = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.personal_details?.mobile
@@ -36,6 +40,8 @@ const ConstantDetails = () => {
   const [validDetails, setValidDetails] = useState({ mobileNo: false, email: false });
   const dispatch = useDispatch();
   const theme = useTheme();
+  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+
   const {
     formState: { errors },
     getValues,
@@ -94,17 +100,29 @@ const ConstantDetails = () => {
         setEmailChange: setEmailChange,
       };
       setData(otpValue);
-
-      let sendOTPData = {
-        contact: type === 'sms' ? getValues().mobileNo : type === 'email' && getValues().email,
-        type: type === 'sms' ? 'sms' : type === 'email' && 'email',
-      };
-      try {
-        dispatch(sendNotificationOtp(sendOTPData)).then((response) => {
-          response?.data?.message === 'Success' && setShowOTPPOPUp(true);
-        });
-      } catch (allFailMsg) {
-        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      if (type === 'email') {
+        let sendOTPData = {
+          email: type === 'email' ? type === 'email' && getValues().email : '',
+        };
+        try {
+          dispatch(verifyEmail(sendOTPData, personalDetails?.hp_profile_id)).then((response) => {
+            response?.data?.message === 'Success' && setShowOTPPOPUp(true);
+          });
+        } catch (allFailMsg) {
+          successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+        }
+      } else {
+        let sendOTPData = {
+          contact: type === 'sms' ? getValues().mobileNo : '',
+          type: type === 'sms' ? 'sms' : '',
+        };
+        try {
+          dispatch(sendNotificationOtp(sendOTPData)).then((response) => {
+            response?.data?.message === 'Success' && setShowOTPPOPUp(true);
+          });
+        } catch (allFailMsg) {
+          successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+        }
       }
     }
   };
@@ -317,7 +335,7 @@ const ConstantDetails = () => {
                 </Paper>
                 {validDetails?.email && (
                   <Typography color="error" mt={1}>
-                    {' '}
+                    {''}
                     Enter Valid Email Address
                   </Typography>
                 )}
@@ -327,7 +345,11 @@ const ConstantDetails = () => {
                 <Typography variant="subtitle2" color="textPrimary.main" width="auto" mr={0.5}>
                   {emailId ? emailId : ''}
                 </Typography>
-                <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
+                {emailIdVerify ? (
+                  <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
+                ) : (
+                  ''
+                )}
                 <Typography
                   sx={{ cursor: 'pointer' }}
                   component="span"
@@ -335,10 +357,10 @@ const ConstantDetails = () => {
                   color="primary.main"
                   ml={0.5}
                   onClick={() => {
-                    setEmailChange(true);
+                    emailIdVerify ? setEmailChange(true) : onSubmit('email');
                   }}
                 >
-                  Change
+                  {emailIdVerify ? 'Change' : 'Get Verified'}
                 </Typography>
               </>
             )}
