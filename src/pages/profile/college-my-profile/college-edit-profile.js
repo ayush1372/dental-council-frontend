@@ -417,7 +417,7 @@ const CollegeEditProfile = (props) => {
             defaultValue={getValues().CollegeAddress}
             error={errors.CollegeAddress?.message}
             {...register('CollegeAddress', {
-              required: 'CollegeAddress  is required',
+              required: 'College Address  is required',
             })}
           />
         </Grid>

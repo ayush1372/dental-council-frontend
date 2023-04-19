@@ -176,7 +176,7 @@ const RegistrationDetailsContent = () => {
             <Typography color="textPrimary.main" variant="subtitle2">
               {renewable_registration_date && is_renewable === '1'
                 ? moment(renewable_registration_date).format('DD-MM-YYYY')
-                : '-'}
+                : ''}
             </Typography>
             {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
