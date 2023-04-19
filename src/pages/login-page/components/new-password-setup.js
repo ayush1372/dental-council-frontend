@@ -30,7 +30,9 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep }) => {
   //   (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.registration_number
   // );
   const uniqueHpId = useSelector((state) =>
-    state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId?.replace('@hpr.abdm', '')
+    state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId
+      ?.replace('@hpr.abdm', '')
+      ?.replace('@dr.abdm', '')
   );
   const hrp_id = useSelector(
     (state) => state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId
