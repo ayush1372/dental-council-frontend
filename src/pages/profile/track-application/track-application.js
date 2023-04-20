@@ -20,6 +20,12 @@ export function TrackApplication({ getTableData }) {
     setShowUserProfile(false);
     setShowTrackApplicationTable(true);
   };
+
+  const handleBreadcrumbs = () => {
+    setShowTrackApplicationTable(!showTrackApplicationTable);
+    setShowTrackApplication(!showTrackApplication);
+  };
+
   return (
     <Box px={2} py={1}>
       {showUserProfile && (
@@ -67,6 +73,7 @@ export function TrackApplication({ getTableData }) {
               selectedRowData={selectedRowData}
               setShowTrackApplication={setShowTrackApplication}
               setShowTrackApplicationTable={setShowTrackApplicationTable}
+              navigateToTab={handleBreadcrumbs}
             />
           </Box>
         )
