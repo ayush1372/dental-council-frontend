@@ -600,7 +600,7 @@ const EditQualificationDetails = ({
               {...register(
                 `qualification[${index}].college`,
                 getValues().qualification[index].college === '' && {
-                  required: 'college is required',
+                  required: 'College is Required',
                 }
               )}
               options={createSelectFieldData(colleges)}
@@ -654,7 +654,7 @@ const EditQualificationDetails = ({
               {...register(
                 `qualification[${index}].university`,
                 getValues()?.qualification[index]?.university === '' && {
-                  required: 'University is required',
+                  required: 'University is Required',
                 }
               )}
               options={createSelectFieldData(universitiesListData, 'id') || []}
@@ -691,7 +691,7 @@ const EditQualificationDetails = ({
               {...register(
                 `qualification[${index}].month`,
                 getValues().qualification[index].month?.length <= 0 && {
-                  required: 'awarding is required',
+                  required: 'Awarding Month is Required',
                 }
               )}
               style={{
@@ -724,7 +724,7 @@ const EditQualificationDetails = ({
               {...register(
                 `qualification[${index}].year`,
                 getValues().qualification[index].year?.length <= 0 && {
-                  required: 'awarding year is Required',
+                  required: 'Awarding Year is Required',
                   pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
                 }
               )}
@@ -747,8 +747,8 @@ const EditQualificationDetails = ({
             <Select
               fullWidth
               error={errors.Speciality?.message}
-              name="Speciality"
-              label="Broad Speciality"
+              name="Specialty"
+              label="Broad Specialty"
               defaultValue={getValues().Speciality}
               required={true}
               {...register(
@@ -756,7 +756,7 @@ const EditQualificationDetails = ({
 
                 showBroadSpeciality &&
                   getValues()?.Speciality?.length <= 0 && {
-                    required: 'Speciality is Required',
+                    required: 'Specialty is Required',
                   }
               )}
               options={createSelectFieldData(specialitiesList.data)}
@@ -768,10 +768,6 @@ const EditQualificationDetails = ({
             <Typography variant="subtitle2" color="inputTextColor.main">
               {' '}
               Super Specialty{' '}
-              <Typography component="span" color="error.main">
-                {' '}
-                *{' '}
-              </Typography>
             </Typography>
             <TextField
               fullWidth
