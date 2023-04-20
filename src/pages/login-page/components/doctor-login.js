@@ -414,7 +414,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
               onClick={handleUserForgetUserName}
               sx={{ cursor: 'pointer' }}
             >
-              Forgot UserName ?
+              Forgot Username ?
             </Typography>
             <TextField
               sx={{ mb: 2 }}
