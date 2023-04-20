@@ -152,12 +152,12 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep }) => {
               ? mobilenumber
               : mobilenumber?.mobile,
             username: uniqueHpId,
-            registration_number: imrUserNotFounddata?.RegistrationNumber,
+            registration_number: imrUserNotFounddata?.RegistrationNumber || registrationNumber,
             password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
             hpr_id_number: hprIdData?.hprIdNumber,
             new: isNewFlag,
             hpr_id: hrp_id,
-            state_medical_council_id: imrUserNotFounddata?.RegistrationCouncilId,
+            state_medical_council_id: imrUserNotFounddata?.RegistrationCouncilId || councilID,
           };
           dispatch(setUserPassword(reqPayload)) // user api 2nd
             .then(() => {
