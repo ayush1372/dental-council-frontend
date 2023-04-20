@@ -111,7 +111,7 @@ function TrackAppicationTable({
       title: 'Current Status',
       name: 'doctor_status',
       sorting: true,
-      type: 'date',
+      type: 'string',
     },
     { title: 'Pendency (in days)', name: 'pendency', sorting: true, type: 'string' },
     { title: 'Action', name: 'view', sorting: false, type: 'string' },
@@ -171,7 +171,6 @@ function TrackAppicationTable({
           type: 'nameofStateCouncil',
           value: data?.council_name,
         },
-        // { type: 'doctor_status', value: data?.doctor_status },
         {
           type: 'doctor_status',
           value:
@@ -185,7 +184,7 @@ function TrackAppicationTable({
               ? 'REJECTED'
               : data?.work_flow_status_id === 5
               ? 'SUSPENDED'
-              : 'BLACKLISTED',
+              : 'SUSPENDED',
         },
 
         {
