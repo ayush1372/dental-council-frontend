@@ -120,6 +120,12 @@ const themeWrapper = (mode, appFontType) => {
           },
         },
       },
+      MuiTooltip: {
+        styleOverrides: {
+          root: {},
+          tooltip: { borderRadius: '3px' },
+        },
+      },
     },
 
     // STYLE FOR BORDER RADIUS

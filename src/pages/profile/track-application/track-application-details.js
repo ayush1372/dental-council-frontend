@@ -8,10 +8,12 @@ import { monthsData } from '../../../constants/common-data';
 import { typeOfApplication, workflowStatusId } from '../../../helpers/functions/common-functions';
 import VerticalLinearStepper from '../../../shared/stepper/vertical-stepper';
 import { Chip } from '../../../ui/core';
+import { BreadcrumbContainer } from '../../../ui/core/breadcrumb/breadcrumb';
 export function TrackApplicationDetails({
   showViewProfile,
   setShowTrackApplicationTable,
   setShowTrackApplication,
+  navigateToTab,
 }) {
   const applicationStatus = useSelector(
     (state) => state?.common?.doctorTrackApplicationTableData?.data?.data
@@ -21,7 +23,6 @@ export function TrackApplicationDetails({
     setShowTrackApplication(false);
   };
   const theme = useTheme();
-
   const currentStatus = useSelector(
     (state) => state?.common?.doctorTrackApplicationTableData?.data?.data?.current_status
   );
@@ -42,6 +43,13 @@ export function TrackApplicationDetails({
       >
         Application Details
       </Typography>
+      <BreadcrumbContainer
+        primary="Track Application"
+        onClick={navigateToTab}
+        primaryLink={'/profile'}
+        secondary={'Application Details'}
+      />
+
       <Grid container spacing={2}>
         <Grid item xs={12} md={9}>
           <Box

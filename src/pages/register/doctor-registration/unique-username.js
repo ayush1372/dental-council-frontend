@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { Box, Container, TextField, Typography } from '@mui/material';
+import { Box, Container, TextField, Tooltip, Typography } from '@mui/material';
 import Link from '@mui/material/Link';
 import { useTheme } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
@@ -84,6 +84,18 @@ const UniqueUserNameForDoctorRegistration = () => {
                 <Typography component="span" color="error.main">
                   *
                 </Typography>
+                <Tooltip
+                  title={
+                    <Box>
+                      You can use letters, numbers & symbols. Minimum length of the username should
+                      be 8 character.
+                    </Box>
+                  }
+                  placement="right"
+                  arrow
+                >
+                  <InfoOutlinedIcon sx={{ fontSize: '15px', mr: '2px' }} />
+                </Tooltip>
               </Typography>
               <Box>
                 <TextField
@@ -113,13 +125,7 @@ const UniqueUserNameForDoctorRegistration = () => {
               display="flex"
               justifyContent="space-between"
               alignItems={{ xs: 'flex-start', sm: 'center' }}
-            >
-              <InfoOutlinedIcon sx={{ fontSize: '15px', mr: '2px' }} />
-              <Typography variant="body3" color="primary" component={'div'}>
-                You can use letters, numbers & symbols. Minimum length of the username should be 8
-                character.
-              </Typography>
-            </Box>
+            ></Box>
 
             <Box pt={2} pb={4}>
               <Typography>Suggestions: </Typography>
