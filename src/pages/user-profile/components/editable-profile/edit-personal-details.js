@@ -1134,7 +1134,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                   }}
                   fullWidth
                   value={getStateData(getValues()?.State)?.name}
-                  required={isSameAddress ? false : true}
                   {...register('State', {
                     required: 'State is required',
                   })}
@@ -1216,7 +1215,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                   }}
                   fullWidth
                   value={getDistrictData(getValues()?.District)?.name}
-                  required={isSameAddress ? false : true}
                   {...register('District', {
                     required: 'District is required',
                   })}
