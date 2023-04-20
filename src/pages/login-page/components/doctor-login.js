@@ -341,7 +341,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
                 required: 'Please enter an NMR ID',
                 pattern: {
                   value: /^\d{12}$/,
-                  message: 'Please enter an valid NMR ID',
+                  message: 'Please enter a valid NMR ID',
                 },
               })}
               min={12}
