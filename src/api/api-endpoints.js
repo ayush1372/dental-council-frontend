@@ -20,6 +20,8 @@ export const API = {
     additionalQualifications:
       '/api/v1/abdm/nmr/health-professional/{healthProfessionalId}/qualifications',
     searchFacilities: '/api/v1/abdm/nmr/facilities/search',
+    verifyEmail: '/api/v1/abdm/nmr/health-professional/{healthProfessionalId}/email',
+    userVerifyEmail: '/api/v1/abdm/nmr/user/verify-email',
   },
   common: {
     states: 'api/v1/abdm/nmr/countries/356/states',
@@ -72,7 +74,7 @@ export const API = {
     getSMCProfileData: 'api/v1/abdm/nmr/smc/user/{id}',
   },
   kyc: {
-    kycCheck: 'api/v1/abdm/nmr/health-professional/{registrationNumber}/kyc',
+    kycCheck: 'api/v1/abdm/nmr/health-professional/{registrationNumber}/kyc?councilId={councilId}',
   },
   doctorRegistration: {
     smcRegistrationDetail:
@@ -82,6 +84,9 @@ export const API = {
   },
   nbe: {
     getNBEProfileData: 'api/v1/abdm/nmr/nbe/user/{id}',
+  },
+  forgotUserName: {
+    retrieveUser: 'api/v1/abdm/nmr/retrieve-user',
   },
   forgotPassword: {
     setPassword: '/api/v1/abdm/nmr/user/set-password',

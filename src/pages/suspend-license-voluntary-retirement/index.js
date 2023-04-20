@@ -56,6 +56,7 @@ export function SuspendLicenseVoluntaryRetirement({
           : '',
     },
   });
+  const { activateLicenseList } = useSelector((state) => state?.common);
 
   const onSubmit = () => {
     setConformSuspend(true);
@@ -138,6 +139,12 @@ export function SuspendLicenseVoluntaryRetirement({
         ? loginData?.data?.profile_id
         : userActiveTab === 'track-status'
         ? selectedSuspendLicenseProfile?.view?.value
+        : activateLicenseList?.data.health_professional_details[
+            selectedSuspendLicenseProfile?.SNo?.value - 1
+          ]?.health_professional_id
+        ? activateLicenseList?.data.health_professional_details[
+            selectedSuspendLicenseProfile?.SNo?.value - 1
+          ]?.health_professional_id
         : '',
       start_date: getValues()?.fromDate ? getValues()?.fromDate : '',
       to_date: getValues()?.toDate ? getValues()?.toDate : '',
@@ -259,9 +266,7 @@ export function SuspendLicenseVoluntaryRetirement({
             ? 'Voluntary Retirement'
             : tabName === 'suspend-license'
             ? 'Suspend License'
-            : // : tabName === 'voluntary-suspend-license'
-              // ? 'Voluntary Suspend License'
-              ''}
+            : ''}
         </Typography>
       )}
 
@@ -423,7 +428,6 @@ export function SuspendLicenseVoluntaryRetirement({
               type="text"
               multiline
               minRows={4}
-              inputProps={{ maxLength: 150 }}
               name="remark"
               required={true}
               placeholder={
@@ -439,6 +443,11 @@ export function SuspendLicenseVoluntaryRetirement({
               error={errors.remark?.message}
               {...register('remark', {
                 required: 'Enter remarks',
+
+                pattern: {
+                  value: /^(?:\b\w+\b[\s\r\n]*){1,300}$/,
+                  message: 'Maximum word limit exceeded',
+                },
               })}
             />
           </Grid>

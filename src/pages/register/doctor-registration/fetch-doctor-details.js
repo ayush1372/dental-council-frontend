@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { Alert, Container, Divider, IconButton, Typography } from '@mui/material';
+import { Alert, Container, Divider, Grid, IconButton, Link, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
@@ -29,7 +29,7 @@ import {
   storeMobileDetails,
   UserNotFoundDetails,
 } from '../../../store/reducers/doctor-registration-reducer';
-import { Button, TextField } from '../../../ui/core';
+import { Button, Checkbox, TextField } from '../../../ui/core';
 import AadhaarInputField from '../../../ui/core/aadhaar-input-field/aadhaar-input-field';
 import successToast from '../../../ui/core/toaster';
 import CreateHprId from './unique-username';
@@ -76,6 +76,27 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
     (state) => state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId
   );
 
+  const { councilNames } = useSelector((state) => state.common);
+  let consentDescription =
+    'I hereby state that I have no objection in authenticating myself with Aadhaar-based authentication system and I Consent to providing my Aadhaar Number, Biometric and/or One Time Pin (OTP) data for Aadhaar-based authentication for the purpose of availing of the eSign Services from Desk Nine Private Limited for the execution of Agreement with Company Name. I understand that the Biometrics and/or OTP I provide for authentication shall be used only for authenticating my identity through the Aadhaar Authentication system for that specific transaction and for the purpose of eSigning the Agreement with Company Name and for no other purposes. I understand that Company Name and Desk Nine Private Limited shall ensure security and confidentiality of my personal identity data provided for the purpose of Aadhaar-based authentication.';
+  const [showFullDescription, setFullDescription] = useState(false);
+  const description = showFullDescription ? consentDescription : consentDescription.slice(0, 110);
+
+  const showFullDescriptionHandler = () => {
+    setFullDescription(!showFullDescription);
+  };
+
+  const getCouncilID = (name) => {
+    let councilData = [];
+    Array.isArray(councilNames) &&
+      councilNames?.map((elementData) => {
+        if (elementData.name === name) {
+          councilData.push(elementData);
+        }
+      });
+    return councilData[0]?.id;
+  };
+
   const {
     register,
     handleSubmit,
@@ -89,6 +110,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
       field_1: '',
       field_2: '',
       field_3: '',
+      consent: false,
     },
   });
   const handleUserAadhaarNumber = () => {
@@ -109,6 +131,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
   const onCancel = () => {
     window.location.reload();
   };
+
   const handleValidateAadhar = () => {
     handleClear();
     if (otpValue.length === 6) {
@@ -123,29 +146,33 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
         setshowOtpAadhar(false);
         handleClear();
         if (!imrDataNotFound) {
+          let councilID = getCouncilID(councilName);
           dispatch(
-            checkKycDetails({
-              registrationNumber: registrationNumber || '',
-              txn_id: response.data.txnId || '',
-              mobile_number: response.data.mobileNumber || '',
-              photo: response.data.photo || '',
-              gender: response.data.gender || '',
-              name: response.data.name || '',
-              email: response.data.email || '',
-              pincode: response.data.pincode || '',
-              birth_date: dateFormat(response.data.birthdate) || '',
-              care_of: response.data.careOf || '',
-              house: response.data.house || '',
-              street: response.data.street || '',
-              kycLandMark: response.data.landmark || '',
-              locality: response.data.locality || '',
-              village_town_city: response.data.villageTownCity || '',
-              sub_dist: response.data.subDist || '',
-              district: response.data.district || '',
-              state: response.data.state || '',
-              post_office: response.data.postOffice || '',
-              address: response.data.address || '',
-            })
+            checkKycDetails(
+              {
+                registrationNumber: registrationNumber || '',
+                txn_id: response.data.txnId || '',
+                mobile_number: response.data.mobileNumber || '',
+                photo: response.data.photo || '',
+                gender: response.data.gender || '',
+                name: response.data.name || '',
+                email: response.data.email || '',
+                pincode: response.data.pincode || '',
+                birth_date: dateFormat(response.data.birthdate) || '',
+                care_of: response.data.careOf || '',
+                house: response.data.house || '',
+                street: response.data.street || '',
+                kycLandMark: response.data.landmark || '',
+                locality: response.data.locality || '',
+                village_town_city: response.data.villageTownCity || '',
+                sub_dist: response.data.subDist || '',
+                district: response.data.district || '',
+                state: response.data.state || '',
+                post_office: response.data.postOffice || '',
+                address: response.data.address || '',
+              },
+              councilID
+            )
           ).then((response) => {
             if (response.data.kyc_fuzzy_match_status === 'Fail') {
               setKycError(true);
@@ -368,34 +395,90 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
                   </Box>
                 )}
               </Box>
+
               {showOtpAadhar && (
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: {
-                      xs: 'column',
-                      sm: 'row',
-                    },
-                  }}
-                >
-                  <Box pt={1}>
-                    <Typography variant="body1">
-                      Please enter the OTP sent on your mobile number {mobileNumber} which is
-                      registered with Aadhaar.
-                    </Typography>
-                    {otpform}
-                  </Box>
-                  <Button
-                    sx={{ width: '114px', height: '53px', marginTop: '77px' }}
-                    component="span"
-                    variant="contained"
-                    color="secondary"
-                    onClick={handleValidateAadhar}
-                    disabled={isOtpValidMobile}
+                <>
+                  {' '}
+                  <Grid
+                    container
+                    bgcolor="backgroundColor.light"
+                    p={2}
+                    mt={2}
+                    mb={2}
+                    display="flex"
+                    border="1px solid"
+                    borderColor="inputBorderColor.main"
+                    borderRadius="5px"
                   >
-                    Validate
-                  </Button>
-                </Box>
+                    <Grid item xs={12} display="flex">
+                      <Grid item xs={1} display="flex">
+                        <Checkbox
+                          sx={{ width: '18px', height: '18px', marginLeft: 1 }}
+                          name="consent"
+                          defaultChecked={getValues()?.consent}
+                          {...register('consent', {
+                            required: 'Consent is Required',
+                          })}
+                          error={errors.consent?.message}
+                        />
+                      </Grid>
+                      <Grid item xs={11} display="flex" pl={1}>
+                        <Typography component="div" variant="body7">
+                          {description}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                    <Grid item xs={12} display="flex">
+                      <Grid item xs={10} display="flex">
+                        {' '}
+                      </Grid>
+                      <Grid item xs={2} display="flex">
+                        <Box
+                          sx={{
+                            display: 'flex !important',
+                            'justify-content': 'right !important',
+                            cursor: 'pointer',
+                          }}
+                        >
+                          {
+                            // eslint-disable-next-line no-console
+                            console.log(getValues()?.consent)
+                          }
+                          <Link onClick={showFullDescriptionHandler}>
+                            Read {showFullDescription ? 'Less' : 'More'}
+                          </Link>
+                        </Box>{' '}
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      flexDirection: {
+                        xs: 'column',
+                        sm: 'row',
+                      },
+                    }}
+                  >
+                    <Box pt={1}>
+                      <Typography variant="body1">
+                        Please enter the OTP sent on your mobile number {mobileNumber} which is
+                        registered with Aadhaar.
+                      </Typography>
+                      {otpform}
+                    </Box>
+                    <Button
+                      sx={{ width: '114px', height: '53px', marginTop: '77px' }}
+                      component="span"
+                      variant="contained"
+                      color="secondary"
+                      onClick={handleValidateAadhar}
+                      disabled={getValues()?.consent ? isOtpValidMobile : true}
+                    >
+                      Validate
+                    </Button>
+                  </Box>
+                </>
               )}
 
               <Divider sx={{ mb: 4, mt: 4 }} variant="fullWidth" />

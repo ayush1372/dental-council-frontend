@@ -8,7 +8,12 @@ export const BreadcrumbContainer = ({ primary, ...prop }) => {
         {prop?.pageName ? prop?.pageName : ''}
       </Typography>
       <Breadcrumbs aria-label="breadcrumb" style={{ fontSize: '16px', fontWeight: 400 }}>
-        <Link underline="hover" color={primary.main} href={prop?.primaryLink || '/'}>
+        <Link
+          underline="hover"
+          color={primary.main}
+          href={prop?.primaryLink || '/'}
+          onClick={prop?.onClick}
+        >
           <Typography textTransform="capitalize" variant="body1" color={primary.main}>
             {(primary && primary) || 'Applications List'}
           </Typography>

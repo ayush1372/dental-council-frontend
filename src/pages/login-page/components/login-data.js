@@ -42,6 +42,7 @@ export const Login = ({ loginName, handleForgotPassword }) => {
   const [selectedLoginOption, setSelectedLoginOption] = useState('mobileNumber');
   const [transaction_id, setTransaction_id] = useState('');
   const [otpFormEnabled, setOtpFormEnable] = useState(false);
+  const [otpSend, setOtpSend] = useState(false);
   const navigate = useNavigate();
   const {
     register,
@@ -75,6 +76,7 @@ export const Login = ({ loginName, handleForgotPassword }) => {
     dispatch(sendNotificationOtp(sendOTPData)).then((response) => {
       if (response) {
         setTransaction_id(response?.data?.transaction_id);
+        setOtpSend(true);
       }
     });
   };
@@ -373,6 +375,7 @@ export const Login = ({ loginName, handleForgotPassword }) => {
               label={'Enter Mobile Number'}
               showVerify
               verifyOnClick={sendNotificationOTPHandler}
+              otpSend={otpSend}
             />
             {otpFormEnabled && (
               <Box mt={2}>

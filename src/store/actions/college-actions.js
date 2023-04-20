@@ -128,7 +128,7 @@ export const updateCollegeAdminProfileData = (body) => async () => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: PUT,
-      url: API.college.register + '/' + body?.id,
+      url: API.common.college.replace('{id}', body?.id),
       data: body,
       headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })

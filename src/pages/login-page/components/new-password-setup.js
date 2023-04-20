@@ -26,11 +26,13 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep }) => {
 
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const registrationNumber = useSelector(
-    (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.registration_number
-  );
+  // const registrationNumber = useSelector(
+  //   (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.registration_number
+  // );
   const uniqueHpId = useSelector((state) =>
-    state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId?.replace('@hpr.abdm', '')
+    state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId
+      ?.replace('@hpr.abdm', '')
+      ?.replace('@dr.abdm', '')
   );
   const hrp_id = useSelector(
     (state) => state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId
@@ -40,12 +42,12 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep }) => {
     (state) => state?.AadhaarTransactionId?.demographicAuthMobileDetailsData
   );
 
-  const kycstatus = useSelector(
-    (state) => state?.doctorRegistration?.getkycDetailsData?.data?.kyc_fuzzy_match_status
-  );
-  const imrDetailsData = useSelector(
-    (state) => state?.doctorRegistration?.UserNotFoundDetailsData?.imrDataNotFound
-  );
+  // const kycstatus = useSelector(
+  //   (state) => state?.doctorRegistration?.getkycDetailsData?.data?.kyc_fuzzy_match_status
+  // );
+  // const imrDetailsData = useSelector(
+  //   (state) => state?.doctorRegistration?.UserNotFoundDetailsData?.imrDataNotFound
+  // );
   const imrUserNotFounddata = useSelector(
     (state) => state?.doctorRegistration?.UserNotFoundDetailsData?.aadhaarFormValues
   );
@@ -112,72 +114,73 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep }) => {
           });
         return;
       }
-      if (kycstatus !== 'Success' || imrDetailsData) {
-        let reqObj = {
-          registration_number: imrUserNotFounddata?.RegistrationNumber,
-          smc_id: imrUserNotFounddata?.RegistrationCouncilId,
-          mobile_number: demographicAuthMobileVerify?.data?.verified
-            ? mobilenumber
-            : mobilenumber?.mobile,
-          gender: userKycData?.gender,
-          name: userKycData?.name,
-          pincode: userKycData?.pincode,
-          birthdate: userKycData?.birthdate,
-          village_town_city: userKycData?.villageTownCity,
-          district: userKycData?.district,
-          state: userKycData?.state,
-          address: userKycData?.address,
-          house: userKycData?.house,
-          locality: userKycData?.locality,
-          landmark: userKycData?.landmark,
-          photo: userKycData?.photo,
-          street: userKycData?.street,
-        };
+      // if (kycstatus !== 'Success' || imrDetailsData) {
+      let reqObj = {
+        registration_number: imrUserNotFounddata?.RegistrationNumber,
+        smc_id: imrUserNotFounddata?.RegistrationCouncilId,
+        mobile_number: demographicAuthMobileVerify?.data?.verified
+          ? mobilenumber
+          : mobilenumber?.mobile,
+        gender: userKycData?.gender,
+        name: userKycData?.name,
+        pincode: userKycData?.pincode,
+        birthdate: userKycData?.birthdate,
+        village_town_city: userKycData?.villageTownCity,
+        district: userKycData?.district,
+        state: userKycData?.state,
+        address: userKycData?.address,
+        house: userKycData?.house,
+        locality: userKycData?.locality,
+        landmark: userKycData?.landmark,
+        photo: userKycData?.photo,
+        street: userKycData?.street,
+      };
 
-        dispatch(createHealthProfessional(reqObj)) //new api 1st
-          .then(() => {
-            const isNewFlag = hprIdData?.new;
-            const reqPayload = {
-              mobile: demographicAuthMobileVerify?.data?.verified
-                ? mobilenumber
-                : mobilenumber?.mobile,
-              username: uniqueHpId,
-              registration_number: imrUserNotFounddata?.RegistrationNumber,
-              password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
-              hpr_id_number: hprIdData?.hprIdNumber,
-              new: isNewFlag,
-              hpr_id: hrp_id,
-            };
-            dispatch(setUserPassword(reqPayload)) // user api 2nd
-              .then(() => {
-                setShowSuccess(true);
-              })
-              .catch((error) => {
-                successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-              });
-          })
-          .catch((error) => {
-            successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-          });
-      } else {
-        const isNewFlag = hprIdData?.new;
-        const reqPayload = {
-          mobile: mobilenumber,
-          username: uniqueHpId,
-          registration_number: registrationNumber,
-          password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
-          hpr_id_number: hprIdData?.hprIdNumber,
-          new: isNewFlag,
-          hpr_id: hrp_id,
-        };
-        dispatch(setUserPassword(reqPayload))
-          .then(() => {
-            setShowSuccess(true);
-          })
-          .catch((error) => {
-            successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-          });
-      }
+      dispatch(createHealthProfessional(reqObj)) //new api 1st
+        .then(() => {
+          const isNewFlag = hprIdData?.new;
+          const reqPayload = {
+            mobile: demographicAuthMobileVerify?.data?.verified
+              ? mobilenumber
+              : mobilenumber?.mobile,
+            username: uniqueHpId,
+            registration_number: imrUserNotFounddata?.RegistrationNumber,
+            password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
+            hpr_id_number: hprIdData?.hprIdNumber,
+            new: isNewFlag,
+            hpr_id: hrp_id,
+            state_medical_council_id: imrUserNotFounddata?.RegistrationCouncilId,
+          };
+          dispatch(setUserPassword(reqPayload)) // user api 2nd
+            .then(() => {
+              setShowSuccess(true);
+            })
+            .catch((error) => {
+              successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+            });
+        })
+        .catch((error) => {
+          successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+        });
+      // } else {
+      //   const isNewFlag = hprIdData?.new;
+      //   const reqPayload = {
+      //     mobile: mobilenumber,
+      //     username: uniqueHpId,
+      //     registration_number: registrationNumber,
+      //     password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
+      //     hpr_id_number: hprIdData?.hprIdNumber,
+      //     new: isNewFlag,
+      //     hpr_id: hrp_id,
+      //   };
+      //   dispatch(setUserPassword(reqPayload))
+      //     .then(() => {
+      //       setShowSuccess(true);
+      //     })
+      //     .catch((error) => {
+      //       successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+      //     });
+      // }
     }
   };
 

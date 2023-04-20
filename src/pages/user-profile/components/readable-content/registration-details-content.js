@@ -204,6 +204,7 @@ const RegistrationDetailsContent = () => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography
+              sx={{ cursor: 'pointer' }}
               variant="subtitle2"
               color="textPrimary.main"
               onClick={(e) => {

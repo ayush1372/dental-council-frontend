@@ -34,7 +34,7 @@ import RegisterAndAcademicDetails from './components/register-and-academic-detai
 // import WorkProfile from './components/work-profile/work-profile';
 const readWizardSteps = ['Personal Details', 'Registration & Academic Details']; //, 'Work Profile'
 
-export const UserProfile = ({ showViewProfile, selectedRowData }) => {
+export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const [isReadMode, setIsReadMode] = useState(true);
@@ -121,7 +121,11 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
   const fetchDoctorUserPersonalDetails = () => {
     dispatch(
       getPersonalDetailsData(
-        showViewProfile ? selectedRowData?.profileID?.value : loginData?.data?.profile_id
+        showViewProfile && tabName === 'Activate License'
+          ? selectedRowData?.health_professional_id
+          : showViewProfile
+          ? selectedRowData?.profileID?.value
+          : loginData?.data?.profile_id
       )
     )
       .then(() => {})
@@ -133,7 +137,11 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
   const fetchDoctorUserRegistrationDetails = () => {
     dispatch(
       getRegistrationDetailsData(
-        showViewProfile ? selectedRowData?.profileID?.value : loginData?.data?.profile_id
+        showViewProfile && tabName === 'Activate License'
+          ? selectedRowData?.health_professional_id
+          : showViewProfile
+          ? selectedRowData?.profileID?.value
+          : loginData?.data?.profile_id
       )
     )
       .then()
@@ -142,71 +150,16 @@ export const UserProfile = ({ showViewProfile, selectedRowData }) => {
       });
   };
 
-  // const fetchDoctorUserWorkProfileDetails = () => {
-  //   dispatch(
-  //     getWorkProfileDetailsData(showViewProfile ? selectedRowData?.profileID?.value : profile_id)
-  //   )
-  //     .then(() => {})
-  //     .catch((allFailMsg) => {
-  //       successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-  //     });
-  // };
-
   useEffect(() => {
     fetchDoctorUserPersonalDetails();
     fetchDoctorUserRegistrationDetails();
     if (personalDetails?.work_flow_status_id === 1) {
       setIsApplicationPending(false);
     }
-    //commented work flow details
-    // fetchDoctorUserWorkProfileDetails();
   }, []);
 
   return (
     <>
-      {
-        // we need to show the suspended flag
-        /* <Box display="flex" justifyContent="start">
-        {loggedInUserType === 'Doctor' && showUserProfile !== true && (
-          // <Alert
-          //   severity="error"
-          //   sx={{
-          //     color: 'suspendAlert.light',
-          //     width: '1479px',
-          //     height: '56px',
-          //   }}
-          // >
-          //   <Typography width="667px" height="19px" color="suspendAlert.dark">
-          //     Your profile is set to suspend mode. You will not be able to perform actions on the
-          //     profile.
-          //   </Typography>
-          //   <TuneIcon
-          //     sx={{
-          //       color: 'suspendAlert.dark',
-          //       width: '18px',
-          //       height: '16px',
-          //       ml: 3,
-          //     }}
-          //   />
-          //   <Link
-          //     color="suspendAlert.secondary"
-          //     ml={1}
-          //     height="20px"
-          //     width="103px"
-          //     onClick={() => {
-          //       setShowReactivateLicense(true);
-          //       setShowSuccessPopup(false);
-          //     }}
-          //     sx={{
-          //       cursor: 'pointer',
-          //     }}
-          //   >
-          //     Change Settings
-          //   </Link>
-          // </Alert>
-        )}
-      </Box> */
-      }
       {showReactivateLicense && (
         <ReactivateLicencePopup
           renderSuccess={renderSuccess}
