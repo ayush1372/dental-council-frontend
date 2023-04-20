@@ -26,9 +26,9 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep }) => {
 
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  // const registrationNumber = useSelector(
-  //   (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.registration_number
-  // );
+  const registrationNumber = useSelector(
+    (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.registration_number
+  );
   const uniqueHpId = useSelector((state) =>
     state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId
       ?.replace('@hpr.abdm', '')
@@ -42,12 +42,10 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep }) => {
     (state) => state?.AadhaarTransactionId?.demographicAuthMobileDetailsData
   );
 
-  // const kycstatus = useSelector(
-  //   (state) => state?.doctorRegistration?.getkycDetailsData?.data?.kyc_fuzzy_match_status
-  // );
-  // const imrDetailsData = useSelector(
-  //   (state) => state?.doctorRegistration?.UserNotFoundDetailsData?.imrDataNotFound
-  // );
+  const councilName = useSelector(
+    (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.council_name
+  );
+
   const imrUserNotFounddata = useSelector(
     (state) => state?.doctorRegistration?.UserNotFoundDetailsData?.aadhaarFormValues
   );
@@ -55,7 +53,7 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep }) => {
     (state) => state?.AadhaarTransactionId?.aadhaarOtpDetailsData?.data
   );
   const mobilenumber = useSelector((state) => state?.doctorRegistration?.storeMobileDetailsData);
-  const { sendNotificationOtpData } = useSelector((state) => state?.common);
+  const { sendNotificationOtpData, councilNames } = useSelector((state) => state?.common);
   const {
     register,
     handleSubmit,
@@ -69,6 +67,17 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep }) => {
       confirmPassword: '',
     },
   });
+
+  const getCouncilID = (name) => {
+    let councilData = [];
+    Array.isArray(councilNames) &&
+      councilNames?.map((elementData) => {
+        if (elementData.name === name) {
+          councilData.push(elementData);
+        }
+      });
+    return councilData[0]?.id;
+  };
 
   const onSubmit = () => {
     if (otpData?.page === 'forgotPasswordPage') {
@@ -93,9 +102,7 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep }) => {
             'top-center'
           );
         });
-      // } catch (error) {
-      //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-      // }
+
       return;
     } else {
       if (params?.request_id) {
@@ -114,10 +121,11 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep }) => {
           });
         return;
       }
-      // if (kycstatus !== 'Success' || imrDetailsData) {
+      let councilID = getCouncilID(councilName);
+
       let reqObj = {
-        registration_number: imrUserNotFounddata?.RegistrationNumber,
-        smc_id: imrUserNotFounddata?.RegistrationCouncilId,
+        registration_number: imrUserNotFounddata?.RegistrationNumber || registrationNumber,
+        smc_id: imrUserNotFounddata?.RegistrationCouncilId || councilID,
         mobile_number: demographicAuthMobileVerify?.data?.verified
           ? mobilenumber
           : mobilenumber?.mobile,
@@ -162,25 +170,6 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep }) => {
         .catch((error) => {
           successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
         });
-      // } else {
-      //   const isNewFlag = hprIdData?.new;
-      //   const reqPayload = {
-      //     mobile: mobilenumber,
-      //     username: uniqueHpId,
-      //     registration_number: registrationNumber,
-      //     password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
-      //     hpr_id_number: hprIdData?.hprIdNumber,
-      //     new: isNewFlag,
-      //     hpr_id: hrp_id,
-      //   };
-      //   dispatch(setUserPassword(reqPayload))
-      //     .then(() => {
-      //       setShowSuccess(true);
-      //     })
-      //     .catch((error) => {
-      //       successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-      //     });
-      // }
     }
   };
 
