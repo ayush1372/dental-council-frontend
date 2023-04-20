@@ -20,6 +20,8 @@ export const API = {
     additionalQualifications:
       '/api/v1/abdm/nmr/health-professional/{healthProfessionalId}/qualifications',
     searchFacilities: '/api/v1/abdm/nmr/facilities/search',
+    verifyEmail: '/api/v1/abdm/nmr/health-professional/{healthProfessionalId}/email',
+    userVerifyEmail: '/api/v1/abdm/nmr/user/verify-email',
   },
   common: {
     states: 'api/v1/abdm/nmr/countries/356/states',

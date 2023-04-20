@@ -316,3 +316,38 @@ export const updateDoctorContactDetails = (body, doctor_profile_id) => async () 
       });
   });
 };
+
+export const userVerifyEmail = (data) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.DoctorUserProfileData.userVerifyEmail,
+      data: data,
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
+
+export const verifyEmail = (data, doctor_profile_id) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: PATCH,
+      url: API.DoctorUserProfileData.verifyEmail.replace(
+        '{healthProfessionalId}',
+        doctor_profile_id
+      ),
+      data: data,
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
