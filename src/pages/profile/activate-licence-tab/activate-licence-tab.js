@@ -10,7 +10,7 @@ import GenericTable from '../../../shared/generic-component/generic-table';
 import ViewProfile from '../../../shared/view-profile/view-profile';
 import {
   getActivateLicenseList,
-  reActivateLicenseStatus,
+  // reActivateLicenseStatus,
 } from '../../../store/actions/common-actions';
 import successToast from '../../../ui/core/toaster';
 import UserProfile from '../../user-profile';
@@ -122,7 +122,7 @@ const ActivateLicence = (props) => {
     event.stopPropagation();
     setRowData(row);
     setShowViewPorfile(true);
-    props.setShowHeader(false);
+    props?.setShowHeader(false);
   };
 
   const handleDataRowClick = (dataRow) => {
@@ -206,60 +206,60 @@ const ActivateLicence = (props) => {
         {
           keyName: 'Approve',
           dataValue: 'approve',
-          onClick: (event, row, selectedStatus) => {
-            fetchReActivateLicenseHealthProfessionalId(row, selectedStatus);
-          },
+          onClick: () => {},
         },
         {
           keyName: 'Reject',
           dataValue: 'reject',
           onClick: (event, selectedRow) => {
             setReactiveLicenseRequestHPApplicationData(selectedRow);
-            setIsRejectModalOpen(true);
+            // setIsRejectModalOpen(true);
           },
         },
       ]
     : undefined;
 
-  const fetchReActivateLicenseHealthProfessionalId = (selectedRow, selectedStatus) => {
-    let reActivateLicenseHealthProfessionalIdBody = {
-      request_id: selectedRow?.Action.value,
-      application_type_id: 5,
-      actor_id: loggedInUserType === 'SMC' ? 2 : loggedInUserType === 'NMC' ? 3 : 0,
-      action_id: selectedStatus === 'approve' ? 4 : 5,
-      hp_profile_id: selectedRow?.registrationNo?.value,
-      start_date: selectedRow?.dateOfSubmission?.value,
-      end_date: selectedRow?.reactivationFromDate?.value,
-      remarks: selectedRow?.Remark?.value,
-    };
-    try {
-      dispatch(reActivateLicenseStatus(reActivateLicenseHealthProfessionalIdBody)).then(
-        (response) => {
-          if (response.data.message === 'Success') {
-            setIsApproveModalOpen(true);
-            setReactiveLicenseRequestHPApplicationData(selectedRow);
-          }
-        }
-      );
-    } catch (allFailMsg) {
-      successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-    }
-  };
+  // const fetchReActivateLicenseHealthProfessionalId = (selectedRow, selectedStatus) => {
+  //   let reActivateLicenseHealthProfessionalIdBody = {
+  //     request_id: selectedRow?.Action.value,
+  //     application_type_id: 5,
+  //     actor_id: loggedInUserType === 'SMC' ? 2 : loggedInUserType === 'NMC' ? 3 : 0,
+  //     action_id: selectedStatus === 'approve' ? 4 : 5,
+  //     hp_profile_id: selectedRow?.registrationNo?.value,
+  //     start_date: selectedRow?.dateOfSubmission?.value,
+  //     end_date: selectedRow?.reactivationFromDate?.value,
+  //     remarks: selectedRow?.Remark?.value,
+  //   };
+  //   try {
+  //     dispatch(reActivateLicenseStatus(reActivateLicenseHealthProfessionalIdBody)).then(
+  //       (response) => {
+  //         if (response.data.message === 'Success') {
+  //           setIsApproveModalOpen(true);
+  //           setReactiveLicenseRequestHPApplicationData(selectedRow);
+  //         }
+  //       }
+  //     );
+  //   } catch (allFailMsg) {
+  //     successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+  //   }
+  // };
 
   return (
     <>
       {showViewProfile ? (
         <Box bgcolor="grey1.lighter">
           <ViewProfile />
-          <UserProfile showViewProfile={true} />
+          <UserProfile
+            showViewProfile={true}
+            selectedRowData={
+              activateLicenseList?.data.health_professional_details[selectedRowData?.SNo?.value - 1]
+            }
+            tabName={'Activate License'}
+          />
         </Box>
       ) : (
         <Grid sx={{ m: 2 }} lg={12} md={12}>
-          <Grid item>
-            {/* <Typography variant="h2" data-testid="tab-heading">
-              Application Requests
-            </Typography> */}
-          </Grid>
+          =
           <Grid mt={3}>
             <TableSearch
               data-testid="tab-heading"
@@ -280,7 +280,6 @@ const ActivateLicence = (props) => {
             customPopupOptions={customPopupOptions}
             setIsApproveModalOpen={setIsApproveModalOpen}
           />
-
           <Box>
             <TablePagination
               rowsPerPageOptions={[]}
