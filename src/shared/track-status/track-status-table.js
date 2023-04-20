@@ -60,7 +60,7 @@ function TrackStatusTable(props) {
     event.stopPropagation();
     setRowData(row);
     setShowViewPorfile(true);
-    props.setShowHeader(false);
+    props?.setShowHeader(false);
     props.setShowTrackApplication(true);
     props.setShowTrackApplicationTable(false);
   };
@@ -214,7 +214,7 @@ function TrackStatusTable(props) {
   };
   const onClickBackButtonHandler = () => {
     setShowViewPorfile(false);
-    props.setShowHeader(true);
+    props?.setShowHeader(true);
   };
 
   return showViewProfile ? (

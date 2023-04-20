@@ -127,6 +127,11 @@ const NAV_META = [
     component: 'reset-password',
     isPrivate: 'PUBLIC',
   },
+  {
+    path: '/user/verify-email/:id', ////:request_id',
+    title: 'User Verify Email',
+    component: 'user-verify-email',
+  },
 ];
 
 export const navbar_routes = [

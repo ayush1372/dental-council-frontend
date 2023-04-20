@@ -371,7 +371,7 @@ const WorkDetails = ({
           required={true}
           placeholder={'Nature Of Work'}
           {...register('NatureOfWork', {
-            // required: 'This field is required',
+            required: 'This field is required',
           })}
           options={createSelectFieldData(natureOfWork)}
         />
@@ -454,7 +454,7 @@ const WorkDetails = ({
           value={languages}
           error={languages?.length === 0 && errors.LanguageSpoken?.message}
           multiple={true}
-          {...register('LanguageSpoken', {})}
+          {...register('LanguageSpoken', { required: 'This field is required' })}
           onChange={(value) => {
             handleLanguageSpokenChange('LanguageSpoken', value);
           }}

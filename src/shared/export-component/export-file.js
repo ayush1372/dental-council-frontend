@@ -1,12 +1,18 @@
 import { useEffect, useState } from 'react';
 
-import FileUploadOutlinedIcon from '@mui/icons-material/FileUploadOutlined';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { Grid, List, ListItem, ListItemButton, ListItemText, Popover } from '@mui/material';
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import {
+  Grid,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemText,
+  Popover,
+} from '@mui/material';
 import Excel from 'exceljs';
 import { saveAs } from 'file-saver';
 
-// import { useSelector } from 'react-redux';
 import {
   ActivateLicence,
   CollegeApproval,
@@ -15,7 +21,6 @@ import {
 } from '../../../src/constants/common-data';
 import { workSheetTheme } from '../../../src/helpers/functions/common-functions';
 import { verboseLog } from '../../config/debug';
-import { Button } from '../../ui/core';
 
 const ExportFiles = ({ exportData, flag }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -114,20 +119,24 @@ const ExportFiles = ({ exportData, flag }) => {
   const id = open ? 'table-search-popover' : undefined;
   return (
     <Grid item md={1} xs={12} data-testid="exportButton">
-      <Button
+      <IconButton
         data-testid="export_Button"
+        aria-label="fontSize-options"
+        aria-controls="menu-appbar"
+        variant="contained"
+        aria-haspopup="true"
         sx={{
-          padding: '17px 10px',
           width: {
             xs: '100%',
             md: 'fit-content',
           },
+          color: 'blue',
         }}
-        variant="contained"
-        endIcon={<KeyboardArrowDownIcon />}
         onClick={handleClick}
-        startIcon={<FileUploadOutlinedIcon sx={{ fontSize: '26px', transform: 'rotate(90deg)' }} />}
-      ></Button>
+        color="blue"
+      >
+        <FileDownloadOutlinedIcon />
+      </IconButton>
       <Popover
         id={id}
         open={open}
