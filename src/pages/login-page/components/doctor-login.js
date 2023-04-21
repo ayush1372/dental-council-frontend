@@ -77,13 +77,17 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
       type: OTPTypeID,
     };
 
-    dispatch(sendNotificationOtp(sendOTPData)).then((response) => {
-      if (response) {
-        setTransaction_id(response?.data?.transaction_id);
-        setMaskedMobileNumber(response?.data?.sent_on.replace(/^.{6}/g, 'XXXXXX'));
-        setOtpSend(true);
-      }
-    });
+    dispatch(sendNotificationOtp(sendOTPData))
+      .then((response) => {
+        if (response) {
+          setTransaction_id(response?.data?.transaction_id);
+          setMaskedMobileNumber(response?.data?.sent_on.replace(/^.{6}/g, 'XXXXXX'));
+          setOtpSend(true);
+        }
+      })
+      .catch(() => {
+        setOtpFormEnable(false);
+      });
   };
 
   const handleLogin = () => {
