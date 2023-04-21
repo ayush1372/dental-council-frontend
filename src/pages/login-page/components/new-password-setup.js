@@ -9,10 +9,7 @@ import { ToastContainer } from 'react-toastify';
 
 import { encryptData } from '../../../helpers/functions/common-functions';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
-import {
-  createHealthProfessional,
-  setUserPassword,
-} from '../../../store/actions/doctor-registration-actions';
+import { createHealthProfessional } from '../../../store/actions/doctor-registration-actions';
 import { forgotPassword, setPassword } from '../../../store/actions/forgot-password-actions';
 import { Button, TextField } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
@@ -122,50 +119,39 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep }) => {
         return;
       }
       let councilID = getCouncilID(councilName);
+      const isNewFlag = hprIdData?.new;
 
       let reqObj = {
-        registration_number: imrUserNotFounddata?.RegistrationNumber || registrationNumber,
-        smc_id: imrUserNotFounddata?.RegistrationCouncilId || councilID,
         mobile_number: demographicAuthMobileVerify?.data?.verified
           ? mobilenumber
           : mobilenumber?.mobile,
+        username: uniqueHpId,
+        password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
+        registration_number: imrUserNotFounddata?.RegistrationNumber || registrationNumber,
+        smc_id: imrUserNotFounddata?.RegistrationCouncilId || councilID,
+        hpr_id: hrp_id,
+        hpr_id_number: hprIdData?.hprIdNumber,
+
+        photo: userKycData?.photo,
         gender: userKycData?.gender,
         name: userKycData?.name,
         pincode: userKycData?.pincode,
         birthdate: userKycData?.birthdate,
+        house: userKycData?.house,
+        street: userKycData?.street,
+        landmark: userKycData?.landmark,
+        locality: userKycData?.locality,
         village_town_city: userKycData?.villageTownCity,
+
         district: userKycData?.district,
         state: userKycData?.state,
         address: userKycData?.address,
-        house: userKycData?.house,
-        locality: userKycData?.locality,
-        landmark: userKycData?.landmark,
-        photo: userKycData?.photo,
-        street: userKycData?.street,
+        new: isNewFlag,
       };
 
-      dispatch(createHealthProfessional(reqObj)) //new api 1st
+      dispatch(createHealthProfessional(reqObj))
         .then(() => {
-          const isNewFlag = hprIdData?.new;
-          const reqPayload = {
-            mobile: demographicAuthMobileVerify?.data?.verified
-              ? mobilenumber
-              : mobilenumber?.mobile,
-            username: uniqueHpId,
-            registration_number: imrUserNotFounddata?.RegistrationNumber || registrationNumber,
-            password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
-            hpr_id_number: hprIdData?.hprIdNumber,
-            new: isNewFlag,
-            hpr_id: hrp_id,
-            state_medical_council_id: imrUserNotFounddata?.RegistrationCouncilId || councilID,
-          };
-          dispatch(setUserPassword(reqPayload)) // user api 2nd
-            .then(() => {
-              setShowSuccess(true);
-            })
-            .catch((error) => {
-              successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-            });
+          setShowSuccess(true);
         })
         .catch((error) => {
           successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');

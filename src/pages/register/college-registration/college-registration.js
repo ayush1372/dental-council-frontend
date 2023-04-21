@@ -120,16 +120,18 @@ export function CollegeRegistration() {
           getValues().CollegePhoneNumber.length - 4
         )}`
       );
-      dispatch(sendNotificationOtp({ contact: getValues().CollegePhoneNumber, type: type }))
-        .then((response) => {
-          setTransactionID(response?.data?.transaction_id);
-          handleClickOpen();
-        })
-        .catch((error) => {
-          handleClose();
-          successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
-        });
-    } else if (type === 'email' && otpEmailVerify) {
+      if (getValues().CollegePhoneNumber >= 10) {
+        dispatch(sendNotificationOtp({ contact: getValues().CollegePhoneNumber, type: type }))
+          .then((response) => {
+            setTransactionID(response?.data?.transaction_id);
+            handleClickOpen();
+          })
+          .catch((error) => {
+            handleClose();
+            successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+          });
+      }
+    } else if (type === 'email' && otpEmailVerify && getValues().email.length > 8) {
       setHeaderText(`Email Id XXXXXX${getValues().email.substr(getValues().email.length - 15)}.`);
       dispatch(sendNotificationOtp({ contact: getValues().email, type: type }))
         .then((response) => {

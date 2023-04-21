@@ -70,7 +70,7 @@ const SmcEditProfile = (props) => {
         setSuccessModalPopup(true);
       }
     });
-    props.sentDetails('Profile');
+    props?.sentDetails('Profile');
   };
 
   return (
@@ -239,7 +239,7 @@ const SmcEditProfile = (props) => {
             },
           }}
           onClick={() => {
-            props.sentDetails('Profile');
+            props?.sentDetails('Profile');
           }}
         >
           Cancel
