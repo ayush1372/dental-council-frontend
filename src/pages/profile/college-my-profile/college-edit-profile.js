@@ -387,7 +387,7 @@ const CollegeEditProfile = (props) => {
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography variant="body1" color="inputTextColor.main">
-              Postal Code
+              Pin Code
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -398,11 +398,11 @@ const CollegeEditProfile = (props) => {
                 type="number"
                 name="Pincode"
                 required
-                placeholder={'Enter  Pin Code'}
+                placeholder={'Enter Pin Code'}
                 defaultValue={getCollegeDetail?.data?.pin_code}
                 error={errors.Pincode?.message}
                 {...register('Pincode', {
-                  required: 'Pin code is required',
+                  required: 'Pin Code is required',
                   pattern: {
                     value: /^[0-9]{6}$/i,
                     message: 'Please enter valid pincode',
