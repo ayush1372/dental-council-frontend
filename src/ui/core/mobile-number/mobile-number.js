@@ -12,6 +12,7 @@ export function MobileNumber(props) {
     getValues,
     errors,
     showVerify,
+    placeholder,
     // showCircleCheckIcon = true,
     verifyOnClick,
     disabled,
@@ -53,6 +54,7 @@ export function MobileNumber(props) {
             name={'mobileNo'}
             disabled={disabled}
             defaultValue={getValues().mobileNo}
+            placeholder={placeholder}
             sx={{
               ...(showVerify === false && {
                 width: '100%',

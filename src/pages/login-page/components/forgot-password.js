@@ -148,6 +148,7 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep })
         <MobileNumber
           register={register}
           getValues={getValues}
+          placeholder="Enter Mobile Number"
           errors={isMobileNumActive ? errors : {}}
           showCircleCheckIcon={false}
           showhint={false}
