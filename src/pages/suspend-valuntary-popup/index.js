@@ -39,7 +39,7 @@ export function SuspendValuntaryPopup({
               ? '300px'
               : selected === 'raise'
               ? '650px'
-              : '500px'
+              : '650px'
           }
           borderRadius={'40px'}
         >
