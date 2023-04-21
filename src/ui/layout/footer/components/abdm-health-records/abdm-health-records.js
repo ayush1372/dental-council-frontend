@@ -14,7 +14,7 @@ export const AbdmHealthRecords = () => {
       <Grid container spacing={1} justifyContent="flex-start">
         <Grid item xs="auto">
           <Typography variant="subtitle1" component="div" fontWeight="500" mb={0.5}>
-            Scan this
+            Scan This
           </Typography>
           <img src={MOBILEAAPSCAN} alt="Mobile App Scan" />
         </Grid>

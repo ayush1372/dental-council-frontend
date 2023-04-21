@@ -312,7 +312,7 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
             <TextField
               variant="outlined"
               name={'workingOrganizationName'}
-              placeholder="Name Of The Organization"
+              placeholder="Name of the Organization"
               fullWidth
               defaultValue={getValues().workingOrganizationName}
               {...register('workingOrganizationName', {

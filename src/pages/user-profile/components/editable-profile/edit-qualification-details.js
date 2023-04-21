@@ -568,7 +568,6 @@ const EditQualificationDetails = ({
           {qualificationfrom === 'International' ? (
             <TextField
               fullWidth
-              error={errors?.qualification?.[index]?.college?.message}
               name="college"
               label="Name of the college"
               defaultValue={qualification?.college}

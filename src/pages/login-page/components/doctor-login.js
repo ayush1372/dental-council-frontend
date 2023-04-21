@@ -393,13 +393,13 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
               required
               fullWidth
               label={'Username'}
-              placeholder={'Please enter Username'}
+              placeholder={'Please enter username'}
               name={'userID'}
               error={errors.userID?.message}
               {...register('userID', {
-                required: 'Please enter Username',
+                required: 'Please enter username',
                 pattern: {
-                  message: 'Please enter a valid Username',
+                  message: 'Please enter a valid username',
                 },
                 minLength: {
                   value: 8,
@@ -421,7 +421,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
               required
               fullWidth
               label={'Password'}
-              placeholder={'Please enter Password'}
+              placeholder={'Please enter password'}
               type={'Password'}
               inputProps={{ maxLength: 12 }}
               name={'password'}

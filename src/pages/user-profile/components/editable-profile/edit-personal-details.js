@@ -1134,6 +1134,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                   }}
                   fullWidth
                   value={getStateData(getValues()?.State)?.name}
+                  {...register('State', {
+                    required: 'State is required',
+                  })}
                 />
               ) : (
                 <Select
@@ -1212,6 +1215,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                   }}
                   fullWidth
                   value={getDistrictData(getValues()?.District)?.name}
+                  {...register('District', {
+                    required: 'District is required',
+                  })}
                 />
               ) : (
                 <Select
@@ -1429,7 +1435,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
                 {...register(
                   'PostalCode',
                   !isSameAddress && {
-                    required: 'PostalCode is Required',
+                    required: 'Postal Code is Required',
                     onChange: (event) => {
                       const pincode = event.target.value.replace(/[^0-9]/g, '');
                       setValue('PostalCode', pincode);
