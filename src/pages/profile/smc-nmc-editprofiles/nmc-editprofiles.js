@@ -65,7 +65,7 @@ const NmcEditProfile = (props) => {
         setSuccessModalPopup(true);
       }
     });
-    props.sentDetails('Profile');
+    props?.sentDetails('Profile');
   };
 
   return (
@@ -231,7 +231,7 @@ const NmcEditProfile = (props) => {
             },
           }}
           onClick={() => {
-            props.sentDetails('Profile');
+            props?.sentDetails('Profile');
           }}
         >
           Cancel

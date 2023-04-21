@@ -377,7 +377,9 @@ const CollegeMyProfile = () => {
           </Grid>
         </Grid>
       )}
-      {showPage === 'Edit' && userType === 'College Admin' && <CollegeEditProfile />}
+      {showPage === 'Edit' && userType === 'College Admin' && (
+        <CollegeEditProfile setShowpage={setShowpage} />
+      )}
       {showPage === 'Edit' && userType === 'College Dean' && (
         <CollegeDean showPage={'edit'} updateShowPage={setShowpage} />
       )}

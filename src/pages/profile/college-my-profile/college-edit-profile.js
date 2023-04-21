@@ -479,8 +479,9 @@ const CollegeEditProfile = (props) => {
                   xs: '100%',
                 },
               }}
-              onClick={() => {
-                props.sentDetails('Profile');
+              onClick={(e) => {
+                e.preventDefault();
+                props?.setShowpage('Profile');
               }}
             >
               Cancel

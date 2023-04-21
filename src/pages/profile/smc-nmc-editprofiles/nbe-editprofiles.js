@@ -59,7 +59,7 @@ const NbeEditProfile = (props) => {
         <SuccessModalPopup
           open={successModalPopup}
           setOpen={() => {
-            props.sentDetails('Profile');
+            props?.sentDetails('Profile');
             setSuccessModalPopup(false);
           }}
           text={'NBE Profile Data has been Updated Successfully.'}
@@ -179,7 +179,7 @@ const NbeEditProfile = (props) => {
             },
           }}
           onClick={() => {
-            props.sentDetails('Profile');
+            props?.sentDetails('Profile');
           }}
         >
           {t('Cancel')}
