@@ -26,6 +26,7 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup 
   const { sendNotificationOtpData } = useSelector((state) => state?.common);
   const [changeUserData, setChangeUserData] = useState(false);
   const { loginData } = useSelector((state) => state?.loginReducer);
+
   const otpResend = () => {
     successToast('OTP Resent Successfully', 'otp-resent', 'success', 'top-center');
   };
@@ -235,11 +236,13 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup 
               Verification code
             </Typography>
           )}
-          {otpData.page === 'doctorConstantDetailsPage' && otpData?.type !== 'email' && (
-            <Box display={'flex'} justifyContent="center">
-              {otpform}
-            </Box>
-          )}
+          {(otpData.page === 'doctorConstantDetailsPage' ||
+            otpData.page === 'forgotPasswordPage') &&
+            otpData?.type !== 'email' && (
+              <Box display={'flex'} justifyContent="center">
+                {otpform}
+              </Box>
+            )}
         </Box>
         {otpData?.page === 'forgetUserName' ? (
           <Box display={'flex'} justifyContent="center">
@@ -259,7 +262,7 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup 
             </Button>
           </Box>
         ) : (
-          otpData.page === 'doctorConstantDetailsPage' &&
+          (otpData.page === 'doctorConstantDetailsPage' || otpData.page === 'forgotPasswordPage') &&
           otpData?.type !== 'email' && (
             <Box mt={3} textAlign="center">
               <Button
