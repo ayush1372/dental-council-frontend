@@ -325,7 +325,7 @@ export const Login = ({ loginName, handleForgotPassword }) => {
               required
               fullWidth
               label={'Username'}
-              placeholder={'Please enter Username'}
+              placeholder={'Please enter username'}
               name={'userID'}
               error={errors.userID?.message}
               {...register('userID', {
@@ -344,7 +344,7 @@ export const Login = ({ loginName, handleForgotPassword }) => {
               required
               fullWidth
               label={'Password'}
-              placeholder={'Please enter Password'}
+              placeholder={'Please enter password'}
               type={'Password'}
               inputProps={{ maxLength: 12 }}
               name={'password'}

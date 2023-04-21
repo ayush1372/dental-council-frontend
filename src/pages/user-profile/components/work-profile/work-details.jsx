@@ -678,7 +678,7 @@ const WorkDetails = ({
               <TextField
                 variant="outlined"
                 name={'workingOrganizationName'}
-                placeholder="Name Of The Organization"
+                placeholder="Enter name of the organization"
                 fullWidth
                 defaultValue={getValues().workingOrganizationName}
                 {...register('workingOrganizationName', {
@@ -698,7 +698,7 @@ const WorkDetails = ({
               <TextField
                 variant="outlined"
                 name={'organizationType'}
-                placeholder="Organization Type"
+                placeholder=" Enter Organization Type"
                 fullWidth
                 defaultValue={getValues().organizationType}
                 {...register('organizationType', {
@@ -748,7 +748,7 @@ const WorkDetails = ({
                 name={'Street'}
                 required={true}
                 fullWidth
-                placeholder="Street"
+                placeholder="Enter Street"
                 defaultValue={getValues().Street}
                 {...register('Street', {
                   required: 'This field is required',
@@ -775,7 +775,7 @@ const WorkDetails = ({
                 name={'Landmark'}
                 required={true}
                 fullWidth
-                placeholder="Landmark"
+                placeholder="Enter Landmark"
                 defaultValue={getValues().Landmark}
                 {...register('Landmark', {
                   required: 'This field is required',
@@ -799,7 +799,7 @@ const WorkDetails = ({
                 name={'Locality'}
                 required={true}
                 fullWidth
-                placeholder="Locality"
+                placeholder="Enter Locality"
                 defaultValue={getValues().Locality}
                 {...register('Locality', {
                   required: 'This field is required',
@@ -929,7 +929,7 @@ const WorkDetails = ({
             </Grid>
             <Grid item xs={12} md={3}>
               <Typography variant="subtitle2" color="inputTextColor.main">
-                Postal code
+                Pin Code
                 <Typography component="span" color="error.main">
                   *
                 </Typography>
@@ -939,7 +939,7 @@ const WorkDetails = ({
                 variant="outlined"
                 name={'pincode'}
                 required={true}
-                placeholder="pincode"
+                placeholder="Enter Pin Code"
                 fullWidth
                 error={errors.Pincode?.message}
                 defaultValue={getValues().pincode}
@@ -967,7 +967,7 @@ const WorkDetails = ({
                 variant="outlined"
                 name={'telecommunicationURL'}
                 required={true}
-                placeholder="Telecommunication URL"
+                placeholder="Enter Telecommunication URL"
                 fullWidth
                 error={errors.telecommunicationURL?.message}
                 defaultValue={getValues().telecommunicationURL}
