@@ -237,7 +237,8 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup 
             </Typography>
           )}
           {(otpData.page === 'doctorConstantDetailsPage' ||
-            otpData.page === 'forgotPasswordPage') &&
+            otpData.page === 'forgotPasswordPage' ||
+            otpData?.page === 'forgetUserName') &&
             otpData?.type !== 'email' && (
               <Box display={'flex'} justifyContent="center">
                 {otpform}

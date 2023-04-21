@@ -126,16 +126,20 @@ const ExportFiles = ({ exportData, flag }) => {
         variant="contained"
         aria-haspopup="true"
         sx={{
-          width: {
-            xs: '100%',
-            md: 'fit-content',
-          },
+          width: 60,
+          height: 60,
           color: 'blue',
         }}
         onClick={handleClick}
         color="blue"
       >
-        <FileDownloadOutlinedIcon />
+        <FileDownloadOutlinedIcon
+          sx={{
+            width: 40,
+            height: 40,
+            color: 'blue',
+          }}
+        />
       </IconButton>
       <Popover
         id={id}
