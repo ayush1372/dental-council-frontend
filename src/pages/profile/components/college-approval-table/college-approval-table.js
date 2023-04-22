@@ -48,7 +48,7 @@ function CollegeApprovalTable(props) {
   const dispatch = useDispatch();
 
   const dataHeader = [
-    { title: 'S.No.', name: 'SNo', sorting: true, type: 'string' },
+    { title: 'S.No.', name: 'SNo', sorting: false, type: 'string' },
     {
       title: 'College Id',
       name: 'collegeId',
