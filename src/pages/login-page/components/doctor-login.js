@@ -338,14 +338,14 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
               required
               disabled={otpFormEnabled}
               label={'NMR ID'}
-              placeholder={'Please enter NMR ID'}
+              placeholder={'Please Enter NMR ID'}
               inputProps={{ maxLength: 12 }}
               name={'nmrID'}
               {...register('nmrID', {
-                required: 'Please enter an NMR ID',
+                required: 'Please Enter an NMR ID',
                 pattern: {
                   value: /^\d{12}$/,
-                  message: 'Please enter a valid NMR ID',
+                  message: 'Please Enter a valid NMR ID',
                 },
               })}
               min={12}
@@ -397,11 +397,11 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
               required
               fullWidth
               label={'Username'}
-              placeholder={'Please enter username'}
+              placeholder={'Please Enter Username'}
               name={'userID'}
               error={errors.userID?.message}
               {...register('userID', {
-                required: 'Please enter username',
+                required: 'Please Enter Username',
                 pattern: {
                   message: 'Please enter a valid username',
                 },
@@ -425,7 +425,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
               required
               fullWidth
               label={'Password'}
-              placeholder={'Please enter password'}
+              placeholder={'Please Enter Password'}
               type={'Password'}
               inputProps={{ maxLength: 12 }}
               name={'password'}
@@ -447,6 +447,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
           <>
             <MobileNumber
               showhint={false}
+              placeholder="Enter Mobile Number"
               required
               register={register}
               getValues={getValues}

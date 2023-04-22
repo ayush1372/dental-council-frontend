@@ -93,7 +93,7 @@ export function MobileNumber(props) {
               sx={{ height: '56px' }}
               color="primary"
               onClick={verifyOnClick}
-              disabled={otpSend}
+              disabled={otpSend || getValues().mobileNo.length < 10}
             >
               GetOTP
             </Button>
