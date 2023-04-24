@@ -17,6 +17,7 @@ import styles from './fileupload.module.scss';
 
 export const UploadFile = (props) => {
   const {
+    fileID,
     showBrowse,
     uploadFiles,
     fileData,
@@ -254,7 +255,8 @@ export const UploadFile = (props) => {
               <div className={styles.dragDropFiles}>{fileMessage}</div>
               <input
                 type="file"
-                id="file"
+                id={fileID}
+                data-testid={fileID}
                 onChange={(e) => handleChange(e)}
                 name="file"
                 accept={fileTypes}
@@ -269,7 +271,8 @@ export const UploadFile = (props) => {
                 <div className={styles.browseFileContainer}>
                   <input
                     type="file"
-                    id="file"
+                    id={fileID}
+                    data-testid={fileID}
                     onChange={(e) => addFile(e)}
                     name="file"
                     accept="image/gif, image/jpeg, image/jpg, .pdf, .doc, .docx"
@@ -324,9 +327,18 @@ export const UploadFile = (props) => {
                           {fileData?.length === 1 || uploadStatus === 'successful' ? (
                             <div className={styles.actionArea}>
                               <DeleteOutlineIcon
+                                id={fileID}
                                 color="error"
                                 onClick={(e) => {
                                   e.preventDefault();
+                                  if (e?.target?.attributes?.id?.value === 'qualification') {
+                                    document.getElementById('qualification').value = '';
+                                    document
+                                      .getElementsByClassName('fileupload_fileUploadArea__shK1w')[1]
+                                      .getElementsByTagName('input').file.value = '';
+                                  } else {
+                                    document.getElementsByTagName('input').file.value = '';
+                                  }
                                   setFileData([]);
                                 }}
                               />{' '}
