@@ -783,6 +783,7 @@ const EditQualificationDetails = ({
       <Grid container item spacing={2} mt={1}>
         <Grid item xs={12}>
           <UploadFile
+            fileID={'qualification'}
             uploadFiles="single"
             sizeAllowed={5}
             fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}

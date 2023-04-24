@@ -58,7 +58,7 @@ const ActivateLicence = (props) => {
   }
 
   const dataHeader = [
-    { title: 'S.No.', name: 'SNo', sorting: true, type: 'string' },
+    { title: 'S.No.', name: 'SNo', sorting: false, type: 'string' },
     {
       title: 'IMR ID/ Registration No.',
       name: 'registrationNo',
