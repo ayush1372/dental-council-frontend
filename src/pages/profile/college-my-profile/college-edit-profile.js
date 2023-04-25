@@ -30,6 +30,7 @@ const CollegeEditProfile = (props) => {
 
   useEffect(() => {
     dispatch(getStatesList());
+    setValue('CouncilID', getCollegeDetail?.data?.state_medical_council_id);
   }, []);
 
   useEffect(() => {
@@ -220,7 +221,6 @@ const CollegeEditProfile = (props) => {
               name="CouncilName"
               items={createEditFieldData(councilNames)}
               defaultValue={getCouncilNameData(getCollegeDetail?.data?.state_medical_council_id)}
-              value={getCouncilNameData(getCollegeDetail?.data?.state_medical_council_id)}
               placeholder="Select Council"
               clearErrors={clearErrors}
               error={errors.CouncilName?.message}
