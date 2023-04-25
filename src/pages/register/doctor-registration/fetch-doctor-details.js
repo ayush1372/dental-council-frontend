@@ -239,7 +239,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
       dispatch(generateMobileOtp(data));
     }
   };
-  const { otpform, otpValue, handleClear } = OtpForm({
+  const { otpform, otpValue, handleClear, validationOtpInvalid } = OtpForm({
     resendAction: otpResend,
     resendTime: 90,
   });
@@ -421,7 +421,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
                     variant="contained"
                     color="secondary"
                     onClick={handleValidateAadhar}
-                    disabled={consentD ? isOtpValidMobile : true}
+                    disabled={consentD ? validationOtpInvalid : true}
                   >
                     Validate
                   </Button>
