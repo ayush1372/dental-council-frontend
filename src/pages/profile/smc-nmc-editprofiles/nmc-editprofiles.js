@@ -33,6 +33,8 @@ const NmcEditProfile = (props) => {
         code: 'TEST',
         name: userData?.state_medical_council?.name,
       },
+      RegistrationCouncil: userData?.state_medical_council?.name,
+      RegistrationCouncilId: userData?.state_medical_council?.id,
       ndhm_enrollment: userData?.ndhm_enrollment,
       enrolled_number: userData?.enrolled_number,
       display_name: userData?.display_name,
@@ -192,7 +194,7 @@ const NmcEditProfile = (props) => {
           <SearchableDropdown
             name="RegistrationCouncil"
             items={createEditFieldData(councilNames)}
-            defaultValue={getValues().state_medical_council?.name}
+            defaultValue={userData?.state_medical_council}
             placeholder="Select Your Registration Council"
             clearErrors={clearErrors}
             error={errors.RegistrationCouncil?.message}
@@ -200,7 +202,7 @@ const NmcEditProfile = (props) => {
               required: 'Registration Council is required',
             })}
             onChange={(currentValue) => {
-              setValue('RegistrationCouncilId', currentValue.name);
+              setValue('RegistrationCouncilId', currentValue?.name);
             }}
           />
         </Grid>
