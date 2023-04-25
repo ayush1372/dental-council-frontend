@@ -80,6 +80,8 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
   let consentDescription =
     'I hereby state that I have no objection in authenticating myself with Aadhaar-based authentication system and I Consent to providing my Aadhaar Number, Biometric and/or One Time Pin (OTP) data for Aadhaar-based authentication for the purpose of availing of the eSign Services from Desk Nine Private Limited for the execution of Agreement with Company Name. I understand that the Biometrics and/or OTP I provide for authentication shall be used only for authenticating my identity through the Aadhaar Authentication system for that specific transaction and for the purpose of eSigning the Agreement with Company Name and for no other purposes. I understand that Company Name and Desk Nine Private Limited shall ensure security and confidentiality of my personal identity data provided for the purpose of Aadhaar-based authentication.';
   const [showFullDescription, setFullDescription] = useState(false);
+  const [consentD, setConsentD] = useState(false);
+
   const description = showFullDescription ? consentDescription : consentDescription.slice(0, 110);
 
   const showFullDescriptionHandler = () => {
@@ -397,90 +399,85 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
               </Box>
 
               {showOtpAadhar && (
-                <>
-                  {' '}
-                  <Grid
-                    container
-                    bgcolor="backgroundColor.light"
-                    p={2}
-                    mt={2}
-                    mb={2}
-                    display="flex"
-                    border="1px solid"
-                    borderColor="inputBorderColor.main"
-                    borderRadius="5px"
-                  >
-                    <Grid item xs={12} display="flex">
-                      <Grid item xs={1} display="flex">
-                        <Checkbox
-                          sx={{ width: '18px', height: '18px', marginLeft: 1 }}
-                          name="consent"
-                          defaultChecked={getValues()?.consent}
-                          {...register('consent', {
-                            required: 'Consent is Required',
-                          })}
-                          error={errors.consent?.message}
-                        />
-                      </Grid>
-                      <Grid item xs={11} display="flex" pl={1}>
-                        <Typography component="div" variant="body7">
-                          {description}
-                        </Typography>
-                      </Grid>
-                    </Grid>
-                    <Grid item xs={12} display="flex">
-                      <Grid item xs={10} display="flex">
-                        {' '}
-                      </Grid>
-                      <Grid item xs={2} display="flex">
-                        <Box
-                          sx={{
-                            display: 'flex !important',
-                            'justify-content': 'right !important',
-                            cursor: 'pointer',
-                          }}
-                        >
-                          {
-                            // eslint-disable-next-line no-console
-                            console.log(getValues()?.consent)
-                          }
-                          <Link onClick={showFullDescriptionHandler}>
-                            Read {showFullDescription ? 'Less' : 'More'}
-                          </Link>
-                        </Box>{' '}
-                      </Grid>
-                    </Grid>
-                  </Grid>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: {
-                        xs: 'column',
-                        sm: 'row',
-                      },
-                    }}
-                  >
-                    <Box pt={1}>
-                      <Typography variant="body1">
-                        Please enter the OTP sent on your mobile number {mobileNumber} which is
-                        registered with Aadhaar.
-                      </Typography>
-                      {otpform}
-                    </Box>
-                    <Button
-                      sx={{ width: '114px', height: '53px', marginTop: '77px' }}
-                      component="span"
-                      variant="contained"
-                      color="secondary"
-                      onClick={handleValidateAadhar}
-                      disabled={getValues()?.consent ? isOtpValidMobile : true}
-                    >
-                      Validate
-                    </Button>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: {
+                      xs: 'column',
+                      sm: 'row',
+                    },
+                  }}
+                >
+                  <Box pt={1}>
+                    <Typography variant="body1">
+                      Please enter the OTP sent on your mobile number {mobileNumber} which is
+                      registered with Aadhaar.
+                    </Typography>
+                    {otpform}
                   </Box>
-                </>
+                  <Button
+                    sx={{ width: '114px', height: '53px', marginTop: '77px' }}
+                    component="span"
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleValidateAadhar}
+                    disabled={consentD ? isOtpValidMobile : true}
+                  >
+                    Validate
+                  </Button>
+                </Box>
               )}
-
+              <Grid
+                container
+                bgcolor="backgroundColor.light"
+                p={2}
+                mt={2}
+                mb={2}
+                display="flex"
+                border="1px solid"
+                borderColor="inputBorderColor.main"
+                borderRadius="5px"
+              >
+                <Grid item xs={12} display="flex">
+                  <Grid item xs={1} display="flex">
+                    <Checkbox
+                      sx={{ width: '18px', height: '18px', marginLeft: 1 }}
+                      name="consent"
+                      defaultChecked={getValues()?.consent}
+                      {...register('consent', {
+                        required: 'Consent is Required',
+                      })}
+                      onChange={(e) => {
+                        setConsentD(e.target.checked);
+                      }}
+                      error={errors.consent?.message}
+                    />
+                  </Grid>
+                  <Grid item xs={11} display="flex" pl={1}>
+                    <Typography component="div" variant="body7">
+                      {description}
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} display="flex">
+                  <Grid item xs={10} display="flex">
+                    {' '}
+                  </Grid>
+                  <Grid item xs={2} display="flex">
+                    <Box
+                      sx={{
+                        display: 'flex !important',
+                        'justify-content': 'right !important',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      <Link onClick={showFullDescriptionHandler}>
+                        Read {showFullDescription ? 'Less' : 'More'}
+                      </Link>
+                    </Box>{' '}
+                  </Grid>
+                </Grid>
+              </Grid>
               <Divider sx={{ mb: 4, mt: 4 }} variant="fullWidth" />
               <Box sx={{ marginTop: '20px', paddingBottom: '48px' }}>
                 <Typography variant="subtitle2">
