@@ -333,9 +333,19 @@ export const UploadFile = (props) => {
                                   e.preventDefault();
                                   if (e?.target?.attributes?.id?.value === 'qualification') {
                                     document.getElementById('qualification').value = '';
-                                    document
-                                      .getElementsByClassName('fileupload_fileUploadArea__shK1w')[1]
-                                      .getElementsByTagName('input').file.value = '';
+                                    if (
+                                      document
+                                        .getElementsByClassName(
+                                          'fileupload_fileUploadArea__shK1w'
+                                        )[1]
+                                        .getElementsByTagName('input') !== undefined
+                                    ) {
+                                      document
+                                        .getElementsByClassName(
+                                          'fileupload_fileUploadArea__shK1w'
+                                        )[1]
+                                        .getElementsByTagName('input').file.value = '';
+                                    }
                                   } else {
                                     document.getElementsByTagName('input').file.value = '';
                                   }
