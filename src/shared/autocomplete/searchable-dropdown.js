@@ -42,8 +42,8 @@ const AutoCompleteField = (
       }}
       noOptiontext={'Not Available'}
       renderOption={(props, item) => (
-        <Box component="li" {...props} key={item.id} title={item.name}>
-          {item.name}
+        <Box component="li" {...props} key={item?.id} title={item?.name}>
+          {item?.name}
         </Box>
       )}
       renderInput={(params) => (
