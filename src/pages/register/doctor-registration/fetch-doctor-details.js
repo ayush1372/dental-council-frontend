@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
-import { dateFormat } from '../../../helpers/functions/common-functions';
+import { dateFormat, encryptData } from '../../../helpers/functions/common-functions';
 import KycErrorPopup from '../../../shared/common-modals/kyc-error-popup';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import OtpForm from '../../../shared/otp-form/otp-component';
@@ -125,7 +125,8 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
       clientSecret: process.env.REACT_APP_SESSION_CLIENT_SECRET,
     };
     dispatch(getSessionAccessToken(reqObj)).then(() => {
-      dispatch(sendAaadharOtp(value)).then(() => {
+      const encryptedAadhaar = encryptData(value, process.env.REACT_APP_HPRID_PUBLICKEY);
+      dispatch(sendAaadharOtp(encryptedAadhaar)).then(() => {
         setshowOtpAadhar(true);
       });
     });
@@ -140,7 +141,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
       dispatch(
         validateOtpAadhaar({
           txnId: aadhaarTxnId,
-          otp: otpValue,
+          otp: encryptData(otpValue, process.env.REACT_APP_HPRID_PUBLICKEY),
         })
       ).then((response) => {
         setisOtpValidAadhar(true);
@@ -190,7 +191,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
     dispatch(
       getDemographicAuthMobile({
         txnId: aadhaarTxnId,
-        mobileNumber: getValues().MobileNumber,
+        mobileNumber: encryptData(getValues().MobileNumber, process.env.REACT_APP_HPRID_PUBLICKEY),
       })
     ).catch(() => {
       let data = {
@@ -215,7 +216,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
   const handleValidateMobile = () => {
     let data = {
       txnId: mobileTxnId,
-      otp: otpValue,
+      otp: encryptData(otpValue, process.env.REACT_APP_HPRID_PUBLICKEY),
     };
     if (otpValue.length === 6) {
       dispatch(verifyMobileOtp(data)).then(() => {
@@ -229,8 +230,8 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
   const otpResend = () => {
     if (otptype === 'aadhaar') {
       let aadharDataFields = getValues().field_1 + getValues().field_2 + getValues().field_3;
-
-      dispatch(sendAaadharOtp(aadharDataFields));
+      const encryptedAadhaar = encryptData(aadharDataFields, process.env.REACT_APP_HPRID_PUBLICKEY);
+      dispatch(sendAaadharOtp(encryptedAadhaar));
     } else {
       let data = {
         mobile: getValues().MobileNumber,
