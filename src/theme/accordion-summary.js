@@ -1,6 +1,4 @@
-import { Palette } from './palette';
-
-export const AccordionSummary = {
+export const AccordionSummary = (palette) => ({
   styleOverrides: {
     root: {
       minHeight: 'auto',
@@ -11,7 +9,7 @@ export const AccordionSummary = {
         minHeight: 'auto',
         '.MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
           svg: {
-            fill: Palette.inputTextColor.main,
+            fill: palette.inputTextColor.main,
           },
         },
       },
@@ -27,4 +25,4 @@ export const AccordionSummary = {
       },
     },
   },
-};
+});

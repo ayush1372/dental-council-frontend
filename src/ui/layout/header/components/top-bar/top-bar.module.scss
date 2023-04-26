@@ -1,26 +1,122 @@
 @use '../../../../../assets/styles/variables' as v;
 
 .topBarWrapper {
-  background-color: map-get(v.$palette, 'grey');
   min-height: 40px;
-  color: map-get(v.$palette, 'primary');
   display: flex;
   align-items: center;
+  @media screen and (max-width: 767px) {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
 }
 
-.topBarIcon {
+.topBarIcon,
+.multilingualDropdown {
   padding: 0;
   min-width: auto;
   margin-left: 16px;
+  margin-right: 16px;
   font-size: 12px;
   font-weight: 500;
   position: relative;
-  @media screen and (max-width: 991px) {
+
+  @media screen and (max-width: 767px) {
+    margin-right: 12px;
+  }
+  @media screen and (max-width: 600px) {
     margin-left: 8px;
+  }
+
+  &:first-child {
+    margin-left: 0;
+  }
+  &:last-child {
+    &::after {
+      display: none;
+    }
   }
   &:hover,
   &:focus {
     background-color: transparent;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -16px;
+    height: 14px;
+    width: 1px;
+    transform: translateY(-50%);
+    background-color: map-get(v.$palette, 'primary');
+    @media screen and (max-width: 600px) {
+      right: -8px;
+    }
+    @media screen and (max-width: 600px) {
+      right: -8px;
+    }
+  }
+  &.themeToggleBtn {
+    @media screen and (max-width: 767px) {
+      margin-left: 12px;
+    }
+    @media screen and (max-width: 600px) {
+      margin-left: 0;
+    }
+  }
+}
+
+.fontBlock {
+  position: relative;
+  .fontText {
+    padding: 0;
+    min-width: auto;
+    margin-left: 16px;
+    margin-right: 16px;
+    font-size: 12px;
+    font-weight: 500;
+    @media screen and (max-width: 600px) {
+      margin-left: 6px;
+      margin-right: 6px;
+    }
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 0;
+    height: 14px;
+    width: 1px;
+    transform: translateY(-50%);
+    background-color: map-get(v.$palette, 'primary');
+    @media screen and (max-width: 600px) {
+      right: -7px;
+    }
+    @media screen and (max-width: 767px) {
+      right: -12px;
+    }
+  }
+}
+
+.multilingualDropdown {
+  @media screen and (min-width: 600px) {
+    margin-left: 16px;
+  }
+  padding: 0;
+  margin-left: 6px;
+  margin-right: 0;
+}
+
+.fontText {
+  margin-left: 12px;
+  font-weight: 600;
+  @media screen and (max-width: 600px) {
+    margin-right: 8px;
+  }
+
+  &::after {
+    display: none;
   }
 }
 
@@ -32,14 +128,24 @@
   padding: 0;
 }
 
-.topBarLanguageMenu {
-  max-width: 160px;
-  color: v.$primary-text-color;
-}
-
 // FONT ZOOM CSS
 .fontZoomSmall,
 .fontZoomMedium,
 .fontZoomLarge {
   padding: 0;
+}
+
+.MultilingualSelect {
+  position: relative;
+  font-size: 13px;
+  font-weight: 500;
+  margin-left: 0;
+
+  color: map-get(v.$palette, 'primary');
+  &:hover,
+  &:focus-within {
+    fieldset {
+      border: none !important;
+    }
+  }
 }

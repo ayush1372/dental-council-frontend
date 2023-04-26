@@ -69,17 +69,40 @@ export const getMaskedMobileNumber = (mobileNumber) => {
 };
 
 export const PasswordRegexValidation = {
-  required: 'Provide  valid  Password',
+  required: 'Enter valid  Password',
   pattern: {
     value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&])[A-Za-z\d@$!%*?#&]{8,}$/,
-    message: 'Minimum eight characters, at least one letter, one number and one special character',
+    message:
+      'Create valid password with eight characters including an uppercase, a lowercase, a number and a special character.',
+  },
+};
+
+export const AadharRegexValidation = {
+  required: 'Enter a valid aadhaar number',
+  pattern: {
+    value: /^[0-9]{4}$/,
+    message: 'Provide a valid aadhaar number',
   },
 };
 
 export const EmailRegexValidation = {
-  required: 'Provide a Valid Email ID',
+  required: 'Enter a Valid Email ID',
   pattern: {
     value: /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/i,
     message: 'Provide a Valid Email ID',
   },
+};
+
+export const convertGender = (gender) => {
+  if (gender.length > 1) {
+    return gender ? gender.charAt(0).toUpperCase() + gender.slice(1) : '';
+  } else {
+    return gender?.toUpperCase() === 'M'
+      ? 'Male'
+      : gender?.toUpperCase() === 'F'
+      ? 'Female'
+      : gender?.toUpperCase() === 'O'
+      ? 'Other'
+      : '';
+  }
 };

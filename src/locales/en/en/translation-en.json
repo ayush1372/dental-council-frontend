@@ -33,11 +33,11 @@
   "abha_mobile_number_creation": "The Mobile number will be used for all communications related to ABHA.",
   "Enter_your_mobile_number": "Enter Mobile Number",
   "aadhaar_authentication": "Aadhaar Authentication",
-  "otp_on_the_mobile_number_linked": "We just sent an OTP on the Mobile Number ******1234 linked with your Aadhaar",
+  "otp_on_the_mobile_number_linked": "Please enter the OTP sent on your Mobile Number XXXXXX1234 linked with your Aadhaar",
   "Resend_OTP": "Resend OTP",
   "Next": "Next",
   "resend_in": "Resend in",
-  "OTP_on_mobile_number": "We just sent an OTP on the mobile number linked with your Aadhaar.",
+  "OTP_on_mobile_number": "Please enter the OTP sent on the mobile number linked with your Aadhaar.",
   "Aadhaar_Number": "Aadhaar Number",
   "declaration_aadhaar_text": "I, hereby declare that I am voluntarily sharing my Aadhaar Number and demographic information issued by UIDAI, with National Health Authority (NHA) for the sole purpose of creation of ABHA number . I understand that my ABHA number can be used and shared for purposes as may be notified by ABDM from time to time including provision of healthcare services. Further, I am aware that my personal identifiable information (Name, Address, Age, Date of Birth, Gender and Photograph) may be made available to the entities working in the National Digital Health Ecosystem (NDHE) which inter alia includes stakeholders and entities such as healthcare professionals (e.g. doctors), facilities (e.g. hospitals, laboratories) and data fiduciaries (e.g. health programmes), which are registered with or linked to the Ayushman Bharat Digital Mission (ABDM), and various processes there under. I authorize NHA to use my Aadhaar number for performing Aadhaar based authentication with UIDAI as per the provisions of the Aadhaar (Targeted Delivery of Financial and other Subsidies, Benefits and Services) Act, 2016 for the aforesaid purpose. I understand that UIDAI will share my e-KYC details, or response of “Yes” with NHA upon successful authentication. I have been duly informed about the option of using other IDs apart from Aadhaar; however, I consciously choose to use Aadhaar number for the purpose of availing benefits across the NDHE. I am aware that my personal identifiable information excluding Aadhaar number / VID number can be used and shared for purposes as mentioned above. I reserve the right to revoke the given consent at any point of time as per provisions of Aadhaar Act and Regulations.",
   "Back": "Back",
@@ -88,5 +88,5 @@
   "abha_address": "ABHA Address",
   "add_proof_of_relationship": "Add Proof Of Relationship",
   "select_the_nature_of_relationship": "Select the Nature of Relationship",
-  "upload_proof_of_relationship": "Upload Proof of Relationship"
+  "upload_the_registration_certificate": "Upload the registration certificate"
 }

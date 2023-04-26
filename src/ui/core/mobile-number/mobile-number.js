@@ -1,9 +1,5 @@
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { Typography } from '@mui/material';
-import { StyledEngineProvider } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
+import { Box, InputAdornment, StyledEngineProvider, Typography } from '@mui/material';
 
 import { Button } from '../button/button';
 import { TextField } from '../form/textfield/textfield';
@@ -11,7 +7,20 @@ import { TextField } from '../form/textfield/textfield';
 import styles from './mobile-number.module.scss';
 
 export function MobileNumber(props) {
-  const { register, getValues, errors, showVerify, verifyOnClick, label } = props;
+  const {
+    register,
+    getValues,
+    errors,
+    showVerify,
+    placeholder,
+    // showCircleCheckIcon = true,
+    verifyOnClick,
+    disabled,
+    label,
+    showhint = true,
+    required,
+    otpSend,
+  } = props;
   const handleInput = (e) => {
     e.preventDefault();
     if (e.target.value.length > 0) {
@@ -22,15 +31,34 @@ export function MobileNumber(props) {
   };
   return (
     <StyledEngineProvider injectFirst>
-      <div className={styles.main} data-testid="mobile-number">
-        <div className={styles.mobileField}>
+      <Box data-testid="mobile-number">
+        <Box>
+          <Typography variant="subtitle2" component={'span'}>
+            {label}
+          </Typography>
+          <Typography variant="body2" color="error">
+            {required ? ' *' : ''}
+          </Typography>
+        </Box>
+        <Box
+          width="100%"
+          className={styles.mobileField}
+          display="flex"
+          gap={{ xs: 1, sm: 0 }}
+          flexWrap={{ xs: 'wrap', sm: 'nowrap' }}
+        >
           <TextField
+            fullWidth
             id="outlined-adornment-password"
             type={'number'}
             name={'mobileNo'}
-            label={label ? label : ''}
+            disabled={disabled}
             defaultValue={getValues().mobileNo}
+            placeholder={placeholder}
             sx={{
+              ...(showVerify === false && {
+                width: '100%',
+              }),
               '& .MuiInputBase-root.MuiOutlinedInput-root': {
                 paddingLeft: 0,
               },
@@ -46,46 +74,40 @@ export function MobileNumber(props) {
             onInput={(e) => handleInput(e)}
             error={errors.mobileNo?.message}
             InputProps={{
-              paddingLeft: '0px',
-              paddingRight: '0px',
+              paddingLeft: '0',
+              paddingRight: '0',
               startAdornment: (
-                <InputAdornment position="start" className={styles.countryCode}>
+                <InputAdornment
+                  sx={{ backgroundColor: 'grey.main' }}
+                  position="start"
+                  className={styles.countryCode}
+                >
                   +91
-                </InputAdornment>
-              ),
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton aria-label="toggle password visibility" edge="end">
-                    {getValues()?.mobileNo?.length === 10 ? (
-                      <CheckCircleIcon color="success" />
-                    ) : (
-                      <CheckCircleIcon />
-                    )}
-                  </IconButton>
                 </InputAdornment>
               ),
             }}
           />
           {showVerify && (
             <Button
-              variant="outlined"
-              color="secondary"
-              sx={{ marginLeft: '20px' }}
+              variant="contained"
+              sx={{ height: '56px' }}
+              color="primary"
               onClick={verifyOnClick}
+              disabled={otpSend || getValues().mobileNo.length < 10}
             >
-              Verify
+              GetOTP
             </Button>
           )}
-          <div>
-            <Typography variant="caption" color="primary">
+          {showhint && (
+            <Typography variant="caption" color="primary" component="div">
               <InfoOutlinedIcon
                 sx={{ fontSize: '15px', verticalAlign: 'middle', marginRight: '5px' }}
               />
               Enter Mobile Number linked with your Aadhaar.
             </Typography>
-          </div>
-        </div>
-      </div>
+          )}
+        </Box>
+      </Box>
     </StyledEngineProvider>
   );
 }

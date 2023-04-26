@@ -90,7 +90,12 @@ const InputField = (
     <StyledEngineProvider injectFirst>
       {label && (
         <Box>
-          <Typography variant="subtitle2" component={'span'}>
+          <Typography
+            variant="subtitle2"
+            component={'span'}
+            color="inputTextColor.main"
+            fontWeight="500"
+          >
             {label}
           </Typography>
           <Typography variant="body2" color="error">
@@ -101,7 +106,15 @@ const InputField = (
 
       <MuiTextField
         {...props}
-        type={showPassword ? 'text' : type === 'Password' ? 'Password' : 'text'}
+        type={
+          showPassword
+            ? 'text'
+            : type === 'Password'
+            ? 'Password'
+            : type === 'date'
+            ? 'date'
+            : 'text'
+        }
         autoComplete={'off'}
         ref={ref}
         error={error ? true : false}
@@ -116,7 +129,6 @@ const InputField = (
                       aria-label="toggle password visibility"
                       onClick={handleClickShowPassword}
                       onMouseDown={handleMouseDownPassword}
-                      edge="end"
                     >
                       {showPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>

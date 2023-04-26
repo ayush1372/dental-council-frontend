@@ -1,6 +1,7 @@
 import Box from '@mui/material/Box';
 
 import ButtonGroupWizard from './button-group-wizard';
+import ProgressBar from './progress-bar';
 import WizardSteps from './wizard-steps';
 
 export default function Wizard({
@@ -12,17 +13,37 @@ export default function Wizard({
   handleNext,
   progress,
   steps,
+  isStepClickEnable,
+  handleStep,
+  showCheckCirlce,
 }) {
   return (
-    <Box sx={{ width: '100%', backgroundColor: 'grey' }}>
+    <Box width="100%" bgcolor={'white'}>
       <WizardSteps
+        steps={steps}
+        activeStep={activeStep}
+        isStepClickEnable={isStepClickEnable}
+        handleStep={handleStep}
+        showCheckCirlce={showCheckCirlce}
+      />
+      {/* <ProgressBar
+        steps={steps}
+        activeStep={activeStep}
+        isStepClickEnable={isStepClickEnable}
+        handleStep={handleStep}
+        showCheckCirlce={showCheckCirlce}
+      /> */}
+      <ProgressBar
         steps={steps}
         activeStep={activeStep}
         progress={progress}
         completed={completed}
+        isStepClickEnable={isStepClickEnable}
+        handleStep={handleStep}
+        showCheckCirlce={showCheckCirlce}
       />
       {children}
-      <Box sx={{ px: 4 }}>
+      <Box px={4}>
         {enableNaviagation && (
           <ButtonGroupWizard
             activeStep={activeStep}

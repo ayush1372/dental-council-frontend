@@ -1,15 +1,11 @@
-.logoWrapper {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  @media screen and (max-width: 767px) {
-    padding: 16px 0;
+.menuLeftBar {
+  display: none;
+  position: absolute;
+  padding: 8px;
+  left: 24px;
+  top: 8%;
+  cursor: pointer;
+  @media screen and (max-width: 1023px) {
+    display: block;
   }
-  .logoImage {
-    height: 90px;
-  }
-}
-
-.authBlock {
-  display: flex;
-  justify-content: flex-end;
 }

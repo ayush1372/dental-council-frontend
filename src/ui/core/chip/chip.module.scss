@@ -1,0 +1,46 @@
+@use '../../../assets/styles/variables' as v;
+
+.wrapper {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.submitted {
+  color: map-get(v.$palette, 'primary') !important;
+  background-color: map-get(v.$palette, 'submittedBg') !important;
+}
+.dotSubmitted {
+  fill: map-get(v.$palette, 'primary');
+}
+
+.approved {
+  color: map-get(v.$palette, 'approvedText') !important;
+  background-color: map-get(v.$palette, 'approvedBg') !important;
+}
+.dotApproved {
+  fill: map-get(v.$palette, 'approvedText');
+}
+
+.reject {
+  color: map-get(v.$palette, 'error') !important;
+  background-color: map-get(v.$palette, 'rejectBg') !important;
+}
+.dotReject {
+  fill: map-get(v.$palette, 'error');
+}
+
+.pending {
+  color: map-get(v.$palette, 'pendingText');
+  background-color: map-get(v.$palette, 'pendingBg');
+}
+.dotPending {
+  fill: map-get(v.$palette, 'pendingText');
+}
+
+.queryRaised {
+  color: map-get(v.$palette, 'secondary') !important;
+  background-color: map-get(v.$palette, 'queryraisedBg') !important;
+}
+.dotQueryRaised {
+  fill: map-get(v.$palette, 'secondary');
+}

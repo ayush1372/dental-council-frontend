@@ -1,24 +1,24 @@
-import { Palette } from './palette';
+import { changeAppFontSize } from '../helpers/functions/common-functions';
 
-export const CardHeader = {
+export const CardHeader = (palette, appFontType) => ({
   styleOverrides: {
     root: {
       padding: '0',
     },
     title: {
-      color: Palette.primary.main,
-      fontSize: '18px',
+      color: palette.primary.main,
+      fontSize: changeAppFontSize(18, appFontType),
       fontWeight: 'bold',
       lineHeight: '28px',
     },
     subheader: {
-      fontSize: '14px',
+      fontSize: changeAppFontSize(14, appFontType),
       lineHeight: '20px',
     },
     content: {
-      color: Palette.textPrimary.main,
-      fontSize: '16px',
+      color: palette.textPrimary.main,
+      fontSize: changeAppFontSize(16, appFontType),
       lineHeight: '24px',
     },
   },
-};
+});

@@ -1,4 +1,4 @@
-import Box from '@mui/material/Box';
+import { Grid } from '@mui/material';
 
 import { Button } from '../button/button';
 
@@ -10,37 +10,55 @@ const ButtonGroupWizard = ({
   disabledNext,
   disabledPrevious,
   hidePrevious = true,
+  hideNext = true,
   loading,
   dataTestidNext,
 }) => {
   // if we've passed handlePrevious function then we will show back button
   hidePrevious = !(typeof handlePrevious === 'function');
+  hideNext = !(typeof handleNext === 'function');
   return (
-    <Box
-      mt={2}
-      p="0px 24px"
-      sx={{ display: 'flex', justifyContent: !hidePrevious ? 'space-between' : 'right' }}
-    >
+    <Grid container mt={2} display="flex" justifyContent={hidePrevious ? 'end' : 'space-between'}>
       {!hidePrevious && (
-        <Button
-          disabled={disabledPrevious}
-          color="grey"
-          variant="contained"
-          onClick={handlePrevious}
-        >
-          {labelPrevioius}
-        </Button>
+        <Grid item xs={12} md={1}>
+          <Button
+            disabled={disabledPrevious}
+            color="grey"
+            variant="contained"
+            onClick={handlePrevious}
+            sx={{
+              width: '100%',
+              margin: {
+                xs: '5px 0',
+                md: '0',
+              },
+            }}
+          >
+            {labelPrevioius}
+          </Button>
+        </Grid>
       )}
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={handleNext}
-        data-testid={dataTestidNext}
-        disabled={loading || disabledNext}
-      >
-        {labelNext}
-      </Button>
-    </Box>
+      {!hideNext && (
+        <Grid item xs={12} md="auto">
+          <Button
+            variant="contained"
+            color="secondary"
+            onClick={handleNext}
+            data-testid={dataTestidNext}
+            disabled={loading || disabledNext}
+            sx={{
+              margin: {
+                width: '100%',
+                xs: '5px 0',
+                md: '0',
+              },
+            }}
+          >
+            {labelNext}
+          </Button>
+        </Grid>
+      )}
+    </Grid>
   );
 };
 
