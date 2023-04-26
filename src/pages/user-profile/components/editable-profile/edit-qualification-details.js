@@ -110,6 +110,8 @@ const EditQualificationDetails = ({
       setValue(`qualification[${index}].qualification`, 69);
     }
     setValue(`qualification[${index}].qualificationfrom`, fields[index].qualificationfrom);
+    setValue(`qualification[${index}].university`, fields[index].university);
+    setValue(`qualification[${index}].college`, fields[index].college);
   }, []);
 
   const customMonthsData = useMemo(() => {
