@@ -100,13 +100,13 @@ export const API = {
 export const API_HPRID = {
   hpId: {
     sessionApi: '/api/v1/abdm/nmr/sessions',
-    sendAadhaarOtp: 'api/v1/registration/aadhaar/generateOtp',
-    verifyAadhaarOtp: 'api/v1/registration/aadhaar/verifyOTP',
+    sendAadhaarOtp: 'api/v2/registration/aadhaar/generateOtp',
+    verifyAadhaarOtp: 'api/v2/registration/aadhaar/verifyOTP',
     generateMobileOtp: 'api/v1/registration/aadhaar/generateMobileOTP',
-    verifyMobileOtp: '/api/v1/registration/aadhaar/verifyMobileOTP',
-    demographicAuthMobile: 'api/v1/registration/aadhaar/demographicAuthViaMobile',
+    verifyMobileOtp: '/api/v2/registration/aadhaar/verifyMobileOTP',
+    demographicAuthMobile: 'api/v2/registration/aadhaar/demographicAuthViaMobile',
     checkHprIdExists: 'api/v2/registration/aadhaar/checkHpIdAccountExist',
-    hpIdSuggestion: 'api/v1/registration/aadhaar/hpid/suggestion',
-    createHprId: 'api/v1/registration/aadhaar/createHprIdWithPreVerified',
+    hpIdSuggestion: 'api/v2/registration/aadhaar/hpid/suggestion',
+    createHprId: 'api/v2/registration/aadhaar/createHprIdWithPreVerified',
   },
 };
