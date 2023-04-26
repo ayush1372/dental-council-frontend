@@ -185,7 +185,7 @@ export const getCollegeData = (id) => async (dispatch) => {
       headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
       .then((response) => {
-        dispatch(getCollegeDetail(response));
+        dispatch(getCollegeDetail(response.data));
         return resolve(response);
       })
       .catch((error) => {

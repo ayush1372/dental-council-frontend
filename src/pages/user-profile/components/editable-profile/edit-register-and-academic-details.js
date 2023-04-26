@@ -499,12 +499,12 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               }}
               InputProps={{
                 inputProps: { max: new Date().toISOString().split('T')[0] },
-                // readOnly:
-                //   work_flow_status_id === 3
-                //     ? getQueryRaised('Registration Date')
-                //     : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-                //     ? false
-                //     : true,
+                readOnly:
+                  work_flow_status_id === 3
+                    ? getQueryRaised('Registration Date')
+                    : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                    ? false
+                    : true,
               }}
               InputLabelProps={{
                 shrink: true,
