@@ -117,7 +117,7 @@ const ProfileConsent = ({
           motherName: personalDetails?.personal_details?.mother_name || '',
           spouseName: personalDetails?.personal_details?.spouse_name || '',
           gender: personalDetails?.personal_details?.gender || '',
-          dob: personalDetails?.personal_details?.date_of_birth || '',
+          dob: moment(personalDetails?.personal_details?.date_of_birth).format('DD-MM-YYYY') || '',
           nationality: 'Indian',
           qualification:
             doctorRegDetails?.qualification_detail_response_tos[0]?.course.course_name || '',
