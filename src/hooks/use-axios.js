@@ -54,7 +54,7 @@ axios.interceptors.response.use(
 
 const setLoadingState = (booleanValue) => store.dispatch(setApiLoading(booleanValue));
 
-const appheader = { 'Content-Type': 'application/json' };
+const appheader = { 'Content-Type': 'application/json', apikey: process.env.REACT_APP_API_KEY };
 
 const axiosProps = {
   method: 'GET',
