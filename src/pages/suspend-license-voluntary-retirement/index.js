@@ -392,6 +392,9 @@ export function SuspendLicenseVoluntaryRetirement({
                         ? true
                         : false
                     }
+                    inputProps={{
+                      min: new Date().toISOString().split('T')[0],
+                    }}
                     required={true}
                     defaultValue={getValues().toDate}
                     error={errors.toDate?.message}
