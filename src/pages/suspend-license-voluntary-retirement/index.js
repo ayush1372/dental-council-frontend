@@ -392,11 +392,14 @@ export function SuspendLicenseVoluntaryRetirement({
                         ? true
                         : false
                     }
+                    inputProps={{
+                      min: new Date().toISOString().split('T')[0],
+                    }}
                     required={true}
                     defaultValue={getValues().toDate}
                     error={errors.toDate?.message}
                     {...register('toDate', {
-                      required: 'Enter To date',
+                      required: 'Enter To Date',
                     })}
                   />
                 </>
@@ -442,7 +445,7 @@ export function SuspendLicenseVoluntaryRetirement({
               defaultValue={getValues().remark}
               error={errors.remark?.message}
               {...register('remark', {
-                required: 'Enter remarks',
+                required: 'Enter Remarks',
 
                 pattern: {
                   value: /^(?:\b\w+\b[\s\r\n]*){1,300}$/,

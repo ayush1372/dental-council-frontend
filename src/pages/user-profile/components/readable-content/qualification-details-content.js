@@ -6,6 +6,7 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Grid, IconButton, Tooltip, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
+import { capitalizeFirstLetter } from '../../../../helpers/functions/common-functions';
 import AttachmentViewPopup from '../../../../shared/query-modal-popup/attachement-view-popup';
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
@@ -139,7 +140,7 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                 </Typography>
                 <Grid display="flex" alignItems="center">
                   <Typography color="textPrimary.main" variant="subtitle2">
-                    {element?.state?.name}
+                    {capitalizeFirstLetter(element?.state?.name)}
                   </Typography>
                   {(data?.user_type === 2 ||
                     data?.user_type === 3 ||

@@ -59,6 +59,17 @@ export const capitalize = (stringValue) => {
   }
 };
 
+export const capitalizeFirstLetter = (str) => {
+  let words = str.split(' ');
+
+  for (let i = 0; i < words.length; i++) {
+    const firstLetter = words[i][0].toUpperCase();
+    let restOfWord = words[i].substr(1).toLowerCase();
+    words[i] = firstLetter + restOfWord;
+  }
+  return words.join(' ');
+};
+
 export const createSelectFieldData = (arrayOfStrings, valueKey) => {
   let updatedValueKey = valueKey !== undefined ? valueKey : 'id';
   if (arrayOfStrings && arrayOfStrings.length > 0) {
