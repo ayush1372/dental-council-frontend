@@ -398,36 +398,6 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
                   </Box>
                 )}
               </Box>
-
-              {showOtpAadhar && (
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: {
-                      xs: 'column',
-                      sm: 'row',
-                    },
-                  }}
-                >
-                  <Box pt={1}>
-                    <Typography variant="body1">
-                      Please enter the OTP sent on your mobile number {mobileNumber} which is
-                      registered with Aadhaar.
-                    </Typography>
-                    {otpform}
-                  </Box>
-                  <Button
-                    sx={{ width: '114px', height: '53px', marginTop: '77px' }}
-                    component="span"
-                    variant="contained"
-                    color="secondary"
-                    onClick={handleValidateAadhar}
-                    disabled={consentD ? validationOtpInvalid : true}
-                  >
-                    Validate
-                  </Button>
-                </Box>
-              )}
               <Grid
                 container
                 bgcolor="backgroundColor.light"
@@ -479,6 +449,44 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
                   </Grid>
                 </Grid>
               </Grid>
+              {showOtpAadhar && (
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: {
+                      xs: 'column',
+                      sm: 'row',
+                    },
+                  }}
+                >
+                  <Box pt={1}>
+                    <Typography variant="body1">
+                      Please enter the OTP sent on your mobile number {mobileNumber} which is
+                      registered with Aadhaar.
+                    </Typography>
+                    {otpform}
+                  </Box>
+                  <Button
+                    sx={{ width: '114px', height: '53px', marginTop: '77px' }}
+                    component="span"
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleValidateAadhar}
+                    disabled={
+                      consentD
+                        ? validationOtpInvalid
+                          ? validationOtpInvalid
+                          : otpValue === ''
+                          ? true
+                          : false
+                        : true
+                    }
+                  >
+                    Validate
+                  </Button>
+                </Box>
+              )}
+
               <Divider sx={{ mb: 4, mt: 4 }} variant="fullWidth" />
               <Box sx={{ marginTop: '20px', paddingBottom: '48px' }}>
                 <Typography variant="subtitle2">
