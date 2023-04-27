@@ -87,7 +87,7 @@ export default function MiniDrawer({ DrawerOptions = [], handleSwitch }) {
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const { userActiveTab } = useSelector((state) => state.common);
   const { nmcProfileData } = useSelector((state) => state.nmc);
-  const { collegeData } = useSelector((state) => state.college);
+  const { getCollegeDetail } = useSelector((state) => state.common);
   const { smcProfileData } = useSelector((state) => state.smc);
   const { nbeData } = useSelector((state) => state.nbe);
   const { personalDetails } = useSelector((state) => state.doctorUserProfileReducer);
@@ -118,7 +118,7 @@ export default function MiniDrawer({ DrawerOptions = [], handleSwitch }) {
                   loggedInUserType === 'Doctor'
                     ? personalDetails?.personal_details?.full_name
                     : loggedInUserType === 'College'
-                    ? collegeData?.data?.name
+                    ? getCollegeDetail?.data?.name
                     : loggedInUserType === 'NMC'
                     ? nmcProfileData?.data?.display_name
                     : loggedInUserType === 'SMC'

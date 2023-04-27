@@ -483,7 +483,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               defaultValue={getValues().RegistrationDate}
               error={errors.RegistrationDate?.message}
               {...register('RegistrationDate', {
-                required: 'Registration date is required',
+                required: 'Registration Date is Required',
               })}
               sx={{
                 input: {

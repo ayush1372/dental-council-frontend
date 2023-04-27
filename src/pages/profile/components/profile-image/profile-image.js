@@ -144,7 +144,9 @@ export default function ProfileImage(props) {
         </Grid>
       )}
       <Grid textAlign="center" item xs={12} mt={4}>
-        <Typography variant="subtitle2">{props.name}</Typography>
+        <Typography component="span" variant="subtitle2" sx={{ wordBreak: 'break-all' }}>
+          {props.name}
+        </Typography>
       </Grid>
       {logInDoctorStatus && (
         <Grid container mt={1}>
