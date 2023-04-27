@@ -338,7 +338,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
               required
               disabled={otpFormEnabled}
               label={'NMR ID'}
-              placeholder={'Please Enter NMR ID'}
+              placeholder={'Please enter NMR ID'}
               inputProps={{ maxLength: 12 }}
               name={'nmrID'}
               {...register('nmrID', {
@@ -397,11 +397,11 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
               required
               fullWidth
               label={'Username'}
-              placeholder={'Please Enter Username'}
+              placeholder={'Please enter username'}
               name={'userID'}
               error={errors.userID?.message}
               {...register('userID', {
-                required: 'Please Enter Username',
+                required: 'Please enter username',
                 pattern: {
                   message: 'Please enter a valid username',
                 },
@@ -425,7 +425,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
               required
               fullWidth
               label={'Password'}
-              placeholder={'Please Enter Password'}
+              placeholder={'Please enter password'}
               type={'Password'}
               inputProps={{ maxLength: 12 }}
               name={'password'}
@@ -447,7 +447,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
           <>
             <MobileNumber
               showhint={false}
-              placeholder="Enter Mobile Number"
+              placeholder="Enter mobile number"
               required
               register={register}
               getValues={getValues}
