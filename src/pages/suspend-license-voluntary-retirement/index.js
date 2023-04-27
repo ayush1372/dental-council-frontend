@@ -396,7 +396,7 @@ export function SuspendLicenseVoluntaryRetirement({
                     defaultValue={getValues().toDate}
                     error={errors.toDate?.message}
                     {...register('toDate', {
-                      required: 'Enter to date',
+                      required: 'Enter To date',
                     })}
                   />
                 </>
