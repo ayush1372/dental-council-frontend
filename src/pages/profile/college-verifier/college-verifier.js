@@ -32,7 +32,7 @@ function CollegeVerifier() {
     setValue,
     clearErrors,
     reset,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -179,26 +179,6 @@ function CollegeVerifier() {
               })}
             />
           </Grid>
-          {/* <Grid item xs={12} md={6} lg={4}>
-          <Typography variant="body3" color="inputTextColor.main">
-            ID
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
-          </Typography>
-
-          <TextField
-            fullWidth
-            name="ID"
-            required
-            placeholder={t('Enter ID')}
-            onInput={(e) => handleInput(e)}
-            error={errors.ID?.message}
-            {...register('ID', {
-              required: 'ID is required',
-            })}
-          />
-        </Grid> */}
         </Grid>
 
         <Box display="flex" justifyContent="flex-start" mt={3}>
@@ -207,6 +187,7 @@ function CollegeVerifier() {
             color="secondary"
             sx={{ mr: 2, mb: 6 }}
             onClick={handleSubmit(onsubmit)}
+            disabled={!isValid}
           >
             Submit
           </Button>

@@ -18,7 +18,7 @@ const AutoCompleteField = (
     multiple = false,
     clearErrors,
     disabled = false,
-
+    defaultValue,
     ...props
   },
   ref
@@ -38,14 +38,15 @@ const AutoCompleteField = (
       getOptionLabel={(item) => `${item.name}`}
       options={items}
       isOptionEqualToValue={(option, value) => {
-        return option.id === value.id;
+        return option.id === value?.id;
       }}
       noOptiontext={'Not Available'}
       renderOption={(props, item) => (
-        <Box component="li" {...props} key={item.id} title={item.name}>
-          {item.name}
+        <Box component="li" {...props} key={item?.id} title={item?.name}>
+          {item?.name}
         </Box>
       )}
+      defaultValue={defaultValue}
       renderInput={(params) => (
         <TextField
           {...props}

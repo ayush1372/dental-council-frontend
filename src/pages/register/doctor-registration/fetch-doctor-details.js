@@ -8,7 +8,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
-import { dateFormat } from '../../../helpers/functions/common-functions';
+import { dateFormat, encryptData } from '../../../helpers/functions/common-functions';
 import KycErrorPopup from '../../../shared/common-modals/kyc-error-popup';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import OtpForm from '../../../shared/otp-form/otp-component';
@@ -80,6 +80,8 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
   let consentDescription =
     'I hereby state that I have no objection in authenticating myself with Aadhaar-based authentication system and I Consent to providing my Aadhaar Number, Biometric and/or One Time Pin (OTP) data for Aadhaar-based authentication for the purpose of availing of the eSign Services from Desk Nine Private Limited for the execution of Agreement with Company Name. I understand that the Biometrics and/or OTP I provide for authentication shall be used only for authenticating my identity through the Aadhaar Authentication system for that specific transaction and for the purpose of eSigning the Agreement with Company Name and for no other purposes. I understand that Company Name and Desk Nine Private Limited shall ensure security and confidentiality of my personal identity data provided for the purpose of Aadhaar-based authentication.';
   const [showFullDescription, setFullDescription] = useState(false);
+  const [consentD, setConsentD] = useState(false);
+
   const description = showFullDescription ? consentDescription : consentDescription.slice(0, 110);
 
   const showFullDescriptionHandler = () => {
@@ -123,7 +125,8 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
       clientSecret: process.env.REACT_APP_SESSION_CLIENT_SECRET,
     };
     dispatch(getSessionAccessToken(reqObj)).then(() => {
-      dispatch(sendAaadharOtp(value)).then(() => {
+      const encryptedAadhaar = encryptData(value, process.env.REACT_APP_HPRID_PUBLICKEY);
+      dispatch(sendAaadharOtp(encryptedAadhaar)).then(() => {
         setshowOtpAadhar(true);
       });
     });
@@ -138,7 +141,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
       dispatch(
         validateOtpAadhaar({
           txnId: aadhaarTxnId,
-          otp: otpValue,
+          otp: encryptData(otpValue, process.env.REACT_APP_HPRID_PUBLICKEY),
         })
       ).then((response) => {
         setisOtpValidAadhar(true);
@@ -188,7 +191,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
     dispatch(
       getDemographicAuthMobile({
         txnId: aadhaarTxnId,
-        mobileNumber: getValues().MobileNumber,
+        mobileNumber: encryptData(getValues().MobileNumber, process.env.REACT_APP_HPRID_PUBLICKEY),
       })
     ).catch(() => {
       let data = {
@@ -213,7 +216,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
   const handleValidateMobile = () => {
     let data = {
       txnId: mobileTxnId,
-      otp: otpValue,
+      otp: encryptData(otpValue, process.env.REACT_APP_HPRID_PUBLICKEY),
     };
     if (otpValue.length === 6) {
       dispatch(verifyMobileOtp(data)).then(() => {
@@ -227,8 +230,8 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
   const otpResend = () => {
     if (otptype === 'aadhaar') {
       let aadharDataFields = getValues().field_1 + getValues().field_2 + getValues().field_3;
-
-      dispatch(sendAaadharOtp(aadharDataFields));
+      const encryptedAadhaar = encryptData(aadharDataFields, process.env.REACT_APP_HPRID_PUBLICKEY);
+      dispatch(sendAaadharOtp(encryptedAadhaar));
     } else {
       let data = {
         mobile: getValues().MobileNumber,
@@ -237,7 +240,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
       dispatch(generateMobileOtp(data));
     }
   };
-  const { otpform, otpValue, handleClear } = OtpForm({
+  const { otpform, otpValue, handleClear, validationOtpInvalid } = OtpForm({
     resendAction: otpResend,
     resendTime: 90,
   });
@@ -395,90 +398,93 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
                   </Box>
                 )}
               </Box>
-
-              {showOtpAadhar && (
-                <>
-                  {' '}
-                  <Grid
-                    container
-                    bgcolor="backgroundColor.light"
-                    p={2}
-                    mt={2}
-                    mb={2}
-                    display="flex"
-                    border="1px solid"
-                    borderColor="inputBorderColor.main"
-                    borderRadius="5px"
-                  >
-                    <Grid item xs={12} display="flex">
-                      <Grid item xs={1} display="flex">
-                        <Checkbox
-                          sx={{ width: '18px', height: '18px', marginLeft: 1 }}
-                          name="consent"
-                          defaultChecked={getValues()?.consent}
-                          {...register('consent', {
-                            required: 'Consent is Required',
-                          })}
-                          error={errors.consent?.message}
-                        />
-                      </Grid>
-                      <Grid item xs={11} display="flex" pl={1}>
-                        <Typography component="div" variant="body7">
-                          {description}
-                        </Typography>
-                      </Grid>
-                    </Grid>
-                    <Grid item xs={12} display="flex">
-                      <Grid item xs={10} display="flex">
-                        {' '}
-                      </Grid>
-                      <Grid item xs={2} display="flex">
-                        <Box
-                          sx={{
-                            display: 'flex !important',
-                            'justify-content': 'right !important',
-                            cursor: 'pointer',
-                          }}
-                        >
-                          {
-                            // eslint-disable-next-line no-console
-                            console.log(getValues()?.consent)
-                          }
-                          <Link onClick={showFullDescriptionHandler}>
-                            Read {showFullDescription ? 'Less' : 'More'}
-                          </Link>
-                        </Box>{' '}
-                      </Grid>
-                    </Grid>
+              <Grid
+                container
+                bgcolor="backgroundColor.light"
+                p={2}
+                mt={2}
+                mb={2}
+                display="flex"
+                border="1px solid"
+                borderColor="inputBorderColor.main"
+                borderRadius="5px"
+              >
+                <Grid item xs={12} display="flex">
+                  <Grid item xs={1} display="flex">
+                    <Checkbox
+                      sx={{ width: '18px', height: '18px', marginLeft: 1 }}
+                      name="consent"
+                      defaultChecked={getValues()?.consent}
+                      {...register('consent', {
+                        required: 'Consent is Required',
+                      })}
+                      onChange={(e) => {
+                        setConsentD(e.target.checked);
+                      }}
+                      error={errors.consent?.message}
+                    />
                   </Grid>
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      flexDirection: {
-                        xs: 'column',
-                        sm: 'row',
-                      },
-                    }}
-                  >
-                    <Box pt={1}>
-                      <Typography variant="body1">
-                        Please enter the OTP sent on your mobile number {mobileNumber} which is
-                        registered with Aadhaar.
-                      </Typography>
-                      {otpform}
-                    </Box>
-                    <Button
-                      sx={{ width: '114px', height: '53px', marginTop: '77px' }}
-                      component="span"
-                      variant="contained"
-                      color="secondary"
-                      onClick={handleValidateAadhar}
-                      disabled={getValues()?.consent ? isOtpValidMobile : true}
+                  <Grid item xs={11} display="flex" pl={1}>
+                    <Typography component="div" variant="body7">
+                      {description}
+                    </Typography>
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} display="flex">
+                  <Grid item xs={10} display="flex">
+                    {' '}
+                  </Grid>
+                  <Grid item xs={2} display="flex">
+                    <Box
+                      sx={{
+                        display: 'flex !important',
+                        'justify-content': 'right !important',
+                        cursor: 'pointer',
+                      }}
                     >
-                      Validate
-                    </Button>
+                      <Link onClick={showFullDescriptionHandler}>
+                        Read {showFullDescription ? 'Less' : 'More'}
+                      </Link>
+                    </Box>{' '}
+                  </Grid>
+                </Grid>
+              </Grid>
+              {showOtpAadhar && (
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: {
+                      xs: 'column',
+                      sm: 'row',
+                    },
+                  }}
+                >
+                  <Box pt={1}>
+                    <Typography variant="body1">
+                      Please enter the OTP sent on your mobile number {mobileNumber} which is
+                      registered with Aadhaar.
+                    </Typography>
+                    {otpform}
                   </Box>
-                </>
+                  <Button
+                    sx={{ width: '114px', height: '53px', marginTop: '77px' }}
+                    component="span"
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleValidateAadhar}
+                    disabled={
+                      consentD
+                        ? validationOtpInvalid
+                          ? validationOtpInvalid
+                          : otpValue === ''
+                          ? true
+                          : false
+                        : true
+                    }
+                  >
+                    Validate
+                  </Button>
+                </Box>
               )}
 
               <Divider sx={{ mb: 4, mt: 4 }} variant="fullWidth" />
