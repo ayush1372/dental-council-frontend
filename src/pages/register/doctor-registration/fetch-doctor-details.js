@@ -472,7 +472,15 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
                     variant="contained"
                     color="secondary"
                     onClick={handleValidateAadhar}
-                    disabled={consentD ? validationOtpInvalid : true}
+                    disabled={
+                      consentD
+                        ? validationOtpInvalid
+                          ? validationOtpInvalid
+                          : otpValue === ''
+                          ? true
+                          : false
+                        : true
+                    }
                   >
                     Validate
                   </Button>
