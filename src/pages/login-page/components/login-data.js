@@ -352,16 +352,14 @@ export const Login = ({ loginName, handleForgotPassword }) => {
                 PasswordRegexValidation,
               })}
             />
-            <Typography
-              display={'flex'}
-              justifyContent="flex-end"
-              color="#FFA500"
-              onClick={() => handleForgotPassword()}
-              sx={{
-                cursor: 'pointer',
-              }}
-            >
-              Forgot Password?
+            <Typography display={'flex'} justifyContent="flex-end">
+              <Button
+                color="secondary"
+                onClick={() => handleForgotPassword()}
+                sx={{ cursor: 'pointer', display: 'contents' }}
+              >
+                Forgot Password?
+              </Button>
             </Typography>
           </>
         ) : selectedLoginOption === 'mobileNumber' ? (

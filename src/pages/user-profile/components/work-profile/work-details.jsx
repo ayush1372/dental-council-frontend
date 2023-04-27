@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
+// import { SvgImageComponent } from '../../../../ui/core/svg-icons';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import RemoveCircleOutlineRoundedIcon from '@mui/icons-material/RemoveCircleOutlineRounded';
 import { Box, Grid, Tab, Tabs, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
@@ -393,7 +395,23 @@ const WorkDetails = ({
           required={true}
           error={errors.workStatus?.message}
           {...register('workStatus', {
-            required: 'This field is required',
+            required: (
+              <div>
+                <Typography
+                  style={{ display: 'flex', alignItems: 'center' }}
+                  variant="body2"
+                  color="error"
+                >
+                  <ErrorOutlineIcon
+                    color={'error'}
+                    icon={'helpOutline'}
+                    fontSize="small"
+                    sx={{ height: '16px' }}
+                  />
+                  {`This field is required`}
+                </Typography>
+              </div>
+            ),
           })}
         />
       </Grid>{' '}
@@ -454,10 +472,29 @@ const WorkDetails = ({
           value={languages}
           error={languages?.length === 0 && errors.LanguageSpoken?.message}
           multiple={true}
-          {...register('LanguageSpoken', { required: 'This field is required' })}
+          {...register('LanguageSpoken', {
+            required: (
+              <div>
+                <Typography
+                  style={{ display: 'flex', alignItems: 'center' }}
+                  variant="body2"
+                  color="error"
+                >
+                  <ErrorOutlineIcon
+                    color={'error'}
+                    icon={'helpOutline'}
+                    fontSize="small"
+                    sx={{ height: '16px' }}
+                  />
+                  {`This field is required`}
+                </Typography>
+              </div>
+            ),
+          })}
           onChange={(value) => {
             handleLanguageSpokenChange('LanguageSpoken', value);
           }}
+          workDetails={true}
         />
       </Grid>
       <Grid item xs={12}>
@@ -518,7 +555,12 @@ const WorkDetails = ({
           </Grid>
           {tabValue === 0 && (
             <Grid container spacing={2} mt={2} ml={1}>
-              <Grid item md={8} display="flex" alignItems="end">
+              <Grid
+                item
+                md={8}
+                display="flex"
+                alignItems={errors?.facilityId?.message ? 'center' : 'end'}
+              >
                 <Box>
                   <TextField
                     fullWidth
