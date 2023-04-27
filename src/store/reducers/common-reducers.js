@@ -96,7 +96,7 @@ export const CommonActivity = createSlice({
       state.allcollegesList.data = action.payload;
     },
     getCollegeDetail: (state, action) => {
-      state.getCollegeDetail.data = action.payload;
+      state.getCollegeDetail = action.payload;
     },
     updateCollegeDetail: (state, action) => {
       state.updateCollegeDetail.data = action.payload;

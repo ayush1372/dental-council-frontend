@@ -325,13 +325,13 @@ export const Login = ({ loginName, handleForgotPassword }) => {
               required
               fullWidth
               label={'Username'}
-              placeholder={'Please enter username'}
+              placeholder={'Please Enter Username'}
               name={'userID'}
               error={errors.userID?.message}
               {...register('userID', {
-                required: 'Please enter an Username',
+                required: 'Please Enter Username',
                 pattern: {
-                  message: 'Please enter an valid Username',
+                  message: 'Please Enter a Valid Username',
                 },
                 minLength: {
                   value: 8,
@@ -344,7 +344,7 @@ export const Login = ({ loginName, handleForgotPassword }) => {
               required
               fullWidth
               label={'Password'}
-              placeholder={'Please enter password'}
+              placeholder={'Please Enter Password'}
               type={'Password'}
               inputProps={{ maxLength: 12 }}
               name={'password'}
@@ -366,6 +366,7 @@ export const Login = ({ loginName, handleForgotPassword }) => {
           <>
             <MobileNumber
               showhint={false}
+              placeholder="Enter Mobile Number"
               required
               register={register}
               getValues={getValues}
