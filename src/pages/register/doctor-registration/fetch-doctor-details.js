@@ -422,6 +422,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
                         setConsentD(e.target.checked);
                       }}
                       error={errors.consent?.message}
+                      disabled={isOtpValidAadhar}
                     />
                   </Grid>
                   <Grid item xs={11} display="flex" pl={1}>
