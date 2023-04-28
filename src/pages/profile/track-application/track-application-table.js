@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { Box, Grid, TablePagination } from '@mui/material';
+import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 
 import GenericTable from '../../../shared/generic-component/generic-table';
@@ -192,7 +193,7 @@ function TrackAppicationTable({
           value: data?.college_dean_status,
         },
         { type: 'NMCVerificationStatus', value: data?.college_registrar_status },
-        { type: 'created_at', value: data?.created_at },
+        { type: 'created_at', value: moment(data?.created_at).format('DD-MM-YYYY') },
         { type: 'smc_action_date', value: data?.smc_action_date },
         { type: 'college_registrar_action_date', value: data?.college_registrar_action_date },
         { type: 'college_dean_action_date', value: data?.college_dean_action_date },
