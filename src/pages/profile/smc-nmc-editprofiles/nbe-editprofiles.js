@@ -40,7 +40,11 @@ const NbeEditProfile = (props) => {
   };
   const dispatch = useDispatch();
   const onsubmit = () => {
-    let updatedNbeData = { email_id: getValues().email_id, mobile_no: getValues().mobile_no };
+    let updatedNbeData = {
+      email_id: getValues().email_id,
+      mobile_no: getValues().mobile_no,
+      display_name: getValues().first_name,
+    };
 
     dispatch(getUpdatedNBEProfileData(updatedNbeData, nbeUpdatedData?.id))
       .then((response) => {
@@ -76,7 +80,7 @@ const NbeEditProfile = (props) => {
       </Grid>
 
       <Grid container item spacing={2} mt={3}>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={3}>
           <Typography variant="body3" color="grey.label">
             {t('User ID')}
           </Typography>
@@ -101,7 +105,31 @@ const NbeEditProfile = (props) => {
             disabled
           />
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={3}>
+          <Typography variant="body3" color="grey.label">
+            {t('Name')}
+          </Typography>
+          <Typography component="span" color="error.main">
+            *
+          </Typography>
+          <TextField
+            fullWidth
+            required
+            name={'first_name'}
+            placeholder={'Enter Name'}
+            defaultValue={getValues().first_name}
+            error={errors.first_name?.message}
+            {...register('first_name', {
+              required: 'Name is required',
+
+              pattern: {
+                value: /^([a-zA-Z]+\s)*[a-zA-Z]+$/i,
+                message: 'Provide a Valid Name',
+              },
+            })}
+          />
+        </Grid>
+        <Grid item xs={12} md={3}>
           <Typography variant="body3" color="grey.label">
             {t('Phone Number')}
           </Typography>
@@ -125,7 +153,7 @@ const NbeEditProfile = (props) => {
           />
         </Grid>
 
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={3}>
           <Typography variant="body3" color="grey.label">
             {t('Email ID')}
           </Typography>
