@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
-// import { SvgImageComponent } from '../../../../ui/core/svg-icons';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import RemoveCircleOutlineRoundedIcon from '@mui/icons-material/RemoveCircleOutlineRounded';
 import { Box, Grid, Tab, Tabs, Typography } from '@mui/material';
@@ -494,7 +493,6 @@ const WorkDetails = ({
           onChange={(value) => {
             handleLanguageSpokenChange('LanguageSpoken', value);
           }}
-          workDetails={true}
         />
       </Grid>
       <Grid item xs={12}>
