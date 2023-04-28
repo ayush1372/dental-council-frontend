@@ -365,15 +365,18 @@ const WorkDetails = ({
       <Grid item xs={12} md={4}>
         <Select
           fullWidth
-          error={errors.NatureOfWork?.message}
+          error={getValues()?.NatureOfWork?.length === 0 && errors.NatureOfWork?.message}
           name="NatureOfWork"
           label="Nature of work"
           defaultValue={getValues().NatureOfWork}
           required={true}
           placeholder={'Nature Of Work'}
-          {...register('NatureOfWork', {
-            required: 'This field is required',
-          })}
+          {...register(
+            'NatureOfWork',
+            getValues()?.NatureOfWork?.length === 0 && {
+              required: 'This field is required',
+            }
+          )}
           options={createSelectFieldData(natureOfWork)}
         />
       </Grid>
