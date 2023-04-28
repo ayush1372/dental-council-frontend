@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
+import { validateAadharNumber } from '../../../constants/common-data';
 import { dateFormat, encryptData } from '../../../helpers/functions/common-functions';
 import KycErrorPopup from '../../../shared/common-modals/kyc-error-popup';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
@@ -380,7 +381,6 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
                     disabled={showOtpAadhar || isOtpValidAadhar}
                   />
                 </Box>
-
                 <Box p="35px 32px 0px 32px">
                   {isOtpValidAadhar ? <CheckCircleIcon color="success" /> : ''}
                 </Box>
@@ -392,6 +392,14 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
                       color="secondary"
                       width="95px"
                       onClick={handleUserAadhaarNumber}
+                      disabled={
+                        !validateAadharNumber(
+                          getValues().field_1 + getValues().field_2 + getValues().field_3
+                        ) ||
+                        getValues().field_1 === '' ||
+                        getValues().field_2 === '' ||
+                        getValues().field_3 === ''
+                      }
                     >
                       Verify
                     </Button>
