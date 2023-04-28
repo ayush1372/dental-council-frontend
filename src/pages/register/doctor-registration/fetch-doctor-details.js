@@ -423,15 +423,16 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
                       sx={{ width: '18px', height: '18px', marginLeft: 1 }}
                       name="consent"
                       defaultChecked={getValues()?.consent}
-                      {...register('consent', {
-                        required: 'Consent is Required',
-                      })}
+                      checked={consentD}
                       onChange={(e) => {
                         setConsentD(e.target.checked);
                       }}
-                      error={errors.consent?.message}
                       disabled={isOtpValidAadhar}
                     />
+                    {
+                      // eslint-disable-next-line no-console
+                      console.log(isOtpValidAadhar ? false : true)
+                    }
                   </Grid>
                   <Grid item xs={11} display="flex" pl={1}>
                     <Typography component="div" variant="body7">
