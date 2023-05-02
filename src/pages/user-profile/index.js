@@ -79,7 +79,12 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
     }
   }, [personalDetails?.work_flow_status_id]);
   const { activeStep, handleNext, handleBack, resetStep, completed, progress, handleStep } =
-    useWizard(['Doctor', 'SMC', 'NMC'].includes(loggedInUserType) ? 0 : 1, [], [0, 25, 25, 25, 25]);
+    useWizard(
+      ['Doctor', 'SMC', 'NMC'].includes(loggedInUserType) ? 0 : 1,
+      [],
+      [0, 25, 25, 25, 25],
+      isReadMode
+    );
 
   const renderSuccess = () => {
     setShowReactivateLicense(false);
