@@ -393,7 +393,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
         ) : selectedLoginOption === 'userName' ? (
           <>
             <TextField
-              sx={{ mb: 2 }}
+              sx={{ mb: 1 }}
               required
               fullWidth
               label={'Username'}
@@ -411,17 +411,17 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
                 },
               })}
             />
-            <Typography
-              display={'flex'}
-              justifyContent="flex-end"
-              color="#FFA500"
-              onClick={handleUserForgetUserName}
-              sx={{ cursor: 'pointer' }}
-            >
-              Forgot Username ?
+            <Typography display={'flex'} justifyContent="flex-end">
+              <Button
+                color="secondary"
+                onClick={handleUserForgetUserName}
+                sx={{ cursor: 'pointer', display: 'contents' }}
+              >
+                Forgot Username ?
+              </Button>
             </Typography>
             <TextField
-              sx={{ mb: 2 }}
+              sx={{ mb: 1 }}
               required
               fullWidth
               label={'Password'}
@@ -433,14 +433,14 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
                 PasswordRegexValidation,
               })}
             />
-            <Typography
-              display={'flex'}
-              justifyContent="flex-end"
-              color="#FFA500"
-              onClick={handleUserForgotPassword}
-              sx={{ cursor: 'pointer' }}
-            >
-              Forgot Password ?
+            <Typography display={'flex'} justifyContent="flex-end">
+              <Button
+                color="secondary"
+                onClick={handleUserForgotPassword}
+                sx={{ cursor: 'pointer', display: 'contents' }}
+              >
+                Forgot Password ?
+              </Button>
             </Typography>
           </>
         ) : selectedLoginOption === 'mobileNumber' ? (
