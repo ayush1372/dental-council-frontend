@@ -453,6 +453,9 @@ const EditQualificationDetails = ({
               required={true}
               {...register(
                 `qualification[${index}].qualification`,
+                {
+                  required: 'Degree is Required',
+                },
 
                 {
                   onload: (e) => {
