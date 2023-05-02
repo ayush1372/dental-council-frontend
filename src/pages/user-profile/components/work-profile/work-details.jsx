@@ -1077,10 +1077,6 @@ const WorkDetails = ({
           )}
         </Grid>
       )}
-      {
-        // eslint-disable-next-line no-console
-        console.log(defaultFacilityData?.current_work_details?.length > 0)
-      }
       {defaultFacilityData?.current_work_details?.length > 0 && (
         <Grid container>
           <Grid item xs={12}>
