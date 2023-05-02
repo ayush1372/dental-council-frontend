@@ -429,10 +429,6 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
                       }}
                       disabled={isOtpValidAadhar}
                     />
-                    {
-                      // eslint-disable-next-line no-console
-                      console.log(isOtpValidAadhar ? false : true)
-                    }
                   </Grid>
                   <Grid item xs={11} display="flex" pl={1}>
                     <Typography component="div" variant="body7">
