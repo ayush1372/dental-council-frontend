@@ -53,6 +53,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
   const logInDoctorStatus = useSelector(
     (state) => state?.loginReducer?.loginData?.data?.blacklisted
   );
+  const [validDetails, setValidDetails] = useState({ mobileNo: false, email: false });
 
   const handleNotification = (eventData, mode) => {
     if (mode === 'email') {
@@ -297,7 +298,9 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
             </Grid>
           </Grid>
         ) : null}
-        {!isReadMode && <ConstantDetails />}
+        {!isReadMode && (
+          <ConstantDetails validDetails={validDetails} setValidDetails={setValidDetails} />
+        )}
         <Wizard
           activeStep={loggedInUserType === 'College' ? activeStep + 1 : activeStep}
           handleBack={handleBack}
@@ -316,6 +319,8 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
               setIsReadMode={setIsReadMode}
               handleNext={handleNext}
               handleBack={handleBack}
+              validDetails={validDetails}
+              setValidDetails={setValidDetails}
             />
           )}
           {activeStep === 1 && (

@@ -8,6 +8,8 @@ const PersonalDetails = ({
   handleNext,
   handleBack,
   loggedInUserType,
+  validDetails,
+  setValidDetails,
 }) => {
   return (
     <Box mt={1} py={4}>
@@ -23,6 +25,8 @@ const PersonalDetails = ({
           handleNext={handleNext}
           handleBack={handleBack}
           setIsReadMode={setIsReadMode}
+          validDetails={validDetails}
+          setValidDetails={setValidDetails}
         />
       )}
       {loggedInUserType === 'SMC' && (
@@ -30,6 +34,8 @@ const PersonalDetails = ({
           handleNext={handleNext}
           handleBack={handleBack}
           setIsReadMode={setIsReadMode}
+          validDetails={validDetails}
+          setValidDetails={setValidDetails}
         />
       )}
     </Box>
