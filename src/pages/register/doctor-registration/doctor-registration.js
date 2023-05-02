@@ -191,8 +191,7 @@ const DoctorRegistrationWelcomePage = () => {
           handleAadhaarPage={handleAadhaarPage}
           isNext={isNext}
           setIsNext={setIsNext}
-          text={` Your data is not found in the NMR.
-           Do you want to continue the registration in the NMR ? `}
+          text={` Your account already exists. Please login with your credentials. `}
         />
       )}
       {/* {datafoundModalPopup && (
