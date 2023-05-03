@@ -26,7 +26,7 @@ const DoctorRegistrationWelcomePage = () => {
     getValues,
     setValue,
     clearErrors,
-    reset,
+    // reset,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
@@ -70,8 +70,7 @@ const DoctorRegistrationWelcomePage = () => {
   const onReset = () => {
     setValue('RegistrationCouncilId', '');
     setValue('RegistrationNumber', '');
-
-    reset();
+    setValue('RegistrationCouncil', '');
   };
   return (
     <>
@@ -117,8 +116,13 @@ const DoctorRegistrationWelcomePage = () => {
                       {...register('RegistrationCouncil', {
                         required: 'Registration Council is required',
                       })}
+                      value={{
+                        id: getValues().RegistrationCouncilId,
+                        name: getValues().RegistrationCouncil,
+                      }}
                       onChange={(currentValue) => {
                         setValue('RegistrationCouncilId', currentValue?.id);
+                        setValue('RegistrationCouncil', currentValue?.name);
                       }}
                     />
                   </Box>
