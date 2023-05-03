@@ -192,7 +192,12 @@ export const LoginRegisterPopover = ({
                   }}
                   className={styles.registerButton}
                   onClick={() => onClickRecruitingAgentHandler()}
-                  disabled={regType === 'SMC' || regType === 'NMC' || regType === 'NBE'}
+                  disabled={
+                    regType === 'SMC' ||
+                    regType === 'NMC' ||
+                    regType === 'NBE' ||
+                    regType === 'College'
+                  }
                 >
                   Register
                 </Button>
