@@ -572,7 +572,7 @@ const WorkDetails = ({
                     defaultValue={getValues()?.facilityId}
                     required={true}
                     {...register(`facilityId`, {
-                      required: 'Facility is Required',
+                      required: 'This field is required',
                     })}
                   />
                 </Box>
