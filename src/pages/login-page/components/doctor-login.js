@@ -338,7 +338,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
               required
               disabled={otpFormEnabled}
               label={'NMR ID'}
-              placeholder={'Please Enter NMR ID'}
+              placeholder={'Please enter NMR ID'}
               inputProps={{ maxLength: 12 }}
               name={'nmrID'}
               {...register('nmrID', {
@@ -393,15 +393,15 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
         ) : selectedLoginOption === 'userName' ? (
           <>
             <TextField
-              sx={{ mb: 2 }}
+              sx={{ mb: 1 }}
               required
               fullWidth
               label={'Username'}
-              placeholder={'Please Enter Username'}
+              placeholder={'Please enter username'}
               name={'userID'}
               error={errors.userID?.message}
               {...register('userID', {
-                required: 'Please Enter Username',
+                required: 'Please enter username',
                 pattern: {
                   message: 'Please enter a valid username',
                 },
@@ -411,21 +411,21 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
                 },
               })}
             />
-            <Typography
-              display={'flex'}
-              justifyContent="flex-end"
-              color="#FFA500"
-              onClick={handleUserForgetUserName}
-              sx={{ cursor: 'pointer' }}
-            >
-              Forgot Username ?
+            <Typography display={'flex'} justifyContent="flex-end">
+              <Button
+                color="secondary"
+                onClick={handleUserForgetUserName}
+                sx={{ cursor: 'pointer', display: 'contents' }}
+              >
+                Forgot Username ?
+              </Button>
             </Typography>
             <TextField
-              sx={{ mb: 2 }}
+              sx={{ mb: 1 }}
               required
               fullWidth
               label={'Password'}
-              placeholder={'Please Enter Password'}
+              placeholder={'Please enter password'}
               type={'Password'}
               inputProps={{ maxLength: 12 }}
               name={'password'}
@@ -433,21 +433,21 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
                 PasswordRegexValidation,
               })}
             />
-            <Typography
-              display={'flex'}
-              justifyContent="flex-end"
-              color="#FFA500"
-              onClick={handleUserForgotPassword}
-              sx={{ cursor: 'pointer' }}
-            >
-              Forgot Password ?
+            <Typography display={'flex'} justifyContent="flex-end">
+              <Button
+                color="secondary"
+                onClick={handleUserForgotPassword}
+                sx={{ cursor: 'pointer', display: 'contents' }}
+              >
+                Forgot Password ?
+              </Button>
             </Typography>
           </>
         ) : selectedLoginOption === 'mobileNumber' ? (
           <>
             <MobileNumber
               showhint={false}
-              placeholder="Enter Mobile Number"
+              placeholder="Enter mobile number"
               required
               register={register}
               getValues={getValues}

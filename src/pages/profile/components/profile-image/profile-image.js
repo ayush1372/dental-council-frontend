@@ -39,6 +39,8 @@ export default function ProfileImage(props) {
   const logInDoctorStatus = useSelector(
     (state) => state?.loginReducer?.loginData?.data?.blacklisted
   );
+  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const { loginData } = useSelector((state) => state?.loginReducer);
   const theme = useTheme();
   const useStyles = makeStyles(() => ({
     avtarImage: {
@@ -94,6 +96,13 @@ export default function ProfileImage(props) {
   const closeReactivateLicense = () => {
     setShowReactivateLicense(false);
   };
+  const fetchDoctorUserPersonalDetails = () => {
+    dispatch(getPersonalDetailsData(loginData?.data?.profile_id))
+      .then(() => {})
+      .catch((allFailMsg) => {
+        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      });
+  };
   return (
     <Grid container className={styles.profileImageDetailsContainer}>
       <ToastContainer></ToastContainer>
@@ -144,52 +153,58 @@ export default function ProfileImage(props) {
         </Grid>
       )}
       <Grid textAlign="center" item xs={12} mt={4}>
-        <Typography variant="subtitle2">{props.name}</Typography>
+        <Typography component="span" variant="subtitle2" sx={{ wordBreak: 'break-all' }}>
+          {props.name}
+        </Typography>
       </Grid>
-      {logInDoctorStatus && (
-        <Grid container mt={1}>
-          <Grid item xs={12}>
-            <Typography
-              color="suspendAlert.dark"
-              component="div"
-              textAlign="center"
-              display="inline-flex"
-              variant="body2"
-            >
-              Your profile is set to suspend mode.
-              <br />
-              You will not be able to perform actions <br />
-              on the profile.
-            </Typography>
+      {logInDoctorStatus &&
+        (personalDetails?.hp_profile_status_id === 5 ||
+          personalDetails?.hp_profile_status_id === 6) && (
+          <Grid container mt={1}>
+            <Grid item xs={12}>
+              <Typography
+                color="suspendAlert.dark"
+                component="div"
+                textAlign="center"
+                display="inline-flex"
+                variant="body2"
+              >
+                Your profile is set to suspend mode.
+                <br />
+                You will not be able to perform actions <br />
+                on the profile.
+              </Typography>
+            </Grid>
+            <Grid item xs={12} textAlign="center" mt={1} mr={2}>
+              <img
+                src={ReactivationLogo}
+                alt="Reactivation license logo"
+                width="15px"
+                height="15px"
+              />
+              <Link
+                sx={{ cursor: 'pointer' }}
+                ml={1}
+                variant="subtitle2"
+                onClick={() => {
+                  setShowReactivateLicense(true);
+                  setShowSuccessPopup(false);
+                }}
+              >
+                Reactivate License
+              </Link>
+            </Grid>
           </Grid>
-          <Grid item xs={12} textAlign="center" mt={1} mr={2}>
-            <img
-              src={ReactivationLogo}
-              alt="Reactivation license logo"
-              width="15px"
-              height="15px"
-            />
-            <Link
-              sx={{ cursor: 'pointer' }}
-              ml={1}
-              variant="subtitle2"
-              onClick={() => {
-                setShowReactivateLicense(true);
-                setShowSuccessPopup(false);
-              }}
-            >
-              Reactivate License
-            </Link>
-          </Grid>
-        </Grid>
-      )}
+        )}
       {showReactivateLicense && (
         <ReactivateLicencePopup
           renderSuccess={renderSuccess}
           closeReactivateLicense={closeReactivateLicense}
         />
       )}{' '}
-      {showSuccessPopup && <SuccessPopup />}
+      {showSuccessPopup && (
+        <SuccessPopup fetchDoctorUserPersonalDetails={fetchDoctorUserPersonalDetails} />
+      )}
     </Grid>
   );
 }

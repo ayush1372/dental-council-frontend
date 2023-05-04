@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
+import { validateAadharNumber } from '../../../constants/common-data';
 import { dateFormat, encryptData } from '../../../helpers/functions/common-functions';
 import KycErrorPopup from '../../../shared/common-modals/kyc-error-popup';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
@@ -380,7 +381,6 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
                     disabled={showOtpAadhar || isOtpValidAadhar}
                   />
                 </Box>
-
                 <Box p="35px 32px 0px 32px">
                   {isOtpValidAadhar ? <CheckCircleIcon color="success" /> : ''}
                 </Box>
@@ -392,42 +392,20 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
                       color="secondary"
                       width="95px"
                       onClick={handleUserAadhaarNumber}
+                      disabled={
+                        !validateAadharNumber(
+                          getValues().field_1 + getValues().field_2 + getValues().field_3
+                        ) ||
+                        getValues().field_1 === '' ||
+                        getValues().field_2 === '' ||
+                        getValues().field_3 === ''
+                      }
                     >
                       Verify
                     </Button>
                   </Box>
                 )}
               </Box>
-
-              {showOtpAadhar && (
-                <Box
-                  sx={{
-                    display: 'flex',
-                    flexDirection: {
-                      xs: 'column',
-                      sm: 'row',
-                    },
-                  }}
-                >
-                  <Box pt={1}>
-                    <Typography variant="body1">
-                      Please enter the OTP sent on your mobile number {mobileNumber} which is
-                      registered with Aadhaar.
-                    </Typography>
-                    {otpform}
-                  </Box>
-                  <Button
-                    sx={{ width: '114px', height: '53px', marginTop: '77px' }}
-                    component="span"
-                    variant="contained"
-                    color="secondary"
-                    onClick={handleValidateAadhar}
-                    disabled={consentD ? validationOtpInvalid : true}
-                  >
-                    Validate
-                  </Button>
-                </Box>
-              )}
               <Grid
                 container
                 bgcolor="backgroundColor.light"
@@ -445,13 +423,11 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
                       sx={{ width: '18px', height: '18px', marginLeft: 1 }}
                       name="consent"
                       defaultChecked={getValues()?.consent}
-                      {...register('consent', {
-                        required: 'Consent is Required',
-                      })}
+                      checked={consentD}
                       onChange={(e) => {
                         setConsentD(e.target.checked);
                       }}
-                      error={errors.consent?.message}
+                      disabled={isOtpValidAadhar}
                     />
                   </Grid>
                   <Grid item xs={11} display="flex" pl={1}>
@@ -479,6 +455,44 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
                   </Grid>
                 </Grid>
               </Grid>
+              {showOtpAadhar && (
+                <Box
+                  sx={{
+                    display: 'flex',
+                    flexDirection: {
+                      xs: 'column',
+                      sm: 'row',
+                    },
+                  }}
+                >
+                  <Box pt={1}>
+                    <Typography variant="body1">
+                      Please enter the OTP sent on your mobile number {mobileNumber} which is
+                      registered with Aadhaar.
+                    </Typography>
+                    {otpform}
+                  </Box>
+                  <Button
+                    sx={{ width: '114px', height: '53px', marginTop: '77px' }}
+                    component="span"
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleValidateAadhar}
+                    disabled={
+                      consentD
+                        ? validationOtpInvalid
+                          ? validationOtpInvalid
+                          : otpValue === ''
+                          ? true
+                          : false
+                        : true
+                    }
+                  >
+                    Validate
+                  </Button>
+                </Box>
+              )}
+
               <Divider sx={{ mb: 4, mt: 4 }} variant="fullWidth" />
               <Box sx={{ marginTop: '20px', paddingBottom: '48px' }}>
                 <Typography variant="subtitle2">
