@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
 
-const useWizard = (initStep, steps = [], progressiveValues = [0]) => {
+const useWizard = (initStep, steps = [], progressiveValues = [0], isReadMode) => {
   const [activeStep, setActiveStep] = useState(initStep || 0);
   const [completed, setCompleted] = useState(false);
   const [progress, setProgress] = useState(progressiveValues[0]);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setProgress((prevProgress) =>
-      prevProgress >= 100 ? 0 : progressiveValues[activeStep + 1] + prevProgress
-    );
+    isReadMode
+      ? setProgress((prevProgress) => prevProgress)
+      : setProgress((prevProgress) =>
+          prevProgress >= 100 ? 0 : progressiveValues[activeStep + 1] + prevProgress
+        );
   };
 
   const handleStep = (step) => {
@@ -24,9 +26,11 @@ const useWizard = (initStep, steps = [], progressiveValues = [0]) => {
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    setProgress((prevProgress) =>
-      prevProgress >= 100 ? 0 : prevProgress - progressiveValues[activeStep + 1]
-    );
+    isReadMode
+      ? setProgress((prevProgress) => prevProgress)
+      : setProgress((prevProgress) =>
+          prevProgress >= 100 ? 0 : prevProgress - progressiveValues[activeStep + 1]
+        );
   };
 
   useEffect(() => {

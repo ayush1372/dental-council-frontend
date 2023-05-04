@@ -53,6 +53,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
   const logInDoctorStatus = useSelector(
     (state) => state?.loginReducer?.loginData?.data?.blacklisted
   );
+  const [validDetails, setValidDetails] = useState({ mobileNo: false, email: false });
 
   const handleNotification = (eventData, mode) => {
     if (mode === 'email') {
@@ -78,7 +79,12 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
     }
   }, [personalDetails?.work_flow_status_id]);
   const { activeStep, handleNext, handleBack, resetStep, completed, progress, handleStep } =
-    useWizard(['Doctor', 'SMC', 'NMC'].includes(loggedInUserType) ? 0 : 1, [], [0, 25, 25, 25, 25]);
+    useWizard(
+      ['Doctor', 'SMC', 'NMC'].includes(loggedInUserType) ? 0 : 1,
+      [],
+      [0, 25, 25, 25, 25],
+      isReadMode
+    );
 
   const renderSuccess = () => {
     setShowReactivateLicense(false);
@@ -297,7 +303,9 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
             </Grid>
           </Grid>
         ) : null}
-        {!isReadMode && <ConstantDetails />}
+        {!isReadMode && (
+          <ConstantDetails validDetails={validDetails} setValidDetails={setValidDetails} />
+        )}
         <Wizard
           activeStep={loggedInUserType === 'College' ? activeStep + 1 : activeStep}
           handleBack={handleBack}
@@ -316,6 +324,8 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
               setIsReadMode={setIsReadMode}
               handleNext={handleNext}
               handleBack={handleBack}
+              validDetails={validDetails}
+              setValidDetails={setValidDetails}
             />
           )}
           {activeStep === 1 && (

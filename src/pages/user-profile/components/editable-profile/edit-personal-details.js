@@ -24,7 +24,7 @@ import { Checkbox } from '../../../../ui/core';
 import { RadioGroup, Select, TextField } from '../../../../ui/core';
 import successToast from '../../../../ui/core/toaster';
 
-const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
+const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValidDetails }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const loggedInUserType = useSelector((state) => state?.common?.loggedInUserType);
@@ -56,6 +56,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     gender,
     full_name,
     language,
+    email,
   } = personal_details || {};
   const {
     country,
@@ -64,7 +65,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
     sub_district,
     village,
     pincode,
-    email,
     mobile,
     landmark,
     locality,
@@ -331,6 +331,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
 
   const handleBackButton = () => {
     setIsReadMode(true);
+    setValidDetails({ ...validDetails, email: false });
   };
 
   const nationalities = [
@@ -391,6 +392,14 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   };
 
   async function onHandleSave() {
+    if (!email) {
+      setValidDetails({ ...validDetails, email: true });
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+      return;
+    }
     const {
       MiddleName,
       LastName,
@@ -462,7 +471,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode }) => {
   async function onHandleOptionNext() {
     await onHandleSave()
       .then((response) => {
-        fetchUpdatedDoctorUserProfileData(response);
+        response && fetchUpdatedDoctorUserProfileData(response);
       })
       .catch((allFailMsg) => {
         successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');

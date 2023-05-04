@@ -335,10 +335,10 @@ export const UploadFile = (props) => {
                                     document.getElementById('qualification').value = '';
                                     if (
                                       document
-                                        .getElementsByClassName(
+                                        ?.getElementsByClassName(
                                           'fileupload_fileUploadArea__shK1w'
                                         )[1]
-                                        .getElementsByTagName('input') !== undefined
+                                        ?.getElementsByTagName('input') !== undefined
                                     ) {
                                       document
                                         .getElementsByClassName(
@@ -347,7 +347,9 @@ export const UploadFile = (props) => {
                                         .getElementsByTagName('input').file.value = '';
                                     }
                                   } else {
-                                    document.getElementsByTagName('input').file.value = '';
+                                    if (document.getElementsByTagName('input') !== undefined) {
+                                      document.getElementsByTagName('input').file.value = '';
+                                    }
                                   }
                                   setFileData([]);
                                 }}
