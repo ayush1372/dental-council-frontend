@@ -403,7 +403,7 @@ const EditQualificationDetails = ({
                   ? errors?.qualification?.[index]?.qualification?.message
                   : ''
               }
-              name={`qualification[${index}].qualification`}
+              name="Qualification"
               label="Name of the Degree"
               value={courseID}
               required={true}
