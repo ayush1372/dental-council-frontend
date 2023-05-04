@@ -37,6 +37,7 @@ function NMCCollegeRegistration() {
 
   const [successModalPopup, setSuccessModalPopup] = useState(false);
   const [showCollegeName, setShowCollegeName] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [collegeResponse, setCollegeResponse] = useState([]);
 
   const dispatch = useDispatch();
@@ -200,56 +201,56 @@ function NMCCollegeRegistration() {
   };
 
   const onNameChange = (currentValue) => {
-    if (currentValue.id === 'other') {
+    if (currentValue?.id === 'other') {
       setShowCollegeName(true);
       // reset();
     } else {
       setShowCollegeName(false);
-      setValue('CollegeNameID', currentValue.id);
+      setValue('CollegeNameID', currentValue?.id);
+      if (currentValue?.id !== undefined)
+        dispatch(getCollegeData(currentValue?.id)).then((response) => {
+          setCollegeResponse(response);
+          response?.data?.college_code && setValue('CollegeCode', response?.data?.college_code);
 
-      dispatch(getCollegeData(currentValue.id)).then((response) => {
-        setCollegeResponse(response);
-        response?.data?.college_code && setValue('CollegeCode', response?.data?.college_code);
+          response?.data?.mobile_number && setValue('MobileNumber', response?.data?.mobile_number);
 
-        response?.data?.mobile_number && setValue('MobileNumber', response?.data?.mobile_number);
+          response?.data?.website && setValue('Website', response?.data?.website);
 
-        response?.data?.website && setValue('Website', response?.data?.website);
+          if (response?.data?.address_line1) {
+            setValue('AddressLine1', response?.data?.address_line1);
+          }
+          if (response?.data?.address_line2) {
+            setValue('AddressLine2', response?.data?.address_line2);
+          }
+          if (response?.data?.pin_code) {
+            setValue('Pincode', response?.data?.pin_code);
+          }
+          if (response?.data?.email_id) {
+            setValue('Email', response?.data?.email_id);
+          }
 
-        if (response?.data?.address_line1) {
-          setValue('AddressLine1', response?.data?.address_line1);
-        }
-        if (response?.data?.address_line2) {
-          setValue('AddressLine2', response?.data?.address_line2);
-        }
-        if (response?.data?.pin_code) {
-          setValue('Pincode', response?.data?.pin_code);
-        }
-        if (response?.data?.email_id) {
-          setValue('Email', response?.data?.email_id);
-        }
-
-        if (response?.data?.state_medical_council_id) {
-          setValue('CouncilID', response?.data?.state_medical_council_id);
-          setValue(
-            'CouncilName',
-            getSelecetedName(response?.data?.state_medical_council_id, 'councilData')
-          );
-        }
-        if (response?.data?.district_id) {
-          setValue('DistrictID', response?.data?.district_id);
-        }
-        if (response?.data?.state_id) {
-          setValue('StateID', response?.data?.state_id);
-          setValue('StateName', getSelecetedName(response?.data?.state_id, 'stateData'));
-        }
-        if (response?.data?.university_id) {
-          setValue('UniversityID', response?.data?.university_id);
-          setValue(
-            'UniversityName',
-            getSelecetedName(response?.data?.university_id, 'universityData')
-          );
-        }
-      });
+          if (response?.data?.state_medical_council_id) {
+            setValue('CouncilID', response?.data?.state_medical_council_id);
+            setValue(
+              'CouncilName',
+              getSelecetedName(response?.data?.state_medical_council_id, 'councilData')
+            );
+          }
+          if (response?.data?.district_id) {
+            setValue('DistrictID', response?.data?.district_id);
+          }
+          if (response?.data?.state_id) {
+            setValue('StateID', response?.data?.state_id);
+            setValue('StateName', getSelecetedName(response?.data?.state_id, 'stateData'));
+          }
+          if (response?.data?.university_id) {
+            setValue('UniversityID', response?.data?.university_id);
+            setValue(
+              'UniversityName',
+              getSelecetedName(response?.data?.university_id, 'universityData')
+            );
+          }
+        });
     }
   };
   const onStateChange = (currentValue) => {
@@ -282,7 +283,6 @@ function NMCCollegeRegistration() {
             {...register('CollegeName', {
               required: 'College name is required',
             })}
-            value={getSelecetedName(collegeResponse?.data?.state_id, 'stateData') || null}
             onChange={(currentValue) => {
               onNameChange(currentValue);
             }}

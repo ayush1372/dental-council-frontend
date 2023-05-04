@@ -38,6 +38,22 @@ const WorkProfile = () => {
 
   const handleCurrentWorking = (e) => {
     setCurrentlyWorking(e?.target?.value);
+    if (e?.target?.value === 'no') {
+      setValue('NatureOfWork', '');
+      setValue('workingOrganizationName', '');
+      setValue('organizationType', '');
+      setValue('Address', '');
+      setValue('Street', '');
+      setValue('Landmark', '');
+      setValue('Locality', '');
+      setValue('Country', '');
+      setValue('state', '');
+      setValue('District', '');
+      setValue('SubDistrict', '');
+      setValue('Area', '');
+      setValue('pincode', '');
+      setValue('telecommunicationURL', '');
+    }
   };
 
   return (

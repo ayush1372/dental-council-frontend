@@ -365,7 +365,11 @@ const WorkDetails = ({
       <Grid item xs={12} md={4}>
         <Select
           fullWidth
-          error={getValues()?.NatureOfWork?.length === 0 && errors.NatureOfWork?.message}
+          error={
+            getValues()?.NatureOfWork?.length === 0 &&
+            getValues()?.NatureOfWork === undefined &&
+            errors.NatureOfWork?.message
+          }
           name="NatureOfWork"
           label="Nature of work"
           defaultValue={getValues().NatureOfWork}
@@ -373,9 +377,10 @@ const WorkDetails = ({
           placeholder={'Nature Of Work'}
           {...register(
             'NatureOfWork',
-            getValues()?.NatureOfWork?.length === 0 && {
-              required: 'This field is required',
-            }
+            getValues()?.NatureOfWork?.length === 0 &&
+              getValues()?.NatureOfWork === undefined && {
+                required: 'This field is required',
+              }
           )}
           options={createSelectFieldData(natureOfWork)}
         />
@@ -572,7 +577,7 @@ const WorkDetails = ({
                     defaultValue={getValues()?.facilityId}
                     required={true}
                     {...register(`facilityId`, {
-                      required: 'Facility is Required',
+                      required: 'This field is required',
                     })}
                   />
                 </Box>
