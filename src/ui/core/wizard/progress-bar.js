@@ -30,7 +30,16 @@ export function LinearProgressWithLabel(props) {
         width="fit-content"
         sx={{ color: 'primary.main' }}
       >
-        {`${Math.round(props.value)}%`}
+        {/* {`${Math.round(props.value)}%`}{' '} */}
+        {props.value === 0
+          ? '0/4'
+          : props.value === 25
+          ? '1/4'
+          : props.value === 50
+          ? '2/4'
+          : props.value === 75
+          ? '3/4'
+          : props.value === 100 && '4/4'}
       </Typography>
       {loggedInUserType === 'Doctor' && props?.value === 75 && (
         <Box display="flex" alignItems={'center'} justifyContent="center">

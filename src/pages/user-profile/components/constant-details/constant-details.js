@@ -12,7 +12,7 @@ import { sendNotificationOtp } from '../../../../store/actions/common-actions';
 import { verifyEmail } from '../../../../store/actions/doctor-user-profile-actions';
 import successToast from '../../../../ui/core/toaster';
 import ConfirmOTP from '../../../login-page/components/confirm-otp';
-const ConstantDetails = () => {
+const ConstantDetails = ({ validDetails, setValidDetails }) => {
   const [mobileNumberChange, setMobileNumberChange] = useState(false);
   const [showOTPPOPUp, setShowOTPPOPUp] = useState(false);
   const [emailChange, setEmailChange] = useState(false);
@@ -37,7 +37,6 @@ const ConstantDetails = () => {
     (state) => state?.doctorUserProfileReducer?.personalDetails?.personal_details?.mobile
   );
   const [userData, setData] = useState({ contact: '', type: '', page: '' });
-  const [validDetails, setValidDetails] = useState({ mobileNo: false, email: false });
   const dispatch = useDispatch();
   const theme = useTheme();
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
@@ -245,7 +244,7 @@ const ConstantDetails = () => {
                       required: 'Mobile number is required',
                       pattern: {
                         value: /^\d{10}$/i,
-                        message: 'Please enter a valid 10 digit mobile no',
+                        message: 'Please enter a valid 10-digit mobile number',
                       },
                     })}
                     onKeyDown={(e) => ['e', 'E', '+', '-'].includes(e.key) && e.preventDefault()}
@@ -336,7 +335,7 @@ const ConstantDetails = () => {
                 {validDetails?.email && (
                   <Typography color="error" mt={1}>
                     {''}
-                    Enter Valid Email Address
+                    Please enter a valid Email ID
                   </Typography>
                 )}
               </Box>

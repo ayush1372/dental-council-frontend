@@ -6,7 +6,7 @@ import styles from './button.module.scss';
 /**
  * Props structure
  *
- * variant: "contained", "outlined"
+ * variant: "contained", "outlined","text"
  * color: "primary", "secondary", "grey"
  * size: "small", "medium", "large"
  */
