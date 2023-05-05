@@ -494,6 +494,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                       ? 'grey2.main'
                       : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
                       ? ''
+                      : getValues().RegistrationDate === ''
+                      ? ''
                       : 'grey2.main',
                 },
               }}
@@ -503,6 +505,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                   work_flow_status_id === 3
                     ? getQueryRaised('Registration Date')
                     : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                    ? false
+                    : getValues().RegistrationDate === ''
                     ? false
                     : true,
               }}
