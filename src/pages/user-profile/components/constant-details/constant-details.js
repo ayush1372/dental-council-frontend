@@ -265,7 +265,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                 {validDetails?.mobileNo && (
                   <Typography color="error" mt={1}>
                     {' '}
-                    Please enter a valid 10 digit mobile no
+                    Please enter a valid 10-digit mobile number
                   </Typography>
                 )}
               </Box>
