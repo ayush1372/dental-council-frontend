@@ -536,6 +536,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                         color="secondary"
                         width="95px"
                         onClick={handleVerifyMobile}
+                        disabled={getValues().MobileNumber.length < 10}
                       >
                         Verify
                       </Button>
