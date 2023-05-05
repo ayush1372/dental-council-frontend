@@ -86,7 +86,7 @@ export const LoginRegisterPopover = ({
         <Box className={styles.lrPopover}>
           <Grid container>
             <Grid item container xs={12}>
-              <Grid item xs={6}>
+              <Grid item xs={5}>
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -103,7 +103,7 @@ export const LoginRegisterPopover = ({
                   label="Doctor"
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={7}>
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -117,10 +117,10 @@ export const LoginRegisterPopover = ({
                       inputProps={{ 'aria-label': 'controlled' }}
                     />
                   }
-                  label="College"
+                  label="College/University"
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={5}>
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -138,7 +138,7 @@ export const LoginRegisterPopover = ({
                 />
               </Grid>
 
-              <Grid item xs={6}>
+              <Grid item xs={7}>
                 <FormControlLabel
                   control={
                     <Checkbox
