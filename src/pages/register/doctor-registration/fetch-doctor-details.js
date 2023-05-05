@@ -301,7 +301,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
               },
               p: {
                 xs: 0,
-                sm: '0 16px',
+                sm: '12px 16px 12px',
               },
             }}
           >
