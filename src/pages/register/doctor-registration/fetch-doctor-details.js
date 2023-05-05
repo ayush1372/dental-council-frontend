@@ -34,7 +34,7 @@ import { Button, Checkbox, TextField } from '../../../ui/core';
 import AadhaarInputField from '../../../ui/core/aadhaar-input-field/aadhaar-input-field';
 import successToast from '../../../ui/core/toaster';
 import CreateHprId from './unique-username';
-function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
+function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onReset }) {
   const [showCreateHprIdPage, setShowCreateHprIdPage] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showOtpMobile, setShowOtpMobile] = useState(false);
@@ -283,6 +283,8 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
         <KycErrorPopup
           open={kycError}
           setOpen={() => setKycError(false)}
+          setIsNext={setIsNext}
+          onReset={onReset}
           text="Your NMR and Aadhar details doesn't match. Do you want to continue the registration in the NMR?"
         />
       )}
@@ -525,7 +527,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound }) {
                     })}
                   />
                   <IconButton aria-label="toggle password visibility" edge="end">
-                    {isOtpValidMobile ? <CheckCircleIcon color="success" /> : ''}
+                    {isOtpValidMobile ? <CheckCircleIcon color="success" cursor="default" /> : ''}
                   </IconButton>
                   <Box>
                     {!showOtpMobile && !isOtpValidMobile && (
