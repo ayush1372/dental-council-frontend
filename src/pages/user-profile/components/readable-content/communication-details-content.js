@@ -16,13 +16,24 @@ const CommunicationAddress = ({ personalDetails }) => {
   const [queryRaisedField, setQueryRaisedField] = useState('');
 
   const { communication_address } = personalDetails || {};
-  const { country, state, district, sub_district, pincode, village } = communication_address || {};
+  const { country, state, district, sub_district, pincode, village, is_same_address } =
+    communication_address || {};
 
-  const countryName = country?.name || '';
-  const stateName = state?.name || '';
-  const districtName = district?.name || '';
-  const subDistrictName = sub_district?.name || '';
-  const villageName = village?.name || '';
+  const countryName = is_same_address
+    ? personalDetails?.kyc_address?.country?.name || ''
+    : country?.name || '';
+  const stateName = is_same_address
+    ? personalDetails?.kyc_address?.state?.name || ''
+    : state?.name || '';
+  const districtName = is_same_address
+    ? personalDetails?.kyc_address?.district?.name || ''
+    : district?.name || '';
+  const subDistrictName = is_same_address
+    ? personalDetails?.kyc_address?.sub_district?.name || ''
+    : sub_district?.name || '';
+  const villageName = is_same_address
+    ? personalDetails?.kyc_address?.village?.name || ''
+    : village?.name || '';
 
   const ClosePopup = () => {
     setOpenModal(false);
