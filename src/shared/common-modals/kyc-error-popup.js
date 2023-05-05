@@ -11,14 +11,17 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 
 import { Button } from '../../ui/core';
-export default function KycErrorPopup({ open, setOpen, text }) {
+export default function KycErrorPopup({ open, setOpen, text, setIsNext, onReset }) {
   const navigate = useNavigate();
   const theme = useTheme();
   const handleYesClick = () => {
     setOpen(false);
   };
   const handleNo = () => {
-    navigate('/');
+    navigate('/register/doctor-registration');
+    setOpen(false);
+    setIsNext(false);
+    onReset();
     window.scrollTo({
       top: 0,
       behavior: 'smooth',

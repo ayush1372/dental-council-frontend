@@ -45,7 +45,6 @@ export const OtpForm = ({
   // };
 
   const handleResend = () => {
-    setOtp('');
     setOtpValid(false);
     setOtpInvalid(false);
     setResetEnabled(true);

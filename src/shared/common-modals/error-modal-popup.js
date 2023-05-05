@@ -12,6 +12,7 @@ export default function ErrorModalPopup({
   setIsNext,
   handleAadhaarPage,
   accountExist,
+  onReset,
 }) {
   const theme = useTheme();
   const navigate = useNavigate();
@@ -25,7 +26,9 @@ export default function ErrorModalPopup({
     setOpen(false);
   };
   const handleNo = () => {
-    navigate('/');
+    onReset ? navigate('/register/doctor-registration') : navigate('/');
+    setOpen(false);
+    onReset && onReset();
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
