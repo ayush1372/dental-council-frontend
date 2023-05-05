@@ -117,7 +117,7 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep })
               type="text"
               name="Id"
               required="true"
-              placeholder={t(loginFormname === 'Doctor' ? doctorTitle : userTitle)}
+              placeholder={t(loginFormname === 'Doctor' ? doctorTitle : 'Enter user ID/email ID')}
               margin="dense"
               defaultValue={getValues().Id}
               error={isIdActive && errors.Id?.message}

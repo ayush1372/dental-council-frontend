@@ -91,7 +91,7 @@ const NbeEditProfile = (props) => {
             fullWidth
             required
             name={'user_id'}
-            placeholder={'Enter User ID'}
+            placeholder={'Enter user ID'}
             defaultValue={getValues().user_id}
             error={errors.user_id?.message}
             {...register('user_id', {

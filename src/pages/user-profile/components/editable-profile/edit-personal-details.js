@@ -867,7 +867,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 Communication Address*
               </Typography>
             </Grid>
-            <Box p={2} display="flex">
+            <Box p={2} display="flex" alignItems="center">
               <Checkbox
                 value={isSameAddress}
                 defaultChecked={
