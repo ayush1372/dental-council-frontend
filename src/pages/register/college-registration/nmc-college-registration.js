@@ -338,7 +338,7 @@ function NMCCollegeRegistration() {
             fullWidth
             name="MobileNumber"
             required
-            placeholder={t('Enter mobile number')}
+            placeholder={t('Enter Mobile Number')}
             onInput={(e) => handleInput(e)}
             error={errors.MobileNumber?.message}
             {...register('MobileNumber', {
