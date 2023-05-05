@@ -174,6 +174,24 @@ export default function VerticalLinearStepper() {
               mt="5px"
               pb={1}
             >
+              <Typography component="div" variant="body1" fontWeight="500">
+                {userActionId(label?.action_id) === 'Forwarded' &&
+                userGroupTypeId(label?.group_id) === 'SMC'
+                  ? 'SMC reviewed the application and forwarded to college for further verification'
+                  : userActionId(label?.action_id) === 'Approve' &&
+                    userGroupTypeId(label?.group_id) === 'College'
+                  ? 'College reviewed and approved the application. Application now has been sent to SMC for further verification.'
+                  : userActionId(label?.action_id) === 'Rejected' &&
+                    userGroupTypeId(label?.group_id) === 'College'
+                  ? 'Your application has been rejected by college for following reason'
+                  : userActionId(label?.action_id) === 'Approve' &&
+                    userGroupTypeId(label?.group_id) === 'SMC'
+                  ? 'SMC reviewed and approved the application. Application now has been sent to NMC for further verification.'
+                  : userActionId(label?.action_id) === 'Approve' &&
+                    userGroupTypeId(label?.group_id) === 'NMC'
+                  ? 'NMC reviewed and approved the application.'
+                  : ''}
+              </Typography>
               <Typography component="div" variant="body3" fontWeight="500">
                 {`${label?.remarks ? label?.remarks : ''}`}
               </Typography>

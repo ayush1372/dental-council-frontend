@@ -447,7 +447,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
           <>
             <MobileNumber
               showhint={false}
-              placeholder="Enter mobile number"
+              placeholder="Enter Mobile Number"
               required
               register={register}
               getValues={getValues}

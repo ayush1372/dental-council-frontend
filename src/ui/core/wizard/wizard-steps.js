@@ -27,6 +27,7 @@ const WizardSteps = ({
               padding: '12px',
               border: '1px solid',
               borderColor: 'inputBorderColor.main',
+              cursor: showCheckCirlce ? 'default' : 'pointer',
               borderBottomColor:
                 index === activeStep
                   ? 'inputFocusColor.main'
