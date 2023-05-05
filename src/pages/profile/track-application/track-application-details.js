@@ -44,13 +44,11 @@ export function TrackApplicationDetails({
         Application Details
       </Typography>
       <BreadcrumbContainer
-        primary="Track Application"
+        primary={'Track Application'}
         onClick={navigateToTab}
-        primaryLink={'/profile'}
         secondary={'Application Details'}
       />
-
-      <Grid container spacing={2}>
+      <Grid container spacing={2} pt={2}>
         <Grid item xs={12} md={9}>
           <Box
             boxShadow="1"
