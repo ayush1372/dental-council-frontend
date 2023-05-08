@@ -68,7 +68,7 @@ export function MobileNumber(props) {
               required: 'Mobile Number is required',
               pattern: {
                 value: /^\d{10}$/i,
-                message: 'Please enter a valid 10 digit mobile no',
+                message: 'Please enter a valid 10-digit mobile number',
               },
             })}
             onInput={(e) => handleInput(e)}

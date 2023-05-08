@@ -301,7 +301,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
               },
               p: {
                 xs: 0,
-                sm: '0 16px',
+                sm: '12px 16px 12px',
               },
             }}
           >
@@ -515,7 +515,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                     onInput={(e) => handleInput(e)}
                     name={'MobileNumber'}
                     disabled={isOtpValidMobile}
-                    placeholder={t('Enter mobile number')}
+                    placeholder={t('Enter Mobile Number')}
                     defaultValue={getValues().MobileNumber}
                     error={errors.MobileNumber?.message}
                     {...register('MobileNumber', {
@@ -536,6 +536,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                         color="secondary"
                         width="95px"
                         onClick={handleVerifyMobile}
+                        disabled={getValues().MobileNumber.length < 10}
                       >
                         Verify
                       </Button>
