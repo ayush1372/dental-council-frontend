@@ -91,7 +91,7 @@ const NbeEditProfile = (props) => {
             fullWidth
             required
             name={'user_id'}
-            placeholder={'Enter user ID'}
+            placeholder={'Enter User ID'}
             defaultValue={getValues().user_id}
             error={errors.user_id?.message}
             {...register('user_id', {
@@ -144,10 +144,10 @@ const NbeEditProfile = (props) => {
             defaultValue={getValues().mobile_no}
             error={errors.mobile_no?.message}
             {...register('mobile_no', {
-              required: 'Enter valid phone number',
+              required: 'Enter Valid Phone Number',
               pattern: {
                 value: /^(\d{10})$/i,
-                message: 'Enter valid phone number',
+                message: 'Enter Valid Phone Number',
               },
             })}
           />
