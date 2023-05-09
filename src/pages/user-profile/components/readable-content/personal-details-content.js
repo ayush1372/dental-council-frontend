@@ -110,7 +110,7 @@ const PersonalDetails = ({ personalDetails }) => {
             Father&apos;s Name
           </Typography>
           {getQueryRaised('Fathers Name') !== undefined && (
-            <Tooltip title={getQueryRaised('Fathers Name')}>
+            <Tooltip sx={{ color: '#D66025' }} title={getQueryRaised('Fathers Name')}>
               <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
             </Tooltip>
           )}
@@ -159,11 +159,11 @@ const PersonalDetails = ({ personalDetails }) => {
           <Typography variant="body5" color="grey.label">
             Spouse Name
           </Typography>
-          {getQueryRaised('Spouse Name') !== undefined && (
+          {/* {getQueryRaised('Spouse Name') !== undefined && (
             <Tooltip title={getQueryRaised('Spouse Name')}>
               <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
             </Tooltip>
-          )}
+          )} */}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {spouse_name === '' || spouse_name === undefined ? '-' : spouse_name}
