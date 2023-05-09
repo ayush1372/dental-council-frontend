@@ -251,6 +251,8 @@ export default function GenericTable(props) {
                               ? 'pending'
                               : row[item.name]?.value === 'Reject'
                               ? 'reject'
+                              : row[item.name]?.value === 'QUERY RAISED'
+                              ? 'queryRaised'
                               : 'approved'
                           }
                           label={row[item.name]?.value}
