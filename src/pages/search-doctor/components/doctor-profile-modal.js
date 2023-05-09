@@ -171,7 +171,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
             </Grid>
           </Grid>
           <Grid container rowSpacing={3}>
-            <Grid item xs={12} sm={6} md={4}>
+            <Grid item xs={12} sm={12} md={12}>
               <Typography
                 component="div"
                 variant="body1"
@@ -184,7 +184,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                 {searchDetailsById?.data?.data?.father_husband_name || '-'}
               </Typography>
             </Grid>
-            <Grid item xs={12} sm={6} md={4}>
+            {/* <Grid item xs={12} sm={6} md={4}>
               <Typography
                 component="div"
                 variant="body1"
@@ -196,7 +196,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
               <Typography component="div" variant="body1" color="textSecondary.main">
                 {searchDetailsById?.data?.data?.date_of_birth || '-'}
               </Typography>
-            </Grid>
+            </Grid> */}
             {/* <Grid item xs={12} sm={6} md={3}>
               <Typography
                 component="div"
@@ -284,19 +284,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                 )}
               </Typography>
             </Grid> */}
-            <Grid item xs={12} sm={6} md={4}>
-              <Typography
-                component="div"
-                variant="body1"
-                fontWeight="400"
-                color="inputTextColor.main"
-              >
-                Qualification year
-              </Typography>
-              <Typography component="span" variant="body1" color="textSecondary.main">
-                {searchDetailsById?.data?.data?.qualifications[0]?.qualification_year || '-'}
-              </Typography>
-            </Grid>
+
             <Grid item xs={12} sm={6} md={4}>
               <Typography
                 component="div"
@@ -308,6 +296,20 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
               </Typography>
               <Typography component="span" variant="body1" color="textSecondary.main">
                 {searchDetailsById?.data?.data?.qualifications[0]?.qualification || '-'}
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12} sm={6} md={4}>
+              <Typography
+                component="div"
+                variant="body1"
+                fontWeight="400"
+                color="inputTextColor.main"
+              >
+                Qualification year
+              </Typography>
+              <Typography component="span" variant="body1" color="textSecondary.main">
+                {searchDetailsById?.data?.data?.qualifications[0]?.qualification_year || '-'}
               </Typography>
             </Grid>
 
@@ -346,7 +348,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                     Additional Qualification :- {index}
                   </Typography>
                   <Grid container rowSpacing={{ xs: 2, md: 0 }}>
-                    <Grid item xs={12} sm={4} md={3}>
+                    <Grid item xs={12} sm={6} md={4}>
                       <Typography
                         component="div"
                         variant="body1"
@@ -359,7 +361,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                         {q?.qualification}
                       </Typography>
                     </Grid>
-                    <Grid item xs={12} sm={4} md={3}>
+                    <Grid item xs={12} sm={6} md={4}>
                       <Typography
                         component="div"
                         variant="body1"
@@ -372,7 +374,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                         {q?.qualification_year}
                       </Typography>
                     </Grid>
-                    <Grid item xs={12} sm={4} md={3}>
+                    <Grid item xs={12} sm={6} md={4}>
                       <Typography
                         component="div"
                         variant="body1"
