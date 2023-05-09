@@ -51,12 +51,19 @@ const authInterceptors = (error) => {
         data?.details[0].message
       ) {
         if (data?.details[0]?.attribute && data?.details[0]?.attribute.key) {
-          successToast(
-            `${capitalizeFirstLetter(data.details[0].attribute.key)}: ${data?.details[0]?.message}`,
-            'auth-error',
-            'error',
-            'top-center'
-          );
+          if (data.details[0].attribute.key === 'mobile') {
+            successToast(data.details[0].message, 'auth-error', 'error', 'top-center');
+          } else {
+            successToast(
+              `${capitalizeFirstLetter(data.details[0].attribute.key)}: ${
+                data?.details[0]?.message
+              }`,
+              'auth-error',
+              'error',
+              'top-center'
+            );
+          }
+
           return Promise.reject(error?.response?.data);
         } else {
           successToast(data?.details[0]?.message, 'auth-error', 'error', 'top-center');

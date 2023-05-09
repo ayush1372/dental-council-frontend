@@ -4,7 +4,7 @@ import { Checkbox as MuiCheckbox, FormControl, FormControlLabel, Typography } fr
 
 const CheckboxField = ({ name, label, error, dataTestid, ...props }, ref) => {
   return (
-    <FormControl>
+    <FormControl sx={{ marginRight: '-10px' }}>
       <FormControlLabel
         control={<MuiCheckbox {...props} name={name} ref={ref} data-testid={dataTestid} />}
         label={label}

@@ -105,7 +105,9 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
         };
         try {
           dispatch(verifyEmail(sendOTPData, personalDetails?.hp_profile_id)).then((response) => {
-            response?.data?.message === 'Success' && setShowOTPPOPUp(true);
+            response?.data?.message === 'Success'
+              ? setShowOTPPOPUp(true)
+              : successToast(response?.data?.message, 'auth-error', 'error', 'top-center');
           });
         } catch (allFailMsg) {
           successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
@@ -117,7 +119,9 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
         };
         try {
           dispatch(sendNotificationOtp(sendOTPData)).then((response) => {
-            response?.data?.message === 'Success' && setShowOTPPOPUp(true);
+            response?.data?.message === 'Success'
+              ? setShowOTPPOPUp(true)
+              : successToast(response?.data?.message, 'auth-error', 'error', 'top-center');
           });
         } catch (allFailMsg) {
           successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
