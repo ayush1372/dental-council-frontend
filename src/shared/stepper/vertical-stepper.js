@@ -117,9 +117,13 @@ export default function VerticalLinearStepper() {
 
               <Typography component="div" fontWeight="600" pl={1}>
                 {userActionId(label?.action_id) === 'Approve'
-                  ? `Application ${userActionId(label?.action_id) + 'd'} by ${userGroupTypeId(
-                      label?.group_id
-                    )}`
+                  ? `Application ${
+                      label?.action_id === 4
+                        ? label?.group_id === 3
+                          ? userActionId(label?.action_id) + 'd'
+                          : 'Verified'
+                        : userActionId(label?.action_id) + 'd'
+                    } by ${userGroupTypeId(label?.group_id)}`
                   : (ApplicationStatus?.application_type === 3 ||
                       ApplicationStatus?.application_type === 4 ||
                       ApplicationStatus?.application_type === 5) &&
@@ -180,13 +184,13 @@ export default function VerticalLinearStepper() {
                   ? 'SMC reviewed the application and forwarded to college for further verification'
                   : userActionId(label?.action_id) === 'Approve' &&
                     userGroupTypeId(label?.group_id) === 'College'
-                  ? 'College reviewed and approved the application. Application now has been sent to SMC for further verification.'
+                  ? 'College reviewed and verified the application. Application now has been sent to SMC for further verification.'
                   : userActionId(label?.action_id) === 'Rejected' &&
                     userGroupTypeId(label?.group_id) === 'College'
                   ? 'Your application has been rejected by college for following reason'
                   : userActionId(label?.action_id) === 'Approve' &&
                     userGroupTypeId(label?.group_id) === 'SMC'
-                  ? 'SMC reviewed and approved the application. Application now has been sent to NMC for further verification.'
+                  ? 'SMC reviewed and verified the application. Application now has been sent to NMC for further verification.'
                   : userActionId(label?.action_id) === 'Approve' &&
                     userGroupTypeId(label?.group_id) === 'NMC'
                   ? 'NMC reviewed and approved the application.'
