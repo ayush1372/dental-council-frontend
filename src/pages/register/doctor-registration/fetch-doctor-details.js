@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { Alert, Container, Divider, Grid, IconButton, Link, Typography } from '@mui/material';
+import { Alert, Container, Divider, Grid, Link, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
@@ -506,10 +506,11 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                 <Box
                   sx={{
                     display: 'flex',
+                    alignItems: 'center',
                   }}
                 >
                   <TextField
-                    sx={{ width: { xs: '100%', sm: '536px' }, marginRight: '16px' }}
+                    sx={{ width: { xs: '100%', sm: '536px' }, marginRight: '24px' }}
                     required
                     type="text"
                     onInput={(e) => handleInput(e)}
@@ -526,9 +527,9 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                       },
                     })}
                   />
-                  <IconButton aria-label="toggle password visibility" edge="end">
-                    {isOtpValidMobile ? <CheckCircleIcon color="success" cursor="default" /> : ''}
-                  </IconButton>
+                  {/* <IconButton aria-label="toggle password visibility" edge="end" cursor="initial"> */}
+                  {isOtpValidMobile ? <CheckCircleIcon color="success" /> : ''}
+                  {/* </IconButton> */}
                   <Box>
                     {!showOtpMobile && !isOtpValidMobile && (
                       <Button
