@@ -527,9 +527,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                       },
                     })}
                   />
-                  {/* <IconButton aria-label="toggle password visibility" edge="end" cursor="initial"> */}
                   {isOtpValidMobile ? <CheckCircleIcon color="success" /> : ''}
-                  {/* </IconButton> */}
                   <Box>
                     {!showOtpMobile && !isOtpValidMobile && (
                       <Button
