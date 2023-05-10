@@ -3,6 +3,7 @@ import { useState } from 'react';
 import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Grid, Tooltip, Typography } from '@mui/material';
+import moment from 'moment';
 import { useSelector } from 'react-redux';
 
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
@@ -225,7 +226,7 @@ const PersonalDetails = ({ personalDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
-              {date_of_birth ? date_of_birth : ''}
+              {date_of_birth ? moment(date_of_birth).format('DD-MM-YYYY') : ''}
             </Typography>
             {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
