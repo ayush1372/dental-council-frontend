@@ -365,23 +365,15 @@ const WorkDetails = ({
       <Grid item xs={12} md={4}>
         <Select
           fullWidth
-          error={
-            getValues()?.NatureOfWork?.length === 0 &&
-            getValues()?.NatureOfWork === undefined &&
-            errors.NatureOfWork?.message
-          }
           name="NatureOfWork"
           label="Nature of work"
           defaultValue={getValues().NatureOfWork}
           required={true}
           placeholder={'Nature Of Work'}
-          {...register(
-            'NatureOfWork',
-            getValues()?.NatureOfWork?.length === 0 &&
-              getValues()?.NatureOfWork === undefined && {
-                required: 'This field is required',
-              }
-          )}
+          {...register('NatureOfWork', {
+            required: 'This field is required',
+          })}
+          error={errors.NatureOfWork?.message}
           options={createSelectFieldData(natureOfWork)}
         />
       </Grid>
@@ -868,7 +860,7 @@ const WorkDetails = ({
                 defaultValue={getValues().Country}
                 required={true}
                 {...register('Country', {
-                  // required: 'Country is required',
+                  required: 'Country is required',
                 })}
                 options={
                   countriesList?.length > 0 ? createSelectFieldData(countriesList, 'id') : []
@@ -897,7 +889,7 @@ const WorkDetails = ({
                 defaultValue={getValues().state}
                 required={true}
                 {...register('state', {
-                  // required: 'This field is required',
+                  required: 'This field is required',
                 })}
                 options={createSelectFieldData(statesList)}
               />
@@ -916,7 +908,7 @@ const WorkDetails = ({
                 defaultValue={getValues().District}
                 required={true}
                 {...register('District', {
-                  // required: 'This field is required',
+                  required: 'This field is required',
                 })}
                 options={createSelectFieldData(districtsList)}
               />
@@ -937,7 +929,7 @@ const WorkDetails = ({
                 required={true}
                 defaultValue={getValues().SubDistrict}
                 {...register('SubDistrict', {
-                  // required: 'This field is required',
+                  required: 'This field is required',
                 })}
                 options={createSelectFieldData(subDistrictList, 'iso_code')}
                 MenuProps={{
@@ -964,7 +956,7 @@ const WorkDetails = ({
                 defaultValue={getValues().Area}
                 required={true}
                 {...register('Area', {
-                  // required: 'City/Town/Village is required',
+                  required: 'City/Town/Village is required',
                 })}
                 options={createSelectFieldData(citiesList)}
                 MenuProps={{
@@ -989,7 +981,7 @@ const WorkDetails = ({
                 required={true}
                 placeholder="Enter Pin Code"
                 fullWidth
-                error={errors.Pincode?.message}
+                error={errors.pincode?.message}
                 defaultValue={getValues().pincode}
                 {...register('pincode', {
                   required: 'This field is required',
