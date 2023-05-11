@@ -117,10 +117,18 @@ const DoctorRegistrationWelcomePage = () => {
                         required: 'Registration Council is required',
                       })}
                       value={{
-                        id: getValues().RegistrationCouncilId,
-                        name: getValues().RegistrationCouncil,
+                        id:
+                          getValues().RegistrationCouncilId !== undefined
+                            ? getValues().RegistrationCouncilId
+                            : '',
+                        name:
+                          getValues().RegistrationCouncil !== undefined
+                            ? getValues().RegistrationCouncil
+                            : '',
                       }}
                       onChange={(currentValue) => {
+                        // eslint-disable-next-line no-console
+                        console.log(currentValue, getValues().RegistrationCouncilId);
                         setValue('RegistrationCouncilId', currentValue?.id);
                         setValue('RegistrationCouncil', currentValue?.name);
                       }}
