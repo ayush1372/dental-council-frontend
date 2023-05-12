@@ -30,6 +30,9 @@ export default function ProfileImage(props) {
   const updatedProfileImage = useSelector(
     (state) => state.doctorUserProfileReducer?.profileImage?.data?.profile_picture
   );
+  const nmrIdData = useSelector(
+    (state) => state?.doctorUserProfileReducer?.personalDetails?.nmr_id
+  );
   const dispatch = useDispatch();
   const [imageChanged, setImageChanged] = useState(false);
   const [imageTypeError, setImageTypeError] = useState(false);
@@ -104,7 +107,7 @@ export default function ProfileImage(props) {
       });
   };
   return (
-    <Grid container className={styles.profileImageDetailsContainer}>
+    <Grid container className={styles.profileImageDetailsContainer} justifyContent="center">
       <ToastContainer></ToastContainer>
       {loggedInUserType === 'Doctor' ? (
         <Grid item xs={12} mt={2} display="flex" justifyContent="center">
@@ -157,6 +160,16 @@ export default function ProfileImage(props) {
           {props.name}
         </Typography>
       </Grid>
+      {nmrIdData && (
+        <Grid display="flex" borderRight={`1px solid ${theme.palette.inputBorderColor.main}`} item>
+          <Typography variant="subtitle2" color="grey.label" sx={{ mr: '5px' }}>
+            NMR ID :
+          </Typography>
+          <Typography variant="subtitle2" color="textPrimary.main">
+            {nmrIdData ? nmrIdData : ''}
+          </Typography>{' '}
+        </Grid>
+      )}
       {logInDoctorStatus &&
         (personalDetails?.hp_profile_status_id === 5 ||
           personalDetails?.hp_profile_status_id === 6) && (
