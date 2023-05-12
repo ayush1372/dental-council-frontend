@@ -420,6 +420,7 @@ export const getActivateLicenseList = (body) => async (dispatch) => {
     useAxiosCall({
       method: GET,
       url: `${API.common.activateLicense}?${path}`,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(getActivateLicense(response));
