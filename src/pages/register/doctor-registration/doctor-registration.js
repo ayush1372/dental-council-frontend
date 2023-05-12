@@ -118,12 +118,12 @@ const DoctorRegistrationWelcomePage = () => {
                       })}
                       value={{
                         id:
-                          getValues().RegistrationCouncilId !== undefined
-                            ? getValues().RegistrationCouncilId
+                          getValues()?.RegistrationCouncilId !== undefined
+                            ? getValues()?.RegistrationCouncilId
                             : '',
                         name:
-                          getValues().RegistrationCouncil !== undefined
-                            ? getValues().RegistrationCouncil
+                          getValues()?.RegistrationCouncil !== undefined
+                            ? getValues()?.RegistrationCouncil
                             : '',
                       }}
                       onChange={(currentValue) => {
