@@ -305,28 +305,28 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
               },
             }}
           >
-            {hpName !== null || undefined ? (
+            {/* {hpName !== null || undefined ? (
               ''
-            ) : (
-              <Box sx={{ width: '100%', height: '53px', marginBottom: '30px', marginTop: '32px ' }}>
-                <Alert
-                  sx={{
-                    m: 2,
-                    marginLeft: '0px',
-                    borderRadius: '5px',
-                    width: {
-                      xs: '100%',
-                      md: '680px',
-                    },
-                    boxShadow: '1',
-                    color: 'inputSuccessTextColor.main',
-                    backgroundColor: 'inputSuccessBackgroundColor.main',
-                  }}
-                >
-                  Record fetched successfully. Please verify your details to proceed further.
-                </Alert>
-              </Box>
-            )}
+            ) : ( */}
+            <Box sx={{ width: '100%', height: '53px', marginBottom: '30px', marginTop: '32px ' }}>
+              <Alert
+                sx={{
+                  m: 2,
+                  marginLeft: '0px',
+                  borderRadius: '5px',
+                  width: {
+                    xs: '100%',
+                    md: '680px',
+                  },
+                  boxShadow: '1',
+                  color: 'inputSuccessTextColor.main',
+                  backgroundColor: 'inputSuccessBackgroundColor.main',
+                }}
+              >
+                Record fetched successfully. Please verify your details to proceed further.
+              </Alert>
+            </Box>
+            {/* )} */}
 
             <Box p="30px 32px 0px 32px" width={{ xs: '100%', md: '679px' }} sx={{ boxShadow: '2' }}>
               <Box mb={4}>

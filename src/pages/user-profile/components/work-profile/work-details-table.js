@@ -4,6 +4,7 @@ import { Box, Grid, TablePagination } from '@mui/material';
 import { Checkbox } from '@mui/material';
 
 import { verboseLog } from '../../../../config/debug';
+import { capitalizeFirstLetter, toUpperCase } from '../../../../helpers/functions/common-functions';
 import GenericTable from '../../../../shared/generic-component/generic-table';
 import { TextField } from '../../../../ui/core';
 
@@ -93,7 +94,7 @@ function WorkDetailsTable({
     return createData(
       {
         type: 'name',
-        value: application?.facilityName,
+        value: toUpperCase(application?.facilityName),
       },
       {
         type: 'address',
@@ -101,7 +102,7 @@ function WorkDetailsTable({
       },
       {
         type: 'state',
-        value: application?.stateName,
+        value: capitalizeFirstLetter(application?.stateName),
       },
       {
         type: 'district',
@@ -182,6 +183,9 @@ function WorkDetailsTable({
         handleRowClick={handleDataRowClick}
         rowsPerPage={rowsPerPage}
         page={page}
+        sx={{
+          bgcolor: 'red',
+        }}
       />
       <Box>
         <TablePagination
