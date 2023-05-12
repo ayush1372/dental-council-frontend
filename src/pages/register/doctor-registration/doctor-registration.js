@@ -127,8 +127,6 @@ const DoctorRegistrationWelcomePage = () => {
                             : '',
                       }}
                       onChange={(currentValue) => {
-                        // eslint-disable-next-line no-console
-                        console.log(currentValue, getValues().RegistrationCouncilId);
                         setValue('RegistrationCouncilId', currentValue?.id);
                         setValue('RegistrationCouncil', currentValue?.name);
                       }}
