@@ -107,6 +107,7 @@ const ProfileConsent = ({
 
   function eSignHandler() {
     let data = {
+      templateId: 'TEMPLATE_1',
       signingPlace:
         personalDetails?.communication_address?.village?.name ||
         personalDetails?.communication_address?.district?.name,

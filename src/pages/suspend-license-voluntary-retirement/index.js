@@ -73,7 +73,9 @@ export function SuspendLicenseVoluntaryRetirement({
         break;
       case 'verify':
         action_id = 4;
-        setSuccessPopupMessage('Approved Successfully');
+        user_group_id === 3
+          ? setSuccessPopupMessage('Approved Successfully')
+          : setSuccessPopupMessage('Verified Successfully');
         break;
       case 'reject':
         action_id = 5;

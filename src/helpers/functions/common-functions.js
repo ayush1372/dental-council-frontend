@@ -59,6 +59,13 @@ export const capitalize = (stringValue) => {
   }
 };
 
+export const toUpperCase = (str) => {
+  const words = str.split(' ');
+  const toUpperCase = words.map((word) => word.toUpperCase());
+  const result = toUpperCase.join(' ');
+  return result;
+};
+
 export const capitalizeFirstLetter = (str) => {
   let words = str.split(' ');
 

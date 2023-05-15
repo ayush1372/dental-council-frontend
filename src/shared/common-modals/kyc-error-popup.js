@@ -7,6 +7,7 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 
@@ -69,9 +70,25 @@ export default function KycErrorPopup({ open, setOpen, text, setIsNext, onReset 
                 <TableBody>
                   {fuzzyDetails.map((row) => (
                     <TableRow key={row.i}>
-                      <TableCell align="left">{row.field}</TableCell>
-                      <TableCell align="left">{row.registered_value}</TableCell>
-                      <TableCell align="left">{row.kyc_value}</TableCell>
+                      {row.field === 'DOB' ? (
+                        <>
+                          <TableCell align="left">{row.field}</TableCell>
+                          <TableCell align="left">
+                            {row.registered_value !== ''
+                              ? moment(row.registered_value).format('DD-MM-YYYY')
+                              : ''}
+                          </TableCell>
+                          <TableCell align="left">
+                            {row.kyc_value !== '' ? moment(row.kyc_value).format('DD-MM-YYYY') : ''}
+                          </TableCell>
+                        </>
+                      ) : (
+                        <>
+                          <TableCell align="left">{row.field}</TableCell>
+                          <TableCell align="left">{row.registered_value}</TableCell>
+                          <TableCell align="left">{row.kyc_value}</TableCell>
+                        </>
+                      )}
                       <TableCell
                         align="left"
                         sx={{ color: row.status === 'Success' ? 'green' : 'red' }}

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Grid, Tooltip, Typography } from '@mui/material';
+import moment from 'moment';
 import { useSelector } from 'react-redux';
 
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
@@ -110,7 +111,7 @@ const PersonalDetails = ({ personalDetails }) => {
             Father&apos;s Name
           </Typography>
           {getQueryRaised('Fathers Name') !== undefined && (
-            <Tooltip title={getQueryRaised('Fathers Name')}>
+            <Tooltip sx={{ color: '#D66025' }} title={getQueryRaised('Fathers Name')}>
               <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
             </Tooltip>
           )}
@@ -159,11 +160,11 @@ const PersonalDetails = ({ personalDetails }) => {
           <Typography variant="body5" color="grey.label">
             Spouse Name
           </Typography>
-          {getQueryRaised('Spouse Name') !== undefined && (
+          {/* {getQueryRaised('Spouse Name') !== undefined && (
             <Tooltip title={getQueryRaised('Spouse Name')}>
               <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
             </Tooltip>
-          )}
+          )} */}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {spouse_name === '' || spouse_name === undefined ? '-' : spouse_name}
@@ -225,7 +226,7 @@ const PersonalDetails = ({ personalDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
-              {date_of_birth ? date_of_birth : ''}
+              {date_of_birth ? moment(date_of_birth).format('DD-MM-YYYY') : ''}
             </Typography>
             {(data?.user_type === 3 || data?.user_type === 4) && (
               <ContactSupportOutlinedIcon
