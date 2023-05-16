@@ -421,17 +421,16 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
               </Button>
             </Typography>
             <TextField
-              sx={{ mb: 1 }}
-              required
               fullWidth
-              label={'Password'}
+              id="outlined-basic"
+              variant="outlined"
+              type="Password"
+              name="password"
+              required="true"
               placeholder={'Please enter password'}
-              type={'Password'}
-              inputProps={{ maxLength: 12 }}
-              name={'password'}
-              {...register('password', {
-                PasswordRegexValidation,
-              })}
+              margin="dense"
+              defaultValue={getValues().password}
+              {...register('password', PasswordRegexValidation)}
             />
             <Typography display={'flex'} justifyContent="flex-end">
               <Button
@@ -479,7 +478,11 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
           fullWidth
           sx={{ mr: 1 }}
           onClick={handleSubmit(handleLogin)}
-          disabled={!otpFormEnabled && selectedLoginOption !== 'userName'}
+          disabled={
+            selectedLoginOption === 'nmrId' || selectedLoginOption === 'mobileNumber'
+              ? !otpFormEnabled || !captchaAnswer
+              : errors.userID?.message || errors.password?.message || !captchaAnswer
+          }
         >
           Login
         </Button>

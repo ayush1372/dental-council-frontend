@@ -399,7 +399,11 @@ export const Login = ({ loginName, handleForgotPassword }) => {
           fullWidth
           sx={{ mr: 1 }}
           onClick={handleSubmit(handleLogin)}
-          disabled={!otpFormEnabled && selectedLoginOption !== 'userName'}
+          disabled={
+            selectedLoginOption === 'nmrId' || selectedLoginOption === 'mobileNumber'
+              ? !otpFormEnabled || !captchaAnswer
+              : errors.userID?.message || errors.password?.message || !captchaAnswer
+          }
         >
           Login
         </Button>
