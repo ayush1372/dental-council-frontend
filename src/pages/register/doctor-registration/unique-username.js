@@ -21,7 +21,11 @@ const UniqueUserNameForDoctorRegistration = () => {
   const theme = useTheme();
   const navigate = useNavigate();
   const getInputValue = () => {
-    return getValues().UniqueUserNameForDoctor === '' ? '' : firstSuggestion;
+    return getValues().UniqueUserNameForDoctor === ''
+      ? ''
+      : firstSuggestion !== '' || firstSuggestion !== undefined
+      ? firstSuggestion
+      : getValues().UniqueUserNameForDoctor;
   };
   const {
     register,
@@ -115,7 +119,7 @@ const UniqueUserNameForDoctorRegistration = () => {
                           },
                         }
                   )}
-                  value={suggestion ? suggestion : getValues().UniqueUserNameForDoctor}
+                  value={suggestion}
                   onChange={(e) => handleSuggestionName(e)}
                   clearErrors={clearErrors}
                 />

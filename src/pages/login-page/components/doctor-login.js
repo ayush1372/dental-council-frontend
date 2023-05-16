@@ -406,7 +406,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
                   message: 'Please enter a valid username',
                 },
                 minLength: {
-                  value: 8,
+                  value: 2,
                   message: 'Should contains 8 character',
                 },
               })}
