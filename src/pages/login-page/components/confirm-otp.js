@@ -195,7 +195,7 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup 
                     <Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
                       <CircularProgress color="secondary" />
                       <Typography textAlign="center" mt={2}>
-                        Waiting for Conformation
+                        Waiting for Confirmation
                       </Typography>
                     </Box>
                   )}
