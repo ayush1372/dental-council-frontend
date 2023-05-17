@@ -162,6 +162,7 @@ export const registrationRequestMapper = {
   Suspended: 'Suspended',
   Blacklisted: 'Blacklisted',
   Pending: 'Pending',
+  'College Verified': 'College Verified',
 };
 export const updationRequestMapper = {
   'Total Modification Requests': 'Total Updation request',
@@ -171,6 +172,7 @@ export const updationRequestMapper = {
   Suspended: 'Suspended',
   Blacklisted: 'Blacklisted',
   Pending: 'Update Request Received',
+  'College Verified': 'College Verified',
 };
 
 export const suspensionRequestMapper = {
