@@ -32,6 +32,7 @@ const EditQualificationDetails = ({
   const [courseID, setCourseID] = useState(
     qualification?.qualification ? qualification?.qualification : ''
   );
+
   // eslint-disable-next-line no-unused-vars
   const [degree, setDegree] = useState([
     {
@@ -405,8 +406,10 @@ const EditQualificationDetails = ({
               }
               name="Qualification"
               label="Name of the Degree"
+              defaultValue={courseID}
               value={courseID}
               required={true}
+              disabled={true}
               {...register(
                 `qualification[${index}].qualification`,
                 {
@@ -427,9 +430,9 @@ const EditQualificationDetails = ({
                     ? '#F0F0F0'
                     : '',
               }}
-              disabled={
-                work_flow_status_id === 3 ? getQueryRaised('Name of the Degree Obtained') : false
-              }
+              // disabled={
+              //   work_flow_status_id === 3 ? getQueryRaised('Name of the Degree Obtained') : false
+              // }
               options={createSelectFieldData(coursesList.data)}
               MenuProps={{
                 style: {
@@ -437,6 +440,12 @@ const EditQualificationDetails = ({
                   maxWidth: 130,
                 },
               }}
+              sx={{
+                '.MuiSelect-select': {
+                  backgroundColor: 'grey2.main',
+                },
+              }}
+              InputProps={{ readOnly: true }}
             />
           ) : (
             <Select

@@ -75,7 +75,7 @@ export function SuspendLicenseVoluntaryRetirement({
         action_id = 4;
         user_group_id === 3
           ? setSuccessPopupMessage('Approved Successfully')
-          : setSuccessPopupMessage('Verified Successfully');
+          : setSuccessPopupMessage('Approved Successfully');
         break;
       case 'reject':
         action_id = 5;
@@ -83,7 +83,7 @@ export function SuspendLicenseVoluntaryRetirement({
         break;
       case 'suspend':
         action_id = 7;
-        setSuccessPopupMessage('Temporarily Suspended');
+        setSuccessPopupMessage('Voluntary Suspended');
         break;
       case 'blacklist':
         action_id = 6;
@@ -317,7 +317,7 @@ export function SuspendLicenseVoluntaryRetirement({
                 items={[
                   {
                     value: 'voluntary-suspension-check',
-                    label: 'Voluntary Suspension',
+                    label: 'Temporary Suspension',
                   },
                   {
                     value: 'permanent-suspension-check',

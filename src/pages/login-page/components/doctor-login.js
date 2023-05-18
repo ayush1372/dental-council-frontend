@@ -25,7 +25,6 @@ import { login, userLoggedInType } from '../../../store/reducers/common-reducers
 import { Button, TextField } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 import successToast from '../../../ui/core/toaster';
-import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
   const [captchaAnswer, setcaptachaAnswer] = useState();
@@ -407,7 +406,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
                 },
                 minLength: {
                   value: 2,
-                  message: 'Should contains 8 character',
+                  message: 'Enter valid username',
                 },
               })}
             />
@@ -429,8 +428,12 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
               type={'Password'}
               inputProps={{ maxLength: 12 }}
               name={'password'}
+              error={errors.password?.message}
               {...register('password', {
-                PasswordRegexValidation,
+                required: 'Please enter password',
+                pattern: {
+                  message: 'Please enter a valid username',
+                },
               })}
             />
             <Typography display={'flex'} justifyContent="flex-end">

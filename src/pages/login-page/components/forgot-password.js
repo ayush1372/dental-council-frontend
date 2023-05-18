@@ -122,7 +122,12 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep })
               defaultValue={getValues().Id}
               error={isIdActive && errors.Id?.message}
               {...register('Id', {
-                required: 'Provide valid ID',
+                required: 'Email ID is required',
+                pattern: {
+                  value:
+                    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
+                  message: 'Provide a Valid Email Id',
+                },
               })}
               disabled={!isIdActive}
             />

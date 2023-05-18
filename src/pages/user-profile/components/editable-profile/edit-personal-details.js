@@ -1421,7 +1421,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
               <TextField
                 variant="outlined"
                 name={'PostalCode'}
-                placeholder="Postal code"
+                placeholder="Pincode"
                 required={isSameAddress ? false : true}
                 fullWidth
                 style={{
@@ -1444,7 +1444,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 {...register(
                   'PostalCode',
                   !isSameAddress && {
-                    required: 'Postal Code is Required',
+                    required: 'Pincode is Required',
                     onChange: (event) => {
                       const pincode = event.target.value.replace(/[^0-9]/g, '');
                       setValue('PostalCode', pincode);
