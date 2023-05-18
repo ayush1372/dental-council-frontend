@@ -47,6 +47,14 @@ const CaptchaComponent = ({ captchaResult }) => {
     userResponse.length > 2 ? setError('Enter captcha answer') : setError('');
   };
 
+  const handleChange = (event) => {
+    const captchaValue = event.target.value.replace(/[^0-9]/g, '');
+    setValue('anwser', captchaValue);
+    setAnwser(captchaValue);
+    captchaResult(captchaValue);
+    captchaValue.length > 2 ? setError('Please enter valid captcha answer') : setError('');
+  };
+
   return (
     <>
       <ToastContainer></ToastContainer>
@@ -91,20 +99,8 @@ const CaptchaComponent = ({ captchaResult }) => {
                     defaultValue={getValues().anwser}
                     required
                     {...register('anwser', {
-                      required: 'Please Enter Valid Name',
-                      pattern: {
-                        value: `^[0-9]$`,
-                        message: 'Please Enter Valid Name',
-                      },
-                      maxLength: {
-                        value: 2,
-                      },
                       onChange: (event) => {
-                        const captchaValue = event.target.value.replace(/[^0-9]/g, '');
-                        setValue('anwser', captchaValue);
-                        setAnwser(captchaValue);
-                        captchaResult(captchaValue);
-                        captchaValue.length > 2 ? setError('Enter captcha answer') : setError('');
+                        handleChange(event);
                       },
                       onBlur: (event) => {
                         onFocusChange(event);
