@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import CancelIcon from '@mui/icons-material/Cancel';
-import { Divider, Grid, Typography } from '@mui/material';
+import { Divider, Grid, Typography, useTheme } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { monthsData, yearsData } from '../../../../constants/common-data';
@@ -28,6 +28,7 @@ const EditQualificationDetails = ({
   showBroadSpeciality = false,
 }) => {
   const dispatch = useDispatch();
+  const theme = useTheme();
   const [colleges, setColleges] = useState([]);
   const [courseID, setCourseID] = useState(
     qualification?.qualification ? qualification?.qualification : ''
@@ -430,9 +431,6 @@ const EditQualificationDetails = ({
                     ? '#F0F0F0'
                     : '',
               }}
-              // disabled={
-              //   work_flow_status_id === 3 ? getQueryRaised('Name of the Degree Obtained') : false
-              // }
               options={createSelectFieldData(coursesList.data)}
               MenuProps={{
                 style: {
@@ -441,9 +439,7 @@ const EditQualificationDetails = ({
                 },
               }}
               sx={{
-                '.MuiSelect-select': {
-                  backgroundColor: 'grey2.main',
-                },
+                backgroundColor: theme.palette.grey2.main,
               }}
               InputProps={{ readOnly: true }}
             />
