@@ -25,6 +25,7 @@ import { login, userLoggedInType } from '../../../store/reducers/common-reducers
 import { Button, TextField } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 import successToast from '../../../ui/core/toaster';
+import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
   const [captchaAnswer, setcaptachaAnswer] = useState();
@@ -420,21 +421,17 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
               </Button>
             </Typography>
             <TextField
-              sx={{ mb: 1 }}
-              required
               fullWidth
-              label={'Password'}
+              id="outlined-basic"
+              variant="outlined"
+              type="Password"
+              name="password"
+              required="true"
               placeholder={'Please enter password'}
-              type={'Password'}
-              inputProps={{ maxLength: 12 }}
-              name={'password'}
               error={errors.password?.message}
-              {...register('password', {
-                required: 'Please enter password',
-                pattern: {
-                  message: 'Please enter a valid username',
-                },
-              })}
+              margin="dense"
+              defaultValue={getValues().password}
+              {...register('password', PasswordRegexValidation)}
             />
             <Typography display={'flex'} justifyContent="flex-end">
               <Button
@@ -482,7 +479,11 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
           fullWidth
           sx={{ mr: 1 }}
           onClick={handleSubmit(handleLogin)}
-          disabled={!otpFormEnabled && selectedLoginOption !== 'userName'}
+          disabled={
+            selectedLoginOption === 'nmrId' || selectedLoginOption === 'mobileNumber'
+              ? !otpFormEnabled || !captchaAnswer
+              : errors.userID?.message || errors.password?.message || !captchaAnswer
+          }
         >
           Login
         </Button>

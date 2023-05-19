@@ -160,7 +160,7 @@ export default function ProfileImage(props) {
           {props.name}
         </Typography>
       </Grid>
-      {nmrIdData && (
+      {loggedInUserType === 'Doctor' && nmrIdData && (
         <Grid display="flex" borderRight={`1px solid ${theme.palette.inputBorderColor.main}`} item>
           <Typography variant="subtitle2" color="grey.label" sx={{ mr: '5px' }}>
             NMR ID :
