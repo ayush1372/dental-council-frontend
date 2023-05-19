@@ -162,6 +162,8 @@ export default function Dashboard() {
   const getCardIcons = (item) => {
     if (item?.name?.includes('Pending') || item?.name?.includes('Received')) {
       return PendingApplication;
+    } else if (item?.name === 'College Verified') {
+      return PendingApplication;
     } else if (item?.name?.includes('Verified') || item?.name?.includes('Approved')) {
       return ApprovedApplication;
     } else if (item?.name?.includes('Raised')) {
@@ -176,6 +178,8 @@ export default function Dashboard() {
   const getTextLabelIcons = (item) => {
     if (item?.name?.includes('Pending') || item?.name?.includes('Received')) {
       return 'Total number of pending applications';
+    } else if (item?.name === 'College Verified') {
+      return 'Total number of college verified applications';
     } else if (item?.name?.includes('Approved')) {
       return 'Total number of approved applications';
     } else if (item?.name?.includes('Verified') || item?.name?.includes('Approved')) {
