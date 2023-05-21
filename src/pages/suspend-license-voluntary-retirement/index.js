@@ -361,7 +361,7 @@ export function SuspendLicenseVoluntaryRetirement({
                 id="fromDate"
                 name="fromDate"
                 required={true}
-                defaultValue={getValues().fromDate}
+                defaultValue={getValues().fromDate || new Date()}
                 error={showFromDateError ? 'Enter From Date' : false}
               />
             </Grid>
@@ -396,7 +396,7 @@ export function SuspendLicenseVoluntaryRetirement({
                         : false
                     }
                     required={true}
-                    defaultValue={getValues().toDate}
+                    defaultValue={getValues().toDate || new Date()}
                     error={showToDateError ? 'Enter To Date' : false}
                   />
                 </>

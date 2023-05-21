@@ -29,6 +29,7 @@ const InputField = ({
         color: 'black',
         textTransform: 'uppercase',
         backgroundColor: backgroundColor || '',
+        paddingRight: '15px',
       },
       '&.MuiInputBase-adornedEnd': {
         paddingRight: '-1px',
@@ -56,7 +57,7 @@ const InputField = ({
           onChange={(newDateValue) => {
             onChangeDate(newDateValue, props?.id);
           }}
-          value={new Date(value)}
+          value={value}
           slotProps={{
             textField: {
               helperText: error ? (
