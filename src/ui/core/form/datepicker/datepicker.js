@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
 
+import { makeStyles } from '@material-ui/core/styles';
 import { StyledEngineProvider, Typography } from '@mui/material';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -11,22 +12,51 @@ import { SvgImageComponent } from '../../svg-icons';
 
 import styles from './datepicker.module.scss';
 
-const InputField = ({ success, error, onChangeDate, messageBlue, ...props }) => {
+const InputField = ({
+  success,
+  error,
+  value,
+  onChangeDate,
+  disabled,
+  defaultValue,
+  messageBlue,
+  backgroundColor,
+  ...props
+}) => {
+  const useStyles = makeStyles({
+    root: {
+      '& .MuiInputBase-root': {
+        color: 'black',
+        textTransform: 'uppercase',
+        backgroundColor: backgroundColor || '',
+      },
+      '&.MuiInputBase-adornedEnd': {
+        paddingRight: '-1px',
+      },
+    },
+  });
+  const classes = useStyles();
+
   return (
     <StyledEngineProvider injectFirst>
       <LocalizationProvider dateAdapter={(AdapterDayjs, AdapterDateFns)}>
         <MuiDatePicker
+          variant="outlined"
           sx={{
             width: '100%',
             pr: 2,
           }}
           id={props?.id}
-          data-testid={props?.dataTestId}
+          format="dd/MM/yyyy"
+          className={classes.root}
+          disabled={disabled || false}
           minDate={props?.minDate || ''}
+          data-testid={props?.dataTestId}
+          defaultValue={new Date(defaultValue) || new Date()}
           onChange={(newDateValue) => {
             onChangeDate(newDateValue, props?.id);
           }}
-          format="dd/MM/yyyy"
+          value={new Date(value)}
           slotProps={{
             textField: {
               helperText: error ? (
