@@ -90,7 +90,7 @@ export default function ReactivateLicencePopup(props) {
               sx={{
                 height: '48px',
                 input: {
-                  color: 'grey1.dark',
+                  color: 'black',
                   textTransform: 'uppercase',
                 },
               }}
