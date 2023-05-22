@@ -8,6 +8,7 @@ import { sendNotificationOtp } from '../../../store/actions/common-actions';
 import { Button, TextField } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 import successToast from '../../../ui/core/toaster';
+import { EmailRegexValidation } from '../../../utilities/common-validations';
 
 const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep }) => {
   const { t } = useTranslation();
@@ -121,9 +122,7 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep })
               margin="dense"
               defaultValue={getValues().Id}
               error={isIdActive && errors.Id?.message}
-              {...register('Id', {
-                required: 'Provide valid ID',
-              })}
+              {...register('Id', EmailRegexValidation)}
               disabled={!isIdActive}
             />
           </Box>

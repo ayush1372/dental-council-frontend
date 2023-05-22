@@ -80,7 +80,7 @@ export function SuspendLicenseVoluntaryRetirement({
         break;
       case 'suspend':
         action_id = 7;
-        setSuccessPopupMessage('Temporarily Suspended');
+        setSuccessPopupMessage('Voluntary Suspended');
         break;
       case 'blacklist':
         action_id = 6;
@@ -311,7 +311,7 @@ export function SuspendLicenseVoluntaryRetirement({
                 items={[
                   {
                     value: 'voluntary-suspension-check',
-                    label: 'Voluntary Suspension',
+                    label: 'Temporary Suspension',
                   },
                   {
                     value: 'permanent-suspension-check',
