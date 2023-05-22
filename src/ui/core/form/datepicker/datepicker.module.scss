@@ -1,0 +1,48 @@
+@use '../../../../assets/styles/variables' as v;
+
+.small {
+  font-size: 14px;
+  line-height: 24px;
+}
+.medium {
+  font-size: 35px;
+  line-height: 24px;
+}
+
+.helperTextMsg {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  margin-left: 0;
+
+  svg {
+    height: 16px;
+  }
+}
+
+.invalid {
+  margin: auto;
+  color: #ff5630;
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.66;
+}
+
+.success {
+  position: relative;
+  color: map-get(v.$palette, 'success');
+}
+
+.messageBlue {
+  position: relative;
+  color: map-get(v.$palette, 'messageBlue');
+}
+
+.css-1s2muma-MuiInputBase-root-MuiOutlinedInput-root.MuiInputBase-adornedEnd {
+  padding-right: '-1px';
+}
+
+.css-1s2muma-MuiInputBase-root-MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-input {
+  color: inherit;
+}
