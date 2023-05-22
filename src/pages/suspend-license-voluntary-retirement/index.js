@@ -195,6 +195,7 @@ export function SuspendLicenseVoluntaryRetirement({
               'error',
               'top-center'
             );
+            closeActionModal(false);
           });
       } else {
         if (selectedValue === 'raise') {
