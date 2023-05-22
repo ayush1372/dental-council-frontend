@@ -415,7 +415,9 @@ const EditQualificationDetails = ({
               defaultValue={courseID}
               value={courseID}
               required={true}
-              disabled={true}
+              disabled={
+                work_flow_status_id === 3 ? getQueryRaised('Name of the Degree Obtained') : false
+              }
               {...register(
                 `qualification[${index}].qualification`,
                 {
