@@ -98,7 +98,7 @@ export default function ReactivateLicencePopup(props) {
               defaultValue={getValues().fromDate}
               error={showFromDateError ? 'Enter Re-activate from' : false}
             />
-          </Box>
+          </Box> 
 
           <Box>
             <Box>
