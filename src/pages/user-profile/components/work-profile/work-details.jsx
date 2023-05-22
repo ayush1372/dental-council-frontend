@@ -504,25 +504,28 @@ const WorkDetails = ({
           Are you currently in Facility/Organization
         </Typography>
       </Grid>
-      <Grid item xs={12} ml={2}>
-        <Checkbox
-          sx={{ padding: '0 8px 0 0' }}
-          value={facilityChecked}
-          defaultChecked={true}
-          // defaultValue={facilityChecked}
-          onChange={(e) => {
-            setFacilityChecked(e.target.checked);
-          }}
-          label="Facility"
-        />
-        <Checkbox
-          sx={{ padding: '0 8px 0 0' }}
-          value={organizationChecked}
-          onChange={(e) => {
-            setOrganizationChecked(e.target.checked);
-          }}
-          label="Organization"
-        />
+      <Grid item xs={12} ml={2} display="flex">
+        <Box>
+          <Checkbox
+            sx={{ padding: '0 8px 0 0' }}
+            value={facilityChecked}
+            defaultChecked={true}
+            onChange={(e) => {
+              setFacilityChecked(e.target.checked);
+            }}
+            label="Facility"
+          />
+        </Box>
+        <Box ml={2}>
+          <Checkbox
+            sx={{ padding: '0 8px 0 0' }}
+            value={organizationChecked}
+            onChange={(e) => {
+              setOrganizationChecked(e.target.checked);
+            }}
+            label="Organization"
+          />
+        </Box>
       </Grid>
       {facilityChecked && (
         <Grid container item spacing={2}>
