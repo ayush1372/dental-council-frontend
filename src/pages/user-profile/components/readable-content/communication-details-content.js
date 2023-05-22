@@ -66,7 +66,8 @@ const CommunicationAddress = ({ personalDetails }) => {
                 ? '-'
                 : communication_address?.house}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -94,7 +95,8 @@ const CommunicationAddress = ({ personalDetails }) => {
                 ? '-'
                 : communication_address?.street}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -122,7 +124,8 @@ const CommunicationAddress = ({ personalDetails }) => {
                 ? '-'
                 : communication_address?.landmark}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -147,7 +150,8 @@ const CommunicationAddress = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {villageName === '' || villageName === undefined ? '-' : villageName}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -177,7 +181,8 @@ const CommunicationAddress = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {capitalize(districtName)}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -202,7 +207,8 @@ const CommunicationAddress = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {subDistrictName === '' || subDistrictName === undefined ? '-' : subDistrictName}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -230,7 +236,8 @@ const CommunicationAddress = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {capitalize(stateName)}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -258,7 +265,8 @@ const CommunicationAddress = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {countryName}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -289,7 +297,8 @@ const CommunicationAddress = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {pincode === '' || pincode === undefined ? '-' : pincode}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
