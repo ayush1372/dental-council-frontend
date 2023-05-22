@@ -24,23 +24,31 @@ const IMRDetails = ({ personalDetails }) => {
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {communication_address?.house}
-              {communication_address?.house !== '' ? ', ' : ' '}
+              {communication_address?.house === undefined
+                ? ''
+                : communication_address?.house !== '' && ', '}
               {communication_address?.street}
-              {communication_address?.street !== '' ? ', ' : ' '}
+              {communication_address?.street === undefined
+                ? ''
+                : communication_address?.street !== '' && ', '}
               {communication_address?.landmark}
-              {communication_address?.landmark !== '' ? ', ' : ' '}
+              {communication_address?.landmark === undefined
+                ? ''
+                : communication_address?.landmark !== '' && ', '}
               {villageName}
               {villageName !== '' ? ', ' : ' '}
               {capitalize(districtName)}
-              {capitalize(districtName) !== '' ? ', ' : ' '}
+              {capitalize(districtName) === undefined
+                ? ''
+                : capitalize(districtName) !== '' && ', '}
               {subDistrictName}
-              {subDistrictName !== '' ? ', ' : ' '}
+              {subDistrictName === undefined ? '' : subDistrictName !== '' && ', '}
               {capitalize(stateName)}
-              {capitalize(stateName) !== '' ? ', ' : ' '}
+              {capitalize(stateName) === undefined ? '' : capitalize(stateName) !== '' && ', '}
               {countryName}
-              {countryName !== '' ? ', ' : ' '}
+              {countryName === undefined ? '' : countryName !== '' && ', '}
               {pincode}
-              {pincode !== '' ? '. ' : ' '}
+              {pincode === undefined ? '' : pincode !== '' && ', '}
             </Typography>
           </Grid>
         </Grid>
