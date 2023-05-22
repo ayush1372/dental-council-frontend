@@ -401,7 +401,12 @@ const EditQualificationDetails = ({
             <Select
               fullWidth
               error={
-                getValues()?.qualification[index]?.qualification?.length === 0
+                isAdditionalQualification
+                  ? getValues()?.qualification[index]?.qualification === 69 ||
+                    getValues()?.qualification[index]?.qualification?.length === 0
+                    ? 'Qualification Details is required'
+                    : ''
+                  : getValues()?.qualification[index]?.qualification?.length === 0
                   ? errors?.qualification?.[index]?.qualification?.message
                   : ''
               }

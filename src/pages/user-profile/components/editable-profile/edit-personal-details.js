@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import { Box, Button, Grid, Typography } from '@mui/material';
-// import moment from 'moment';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,7 +20,7 @@ import {
 } from '../../../../store/actions/doctor-user-profile-actions';
 import { getPersonalDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
 import { Checkbox } from '../../../../ui/core';
-import { RadioGroup, Select, TextField } from '../../../../ui/core';
+import { DatePicker, RadioGroup, Select, TextField } from '../../../../ui/core';
 import successToast from '../../../../ui/core/toaster';
 
 const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValidDetails }) => {
@@ -735,32 +734,19 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 *
               </Typography>
             </Typography>
-            <TextField
-              fullWidth
+            <DatePicker
+              value={getValues()?.DateOfBirth}
+              onChangeDate={(newDateValue) => {
+                setValue('DateOfBirth', new Date(newDateValue)?.toLocaleDateString('en-GB'));
+              }}
               data-testid="Date of Birth"
-              id="Date of Birth"
-              type="date"
-              name="DateOfBirth"
-              sx={{
-                height: '48px',
-                input: {
-                  color: 'black.main',
-                  textTransform: 'uppercase',
-                  backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
-                },
-              }}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              InputProps={{
-                readOnly: loggedInUserType === 'SMC' ? false : true,
-              }}
+              id="DateOfBirth"
+              name="RenewalDate"
               required={true}
               defaultValue={getValues().dateOfBirth}
               error={errors.DateOfBirth?.message}
-              {...register('DateOfBirth', {
-                required: 'Enter Date of Birth',
-              })}
+              backgroundColor={loggedInUserType === 'SMC' ? '' : '#F0F0F0'}
+              disabled={loggedInUserType === 'SMC' ? false : true}
             />
           </Grid>
 

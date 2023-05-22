@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getInitiateWorkFlow, raiseQuery, suspendDoctor } from '../../store/actions/common-actions';
-import { Button, Checkbox, RadioGroup, TextField } from '../../ui/core';
+import { Button, Checkbox, DatePicker, RadioGroup, TextField } from '../../ui/core';
 import successToast from '../../ui/core/toaster';
 
 export function SuspendLicenseVoluntaryRetirement({
@@ -33,10 +33,12 @@ export function SuspendLicenseVoluntaryRetirement({
   const user_group_id = useSelector((state) => state.loginReducer?.loginData?.data);
 
   const [selectedSuspension, setSelectedSuspension] = useState('voluntary-suspension-check');
-  const [selectedFromDate, setSelectedFromDate] = useState();
+
   const [conformSuspend, setConformSuspend] = useState(false);
   const [confirmationModal, setConfirmationModal] = useState(false);
   const [queries, setQueries] = useState([]);
+  const [showToDateError, setShowToDateError] = useState(false);
+  const [showFromDateError, setShowFromDateError] = useState(false);
 
   const {
     register,
@@ -49,11 +51,6 @@ export function SuspendLicenseVoluntaryRetirement({
     mode: 'onChange',
     defaultValues: {
       voluntarySuspendLicense: 'voluntary-suspension-check',
-      fromDate: '',
-      toDate:
-        selectedSuspension === 'permanent-suspension-check' || selectedValue === 'suspend'
-          ? selectedFromDate?.length >= 10 && selectedFromDate
-          : '',
     },
   });
   const { activateLicenseList } = useSelector((state) => state?.common);
@@ -228,15 +225,6 @@ export function SuspendLicenseVoluntaryRetirement({
     reset({ toDate: '', fromDate: '', remark: '' });
   };
 
-  const autoFromDateSelected = (event) => {
-    const temp1 = +event.target.value.substring(0, 4) + 99 + '';
-    const temp2 = event.target.value.replace(event.target.value.substring(0, 4), temp1);
-    if (selectedSuspension === 'permanent-suspension-check' || selectedValue === 'suspend') {
-      setValue('toDate', temp2);
-    }
-    setSelectedFromDate(temp2);
-  };
-
   return (
     <Box data-testid="suspend-license-voluntary-retirement" width="100%">
       {!tabName && selectedValue !== 'forward' && (
@@ -338,30 +326,43 @@ export function SuspendLicenseVoluntaryRetirement({
             <Grid item xs={12} md={6} lg={6}>
               <Typography component={'p'} variant="body1">
                 Select From Date
+                <Typography variant="body2" color="error">
+                  {'*'}
+                </Typography>
               </Typography>
-              <TextField
-                fullWidth
+              <DatePicker
+                value={getValues()?.fromDate}
+                onChangeDate={(newDateValue) => {
+                  if (
+                    selectedSuspension === 'permanent-suspension-check' ||
+                    selectedValue === 'suspend'
+                  ) {
+                    setValue('fromDate', new Date(newDateValue)?.toLocaleDateString('en-GB'));
+                    setValue(
+                      'toDate',
+                      new Date(newDateValue)
+                        ?.toLocaleDateString('en-GB')
+                        ?.replace(
+                          new Date(newDateValue)?.toLocaleDateString('en-GB')?.substring(6, 10),
+                          Number(
+                            new Date(newDateValue)?.toLocaleDateString('en-GB')?.substring(6, 10)
+                          ) + 99
+                        )
+                    );
+                  } else {
+                    setValue('fromDate', new Date(newDateValue)?.toLocaleDateString('en-GB'));
+                  }
+
+                  if (getValues().fromDate !== undefined) {
+                    setShowFromDateError(false);
+                  }
+                }}
                 data-testid="fromDate"
                 id="fromDate"
-                type="date"
                 name="fromDate"
-                sx={{
-                  height: '48px',
-                  input: {
-                    color: 'black',
-                    textTransform: 'uppercase',
-                  },
-                }}
-                InputLabelProps={{
-                  shrink: true,
-                }}
                 required={true}
-                defaultValue={getValues().fromDate}
-                error={errors.fromDate?.message}
-                {...register('fromDate', {
-                  required: 'Enter From Date ',
-                  onChange: (e) => autoFromDateSelected(e),
-                })}
+                defaultValue={getValues().fromDate || new Date()}
+                error={showFromDateError ? 'Enter From Date' : false}
               />
             </Grid>
             <Grid item xs={12} md={6} my={{ xs: 1, md: 0 }}>
@@ -371,38 +372,32 @@ export function SuspendLicenseVoluntaryRetirement({
                 <>
                   <Typography component={'p'} variant="body1">
                     Select To Date
+                    <Typography variant="body2" color="error">
+                      {'*'}
+                    </Typography>
                   </Typography>
-                  <TextField
-                    fullWidth
+
+                  <DatePicker
+                    minDate={new Date()}
+                    value={getValues()?.toDate}
+                    onChangeDate={(newDateValue) => {
+                      setValue('toDate', new Date(newDateValue)?.toLocaleDateString('en-GB'));
+                      if (getValues().toDate !== undefined) {
+                        setShowToDateError(false);
+                      }
+                    }}
                     data-testid="toDate"
                     id="toDate"
-                    type="date"
                     name="toDate"
-                    sx={{
-                      input: {
-                        color: 'black',
-                        textTransform: 'uppercase',
-                      },
-                    }}
-                    InputLabelProps={{
-                      shrink: true,
-                      sx: { height: '40px' },
-                    }}
                     disabled={
                       selectedSuspension === 'permanent-suspension-check' ||
                       selectedValue === 'suspend'
                         ? true
                         : false
                     }
-                    inputProps={{
-                      min: new Date().toISOString().split('T')[0],
-                    }}
                     required={true}
-                    defaultValue={getValues().toDate}
-                    error={errors.toDate?.message}
-                    {...register('toDate', {
-                      required: 'Enter To Date',
-                    })}
+                    defaultValue={getValues().toDate || new Date()}
+                    error={showToDateError ? 'Enter To Date' : false}
                   />
                 </>
               )}
@@ -549,6 +544,12 @@ export function SuspendLicenseVoluntaryRetirement({
                 setConfirmationModal(true);
               } else {
                 handleSubmit(onSubmit);
+              }
+              if (getValues().toDate === undefined) {
+                setShowToDateError(true);
+              }
+              if (getValues().fromDate === undefined) {
+                setShowFromDateError(true);
               }
             }}
             sx={{
