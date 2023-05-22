@@ -581,7 +581,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 inputProps={{
                   min: new Date().toISOString().split('T')[0],
                 }}
-                disabled={work_flow_status_id === 3 ? getQueryRaised('Due Date of Renewal') : false}
+                // disabled={work_flow_status_id === 3 ? getQueryRaised('Due Date of Renewal') : false}
               />
             </Grid>
           )}
@@ -592,6 +592,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               fileID={'registrationFileData'}
               uploadFiles="single"
               sizeAllowed={5}
+              name={'frontSideFileName'}
               fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
               fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
                Maximum size allowed for the attachment is 5MB.`}
@@ -603,6 +604,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                   ? getQueryRaised('Upload the registration certificate')
                   : false
               }
+              {...register('frontSideFileName', {
+                required: 'error ',
+              })}
             />
           </Grid>
         </Grid>
