@@ -185,7 +185,13 @@ export function SuspendLicenseVoluntaryRetirement({
               setConfirmationModal(false);
             }
           })
-          .catch(() => {
+          .catch((allFailMsg) => {
+            successToast(
+              'ERR_INT: ' + allFailMsg?.data?.message,
+              'auth-error',
+              'error',
+              'top-center'
+            );
             closeActionModal(false);
           });
       } else {
