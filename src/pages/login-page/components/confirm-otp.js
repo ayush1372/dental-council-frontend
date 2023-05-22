@@ -239,7 +239,7 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup 
           {(otpData.page === 'doctorConstantDetailsPage' ||
             otpData.page === 'forgotPasswordPage' ||
             otpData?.page === 'forgetUserName') &&
-            otpData?.type !== 'email' && (
+            (otpData?.type === 'email' || otpData?.type === 'sms') && (
               <Box display={'flex'} justifyContent="center">
                 {otpform}
               </Box>
@@ -264,7 +264,7 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup 
           </Box>
         ) : (
           (otpData.page === 'doctorConstantDetailsPage' || otpData.page === 'forgotPasswordPage') &&
-          otpData?.type !== 'email' && (
+          (otpData?.type === 'email' || otpData?.type === 'sms') && (
             <Box mt={3} textAlign="center">
               <Button
                 onClick={() => {

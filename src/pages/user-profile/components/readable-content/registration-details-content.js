@@ -65,7 +65,8 @@ const RegistrationDetailsContent = () => {
               {smcName ? smcName : ''}
             </Typography>
 
-            {(data?.user_type === 3 || data?.user_type === 4) && (
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -93,7 +94,8 @@ const RegistrationDetailsContent = () => {
             <Typography color="textPrimary.main" variant="subtitle2">
               {registration_number ? registration_number : ''}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -121,7 +123,8 @@ const RegistrationDetailsContent = () => {
             <Typography color="textPrimary.main" variant="subtitle2">
               {registration_date && moment(registration_date).format('DD-MM-YYYY')}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -151,7 +154,8 @@ const RegistrationDetailsContent = () => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {is_renewable === '0' ? 'Permanent' : is_renewable === '1' ? 'Renewable' : ''}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -178,7 +182,8 @@ const RegistrationDetailsContent = () => {
                 ? moment(renewable_registration_date).format('DD-MM-YYYY')
                 : ''}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
@@ -217,7 +222,8 @@ const RegistrationDetailsContent = () => {
               </IconButton>
               View attachment
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) && (
               <ContactSupportOutlinedIcon
                 color="primary"
                 onClick={() => {
