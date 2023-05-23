@@ -105,7 +105,7 @@ export const API_HPRID = {
     verifyMobileOtp: '/api/v2/registration/aadhaar/verifyMobileOTP',
     demographicAuthMobile: 'api/v2/registration/aadhaar/demographicAuthViaMobile',
     checkHprIdExists: 'api/v2/registration/aadhaar/checkHpIdAccountExist',
-    hpIdSuggestion: 'api/v2/registration/aadhaar/hpid/suggestion',
+    hpIdSuggestion: 'api/v1/registration/aadhaar/hpid/suggestion',
     createHprId: 'api/v1/registration/aadhaar/createHprIdWithPreVerified',
   },
 };
