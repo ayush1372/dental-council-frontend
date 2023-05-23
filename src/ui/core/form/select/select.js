@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, useState } from 'react';
 
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import {
@@ -26,10 +26,12 @@ const SelectField = (
     dataTestOptionId,
     messageBlue,
     success,
+    // placeholder,
     ...props
   },
   ref
 ) => {
+  const [showError, setShowError] = useState(true);
   return (
     <StyledEngineProvider injectFirst>
       {label && (
@@ -54,8 +56,22 @@ const SelectField = (
         ref={ref}
         {...props}
         data-testid={dataTestSelectId}
-        error={error ? true : false}
+        error={error && showError ? true : false}
         defaultValue={defaultValue}
+        onBlur={(e) => {
+          if (e.target.value?.length > 1) {
+            setShowError(false);
+          }
+        }}
+        onFocus={(e) => {
+          if (e?.target?.innerText?.length > 1) {
+            setShowError(false);
+          }
+        }}
+        // displayEmpty={true}
+        // renderValue={(defaultValue) =>
+        //   defaultValue?.length ? defaultValue : placeholder !== undefined ? placeholder : 'Select'
+        // }
       >
         {options?.length > 0 &&
           options?.map((item) => (
@@ -69,11 +85,7 @@ const SelectField = (
             </MenuItem>
           ))}
       </MuiSelect>
-      {error && (
-        // <Typography variant="body2" color="error">
-        //   {error}
-        // </Typography>
-
+      {error && showError && (
         <div
           className={CN(styles.helperTextMsg, {
             [styles.success]: success && 'success',
