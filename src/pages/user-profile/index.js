@@ -334,6 +334,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
               handleBack={handleBack}
               validDetails={validDetails}
               setValidDetails={setValidDetails}
+              selectedDataIndex={selectedRowData?.SNo?.value - 1}
             />
           )}
           {activeStep === 1 && (
@@ -342,6 +343,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
               setIsReadMode={setIsReadMode}
               handleNext={handleNext}
               handleBack={handleBack}
+              selectedDataIndex={selectedRowData?.SNo?.value - 1}
             />
           )}
           {/* {activeStep === 2 && (

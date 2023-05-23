@@ -30,6 +30,7 @@ const ReadRegisterAndAcademicDetails = ({
   setShowDashboard,
   setShowViewPorfile,
   setShowTable,
+  selectedDataIndex,
 }) => {
   const [accordionKeys, setAccordionKeys] = useState(['accordion-0', 'accordion-1', 'accordion-2']);
   const [selected, setSelected] = useState('');
@@ -45,6 +46,9 @@ const ReadRegisterAndAcademicDetails = ({
   // const dispatch = useDispatch();
   const { data } = useSelector((state) => state.loginReducer?.loginData);
 
+  const dashboardTableDetailsData = useSelector((state) => state?.dashboard?.dashboardTableDetails);
+  const { college_status: dashboardTableDetails } =
+    dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex] || [];
   const accordions = [
     {
       title: 'Registration Details',
@@ -112,7 +116,10 @@ const ReadRegisterAndAcademicDetails = ({
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Component registrationDetails={registrationDetails} />
+                <Component
+                  registrationDetails={registrationDetails}
+                  selectedDataIndex={selectedDataIndex}
+                />
               </AccordionDetails>
             </Accordion>
           );
@@ -162,60 +169,62 @@ const ReadRegisterAndAcademicDetails = ({
                 <PopupState>
                   {(popupState) => (
                     <React.Fragment>
-                      {data?.user_type === 4 &&
-                        (data?.user_sub_type !== 6 || data?.user_sub_type === 7) && (
-                          <>
-                            <Button
-                              variant="contained"
-                              color="secondary"
-                              {...bindTrigger(popupState)}
-                              sx={{
-                                mr: 2,
-                                mb: {
-                                  xs: 1,
-                                  md: 0,
-                                },
-                                width: {
-                                  xs: '100%',
-                                  md: 'fit-content',
-                                },
-                              }}
-                              disabled={actionVerified}
-                            >
-                              Action <MoreHorizIcon />
-                            </Button>
-                            <Button
-                              variant="contained"
-                              color="secondary"
-                              onClick={selectionChangeHandler}
-                              data-my-value={'verify'}
-                              sx={{
-                                mr: 2,
-                                mb: {
-                                  xs: 1,
-                                  md: 0,
-                                },
-                                width: {
-                                  xs: '100%',
-                                  md: 'fit-content',
-                                },
-                              }}
-                            >
-                              {loggedInUserType === 'SMC' ||
-                              loggedInUserType === 'College' ||
-                              loggedInUserType === 'NBE'
-                                ? 'Verify'
-                                : 'Approve'}
-                            </Button>
-                          </>
-                        )}
-
+                      {data?.user_type === 4 && data?.user_sub_type === 6 ? (
+                        ''
+                      ) : (
+                        <>
+                          <Button
+                            variant="contained"
+                            color="secondary"
+                            {...bindTrigger(popupState)}
+                            sx={{
+                              mr: 2,
+                              mb: {
+                                xs: 1,
+                                md: 0,
+                              },
+                              width: {
+                                xs: '100%',
+                                md: 'fit-content',
+                              },
+                            }}
+                            disabled={actionVerified}
+                          >
+                            Action <MoreHorizIcon />
+                          </Button>
+                          <Button
+                            variant="contained"
+                            color="secondary"
+                            onClick={selectionChangeHandler}
+                            data-my-value={'verify'}
+                            sx={{
+                              mr: 2,
+                              mb: {
+                                xs: 1,
+                                md: 0,
+                              },
+                              width: {
+                                xs: '100%',
+                                md: 'fit-content',
+                              },
+                            }}
+                          >
+                            {loggedInUserType === 'SMC' ||
+                            loggedInUserType === 'College' ||
+                            loggedInUserType === 'NBE'
+                              ? 'Verify'
+                              : 'Approve'}
+                          </Button>
+                        </>
+                      )}
                       <Menu {...bindMenu(popupState)}>
                         {/* <MenuItem onClick={selectionChangeHandler} data-my-value={'verify'}>
                           Verify
                         </MenuItem> */}
                         {selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
-                          selectedAcademicStatus !== 'Permanent Suspension Requests Received' && (
+                          selectedAcademicStatus !== 'Permanent Suspension Requests Received' &&
+                          !!dashboardTableDetails &&
+                          dashboardTableDetails !== 'Approved' && (
                             <MenuItem onClick={selectionChangeHandler} data-my-value={'raise'}>
                               Raise a Query
                             </MenuItem>
