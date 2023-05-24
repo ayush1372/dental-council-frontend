@@ -96,7 +96,7 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
   const classes = useStyles(theme);
 
   return (
-    <Container maxWidth={userLoggedIn ? '1920px' : 'lg'} sx={{ position: 'relative' }}>
+    <Container maxWidth={userLoggedIn ? '1920px' : '1900px'} sx={{ position: 'relative' }}>
       <MobileDrawer />
       {loggedIn && <IdleTimer />}
 

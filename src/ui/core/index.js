@@ -7,4 +7,5 @@ export * from './chip/chip';
 export * from './form/radio-group/radio-group';
 export * from './form/check-box/check-box';
 export * from './form/select/select';
+export * from './form/datepicker/datepicker';
 export * from './fileupload/fileupload';

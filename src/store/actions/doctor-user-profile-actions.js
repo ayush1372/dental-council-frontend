@@ -104,6 +104,7 @@ export const updateDoctorPersonalDetails = (body, doctor_profile_id) => async (d
     })
       .then((response) => {
         dispatch(getUpdatedPersonalDetails(response.data));
+        dispatch(getPersonalDetails(response.data));
         return resolve(response);
       })
       .catch((error) => {

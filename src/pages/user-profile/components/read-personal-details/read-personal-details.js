@@ -10,7 +10,7 @@ import ButtonGroupWizard from '../../../../ui/core/wizard/button-group-wizard';
 import CommunicationAddressContent from '../readable-content/communication-details-content';
 import IMRDetailsContent from '../readable-content/imr-details-content';
 import PersonalDetailsContent from '../readable-content/personal-details-content';
-const ReadPersonalDetails = ({ handleNext, showActions = true }) => {
+const ReadPersonalDetails = ({ handleNext, showActions = true, selectedDataIndex }) => {
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { t } = useTranslation();
   const [accordionKeys, setAccordionKeys] = useState(['accordion-0', 'accordion-1', 'accordion-2']);
@@ -68,7 +68,10 @@ const ReadPersonalDetails = ({ handleNext, showActions = true }) => {
                 </Typography>
               </AccordionSummary>
               <AccordionDetails>
-                <Component personalDetails={personalDetails} />
+                <Component
+                  personalDetails={personalDetails}
+                  selectedDataIndex={selectedDataIndex}
+                />
               </AccordionDetails>
             </Accordion>
           );

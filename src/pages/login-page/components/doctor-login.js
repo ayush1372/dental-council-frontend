@@ -407,7 +407,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
                 },
                 minLength: {
                   value: 2,
-                  message: 'Should contains 8 character',
+                  message: 'Enter valid username',
                 },
               })}
             />
@@ -428,6 +428,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
               name="password"
               required="true"
               placeholder={'Please enter password'}
+              error={errors.password?.message}
               margin="dense"
               defaultValue={getValues().password}
               {...register('password', PasswordRegexValidation)}
