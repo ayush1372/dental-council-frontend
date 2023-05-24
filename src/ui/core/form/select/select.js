@@ -26,7 +26,6 @@ const SelectField = (
     dataTestOptionId,
     messageBlue,
     success,
-    // placeholder,
     ...props
   },
   ref
@@ -68,10 +67,6 @@ const SelectField = (
             setShowError(false);
           }
         }}
-        // displayEmpty={true}
-        // renderValue={(defaultValue) =>
-        //   defaultValue?.length ? defaultValue : placeholder !== undefined ? placeholder : 'Select'
-        // }
       >
         {options?.length > 0 &&
           options?.map((item) => (
