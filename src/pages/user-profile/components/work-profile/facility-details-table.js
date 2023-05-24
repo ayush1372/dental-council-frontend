@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 
 import CloseIcon from '@mui/icons-material/Close';
 import ErrorIcon from '@mui/icons-material/Error';
-// import { useState } from 'react';
 import { Box, Button, Dialog, Grid, TablePagination, Typography } from '@mui/material';
+import { useDispatch } from 'react-redux';
 
-// import { Button } from '../../../../ui/core';
-import { verboseLog } from '../../../../config/debug';
-// import { useDispatch, useSelector } from 'react-redux';
+import SuccessModalPopup from '../../../../shared/common-modals/success-modal-popup';
 import GenericTable from '../../../../shared/generic-component/generic-table';
-// import { Checkbox } from '../../../../ui/core';
+import { deleteWorkProfileDetailsData } from '../../../../store/actions/doctor-user-profile-actions';
+import successToast from '../../../ui/core/toaster';
 
 function createData(
   name,
@@ -35,17 +34,20 @@ function createData(
   };
 }
 
-function FacilityDetailsTable({ declaredFacilityData, trackStatusData }) {
+function FacilityDetailsTable({ declaredFacilityData, trackStatusData, currentWorkDetails }) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState({});
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
-  const [selectedRowData, setRowData] = React.useState({});
+  const [defaultFacilityData, setDefaultFacilityData] = useState(declaredFacilityData);
   const [confirmationModal, setConfirmationModal] = useState(false);
-  //   const dispatch = useDispatch();
-  verboseLog('selectedRowData', selectedRowData);
+  const [selectedRowIndex, setSelectedRowIndex] = useState('');
+  const [successDeLinkModalPopup, setSuccessDeLinkModalPopup] = useState(false);
 
-  const handleStatusClick = () => {
+  const dispatch = useDispatch();
+
+  const viewCallback = (rowIndex) => {
+    setSelectedRowIndex(rowIndex);
     setConfirmationModal(true);
   };
 
@@ -81,17 +83,13 @@ function FacilityDetailsTable({ declaredFacilityData, trackStatusData }) {
     { title: 'Status', name: 'status', type: 'string' },
   ];
 
-  const handleDataRowClick = (dataRow) => {
-    setRowData(dataRow);
-  };
-
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy.name === property.name && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
 
-  const newRowsData = declaredFacilityData?.current_work_details?.map((application) => {
+  const newRowsData = defaultFacilityData?.current_work_details?.map((application) => {
     return createData(
       {
         type: 'name',
@@ -117,13 +115,37 @@ function FacilityDetailsTable({ declaredFacilityData, trackStatusData }) {
       { type: 'systemOfMedicine', value: application?.systemOfMedicine },
       { type: 'department', value: application?.department },
       { type: 'designation', value: application?.designation },
-      { type: 'status', onClickCallback: handleStatusClick }
+      { type: 'status', onClickCallback: viewCallback }
     );
   });
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+  };
+
+  const facilityDeLinkHandler = (facilityIndex) => {
+    let facilityID = {
+      facility_id: [currentWorkDetails?.[facilityIndex]?.facility_id],
+    };
+    dispatch(deleteWorkProfileDetailsData(facilityID))
+      .then((response) => {
+        if (response?.data) {
+          setDefaultFacilityData(response?.data);
+        }
+      })
+      .then(() => {
+        setConfirmationModal(false);
+        setSuccessDeLinkModalPopup(true);
+      })
+      .catch((error) => {
+        successToast(
+          error?.data?.response?.data?.error,
+          'RegistrationError',
+          'error',
+          'top-center'
+        );
+      });
   };
 
   return (
@@ -137,7 +159,6 @@ function FacilityDetailsTable({ declaredFacilityData, trackStatusData }) {
           onRequestSort={handleRequestSort}
           tableHeader={dataHeader}
           data={newRowsData}
-          handleRowClick={handleDataRowClick}
           rowsPerPage={rowsPerPage}
           page={page}
         />
@@ -201,7 +222,9 @@ function FacilityDetailsTable({ declaredFacilityData, trackStatusData }) {
               No
             </Button>
             <Button
-              onClick={() => {}}
+              onClick={() => {
+                facilityDeLinkHandler(selectedRowIndex);
+              }}
               color="secondary"
               variant="contained"
               sx={{
@@ -213,6 +236,14 @@ function FacilityDetailsTable({ declaredFacilityData, trackStatusData }) {
           </Box>
         </Box>
       </Dialog>
+      {successDeLinkModalPopup && (
+        <SuccessModalPopup
+          open={successDeLinkModalPopup}
+          workDetails={true}
+          setOpen={() => setSuccessDeLinkModalPopup(false)}
+          text={'Your Work-Details has been De-Linked successfully.'}
+        />
+      )}
     </>
   );
 }

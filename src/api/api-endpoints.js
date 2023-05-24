@@ -10,6 +10,7 @@ export const API = {
     personalDetails: 'health-professional/{healthProfessionalId}/personal',
     registrationDetails: 'health-professional/{healthProfessionalId}/registration',
     workProfileDetails: 'health-professional/{healthProfessionalId}/work-profile',
+    workProfileDeLink: 'health-professional/work-profile/facility',
     profileImage: 'health-professional/{healthProfessionalId}/profile-picture',
     initiateWorkFlow: 'health-professional/applications/status',
     trackApplicationData: 'health-professional/{healthProfessionalId}/applications',
