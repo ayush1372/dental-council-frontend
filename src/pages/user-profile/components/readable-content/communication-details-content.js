@@ -16,7 +16,9 @@ const CommunicationAddress = ({ personalDetails, selectedDataIndex }) => {
   const [queryRaisedField, setQueryRaisedField] = useState('');
   const dashboardTableDetailsData = useSelector((state) => state?.dashboard?.dashboardTableDetails);
   const { college_status: dashboardTableDetails } =
-    dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex] || [];
+    (dashboardTableDetailsData?.data?.dashboard_tolist &&
+      dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]) ||
+    [];
   const { communication_address } = personalDetails || {};
   const { country, state, district, sub_district, pincode, village, is_same_address } =
     communication_address || {};
