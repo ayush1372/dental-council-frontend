@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import CancelIcon from '@mui/icons-material/Cancel';
-import { Divider, Grid, Typography, useTheme } from '@mui/material';
+import { Divider, Grid, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { monthsData, yearsData } from '../../../../constants/common-data';
@@ -28,7 +28,6 @@ const EditQualificationDetails = ({
   showBroadSpeciality = false,
 }) => {
   const dispatch = useDispatch();
-  const theme = useTheme();
   const [colleges, setColleges] = useState([]);
   const [courseID, setCourseID] = useState(
     qualification?.qualification ? qualification?.qualification : ''
@@ -401,12 +400,7 @@ const EditQualificationDetails = ({
             <Select
               fullWidth
               error={
-                isAdditionalQualification
-                  ? getValues()?.qualification[index]?.qualification === 69 ||
-                    getValues()?.qualification[index]?.qualification?.length === 0
-                    ? 'Qualification Details is required'
-                    : ''
-                  : getValues()?.qualification[index]?.qualification?.length === 0
+                getValues()?.qualification[index]?.qualification?.length === 0
                   ? errors?.qualification?.[index]?.qualification?.message
                   : ''
               }
@@ -445,10 +439,6 @@ const EditQualificationDetails = ({
                   maxWidth: 130,
                 },
               }}
-              sx={{
-                backgroundColor: theme.palette.grey2.main,
-              }}
-              InputProps={{ readOnly: true }}
             />
           ) : (
             <Select
