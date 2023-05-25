@@ -211,7 +211,7 @@ export const workflowStatusId = (actionType) => {
     2: ' Approved',
     3: ' Query Raised',
     4: ' Rejected',
-    5: ' Suspend',
+    5: ' Suspended',
     6: ' Suspended',
   };
   return actionTypeObj[actionType];

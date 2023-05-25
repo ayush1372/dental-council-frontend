@@ -43,7 +43,7 @@ const ChangePassword = () => {
         setSuccessModalPopup(true);
       })
       .catch((error) => {
-        successToast(error?.data?.response?.data?.error, 'error');
+        successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
       });
   };
 
