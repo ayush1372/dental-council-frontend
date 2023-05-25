@@ -46,10 +46,12 @@ const WorkDetails = ({
   const [successModalPopup, setSuccessModalPopup] = useState(false);
   const [organizationChecked, setOrganizationChecked] = useState(false);
   const [declaredFacilityData, setDeclaredFacilityDistrict] = useState([]);
-  const [defaultFacilityData, setDefaultFacilityDistrict] = useState([]);
+  const [defaultFacilityData, setDefaultFacilityData] = useState([]);
 
   const { loginData } = useSelector((state) => state.loginReducer);
-  const { registrationDetails } = useSelector((state) => state.doctorUserProfileReducer);
+  const { registrationDetails, workProfileDetails } = useSelector(
+    (state) => state.doctorUserProfileReducer
+  );
 
   // eslint-disable-next-line no-unused-vars
   const [facilityResponseData, setFacilityResponseData] = useState([]);
@@ -57,7 +59,7 @@ const WorkDetails = ({
   useEffect(() => {
     dispatch(getWorkProfileDetailsData(loginData?.data?.profile_id)).then((response) => {
       if (response?.data) {
-        setDefaultFacilityDistrict(response?.data);
+        setDefaultFacilityData(response?.data);
       }
     });
   }, []);
@@ -1089,7 +1091,10 @@ const WorkDetails = ({
             </Typography>
           </Grid>
           <Grid item xs={12} padding="10px 0 !important">
-            <FacilityDetailsTable declaredFacilityData={defaultFacilityData} />
+            <FacilityDetailsTable
+              declaredFacilityData={defaultFacilityData}
+              currentWorkDetails={workProfileDetails?.current_work_details}
+            />
           </Grid>
         </Grid>
       )}

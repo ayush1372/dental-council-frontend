@@ -17,7 +17,9 @@ const PersonalDetails = ({ personalDetails, selectedDataIndex }) => {
   const [openModal, setOpenModal] = useState(false);
   const dashboardTableDetailsData = useSelector((state) => state?.dashboard?.dashboardTableDetails);
   const { college_status: dashboardTableDetails } =
-    dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex] || [];
+    (dashboardTableDetailsData?.data?.dashboard_tolist &&
+      dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]) ||
+    [];
   const { personal_details } = personalDetails || {};
   const {
     full_name,
