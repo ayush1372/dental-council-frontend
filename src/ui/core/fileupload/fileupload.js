@@ -8,7 +8,7 @@ import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { Box, Grid, Typography } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import moment from 'moment';
-import { AiOutlineEye } from 'react-icons/ai';
+import { AiFillEdit, AiOutlineEye } from 'react-icons/ai';
 
 import { base64ToBlob } from '../../../helpers/functions/common-functions';
 import { Button } from '../button/button.js';
@@ -362,6 +362,7 @@ export const UploadFile = (props) => {
                                   onClick={() => downloadFile(file)}
                                 />
                               )}
+                              <AiFillEdit fill="#264488"></AiFillEdit>
                             </div>
                           ) : uploadStatus === 'failed' ? (
                             <div className={styles.actionArea}>

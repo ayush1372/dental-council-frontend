@@ -33,7 +33,6 @@ import { Button, TextField } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 import successToast from '../../../ui/core/toaster';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
-
 export const Login = ({ loginName, handleForgotPassword }) => {
   const [captchaAnswer, setcaptachaAnswer] = useState();
   const { generateCaptcha } = useSelector((state) => state.loginReducer);
@@ -325,13 +324,13 @@ export const Login = ({ loginName, handleForgotPassword }) => {
               required
               fullWidth
               label={'Username'}
-              placeholder={'Please Enter Username'}
+              placeholder={'Please enter username'}
               name={'userID'}
               error={errors.userID?.message}
               {...register('userID', {
-                required: 'Please Enter Username',
+                required: 'Please enter username',
                 pattern: {
-                  message: 'Please Enter a Valid Username',
+                  message: 'Please enter a valid username',
                 },
                 minLength: {
                   value: 8,
@@ -344,10 +343,11 @@ export const Login = ({ loginName, handleForgotPassword }) => {
               required
               fullWidth
               label={'Password'}
-              placeholder={'Please Enter Password'}
+              placeholder={'Please enter password'}
               type={'Password'}
               inputProps={{ maxLength: 12 }}
               name={'password'}
+              error={errors.password?.message}
               {...register('password', {
                 PasswordRegexValidation,
               })}

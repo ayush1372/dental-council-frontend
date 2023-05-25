@@ -10,6 +10,7 @@ export const API = {
     personalDetails: 'health-professional/{healthProfessionalId}/personal',
     registrationDetails: 'health-professional/{healthProfessionalId}/registration',
     workProfileDetails: 'health-professional/{healthProfessionalId}/work-profile',
+    workProfileDeLink: 'health-professional/work-profile/facility',
     profileImage: 'health-professional/{healthProfessionalId}/profile-picture',
     initiateWorkFlow: 'health-professional/applications/status',
     trackApplicationData: 'health-professional/{healthProfessionalId}/applications',
@@ -105,7 +106,7 @@ export const API_HPRID = {
     verifyMobileOtp: '/api/v2/registration/aadhaar/verifyMobileOTP',
     demographicAuthMobile: 'api/v2/registration/aadhaar/demographicAuthViaMobile',
     checkHprIdExists: 'api/v2/registration/aadhaar/checkHpIdAccountExist',
-    hpIdSuggestion: 'api/v2/registration/aadhaar/hpid/suggestion',
+    hpIdSuggestion: 'api/v1/registration/aadhaar/hpid/suggestion',
     createHprId: 'api/v1/registration/aadhaar/createHprIdWithPreVerified',
   },
 };

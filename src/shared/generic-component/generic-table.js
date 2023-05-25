@@ -315,9 +315,10 @@ export default function GenericTable(props) {
                     return (
                       <TableCell maxWidth={`${tableCellWidth}%`} key={index} align="left">
                         <Button
-                          onClick={(event) => row[item.name].onClickCallback(event, row)}
+                          onClick={() => row[item.name]?.onClickCallback(rowIndex)}
                           variant="contained"
                           color="secondary"
+                          size="small"
                         >
                           DeLink
                         </Button>
