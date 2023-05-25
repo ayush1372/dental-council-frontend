@@ -17,6 +17,7 @@ import {
   updateDoctorContactDetails,
 } from '../../../store/actions/doctor-user-profile-actions';
 import { retrieveUserName } from '../../../store/actions/forgot-username-actions';
+import { loginActiveState } from '../../../store/reducers/login-reducer';
 import { Button } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
 const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup }) => {
@@ -269,6 +270,7 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup 
               <Button
                 onClick={() => {
                   resetStep(0);
+                  dispatch(loginActiveState({ activeIndex: 0 }));
                 }}
                 variant="contained"
                 color="grey"
