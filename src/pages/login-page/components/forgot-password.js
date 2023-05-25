@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
 import { sendNotificationOtp } from '../../../store/actions/common-actions';
+import { loginActiveState } from '../../../store/reducers/login-reducer';
 import { Button, TextField } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 import successToast from '../../../ui/core/toaster';
@@ -159,6 +160,7 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep })
         <Button
           onClick={() => {
             resetStep(0);
+            dispatch(loginActiveState({ activeIndex: 0 }));
           }}
           variant="contained"
           color="grey"

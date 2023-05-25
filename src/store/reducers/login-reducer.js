@@ -12,6 +12,7 @@ const initialState = {
     accessToken: '',
     refreshToken: '',
   },
+  activeState: '',
 };
 
 const loginReducer = createSlice({
@@ -33,6 +34,9 @@ const loginReducer = createSlice({
     refreshTokenApi: (state, action) => {
       state.loginData = action.payload;
     },
+    loginActiveState: (state, action) => {
+      state.activeState = action.payload;
+    },
   },
 });
 
@@ -42,6 +46,7 @@ export const {
   validateCaptcha,
   loginUser,
   refreshTokenApi,
+  loginActiveState,
 } = loginReducer.actions;
 
 export default loginReducer.reducer;
