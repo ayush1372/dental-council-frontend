@@ -740,7 +740,7 @@ const EditQualificationDetails = ({
           <Grid item xs={12} md={4}>
             <Select
               fullWidth
-              error={errors.Speciality?.message}
+              error={!getValues().Speciality && errors.Speciality?.message}
               name="Specialty"
               label="Broad Specialty"
               defaultValue={getValues().Speciality}

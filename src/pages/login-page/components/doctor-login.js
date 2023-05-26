@@ -61,7 +61,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
     setcaptachaAnswer(num);
   };
   const sendNotificationOTPHandler = (enableOTP, OTPType) => {
-    setOtpFormEnable(enableOTP);
+    OTPType !== undefined && setOtpFormEnable(enableOTP);
     let OTPTypeID;
     switch (OTPType) {
       case 'NMR':
@@ -81,17 +81,28 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
 
     dispatch(sendNotificationOtp(sendOTPData))
       .then((response) => {
+        response?.data?.message === 'Success'
+          ? handleResponse(response)
+          : successToast(response?.data?.message, 'auth-error', 'error', 'top-center');
+
         if (response) {
           setTransaction_id(response?.data?.transaction_id);
           setMaskedMobileNumber(response?.data?.sent_on.replace(/^.{6}/g, 'XXXXXX'));
           setOtpSend(true);
         }
       })
-      .catch(() => {
+      .catch((error) => {
         setOtpFormEnable(false);
+        successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
       });
   };
 
+  const handleResponse = (response) => {
+    setOtpFormEnable(true);
+    setTransaction_id(response?.data?.transaction_id);
+    setMaskedMobileNumber(response?.data?.sent_on.replace(/^.{6}/g, 'XXXXXX'));
+    setOtpSend(true);
+  };
   const handleLogin = () => {
     let loginTypeID;
     switch (selectedLoginOption) {
