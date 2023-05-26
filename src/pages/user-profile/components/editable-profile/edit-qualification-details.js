@@ -21,6 +21,7 @@ const EditQualificationDetails = ({
   unregister,
   remove,
   watch,
+  fileName,
   qualification,
   qualificationFilesData,
   isAdditionalQualification,
@@ -788,6 +789,7 @@ const EditQualificationDetails = ({
             setFileData={(files) => {
               handleQualificationFilesData(`qualification.${index}.files`, files);
             }}
+            fileName={fileName || ''}
             isDigiLockcerVisible={true}
             uploadFileLabel="Upload Qualification Degree "
             disabled={
