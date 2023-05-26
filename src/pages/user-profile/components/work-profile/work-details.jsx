@@ -725,7 +725,7 @@ const WorkDetails = ({
                 fullWidth
                 defaultValue={getValues().workingOrganizationName}
                 {...register('workingOrganizationName', {
-                  // required: 'This field is required',
+                  required: 'This field is required',
                   maxLength: {
                     value: 300,
                     message: 'Length should be less than 300.',

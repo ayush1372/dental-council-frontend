@@ -2,8 +2,10 @@ import { useState } from 'react';
 
 import { Box, Checkbox, Container, FormControlLabel, Grid, Popover } from '@mui/material';
 import { RiCheckboxBlankCircleLine, RiCheckboxCircleFill } from 'react-icons/ri';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import { loginActiveState } from '../../../../../../store/reducers/login-reducer';
 import { Button } from '../../../../../core';
 
 import styles from '../login-register-popover/login-register-popover.module.scss';
@@ -14,6 +16,7 @@ export const LoginRegisterPopover = ({
   setAnchorLRLoginRegister,
 }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   /** Login Register */
 
@@ -47,6 +50,7 @@ export const LoginRegisterPopover = ({
 
   const onClickLoginHandler = () => {
     if (regType !== '') {
+      dispatch(loginActiveState({ activeIndex: 0 }));
       if (regType === 'Doctor') {
         navigate('/login-page', { state: { loginFormname: 'Doctor' } });
       } else if (regType === 'College') {
