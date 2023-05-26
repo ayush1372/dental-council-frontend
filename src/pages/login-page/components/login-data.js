@@ -46,6 +46,7 @@ export const Login = ({ loginName, handleForgotPassword }) => {
   const {
     register,
     getValues,
+    watch,
     setValue,
     handleSubmit,
     formState: { errors },
@@ -57,7 +58,7 @@ export const Login = ({ loginName, handleForgotPassword }) => {
       mobileNo: '',
     },
   });
-
+  watch('mobileNo');
   const { otpform, otpValue, handleClear } = OtpForm({});
   const captchaResult = (num) => {
     setcaptachaAnswer(num);
