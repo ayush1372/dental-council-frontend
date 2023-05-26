@@ -46,6 +46,7 @@ export const Login = ({ loginName, handleForgotPassword }) => {
   const {
     register,
     getValues,
+    watch,
     setValue,
     handleSubmit,
     formState: { errors },
@@ -57,14 +58,13 @@ export const Login = ({ loginName, handleForgotPassword }) => {
       mobileNo: '',
     },
   });
-
+  watch('mobileNo');
   const { otpform, otpValue, handleClear } = OtpForm({});
   const captchaResult = (num) => {
     setcaptachaAnswer(num);
   };
 
   const sendNotificationOTPHandler = () => {
-    setOtpFormEnable(true);
     let OTPTypeID = 'sms';
 
     let sendOTPData = {
@@ -72,12 +72,17 @@ export const Login = ({ loginName, handleForgotPassword }) => {
       type: OTPTypeID,
     };
 
-    dispatch(sendNotificationOtp(sendOTPData)).then((response) => {
-      if (response) {
-        setTransaction_id(response?.data?.transaction_id);
-        setOtpSend(true);
-      }
-    });
+    dispatch(sendNotificationOtp(sendOTPData))
+      .then((response) => {
+        if (response) {
+          setTransaction_id(response?.data?.transaction_id);
+          setOtpSend(true);
+          setOtpFormEnable(true);
+        }
+      })
+      .catch((error) => {
+        successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
+      });
   };
 
   const getCommonData = (response) => {
@@ -150,6 +155,7 @@ export const Login = ({ loginName, handleForgotPassword }) => {
                 getCommonData(resp);
               })
               .catch((error) => {
+                setOtpFormEnable(false);
                 dispatch(generateCaptchaImage()).catch((error) => {
                   successToast(
                     'ERROR: ' + error?.data?.message,

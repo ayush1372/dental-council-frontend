@@ -92,12 +92,7 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep }) => {
           }
         })
         .catch((error) => {
-          successToast(
-            'ERROR: ' + error?.data?.response?.data?.error,
-            'auth-error',
-            'error',
-            'top-center'
-          );
+          successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
         });
 
       return;
