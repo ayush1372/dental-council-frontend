@@ -42,6 +42,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
   const {
     register,
     getValues,
+    watch,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -53,6 +54,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
       mobileNo: '',
     },
   });
+  watch('mobileNo');
 
   const { otpform, otpValue, handleClear } = OtpForm({});
   const captchaResult = (num) => {
