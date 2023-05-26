@@ -17,6 +17,7 @@ import {
   updateDoctorContactDetails,
 } from '../../../store/actions/doctor-user-profile-actions';
 import { retrieveUserName } from '../../../store/actions/forgot-username-actions';
+import { loginActiveState } from '../../../store/reducers/login-reducer';
 import { Button } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
 const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup }) => {
@@ -195,7 +196,7 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup 
                     <Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
                       <CircularProgress color="secondary" />
                       <Typography textAlign="center" mt={2}>
-                        Waiting for Conformation
+                        Waiting for Confirmation
                       </Typography>
                     </Box>
                   )}
@@ -239,7 +240,7 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup 
           {(otpData.page === 'doctorConstantDetailsPage' ||
             otpData.page === 'forgotPasswordPage' ||
             otpData?.page === 'forgetUserName') &&
-            otpData?.type !== 'email' && (
+            (otpData?.type === 'email' || otpData?.type === 'sms') && (
               <Box display={'flex'} justifyContent="center">
                 {otpform}
               </Box>
@@ -264,11 +265,12 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup 
           </Box>
         ) : (
           (otpData.page === 'doctorConstantDetailsPage' || otpData.page === 'forgotPasswordPage') &&
-          otpData?.type !== 'email' && (
+          (otpData?.type === 'email' || otpData?.type === 'sms') && (
             <Box mt={3} textAlign="center">
               <Button
                 onClick={() => {
                   resetStep(0);
+                  dispatch(loginActiveState({ activeIndex: 0 }));
                 }}
                 variant="contained"
                 color="grey"

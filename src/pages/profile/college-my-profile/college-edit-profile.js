@@ -223,9 +223,12 @@ const CollegeEditProfile = (props) => {
               defaultValue={getCouncilNameData(getCollegeDetail?.data?.state_medical_council_id)}
               placeholder="Select Council"
               clearErrors={clearErrors}
-              error={errors.CouncilName?.message}
+              error={
+                (getValues()?.CouncilID === '' || getValues()?.CouncilID === undefined) &&
+                errors.CouncilName?.message
+              }
               {...register('CouncilName', {
-                required: ' Council name is required',
+                required: 'Council name is required',
               })}
               onChange={(currentValue) => {
                 setValue('CouncilID', currentValue?.id);

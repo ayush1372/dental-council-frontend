@@ -67,14 +67,14 @@ export const toUpperCase = (str) => {
 };
 
 export const capitalizeFirstLetter = (str) => {
-  let words = str.split(' ');
+  let words = str?.split(' ');
 
-  for (let i = 0; i < words.length; i++) {
+  for (let i = 0; i < words?.length; i++) {
     const firstLetter = words[i][0].toUpperCase();
     let restOfWord = words[i].substr(1).toLowerCase();
     words[i] = firstLetter + restOfWord;
   }
-  return words.join(' ');
+  return words?.join(' ');
 };
 
 export const createSelectFieldData = (arrayOfStrings, valueKey) => {

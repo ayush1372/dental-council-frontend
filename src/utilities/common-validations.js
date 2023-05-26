@@ -88,7 +88,8 @@ export const AadharRegexValidation = {
 export const EmailRegexValidation = {
   required: 'Enter a Valid Email ID',
   pattern: {
-    value: /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/i,
+    value:
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
     message: 'Provide a Valid Email ID',
   },
 };

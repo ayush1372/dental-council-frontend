@@ -13,7 +13,7 @@ import {
   updateDoctorRegistrationDetails,
 } from '../../../../store/actions/doctor-user-profile-actions';
 import { getRegistrationDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
-import { Button, RadioGroup, Select, TextField } from '../../../../ui/core';
+import { Button, DatePicker, RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
 import successToast from '../../../../ui/core/toaster';
 import EditQualificationDetails from './edit-qualification-details';
@@ -556,31 +556,24 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 </Typography>
               </Typography>
 
-              <TextField
-                variant="outlined"
-                name={'RenewalDate'}
+              <DatePicker
+                onChangeDate={(newDateValue) => {
+                  setValue('RenewalDate', new Date(newDateValue)?.toLocaleDateString('en-GB'));
+                }}
+                data-testid="RenewalDate"
+                id="RenewalDate"
+                name="RenewalDate"
                 required={true}
-                fullWidth
-                type="date"
                 defaultValue={getValues().RenewalDate}
-                {...register('RenewalDate', {
-                  required: 'Registration Date is Required',
-                })}
-                sx={{
-                  input: {
-                    color: 'black',
-                    textTransform: 'uppercase',
-                    backgroundColor:
-                      work_flow_status_id === 3
-                        ? 'grey2.main'
-                        : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-                        ? ''
-                        : 'grey2.main',
-                  },
-                }}
-                inputProps={{
-                  min: new Date().toISOString().split('T')[0],
-                }}
+                minDate={new Date()}
+                backgroundColor={
+                  work_flow_status_id === 3
+                    ? '#F0F0F0'
+                    : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                    ? '#F0F0F0'
+                    : ''
+                }
+                value={new Date()}
                 disabled={work_flow_status_id === 3 ? getQueryRaised('Due Date of Renewal') : false}
               />
             </Grid>

@@ -7,15 +7,19 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import ReactivationLogo from '../../../src/assets/images/reactivate-license-icon.png';
 import { createReActivateLicense } from '../../store/actions/common-actions';
-import { TextField } from '../../ui/core';
+import { DatePicker, TextField } from '../../ui/core';
 import successToast from '../../ui/core/toaster';
 export default function ReactivateLicencePopup(props) {
   const [open, setOpen] = useState(true);
+  const [showFromDateError, setShowFromDateError] = useState(false);
+
   const { loginData } = useSelector((state) => state?.loginReducer);
   const dispatch = useDispatch();
+
   const {
     register,
     getValues,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -55,9 +59,9 @@ export default function ReactivateLicencePopup(props) {
   }
 
   return (
-    <Modal open={open} onClose={handleClose} sx={{ mt: 15, height: '561px' }}>
+    <Modal open={open} onClose={handleClose} sx={{ mt: 5, height: '561px' }}>
       <Container
-        maxWidth="sm"
+        maxWidth="xs"
         sx={{ backgroundColor: 'white.main', borderRadius: '10px', height: '544px' }}
       >
         <Box py={3}>
@@ -81,30 +85,20 @@ export default function ReactivateLicencePopup(props) {
               *
             </Typography>
 
-            <TextField
-              fullWidth
+            <DatePicker
+              value={getValues()?.fromDate}
+              onChangeDate={(newDateValue) => {
+                setValue('fromDate', new Date(newDateValue)?.toLocaleDateString('en-GB'));
+                setShowFromDateError(false);
+              }}
               data-testid="fromDate"
               id="fromDate"
-              type="date"
               name="fromDate"
-              sx={{
-                height: '48px',
-                input: {
-                  color: 'grey1.dark',
-                  textTransform: 'uppercase',
-                },
-              }}
-              InputLabelProps={{
-                shrink: true,
-              }}
               required={true}
               defaultValue={getValues().fromDate}
-              error={errors.fromDate?.message}
-              {...register('fromDate', {
-                required: 'This field is required',
-              })}
+              error={showFromDateError ? 'Enter Re-activate from' : false}
             />
-          </Box>
+          </Box> 
 
           <Box>
             <Box>
@@ -152,7 +146,12 @@ export default function ReactivateLicencePopup(props) {
             </Button>
             <Button
               sx={{ ml: 2 }}
-              onClick={handleSubmit(handleReactivate)}
+              onClick={() => {
+                if (getValues().fromDate === undefined) {
+                  setShowFromDateError(true);
+                }
+                handleSubmit(handleReactivate);
+              }}
               variant="contained"
               color="secondary"
             >

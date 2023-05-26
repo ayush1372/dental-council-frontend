@@ -9,13 +9,17 @@ import { useSelector } from 'react-redux';
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 import { convertGender } from '../../../../utilities/common-validations';
 
-const PersonalDetails = ({ personalDetails }) => {
+const PersonalDetails = ({ personalDetails, selectedDataIndex }) => {
   const { data } = useSelector((state) => state.loginReducer?.loginData);
   const { raisedQueryData } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
 
   const [queryRaisedField, setQueryRaisedField] = useState('');
   const [openModal, setOpenModal] = useState(false);
-
+  const dashboardTableDetailsData = useSelector((state) => state?.dashboard?.dashboardTableDetails);
+  const { college_status: dashboardTableDetails } =
+    (dashboardTableDetailsData?.data?.dashboard_tolist &&
+      dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]) ||
+    [];
   const { personal_details } = personalDetails || {};
   const {
     full_name,
@@ -55,13 +59,16 @@ const PersonalDetails = ({ personalDetails }) => {
               <Typography p={1} variant="subtitle2" color="inputTextColor.light">
                 xxxx-xxxx-{aadhaar_token ? aadhaar_token : 'XXXX'}
               </Typography>
-              {(data?.user_type === 3 || data?.user_type === 4) && (
-                <ContactSupportOutlinedIcon
-                  color="primary"
-                  onClick={() => setOpenModal(true)}
-                  fontSize="width24"
-                />
-              )}{' '}
+              {((data?.user_type === 4 &&
+                (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+                data?.user_type === 3) &&
+                dashboardTableDetails !== 'Approved' && (
+                  <ContactSupportOutlinedIcon
+                    color="primary"
+                    onClick={() => setOpenModal(true)}
+                    fontSize="width24"
+                  />
+                )}{' '}
             </Grid>
           </Grid>
         )}
@@ -94,16 +101,18 @@ const PersonalDetails = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               Dr. {full_name ? full_name : ''}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => {
-                  setOpenModal(true);
-                  setQueryRaisedField('Name');
-                }}
-                fontSize="width24"
-              />
-            )}{' '}
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) &&
+              dashboardTableDetails !== 'Approved' && (
+                <ContactSupportOutlinedIcon
+                  color="primary"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('Name');
+                  }}
+                  fontSize="width24"
+                />
+              )}{' '}
           </Grid>
         </Grid>
         <Grid item xs={12} md={3}>
@@ -119,16 +128,18 @@ const PersonalDetails = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {father_name ? father_name : ''}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => {
-                  setOpenModal(true);
-                  setQueryRaisedField('Fathers Name');
-                }}
-                fontSize="width24"
-              />
-            )}{' '}
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) &&
+              dashboardTableDetails !== 'Approved' && (
+                <ContactSupportOutlinedIcon
+                  color="primary"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('Fathers Name');
+                  }}
+                  fontSize="width24"
+                />
+              )}{' '}
           </Grid>
         </Grid>
         <Grid item xs={12} md={3}>
@@ -144,16 +155,18 @@ const PersonalDetails = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {mother_name === '' || mother_name === undefined ? '-' : mother_name}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => {
-                  setOpenModal(true);
-                  setQueryRaisedField('Mothers Name');
-                }}
-                fontSize="width24"
-              />
-            )}{' '}
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) &&
+              dashboardTableDetails !== 'Approved' && (
+                <ContactSupportOutlinedIcon
+                  color="primary"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('Mothers Name');
+                  }}
+                  fontSize="width24"
+                />
+              )}{' '}
           </Grid>
         </Grid>
         <Grid item xs={12} md={3}>
@@ -169,16 +182,18 @@ const PersonalDetails = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {spouse_name === '' || spouse_name === undefined ? '-' : spouse_name}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => {
-                  setOpenModal(true);
-                  setQueryRaisedField('Spouse Name');
-                }}
-                fontSize="width24"
-              />
-            )}{' '}
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) &&
+              dashboardTableDetails !== 'Approved' && (
+                <ContactSupportOutlinedIcon
+                  color="primary"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('Spouse Name');
+                  }}
+                  fontSize="width24"
+                />
+              )}{' '}
           </Grid>
         </Grid>
       </Grid>
@@ -199,16 +214,18 @@ const PersonalDetails = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {gender && convertGender(gender)}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => {
-                  setOpenModal(true);
-                  setQueryRaisedField('Gender');
-                }}
-                fontSize="width24"
-              />
-            )}{' '}
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) &&
+              dashboardTableDetails !== 'Approved' && (
+                <ContactSupportOutlinedIcon
+                  color="primary"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('Gender');
+                  }}
+                  fontSize="width24"
+                />
+              )}{' '}
           </Grid>
         </Grid>
 
@@ -228,16 +245,18 @@ const PersonalDetails = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {date_of_birth ? moment(date_of_birth).format('DD-MM-YYYY') : ''}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => {
-                  setOpenModal(true);
-                  setQueryRaisedField('Date of Birth');
-                }}
-                fontSize="width24"
-              />
-            )}
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) &&
+              dashboardTableDetails !== 'Approved' && (
+                <ContactSupportOutlinedIcon
+                  color="primary"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('Date of Birth');
+                  }}
+                  fontSize="width24"
+                />
+              )}
           </Grid>
         </Grid>
 
@@ -257,16 +276,18 @@ const PersonalDetails = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {nationality}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => {
-                  setOpenModal(true);
-                  setQueryRaisedField('Nationality');
-                }}
-                fontSize="width24"
-              />
-            )}{' '}
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) &&
+              dashboardTableDetails !== 'Approved' && (
+                <ContactSupportOutlinedIcon
+                  color="primary"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('Nationality');
+                  }}
+                  fontSize="width24"
+                />
+              )}{' '}
           </Grid>
         </Grid>
       </Grid>

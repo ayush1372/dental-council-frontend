@@ -46,10 +46,12 @@ const WorkDetails = ({
   const [successModalPopup, setSuccessModalPopup] = useState(false);
   const [organizationChecked, setOrganizationChecked] = useState(false);
   const [declaredFacilityData, setDeclaredFacilityDistrict] = useState([]);
-  const [defaultFacilityData, setDefaultFacilityDistrict] = useState([]);
+  const [defaultFacilityData, setDefaultFacilityData] = useState([]);
 
   const { loginData } = useSelector((state) => state.loginReducer);
-  const { registrationDetails } = useSelector((state) => state.doctorUserProfileReducer);
+  const { registrationDetails, workProfileDetails } = useSelector(
+    (state) => state.doctorUserProfileReducer
+  );
 
   // eslint-disable-next-line no-unused-vars
   const [facilityResponseData, setFacilityResponseData] = useState([]);
@@ -57,7 +59,7 @@ const WorkDetails = ({
   useEffect(() => {
     dispatch(getWorkProfileDetailsData(loginData?.data?.profile_id)).then((response) => {
       if (response?.data) {
-        setDefaultFacilityDistrict(response?.data);
+        setDefaultFacilityData(response?.data);
       }
     });
   }, []);
@@ -504,25 +506,28 @@ const WorkDetails = ({
           Are you currently in Facility/Organization
         </Typography>
       </Grid>
-      <Grid item xs={12} ml={2}>
-        <Checkbox
-          sx={{ padding: '0 8px 0 0' }}
-          value={facilityChecked}
-          defaultChecked={true}
-          // defaultValue={facilityChecked}
-          onChange={(e) => {
-            setFacilityChecked(e.target.checked);
-          }}
-          label="Facility"
-        />
-        <Checkbox
-          sx={{ padding: '0 8px 0 0' }}
-          value={organizationChecked}
-          onChange={(e) => {
-            setOrganizationChecked(e.target.checked);
-          }}
-          label="Organization"
-        />
+      <Grid item xs={12} ml={2} display="flex">
+        <Box>
+          <Checkbox
+            sx={{ padding: '0 8px 0 0' }}
+            value={facilityChecked}
+            defaultChecked={true}
+            onChange={(e) => {
+              setFacilityChecked(e.target.checked);
+            }}
+            label="Facility"
+          />
+        </Box>
+        <Box ml={2}>
+          <Checkbox
+            sx={{ padding: '0 8px 0 0' }}
+            value={organizationChecked}
+            onChange={(e) => {
+              setOrganizationChecked(e.target.checked);
+            }}
+            label="Organization"
+          />
+        </Box>
       </Grid>
       {facilityChecked && (
         <Grid container item spacing={2}>
@@ -720,7 +725,7 @@ const WorkDetails = ({
                 fullWidth
                 defaultValue={getValues().workingOrganizationName}
                 {...register('workingOrganizationName', {
-                  // required: 'This field is required',
+                  required: 'This field is required',
                   maxLength: {
                     value: 300,
                     message: 'Length should be less than 300.',
@@ -1086,7 +1091,10 @@ const WorkDetails = ({
             </Typography>
           </Grid>
           <Grid item xs={12} padding="10px 0 !important">
-            <FacilityDetailsTable declaredFacilityData={defaultFacilityData} />
+            <FacilityDetailsTable
+              declaredFacilityData={defaultFacilityData}
+              currentWorkDetails={workProfileDetails?.current_work_details}
+            />
           </Grid>
         </Grid>
       )}

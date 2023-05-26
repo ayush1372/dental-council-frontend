@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import { Grid, Typography, useTheme } from '@mui/material';
 import { Box } from '@mui/system';
+import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
@@ -17,7 +18,10 @@ const CaptchaComponent = ({ captchaResult }) => {
   const [error, setError] = useState();
   const dispatch = useDispatch();
   const theme = useTheme();
-
+  const { register, getValues, setValue } = useForm({
+    mode: 'onChange',
+    defaultValues: { anwser: anwser },
+  });
   const reloadCaptcha = () => {
     setAnwser('');
     if (captchaEnabledFlag?.data) {
@@ -31,11 +35,6 @@ const CaptchaComponent = ({ captchaResult }) => {
     setAnwser('');
   }, [generateCaptcha?.transaction_id]);
 
-  const handleChange = (e) => {
-    setAnwser(e.target.value);
-    captchaResult(e.target.value);
-  };
-
   const onFocusChange = (e) => {
     e.preventDefault();
     const userResponse = anwser;
@@ -45,6 +44,15 @@ const CaptchaComponent = ({ captchaResult }) => {
     } else {
       setError(null);
     }
+    userResponse.length > 2 ? setError('Enter captcha answer') : setError('');
+  };
+
+  const handleChange = (event) => {
+    const captchaValue = event.target.value.replace(/[^0-9]/g, '');
+    setValue('anwser', captchaValue);
+    setAnwser(captchaValue);
+    captchaResult(captchaValue);
+    captchaValue.length > 2 ? setError('Please enter valid captcha answer') : setError('');
   };
 
   return (
@@ -88,9 +96,16 @@ const CaptchaComponent = ({ captchaResult }) => {
                     // className={`${!error ? 'text-captcha' : 'text-captcha-danger'}`}
                     name="anwser"
                     placeholder="Enter Answer"
-                    value={anwser}
-                    onBlur={onFocusChange}
-                    onChange={handleChange}
+                    defaultValue={getValues().anwser}
+                    required
+                    {...register('anwser', {
+                      onChange: (event) => {
+                        handleChange(event);
+                      },
+                      onBlur: (event) => {
+                        onFocusChange(event);
+                      },
+                    })}
                   />
                 </Grid>
               </Grid>
