@@ -117,15 +117,20 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
           contact: type === 'sms' ? getValues().mobileNo : '',
           type: type === 'sms' ? 'sms' : '',
         };
-        try {
-          dispatch(sendNotificationOtp(sendOTPData)).then((response) => {
+        dispatch(sendNotificationOtp(sendOTPData))
+          .then((response) => {
             response?.data?.message === 'Success'
               ? setShowOTPPOPUp(true)
               : successToast(response?.data?.message, 'auth-error', 'error', 'top-center');
+          })
+          .catch((allFailMsg) => {
+            successToast(
+              allFailMsg?.data?.response?.data?.message,
+              'auth-error',
+              'error',
+              'top-center'
+            );
           });
-        } catch (allFailMsg) {
-          successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-        }
       }
     }
   };
