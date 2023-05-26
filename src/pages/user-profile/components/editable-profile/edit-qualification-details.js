@@ -29,12 +29,8 @@ const EditQualificationDetails = ({
 }) => {
   const dispatch = useDispatch();
   const [colleges, setColleges] = useState([]);
-  const [courseID, setCourseID] = useState(
-    qualification?.qualification ? qualification?.qualification : ''
-  );
 
-  // eslint-disable-next-line no-unused-vars
-  const [degree, setDegree] = useState([
+  const [degree] = useState([
     {
       name: 'MBBS - Bachelor of Medicine and Bachelor of Surgery ',
       id: 69,
@@ -399,15 +395,11 @@ const EditQualificationDetails = ({
           {qualificationfrom === 'International' || isAdditionalQualification ? (
             <Select
               fullWidth
-              error={
-                getValues()?.qualification[index]?.qualification?.length === 0
-                  ? errors?.qualification?.[index]?.qualification?.message
-                  : ''
-              }
+              error={errors?.qualification?.[index]?.qualification?.message}
               name="Qualification"
               label="Name of the Degree"
-              defaultValue={courseID}
-              value={courseID}
+              defaultValue={degree[0]?.id}
+              isAdditionalQualification={isAdditionalQualification}
               required={true}
               disabled={
                 work_flow_status_id === 3 ? getQueryRaised('Name of the Degree Obtained') : false
@@ -417,14 +409,11 @@ const EditQualificationDetails = ({
                 {
                   onChange: (e) => {
                     setValue(`qualification[${index}].qualification`, e.target.value);
-                    setCourseID(e.target.value);
                   },
                 },
-                getValues()?.qualification[index]?.qualification?.length === 0
-                  ? {
-                      required: 'Qualification Details is required',
-                    }
-                  : ''
+                {
+                  required: 'Qualification Details is required',
+                }
               )}
               style={{
                 backgroundColor:
@@ -462,7 +451,6 @@ const EditQualificationDetails = ({
                 {
                   onload: (e) => {
                     setValue(`qualification[${index}].qualification`, e.target.value);
-                    setCourseID(e.target.value);
                   },
                 }
               )}
