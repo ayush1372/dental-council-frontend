@@ -94,11 +94,21 @@ export default function ReactivateLicencePopup(props) {
               data-testid="fromDate"
               id="fromDate"
               name="fromDate"
+              sx={{
+                height: '48px',
+                input: {
+                  color: 'black',
+                  textTransform: 'uppercase',
+                },
+              }}
+              InputLabelProps={{
+                shrink: true,
+              }}
               required={true}
               defaultValue={getValues().fromDate}
               error={showFromDateError ? 'Enter Re-activate from' : false}
             />
-          </Box> 
+          </Box>
 
           <Box>
             <Box>
