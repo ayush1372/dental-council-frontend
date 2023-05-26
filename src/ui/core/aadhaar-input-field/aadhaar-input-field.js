@@ -31,7 +31,7 @@ export const AadhaarInputField = (props) => {
   };
 
   const renderError = () => {
-    if (errors[FIRST_FIELD_NAME] || errors[SECOND_FIELD_NAME] || errors[THIRD_FIELD_NAME]) {
+    if (errors[FIRST_FIELD_NAME] && errors[SECOND_FIELD_NAME] && errors[THIRD_FIELD_NAME]) {
       return (
         <Typography
           style={{ display: 'flex', alignItems: 'center' }}
