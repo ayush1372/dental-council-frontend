@@ -247,7 +247,9 @@ const AdditionalQualifications = () => {
         <SuccessModalPopup
           open={successModalPopup}
           setOpen={() => setSuccessModalPopup(false)}
-          text={'Added Qualification Successfully!'}
+          text={
+            'The additional qualification details has been sent for verification. You can check the verification status in the Track Status tab!'
+          }
           navigateToTrackApplication={navigateToTrackApplication}
         />
       )}
