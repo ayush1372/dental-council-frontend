@@ -61,7 +61,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
     setcaptachaAnswer(num);
   };
   const sendNotificationOTPHandler = (enableOTP, OTPType) => {
-    !!OTPType && setOtpFormEnable(enableOTP);
+    OTPType !== undefined && setOtpFormEnable(enableOTP);
     let OTPTypeID;
     switch (OTPType) {
       case 'NMR':
