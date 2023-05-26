@@ -40,12 +40,35 @@ export const UploadFile = (props) => {
     setBrowsedFileData(e);
     setBrowsedFileName(e.target.files[0].name);
   };
+
+  //Helper Function to convert b64 string to a blob
+  const b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
+    const byteCharacters = atob(b64Data);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+
+    const blob = new Blob(byteArrays, { type: contentType });
+    return blob;
+  };
+
   function downloadFile(file) {
     if (file?.fileBlob) {
       const newTab = window.open();
       const image = new Image();
       const url = file?.fileName;
       const blob = file?.fileBlob;
+
       if (url && url !== null && url?.includes('.png')) {
         image.src = 'data:image/png;base64,' + blob;
         image.width = '1250';
@@ -137,7 +160,9 @@ export const UploadFile = (props) => {
     } else {
       const reader = new FileReader();
       const newTab = window.open();
-      reader.readAsDataURL(file?.file);
+      const blob = b64toBlob(file.file, '');
+
+      reader.readAsDataURL(blob);
       reader.onload = function () {
         const type = reader?.result.includes('data:application/pdf;');
         if (type === true) {
