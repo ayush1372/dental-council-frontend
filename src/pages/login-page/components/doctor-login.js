@@ -424,6 +424,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
               {...register('userID', {
                 required: 'Please enter username',
                 pattern: {
+                  value: /^[\s.]*([^\s.][\s.]*){0,100}$/,
                   message: 'Please enter a valid username',
                 },
                 minLength: {
@@ -431,6 +432,9 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
                   message: 'Enter valid username',
                 },
               })}
+              inputProps={{
+                maxLength: 100,
+              }}
             />
             <Typography display={'flex'} justifyContent="flex-end">
               <Button

@@ -28,6 +28,7 @@ export const UploadFile = (props) => {
     isDigiLockcerVisible = false,
     uploadFileLabel,
     name = 'file',
+    fileName,
   } = props;
   const [uploadPercentage, setUploadPercentage] = useState('');
   // const [fileData, setFileData] = useState([]);
@@ -334,7 +335,9 @@ export const UploadFile = (props) => {
                         <div className={styles.fileDetailsContainer}>
                           <UploadFileIcon color="primary" fontSize="large" />
                           <div className={styles.fileDetailsArea}>
-                            <Typography color="inputTextColor.main">{file.fileName}</Typography>
+                            <Typography color="inputTextColor.main">
+                              {file.fileName || fileName}
+                            </Typography>
                             {fileData.length === 1 || uploadStatus === 'successful' ? (
                               <div className={styles.timeInfo}>
                                 {moment(file.timeInfo).format('DD MMMM, YYYY')} at{' '}
