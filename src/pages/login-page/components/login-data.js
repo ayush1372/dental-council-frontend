@@ -336,6 +336,7 @@ export const Login = ({ loginName, handleForgotPassword }) => {
               {...register('userID', {
                 required: 'Please enter username',
                 pattern: {
+                  value: /^[\s.]*([^\s.][\s.]*){0,100}$/,
                   message: 'Please enter a valid username',
                 },
                 minLength: {
@@ -343,6 +344,9 @@ export const Login = ({ loginName, handleForgotPassword }) => {
                   message: 'Should contains 8 character',
                 },
               })}
+              inputProps={{
+                maxLength: 100,
+              }}
             />
             <TextField
               sx={{ mb: 2 }}
