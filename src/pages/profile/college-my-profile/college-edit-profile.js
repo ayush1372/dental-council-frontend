@@ -35,9 +35,10 @@ const CollegeEditProfile = (props) => {
 
   useEffect(() => {
     dispatch(getUniversitiesList());
-    dispatch(getDistrictList(getCollegeDetail?.data?.state_id)).then((res) => {
-      setDistrictList(res?.data);
-    });
+    if (getCollegeDetail?.data?.state_id !== undefined)
+      dispatch(getDistrictList(getCollegeDetail?.data?.state_id)).then((res) => {
+        setDistrictList(res?.data);
+      });
   }, []);
 
   const {
