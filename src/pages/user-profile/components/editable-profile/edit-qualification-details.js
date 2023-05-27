@@ -21,6 +21,7 @@ const EditQualificationDetails = ({
   unregister,
   remove,
   watch,
+  fileName,
   qualification,
   qualificationFilesData,
   isAdditionalQualification,
@@ -221,6 +222,10 @@ const EditQualificationDetails = ({
               defaultValue={getValues()[`qualification[${index}].passportNumber`]}
               {...register(`qualification[${index}].passportNumber`, {
                 required: 'Passport Number is Required',
+                pattern: {
+                  value: /^[A-PR-WY][1-9]\d\s?\d{4}[1-9]$/gi,
+                  message: 'Passport Number is Required',
+                },
               })}
               sx={{
                 input: {
@@ -788,6 +793,7 @@ const EditQualificationDetails = ({
             setFileData={(files) => {
               handleQualificationFilesData(`qualification.${index}.files`, files);
             }}
+            fileName={fileName || ''}
             isDigiLockcerVisible={true}
             uploadFileLabel="Upload Qualification Degree "
             disabled={

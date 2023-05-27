@@ -62,9 +62,10 @@ const CollegeMyProfile = () => {
 
   useEffect(() => {
     dispatch(getUniversitiesList());
-    dispatch(getDistrictList(getCollegeDetail?.data?.state_id)).then((res) => {
-      setDistrictList(res?.data);
-    });
+    if (getCollegeDetail?.data?.state_id !== undefined)
+      dispatch(getDistrictList(getCollegeDetail?.data?.state_id)).then((res) => {
+        setDistrictList(res?.data);
+      });
   }, []);
 
   useEffect(() => {
@@ -127,42 +128,42 @@ const CollegeMyProfile = () => {
           </Grid>
 
           <Grid container spacing={2} mt={3}>
-            {loginData?.data?.user_sub_type === 1 ? (
+            {loginData?.data?.user_sub_type === 1 || userData?.name ? (
               <Grid item xs={12} md={4} sm={6}>
                 <Typography variant="body3" color="grey.label">
                   Name
                 </Typography>
 
                 <Typography variant="subtitle2" color="inputTextColor.main">
-                  {getCollegeDetail?.data?.name}
+                  {getCollegeDetail?.data?.name || userData?.name}
                 </Typography>
               </Grid>
             ) : (
               ''
             )}
 
-            {loginData?.data?.user_sub_type === 1 ? (
+            {loginData?.data?.user_sub_type === 1 || userData?.college_id ? (
               <Grid item xs={12} md={4} sm={6}>
                 <Typography variant="body3" color="grey.label">
                   College Code
                 </Typography>
 
                 <Typography variant="subtitle2" color="inputTextColor.main">
-                  {getCollegeDetail?.data?.college_code}
+                  {getCollegeDetail?.data?.college_code || userData?.college_id}
                 </Typography>
               </Grid>
             ) : (
               ''
             )}
 
-            {loginData?.data?.user_sub_type === 1 ? (
+            {loginData?.data?.user_sub_type === 1 || userData?.mobile_number ? (
               <Grid item xs={12} md={4} sm={6}>
                 <Typography variant="body3" color="grey.label">
                   Mobile
                 </Typography>
 
                 <Typography variant="subtitle2" color="inputTextColor.main">
-                  {getCollegeDetail?.data?.mobile_number}
+                  {getCollegeDetail?.data?.mobile_number || userData?.mobile_number}
                 </Typography>
               </Grid>
             ) : (

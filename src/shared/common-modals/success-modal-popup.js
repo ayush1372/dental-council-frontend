@@ -17,6 +17,7 @@ import {
   resetCommonReducer,
 } from '../../store/reducers/common-reducers';
 import { setBreadcrumbsActivetab } from '../../store/reducers/common-reducers';
+import { loginActiveState } from '../../store/reducers/login-reducer';
 import { Button } from '../../ui/core';
 
 export default function SuccessModalPopup({
@@ -98,6 +99,7 @@ export default function SuccessModalPopup({
     }
   };
   const navigateLogin = () => {
+    dispatch(loginActiveState({ activeIndex: 0 }));
     navigate('/login-page', { state: { loginFormname: 'Doctor' } });
   };
 

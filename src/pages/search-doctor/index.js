@@ -1,9 +1,10 @@
 import { useState } from 'react';
 
 import { Box, Container, Tab, Tabs } from '@mui/material';
+import { useDispatch } from 'react-redux';
 
+import { searchDoctor } from '../../store/reducers/doctor-search-reducer';
 import AdvanceSearch from './components/advance-search';
-// import BlacklistedDoctor from './components/blacklisted-doctor';
 import SearchResults from './components/doctor-search-results';
 import Name from './components/name';
 import RegistrationNumber from './components/registration-number';
@@ -22,11 +23,15 @@ const tabNames = {
 };
 
 const SearchDoctor = () => {
+  const dispatch = useDispatch();
+
   const [doSearch, setDoSearch] = useState(false);
   const [scrolldown, setScrollDown] = useState(false);
   const [searchData, setSearchData] = useState({});
   const [tabValue, setTabValue] = useState('Advance Search');
   const handleTabChange = (event, newValue) => {
+    setSearchData({});
+    dispatch(searchDoctor({ results: [], count: undefined }));
     setScrollDown(false);
     setTabValue(newValue);
   };
