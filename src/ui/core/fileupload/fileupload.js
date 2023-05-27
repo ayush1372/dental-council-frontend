@@ -28,6 +28,7 @@ export const UploadFile = (props) => {
     fileMessage,
     isDigiLockcerVisible = false,
     uploadFileLabel,
+    name = 'file',
   } = props;
   const [uploadPercentage, setUploadPercentage] = useState('');
   // const [fileData, setFileData] = useState([]);
@@ -284,7 +285,7 @@ export const UploadFile = (props) => {
                 id={fileID}
                 data-testid={fileID}
                 onChange={(e) => handleChange(e)}
-                name="file"
+                name={name}
                 accept={fileTypes}
               />
             </div>
