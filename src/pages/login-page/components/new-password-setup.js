@@ -83,11 +83,11 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep }) => {
         password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
         transaction_id: sendNotificationOtpData?.data?.transaction_id,
       };
-      // try {
       dispatch(forgotPassword(reSetPasswordBody))
         .then((response) => {
           if (response?.data?.message === 'Success') {
             setShowSuccessPopUp(true);
+            setShowSuccess(true);
             resetStep(0);
           }
         })
@@ -260,6 +260,8 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep }) => {
             setOpen={() => setShowSuccess(false)}
             text={
               collegeRegisterSuccess
+                ? 'Your password has been successfully created.'
+                : uniqueHpId === undefined
                 ? 'Your password has been successfully created.'
                 : `Your password for ${uniqueHpId} has been successfully created.`
             }
