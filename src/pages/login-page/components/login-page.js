@@ -87,11 +87,17 @@ export function LoginPage() {
           loginName={loginFormNames[loginFormname]}
           handleNext={handleNext}
           otpData={setData}
+          userTypeDetails={data}
         />
       ) : (
         activeIndex === 0 &&
         loginFormNames[loginFormname] !== 'Doctor' && (
-          <Login loginName={loginFormNames[loginFormname]} handleForgotPassword={handleNext} />
+          <Login
+            loginName={loginFormNames[loginFormname]}
+            handleForgotPassword={handleNext}
+            otpData={setData}
+            userTypeDetails={data}
+          />
         )
       )}
       {activeIndex === 1 && (

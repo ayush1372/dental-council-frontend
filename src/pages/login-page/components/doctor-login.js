@@ -27,7 +27,7 @@ import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 import successToast from '../../../ui/core/toaster';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
-export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
+export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTypeDetails }) => {
   const [captchaAnswer, setcaptachaAnswer] = useState();
   const { generateCaptcha } = useSelector((state) => state.loginReducer);
   const theme = useTheme();
@@ -56,7 +56,6 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
   });
   watch('mobileNo');
 
-  const { otpform, otpValue, handleClear } = OtpForm({});
   const captchaResult = (num) => {
     setcaptachaAnswer(num);
   };
@@ -78,7 +77,12 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
       contact: selectedLoginOption === 'nmrId' ? getValues().nmrID : getValues().mobileNo,
       type: OTPTypeID,
     };
-
+    otpData({
+      ...otpData,
+      contact: selectedLoginOption === 'nmrId' ? getValues().nmrID : getValues().mobileNo,
+      type: OTPTypeID,
+      page: 'doctorLogInPage',
+    });
     dispatch(sendNotificationOtp(sendOTPData))
       .then((response) => {
         response?.data?.message === 'Success'
@@ -96,6 +100,10 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
         successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
       });
   };
+  const { otpform, otpValue, handleClear } = OtpForm({
+    sendOTP: sendNotificationOTPHandler,
+    otpData: userTypeDetails,
+  });
 
   const handleResponse = (response) => {
     setOtpFormEnable(true);
@@ -416,6 +424,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
               {...register('userID', {
                 required: 'Please enter username',
                 pattern: {
+                  value: /^[\s.]*([^\s.][\s.]*){0,100}$/,
                   message: 'Please enter a valid username',
                 },
                 minLength: {
@@ -423,6 +432,9 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData }) => {
                   message: 'Enter valid username',
                 },
               })}
+              inputProps={{
+                maxLength: 100,
+              }}
             />
             <Typography display={'flex'} justifyContent="flex-end">
               <Button

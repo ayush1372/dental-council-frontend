@@ -11,6 +11,7 @@ import moment from 'moment';
 import { AiFillEdit, AiOutlineEye } from 'react-icons/ai';
 
 import { base64ToBlob } from '../../../helpers/functions/common-functions';
+import { SvgImageComponent } from '../../../ui/core/svg-icons';
 import { Button } from '../button/button.js';
 
 import styles from './fileupload.module.scss';
@@ -27,6 +28,8 @@ export const UploadFile = (props) => {
     fileMessage,
     isDigiLockcerVisible = false,
     uploadFileLabel,
+    name = 'file',
+    fileName,
   } = props;
   const [uploadPercentage, setUploadPercentage] = useState('');
   // const [fileData, setFileData] = useState([]);
@@ -283,13 +286,13 @@ export const UploadFile = (props) => {
                 id={fileID}
                 data-testid={fileID}
                 onChange={(e) => handleChange(e)}
-                name="file"
+                name={name}
                 accept={fileTypes}
               />
             </div>
           </Grid>
+
           <Grid item sm={6}>
-            {uploadFileError !== '' && <div className={styles.fileError}> {uploadFileError}</div>}
             {showBrowse && (
               <div>
                 <label className={styles.modalLabelHeading}>Browse Files</label>
@@ -333,7 +336,9 @@ export const UploadFile = (props) => {
                         <div className={styles.fileDetailsContainer}>
                           <UploadFileIcon color="primary" fontSize="large" />
                           <div className={styles.fileDetailsArea}>
-                            <Typography color="inputTextColor.main">{file.fileName}</Typography>
+                            <Typography color="inputTextColor.main">
+                              {file.fileName || fileName}
+                            </Typography>
                             {fileData.length === 1 || uploadStatus === 'successful' ? (
                               <div className={styles.timeInfo}>
                                 {moment(file.timeInfo).format('DD MMMM, YYYY')} at{' '}
@@ -442,6 +447,21 @@ export const UploadFile = (props) => {
               </table>
             </div>
           </Grid>
+          {uploadFileError !== '' && (
+            <Box>
+              <div className={styles.fileError} style={{ display: 'flex', alignItems: 'center' }}>
+                <SvgImageComponent icon="error" height="14px" width="16px"></SvgImageComponent>
+                <Typography
+                  style={{ display: 'flex', alignItems: 'center' }}
+                  variant="body2"
+                  color="error"
+                  margin="4px"
+                >
+                  {uploadFileError}
+                </Typography>
+              </div>
+            </Box>
+          )}
         </Grid>
       </div>
     </>

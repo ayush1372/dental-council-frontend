@@ -71,7 +71,7 @@ export const getMaskedMobileNumber = (mobileNumber) => {
 export const PasswordRegexValidation = {
   required: 'Enter valid  Password',
   pattern: {
-    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&])[A-Za-z\d@$!%*?#&]{8,}$/,
+    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&])[A-Za-z\d@$!%*?#&]{8,100}$/,
     message:
       'Create valid password with eight characters including an uppercase, a lowercase, a number and a special character.',
   },

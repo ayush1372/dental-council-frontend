@@ -1,5 +1,5 @@
 // import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Box, Dialog, Grid, Link, Typography, useTheme } from '@mui/material';
 import InputBase from '@mui/material/InputBase';
@@ -9,7 +9,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import IconVerified from '../../../../assets/images/ico-verified.svg';
 import { sendNotificationOtp } from '../../../../store/actions/common-actions';
-import { verifyEmail } from '../../../../store/actions/doctor-user-profile-actions';
+import {
+  getPersonalDetailsData,
+  verifyEmail,
+} from '../../../../store/actions/doctor-user-profile-actions';
 import successToast from '../../../../ui/core/toaster';
 import ConfirmOTP from '../../../login-page/components/confirm-otp';
 const ConstantDetails = ({ validDetails, setValidDetails }) => {
@@ -40,7 +43,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
   const dispatch = useDispatch();
   const theme = useTheme();
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
-
+  const [verifyEmailID, setVerifyEmailID] = useState(false);
   const {
     formState: { errors },
     getValues,
@@ -105,9 +108,12 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
         };
         try {
           dispatch(verifyEmail(sendOTPData, personalDetails?.hp_profile_id)).then((response) => {
-            response?.data?.message === 'Success'
-              ? setShowOTPPOPUp(true)
-              : successToast(response?.data?.message, 'auth-error', 'error', 'top-center');
+            if (response?.data?.message === 'Success') {
+              setShowOTPPOPUp(true);
+              setVerifyEmailID(true);
+            } else {
+              successToast(response?.data?.message, 'auth-error', 'error', 'top-center');
+            }
           });
         } catch (allFailMsg) {
           successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
@@ -134,6 +140,33 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
       }
     }
   };
+
+  useEffect(() => {
+    let clearTimer = false;
+    if (!verifyEmailID) return;
+    const timer = setInterval(() => {
+      try {
+        if (clearTimer) {
+          clearInterval(timer);
+          setShowOTPPOPUp(false);
+          setVerifyEmailID(false);
+          setEmailChange(false);
+          return;
+        }
+        dispatch(getPersonalDetailsData(personalDetails?.hp_profile_id)).then((response) => {
+          if (response?.data?.email_verified) {
+            clearTimer = true;
+          }
+        });
+      } catch (allFailMsg) {
+        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      }
+    }, 6000);
+    return () => {
+      clearInterval(timer);
+      setShowOTPPOPUp(false);
+    };
+  }, [verifyEmailID]);
 
   return (
     <Box bgcolor="white.main" py={3} mb={2} boxShadow="1">

@@ -15,9 +15,10 @@ import styles from './otp-component.module.scss';
 
 export const OtpForm = ({
   otpInvalidError = false,
-  resendAction = undefined,
+  resendAction,
   resendTime = 90,
   otpData,
+  sendOTP,
 }) => {
   const { t } = useTranslation();
   const [otp, setOtp] = useState('');
@@ -127,7 +128,13 @@ export const OtpForm = ({
               setResetEnabled(!isResendEnabled);
               otpData?.reSendOTP && otpData?.reSendOTP(otpData?.type);
               otpData?.reSetPasswordOtp && otpData?.reSetPasswordOtp('reSetPassword');
-              resendAction();
+              resendAction && resendAction();
+              otpData?.page === 'doctorLogInPage' &&
+                sendOTP(
+                  true,
+                  otpData?.type === 'nmr_id' ? 'NMR' : otpData?.type === 'sms' && 'Mobile'
+                );
+              otpData?.page === 'LogInPage' && sendOTP();
             }}
             sx={{
               fontSize: '16px',

@@ -33,7 +33,7 @@ import { Button, TextField } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 import successToast from '../../../ui/core/toaster';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
-export const Login = ({ loginName, handleForgotPassword }) => {
+export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetails }) => {
   const [captchaAnswer, setcaptachaAnswer] = useState();
   const { generateCaptcha } = useSelector((state) => state.loginReducer);
   const theme = useTheme();
@@ -59,7 +59,6 @@ export const Login = ({ loginName, handleForgotPassword }) => {
     },
   });
   watch('mobileNo');
-  const { otpform, otpValue, handleClear } = OtpForm({});
   const captchaResult = (num) => {
     setcaptachaAnswer(num);
   };
@@ -71,6 +70,7 @@ export const Login = ({ loginName, handleForgotPassword }) => {
       contact: getValues().mobileNo,
       type: OTPTypeID,
     };
+    otpData({ ...otpData, contact: getValues().mobileNo, type: OTPTypeID, page: 'LogInPage' });
 
     dispatch(sendNotificationOtp(sendOTPData))
       .then((response) => {
@@ -84,6 +84,15 @@ export const Login = ({ loginName, handleForgotPassword }) => {
         successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
       });
   };
+  const { otpform, otpValue, handleClear } = OtpForm({
+    sendOTP: sendNotificationOTPHandler,
+    otpData: userTypeDetails,
+  });
+
+  useEffect(() => {
+    setOtpSend(false);
+    setOtpFormEnable(false);
+  }, [loginName]);
 
   const getCommonData = (response) => {
     const userType = userGroupType(response?.data?.user_group_id);
@@ -336,6 +345,7 @@ export const Login = ({ loginName, handleForgotPassword }) => {
               {...register('userID', {
                 required: 'Please enter username',
                 pattern: {
+                  value: /^[\s.]*([^\s.][\s.]*){0,100}$/,
                   message: 'Please enter a valid username',
                 },
                 minLength: {
@@ -343,6 +353,9 @@ export const Login = ({ loginName, handleForgotPassword }) => {
                   message: 'Should contains 8 character',
                 },
               })}
+              inputProps={{
+                maxLength: 100,
+              }}
             />
             <TextField
               sx={{ mb: 2 }}

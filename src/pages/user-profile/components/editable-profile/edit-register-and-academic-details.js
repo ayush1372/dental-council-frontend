@@ -60,6 +60,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     renewable_registration_date,
     is_name_change,
     registration_certificate,
+    file_name,
+    file_type,
   } = registration_detail_to || {};
   const { degree_certificate } = qualification_detail_response_tos?.[0] || {};
   const [registrationFileData, setRegistrationFileData] = useState(
@@ -591,6 +593,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               fileData={registrationFileData}
               setFileData={setRegistrationFileData}
               uploadFileLabel="Upload the Registration Certificate"
+              fileName={file_name + '.' + file_type}
               disabled={
                 work_flow_status_id === 3
                   ? getQueryRaised('Upload the registration certificate')
@@ -629,6 +632,11 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               unregister={unregister}
               qualificationFilesData={qualificationFilesData}
               handleQualificationFilesData={handleQualificationFilesData}
+              fileName={
+                qualification_detail_response_tos?.[index]?.file_name +
+                '.' +
+                qualification_detail_response_tos?.[index]?.file_type
+              }
             />
           );
         })}
