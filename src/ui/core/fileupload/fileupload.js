@@ -11,6 +11,7 @@ import moment from 'moment';
 import { AiFillEdit, AiOutlineEye } from 'react-icons/ai';
 
 import { base64ToBlob } from '../../../helpers/functions/common-functions';
+import { SvgImageComponent } from '../../../ui/core/svg-icons';
 import { Button } from '../button/button.js';
 
 import styles from './fileupload.module.scss';
@@ -288,8 +289,8 @@ export const UploadFile = (props) => {
               />
             </div>
           </Grid>
+
           <Grid item sm={6}>
-            {uploadFileError !== '' && <div className={styles.fileError}> {uploadFileError}</div>}
             {showBrowse && (
               <div>
                 <label className={styles.modalLabelHeading}>Browse Files</label>
@@ -442,6 +443,21 @@ export const UploadFile = (props) => {
               </table>
             </div>
           </Grid>
+          {uploadFileError !== '' && (
+            <Box>
+              <div className={styles.fileError} style={{ display: 'flex', alignItems: 'center' }}>
+                <SvgImageComponent icon="error" height="14px" width="16px"></SvgImageComponent>
+                <Typography
+                  style={{ display: 'flex', alignItems: 'center' }}
+                  variant="body2"
+                  color="error"
+                  margin="4px"
+                >
+                  {uploadFileError}
+                </Typography>
+              </div>
+            </Box>
+          )}
         </Grid>
       </div>
     </>
