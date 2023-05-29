@@ -117,6 +117,12 @@ const ExportFiles = ({ exportData, flag }) => {
       worksheet.getRow(1).font = { bold: true };
       worksheet.getRow(1).fill = workSheetTheme;
       worksheet.columns.forEach((column) => {
+        if (column.header === 'Date of Submission') {
+          column.header = 'Date of Submission (DD-MM-YYYY HH:MM)';
+        }
+        if (column.header === 'Pendency') {
+          column.header = 'Pendency (In Days)';
+        }
         column.width = column.header.length + 20;
       });
 
