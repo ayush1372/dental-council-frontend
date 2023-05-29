@@ -75,6 +75,7 @@ const ExportFiles = ({ exportData, flag }) => {
             registration_no: elementData.registration_no,
             applicant_full_name: elementData?.applicant_full_name,
             council_name: elementData.council_name,
+            college_dean_status: elementData?.college_status,
             smc_status: elementData?.smc_status,
             nmc_status: elementData.nmc_status,
             created_at: moment(elementData?.created_at).format('DD-MM-YYYY'),
