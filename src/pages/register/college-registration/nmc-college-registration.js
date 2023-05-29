@@ -320,7 +320,7 @@ function NMCCollegeRegistration() {
             name="CollegeCode"
             placeholder={t('Enter College Code')}
             error={errors.CollegeCode?.message}
-            {...register('CollegeCode', {})}
+            {...register('CollegeCode')}
           />
         </Grid>
 

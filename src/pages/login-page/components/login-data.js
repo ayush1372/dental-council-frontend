@@ -359,7 +359,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
             />
             <TextField
               sx={{ mb: 2 }}
-              required="true"
+              required={true}
               fullWidth
               label={'Password'}
               variant="outlined"
