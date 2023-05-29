@@ -54,6 +54,7 @@ const ChangePassword = () => {
           open={successModalPopup}
           setOpen={() => setSuccessModalPopup(false)}
           text={'Your password has been successfully changed'}
+          PasswordChange={true}
         />
       )}
       {/* <Typography color="inputTextColor.main" variant="h2" textAlign="center" mt={3}>
