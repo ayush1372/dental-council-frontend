@@ -41,7 +41,7 @@ const AdditionalQualifications = () => {
   });
 
   const [successModalPopup, setSuccessModalPopup] = useState(false);
-  // eslint-disable-next-line no-unused-vars
+
   const {
     statesList,
     collegesList,
