@@ -1,6 +1,7 @@
 import CheckCircle from '@mui/icons-material/CheckCircle';
 import { Button, Divider, Grid, Typography, useTheme } from '@mui/material';
 import { Box } from '@mui/system';
+import moment from 'moment';
 import { useSelector } from 'react-redux';
 
 import APPLICATIONICONBW from '../../../assets/images/application-approved-icon-BW.svg';
@@ -44,13 +45,11 @@ export function TrackApplicationDetails({
         Application Details
       </Typography>
       <BreadcrumbContainer
-        primary="Track Application"
+        primary={'Track Application'}
         onClick={navigateToTab}
-        primaryLink={'/profile'}
         secondary={'Application Details'}
       />
-
-      <Grid container spacing={2}>
+      <Grid container spacing={2} pt={2}>
         <Grid item xs={12} md={9}>
           <Box
             boxShadow="1"
@@ -143,7 +142,7 @@ export function TrackApplicationDetails({
                 <Typography variant="subtitle2" color="textPrimary.main">
                   {`${
                     getDate(applicationStatus?.submission_date)
-                      ? getDate(applicationStatus?.submission_date)
+                      ? moment(getDate(applicationStatus?.submission_date)).format('DD-MM-YYYY')
                       : ''
                   }`}
                 </Typography>
@@ -156,7 +155,7 @@ export function TrackApplicationDetails({
                   {`${applicationStatus?.pendency}`}
                 </Typography>
               </Grid>
-              <Grid item xs={12} mt={3}>
+              <Grid item xs={12} xl={6}>
                 <Typography variant="body3" color="grey.label">
                   Current Status
                 </Typography>

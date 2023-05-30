@@ -1,5 +1,3 @@
-import { useEffect } from 'react';
-
 import { CssBaseline } from '@mui/material';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
@@ -12,10 +10,6 @@ import ThemeProviderWrapper from './theme/theme-provider-wrapper';
 
 function App() {
   const navMeta = getNavMeta(LOGGED_IN);
-
-  useEffect(() => {
-    localStorage?.removeItem('accesstoken');
-  }, []);
 
   return (
     <ErrorBoundary>

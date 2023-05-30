@@ -33,8 +33,7 @@ import { Button, TextField } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 import successToast from '../../../ui/core/toaster';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
-
-export const Login = ({ loginName, handleForgotPassword }) => {
+export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetails }) => {
   const [captchaAnswer, setcaptachaAnswer] = useState();
   const { generateCaptcha } = useSelector((state) => state.loginReducer);
   const theme = useTheme();
@@ -47,6 +46,7 @@ export const Login = ({ loginName, handleForgotPassword }) => {
   const {
     register,
     getValues,
+    watch,
     setValue,
     handleSubmit,
     formState: { errors },
@@ -58,28 +58,41 @@ export const Login = ({ loginName, handleForgotPassword }) => {
       mobileNo: '',
     },
   });
-
-  const { otpform, otpValue, handleClear } = OtpForm({});
+  watch('mobileNo');
   const captchaResult = (num) => {
     setcaptachaAnswer(num);
   };
 
   const sendNotificationOTPHandler = () => {
-    setOtpFormEnable(true);
     let OTPTypeID = 'sms';
 
     let sendOTPData = {
       contact: getValues().mobileNo,
       type: OTPTypeID,
     };
+    otpData({ ...otpData, contact: getValues().mobileNo, type: OTPTypeID, page: 'LogInPage' });
 
-    dispatch(sendNotificationOtp(sendOTPData)).then((response) => {
-      if (response) {
-        setTransaction_id(response?.data?.transaction_id);
-        setOtpSend(true);
-      }
-    });
+    dispatch(sendNotificationOtp(sendOTPData))
+      .then((response) => {
+        if (response) {
+          setTransaction_id(response?.data?.transaction_id);
+          setOtpSend(true);
+          setOtpFormEnable(true);
+        }
+      })
+      .catch((error) => {
+        successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
+      });
   };
+  const { otpform, otpValue, handleClear } = OtpForm({
+    sendOTP: sendNotificationOTPHandler,
+    otpData: userTypeDetails,
+  });
+
+  useEffect(() => {
+    setOtpSend(false);
+    setOtpFormEnable(false);
+  }, [loginName]);
 
   const getCommonData = (response) => {
     const userType = userGroupType(response?.data?.user_group_id);
@@ -151,6 +164,7 @@ export const Login = ({ loginName, handleForgotPassword }) => {
                 getCommonData(resp);
               })
               .catch((error) => {
+                setOtpFormEnable(false);
                 dispatch(generateCaptchaImage()).catch((error) => {
                   successToast(
                     'ERROR: ' + error?.data?.message,
@@ -325,32 +339,37 @@ export const Login = ({ loginName, handleForgotPassword }) => {
               required
               fullWidth
               label={'Username'}
-              placeholder={'Please Enter Username'}
+              placeholder={'Please enter username'}
               name={'userID'}
               error={errors.userID?.message}
               {...register('userID', {
-                required: 'Please Enter Username',
+                required: 'Please enter username',
                 pattern: {
-                  message: 'Please Enter a Valid Username',
+                  value: /^[\s.]*([^\s.][\s.]*){0,100}$/,
+                  message: 'Please enter a valid username',
                 },
                 minLength: {
                   value: 8,
                   message: 'Should contains 8 character',
                 },
               })}
+              inputProps={{
+                maxLength: 100,
+              }}
             />
             <TextField
               sx={{ mb: 2 }}
-              required
+              required={true}
               fullWidth
               label={'Password'}
-              placeholder={'Please Enter Password'}
+              variant="outlined"
+              placeholder={'Please enter password'}
               type={'Password'}
               inputProps={{ maxLength: 12 }}
               name={'password'}
-              {...register('password', {
-                PasswordRegexValidation,
-              })}
+              error={errors.password?.message}
+              defaultValue={getValues().password}
+              {...register('password', PasswordRegexValidation)}
             />
             <Typography display={'flex'} justifyContent="flex-end">
               <Button
@@ -399,7 +418,11 @@ export const Login = ({ loginName, handleForgotPassword }) => {
           fullWidth
           sx={{ mr: 1 }}
           onClick={handleSubmit(handleLogin)}
-          disabled={!otpFormEnabled && selectedLoginOption !== 'userName'}
+          disabled={
+            selectedLoginOption === 'nmrId' || selectedLoginOption === 'mobileNumber'
+              ? !otpFormEnabled || !captchaAnswer
+              : errors.userID?.message || errors.password?.message || !captchaAnswer
+          }
         >
           Login
         </Button>

@@ -51,7 +51,7 @@ const ICON = {
 
 export const ICONS_NAME_LIST = Object.keys(ICON);
 
-export const SvgImageComponent = ({ icon, height, width, fill = 'currentColor' }) => {
+export const SvgImageComponent = ({ icon, height, width, fill = 'currentColor', newPassword }) => {
   const Component = ICON[icon];
   return (
     <Component
@@ -63,6 +63,7 @@ export const SvgImageComponent = ({ icon, height, width, fill = 'currentColor' }
       fill={fill}
       height={height ?? '24px'}
       width={width ?? '24px'}
+      style={{ 'margin-top': icon === 'error' ? (newPassword ? '-23px' : '0px') : 'opx' }}
     />
   );
 };

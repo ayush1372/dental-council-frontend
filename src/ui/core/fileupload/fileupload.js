@@ -8,9 +8,10 @@ import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { Box, Grid, Typography } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import moment from 'moment';
-import { AiOutlineEye } from 'react-icons/ai';
+import { AiFillEdit, AiOutlineEye } from 'react-icons/ai';
 
 import { base64ToBlob } from '../../../helpers/functions/common-functions';
+import { SvgImageComponent } from '../../../ui/core/svg-icons';
 import { Button } from '../button/button.js';
 
 import styles from './fileupload.module.scss';
@@ -27,6 +28,8 @@ export const UploadFile = (props) => {
     fileMessage,
     isDigiLockcerVisible = false,
     uploadFileLabel,
+    name = 'file',
+    fileName,
   } = props;
   const [uploadPercentage, setUploadPercentage] = useState('');
   // const [fileData, setFileData] = useState([]);
@@ -40,12 +43,35 @@ export const UploadFile = (props) => {
     setBrowsedFileData(e);
     setBrowsedFileName(e.target.files[0].name);
   };
+
+  //Helper Function to convert b64 string to a blob
+  const b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
+    const byteCharacters = atob(b64Data);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+
+    const blob = new Blob(byteArrays, { type: contentType });
+    return blob;
+  };
+
   function downloadFile(file) {
     if (file?.fileBlob) {
       const newTab = window.open();
       const image = new Image();
       const url = file?.fileName;
       const blob = file?.fileBlob;
+
       if (url && url !== null && url?.includes('.png')) {
         image.src = 'data:image/png;base64,' + blob;
         image.width = '1250';
@@ -137,7 +163,9 @@ export const UploadFile = (props) => {
     } else {
       const reader = new FileReader();
       const newTab = window.open();
-      reader.readAsDataURL(file?.file);
+      const blob = b64toBlob(file.file, '');
+
+      reader.readAsDataURL(blob);
       reader.onload = function () {
         const type = reader?.result.includes('data:application/pdf;');
         if (type === true) {
@@ -258,13 +286,13 @@ export const UploadFile = (props) => {
                 id={fileID}
                 data-testid={fileID}
                 onChange={(e) => handleChange(e)}
-                name="file"
+                name={name}
                 accept={fileTypes}
               />
             </div>
           </Grid>
+
           <Grid item sm={6}>
-            {uploadFileError !== '' && <div className={styles.fileError}> {uploadFileError}</div>}
             {showBrowse && (
               <div>
                 <label className={styles.modalLabelHeading}>Browse Files</label>
@@ -308,7 +336,9 @@ export const UploadFile = (props) => {
                         <div className={styles.fileDetailsContainer}>
                           <UploadFileIcon color="primary" fontSize="large" />
                           <div className={styles.fileDetailsArea}>
-                            <Typography color="inputTextColor.main">{file.fileName}</Typography>
+                            <Typography color="inputTextColor.main">
+                              {file.fileName || fileName}
+                            </Typography>
                             {fileData.length === 1 || uploadStatus === 'successful' ? (
                               <div className={styles.timeInfo}>
                                 {moment(file.timeInfo).format('DD MMMM, YYYY')} at{' '}
@@ -361,6 +391,7 @@ export const UploadFile = (props) => {
                                   onClick={() => downloadFile(file)}
                                 />
                               )}
+                              <AiFillEdit fill="#264488"></AiFillEdit>
                             </div>
                           ) : uploadStatus === 'failed' ? (
                             <div className={styles.actionArea}>
@@ -416,6 +447,21 @@ export const UploadFile = (props) => {
               </table>
             </div>
           </Grid>
+          {uploadFileError !== '' && (
+            <Box>
+              <div className={styles.fileError} style={{ display: 'flex', alignItems: 'center' }}>
+                <SvgImageComponent icon="error" height="14px" width="16px"></SvgImageComponent>
+                <Typography
+                  style={{ display: 'flex', alignItems: 'center' }}
+                  variant="body2"
+                  color="error"
+                  margin="4px"
+                >
+                  {uploadFileError}
+                </Typography>
+              </div>
+            </Box>
+          )}
         </Grid>
       </div>
     </>

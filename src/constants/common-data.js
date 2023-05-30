@@ -10,9 +10,11 @@ export const UniqueUserNameForDoctor = [
 
 export const getSMCProfileDetails = (details) => [
   { label: 'Name', value: details?.first_name, id: '1' },
-  { label: 'Council', value: details?.state_medical_council?.name, id: '4' },
-  { label: 'Phone Number', value: details?.mobile_no, id: '5' },
-  { label: 'Email Address', value: details?.email_id, id: '6' },
+  { label: 'Enrolment Number NDHM', value: details?.ndhm_enrollment, id: '2' },
+  { label: 'Phone Number', value: details?.mobile_no, id: '3' },
+  { label: 'Email Address', value: details?.email_id, id: '4' },
+  { label: 'Enrolment Number', value: details?.enrolled_number, id: '5' },
+  { label: 'Council', value: details?.state_medical_council?.name, id: '6' },
 ];
 
 export const getNMCProfileDetails = (details) => [
@@ -162,6 +164,7 @@ export const registrationRequestMapper = {
   Suspended: 'Suspended',
   Blacklisted: 'Blacklisted',
   Pending: 'Pending',
+  'College Verified': 'College Verified',
 };
 export const updationRequestMapper = {
   'Total Modification Requests': 'Total Updation request',
@@ -171,6 +174,7 @@ export const updationRequestMapper = {
   Suspended: 'Suspended',
   Blacklisted: 'Blacklisted',
   Pending: 'Update Request Received',
+  'College Verified': 'College Verified',
 };
 
 export const suspensionRequestMapper = {
@@ -224,17 +228,17 @@ export const applicationType = [
   { id: 3, name: 'Temporary Suspension' },
   { id: 4, name: 'Permanent Suspension' },
   { id: 5, name: 'Activate License' },
-  { id: 6, name: 'College Registration' },
-  { id: 7, name: 'Foreign HP Registration' },
-  { id: 8, name: 'Qualification Workflow' },
+  // { id: 6, name: 'College Registration' },
+  { id: 6, name: 'Foreign HP Registration' },
+  { id: 7, name: 'Qualification Workflow' },
 ];
 export const applicationStatus = [
-  { id: 1, name: 'PENDING' },
-  { id: 2, name: 'APPROVED' },
-  { id: 3, name: 'QUERY RAISED' },
-  { id: 4, name: 'REJECTED' },
-  { id: 5, name: 'SUSPENDED' },
-  { id: 6, name: 'BLACKLISTED' },
+  { id: 1, name: 'Pending' },
+  { id: 2, name: 'Approved' },
+  { id: 3, name: 'Query Raised' },
+  { id: 4, name: 'Rejected' },
+  { id: 5, name: 'Suspend' },
+  { id: 6, name: 'Blacklisted' },
 ];
 export const filterDropDownData = [
   { id: 'applicationTypeId', name: 'Type of Application ' },

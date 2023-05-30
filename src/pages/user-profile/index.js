@@ -38,9 +38,14 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const [isReadMode, setIsReadMode] = useState(true);
-
-  const [emailNotification, setEmailNotification] = useState();
-  const [mobileNotification, setMobileNotification] = useState();
+  const emailNotify = useSelector(
+    (state) => state?.doctorUserProfileReducer?.personalDetails?.email_notification_enabled
+  );
+  const mobileNotify = useSelector(
+    (state) => state?.doctorUserProfileReducer?.personalDetails?.sms_notification_enabled
+  );
+  const [emailNotification, setEmailNotification] = useState(emailNotify);
+  const [mobileNotification, setMobileNotification] = useState(mobileNotify);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [wizardSteps, setWizardSteps] = useState(readWizardSteps);
   const [isApplicationPending, setIsApplicationPending] = useState(true);
@@ -164,6 +169,9 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
     }
   }, []);
 
+  useEffect(() => {
+    fetchDoctorUserPersonalDetails();
+  }, [emailNotification, mobileNotification, !isReadMode]);
   return (
     <>
       {showReactivateLicense && (
@@ -269,7 +277,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
                     control={
                       <Switch
                         color="primary"
-                        checked={emailNotification}
+                        checked={emailNotify}
                         onChange={(e) => {
                           handleNotification(e, 'email');
                         }}
@@ -289,7 +297,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
                     control={
                       <Switch
                         color="primary"
-                        checked={mobileNotification}
+                        checked={mobileNotify}
                         onChange={(e) => {
                           handleNotification(e, 'sms');
                         }}
@@ -326,6 +334,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
               handleBack={handleBack}
               validDetails={validDetails}
               setValidDetails={setValidDetails}
+              selectedDataIndex={selectedRowData?.SNo?.value - 1}
             />
           )}
           {activeStep === 1 && (
@@ -334,6 +343,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
               setIsReadMode={setIsReadMode}
               handleNext={handleNext}
               handleBack={handleBack}
+              selectedDataIndex={selectedRowData?.SNo?.value - 1}
             />
           )}
           {/* {activeStep === 2 && (

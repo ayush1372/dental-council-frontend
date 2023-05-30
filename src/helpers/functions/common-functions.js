@@ -59,15 +59,22 @@ export const capitalize = (stringValue) => {
   }
 };
 
-export const capitalizeFirstLetter = (str) => {
-  let words = str.split(' ');
+export const toUpperCase = (str) => {
+  const words = str.split(' ');
+  const toUpperCase = words.map((word) => word.toUpperCase());
+  const result = toUpperCase.join(' ');
+  return result;
+};
 
-  for (let i = 0; i < words.length; i++) {
+export const capitalizeFirstLetter = (str) => {
+  let words = str?.split(' ');
+
+  for (let i = 0; i < words?.length; i++) {
     const firstLetter = words[i][0].toUpperCase();
     let restOfWord = words[i].substr(1).toLowerCase();
     words[i] = firstLetter + restOfWord;
   }
-  return words.join(' ');
+  return words?.join(' ');
 };
 
 export const createSelectFieldData = (arrayOfStrings, valueKey) => {
@@ -204,8 +211,8 @@ export const workflowStatusId = (actionType) => {
     2: ' Approved',
     3: ' Query Raised',
     4: ' Rejected',
-    5: ' Suspend',
-    6: ' Suspended',
+    5: ' Suspended',
+    6: ' Blacklisted',
   };
   return actionTypeObj[actionType];
 };

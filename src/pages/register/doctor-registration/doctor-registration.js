@@ -117,8 +117,14 @@ const DoctorRegistrationWelcomePage = () => {
                         required: 'Registration Council is required',
                       })}
                       value={{
-                        id: getValues().RegistrationCouncilId,
-                        name: getValues().RegistrationCouncil,
+                        id:
+                          getValues()?.RegistrationCouncilId !== undefined
+                            ? getValues()?.RegistrationCouncilId
+                            : '',
+                        name:
+                          getValues()?.RegistrationCouncil !== undefined
+                            ? getValues()?.RegistrationCouncil
+                            : '',
                       }}
                       onChange={(currentValue) => {
                         setValue('RegistrationCouncilId', currentValue?.id);
@@ -184,7 +190,12 @@ const DoctorRegistrationWelcomePage = () => {
             </Container>
           </Box>
         ) : (
-          <FetchDoctorDetails imrDataNotFound={imrDataNotFound} aadhaarFormValues={getValues()} />
+          <FetchDoctorDetails
+            imrDataNotFound={imrDataNotFound}
+            aadhaarFormValues={getValues()}
+            setIsNext={setIsNext}
+            onReset={onReset}
+          />
         )}
       </Box>
       {rejectPopup && (
@@ -195,7 +206,9 @@ const DoctorRegistrationWelcomePage = () => {
           handleAadhaarPage={handleAadhaarPage}
           isNext={isNext}
           setIsNext={setIsNext}
-          text={` Your account already exists. Please login with your credentials. `}
+          onReset={onReset}
+          text={` Your data is not found in the NMR.
+           Do you want to continue the registration in the NMR ? `}
         />
       )}
       {/* {datafoundModalPopup && (

@@ -46,10 +46,12 @@ const WorkDetails = ({
   const [successModalPopup, setSuccessModalPopup] = useState(false);
   const [organizationChecked, setOrganizationChecked] = useState(false);
   const [declaredFacilityData, setDeclaredFacilityDistrict] = useState([]);
-  const [defaultFacilityData, setDefaultFacilityDistrict] = useState([]);
+  const [defaultFacilityData, setDefaultFacilityData] = useState([]);
 
   const { loginData } = useSelector((state) => state.loginReducer);
-  const { registrationDetails } = useSelector((state) => state.doctorUserProfileReducer);
+  const { registrationDetails, workProfileDetails } = useSelector(
+    (state) => state.doctorUserProfileReducer
+  );
 
   // eslint-disable-next-line no-unused-vars
   const [facilityResponseData, setFacilityResponseData] = useState([]);
@@ -57,7 +59,7 @@ const WorkDetails = ({
   useEffect(() => {
     dispatch(getWorkProfileDetailsData(loginData?.data?.profile_id)).then((response) => {
       if (response?.data) {
-        setDefaultFacilityDistrict(response?.data);
+        setDefaultFacilityData(response?.data);
       }
     });
   }, []);
@@ -365,23 +367,15 @@ const WorkDetails = ({
       <Grid item xs={12} md={4}>
         <Select
           fullWidth
-          error={
-            getValues()?.NatureOfWork?.length === 0 &&
-            getValues()?.NatureOfWork === undefined &&
-            errors.NatureOfWork?.message
-          }
           name="NatureOfWork"
           label="Nature of work"
           defaultValue={getValues().NatureOfWork}
           required={true}
           placeholder={'Nature Of Work'}
-          {...register(
-            'NatureOfWork',
-            getValues()?.NatureOfWork?.length === 0 &&
-              getValues()?.NatureOfWork === undefined && {
-                required: 'This field is required',
-              }
-          )}
+          {...register('NatureOfWork', {
+            required: 'This field is required',
+          })}
+          error={errors.NatureOfWork?.message}
           options={createSelectFieldData(natureOfWork)}
         />
       </Grid>
@@ -477,25 +471,23 @@ const WorkDetails = ({
           name="LanguageSpoken"
           options={languagesList?.data || []}
           value={languages}
-          error={languages?.length === 0 && errors.LanguageSpoken?.message}
+          error={languages?.length === 0 && errors?.LanguageSpoken?.message}
           multiple={true}
           {...register('LanguageSpoken', {
             required: (
-              <div>
-                <Typography
-                  style={{ display: 'flex', alignItems: 'center' }}
-                  variant="body2"
-                  color="error"
-                >
-                  <ErrorOutlineIcon
-                    color={'error'}
-                    icon={'helpOutline'}
-                    fontSize="small"
-                    sx={{ height: '16px' }}
-                  />
-                  {`This field is required`}
-                </Typography>
-              </div>
+              <Typography
+                style={{ display: 'flex', alignItems: 'center' }}
+                variant="body2"
+                color="error"
+              >
+                <ErrorOutlineIcon
+                  color={'error'}
+                  icon={'helpOutline'}
+                  fontSize="small"
+                  sx={{ height: '16px' }}
+                />
+                {`This field is required`}
+              </Typography>
             ),
           })}
           onChange={(value) => {
@@ -514,25 +506,28 @@ const WorkDetails = ({
           Are you currently in Facility/Organization
         </Typography>
       </Grid>
-      <Grid item xs={12} ml={2}>
-        <Checkbox
-          sx={{ padding: '0 8px 0 0' }}
-          value={facilityChecked}
-          defaultChecked={true}
-          // defaultValue={facilityChecked}
-          onChange={(e) => {
-            setFacilityChecked(e.target.checked);
-          }}
-          label="Facility"
-        />
-        <Checkbox
-          sx={{ padding: '0 8px 0 0' }}
-          value={organizationChecked}
-          onChange={(e) => {
-            setOrganizationChecked(e.target.checked);
-          }}
-          label="Organization"
-        />
+      <Grid item xs={12} ml={2} display="flex">
+        <Box>
+          <Checkbox
+            sx={{ padding: '0 8px 0 0' }}
+            value={facilityChecked}
+            defaultChecked={true}
+            onChange={(e) => {
+              setFacilityChecked(e.target.checked);
+            }}
+            label="Facility"
+          />
+        </Box>
+        <Box ml={2}>
+          <Checkbox
+            sx={{ padding: '0 8px 0 0' }}
+            value={organizationChecked}
+            onChange={(e) => {
+              setOrganizationChecked(e.target.checked);
+            }}
+            label="Organization"
+          />
+        </Box>
       </Grid>
       {facilityChecked && (
         <Grid container item spacing={2}>
@@ -730,7 +725,7 @@ const WorkDetails = ({
                 fullWidth
                 defaultValue={getValues().workingOrganizationName}
                 {...register('workingOrganizationName', {
-                  // required: 'This field is required',
+                  required: 'This field is required',
                   maxLength: {
                     value: 300,
                     message: 'Length should be less than 300.',
@@ -868,7 +863,7 @@ const WorkDetails = ({
                 defaultValue={getValues().Country}
                 required={true}
                 {...register('Country', {
-                  // required: 'Country is required',
+                  required: 'Country is required',
                 })}
                 options={
                   countriesList?.length > 0 ? createSelectFieldData(countriesList, 'id') : []
@@ -897,7 +892,7 @@ const WorkDetails = ({
                 defaultValue={getValues().state}
                 required={true}
                 {...register('state', {
-                  // required: 'This field is required',
+                  required: 'This field is required',
                 })}
                 options={createSelectFieldData(statesList)}
               />
@@ -916,7 +911,7 @@ const WorkDetails = ({
                 defaultValue={getValues().District}
                 required={true}
                 {...register('District', {
-                  // required: 'This field is required',
+                  required: 'This field is required',
                 })}
                 options={createSelectFieldData(districtsList)}
               />
@@ -937,7 +932,7 @@ const WorkDetails = ({
                 required={true}
                 defaultValue={getValues().SubDistrict}
                 {...register('SubDistrict', {
-                  // required: 'This field is required',
+                  required: 'This field is required',
                 })}
                 options={createSelectFieldData(subDistrictList, 'iso_code')}
                 MenuProps={{
@@ -964,7 +959,7 @@ const WorkDetails = ({
                 defaultValue={getValues().Area}
                 required={true}
                 {...register('Area', {
-                  // required: 'City/Town/Village is required',
+                  required: 'City/Town/Village is required',
                 })}
                 options={createSelectFieldData(citiesList)}
                 MenuProps={{
@@ -989,7 +984,7 @@ const WorkDetails = ({
                 required={true}
                 placeholder="Enter Pin Code"
                 fullWidth
-                error={errors.Pincode?.message}
+                error={errors.pincode?.message}
                 defaultValue={getValues().pincode}
                 {...register('pincode', {
                   required: 'This field is required',
@@ -1096,7 +1091,10 @@ const WorkDetails = ({
             </Typography>
           </Grid>
           <Grid item xs={12} padding="10px 0 !important">
-            <FacilityDetailsTable declaredFacilityData={defaultFacilityData} />
+            <FacilityDetailsTable
+              declaredFacilityData={defaultFacilityData}
+              currentWorkDetails={workProfileDetails?.current_work_details}
+            />
           </Grid>
         </Grid>
       )}

@@ -83,21 +83,16 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep }) => {
         password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
         transaction_id: sendNotificationOtpData?.data?.transaction_id,
       };
-      // try {
       dispatch(forgotPassword(reSetPasswordBody))
         .then((response) => {
           if (response?.data?.message === 'Success') {
             setShowSuccessPopUp(true);
+            setShowSuccess(true);
             resetStep(0);
           }
         })
         .catch((error) => {
-          successToast(
-            'ERROR: ' + error?.data?.response?.data?.error,
-            'auth-error',
-            'error',
-            'top-center'
-          );
+          successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
         });
 
       return;
@@ -188,7 +183,7 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep }) => {
         </Typography>
 
         <Box>
-          <Box mt={2}>
+          <Box mt={2} sx={{ minHeight: '120px' }}>
             <Typography variant="body1">
               New Password
               <Typography component="span" color="error.main">
@@ -210,6 +205,7 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep }) => {
               {...register('password', PasswordRegexValidation, {
                 required: 'Provide Password',
               })}
+              newPassword={true}
             />
           </Box>
           <Box mt={2}>
@@ -264,6 +260,8 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep }) => {
             setOpen={() => setShowSuccess(false)}
             text={
               collegeRegisterSuccess
+                ? 'Your password has been successfully created.'
+                : uniqueHpId === undefined
                 ? 'Your password has been successfully created.'
                 : `Your password for ${uniqueHpId} has been successfully created.`
             }
