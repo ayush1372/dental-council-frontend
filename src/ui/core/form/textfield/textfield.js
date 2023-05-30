@@ -24,7 +24,7 @@ import styles from './textfield.module.scss';
  * fullWidth
  */
 
-export const HelperText = ({ type, text }) => (
+export const HelperText = ({ type, text, newPassword }) => (
   <div
     className={CN(styles.helperTextMsg, {
       [styles.success]: type === 'success',
@@ -42,6 +42,7 @@ export const HelperText = ({ type, text }) => (
           ? 'helpOutline'
           : undefined
       }
+      newPassword={newPassword}
     />
     <Typography
       variant="body2"
@@ -84,6 +85,7 @@ const InputField = (
         })}
         type={error ? 'error' : success ? 'success' : messageBlue ? 'messageBlue' : undefined}
         text={helperMsg || error}
+        newPassword={props?.newPassword}
       />
     ) : null;
   return (

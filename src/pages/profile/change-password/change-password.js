@@ -43,7 +43,7 @@ const ChangePassword = () => {
         setSuccessModalPopup(true);
       })
       .catch((error) => {
-        successToast(error?.data?.response?.data?.error, 'error');
+        successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
       });
   };
 
@@ -54,6 +54,7 @@ const ChangePassword = () => {
           open={successModalPopup}
           setOpen={() => setSuccessModalPopup(false)}
           text={'Your password has been successfully changed'}
+          PasswordChange={true}
         />
       )}
       {/* <Typography color="inputTextColor.main" variant="h2" textAlign="center" mt={3}>

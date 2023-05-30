@@ -10,6 +10,7 @@ const PersonalDetails = ({
   loggedInUserType,
   validDetails,
   setValidDetails,
+  selectedDataIndex,
 }) => {
   return (
     <Box mt={1} py={4}>
@@ -18,6 +19,7 @@ const PersonalDetails = ({
           handleNext={handleNext}
           handleBack={handleBack}
           setIsReadMode={setIsReadMode}
+          selectedDataIndex={selectedDataIndex}
         />
       )}
       {!isReadMode && (

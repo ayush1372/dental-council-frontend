@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 
 import { Box } from '@mui/material';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
 import useWizard from '../../../hooks/use-wizard';
@@ -11,6 +11,7 @@ import {
   generateCaptchaImage,
   getCaptchaEnabledFlagValue,
 } from '../../../store/actions/login-action';
+import { loginActiveState } from '../../../store/reducers/login-reducer';
 import successToast from '../../../ui/core/toaster';
 // import LoginWrapper from '../index';
 import ConfirmOTP from './confirm-otp';
@@ -26,7 +27,9 @@ export function LoginPage() {
   const dispatch = useDispatch();
   const { state } = useLocation();
   const { loginFormname } = state;
-  const { activeStep, handleNext, resetStep } = useWizard(0, []);
+
+  const activeIndex = useSelector((state) => state.loginReducer.activeState?.activeIndex);
+  const { activeStep, resetStep } = useWizard(0, []);
   const [showPopup, setShowPopup] = useState(false);
   const [showUserNamePopUp, setShowUserNamePopUp] = useState(false);
   const [data, setData] = useState({ contact: '', type: '', page: 'forgotPasswordPage' });
@@ -72,21 +75,32 @@ export function LoginPage() {
   const handlePasswordSetup = () => {
     data?.page === 'forgetUserName' ? setShowUserNamePopUp(true) : setShowPopup(true);
   };
+
+  const handleNext = () => {
+    dispatch(loginActiveState({ activeIndex: activeIndex + 1 }));
+  };
+
   return (
     <Box sx={{ mt: 5, mb: 5, maxWidth: '648px', margin: '40px auto' }}>
-      {activeStep === 0 && loginFormNames[loginFormname] === 'Doctor' ? (
+      {activeIndex === 0 && loginFormNames[loginFormname] === 'Doctor' ? (
         <DoctorLogin
           loginName={loginFormNames[loginFormname]}
           handleNext={handleNext}
           otpData={setData}
+          userTypeDetails={data}
         />
       ) : (
-        activeStep === 0 &&
+        activeIndex === 0 &&
         loginFormNames[loginFormname] !== 'Doctor' && (
-          <Login loginName={loginFormNames[loginFormname]} handleForgotPassword={handleNext} />
+          <Login
+            loginName={loginFormNames[loginFormname]}
+            handleForgotPassword={handleNext}
+            otpData={setData}
+            userTypeDetails={data}
+          />
         )
       )}
-      {activeStep === 1 && (
+      {activeIndex === 1 && (
         <ForgotPassword
           handleConfirmPassword={handleNext}
           otpData={setData}
@@ -95,7 +109,7 @@ export function LoginPage() {
           resetStep={resetStep}
         />
       )}
-      {activeStep === 2 && (
+      {activeIndex === 2 && (
         <ConfirmOTP
           handleConfirmOTP={handleNext}
           otpData={data}
@@ -103,7 +117,7 @@ export function LoginPage() {
           handlePasswordSetup={handlePasswordSetup}
         />
       )}
-      {activeStep === 3 && data?.page === 'forgetUserName' && showUserNamePopUp ? (
+      {activeIndex === 3 && data?.page === 'forgetUserName' && showUserNamePopUp ? (
         <SuccessModal
           open={showUserNamePopUp}
           setOpen={() => setShowUserNamePopUp(false)}
@@ -112,7 +126,7 @@ export function LoginPage() {
           resetStep={resetStep}
         />
       ) : (
-        activeStep === 3 && (
+        activeIndex === 3 && (
           <NewPasswordSetup
             handlePasswordSetup={handlePasswordSetup}
             otpData={data}

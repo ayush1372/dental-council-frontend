@@ -318,12 +318,9 @@ function NMCCollegeRegistration() {
           <TextField
             fullWidth
             name="CollegeCode"
-            required
             placeholder={t('Enter College Code')}
             error={errors.CollegeCode?.message}
-            {...register('CollegeCode', {
-              required: 'College code is required',
-            })}
+            {...register('CollegeCode')}
           />
         </Grid>
 
@@ -338,7 +335,7 @@ function NMCCollegeRegistration() {
             fullWidth
             name="MobileNumber"
             required
-            placeholder={t('Enter mobile number')}
+            placeholder={t('Enter Mobile Number')}
             onInput={(e) => handleInput(e)}
             error={errors.MobileNumber?.message}
             {...register('MobileNumber', {

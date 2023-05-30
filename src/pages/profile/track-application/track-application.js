@@ -22,8 +22,8 @@ export function TrackApplication({ getTableData }) {
   };
 
   const handleBreadcrumbs = () => {
-    setShowTrackApplicationTable(!showTrackApplicationTable);
-    setShowTrackApplication(!showTrackApplication);
+    setShowUserProfile(false);
+    setShowTrackApplicationTable(true);
   };
 
   return (

@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
 import { doctorTabs, smcTabs } from '../../../../helpers/components/sidebar-drawer-list-item';
+import { capitalizeFirstLetter } from '../../../../helpers/functions/common-functions';
 import {
   getEsignFormDetails,
   getRegistrationDetailsData,
@@ -107,6 +108,7 @@ const ProfileConsent = ({
 
   function eSignHandler() {
     let data = {
+      templateId: 'TEMPLATE_1',
       signingPlace:
         personalDetails?.communication_address?.village?.name ||
         personalDetails?.communication_address?.district?.name,
@@ -159,7 +161,10 @@ const ProfileConsent = ({
           nameOfDegree:
             doctorRegDetails?.qualification_detail_response_tos[0]?.course.course_name || '',
           country: doctorRegDetails?.qualification_detail_response_tos[0]?.country.name || '',
-          state: doctorRegDetails?.qualification_detail_response_tos[0]?.state.name || '',
+          state:
+            capitalizeFirstLetter(
+              doctorRegDetails?.qualification_detail_response_tos[0]?.state.name
+            ) || '',
           college: doctorRegDetails?.qualification_detail_response_tos[0]?.college.name || '',
           university:
             doctorRegDetails?.qualification_detail_response_tos[0]?.university?.name || '',

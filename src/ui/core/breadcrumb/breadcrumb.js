@@ -11,8 +11,9 @@ export const BreadcrumbContainer = ({ primary, ...prop }) => {
         <Link
           underline="hover"
           color={primary.main}
-          href={prop?.primaryLink || '/'}
+          href={prop?.primaryLink}
           onClick={prop?.onClick}
+          style={{ cursor: 'pointer' }}
         >
           <Typography textTransform="capitalize" variant="body1" color={primary.main}>
             {(primary && primary) || 'Applications List'}
@@ -23,6 +24,7 @@ export const BreadcrumbContainer = ({ primary, ...prop }) => {
             underline="hover"
             color={prop?.tertiary ? primary.main : 'textPrimary.main'}
             href={prop?.secondaryLink}
+            style={{ cursor: 'pointer' }}
           >
             <Typography
               textTransform="capitalize"
@@ -39,6 +41,7 @@ export const BreadcrumbContainer = ({ primary, ...prop }) => {
             color="textPrimary.main"
             href={prop?.tertiaryLink}
             aria-current="page"
+            style={{ cursor: 'pointer' }}
           >
             <Typography textTransform="capitalize" variant="body1" color="textPrimary.main">
               {prop?.tertiary}

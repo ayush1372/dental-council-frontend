@@ -2,8 +2,10 @@ import { useState } from 'react';
 
 import { Box, Checkbox, Container, FormControlLabel, Grid, Popover } from '@mui/material';
 import { RiCheckboxBlankCircleLine, RiCheckboxCircleFill } from 'react-icons/ri';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import { loginActiveState } from '../../../../../../store/reducers/login-reducer';
 import { Button } from '../../../../../core';
 
 import styles from '../login-register-popover/login-register-popover.module.scss';
@@ -14,6 +16,7 @@ export const LoginRegisterPopover = ({
   setAnchorLRLoginRegister,
 }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   /** Login Register */
 
@@ -47,6 +50,7 @@ export const LoginRegisterPopover = ({
 
   const onClickLoginHandler = () => {
     if (regType !== '') {
+      dispatch(loginActiveState({ activeIndex: 0 }));
       if (regType === 'Doctor') {
         navigate('/login-page', { state: { loginFormname: 'Doctor' } });
       } else if (regType === 'College') {
@@ -86,7 +90,7 @@ export const LoginRegisterPopover = ({
         <Box className={styles.lrPopover}>
           <Grid container>
             <Grid item container xs={12}>
-              <Grid item xs={6}>
+              <Grid item xs={5}>
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -103,7 +107,7 @@ export const LoginRegisterPopover = ({
                   label="Doctor"
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={7}>
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -117,10 +121,10 @@ export const LoginRegisterPopover = ({
                       inputProps={{ 'aria-label': 'controlled' }}
                     />
                   }
-                  label="College"
+                  label="College/University"
                 />
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={5}>
                 <FormControlLabel
                   control={
                     <Checkbox
@@ -138,7 +142,7 @@ export const LoginRegisterPopover = ({
                 />
               </Grid>
 
-              <Grid item xs={6}>
+              <Grid item xs={7}>
                 <FormControlLabel
                   control={
                     <Checkbox

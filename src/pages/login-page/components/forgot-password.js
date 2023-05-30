@@ -5,9 +5,11 @@ import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
 import { sendNotificationOtp } from '../../../store/actions/common-actions';
+import { loginActiveState } from '../../../store/reducers/login-reducer';
 import { Button, TextField } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 import successToast from '../../../ui/core/toaster';
+import { EmailRegexValidation } from '../../../utilities/common-validations';
 
 const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep }) => {
   const { t } = useTranslation();
@@ -117,13 +119,11 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep })
               type="text"
               name="Id"
               required="true"
-              placeholder={t(loginFormname === 'Doctor' ? doctorTitle : userTitle)}
+              placeholder={t(loginFormname === 'Doctor' ? doctorTitle : 'Enter user ID/email ID')}
               margin="dense"
               defaultValue={getValues().Id}
               error={isIdActive && errors.Id?.message}
-              {...register('Id', {
-                required: 'Provide valid ID',
-              })}
+              {...register('Id', EmailRegexValidation)}
               disabled={!isIdActive}
             />
           </Box>
@@ -148,7 +148,7 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep })
         <MobileNumber
           register={register}
           getValues={getValues}
-          placeholder="Enter mobile number"
+          placeholder="Enter Mobile Number"
           errors={isMobileNumActive ? errors : {}}
           showCircleCheckIcon={false}
           showhint={false}
@@ -160,6 +160,7 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep })
         <Button
           onClick={() => {
             resetStep(0);
+            dispatch(loginActiveState({ activeIndex: 0 }));
           }}
           variant="contained"
           color="grey"

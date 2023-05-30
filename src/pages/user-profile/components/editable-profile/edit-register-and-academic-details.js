@@ -13,7 +13,7 @@ import {
   updateDoctorRegistrationDetails,
 } from '../../../../store/actions/doctor-user-profile-actions';
 import { getRegistrationDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
-import { Button, RadioGroup, Select, TextField } from '../../../../ui/core';
+import { Button, DatePicker, RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
 import successToast from '../../../../ui/core/toaster';
 import EditQualificationDetails from './edit-qualification-details';
@@ -60,6 +60,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     renewable_registration_date,
     is_name_change,
     registration_certificate,
+    file_name,
+    file_type,
   } = registration_detail_to || {};
   const { degree_certificate } = qualification_detail_response_tos?.[0] || {};
   const [registrationFileData, setRegistrationFileData] = useState(
@@ -494,6 +496,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                       ? 'grey2.main'
                       : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
                       ? ''
+                      : getValues().RegistrationDate === ''
+                      ? ''
                       : 'grey2.main',
                 },
               }}
@@ -503,6 +507,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                   work_flow_status_id === 3
                     ? getQueryRaised('Registration Date')
                     : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                    ? false
+                    : getValues().RegistrationDate === ''
                     ? false
                     : true,
               }}
@@ -552,31 +558,24 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 </Typography>
               </Typography>
 
-              <TextField
-                variant="outlined"
-                name={'RenewalDate'}
+              <DatePicker
+                onChangeDate={(newDateValue) => {
+                  setValue('RenewalDate', new Date(newDateValue)?.toLocaleDateString('en-GB'));
+                }}
+                data-testid="RenewalDate"
+                id="RenewalDate"
+                name="RenewalDate"
                 required={true}
-                fullWidth
-                type="date"
                 defaultValue={getValues().RenewalDate}
-                {...register('RenewalDate', {
-                  required: 'Registration Date is Required',
-                })}
-                sx={{
-                  input: {
-                    color: 'black',
-                    textTransform: 'uppercase',
-                    backgroundColor:
-                      work_flow_status_id === 3
-                        ? 'grey2.main'
-                        : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-                        ? ''
-                        : 'grey2.main',
-                  },
-                }}
-                inputProps={{
-                  min: new Date().toISOString().split('T')[0],
-                }}
+                minDate={new Date()}
+                backgroundColor={
+                  work_flow_status_id === 3
+                    ? '#F0F0F0'
+                    : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                    ? '#F0F0F0'
+                    : ''
+                }
+                value={new Date()}
                 disabled={work_flow_status_id === 3 ? getQueryRaised('Due Date of Renewal') : false}
               />
             </Grid>
@@ -594,6 +593,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               fileData={registrationFileData}
               setFileData={setRegistrationFileData}
               uploadFileLabel="Upload the Registration Certificate"
+              fileName={file_name + '.' + file_type}
               disabled={
                 work_flow_status_id === 3
                   ? getQueryRaised('Upload the registration certificate')
@@ -632,6 +632,11 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               unregister={unregister}
               qualificationFilesData={qualificationFilesData}
               handleQualificationFilesData={handleQualificationFilesData}
+              fileName={
+                qualification_detail_response_tos?.[index]?.file_name +
+                '.' +
+                qualification_detail_response_tos?.[index]?.file_type
+              }
             />
           );
         })}

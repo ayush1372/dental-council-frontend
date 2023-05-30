@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import AttachmentViewPopup from '../../../../shared/query-modal-popup/attachement-view-popup';
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
-const RegistrationDetailsContent = () => {
+const RegistrationDetailsContent = ({ selectedDataIndex }) => {
   const { data } = useSelector((state) => state.loginReducer?.loginData);
   const { registrationDetails } = useSelector((state) => state.doctorUserProfileReducer);
   const { raisedQueryData } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
@@ -19,7 +19,11 @@ const RegistrationDetailsContent = () => {
   const [openModal, setOpenModal] = useState(false);
   const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
   const [queryRaisedField, setQueryRaisedField] = useState('');
-
+  const dashboardTableDetailsData = useSelector((state) => state?.dashboard?.dashboardTableDetails);
+  const { college_status: dashboardTableDetails } =
+    (dashboardTableDetailsData?.data?.dashboard_tolist &&
+      dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]) ||
+    [];
   const ClosePopup = () => {
     setOpenModal(false);
   };
@@ -65,16 +69,18 @@ const RegistrationDetailsContent = () => {
               {smcName ? smcName : ''}
             </Typography>
 
-            {(data?.user_type === 3 || data?.user_type === 4) && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => {
-                  setOpenModal(true);
-                  setQueryRaisedField('Registered with council');
-                }}
-                fontSize="width24"
-              />
-            )}
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) &&
+              dashboardTableDetails !== 'Approved' && (
+                <ContactSupportOutlinedIcon
+                  color="primary"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('Registered with council');
+                  }}
+                  fontSize="width24"
+                />
+              )}
           </Grid>
         </Grid>
         <Grid item xs={12} md={4}>
@@ -93,16 +99,18 @@ const RegistrationDetailsContent = () => {
             <Typography color="textPrimary.main" variant="subtitle2">
               {registration_number ? registration_number : ''}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => {
-                  setOpenModal(true);
-                  setQueryRaisedField('Registration Number');
-                }}
-                fontSize="width24"
-              />
-            )}
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) &&
+              dashboardTableDetails !== 'Approved' && (
+                <ContactSupportOutlinedIcon
+                  color="primary"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('Registration Number');
+                  }}
+                  fontSize="width24"
+                />
+              )}
           </Grid>
         </Grid>
         <Grid item xs={12} md={4}>
@@ -121,16 +129,18 @@ const RegistrationDetailsContent = () => {
             <Typography color="textPrimary.main" variant="subtitle2">
               {registration_date && moment(registration_date).format('DD-MM-YYYY')}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => {
-                  setOpenModal(true);
-                  setQueryRaisedField('Registration Date');
-                }}
-                fontSize="width24"
-              />
-            )}
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) &&
+              dashboardTableDetails !== 'Approved' && (
+                <ContactSupportOutlinedIcon
+                  color="primary"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('Registration Date');
+                  }}
+                  fontSize="width24"
+                />
+              )}
           </Grid>
         </Grid>
       </Grid>
@@ -151,16 +161,18 @@ const RegistrationDetailsContent = () => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {is_renewable === '0' ? 'Permanent' : is_renewable === '1' ? 'Renewable' : ''}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => {
-                  setOpenModal(true);
-                  setQueryRaisedField('Registration');
-                }}
-                fontSize="width24"
-              />
-            )}
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) &&
+              dashboardTableDetails !== 'Approved' && (
+                <ContactSupportOutlinedIcon
+                  color="primary"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('Registration');
+                  }}
+                  fontSize="width24"
+                />
+              )}
           </Grid>
         </Grid>
         <Grid item xs={12} md={4}>
@@ -178,16 +190,18 @@ const RegistrationDetailsContent = () => {
                 ? moment(renewable_registration_date).format('DD-MM-YYYY')
                 : ''}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => {
-                  setOpenModal(true);
-                  setQueryRaisedField('Due Date of Renewal');
-                }}
-                fontSize="width24"
-              />
-            )}
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) &&
+              dashboardTableDetails !== 'Approved' && (
+                <ContactSupportOutlinedIcon
+                  color="primary"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('Due Date of Renewal');
+                  }}
+                  fontSize="width24"
+                />
+              )}
           </Grid>
         </Grid>
         <Grid item xs={12} md={4}>
@@ -217,16 +231,18 @@ const RegistrationDetailsContent = () => {
               </IconButton>
               View attachment
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => {
-                  setOpenModal(true);
-                  setQueryRaisedField('Upload the registration certificate');
-                }}
-                fontSize="width24"
-              />
-            )}
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) &&
+              dashboardTableDetails !== 'Approved' && (
+                <ContactSupportOutlinedIcon
+                  color="primary"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('Upload the registration certificate');
+                  }}
+                  fontSize="width24"
+                />
+              )}
           </Grid>
         </Grid>
       </Grid>

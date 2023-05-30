@@ -93,7 +93,7 @@ function TrackAppicationTable({
   };
 
   const dataHeader = [
-    { title: 'S.No.', name: 'SNo', sorting: false, type: 'string' },
+    { title: 'S.No.', name: 'SNo', sorting: true, type: 'string' },
     {
       title: 'Request ID',
       name: 'registration_no',

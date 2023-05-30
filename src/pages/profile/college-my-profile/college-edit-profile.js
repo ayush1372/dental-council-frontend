@@ -35,9 +35,10 @@ const CollegeEditProfile = (props) => {
 
   useEffect(() => {
     dispatch(getUniversitiesList());
-    dispatch(getDistrictList(getCollegeDetail?.data?.state_id)).then((res) => {
-      setDistrictList(res?.data);
-    });
+    if (getCollegeDetail?.data?.state_id !== undefined)
+      dispatch(getDistrictList(getCollegeDetail?.data?.state_id)).then((res) => {
+        setDistrictList(res?.data);
+      });
   }, []);
 
   const {
@@ -193,7 +194,7 @@ const CollegeEditProfile = (props) => {
               fullWidth
               name="MobileNumber"
               required
-              placeholder={'Enter mobile number'}
+              placeholder={'Enter Mobile Number'}
               defaultValue={getCollegeDetail?.data?.mobile_number}
               onInput={(e) => handleInput(e)}
               error={errors.MobileNumber?.message}
@@ -223,9 +224,12 @@ const CollegeEditProfile = (props) => {
               defaultValue={getCouncilNameData(getCollegeDetail?.data?.state_medical_council_id)}
               placeholder="Select Council"
               clearErrors={clearErrors}
-              error={errors.CouncilName?.message}
+              error={
+                (getValues()?.CouncilID === '' || getValues()?.CouncilID === undefined) &&
+                errors.CouncilName?.message
+              }
               {...register('CouncilName', {
-                required: ' Council name is required',
+                required: 'Council name is required',
               })}
               onChange={(currentValue) => {
                 setValue('CouncilID', currentValue?.id);

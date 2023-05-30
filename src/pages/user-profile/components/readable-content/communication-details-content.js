@@ -8,21 +8,36 @@ import { useSelector } from 'react-redux';
 import { capitalize } from '../../../../helpers/functions/common-functions';
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
-const CommunicationAddress = ({ personalDetails }) => {
+const CommunicationAddress = ({ personalDetails, selectedDataIndex }) => {
   const { data } = useSelector((state) => state.loginReducer?.loginData);
   const { raisedQueryData } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
 
   const [openModal, setOpenModal] = useState(false);
   const [queryRaisedField, setQueryRaisedField] = useState('');
-
+  const dashboardTableDetailsData = useSelector((state) => state?.dashboard?.dashboardTableDetails);
+  const { college_status: dashboardTableDetails } =
+    (dashboardTableDetailsData?.data?.dashboard_tolist &&
+      dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]) ||
+    [];
   const { communication_address } = personalDetails || {};
-  const { country, state, district, sub_district, pincode, village } = communication_address || {};
+  const { country, state, district, sub_district, pincode, village, is_same_address } =
+    communication_address || {};
 
-  const countryName = country?.name || '';
-  const stateName = state?.name || '';
-  const districtName = district?.name || '';
-  const subDistrictName = sub_district?.name || '';
-  const villageName = village?.name || '';
+  const countryName = is_same_address
+    ? personalDetails?.kyc_address?.country?.name || ''
+    : country?.name || '';
+  const stateName = is_same_address
+    ? personalDetails?.kyc_address?.state?.name || ''
+    : state?.name || '';
+  const districtName = is_same_address
+    ? personalDetails?.kyc_address?.district?.name || ''
+    : district?.name || '';
+  const subDistrictName = is_same_address
+    ? personalDetails?.kyc_address?.sub_district?.name || ''
+    : sub_district?.name || '';
+  const villageName = is_same_address
+    ? personalDetails?.kyc_address?.village?.name || ''
+    : village?.name || '';
 
   const ClosePopup = () => {
     setOpenModal(false);
@@ -55,16 +70,18 @@ const CommunicationAddress = ({ personalDetails }) => {
                 ? '-'
                 : communication_address?.house}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => {
-                  setOpenModal(true);
-                  setQueryRaisedField('House');
-                }}
-                fontSize="width24"
-              />
-            )}{' '}
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) &&
+              dashboardTableDetails !== 'Approved' && (
+                <ContactSupportOutlinedIcon
+                  color="primary"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('House');
+                  }}
+                  fontSize="width24"
+                />
+              )}{' '}
           </Grid>
         </Grid>
 
@@ -83,16 +100,18 @@ const CommunicationAddress = ({ personalDetails }) => {
                 ? '-'
                 : communication_address?.street}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => {
-                  setOpenModal(true);
-                  setQueryRaisedField('Street');
-                }}
-                fontSize="width24"
-              />
-            )}{' '}
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) &&
+              dashboardTableDetails !== 'Approved' && (
+                <ContactSupportOutlinedIcon
+                  color="primary"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('Street');
+                  }}
+                  fontSize="width24"
+                />
+              )}{' '}
           </Grid>
         </Grid>
         <Grid item xs={12} md={3}>
@@ -111,16 +130,18 @@ const CommunicationAddress = ({ personalDetails }) => {
                 ? '-'
                 : communication_address?.landmark}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => {
-                  setOpenModal(true);
-                  setQueryRaisedField('Landmark');
-                }}
-                fontSize="width24"
-              />
-            )}{' '}
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) &&
+              dashboardTableDetails !== 'Approved' && (
+                <ContactSupportOutlinedIcon
+                  color="primary"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('Landmark');
+                  }}
+                  fontSize="width24"
+                />
+              )}{' '}
           </Grid>
         </Grid>
         <Grid item xs={12} md={3}>
@@ -136,16 +157,18 @@ const CommunicationAddress = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {villageName === '' || villageName === undefined ? '-' : villageName}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => {
-                  setOpenModal(true);
-                  setQueryRaisedField('City/Town/Village');
-                }}
-                fontSize="width24"
-              />
-            )}{' '}
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) &&
+              dashboardTableDetails !== 'Approved' && (
+                <ContactSupportOutlinedIcon
+                  color="primary"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('City/Town/Village');
+                  }}
+                  fontSize="width24"
+                />
+              )}{' '}
           </Grid>
         </Grid>
       </Grid>
@@ -166,16 +189,18 @@ const CommunicationAddress = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {capitalize(districtName)}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => {
-                  setOpenModal(true);
-                  setQueryRaisedField('District');
-                }}
-                fontSize="width24"
-              />
-            )}{' '}
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) &&
+              dashboardTableDetails !== 'Approved' && (
+                <ContactSupportOutlinedIcon
+                  color="primary"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('District');
+                  }}
+                  fontSize="width24"
+                />
+              )}{' '}
           </Grid>
         </Grid>
         <Grid item xs={12} md={3}>
@@ -191,16 +216,18 @@ const CommunicationAddress = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {subDistrictName === '' || subDistrictName === undefined ? '-' : subDistrictName}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => {
-                  setOpenModal(true);
-                  setQueryRaisedField('Sub District');
-                }}
-                fontSize="width24"
-              />
-            )}{' '}
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) &&
+              dashboardTableDetails !== 'Approved' && (
+                <ContactSupportOutlinedIcon
+                  color="primary"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('Sub District');
+                  }}
+                  fontSize="width24"
+                />
+              )}{' '}
           </Grid>
         </Grid>
         <Grid item xs={12} md={3}>
@@ -219,16 +246,18 @@ const CommunicationAddress = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {capitalize(stateName)}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => {
-                  setOpenModal(true);
-                  setQueryRaisedField('State/Union Territory');
-                }}
-                fontSize="width24"
-              />
-            )}{' '}
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) &&
+              dashboardTableDetails !== 'Approved' && (
+                <ContactSupportOutlinedIcon
+                  color="primary"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('State/Union Territory');
+                  }}
+                  fontSize="width24"
+                />
+              )}{' '}
           </Grid>
         </Grid>
         <Grid item xs={12} md={3}>
@@ -247,16 +276,18 @@ const CommunicationAddress = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {countryName}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => {
-                  setOpenModal(true);
-                  setQueryRaisedField('Country');
-                }}
-                fontSize="width24"
-              />
-            )}{' '}
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) &&
+              dashboardTableDetails !== 'Approved' && (
+                <ContactSupportOutlinedIcon
+                  color="primary"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('Country');
+                  }}
+                  fontSize="width24"
+                />
+              )}{' '}
           </Grid>
         </Grid>
       </Grid>
@@ -278,16 +309,18 @@ const CommunicationAddress = ({ personalDetails }) => {
             <Typography variant="subtitle2" color="textPrimary.main">
               {pincode === '' || pincode === undefined ? '-' : pincode}
             </Typography>
-            {(data?.user_type === 3 || data?.user_type === 4) && (
-              <ContactSupportOutlinedIcon
-                color="primary"
-                onClick={() => {
-                  setOpenModal(true);
-                  setQueryRaisedField('Pincode');
-                }}
-                fontSize="width24"
-              />
-            )}{' '}
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) &&
+              dashboardTableDetails !== 'Approved' && (
+                <ContactSupportOutlinedIcon
+                  color="primary"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('Pincode');
+                  }}
+                  fontSize="width24"
+                />
+              )}{' '}
           </Grid>
         </Grid>
       </Grid>

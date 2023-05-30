@@ -21,6 +21,7 @@ const EditQualificationDetails = ({
   unregister,
   remove,
   watch,
+  fileName,
   qualification,
   qualificationFilesData,
   isAdditionalQualification,
@@ -29,11 +30,8 @@ const EditQualificationDetails = ({
 }) => {
   const dispatch = useDispatch();
   const [colleges, setColleges] = useState([]);
-  const [courseID, setCourseID] = useState(
-    qualification?.qualification ? qualification?.qualification : ''
-  );
-  // eslint-disable-next-line no-unused-vars
-  const [degree, setDegree] = useState([
+
+  const [degree] = useState([
     {
       name: 'MBBS - Bachelor of Medicine and Bachelor of Surgery ',
       id: 69,
@@ -224,6 +222,10 @@ const EditQualificationDetails = ({
               defaultValue={getValues()[`qualification[${index}].passportNumber`]}
               {...register(`qualification[${index}].passportNumber`, {
                 required: 'Passport Number is Required',
+                pattern: {
+                  value: /^[A-PR-WY][1-9]\d\s?\d{4}[1-9]$/gi,
+                  message: 'Passport Number is Required',
+                },
               })}
               sx={{
                 input: {
@@ -398,28 +400,25 @@ const EditQualificationDetails = ({
           {qualificationfrom === 'International' || isAdditionalQualification ? (
             <Select
               fullWidth
-              error={
-                getValues()?.qualification[index]?.qualification?.length === 0
-                  ? errors?.qualification?.[index]?.qualification?.message
-                  : ''
-              }
+              error={errors?.qualification?.[index]?.qualification?.message}
               name="Qualification"
               label="Name of the Degree"
-              value={courseID}
+              defaultValue={degree[0]?.id}
+              isAdditionalQualification={isAdditionalQualification}
               required={true}
+              disabled={
+                work_flow_status_id === 3 ? getQueryRaised('Name of the Degree Obtained') : false
+              }
               {...register(
                 `qualification[${index}].qualification`,
                 {
                   onChange: (e) => {
                     setValue(`qualification[${index}].qualification`, e.target.value);
-                    setCourseID(e.target.value);
                   },
                 },
-                getValues()?.qualification[index]?.qualification?.length === 0
-                  ? {
-                      required: 'Qualification Details is required',
-                    }
-                  : ''
+                {
+                  required: 'Qualification Details is required',
+                }
               )}
               style={{
                 backgroundColor:
@@ -427,9 +426,6 @@ const EditQualificationDetails = ({
                     ? '#F0F0F0'
                     : '',
               }}
-              disabled={
-                work_flow_status_id === 3 ? getQueryRaised('Name of the Degree Obtained') : false
-              }
               options={createSelectFieldData(coursesList.data)}
               MenuProps={{
                 style: {
@@ -460,7 +456,6 @@ const EditQualificationDetails = ({
                 {
                   onload: (e) => {
                     setValue(`qualification[${index}].qualification`, e.target.value);
-                    setCourseID(e.target.value);
                   },
                 }
               )}
@@ -750,7 +745,7 @@ const EditQualificationDetails = ({
           <Grid item xs={12} md={4}>
             <Select
               fullWidth
-              error={errors.Speciality?.message}
+              error={!getValues().Speciality && errors.Speciality?.message}
               name="Specialty"
               label="Broad Specialty"
               defaultValue={getValues().Speciality}
@@ -798,6 +793,7 @@ const EditQualificationDetails = ({
             setFileData={(files) => {
               handleQualificationFilesData(`qualification.${index}.files`, files);
             }}
+            fileName={fileName || ''}
             isDigiLockcerVisible={true}
             uploadFileLabel="Upload Qualification Degree "
             disabled={

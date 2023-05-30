@@ -1,5 +1,5 @@
 import { API } from '../../api/api-endpoints';
-import { GET, PATCH, POST, PUT } from '../../constants/requests';
+import { DELETE, GET, PATCH, POST, PUT } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
 import successToast from '../../ui/core/toaster';
 import {
@@ -75,6 +75,27 @@ export const getWorkProfileDetailsData = (doctor_profile_id) => async (dispatch)
   });
 };
 
+export const deleteWorkProfileDetailsData =
+  (doctor_profile_id, facility_id) => async (dispatch) => {
+    return await new Promise((resolve, reject) => {
+      useAxiosCall({
+        method: DELETE,
+        url: API.DoctorUserProfileData.workProfileDeLink.replace(
+          '{healthProfessionalId}',
+          doctor_profile_id
+        ),
+        data: facility_id,
+      })
+        .then((response) => {
+          dispatch(getWorkProfileDetails(response.data));
+          return resolve(response);
+        })
+        .catch((error) => {
+          return reject(error);
+        });
+    });
+  };
+
 export const getNewDoctorPersonalDetailsData = (body) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
@@ -104,6 +125,7 @@ export const updateDoctorPersonalDetails = (body, doctor_profile_id) => async (d
     })
       .then((response) => {
         dispatch(getUpdatedPersonalDetails(response.data));
+        dispatch(getPersonalDetails(response.data));
         return resolve(response);
       })
       .catch((error) => {
