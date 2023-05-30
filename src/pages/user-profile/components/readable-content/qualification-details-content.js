@@ -78,10 +78,9 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                   </Typography>
                   {(data?.user_type === 2 ||
                     data?.user_type === 3 ||
-                    data?.user_type === 4 ||
+                    (data?.user_type === 4 && index !== 0) ||
                     data?.user_type === 5) &&
-                    element.is_verified !== 1 &&
-                    index !== 0 && (
+                    element.is_verified !== 1 && (
                       <ContactSupportOutlinedIcon
                         color="primary"
                         onClick={() => {
@@ -111,10 +110,9 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                   </Typography>
                   {(data?.user_type === 2 ||
                     data?.user_type === 3 ||
-                    data?.user_type === 4 ||
+                    (data?.user_type === 4 && index !== 0) ||
                     data?.user_type === 5) &&
-                    element.is_verified !== 1 &&
-                    index !== 0 && (
+                    element.is_verified !== 1 && (
                       <ContactSupportOutlinedIcon
                         color="primary"
                         onClick={() => {
@@ -144,10 +142,9 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                   </Typography>
                   {(data?.user_type === 2 ||
                     data?.user_type === 3 ||
-                    data?.user_type === 4 ||
+                    (data?.user_type === 4 && index !== 0) ||
                     data?.user_type === 5) &&
-                    element.is_verified !== 1 &&
-                    index !== 0 && (
+                    element.is_verified !== 1 && (
                       <ContactSupportOutlinedIcon
                         color="primary"
                         onClick={() => {
@@ -180,10 +177,9 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
 
                   {(data?.user_type === 2 ||
                     data?.user_type === 3 ||
-                    data?.user_type === 4 ||
+                    (data?.user_type === 4 && index !== 0) ||
                     data?.user_type === 5) &&
-                    element.is_verified !== 1 &&
-                    index !== 0 && (
+                    element.is_verified !== 1 && (
                       <ContactSupportOutlinedIcon
                         color="primary"
                         onClick={() => {
@@ -213,10 +209,9 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                   </Typography>{' '}
                   {(data?.user_type === 2 ||
                     data?.user_type === 3 ||
-                    data?.user_type === 4 ||
+                    (data?.user_type === 4 && index !== 0) ||
                     data?.user_type === 5) &&
-                    element.is_verified !== 1 &&
-                    index !== 0 && (
+                    element.is_verified !== 1 && (
                       <ContactSupportOutlinedIcon
                         color="primary"
                         onClick={() => {
@@ -244,10 +239,9 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                   </Typography>{' '}
                   {(data?.user_type === 2 ||
                     data?.user_type === 3 ||
-                    data?.user_type === 4 ||
+                    (data?.user_type === 4 && index !== 0) ||
                     data?.user_type === 5) &&
-                    element.is_verified !== 1 &&
-                    index !== 0 && (
+                    element.is_verified !== 1 && (
                       <ContactSupportOutlinedIcon
                         color="primary"
                         onClick={() => {
@@ -290,10 +284,9 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                   </Typography>
                   {(data?.user_type === 2 ||
                     data?.user_type === 3 ||
-                    data?.user_type === 4 ||
+                    (data?.user_type === 4 && index !== 0) ||
                     data?.user_type === 5) &&
-                    element.is_verified !== 1 &&
-                    index !== 0 && (
+                    element.is_verified !== 1 && (
                       <ContactSupportOutlinedIcon
                         color="primary"
                         onClick={() => {
