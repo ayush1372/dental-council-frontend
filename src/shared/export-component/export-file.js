@@ -44,7 +44,7 @@ const ExportFiles = ({ exportData, flag }) => {
           return {
             request_id: elementData.request_id,
             application_type_name: elementData?.application_type_name,
-            created_at: moment(elementData?.created_at).format('DD-MM-YYYY HH:mm'),
+            created_at: moment(elementData?.created_at).format('DD-MM-YYYY hh:mm A'),
             doctor_status: elementData?.doctor_status,
             pendency: elementData?.pendency,
           };
@@ -59,8 +59,8 @@ const ExportFiles = ({ exportData, flag }) => {
         return {
           registration_id: elementData.registration_id,
           health_professional_name: elementData?.health_professional_name,
-          submitted_date: moment(elementData?.reactivation).format('DD-MM-YYYY HH:mm'),
-          created_at: moment(elementData?.submitted_date).format('DD-MM-YYYY HH:mm'),
+          submitted_date: moment(elementData?.reactivation).format('DD-MM-YYYY hh:mm A'),
+          created_at: moment(elementData?.submitted_date).format('DD-MM-YYYY hh:mm A'),
           typeOfSuspension: userActionId(elementData.type_of_suspension),
           remarks: elementData?.remarks,
           request_id: elementData.request_id,
@@ -78,7 +78,7 @@ const ExportFiles = ({ exportData, flag }) => {
             college_dean_status: elementData?.college_status,
             smc_status: elementData?.smc_status,
             nmc_status: elementData.nmc_status,
-            created_at: moment(elementData?.created_at).format('DD-MM-YYYY HH:mm'),
+            created_at: moment(elementData?.created_at).format('DD-MM-YYYY hh:mm A'),
             doctor_status: elementData?.doctor_status,
             pendency: elementData?.pendency,
           };
@@ -118,7 +118,7 @@ const ExportFiles = ({ exportData, flag }) => {
       worksheet.getRow(1).fill = workSheetTheme;
       worksheet.columns.forEach((column) => {
         if (column.header === 'Date of Submission') {
-          column.header = 'Date of Submission (DD-MM-YYYY HH:MM)';
+          column.header = 'Date of Submission (DD-MM-YYYY HH:MM AM/PM)';
         }
         if (column.header === 'Pendency') {
           column.header = 'Pendency (In Days)';
