@@ -447,6 +447,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
             </Typography>
             <TextField
               fullWidth
+              label={'Password'}
               id="outlined-basic"
               variant="outlined"
               type="Password"
