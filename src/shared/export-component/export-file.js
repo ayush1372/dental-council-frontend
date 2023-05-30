@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import Excel from 'exceljs';
 import { saveAs } from 'file-saver';
+import moment from 'moment';
 
 import {
   ActivateLicence,
@@ -19,7 +20,7 @@ import {
   DashboardData,
   TrackApplication,
 } from '../../../src/constants/common-data';
-import { workSheetTheme } from '../../../src/helpers/functions/common-functions';
+import { userActionId, workSheetTheme } from '../../../src/helpers/functions/common-functions';
 import { verboseLog } from '../../config/debug';
 
 const ExportFiles = ({ exportData, flag }) => {
@@ -37,15 +38,54 @@ const ExportFiles = ({ exportData, flag }) => {
 
     if (flag === 'trackApplicationData') {
       setColumns(TrackApplication);
-      data = exportData;
+
+      data = exportData?.map((elementData) => {
+        if (elementData.created_at) {
+          return {
+            request_id: elementData.request_id,
+            application_type_name: elementData?.application_type_name,
+            created_at: moment(elementData?.created_at).format('DD-MM-YYYY HH:mm'),
+            doctor_status: elementData?.doctor_status,
+            pendency: elementData?.pendency,
+          };
+        } else {
+          return elementData;
+        }
+      });
     }
     if (flag === 'ActivateList') {
       setColumns(ActivateLicence);
-      data = exportData?.data?.health_professional_details;
+      data = exportData?.data?.health_professional_details?.map((elementData) => {
+        return {
+          registration_id: elementData.registration_id,
+          health_professional_name: elementData?.health_professional_name,
+          submitted_date: moment(elementData?.reactivation).format('DD-MM-YYYY HH:mm'),
+          created_at: moment(elementData?.submitted_date).format('DD-MM-YYYY HH:mm'),
+          typeOfSuspension: userActionId(elementData.type_of_suspension),
+          remarks: elementData?.remarks,
+          request_id: elementData.request_id,
+        };
+      });
     }
     if (flag === 'dashboardTableDetails') {
       setColumns(DashboardData);
-      data = exportData?.data?.dashboard_tolist;
+      data = exportData?.data?.dashboard_tolist?.map((elementData) => {
+        if (elementData.created_at) {
+          return {
+            registration_no: elementData.registration_no,
+            applicant_full_name: elementData?.applicant_full_name,
+            council_name: elementData.council_name,
+            college_dean_status: elementData?.college_status,
+            smc_status: elementData?.smc_status,
+            nmc_status: elementData.nmc_status,
+            created_at: moment(elementData?.created_at).format('DD-MM-YYYY HH:mm'),
+            doctor_status: elementData?.doctor_status,
+            pendency: elementData?.pendency,
+          };
+        } else {
+          return elementData;
+        }
+      });
     }
     if (flag === 'collegeApprovalData') {
       setColumns(CollegeApproval);
@@ -77,6 +117,12 @@ const ExportFiles = ({ exportData, flag }) => {
       worksheet.getRow(1).font = { bold: true };
       worksheet.getRow(1).fill = workSheetTheme;
       worksheet.columns.forEach((column) => {
+        if (column.header === 'Date of Submission') {
+          column.header = 'Date of Submission (DD-MM-YYYY HH:MM)';
+        }
+        if (column.header === 'Pendency') {
+          column.header = 'Pendency (In Days)';
+        }
         column.width = column.header.length + 20;
       });
 

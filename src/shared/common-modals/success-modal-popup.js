@@ -35,6 +35,7 @@ export default function SuccessModalPopup({
   navigateToTrackApplication,
   fetchDoctorUserPersonalDetails,
   setChangeUserData,
+  PasswordChange,
 }) {
   const theme = useTheme();
   const navigate = useNavigate();
@@ -105,11 +106,6 @@ export default function SuccessModalPopup({
 
   const navigateSetPassword = () => {
     setOpen(false);
-    // navigate('/');
-    // window.scrollTo({
-    //   top: 0,
-    //   behavior: 'smooth',
-    // });
   };
 
   const closeSuccessModal = () => {
@@ -117,6 +113,16 @@ export default function SuccessModalPopup({
     setChangeUserData(false);
     fetchDoctorUserPersonalDetails && fetchDoctorUserPersonalDetails();
   };
+
+  const navigateToDashboard = () => {
+    let ActiveTab = colgTabs[0].tabName;
+    dispatch(changeUserActiveTab(ActiveTab));
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <Modal open={open} onClose={handleClose} sx={{ mt: 15 }}>
       <Container
@@ -177,6 +183,8 @@ export default function SuccessModalPopup({
                 ? closeSuccessModal
                 : navigateToTrackApplication
                 ? navigateToTrackApplication()
+                : PasswordChange
+                ? navigateToDashboard
                 : handleCloseModal
             }
           >

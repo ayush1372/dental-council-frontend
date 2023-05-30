@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { Box, Grid, TablePagination, Typography } from '@mui/material';
+import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
@@ -145,7 +146,10 @@ function CollegeApprovalTable(props) {
         value: collegeApproval?.status,
       },
 
-      { type: 'dateofSubmission', value: collegeApproval?.submitted_on },
+      {
+        type: 'dateofSubmission',
+        value: moment(collegeApproval?.submitted_on).format('DD-MM-YYYY'),
+      },
       { type: 'pendency', value: collegeApproval?.pendency },
       { type: 'view', value: 'View', onClickCallback: viewCallback }
     );

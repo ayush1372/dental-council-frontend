@@ -165,6 +165,7 @@ const ReadRegisterAndAcademicDetails = ({
           </Button>
           {userActiveTab === 'dashboard' &&
             (selectedAcademicStatus?.toUpperCase() === 'PENDING' ||
+              selectedAcademicStatus === 'College Verified' ||
               selectedAcademicStatus === 'Temporary Suspension Requests Received' ||
               selectedAcademicStatus === 'Permanent Suspension Requests Received') && (
               <Box mt={2}>
@@ -231,11 +232,12 @@ const ReadRegisterAndAcademicDetails = ({
                               Raise a Query
                             </MenuItem>
                           )}
-                        {loggedInUserType === 'SMC' && (
-                          <MenuItem onClick={selectionChangeHandler} data-my-value={'forward'}>
-                            Forward
-                          </MenuItem>
-                        )}
+                        {loggedInUserType === 'SMC' &&
+                          selectedAcademicStatus !== 'College Verified' && (
+                            <MenuItem onClick={selectionChangeHandler} data-my-value={'forward'}>
+                              Forward
+                            </MenuItem>
+                          )}
                         <MenuItem onClick={selectionChangeHandler} data-my-value={'reject'}>
                           Reject
                         </MenuItem>
