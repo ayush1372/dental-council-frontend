@@ -40,11 +40,8 @@ const AdditionalQualifications = () => {
     'qualification.0.files': degree_certificate ? [{ file: degree_certificate }] : [],
   });
 
-  // const [qualificationFilesData, setQualificationFilesData] = useState(
-  //   degree_certificate ? [{ file: degree_certificate }] : []
-  // );
   const [successModalPopup, setSuccessModalPopup] = useState(false);
-  // eslint-disable-next-line no-unused-vars
+
   const {
     statesList,
     collegesList,

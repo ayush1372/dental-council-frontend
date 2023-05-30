@@ -56,6 +56,9 @@ export default function SuccessModalPopup({
       behavior: 'smooth',
     });
   };
+  const navigateToTrackStatus = () => {
+    dispatch(changeUserActiveTab(doctorTabs[1].tabName));
+  };
 
   const handleCloseModalALL = () => {
     setOpen(false);
@@ -182,7 +185,7 @@ export default function SuccessModalPopup({
                 : changeUserData
                 ? closeSuccessModal
                 : navigateToTrackApplication
-                ? navigateToTrackApplication()
+                ? navigateToTrackStatus
                 : PasswordChange
                 ? navigateToDashboard
                 : handleCloseModal
