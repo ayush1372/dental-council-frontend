@@ -261,7 +261,7 @@ function TrackStatusTable(props) {
         <TablePagination
           rowsPerPageOptions={[]}
           component="div"
-          count={props?.trackStatusData?.total_no_of_records || '0'}
+          count={props?.trackStatusData?.total_no_of_records}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
