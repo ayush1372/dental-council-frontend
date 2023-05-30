@@ -359,17 +359,17 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
             />
             <TextField
               sx={{ mb: 2 }}
-              required
+              required={true}
               fullWidth
               label={'Password'}
+              variant="outlined"
               placeholder={'Please enter password'}
               type={'Password'}
               inputProps={{ maxLength: 12 }}
               name={'password'}
               error={errors.password?.message}
-              {...register('password', {
-                PasswordRegexValidation,
-              })}
+              defaultValue={getValues().password}
+              {...register('password', PasswordRegexValidation)}
             />
             <Typography display={'flex'} justifyContent="flex-end">
               <Button
