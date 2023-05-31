@@ -79,10 +79,12 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   <Typography color="textPrimary.main" variant="subtitle2">
                     {element?.course?.course_name}
                   </Typography>
-                  {(data?.user_type === 2 || data?.user_type === 4 || data?.user_type === 5) &&
+                  {(data?.user_type === 2 ||
+                    data?.user_type === 3 ||
+                    (data?.user_type === 4 && index !== 0) ||
+                    data?.user_type === 5) &&
                     element.is_verified !== 1 &&
-                    college_status !== 'Approved' &&
-                    index !== 0 && (
+                    college_status !== 'Approved' && (
                       <ContactSupportOutlinedIcon
                         color="primary"
                         onClick={() => {
@@ -111,12 +113,11 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                     {element?.country?.name}
                   </Typography>
                   {(data?.user_type === 2 ||
-                    college_status !== 'Approved' ||
-                    data?.user_type === 4 ||
+                    data?.user_type === 3 ||
+                    (data?.user_type === 4 && index !== 0) ||
                     data?.user_type === 5) &&
                     element.is_verified !== 1 &&
-                    college_status !== 'Approved' &&
-                    index !== 0 && (
+                    college_status !== 'Approved' && (
                       <ContactSupportOutlinedIcon
                         color="primary"
                         onClick={() => {
@@ -145,12 +146,11 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                     {capitalizeFirstLetter(element?.state?.name)}
                   </Typography>
                   {(data?.user_type === 2 ||
-                    college_status !== 'Approved' ||
-                    data?.user_type === 4 ||
+                    data?.user_type === 3 ||
+                    (data?.user_type === 4 && index !== 0) ||
                     data?.user_type === 5) &&
                     element.is_verified !== 1 &&
-                    college_status !== 'Approved' &&
-                    index !== 0 && (
+                    college_status !== 'Approved' && (
                       <ContactSupportOutlinedIcon
                         color="primary"
                         onClick={() => {
@@ -182,12 +182,11 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   </Typography>
 
                   {(data?.user_type === 2 ||
-                    college_status !== 'Approved' ||
-                    data?.user_type === 4 ||
+                    data?.user_type === 3 ||
+                    (data?.user_type === 4 && index !== 0) ||
                     data?.user_type === 5) &&
                     element.is_verified !== 1 &&
-                    college_status !== 'Approved' &&
-                    index !== 0 && (
+                    college_status !== 'Approved' && (
                       <ContactSupportOutlinedIcon
                         color="primary"
                         onClick={() => {
@@ -216,12 +215,11 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                     {element?.university?.name}
                   </Typography>{' '}
                   {(data?.user_type === 2 ||
-                    college_status !== 'Approved' ||
-                    data?.user_type === 4 ||
+                    data?.user_type === 3 ||
+                    (data?.user_type === 4 && index !== 0) ||
                     data?.user_type === 5) &&
                     element.is_verified !== 1 &&
-                    college_status !== 'Approved' &&
-                    index !== 0 && (
+                    college_status !== 'Approved' && (
                       <ContactSupportOutlinedIcon
                         color="primary"
                         onClick={() => {
@@ -248,12 +246,11 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                     {element?.qualification_year ? element?.qualification_year : ''}
                   </Typography>{' '}
                   {(data?.user_type === 2 ||
-                    college_status !== 'Approved' ||
-                    data?.user_type === 4 ||
+                    data?.user_type === 3 ||
+                    (data?.user_type === 4 && index !== 0) ||
                     data?.user_type === 5) &&
                     element.is_verified !== 1 &&
-                    college_status !== 'Approved' &&
-                    index !== 0 && (
+                    college_status !== 'Approved' && (
                       <ContactSupportOutlinedIcon
                         color="primary"
                         onClick={() => {
@@ -295,12 +292,11 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                     View Attachment
                   </Typography>
                   {(data?.user_type === 2 ||
-                    college_status !== 'Approved' ||
-                    data?.user_type === 4 ||
+                    data?.user_type === 3 ||
+                    (data?.user_type === 4 && index !== 0) ||
                     data?.user_type === 5) &&
                     element.is_verified !== 1 &&
-                    college_status !== 'Approved' &&
-                    index !== 0 && (
+                    college_status !== 'Approved' && (
                       <ContactSupportOutlinedIcon
                         color="primary"
                         onClick={() => {
