@@ -14,7 +14,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
   const { data } = useSelector((state) => state.loginReducer?.loginData);
   const { raisedQueryData } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
   const { college_status } = useSelector(
-    (state) => state?.dashboard?.dashboardTableDetails?.data?.dashboard_tolist[selectedDataIndex]
+    (state) =>
+      state?.dashboard?.dashboardTableDetails?.data?.dashboard_tolist?.[selectedDataIndex || 0]
   );
 
   const [openModal, setOpenModal] = useState(false);
