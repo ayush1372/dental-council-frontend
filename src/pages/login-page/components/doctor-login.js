@@ -456,6 +456,9 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
               placeholder={'Please enter password'}
               error={errors.password?.message}
               margin="dense"
+              inputProps={{
+                maxLength: 100,
+              }}
               defaultValue={getValues().password}
               {...register('password', PasswordRegexValidation)}
             />
