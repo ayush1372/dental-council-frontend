@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { Box, Container, Grid, TablePagination, Typography, useTheme } from '@mui/material';
@@ -62,6 +62,10 @@ const SearchResults = ({ searchData, scrolldown }) => {
 
     setImagePath(imagePath);
   };
+
+  useEffect(() => {
+    setPage(0);
+  }, [searchDetails?.data?.data?.count]);
 
   return (
     <Container
