@@ -24,6 +24,7 @@ export default function SuccessModalPopup({
   open,
   setOpen,
   text,
+  loginName,
   workDetails,
   handleClose,
   SuspensionCall,
@@ -104,7 +105,7 @@ export default function SuccessModalPopup({
   };
   const navigateLogin = () => {
     dispatch(loginActiveState({ activeIndex: 0 }));
-    navigate('/login-page', { state: { loginFormname: 'Doctor' } });
+    navigate('/login-page', { state: { loginFormname: loginName } });
   };
 
   const navigateSetPassword = () => {
