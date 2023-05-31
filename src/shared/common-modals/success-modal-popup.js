@@ -45,7 +45,7 @@ export default function SuccessModalPopup({
 
   const handleCloseModal = () => {
     if (workDetails) {
-      dispatch(changeUserActiveTab(doctorTabs[0].tabName));
+      dispatch(changeUserActiveTab(doctorTabs[1].tabName));
     }
     setOpen(false);
   };

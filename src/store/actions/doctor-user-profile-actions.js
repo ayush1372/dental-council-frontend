@@ -75,26 +75,23 @@ export const getWorkProfileDetailsData = (doctor_profile_id) => async (dispatch)
   });
 };
 
-export const deleteWorkProfileDetailsData =
-  (doctor_profile_id, facility_id) => async (dispatch) => {
-    return await new Promise((resolve, reject) => {
-      useAxiosCall({
-        method: DELETE,
-        url: API.DoctorUserProfileData.workProfileDeLink.replace(
-          '{healthProfessionalId}',
-          doctor_profile_id
-        ),
-        data: facility_id,
+export const deleteWorkProfileDetailsData = (facility_id) => async (dispatch) => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: DELETE,
+      url: API.DoctorUserProfileData.workProfileDeLink,
+      data: facility_id,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+    })
+      .then((response) => {
+        dispatch(getWorkProfileDetails(response.data));
+        return resolve(response);
       })
-        .then((response) => {
-          dispatch(getWorkProfileDetails(response.data));
-          return resolve(response);
-        })
-        .catch((error) => {
-          return reject(error);
-        });
-    });
-  };
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
 
 export const getNewDoctorPersonalDetailsData = (body) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
