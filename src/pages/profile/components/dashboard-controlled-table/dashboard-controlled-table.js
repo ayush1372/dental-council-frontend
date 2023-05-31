@@ -243,6 +243,7 @@ function DashboardControlledTable(props) {
         searchParams={searchParams}
         exportData={dashboardTableDetails}
         flag={'dashboardTableDetails'}
+        value={props?.selectedCardDataData?.value}
       />
       <GenericTable
         order={order}

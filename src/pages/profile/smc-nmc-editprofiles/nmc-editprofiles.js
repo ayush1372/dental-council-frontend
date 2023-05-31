@@ -13,6 +13,7 @@ const NmcEditProfile = (props) => {
   const userData = useSelector((state) => state?.nmc?.nmcProfileData?.data);
   const { councilNames } = useSelector((state) => state.common);
   const [successModalPopup, setSuccessModalPopup] = useState(false);
+  const loggedInUserType = useSelector((state) => state?.common?.loggedInUserType);
   const {
     register,
     handleSubmit,
@@ -154,59 +155,64 @@ const NmcEditProfile = (props) => {
                   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
                 message: 'Provide a Valid Email Id',
               },
-            })}
-          />
-        </Grid>
-      </Grid>
-      <Grid container item spacing={2} mt={3}>
-        <Grid item xs={12} md={4}>
-          <Typography variant="body3" color="grey.label">
-            User ID
-          </Typography>
-          <Typography component="span" color="error.main">
-            *
-          </Typography>
-          <TextField
-            fullWidth
-            required
-            name={'user_id'}
-            placeholder={'Enter user ID'}
-            defaultValue={getValues().user_id}
-            error={errors.user_id?.message}
-            {...register('user_id', {
-              required: 'User ID is required',
-
-              pattern: {
-                value: /^[a-zA-Z0-9@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
-                message: 'Provide a Valid User ID',
+              onChange: (event) => {
+                setValue(event.target.value);
               },
             })}
           />
         </Grid>
-
-        <Grid item xs={12} md={4}>
-          <Typography variant="body3" color="grey.label">
-            Council
-          </Typography>
-          <Typography component="span" color="error.main">
-            *
-          </Typography>
-          <SearchableDropdown
-            name="RegistrationCouncil"
-            items={createEditFieldData(councilNames)}
-            defaultValue={userData?.state_medical_council}
-            placeholder="Select Your Registration Council"
-            clearErrors={clearErrors}
-            error={errors.RegistrationCouncil?.message}
-            {...register('RegistrationCouncil', {
-              required: 'Registration Council is required',
-            })}
-            onChange={(currentValue) => {
-              setValue('RegistrationCouncilId', currentValue?.name);
-            }}
-          />
-        </Grid>
       </Grid>
+      {loggedInUserType !== 'NMC' && (
+        <Grid container item spacing={2} mt={3}>
+          <Grid item xs={12} md={4}>
+            <Typography variant="body3" color="grey.label">
+              User ID
+            </Typography>
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
+            <TextField
+              fullWidth
+              required
+              name={'user_id'}
+              placeholder={'Enter user ID'}
+              defaultValue={getValues().user_id}
+              error={errors.user_id?.message}
+              {...register('user_id', {
+                required: 'User ID is required',
+
+                pattern: {
+                  value: /^[a-zA-Z0-9@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
+                  message: 'Provide a Valid User ID',
+                },
+              })}
+            />
+          </Grid>
+
+          <Grid item xs={12} md={4}>
+            <Typography variant="body3" color="grey.label">
+              Council
+            </Typography>
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
+            <SearchableDropdown
+              name="RegistrationCouncil"
+              items={createEditFieldData(councilNames)}
+              defaultValue={userData?.state_medical_council}
+              placeholder="Select Your Registration Council"
+              clearErrors={clearErrors}
+              error={errors.RegistrationCouncil?.message}
+              {...register('RegistrationCouncil', {
+                required: 'Registration Council is required',
+              })}
+              onChange={(currentValue) => {
+                setValue('RegistrationCouncilId', currentValue?.name);
+              }}
+            />
+          </Grid>
+        </Grid>
+      )}
 
       <Box display="flex" mt={5} md="auto">
         <Button

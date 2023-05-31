@@ -20,7 +20,7 @@ import { SearchableDropdown } from '../../../../shared/autocomplete/searchable-d
 import ExportFiles from '../../../../shared/export-component/export-file';
 import { Button, TextField } from '../../../../ui/core';
 
-export function TableSearch({ trackApplication, searchParams, exportData, flag }) {
+export function TableSearch({ trackApplication, searchParams, exportData, flag, value }) {
   // const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   // const { councilNames } = useSelector((state) => state.common);
 
@@ -288,7 +288,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
           </Grid>
         </Grid>
         <Grid item xs={12} md="auto">
-          <ExportFiles exportData={exportData} flag={flag} />
+          {!!value && <ExportFiles exportData={exportData} flag={flag} />}
         </Grid>
       </Grid>
     </Box>
