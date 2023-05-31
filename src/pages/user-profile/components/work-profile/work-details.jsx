@@ -471,25 +471,29 @@ const WorkDetails = ({
           name="LanguageSpoken"
           options={languagesList?.data || []}
           value={languages}
-          error={languages?.length === 0 && errors?.LanguageSpoken?.message}
+          error={errors?.LanguageSpoken?.message}
           multiple={true}
+          required={true}
           {...register('LanguageSpoken', {
-            required: (
-              <Typography
-                style={{ display: 'flex', alignItems: 'center' }}
-                variant="body2"
-                color="error"
-              >
-                <ErrorOutlineIcon
-                  color={'error'}
-                  icon={'helpOutline'}
-                  fontSize="small"
-                  sx={{ height: '16px' }}
-                />
-                {`This field is required`}
-              </Typography>
-            ),
+            required: 'This field is required',
           })}
+          // {...register('LanguageSpoken', {
+          //   required: (
+          //     <Typography
+          //       style={{ display: 'flex', alignItems: 'center' }}
+          //       variant="body2"
+          //       color="error"
+          //     >
+          //       <ErrorOutlineIcon
+          //         color={'error'}
+          //         icon={'helpOutline'}
+          //         fontSize="small"
+          //         sx={{ height: '16px' }}
+          //       />
+          //       {`This field is required`}
+          //     </Typography>
+          //   ),
+          // })}
           onChange={(value) => {
             handleLanguageSpokenChange('LanguageSpoken', value);
           }}

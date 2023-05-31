@@ -32,6 +32,14 @@ export const OTPValidation = (otp) => {
   if (validotp.test(otp)) return true;
 };
 
+export const TextValidationMaxLength = (text, maxLength) => {
+  if (text.length <= maxLength) {
+    return text;
+  } else {
+    return text.substring(0, maxLength) + '...';
+  }
+};
+
 export const PasswordValidation = (password) => {
   if (
     validator.isStrongPassword(password, {

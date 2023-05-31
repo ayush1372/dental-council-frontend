@@ -109,6 +109,69 @@ const NmcEditProfile = (props) => {
 
         <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
+            Enrolment Number NDHM
+          </Typography>
+          <Typography component="span" color="error.main">
+            *
+          </Typography>
+          <TextField
+            fullWidth
+            required
+            name={'NDHM_no'}
+            placeholder={'Enter NDHM Number '}
+            defaultValue={getValues().ndhm_enrollment}
+            error={errors.ndhm_enrollment?.message}
+            {...register('NDHM_no', {
+              required: 'NDHM Number is required',
+            })}
+          />
+        </Grid>
+
+        <Grid item xs={12} md={4}>
+          <Typography variant="body3" color="grey.label">
+            Enrolment Number
+          </Typography>
+          <Typography component="span" color="error.main">
+            *
+          </Typography>
+          <TextField
+            fullWidth
+            required={true}
+            name={'NDHM_no'}
+            placeholder={'Enter enrolment number '}
+            defaultValue={getValues().enrolled_number}
+            error={errors.enrolled_number?.message}
+            {...register('NDHM_no', {
+              required: ' Enrolment number is required',
+            })}
+          />
+        </Grid>
+
+        <Grid item xs={12} md={4}>
+          <Typography variant="body3" color="grey.label">
+            Council
+          </Typography>
+          <Typography component="span" color="error.main">
+            *
+          </Typography>
+          <SearchableDropdown
+            name="RegistrationCouncil"
+            items={createEditFieldData(councilNames)}
+            defaultValue={userData?.state_medical_council}
+            placeholder="Select Your Registration Council"
+            clearErrors={clearErrors}
+            error={errors.RegistrationCouncil?.message}
+            {...register('RegistrationCouncil', {
+              required: 'Registration Council is required',
+            })}
+            onChange={(currentValue) => {
+              setValue('RegistrationCouncilId', currentValue?.name);
+            }}
+          />
+        </Grid>
+
+        <Grid item xs={12} md={4}>
+          <Typography variant="body3" color="grey.label">
             Phone Number
           </Typography>
           <Typography component="span" color="error.main">
@@ -158,7 +221,7 @@ const NmcEditProfile = (props) => {
           />
         </Grid>
       </Grid>
-      <Grid container item spacing={2} mt={3}>
+      {/* <Grid container item spacing={2} mt={3}>
         <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
             User ID
@@ -183,30 +246,7 @@ const NmcEditProfile = (props) => {
             })}
           />
         </Grid>
-
-        <Grid item xs={12} md={4}>
-          <Typography variant="body3" color="grey.label">
-            Council
-          </Typography>
-          <Typography component="span" color="error.main">
-            *
-          </Typography>
-          <SearchableDropdown
-            name="RegistrationCouncil"
-            items={createEditFieldData(councilNames)}
-            defaultValue={userData?.state_medical_council}
-            placeholder="Select Your Registration Council"
-            clearErrors={clearErrors}
-            error={errors.RegistrationCouncil?.message}
-            {...register('RegistrationCouncil', {
-              required: 'Registration Council is required',
-            })}
-            onChange={(currentValue) => {
-              setValue('RegistrationCouncilId', currentValue?.name);
-            }}
-          />
-        </Grid>
-      </Grid>
+      </Grid> */}
 
       <Box display="flex" mt={5} md="auto">
         <Button
