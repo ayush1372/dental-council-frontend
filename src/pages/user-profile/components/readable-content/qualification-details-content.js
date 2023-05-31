@@ -10,9 +10,12 @@ import { capitalizeFirstLetter } from '../../../../helpers/functions/common-func
 import AttachmentViewPopup from '../../../../shared/query-modal-popup/attachement-view-popup';
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
-const QualificationDetailsContent = ({ registrationDetails }) => {
+const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex }) => {
   const { data } = useSelector((state) => state.loginReducer?.loginData);
   const { raisedQueryData } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
+  const { college_status } = useSelector(
+    (state) => state?.dashboard?.dashboardTableDetails?.data?.dashboard_tolist[selectedDataIndex]
+  );
 
   const [openModal, setOpenModal] = useState(false);
   const [queryRaisedField, setQueryRaisedField] = useState('');
@@ -78,10 +81,10 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                   </Typography>
                   {(data?.user_type === 2 ||
                     data?.user_type === 3 ||
-                    data?.user_type === 4 ||
+                    (data?.user_type === 4 && index !== 0) ||
                     data?.user_type === 5) &&
                     element.is_verified !== 1 &&
-                    index !== 0 && (
+                    college_status !== 'Approved' && (
                       <ContactSupportOutlinedIcon
                         color="primary"
                         onClick={() => {
@@ -111,10 +114,10 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                   </Typography>
                   {(data?.user_type === 2 ||
                     data?.user_type === 3 ||
-                    data?.user_type === 4 ||
+                    (data?.user_type === 4 && index !== 0) ||
                     data?.user_type === 5) &&
                     element.is_verified !== 1 &&
-                    index !== 0 && (
+                    college_status !== 'Approved' && (
                       <ContactSupportOutlinedIcon
                         color="primary"
                         onClick={() => {
@@ -144,10 +147,10 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                   </Typography>
                   {(data?.user_type === 2 ||
                     data?.user_type === 3 ||
-                    data?.user_type === 4 ||
+                    (data?.user_type === 4 && index !== 0) ||
                     data?.user_type === 5) &&
                     element.is_verified !== 1 &&
-                    index !== 0 && (
+                    college_status !== 'Approved' && (
                       <ContactSupportOutlinedIcon
                         color="primary"
                         onClick={() => {
@@ -180,10 +183,10 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
 
                   {(data?.user_type === 2 ||
                     data?.user_type === 3 ||
-                    data?.user_type === 4 ||
+                    (data?.user_type === 4 && index !== 0) ||
                     data?.user_type === 5) &&
                     element.is_verified !== 1 &&
-                    index !== 0 && (
+                    college_status !== 'Approved' && (
                       <ContactSupportOutlinedIcon
                         color="primary"
                         onClick={() => {
@@ -213,10 +216,10 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                   </Typography>{' '}
                   {(data?.user_type === 2 ||
                     data?.user_type === 3 ||
-                    data?.user_type === 4 ||
+                    (data?.user_type === 4 && index !== 0) ||
                     data?.user_type === 5) &&
                     element.is_verified !== 1 &&
-                    index !== 0 && (
+                    college_status !== 'Approved' && (
                       <ContactSupportOutlinedIcon
                         color="primary"
                         onClick={() => {
@@ -244,10 +247,10 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                   </Typography>{' '}
                   {(data?.user_type === 2 ||
                     data?.user_type === 3 ||
-                    data?.user_type === 4 ||
+                    (data?.user_type === 4 && index !== 0) ||
                     data?.user_type === 5) &&
                     element.is_verified !== 1 &&
-                    index !== 0 && (
+                    college_status !== 'Approved' && (
                       <ContactSupportOutlinedIcon
                         color="primary"
                         onClick={() => {
@@ -290,10 +293,10 @@ const QualificationDetailsContent = ({ registrationDetails }) => {
                   </Typography>
                   {(data?.user_type === 2 ||
                     data?.user_type === 3 ||
-                    data?.user_type === 4 ||
+                    (data?.user_type === 4 && index !== 0) ||
                     data?.user_type === 5) &&
                     element.is_verified !== 1 &&
-                    index !== 0 && (
+                    college_status !== 'Approved' && (
                       <ContactSupportOutlinedIcon
                         color="primary"
                         onClick={() => {
