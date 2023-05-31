@@ -418,7 +418,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
       District,
       SubDistrict,
       Area,
-      DateOfBirth,
+      // DateOfBirth,
       Landmark,
       Locality,
       Street,
@@ -431,7 +431,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
     doctorProfileValues.personal_details.father_name = FatherName;
     doctorProfileValues.personal_details.mother_name = MotherName;
     doctorProfileValues.personal_details.spouse_name = SpouseName;
-    doctorProfileValues.personal_details.date_of_birth = DateOfBirth;
+    doctorProfileValues.personal_details.date_of_birth = getValues()
+      .dateOfBirth?.split('/')
+      ?.reverse()
+      ?.join('/');
     doctorProfileValues.personal_details.full_name = Name;
     doctorProfileValues.personal_details.country_nationality =
       nationalities.find((x) => x.id === Nationality) || {};
