@@ -8,6 +8,7 @@ const CheckboxField = ({ name, label, error, dataTestid, ...props }, ref) => {
       <FormControlLabel
         control={<MuiCheckbox {...props} name={name} ref={ref} data-testid={dataTestid} />}
         label={label}
+        sx={{ alignItems: 'flex-start' }}
       />
       {error && (
         <Typography variant="body2" color="error">
