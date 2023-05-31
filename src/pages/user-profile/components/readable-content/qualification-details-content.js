@@ -13,9 +13,12 @@ import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-po
 const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex }) => {
   const { data } = useSelector((state) => state.loginReducer?.loginData);
   const { raisedQueryData } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
-  const { college_status } = useSelector(
-    (state) =>
-      state?.dashboard?.dashboardTableDetails?.data?.dashboard_tolist?.[selectedDataIndex || 0]
+  const { count } = useSelector((state) => state?.dashboard);
+
+  const { college_status } = useSelector((state) =>
+    count > 0
+      ? state?.dashboard?.dashboardTableDetails?.data?.dashboard_tolist?.[selectedDataIndex]
+      : ''
   );
 
   const [openModal, setOpenModal] = useState(false);
