@@ -162,10 +162,18 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     let qualification_details = {};
 
     registration_detail.registration_date = RegistrationDate;
-    registration_detail.registration_number = RegistrationNumber;
+    registration_detail.registration_number =
+      work_flow_status_id === 3
+        ? getQueryRaised('Registration Date')
+          ? RegistrationNumber
+          : RegistrationNumber?.split('/')?.reverse()?.join('-')
+        : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+        ? RegistrationNumber?.split('/')?.reverse()?.join('-')
+        : RegistrationNumber;
+
     registration_detail.state_medical_council = getRegistrationCouncilData(RegisteredWithCouncil);
     registration_detail.is_renewable = registration;
-    registration_detail.renewable_registration_date = RenewalDate;
+    registration_detail.renewable_registration_date = RenewalDate?.split('/')?.reverse()?.join('/');
 
     // this below code is storing qualification details
     const { qualification } = getValues();
@@ -475,49 +483,39 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 *
               </Typography>
             </Typography>
-
-            <TextField
-              variant="outlined"
+            <DatePicker
+              value={
+                getValues()?.RegistrationDate ? new Date(getValues()?.RegistrationDate) : undefined
+              }
+              onChangeDate={(newDateValue) => {
+                setValue('RegistrationDate', new Date(newDateValue)?.toLocaleDateString('en-GB'));
+              }}
+              data-testid="RegistrationDate"
+              id="RegistrationDate"
               name={'RegistrationDate'}
               required={true}
-              fullWidth
-              type="date"
-              defaultValue={getValues().RegistrationDate}
-              error={errors.RegistrationDate?.message}
-              {...register('RegistrationDate', {
-                required: 'Registration Date is Required',
-              })}
-              sx={{
-                input: {
-                  color: 'black',
-                  textTransform: 'uppercase',
-                  backgroundColor:
-                    work_flow_status_id === 3
-                      ? 'grey2.main'
-                      : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-                      ? ''
-                      : getValues().RegistrationDate === ''
-                      ? ''
-                      : 'grey2.main',
-                },
-              }}
-              InputProps={{
-                inputProps: { max: new Date().toISOString().split('T')[0] },
-                readOnly:
-                  work_flow_status_id === 3
-                    ? getQueryRaised('Registration Date')
-                    : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-                    ? false
-                    : getValues().RegistrationDate === ''
-                    ? false
-                    : true,
-              }}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              inputProps={{
-                max: new Date().toISOString().split('T')[0],
-              }}
+              defaultValue={
+                getValues()?.RegistrationDate ? new Date(getValues()?.RegistrationDate) : undefined
+              }
+              error={false}
+              backgroundColor={
+                work_flow_status_id === 3
+                  ? '#F0F0F0'
+                  : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                  ? ''
+                  : getValues().RegistrationDate === ''
+                  ? '#F0F0F0'
+                  : '#F0F0F0'
+              }
+              disabled={
+                work_flow_status_id === 3
+                  ? getQueryRaised('Registration Date')
+                  : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                  ? false
+                  : getValues().RegistrationDate === ''
+                  ? false
+                  : true
+              }
             />
           </Grid>
         </Grid>
