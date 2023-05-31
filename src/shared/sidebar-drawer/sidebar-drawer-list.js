@@ -59,6 +59,8 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
                     (data?.user_sub_type === 2 || data?.user_sub_type === 3) &&
                     index === 2
                   ? true
+                  : loggedInUserType === 'NMC' && data?.user_sub_type === 7 && index === 4
+                  ? true
                   : false
               }
               sx={{
