@@ -54,7 +54,7 @@ const SearchableAutoComplete = (
             placeholder={placeholder}
             ref={ref}
             error={error ? true : false}
-            helperText={error ? error : ''}
+            // helperText={error ? error : ''}
           />
         )}
       />
