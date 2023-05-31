@@ -746,7 +746,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
               id="DateOfBirth"
               name="RenewalDate"
               required={true}
-              defaultValue={getValues().dateOfBirth}
+              defaultValue={
+                getValues()?.dateOfBirth ? new Date(getValues()?.dateOfBirth) : undefined
+              }
               error={errors.DateOfBirth?.message}
               backgroundColor={loggedInUserType === 'SMC' ? '' : '#F0F0F0'}
               disabled={loggedInUserType === 'SMC' ? false : true}
