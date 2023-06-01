@@ -105,6 +105,7 @@ export default function ReactivateLicencePopup(props) {
                 shrink: true,
               }}
               required={true}
+              minDate={new Date()}
               defaultValue={getValues().fromDate}
               error={showFromDateError ? 'Enter Re-activate from' : false}
             />

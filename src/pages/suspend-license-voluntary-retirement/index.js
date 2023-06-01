@@ -409,6 +409,7 @@ export function SuspendLicenseVoluntaryRetirement({
                         ? true
                         : false
                     }
+                    minDate={getValues()?.fromDate ? new Date(getValues()?.fromDate) : new Date()}
                     required={true}
                     defaultValue={getValues()?.toDate ? new Date(getValues()?.toDate) : undefined}
                     error={showToDateError ? 'Enter To Date' : false}
