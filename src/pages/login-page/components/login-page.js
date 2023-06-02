@@ -132,6 +132,7 @@ export function LoginPage() {
             otpData={data}
             setShowSuccessPopUp={setShowPopup}
             resetStep={resetStep}
+            loginName={loginFormNames[loginFormname]}
           />
         )
       )}
