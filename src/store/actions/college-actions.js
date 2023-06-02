@@ -141,27 +141,8 @@ export const updateCollegeAdminProfileData = (body) => async () => {
   });
 };
 
-export const updateCollegeDeanData = (body, collegeId, verifierId) => async () => {
-  const endpoint = API.college.updateCollegeProfile.replace('{collegeId}', collegeId);
-
-  return await new Promise((resolve, reject) => {
-    useAxiosCall({
-      method: PUT,
-      url: endpoint.replace('{verifierId}', verifierId),
-      data: body,
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
-    })
-      .then((response) => {
-        return resolve(response);
-      })
-      .catch((error) => {
-        return reject(error);
-      });
-  });
-};
-
 export const updateCollegeRegistrarData = (body, collegeId, verifierId) => async () => {
-  const endpoint = API.college.updateCollegeProfile.replace('{collegeId}', collegeId);
+  const endpoint = API.college.collegeProfile.replace('{collegeId}', collegeId);
 
   return await new Promise((resolve, reject) => {
     useAxiosCall({
@@ -232,6 +213,7 @@ export const registerCollegeDetail = (collegeDetails) => async (dispatch) => {
 };
 export const collegeProfileData = (collegeId, verifierId) => async (dispatch) => {
   const endpoint = API.college.collegeProfile.replace('{collegeId}', collegeId);
+
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: GET,
@@ -239,7 +221,17 @@ export const collegeProfileData = (collegeId, verifierId) => async (dispatch) =>
       headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
       .then((response) => {
-        dispatch(collegeProfile(response));
+        if (response?.data?.designation === 1) {
+          dispatch(getCollegeAdminData({ data: response.data, isError: false, isLoading: false }));
+        } else if (response?.data?.designation === 2) {
+          dispatch(
+            getCollegeRegistrarData({ data: response.data, isError: false, isLoading: false })
+          );
+        } else if (response?.data?.designation === 3) {
+          dispatch(getCollegeDeanData({ data: response.data, isError: false, isLoading: false }));
+        } else {
+          dispatch(collegeProfile(response));
+        }
         return resolve(response);
       })
       .catch((error) => {
