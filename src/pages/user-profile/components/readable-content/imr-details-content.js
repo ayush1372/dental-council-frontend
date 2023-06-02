@@ -3,7 +3,7 @@ import { Grid, Typography } from '@mui/material';
 import { capitalize } from '../../../../helpers/functions/common-functions';
 
 const IMRDetails = ({ personalDetails }) => {
-  const { communication_address, kyc_address } = personalDetails || {};
+  const { kyc_address } = personalDetails || {};
   const { country, state, district, sub_district, pincode, village } = kyc_address || {};
 
   const countryName = country?.name || '';
@@ -23,32 +23,26 @@ const IMRDetails = ({ personalDetails }) => {
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
-              {communication_address?.house}
-              {communication_address?.house === undefined
-                ? ''
-                : communication_address?.house !== '' && ', '}
-              {communication_address?.street}
-              {communication_address?.street === undefined
-                ? ''
-                : communication_address?.street !== '' && ', '}
-              {communication_address?.landmark}
-              {communication_address?.landmark === undefined
-                ? ''
-                : communication_address?.landmark !== '' && ', '}
+              {kyc_address?.house}
+              {kyc_address?.house === undefined ? '' : kyc_address?.house !== '' && ', '}
+              {kyc_address?.street}
+              {kyc_address?.street === undefined ? '' : kyc_address?.street !== '' && ', '}
+              {kyc_address?.landmark}
+              {kyc_address?.landmark === undefined ? '' : kyc_address?.landmark !== '' && ', '}
               {villageName}
               {villageName !== '' ? ', ' : ' '}
+              {subDistrictName}
+              {subDistrictName === undefined ? '' : subDistrictName !== '' && ', '}
               {capitalize(districtName)}
               {capitalize(districtName) === undefined
                 ? ''
                 : capitalize(districtName) !== '' && ', '}
-              {subDistrictName}
-              {subDistrictName === undefined ? '' : subDistrictName !== '' && ', '}
               {capitalize(stateName)}
               {capitalize(stateName) === undefined ? '' : capitalize(stateName) !== '' && ', '}
               {countryName}
               {countryName === undefined ? '' : countryName !== '' && ', '}
               {pincode}
-              {pincode === undefined ? '' : pincode !== '' && ', '}
+              {pincode === undefined ? '' : pincode !== '' && '. '}
             </Typography>
           </Grid>
         </Grid>

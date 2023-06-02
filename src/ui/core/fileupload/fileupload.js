@@ -187,7 +187,7 @@ export const UploadFile = (props) => {
   const handleChange = (e) => {
     setUploadFileError('');
     setFileData(fileData);
-    e.preventDefault();
+    e?.preventDefault();
     setBrowsedFileData(e);
     setBrowsedFileName();
     try {
@@ -359,6 +359,7 @@ export const UploadFile = (props) => {
                               <DeleteOutlineIcon
                                 id={fileID}
                                 color="error"
+                                size={20}
                                 onClick={(e) => {
                                   e.preventDefault();
                                   if (e?.target?.attributes?.id?.value === 'qualification') {
@@ -390,8 +391,12 @@ export const UploadFile = (props) => {
                                   size={20}
                                   onClick={() => downloadFile(file)}
                                 />
-                              )}
-                              <AiFillEdit fill="#264488"></AiFillEdit>
+                              )}{' '}
+                              <AiFillEdit
+                                fill="#264488"
+                                size={20}
+                                onClick={() => downloadFile(file)}
+                              ></AiFillEdit>{' '}
                             </div>
                           ) : uploadStatus === 'failed' ? (
                             <div className={styles.actionArea}>
