@@ -185,10 +185,10 @@ const NmcEditProfile = (props) => {
             defaultValue={getValues().mobile_no}
             error={errors.mobile_no?.message}
             {...register('mobile_no', {
-              required: 'Phone Number is required',
+              required: 'Phone umber is required',
               pattern: {
                 value: /^[0-9]{10}$/i,
-                message: 'Enter  Valid Phone Number',
+                message: 'Enter valid phone number',
               },
             })}
           />
