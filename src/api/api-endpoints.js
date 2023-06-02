@@ -60,7 +60,6 @@ export const API = {
     admindesignation: 'colleges/verifiers/designations',
     adminVerifier: 'colleges/{collegeId}/verifiers',
     collegeProfile: 'colleges/{collegeId}/verifiers/{verifierId}',
-    updateCollegeProfile: 'colleges/{collegeId}/verifiers/{verifierId}',
   },
   nmc: {
     getNMCProfileData: 'nmc/user/{id}',

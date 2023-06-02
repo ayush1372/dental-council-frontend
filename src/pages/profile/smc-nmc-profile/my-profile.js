@@ -11,11 +11,7 @@ import {
 } from '../../../constants/common-data';
 import { userGroupType } from '../../../helpers/functions/common-functions';
 import CircularLoader from '../../../shared/circular-loader/circular-loader';
-import {
-  getCollegeAdminProfileData,
-  getCollegeDeanProfileData,
-  getCollegeRegistrarProfileData,
-} from '../../../store/actions/college-actions';
+import { collegeProfileData } from '../../../store/actions/college-actions';
 import { getNBEProfileData } from '../../../store/actions/nbe-actions';
 import { getNMCProfileData } from '../../../store/actions/nmc-actions';
 import { getSMCProfileData } from '../../../store/actions/smc-actions';
@@ -47,20 +43,14 @@ const MyProfile = (props) => {
       // dispatch(getRegistrationCouncilList());
       // dispatch(getUniversitiesList());
       const userType = userGroupType(loginData?.data?.user_group_id);
-
-      if (userType === 'College Dean') {
+      if (loginData?.data?.user_group_id === 4) {
         dispatch(
-          getCollegeDeanProfileData(loginData?.data?.parent_profile_id, loginData?.data?.profile_id)
-        );
-      } else if (userType === 'College Registrar') {
-        dispatch(
-          getCollegeRegistrarProfileData(
-            loginData?.data?.parent_profile_id,
-            loginData?.data?.profile_id
+          collegeProfileData(
+            loginData?.data?.college_id,
+            loginData?.data?.profile_id,
+            loginData?.data?.user_sub_type
           )
         );
-      } else if (userType === 'College Admin') {
-        dispatch(getCollegeAdminProfileData(loginData?.data?.profile_id));
       } else if (userType === 'State Medical Council') {
         dispatch(getSMCProfileData(loginData?.data?.profile_id));
       } else if (userType === 'National Medical Council') {

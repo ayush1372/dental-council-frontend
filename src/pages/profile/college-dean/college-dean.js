@@ -9,7 +9,7 @@ import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup
 import {
   collegeProfileData,
   sendDeanDetails,
-  updateCollegeDeanData,
+  updateCollegeRegistrarData,
 } from '../../../store/actions/college-actions';
 import { Button, TextField } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
@@ -53,7 +53,7 @@ export function CollegeDean({ showPage, updateShowPage }) {
     };
 
     if (showPage === 'edit') {
-      dispatch(updateCollegeDeanData(deanData, userData?.college_id, userData?.id))
+      dispatch(updateCollegeRegistrarData(deanData, userData?.college_id, userData?.id))
         .then((response) => {
           dispatch(collegeProfileData(userData?.college_id, userData?.id));
           if (response?.isError === false) {

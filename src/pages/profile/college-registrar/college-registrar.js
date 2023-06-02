@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import {
   collegeProfileData,
-  // collegeProfileData,
   sendRegistrarDetails,
   updateCollegeRegistrarData,
 } from '../../../store/actions/college-actions';

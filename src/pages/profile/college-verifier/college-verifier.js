@@ -51,7 +51,7 @@ function CollegeVerifier() {
       mobile_number: getValues()?.Number,
       email_id: getValues()?.Email,
       id: getValues()?.ID,
-      college_id: loginData?.data?.parent_profile_id,
+      college_id: loginData?.data?.college_id,
     };
 
     dispatch(getAdminVerifier(collegeDetailValues))
@@ -61,7 +61,7 @@ function CollegeVerifier() {
       })
       .catch((error) => {
         successToast(
-          error?.data?.response?.data?.error,
+          error?.data?.response?.data?.message,
           'RegistrationError',
           'error',
           'top-center'
