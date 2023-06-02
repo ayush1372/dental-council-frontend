@@ -98,7 +98,7 @@ const NmcEditProfile = (props) => {
             defaultValue={getValues().first_name}
             error={errors.first_name?.message}
             {...register('first_name', {
-              required: ' Name is required',
+              required: 'Name is required',
               pattern: {
                 value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
                 message: 'Enter Valid Name',
@@ -109,7 +109,7 @@ const NmcEditProfile = (props) => {
 
         <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
-            Enrolment Number NDHM
+            Enrolment number NDHM
           </Typography>
           <Typography component="span" color="error.main">
             *
@@ -117,19 +117,19 @@ const NmcEditProfile = (props) => {
           <TextField
             fullWidth
             required
-            name={'NDHM_no'}
-            placeholder={'Enter NDHM Number '}
+            name={'enrol_no_ndhm'}
+            placeholder={'Enter NDHM number'}
             defaultValue={getValues().ndhm_enrollment}
             error={errors.ndhm_enrollment?.message}
-            {...register('NDHM_no', {
-              required: 'NDHM Number is required',
+            {...register('enrol_no_ndhm', {
+              required: 'NDHM number is required',
             })}
           />
         </Grid>
 
         <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
-            Enrolment Number
+            Enrolment number
           </Typography>
           <Typography component="span" color="error.main">
             *
@@ -137,12 +137,12 @@ const NmcEditProfile = (props) => {
           <TextField
             fullWidth
             required={true}
-            name={'NDHM_no'}
+            name={'enrol_no'}
             placeholder={'Enter enrolment number '}
             defaultValue={getValues().enrolled_number}
             error={errors.enrolled_number?.message}
-            {...register('NDHM_no', {
-              required: ' Enrolment number is required',
+            {...register('enrol_no', {
+              required: 'Enrolment number is required',
             })}
           />
         </Grid>
@@ -172,7 +172,7 @@ const NmcEditProfile = (props) => {
 
         <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
-            Phone Number
+            Phone number
           </Typography>
           <Typography component="span" color="error.main">
             *
@@ -181,11 +181,11 @@ const NmcEditProfile = (props) => {
             fullWidth
             required
             name={'mobile_no'}
-            placeholder={'Enter Phone Number '}
+            placeholder={'Enter phone number '}
             defaultValue={getValues().mobile_no}
             error={errors.mobile_no?.message}
             {...register('mobile_no', {
-              required: 'Phone umber is required',
+              required: 'Phone number is required',
               pattern: {
                 value: /^[0-9]{10}$/i,
                 message: 'Enter valid phone number',
@@ -221,32 +221,6 @@ const NmcEditProfile = (props) => {
           />
         </Grid>
       </Grid>
-      {/* <Grid container item spacing={2} mt={3}>
-        <Grid item xs={12} md={4}>
-          <Typography variant="body3" color="grey.label">
-            User ID
-          </Typography>
-          <Typography component="span" color="error.main">
-            *
-          </Typography>
-          <TextField
-            fullWidth
-            required
-            name={'user_id'}
-            placeholder={'Enter user ID'}
-            defaultValue={getValues().user_id}
-            error={errors.user_id?.message}
-            {...register('user_id', {
-              required: 'User ID is required',
-
-              pattern: {
-                value: /^[a-zA-Z0-9@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
-                message: 'Provide a Valid User ID',
-              },
-            })}
-          />
-        </Grid>
-      </Grid> */}
 
       <Box display="flex" mt={5} md="auto">
         <Button

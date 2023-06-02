@@ -26,7 +26,7 @@ const SearchableAutoComplete = (
   ref
 ) => {
   return (
-    <Box>
+    <>
       <Autocomplete
         multiple={multiple}
         popupIcon={<KeyboardArrowDownIcon />}
@@ -54,7 +54,6 @@ const SearchableAutoComplete = (
             placeholder={placeholder}
             ref={ref}
             error={error ? true : false}
-            // helperText={error ? error : ''}
           />
         )}
       />
@@ -87,7 +86,7 @@ const SearchableAutoComplete = (
           </Typography>
         </div>
       )}
-    </Box>
+    </>
   );
 };
 
