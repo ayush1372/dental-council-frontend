@@ -66,7 +66,7 @@ const CollegeEditProfile = (props) => {
       CollegeWebsite: userData?.website,
     },
   });
-  const onhandleSubmitClick = () => {
+  const onSubmitClickHandler = () => {
     const updatedCollegeDetails = {
       id: userData?.id,
       name: getValues()?.CollegeName || '',
@@ -466,7 +466,7 @@ const CollegeEditProfile = (props) => {
               }}
               variant="contained"
               color="secondary"
-              onClick={handleSubmit(onhandleSubmitClick)}
+              onClick={handleSubmit(onSubmitClickHandler)}
             >
               Submit
             </Button>
