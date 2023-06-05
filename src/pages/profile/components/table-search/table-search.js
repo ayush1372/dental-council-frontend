@@ -30,6 +30,8 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag, 
   const [statusTypeValue, setStatusTypeValue] = useState(false);
   const [filterId, setFilterId] = useState('');
   const [dashBoardCardId, setDashBoardCardId] = useState('');
+  const { userActiveTab } = useSelector((state) => state.common);
+
   useEffect(() => {
     if (filterId === 'workFlowStatusId') {
       setApplicationTypeValue(false);
@@ -115,7 +117,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag, 
   return (
     <Box data-testid="table-search" mb={2}>
       <Grid container>
-        <Grid item xs={11}>
+        <Grid item xs={11} mt={userActiveTab === 'Activate Licence' ? 3 : 0}>
           <Grid
             container
             item
@@ -288,7 +290,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag, 
           </Grid>
         </Grid>
         <Grid item xs={12} md="auto">
-          {!!value && <ExportFiles exportData={exportData} flag={flag} />}
+          {value > 0 && <ExportFiles exportData={exportData} flag={flag} />}
         </Grid>
       </Grid>
     </Box>
