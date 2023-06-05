@@ -9,6 +9,7 @@ import { SearchableDropdown } from '../../../shared/autocomplete/searchable-drop
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import { getUpdatedNmcProfileData } from '../../../store/actions/nmc-actions';
 import { Button, TextField } from '../../../ui/core';
+import { EmailRegexValidation } from '../../../utilities/common-validations';
 const NmcEditProfile = (props) => {
   const userData = useSelector((state) => state?.nmc?.nmcProfileData?.data);
   const { councilNames } = useSelector((state) => state.common);
@@ -147,18 +148,7 @@ const NmcEditProfile = (props) => {
             placeholder={'Enter Email ID'}
             defaultValue={getValues().email_id}
             error={errors.email_id?.message}
-            {...register('email_id', {
-              required: 'Email ID is required',
-
-              pattern: {
-                value:
-                  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-                message: 'Provide a Valid Email Id',
-              },
-              onChange: (event) => {
-                setValue(event.target.value);
-              },
-            })}
+            {...register('email_id', EmailRegexValidation)}
           />
         </Grid>
       </Grid>
