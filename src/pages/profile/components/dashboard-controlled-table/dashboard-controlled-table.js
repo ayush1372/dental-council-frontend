@@ -107,11 +107,11 @@ function DashboardControlledTable(props) {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
     // const reqObj = {
-    //   application_type_id: props?.selectedCardDataData?.applicationTypeID
-    //     ? props?.selectedCardDataData?.applicationTypeID.toString()
+    //   application_type_id: props?.selectedCardData?.applicationTypeID
+    //     ? props?.selectedCardData?.applicationTypeID.toString()
     //     : '',
-    //   user_group_status: props?.selectedCardDataData?.responseKey
-    //     ? props?.selectedCardDataData?.responseKey
+    //   user_group_status: props?.selectedCardData?.responseKey
+    //     ? props?.selectedCardData?.responseKey
     //     : '',
     //   sortBy: property.name,
     //   sortOrder: isAsc ? 'desc' : 'asc',
@@ -190,11 +190,11 @@ function DashboardControlledTable(props) {
   const getTableData = (pageNo, noOfRecords) => {
     const requestObj = {
       work_flow_status_id: '',
-      application_type_id: props?.selectedCardDataData?.applicationTypeID
-        ? props?.selectedCardDataData?.applicationTypeID.toString()
+      application_type_id: props?.selectedCardData?.applicationTypeID
+        ? props?.selectedCardData?.applicationTypeID.toString()
         : '',
-      user_group_status: props?.selectedCardDataData?.responseKey
-        ? props?.selectedCardDataData?.responseKey
+      user_group_status: props?.selectedCardData?.responseKey
+        ? props?.selectedCardData?.responseKey
         : '',
       smc_id: searchQueryParams ? searchQueryParams?.RegistrationCouncilId : '',
       name: searchQueryParams ? searchQueryParams?.filterByName : '',
@@ -205,7 +205,7 @@ function DashboardControlledTable(props) {
       sort_by: '',
       sort_order: '',
     };
-    dispatch(setSelectedAcademicStatus(props?.selectedCardDataData?.responseKey));
+    dispatch(setSelectedAcademicStatus(props?.selectedCardData?.responseKey));
     dispatch(getDashboardTableData(requestObj));
   };
 
@@ -214,11 +214,11 @@ function DashboardControlledTable(props) {
 
     let reqObj = {
       work_flow_status_id: '',
-      application_type_id: props?.selectedCardDataData?.applicationTypeID
-        ? props?.selectedCardDataData?.applicationTypeID.toString()
+      application_type_id: props?.selectedCardData?.applicationTypeID
+        ? props?.selectedCardData?.applicationTypeID.toString()
         : '',
-      user_group_status: props?.selectedCardDataData?.responseKey
-        ? props?.selectedCardDataData?.responseKey
+      user_group_status: props?.selectedCardData?.responseKey
+        ? props?.selectedCardData?.responseKey
         : '',
       smc_id: searchQueryParams ? searchQueryParams?.RegistrationCouncilId : '',
       name: searchQueryParams ? searchQueryParams?.filterByName : '',
@@ -237,13 +237,13 @@ function DashboardControlledTable(props) {
   return (
     <Grid sx={{ m: 2 }}>
       <Typography variant="h2" py={2}>
-        {`${props?.selectedCardDataData?.responseKey} Applications`}
+        {`${props?.selectedCardData?.responseKey} Applications`}
       </Typography>
       <TableSearch
         searchParams={searchParams}
         exportData={dashboardTableDetails}
         flag={'dashboardTableDetails'}
-        value={props?.selectedCardDataData?.value}
+        value={props?.selectedCardData?.value}
       />
       <GenericTable
         order={order}
