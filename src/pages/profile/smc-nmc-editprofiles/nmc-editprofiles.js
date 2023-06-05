@@ -98,7 +98,7 @@ const NmcEditProfile = (props) => {
             defaultValue={getValues().first_name}
             error={errors.first_name?.message}
             {...register('first_name', {
-              required: ' Name is required',
+              required: 'Name is required',
               pattern: {
                 value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
                 message: 'Enter Valid Name',
@@ -109,7 +109,70 @@ const NmcEditProfile = (props) => {
 
         <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
-            Phone Number
+            Enrolment number NDHM
+          </Typography>
+          <Typography component="span" color="error.main">
+            *
+          </Typography>
+          <TextField
+            fullWidth
+            required
+            name={'enrol_no_ndhm'}
+            placeholder={'Enter NDHM number'}
+            defaultValue={getValues().ndhm_enrollment}
+            error={errors.ndhm_enrollment?.message}
+            {...register('enrol_no_ndhm', {
+              required: 'NDHM number is required',
+            })}
+          />
+        </Grid>
+
+        <Grid item xs={12} md={4}>
+          <Typography variant="body3" color="grey.label">
+            Enrolment number
+          </Typography>
+          <Typography component="span" color="error.main">
+            *
+          </Typography>
+          <TextField
+            fullWidth
+            required={true}
+            name={'enrol_no'}
+            placeholder={'Enter enrolment number '}
+            defaultValue={getValues().enrolled_number}
+            error={errors.enrolled_number?.message}
+            {...register('enrol_no', {
+              required: 'Enrolment number is required',
+            })}
+          />
+        </Grid>
+
+        <Grid item xs={12} md={4}>
+          <Typography variant="body3" color="grey.label">
+            Council
+          </Typography>
+          <Typography component="span" color="error.main">
+            *
+          </Typography>
+          <SearchableDropdown
+            name="RegistrationCouncil"
+            items={createEditFieldData(councilNames)}
+            defaultValue={userData?.state_medical_council}
+            placeholder="Select Your Registration Council"
+            clearErrors={clearErrors}
+            error={errors.RegistrationCouncil?.message}
+            {...register('RegistrationCouncil', {
+              required: 'Registration Council is required',
+            })}
+            onChange={(currentValue) => {
+              setValue('RegistrationCouncilId', currentValue?.name);
+            }}
+          />
+        </Grid>
+
+        <Grid item xs={12} md={4}>
+          <Typography variant="body3" color="grey.label">
+            Phone number
           </Typography>
           <Typography component="span" color="error.main">
             *
@@ -118,14 +181,14 @@ const NmcEditProfile = (props) => {
             fullWidth
             required
             name={'mobile_no'}
-            placeholder={'Enter Phone Number '}
+            placeholder={'Enter phone number '}
             defaultValue={getValues().mobile_no}
             error={errors.mobile_no?.message}
             {...register('mobile_no', {
-              required: 'Phone Number is required',
+              required: 'Phone number is required',
               pattern: {
                 value: /^[0-9]{10}$/i,
-                message: 'Enter  Valid Phone Number',
+                message: 'Enter valid phone number',
               },
             })}
           />
@@ -155,55 +218,6 @@ const NmcEditProfile = (props) => {
                 message: 'Provide a Valid Email Id',
               },
             })}
-          />
-        </Grid>
-      </Grid>
-      <Grid container item spacing={2} mt={3}>
-        <Grid item xs={12} md={4}>
-          <Typography variant="body3" color="grey.label">
-            User ID
-          </Typography>
-          <Typography component="span" color="error.main">
-            *
-          </Typography>
-          <TextField
-            fullWidth
-            required
-            name={'user_id'}
-            placeholder={'Enter user ID'}
-            defaultValue={getValues().user_id}
-            error={errors.user_id?.message}
-            {...register('user_id', {
-              required: 'User ID is required',
-
-              pattern: {
-                value: /^[a-zA-Z0-9@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
-                message: 'Provide a Valid User ID',
-              },
-            })}
-          />
-        </Grid>
-
-        <Grid item xs={12} md={4}>
-          <Typography variant="body3" color="grey.label">
-            Council
-          </Typography>
-          <Typography component="span" color="error.main">
-            *
-          </Typography>
-          <SearchableDropdown
-            name="RegistrationCouncil"
-            items={createEditFieldData(councilNames)}
-            defaultValue={userData?.state_medical_council}
-            placeholder="Select Your Registration Council"
-            clearErrors={clearErrors}
-            error={errors.RegistrationCouncil?.message}
-            {...register('RegistrationCouncil', {
-              required: 'Registration Council is required',
-            })}
-            onChange={(currentValue) => {
-              setValue('RegistrationCouncilId', currentValue?.name);
-            }}
           />
         </Grid>
       </Grid>
