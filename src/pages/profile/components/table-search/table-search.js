@@ -1,8 +1,6 @@
-// import SearchIcon from '@mui/icons-material/Search';
 import { useEffect, useState } from 'react';
 
 import { Box, Grid } from '@mui/material';
-// import { useTheme } from '@mui/material/styles';
 import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 
@@ -21,9 +19,6 @@ import ExportFiles from '../../../../shared/export-component/export-file';
 import { Button, TextField } from '../../../../ui/core';
 
 export function TableSearch({ trackApplication, searchParams, exportData, flag, value }) {
-  // const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
-  // const { councilNames } = useSelector((state) => state.common);
-
   const profileId = useSelector((state) => state.loginReducer.loginData.data.profile_id);
 
   const [applicationTypeValue, setApplicationTypeValue] = useState(false);
@@ -74,7 +69,6 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag, 
       ActivateLicenceId: '',
       ActivateLicenceFilter: '',
       dashBoardCard: '',
-      // dashBoardCardId: '',
       dashBoardCardFilter: '',
     },
   });
@@ -99,7 +93,6 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag, 
       trackData.search = getValues().collegeApprovalId;
       trackData.value = getValues().collegeApprovalFilter;
       searchParams(trackData);
-      // dispatch(getDoctorTrackApplicationData(profileId, trackData));
     }
 
     reset({
@@ -251,21 +244,6 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag, 
                 )}
               </Grid>
             )}
-            {/* {(loggedInUserType === 'College' || loggedInUserType === 'NMC') && (
-               <Grid item md={3} xs={12}>
-                <SearchableDropdown
-                  fullWidth
-                  name="registrationCouncil"
-                  items={createEditFieldData(councilNames)}
-                  placeholder="Please Select"
-                  clearErrors={clearErrors}
-                  {...register('registrationCouncil')}
-                  onChange={(currentValue) => {
-                    setValue('RegistrationCouncilId', currentValue.id);
-                  }}
-                />
-              </Grid> 
-             )} */}
             {(trackApplication !== true || trackApplication === true) && (
               <Grid item md="auto" xs={12}>
                 <Button
