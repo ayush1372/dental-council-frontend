@@ -487,7 +487,8 @@ const WorkDetails = ({
         <Tooltip
           title={
             <Box>
-              Information about schedule <br /> will be shown here{' '}
+              Information about schedule
+              <Box mr="2px"> will be shown here</Box>
             </Box>
           }
           placement="top-end"
