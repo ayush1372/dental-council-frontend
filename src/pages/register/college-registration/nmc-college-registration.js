@@ -31,6 +31,18 @@ function NMCCollegeRegistration() {
     subDistrictList,
     universitiesList,
   } = useSelector((state) => state.common);
+  const { updateCollegeDetails, collegeRegisterDetails } = useSelector((state) => state.college);
+
+  useEffect(() => {
+    if (updateCollegeDetails?.data.length !== 0) {
+      setSuccessModalPopup(true);
+    }
+  }, [updateCollegeDetails?.data]);
+  useEffect(() => {
+    if (collegeRegisterDetails?.data.length !== 0) {
+      setSuccessModalPopup(true);
+    }
+  }, [collegeRegisterDetails?.data]);
 
   let collegesList = [];
   collegesList.push(...allcollegesList.data, { id: 'other', name: 'other' });
@@ -106,7 +118,6 @@ function NMCCollegeRegistration() {
       dispatch(registerCollegeDetail(collegeDetailValues))
         .then(() => {
           setSuccessModalPopup(true);
-          document.getElementById('collegeRegistrationId').reset();
           setValue('CouncilName', '');
           setValue('CouncilID', '');
           setValue('Name', '');
@@ -126,7 +137,6 @@ function NMCCollegeRegistration() {
             'top-center'
           );
         });
-      document.getElementById('collegeRegistrationId').reset();
       reset();
     } else {
       const collegeDetailValues = {
@@ -149,8 +159,6 @@ function NMCCollegeRegistration() {
 
       dispatch(updateCollegeDetail(collegeDetailValues))
         .then(() => {
-          document.getElementById('collegeRegistrationId').reset();
-
           setSuccessModalPopup(true);
           reset();
           setValue('CouncilName', '');
