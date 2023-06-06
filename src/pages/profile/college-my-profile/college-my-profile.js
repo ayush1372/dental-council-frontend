@@ -81,15 +81,11 @@ const CollegeMyProfile = () => {
       }
 
       if (userType === 'College Dean') {
-        dispatch(
-          collegeProfileData(loginData?.data?.parent_profile_id, loginData?.data?.profile_id)
-        );
+        dispatch(collegeProfileData(loginData?.data?.college_id, loginData?.data?.profile_id));
       } else if (userType === 'College Registrar') {
-        dispatch(
-          collegeProfileData(loginData?.data?.parent_profile_id, loginData?.data?.profile_id)
-        );
+        dispatch(collegeProfileData(loginData?.data?.college_id, loginData?.data?.profile_id));
       } else if (userType === 'College Admin') {
-        dispatch(getCollegeData(loginData?.data?.profile_id));
+        dispatch(getCollegeData(loginData?.data?.college_id));
       }
     };
     getCommonData();

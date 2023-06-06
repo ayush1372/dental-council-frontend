@@ -71,7 +71,7 @@ const authInterceptors = (error) => {
         }
       } else {
         successToast(data?.Message, 'auth-error-Network', 'error', 'top-center');
-        return Promise.reject(error?.response?.data, 'auth-error', 'error', 'top-center');
+        return Promise?.reject(error?.response?.data || error, 'auth-error', 'error', 'top-center');
       }
     }
   } else if (error?.message && error?.message.includes('Network')) {

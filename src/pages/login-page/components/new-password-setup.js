@@ -15,7 +15,7 @@ import { Button, TextField } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
-const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep }) => {
+const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }) => {
   const [showSuccess, setShowSuccess] = useState(false);
   const [collegeRegisterSuccess, setCollegeRegisterSuccess] = useState(false);
   let navigate = useNavigate();
@@ -266,6 +266,7 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep }) => {
                 : `Your password for ${uniqueHpId} has been successfully created.`
             }
             successRegistration={true}
+            loginName={loginName}
           />
         )}
       </Box>
