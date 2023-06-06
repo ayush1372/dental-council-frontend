@@ -120,8 +120,11 @@ export function SuspendLicenseVoluntaryRetirement({
           : userActiveTab === 'voluntary-suspend-license'
           ? 1
           : '',
-      from_date: getValues()?.fromDate ? getValues()?.fromDate : '',
-      to_date: getValues()?.toDate ? getValues()?.toDate : '',
+
+      from_date: getValues()?.fromDate
+        ? getValues()?.fromDate?.split('/')?.reverse()?.join('-')
+        : '',
+      to_date: getValues()?.toDate ? getValues()?.toDate?.split('/')?.reverse()?.join('-') : '',
       remarks: getValues()?.remark ? getValues()?.remark : '',
     };
 
@@ -145,8 +148,12 @@ export function SuspendLicenseVoluntaryRetirement({
             selectedSuspendLicenseProfile?.SNo?.value - 1
           ]?.health_professional_id
         : '',
-      start_date: getValues()?.fromDate ? getValues()?.fromDate : '',
-      to_date: getValues()?.toDate ? getValues()?.toDate : '',
+      start_date: getValues()?.fromDate
+        ? getValues()?.fromDate?.fromDate?.split('/')?.reverse()?.join('/')
+        : '',
+      to_date: getValues()?.toDate
+        ? getValues()?.toDate?.fromDate?.split('/')?.reverse()?.join('/')
+        : '',
       remarks: getValues()?.remark ? getValues()?.remark : '',
     };
     let raiseQueryBody = {
@@ -192,7 +199,9 @@ export function SuspendLicenseVoluntaryRetirement({
               'error',
               'top-center'
             );
-            closeActionModal(false);
+            if (userActiveTab !== 'voluntary-suspend-license') {
+              closeActionModal(false);
+            }
           });
       } else {
         if (selectedValue === 'raise') {
@@ -337,7 +346,7 @@ export function SuspendLicenseVoluntaryRetirement({
                 </Typography>
               </Typography>
               <DatePicker
-                value={getValues()?.fromDate}
+                value={getValues()?.fromDate ? new Date(getValues()?.fromDate) : undefined}
                 onChangeDate={(newDateValue) => {
                   if (
                     selectedSuspension === 'permanent-suspension-check' ||
@@ -367,7 +376,7 @@ export function SuspendLicenseVoluntaryRetirement({
                 id="fromDate"
                 name="fromDate"
                 required={true}
-                defaultValue={getValues().fromDate || new Date()}
+                defaultValue={getValues()?.fromDate ? new Date(getValues()?.fromDate) : undefined}
                 error={showFromDateError ? 'Enter From Date' : false}
               />
             </Grid>
@@ -384,8 +393,7 @@ export function SuspendLicenseVoluntaryRetirement({
                   </Typography>
 
                   <DatePicker
-                    minDate={new Date()}
-                    value={getValues()?.toDate}
+                    value={getValues()?.toDate ? new Date(getValues()?.toDate) : undefined}
                     onChangeDate={(newDateValue) => {
                       setValue('toDate', new Date(newDateValue)?.toLocaleDateString('en-GB'));
                       if (getValues().toDate !== undefined) {
@@ -401,8 +409,9 @@ export function SuspendLicenseVoluntaryRetirement({
                         ? true
                         : false
                     }
+                    minDate={getValues()?.fromDate ? new Date(getValues()?.fromDate) : new Date()}
                     required={true}
-                    defaultValue={getValues().toDate || new Date()}
+                    defaultValue={getValues()?.toDate ? new Date(getValues()?.toDate) : undefined}
                     error={showToDateError ? 'Enter To Date' : false}
                   />
                 </>

@@ -223,10 +223,9 @@ export default function GenericTable(props) {
                                         selectionChangeHandler(e, row)
                                       }
                                       disabled={
-                                        props?.data?.NMRID?.value !== undefined ||
-                                        props?.data?.NMRID?.value !== null
-                                          ? false
-                                          : true
+                                        props?.data?.[rowIndex]?.NMRID?.value === undefined
+                                          ? true
+                                          : false
                                       }
                                     >
                                       {option.keyName}

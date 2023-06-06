@@ -224,7 +224,7 @@ const EditQualificationDetails = ({
                 required: 'Passport Number is Required',
                 pattern: {
                   value: /^[A-PR-WY][1-9]\d\s?\d{4}[1-9]$/gi,
-                  message: 'Passport Number is Required',
+                  message: 'Please enter valid 8character Passport Number,Example:P1234567',
                 },
               })}
               sx={{

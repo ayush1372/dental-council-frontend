@@ -51,13 +51,13 @@ const InputField = ({
           format="dd/MM/yyyy"
           className={classes.root}
           disabled={disabled || false}
-          minDate={props?.minDate || ''}
+          minDate={props?.minDate}
           data-testid={props?.dataTestId}
-          defaultValue={new Date(defaultValue) || new Date()}
+          defaultValue={defaultValue !== undefined ? defaultValue : undefined}
           onChange={(newDateValue) => {
             onChangeDate(newDateValue, props?.id);
           }}
-          value={value}
+          value={error ? new Date(undefined) : value}
           slotProps={{
             textField: {
               helperText: error ? (

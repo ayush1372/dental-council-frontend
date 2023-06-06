@@ -8,7 +8,7 @@ import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { Box, Grid, Typography } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import moment from 'moment';
-import { AiFillEdit, AiOutlineEye } from 'react-icons/ai';
+import { AiOutlineEye } from 'react-icons/ai';
 
 import { base64ToBlob } from '../../../helpers/functions/common-functions';
 import { SvgImageComponent } from '../../../ui/core/svg-icons';
@@ -187,7 +187,7 @@ export const UploadFile = (props) => {
   const handleChange = (e) => {
     setUploadFileError('');
     setFileData(fileData);
-    e.preventDefault();
+    e?.preventDefault();
     setBrowsedFileData(e);
     setBrowsedFileName();
     try {
@@ -359,6 +359,7 @@ export const UploadFile = (props) => {
                               <DeleteOutlineIcon
                                 id={fileID}
                                 color="error"
+                                size={20}
                                 onClick={(e) => {
                                   e.preventDefault();
                                   if (e?.target?.attributes?.id?.value === 'qualification') {
@@ -389,9 +390,9 @@ export const UploadFile = (props) => {
                                   fill="#264488"
                                   size={20}
                                   onClick={() => downloadFile(file)}
+                                  mr={1}
                                 />
-                              )}
-                              <AiFillEdit fill="#264488"></AiFillEdit>
+                              )}{' '}
                             </div>
                           ) : uploadStatus === 'failed' ? (
                             <div className={styles.actionArea}>

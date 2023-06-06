@@ -35,7 +35,7 @@ export default function Dashboard() {
   const [showDashboard, setShowDashboard] = useState(true);
   const [showTable, setShowTable] = useState(false);
   const [showViewProfile, setShowViewPorfile] = useState(false);
-  const [selectedCardDataData, setSelectedCardDataData] = useState();
+  const [selectedCardData, setSelectedCardData] = useState();
   const [selectedRowData, setSelectedRowData] = useState();
   const dispatch = useDispatch();
 
@@ -132,7 +132,7 @@ export default function Dashboard() {
     setShowDashboard(false);
     setShowTable(true);
     setShowViewPorfile(false);
-    setSelectedCardDataData(item);
+    setSelectedCardData(item);
     setSelectedRowData();
   };
 
@@ -311,7 +311,7 @@ export default function Dashboard() {
           setShowViewPorfile={setShowViewPorfile}
           setShowDashboard={setShowDashboard}
           setShowTable={setShowTable}
-          selectedCardDataData={selectedCardDataData}
+          selectedCardData={selectedCardData}
           getSelectedRowData={getSelectedRowData}
         />
       ) : showViewProfile ? (

@@ -55,42 +55,59 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep })
     } else {
       sendNotificationOtpBody = { contact: getValues().Id, type: 'nmr_id' };
     }
-    try {
-      dispatch(sendNotificationOtp(sendNotificationOtpBody)).then();
-    } catch (allFailMsg) {
-      successToast('ERR_INT: ' + allFailMsg?.data?.message, 'auth-error', 'error', 'top-center');
-    }
-    otpData(sendNotificationOtpBody);
-    if (userData?.page === 'forgotPasswordPage') {
-      let otpValue = {
-        contact: getValues()?.mobileNo
-          ? getValues().mobileNo
-          : getValues()?.Id?.includes('@')
-          ? getValues().Id
-          : getValues().Id,
-        type: getValues().mobileNo ? 'sms' : getValues()?.Id?.includes('@') ? 'email' : 'nmr_id',
-        page: userData?.page,
-        reSetPasswordOtp: onSubmit,
-      };
-      otpData(otpValue);
-    }
-    if (userData?.page === 'forgetUserName') {
-      let otpValue = {
-        contact: getValues()?.mobileNo
-          ? getValues().mobileNo
-          : getValues()?.Id?.includes('@')
-          ? getValues().Id
-          : getValues().Id,
-        type: getValues().mobileNo ? 'sms' : getValues()?.Id?.includes('@') ? 'email' : 'nmr_id',
-        page: userData?.page,
-        reSetPasswordOtp: onSubmit,
-        handleClose: () => {
-          resetStep(0);
-        },
-      };
-      otpData(otpValue);
-    }
-    reSetPassword !== 'reSetPassword' && handleConfirmPassword();
+
+    dispatch(sendNotificationOtp(sendNotificationOtpBody))
+      .then((response) => {
+        if (response) {
+          otpData(sendNotificationOtpBody);
+          if (userData?.page === 'forgotPasswordPage') {
+            let otpValue = {
+              contact: getValues()?.mobileNo
+                ? getValues().mobileNo
+                : getValues()?.Id?.includes('@')
+                ? getValues().Id
+                : getValues().Id,
+              type: getValues().mobileNo
+                ? 'sms'
+                : getValues()?.Id?.includes('@')
+                ? 'email'
+                : 'nmr_id',
+              page: userData?.page,
+              reSetPasswordOtp: onSubmit,
+            };
+            otpData(otpValue);
+          }
+          if (userData?.page === 'forgetUserName') {
+            let otpValue = {
+              contact: getValues()?.mobileNo
+                ? getValues().mobileNo
+                : getValues()?.Id?.includes('@')
+                ? getValues().Id
+                : getValues().Id,
+              type: getValues().mobileNo
+                ? 'sms'
+                : getValues()?.Id?.includes('@')
+                ? 'email'
+                : 'nmr_id',
+              page: userData?.page,
+              reSetPasswordOtp: onSubmit,
+              handleClose: () => {
+                resetStep(0);
+              },
+            };
+            otpData(otpValue);
+          }
+          reSetPassword !== 'reSetPassword' && handleConfirmPassword();
+        }
+      })
+      .catch((allFailMsg) => {
+        successToast(
+          'ERR_INT: ' + allFailMsg?.data?.response?.data?.message,
+          'auth-error',
+          'error',
+          'top-center'
+        );
+      });
   };
 
   return (

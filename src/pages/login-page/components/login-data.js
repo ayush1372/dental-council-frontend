@@ -11,11 +11,7 @@ import { verboseLog } from '../../../config/debug';
 import { encryptData, userGroupType, usersType } from '../../../helpers/functions/common-functions';
 import CaptchaComponent from '../../../shared/captcha-component/captcha-component';
 import OtpForm from '../../../shared/otp-form/otp-component';
-import {
-  getCollegeAdminProfileData,
-  getCollegeDeanProfileData,
-  getCollegeRegistrarProfileData,
-} from '../../../store/actions/college-actions';
+import { collegeProfileData } from '../../../store/actions/college-actions';
 import {
   getRegistrationCouncilList,
   sendNotificationOtp,
@@ -97,19 +93,8 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
   const getCommonData = (response) => {
     const userType = userGroupType(response?.data?.user_group_id);
 
-    if (userType === 'College Dean') {
-      dispatch(
-        getCollegeDeanProfileData(response?.data?.parent_profile_id, response?.data?.profile_id)
-      );
-    } else if (userType === 'College Registrar') {
-      dispatch(
-        getCollegeRegistrarProfileData(
-          response?.data?.parent_profile_id,
-          response?.data?.profile_id
-        )
-      );
-    } else if (userType === 'College Admin') {
-      dispatch(getCollegeAdminProfileData(response?.data?.profile_id));
+    if (response?.data?.user_group_id === 4) {
+      dispatch(collegeProfileData(response?.data?.college_id, response?.data?.profile_id));
     } else if (userType === 'State Medical Council') {
       dispatch(getSMCProfileData(response?.data?.profile_id));
     } else if (userType === 'National Medical Council') {
