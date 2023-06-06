@@ -260,7 +260,6 @@ const ActivateLicence = (props) => {
         </Box>
       ) : (
         <Grid sx={{ m: 2 }} lg={12} md={12}>
-          =
           <Grid mt={3}>
             <TableSearch
               data-testid="tab-heading"

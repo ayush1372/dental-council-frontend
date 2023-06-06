@@ -106,17 +106,6 @@ function DashboardControlledTable(props) {
     const isAsc = orderBy.name === property.name && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
-    // const reqObj = {
-    //   application_type_id: props?.selectedCardDataData?.applicationTypeID
-    //     ? props?.selectedCardDataData?.applicationTypeID.toString()
-    //     : '',
-    //   user_group_status: props?.selectedCardDataData?.responseKey
-    //     ? props?.selectedCardDataData?.responseKey
-    //     : '',
-    //   sortBy: property.name,
-    //   sortOrder: isAsc ? 'desc' : 'asc',
-    // };
-    // dispatch(getDashboardTableData(reqObj));
   };
 
   const newRowsData = dashboardTableDetails?.data?.dashboard_tolist?.map((application, index) => {
@@ -152,14 +141,6 @@ function DashboardControlledTable(props) {
           application?.application_type_id === 7
             ? capitalize(application?.nbe_status)
             : capitalize(application?.college_status),
-        // value:
-        //   application?.college_dean_status === ('NOT YET RECEIVED' || 'PENDING') &&
-        //   application?.college_registrar_status === 'Approved'
-        //     ? 'Pending'
-        //     : application?.college_dean_status === 'APPROVED' &&
-        //       application?.college_registrar_status === 'APPROVED'
-        //     ? 'Approved'
-        //     : 'Not yet received',
       },
       { type: 'NMCVerificationStatus', value: capitalize(application?.nmc_status) },
       { type: 'dateofSubmission', value: formattedDate },
@@ -180,7 +161,6 @@ function DashboardControlledTable(props) {
 
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
-    // setPage(0);
   };
 
   useEffect(() => {
@@ -190,11 +170,11 @@ function DashboardControlledTable(props) {
   const getTableData = (pageNo, noOfRecords) => {
     const requestObj = {
       work_flow_status_id: '',
-      application_type_id: props?.selectedCardDataData?.applicationTypeID
-        ? props?.selectedCardDataData?.applicationTypeID.toString()
+      application_type_id: props?.selectedCardData?.applicationTypeID
+        ? props?.selectedCardData?.applicationTypeID.toString()
         : '',
-      user_group_status: props?.selectedCardDataData?.responseKey
-        ? props?.selectedCardDataData?.responseKey
+      user_group_status: props?.selectedCardData?.responseKey
+        ? props?.selectedCardData?.responseKey
         : '',
       smc_id: searchQueryParams ? searchQueryParams?.RegistrationCouncilId : '',
       name: searchQueryParams ? searchQueryParams?.filterByName : '',
@@ -205,7 +185,7 @@ function DashboardControlledTable(props) {
       sort_by: '',
       sort_order: '',
     };
-    dispatch(setSelectedAcademicStatus(props?.selectedCardDataData?.responseKey));
+    dispatch(setSelectedAcademicStatus(props?.selectedCardData?.responseKey));
     dispatch(getDashboardTableData(requestObj));
   };
 
@@ -214,16 +194,15 @@ function DashboardControlledTable(props) {
 
     let reqObj = {
       work_flow_status_id: '',
-      application_type_id: props?.selectedCardDataData?.applicationTypeID
-        ? props?.selectedCardDataData?.applicationTypeID.toString()
+      application_type_id: props?.selectedCardData?.applicationTypeID
+        ? props?.selectedCardData?.applicationTypeID.toString()
         : '',
-      user_group_status: props?.selectedCardDataData?.responseKey
-        ? props?.selectedCardDataData?.responseKey
+      user_group_status: props?.selectedCardData?.responseKey
+        ? props?.selectedCardData?.responseKey
         : '',
       smc_id: searchQueryParams ? searchQueryParams?.RegistrationCouncilId : '',
       name: searchQueryParams ? searchQueryParams?.filterByName : '',
       nmr_id: searchQueryParams ? searchQueryParams?.filterByRegNo : '',
-      // search: searchQueryParams ? searchQueryParams?.search : '',
       page_no: data.pageNo,
       offset: data.offset,
       sort_by: '',
@@ -237,12 +216,13 @@ function DashboardControlledTable(props) {
   return (
     <Grid sx={{ m: 2 }}>
       <Typography variant="h2" py={2}>
-        {`${props?.selectedCardDataData?.responseKey} Applications`}
+        {`${props?.selectedCardData?.responseKey} Applications`}
       </Typography>
       <TableSearch
         searchParams={searchParams}
         exportData={dashboardTableDetails}
         flag={'dashboardTableDetails'}
+        value={props?.selectedCardData?.value}
       />
       <GenericTable
         order={order}
@@ -250,7 +230,6 @@ function DashboardControlledTable(props) {
         onRequestSort={handleRequestSort}
         tableHeader={dataHeader}
         data={newRowsData}
-        // handleRowClick={handleDataRowClick}
         rowsPerPage={rowsPerPage}
         page={page}
       />

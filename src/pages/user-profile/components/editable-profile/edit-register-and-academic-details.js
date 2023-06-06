@@ -173,7 +173,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
     registration_detail.state_medical_council = getRegistrationCouncilData(RegisteredWithCouncil);
     registration_detail.is_renewable = registration;
-    registration_detail.renewable_registration_date = RenewalDate?.split('/')?.reverse()?.join('/');
+    registration_detail.renewable_registration_date = RenewalDate?.split('/')?.reverse()?.join('-');
 
     // this below code is storing qualification details
     const { qualification } = getValues();
