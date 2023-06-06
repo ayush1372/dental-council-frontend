@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
+import { capitalize } from '../../../../helpers/functions/common-functions';
 import {
   getCitiesList,
   getDistrictList,
@@ -38,7 +39,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
   const [isSameAddress, setIsSameAddress] = useState(
     personalDetails?.communication_address?.is_same_address === 'true' ? true : false
   );
-  const { personal_details, communication_address, imr_details, work_flow_status_id } =
+  const { personal_details, communication_address, imr_details, work_flow_status_id, kyc_address } =
     personalDetails || {};
 
   const {
@@ -149,7 +150,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
         loggedInUserType === 'SMC'
           ? ''
           : loggedInUserType === 'Doctor'
-          ? personalDetails?.kyc_address?.address_line1
+          ? ((personalDetails?.kyc_address?.address_line1 &&
+              personalDetails?.kyc_address?.address_line1 + ', ') ||
+              '') +
+            ((kyc_address?.state?.name && capitalize(kyc_address?.state?.name) + ', ') || ' ') +
+            ((kyc_address?.state?.name && capitalize(kyc_address?.country?.name) + ', ') || ' ') +
+            ((kyc_address?.state?.name && capitalize(kyc_address?.pincode)) || '')
           : '',
       IMRID: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? nmr_id : '',
       YearOfInfo:
