@@ -19,6 +19,7 @@ import { getWorkProfileDetails } from '../../../../store/reducers/doctor-user-pr
 import { Button, RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
 import successToast from '../../../../ui/core/toaster';
+import { PostalCodeRegexValidation } from '../../../../utilities/common-validations';
 
 const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
   const { t } = useTranslation();
@@ -575,13 +576,7 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
               fullWidth
               error={errors.Pincode?.message}
               defaultValue={getValues().Pincode}
-              {...register('Pincode', {
-                required: 'This field is required',
-                pattern: {
-                  value: /^[0-9]{6}$/,
-                  message: 'Should only contains 6 digits',
-                },
-              })}
+              {...register('Pincode', PostalCodeRegexValidation)}
             />
           </Grid>
         </Grid>
