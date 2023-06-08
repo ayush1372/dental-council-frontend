@@ -62,8 +62,8 @@ export default function KycErrorPopup({ open, setOpen, text, setIsNext, onReset 
                 <TableHead>
                   <TableRow>
                     <TableCell align="left">Field</TableCell>
-                    <TableCell align="left">Registered Value</TableCell>
-                    <TableCell align="left">KYC Value</TableCell>
+                    <TableCell align="left">Registered value</TableCell>
+                    <TableCell align="left">KYC value</TableCell>
                     <TableCell align="left">Status</TableCell>
                   </TableRow>
                 </TableHead>
