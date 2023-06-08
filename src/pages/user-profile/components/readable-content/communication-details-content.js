@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import ReportIcon from '@mui/icons-material/Report';
 import { Grid, Tooltip, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
@@ -60,7 +60,7 @@ const CommunicationAddress = ({ personalDetails, selectedDataIndex }) => {
             </Typography>
             {getQueryRaised('House') !== undefined && (
               <Tooltip title={getQueryRaised('House')}>
-                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                <ReportIcon color="secondary" ml={2} />
               </Tooltip>
             )}
           </Typography>
@@ -91,7 +91,7 @@ const CommunicationAddress = ({ personalDetails, selectedDataIndex }) => {
           </Typography>
           {getQueryRaised('Street') !== undefined && (
             <Tooltip title={getQueryRaised('Street')}>
-              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              <ReportIcon color="secondary" ml={2} />
             </Tooltip>
           )}
           <Grid display="flex" alignItems="center">
@@ -120,7 +120,7 @@ const CommunicationAddress = ({ personalDetails, selectedDataIndex }) => {
           </Typography>
           {getQueryRaised('Landmark') !== undefined && (
             <Tooltip title={getQueryRaised('Landmark')}>
-              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              <ReportIcon color="secondary" ml={2} />
             </Tooltip>
           )}
           <Grid display="flex" alignItems="center">
@@ -150,7 +150,7 @@ const CommunicationAddress = ({ personalDetails, selectedDataIndex }) => {
           </Typography>
           {getQueryRaised('City/Town/Village') !== undefined && (
             <Tooltip title={getQueryRaised('City/Town/Village')}>
-              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              <ReportIcon color="secondary" ml={2} />
             </Tooltip>
           )}
           <Grid display="flex" alignItems="center">
@@ -181,7 +181,7 @@ const CommunicationAddress = ({ personalDetails, selectedDataIndex }) => {
             </Typography>
             {getQueryRaised('District') !== undefined && (
               <Tooltip title={getQueryRaised('District')}>
-                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                <ReportIcon color="secondary" ml={2} />
               </Tooltip>
             )}
           </Typography>
@@ -209,7 +209,7 @@ const CommunicationAddress = ({ personalDetails, selectedDataIndex }) => {
           </Typography>
           {getQueryRaised('Sub District') !== undefined && (
             <Tooltip title={getQueryRaised('Sub District')}>
-              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              <ReportIcon color="secondary" ml={2} />
             </Tooltip>
           )}
           <Grid display="flex" alignItems="center">
@@ -238,7 +238,7 @@ const CommunicationAddress = ({ personalDetails, selectedDataIndex }) => {
             </Typography>
             {getQueryRaised('State/Union Territory') !== undefined && (
               <Tooltip title={getQueryRaised('State/Union Territory')}>
-                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                <ReportIcon color="secondary" ml={2} />
               </Tooltip>
             )}
           </Typography>
@@ -268,7 +268,7 @@ const CommunicationAddress = ({ personalDetails, selectedDataIndex }) => {
             </Typography>
             {getQueryRaised('Country') !== undefined && (
               <Tooltip title={getQueryRaised('Country')}>
-                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                <ReportIcon color="secondary" ml={2} />
               </Tooltip>
             )}
           </Typography>
@@ -301,7 +301,7 @@ const CommunicationAddress = ({ personalDetails, selectedDataIndex }) => {
             </Typography>
             {getQueryRaised('Pincode') !== undefined && (
               <Tooltip title={getQueryRaised('Pincode')}>
-                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                <ReportIcon color="secondary" ml={2} />
               </Tooltip>
             )}
           </Typography>
