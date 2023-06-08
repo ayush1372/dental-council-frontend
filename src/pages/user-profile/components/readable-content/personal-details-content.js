@@ -173,11 +173,11 @@ const PersonalDetails = ({ personalDetails, selectedDataIndex }) => {
           <Typography variant="body5" color="grey.label">
             Spouse Name
           </Typography>
-          {/* {getQueryRaised('Spouse Name') !== undefined && (
+          {getQueryRaised('Spouse Name') !== undefined && (
             <Tooltip title={getQueryRaised('Spouse Name')}>
               <ReportIcon color="secondary" ml={2} />
             </Tooltip>
-          )} */}
+          )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {spouse_name === '' || spouse_name === undefined ? '-' : spouse_name}
