@@ -107,6 +107,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
     register,
     handleSubmit,
     getValues,
+    setValue,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
@@ -394,6 +395,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                     getValues={getValues}
                     required={true}
                     errors={errors}
+                    setValue={setValue}
                     disabled={showOtpAadhar || isOtpValidAadhar}
                   />
                 </Box>

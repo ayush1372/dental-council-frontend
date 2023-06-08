@@ -25,7 +25,6 @@ import { login, userLoggedInType } from '../../../store/reducers/common-reducers
 import { Button, TextField } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 import successToast from '../../../ui/core/toaster';
-import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTypeDetails }) => {
   const [captchaAnswer, setcaptachaAnswer] = useState();
@@ -460,7 +459,14 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
                 maxLength: 100,
               }}
               defaultValue={getValues().password}
-              {...register('password', PasswordRegexValidation)}
+              {...register('password', {
+                required: 'Enter correct password',
+                pattern: {
+                  value:
+                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&])[A-Za-z\d@$!%*?#&]{8,100}$/,
+                  message: 'Enter correct password',
+                },
+              })}
             />
             <Typography display={'flex'} justifyContent="flex-end">
               <Button
@@ -510,8 +516,12 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
           onClick={handleSubmit(handleLogin)}
           disabled={
             selectedLoginOption === 'nmrId' || selectedLoginOption === 'mobileNumber'
-              ? !otpFormEnabled || !captchaAnswer
-              : errors.userID?.message || errors.password?.message || !captchaAnswer
+              ? !otpFormEnabled || !captchaAnswer || otpValue.length < 6
+              : errors.userID?.message ||
+                errors.password?.message ||
+                !captchaAnswer ||
+                getValues()?.password?.length < 1 ||
+                getValues()?.userID?.length < 1
           }
         >
           Login

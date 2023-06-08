@@ -9,14 +9,16 @@ export const SECOND_FIELD_NAME = `${FIELD}_2`;
 export const THIRD_FIELD_NAME = `${FIELD}_3`;
 
 export const AadhaarInputField = (props) => {
-  const { register, errors, getValues } = props;
+  const { register, errors, getValues, setValue } = props;
 
   const inputFocus = (fieldIndex) => {
     const nextField = document.querySelector(`input[name=field_${fieldIndex}]`);
     if (nextField) nextField.focus();
   };
 
-  const onHandleAadhaarChange = (e) => {
+  const onHandleAadhaarChange = (e, fieldName) => {
+    const tempData = e.target.value.replace(/[^0-9]/g, '');
+    setValue(fieldName, tempData);
     const { maxLength, value, name } = e.target;
     const [, fieldIndex] = name.split('_');
     const fieldIntIndex = parseInt(fieldIndex, 10);
@@ -106,7 +108,7 @@ export const AadhaarInputField = (props) => {
                 value: /^[0-9]{4}$/,
                 message: 'Provide a valid Aadhaar number',
               },
-              onChange: (e) => onHandleAadhaarChange(e),
+              onChange: (e) => onHandleAadhaarChange(e, FIRST_FIELD_NAME),
             })}
           />{' '}
           <Box component="span" display="flex" alignItems="center" justifyContent="center">
@@ -144,7 +146,7 @@ export const AadhaarInputField = (props) => {
                 value: /^[0-9]{4}$/,
                 message: 'Provide a valid Aadhaar number',
               },
-              onChange: (e) => onHandleAadhaarChange(e),
+              onChange: (e) => onHandleAadhaarChange(e, SECOND_FIELD_NAME),
             })}
           />
           <Box component="span" display="flex" alignItems="center" justifyContent="center">
@@ -182,7 +184,7 @@ export const AadhaarInputField = (props) => {
                 value: /^[0-9]{4}$/,
                 message: 'Provide a valid Aadhaar number',
               },
-              onChange: (e) => onHandleAadhaarChange(e),
+              onChange: (e) => onHandleAadhaarChange(e, THIRD_FIELD_NAME),
             })}
           />
         </Box>
