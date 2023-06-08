@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import RemoveCircleOutlineRoundedIcon from '@mui/icons-material/RemoveCircleOutlineRounded';
-import { Box, Grid, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Grid, Tab, Tabs, Tooltip, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { natureOfWork, workStatusOptions } from '../../../../constants/common-data';
@@ -482,6 +483,23 @@ const WorkDetails = ({
           }}
         />
       </Grid>
+      <Grid>
+        <Tooltip
+          title={
+            <Box>
+              Information about schedule
+              <Box mr="2px"> will be shown here</Box>
+            </Box>
+          }
+          placement="top-end"
+          arrow
+        >
+          <Typography variant="body4" color="messageBlue.main" display="flex" alignItems="center">
+            <InfoOutlinedIcon sx={{ fontSize: '16px', ml: '450px', padding: '2px' }} />
+            Multiple languages can be selected
+          </Typography>
+        </Tooltip>
+      </Grid>
       <Grid item xs={12}>
         <Typography
           bgcolor="grey1.light"
@@ -557,7 +575,7 @@ const WorkDetails = ({
                     label="Enter Facility Id(If Known)"
                     placeholder="Facility Id"
                     defaultValue={getValues()?.facilityId}
-                    required={true}
+                    // required={true}
                     {...register(`facilityId`, {
                       required: 'This field is required',
                     })}

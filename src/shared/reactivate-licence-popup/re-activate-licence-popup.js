@@ -1,28 +1,23 @@
 import { useState } from 'react';
 
 import CloseIcon from '@mui/icons-material/Close';
-import { Box, Button, Container, Modal, Typography } from '@mui/material';
+import { Box, Container, Modal, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
 import ReactivationLogo from '../../../src/assets/images/reactivate-license-icon.png';
 import { createReActivateLicense } from '../../store/actions/common-actions';
-import { DatePicker, TextField } from '../../ui/core';
+import { Button, DatePicker, TextField } from '../../ui/core';
 import successToast from '../../ui/core/toaster';
 export default function ReactivateLicencePopup(props) {
   const [open, setOpen] = useState(true);
   const [showFromDateError, setShowFromDateError] = useState(false);
+  const [showReasonError, setShowReasonError] = useState(false);
 
   const { loginData } = useSelector((state) => state?.loginReducer);
   const dispatch = useDispatch();
 
-  const {
-    register,
-    getValues,
-    setValue,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const { register, getValues, setValue } = useForm({
     mode: 'onChange',
   });
 
@@ -38,7 +33,7 @@ export default function ReactivateLicencePopup(props) {
       hp_profile_id: loginData?.data?.profile_id,
       application_type_id: 5,
       action_id: 1,
-      from_date: fromDate,
+      from_date: fromDate?.split('/')?.reverse()?.join('-'),
       remarks: reason,
     };
 
@@ -86,7 +81,7 @@ export default function ReactivateLicencePopup(props) {
             </Typography>
 
             <DatePicker
-              value={getValues()?.fromDate}
+              value={getValues()?.fromDate ? new Date(getValues()?.fromDate) : undefined}
               onChangeDate={(newDateValue) => {
                 setValue('fromDate', new Date(newDateValue)?.toLocaleDateString('en-GB'));
                 setShowFromDateError(false);
@@ -106,7 +101,6 @@ export default function ReactivateLicencePopup(props) {
               }}
               required={true}
               minDate={new Date()}
-              defaultValue={getValues().fromDate}
               error={showFromDateError ? 'Enter Re-activate from' : false}
             />
           </Box>
@@ -134,9 +128,14 @@ export default function ReactivateLicencePopup(props) {
               placeholder="Add a reason..."
               required={true}
               defaultValue={getValues().reason}
-              error={errors.reason?.message}
+              error={showReasonError ? 'Enter Re-activate reason' : false}
               {...register('reason', {
                 required: 'This field is required',
+                onChange: (event) => {
+                  if (event.target.value) {
+                    setShowReasonError(false);
+                  }
+                },
               })}
             />
           </Box>
@@ -156,15 +155,32 @@ export default function ReactivateLicencePopup(props) {
               Cancel
             </Button>
             <Button
-              sx={{ ml: 2 }}
               onClick={() => {
-                if (getValues().fromDate === undefined) {
+                const { fromDate, reason } = getValues();
+
+                if (fromDate === undefined) {
                   setShowFromDateError(true);
                 }
-                handleSubmit(handleReactivate);
+                if (reason === undefined || reason === '') {
+                  setShowReasonError(true);
+                }
+                if ((reason !== undefined || reason !== '') && fromDate !== undefined) {
+                  handleReactivate();
+                }
               }}
-              variant="contained"
+              ml={2}
               color="secondary"
+              variant="contained"
+              sx={{
+                margin: {
+                  xs: '5px 0',
+                  md: '0',
+                },
+                width: {
+                  xs: '100%',
+                  md: 'fit-content',
+                },
+              }}
             >
               Reactivate
             </Button>
