@@ -575,7 +575,7 @@ const WorkDetails = ({
                     label="Enter Facility Id(If Known)"
                     placeholder="Facility Id"
                     defaultValue={getValues()?.facilityId}
-                    required={true}
+                    // required={true}
                     {...register(`facilityId`, {
                       required: 'This field is required',
                     })}

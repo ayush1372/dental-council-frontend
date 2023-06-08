@@ -21,6 +21,11 @@ import {
 } from '../../../store/actions/common-actions';
 import { Button } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
+import {
+  EmailRegexValidation,
+  MobileNumberRegexValidation,
+  PostalCodeRegexValidation,
+} from '../../../utilities/common-validations';
 
 function NMCCollegeRegistration() {
   const {
@@ -302,6 +307,7 @@ function NMCCollegeRegistration() {
               name="Name"
               required
               placeholder={t('Enter college name')}
+              inputProps={{ maxLength: 300 }}
               error={errors.Name?.message}
               {...register('Name', {
                 required: 'College name is required',
@@ -319,6 +325,7 @@ function NMCCollegeRegistration() {
             fullWidth
             name="CollegeCode"
             placeholder={t('Enter College Code')}
+            inputProps={{ maxLength: 300 }}
             error={errors.CollegeCode?.message}
             {...register('CollegeCode')}
           />
@@ -338,13 +345,7 @@ function NMCCollegeRegistration() {
             placeholder={t('Enter Mobile Number')}
             onInput={(e) => handleInput(e)}
             error={errors.MobileNumber?.message}
-            {...register('MobileNumber', {
-              required: 'Mobile number is required',
-              pattern: {
-                value: /^\d{10}$/i,
-                message: 'Provide a valid mobile number',
-              },
-            })}
+            {...register('MobileNumber', MobileNumberRegexValidation)}
           />
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
@@ -405,6 +406,7 @@ function NMCCollegeRegistration() {
             fullWidth
             name={'Website'}
             placeholder={'Enter College Website'}
+            inputProps={{ maxLength: 300 }}
             {...register('Website', {})}
           />
         </Grid>
@@ -422,6 +424,7 @@ function NMCCollegeRegistration() {
             fullWidth
             name="AddressLine1"
             placeholder="Enter Address line1"
+            inputProps={{ maxLength: 300 }}
             error={errors.AddressLine1?.message}
             {...register('AddressLine1', {
               required: 'Address line1 is required',
@@ -525,13 +528,7 @@ function NMCCollegeRegistration() {
             required
             placeholder={'Enter  Pin Code'}
             error={errors.Pincode?.message}
-            {...register('Pincode', {
-              required: 'Pin code is required',
-              pattern: {
-                value: /^[0-9]{6}$/i,
-                message: 'Please enter valid pincode',
-              },
-            })}
+            {...register('Pincode', PostalCodeRegexValidation)}
           />
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
@@ -552,14 +549,7 @@ function NMCCollegeRegistration() {
             required
             placeholder={t('Enter Email ID')}
             error={errors.Email?.message}
-            {...register('Email', {
-              required: 'Email id is required',
-              pattern: {
-                value:
-                  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-                message: 'Provide valid email id',
-              },
-            })}
+            {...register('Email', EmailRegexValidation)}
           />
         </Grid>
       </Grid>
