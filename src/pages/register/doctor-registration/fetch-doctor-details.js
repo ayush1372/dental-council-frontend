@@ -400,7 +400,8 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                         ) ||
                         getValues().field_1 === '' ||
                         getValues().field_2 === '' ||
-                        getValues().field_3 === ''
+                        getValues().field_3 === '' ||
+                        !consentD
                       }
                     >
                       Verify
