@@ -94,6 +94,22 @@ export const EmailRegexValidation = {
   },
 };
 
+export const PostalCodeRegexValidation = {
+  required: 'This field is required',
+  pattern: {
+    value: /^\d{6}$/,
+    message: 'Should only contains 6 digits',
+  },
+};
+
+export const MobileNumberRegexValidation = {
+  required: 'Mobile Number is required',
+  pattern: {
+    value: /^\d{10}$/i,
+    message: 'Please enter a valid 10-digit mobile number',
+  },
+};
+
 export const convertGender = (gender) => {
   if (gender.length > 1) {
     return gender ? gender.charAt(0).toUpperCase() + gender.slice(1) : '';
