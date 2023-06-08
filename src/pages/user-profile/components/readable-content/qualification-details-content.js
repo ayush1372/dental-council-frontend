@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import ReportIcon from '@mui/icons-material/Report';
 import { Grid, IconButton, Tooltip, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
@@ -75,7 +75,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   </Typography>
                   {getQueryRaised('Name of the Degree Obtained') !== undefined && (
                     <Tooltip title={getQueryRaised('Name of the Degree Obtained')}>
-                      <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                      <ReportIcon color="secondary" ml={2} />
                     </Tooltip>
                   )}
                 </Typography>
@@ -108,7 +108,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   </Typography>
                   {getQueryRaised('Country Name') !== undefined && (
                     <Tooltip title={getQueryRaised('Country Name')}>
-                      <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                      <ReportIcon color="secondary" ml={2} />
                     </Tooltip>
                   )}
                 </Typography>
@@ -141,7 +141,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   </Typography>
                   {getQueryRaised('State') !== undefined && (
                     <Tooltip title={getQueryRaised('State')}>
-                      <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                      <ReportIcon color="secondary" ml={2} />
                     </Tooltip>
                   )}
                 </Typography>
@@ -176,7 +176,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   </Typography>
                   {getQueryRaised('Name of the College') !== undefined && (
                     <Tooltip title={getQueryRaised('Name of the College')}>
-                      <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                      <ReportIcon color="secondary" ml={2} />
                     </Tooltip>
                   )}
                 </Typography>
@@ -210,7 +210,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   </Typography>
                   {getQueryRaised('University') !== undefined && (
                     <Tooltip title={getQueryRaised('University')}>
-                      <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                      <ReportIcon color="secondary" ml={2} />
                     </Tooltip>
                   )}
                 </Typography>
@@ -241,7 +241,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                 </Typography>
                 {getQueryRaised('Month & Year of Awarding Degree') !== undefined && (
                   <Tooltip title={getQueryRaised('Month & Year of Awarding Degree')}>
-                    <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                    <ReportIcon color="secondary" ml={2} />
                   </Tooltip>
                 )}
                 <Grid display="flex" alignItems="center">
@@ -276,7 +276,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   </Typography>
                   {getQueryRaised('Upload Qualification Degree') !== undefined && (
                     <Tooltip title={getQueryRaised('Upload Qualification Degree')}>
-                      <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                      <ReportIcon color="secondary" ml={2} />
                     </Tooltip>
                   )}
                 </Typography>

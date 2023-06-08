@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import ReportIcon from '@mui/icons-material/Report';
 import { Grid, Tooltip, Typography } from '@mui/material';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
@@ -93,7 +93,7 @@ const PersonalDetails = ({ personalDetails, selectedDataIndex }) => {
             </Typography>
             {getQueryRaised('Name') !== undefined && (
               <Tooltip title={getQueryRaised('Name')}>
-                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                <ReportIcon color="secondary" ml={2} />
               </Tooltip>
             )}
           </Typography>
@@ -120,8 +120,8 @@ const PersonalDetails = ({ personalDetails, selectedDataIndex }) => {
             Father&apos;s Name
           </Typography>
           {getQueryRaised('Fathers Name') !== undefined && (
-            <Tooltip sx={{ color: '#D66025' }} title={getQueryRaised('Fathers Name')}>
-              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+            <Tooltip title={getQueryRaised('Fathers Name')}>
+              <ReportIcon color="secondary" ml={2} />
             </Tooltip>
           )}
           <Grid display="flex" alignItems="center">
@@ -147,8 +147,8 @@ const PersonalDetails = ({ personalDetails, selectedDataIndex }) => {
             Mother&apos;s Name
           </Typography>
           {getQueryRaised('Mothers Name') !== undefined && (
-            <Tooltip title={getQueryRaised('Mothers Name')}>
-              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+            <Tooltip color="secondary" title={getQueryRaised('Mothers Name')}>
+              <ReportIcon color="secondary" ml={2} />
             </Tooltip>
           )}
           <Grid display="flex" alignItems="center">
@@ -173,11 +173,11 @@ const PersonalDetails = ({ personalDetails, selectedDataIndex }) => {
           <Typography variant="body5" color="grey.label">
             Spouse Name
           </Typography>
-          {/* {getQueryRaised('Spouse Name') !== undefined && (
+          {getQueryRaised('Spouse Name') !== undefined && (
             <Tooltip title={getQueryRaised('Spouse Name')}>
-              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              <ReportIcon color="secondary" ml={2} />
             </Tooltip>
-          )} */}
+          )}
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
               {spouse_name === '' || spouse_name === undefined ? '-' : spouse_name}
@@ -206,7 +206,7 @@ const PersonalDetails = ({ personalDetails, selectedDataIndex }) => {
             </Typography>
             {getQueryRaised('Gender') !== undefined && (
               <Tooltip title={getQueryRaised('Gender')}>
-                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                <ReportIcon color="secondary" ml={2} />
               </Tooltip>
             )}
           </Typography>
@@ -237,7 +237,7 @@ const PersonalDetails = ({ personalDetails, selectedDataIndex }) => {
             </Typography>
             {getQueryRaised('Date of Birth') !== undefined && (
               <Tooltip title={getQueryRaised('Date of Birth')}>
-                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                <ReportIcon color="secondary" ml={2} />
               </Tooltip>
             )}
           </Typography>
@@ -268,7 +268,7 @@ const PersonalDetails = ({ personalDetails, selectedDataIndex }) => {
             </Typography>
             {getQueryRaised('Nationality') !== undefined && (
               <Tooltip title={getQueryRaised('Nationality')}>
-                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                <ReportIcon color="secondary" ml={2} />
               </Tooltip>
             )}
           </Typography>
