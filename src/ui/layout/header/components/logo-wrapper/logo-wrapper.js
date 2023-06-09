@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 import ABDMLogo from '../../../../../assets/images/logo-slider/ABDM_logo.svg';
 import G20Logo from '../../../../../assets/images/logo-slider/G20.svg';
-import NmcLogo from '../../../../../assets/images/logo-slider/NMC_logo.png';
+import NmcLogo from '../../../../../assets/images/logo-slider/NMC_logo.svg';
 import { IdleTimer } from '../../../../../helpers/components/idle-timer';
 import { logout, resetCommonReducer } from '../../../../../store/reducers/common-reducers';
 import { Button } from '../../../../core';
@@ -107,7 +107,6 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
               <Link onClick={() => navigate('/')} sx={{ cursor: 'pointer' }}>
                 <img
                   src={NmcLogo}
-                  height={'58px'}
                   className={classes.logoImage}
                   alt="NATIONAL MEDICAL COMMISSION"
                 />
