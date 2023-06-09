@@ -1,6 +1,9 @@
 import { get_year_data } from '../helpers/functions/common-functions';
 import { year_data } from '../helpers/functions/common-functions';
 
+export const consentDescription =
+  'I, hereby declare that I am voluntarily sharing my Aadhaar Number and demographic information issued by UIDAI, with National Medical Register (NMR) for the sole purpose of creation of User ID. I understand that my User ID can be used and shared for purposes as may be notified by NMR from time to time. Further, I am aware that my personal identifiable information (Name, Address, Age, Date of Birth, Gender and Photograph) may be made available to the entities working in the National Medical Register Ecosystem which inter alia includes stakeholders and entities such as National Medical Council, State Medical Council, Medical Colleges, National Board of Examination, which are registered with or linked to the National Medical Register, and various processes there under. I authorize NMR to use my Aadhaar number for performing Aadhaar based authentication with UIDAI as per the provisions of the Aadhaar (Targeted Delivery of Financial and other Subsidies, Benefits and Services) Act, 2016 for the aforesaid purpose. I understand that UIDAI will share my e-KYC details, on response of “Yes” with NMR upon successful authentication. I consciously choose to use Aadhaar number for the purpose of availing benefits across the NMR. I am aware that my personal identifiable information excluding Aadhaar number / VID number can be used and shared for purposes as mentioned above. I reserve the right to revoke the given consent at any point of time as per provisions of Aadhaar Act and Regulations.';
+
 export const UniqueUserNameForDoctor = [
   { id: '1', name: 'aarushi.sharma3' },
   { id: '1', name: 'aarushisharma390' },
