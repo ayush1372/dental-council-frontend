@@ -579,7 +579,6 @@ const WorkDetails = ({
                     label="Enter Facility Id(If Known)"
                     placeholder="Facility Id"
                     defaultValue={getValues()?.facilityId}
-                    // required={true}
                     {...register(`facilityId`, {
                       required: 'This field is required',
                     })}
@@ -626,7 +625,7 @@ const WorkDetails = ({
                   name={'stateLGDCode'}
                   defaultValue={getValues().stateLGDCode}
                   required={true}
-                  {...register('stateLGDCode', {})}
+                  {...register('stateLGDCode')}
                   options={createSelectFieldData(statesList)}
                 />
               </Grid>
@@ -643,7 +642,7 @@ const WorkDetails = ({
                   name={'districtLGDCode'}
                   defaultValue={getValues().districtLGDCode}
                   required={true}
-                  {...register('districtLGDCode', {})}
+                  {...register('districtLGDCode')}
                   options={createSelectFieldData(facilityDistrict)}
                 />
               </Grid>
