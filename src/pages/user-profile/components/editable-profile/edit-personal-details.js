@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
-import { capitalize } from '../../../../helpers/functions/common-functions';
 import {
   getCitiesList,
   getDistrictList,
@@ -90,6 +89,26 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
   const citiesId = isSameAddress ? personalDetails?.kyc_address?.village?.id : village?.id;
   const [districtListData, setDistrictListData] = useState('');
   const [subDistrictListData, setSubDistrictListData] = useState('');
+  const countryName = country?.name || '';
+  const stateName = state?.name || '';
+  const districtName = district?.name || '';
+  const subDistrictName = sub_district?.name || '';
+  const villageName = kyc_address?.village || '';
+  const houseNumber = kyc_address?.house || '';
+  const streetName = kyc_address?.street || '';
+  const addressLandmark = kyc_address?.landmark || '';
+  const userPincode = kyc_address?.pincode || '';
+
+  const kycAddress =
+    (houseNumber && houseNumber + ', ') +
+    (streetName && streetName + ', ') +
+    (addressLandmark && addressLandmark + ', ') +
+    (villageName && villageName + ', ') +
+    (subDistrictName && subDistrictName + ', ') +
+    (districtName && districtName + ', ') +
+    (stateName && stateName + ', ') +
+    (countryName && countryName + ', ') +
+    (userPincode && userPincode);
 
   const {
     formState: { errors },
@@ -146,17 +165,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
           : '',
       // Schedule: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? scheduleId : '',
       Name: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? full_name : '',
-      Address:
-        loggedInUserType === 'SMC'
-          ? ''
-          : loggedInUserType === 'Doctor'
-          ? ((personalDetails?.kyc_address?.address_line1 &&
-              personalDetails?.kyc_address?.address_line1 + ', ') ||
-              '') +
-            ((kyc_address?.state?.name && capitalize(kyc_address?.state?.name) + ', ') || ' ') +
-            ((kyc_address?.state?.name && capitalize(kyc_address?.country?.name) + ', ') || ' ') +
-            ((kyc_address?.state?.name && capitalize(kyc_address?.pincode)) || '')
-          : '',
+      Address: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? kycAddress : '',
       IMRID: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? nmr_id : '',
       YearOfInfo:
         loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? year_of_info : '',
