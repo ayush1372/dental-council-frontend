@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 import ABDMLogo from '../../../../../assets/images/logo-slider/ABDM_logo.svg';
 import G20Logo from '../../../../../assets/images/logo-slider/G20.svg';
-import NmcLogo from '../../../../../assets/images/logo-slider/nmc-logo.svg';
+import NmcLogo from '../../../../../assets/images/logo-slider/NMC_logo.png';
 import { IdleTimer } from '../../../../../helpers/components/idle-timer';
 import { logout, resetCommonReducer } from '../../../../../store/reducers/common-reducers';
 import { Button } from '../../../../core';
@@ -106,19 +106,14 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
             <Grid item xs="auto" mr={2}>
               <Link onClick={() => navigate('/')} sx={{ cursor: 'pointer' }}>
                 <img
-                  className={classes.logoImage}
                   src={NmcLogo}
+                  height={'58px'}
+                  className={classes.logoImage}
                   alt="NATIONAL MEDICAL COMMISSION"
                 />
               </Link>
             </Grid>
-            <Grid
-              item
-              xs="auto"
-              mr={2}
-              // sm={2}
-              // sx={{ display: 'flex !important', 'justify-content': 'right !important' }}
-            >
+            <Grid item xs="auto" mr={2}>
               <Link onClick={() => navigate('/')} sx={{ cursor: 'pointer' }}>
                 <img className={classes.logoImage} src={ABDMLogo} alt="Digital logo" />
               </Link>
