@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import VolumeOffIcon from '@mui/icons-material/VolumeOff';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
-import { Alert, Container, Divider, Grid, IconButton, Link, Typography } from '@mui/material';
+import { Alert, Container, Divider, Grid, IconButton, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useSpeechSynthesis } from 'react-speech-kit';
 import { ToastContainer } from 'react-toastify';
 
+import { consentDescription } from '../../../constants/common-data';
 import { validateAadharNumber } from '../../../constants/common-data';
 import { dateFormat, encryptData } from '../../../helpers/functions/common-functions';
 import KycErrorPopup from '../../../shared/common-modals/kyc-error-popup';
@@ -47,7 +48,6 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
   const [showOtpAadhar, setshowOtpAadhar] = useState(false);
   const [isOtpValidMobile, setisOtpValidMobile] = useState(false);
   const [isOtpValidAadhar, setisOtpValidAadhar] = useState(false);
-  const [showFullDescription, setFullDescription] = useState(false);
   const [showCreateHprIdPage, setShowCreateHprIdPage] = useState(false);
 
   const { speak, cancel } = useSpeechSynthesis();
@@ -82,15 +82,6 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
     (state) => state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId
   );
   const { councilNames } = useSelector((state) => state.common);
-
-  let consentDescription =
-    'I, hereby declare that I am voluntarily sharing my Aadhaar Number and demographic information issued by UIDAI, with National Medical Register (NMR) for the sole purpose of creation of User ID. I understand that my User ID can be used and shared for purposes as may be notified by NMR from time to time. Further, I am aware that my personal identifiable information (Name, Address, Age, Date of Birth, Gender and Photograph) may be made available to the entities working in the National Medical Register Ecosystem which inter alia includes stakeholders and entities such as National Medical Council, State Medical Council, Medical Colleges, National Board of Examination, which are registered with or linked to the National Medical Register, and various processes there under. I authorize NMR to use my Aadhaar number for performing Aadhaar based authentication with UIDAI as per the provisions of the Aadhaar (Targeted Delivery of Financial and other Subsidies, Benefits and Services) Act, 2016 for the aforesaid purpose. I understand that UIDAI will share my e-KYC details, on response of “Yes” with NMR upon successful authentication. I consciously choose to use Aadhaar number for the purpose of availing benefits across the NMR. I am aware that my personal identifiable information excluding Aadhaar number / VID number can be used and shared for purposes as mentioned above. I reserve the right to revoke the given consent at any point of time as per provisions of Aadhaar Act and Regulations.';
-
-  const description = showFullDescription ? consentDescription : consentDescription.slice(0, 110);
-
-  const showFullDescriptionHandler = () => {
-    setFullDescription(!showFullDescription);
-  };
 
   const getCouncilID = (name) => {
     let councilData = [];
@@ -449,29 +440,17 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                       disabled={isOtpValidAadhar}
                     />
                   </Grid>
-                  <Grid item xs={11} display="flex" pl={1}>
+                  <Box maxHeight={100} overflow="scroll">
                     <Typography component="div" variant="body7">
-                      {description}
+                      {consentDescription}
                     </Typography>
-                  </Grid>
+                  </Box>
                 </Grid>
                 <Grid item xs={12} display="flex">
                   <Grid item xs={9} display="flex">
                     {' '}
                   </Grid>
-                  <Grid item xs={2} display="flex">
-                    <Box
-                      sx={{
-                        display: 'flex !important',
-                        'justify-content': 'right !important',
-                        cursor: 'pointer',
-                      }}
-                    >
-                      <Link onClick={showFullDescriptionHandler}>
-                        Read {showFullDescription ? 'Less' : 'More'}
-                      </Link>
-                    </Box>{' '}
-                  </Grid>
+
                   <Grid item xs={1} display="flex">
                     <Box
                       sx={{
