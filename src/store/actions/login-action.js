@@ -74,6 +74,8 @@ export const loginAction = (body) => async (dispatch) => {
         JSON.stringify(
           localStorage.setItem('refreshtoken', response.responseHeader['refresh-token'])
         );
+        JSON.stringify(localStorage.setItem('userSubTypeID', response.data['user_sub_type']));
+        JSON.stringify(localStorage.setItem('collegeID', response.data['college_id']));
         return resolve(response);
       })
       .catch((error) => {
