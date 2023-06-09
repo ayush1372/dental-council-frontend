@@ -77,6 +77,13 @@ export const PasswordRegexValidation = {
   },
 };
 
+export const LoginPasswordRegexValidation = {
+  required: 'Please enter Password',
+  pattern: {
+    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&])[A-Za-z\d@$!%*?#&]{8,100}$/,
+    message: 'Enter correct password',
+  },
+};
 export const AadharRegexValidation = {
   required: 'Enter a valid aadhaar number',
   pattern: {

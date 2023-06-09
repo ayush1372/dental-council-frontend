@@ -28,6 +28,7 @@ import { login, userLoggedInType } from '../../../store/reducers/common-reducers
 import { Button, TextField } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 import successToast from '../../../ui/core/toaster';
+import { LoginPasswordRegexValidation } from '../../../utilities/common-validations';
 export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetails }) => {
   const [captchaAnswer, setcaptachaAnswer] = useState();
   const { generateCaptcha } = useSelector((state) => state.loginReducer);
@@ -353,14 +354,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
               name={'password'}
               error={errors.password?.message}
               defaultValue={getValues().password}
-              {...register('password', {
-                required: 'Enter correct password',
-                pattern: {
-                  value:
-                    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&])[A-Za-z\d@$!%*?#&]{8,100}$/,
-                  message: 'Enter correct password',
-                },
-              })}
+              {...register('password', LoginPasswordRegexValidation)}
             />
             <Typography display={'flex'} justifyContent="flex-end">
               <Button
