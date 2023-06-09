@@ -526,7 +526,7 @@ function NMCCollegeRegistration() {
             type="number"
             name="Pincode"
             required
-            placeholder={'Enter  Pin Code'}
+            placeholder={'Enter Postal Code'}
             error={errors.Pincode?.message}
             {...register('Pincode', PostalCodeRegexValidation)}
           />
