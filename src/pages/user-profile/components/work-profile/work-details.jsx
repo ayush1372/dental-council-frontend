@@ -23,6 +23,7 @@ import {
   updateDoctorWorkDetails,
 } from '../../../../store/actions/doctor-user-profile-actions';
 import { Button, Checkbox, RadioGroup, Select, TextField } from '../../../../ui/core';
+import successToast from '../../../../ui/core/toaster';
 import { getFacilityDistrictList } from './district-api';
 import FacilityDetailsTable from './facility-details-table';
 import WorkDetailsTable from './work-details-table';
@@ -209,11 +210,15 @@ const WorkDetails = ({
       stateLGDCode: getStateISOCode(values.stateLGDCode) || '',
       districtLGDCode: getDistrictISOCode(values.districtLGDCode) || '',
     };
-    dispatch(getFacilitiesData(searchFacilities)).then((response) => {
-      if (response?.data?.message === 'Request processed successfully') {
-        setFacilityResponseData(response?.data?.facilities);
-      }
-    });
+    dispatch(getFacilitiesData(searchFacilities))
+      .then((response) => {
+        if (response?.data?.message === 'Request processed successfully') {
+          setFacilityResponseData(response?.data?.facilities);
+        }
+      })
+      .catch(() => {
+        successToast('ERR_INT:' + 'Invalid facility details', 'auth-error', 'error', 'top-center');
+      });
     setShowTable(true);
   };
 
@@ -255,7 +260,6 @@ const WorkDetails = ({
   }, [watchState]);
 
   useEffect(() => {
-    // searchFacilitiesHandler();
     fetchDistricts(watchFacilityStateCode, true);
   }, [watchFacilityStateCode]);
 
@@ -575,7 +579,6 @@ const WorkDetails = ({
                     label="Enter Facility Id(If Known)"
                     placeholder="Facility Id"
                     defaultValue={getValues()?.facilityId}
-                    required={true}
                     {...register(`facilityId`, {
                       required: 'This field is required',
                     })}
@@ -622,9 +625,7 @@ const WorkDetails = ({
                   name={'stateLGDCode'}
                   defaultValue={getValues().stateLGDCode}
                   required={true}
-                  {...register('stateLGDCode', {
-                    // required: 'This field is required',
-                  })}
+                  {...register('stateLGDCode')}
                   options={createSelectFieldData(statesList)}
                 />
               </Grid>
@@ -641,9 +642,7 @@ const WorkDetails = ({
                   name={'districtLGDCode'}
                   defaultValue={getValues().districtLGDCode}
                   required={true}
-                  {...register('districtLGDCode', {
-                    // required: 'This field is required',
-                  })}
+                  {...register('districtLGDCode')}
                   options={createSelectFieldData(facilityDistrict)}
                 />
               </Grid>
@@ -653,13 +652,9 @@ const WorkDetails = ({
                 </Typography>
                 <TextField
                   fullWidth
-                  error={errors.facilityName?.message}
                   name={'facilityName'}
                   defaultValue={getValues().facilityName}
-                  {...register('facilityName', {
-                    required: 'This field is required',
-                  })}
-                  options={[]}
+                  {...register('facilityName')}
                 />
               </Grid>
               <Grid item xs={12} md={3} lg={3} mt={3}>

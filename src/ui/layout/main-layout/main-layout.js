@@ -33,6 +33,8 @@ export const MainLayout = () => {
           user_group_id: userGroupTypeForSession(
             parserJWT(localStorage.getItem('accesstoken')).authorities[0]
           ),
+          user_sub_type: Number(localStorage.getItem('userSubTypeID')),
+          college_id: Number(localStorage.getItem('collegeID')),
         },
       };
       dispatch(loginUser(dataObj));

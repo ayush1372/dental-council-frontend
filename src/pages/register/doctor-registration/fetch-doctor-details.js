@@ -1,13 +1,17 @@
 import { useEffect, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { Alert, Container, Divider, Grid, Link, Typography } from '@mui/material';
+import VolumeOffIcon from '@mui/icons-material/VolumeOff';
+import VolumeUpIcon from '@mui/icons-material/VolumeUp';
+import { Alert, Container, Divider, Grid, IconButton, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { useSpeechSynthesis } from 'react-speech-kit';
 import { ToastContainer } from 'react-toastify';
 
+import { consentDescription } from '../../../constants/common-data';
 import { validateAadharNumber } from '../../../constants/common-data';
 import { dateFormat, encryptData } from '../../../helpers/functions/common-functions';
 import KycErrorPopup from '../../../shared/common-modals/kyc-error-popup';
@@ -34,15 +38,20 @@ import { Button, Checkbox, TextField } from '../../../ui/core';
 import AadhaarInputField from '../../../ui/core/aadhaar-input-field/aadhaar-input-field';
 import successToast from '../../../ui/core/toaster';
 import CreateHprId from './unique-username';
+
 function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onReset }) {
-  const [showCreateHprIdPage, setShowCreateHprIdPage] = useState(false);
+  const [kycError, setKycError] = useState(false);
+  const [consentD, setConsentD] = useState(false);
+  const [textSpeech, setTextSpeech] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showOtpMobile, setShowOtpMobile] = useState(false);
   const [showOtpAadhar, setshowOtpAadhar] = useState(false);
-
   const [isOtpValidMobile, setisOtpValidMobile] = useState(false);
   const [isOtpValidAadhar, setisOtpValidAadhar] = useState(false);
-  const [kycError, setKycError] = useState(false);
+  const [showCreateHprIdPage, setShowCreateHprIdPage] = useState(false);
+
+  const { speak, cancel } = useSpeechSynthesis();
+
   const dispatch = useDispatch();
 
   const otptype = useSelector((state) => state?.AadhaarTransactionId?.typeOfOtpDetailsData);
@@ -60,34 +69,19 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
   const mobileTxnId = useSelector(
     (state) => state?.doctorRegistration?.getMobileOtpDetails?.data?.txnId
   );
-
   const councilName = useSelector(
     (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.council_name
   );
-
   const hpName = useSelector(
     (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.hp_name
   );
-
   const demographicAuthMobileVerify = useSelector(
     (state) => state?.AadhaarTransactionId?.demographicAuthMobileDetailsData
   );
-
   const existUSerName = useSelector(
     (state) => state?.doctorRegistration?.hpIdExistsDetailsData?.data?.hprId
   );
-
   const { councilNames } = useSelector((state) => state.common);
-  let consentDescription =
-    'I, hereby declare that I am voluntarily sharing my Aadhaar Number and demographic information issued by UIDAI, with National Medical Register (NMR) for the sole purpose of creation of User ID. I understand that my User ID can be used and shared for purposes as may be notified by NMR from time to time. Further, I am aware that my personal identifiable information (Name, Address, Age, Date of Birth, Gender and Photograph) may be made available to the entities working in the National Medical Register Ecosystem which inter alia includes stakeholders and entities such as National Medical Council, State Medical Council, Medical Colleges, National Board of Examination, which are registered with or linked to the National Medical Register, and various processes there under. I authorize NMR to use my Aadhaar number for performing Aadhaar based authentication with UIDAI as per the provisions of the Aadhaar (Targeted Delivery of Financial and other Subsidies, Benefits and Services) Act, 2016 for the aforesaid purpose. I understand that UIDAI will share my e-KYC details, on response of “Yes” with NMR upon successful authentication. I consciously choose to use Aadhaar number for the purpose of availing benefits across the NMR. I am aware that my personal identifiable information excluding Aadhaar number / VID number can be used and shared for purposes as mentioned above. I reserve the right to revoke the given consent at any point of time as per provisions of Aadhaar Act and Regulations.';
-  const [showFullDescription, setFullDescription] = useState(false);
-  const [consentD, setConsentD] = useState(false);
-
-  const description = showFullDescription ? consentDescription : consentDescription.slice(0, 110);
-
-  const showFullDescriptionHandler = () => {
-    setFullDescription(!showFullDescription);
-  };
 
   const getCouncilID = (name) => {
     let councilData = [];
@@ -104,6 +98,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
     register,
     handleSubmit,
     getValues,
+    setValue,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
@@ -208,6 +203,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
         });
     });
   };
+
   useEffect(() => {
     if (demographicAuthMobileVerify?.data?.verified) {
       setisOtpValidMobile(true);
@@ -241,6 +237,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
       dispatch(generateMobileOtp(data));
     }
   };
+
   const { otpform, otpValue, handleClear, validationOtpInvalid } = OtpForm({
     resendAction: otpResend,
     resendTime: 90,
@@ -276,6 +273,18 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
       }
     });
   };
+
+  //Helper method to voice over the Aadhar Consent Message.
+  const textToSpeech = () => {
+    if (textSpeech === false) {
+      setTextSpeech(true);
+      speak({ text: t(consentDescription) });
+    }
+    if (textSpeech === true) {
+      setTextSpeech(false);
+      cancel();
+    }
+  };
   return (
     <>
       <ToastContainer></ToastContainer>
@@ -305,9 +314,6 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
               },
             }}
           >
-            {/* {hpName !== null || undefined ? (
-              ''
-            ) : ( */}
             <Box sx={{ width: '100%', height: '53px', marginBottom: '30px', marginTop: '32px ' }}>
               <Alert
                 sx={{
@@ -380,6 +386,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                     getValues={getValues}
                     required={true}
                     errors={errors}
+                    setValue={setValue}
                     disabled={showOtpAadhar || isOtpValidAadhar}
                   />
                 </Box>
@@ -400,7 +407,8 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                         ) ||
                         getValues().field_1 === '' ||
                         getValues().field_2 === '' ||
-                        getValues().field_3 === ''
+                        getValues().field_3 === '' ||
+                        !consentD
                       }
                     >
                       Verify
@@ -432,17 +440,18 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                       disabled={isOtpValidAadhar}
                     />
                   </Grid>
-                  <Grid item xs={11} display="flex" pl={1}>
+                  <Box maxHeight={100} overflow="scroll">
                     <Typography component="div" variant="body7">
-                      {description}
+                      {consentDescription}
                     </Typography>
-                  </Grid>
+                  </Box>
                 </Grid>
                 <Grid item xs={12} display="flex">
-                  <Grid item xs={10} display="flex">
+                  <Grid item xs={9} display="flex">
                     {' '}
                   </Grid>
-                  <Grid item xs={2} display="flex">
+
+                  <Grid item xs={1} display="flex">
                     <Box
                       sx={{
                         display: 'flex !important',
@@ -450,9 +459,15 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                         cursor: 'pointer',
                       }}
                     >
-                      <Link onClick={showFullDescriptionHandler}>
-                        Read {showFullDescription ? 'Less' : 'More'}
-                      </Link>
+                      {textSpeech ? (
+                        <IconButton onClick={textToSpeech}>
+                          <VolumeUpIcon />
+                        </IconButton>
+                      ) : (
+                        <IconButton onClick={textToSpeech}>
+                          <VolumeOffIcon />
+                        </IconButton>
+                      )}
                     </Box>{' '}
                   </Grid>
                 </Grid>
