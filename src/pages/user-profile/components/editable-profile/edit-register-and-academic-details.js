@@ -478,7 +478,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
-              Registration Date(if available)
+              Registration Date
               <Typography component="span" color="error.main">
                 *
               </Typography>
