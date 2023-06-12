@@ -108,7 +108,8 @@ const NmcEditProfile = (props) => {
             })}
           />
         </Grid>
-
+        {/*
+        Commenting the below fields from edit profile Issue ID - CS-2078
         <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
             Enrolment number NDHM
@@ -147,8 +148,7 @@ const NmcEditProfile = (props) => {
               required: 'Enrolment number is required',
             })}
           />
-        </Grid>
-
+        </Grid> 
         <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
             Council
@@ -170,7 +170,7 @@ const NmcEditProfile = (props) => {
               setValue('RegistrationCouncilId', currentValue?.name);
             }}
           />
-        </Grid>
+        </Grid> */}
 
         <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
@@ -267,7 +267,7 @@ const NmcEditProfile = (props) => {
         </Grid>
       )}
 
-      <Box display="flex" mt={5} md="auto">
+      <Box display="flex" mt={10} md="auto">
         <Button
           variant="contained"
           color="secondary"

@@ -135,7 +135,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
         showViewProfile && tabName === 'Activate License'
           ? selectedRowData?.health_professional_id
           : showViewProfile
-          ? selectedRowData?.profileID?.value
+          ? selectedRowData?.profileID?.value || selectedRowData?.view?.value
           : loginData?.data?.profile_id
       )
     )
@@ -151,7 +151,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
         showViewProfile && tabName === 'Activate License'
           ? selectedRowData?.health_professional_id
           : showViewProfile
-          ? selectedRowData?.profileID?.value
+          ? selectedRowData?.profileID?.value || selectedRowData?.view?.value
           : loginData?.data?.profile_id
       )
     )
