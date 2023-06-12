@@ -255,7 +255,7 @@ const CollegeMyProfile = () => {
                   District
                 </Typography>
                 <Typography variant="subtitle2" color="inputTextColor.main">
-                  {getDistrictNameData(getCollegeDetail?.data.district_id)}
+                  {getDistrictNameData(getCollegeDetail?.data?.district_id)}
                 </Typography>
               </Grid>
             ) : (
@@ -354,7 +354,9 @@ const CollegeMyProfile = () => {
                 <Typography variant="body3" color="grey.label">
                   College University Name
                 </Typography>
-                <Typography variant="subtitle2" color="primary.main"></Typography>
+                <Typography variant="subtitle2" color="primary.main">
+                  {userData.university_name}
+                </Typography>
               </Grid>
             ) : (
               ''

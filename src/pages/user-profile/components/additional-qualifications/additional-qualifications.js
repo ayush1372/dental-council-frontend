@@ -245,7 +245,7 @@ const AdditionalQualifications = () => {
           open={successModalPopup}
           setOpen={() => setSuccessModalPopup(false)}
           text={
-            'The additional qualification details has been sent for verification. You can check the verification status in the Track Status tab!'
+            'The additional qualification details has been sent for verification. You can check the verification status in the Track Status tab'
           }
           navigateToTrackApplication={navigateToTrackApplication}
         />
