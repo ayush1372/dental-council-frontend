@@ -59,11 +59,20 @@ const WorkDetails = ({
   const [facilityResponseData, setFacilityResponseData] = useState([]);
 
   useEffect(() => {
-    dispatch(getWorkProfileDetailsData(loginData?.data?.profile_id)).then((response) => {
-      if (response?.data) {
-        setDefaultFacilityData(response?.data);
-      }
-    });
+    dispatch(getWorkProfileDetailsData(loginData?.data?.profile_id))
+      .then((response) => {
+        if (response?.data) {
+          setDefaultFacilityData(response?.data);
+        }
+      })
+      .catch(() => {
+        successToast(
+          'No matching work profile details found for the given hp_profile_id.',
+          'auth-error',
+          'error',
+          'top-center'
+        );
+      });
   }, []);
 
   const onSubmit = () => {
