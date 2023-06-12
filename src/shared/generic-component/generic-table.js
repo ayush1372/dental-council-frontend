@@ -243,15 +243,18 @@ export default function GenericTable(props) {
                       <TableCell maxWidth={`${tableCellWidth}%`} key={index} align="left">
                         <Chip
                           sx={{ width: '100px' }}
+                          
                           type={
                             row[item.name]?.value === 'Submitted'
                               ? 'submitted'
-                              : row[item.name]?.value === 'Pending'
+                              : row[item.name]?.value === 'PENDING'
                               ? 'pending'
-                              : row[item.name]?.value === 'Reject'
+                              : row[item.name]?.value === 'REJECTED'
                               ? 'reject'
                               : row[item.name]?.value === 'QUERY RAISED'
                               ? 'queryRaised'
+                              : row[item.name]?.value === 'SUSPENDED'
+                              ? 'suspended'
                               : 'approved'
                           }
                           label={row[item.name]?.value}
