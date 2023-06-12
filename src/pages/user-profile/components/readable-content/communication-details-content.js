@@ -74,6 +74,7 @@ const CommunicationAddress = ({ personalDetails, selectedDataIndex }) => {
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
+                  cursor="pointer"
                   color="primary"
                   onClick={() => {
                     setOpenModal(true);
@@ -104,6 +105,7 @@ const CommunicationAddress = ({ personalDetails, selectedDataIndex }) => {
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
+                  cursor="pointer"
                   color="primary"
                   onClick={() => {
                     setOpenModal(true);
@@ -134,6 +136,7 @@ const CommunicationAddress = ({ personalDetails, selectedDataIndex }) => {
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
+                  cursor="pointer"
                   color="primary"
                   onClick={() => {
                     setOpenModal(true);
@@ -161,6 +164,7 @@ const CommunicationAddress = ({ personalDetails, selectedDataIndex }) => {
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
+                  cursor="pointer"
                   color="primary"
                   onClick={() => {
                     setOpenModal(true);
@@ -193,6 +197,7 @@ const CommunicationAddress = ({ personalDetails, selectedDataIndex }) => {
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
+                  cursor="pointer"
                   color="primary"
                   onClick={() => {
                     setOpenModal(true);
@@ -220,6 +225,7 @@ const CommunicationAddress = ({ personalDetails, selectedDataIndex }) => {
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
+                  cursor="pointer"
                   color="primary"
                   onClick={() => {
                     setOpenModal(true);
@@ -250,6 +256,7 @@ const CommunicationAddress = ({ personalDetails, selectedDataIndex }) => {
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
+                  cursor="pointer"
                   color="primary"
                   onClick={() => {
                     setOpenModal(true);
@@ -280,6 +287,7 @@ const CommunicationAddress = ({ personalDetails, selectedDataIndex }) => {
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
+                  cursor="pointer"
                   color="primary"
                   onClick={() => {
                     setOpenModal(true);
@@ -313,6 +321,7 @@ const CommunicationAddress = ({ personalDetails, selectedDataIndex }) => {
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
+                  cursor="pointer"
                   color="primary"
                   onClick={() => {
                     setOpenModal(true);
