@@ -942,7 +942,7 @@ const EditQualificationDetails = ({
             }}
             fileName={fileName || ''}
             isDigiLockcerVisible={true}
-            uploadFileLabel="Upload Qualification Degree "
+            uploadFileLabel="Upload qualification degree"
             disabled={
               work_flow_status_id === 3
                 ? getQueryRaised('Upload Qualification Degree')
