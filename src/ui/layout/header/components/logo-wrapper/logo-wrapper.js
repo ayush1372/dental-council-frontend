@@ -139,7 +139,6 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
               color="secondary"
               data-testid="logoutbtn"
               size="small"
-              sx={{ height: '48px' }}
               onClick={handleClickedLogout}
             >
               {t('Logout')}
