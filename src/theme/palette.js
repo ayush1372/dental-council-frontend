@@ -122,5 +122,13 @@ export const palette = (mode) => {
     profileCardBorder: {
       main: '#BFBFBF8C',
     },
+    status: {
+      1: '#D66025',
+      2: '#36B37E',
+      3: '#D66025',
+      4: '#FF5630',
+      5: '#FF5630',
+      6: '#FF5630',
+    }
   };
 };
