@@ -152,7 +152,6 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
                 size="small"
                 onClick={handleClickLoginRegister}
                 endIcon={<KeyboardArrowDownIcon />}
-                sx={{ height: '48px' }}
               >
                 {'Login/Registration'}
               </Button>
