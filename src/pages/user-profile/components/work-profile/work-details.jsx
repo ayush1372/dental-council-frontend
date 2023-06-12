@@ -59,11 +59,20 @@ const WorkDetails = ({
   const [facilityResponseData, setFacilityResponseData] = useState([]);
 
   useEffect(() => {
-    dispatch(getWorkProfileDetailsData(loginData?.data?.profile_id)).then((response) => {
-      if (response?.data) {
-        setDefaultFacilityData(response?.data);
-      }
-    });
+    dispatch(getWorkProfileDetailsData(loginData?.data?.profile_id))
+      .then((response) => {
+        if (response?.data) {
+          setDefaultFacilityData(response?.data);
+        }
+      })
+      .catch(() => {
+        successToast(
+          'No matching work profile details found for the given hp_profile_id.',
+          'auth-error',
+          'error',
+          'top-center'
+        );
+      });
   }, []);
 
   const onSubmit = () => {
@@ -476,7 +485,7 @@ const WorkDetails = ({
           name="LanguageSpoken"
           options={languagesList?.data || []}
           value={languages}
-          error={errors?.LanguageSpoken?.message}
+          error={getValues()?.LanguageSpoken?.length <= 0 && errors?.LanguageSpoken?.message}
           multiple={true}
           required={true}
           {...register('LanguageSpoken', {
