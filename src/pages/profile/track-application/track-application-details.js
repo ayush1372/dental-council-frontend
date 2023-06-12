@@ -159,7 +159,7 @@ export function TrackApplicationDetails({
                 <Typography variant="body3" color="grey.label">
                   Current Status
                 </Typography>
-                <Typography variant="subtitle2" component="div" color="primary.main">
+                <Typography variant="subtitle2" component="div" color={`status.${currentStatus}`}>
                   {`${workflowStatusId(currentStatus) ? workflowStatusId(currentStatus) : ''}`}
                 </Typography>
               </Grid>
