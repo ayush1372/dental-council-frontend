@@ -635,6 +635,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 '.' +
                 qualification_detail_response_tos?.[index]?.file_type
               }
+              isVerified={qualification_detail_response_tos?.[index]?.is_verified}
             />
           );
         })}
