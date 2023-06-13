@@ -112,7 +112,7 @@ function FacilityDetailsTable({ declaredFacilityData, trackStatusData, currentWo
         value: application?.organization_type,
       },
 
-      { type: 'systemOfMedicine', value: application?.systemOfMedicine },
+      { type: 'systemOfMedicine', value: application?.system_of_medicine },
       { type: 'department', value: application?.department },
       { type: 'designation', value: application?.designation },
       { type: 'status', onClickCallback: viewCallback }

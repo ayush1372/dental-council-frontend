@@ -61,7 +61,7 @@ export default function SuccessPopup({ fetchDoctorUserPersonalDetails }) {
             data-testid="popup-input-text"
           >
             {logInDoctorStatus
-              ? `Your reactivation request has been successfully sent to the SMC for approval. We will notify you once your request has been processed.`
+              ? `Your profile has been successfully re-activated. You can able to perform action on your profile now.`
               : `Your username has been successfully created.
             <br /> A link to create your password has been sent to the registered mobile number.`}
           </Typography>

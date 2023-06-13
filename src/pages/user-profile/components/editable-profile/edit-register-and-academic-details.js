@@ -161,14 +161,14 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     let registration_detail = {};
     let qualification_details = {};
 
-    registration_detail.registration_date = RegistrationDate;
+    registration_detail.registration_date = RegistrationDate?.split('/')?.reverse()?.join('-');
     registration_detail.registration_number =
       work_flow_status_id === 3
         ? getQueryRaised('Registration Date')
           ? RegistrationNumber
-          : RegistrationNumber?.split('/')?.reverse()?.join('-')
+          : RegistrationNumber
         : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-        ? RegistrationNumber?.split('/')?.reverse()?.join('-')
+        ? RegistrationNumber
         : RegistrationNumber;
 
     registration_detail.state_medical_council = getRegistrationCouncilData(RegisteredWithCouncil);
@@ -635,6 +635,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 '.' +
                 qualification_detail_response_tos?.[index]?.file_type
               }
+              isVerified={qualification_detail_response_tos?.[index]?.is_verified}
             />
           );
         })}

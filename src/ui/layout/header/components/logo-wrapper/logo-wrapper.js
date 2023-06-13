@@ -7,9 +7,9 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import G20Logo from '../../../../../assets/images/g-20-logo.png';
-import DigitalIndia from '../../../../../assets/images/logo-slider/digital-India.png';
-import NmcLogo from '../../../../../assets/images/logo-slider/nmc-logo.png';
+import ABDMLogo from '../../../../../assets/images/logo-slider/ABDM_logo.svg';
+import G20Logo from '../../../../../assets/images/logo-slider/G20.svg';
+import NmcLogo from '../../../../../assets/images/logo-slider/NMC_logo.svg';
 import { IdleTimer } from '../../../../../helpers/components/idle-timer';
 import { logout, resetCommonReducer } from '../../../../../store/reducers/common-reducers';
 import { Button } from '../../../../core';
@@ -75,7 +75,7 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
       },
     },
     logoImage: {
-      height: '72px',
+      // height: '72px',
       [theme.breakpoints.down('md')]: {
         height: '60px',
       },
@@ -103,18 +103,18 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
       <Grid container alignItems="center">
         <Grid item xs={12} sm={6} my={1} pl={loggedIn && { xs: 7, md: 0 }}>
           <Grid container>
-            <Grid item xs="auto">
+            <Grid item xs="auto" mr={2}>
               <Link onClick={() => navigate('/')} sx={{ cursor: 'pointer' }}>
                 <img
-                  className={classes.logoImage}
                   src={NmcLogo}
+                  className={classes.logoImage}
                   alt="NATIONAL MEDICAL COMMISSION"
                 />
               </Link>
             </Grid>
-            <Grid item xs="auto">
+            <Grid item xs="auto" mr={2}>
               <Link onClick={() => navigate('/')} sx={{ cursor: 'pointer' }}>
-                <img className={classes.logoImage} src={DigitalIndia} alt="Digital logo" />
+                <img className={classes.logoImage} src={ABDMLogo} alt="Digital logo" />
               </Link>
             </Grid>
             <Grid item xs="auto">
@@ -138,7 +138,7 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
               variant="contained"
               color="secondary"
               data-testid="logoutbtn"
-              size="medium"
+              size="small"
               onClick={handleClickedLogout}
             >
               {t('Logout')}
@@ -148,7 +148,7 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
               <Button
                 variant="contained"
                 color="secondary"
-                size="medium"
+                size="small"
                 onClick={handleClickLoginRegister}
                 endIcon={<KeyboardArrowDownIcon />}
               >

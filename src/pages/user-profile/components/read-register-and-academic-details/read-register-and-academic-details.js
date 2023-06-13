@@ -233,7 +233,8 @@ const ReadRegisterAndAcademicDetails = ({
                             </MenuItem>
                           )}
                         {loggedInUserType === 'SMC' &&
-                          selectedAcademicStatus !== 'College Verified' && (
+                          selectedAcademicStatus !== 'College Verified' &&
+                          registrationDetails?.qualification_detail_response_tos.length < 2 && (
                             <MenuItem onClick={selectionChangeHandler} data-my-value={'forward'}>
                               Forward
                             </MenuItem>

@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import ReportIcon from '@mui/icons-material/Report';
 import { Grid, Tooltip, Typography } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import moment from 'moment';
@@ -60,7 +60,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
             </Typography>
             {getQueryRaised('Registered with council') !== undefined && (
               <Tooltip title={getQueryRaised('Registered with council')}>
-                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                <ReportIcon color="secondary" ml={2} />
               </Tooltip>
             )}
           </Typography>
@@ -73,6 +73,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
+                  cursor="pointer"
                   color="primary"
                   onClick={() => {
                     setOpenModal(true);
@@ -91,7 +92,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
             </Typography>
             {getQueryRaised('Registration Number') !== undefined && (
               <Tooltip title={getQueryRaised('Registration Number')}>
-                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                <ReportIcon color="secondary" ml={2} />
               </Tooltip>
             )}
           </Typography>
@@ -103,6 +104,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
+                  cursor="pointer"
                   color="primary"
                   onClick={() => {
                     setOpenModal(true);
@@ -121,7 +123,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
             </Typography>
             {getQueryRaised('Registration Date') !== undefined && (
               <Tooltip title={getQueryRaised('Registration Date')}>
-                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                <ReportIcon color="secondary" ml={2} />
               </Tooltip>
             )}
           </Typography>
@@ -133,6 +135,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
+                  cursor="pointer"
                   color="primary"
                   onClick={() => {
                     setOpenModal(true);
@@ -153,7 +156,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
             </Typography>
             {getQueryRaised('Registration') !== undefined && (
               <Tooltip title={getQueryRaised('Registration')}>
-                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                <ReportIcon color="secondary" ml={2} />
               </Tooltip>
             )}
           </Typography>
@@ -165,6 +168,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
+                  cursor="pointer"
                   color="primary"
                   onClick={() => {
                     setOpenModal(true);
@@ -181,7 +185,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
           </Typography>
           {getQueryRaised('Due Date of Renewal') !== undefined && (
             <Tooltip title={getQueryRaised('Due Date of Renewal')}>
-              <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+              <ReportIcon color="secondary" ml={2} />
             </Tooltip>
           )}
           <Grid display="flex">
@@ -194,6 +198,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
+                  cursor="pointer"
                   color="primary"
                   onClick={() => {
                     setOpenModal(true);
@@ -212,7 +217,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
             </Typography>
             {getQueryRaised('Upload the registration certificate') !== undefined && (
               <Tooltip title={getQueryRaised('Upload the registration certificate')}>
-                <InfoOutlinedIcon ml={2}></InfoOutlinedIcon>
+                <ReportIcon color="secondary" ml={2} />
               </Tooltip>
             )}
           </Typography>
@@ -235,6 +240,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
+                  cursor="pointer"
                   color="primary"
                   onClick={() => {
                     setOpenModal(true);

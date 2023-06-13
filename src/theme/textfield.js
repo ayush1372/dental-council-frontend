@@ -52,7 +52,9 @@ export const TextField = (palette, appFontType) => ({
         color: palette.error.main,
       },
       '&.Mui-disabled': {
+        opacity: '0.9',
         pointerEvents: 'none',
+        backgroundColor: palette.backgroundColor.light,
       },
       '&.MuiInputBase-adornedEnd': {
         paddingRight: '0',
