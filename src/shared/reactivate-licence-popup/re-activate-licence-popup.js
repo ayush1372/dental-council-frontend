@@ -31,13 +31,21 @@ export default function ReactivateLicencePopup(props) {
   function handleReactivate() {
     const { fromDate, reason } = getValues();
 
-    let reActivateLicensebody = {
-      hp_profile_id: loginData?.data?.profile_id,
-      application_type_id: 5,
-      action_id: 1,
-      from_date: fromDate?.split('/')?.reverse()?.join('-'),
-      remarks: reason,
-    };
+    let reActivateLicensebody = props?.suspensionCall
+      ? {
+          hp_profile_id: props?.profileID,
+          application_type_id: 5,
+          action_id: 1,
+          from_date: fromDate?.split('/')?.reverse()?.join('-'),
+          remarks: reason,
+        }
+      : {
+          hp_profile_id: loginData?.data?.profile_id,
+          application_type_id: 5,
+          action_id: 1,
+          from_date: fromDate?.split('/')?.reverse()?.join('-'),
+          remarks: reason,
+        };
 
     dispatch(createReActivateLicense(reActivateLicensebody))
       .then((response) => {

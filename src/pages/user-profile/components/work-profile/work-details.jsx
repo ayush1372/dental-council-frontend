@@ -588,9 +588,7 @@ const WorkDetails = ({
                     label="Enter Facility Id(If Known)"
                     placeholder="Facility Id"
                     defaultValue={getValues()?.facilityId}
-                    {...register(`facilityId`, {
-                      required: 'This field is required',
-                    })}
+                    {...register(`facilityId`)}
                   />
                 </Box>
                 <Box ml={1}>
@@ -624,9 +622,6 @@ const WorkDetails = ({
               <Grid item xs={12} md={3} lg={3}>
                 <Typography variant="subtitle2" color="inputTextColor.main">
                   State
-                  <Typography component="span" color="error.main">
-                    *
-                  </Typography>
                 </Typography>
                 <Select
                   fullWidth
@@ -641,9 +636,6 @@ const WorkDetails = ({
               <Grid item xs={12} md={3} lg={3}>
                 <Typography variant="subtitle2" color="inputTextColor.main">
                   District
-                  <Typography component="span" color="error.main">
-                    *
-                  </Typography>
                 </Typography>
                 <Select
                   fullWidth
