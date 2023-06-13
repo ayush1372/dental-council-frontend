@@ -64,6 +64,7 @@ const PersonalDetails = ({ personalDetails, selectedDataIndex }) => {
                 data?.user_type === 3) &&
                 dashboardTableDetails !== 'Approved' && (
                   <ContactSupportOutlinedIcon
+                    cursor="pointer"
                     color="primary"
                     onClick={() => setOpenModal(true)}
                     fontSize="width24"
@@ -105,6 +106,7 @@ const PersonalDetails = ({ personalDetails, selectedDataIndex }) => {
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
+                  cursor="pointer"
                   color="primary"
                   onClick={() => {
                     setOpenModal(true);
@@ -132,6 +134,7 @@ const PersonalDetails = ({ personalDetails, selectedDataIndex }) => {
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
+                  cursor="pointer"
                   color="primary"
                   onClick={() => {
                     setOpenModal(true);
@@ -159,6 +162,7 @@ const PersonalDetails = ({ personalDetails, selectedDataIndex }) => {
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
+                  cursor="pointer"
                   color="primary"
                   onClick={() => {
                     setOpenModal(true);
@@ -186,6 +190,7 @@ const PersonalDetails = ({ personalDetails, selectedDataIndex }) => {
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
+                  cursor="pointer"
                   color="primary"
                   onClick={() => {
                     setOpenModal(true);
@@ -218,6 +223,7 @@ const PersonalDetails = ({ personalDetails, selectedDataIndex }) => {
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
+                  cursor="pointer"
                   color="primary"
                   onClick={() => {
                     setOpenModal(true);
@@ -249,6 +255,7 @@ const PersonalDetails = ({ personalDetails, selectedDataIndex }) => {
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
+                  cursor="pointer"
                   color="primary"
                   onClick={() => {
                     setOpenModal(true);
@@ -280,6 +287,7 @@ const PersonalDetails = ({ personalDetails, selectedDataIndex }) => {
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
+                  cursor="pointer"
                   color="primary"
                   onClick={() => {
                     setOpenModal(true);

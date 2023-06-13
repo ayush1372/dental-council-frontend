@@ -90,6 +90,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                     element.is_verified !== 1 &&
                     college_status !== 'Approved' && (
                       <ContactSupportOutlinedIcon
+                        cursor="pointer"
                         color="primary"
                         onClick={() => {
                           setOpenModal(true);
@@ -123,6 +124,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                     element.is_verified !== 1 &&
                     college_status !== 'Approved' && (
                       <ContactSupportOutlinedIcon
+                        cursor="pointer"
                         color="primary"
                         onClick={() => {
                           setOpenModal(true);
@@ -156,6 +158,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                     element.is_verified !== 1 &&
                     college_status !== 'Approved' && (
                       <ContactSupportOutlinedIcon
+                        cursor="pointer"
                         color="primary"
                         onClick={() => {
                           setOpenModal(true);
@@ -192,6 +195,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                     element.is_verified !== 1 &&
                     college_status !== 'Approved' && (
                       <ContactSupportOutlinedIcon
+                        cursor="pointer"
                         color="primary"
                         onClick={() => {
                           setOpenModal(true);
@@ -225,6 +229,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                     element.is_verified !== 1 &&
                     college_status !== 'Approved' && (
                       <ContactSupportOutlinedIcon
+                        cursor="pointer"
                         color="primary"
                         onClick={() => {
                           setOpenModal(true);
@@ -256,6 +261,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                     element.is_verified !== 1 &&
                     college_status !== 'Approved' && (
                       <ContactSupportOutlinedIcon
+                        cursor="pointer"
                         color="primary"
                         onClick={() => {
                           setOpenModal(true);
@@ -302,6 +308,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                     element.is_verified !== 1 &&
                     college_status !== 'Approved' && (
                       <ContactSupportOutlinedIcon
+                        cursor="pointer"
                         color="primary"
                         onClick={() => {
                           setOpenModal(true);
