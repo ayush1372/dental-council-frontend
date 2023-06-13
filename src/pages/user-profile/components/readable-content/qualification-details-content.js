@@ -62,14 +62,37 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
           borderBottom={qualification_detail_response_tos?.length > 1 ? 1 : 'none'}
           borderColor={qualification_detail_response_tos?.length > 1 ? 'grey2.light' : 'none'}
           // backgroundColor={element.request_id === requestId ? 'red' : ''}
+          // eslint-disable-next-line no-console
         >
-          {element.is_verified ? (
-            <Typography ml={2} spacing={2} color="success.main">
+          {element?.is_verified === 1 ? (
+            <Typography
+              ml={2}
+              spacing={2}
+              color="success.main"
+              display={'flex'}
+              justifyContent={'right'}
+            >
               Approved
             </Typography>
-          ) : index !== 0 ? (
-            <Typography ml={2} spacing={2} color="error.main">
+          ) : element?.is_verified === 0 ? (
+            <Typography
+              ml={2}
+              spacing={2}
+              color="secondary.main"
+              display={'flex'}
+              justifyContent={'right'}
+            >
               Pending Approval
+            </Typography>
+          ) : element?.is_verified === 2 ? (
+            <Typography
+              ml={2}
+              spacing={2}
+              color="error.main"
+              display={'flex'}
+              justifyContent={'right'}
+            >
+              Rejected
             </Typography>
           ) : (
             ''
