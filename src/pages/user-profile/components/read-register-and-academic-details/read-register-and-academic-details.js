@@ -195,35 +195,82 @@ const ReadRegisterAndAcademicDetails = ({
                           >
                             Action <MoreHorizIcon />
                           </Button>
-                          <Button
-                            variant="contained"
-                            color="secondary"
-                            onClick={selectionChangeHandler}
-                            data-my-value={'verify'}
-                            sx={{
-                              mr: 2,
-                              mb: {
-                                xs: 1,
-                                md: 0,
-                              },
-                              width: {
-                                xs: '100%',
-                                md: 'fit-content',
-                              },
-                            }}
-                          >
-                            {loggedInUserType === 'SMC' ||
-                            loggedInUserType === 'College' ||
-                            loggedInUserType === 'NBE'
-                              ? 'Verify'
-                              : 'Approve'}
-                          </Button>
+                          {selectedAcademicStatus === 'College Verified' &&
+                            loggedInUserType === 'SMC' && (
+                              <Button
+                                variant="contained"
+                                color="secondary"
+                                onClick={selectionChangeHandler}
+                                data-my-value={'verify'}
+                                sx={{
+                                  mr: 2,
+                                  mb: {
+                                    xs: 1,
+                                    md: 0,
+                                  },
+                                  width: {
+                                    xs: '100%',
+                                    md: 'fit-content',
+                                  },
+                                }}
+                              >
+                                {loggedInUserType === 'SMC' ||
+                                loggedInUserType === 'College' ||
+                                loggedInUserType === 'NBE'
+                                  ? 'Verify'
+                                  : 'Approve'}
+                              </Button>
+                            )}
+                          {loggedInUserType === 'SMC' &&
+                            selectedAcademicStatus !== 'College Verified' && (
+                              <Button
+                                variant="contained"
+                                color="secondary"
+                                onClick={selectionChangeHandler}
+                                data-my-value={'forward'}
+                                sx={{
+                                  mr: 2,
+                                  mb: {
+                                    xs: 1,
+                                    md: 0,
+                                  },
+                                  width: {
+                                    xs: '100%',
+                                    md: 'fit-content',
+                                  },
+                                }}
+                              >
+                                Forward
+                              </Button>
+                            )}{' '}
+                          {loggedInUserType !== 'SMC' && (
+                            <Button
+                              variant="contained"
+                              color="secondary"
+                              onClick={selectionChangeHandler}
+                              data-my-value={'verify'}
+                              sx={{
+                                mr: 2,
+                                mb: {
+                                  xs: 1,
+                                  md: 0,
+                                },
+                                width: {
+                                  xs: '100%',
+                                  md: 'fit-content',
+                                },
+                              }}
+                            >
+                              {loggedInUserType === 'SMC' ||
+                              loggedInUserType === 'College' ||
+                              loggedInUserType === 'NBE'
+                                ? 'Verify'
+                                : 'Approve'}
+                            </Button>
+                          )}
                         </>
                       )}
                       <Menu {...bindMenu(popupState)}>
-                        {/* <MenuItem onClick={selectionChangeHandler} data-my-value={'verify'}>
-                          Verify
-                        </MenuItem> */}
                         {selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
                           selectedAcademicStatus !== 'Permanent Suspension Requests Received' &&
                           !!dashboardTableDetails &&
@@ -233,12 +280,19 @@ const ReadRegisterAndAcademicDetails = ({
                             </MenuItem>
                           )}
                         {loggedInUserType === 'SMC' &&
+                          selectedAcademicStatus !== 'College Verified' && (
+                            <MenuItem onClick={selectionChangeHandler} data-my-value={'verify'}>
+                              Verify
+                            </MenuItem>
+                          )}
+                        {/* Commenting the below block for future use
+                        {loggedInUserType === 'SMC' &&
                           selectedAcademicStatus !== 'College Verified' &&
                           registrationDetails?.qualification_detail_response_tos.length < 2 && (
                             <MenuItem onClick={selectionChangeHandler} data-my-value={'forward'}>
                               Forward
                             </MenuItem>
-                          )}
+                          )} */}
                         <MenuItem onClick={selectionChangeHandler} data-my-value={'reject'}>
                           Reject
                         </MenuItem>
@@ -250,7 +304,6 @@ const ReadRegisterAndAcademicDetails = ({
                               Permanent suspend
                             </MenuItem>
                           )}
-
                         {personalDetails.nmr_id !== undefined &&
                           loggedInUserType === 'NMC' &&
                           selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
