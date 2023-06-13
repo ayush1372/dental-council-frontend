@@ -1009,23 +1009,17 @@ const WorkDetails = ({
           <Grid container item spacing={2} mt={1}>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
-                Telecommunication URL
-                <Typography component="span" color="error.main">
-                  *
-                </Typography>
+                Teleconsultation URL
               </Typography>
 
               <TextField
                 variant="outlined"
-                name={'telecommunicationURL'}
-                required={true}
-                placeholder="Enter Telecommunication URL"
+                name={'teleconsultationURL'}
+                placeholder="Enter teleconsultation URL"
                 fullWidth
                 error={errors.telecommunicationURL?.message}
                 defaultValue={getValues().telecommunicationURL}
-                {...register('telecommunicationURL', {
-                  required: 'This field is required',
-                })}
+                {...register('teleconsultationURL')}
               />
             </Grid>
           </Grid>

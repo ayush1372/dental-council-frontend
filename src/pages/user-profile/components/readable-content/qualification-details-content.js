@@ -56,11 +56,11 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
             // backgroundColor={element.request_id === requestId ? 'red' : ''}
           >
             {element.is_verified ? (
-              <Typography ml={2} spacing={2} color="success.main">
+              <Typography ml={2} spacing={2} color="success.main" textAlign="right">
                 Approved
               </Typography>
             ) : index !== 0 ? (
-              <Typography ml={2} spacing={2} color="error.main">
+              <Typography ml={2} spacing={2} color="error.main" textAlign="right">
                 Pending Approval
               </Typography>
             ) : (

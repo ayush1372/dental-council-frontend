@@ -34,7 +34,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
   const { generateCaptcha } = useSelector((state) => state.loginReducer);
   const theme = useTheme();
   const dispatch = useDispatch();
-  const [selectedLoginOption, setSelectedLoginOption] = useState('mobileNumber');
+  const [selectedLoginOption, setSelectedLoginOption] = useState('userName');
   const [transaction_id, setTransaction_id] = useState('');
   const [otpFormEnabled, setOtpFormEnable] = useState(false);
   const [otpSend, setOtpSend] = useState(false);
