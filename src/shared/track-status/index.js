@@ -93,7 +93,7 @@ export default function TrackStatus() {
                     }
                     clearErrors={clearErrors}
                     error={loggedInUserType !== 'SMC' && errors.RegistrationCouncil?.message}
-                    {...register('RegistrationCouncil', {})}
+                    {...register('RegistrationCouncil')}
                     disabled={loggedInUserType === 'SMC'}
                     onChange={(currentValue) => {
                       setValue('RegistrationCouncilId', currentValue.id);
