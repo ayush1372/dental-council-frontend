@@ -77,6 +77,13 @@ export const PasswordRegexValidation = {
   },
 };
 
+export const LoginPasswordRegexValidation = {
+  required: 'Please enter Password',
+  pattern: {
+    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&])[A-Za-z\d@$!%*?#&]{8,100}$/,
+    message: 'Enter correct password',
+  },
+};
 export const AadharRegexValidation = {
   required: 'Enter a valid aadhaar number',
   pattern: {
@@ -86,7 +93,7 @@ export const AadharRegexValidation = {
 };
 
 export const EmailRegexValidation = {
-  required: 'Enter a valid Email ID',
+  required: 'Email ID is required',
   pattern: {
     value:
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
@@ -95,10 +102,10 @@ export const EmailRegexValidation = {
 };
 
 export const PostalCodeRegexValidation = {
-  required: 'This field is required',
+  required: 'Postal code is required',
   pattern: {
     value: /^\d{6}$/,
-    message: 'Should only contains 6 digits',
+    message: 'Should only contain 6 digits',
   },
 };
 
