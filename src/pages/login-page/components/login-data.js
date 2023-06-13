@@ -284,7 +284,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
               },
             }}
           >
-            <Typography variant="body1" color="textPrimary.main">
+            <Typography variant="body1" color="textPrimary.main" textAlign={'left'} ml={1}>
               Mobile Number
             </Typography>
           </Button>
