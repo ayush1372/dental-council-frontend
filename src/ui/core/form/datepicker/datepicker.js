@@ -52,7 +52,6 @@ const InputField = ({
           className={classes.root}
           disabled={disabled || false}
           minDate={props?.minDate}
-          maxDate={props?.maxDate}
           data-testid={props?.dataTestId}
           defaultValue={defaultValue !== undefined ? defaultValue : undefined}
           onChange={(newDateValue) => {

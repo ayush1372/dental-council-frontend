@@ -187,7 +187,7 @@ const CollegeMyProfile = () => {
                 </Typography>
 
                 <Typography variant="subtitle2" color="inputTextColor.main">
-                  {getUniversityData(getCollegeDetail?.data?.university_id)}
+                  {getUniversityData(universitiesList?.data?.university_id)}
                 </Typography>
               </Grid>
             ) : (
@@ -355,7 +355,7 @@ const CollegeMyProfile = () => {
                   College University Name
                 </Typography>
                 <Typography variant="subtitle2" color="primary.main">
-                  {userData.university_name}
+                  {getDistrictNameData(getUniversitiesList?.data?.university_id)}
                 </Typography>
               </Grid>
             ) : (
