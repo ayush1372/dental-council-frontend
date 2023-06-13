@@ -35,6 +35,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
     is_renewable,
     renewable_registration_date,
     registration_certificate,
+    file_type,
   } = registration_detail_to || {};
 
   const smcName = state_medical_council?.name || '';
@@ -265,6 +266,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
           certificate={registration_certificate}
           closePopup={CloseAttachmentPopup}
           alt={'Registration Certificate'}
+          certFileType={file_type}
         />
       )}
     </Grid>
