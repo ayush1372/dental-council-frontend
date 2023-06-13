@@ -204,7 +204,8 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
                   progress={
                     showStaticFormProgress ||
                     personalDetails?.nmr_id ||
-                    personalDetails?.work_flow_status_id === 1
+                    personalDetails?.work_flow_status_id === 1 ||
+                    personalDetails?.work_flow_status_id === 3
                       ? 75
                       : progress
                   }
