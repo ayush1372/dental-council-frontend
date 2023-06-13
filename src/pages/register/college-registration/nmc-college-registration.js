@@ -534,7 +534,7 @@ function NMCCollegeRegistration() {
             type="number"
             name="Pincode"
             required
-            placeholder={'Enter  Pin Code'}
+            placeholder={'Enter postal code'}
             error={errors.Pincode?.message}
             {...register('Pincode', PostalCodeRegexValidation)}
           />
@@ -576,7 +576,7 @@ function NMCCollegeRegistration() {
         <SuccessModalPopup
           open={successModalPopup}
           setOpen={() => setSuccessModalPopup(false)}
-          text={'We have Shared the Password link on given Email Id and Mobile No.'}
+          text={'We have shared the password link on given Email ID and Mobile No.'}
           fromCollegeRegistration={true}
         />
       )}

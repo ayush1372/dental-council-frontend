@@ -73,6 +73,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
+                  cursor="pointer"
                   color="primary"
                   onClick={() => {
                     setOpenModal(true);
@@ -103,6 +104,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
+                  cursor="pointer"
                   color="primary"
                   onClick={() => {
                     setOpenModal(true);
@@ -133,6 +135,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
+                  cursor="pointer"
                   color="primary"
                   onClick={() => {
                     setOpenModal(true);
@@ -165,6 +168,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
+                  cursor="pointer"
                   color="primary"
                   onClick={() => {
                     setOpenModal(true);
@@ -194,6 +198,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
+                  cursor="pointer"
                   color="primary"
                   onClick={() => {
                     setOpenModal(true);
@@ -235,6 +240,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
+                  cursor="pointer"
                   color="primary"
                   onClick={() => {
                     setOpenModal(true);

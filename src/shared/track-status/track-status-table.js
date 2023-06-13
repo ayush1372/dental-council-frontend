@@ -61,8 +61,9 @@ function TrackStatusTable(props) {
     setRowData(row);
     setShowViewPorfile(true);
     props?.setShowHeader(false);
-    props.setShowTrackApplication(true);
-    props.setShowTrackApplicationTable(false);
+    // Commenting the below Props.setState call as we are not passing any values from the parent.
+    // props?.setShowTrackApplication(true);
+    // props?.setShowTrackApplicationTable(false);
   };
 
   verboseLog('selectedRowData', selectedRowData, props);
@@ -239,7 +240,7 @@ function TrackStatusTable(props) {
       </Box>
       <Box>
         <ViewProfile />
-        <UserProfile showViewProfile={true} />
+        <UserProfile showViewProfile={true} selectedRowData={selectedRowData} />
       </Box>
     </Box>
   ) : (

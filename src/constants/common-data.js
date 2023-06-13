@@ -22,9 +22,10 @@ export const getSMCProfileDetails = (details) => [
 
 export const getNMCProfileDetails = (details) => [
   { label: 'Name', value: details?.first_name, id: '1' },
-  { label: 'Enrolment Number NDHM', value: details?.ndhm_enrollment, id: '2' },
-  { label: 'Enrolment Number', value: details?.enrolled_number, id: '3' },
-  { label: 'Council', value: details?.state_medical_council?.name, id: '4' },
+  // Commenting the below fields from edit profile Issue ID - CS-2078
+  // { label: 'Enrolment Number NDHM', value: details?.ndhm_enrollment, id: '2' },
+  // { label: 'Enrolment Number', value: details?.enrolled_number, id: '3' },
+  // { label: 'Council', value: details?.state_medical_council?.name, id: '4' },
   { label: 'Phone Number', value: details?.mobile_no, id: '5' },
   { label: 'Email Address', value: details?.email_id, id: '6' },
 ];
