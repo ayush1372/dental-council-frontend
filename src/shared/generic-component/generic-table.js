@@ -222,11 +222,6 @@ export default function GenericTable(props) {
                                         option?.onClick(e, row, option.dataValue) ||
                                         selectionChangeHandler(e, row)
                                       }
-                                      disabled={
-                                        props?.data?.[rowIndex]?.NMRID?.value === undefined
-                                          ? true
-                                          : false
-                                      }
                                     >
                                       {option.keyName}
                                     </MenuItem>
@@ -243,7 +238,6 @@ export default function GenericTable(props) {
                       <TableCell maxWidth={`${tableCellWidth}%`} key={index} align="left">
                         <Chip
                           sx={{ width: '100px' }}
-                          
                           type={
                             row[item.name]?.value === 'Submitted'
                               ? 'submitted'
