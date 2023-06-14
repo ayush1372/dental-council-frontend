@@ -625,10 +625,10 @@ const WorkDetails = ({
                 </Typography>
                 <Select
                   fullWidth
-                  error={errors.state?.message}
+                  // error={errors.state?.message}
                   name={'stateLGDCode'}
                   defaultValue={getValues().stateLGDCode}
-                  required={true}
+                  // required={true}
                   {...register('stateLGDCode')}
                   options={createSelectFieldData(statesList)}
                 />
@@ -639,10 +639,10 @@ const WorkDetails = ({
                 </Typography>
                 <Select
                   fullWidth
-                  error={errors.District?.message}
+                  // error={errors.District?.message}
                   name={'districtLGDCode'}
                   defaultValue={getValues().districtLGDCode}
-                  required={true}
+                  // required={true}
                   {...register('districtLGDCode')}
                   options={createSelectFieldData(facilityDistrict)}
                 />

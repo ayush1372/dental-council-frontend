@@ -13,10 +13,11 @@ export const UniqueUserNameForDoctor = [
 
 export const getSMCProfileDetails = (details) => [
   { label: 'Name', value: details?.first_name, id: '1' },
-  { label: 'Enrolment Number NDHM', value: details?.ndhm_enrollment, id: '2' },
+  // Commenting the below fields from edit profile Issue ID - CS-2078
+  // { label: 'Enrolment Number NDHM', value: details?.ndhm_enrollment, id: '2' },
+  // { label: 'Enrolment Number', value: details?.enrolled_number, id: '5' },
   { label: 'Phone Number', value: details?.mobile_no, id: '3' },
   { label: 'Email Address', value: details?.email_id, id: '4' },
-  { label: 'Enrolment Number', value: details?.enrolled_number, id: '5' },
   { label: 'Council', value: details?.state_medical_council?.name, id: '6' },
 ];
 

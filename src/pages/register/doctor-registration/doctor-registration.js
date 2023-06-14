@@ -55,9 +55,12 @@ const DoctorRegistrationWelcomePage = () => {
       registrationNumber: getValues().RegistrationNumber,
     };
     dispatch(fetchSmcRegistrationDetails(registrationData))
-      .then(() => {
-        setIsNext(true);
-        // setDatafoundModalPopup(true);
+      .then((response) => {
+        if (response?.data?.already_registered_in_nmr) {
+          setAccountExists(true);
+        } else {
+          setIsNext(true);
+        }
       })
       .catch((err) => {
         if (err?.data?.response?.data?.status === 400 && err?.data?.response?.data?.error) {
@@ -228,6 +231,7 @@ const DoctorRegistrationWelcomePage = () => {
           setOpen={() => setAccountExists(false)}
           accountExist={true}
           text={`Your account already exists. Please login with your credentails`}
+          loginFormName="Doctor"
         />
       )}
     </>
