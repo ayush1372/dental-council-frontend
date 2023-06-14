@@ -398,6 +398,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                 container
                 bgcolor="backgroundColor.light"
                 p={2}
+                pb={0}
                 mt={2}
                 mb={2}
                 display="flex"
@@ -407,7 +408,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
               >
                 <Grid item xs={12} display="flex">
                   <Grid item xs={1} display="flex"></Grid>
-                  <Box maxHeight={100} overflow="scroll">
+                  <Box maxHeight={80} overflow="scroll">
                     <Typography component="div" variant="body7">
                       {consentDescription}
                     </Typography>
