@@ -157,7 +157,7 @@ export default function ProfileImage(props) {
         </Grid>
       )}
       <Grid textAlign="center" item xs={12} mt={4}>
-        <Typography component="span" variant="subtitle2" sx={{ wordBreak: 'break-all' }}>
+        <Typography component="span" variant="subtitle2" whiteSpace="initial">
           {props.name || name}
         </Typography>
       </Grid>

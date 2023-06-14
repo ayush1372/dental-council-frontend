@@ -336,13 +336,13 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
             <TextField
               variant="outlined"
               name={'organizationType'}
-              placeholder="Organization Type"
+              placeholder="Organization type"
               fullWidth
               defaultValue={getValues().organizationType}
               {...register('organizationType', {
                 maxLength: {
                   value: 100,
-                  message: 'organizationType Is Reuired.',
+                  message: 'Organization type is required.',
                 },
               })}
               error={errors.organizationType?.message}
@@ -584,23 +584,17 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
-              Telecommunication URL
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
+              Teleconsultation URL
             </Typography>
 
             <TextField
               variant="outlined"
-              name={'telecommunicationURL'}
-              required={true}
-              placeholder="Telecommunication URL"
+              name={'teleconsultationURL'}
+              placeholder="Teleconsultation URL"
               fullWidth
               error={errors.telecommunicationURL?.message}
               defaultValue={getValues().telecommunicationURL}
-              {...register('telecommunicationURL', {
-                required: 'This field is required',
-              })}
+              {...register('teleconsultationURL')}
             />
           </Grid>
         </Grid>
