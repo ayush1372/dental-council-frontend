@@ -7,6 +7,7 @@ import { useTheme } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 
 import ApprovedApplication from '../../../../assets/images/application-approved.svg';
+import ApplicationForwarded from '../../../../assets/images/application-forwarded.svg';
 import RaisedApplication from '../../../../assets/images/application-raised.svg';
 import RejectedApplication from '../../../../assets/images/application-rejected.svg';
 import PendingApplication from '../../../../assets/images/pending-application.svg';
@@ -170,6 +171,8 @@ export default function Dashboard() {
       return RaisedApplication;
     } else if (item?.name?.includes('Rejected') || item?.name?.includes('Blacklisted')) {
       return RejectedApplication;
+    } else if (item?.name?.includes('Forwarded')) {
+      return ApplicationForwarded;
     } else if (item?.name?.includes('Total')) {
       return TotalRegReq;
     }
@@ -186,6 +189,8 @@ export default function Dashboard() {
       return 'Total number of verified applications';
     } else if (item?.name?.includes('Raised')) {
       return 'Total number of query raised on applications';
+    } else if (item?.name?.includes('Forwarded')) {
+      return 'Total number of forwarded applications';
     } else if (item?.name?.includes('Rejected') || item?.name?.includes('Blacklisted')) {
       return 'Total number of rejected applications';
     } else if (item?.name?.includes('Total')) {
@@ -266,7 +271,7 @@ export default function Dashboard() {
                   return (
                     <Box
                       mb={{ xs: 2, md: 4 }}
-                      flex={{ xs: '1 0 100%', sm: '1 0 32%', md: '1 0 24%', lg: '1 0 15%' }}
+                      flex={{ xs: '1 0 100%', sm: '1 0 32%', md: '1 0 24%', lg: '1 0 13%' }}
                       key={item?.name}
                     >
                       <Item id={item?.id} onClick={() => showTableFun(item)}>
