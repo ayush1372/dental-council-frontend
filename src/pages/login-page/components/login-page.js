@@ -82,7 +82,8 @@ export function LoginPage() {
 
   return (
     <Box sx={{ mt: 5, mb: 5, maxWidth: '648px', margin: '40px auto' }}>
-      {activeIndex === 0 && loginFormNames[loginFormname] === 'Doctor' ? (
+      {(activeIndex === 0 || activeIndex === undefined) &&
+      loginFormNames[loginFormname] === 'Doctor' ? (
         <DoctorLogin
           loginName={loginFormNames[loginFormname]}
           handleNext={handleNext}
