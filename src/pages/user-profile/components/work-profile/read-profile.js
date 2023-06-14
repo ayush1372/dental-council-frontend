@@ -252,7 +252,7 @@ const ReadWorkProfile = ({ handleEdit }) => {
               </Grid>
               <Grid item xs={12} md={3} mt={1}>
                 <Typography variant="body5" color="grey.label">
-                  Telecommunication URL
+                  Teleconsultation URL
                 </Typography>
                 <Grid display="flex" alignItems="center">
                   <Typography variant="subtitle2" color=" mt={2}.main">
