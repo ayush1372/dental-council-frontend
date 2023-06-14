@@ -1,7 +1,5 @@
-/* eslint-disable quotes */
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-// import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ReplayIcon from '@mui/icons-material/Replay';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
@@ -10,7 +8,6 @@ import CircularProgress from '@mui/material/CircularProgress';
 import moment from 'moment';
 import { AiOutlineEye } from 'react-icons/ai';
 
-// import { base64ToBlob } from '../../../helpers/functions/common-functions';
 import AttachmentViewPopup from '../../../shared/query-modal-popup/attachement-view-popup';
 import { SvgImageComponent } from '../../../ui/core/svg-icons';
 import { Button } from '../button/button.js';
@@ -33,7 +30,6 @@ export const UploadFile = (props) => {
     fileName,
   } = props;
   const [uploadPercentage, setUploadPercentage] = useState('');
-  // const [fileData, setFileData] = useState([]);
   const [browsedFileData, setBrowsedFileData] = useState();
   const [browsedFileName, setBrowsedFileName] = useState();
   const [uploadFileError, setUploadFileError] = useState('');
@@ -43,7 +39,6 @@ export const UploadFile = (props) => {
   const [browsedFileDataBase64, setBrowsedFileDataBase64] = useState('');
   const [viewFileType, setViewFileType] = useState('');
 
-  // let uploadPercentage = useSelector((state) => state.uploadDocument.uploadDocumentState);
   const addFile = (e) => {
     setBrowsedFileData(e);
     setBrowsedFileName(e.target.files[0].name);
@@ -51,19 +46,7 @@ export const UploadFile = (props) => {
 
   const CloseAttachmentPopup = () => {
     setAttachmentViewProfile(false);
-    // setAttachedFileData('');
-    // setBrowsedFileDataBase64('');
-    // setViewFileType('');
   };
-
-  useEffect(() => {
-    // return () => {
-    setAttachmentViewProfile(false);
-    setAttachedFileData('');
-    setBrowsedFileDataBase64('');
-    setViewFileType('');
-    // }
-  }, []);
 
   const fileToBase64 = async (file) => {
     let reader = new FileReader();
