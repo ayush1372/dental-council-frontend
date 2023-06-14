@@ -12,6 +12,8 @@ import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-po
 
 const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex }) => {
   const { data } = useSelector((state) => state.loginReducer?.loginData);
+  const { selectedAcademicStatus } = useSelector((state) => state.common);
+
   const { raisedQueryData } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
   const { count } = useSelector((state) => state?.dashboard);
   const [attachmentViewIndex, setAttachmentViewIndex] = useState();
@@ -117,6 +119,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
+                  selectedAcademicStatus !== 'College Verified' &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
@@ -151,6 +154,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
+                  selectedAcademicStatus !== 'College Verified' &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
@@ -185,6 +189,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
+                  selectedAcademicStatus !== 'College Verified' &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
@@ -222,6 +227,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
+                  selectedAcademicStatus !== 'College Verified' &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
@@ -256,6 +262,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
+                  selectedAcademicStatus !== 'College Verified' &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
@@ -288,6 +295,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
+                  selectedAcademicStatus !== 'College Verified' &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
@@ -336,6 +344,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
+                  selectedAcademicStatus !== 'College Verified' &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
