@@ -170,6 +170,7 @@ export const registrationRequestMapper = {
   Blacklisted: 'Blacklisted',
   Pending: 'Pending',
   'College Verified': 'College Verified',
+  Forwarded: 'Forwarded',
 };
 export const updationRequestMapper = {
   'Total Modification Requests': 'Total Updation request',
@@ -180,6 +181,7 @@ export const updationRequestMapper = {
   Blacklisted: 'Blacklisted',
   Pending: 'Update Request Received',
   'College Verified': 'College Verified',
+  Forwarded: 'Forwarded',
 };
 
 export const suspensionRequestMapper = {
