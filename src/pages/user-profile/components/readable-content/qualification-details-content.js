@@ -61,8 +61,6 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
           key={index}
           borderBottom={qualification_detail_response_tos?.length > 1 ? 1 : 'none'}
           borderColor={qualification_detail_response_tos?.length > 1 ? 'grey2.light' : 'none'}
-          // backgroundColor={element.request_id === requestId ? 'red' : ''}
-          // eslint-disable-next-line no-console
         >
           {element?.is_verified === 1 ? (
             <Typography
