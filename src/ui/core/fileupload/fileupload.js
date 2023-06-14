@@ -1,5 +1,5 @@
 /* eslint-disable quotes */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // import ControlPointIcon from '@mui/icons-material/ControlPoint';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
@@ -10,7 +10,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import moment from 'moment';
 import { AiOutlineEye } from 'react-icons/ai';
 
-import { base64ToBlob } from '../../../helpers/functions/common-functions';
+// import { base64ToBlob } from '../../../helpers/functions/common-functions';
+import AttachmentViewPopup from '../../../shared/query-modal-popup/attachement-view-popup';
 import { SvgImageComponent } from '../../../ui/core/svg-icons';
 import { Button } from '../button/button.js';
 
@@ -37,6 +38,10 @@ export const UploadFile = (props) => {
   const [browsedFileName, setBrowsedFileName] = useState();
   const [uploadFileError, setUploadFileError] = useState('');
   const [uploadStatus, setUploadStatus] = useState();
+  const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
+  const [attachedFileData, setAttachedFileData] = useState('');
+  const [browsedFileDataBase64, setBrowsedFileDataBase64] = useState('');
+  const [viewFileType, setViewFileType] = useState('');
 
   // let uploadPercentage = useSelector((state) => state.uploadDocument.uploadDocumentState);
   const addFile = (e) => {
@@ -44,145 +49,46 @@ export const UploadFile = (props) => {
     setBrowsedFileName(e.target.files[0].name);
   };
 
-  //Helper Function to convert b64 string to a blob
-  const b64toBlob = (b64Data, contentType = '', sliceSize = 512) => {
-    const byteCharacters = atob(b64Data);
-    const byteArrays = [];
-
-    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-      const slice = byteCharacters.slice(offset, offset + sliceSize);
-
-      const byteNumbers = new Array(slice.length);
-      for (let i = 0; i < slice.length; i++) {
-        byteNumbers[i] = slice.charCodeAt(i);
-      }
-
-      const byteArray = new Uint8Array(byteNumbers);
-      byteArrays.push(byteArray);
-    }
-
-    const blob = new Blob(byteArrays, { type: contentType });
-    return blob;
+  const CloseAttachmentPopup = () => {
+    setAttachmentViewProfile(false);
+    // setAttachedFileData('');
+    // setBrowsedFileDataBase64('');
+    // setViewFileType('');
   };
 
-  function downloadFile(file) {
-    if (file?.fileBlob) {
-      const newTab = window.open();
-      const image = new Image();
-      const url = file?.fileName;
-      const blob = file?.fileBlob;
+  useEffect(() => {
+    // return () => {
+    setAttachmentViewProfile(false);
+    setAttachedFileData('');
+    setBrowsedFileDataBase64('');
+    setViewFileType('');
+    // }
+  }, []);
 
-      if (url && url !== null && url?.includes('.png')) {
-        image.src = 'data:image/png;base64,' + blob;
-        image.width = '1250';
-        newTab.document.write(image.outerHTML);
-      }
-      if (url && url !== null && url?.includes('.jfif')) {
-        newTab.document.body.innerHTML =
-          "<iframe src='data:image/jfif;base64," + blob + "' width='100%' height='100%'></iframe>";
-      }
-      if (url && url !== null && url?.includes('.jpg')) {
-        image.src = 'data:image/jpg;base64,' + blob;
-        image.width = '1250';
-        newTab.document.write(image.outerHTML);
-      }
-      if (url && url !== null && url?.includes('.jpeg')) {
-        image.src = 'data:image/jpeg;base64,' + blob;
-        image.width = '1250';
-        newTab.document.write(image.outerHTML);
-      }
-      if (url && url !== null && url?.includes('.PNG')) {
-        image.src = 'data:image/PNG;base64,' + blob;
-        image.width = '1250';
-        newTab.document.write(image.outerHTML);
-      }
-      if (url && url !== null && url?.includes('.JFIF')) {
-        image.src = 'data:image/JFIF;base64,' + blob;
-        image.width = '1250';
-        newTab.document.write(image.outerHTML);
-      }
-      if (url && url !== null && url?.includes('.JPG')) {
-        image.src = 'data:image/JPG;base64,' + blob;
-        image.width = '1250';
-        newTab.document.write(image.outerHTML);
-      }
-      if (url && url !== null && url?.includes('.JPEG')) {
-        image.src = 'data:image/JPEG;base64,' + blob;
-        image.width = '1250';
-        newTab.document.write(image.outerHTML);
-      }
-      if ((url && url !== null && url?.includes('.pdf')) || url?.includes('.PDF')) {
-        const blob1 = base64ToBlob(blob, 'application/pdf');
-        const url1 = URL.createObjectURL(blob1);
-        newTab.document.write("<iframe width='100%' height='100%' src='" + url1 + "'></iframe>");
-      }
-      if (
-        (url && url !== null && url?.includes('.doc')) ||
-        url?.includes('.docs') ||
-        url?.includes('.DOC') ||
-        url?.includes('.DOCS')
-      ) {
-        newTab.document.body.innerHTML =
-          "<iframe src='data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64," +
-          blob +
-          "' width='100%' height='100%'></iframe>";
-      }
-      if (
-        (url && url !== null && url?.includes('.xlsx')) ||
-        url?.includes('.XLSX') ||
-        url?.includes('.xls') ||
-        url?.includes('.csv') ||
-        url?.includes('.XLS')
-      ) {
-        newTab.document.body.innerHTML =
-          "<iframe src='data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64," +
-          blob +
-          "' width='100%' height='100%'></iframe>";
-      }
-      if (
-        (url && url !== null && url?.includes('.ppt')) ||
-        url?.includes('.pptx') ||
-        url?.includes('.PPT') ||
-        url?.includes('.PPTX')
-      ) {
-        newTab.document.body.innerHTML =
-          "<iframe src='data:application/vnd.openxmlformats-officedocument.presentationml.presentation;base64," +
-          blob +
-          "' width='100%' height='100%'></iframe>";
-      }
-      if ((url && url !== null && url?.includes('.txt')) || url?.includes('.text')) {
-        newTab.document.body.innerHTML =
-          "<iframe src='data:application/txt;base64," +
-          blob +
-          "' width='100%' height='100%'></iframe>";
-      }
-      if ((url && url !== null && url?.includes('.gif')) || url?.includes('.GIF')) {
-        newTab.document.body.innerHTML =
-          "<iframe src='data:image/gif;base64," + blob + "' width='100%' height='100%'></iframe>";
-      }
+  const fileToBase64 = async (file) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(file?.file);
+    reader.onload = function () {
+      const base64String = reader?.result?.split(',')?.pop();
+      setBrowsedFileDataBase64(base64String);
+    };
+  };
+
+  const viewAttachemnent = (file) => {
+    if (typeof file?.file !== 'string') {
+      const viewFileType = file?.fileName?.split('.')?.pop();
+      setViewFileType(viewFileType);
+      fileToBase64(file);
+      setAttachedFileData(browsedFileDataBase64);
+      setAttachmentViewProfile(true);
     } else {
-      const reader = new FileReader();
-      const newTab = window.open();
-      const blob = b64toBlob(file.file, '');
-
-      reader.readAsDataURL(blob);
-      reader.onload = function () {
-        const type = reader?.result.includes('data:application/pdf;');
-        if (type === true) {
-          const pdfBase64 = reader?.result?.substring(reader?.result.indexOf(',') + 1);
-          const blob1 = base64ToBlob(pdfBase64, 'application/pdf');
-          const url = URL.createObjectURL(blob1);
-          newTab.document.write("<iframe width='100%' height='100%' src='" + url + "'></iframe>");
-        } else {
-          const image = new Image();
-          image.src = reader?.result;
-          image.width = '1250';
-          newTab.document.write(image.outerHTML);
-        }
-      };
-      reader.onerror = function () {};
+      const viewFileType = fileName?.split('.')?.pop();
+      setViewFileType(viewFileType);
+      setAttachedFileData(file?.file);
+      setAttachmentViewProfile(true);
     }
-  }
+  };
+
   //To add the file in the file array
   const handleChange = (e) => {
     setUploadFileError('');
@@ -233,6 +139,7 @@ export const UploadFile = (props) => {
       // setUploadPercentage(0);
     }
   };
+
   return (
     <>
       <Box>
@@ -384,15 +291,15 @@ export const UploadFile = (props) => {
                                   }
                                   setFileData([]);
                                 }}
-                              />{' '}
+                              />
                               {(file?.file || file?.fileBlob) && (
                                 <AiOutlineEye
                                   fill="#264488"
                                   size={20}
-                                  onClick={() => downloadFile(file)}
+                                  onClick={() => viewAttachemnent(file)}
                                   mr={1}
                                 />
-                              )}{' '}
+                              )}
                             </div>
                           ) : uploadStatus === 'failed' ? (
                             <div className={styles.actionArea}>
@@ -465,6 +372,14 @@ export const UploadFile = (props) => {
           )}
         </Grid>
       </div>
+      {attachmentViewProfile && (
+        <AttachmentViewPopup
+          certificate={attachedFileData}
+          closePopup={CloseAttachmentPopup}
+          alt={'Uploaded File'}
+          certFileType={viewFileType}
+        />
+      )}
     </>
   );
 };
