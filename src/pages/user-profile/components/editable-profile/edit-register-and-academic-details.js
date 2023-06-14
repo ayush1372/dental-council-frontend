@@ -565,7 +565,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 name="RenewalDate"
                 required={true}
                 defaultValue={getValues().RenewalDate}
-                minDate={new Date()}
+                minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 5))}
+                maxDate={new Date(new Date().setFullYear(new Date().getFullYear() + 5))}
                 backgroundColor={
                   work_flow_status_id === 3
                     ? '#F0F0F0'
