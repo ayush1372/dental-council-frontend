@@ -381,7 +381,7 @@ const WorkDetails = ({
       <Grid item xs={12} md={4}>
         <Select
           fullWidth
-          name="NatureOfWork"
+          name={'NatureOfWork'}
           label="Nature of work"
           defaultValue={getValues().NatureOfWork}
           required={true}
@@ -403,7 +403,7 @@ const WorkDetails = ({
 
         <RadioGroup
           onChange={handleWorkStatus}
-          name="workStatus"
+          name={'workStatus'}
           size="small"
           defaultValue={getValues().workStatus}
           items={createSelectFieldData(workStatusOptions)}
@@ -482,10 +482,10 @@ const WorkDetails = ({
           </Typography>
         </Typography>
         <AutoComplete
-          name="LanguageSpoken"
+          name={'LanguageSpoken'}
           options={languagesList?.data || []}
           value={languages}
-          error={getValues()?.LanguageSpoken?.length <= 0 && errors?.LanguageSpoken?.message}
+          error={errors?.LanguageSpoken?.message}
           multiple={true}
           required={true}
           {...register('LanguageSpoken', {
@@ -584,13 +584,11 @@ const WorkDetails = ({
                   <TextField
                     fullWidth
                     error={errors?.facilityId?.message}
-                    name="facilityId"
+                    name={'facilityId'}
                     label="Enter Facility Id(If Known)"
                     placeholder="Facility Id"
                     defaultValue={getValues()?.facilityId}
-                    {...register(`facilityId`, {
-                      required: 'This field is required',
-                    })}
+                    {...register(`facilityId`)}
                   />
                 </Box>
                 <Box ml={1}>
@@ -624,16 +622,13 @@ const WorkDetails = ({
               <Grid item xs={12} md={3} lg={3}>
                 <Typography variant="subtitle2" color="inputTextColor.main">
                   State
-                  <Typography component="span" color="error.main">
-                    *
-                  </Typography>
                 </Typography>
                 <Select
                   fullWidth
-                  error={errors.state?.message}
+                  // error={errors.state?.message}
                   name={'stateLGDCode'}
                   defaultValue={getValues().stateLGDCode}
-                  required={true}
+                  // required={true}
                   {...register('stateLGDCode')}
                   options={createSelectFieldData(statesList)}
                 />
@@ -641,16 +636,13 @@ const WorkDetails = ({
               <Grid item xs={12} md={3} lg={3}>
                 <Typography variant="subtitle2" color="inputTextColor.main">
                   District
-                  <Typography component="span" color="error.main">
-                    *
-                  </Typography>
                 </Typography>
                 <Select
                   fullWidth
-                  error={errors.District?.message}
+                  // error={errors.District?.message}
                   name={'districtLGDCode'}
                   defaultValue={getValues().districtLGDCode}
-                  required={true}
+                  // required={true}
                   {...register('districtLGDCode')}
                   options={createSelectFieldData(facilityDistrict)}
                 />
@@ -964,7 +956,7 @@ const WorkDetails = ({
               <Select
                 fullWidth
                 error={errors.Area?.message}
-                name="Area"
+                name={'Area'}
                 defaultValue={getValues().Area}
                 required={true}
                 {...register('Area', {
@@ -1009,23 +1001,17 @@ const WorkDetails = ({
           <Grid container item spacing={2} mt={1}>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
-                Telecommunication URL
-                <Typography component="span" color="error.main">
-                  *
-                </Typography>
+                Teleconsultation URL
               </Typography>
 
               <TextField
                 variant="outlined"
-                name={'telecommunicationURL'}
-                required={true}
-                placeholder="Enter Telecommunication URL"
+                name={'teleconsultationURL'}
+                placeholder="Enter teleconsultation URL"
                 fullWidth
                 error={errors.telecommunicationURL?.message}
                 defaultValue={getValues().telecommunicationURL}
-                {...register('telecommunicationURL', {
-                  required: 'This field is required',
-                })}
+                {...register('teleconsultationURL')}
               />
             </Grid>
           </Grid>

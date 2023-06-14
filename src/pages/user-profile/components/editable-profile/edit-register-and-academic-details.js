@@ -478,7 +478,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
-              Registration Date(if available)
+              Registration Date
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -565,7 +565,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 name="RenewalDate"
                 required={true}
                 defaultValue={getValues().RenewalDate}
-                minDate={new Date()}
+                minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 5))}
+                maxDate={new Date(new Date().setFullYear(new Date().getFullYear() + 5))}
                 backgroundColor={
                   work_flow_status_id === 3
                     ? '#F0F0F0'

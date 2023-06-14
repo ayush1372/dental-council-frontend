@@ -1,7 +1,9 @@
 import { Box, Container, Modal, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router';
 
+import { loginActiveState } from '../../store/reducers/login-reducer';
 import { Button } from '../../ui/core';
 
 export default function ErrorModalPopup({
@@ -10,13 +12,19 @@ export default function ErrorModalPopup({
   text,
   imrData,
   setIsNext,
+  loginFormName,
   handleAadhaarPage,
   accountExist,
   onReset,
 }) {
   const theme = useTheme();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleCloseModal = () => {
+    if (accountExist) {
+      dispatch(loginActiveState({ activeIndex: 0 }));
+      navigate('/login-page', { state: { loginFormname: loginFormName } });
+    }
     setOpen(false);
     window.location.reload();
   };
@@ -88,18 +96,18 @@ export default function ErrorModalPopup({
                 </Button>
               </Box>
             ) : accountExist ? (
-              <Box display="flex" justifyContent="right">
+              <Box display="flex" justifyContent="center">
                 <Button
                   size="small"
                   sx={{
                     mt: 3,
-                    width: '20%',
+                    width: '40%',
                   }}
                   variant="contained"
                   color="warning"
                   onClick={handleCloseModal}
                 >
-                  Ok
+                  Continue to login
                 </Button>
               </Box>
             ) : (
