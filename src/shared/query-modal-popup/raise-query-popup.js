@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { getRaiseQueryData } from '../../store/reducers/raise-query-reducer';
 import { TextField } from '../../ui/core';
+import { QueryRaisedValidation } from '../../utilities/common-validations';
 
 const RaiseQueryPopup = ({ ClosePopup, queryRaisedField }) => {
   const dispatch = useDispatch();
@@ -103,13 +104,7 @@ const RaiseQueryPopup = ({ ClosePopup, queryRaisedField }) => {
                 rows={4}
                 fullWidth
                 error={errors?.raiseQuery?.message}
-                {...register('raiseQuery', {
-                  required: 'This field is required',
-                  pattern: {
-                    value: /^(?:\s*\w+\b){1,150}\s*$/,
-                    message: 'Maximum word limit exceeded',
-                  },
-                })}
+                {...register('raiseQuery', QueryRaisedValidation)}
                 placeholder="Write a reason here . . ."
               />
             </Box>
