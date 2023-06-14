@@ -381,7 +381,7 @@ const WorkDetails = ({
       <Grid item xs={12} md={4}>
         <Select
           fullWidth
-          name="NatureOfWork"
+          name={'NatureOfWork'}
           label="Nature of work"
           defaultValue={getValues().NatureOfWork}
           required={true}
@@ -403,7 +403,7 @@ const WorkDetails = ({
 
         <RadioGroup
           onChange={handleWorkStatus}
-          name="workStatus"
+          name={'workStatus'}
           size="small"
           defaultValue={getValues().workStatus}
           items={createSelectFieldData(workStatusOptions)}
@@ -482,10 +482,10 @@ const WorkDetails = ({
           </Typography>
         </Typography>
         <AutoComplete
-          name="LanguageSpoken"
+          name={'LanguageSpoken'}
           options={languagesList?.data || []}
           value={languages}
-          error={getValues()?.LanguageSpoken?.length <= 0 && errors?.LanguageSpoken?.message}
+          error={errors?.LanguageSpoken?.message}
           multiple={true}
           required={true}
           {...register('LanguageSpoken', {
@@ -584,7 +584,7 @@ const WorkDetails = ({
                   <TextField
                     fullWidth
                     error={errors?.facilityId?.message}
-                    name="facilityId"
+                    name={'facilityId'}
                     label="Enter Facility Id(If Known)"
                     placeholder="Facility Id"
                     defaultValue={getValues()?.facilityId}
@@ -956,7 +956,7 @@ const WorkDetails = ({
               <Select
                 fullWidth
                 error={errors.Area?.message}
-                name="Area"
+                name={'Area'}
                 defaultValue={getValues().Area}
                 required={true}
                 {...register('Area', {
