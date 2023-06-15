@@ -284,7 +284,7 @@ const ActivateLicence = (props) => {
             <TablePagination
               rowsPerPageOptions={[]}
               component="div"
-              count={activateLicenseList?.data?.total_no_of_records || '0'}
+              count={activateLicenseList?.data?.total_no_of_records}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
