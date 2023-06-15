@@ -523,7 +523,7 @@ export function SuspendLicenseVoluntaryRetirement({
                 return (
                   <Checkbox
                     key={index}
-                    sx={{ padding: '0 8px 0 0' }}
+                    sx={{ padding: '0 8px 0 10px' }}
                     name={fieldData?.filedName}
                     value={fieldData?.value}
                     onChange={(e) => {

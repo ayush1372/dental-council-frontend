@@ -237,7 +237,7 @@ function DashboardControlledTable(props) {
         <TablePagination
           rowsPerPageOptions={[]}
           component="div"
-          count={dashboardTableDetails?.data?.total_no_of_records || '0'}
+          count={dashboardTableDetails?.data?.total_no_of_records}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

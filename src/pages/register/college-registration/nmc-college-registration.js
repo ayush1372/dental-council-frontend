@@ -560,6 +560,7 @@ function NMCCollegeRegistration() {
             name="Email"
             required
             placeholder={t('Enter Email ID')}
+            inputProps={{ maxLength: 100 }}
             error={errors.Email?.message}
             {...register('Email', EmailRegexValidation)}
           />

@@ -473,7 +473,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                         !consentD
                       }
                     >
-                      Verify Aadhar
+                      Verify Aadhaar
                     </Button>
                   </Box>
                 )}
