@@ -168,7 +168,7 @@ const ReadRegisterAndAcademicDetails = ({
               selectedAcademicStatus === 'Temporary Suspension Requests Received' ||
               selectedAcademicStatus === 'Permanent Suspension Requests Received' ||
               selectedAcademicStatus === 'Temporary Suspension Requests Approved' ||
-              selectedAcademicStatus === 'Permanent Suspension Requests Received') && (
+              selectedAcademicStatus === 'Permanent Suspension Requests Approved') && (
               <Box mt={2}>
                 <PopupState>
                   {(popupState) => (
@@ -176,7 +176,7 @@ const ReadRegisterAndAcademicDetails = ({
                       {data?.user_type === 4 && data?.user_sub_type === 6
                         ? ''
                         : selectedAcademicStatus !== 'Temporary Suspension Requests Approved' &&
-                          selectedAcademicStatus !== 'Permanent Suspension Requests Received' && (
+                          selectedAcademicStatus !== 'Permanent Suspension Requests Approved' && (
                             <>
                               <Button
                                 variant="contained"
@@ -274,7 +274,7 @@ const ReadRegisterAndAcademicDetails = ({
                           )}
                       {(loggedInUserType === 'NMC' || loggedInUserType === 'SMC') &&
                         (selectedAcademicStatus === 'Temporary Suspension Requests Approved' ||
-                          selectedAcademicStatus === 'Permanent Suspension Requests Received') && (
+                          selectedAcademicStatus === 'Permanent Suspension Requests Approved') && (
                           <Button
                             variant="contained"
                             color="secondary"
