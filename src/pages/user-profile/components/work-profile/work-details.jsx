@@ -485,7 +485,7 @@ const WorkDetails = ({
           name={'LanguageSpoken'}
           options={languagesList?.data || []}
           value={languages}
-          error={errors?.LanguageSpoken?.message}
+          error={getValues()?.LanguageSpoken?.length < 1 && errors?.LanguageSpoken?.message}
           multiple={true}
           required={true}
           {...register('LanguageSpoken', {
