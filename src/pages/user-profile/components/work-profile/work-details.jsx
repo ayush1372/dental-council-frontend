@@ -485,11 +485,11 @@ const WorkDetails = ({
           name={'LanguageSpoken'}
           options={languagesList?.data || []}
           value={languages}
-          error={errors?.LanguageSpoken?.message}
+          // error={errors?.LanguageSpoken?.message}
           multiple={true}
-          required={true}
+          // required={true}
           {...register('LanguageSpoken', {
-            required: 'This field is required',
+            // required: 'This field is required',
           })}
           onChange={(value) => {
             handleLanguageSpokenChange('LanguageSpoken', value);
