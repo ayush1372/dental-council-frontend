@@ -106,7 +106,7 @@ const EditQualificationDetails = ({
         name: 'India',
         nationality: 'Indian',
       });
-      setValue(`qualification[${index}].qualification`, 69);
+      if (!isAdditionalQualification) setValue(`qualification[${index}].qualification`, 69);
     }
     setValue(`qualification[${index}].qualificationfrom`, fields[index].qualificationfrom);
     setValue(`qualification[${index}].university`, fields[index].university);
@@ -460,7 +460,6 @@ const EditQualificationDetails = ({
               error={errors?.qualification?.[index]?.qualification?.message}
               name="Qualification"
               label="Name of the Degree"
-              defaultValue={degree[0]?.id}
               isAdditionalQualification={isAdditionalQualification}
               required={true}
               disabled={
@@ -473,12 +472,12 @@ const EditQualificationDetails = ({
               {...register(
                 `qualification[${index}].qualification`,
                 {
+                  required: 'Qualification Details is required',
+                },
+                {
                   onChange: (e) => {
                     setValue(`qualification[${index}].qualification`, e.target.value);
                   },
-                },
-                {
-                  required: 'Qualification Details is required',
                 }
               )}
               style={{
@@ -518,7 +517,8 @@ const EditQualificationDetails = ({
 
                 {
                   onload: (e) => {
-                    setValue(`qualification[${index}].qualification`, e.target.value);
+                    if (!isAdditionalQualification)
+                      setValue(`qualification[${index}].qualification`, e.target.value);
                   },
                 }
               )}

@@ -267,12 +267,16 @@ function NMCCollegeRegistration() {
     }
   };
   const onStateChange = (currentValue) => {
-    setValue('StateID', currentValue.id);
-    dispatch(getDistrictList(currentValue.id));
+    if (currentValue !== null) {
+      setValue('StateID', currentValue.id);
+      dispatch(getDistrictList(currentValue.id));
+    }
   };
   const onDistrictChange = (currentValue) => {
-    setValue('DistrictID', currentValue.id);
-    dispatch(getSubDistrictsList(currentValue.id));
+    if (currentValue !== null) {
+      setValue('DistrictID', currentValue.id);
+      dispatch(getSubDistrictsList(currentValue.id));
+    }
   };
 
   return (
@@ -487,7 +491,7 @@ function NMCCollegeRegistration() {
             <SearchableDropdown
               fullWidth
               name="District"
-              items={createEditFieldData(districtsList)}
+              items={createEditFieldData(districtsList, 'iso_code')}
               placeholder="Select  District"
               clearErrors={clearErrors}
               error={errors.District?.message}
@@ -513,11 +517,11 @@ function NMCCollegeRegistration() {
             items={createEditFieldData(subDistrictList)}
             placeholder="Select Town "
             error={errors.Town?.message}
-            {...register('Town', {
-              // required: 'Town name is required',
-            })}
+            {...register('Town')}
             onChange={(currentValue) => {
-              setValue('TownID', currentValue.id);
+              if (currentValue !== null) {
+                setValue('TownID', currentValue.id);
+              }
             }}
           />
         </Grid>
@@ -556,6 +560,7 @@ function NMCCollegeRegistration() {
             name="Email"
             required
             placeholder={t('Enter Email ID')}
+            inputProps={{ maxLength: 100 }}
             error={errors.Email?.message}
             {...register('Email', EmailRegexValidation)}
           />

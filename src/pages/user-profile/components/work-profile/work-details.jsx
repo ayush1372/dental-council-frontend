@@ -485,11 +485,11 @@ const WorkDetails = ({
           name={'LanguageSpoken'}
           options={languagesList?.data || []}
           value={languages}
-          error={errors?.LanguageSpoken?.message}
+          error={getValues()?.LanguageSpoken?.length < 1 && errors?.LanguageSpoken?.message}
           multiple={true}
-          required={true}
+          // required={true}
           {...register('LanguageSpoken', {
-            required: 'This field is required',
+            // required: 'This field is required',
           })}
           onChange={(value) => {
             handleLanguageSpokenChange('LanguageSpoken', value);
@@ -508,7 +508,7 @@ const WorkDetails = ({
           arrow
         >
           <Typography variant="body4" color="messageBlue.main" display="flex" alignItems="center">
-            <InfoOutlinedIcon sx={{ fontSize: '16px', ml: '450px', padding: '2px' }} />
+            <InfoOutlinedIcon sx={{ fontSize: '16px', ml: '310px', padding: '2px' }} />
             Multiple languages can be selected
           </Typography>
         </Tooltip>
