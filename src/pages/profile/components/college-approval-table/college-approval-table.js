@@ -195,7 +195,7 @@ function CollegeApprovalTable(props) {
           <TablePagination
             rowsPerPageOptions={[]}
             component="div"
-            count={collegeApprovalData?.data?.total_no_of_records || '0'}
+            count={collegeApprovalData?.data?.total_no_of_records}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

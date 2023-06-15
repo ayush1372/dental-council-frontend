@@ -223,9 +223,9 @@ export default function GenericTable(props) {
                                         selectionChangeHandler(e, row)
                                       }
                                       disabled={
-                                        props?.data?.[rowIndex]?.NMRID?.value === undefined
-                                          ? true
-                                          : false
+                                        row['NMCVerificationStatus']?.value === 'Blacklisted' ||
+                                        row['NMCVerificationStatus']?.value === 'Suspended' ||
+                                        row['councilVerificationStatus']?.value === 'Blacklisted'
                                       }
                                     >
                                       {option.keyName}
@@ -243,7 +243,6 @@ export default function GenericTable(props) {
                       <TableCell maxWidth={`${tableCellWidth}%`} key={index} align="left">
                         <Chip
                           sx={{ width: '100px' }}
-                          
                           type={
                             row[item.name]?.value === 'Submitted'
                               ? 'submitted'

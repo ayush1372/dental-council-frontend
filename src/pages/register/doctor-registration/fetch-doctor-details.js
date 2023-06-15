@@ -393,33 +393,12 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                 <Box p="35px 32px 0px 32px">
                   {isOtpValidAadhar ? <CheckCircleIcon color="success" /> : ''}
                 </Box>
-
-                {!showOtpAadhar && !isOtpValidAadhar && (
-                  <Box mt={3}>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      width="95px"
-                      onClick={handleUserAadhaarNumber}
-                      disabled={
-                        !validateAadharNumber(
-                          getValues().field_1 + getValues().field_2 + getValues().field_3
-                        ) ||
-                        getValues().field_1 === '' ||
-                        getValues().field_2 === '' ||
-                        getValues().field_3 === '' ||
-                        !consentD
-                      }
-                    >
-                      Verify
-                    </Button>
-                  </Box>
-                )}
               </Box>
               <Grid
                 container
                 bgcolor="backgroundColor.light"
                 p={2}
+                pb={0}
                 mt={2}
                 mb={2}
                 display="flex"
@@ -428,9 +407,18 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                 borderRadius="5px"
               >
                 <Grid item xs={12} display="flex">
-                  <Grid item xs={1} display="flex">
+                  <Grid item xs={1} display="flex"></Grid>
+                  <Box maxHeight={80} overflow="scroll">
+                    <Typography component="div" variant="body7">
+                      {consentDescription}
+                    </Typography>
+                  </Box>
+                </Grid>
+                <Grid Container xs={12} display="flex" sx={{ alignItems: 'center' }}>
+                  <Grid item xs={11} display="flex">
                     <Checkbox
-                      sx={{ width: '18px', height: '18px', marginLeft: 1 }}
+                      label="I Agree"
+                      sx={{ width: '18px', height: '18px', marginRight: 1, marginLeft: 2 }}
                       name="consent"
                       defaultChecked={getValues()?.consent}
                       checked={consentD}
@@ -439,16 +427,6 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                       }}
                       disabled={isOtpValidAadhar}
                     />
-                  </Grid>
-                  <Box maxHeight={100} overflow="scroll">
-                    <Typography component="div" variant="body7">
-                      {consentDescription}
-                    </Typography>
-                  </Box>
-                </Grid>
-                <Grid item xs={12} display="flex">
-                  <Grid item xs={9} display="flex">
-                    {' '}
                   </Grid>
 
                   <Grid item xs={1} display="flex">
@@ -472,6 +450,34 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                   </Grid>
                 </Grid>
               </Grid>
+
+              <Box
+                display="flex"
+                justifyContent="flex-start"
+                flexDirection={{ xs: 'column', sm: 'row' }}
+              >
+                {!showOtpAadhar && !isOtpValidAadhar && (
+                  <Box>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      width="95px"
+                      onClick={handleUserAadhaarNumber}
+                      disabled={
+                        !validateAadharNumber(
+                          getValues().field_1 + getValues().field_2 + getValues().field_3
+                        ) ||
+                        getValues().field_1 === '' ||
+                        getValues().field_2 === '' ||
+                        getValues().field_3 === '' ||
+                        !consentD
+                      }
+                    >
+                      Verify Aadhaar
+                    </Button>
+                  </Box>
+                )}
+              </Box>
               {showOtpAadhar && (
                 <Box
                   sx={{

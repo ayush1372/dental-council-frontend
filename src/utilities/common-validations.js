@@ -92,6 +92,14 @@ export const AadharRegexValidation = {
   },
 };
 
+export const QueryRaisedValidation = {
+  required: 'This field is required',
+  pattern: {
+    value: /^[\s\S]{1,150}$/,
+    message: 'Maximum word limit exceeded',
+  },
+};
+
 export const EmailRegexValidation = {
   required: 'Email ID is required',
   pattern: {
