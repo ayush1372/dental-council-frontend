@@ -508,7 +508,7 @@ const WorkDetails = ({
           arrow
         >
           <Typography variant="body4" color="messageBlue.main" display="flex" alignItems="center">
-            <InfoOutlinedIcon sx={{ fontSize: '16px', ml: '450px', padding: '2px' }} />
+            <InfoOutlinedIcon sx={{ fontSize: '16px', ml: '310px', padding: '2px' }} />
             Multiple languages can be selected
           </Typography>
         </Tooltip>

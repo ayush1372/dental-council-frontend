@@ -266,7 +266,7 @@ function TrackAppicationTable({
         <TablePagination
           rowsPerPageOptions={[]}
           component="div"
-          count={tableData?.data?.data?.total_no_of_records || '0'}
+          count={tableData?.data?.data?.total_no_of_records}
           page={page}
           rowsPerPage={rowsPerPage}
           onPageChange={handleChangePage}
