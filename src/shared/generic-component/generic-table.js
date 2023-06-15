@@ -222,6 +222,11 @@ export default function GenericTable(props) {
                                         option?.onClick(e, row, option.dataValue) ||
                                         selectionChangeHandler(e, row)
                                       }
+                                      disabled={
+                                        row['NMCVerificationStatus']?.value === 'Blacklisted' ||
+                                        row['NMCVerificationStatus']?.value === 'Suspended' ||
+                                        row['councilVerificationStatus']?.value === 'Blacklisted'
+                                      }
                                     >
                                       {option.keyName}
                                     </MenuItem>
