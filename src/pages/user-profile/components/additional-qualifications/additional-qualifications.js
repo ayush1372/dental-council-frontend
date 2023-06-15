@@ -16,7 +16,7 @@ import EditQualificationDetails from '../editable-profile/edit-qualification-det
 
 const qualificationObjTemplate = [
   {
-    qualification: '',
+    qualification: undefined,
     country: '',
     state: '',
     college: '',
