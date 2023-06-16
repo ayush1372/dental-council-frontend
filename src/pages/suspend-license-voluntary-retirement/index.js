@@ -71,8 +71,8 @@ export function SuspendLicenseVoluntaryRetirement({
       case 'verify':
         action_id = 4;
         user_group_id === 3
-          ? setSuccessPopupMessage('Approved Successfully')
-          : setSuccessPopupMessage('Verified Successfully');
+          ? setSuccessPopupMessage('Verified Successfully')
+          : setSuccessPopupMessage('Approved Successfully');
         break;
       case 'reject':
         action_id = 5;
@@ -194,7 +194,7 @@ export function SuspendLicenseVoluntaryRetirement({
           })
           .catch((allFailMsg) => {
             successToast(
-              'ERR_INT: ' + allFailMsg?.data?.message,
+              allFailMsg?.data?.response?.data?.message,
               'auth-error',
               'error',
               'top-center'
