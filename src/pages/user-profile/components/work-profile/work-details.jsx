@@ -487,9 +487,9 @@ const WorkDetails = ({
           value={languages}
           error={getValues()?.LanguageSpoken?.length < 1 && errors?.LanguageSpoken?.message}
           multiple={true}
-          required={true}
+          // required={true}
           {...register('LanguageSpoken', {
-            required: 'This field is required',
+            // required: 'This field is required',
           })}
           onChange={(value) => {
             handleLanguageSpokenChange('LanguageSpoken', value);
