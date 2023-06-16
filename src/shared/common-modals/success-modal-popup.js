@@ -72,7 +72,7 @@ export default function SuccessModalPopup({
           ActiveTab = smcTabs[0].tabName;
           break;
         case 'Doctor':
-          ActiveTab = doctorTabs[0].tabName;
+          ActiveTab = doctorTabs[1].tabName;
           break;
         case 'NMC':
           ActiveTab = nmcTabs[0].tabName;
