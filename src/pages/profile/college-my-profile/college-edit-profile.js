@@ -30,13 +30,13 @@ const CollegeEditProfile = (props) => {
 
   useEffect(() => {
     dispatch(getStatesList());
-    setValue('CouncilID', getCollegeDetail?.data?.state_medical_council_id);
+    setValue('CouncilID', getCollegeDetail?.data?.state_medical_council_to?.id);
   }, []);
 
   useEffect(() => {
     dispatch(getUniversitiesList());
-    if (getCollegeDetail?.data?.state_id !== undefined)
-      dispatch(getDistrictList(getCollegeDetail?.data?.state_id)).then((res) => {
+    if (getCollegeDetail?.data?.state_to?.id !== undefined)
+      dispatch(getDistrictList(getCollegeDetail?.data?.state_to?.id)).then((res) => {
         setDistrictList(res?.data);
       });
   }, []);
