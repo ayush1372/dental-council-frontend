@@ -71,8 +71,8 @@ export function SuspendLicenseVoluntaryRetirement({
       case 'verify':
         action_id = 4;
         user_group_id === 3
-          ? setSuccessPopupMessage('Approved Successfully')
-          : setSuccessPopupMessage('Verified Successfully');
+          ? setSuccessPopupMessage('Verified Successfully')
+          : setSuccessPopupMessage('Approved Successfully');
         break;
       case 'reject':
         action_id = 5;
@@ -85,6 +85,12 @@ export function SuspendLicenseVoluntaryRetirement({
       case 'blacklist':
         action_id = 6;
         setSuccessPopupMessage('Permanently Suspended');
+        break;
+      case 'approve':
+        action_id = 4;
+        user_group_id === 3
+          ? setSuccessPopupMessage('Approved Successfully')
+          : setSuccessPopupMessage('Verified Successfully');
         break;
       default:
         action_id = 1;
@@ -120,7 +126,6 @@ export function SuspendLicenseVoluntaryRetirement({
           : userActiveTab === 'voluntary-suspend-license'
           ? 1
           : '',
-
       from_date: getValues()?.fromDate
         ? getValues()?.fromDate?.split('/')?.reverse()?.join('-')
         : '',
@@ -132,6 +137,8 @@ export function SuspendLicenseVoluntaryRetirement({
       request_id: personalDetails?.request_id,
       application_type_id: personalDetails?.application_type_id
         ? personalDetails?.application_type_id
+        : userActiveTab === 'Activate Licence'
+        ? 5
         : 1,
       actor_id: loginData?.data?.user_group_id,
       action_id: action_id,
@@ -194,7 +201,7 @@ export function SuspendLicenseVoluntaryRetirement({
           })
           .catch((allFailMsg) => {
             successToast(
-              'ERR_INT: ' + allFailMsg?.data?.message,
+              allFailMsg?.data?.response?.data?.message,
               'auth-error',
               'error',
               'top-center'

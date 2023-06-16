@@ -306,7 +306,7 @@ const WorkDetails = ({
     let DistrictData = [];
     Array.isArray(districtsList) &&
       districtsList?.map((elementData) => {
-        if (elementData.id === District) {
+        if (elementData.iso_code === District) {
           DistrictData.push(elementData);
         }
       });
@@ -495,8 +495,6 @@ const WorkDetails = ({
             handleLanguageSpokenChange('LanguageSpoken', value);
           }}
         />
-      </Grid>
-      <Grid>
         <Tooltip
           title={
             <Box>
@@ -508,7 +506,7 @@ const WorkDetails = ({
           arrow
         >
           <Typography variant="body4" color="messageBlue.main" display="flex" alignItems="center">
-            <InfoOutlinedIcon sx={{ fontSize: '16px', ml: '310px', padding: '2px' }} />
+            <InfoOutlinedIcon sx={{ fontSize: '20px', padding: '2px' }} />
             Multiple languages can be selected
           </Typography>
         </Tooltip>
@@ -914,7 +912,7 @@ const WorkDetails = ({
                 {...register('District', {
                   required: 'This field is required',
                 })}
-                options={createSelectFieldData(districtsList)}
+                options={createSelectFieldData(districtsList, 'iso_code')}
               />
             </Grid>
             <Grid item xs={12} md={4}>
