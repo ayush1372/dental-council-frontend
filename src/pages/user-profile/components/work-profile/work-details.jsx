@@ -306,7 +306,7 @@ const WorkDetails = ({
     let DistrictData = [];
     Array.isArray(districtsList) &&
       districtsList?.map((elementData) => {
-        if (elementData.id === District) {
+        if (elementData.iso_code === District) {
           DistrictData.push(elementData);
         }
       });
@@ -914,7 +914,7 @@ const WorkDetails = ({
                 {...register('District', {
                   required: 'This field is required',
                 })}
-                options={createSelectFieldData(districtsList)}
+                options={createSelectFieldData(districtsList, 'iso_code')}
               />
             </Grid>
             <Grid item xs={12} md={4}>
