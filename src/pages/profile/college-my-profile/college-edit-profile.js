@@ -27,8 +27,6 @@ const CollegeEditProfile = (props) => {
   const [successModalPopup, setSuccessModalPopup] = useState(false);
   const userData = getCollegeDetail?.data;
   const dispatch = useDispatch();
-  // eslint-disable-next-line no-console
-  console.log('test', userData);
 
   useEffect(() => {
     dispatch(getStatesList());
@@ -120,9 +118,6 @@ const CollegeEditProfile = (props) => {
     return statesList?.find((obj) => obj?.id === stateId);
   };
 
-  // const getCouncilNameData = (state_medical_council_id) => {
-  //   return councilNames?.find((obj) => obj?.id === state_medical_council_id);
-  // };
   const getDistrictNameData = (district_id) => {
     return districtList?.find((obj) => obj?.id === district_id);
   };
