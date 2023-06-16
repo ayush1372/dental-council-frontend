@@ -194,7 +194,7 @@ export function SuspendLicenseVoluntaryRetirement({
           })
           .catch((allFailMsg) => {
             successToast(
-              'ERR_INT: ' + allFailMsg?.data?.message,
+              allFailMsg?.data?.response?.data?.message,
               'auth-error',
               'error',
               'top-center'
