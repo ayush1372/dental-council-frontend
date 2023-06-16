@@ -218,6 +218,16 @@ function NMCCollegeRegistration() {
       setShowCollegeName(true);
       // reset();
     } else {
+      setValue('CouncilName', '');
+      setValue('CouncilID', '');
+      setValue('Name', '');
+      setValue('CollegeCode', '');
+      setValue('MobileNumber', '');
+      setValue('Website', '');
+      setValue('AddressLine1', '');
+      setValue('AddressLine2', '');
+      setValue('Pincode', '');
+      setValue('Email', '');
       setShowCollegeName(false);
       setValue('CollegeNameID', currentValue?.id);
       if (currentValue?.id !== undefined)
@@ -242,25 +252,30 @@ function NMCCollegeRegistration() {
             setValue('Email', response?.data?.email_id);
           }
 
-          if (response?.data?.state_medical_council_id) {
-            setValue('CouncilID', response?.data?.state_medical_council_id);
+          if (response?.data?.state_medical_council_to?.id) {
+            setValue('CouncilID', response?.data?.state_medical_council_to?.id);
             setValue(
               'CouncilName',
-              getSelecetedName(response?.data?.state_medical_council_id, 'councilData')
+              getSelecetedName(response?.data?.state_medical_council_to?.id, 'councilData')
             );
           }
-          if (response?.data?.district_id) {
-            setValue('DistrictID', response?.data?.district_id);
+          if (response?.data?.district_to?.id) {
+            setValue('DistrictID', response?.data?.district_to?.id);
           }
-          if (response?.data?.state_id) {
-            setValue('StateID', response?.data?.state_id);
-            setValue('StateName', getSelecetedName(response?.data?.state_id, 'stateData'));
+          if (response?.data?.state_to?.id) {
+            setValue('StateID', response?.data?.state_to?.id);
+            // setValue('StateName', getSelecetedName(response?.data?.state_id, 'stateData'));
+            setValue('StateName', getSelecetedName(response?.data?.state_to?.id, 'stateData'));
           }
-          if (response?.data?.university_id) {
-            setValue('UniversityID', response?.data?.university_id);
+          if (response?.data?.university_to?.id) {
+            setValue('UniversityID', response?.data?.university_to?.id);
+            // setValue(
+            //   'UniversityName',
+            //   getSelecetedName(response?.data?.university_id, 'universityData')
+            // );
             setValue(
               'UniversityName',
-              getSelecetedName(response?.data?.university_id, 'universityData')
+              getSelecetedName(response?.data?.university_to?.id, 'universityData')
             );
           }
         });
