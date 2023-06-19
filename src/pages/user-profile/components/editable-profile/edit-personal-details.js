@@ -406,14 +406,15 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
   };
 
   async function onHandleSave() {
-    if (!email) {
-      setValidDetails({ ...validDetails, email: true });
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      });
-      return;
-    }
+    // CS-2173 Commenting for future use
+    // if (!email) {
+    //   setValidDetails({ ...validDetails, email: true });
+    //   window.scrollTo({
+    //     top: 0,
+    //     behavior: 'smooth',
+    //   });
+    //   return;
+    // }
     const {
       MiddleName,
       LastName,
