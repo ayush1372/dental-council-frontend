@@ -75,10 +75,10 @@ const CollegeEditProfile = (props) => {
       website: getValues().CollegeWebsite,
       address_line1: getValues()?.AddressLine1 || '',
       address_line2: getValues()?.AddressLine2 || '',
-      district_id: getValues()?.DistrictID,
-      village_id: subDistrictList.find((x) => x.name === getValues()?.Area)?.id,
+      district_to: districtsList?.find((x) => x.id === getValues()?.DistrictID),
+      villages_to: subDistrictList?.find((x) => x.name === getValues()?.Area),
       pin_code: getValues()?.CollegePincode,
-      state_medical_council_id: getValues()?.CouncilID,
+      state_medical_council_to: councilNames?.find((x) => x.id === getValues()?.CouncilID),
       mobile_number: getValues()?.CollegePhoneNumber,
       email_id: getValues()?.CollegeEmailId,
       university_id: getValues()?.UniversityId,
@@ -97,10 +97,10 @@ const CollegeEditProfile = (props) => {
 
   const handleInput = (e) => {
     e.preventDefault();
-    if (e.target.value.length > 0) {
-      e.target.value = isNaN(e.target.value)
-        ? e.target.value.toString().slice(0, -1)
-        : Math.max(0, parseInt(e.target.value)).toString().slice(0, 10);
+    if (e?.target?.value?.length > 0) {
+      e.target.value = isNaN(e?.target?.value)
+        ? e?.target?.value?.toString()?.slice(0, -1)
+        : Math?.max(0, parseInt(e.target.value))?.toString()?.slice(0, 10);
     }
   };
 
@@ -111,7 +111,9 @@ const CollegeEditProfile = (props) => {
 
   const onDistrictChange = (currentValue) => {
     setValue('DistrictID', currentValue?.id);
-    dispatch(getSubDistrictsList(currentValue?.id));
+    if (currentValue?.id !== undefined) {
+      dispatch(getSubDistrictsList(currentValue?.id));
+    }
   };
 
   const getStateData = (stateId) => {
