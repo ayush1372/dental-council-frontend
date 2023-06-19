@@ -20,7 +20,7 @@ export default function ProfileTabContainer({ DrawerOptions }) {
             {userActiveTab === 'my-profile' && loggedInUserType === 'Doctor' ? (
               ''
             ) : (
-              <Typography variant="h2" py={3} bgcolor={`${theme.palette.white.main}`} mb={2} px={3}>
+              <Typography variant="h2" py={2} bgcolor={`${theme.palette.white.main}`} mb={1} px={3}>
                 {item?.name}
               </Typography>
             )}
