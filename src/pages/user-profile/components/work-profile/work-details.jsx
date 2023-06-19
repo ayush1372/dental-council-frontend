@@ -664,10 +664,6 @@ const WorkDetails = ({
                     onClick={() => {
                       searchFacilitiesHandler();
                     }}
-                    disabled={
-                      getValues()?.stateLGDCode?.length === 0 ||
-                      getValues()?.districtLGDCode?.length === 0
-                    }
                   >
                     Search
                   </Button>
