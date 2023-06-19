@@ -38,9 +38,11 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
   const { collegeData } = useSelector((state) => state.college);
   const userLoggedIn = useSelector((state) => state.common.isloggedIn);
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
-  const { profile_photo, full_name } = useSelector(
-    (state) => state.doctorUserProfileReducer?.personalDetails?.personal_details
-  );
+
+  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const { personal_details } = personalDetails || {};
+
+  const { profile_photo, full_name } = personal_details || {};
 
   const [anchorElUser, setAnchorElUser] = useState(null);
 
