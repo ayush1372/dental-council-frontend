@@ -453,7 +453,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
 
               <Box
                 display="flex"
-                justifyContent="flex-start"
+                justifyContent="flex-end"
                 flexDirection={{ xs: 'column', sm: 'row' }}
               >
                 {!showOtpAadhar && !isOtpValidAadhar && (

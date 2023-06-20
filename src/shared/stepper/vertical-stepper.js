@@ -35,15 +35,15 @@ export default function VerticalLinearStepper() {
   };
   const getTime = (date) => {
     const dateObj = new Date(date);
-    let ans = dateObj.getMinutes();
+
+    let ans = dateObj?.getMinutes();
     let minute;
     if (ans >= 0 && ans <= 9) {
       minute = '0' + ans;
     } else {
       minute = ans;
     }
-    return ` ${dateObj.getHours()}:${minute}`;
-    // return ` ${dateObj.getHours()}:${dateObj.getMinutes()}`;
+    return ` ${dateObj?.getHours()}:${minute}`;
   };
 
   const theme = useTheme();

@@ -4,7 +4,7 @@ import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRou
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import RemoveCircleOutlineRoundedIcon from '@mui/icons-material/RemoveCircleOutlineRounded';
-import { Box, Grid, Tab, Tabs, Tooltip, Typography } from '@mui/material';
+import { Box, Grid, Tab, Tabs, Typography } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormGroup from '@mui/material/FormGroup';
 import GoogleMapReact from 'google-map-react';
@@ -516,21 +516,11 @@ const WorkDetails = ({
             handleLanguageSpokenChange('LanguageSpoken', value);
           }}
         />
-        <Tooltip
-          title={
-            <Box>
-              Information about schedule
-              <Box mr="2px"> will be shown here</Box>
-            </Box>
-          }
-          placement="top-end"
-          arrow
-        >
-          <Typography variant="body4" color="messageBlue.main" display="flex" alignItems="center">
-            <InfoOutlinedIcon sx={{ fontSize: '20px', padding: '2px' }} />
-            Multiple languages can be selected
-          </Typography>
-        </Tooltip>
+
+        <Typography variant="body4" color="messageBlue.main" display="flex" alignItems="center">
+          <InfoOutlinedIcon sx={{ fontSize: '20px', padding: '2px' }} />
+          Multiple languages can be selected
+        </Typography>
       </Grid>
       <Grid item xs={12}>
         <Typography
@@ -685,10 +675,6 @@ const WorkDetails = ({
                     onClick={() => {
                       searchFacilitiesHandler();
                     }}
-                    disabled={
-                      getValues()?.stateLGDCode?.length === 0 ||
-                      getValues()?.districtLGDCode?.length === 0
-                    }
                   >
                     Search
                   </Button>
