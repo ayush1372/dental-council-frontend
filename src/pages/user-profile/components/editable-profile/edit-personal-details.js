@@ -93,7 +93,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
   const stateName = state?.name || '';
   const districtName = district?.name || '';
   const subDistrictName = sub_district?.name || '';
-  const villageName = kyc_address?.village || '';
+  const villageName = village?.name || '';
   const houseNumber = kyc_address?.house || '';
   const streetName = kyc_address?.street || '';
   const addressLandmark = kyc_address?.landmark || '';
@@ -406,14 +406,15 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
   };
 
   async function onHandleSave() {
-    if (!email) {
-      setValidDetails({ ...validDetails, email: true });
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      });
-      return;
-    }
+    // CS-2173 Commenting for future use
+    // if (!email) {
+    //   setValidDetails({ ...validDetails, email: true });
+    //   window.scrollTo({
+    //     top: 0,
+    //     behavior: 'smooth',
+    //   });
+    //   return;
+    // }
     const {
       MiddleName,
       LastName,

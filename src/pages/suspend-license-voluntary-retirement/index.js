@@ -501,23 +501,31 @@ export function SuspendLicenseVoluntaryRetirement({
       </Box>
 
       {tabName || selectedValue === 'blacklist' || selectedValue === 'suspend' ? (
-        <Box my={4} ml={1}>
-          <Checkbox
-            name="notification"
-            {...register('notification', {
-              required: 'Please indicate that you accept the Terms and Conditions',
-            })}
-            sx={{ padding: '0 8px 0 0' }}
-            label={
-              tabName
-                ? 'I understand that during the period of my suspension, I will not be able to practice, and my NMR profile will be deactivated.'
-                : selectedValue === 'blacklist' || selectedValue === 'suspend'
-                ? 'Doctor will no longer be able to receive notifications or perform actions on his/her profile.'
-                : ''
-            }
-            error={errors.notification?.message}
-          />
-        </Box>
+        <>
+          <Typography variant="subtitle2">
+            {'Consent'}
+            <Typography variant="body4" color="error.main">
+              *
+            </Typography>
+          </Typography>
+          <Box ml={1}>
+            <Checkbox
+              name="notification"
+              {...register('notification', {
+                required: 'Please indicate that you accept the Terms and Conditions',
+              })}
+              sx={{ padding: '0 8px 0 0' }}
+              label={
+                tabName
+                  ? 'I understand that during the period of my suspension, I will not be able to practice, and my NMR profile will be deactivated.'
+                  : selectedValue === 'blacklist' || selectedValue === 'suspend'
+                  ? 'Doctor will no longer be able to receive notifications or perform actions on his/her profile.'
+                  : ''
+              }
+              error={errors.notification?.message}
+            />
+          </Box>
+        </>
       ) : (
         ''
       )}
