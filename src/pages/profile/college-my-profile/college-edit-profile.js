@@ -30,13 +30,13 @@ const CollegeEditProfile = (props) => {
 
   useEffect(() => {
     dispatch(getStatesList());
-    setValue('CouncilID', getCollegeDetail?.data?.state_medical_council_id);
+    setValue('CouncilID', getCollegeDetail?.data?.state_medical_council_to?.id);
   }, []);
 
   useEffect(() => {
     dispatch(getUniversitiesList());
-    if (getCollegeDetail?.data?.state_id !== undefined)
-      dispatch(getDistrictList(getCollegeDetail?.data?.state_id)).then((res) => {
+    if (getCollegeDetail?.data?.state_to?.id !== undefined)
+      dispatch(getDistrictList(getCollegeDetail?.data?.state_to?.id)).then((res) => {
         setDistrictList(res?.data);
       });
   }, []);
@@ -75,10 +75,10 @@ const CollegeEditProfile = (props) => {
       website: getValues().CollegeWebsite,
       address_line1: getValues()?.AddressLine1 || '',
       address_line2: getValues()?.AddressLine2 || '',
-      district_id: getValues()?.DistrictID,
-      village_id: subDistrictList.find((x) => x.name === getValues()?.Area)?.id,
+      district_to: districtsList?.find((x) => x.id === getValues()?.DistrictID),
+      villages_to: subDistrictList?.find((x) => x.name === getValues()?.Area),
       pin_code: getValues()?.CollegePincode,
-      state_medical_council_id: getValues()?.CouncilID,
+      state_medical_council_to: councilNames?.find((x) => x.id === getValues()?.CouncilID),
       mobile_number: getValues()?.CollegePhoneNumber,
       email_id: getValues()?.CollegeEmailId,
       university_id: getValues()?.UniversityId,
@@ -97,10 +97,10 @@ const CollegeEditProfile = (props) => {
 
   const handleInput = (e) => {
     e.preventDefault();
-    if (e.target.value.length > 0) {
-      e.target.value = isNaN(e.target.value)
-        ? e.target.value.toString().slice(0, -1)
-        : Math.max(0, parseInt(e.target.value)).toString().slice(0, 10);
+    if (e?.target?.value?.length > 0) {
+      e.target.value = isNaN(e?.target?.value)
+        ? e?.target?.value?.toString()?.slice(0, -1)
+        : Math?.max(0, parseInt(e.target.value))?.toString()?.slice(0, 10);
     }
   };
 
@@ -111,16 +111,15 @@ const CollegeEditProfile = (props) => {
 
   const onDistrictChange = (currentValue) => {
     setValue('DistrictID', currentValue?.id);
-    dispatch(getSubDistrictsList(currentValue?.id));
+    if (currentValue?.id !== undefined) {
+      dispatch(getSubDistrictsList(currentValue?.id));
+    }
   };
 
   const getStateData = (stateId) => {
     return statesList?.find((obj) => obj?.id === stateId);
   };
 
-  const getCouncilNameData = (state_medical_council_id) => {
-    return councilNames?.find((obj) => obj?.id === state_medical_council_id);
-  };
   const getDistrictNameData = (district_id) => {
     return districtList?.find((obj) => obj?.id === district_id);
   };
@@ -221,7 +220,7 @@ const CollegeEditProfile = (props) => {
               fullWidth
               name="CouncilName"
               items={createEditFieldData(councilNames)}
-              defaultValue={getCouncilNameData(getCollegeDetail?.data?.state_medical_council_id)}
+              defaultValue={userData?.state_medical_council_to}
               placeholder="Select Council"
               clearErrors={clearErrors}
               error={
@@ -251,7 +250,7 @@ const CollegeEditProfile = (props) => {
               clearErrors={clearErrors}
               items={createEditFieldData(universitiesList?.data)}
               placeholder="Select University"
-              defaultValues={getUniversityData(getCollegeDetail?.data?.university_id)}
+              defaultValue={userData?.university_to}
               value={getUniversityData(getCollegeDetail?.data?.university_id)}
               onChange={(currentValue) => {
                 setValue('UniversityID', currentValue?.id);
@@ -327,7 +326,7 @@ const CollegeEditProfile = (props) => {
               items={createEditFieldData(statesList)}
               clearErrors={clearErrors}
               placeholder={'Select State '}
-              defaultValue={getStateData(getCollegeDetail?.data?.state_id)}
+              defaultValue={userData?.state_to}
               value={getStateData(getCollegeDetail?.data?.state_id)}
               onChange={(currentValue) => {
                 onStateChange(currentValue);
@@ -350,7 +349,7 @@ const CollegeEditProfile = (props) => {
                 name="District"
                 items={createEditFieldData(districtsList)}
                 placeholder="Select District"
-                defaultValue={getDistrictNameData(getCollegeDetail?.data?.district_id)}
+                defaultValue={userData?.district_to}
                 value={getDistrictNameData(getCollegeDetail?.data?.district_id)}
                 clearErrors={clearErrors}
                 error={errors.District?.message}
@@ -379,7 +378,7 @@ const CollegeEditProfile = (props) => {
                 clearErrors={clearErrors}
                 items={createEditFieldData(subDistrictList)}
                 placeholder="Select Area"
-                defaultValue={getValues().Area}
+                defaultValue={userData?.villages_to}
                 error={errors.Area?.message}
                 {...register('Area', {
                   required: 'Town name is required',

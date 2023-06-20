@@ -228,7 +228,6 @@ export default function Dashboard() {
                     color: 'primary.main',
                     backgroundColor: 'white.main',
                   },
-                  height: '48px',
                 }}
                 onClick={onClickBackButtonHandler}
               >

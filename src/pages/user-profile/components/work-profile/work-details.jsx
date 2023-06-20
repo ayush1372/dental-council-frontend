@@ -4,7 +4,7 @@ import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRou
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import RemoveCircleOutlineRoundedIcon from '@mui/icons-material/RemoveCircleOutlineRounded';
-import { Box, Grid, Tab, Tabs, Tooltip, Typography } from '@mui/material';
+import { Box, Grid, Tab, Tabs, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { natureOfWork, workStatusOptions } from '../../../../constants/common-data';
@@ -306,7 +306,7 @@ const WorkDetails = ({
     let DistrictData = [];
     Array.isArray(districtsList) &&
       districtsList?.map((elementData) => {
-        if (elementData.id === District) {
+        if (elementData.iso_code === District) {
           DistrictData.push(elementData);
         }
       });
@@ -495,23 +495,11 @@ const WorkDetails = ({
             handleLanguageSpokenChange('LanguageSpoken', value);
           }}
         />
-      </Grid>
-      <Grid>
-        <Tooltip
-          title={
-            <Box>
-              Information about schedule
-              <Box mr="2px"> will be shown here</Box>
-            </Box>
-          }
-          placement="top-end"
-          arrow
-        >
-          <Typography variant="body4" color="messageBlue.main" display="flex" alignItems="center">
-            <InfoOutlinedIcon sx={{ fontSize: '16px', ml: '310px', padding: '2px' }} />
-            Multiple languages can be selected
-          </Typography>
-        </Tooltip>
+
+        <Typography variant="body4" color="messageBlue.main" display="flex" alignItems="center">
+          <InfoOutlinedIcon sx={{ fontSize: '20px', padding: '2px' }} />
+          Multiple languages can be selected
+        </Typography>
       </Grid>
       <Grid item xs={12}>
         <Typography
@@ -666,10 +654,6 @@ const WorkDetails = ({
                     onClick={() => {
                       searchFacilitiesHandler();
                     }}
-                    disabled={
-                      getValues()?.stateLGDCode?.length === 0 ||
-                      getValues()?.districtLGDCode?.length === 0
-                    }
                   >
                     Search
                   </Button>
@@ -914,7 +898,7 @@ const WorkDetails = ({
                 {...register('District', {
                   required: 'This field is required',
                 })}
-                options={createSelectFieldData(districtsList)}
+                options={createSelectFieldData(districtsList, 'iso_code')}
               />
             </Grid>
             <Grid item xs={12} md={4}>
