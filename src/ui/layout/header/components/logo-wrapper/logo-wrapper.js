@@ -22,7 +22,12 @@ import ABDMLogo from '../../../../../assets/images/logo-slider/ABDM_logo.svg';
 import G20Logo from '../../../../../assets/images/logo-slider/G20.svg';
 import NmcLogo from '../../../../../assets/images/logo-slider/NMC_logo.svg';
 import { IdleTimer } from '../../../../../helpers/components/idle-timer';
-import { logout, resetCommonReducer } from '../../../../../store/reducers/common-reducers';
+import { colgTabs, doctorTabs } from '../../../../../helpers/components/sidebar-drawer-list-item';
+import {
+  changeUserActiveTab,
+  logout,
+  resetCommonReducer,
+} from '../../../../../store/reducers/common-reducers';
 import { Button } from '../../../../core';
 import { LoginRegisterPopover } from './login-register-popover/login-register-popover';
 import { MobileDrawer } from './mobile-drawer';
@@ -47,7 +52,7 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
   const [anchorElUser, setAnchorElUser] = useState(null);
 
   let options = [
-    { name: 'Back To Dashboard', url: '/profile' },
+    { name: 'Dashboard', url: '/profile' },
     { name: 'Logout', url: '/' },
   ];
 
@@ -131,8 +136,19 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
       dispatch(resetCommonReducer());
       localStorage.clear();
       navigate('/');
-    } else if (optionType === 'My Profile') {
-      navigate('/profile');
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    } else if (optionType === 'Dashboard') {
+      loggedInUserType === 'Doctor'
+        ? dispatch(changeUserActiveTab(doctorTabs[0].tabName))
+        : dispatch(changeUserActiveTab(colgTabs[0].tabName));
+
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
     }
   };
 
@@ -227,7 +243,13 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
               >
                 {options.map((option) => (
                   <MenuItem key={option.name} onClick={() => handleNavigation(option.name)}>
-                    <Typography>{option.name}</Typography>
+                    <Typography>
+                      {option.name === 'Dashboard'
+                        ? loggedInUserType === 'Doctor'
+                          ? 'My Profile'
+                          : option.name
+                        : option.name}
+                    </Typography>
                   </MenuItem>
                 ))}
               </Menu>

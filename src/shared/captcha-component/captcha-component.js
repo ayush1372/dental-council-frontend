@@ -59,57 +59,49 @@ const CaptchaComponent = ({ captchaResult }) => {
     <>
       <ToastContainer></ToastContainer>
       <Box>
-        <Box
-          border={1}
-          borderColor={theme.palette.grey.dark}
-          width={{ xs: '100%', sm: '50%' }}
-          py="10px"
-          borderRadius="5px"
-        >
+        <Box>
           {captchaEnabledFlag?.isLoading ? (
             <Box alignItems={'center'}>
               <CircularLoader />
             </Box>
           ) : (
-            <>
-              <Grid container alignItems={'center'} justifyContent="center">
-                <Grid item xs="auto">
-                  <img
-                    src={`data:image/png;base64,${generateCaptcha?.image}`}
-                    alt="captcha"
-                    width="100"
-                    //height="60"
-                  />
-                </Grid>
-                <Grid item xs="auto">
-                  <RefreshIcon color="primary.dark" onClick={reloadCaptcha} />
-                </Grid>
+            <Grid container>
+              <Grid
+                border={1}
+                borderRadius="5px"
+                borderColor={theme.palette.grey.dark}
+                item
+                xs={5}
+                alignItems="center"
+                display="flex"
+                justifyContent="center"
+              >
+                <img
+                  src={`data:image/png;base64,${generateCaptcha?.image}`}
+                  alt="captcha"
+                  width="100"
+                />
               </Grid>
-              <Grid container alignItems="center" justifyContent="center" gap={1} flexWrap="wrap">
-                <Grid item xs="auto">
-                  <Typography variant="body3" color="gray.dark">
-                    Type answer -
-                  </Typography>
-                </Grid>
-                <Grid item xs={6} flexGrow="1">
-                  <TextField
-                    // className={`${!error ? 'text-captcha' : 'text-captcha-danger'}`}
-                    name="anwser"
-                    placeholder="Enter Answer"
-                    defaultValue={getValues().anwser}
-                    required
-                    {...register('anwser', {
-                      onChange: (event) => {
-                        handleChange(event);
-                      },
-                      onBlur: (event) => {
-                        onFocusChange(event);
-                      },
-                    })}
-                  />
-                </Grid>
+              <Grid item xs={2} alignItems="center" display="flex" justifyContent="center">
+                <RefreshIcon color="primary.dark" onClick={reloadCaptcha} />
               </Grid>
-            </>
+              <Grid item xs={5} alignItems="center" display="flex" justifyContent="center">
+                <TextField
+                  name="anwser"
+                  placeholder="Type Answer"
+                  defaultValue={getValues().anwser}
+                  required
+                  {...register('anwser', {
+                    onChange: (event) => {
+                      handleChange(event);
+                    },
+                    onBlur: (event) => {
+                      onFocusChange(event);
+                    },
+                  })}
+                />
+              </Grid>
+            </Grid>
           )}
         </Box>
         <Typography color="error.main">
