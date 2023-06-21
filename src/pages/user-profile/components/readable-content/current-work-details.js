@@ -275,7 +275,7 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
           <Typography variant="body5" color="grey.label">
-            Telecommunication URL
+            Teleconsultation URL
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">

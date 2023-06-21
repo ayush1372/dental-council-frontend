@@ -18,9 +18,8 @@ import { SearchableDropdown } from '../../../../shared/autocomplete/searchable-d
 import ExportFiles from '../../../../shared/export-component/export-file';
 import { Button, TextField } from '../../../../ui/core';
 
-export function TableSearch({ trackApplication, searchParams, exportData, flag, value }) {
+export function TableSearch({ trackApplication, searchParams, exportData, flag }) {
   const profileId = useSelector((state) => state.loginReducer.loginData.data.profile_id);
-
   const [applicationTypeValue, setApplicationTypeValue] = useState(false);
   const [statusTypeValue, setStatusTypeValue] = useState(false);
   const [filterId, setFilterId] = useState('');
@@ -268,7 +267,8 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag, 
           </Grid>
         </Grid>
         <Grid item xs={12} md="auto">
-          {value > 0 && <ExportFiles exportData={exportData} flag={flag} />}
+          {/* {exportData.length > 0 && <ExportFiles exportData={exportData} flag={flag} />} */}
+          <ExportFiles exportData={exportData} flag={flag} />
         </Grid>
       </Grid>
     </Box>

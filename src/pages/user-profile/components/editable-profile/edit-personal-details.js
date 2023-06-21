@@ -38,7 +38,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
   const [isSameAddress, setIsSameAddress] = useState(
     personalDetails?.communication_address?.is_same_address === 'true' ? true : false
   );
-  const { personal_details, communication_address, imr_details, work_flow_status_id } =
+  const { personal_details, communication_address, imr_details, work_flow_status_id, kyc_address } =
     personalDetails || {};
 
   const {
@@ -89,6 +89,26 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
   const citiesId = isSameAddress ? personalDetails?.kyc_address?.village?.id : village?.id;
   const [districtListData, setDistrictListData] = useState('');
   const [subDistrictListData, setSubDistrictListData] = useState('');
+  const countryName = country?.name || '';
+  const stateName = state?.name || '';
+  const districtName = district?.name || '';
+  const subDistrictName = sub_district?.name || '';
+  const villageName = village?.name || '';
+  const houseNumber = kyc_address?.house || '';
+  const streetName = kyc_address?.street || '';
+  const addressLandmark = kyc_address?.landmark || '';
+  const userPincode = kyc_address?.pincode || '';
+
+  const kycAddress =
+    (houseNumber && houseNumber + ', ') +
+    (streetName && streetName + ', ') +
+    (addressLandmark && addressLandmark + ', ') +
+    (villageName && villageName + ', ') +
+    (subDistrictName && subDistrictName + ', ') +
+    (districtName && districtName + ', ') +
+    (stateName && stateName + ', ') +
+    (countryName && countryName + ', ') +
+    (userPincode && userPincode);
 
   const {
     formState: { errors },
@@ -145,12 +165,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
           : '',
       // Schedule: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? scheduleId : '',
       Name: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? full_name : '',
-      Address:
-        loggedInUserType === 'SMC'
-          ? ''
-          : loggedInUserType === 'Doctor'
-          ? personalDetails?.kyc_address?.address_line1
-          : '',
+      Address: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? kycAddress : '',
       IMRID: loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? nmr_id : '',
       YearOfInfo:
         loggedInUserType === 'SMC' ? '' : loggedInUserType === 'Doctor' ? year_of_info : '',
@@ -391,14 +406,15 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
   };
 
   async function onHandleSave() {
-    if (!email) {
-      setValidDetails({ ...validDetails, email: true });
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      });
-      return;
-    }
+    // CS-2173 Commenting for future use
+    // if (!email) {
+    //   setValidDetails({ ...validDetails, email: true });
+    //   window.scrollTo({
+    //     top: 0,
+    //     behavior: 'smooth',
+    //   });
+    //   return;
+    // }
     const {
       MiddleName,
       LastName,

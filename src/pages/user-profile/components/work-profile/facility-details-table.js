@@ -55,26 +55,22 @@ function FacilityDetailsTable({ declaredFacilityData, trackStatusData, currentWo
     {
       title: 'Name',
       name: 'name',
-      //   sorting: true,
       type: 'string',
     },
     {
       title: 'Address',
       name: 'address',
-      //   sorting: true,
       type: 'string',
     },
     {
       title: 'State',
       name: 'state',
-      //   sorting: true,
       type: 'string',
     },
     { title: 'District', name: 'district', type: 'string' },
     {
       title: 'Type',
       name: 'type',
-      //   sorting: true,
       type: 'string',
     },
     { title: 'System of Medicine', name: 'systemOfMedicine', type: 'string' },
@@ -112,9 +108,9 @@ function FacilityDetailsTable({ declaredFacilityData, trackStatusData, currentWo
         value: application?.organization_type,
       },
 
-      { type: 'systemOfMedicine', value: application?.systemOfMedicine },
-      { type: 'department', value: application?.department },
-      { type: 'designation', value: application?.designation },
+      { type: 'systemOfMedicine', value: application?.system_of_medicine || '-' },
+      { type: 'department', value: application?.department || '-' },
+      { type: 'designation', value: application?.designation || '-' },
       { type: 'status', onClickCallback: viewCallback }
     );
   });
@@ -167,7 +163,7 @@ function FacilityDetailsTable({ declaredFacilityData, trackStatusData, currentWo
           <TablePagination
             rowsPerPageOptions={[]}
             component="div"
-            count={trackStatusData?.total_no_of_records || '0'}
+            count={trackStatusData?.total_no_of_records}
             rowsPerPage={rowsPerPage}
             page={page}
             //   onPageChange={handleChangePage}

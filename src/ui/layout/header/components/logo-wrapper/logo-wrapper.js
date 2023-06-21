@@ -1,15 +1,26 @@
 import { useState } from 'react';
 
 import { makeStyles } from '@material-ui/core';
+import { KeyboardArrowDown, KeyboardArrowUp } from '@mui/icons-material';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import { Box, Container, Grid, Link, useTheme } from '@mui/material';
-import { useTranslation } from 'react-i18next';
+import {
+  Avatar,
+  Box,
+  Container,
+  Grid,
+  IconButton,
+  Link,
+  Menu,
+  MenuItem,
+  Typography,
+  useTheme,
+} from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import G20Logo from '../../../../../assets/images/g-20-logo.png';
-import DigitalIndia from '../../../../../assets/images/logo-slider/digital-India.png';
-import NmcLogo from '../../../../../assets/images/logo-slider/nmc-logo.png';
+import ABDMLogo from '../../../../../assets/images/logo-slider/ABDM_logo.svg';
+import G20Logo from '../../../../../assets/images/logo-slider/G20.svg';
+import NmcLogo from '../../../../../assets/images/logo-slider/NMC_logo.svg';
 import { IdleTimer } from '../../../../../helpers/components/idle-timer';
 import { logout, resetCommonReducer } from '../../../../../store/reducers/common-reducers';
 import { Button } from '../../../../core';
@@ -20,9 +31,25 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const loggedIn = localStorage.getItem('accesstoken');
-  const userLoggedIn = useSelector((state) => state.common.isloggedIn);
 
-  const { t } = useTranslation();
+  const { nbeData } = useSelector((state) => state.nbe);
+  const { smcProfileData } = useSelector((state) => state.smc);
+  const { nmcProfileData } = useSelector((state) => state.nmc);
+  const { collegeData } = useSelector((state) => state.college);
+  const userLoggedIn = useSelector((state) => state.common.isloggedIn);
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+
+  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const { personal_details } = personalDetails || {};
+
+  const { profile_photo, full_name } = personal_details || {};
+
+  const [anchorElUser, setAnchorElUser] = useState(null);
+
+  let options = [
+    { name: 'Back To Dashboard', url: '/profile' },
+    { name: 'Logout', url: '/' },
+  ];
 
   /** Login Register */
 
@@ -34,13 +61,6 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
   const handleClickLoginRegister = (event) => {
     setRegType('');
     setAnchorLRLoginRegister(event.currentTarget);
-  };
-
-  const handleClickedLogout = () => {
-    dispatch(logout());
-    dispatch(resetCommonReducer());
-    localStorage.clear();
-    navigate('/');
   };
 
   const theme = useTheme();
@@ -75,7 +95,7 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
       },
     },
     logoImage: {
-      height: '72px',
+      // height: '72px',
       [theme.breakpoints.down('md')]: {
         height: '60px',
       },
@@ -95,6 +115,27 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
   }));
   const classes = useStyles(theme);
 
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleNavigation = (optionType) => {
+    handleCloseUserMenu();
+
+    if (optionType === 'Logout') {
+      dispatch(logout());
+      dispatch(resetCommonReducer());
+      localStorage.clear();
+      navigate('/');
+    } else if (optionType === 'My Profile') {
+      navigate('/profile');
+    }
+  };
+
   return (
     <Container maxWidth={userLoggedIn ? '1920px' : '1900px'} sx={{ position: 'relative' }}>
       <MobileDrawer />
@@ -103,18 +144,18 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
       <Grid container alignItems="center">
         <Grid item xs={12} sm={6} my={1} pl={loggedIn && { xs: 7, md: 0 }}>
           <Grid container>
-            <Grid item xs="auto">
+            <Grid item xs="auto" mr={2}>
               <Link onClick={() => navigate('/')} sx={{ cursor: 'pointer' }}>
                 <img
-                  className={classes.logoImage}
                   src={NmcLogo}
+                  className={classes.logoImage}
                   alt="NATIONAL MEDICAL COMMISSION"
                 />
               </Link>
             </Grid>
-            <Grid item xs="auto">
+            <Grid item xs="auto" mr={2}>
               <Link onClick={() => navigate('/')} sx={{ cursor: 'pointer' }}>
-                <img className={classes.logoImage} src={DigitalIndia} alt="Digital logo" />
+                <img className={classes.logoImage} src={ABDMLogo} alt="Digital logo" />
               </Link>
             </Grid>
             <Grid item xs="auto">
@@ -134,21 +175,69 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
           my={{ xs: 2, md: 0 }}
         >
           {loggedIn ? (
-            <Button
-              variant="contained"
-              color="secondary"
-              data-testid="logoutbtn"
-              size="medium"
-              onClick={handleClickedLogout}
-            >
-              {t('Logout')}
-            </Button>
+            <Box sx={{ flexGrow: 0 }}>
+              <IconButton
+                onClick={handleOpenUserMenu}
+                sx={{ p: 0, cursor: 'pointer', gap: 1 }}
+                disableRipple
+              >
+                <Avatar
+                  src={
+                    loggedInUserType === 'Doctor'
+                      ? profile_photo
+                        ? `data:image/jpeg;base64,${profile_photo}`
+                        : null
+                      : null
+                  }
+                />
+                <Typography variant="subtitle1" color="tabHighlightedBackgroundColor.main">
+                  {loggedInUserType === 'Doctor'
+                    ? full_name
+                    : loggedInUserType === 'College'
+                    ? collegeData?.data?.name
+                    : loggedInUserType === 'NMC'
+                    ? nmcProfileData?.data?.display_name
+                    : loggedInUserType === 'SMC'
+                    ? smcProfileData?.data?.display_name
+                    : loggedInUserType === 'NBE'
+                    ? nbeData?.data?.display_name
+                    : null}
+                </Typography>
+                {anchorElUser ? (
+                  <KeyboardArrowUp color="primary" />
+                ) : (
+                  <KeyboardArrowDown color="primary" />
+                )}
+              </IconButton>
+              <Menu
+                sx={{ mt: '45px' }}
+                id="menu-appbar"
+                anchorEl={anchorElUser}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorElUser)}
+                onClose={handleCloseUserMenu}
+              >
+                {options.map((option) => (
+                  <MenuItem key={option.name} onClick={() => handleNavigation(option.name)}>
+                    <Typography>{option.name}</Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
           ) : (
             <>
               <Button
                 variant="contained"
                 color="secondary"
-                size="medium"
+                size="small"
                 onClick={handleClickLoginRegister}
                 endIcon={<KeyboardArrowDownIcon />}
               >

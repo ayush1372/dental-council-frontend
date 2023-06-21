@@ -71,8 +71,8 @@ export function SuspendLicenseVoluntaryRetirement({
       case 'verify':
         action_id = 4;
         user_group_id === 3
-          ? setSuccessPopupMessage('Approved Successfully')
-          : setSuccessPopupMessage('Verified Successfully');
+          ? setSuccessPopupMessage('Verified Successfully')
+          : setSuccessPopupMessage('Approved Successfully');
         break;
       case 'reject':
         action_id = 5;
@@ -85,6 +85,12 @@ export function SuspendLicenseVoluntaryRetirement({
       case 'blacklist':
         action_id = 6;
         setSuccessPopupMessage('Permanently Suspended');
+        break;
+      case 'approve':
+        action_id = 4;
+        user_group_id === 3
+          ? setSuccessPopupMessage('Approved Successfully')
+          : setSuccessPopupMessage('Verified Successfully');
         break;
       default:
         action_id = 1;
@@ -120,7 +126,6 @@ export function SuspendLicenseVoluntaryRetirement({
           : userActiveTab === 'voluntary-suspend-license'
           ? 1
           : '',
-
       from_date: getValues()?.fromDate
         ? getValues()?.fromDate?.split('/')?.reverse()?.join('-')
         : '',
@@ -132,6 +137,8 @@ export function SuspendLicenseVoluntaryRetirement({
       request_id: personalDetails?.request_id,
       application_type_id: personalDetails?.application_type_id
         ? personalDetails?.application_type_id
+        : userActiveTab === 'Activate Licence'
+        ? 5
         : 1,
       actor_id: loginData?.data?.user_group_id,
       action_id: action_id,
@@ -194,7 +201,7 @@ export function SuspendLicenseVoluntaryRetirement({
           })
           .catch((allFailMsg) => {
             successToast(
-              'ERR_INT: ' + allFailMsg?.data?.message,
+              allFailMsg?.data?.response?.data?.message,
               'auth-error',
               'error',
               'top-center'
@@ -494,23 +501,31 @@ export function SuspendLicenseVoluntaryRetirement({
       </Box>
 
       {tabName || selectedValue === 'blacklist' || selectedValue === 'suspend' ? (
-        <Box my={4} ml={1}>
-          <Checkbox
-            name="notification"
-            {...register('notification', {
-              required: 'Please indicate that you accept the Terms and Conditions',
-            })}
-            sx={{ padding: '0 8px 0 0' }}
-            label={
-              tabName
-                ? 'I understand that during the period of my suspension, I will not be able to practice, and my NMR profile will be deactivated.'
-                : selectedValue === 'blacklist' || selectedValue === 'suspend'
-                ? 'Doctor will no longer be able to receive notifications or perform actions on his/her profile.'
-                : ''
-            }
-            error={errors.notification?.message}
-          />
-        </Box>
+        <>
+          <Typography variant="subtitle2">
+            {'Consent'}
+            <Typography variant="body4" color="error.main">
+              *
+            </Typography>
+          </Typography>
+          <Box ml={1}>
+            <Checkbox
+              name="notification"
+              {...register('notification', {
+                required: 'Please indicate that you accept the Terms and Conditions',
+              })}
+              sx={{ padding: '0 8px 0 0' }}
+              label={
+                tabName
+                  ? 'I understand that during the period of my suspension, I will not be able to practice, and my NMR profile will be deactivated.'
+                  : selectedValue === 'blacklist' || selectedValue === 'suspend'
+                  ? 'Doctor will no longer be able to receive notifications or perform actions on his/her profile.'
+                  : ''
+              }
+              error={errors.notification?.message}
+            />
+          </Box>
+        </>
       ) : (
         ''
       )}
@@ -523,7 +538,7 @@ export function SuspendLicenseVoluntaryRetirement({
                 return (
                   <Checkbox
                     key={index}
-                    sx={{ padding: '0 8px 0 0' }}
+                    sx={{ padding: '0 8px 0 10px' }}
                     name={fieldData?.filedName}
                     value={fieldData?.value}
                     onChange={(e) => {

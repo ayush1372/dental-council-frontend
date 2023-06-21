@@ -28,13 +28,13 @@ import { login, userLoggedInType } from '../../../store/reducers/common-reducers
 import { Button, TextField } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 import successToast from '../../../ui/core/toaster';
-import { PasswordRegexValidation } from '../../../utilities/common-validations';
+import { LoginPasswordRegexValidation } from '../../../utilities/common-validations';
 export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetails }) => {
   const [captchaAnswer, setcaptachaAnswer] = useState();
   const { generateCaptcha } = useSelector((state) => state.loginReducer);
   const theme = useTheme();
   const dispatch = useDispatch();
-  const [selectedLoginOption, setSelectedLoginOption] = useState('mobileNumber');
+  const [selectedLoginOption, setSelectedLoginOption] = useState('userName');
   const [transaction_id, setTransaction_id] = useState('');
   const [otpFormEnabled, setOtpFormEnable] = useState(false);
   const [otpSend, setOtpSend] = useState(false);
@@ -284,7 +284,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
               },
             }}
           >
-            <Typography variant="body1" color="textPrimary.main">
+            <Typography variant="body1" color="textPrimary.main" textAlign={'left'} ml={1}>
               Mobile Number
             </Typography>
           </Button>
@@ -354,7 +354,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
               name={'password'}
               error={errors.password?.message}
               defaultValue={getValues().password}
-              {...register('password', PasswordRegexValidation)}
+              {...register('password', LoginPasswordRegexValidation)}
             />
             <Typography display={'flex'} justifyContent="flex-end">
               <Button
@@ -405,8 +405,12 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
           onClick={handleSubmit(handleLogin)}
           disabled={
             selectedLoginOption === 'nmrId' || selectedLoginOption === 'mobileNumber'
-              ? !otpFormEnabled || !captchaAnswer
-              : errors.userID?.message || errors.password?.message || !captchaAnswer
+              ? !otpFormEnabled || !captchaAnswer || otpValue.length < 6
+              : errors.userID?.message ||
+                errors.password?.message ||
+                !captchaAnswer ||
+                getValues()?.password?.length < 1 ||
+                getValues()?.userID?.length < 1
           }
         >
           Login

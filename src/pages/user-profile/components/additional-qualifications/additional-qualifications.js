@@ -16,7 +16,7 @@ import EditQualificationDetails from '../editable-profile/edit-qualification-det
 
 const qualificationObjTemplate = [
   {
-    qualification: '',
+    qualification: undefined,
     country: '',
     state: '',
     college: '',
@@ -103,7 +103,6 @@ const AdditionalQualifications = () => {
 
   // this below code is storing qualification details
   const { qualification } = getValues();
-  const isInternational = qualification?.[0]?.qualificationfrom === 'International';
 
   useEffect(() => {
     setQualificationFilesData([]);
@@ -118,20 +117,25 @@ const AdditionalQualifications = () => {
     let qualification_detail_response_tos = [],
       updatedQualificationDetailsArray = [];
     let updatedQualificationDetails;
+
     qualification?.forEach((qualification) => {
       updatedQualificationDetails = {
-        country: isInternational
-          ? countriesList.find((obj) => obj.id === qualification?.country)
-          : qualification?.country,
-        state: isInternational
-          ? { name: qualification?.state }
-          : getStateData(qualification?.state),
-        college: isInternational
-          ? { name: qualification?.college }
-          : getCollegeData(qualification?.college),
-        university: isInternational
-          ? { name: qualification?.university }
-          : getUniversityData(qualification?.university),
+        country:
+          qualification?.qualificationfrom === 'International'
+            ? countriesList.find((obj) => obj.id === qualification?.country)
+            : qualification?.country,
+        state:
+          qualification?.qualificationfrom === 'International'
+            ? { name: qualification?.state }
+            : getStateData(qualification?.state),
+        college:
+          qualification?.qualificationfrom === 'International'
+            ? { name: qualification?.college }
+            : getCollegeData(qualification?.college),
+        university:
+          qualification?.qualificationfrom === 'International'
+            ? { name: qualification?.university }
+            : getUniversityData(qualification?.university),
         course: getCourseData(qualification?.qualification),
         qualification_year: qualification?.year,
         qualification_month: qualification?.month,
@@ -173,6 +177,7 @@ const AdditionalQualifications = () => {
         reset();
       })
       .catch((error) => {
+        reset();
         successToast(
           'ERROR: ' + error?.data?.response?.data?.message,
           'auth-error',
@@ -245,7 +250,7 @@ const AdditionalQualifications = () => {
           open={successModalPopup}
           setOpen={() => setSuccessModalPopup(false)}
           text={
-            'The additional qualification details has been sent for verification. You can check the verification status in the Track Status tab!'
+            'The additional qualification details has been sent for verification. You can check the verification status in the Track Status tab'
           }
           navigateToTrackApplication={navigateToTrackApplication}
         />

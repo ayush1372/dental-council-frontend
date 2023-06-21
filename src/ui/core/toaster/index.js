@@ -20,6 +20,7 @@ const successToast = (message, operation, toastType, toastPosition = 'bottom-rig
       fontSize: '14px',
       letterSpacing: '1.2px',
       fontWeight: '500',
+      width: 'fit-content',
     },
   });
 };

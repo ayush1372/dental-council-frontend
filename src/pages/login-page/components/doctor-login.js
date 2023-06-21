@@ -25,14 +25,14 @@ import { login, userLoggedInType } from '../../../store/reducers/common-reducers
 import { Button, TextField } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 import successToast from '../../../ui/core/toaster';
-import { PasswordRegexValidation } from '../../../utilities/common-validations';
+import { LoginPasswordRegexValidation } from '../../../utilities/common-validations';
 
 export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTypeDetails }) => {
   const [captchaAnswer, setcaptachaAnswer] = useState();
   const { generateCaptcha } = useSelector((state) => state.loginReducer);
   const theme = useTheme();
   const dispatch = useDispatch();
-  const [selectedLoginOption, setSelectedLoginOption] = useState('mobileNumber');
+  const [selectedLoginOption, setSelectedLoginOption] = useState('userName');
   const [transaction_id, setTransaction_id] = useState('');
   const [otpFormEnabled, setOtpFormEnable] = useState(false);
   const [maskedMobileNumber, setMaskedMobileNumber] = useState('');
@@ -460,7 +460,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
                 maxLength: 100,
               }}
               defaultValue={getValues().password}
-              {...register('password', PasswordRegexValidation)}
+              {...register('password', LoginPasswordRegexValidation)}
             />
             <Typography display={'flex'} justifyContent="flex-end">
               <Button
@@ -510,8 +510,12 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
           onClick={handleSubmit(handleLogin)}
           disabled={
             selectedLoginOption === 'nmrId' || selectedLoginOption === 'mobileNumber'
-              ? !otpFormEnabled || !captchaAnswer
-              : errors.userID?.message || errors.password?.message || !captchaAnswer
+              ? !otpFormEnabled || !captchaAnswer || otpValue.length < 6
+              : errors.userID?.message ||
+                errors.password?.message ||
+                !captchaAnswer ||
+                getValues()?.password?.length < 1 ||
+                getValues()?.userID?.length < 1
           }
         >
           Login

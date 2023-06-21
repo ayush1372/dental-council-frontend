@@ -8,7 +8,6 @@ export default function CircularLoader() {
     loader: {
       width: '100%',
       height: '100%',
-      backgroundColor: 'rgba(0,0,0,0.6)',
       position: 'fixed',
       zIndex: '9999',
     },

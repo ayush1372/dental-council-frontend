@@ -1,28 +1,25 @@
 import { useState } from 'react';
 
 import CloseIcon from '@mui/icons-material/Close';
-import { Box, Button, Container, Modal, Typography } from '@mui/material';
+import { Box, Container, Grid, Modal, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
 import ReactivationLogo from '../../../src/assets/images/reactivate-license-icon.png';
 import { createReActivateLicense } from '../../store/actions/common-actions';
-import { DatePicker, TextField } from '../../ui/core';
+import { Button, DatePicker, TextField } from '../../ui/core';
+import UploadFile from '../../ui/core/fileupload/fileupload';
 import successToast from '../../ui/core/toaster';
 export default function ReactivateLicencePopup(props) {
   const [open, setOpen] = useState(true);
   const [showFromDateError, setShowFromDateError] = useState(false);
+  const [showReasonError, setShowReasonError] = useState(false);
+  const [reActivateFileData, setReActivateFileData] = useState([]);
 
   const { loginData } = useSelector((state) => state?.loginReducer);
   const dispatch = useDispatch();
 
-  const {
-    register,
-    getValues,
-    setValue,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+  const { register, getValues, setValue } = useForm({
     mode: 'onChange',
   });
 
@@ -34,13 +31,21 @@ export default function ReactivateLicencePopup(props) {
   function handleReactivate() {
     const { fromDate, reason } = getValues();
 
-    let reActivateLicensebody = {
-      hp_profile_id: loginData?.data?.profile_id,
-      application_type_id: 5,
-      action_id: 1,
-      from_date: fromDate,
-      remarks: reason,
-    };
+    let reActivateLicensebody = props?.suspensionCall
+      ? {
+          hp_profile_id: props?.profileID,
+          application_type_id: 5,
+          action_id: 1,
+          from_date: fromDate?.split('/')?.reverse()?.join('-'),
+          remarks: reason,
+        }
+      : {
+          hp_profile_id: loginData?.data?.profile_id,
+          application_type_id: 5,
+          action_id: 1,
+          from_date: fromDate?.split('/')?.reverse()?.join('-'),
+          remarks: reason,
+        };
 
     dispatch(createReActivateLicense(reActivateLicensebody))
       .then((response) => {
@@ -59,10 +64,10 @@ export default function ReactivateLicencePopup(props) {
   }
 
   return (
-    <Modal open={open} onClose={handleClose} sx={{ mt: 5, height: '561px' }}>
+    <Modal open={open} onClose={handleClose} sx={{ mt: 5, height: '575px' }}>
       <Container
-        maxWidth="xs"
-        sx={{ backgroundColor: 'white.main', borderRadius: '10px', height: '544px' }}
+        maxWidth="sm"
+        sx={{ backgroundColor: 'white.main', borderRadius: '10px', height: '535px' }}
       >
         <Box py={3}>
           <Box mt={1} p={1} mb={2} width="100%" display="flex">
@@ -77,73 +82,95 @@ export default function ReactivateLicencePopup(props) {
             </Typography>
             <CloseIcon color="grey.context" onClick={handleClose} />
           </Box>
-          <Box mb={4}>
-            <Typography variant="subtitle2" color="inputTextColor.main" component="span">
-              Re-activate from
-            </Typography>
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
+          <Grid container item spacing={2} mt={1}>
+            <Grid item xs={6}>
+              <Box>
+                <Typography variant="subtitle2" color="inputTextColor.main" component="span">
+                  Re-activate from
+                </Typography>
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
 
-            <DatePicker
-              value={getValues()?.fromDate}
-              onChangeDate={(newDateValue) => {
-                setValue('fromDate', new Date(newDateValue)?.toLocaleDateString('en-GB'));
-                setShowFromDateError(false);
-              }}
-              data-testid="fromDate"
-              id="fromDate"
-              name="fromDate"
-              sx={{
-                height: '48px',
-                input: {
-                  color: 'black',
-                  textTransform: 'uppercase',
-                },
-              }}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              required={true}
-              minDate={new Date()}
-              defaultValue={getValues().fromDate}
-              error={showFromDateError ? 'Enter Re-activate from' : false}
-            />
-          </Box>
+                <DatePicker
+                  value={getValues()?.fromDate ? new Date(getValues()?.fromDate) : undefined}
+                  onChangeDate={(newDateValue) => {
+                    setValue('fromDate', new Date(newDateValue)?.toLocaleDateString('en-GB'));
+                    setShowFromDateError(false);
+                  }}
+                  data-testid="fromDate"
+                  id="fromDate"
+                  name="fromDate"
+                  sx={{
+                    height: '48px',
+                    input: {
+                      color: 'black',
+                      textTransform: 'uppercase',
+                    },
+                  }}
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  required={true}
+                  minDate={new Date()}
+                  error={showFromDateError ? 'Enter Re-activate from' : false}
+                />
+              </Box>
+            </Grid>
+            <Grid item xs={6}>
+              <Box>
+                <Box>
+                  <Typography
+                    data-testid="fieldName_reason"
+                    variant="subtitle2"
+                    color="inputTextColor.main"
+                    component="span"
+                  >
+                    Reason
+                  </Typography>
+                  <Typography component="span" color="error.main">
+                    *
+                  </Typography>
+                </Box>
+                <TextField
+                  data-testid="Reason"
+                  multiline
+                  rows={1}
+                  fullWidth
+                  name="reason"
+                  placeholder="Add a reason..."
+                  required={true}
+                  defaultValue={getValues().reason}
+                  error={showReasonError ? 'Enter Re-activate reason' : false}
+                  {...register('reason', {
+                    required: 'This field is required',
+                    onChange: (event) => {
+                      if (event.target.value) {
+                        setShowReasonError(false);
+                      }
+                    },
+                  })}
+                />
+              </Box>
+            </Grid>
+          </Grid>
 
-          <Box>
-            <Box>
-              <Typography
-                data-testid="fieldName_reason"
-                variant="subtitle2"
-                color="inputTextColor.main"
-                component="span"
-              >
-                Reason
-              </Typography>
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
-            </Box>
-            <TextField
-              data-testid="Reason"
-              multiline
-              rows={4}
-              fullWidth
-              name="reason"
-              placeholder="Add a reason..."
-              required={true}
-              defaultValue={getValues().reason}
-              error={errors.reason?.message}
-              {...register('reason', {
-                required: 'This field is required',
-              })}
-            />
-          </Box>
           <Box display="flex" textAlign="right">
             <Typography color="grey1.main">150 words only</Typography>
           </Box>
-
+          <Box mt={1}>
+            <UploadFile
+              fileID={'registrationFileData'}
+              uploadFiles="single"
+              sizeAllowed={5}
+              fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
+              fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
+               Maximum size allowed for the attachment is 5MB.`}
+              fileData={reActivateFileData}
+              setFileData={setReActivateFileData}
+              uploadFileLabel="Upload the Supporting Document"
+            />
+          </Box>
           <Box display="flex" justifyContent="flex-end" mt={5}>
             <Button
               onClick={() => handleClose()}
@@ -156,15 +183,32 @@ export default function ReactivateLicencePopup(props) {
               Cancel
             </Button>
             <Button
-              sx={{ ml: 2 }}
               onClick={() => {
-                if (getValues().fromDate === undefined) {
+                const { fromDate, reason } = getValues();
+
+                if (fromDate === undefined) {
                   setShowFromDateError(true);
                 }
-                handleSubmit(handleReactivate);
+                if (reason === undefined || reason === '') {
+                  setShowReasonError(true);
+                }
+                if ((reason !== undefined || reason !== '') && fromDate !== undefined) {
+                  handleReactivate();
+                }
               }}
-              variant="contained"
+              ml={2}
               color="secondary"
+              variant="contained"
+              sx={{
+                margin: {
+                  xs: '5px 0',
+                  md: '0',
+                },
+                width: {
+                  xs: '100%',
+                  md: 'fit-content',
+                },
+              }}
             >
               Reactivate
             </Button>

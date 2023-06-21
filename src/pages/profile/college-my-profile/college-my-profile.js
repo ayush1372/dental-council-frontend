@@ -5,11 +5,7 @@ import { Grid, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { collegeProfileData } from '../../../store/actions/college-actions';
-import {
-  getCollegeData,
-  getDistrictList,
-  getUniversitiesList,
-} from '../../../store/actions/common-actions';
+import { getCollegeData } from '../../../store/actions/common-actions';
 import { Button } from '../../../ui/core';
 import CollegeDean from '../college-dean/college-dean';
 import CollegeRegistrar from '../college-registrar/college-registrar';
@@ -17,13 +13,10 @@ import CollegeEditProfile from './college-edit-profile';
 
 const CollegeMyProfile = () => {
   const [showPage, setShowpage] = useState('Profile');
-  const [districtList, setDistrictList] = useState([]);
   const dispatch = useDispatch();
 
   const { collegeData } = useSelector((state) => state.college);
-  const { getCollegeDetail, statesList, universitiesList, councilNames } = useSelector(
-    (state) => state.common
-  );
+  const { getCollegeDetail } = useSelector((state) => state.common);
 
   const userData = collegeData?.data;
 
@@ -39,34 +32,6 @@ const CollegeMyProfile = () => {
   if (userType === 3) {
     userType = 'College Dean';
   }
-
-  const getStateData = (stateId) => {
-    const userState = statesList?.find((obj) => obj?.id === stateId);
-    return userState?.name;
-  };
-
-  const getUniversityData = (university_id) => {
-    const userUniversity = universitiesList?.data?.find((obj) => obj.id === university_id);
-    return userUniversity?.name;
-  };
-
-  const getCouncilNameData = (state_medical_council_id) => {
-    const userCouncilName = councilNames?.find((obj) => obj.id === state_medical_council_id);
-    return userCouncilName?.name;
-  };
-
-  const getDistrictNameData = (district_id) => {
-    const userDistrictName = districtList?.find((obj) => obj.id === district_id);
-    return userDistrictName?.name;
-  };
-
-  useEffect(() => {
-    dispatch(getUniversitiesList());
-    if (getCollegeDetail?.data?.state_id !== undefined)
-      dispatch(getDistrictList(getCollegeDetail?.data?.state_id)).then((res) => {
-        setDistrictList(res?.data);
-      });
-  }, []);
 
   useEffect(() => {
     const getCommonData = () => {
@@ -173,7 +138,7 @@ const CollegeMyProfile = () => {
                 </Typography>
 
                 <Typography variant="subtitle2" color="inputTextColor.main">
-                  {getCouncilNameData(getCollegeDetail?.data?.state_medical_council_id)}
+                  {getCollegeDetail?.data?.state_medical_council_to?.name}
                 </Typography>
               </Grid>
             ) : (
@@ -187,7 +152,7 @@ const CollegeMyProfile = () => {
                 </Typography>
 
                 <Typography variant="subtitle2" color="inputTextColor.main">
-                  {getUniversityData(getCollegeDetail?.data?.university_id)}
+                  {getCollegeDetail?.data?.university_to?.name}
                 </Typography>
               </Grid>
             ) : (
@@ -242,7 +207,7 @@ const CollegeMyProfile = () => {
                   State Name
                 </Typography>
                 <Typography variant="subtitle2" color="inputTextColor.main">
-                  {getStateData(getCollegeDetail?.data.state_id)}
+                  {getCollegeDetail?.data?.state_to?.name}
                 </Typography>
               </Grid>
             ) : (
@@ -255,7 +220,7 @@ const CollegeMyProfile = () => {
                   District
                 </Typography>
                 <Typography variant="subtitle2" color="inputTextColor.main">
-                  {getDistrictNameData(getCollegeDetail?.data.district_id)}
+                  {getCollegeDetail?.data?.district_to?.name}
                 </Typography>
               </Grid>
             ) : (
@@ -268,7 +233,7 @@ const CollegeMyProfile = () => {
                   City/Town/Village
                 </Typography>
                 <Typography variant="subtitle2" color="inputTextColor.main">
-                  {getCollegeDetail?.data.state_id}
+                  {getCollegeDetail?.data?.villages_to?.name}
                 </Typography>
               </Grid>
             ) : (
@@ -354,7 +319,9 @@ const CollegeMyProfile = () => {
                 <Typography variant="body3" color="grey.label">
                   College University Name
                 </Typography>
-                <Typography variant="subtitle2" color="primary.main"></Typography>
+                <Typography variant="subtitle2" color="primary.main">
+                  {userData.university_name}
+                </Typography>
               </Grid>
             ) : (
               ''

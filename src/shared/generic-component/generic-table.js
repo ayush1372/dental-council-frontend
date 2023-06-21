@@ -223,9 +223,9 @@ export default function GenericTable(props) {
                                         selectionChangeHandler(e, row)
                                       }
                                       disabled={
-                                        props?.data?.[rowIndex]?.NMRID?.value === undefined
-                                          ? true
-                                          : false
+                                        row['NMCVerificationStatus']?.value === 'Blacklisted' ||
+                                        row['NMCVerificationStatus']?.value === 'Suspended' ||
+                                        row['councilVerificationStatus']?.value === 'Blacklisted'
                                       }
                                     >
                                       {option.keyName}
@@ -246,12 +246,14 @@ export default function GenericTable(props) {
                           type={
                             row[item.name]?.value === 'Submitted'
                               ? 'submitted'
-                              : row[item.name]?.value === 'Pending'
+                              : row[item.name]?.value === 'PENDING'
                               ? 'pending'
-                              : row[item.name]?.value === 'Reject'
+                              : row[item.name]?.value === 'REJECTED'
                               ? 'reject'
                               : row[item.name]?.value === 'QUERY RAISED'
                               ? 'queryRaised'
+                              : row[item.name]?.value === 'SUSPENDED'
+                              ? 'suspended'
                               : 'approved'
                           }
                           label={row[item.name]?.value}

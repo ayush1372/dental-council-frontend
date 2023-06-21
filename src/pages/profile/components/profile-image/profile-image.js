@@ -24,6 +24,7 @@ export default function ProfileImage(props) {
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
 
   const profileId = useSelector((state) => state.loginReducer.loginData.data.profile_id);
+  const name = useSelector((state) => state.college.collegeData.data.name);
   const profileImage = useSelector(
     (state) => state.doctorUserProfileReducer?.personalDetails?.personal_details?.profile_photo
   );
@@ -156,8 +157,8 @@ export default function ProfileImage(props) {
         </Grid>
       )}
       <Grid textAlign="center" item xs={12} mt={4}>
-        <Typography component="span" variant="subtitle2" sx={{ wordBreak: 'break-all' }}>
-          {props.name}
+        <Typography component="span" variant="subtitle2" whiteSpace="initial">
+          {props.name || name}
         </Typography>
       </Grid>
       {loggedInUserType === 'Doctor' && nmrIdData && (

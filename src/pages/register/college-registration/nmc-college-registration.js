@@ -21,6 +21,11 @@ import {
 } from '../../../store/actions/common-actions';
 import { Button } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
+import {
+  EmailRegexValidation,
+  MobileNumberRegexValidation,
+  PostalCodeRegexValidation,
+} from '../../../utilities/common-validations';
 
 function NMCCollegeRegistration() {
   const {
@@ -31,6 +36,18 @@ function NMCCollegeRegistration() {
     subDistrictList,
     universitiesList,
   } = useSelector((state) => state.common);
+  const { updateCollegeDetails, collegeRegisterDetails } = useSelector((state) => state.college);
+
+  useEffect(() => {
+    if (updateCollegeDetails?.data.length !== 0) {
+      setSuccessModalPopup(true);
+    }
+  }, [updateCollegeDetails?.data]);
+  useEffect(() => {
+    if (collegeRegisterDetails?.data.length !== 0) {
+      setSuccessModalPopup(true);
+    }
+  }, [collegeRegisterDetails?.data]);
 
   let collegesList = [];
   collegesList.push(...allcollegesList.data, { id: 'other', name: 'other' });
@@ -106,7 +123,6 @@ function NMCCollegeRegistration() {
       dispatch(registerCollegeDetail(collegeDetailValues))
         .then(() => {
           setSuccessModalPopup(true);
-          document.getElementById('collegeRegistrationId').reset();
           setValue('CouncilName', '');
           setValue('CouncilID', '');
           setValue('Name', '');
@@ -126,7 +142,6 @@ function NMCCollegeRegistration() {
             'top-center'
           );
         });
-      document.getElementById('collegeRegistrationId').reset();
       reset();
     } else {
       const collegeDetailValues = {
@@ -149,8 +164,6 @@ function NMCCollegeRegistration() {
 
       dispatch(updateCollegeDetail(collegeDetailValues))
         .then(() => {
-          document.getElementById('collegeRegistrationId').reset();
-
           setSuccessModalPopup(true);
           reset();
           setValue('CouncilName', '');
@@ -205,6 +218,16 @@ function NMCCollegeRegistration() {
       setShowCollegeName(true);
       // reset();
     } else {
+      setValue('CouncilName', '');
+      setValue('CouncilID', '');
+      setValue('Name', '');
+      setValue('CollegeCode', '');
+      setValue('MobileNumber', '');
+      setValue('Website', '');
+      setValue('AddressLine1', '');
+      setValue('AddressLine2', '');
+      setValue('Pincode', '');
+      setValue('Email', '');
       setShowCollegeName(false);
       setValue('CollegeNameID', currentValue?.id);
       if (currentValue?.id !== undefined)
@@ -229,37 +252,46 @@ function NMCCollegeRegistration() {
             setValue('Email', response?.data?.email_id);
           }
 
-          if (response?.data?.state_medical_council_id) {
-            setValue('CouncilID', response?.data?.state_medical_council_id);
+          if (response?.data?.state_medical_council_to?.id) {
+            setValue('CouncilID', response?.data?.state_medical_council_to?.id);
             setValue(
               'CouncilName',
-              getSelecetedName(response?.data?.state_medical_council_id, 'councilData')
+              getSelecetedName(response?.data?.state_medical_council_to?.id, 'councilData')
             );
           }
-          if (response?.data?.district_id) {
-            setValue('DistrictID', response?.data?.district_id);
+          if (response?.data?.district_to?.id) {
+            setValue('DistrictID', response?.data?.district_to?.id);
           }
-          if (response?.data?.state_id) {
-            setValue('StateID', response?.data?.state_id);
-            setValue('StateName', getSelecetedName(response?.data?.state_id, 'stateData'));
+          if (response?.data?.state_to?.id) {
+            setValue('StateID', response?.data?.state_to?.id);
+            // setValue('StateName', getSelecetedName(response?.data?.state_id, 'stateData'));
+            setValue('StateName', getSelecetedName(response?.data?.state_to?.id, 'stateData'));
           }
-          if (response?.data?.university_id) {
-            setValue('UniversityID', response?.data?.university_id);
+          if (response?.data?.university_to?.id) {
+            setValue('UniversityID', response?.data?.university_to?.id);
+            // setValue(
+            //   'UniversityName',
+            //   getSelecetedName(response?.data?.university_id, 'universityData')
+            // );
             setValue(
               'UniversityName',
-              getSelecetedName(response?.data?.university_id, 'universityData')
+              getSelecetedName(response?.data?.university_to?.id, 'universityData')
             );
           }
         });
     }
   };
   const onStateChange = (currentValue) => {
-    setValue('StateID', currentValue.id);
-    dispatch(getDistrictList(currentValue.id));
+    if (currentValue !== null) {
+      setValue('StateID', currentValue.id);
+      dispatch(getDistrictList(currentValue.id));
+    }
   };
   const onDistrictChange = (currentValue) => {
-    setValue('DistrictID', currentValue.id);
-    dispatch(getSubDistrictsList(currentValue.id));
+    if (currentValue !== null) {
+      setValue('DistrictID', currentValue.id);
+      dispatch(getSubDistrictsList(currentValue.id));
+    }
   };
 
   return (
@@ -302,6 +334,7 @@ function NMCCollegeRegistration() {
               name="Name"
               required
               placeholder={t('Enter college name')}
+              inputProps={{ maxLength: 300 }}
               error={errors.Name?.message}
               {...register('Name', {
                 required: 'College name is required',
@@ -319,6 +352,7 @@ function NMCCollegeRegistration() {
             fullWidth
             name="CollegeCode"
             placeholder={t('Enter College Code')}
+            inputProps={{ maxLength: 300 }}
             error={errors.CollegeCode?.message}
             {...register('CollegeCode')}
           />
@@ -338,13 +372,7 @@ function NMCCollegeRegistration() {
             placeholder={t('Enter Mobile Number')}
             onInput={(e) => handleInput(e)}
             error={errors.MobileNumber?.message}
-            {...register('MobileNumber', {
-              required: 'Mobile number is required',
-              pattern: {
-                value: /^\d{10}$/i,
-                message: 'Provide a valid mobile number',
-              },
-            })}
+            {...register('MobileNumber', MobileNumberRegexValidation)}
           />
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
@@ -405,6 +433,7 @@ function NMCCollegeRegistration() {
             fullWidth
             name={'Website'}
             placeholder={'Enter College Website'}
+            inputProps={{ maxLength: 300 }}
             {...register('Website', {})}
           />
         </Grid>
@@ -422,6 +451,7 @@ function NMCCollegeRegistration() {
             fullWidth
             name="AddressLine1"
             placeholder="Enter Address line1"
+            inputProps={{ maxLength: 300 }}
             error={errors.AddressLine1?.message}
             {...register('AddressLine1', {
               required: 'Address line1 is required',
@@ -476,7 +506,7 @@ function NMCCollegeRegistration() {
             <SearchableDropdown
               fullWidth
               name="District"
-              items={createEditFieldData(districtsList)}
+              items={createEditFieldData(districtsList, 'iso_code')}
               placeholder="Select  District"
               clearErrors={clearErrors}
               error={errors.District?.message}
@@ -502,11 +532,11 @@ function NMCCollegeRegistration() {
             items={createEditFieldData(subDistrictList)}
             placeholder="Select Town "
             error={errors.Town?.message}
-            {...register('Town', {
-              // required: 'Town name is required',
-            })}
+            {...register('Town')}
             onChange={(currentValue) => {
-              setValue('TownID', currentValue.id);
+              if (currentValue !== null) {
+                setValue('TownID', currentValue.id);
+              }
             }}
           />
         </Grid>
@@ -523,15 +553,9 @@ function NMCCollegeRegistration() {
             type="number"
             name="Pincode"
             required
-            placeholder={'Enter  Pin Code'}
+            placeholder={'Enter postal code'}
             error={errors.Pincode?.message}
-            {...register('Pincode', {
-              required: 'Pin code is required',
-              pattern: {
-                value: /^[0-9]{6}$/i,
-                message: 'Please enter valid pincode',
-              },
-            })}
+            {...register('Pincode', PostalCodeRegexValidation)}
           />
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
@@ -551,15 +575,9 @@ function NMCCollegeRegistration() {
             name="Email"
             required
             placeholder={t('Enter Email ID')}
+            inputProps={{ maxLength: 100 }}
             error={errors.Email?.message}
-            {...register('Email', {
-              required: 'Email id is required',
-              pattern: {
-                value:
-                  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-                message: 'Provide valid email id',
-              },
-            })}
+            {...register('Email', EmailRegexValidation)}
           />
         </Grid>
       </Grid>
@@ -578,7 +596,7 @@ function NMCCollegeRegistration() {
         <SuccessModalPopup
           open={successModalPopup}
           setOpen={() => setSuccessModalPopup(false)}
-          text={'We have Shared the Password link on given Email Id and Mobile No.'}
+          text={'We have shared the password link on given Email ID and Mobile No.'}
           fromCollegeRegistration={true}
         />
       )}

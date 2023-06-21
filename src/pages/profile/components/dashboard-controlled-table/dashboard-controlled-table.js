@@ -215,7 +215,7 @@ function DashboardControlledTable(props) {
   };
   return (
     <Grid sx={{ m: 2 }}>
-      <Typography variant="h2" py={2}>
+      <Typography variant="h2" pb={2}>
         {`${props?.selectedCardData?.responseKey} Applications`}
       </Typography>
       <TableSearch
@@ -237,7 +237,7 @@ function DashboardControlledTable(props) {
         <TablePagination
           rowsPerPageOptions={[]}
           component="div"
-          count={dashboardTableDetails?.data?.total_no_of_records || '0'}
+          count={dashboardTableDetails?.data?.total_no_of_records}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

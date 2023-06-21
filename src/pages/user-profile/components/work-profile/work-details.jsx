@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import RemoveCircleOutlineRoundedIcon from '@mui/icons-material/RemoveCircleOutlineRounded';
 import { Box, Grid, Tab, Tabs, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,6 +23,7 @@ import {
   updateDoctorWorkDetails,
 } from '../../../../store/actions/doctor-user-profile-actions';
 import { Button, Checkbox, RadioGroup, Select, TextField } from '../../../../ui/core';
+import successToast from '../../../../ui/core/toaster';
 import { getFacilityDistrictList } from './district-api';
 import FacilityDetailsTable from './facility-details-table';
 import WorkDetailsTable from './work-details-table';
@@ -57,11 +59,20 @@ const WorkDetails = ({
   const [facilityResponseData, setFacilityResponseData] = useState([]);
 
   useEffect(() => {
-    dispatch(getWorkProfileDetailsData(loginData?.data?.profile_id)).then((response) => {
-      if (response?.data) {
-        setDefaultFacilityData(response?.data);
-      }
-    });
+    dispatch(getWorkProfileDetailsData(loginData?.data?.profile_id))
+      .then((response) => {
+        if (response?.data) {
+          setDefaultFacilityData(response?.data);
+        }
+      })
+      .catch(() => {
+        successToast(
+          'No matching work profile details found for the given hp_profile_id.',
+          'auth-error',
+          'error',
+          'top-center'
+        );
+      });
   }, []);
 
   const onSubmit = () => {
@@ -208,11 +219,15 @@ const WorkDetails = ({
       stateLGDCode: getStateISOCode(values.stateLGDCode) || '',
       districtLGDCode: getDistrictISOCode(values.districtLGDCode) || '',
     };
-    dispatch(getFacilitiesData(searchFacilities)).then((response) => {
-      if (response?.data?.message === 'Request processed successfully') {
-        setFacilityResponseData(response?.data?.facilities);
-      }
-    });
+    dispatch(getFacilitiesData(searchFacilities))
+      .then((response) => {
+        if (response?.data?.message === 'Request processed successfully') {
+          setFacilityResponseData(response?.data?.facilities);
+        }
+      })
+      .catch(() => {
+        successToast('ERR_INT:' + 'Invalid facility details', 'auth-error', 'error', 'top-center');
+      });
     setShowTable(true);
   };
 
@@ -254,7 +269,6 @@ const WorkDetails = ({
   }, [watchState]);
 
   useEffect(() => {
-    // searchFacilitiesHandler();
     fetchDistricts(watchFacilityStateCode, true);
   }, [watchFacilityStateCode]);
 
@@ -292,7 +306,7 @@ const WorkDetails = ({
     let DistrictData = [];
     Array.isArray(districtsList) &&
       districtsList?.map((elementData) => {
-        if (elementData.id === District) {
+        if (elementData.iso_code === District) {
           DistrictData.push(elementData);
         }
       });
@@ -367,7 +381,7 @@ const WorkDetails = ({
       <Grid item xs={12} md={4}>
         <Select
           fullWidth
-          name="NatureOfWork"
+          name={'NatureOfWork'}
           label="Nature of work"
           defaultValue={getValues().NatureOfWork}
           required={true}
@@ -389,7 +403,7 @@ const WorkDetails = ({
 
         <RadioGroup
           onChange={handleWorkStatus}
-          name="workStatus"
+          name={'workStatus'}
           size="small"
           defaultValue={getValues().workStatus}
           items={createSelectFieldData(workStatusOptions)}
@@ -468,19 +482,24 @@ const WorkDetails = ({
           </Typography>
         </Typography>
         <AutoComplete
-          name="LanguageSpoken"
+          name={'LanguageSpoken'}
           options={languagesList?.data || []}
           value={languages}
-          error={errors?.LanguageSpoken?.message}
+          error={getValues()?.LanguageSpoken?.length < 1 && errors?.LanguageSpoken?.message}
           multiple={true}
-          required={true}
+          // required={true}
           {...register('LanguageSpoken', {
-            required: 'This field is required',
+            // required: 'This field is required',
           })}
           onChange={(value) => {
             handleLanguageSpokenChange('LanguageSpoken', value);
           }}
         />
+
+        <Typography variant="body4" color="messageBlue.main" display="flex" alignItems="center">
+          <InfoOutlinedIcon sx={{ fontSize: '20px', padding: '2px' }} />
+          Multiple languages can be selected
+        </Typography>
       </Grid>
       <Grid item xs={12}>
         <Typography
@@ -553,14 +572,11 @@ const WorkDetails = ({
                   <TextField
                     fullWidth
                     error={errors?.facilityId?.message}
-                    name="facilityId"
+                    name={'facilityId'}
                     label="Enter Facility Id(If Known)"
                     placeholder="Facility Id"
                     defaultValue={getValues()?.facilityId}
-                    required={true}
-                    {...register(`facilityId`, {
-                      required: 'This field is required',
-                    })}
+                    {...register(`facilityId`)}
                   />
                 </Box>
                 <Box ml={1}>
@@ -594,38 +610,28 @@ const WorkDetails = ({
               <Grid item xs={12} md={3} lg={3}>
                 <Typography variant="subtitle2" color="inputTextColor.main">
                   State
-                  <Typography component="span" color="error.main">
-                    *
-                  </Typography>
                 </Typography>
                 <Select
                   fullWidth
-                  error={errors.state?.message}
+                  // error={errors.state?.message}
                   name={'stateLGDCode'}
                   defaultValue={getValues().stateLGDCode}
-                  required={true}
-                  {...register('stateLGDCode', {
-                    // required: 'This field is required',
-                  })}
+                  // required={true}
+                  {...register('stateLGDCode')}
                   options={createSelectFieldData(statesList)}
                 />
               </Grid>
               <Grid item xs={12} md={3} lg={3}>
                 <Typography variant="subtitle2" color="inputTextColor.main">
                   District
-                  <Typography component="span" color="error.main">
-                    *
-                  </Typography>
                 </Typography>
                 <Select
                   fullWidth
-                  error={errors.District?.message}
+                  // error={errors.District?.message}
                   name={'districtLGDCode'}
                   defaultValue={getValues().districtLGDCode}
-                  required={true}
-                  {...register('districtLGDCode', {
-                    // required: 'This field is required',
-                  })}
+                  // required={true}
+                  {...register('districtLGDCode')}
                   options={createSelectFieldData(facilityDistrict)}
                 />
               </Grid>
@@ -635,13 +641,9 @@ const WorkDetails = ({
                 </Typography>
                 <TextField
                   fullWidth
-                  error={errors.facilityName?.message}
                   name={'facilityName'}
                   defaultValue={getValues().facilityName}
-                  {...register('facilityName', {
-                    required: 'This field is required',
-                  })}
-                  options={[]}
+                  {...register('facilityName')}
                 />
               </Grid>
               <Grid item xs={12} md={3} lg={3} mt={3}>
@@ -652,10 +654,6 @@ const WorkDetails = ({
                     onClick={() => {
                       searchFacilitiesHandler();
                     }}
-                    disabled={
-                      getValues()?.stateLGDCode?.length === 0 ||
-                      getValues()?.districtLGDCode?.length === 0
-                    }
                   >
                     Search
                   </Button>
@@ -900,7 +898,7 @@ const WorkDetails = ({
                 {...register('District', {
                   required: 'This field is required',
                 })}
-                options={createSelectFieldData(districtsList)}
+                options={createSelectFieldData(districtsList, 'iso_code')}
               />
             </Grid>
             <Grid item xs={12} md={4}>
@@ -942,7 +940,7 @@ const WorkDetails = ({
               <Select
                 fullWidth
                 error={errors.Area?.message}
-                name="Area"
+                name={'Area'}
                 defaultValue={getValues().Area}
                 required={true}
                 {...register('Area', {
@@ -987,23 +985,17 @@ const WorkDetails = ({
           <Grid container item spacing={2} mt={1}>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
-                Telecommunication URL
-                <Typography component="span" color="error.main">
-                  *
-                </Typography>
+                Teleconsultation URL
               </Typography>
 
               <TextField
                 variant="outlined"
-                name={'telecommunicationURL'}
-                required={true}
-                placeholder="Enter Telecommunication URL"
+                name={'teleconsultationURL'}
+                placeholder="Enter teleconsultation URL"
                 fullWidth
                 error={errors.telecommunicationURL?.message}
                 defaultValue={getValues().telecommunicationURL}
-                {...register('telecommunicationURL', {
-                  required: 'This field is required',
-                })}
+                {...register('teleconsultationURL')}
               />
             </Grid>
           </Grid>

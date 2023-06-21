@@ -77,6 +77,13 @@ export const PasswordRegexValidation = {
   },
 };
 
+export const LoginPasswordRegexValidation = {
+  required: 'Please enter Password',
+  pattern: {
+    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&])[A-Za-z\d@$!%*?#&]{8,100}$/,
+    message: 'Enter correct password',
+  },
+};
 export const AadharRegexValidation = {
   required: 'Enter a valid aadhaar number',
   pattern: {
@@ -85,12 +92,36 @@ export const AadharRegexValidation = {
   },
 };
 
+export const QueryRaisedValidation = {
+  required: 'This field is required',
+  pattern: {
+    value: /^[\s\S]{1,150}$/,
+    message: 'Maximum word limit exceeded',
+  },
+};
+
 export const EmailRegexValidation = {
-  required: 'Enter a valid Email ID',
+  required: 'Email ID is required',
   pattern: {
     value:
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
     message: 'Provide a valid Email ID',
+  },
+};
+
+export const PostalCodeRegexValidation = {
+  required: 'Postal code is required',
+  pattern: {
+    value: /^\d{6}$/,
+    message: 'Should only contain 6 digits',
+  },
+};
+
+export const MobileNumberRegexValidation = {
+  required: 'Mobile Number is required',
+  pattern: {
+    value: /^\d{10}$/i,
+    message: 'Please enter a valid 10-digit mobile number',
   },
 };
 
