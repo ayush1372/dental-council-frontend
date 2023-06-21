@@ -208,6 +208,12 @@ export default function ProfileImage(props) {
                     personalDetails?.work_flow_status_id === 1
                       ? 'none'
                       : 'unset',
+                  opacity:
+                    (personalDetails?.hp_profile_status_id === 5 ||
+                      personalDetails?.hp_profile_status_id === 6) &&
+                    personalDetails?.work_flow_status_id === 1
+                      ? 0.5
+                      : 'unset',
                 }}
                 ml={1}
                 variant="subtitle2"
