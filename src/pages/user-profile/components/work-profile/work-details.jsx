@@ -5,9 +5,6 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import RemoveCircleOutlineRoundedIcon from '@mui/icons-material/RemoveCircleOutlineRounded';
 import { Box, Grid, Tab, Tabs, Typography } from '@mui/material';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormGroup from '@mui/material/FormGroup';
-import GoogleMapReact from 'google-map-react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { natureOfWork, workStatusOptions } from '../../../../constants/common-data';
@@ -35,8 +32,6 @@ import { getFacilityDistrictList } from './district-api';
 import FacilityDetailsTable from './facility-details-table';
 import WorkDetailsTable from './work-details-table';
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
-
 const WorkDetails = ({
   getValues,
   register,
@@ -46,13 +41,6 @@ const WorkDetails = ({
   watch,
   currentWorkingSelection,
 }) => {
-  const defaultProps = {
-    center: {
-      lat: 10.99835602,
-      lng: 77.01502627,
-    },
-    zoom: 11,
-  };
   const dispatch = useDispatch();
 
   const [tabValue, setTabValue] = useState(0);
@@ -65,7 +53,6 @@ const WorkDetails = ({
   const [organizationChecked, setOrganizationChecked] = useState(false);
   const [declaredFacilityData, setDeclaredFacilityDistrict] = useState([]);
   const [defaultFacilityData, setDefaultFacilityData] = useState([]);
-  const [formContent, setFormContent] = useState(false);
 
   const { loginData } = useSelector((state) => state.loginReducer);
   const { registrationDetails, workProfileDetails } = useSelector(
@@ -404,10 +391,6 @@ const WorkDetails = ({
     return languageData;
   };
 
-  const pinFacilityClick = () => {
-    setFormContent(!formContent);
-  };
-
   return (
     <>
       <Grid item xs={12} md={4}>
@@ -724,279 +707,7 @@ const WorkDetails = ({
               )}
             </Grid>
           )}
-          {tabValue === 2 && (
-            <>
-              <Grid container spacing={2}>
-                <Grid item md={8}>
-                  <Box pl={2}>
-                    <FormGroup sx={{ paddingLeft: '2px' }}>
-                      <FormControlLabel control={<Checkbox />} label="Major Hospitals" />
-                      <FormControlLabel
-                        control={<Checkbox />}
-                        label="Pathological and Diagnostic lab"
-                      />
-                      <FormControlLabel
-                        control={<Checkbox />}
-                        label="Clinic Dispensary Health Care Centre"
-                      />
-                    </FormGroup>
-                    <TextField
-                      error={errors?.facilityId?.message}
-                      name={'facilityId'}
-                      label="Search Location"
-                      placeholder="Enter Location"
-                      defaultValue={getValues()?.facilityId}
-                      {...register(`facilityId`)}
-                    />
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      onClick={() => {
-                        // searchLocationHandler();
-                      }}
-                      sx={{ ml: 2 }}
-                    >
-                      Search
-                    </Button>
-                    <Typography variant="subtitle2" color="inputTextColor.main" mt={1}>
-                      Or
-                    </Typography>
-
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      onClick={() => {
-                        pinFacilityClick();
-                      }}
-                    >
-                      Pin Your Facility
-                    </Button>
-                  </Box>
-                </Grid>
-                {formContent && (
-                  <Grid item md={4}>
-                    <Box style={{ height: '80%', width: '80%' }}>
-                      <GoogleMapReact
-                        bootstrapURLKeys={{ key: '' }}
-                        defaultCenter={defaultProps.center}
-                        defaultZoom={defaultProps.zoom}
-                      >
-                        <AnyReactComponent lat={59.955413} lng={30.337844} text="My Marker" />
-                      </GoogleMapReact>
-                    </Box>
-                  </Grid>
-                )}
-              </Grid>
-              {formContent && (
-                <Grid container item spacing={2} mt={1}>
-                  <Grid item xs={12} md={6} lg={4}>
-                    <Typography variant="body3" color="inputTextColor.main">
-                      State
-                    </Typography>
-                    <Typography component="span" color="error.main">
-                      *
-                    </Typography>
-
-                    <Select
-                      fullWidth
-                      name="stateName"
-                      items={createSelectFieldData(statesList)}
-                      placeholder="Select State"
-                      // clearErrors={clearErrors}
-                      error={errors.stateName?.message}
-                      {...register('stateName', {
-                        required: 'state name is required',
-                      })}
-                      onChange={() => {
-                        // onstateChange(currentValue);
-                      }}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} md={6} lg={4}>
-                    <Typography variant="body3" color="inputTextColor.main">
-                      District
-                    </Typography>
-
-                    <Select
-                      fullWidth
-                      error={errors.DistrictName?.message}
-                      name={'DistrictName'}
-                      defaultValue={getValues().DistrictName}
-                      required={true}
-                      {...register('DistrictName', {
-                        required: 'This field is required',
-                      })}
-                      options={createSelectFieldData(districtsList)}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} md={6} lg={4}>
-                    <Typography variant="body3" color="inputTextColor.main">
-                      Name of the organization where you work
-                      <Typography component="span" color="error.main">
-                        *
-                      </Typography>
-                    </Typography>
-                    <TextField
-                      variant="outlined"
-                      name={'OrganizationName'}
-                      placeholder="Enter name of the organization"
-                      fullWidth
-                      defaultValue={getValues().OrganizationName}
-                      {...register('OrganizationName', {
-                        required: 'This field is required',
-                      })}
-                      error={errors.OrganizationName?.message}
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={6} lg={4}>
-                    <Typography variant="body3" color="textSecondary.main">
-                      Facility Ownership
-                      <Typography component="span" color="error.main">
-                        *
-                      </Typography>
-                    </Typography>
-                    <Box>
-                      <Select
-                        fullWidth
-                        name="OwenershipName"
-                        items={createSelectFieldData(districtsList)}
-                        placeholder="Select Council"
-                        // clearErrors={clearErrors}
-                        error={errors.OwenershipName?.message}
-                        {...register('OwenershipName', {
-                          required: ' OwenershipName name is required',
-                        })}
-                        onChange={() => {
-                          // setValue('OwenershipName', currentValue.id);
-                        }}
-                      />
-                    </Box>
-                    <Grid />
-                    <Grid />
-                  </Grid>
-                  <Grid item xs={12} md={6} lg={4}>
-                    <Typography variant="body3" color="inputTextColor.main">
-                      System of Medicine(if Applicable)
-                    </Typography>
-
-                    <Select
-                      fullWidth
-                      name="SystemOfMedicine"
-                      // clearErrors={clearErrors}
-                      items={createSelectFieldData(districtsList)}
-                      placeholder="Select System of medicine"
-                      error={errors.SystemOfMedicine?.message}
-                      {...register('SystemOfMedicine', {
-                        required: 'system of medicine is required',
-                      })}
-                      onChange={() => {
-                        // setValue('SystemOfMedicine', currentValue.id);
-                      }}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} md={6} lg={4}>
-                    <Typography variant="body3" color="inputTextColor.main">
-                      Facility Type(if Applicable)
-                    </Typography>
-
-                    <Select
-                      fullWidth
-                      name="FacilityType"
-                      // clearErrors={clearErrors}
-                      items={createSelectFieldData(districtsList)}
-                      placeholder="Select Facility Type"
-                      // error={errors.FacilityType?.message}
-                      {...register('FacilityType', {
-                        // required: 'Facility Type is required',
-                      })}
-                      onChange={() => {
-                        // setValue('UniversityID', currentValue.id);
-                      }}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} md={6} lg={4}>
-                    <Typography variant="body3" color="inputTextColor.main">
-                      Department
-                    </Typography>
-
-                    <TextField
-                      fullWidth
-                      name="Department"
-                      placeholder="Enter Department Name"
-                      error={errors.Department?.message}
-                      {...register('Department', {
-                        // required: 'Department is required',
-                      })}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} md={6} lg={4}>
-                    <Typography variant="body3" color="inputTextColor.main">
-                      Designation
-                    </Typography>
-                    <Typography component="span" color="error.main">
-                      *
-                    </Typography>
-                    <TextField
-                      fullWidth
-                      name="Designation"
-                      placeholder={'Enter designation'}
-                      error={errors.Designation?.message}
-                      {...register('Designation', {})}
-                    />
-                  </Grid>
-
-                  <Grid item xs={12} md={6} lg={4}>
-                    <Typography variant="body3" color="inputTextColor.main">
-                      Address
-                    </Typography>
-                    <Typography component="span" color="error.main">
-                      *
-                    </Typography>
-                    <TextField
-                      fullWidth
-                      name="Address"
-                      placeholder="Enter Address"
-                      inputProps={{ maxLength: 300 }}
-                      error={errors.Address?.message}
-                      {...register('Address', {
-                        // required: 'Address  is required',
-                      })}
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={6} lg={4}>
-                    <Typography variant="body3" color="textSecondary.main">
-                      PIN Code
-                    </Typography>
-                    <TextField
-                      fullWidth
-                      type="number"
-                      name="Pincode"
-                      placeholder={'Enter postal code'}
-                      error={errors.Pincode?.message}
-                      {...register('Pincode')}
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={6} lg={4}>
-                    <Typography variant="body3" color="inputTextColor.main">
-                      eLoc
-                    </Typography>
-                    <TextField
-                      fullWidth
-                      name="eloc"
-                      placeholder={'Enter eloc'}
-                      error={errors.eloc?.message}
-                      {...register('eloc')}
-                    />
-                  </Grid>
-                </Grid>
-              )}
-            </>
-          )}
+          {tabValue === 2 && <Typography>on the map</Typography>}
         </Grid>
       )}
       {organizationChecked && (

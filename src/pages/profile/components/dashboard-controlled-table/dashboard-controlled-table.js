@@ -215,9 +215,6 @@ function DashboardControlledTable(props) {
   };
   return (
     <Grid sx={{ m: 2 }}>
-      {/* <Typography variant="h2" pb={2}>
-        {`${props?.selectedCardData?.responseKey} Applications`}
-      </Typography> */}
       <TableSearch
         searchParams={searchParams}
         exportData={dashboardTableDetails}
