@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 export default function ProfileTabContainer({ DrawerOptions }) {
@@ -17,13 +17,13 @@ export default function ProfileTabContainer({ DrawerOptions }) {
       {DrawerOptions?.map((item, index) =>
         item.tabName === userActiveTab ? (
           <>
-            {userActiveTab === 'my-profile' && loggedInUserType === 'Doctor' ? (
+            {/* {userActiveTab === 'my-profile' && loggedInUserType === 'Doctor' ? (
               ''
             ) : (
               <Typography variant="h2" py={2} bgcolor={`${theme.palette.white.main}`} mb={1} px={3}>
                 {item?.name}
               </Typography>
-            )}
+            )} */}
             <Box
               bgcolor={
                 userActiveTab === 'my-profile' && loggedInUserType === 'Doctor'

@@ -142,7 +142,7 @@ export function LoginPage() {
         <SuccessModal
           open={showPopup}
           setOpen={() => setShowPopup(false)}
-          text={' Your password has been successfully Changed.'}
+          text={' Your password has been successfully changed.'}
           successRegistration={true}
           resetStep={resetStep}
         />

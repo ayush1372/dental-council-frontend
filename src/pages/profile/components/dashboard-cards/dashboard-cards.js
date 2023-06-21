@@ -211,6 +211,7 @@ export default function Dashboard() {
         <Grid container>
           <Grid item xs={6}>
             <BreadcrumbsCompnent
+              selectedCardData={selectedCardData}
               showTable={showTable}
               showViewProfile={showViewProfile}
               handleBreadCrumClick={handleBreadCrumClick}
