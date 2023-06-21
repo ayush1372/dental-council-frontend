@@ -9,6 +9,9 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
   const logInDoctorStatus = useSelector(
     (state) => state?.loginReducer?.loginData?.data?.blacklisted
   );
+  const doctorEsignStatus = useSelector(
+    (state) => state?.loginReducer?.loginData?.data?.esign_status
+  );
   const { data } = useSelector((state) => state?.loginReducer?.loginData);
 
   return (
@@ -48,6 +51,8 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
               disabled={
                 loggedInUserType === 'Doctor' &&
                 (!personalDetails?.nmr_id ||
+                  doctorEsignStatus === 3 ||
+                  doctorEsignStatus === 2 ||
                   (logInDoctorStatus &&
                     (personalDetails?.hp_profile_status_id === 5 ||
                       personalDetails?.hp_profile_status_id === 6))) &&
