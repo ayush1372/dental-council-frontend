@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { Box, Grid, TablePagination, Typography } from '@mui/material';
+import { Box, Grid, TablePagination } from '@mui/material';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -215,9 +215,6 @@ function DashboardControlledTable(props) {
   };
   return (
     <Grid sx={{ m: 2 }}>
-      <Typography variant="h2" pb={2}>
-        {`${props?.selectedCardData?.responseKey} Applications`}
-      </Typography>
       <TableSearch
         searchParams={searchParams}
         exportData={dashboardTableDetails}

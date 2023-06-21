@@ -12,14 +12,24 @@ export default function DatafoundModalPopup({
   imrData,
   setIsNext,
   handleAadhaarPage,
+  registrationData,
   accountExist,
 }) {
   const theme = useTheme();
   const navigate = useNavigate();
-  const councilName = useSelector(
-    (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.council_name
-  );
 
+  const { councilNames } = useSelector((state) => state.common);
+
+  const getCouncilName = () => {
+    let name;
+    Array.isArray(councilNames) &&
+      councilNames?.map((elementData) => {
+        if (elementData.id === registrationData?.smcId) {
+          name = elementData?.name;
+        }
+      });
+    return name;
+  };
   const registrationNumber = useSelector(
     (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.registration_number
   );
@@ -94,7 +104,7 @@ export default function DatafoundModalPopup({
                     Registration Number
                   </Typography>
                   <Typography variant="subtitle2" component="div" color="primary">
-                    {registrationNumber}
+                    {registrationNumber || registrationData?.registrationNumber}
                   </Typography>
                 </Box>
               </Box>
@@ -103,7 +113,7 @@ export default function DatafoundModalPopup({
                   Council
                 </Typography>
                 <Typography variant="subtitle2" component="div" color="primary">
-                  {councilName}
+                  {getCouncilName()}
                 </Typography>
               </Box>
             </Box>

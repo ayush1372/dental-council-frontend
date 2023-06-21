@@ -53,13 +53,9 @@ export default function ReactivateLicencePopup(props) {
           props.renderSuccess();
         }
       })
-      .catch((allFailMsg) => {
-        successToast(
-          'ERR_INT: ' + JSON.stringify(allFailMsg?.data?.message),
-          'auth-error',
-          'error',
-          'top-center'
-        );
+      .catch((error) => {
+        props?.closeReactivateLicense();
+        successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
       });
   }
 
