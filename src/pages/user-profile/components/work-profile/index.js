@@ -1,28 +1,41 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Container, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
 
-// import { useDispatch } from 'react-redux';
-// import { getProfileId } from '../../../../helpers/functions/common-functions';
-// import { getWorkProfileDetailsData } from '../../../../store/actions/doctor-user-profile-actions';
-// import successToast from '../../../../ui/core/toaster';
-// import ReadWorkProfile from './read-profile';
+import { getWorkProfileDetailsData } from '../../../../store/actions/doctor-user-profile-actions';
 import { RadioGroup } from '../../../../ui/core';
+import successToast from '../../../../ui/core/toaster';
 import NonWorkDetails from './non-work-details';
 import WorkDetails from './work-details';
 
 const WorkProfile = () => {
-  const [currentlyWorking, setCurrentlyWorking] = useState('yes');
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+  const { loginData } = useSelector((state) => state.loginReducer);
 
-  // const profile_id = useMemo(() => getProfileId(), []);
+  const [currentlyWorking, setCurrentlyWorking] = useState('');
+  const [workingDetails, setWorkingDetails] = useState('');
 
-  // useEffect(() => {
-  //   dispatch(getWorkProfileDetailsData(profile_id)).catch((allFailMsg) => {
-  //     successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-  //   });
-  // }, [profile_id]);
+  useEffect(() => {
+    dispatch(getWorkProfileDetailsData(loginData?.data?.profile_id))
+      .then((response) => {
+        if (response?.data) {
+          setCurrentlyWorking(
+            response?.data?.work_details?.is_user_currently_working === 1 ? 'no' : 'yes'
+          );
+          setWorkingDetails(response?.data?.current_work_details);
+        }
+      })
+      .catch(() => {
+        successToast(
+          'No matching work profile details found for the given hp_profile_id.',
+          'auth-error',
+          'error',
+          'top-center'
+        );
+      });
+  }, []);
 
   const {
     formState: { errors },
@@ -66,7 +79,6 @@ const WorkProfile = () => {
               *
             </Typography>
           </Typography>
-
           <RadioGroup
             onChange={handleCurrentWorking}
             name={'currentWorkingSelection'}
@@ -82,6 +94,7 @@ const WorkProfile = () => {
                 label: 'No',
               },
             ]}
+            value={currentlyWorking}
           />
         </Grid>
         {currentlyWorking === 'no' && (
@@ -92,6 +105,7 @@ const WorkProfile = () => {
             setValue={setValue}
             handleSubmit={handleSubmit}
             watch={watch}
+            workingDetails={workingDetails}
           />
         )}
         {currentlyWorking === 'yes' && (
