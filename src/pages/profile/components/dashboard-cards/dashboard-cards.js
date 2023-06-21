@@ -270,7 +270,7 @@ export default function Dashboard() {
                   return (
                     <Box
                       mb={{ xs: 2, md: 4 }}
-                      flex={{ xs: '1 0 100%', sm: '1 0 32%', md: '1 0 24%', lg: '1 0 13%' }}
+                      flex={{ xs: '1 0 100%', sm: '1 0 32%', md: '1 0 13%', lg: '1 0 13%' }}
                       key={item?.name}
                     >
                       <Item id={item?.id} onClick={() => showTableFun(item)}>

@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 
 import MobileIcon from '../../../assets/images/mobile-icon.svg';
 import ProfileIcon from '../../../assets/images/profile-icon.svg';
-import { verboseLog } from '../../../config/debug';
 import { encryptData, userGroupType, usersType } from '../../../helpers/functions/common-functions';
 import CaptchaComponent from '../../../shared/captcha-component/captcha-component';
 import OtpForm from '../../../shared/otp-form/otp-component';
@@ -181,8 +180,6 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
           successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
         });
     } else if (selectedLoginOption === 'userName') {
-      verboseLog('Login Data -> ', getValues()?.password);
-      verboseLog('Login Data -> ', getValues()?.userID);
       dispatch(
         validateCaptchaImage({
           transaction_id: generateCaptcha?.transaction_id,

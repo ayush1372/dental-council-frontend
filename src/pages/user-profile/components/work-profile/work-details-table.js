@@ -191,7 +191,7 @@ function WorkDetailsTable({
         <TablePagination
           rowsPerPageOptions={[]}
           component="div"
-          count={trackStatusData?.total_no_of_records}
+          count={trackStatusData?.total_no_of_records || '0'}
           rowsPerPage={rowsPerPage}
           page={page}
           onRowsPerPageChange={handleChangeRowsPerPage}
