@@ -118,7 +118,7 @@ const LoginWrapper = () => {
           <Box mt={2} textAlign="center">
             <Typography color="grey.context" variant="h3">
               Your password has been <br />
-              successfully Changed.
+              successfully changed.
             </Typography>
           </Box>
           <Box display={'flex'} mt={1} justifyContent="center">
@@ -133,7 +133,7 @@ const LoginWrapper = () => {
                 margin: '0 4px',
               }}
             >
-              Login with New Password
+              Login with new password
             </Button>
           </Box>
         </Box>
