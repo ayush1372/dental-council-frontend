@@ -8,12 +8,8 @@ import { Box, Grid, Tab, Tabs, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { natureOfWork, workStatusOptions } from '../../../../constants/common-data';
-import {
-  // createEditFieldData,
-  createSelectFieldData,
-} from '../../../../helpers/functions/common-functions';
+import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
 import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
-// import { SearchableDropdown } from '../../../../shared/autocomplete/searchable-dropdown';
 import SuccessModalPopup from '../../../../shared/common-modals/success-modal-popup';
 import {
   getCitiesList,
