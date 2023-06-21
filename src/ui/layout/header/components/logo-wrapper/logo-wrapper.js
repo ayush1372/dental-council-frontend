@@ -52,7 +52,7 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
   const [anchorElUser, setAnchorElUser] = useState(null);
 
   let options = [
-    { name: 'Back To Dashboard', url: '/profile' },
+    { name: 'Dashboard', url: '/profile' },
     { name: 'Logout', url: '/' },
   ];
 
@@ -140,7 +140,7 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
         top: 0,
         behavior: 'smooth',
       });
-    } else if (optionType === 'Back To Dashboard') {
+    } else if (optionType === 'Dashboard') {
       loggedInUserType === 'Doctor'
         ? dispatch(changeUserActiveTab(doctorTabs[0].tabName))
         : dispatch(changeUserActiveTab(colgTabs[0].tabName));
@@ -243,7 +243,13 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
               >
                 {options.map((option) => (
                   <MenuItem key={option.name} onClick={() => handleNavigation(option.name)}>
-                    <Typography>{option.name}</Typography>
+                    <Typography>
+                      {option.name === 'Dashboard'
+                        ? loggedInUserType === 'Doctor'
+                          ? 'My Profile'
+                          : option.name
+                        : option.name}
+                    </Typography>
                   </MenuItem>
                 ))}
               </Menu>

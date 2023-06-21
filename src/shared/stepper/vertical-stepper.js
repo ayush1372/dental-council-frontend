@@ -78,6 +78,7 @@ export default function VerticalLinearStepper() {
               {(label?.action_id === 1 &&
                 index === ApplicationStatus?.application_details?.length - 1) ||
               label?.action_id === 2 ||
+              label?.action_id === 6 ||
               label?.action_id === 4 ? (
                 <CheckCircleIcon
                   sx={{
@@ -148,7 +149,8 @@ export default function VerticalLinearStepper() {
                 type={
                   userActionId(label?.action_id) === 'Submitted' ||
                   userActionId(label?.action_id) === 'Forwarded' ||
-                  userActionId(label?.action_id) === 'Approve'
+                  userActionId(label?.action_id) === 'Approve' ||
+                  userActionId(label?.action_id) === 'Temporary suspension'
                     ? 'approved'
                     : userActionId(label?.action_id) === 'Rejected'
                     ? 'reject'
@@ -161,6 +163,7 @@ export default function VerticalLinearStepper() {
             <Box
               borderLeft={
                 (label?.action_id !== 1 &&
+                  label?.action_id !== 6 &&
                   index === ApplicationStatus?.application_details?.length - 1) ||
                 label?.action_id === 2 ||
                 label?.action_id === 4 ||

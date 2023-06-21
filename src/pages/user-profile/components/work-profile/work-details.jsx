@@ -703,11 +703,7 @@ const WorkDetails = ({
               )}
             </Grid>
           )}
-          {tabValue === 2 && (
-            <Grid item md={8}>
-              map
-            </Grid>
-          )}
+          {tabValue === 2 && <Typography>on the map</Typography>}
         </Grid>
       )}
       {organizationChecked && (
