@@ -200,7 +200,15 @@ export default function ProfileImage(props) {
                 height="15px"
               />
               <Link
-                sx={{ cursor: 'pointer' }}
+                sx={{
+                  cursor: 'pointer',
+                  'pointer-events':
+                    (personalDetails?.hp_profile_status_id === 5 ||
+                      personalDetails?.hp_profile_status_id === 6) &&
+                    personalDetails?.work_flow_status_id === 1
+                      ? 'none'
+                      : 'unset',
+                }}
                 ml={1}
                 variant="subtitle2"
                 onClick={() => {
