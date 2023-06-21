@@ -318,7 +318,7 @@ const ProfileConsent = ({
               sx={{ height: '14px', width: '14px', color: 'messageBlue.main', mr: 1 }}
             />
             <Link
-              href="https://hpr.abdm.gov.in/en"
+              href={process.env.REACT_APP_HPR_CONCENT_API}
               target="_blank"
               component="a"
               variant="body8"
