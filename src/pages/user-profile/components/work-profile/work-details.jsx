@@ -631,7 +631,7 @@ const WorkDetails = ({
 
                 <Select
                   fullWidth
-                  error={'This field is required'}
+                  error={getValues().stateLGDCode?.length === 0 && 'This field is required'}
                   name={'stateLGDCode'}
                   defaultValue={getValues().stateLGDCode}
                   required={true}
@@ -648,10 +648,9 @@ const WorkDetails = ({
                     *
                   </Typography>
                 </Typography>
-
                 <Select
                   fullWidth
-                  error={errors.District?.message}
+                  error={getValues().districtLGDCode?.length === 0 && 'This field is required'}
                   name={'districtLGDCode'}
                   defaultValue={getValues().districtLGDCode}
                   required={true}
