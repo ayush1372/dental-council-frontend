@@ -211,6 +211,7 @@ export default function Dashboard() {
         <Grid container>
           <Grid item xs={6}>
             <BreadcrumbsCompnent
+              selectedCardData={selectedCardData}
               showTable={showTable}
               showViewProfile={showViewProfile}
               handleBreadCrumClick={handleBreadCrumClick}
@@ -270,7 +271,7 @@ export default function Dashboard() {
                   return (
                     <Box
                       mb={{ xs: 2, md: 4 }}
-                      flex={{ xs: '1 0 100%', sm: '1 0 32%', md: '1 0 24%', lg: '1 0 13%' }}
+                      flex={{ xs: '1 0 100%', sm: '1 0 32%', md: '1 0 13%', lg: '1 0 13%' }}
                       key={item?.name}
                     >
                       <Item id={item?.id} onClick={() => showTableFun(item)}>
@@ -286,19 +287,20 @@ export default function Dashboard() {
                           <img className={classes.iconImage} src={getCardIcons(item)} alt="icon" />
                         </Box>
                         <Typography
-                          variant="body1"
                           color="primary"
                           component="div"
-                          lineHeight={{ xs: '18px', lg: '24px' }}
+                          fontSize={{ xs: '12px', sm: '12px', md: '14px', lg: '16px' }}
+                          lineHeight={{ xs: '14px', sm: '16px', md: '18px', lg: '24px' }}
                           mb={1}
                         >
                           {item.name}
                         </Typography>
                         <Typography
-                          variant="body1"
                           color="primary"
                           component="div"
                           fontWeight="400"
+                          fontSize={{ xs: '12px', sm: '12px', md: '12px', lg: '16px' }}
+                          lineHeight={{ xs: '14px', sm: '16px', md: '16px', lg: '24px' }}
                         >
                           {getTextLabelIcons(item)}
                         </Typography>

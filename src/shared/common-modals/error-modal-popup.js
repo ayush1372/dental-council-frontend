@@ -22,7 +22,7 @@ export default function ErrorModalPopup({
   const dispatch = useDispatch();
   const handleCloseModal = () => {
     if (accountExist) {
-      dispatch(loginActiveState({ activeIndex: 0 }));
+      dispatch(loginActiveState({ activeIndex: 1 }));
       navigate('/login-page', { state: { loginFormname: loginFormName } });
     }
     setOpen(false);
@@ -30,7 +30,7 @@ export default function ErrorModalPopup({
   };
   const handleYes = () => {
     handleAadhaarPage(true);
-    setIsNext(true);
+    if (setIsNext !== undefined) setIsNext(true);
     setOpen(false);
   };
   const handleNo = () => {
