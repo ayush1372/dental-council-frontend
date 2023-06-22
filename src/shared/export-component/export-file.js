@@ -78,7 +78,7 @@ const ExportFiles = ({ exportData, flag }) => {
             college_dean_status: elementData?.college_status,
             smc_status: elementData?.smc_status,
             nmc_status: elementData.nmc_status,
-            created_at: moment(elementData?.created_at).format('DD-MM-YYYY hh:mm A'),
+            created_at: moment(elementData?.created_at).format('DD-MM-YYYY HH:mm'),
             doctor_status: elementData?.doctor_status,
             pendency: elementData?.pendency,
           };
@@ -118,7 +118,7 @@ const ExportFiles = ({ exportData, flag }) => {
       worksheet.getRow(1).fill = workSheetTheme;
       worksheet.columns.forEach((column) => {
         if (column.header === 'Date of Submission') {
-          column.header = 'Date of Submission (DD-MM-YYYY HH:MM AM/PM)';
+          column.header = 'Date of Submission (DD-MM-YYYY HH:MM )';
         }
         if (column.header === 'Pendency') {
           column.header = 'Pendency (In Days)';
