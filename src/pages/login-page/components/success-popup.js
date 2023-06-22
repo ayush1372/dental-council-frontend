@@ -1,16 +1,38 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined';
 import { Box, Container, Modal, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
+import { useLocation } from 'react-router-dom';
 
+import { loginActiveState } from '../../../store/reducers/login-reducer';
 import { Button } from '../../../ui/core';
 
 export default function SuccessModal({ text, userData, resetStep }) {
+  const { state } = useLocation();
+  const { loginFormname } = state;
+  const loginFormNames = useMemo(
+    () => ({
+      Doctor: 'Doctor',
+      College: 'College',
+      SMC: 'SMC',
+      NMC: 'NMC',
+      NBE: 'NBE',
+    }),
+    []
+  );
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [open, setOpen] = useState(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false);
+    dispatch(loginActiveState({ activeIndex: 0 }));
+    navigate('/login-page', { state: { loginFormname: loginFormNames[loginFormname] } });
+  };
   const theme = useTheme();
+
   const retrieveUserName = useSelector((state) => state?.forgotUserName?.status?.data);
 
   return (
@@ -72,7 +94,7 @@ export default function SuccessModal({ text, userData, resetStep }) {
                 : handleClose
             }
           >
-            {userData?.page === 'forgetUserName' ? 'Okay' : 'Login with New Password'}
+            {userData?.page === 'forgetUserName' ? 'Okay' : 'Login with new password'}
           </Button>
         </Box>
       </Container>

@@ -1205,11 +1205,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 District
-                {!isSameAddress && (
-                  <Typography component="span" color="error.main">
-                    *
-                  </Typography>
-                )}
               </Typography>
               {isSameAddress || (work_flow_status_id === 3 && getQueryRaised('District')) ? (
                 <TextField
@@ -1234,7 +1229,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                   fullWidth
                   value={getDistrictData(getValues()?.District)?.name}
                   {...register('District', {
-                    required: 'District is required',
+                    // required: 'District is required',
                   })}
                 />
               ) : (
@@ -1259,7 +1254,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                       ? personalDetails?.kyc_address?.district?.iso_code
                       : getValues()?.District
                   }
-                  required={isSameAddress ? false : true}
                   disabled={
                     isSameAddress
                       ? isSameAddress
@@ -1267,13 +1261,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                       ? getQueryRaised('District')
                       : false
                   }
-                  {...register(
-                    'District',
-                    !isSameAddress &&
-                      getValues()?.District?.length <= 0 && {
-                        required: 'District is required',
-                      }
-                  )}
+                  {...register('District')}
                   options={createSelectFieldData(districtsList, 'iso_code')}
                   MenuProps={{
                     style: {
