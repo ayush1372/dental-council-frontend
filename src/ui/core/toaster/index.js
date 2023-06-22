@@ -21,6 +21,7 @@ const successToast = (message, operation, toastType, toastPosition = 'bottom-rig
       letterSpacing: '1.2px',
       fontWeight: '500',
       width: 'fit-content',
+      whiteSpace: 'normal',
     },
   });
 };

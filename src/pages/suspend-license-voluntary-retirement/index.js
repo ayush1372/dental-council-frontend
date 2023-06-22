@@ -206,6 +206,9 @@ export function SuspendLicenseVoluntaryRetirement({
               'error',
               'top-center'
             );
+            if (userActiveTab === 'voluntary-suspend-license') {
+              setConfirmationModal(false);
+            }
             if (userActiveTab !== 'voluntary-suspend-license') {
               closeActionModal(false);
             }

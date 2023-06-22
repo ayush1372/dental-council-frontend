@@ -16,6 +16,9 @@ const WorkProfile = () => {
 
   const [currentlyWorking, setCurrentlyWorking] = useState('');
   const [workingDetails, setWorkingDetails] = useState('');
+  const { is_user_currently_working } = useSelector(
+    (state) => state?.doctorUserProfileReducer?.workProfileDetails?.work_details
+  );
 
   useEffect(() => {
     dispatch(getWorkProfileDetailsData(loginData?.data?.profile_id))
@@ -83,7 +86,7 @@ const WorkProfile = () => {
             onChange={handleCurrentWorking}
             name={'currentWorkingSelection'}
             size="small"
-            defaultValue={currentlyWorking}
+            defaultValue={currentlyWorking || is_user_currently_working === 1 ? 'no' : 'yes'}
             items={[
               {
                 value: 'yes',
