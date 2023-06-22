@@ -118,7 +118,7 @@ const ExportFiles = ({ exportData, flag }) => {
       worksheet.getRow(1).fill = workSheetTheme;
       worksheet.columns.forEach((column) => {
         if (column.header === 'Date of Submission') {
-          column.header = 'Date of Submission (DD-MM-YYYY HH:MM AM/PM)';
+          column.header = 'Date of Submission (DD-MM-YYYY HH:MM )';
         }
         if (column.header === 'Pendency') {
           column.header = 'Pendency (In Days)';
