@@ -64,10 +64,10 @@ const RaiseQueryPopup = ({ ClosePopup, queryRaisedField }) => {
 
   return (
     <Box>
-      <Modal open={open} onClose={handleClose} sx={{ mt: 15 }}>
+      <Modal open={open} onClose={handleClose} sx={{ mt: 5 }}>
         <Container
           maxWidth="sm"
-          sx={{ backgroundColor: 'white.main', borderRadius: '10px', height: '544px' }}
+          sx={{ backgroundColor: 'white.main', borderRadius: '10px', height: '75%' }}
         >
           <Box py={3}>
             <Box display="flex" justifyContent="flex-end">
@@ -112,7 +112,7 @@ const RaiseQueryPopup = ({ ClosePopup, queryRaisedField }) => {
               <Typography color="inputFocusColor.main">150 words only</Typography>
             </Box>
 
-            <Box display="flex" justifyContent="flex-end" mt={16}>
+            <Box display="flex" justifyContent="flex-end" mt={4}>
               <Button
                 onClose={handleClose}
                 variant="contained"
