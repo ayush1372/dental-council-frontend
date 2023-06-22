@@ -87,7 +87,6 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }
         .then((response) => {
           if (response?.data?.message === 'Success') {
             setShowSuccessPopUp(true);
-            // setShowSuccess(true);
             resetStep(0);
           }
         })
