@@ -243,7 +243,7 @@ export default function ProfileImage(props) {
           </Grid>
         </Grid>
       )}
-      {doctorEsignStatus === 3 && (
+      {doctorEsignStatus === 3 && personalDetails?.hp_profile_status_id !== 7 && (
         <Grid container mt={1}>
           <Grid item>
             <Typography
