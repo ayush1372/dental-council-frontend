@@ -287,19 +287,20 @@ export default function Dashboard() {
                           <img className={classes.iconImage} src={getCardIcons(item)} alt="icon" />
                         </Box>
                         <Typography
-                          variant="body1"
                           color="primary"
                           component="div"
-                          lineHeight={{ xs: '18px', lg: '24px' }}
+                          fontSize={{ xs: '12px', sm: '12px', md: '14px', lg: '16px' }}
+                          lineHeight={{ xs: '14px', sm: '16px', md: '18px', lg: '24px' }}
                           mb={1}
                         >
                           {item.name}
                         </Typography>
                         <Typography
-                          variant="body1"
                           color="primary"
                           component="div"
                           fontWeight="400"
+                          fontSize={{ xs: '12px', sm: '12px', md: '12px', lg: '16px' }}
+                          lineHeight={{ xs: '14px', sm: '16px', md: '16px', lg: '24px' }}
                         >
                           {getTextLabelIcons(item)}
                         </Typography>

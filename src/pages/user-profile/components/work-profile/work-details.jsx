@@ -186,6 +186,7 @@ const WorkDetails = ({
   const handleTabChange = (_, value) => {
     setFacilityResponseData([]);
     setDeclaredFacilityDistrict([]);
+    setShowTable(false);
     setTabValue(value);
   };
 

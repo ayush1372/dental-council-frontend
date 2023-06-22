@@ -200,7 +200,21 @@ export default function ProfileImage(props) {
                 height="15px"
               />
               <Link
-                sx={{ cursor: 'pointer' }}
+                sx={{
+                  cursor: 'pointer',
+                  'pointer-events':
+                    (personalDetails?.hp_profile_status_id === 5 ||
+                      personalDetails?.hp_profile_status_id === 6) &&
+                    personalDetails?.work_flow_status_id === 1
+                      ? 'none'
+                      : 'unset',
+                  opacity:
+                    (personalDetails?.hp_profile_status_id === 5 ||
+                      personalDetails?.hp_profile_status_id === 6) &&
+                    personalDetails?.work_flow_status_id === 1
+                      ? 0.5
+                      : 'unset',
+                }}
                 ml={1}
                 variant="subtitle2"
                 onClick={() => {
@@ -229,7 +243,7 @@ export default function ProfileImage(props) {
           </Grid>
         </Grid>
       )}
-      {doctorEsignStatus === 3 && (
+      {doctorEsignStatus === 3 && personalDetails?.hp_profile_status_id !== 7 && (
         <Grid container mt={1}>
           <Grid item>
             <Typography
