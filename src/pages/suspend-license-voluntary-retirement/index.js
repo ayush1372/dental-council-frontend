@@ -15,6 +15,7 @@ import successToast from '../../ui/core/toaster';
 
 export function SuspendLicenseVoluntaryRetirement({
   tabName,
+  requestID,
   selectedValue,
   handleClose,
   closeActionModal,
@@ -119,9 +120,9 @@ export function SuspendLicenseVoluntaryRetirement({
           : '',
       application_type_id: temp_application_type_id,
       action_id:
-        selectedValue === 'suspend'
+        userActiveTab !== 'voluntary-suspend-license' && selectedValue === 'suspend'
           ? 7
-          : selectedValue === 'blacklist'
+          : userActiveTab !== 'voluntary-suspend-license' && selectedValue === 'blacklist'
           ? 6
           : userActiveTab === 'voluntary-suspend-license'
           ? 1
@@ -134,7 +135,7 @@ export function SuspendLicenseVoluntaryRetirement({
     };
 
     let workFlowData = {
-      request_id: personalDetails?.request_id,
+      request_id: requestID || '',
       application_type_id: personalDetails?.application_type_id
         ? personalDetails?.application_type_id
         : userActiveTab === 'Activate Licence'
@@ -169,7 +170,7 @@ export function SuspendLicenseVoluntaryRetirement({
       commonComment: getValues().remark,
 
       groupId: user_group_id?.user_group_id,
-      requestId: personalDetails?.request_id ? personalDetails?.request_id : '',
+      requestId: requestID || '',
       applicationTypeId: personalDetails?.application_type_id
         ? personalDetails?.application_type_id
         : 1,
