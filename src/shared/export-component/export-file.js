@@ -4,11 +4,11 @@ import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
 import {
   Grid,
   IconButton,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  Popover,
+  // List,
+  // ListItem,
+  // ListItemButton,
+  // ListItemText,
+  // Popover,
 } from '@mui/material';
 import Excel from 'exceljs';
 import { saveAs } from 'file-saver';
@@ -24,7 +24,7 @@ import { userActionId, workSheetTheme } from '../../../src/helpers/functions/com
 import { verboseLog } from '../../config/debug';
 
 const ExportFiles = ({ exportData, flag }) => {
-  const [anchorEl, setAnchorEl] = useState(null);
+  // const [anchorEl, setAnchorEl] = useState(null);
   const [csvData, setCsvData] = useState([]);
   const [docType, setDocType] = useState();
   const [columns, setColumns] = useState([]);
@@ -94,13 +94,13 @@ const ExportFiles = ({ exportData, flag }) => {
     setCsvData(data);
   };
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  // const handleClick = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  // const handleClose = () => {
+  //   setAnchorEl(null);
+  // };
 
   useEffect(() => {
     if (csvData?.length > 0) {
@@ -147,10 +147,10 @@ const ExportFiles = ({ exportData, flag }) => {
         const buf = await workbook.xlsx.writeBuffer();
         saveAs(new Blob([buf]), `${fileName}.xlsx`);
       }
-      if (docType === 'csv') {
-        const buf = await workbook.csv.writeBuffer();
-        saveAs(new Blob([buf]), `${fileName}.csv`);
-      }
+      // if (docType === 'csv') {
+      //   const buf = await workbook.csv.writeBuffer();
+      //   saveAs(new Blob([buf]), `${fileName}.csv`);
+      // }
     } catch (error) {
       verboseLog('<<<ERRROR>>>', error);
       verboseLog('Something Went Wrong', error.message);
@@ -161,8 +161,8 @@ const ExportFiles = ({ exportData, flag }) => {
     }
   };
 
-  const open = Boolean(anchorEl);
-  const id = open ? 'table-search-popover' : undefined;
+  // const open = Boolean(anchorEl);
+  // const id = open ? 'table-search-popover' : undefined;
   return (
     <Grid item md={1} xs={12} data-testid="exportButton">
       <IconButton
@@ -176,7 +176,10 @@ const ExportFiles = ({ exportData, flag }) => {
           height: 60,
           color: 'blue',
         }}
-        onClick={handleClick}
+        onClick={(e) => {
+          e.preventDefault();
+          onExportClick('xlsx');
+        }}
         color="blue"
       >
         <FileDownloadOutlinedIcon
@@ -187,7 +190,11 @@ const ExportFiles = ({ exportData, flag }) => {
           }}
         />
       </IconButton>
-      <Popover
+      {/*
+      As per our Discussion commented the CSV export and xlsx export is triggered the event from export button. to make it as consistency across building Blocks of ABDM.
+      CC: @Govind, Ashvini , Sadik, 
+      Author: Mahalingam V S
+       <Popover
         id={id}
         open={open}
         anchorEl={anchorEl}
@@ -223,7 +230,7 @@ const ExportFiles = ({ exportData, flag }) => {
             </ListItemButton>
           </ListItem>
         </List>
-      </Popover>
+      </Popover> */}
     </Grid>
   );
 };
