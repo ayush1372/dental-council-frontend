@@ -6,6 +6,7 @@ import {
   MenuItem,
   Select as MuiSelect,
   StyledEngineProvider,
+  TextField,
   Typography,
 } from '@mui/material';
 import CN from 'clsx';
@@ -26,6 +27,7 @@ const SelectField = (
     dataTestOptionId,
     messageBlue,
     success,
+    placeholder,
     ...props
   },
   ref
@@ -52,11 +54,14 @@ const SelectField = (
         IconComponent={KeyboardArrowDownIcon}
         fullWidth
         name={name}
+        placeholder={placeholder}
         ref={ref}
         {...props}
         data-testid={dataTestSelectId}
         error={error && showError ? true : false}
         defaultValue={defaultValue}
+        displayEmpty
+        renderInput={() => <TextField {...props} placeholder={placeholder} />}
         onBlur={(e) => {
           if (e.target.value?.length > 1) {
             setShowError(false);
@@ -68,6 +73,11 @@ const SelectField = (
           }
         }}
       >
+        <MenuItem key={0} value={''}>
+          <Typography fontWeight={'400'} sx={{ opacity: '0.4' }}>
+            {placeholder}
+          </Typography>
+        </MenuItem>
         {options?.length > 0 &&
           options?.map((item) => (
             <MenuItem
