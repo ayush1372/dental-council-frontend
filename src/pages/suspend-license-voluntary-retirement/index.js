@@ -119,9 +119,9 @@ export function SuspendLicenseVoluntaryRetirement({
           : '',
       application_type_id: temp_application_type_id,
       action_id:
-        selectedValue === 'suspend'
+        userActiveTab !== 'voluntary-suspend-license' && selectedValue === 'suspend'
           ? 7
-          : selectedValue === 'blacklist'
+          : userActiveTab !== 'voluntary-suspend-license' && selectedValue === 'blacklist'
           ? 6
           : userActiveTab === 'voluntary-suspend-license'
           ? 1
