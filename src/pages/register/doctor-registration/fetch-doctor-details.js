@@ -453,7 +453,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
 
               <Box
                 display="flex"
-                justifyContent="flex-start"
+                justifyContent="flex-end"
                 flexDirection={{ xs: 'column', sm: 'row' }}
               >
                 {!showOtpAadhar && !isOtpValidAadhar && (
@@ -624,10 +624,12 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
               open={showSuccess}
               setOpen={() => setShowSuccess(false)}
               existHprId={true}
-              text={`Your username ${existUSerName.replace(
-                '@hpr.abdm',
-                ''
-              )} has been already created. Please proceed to set your password`}
+              text={`Your username ${existUSerName
+                .replace('@hpr.abdm', '')
+                ?.replace(
+                  '@dr.abdm',
+                  ''
+                )} has been already created. Please proceed to set your password`}
               isHpIdCreated={true}
             />
           )}

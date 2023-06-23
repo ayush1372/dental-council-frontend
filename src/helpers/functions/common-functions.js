@@ -189,6 +189,7 @@ export const trackApplicationLabel = (userGroupID) => {
     'Query Raised': 'Query Raised',
     Approve: 'Completed',
     Rejected: 'Rejected',
+    'Temporary suspension': 'Completed',
   };
   return userGroupTypeObj[userGroupID];
 };

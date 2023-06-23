@@ -204,9 +204,7 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup 
           ) : otpData?.page === 'forgotPasswordPage' ? (
             <Typography variant="body" textAlign="center">
               {otpData.page === 'forgotPasswordPage' && otpData?.type === 'sms'
-                ? `Please enter OTP sent on your We just sent an OTP on your mobile number XXXXXX${otpData?.contact?.slice(
-                    -4
-                  )}.`
+                ? `We just sent an OTP on your mobile number XXXXXX${otpData?.contact?.slice(-4)}.`
                 : otpData.page === 'forgotPasswordPage' &&
                   otpData?.type === 'email' &&
                   `Please enter the OTP sent on your Email ID XXXXXX${otpData?.contact?.slice(

@@ -188,6 +188,7 @@ const ProfileConsent = ({
             ? 7
             : 1,
           transaction_id: response?.data?.asp_txn_id,
+          hpr_share_acknowledgement: getValues()?.HPR ? 1 : 0,
         };
         dispatch(updateProfileConsent(payload))
           .then(() => {
@@ -217,7 +218,8 @@ const ProfileConsent = ({
   const handleEsign = () => {
     document.getElementById('formid')?.submit();
   };
-  useEffect(() => {}, [eSignResponse, getValues().consent]);
+
+  useEffect(() => {}, [eSignResponse, getValues().consent, getValues()?.HPR]);
   return eSignResponse?.asp_txn_id ? (
     <div>
       <form
@@ -318,7 +320,7 @@ const ProfileConsent = ({
               sx={{ height: '14px', width: '14px', color: 'messageBlue.main', mr: 1 }}
             />
             <Link
-              href="https://hpr.abdm.gov.in/en"
+              href={process.env.REACT_APP_HPR_CONCENT_API}
               target="_blank"
               component="a"
               variant="body8"

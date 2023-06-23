@@ -52,6 +52,9 @@ export default function ProfileImage(props) {
   const logInDoctorStatus = useSelector(
     (state) => state?.loginReducer?.loginData?.data?.blacklisted
   );
+  const doctorEsignStatus = useSelector(
+    (state) => state?.loginReducer?.loginData?.data?.esign_status
+  );
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { loginData } = useSelector((state) => state?.loginReducer);
   const theme = useTheme();
@@ -242,7 +245,21 @@ export default function ProfileImage(props) {
                 height="15px"
               />
               <Link
-                sx={{ cursor: 'pointer' }}
+                sx={{
+                  cursor: 'pointer',
+                  'pointer-events':
+                    (personalDetails?.hp_profile_status_id === 5 ||
+                      personalDetails?.hp_profile_status_id === 6) &&
+                    personalDetails?.work_flow_status_id === 1
+                      ? 'none'
+                      : 'unset',
+                  opacity:
+                    (personalDetails?.hp_profile_status_id === 5 ||
+                      personalDetails?.hp_profile_status_id === 6) &&
+                    personalDetails?.work_flow_status_id === 1
+                      ? 0.5
+                      : 'unset',
+                }}
                 ml={1}
                 variant="subtitle2"
                 onClick={() => {
@@ -255,6 +272,39 @@ export default function ProfileImage(props) {
             </Grid>
           </Grid>
         )}
+      {doctorEsignStatus === 2 && (
+        <Grid container mt={1}>
+          <Grid item>
+            <Typography
+              color="suspendAlert.dark"
+              component="div"
+              display="inline-flex"
+              variant="body2"
+            >
+              You have done E-sign with different
+              <br /> account. Please verify and re-do the <br />
+              E-sign process correctly.
+            </Typography>
+          </Grid>
+        </Grid>
+      )}
+      {doctorEsignStatus === 3 && personalDetails?.hp_profile_status_id !== 7 && (
+        <Grid container mt={1}>
+          <Grid item>
+            <Typography
+              color="suspendAlert.dark"
+              component="div"
+              display="inline-flex"
+              variant="body2"
+            >
+              Your profile has to complete E-sign <br />
+              process. You will not be able to perform <br /> actions on the profile untill you{' '}
+              <br />
+              complete E-sign process.
+            </Typography>
+          </Grid>
+        </Grid>
+      )}
       {showReactivateLicense && (
         <ReactivateLicencePopup
           renderSuccess={renderSuccess}

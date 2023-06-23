@@ -38,7 +38,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
   const [isSameAddress, setIsSameAddress] = useState(
     personalDetails?.communication_address?.is_same_address === 'true' ? true : false
   );
-  const { personal_details, communication_address, imr_details, work_flow_status_id, kyc_address } =
+  const { personal_details, communication_address, imr_details, work_flow_status_id } =
     personalDetails || {};
 
   const {
@@ -89,15 +89,16 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
   const citiesId = isSameAddress ? personalDetails?.kyc_address?.village?.id : village?.id;
   const [districtListData, setDistrictListData] = useState('');
   const [subDistrictListData, setSubDistrictListData] = useState('');
-  const countryName = country?.name || '';
-  const stateName = state?.name || '';
-  const districtName = district?.name || '';
-  const subDistrictName = sub_district?.name || '';
-  const villageName = kyc_address?.village || '';
-  const houseNumber = kyc_address?.house || '';
-  const streetName = kyc_address?.street || '';
-  const addressLandmark = kyc_address?.landmark || '';
-  const userPincode = kyc_address?.pincode || '';
+
+  const countryName = personalDetails?.kyc_address?.country?.name || '';
+  const stateName = personalDetails?.kyc_address?.state?.name || '';
+  const districtName = personalDetails?.kyc_address?.district?.name || '';
+  const subDistrictName = personalDetails?.kyc_address?.sub_district?.name || '';
+  const villageName = personalDetails?.kyc_address?.village?.name || '';
+  const houseNumber = personalDetails?.kyc_address?.house || '';
+  const streetName = personalDetails?.kyc_address?.street || '';
+  const addressLandmark = personalDetails?.kyc_address?.landmark || '';
+  const userPincode = personalDetails?.kyc_address?.pincode || '';
 
   const kycAddress =
     (houseNumber && houseNumber + ', ') +
@@ -108,7 +109,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
     (districtName && districtName + ', ') +
     (stateName && stateName + ', ') +
     (countryName && countryName + ', ') +
-    (userPincode && userPincode);
+    (userPincode && userPincode) +
+    '.';
 
   const {
     formState: { errors },
@@ -1203,11 +1205,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 District
-                {!isSameAddress && (
-                  <Typography component="span" color="error.main">
-                    *
-                  </Typography>
-                )}
               </Typography>
               {isSameAddress || (work_flow_status_id === 3 && getQueryRaised('District')) ? (
                 <TextField
@@ -1232,7 +1229,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                   fullWidth
                   value={getDistrictData(getValues()?.District)?.name}
                   {...register('District', {
-                    required: 'District is required',
+                    // required: 'District is required',
                   })}
                 />
               ) : (
@@ -1257,7 +1254,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                       ? personalDetails?.kyc_address?.district?.iso_code
                       : getValues()?.District
                   }
-                  required={isSameAddress ? false : true}
                   disabled={
                     isSameAddress
                       ? isSameAddress
@@ -1265,13 +1261,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                       ? getQueryRaised('District')
                       : false
                   }
-                  {...register(
-                    'District',
-                    !isSameAddress &&
-                      getValues()?.District?.length <= 0 && {
-                        required: 'District is required',
-                      }
-                  )}
+                  {...register('District')}
                   options={createSelectFieldData(districtsList, 'iso_code')}
                   MenuProps={{
                     style: {

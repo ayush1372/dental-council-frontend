@@ -15,6 +15,7 @@ import successToast from '../../ui/core/toaster';
 
 export function SuspendLicenseVoluntaryRetirement({
   tabName,
+  requestID,
   selectedValue,
   handleClose,
   closeActionModal,
@@ -119,9 +120,9 @@ export function SuspendLicenseVoluntaryRetirement({
           : '',
       application_type_id: temp_application_type_id,
       action_id:
-        selectedValue === 'suspend'
+        userActiveTab !== 'voluntary-suspend-license' && selectedValue === 'suspend'
           ? 7
-          : selectedValue === 'blacklist'
+          : userActiveTab !== 'voluntary-suspend-license' && selectedValue === 'blacklist'
           ? 6
           : userActiveTab === 'voluntary-suspend-license'
           ? 1
@@ -134,7 +135,7 @@ export function SuspendLicenseVoluntaryRetirement({
     };
 
     let workFlowData = {
-      request_id: personalDetails?.request_id,
+      request_id: requestID || '',
       application_type_id: personalDetails?.application_type_id
         ? personalDetails?.application_type_id
         : userActiveTab === 'Activate Licence'
@@ -169,7 +170,7 @@ export function SuspendLicenseVoluntaryRetirement({
       commonComment: getValues().remark,
 
       groupId: user_group_id?.user_group_id,
-      requestId: personalDetails?.request_id ? personalDetails?.request_id : '',
+      requestId: requestID || '',
       applicationTypeId: personalDetails?.application_type_id
         ? personalDetails?.application_type_id
         : 1,
@@ -206,6 +207,9 @@ export function SuspendLicenseVoluntaryRetirement({
               'error',
               'top-center'
             );
+            if (userActiveTab === 'voluntary-suspend-license') {
+              setConfirmationModal(false);
+            }
             if (userActiveTab !== 'voluntary-suspend-license') {
               closeActionModal(false);
             }
@@ -501,23 +505,31 @@ export function SuspendLicenseVoluntaryRetirement({
       </Box>
 
       {tabName || selectedValue === 'blacklist' || selectedValue === 'suspend' ? (
-        <Box my={4} ml={1}>
-          <Checkbox
-            name="notification"
-            {...register('notification', {
-              required: 'Please indicate that you accept the Terms and Conditions',
-            })}
-            sx={{ padding: '0 8px 0 0' }}
-            label={
-              tabName
-                ? 'I understand that during the period of my suspension, I will not be able to practice, and my NMR profile will be deactivated.'
-                : selectedValue === 'blacklist' || selectedValue === 'suspend'
-                ? 'Doctor will no longer be able to receive notifications or perform actions on his/her profile.'
-                : ''
-            }
-            error={errors.notification?.message}
-          />
-        </Box>
+        <>
+          <Typography variant="subtitle2">
+            {'Consent'}
+            <Typography variant="body4" color="error.main">
+              *
+            </Typography>
+          </Typography>
+          <Box ml={1}>
+            <Checkbox
+              name="notification"
+              {...register('notification', {
+                required: 'Please indicate that you accept the Terms and Conditions',
+              })}
+              sx={{ padding: '0 8px 0 0' }}
+              label={
+                tabName
+                  ? 'I understand that during the period of my suspension, I will not be able to practice, and my NMR profile will be deactivated.'
+                  : selectedValue === 'blacklist' || selectedValue === 'suspend'
+                  ? 'Doctor will no longer be able to receive notifications or perform actions on his/her profile.'
+                  : ''
+              }
+              error={errors.notification?.message}
+            />
+          </Box>
+        </>
       ) : (
         ''
       )}

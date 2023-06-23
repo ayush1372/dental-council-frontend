@@ -36,7 +36,6 @@ export const UploadFile = (props) => {
   const [uploadStatus, setUploadStatus] = useState();
   const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
   const [attachedFileData, setAttachedFileData] = useState('');
-  const [browsedFileDataBase64, setBrowsedFileDataBase64] = useState('');
   const [viewFileType, setViewFileType] = useState('');
 
   const addFile = (e) => {
@@ -46,6 +45,7 @@ export const UploadFile = (props) => {
 
   const CloseAttachmentPopup = () => {
     setAttachmentViewProfile(false);
+    setAttachedFileData('');
   };
 
   const fileToBase64 = async (file) => {
@@ -53,16 +53,16 @@ export const UploadFile = (props) => {
     reader.readAsDataURL(file?.file);
     reader.onload = function () {
       const base64String = reader?.result?.split(',')?.pop();
-      setBrowsedFileDataBase64(base64String);
+      setAttachedFileData(base64String);
     };
   };
 
   const viewAttachemnent = (file) => {
+    setAttachedFileData('');
     if (typeof file?.file !== 'string') {
       const viewFileType = file?.fileName?.split('.')?.pop();
       setViewFileType(viewFileType);
       fileToBase64(file);
-      setAttachedFileData(browsedFileDataBase64);
       setAttachmentViewProfile(true);
     } else {
       const viewFileType = fileName?.split('.')?.pop();
@@ -227,7 +227,7 @@ export const UploadFile = (props) => {
                           <UploadFileIcon color="primary" fontSize="large" />
                           <div className={styles.fileDetailsArea}>
                             <Typography color="inputTextColor.main">
-                              {file.fileName || fileName}
+                              {fileName === 'undefined.undefined' ? '' : fileName}
                             </Typography>
                             {fileData.length === 1 || uploadStatus === 'successful' ? (
                               <div className={styles.timeInfo}>

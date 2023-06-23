@@ -461,7 +461,7 @@ const EditQualificationDetails = ({
                   : false
               }
               {...register(
-                `qualification[${index}].degree`,
+                `qualification[${index}].qualification`,
                 {
                   required: 'Qualification details is required',
                 },
