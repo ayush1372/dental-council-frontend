@@ -1,7 +1,6 @@
 import { Box, Container, Modal, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
 
 import { Button } from '../../ui/core';
 
@@ -11,12 +10,12 @@ export default function DatafoundModalPopup({
   text,
   imrData,
   setIsNext,
+  handleClose,
   handleAadhaarPage,
   registrationData,
   accountExist,
 }) {
   const theme = useTheme();
-  const navigate = useNavigate();
 
   const { councilNames } = useSelector((state) => state.common);
 
@@ -47,7 +46,7 @@ export default function DatafoundModalPopup({
     setOpen(false);
   };
   const handleNo = () => {
-    navigate('/');
+    handleClose(false);
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
