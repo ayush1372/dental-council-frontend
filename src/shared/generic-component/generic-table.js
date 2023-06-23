@@ -225,7 +225,11 @@ export default function GenericTable(props) {
                                       disabled={
                                         row['NMCVerificationStatus']?.value === 'Blacklisted' ||
                                         row['NMCVerificationStatus']?.value === 'Suspended' ||
-                                        row['councilVerificationStatus']?.value === 'Blacklisted'
+                                        row['councilVerificationStatus']?.value === 'Blacklisted' ||
+                                        props?.applicationData[rowIndex]?.doctor_status ===
+                                          'Blacklisted' ||
+                                        props?.applicationData[rowIndex]?.doctor_status ===
+                                          'Suspended'
                                       }
                                     >
                                       {option.keyName}
