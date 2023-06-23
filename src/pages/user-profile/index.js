@@ -8,6 +8,7 @@ import Switch from '@mui/material/Switch';
 import { useDispatch, useSelector } from 'react-redux';
 
 import useWizard from '../../hooks/use-wizard';
+import CircularLoader from '../../shared/circular-loader/circular-loader';
 import ReactivateLicencePopup from '../../shared/reactivate-licence-popup/re-activate-licence-popup';
 import SuccessPopup from '../../shared/reactivate-licence-popup/success-popup';
 import {
@@ -37,7 +38,7 @@ const readWizardSteps = ['Personal Details', 'Registration & Academic Details'];
 export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const [isReadMode, setIsReadMode] = useState(true);
+
   const emailNotify = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.email_notification_enabled
   );
@@ -55,6 +56,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
   const { loginData } = useSelector((state) => state?.loginReducer);
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const [isReadMode, setIsReadMode] = useState(true);
   const logInDoctorStatus = useSelector(
     (state) => state?.loginReducer?.loginData?.data?.blacklisted
   );
@@ -130,19 +132,26 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
   }, [isReadMode]);
 
   const fetchDoctorUserPersonalDetails = () => {
-    dispatch(
-      getPersonalDetailsData(
-        showViewProfile && tabName === 'Activate License'
-          ? selectedRowData?.health_professional_id
-          : showViewProfile
-          ? selectedRowData?.profileID?.value || selectedRowData?.view?.value
-          : loginData?.data?.profile_id
+    if (
+      loginData?.data?.profile_id !== undefined ||
+      selectedRowData?.health_professional_id !== undefined ||
+      selectedRowData?.profileID?.value !== undefined ||
+      selectedRowData?.view?.value !== undefined
+    ) {
+      dispatch(
+        getPersonalDetailsData(
+          showViewProfile && tabName === 'Activate License'
+            ? selectedRowData?.health_professional_id
+            : showViewProfile
+            ? selectedRowData?.profileID?.value || selectedRowData?.view?.value
+            : loginData?.data?.profile_id
+        )
       )
-    )
-      .then(() => {})
-      .catch((allFailMsg) => {
-        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-      });
+        .then(() => {})
+        .catch((allFailMsg) => {
+          successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+        });
+    }
   };
 
   const fetchDoctorUserRegistrationDetails = () => {
@@ -167,11 +176,17 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
     if (personalDetails?.work_flow_status_id === 1) {
       setIsApplicationPending(false);
     }
+    if (loginData?.data?.hp_profile_status_id === 7) {
+      setIsReadMode(false);
+    } else {
+      setIsReadMode(true);
+    }
   }, []);
 
   useEffect(() => {
     fetchDoctorUserPersonalDetails();
   }, [emailNotification, mobileNotification, !isReadMode]);
+
   return (
     <>
       {showReactivateLicense && (
@@ -181,46 +196,47 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
         />
       )}
       {showSuccessPopup && <SuccessPopup />}
-      {/* {!showChangepassword ? ( */}
-      <Box>
-        {!showViewProfile ? (
-          <Grid
-            container
-            display="flex"
-            justifyContent="space-between"
-            sx={{ alignItems: 'center' }}
-            bgcolor={`${theme.palette.white.main}`}
-            mb={2}
-            px={3}
-            py={2}
-          >
-            <Grid item xs={12} sm="auto">
-              <Box display="flex" gap={1.5} alignItems={'center'} width="100%">
-                <Typography variant="h2" component="span" flexBasis="0" flexGrow="1">
-                  {isReadMode ? 'My Profile' : 'Edit Profile'}
-                </Typography>
-                <ProgressBar
-                  width="302px"
-                  progress={
-                    showStaticFormProgress ||
-                    personalDetails?.nmr_id ||
-                    personalDetails?.work_flow_status_id === 1 ||
-                    personalDetails?.work_flow_status_id === 3
-                      ? 75
-                      : progress
-                  }
-                  completed={completed}
-                />
-              </Box>
-              {!isReadMode && (
-                <BreadcrumbContainer
-                  primary="My Profile"
-                  primaryLink={'/profile'}
-                  secondary={'Edit Profile'}
-                />
-              )}
-            </Grid>
-            {/* {loggedInUserType === 'Doctor' && (
+      {personalDetails?.hp_profile_status_id === undefined && <CircularLoader />}
+      {loginData?.data?.hp_profile_status_id !== undefined && (
+        <Box>
+          {!showViewProfile ? (
+            <Grid
+              container
+              display="flex"
+              justifyContent="space-between"
+              sx={{ alignItems: 'center' }}
+              bgcolor={`${theme.palette.white.main}`}
+              mb={2}
+              px={3}
+              py={2}
+            >
+              <Grid item xs={12} sm="auto">
+                <Box display="flex" gap={1.5} alignItems={'center'} width="100%">
+                  <Typography variant="h2" component="span" flexBasis="0" flexGrow="1">
+                    {isReadMode ? 'My Profile' : 'Edit Profile'}
+                  </Typography>
+                  <ProgressBar
+                    width="302px"
+                    progress={
+                      showStaticFormProgress ||
+                      personalDetails?.nmr_id ||
+                      personalDetails?.work_flow_status_id === 1 ||
+                      personalDetails?.work_flow_status_id === 3
+                        ? 75
+                        : progress
+                    }
+                    completed={completed}
+                  />
+                </Box>
+                {!isReadMode && (
+                  <BreadcrumbContainer
+                    primary="My Profile"
+                    primaryLink={'/profile'}
+                    secondary={'Edit Profile'}
+                  />
+                )}
+              </Grid>
+              {/* {loggedInUserType === 'Doctor' && (
               <Grid
                 item
                 xs={12}
@@ -233,121 +249,121 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
                 }}
               ></Grid>
             )} */}
-            {isReadMode && isApplicationPending && !logInDoctorStatus && (
-              <Grid
-                item
-                xs="auto"
-                ml="auto"
-                sx={{
-                  marginBottom: {
-                    xs: '10px',
-                    md: '0',
-                  },
-                }}
-              >
-                <Button
-                  startIcon={<EditIcon sx={{ mr: 1 }} />}
-                  variant="contained"
-                  color="secondary"
-                  onClick={openDoctorEditProfile}
+              {isReadMode && isApplicationPending && !logInDoctorStatus && (
+                <Grid
+                  item
+                  xs="auto"
+                  ml="auto"
                   sx={{
-                    width: '100%',
+                    marginBottom: {
+                      xs: '10px',
+                      md: '0',
+                    },
                   }}
                 >
-                  Edit Profile
-                </Button>
-              </Grid>
-            )}
-
-            <Grid item xs={12} lg="auto">
-              {!isReadMode && (
-                <Box
-                  display={'flex'}
-                  flexDirection={{ xs: 'column', sm: 'row' }}
-                  mt={{ xs: 2, lg: 0 }}
-                >
-                  <FormControlLabel
+                  <Button
+                    startIcon={<EditIcon sx={{ mr: 1 }} />}
+                    variant="contained"
+                    color="secondary"
+                    onClick={openDoctorEditProfile}
                     sx={{
-                      width: {
-                        xs: 'auto',
-                      },
-                      ml: 0,
-                      mr: { xs: 0, sm: 2 },
+                      width: '100%',
                     }}
-                    value="email"
-                    control={
-                      <Switch
-                        color="primary"
-                        checked={emailNotify}
-                        onChange={(e) => {
-                          handleNotification(e, 'email');
-                        }}
-                      />
-                    }
-                    label="Email Notifications"
-                    labelPlacement="start"
-                  />
-                  <FormControlLabel
-                    sx={{
-                      width: {
-                        xs: 'auto',
-                      },
-                      ml: 0,
-                    }}
-                    value="sms"
-                    control={
-                      <Switch
-                        color="primary"
-                        checked={mobileNotify}
-                        onChange={(e) => {
-                          handleNotification(e, 'sms');
-                        }}
-                      />
-                    }
-                    label="Mobile Notifications"
-                    labelPlacement="start"
-                  />
-                </Box>
+                  >
+                    Edit Profile
+                  </Button>
+                </Grid>
               )}
-            </Grid>
-          </Grid>
-        ) : null}
-        {!isReadMode && (
-          <ConstantDetails validDetails={validDetails} setValidDetails={setValidDetails} />
-        )}
-        <Wizard
-          activeStep={loggedInUserType === 'College' ? activeStep + 1 : activeStep}
-          handleBack={handleBack}
-          handleNext={handleNext}
-          steps={wizardSteps}
-          progress={false}
-          isStepClickEnable={['SMC', 'NMC', 'College'].includes(loggedInUserType)}
-          showCheckCirlce={loggedInUserType === 'Doctor'}
-          handleStep={handleStep}
-        ></Wizard>
 
-        <Box bgcolor="white.main">
-          {activeStep === 0 && (
-            <PersonalDetails
-              isReadMode={isReadMode}
-              setIsReadMode={setIsReadMode}
-              handleNext={handleNext}
-              handleBack={handleBack}
-              validDetails={validDetails}
-              setValidDetails={setValidDetails}
-              selectedDataIndex={selectedRowData?.SNo?.value - 1}
-            />
+              <Grid item xs={12} lg="auto">
+                {!isReadMode && (
+                  <Box
+                    display={'flex'}
+                    flexDirection={{ xs: 'column', sm: 'row' }}
+                    mt={{ xs: 2, lg: 0 }}
+                  >
+                    <FormControlLabel
+                      sx={{
+                        width: {
+                          xs: 'auto',
+                        },
+                        ml: 0,
+                        mr: { xs: 0, sm: 2 },
+                      }}
+                      value="email"
+                      control={
+                        <Switch
+                          color="primary"
+                          checked={emailNotify}
+                          onChange={(e) => {
+                            handleNotification(e, 'email');
+                          }}
+                        />
+                      }
+                      label="Email Notifications"
+                      labelPlacement="start"
+                    />
+                    <FormControlLabel
+                      sx={{
+                        width: {
+                          xs: 'auto',
+                        },
+                        ml: 0,
+                      }}
+                      value="sms"
+                      control={
+                        <Switch
+                          color="primary"
+                          checked={mobileNotify}
+                          onChange={(e) => {
+                            handleNotification(e, 'sms');
+                          }}
+                        />
+                      }
+                      label="Mobile Notifications"
+                      labelPlacement="start"
+                    />
+                  </Box>
+                )}
+              </Grid>
+            </Grid>
+          ) : null}
+          {!isReadMode && (
+            <ConstantDetails validDetails={validDetails} setValidDetails={setValidDetails} />
           )}
-          {activeStep === 1 && (
-            <RegisterAndAcademicDetails
-              isReadMode={isReadMode}
-              setIsReadMode={setIsReadMode}
-              handleNext={handleNext}
-              handleBack={handleBack}
-              selectedDataIndex={selectedRowData?.SNo?.value - 1}
-            />
-          )}
-          {/* {activeStep === 2 && (
+          <Wizard
+            activeStep={loggedInUserType === 'College' ? activeStep + 1 : activeStep}
+            handleBack={handleBack}
+            handleNext={handleNext}
+            steps={wizardSteps}
+            progress={false}
+            isStepClickEnable={['SMC', 'NMC', 'College'].includes(loggedInUserType)}
+            showCheckCirlce={loggedInUserType === 'Doctor'}
+            handleStep={handleStep}
+          ></Wizard>
+
+          <Box bgcolor="white.main">
+            {activeStep === 0 && (
+              <PersonalDetails
+                isReadMode={isReadMode}
+                setIsReadMode={setIsReadMode}
+                handleNext={handleNext}
+                handleBack={handleBack}
+                validDetails={validDetails}
+                setValidDetails={setValidDetails}
+                selectedDataIndex={selectedRowData?.SNo?.value - 1}
+              />
+            )}
+            {activeStep === 1 && (
+              <RegisterAndAcademicDetails
+                isReadMode={isReadMode}
+                setIsReadMode={setIsReadMode}
+                handleNext={handleNext}
+                handleBack={handleBack}
+                selectedDataIndex={selectedRowData?.SNo?.value - 1}
+              />
+            )}
+            {/* {activeStep === 2 && (
               <WorkProfile
                 isReadMode={isReadMode}
                 setIsReadMode={setIsReadMode}
@@ -359,24 +375,25 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
                 activeStep={activeStep}
               />
             )} */}
-          {activeStep === 2 && (
-            <PreviewProfile
-              isReadMode={isReadMode}
-              setIsReadMode={setIsReadMode}
-              handleNext={handleNext}
+            {activeStep === 2 && (
+              <PreviewProfile
+                isReadMode={isReadMode}
+                setIsReadMode={setIsReadMode}
+                handleNext={handleNext}
+                handleBack={handleBack}
+              />
+            )}
+          </Box>
+          {!isReadMode && activeStep === 2 && (
+            <ProfileConsent
+              setShowStaticFormProgress={setShowStaticFormProgress}
               handleBack={handleBack}
+              resetStep={resetStep}
+              setIsReadMode={setIsReadMode}
             />
           )}
         </Box>
-        {!isReadMode && activeStep === 2 && (
-          <ProfileConsent
-            setShowStaticFormProgress={setShowStaticFormProgress}
-            handleBack={handleBack}
-            resetStep={resetStep}
-            setIsReadMode={setIsReadMode}
-          />
-        )}
-      </Box>
+      )}
     </>
   );
 };
