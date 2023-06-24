@@ -414,32 +414,32 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
                   </Grid>
                 )
               ) : (
-                <>
-                  {loginData?.data?.hp_profile_status_id !== 7 && (
-                    <Grid
-                      item
-                      xs="auto"
-                      ml="auto"
-                      sx={{
-                        marginBottom: {
-                          xs: '10px',
-                          md: '0',
-                        },
-                      }}
-                    >
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        onClick={eSignHandler}
-                        sx={{
-                          width: '100%',
-                        }}
-                      >
-                        E-sign Profile
-                      </Button>
-                    </Grid>
-                  )}
-                </>
+                // <>
+                //   {loginData?.data?.hp_profile_status_id !== 7 && (
+                <Grid
+                  item
+                  xs="auto"
+                  ml="auto"
+                  sx={{
+                    marginBottom: {
+                      xs: '10px',
+                      md: '0',
+                    },
+                  }}
+                >
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={eSignHandler}
+                    sx={{
+                      width: '100%',
+                    }}
+                  >
+                    E-sign Profile
+                  </Button>
+                </Grid>
+                //   )}
+                // </>
               )}
 
               <Grid item xs={12} lg="auto">
