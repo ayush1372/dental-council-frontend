@@ -183,11 +183,11 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
     if (loginData?.data?.work_flow_status_id === 1) {
       setIsApplicationPending(false);
     }
-    if (loginData?.data?.hp_profile_status_id === 7) {
-      setIsReadMode(false);
-    } else {
-      setIsReadMode(true);
-    }
+    // if (loginData?.data?.hp_profile_status_id === 7) {
+    //   setIsReadMode(false);
+    // } else {
+    //   setIsReadMode(true);
+    // }
     if (personalDetails?.hp_profile_id !== undefined) {
       dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id)).then((response) => {
         if (response?.data?.registration_detail_to?.registration_certificate) {
