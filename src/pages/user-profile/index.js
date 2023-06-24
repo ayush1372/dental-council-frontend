@@ -95,7 +95,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
   };
 
   useEffect(() => {
-    if (personalDetails?.work_flow_status_id === 1) {
+    if (loginData?.data?.work_flow_status_id === 1) {
       setIsApplicationPending(false);
     }
   }, [personalDetails?.work_flow_status_id]);
@@ -180,7 +180,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
   useEffect(() => {
     fetchDoctorUserPersonalDetails();
     fetchDoctorUserRegistrationDetails();
-    if (personalDetails?.work_flow_status_id === 1) {
+    if (loginData?.data?.work_flow_status_id === 1) {
       setIsApplicationPending(false);
     }
     if (loginData?.data?.hp_profile_status_id === 7) {
