@@ -100,23 +100,28 @@ const ReadRegisterAndAcademicDetails = ({
   };
 
   useEffect(() => {
-    let ss = [];
-    registrationDetails?.qualification_detail_response_tos?.map((element) => {
-      if (
-        element?.request_id ===
-        dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]?.request_id
-      ) {
-        ss.push(element);
-      }
-    });
-    let newArr = {};
-    newArr.hp_profile_id = registrationDetails?.hp_profile_id;
-    newArr.nbe_response_to = registrationDetails?.nbe_response_to;
-    newArr.registration_detail_to = registrationDetails?.registration_detail_to;
-    newArr.request_id = registrationDetails?.request_id;
-    newArr.qualification_detail_response_tos = ss;
+    if (!isNaN(selectedDataIndex)) {
+      let filteredQualificationDetails = [];
 
-    setRegistrationDetailsData(newArr);
+      registrationDetails?.qualification_detail_response_tos?.map((element) => {
+        if (
+          element &&
+          element?.request_id ===
+            dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]?.request_id
+        ) {
+          filteredQualificationDetails.push(element);
+        }
+      });
+      let newRegistrationDetails = {};
+      newRegistrationDetails.hp_profile_id = registrationDetails?.hp_profile_id;
+      newRegistrationDetails.nbe_response_to = registrationDetails?.nbe_response_to;
+      newRegistrationDetails.registration_detail_to = registrationDetails?.registration_detail_to;
+      newRegistrationDetails.request_id = registrationDetails?.request_id;
+      newRegistrationDetails.qualification_detail_response_tos = filteredQualificationDetails;
+      setRegistrationDetailsData(newRegistrationDetails);
+    } else {
+      setRegistrationDetailsData(registrationDetails);
+    }
   }, []);
 
   return (
