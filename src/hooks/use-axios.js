@@ -65,7 +65,11 @@ const axiosProps = {
 };
 
 export const useAxiosCall = async (payload = axiosProps) => {
-  setLoadingState(true);
+  if (payload?.url?.includes('/personal')) {
+    setLoadingState(false);
+  } else {
+    setLoadingState(true);
+  }
   payload.headers =
     payload.headers !== undefined ? Object.assign(payload.headers, appheader) : appheader;
   // payload = concatDefaultProps(axiosProps, payload);
