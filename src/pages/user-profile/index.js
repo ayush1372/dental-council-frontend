@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { doctorTabs } from '../../helpers/components/sidebar-drawer-list-item';
 import { capitalizeFirstLetter } from '../../helpers/functions/common-functions';
 import useWizard from '../../hooks/use-wizard';
+import CircularLoader from '../../shared/circular-loader/circular-loader';
 import ReactivateLicencePopup from '../../shared/reactivate-licence-popup/re-activate-licence-popup';
 import SuccessPopup from '../../shared/reactivate-licence-popup/success-popup';
 import {
@@ -182,24 +183,26 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
     if (personalDetails?.work_flow_status_id === 1) {
       setIsApplicationPending(false);
     }
+    if (loginData?.data?.hp_profile_status_id === 7) {
+      setIsReadMode(false);
+    } else {
+      setIsReadMode(true);
+    }
+    if (personalDetails?.hp_profile_id !== undefined) {
+      dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id)).then((response) => {
+        if (response?.data?.registration_detail_to?.registration_certificate) {
+          setRegistrationFile(true);
+        }
+        if (response?.data?.qualification_detail_response_tos[0]?.degree_certificate) {
+          setDegreeCertificate(true);
+        }
+      });
+    }
   }, []);
 
   useEffect(() => {
     fetchDoctorUserPersonalDetails();
   }, [emailNotification, mobileNotification, !isReadMode]);
-
-  useEffect(() => {
-    dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id)).then((response) => {
-      if (response?.data?.registration_detail_to?.registration_certificate) {
-        setRegistrationFile(true);
-      }
-    });
-    dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id)).then((response) => {
-      if (response?.data?.qualification_detail_response_tos[0]?.degree_certificate) {
-        setDegreeCertificate(true);
-      }
-    });
-  }, []);
 
   const handleEsign = () => {
     document.getElementById('formid')?.submit();
@@ -342,203 +345,222 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
         />
       )}
       {showSuccessPopup && <SuccessPopup />}
-      <Box>
-        {!showViewProfile ? (
-          <Grid
-            container
-            display="flex"
-            justifyContent="space-between"
-            sx={{ alignItems: 'center' }}
-            bgcolor={`${theme.palette.white.main}`}
-            mb={2}
-            px={3}
-            py={2}
-          >
-            <Grid item xs={12} sm="auto">
-              <Box display="flex" gap={1.5} alignItems={'center'} width="100%">
-                <Typography variant="h2" component="span" flexBasis="0" flexGrow="1">
-                  {isReadMode ? 'My Profile' : 'Edit Profile'}
-                </Typography>
-                <ProgressBar
-                  width="302px"
-                  progress={
-                    showStaticFormProgress ||
-                    personalDetails?.nmr_id ||
-                    personalDetails?.work_flow_status_id === 1 ||
-                    personalDetails?.work_flow_status_id === 3
-                      ? 75
-                      : progress
-                  }
-                  completed={completed}
-                />
-              </Box>
-              {!isReadMode && (
-                <BreadcrumbContainer
-                  primary="My Profile"
-                  primaryLink={'/profile'}
-                  secondary={'Edit Profile'}
-                />
-              )}
-            </Grid>
-            {doctorEsignStatus === 1 ? (
-              isReadMode &&
-              isApplicationPending &&
-              !logInDoctorStatus && (
-                <Grid
-                  item
-                  xs="auto"
-                  ml="auto"
-                  sx={{
-                    marginBottom: {
-                      xs: '10px',
-                      md: '0',
-                    },
-                  }}
-                >
-                  <Button
-                    startIcon={<EditIcon sx={{ mr: 1 }} />}
-                    variant="contained"
-                    color="secondary"
-                    onClick={openDoctorEditProfile}
-                    sx={{
-                      width: '100%',
-                    }}
-                  >
-                    Edit Profile
-                  </Button>
-                </Grid>
-              )
-            ) : (
-              <Grid
-                item
-                xs="auto"
-                ml="auto"
-                sx={{
-                  marginBottom: {
-                    xs: '10px',
-                    md: '0',
-                  },
-                }}
-              >
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  onClick={eSignHandler}
-                  sx={{
-                    width: '100%',
-                  }}
-                >
-                  E-sign Profile
-                </Button>
-              </Grid>
-            )}
-
-            <Grid item xs={12} lg="auto">
-              {!isReadMode && (
-                <Box
-                  display={'flex'}
-                  flexDirection={{ xs: 'column', sm: 'row' }}
-                  mt={{ xs: 2, lg: 0 }}
-                >
-                  <FormControlLabel
-                    sx={{
-                      width: {
-                        xs: 'auto',
-                      },
-                      ml: 0,
-                      mr: { xs: 0, sm: 2 },
-                    }}
-                    value="email"
-                    control={
-                      <Switch
-                        color="primary"
-                        checked={emailNotify}
-                        onChange={(e) => {
-                          handleNotification(e, 'email');
-                        }}
-                      />
+      {personalDetails?.hp_profile_status_id === undefined && <CircularLoader />}
+      {loginData?.data?.hp_profile_status_id !== undefined && (
+        <Box>
+          {!showViewProfile ? (
+            <Grid
+              container
+              display="flex"
+              justifyContent="space-between"
+              sx={{ alignItems: 'center' }}
+              bgcolor={`${theme.palette.white.main}`}
+              mb={2}
+              px={3}
+              py={2}
+            >
+              <Grid item xs={12} sm="auto">
+                <Box display="flex" gap={1.5} alignItems={'center'} width="100%">
+                  <Typography variant="h2" component="span" flexBasis="0" flexGrow="1">
+                    {isReadMode ? 'My Profile' : 'Edit Profile'}
+                  </Typography>
+                  <ProgressBar
+                    width="302px"
+                    progress={
+                      showStaticFormProgress ||
+                      personalDetails?.nmr_id ||
+                      personalDetails?.work_flow_status_id === 1 ||
+                      personalDetails?.work_flow_status_id === 3
+                        ? 75
+                        : progress
                     }
-                    label="Email Notifications"
-                    labelPlacement="start"
-                  />
-                  <FormControlLabel
-                    sx={{
-                      width: {
-                        xs: 'auto',
-                      },
-                      ml: 0,
-                    }}
-                    value="sms"
-                    control={
-                      <Switch
-                        color="primary"
-                        checked={mobileNotify}
-                        onChange={(e) => {
-                          handleNotification(e, 'sms');
-                        }}
-                      />
-                    }
-                    label="Mobile Notifications"
-                    labelPlacement="start"
+                    completed={completed}
                   />
                 </Box>
+                {!isReadMode && (
+                  <BreadcrumbContainer
+                    primary="My Profile"
+                    primaryLink={'/profile'}
+                    secondary={'Edit Profile'}
+                  />
+                )}
+              </Grid>
+              {doctorEsignStatus === 1 ? (
+                isReadMode &&
+                isApplicationPending &&
+                !logInDoctorStatus && (
+                  <Grid
+                    item
+                    xs="auto"
+                    ml="auto"
+                    sx={{
+                      marginBottom: {
+                        xs: '10px',
+                        md: '0',
+                      },
+                    }}
+                  >
+                    <Button
+                      startIcon={<EditIcon sx={{ mr: 1 }} />}
+                      variant="contained"
+                      color="secondary"
+                      onClick={openDoctorEditProfile}
+                      sx={{
+                        width: '100%',
+                      }}
+                    >
+                      Edit Profile
+                    </Button>
+                  </Grid>
+                )
+              ) : (
+                <>
+                  {loginData?.data?.hp_profile_status_id !== 7 && (
+                    <Grid
+                      item
+                      xs="auto"
+                      ml="auto"
+                      sx={{
+                        marginBottom: {
+                          xs: '10px',
+                          md: '0',
+                        },
+                      }}
+                    >
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={eSignHandler}
+                        sx={{
+                          width: '100%',
+                        }}
+                      >
+                        E-sign Profile
+                      </Button>
+                    </Grid>
+                  )}
+                </>
               )}
-            </Grid>
-          </Grid>
-        ) : null}
-        {!isReadMode && (
-          <ConstantDetails validDetails={validDetails} setValidDetails={setValidDetails} />
-        )}
-        <Wizard
-          activeStep={loggedInUserType === 'College' ? activeStep + 1 : activeStep}
-          handleBack={handleBack}
-          handleNext={handleNext}
-          steps={wizardSteps}
-          progress={false}
-          isStepClickEnable={['SMC', 'NMC', 'College'].includes(loggedInUserType)}
-          showCheckCirlce={loggedInUserType === 'Doctor'}
-          handleStep={handleStep}
-        ></Wizard>
 
-        <Box bgcolor="white.main">
-          {activeStep === 0 && (
-            <PersonalDetails
-              isReadMode={isReadMode}
-              setIsReadMode={setIsReadMode}
-              handleNext={handleNext}
-              handleBack={handleBack}
-              validDetails={validDetails}
-              setValidDetails={setValidDetails}
-              selectedDataIndex={selectedRowData?.SNo?.value - 1}
-            />
+              <Grid item xs={12} lg="auto">
+                {!isReadMode && (
+                  <Box
+                    display={'flex'}
+                    flexDirection={{ xs: 'column', sm: 'row' }}
+                    mt={{ xs: 2, lg: 0 }}
+                  >
+                    <FormControlLabel
+                      sx={{
+                        width: {
+                          xs: 'auto',
+                        },
+                        ml: 0,
+                        mr: { xs: 0, sm: 2 },
+                      }}
+                      value="email"
+                      control={
+                        <Switch
+                          color="primary"
+                          checked={emailNotify}
+                          onChange={(e) => {
+                            handleNotification(e, 'email');
+                          }}
+                        />
+                      }
+                      label="Email Notifications"
+                      labelPlacement="start"
+                    />
+                    <FormControlLabel
+                      sx={{
+                        width: {
+                          xs: 'auto',
+                        },
+                        ml: 0,
+                      }}
+                      value="sms"
+                      control={
+                        <Switch
+                          color="primary"
+                          checked={mobileNotify}
+                          onChange={(e) => {
+                            handleNotification(e, 'sms');
+                          }}
+                        />
+                      }
+                      label="Mobile Notifications"
+                      labelPlacement="start"
+                    />
+                  </Box>
+                )}
+              </Grid>
+            </Grid>
+          ) : null}
+          {!isReadMode && (
+            <ConstantDetails validDetails={validDetails} setValidDetails={setValidDetails} />
           )}
-          {activeStep === 1 && (
-            <RegisterAndAcademicDetails
-              isReadMode={isReadMode}
-              setIsReadMode={setIsReadMode}
-              handleNext={handleNext}
+          <Wizard
+            activeStep={loggedInUserType === 'College' ? activeStep + 1 : activeStep}
+            handleBack={handleBack}
+            handleNext={handleNext}
+            steps={wizardSteps}
+            progress={false}
+            isStepClickEnable={['SMC', 'NMC', 'College'].includes(loggedInUserType)}
+            showCheckCirlce={loggedInUserType === 'Doctor'}
+            handleStep={handleStep}
+          ></Wizard>
+
+          <Box bgcolor="white.main">
+            {activeStep === 0 && (
+              <PersonalDetails
+                isReadMode={isReadMode}
+                setIsReadMode={setIsReadMode}
+                handleNext={handleNext}
+                handleBack={handleBack}
+                validDetails={validDetails}
+                setValidDetails={setValidDetails}
+                selectedDataIndex={selectedRowData?.SNo?.value - 1}
+              />
+            )}
+            {activeStep === 1 && (
+              <RegisterAndAcademicDetails
+                isReadMode={isReadMode}
+                setIsReadMode={setIsReadMode}
+                handleNext={handleNext}
+                handleBack={handleBack}
+                selectedDataIndex={selectedRowData?.SNo?.value - 1}
+              />
+            )}
+            {/* {activeStep === 2 && (
+              <WorkProfile
+                isReadMode={isReadMode}
+                setIsReadMode={setIsReadMode}
+                handleNext={handleNext}
+                handleBack={handleBack}
+                setShowDashboard={setShowDashboard}
+                setShowTable={setShowTable}
+                setShowViewPorfile={setShowViewPorfile}
+                activeStep={activeStep}
+              />
+            )} */}
+            {activeStep === 2 && (
+              <PreviewProfile
+                isReadMode={isReadMode}
+                setIsReadMode={setIsReadMode}
+                handleNext={handleNext}
+                handleBack={handleBack}
+              />
+            )}
+          </Box>
+          {!isReadMode && activeStep === 2 && (
+            <ProfileConsent
+              setShowStaticFormProgress={setShowStaticFormProgress}
               handleBack={handleBack}
-              selectedDataIndex={selectedRowData?.SNo?.value - 1}
-            />
-          )}
-          {activeStep === 2 && (
-            <PreviewProfile
-              isReadMode={isReadMode}
+              resetStep={resetStep}
               setIsReadMode={setIsReadMode}
-              handleNext={handleNext}
-              handleBack={handleBack}
             />
           )}
         </Box>
-        {!isReadMode && activeStep === 2 && (
-          <ProfileConsent
-            setShowStaticFormProgress={setShowStaticFormProgress}
-            handleBack={handleBack}
-            resetStep={resetStep}
-            setIsReadMode={setIsReadMode}
-          />
-        )}
-      </Box>
+      )}
     </>
   );
 };
