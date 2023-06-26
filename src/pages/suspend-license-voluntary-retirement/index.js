@@ -135,7 +135,7 @@ export function SuspendLicenseVoluntaryRetirement({
     };
 
     let workFlowData = {
-      request_id: requestID || '',
+      request_id: requestID || selectedSuspendLicenseProfile?.RequestId?.value,
       application_type_id:
         userActiveTab === 'Activate Licence'
           ? 5
