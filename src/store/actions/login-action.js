@@ -76,6 +76,14 @@ export const loginAction = (body) => async (dispatch) => {
         );
         JSON.stringify(localStorage.setItem('userSubTypeID', response.data['user_sub_type']));
         JSON.stringify(localStorage.setItem('collegeID', response.data['college_id']));
+        JSON.stringify(
+          localStorage.setItem('HPProfileStatusID', response.data['hp_profile_status_id'])
+        );
+        JSON.stringify(
+          localStorage.setItem('workProfileStatusID', response.data['work_flow_status_id'])
+        );
+        JSON.stringify(localStorage.setItem('esignStatus', response.data['esign_status']));
+        JSON.stringify(localStorage.setItem('blacklistedStatus', response.data['blacklisted']));
         return resolve(response);
       })
       .catch((error) => {
