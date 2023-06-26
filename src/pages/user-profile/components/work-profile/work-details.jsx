@@ -150,11 +150,22 @@ const WorkDetails = ({
       };
       currentWorkDetails?.current_work_details.push(facilityDetailsDeclared);
     }
-
     if (!organizationChecked) {
       currentWorkDetails?.current_work_details.splice(0, 1);
     }
+    if (facilityChecked) {
+      if (declaredFacilityData?.length > 0) {
+        updateWorkStatus(currentWorkDetails);
+      }
+      if (organizationChecked) {
+        updateWorkStatus(currentWorkDetails);
+      }
+    } else {
+      updateWorkStatus(currentWorkDetails);
+    }
+  };
 
+  const updateWorkStatus = (currentWorkDetails) => {
     dispatch(updateDoctorWorkDetails(currentWorkDetails, loginData?.data?.profile_id)).then(() => {
       setSuccessModalPopup(true);
     });
@@ -175,6 +186,7 @@ const WorkDetails = ({
   const handleTabChange = (_, value) => {
     setFacilityResponseData([]);
     setDeclaredFacilityDistrict([]);
+    setShowTable(false);
     setTabValue(value);
   };
 
@@ -574,9 +586,12 @@ const WorkDetails = ({
                     error={errors?.facilityId?.message}
                     name={'facilityId'}
                     label="Enter Facility Id(If Known)"
+                    required={true}
                     placeholder="Facility Id"
                     defaultValue={getValues()?.facilityId}
-                    {...register(`facilityId`)}
+                    {...register(`facilityId`, {
+                      required: 'This field is required',
+                    })}
                   />
                 </Box>
                 <Box ml={1}>
@@ -584,7 +599,7 @@ const WorkDetails = ({
                     variant="contained"
                     color="secondary"
                     onClick={() => {
-                      searchFacilitiesHandler();
+                      getValues()?.facilityId?.length > 0 && searchFacilitiesHandler();
                     }}
                   >
                     Search
@@ -610,28 +625,39 @@ const WorkDetails = ({
               <Grid item xs={12} md={3} lg={3}>
                 <Typography variant="subtitle2" color="inputTextColor.main">
                   State
+                  <Typography component="span" color="error.main">
+                    *
+                  </Typography>
                 </Typography>
+
                 <Select
                   fullWidth
-                  // error={errors.state?.message}
+                  error={getValues().stateLGDCode?.length === 0 && 'This field is required'}
                   name={'stateLGDCode'}
                   defaultValue={getValues().stateLGDCode}
-                  // required={true}
-                  {...register('stateLGDCode')}
+                  required={true}
+                  {...register('stateLGDCode', {
+                    required: 'This field is required',
+                  })}
                   options={createSelectFieldData(statesList)}
                 />
               </Grid>
               <Grid item xs={12} md={3} lg={3}>
                 <Typography variant="subtitle2" color="inputTextColor.main">
                   District
+                  <Typography component="span" color="error.main">
+                    *
+                  </Typography>
                 </Typography>
                 <Select
                   fullWidth
-                  // error={errors.District?.message}
+                  error={getValues().districtLGDCode?.length === 0 && 'This field is required'}
                   name={'districtLGDCode'}
                   defaultValue={getValues().districtLGDCode}
-                  // required={true}
-                  {...register('districtLGDCode')}
+                  required={true}
+                  {...register('districtLGDCode', {
+                    required: 'This field is required',
+                  })}
                   options={createSelectFieldData(facilityDistrict)}
                 />
               </Grid>
@@ -652,8 +678,14 @@ const WorkDetails = ({
                     variant="contained"
                     color="secondary"
                     onClick={() => {
-                      searchFacilitiesHandler();
+                      typeof getValues()?.stateLGDCode === 'number' &&
+                        typeof getValues()?.districtLGDCode === 'number' &&
+                        searchFacilitiesHandler();
                     }}
+                    disabled={
+                      getValues()?.stateLGDCode?.length > 0 &&
+                      getValues()?.districtLGDCode?.length > 0
+                    }
                   >
                     Search
                   </Button>
@@ -672,11 +704,7 @@ const WorkDetails = ({
               )}
             </Grid>
           )}
-          {tabValue === 2 && (
-            <Grid item md={8}>
-              map
-            </Grid>
-          )}
+          {tabValue === 2 && <Typography>on the map</Typography>}
         </Grid>
       )}
       {organizationChecked && (

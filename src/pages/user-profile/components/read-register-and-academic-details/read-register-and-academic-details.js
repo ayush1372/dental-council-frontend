@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
@@ -63,6 +63,9 @@ const ReadRegisterAndAcademicDetails = ({
       body: QualificationDetailsContent,
     },
   ];
+
+  const [registrationDetailsData, setRegistrationDetailsData] = useState('');
+
   const handleChange = (accordionValue) => () => {
     if (accordionKeys.includes(accordionValue)) {
       setAccordionKeys(accordionKeys.filter((a) => a !== accordionValue));
@@ -95,6 +98,31 @@ const ReadRegisterAndAcademicDetails = ({
     setShowReactivateLicense(false);
     setShowSuccessPopup(true);
   };
+
+  useEffect(() => {
+    if (!isNaN(selectedDataIndex)) {
+      let filteredQualificationDetails = [];
+
+      registrationDetails?.qualification_detail_response_tos?.map((element) => {
+        if (
+          element &&
+          element?.request_id ===
+            dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]?.request_id
+        ) {
+          filteredQualificationDetails.push(element);
+        }
+      });
+      let newRegistrationDetails = {};
+      newRegistrationDetails.hp_profile_id = registrationDetails?.hp_profile_id;
+      newRegistrationDetails.nbe_response_to = registrationDetails?.nbe_response_to;
+      newRegistrationDetails.registration_detail_to = registrationDetails?.registration_detail_to;
+      newRegistrationDetails.request_id = registrationDetails?.request_id;
+      newRegistrationDetails.qualification_detail_response_tos = filteredQualificationDetails;
+      setRegistrationDetailsData(newRegistrationDetails);
+    } else {
+      setRegistrationDetailsData(registrationDetails);
+    }
+  }, []);
 
   return (
     <Box>
@@ -130,7 +158,7 @@ const ReadRegisterAndAcademicDetails = ({
               </AccordionSummary>
               <AccordionDetails>
                 <Component
-                  registrationDetails={registrationDetails}
+                  registrationDetails={registrationDetailsData}
                   selectedDataIndex={selectedDataIndex}
                 />
               </AccordionDetails>
@@ -385,6 +413,9 @@ const ReadRegisterAndAcademicDetails = ({
                 setSuccessPopupMessage={setSuccessPopupMessage}
                 setActionVerified={setActionVerified}
                 selectedAcademicStatus={selectedAcademicStatus}
+                requestID={
+                  dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]?.request_id
+                }
               />
             </Box>
           ) : (

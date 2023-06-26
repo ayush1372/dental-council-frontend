@@ -1,15 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
-import {
-  Grid,
-  IconButton,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  Popover,
-} from '@mui/material';
+import { Grid, IconButton } from '@mui/material';
 import Excel from 'exceljs';
 import { saveAs } from 'file-saver';
 import moment from 'moment';
@@ -24,7 +16,6 @@ import { userActionId, workSheetTheme } from '../../../src/helpers/functions/com
 import { verboseLog } from '../../config/debug';
 
 const ExportFiles = ({ exportData, flag }) => {
-  const [anchorEl, setAnchorEl] = useState(null);
   const [csvData, setCsvData] = useState([]);
   const [docType, setDocType] = useState();
   const [columns, setColumns] = useState([]);
@@ -78,7 +69,7 @@ const ExportFiles = ({ exportData, flag }) => {
             college_dean_status: elementData?.college_status,
             smc_status: elementData?.smc_status,
             nmc_status: elementData.nmc_status,
-            created_at: moment(elementData?.created_at).format('DD-MM-YYYY hh:mm A'),
+            created_at: moment(elementData?.created_at).format('DD-MM-YYYY HH:mm'),
             doctor_status: elementData?.doctor_status,
             pendency: elementData?.pendency,
           };
@@ -92,14 +83,6 @@ const ExportFiles = ({ exportData, flag }) => {
       data = exportData?.data?.college_details;
     }
     setCsvData(data);
-  };
-
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
   };
 
   useEffect(() => {
@@ -118,7 +101,7 @@ const ExportFiles = ({ exportData, flag }) => {
       worksheet.getRow(1).fill = workSheetTheme;
       worksheet.columns.forEach((column) => {
         if (column.header === 'Date of Submission') {
-          column.header = 'Date of Submission (DD-MM-YYYY HH:MM AM/PM)';
+          column.header = 'Date of Submission (DD-MM-YYYY HH:MM )';
         }
         if (column.header === 'Pendency') {
           column.header = 'Pendency (In Days)';
@@ -147,10 +130,6 @@ const ExportFiles = ({ exportData, flag }) => {
         const buf = await workbook.xlsx.writeBuffer();
         saveAs(new Blob([buf]), `${fileName}.xlsx`);
       }
-      if (docType === 'csv') {
-        const buf = await workbook.csv.writeBuffer();
-        saveAs(new Blob([buf]), `${fileName}.csv`);
-      }
     } catch (error) {
       verboseLog('<<<ERRROR>>>', error);
       verboseLog('Something Went Wrong', error.message);
@@ -161,8 +140,6 @@ const ExportFiles = ({ exportData, flag }) => {
     }
   };
 
-  const open = Boolean(anchorEl);
-  const id = open ? 'table-search-popover' : undefined;
   return (
     <Grid item md={1} xs={12} data-testid="exportButton">
       <IconButton
@@ -176,7 +153,10 @@ const ExportFiles = ({ exportData, flag }) => {
           height: 60,
           color: 'blue',
         }}
-        onClick={handleClick}
+        onClick={(e) => {
+          e.preventDefault();
+          onExportClick('xlsx');
+        }}
         color="blue"
       >
         <FileDownloadOutlinedIcon
@@ -187,43 +167,6 @@ const ExportFiles = ({ exportData, flag }) => {
           }}
         />
       </IconButton>
-      <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-      >
-        <List>
-          <ListItem disablePadding>
-            <ListItemButton onClick={handleClose}>
-              <ListItemText
-                primary="Export as xlsx"
-                onClick={() => {
-                  onExportClick('xlsx');
-                }}
-              />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton onClick={handleClose}>
-              <ListItemText
-                primary="Export as csv"
-                onClick={() => {
-                  onExportClick('csv');
-                }}
-              />
-            </ListItemButton>
-          </ListItem>
-        </List>
-      </Popover>
     </Grid>
   );
 };

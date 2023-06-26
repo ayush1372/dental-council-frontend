@@ -8,7 +8,7 @@ import { ToastContainer } from 'react-toastify';
 
 import { createEditFieldData } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
-// import DatafoundModalPopup from '../../../shared/common-modals/data-found-modal';
+import DatafoundModalPopup from '../../../shared/common-modals/data-found-modal';
 import ErrorModalPopup from '../../../shared/common-modals/error-modal-popup';
 import { getRegistrationCouncilList } from '../../../store/actions/common-actions';
 import { fetchSmcRegistrationDetails } from '../../../store/actions/doctor-registration-actions';
@@ -18,7 +18,7 @@ const DoctorRegistrationWelcomePage = () => {
   const [isNext, setIsNext] = useState(false);
   const [imrDataNotFound, setImrDataNotFound] = useState(false);
   const [rejectPopup, setRejectPopup] = useState(false);
-  // const [datafoundModalPopup, setDatafoundModalPopup] = useState(false);
+  const [datafoundModalPopup, setDatafoundModalPopup] = useState(false);
   const [accountExists, setAccountExists] = useState(false);
   const {
     register,
@@ -42,7 +42,7 @@ const DoctorRegistrationWelcomePage = () => {
   const dispatch = useDispatch();
   const handleAadhaarPage = (data) => {
     setImrDataNotFound(data);
-    // setDatafoundModalPopup(false);
+    setDatafoundModalPopup(false);
   };
   useEffect(() => {
     dispatch(getRegistrationCouncilList());
@@ -204,27 +204,36 @@ const DoctorRegistrationWelcomePage = () => {
       {rejectPopup && (
         <ErrorModalPopup
           open={setRejectPopup}
-          setOpen={() => setRejectPopup(false)}
+          setOpen={() => {
+            setDatafoundModalPopup(true);
+            setRejectPopup(false);
+          }}
           imrData={true}
           handleAadhaarPage={handleAadhaarPage}
-          isNext={isNext}
-          setIsNext={setIsNext}
           onReset={onReset}
           text={` Your data is not found in the NMR.
            Do you want to continue the registration in the NMR ? `}
         />
       )}
-      {/* {datafoundModalPopup && (
+      {datafoundModalPopup && (
         <DatafoundModalPopup
           open={setRejectPopup}
           setOpen={() => setRejectPopup(false)}
+          handleClose={() => {
+            setDatafoundModalPopup(false);
+          }}
           imrData={true}
           handleAadhaarPage={handleAadhaarPage}
           isNext={isNext}
           setIsNext={setIsNext}
-          text={`We found below details as per provided information. If the details are correct, click yes to continue registration. `}
+          registrationData={{
+            smcId: getValues().RegistrationCouncilId,
+            registrationNumber: getValues().RegistrationNumber,
+          }}
+          text={`We found below details as per provided information. 
+          If the details are correct, click yes to continue registration. `}
         />
-      )} */}
+      )}
       {accountExists && (
         <ErrorModalPopup
           open={setAccountExists}

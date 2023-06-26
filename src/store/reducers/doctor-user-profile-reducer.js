@@ -39,6 +39,7 @@ const doctorUserProfileReducer = createSlice({
     selectedQualificationType: (state, action) => {
       state.selectedQualificationTypeValue = action.payload;
     },
+    resetDoctorProfileReducer: () => initialState,
   },
 });
 
@@ -51,6 +52,7 @@ export const {
   getUpdatedPersonalDetails,
   getUpdatedRegistrationDetails,
   selectedQualificationType,
+  resetDoctorProfileReducer,
 } = doctorUserProfileReducer.actions;
 
 export default doctorUserProfileReducer.reducer;

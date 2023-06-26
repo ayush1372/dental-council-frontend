@@ -2,7 +2,12 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 
 import { makeStyles } from '@material-ui/core';
+import CancelIcon from '@mui/icons-material/Cancel';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import NoAccountsIcon from '@mui/icons-material/NoAccounts';
+import ReportIcon from '@mui/icons-material/Report';
+import TimerIcon from '@mui/icons-material/Timer';
+import VerifiedIcon from '@mui/icons-material/Verified';
 import { Box, FormGroup, Grid, IconButton, Link, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +15,7 @@ import { ToastContainer } from 'react-toastify';
 
 import ReactivationLogo from '../../../../../src/assets/images/reactivate-license-icon.png';
 import avtarImg from '../../../../assets/images/user.png';
+import { workflowStatusId } from '../../../../helpers/functions/common-functions';
 import ReactivateLicencePopup from '../../../../shared/reactivate-licence-popup/re-activate-licence-popup';
 import SuccessPopup from '../../../../shared/reactivate-licence-popup/success-popup';
 import {
@@ -22,6 +28,9 @@ import styles from './profile-image.module.scss';
 
 export default function ProfileImage(props) {
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  const currentStatus = useSelector(
+    (state) => state.doctorUserProfileReducer?.personalDetails?.hp_profile_status_id
+  );
 
   const profileId = useSelector((state) => state.loginReducer.loginData.data.profile_id);
   const name = useSelector((state) => state.college.collegeData.data.name);
@@ -42,6 +51,9 @@ export default function ProfileImage(props) {
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const logInDoctorStatus = useSelector(
     (state) => state?.loginReducer?.loginData?.data?.blacklisted
+  );
+  const doctorEsignStatus = useSelector(
+    (state) => state?.loginReducer?.loginData?.data?.esign_status
   );
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { loginData } = useSelector((state) => state?.loginReducer);
@@ -107,6 +119,35 @@ export default function ProfileImage(props) {
         successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
       });
   };
+  const getIconAndText = (currentStatus) => {
+    switch (currentStatus) {
+      case 1:
+        return { icon: <TimerIcon sx={{ color: 'primary.main' }} />, text: workflowStatusId(1) };
+      case 2:
+        return { icon: <VerifiedIcon sx={{ color: 'success.main' }} />, text: workflowStatusId(2) };
+      case 3:
+        return {
+          icon: <ReportIcon sx={{ color: 'secondary.lightOrange' }} />,
+          text: workflowStatusId(3),
+        };
+      case 4:
+        return { icon: <CancelIcon sx={{ color: 'error.main' }} />, text: workflowStatusId(4) };
+      case 5:
+        return {
+          icon: <NoAccountsIcon sx={{ color: 'error.main' }} />,
+          text: workflowStatusId(5),
+        };
+      case 6:
+        return {
+          icon: <NoAccountsIcon sx={{ color: 'error.main' }} />,
+          text: workflowStatusId(6),
+        };
+      default:
+        return { icon: null, text: 'Unknown Status' };
+    }
+  };
+  const { icon, text } = getIconAndText(currentStatus);
+
   return (
     <Grid container className={styles.profileImageDetailsContainer} justifyContent="center">
       <ToastContainer></ToastContainer>
@@ -156,10 +197,17 @@ export default function ProfileImage(props) {
           </Box>
         </Grid>
       )}
-      <Grid textAlign="center" item xs={12} mt={4}>
-        <Typography component="span" variant="subtitle2" whiteSpace="initial">
-          {props.name || name}
-        </Typography>
+      <Grid textAlign="center" container xs={12} mt={4} justifyContent="center" flexWrap="nowrap">
+        <Grid item>
+          <Typography component="span" variant="subtitle2" whiteSpace="initial" display="flex">
+            {props.name || name}
+          </Typography>
+        </Grid>
+        <Grid item>
+          <Typography component="div" title={text}>
+            {icon}
+          </Typography>
+        </Grid>
       </Grid>
       {loggedInUserType === 'Doctor' && nmrIdData && (
         <Grid display="flex" borderRight={`1px solid ${theme.palette.inputBorderColor.main}`} item>
@@ -197,7 +245,21 @@ export default function ProfileImage(props) {
                 height="15px"
               />
               <Link
-                sx={{ cursor: 'pointer' }}
+                sx={{
+                  cursor: 'pointer',
+                  'pointer-events':
+                    (personalDetails?.hp_profile_status_id === 5 ||
+                      personalDetails?.hp_profile_status_id === 6) &&
+                    personalDetails?.work_flow_status_id === 1
+                      ? 'none'
+                      : 'unset',
+                  opacity:
+                    (personalDetails?.hp_profile_status_id === 5 ||
+                      personalDetails?.hp_profile_status_id === 6) &&
+                    personalDetails?.work_flow_status_id === 1
+                      ? 0.5
+                      : 'unset',
+                }}
                 ml={1}
                 variant="subtitle2"
                 onClick={() => {
@@ -210,6 +272,39 @@ export default function ProfileImage(props) {
             </Grid>
           </Grid>
         )}
+      {doctorEsignStatus === 2 && (
+        <Grid container mt={1}>
+          <Grid item>
+            <Typography
+              color="suspendAlert.dark"
+              component="div"
+              display="inline-flex"
+              variant="body2"
+            >
+              You have done E-sign with different
+              <br /> account. Please verify and re-do the <br />
+              E-sign process correctly.
+            </Typography>
+          </Grid>
+        </Grid>
+      )}
+      {doctorEsignStatus === 3 && (
+        <Grid container mt={1}>
+          <Grid item>
+            <Typography
+              color="suspendAlert.dark"
+              component="div"
+              display="inline-flex"
+              variant="body2"
+            >
+              Your profile has to complete E-sign <br />
+              process. You will not be able to perform <br /> actions on the profile untill you{' '}
+              <br />
+              complete E-sign process.
+            </Typography>
+          </Grid>
+        </Grid>
+      )}
       {showReactivateLicense && (
         <ReactivateLicencePopup
           renderSuccess={renderSuccess}

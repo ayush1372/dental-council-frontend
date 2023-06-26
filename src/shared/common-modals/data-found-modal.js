@@ -1,7 +1,6 @@
 import { Box, Container, Modal, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
 
 import { Button } from '../../ui/core';
 
@@ -11,15 +10,25 @@ export default function DatafoundModalPopup({
   text,
   imrData,
   setIsNext,
+  handleClose,
   handleAadhaarPage,
+  registrationData,
   accountExist,
 }) {
   const theme = useTheme();
-  const navigate = useNavigate();
-  const councilName = useSelector(
-    (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.council_name
-  );
 
+  const { councilNames } = useSelector((state) => state.common);
+
+  const getCouncilName = () => {
+    let name;
+    Array.isArray(councilNames) &&
+      councilNames?.map((elementData) => {
+        if (elementData.id === registrationData?.smcId) {
+          name = elementData?.name;
+        }
+      });
+    return name;
+  };
   const registrationNumber = useSelector(
     (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.registration_number
   );
@@ -37,7 +46,7 @@ export default function DatafoundModalPopup({
     setOpen(false);
   };
   const handleNo = () => {
-    navigate('/');
+    handleClose(false);
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
@@ -94,7 +103,7 @@ export default function DatafoundModalPopup({
                     Registration Number
                   </Typography>
                   <Typography variant="subtitle2" component="div" color="primary">
-                    {registrationNumber}
+                    {registrationNumber || registrationData?.registrationNumber}
                   </Typography>
                 </Box>
               </Box>
@@ -103,7 +112,7 @@ export default function DatafoundModalPopup({
                   Council
                 </Typography>
                 <Typography variant="subtitle2" component="div" color="primary">
-                  {councilName}
+                  {getCouncilName()}
                 </Typography>
               </Box>
             </Box>
