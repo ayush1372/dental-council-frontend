@@ -346,7 +346,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
       )}
       {showSuccessPopup && <SuccessPopup />}
       {personalDetails?.hp_profile_status_id === undefined && <CircularLoader />}
-      {loginData?.data?.hp_profile_status_id !== undefined && (
+      {personalDetails?.hp_profile_status_id !== undefined && (
         <Box>
           {!showViewProfile ? (
             <Grid
