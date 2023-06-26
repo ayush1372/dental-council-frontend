@@ -98,7 +98,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
     if (loginData?.data?.work_flow_status_id === 1) {
       setIsApplicationPending(false);
     }
-  }, [personalDetails?.work_flow_status_id]);
+  }, [loginData?.data?.work_flow_status_id]);
   const { activeStep, handleNext, handleBack, resetStep, completed, progress, handleStep } =
     useWizard(
       ['Doctor', 'SMC', 'NMC'].includes(loggedInUserType) ? 0 : 1,
@@ -385,7 +385,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
                   />
                 )}
               </Grid>
-              {doctorEsignStatus === 1 ? (
+              {doctorEsignStatus === 1 || loginData?.data?.hp_profile_status_id === 7 ? (
                 isReadMode &&
                 isApplicationPending &&
                 !logInDoctorStatus && (
@@ -414,8 +414,6 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
                   </Grid>
                 )
               ) : (
-                // <>
-                //   {loginData?.data?.hp_profile_status_id !== 7 && (
                 <Grid
                   item
                   xs="auto"
@@ -438,8 +436,6 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
                     E-sign Profile
                   </Button>
                 </Grid>
-                //   )}
-                // </>
               )}
 
               <Grid item xs={12} lg="auto">
