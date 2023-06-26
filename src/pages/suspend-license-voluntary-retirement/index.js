@@ -136,11 +136,12 @@ export function SuspendLicenseVoluntaryRetirement({
 
     let workFlowData = {
       request_id: requestID || '',
-      application_type_id: personalDetails?.application_type_id
-        ? personalDetails?.application_type_id
-        : userActiveTab === 'Activate Licence'
-        ? 5
-        : 1,
+      application_type_id:
+        userActiveTab === 'Activate Licence'
+          ? 5
+          : personalDetails?.application_type_id
+          ? personalDetails?.application_type_id
+          : 1,
       actor_id: loginData?.data?.user_group_id,
       action_id: action_id,
       hp_profile_id: personalDetails?.hp_profile_id
@@ -164,6 +165,7 @@ export function SuspendLicenseVoluntaryRetirement({
         : '',
       remarks: getValues()?.remark ? getValues()?.remark : '',
     };
+
     let raiseQueryBody = {
       queries: queries,
       hpProfileId: personalDetails?.hp_profile_id ? personalDetails?.hp_profile_id : '',
