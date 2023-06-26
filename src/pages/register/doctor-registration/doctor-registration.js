@@ -219,6 +219,9 @@ const DoctorRegistrationWelcomePage = () => {
         <DatafoundModalPopup
           open={setRejectPopup}
           setOpen={() => setRejectPopup(false)}
+          handleClose={() => {
+            setDatafoundModalPopup(false);
+          }}
           imrData={true}
           handleAadhaarPage={handleAadhaarPage}
           isNext={isNext}

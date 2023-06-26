@@ -282,7 +282,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
   }, [selectedSubDistrict]);
 
   useEffect(() => {
-    dispatch(getPersonalDetailsData(personalDetails?.hp_profile_id));
+    if (personalDetails?.hp_profile_id !== undefined) {
+      dispatch(getPersonalDetailsData(personalDetails?.hp_profile_id));
+    }
     setIsSameAddress(
       personalDetails?.communication_address?.is_same_address === 'true' ? true : false
     );
