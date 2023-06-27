@@ -14,12 +14,12 @@ import YearOfRegistration from './components/year-of-registraation';
 
 const tabNames = {
   Name: Name,
-  'Year Of Registration': YearOfRegistration,
-  'Registration Number': RegistrationNumber,
-  'State Medical Council': StateMedicalCouncil,
-  'Advance Search': AdvanceSearch,
+  'Year of registration': YearOfRegistration,
+  'Registration number': RegistrationNumber,
+  'State medical council': StateMedicalCouncil,
+  'Advance search': AdvanceSearch,
   // 'Blacklisted Doctor': BlacklistedDoctor,
-  'Suspended Doctor': SuspendedDoctor,
+  'Suspended doctor': SuspendedDoctor,
 };
 
 const SearchDoctor = () => {
