@@ -255,6 +255,7 @@ function TrackStatusTable(props) {
         handleRowClick={handleDataRowClick}
         rowsPerPage={rowsPerPage}
         page={page}
+        applicationData={props?.trackStatusData?.health_professional_applications}
       />
 
       <Box>

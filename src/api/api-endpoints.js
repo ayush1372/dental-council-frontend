@@ -80,6 +80,7 @@ export const API = {
       'health-professional?smcId={smcId}&registrationNumber={registrationNumber}',
     setUserPassword: 'health-professional/user',
     healthProfesssional: '/health-professional',
+    validateUserRegistration: 'user-accounts?mobileNumber={mobileNumber}&userType=1',
   },
   nbe: {
     getNBEProfileData: 'nbe/user/{id}',

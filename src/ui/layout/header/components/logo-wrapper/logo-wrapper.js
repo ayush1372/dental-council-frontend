@@ -28,6 +28,7 @@ import {
   logout,
   resetCommonReducer,
 } from '../../../../../store/reducers/common-reducers';
+import { resetDoctorProfileReducer } from '../../../../../store/reducers/doctor-user-profile-reducer';
 import { Button } from '../../../../core';
 import { LoginRegisterPopover } from './login-register-popover/login-register-popover';
 import { MobileDrawer } from './mobile-drawer';
@@ -134,6 +135,7 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
     if (optionType === 'Logout') {
       dispatch(logout());
       dispatch(resetCommonReducer());
+      dispatch(resetDoctorProfileReducer());
       localStorage.clear();
       navigate('/');
       window.scrollTo({

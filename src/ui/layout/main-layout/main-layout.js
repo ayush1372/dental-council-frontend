@@ -33,6 +33,10 @@ export const MainLayout = () => {
           ),
           user_sub_type: Number(localStorage.getItem('userSubTypeID')),
           college_id: Number(localStorage.getItem('collegeID')),
+          hp_profile_status_id: Number(localStorage.getItem('HPProfileStatusID')),
+          work_flow_status_id: Number(localStorage.getItem('workProfileStatusID')),
+          esign_status: Number(localStorage.getItem('esignStatus')),
+          blacklisted: Number(localStorage.getItem('blacklistedStatus')),
         },
       };
       dispatch(loginUser(dataObj));

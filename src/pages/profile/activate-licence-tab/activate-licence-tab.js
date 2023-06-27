@@ -5,14 +5,12 @@ import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { verboseLog } from '../../../config/debug';
+import { workflowStatusId } from '../../../helpers/functions/common-functions';
 import ApproveLicenseModal from '../../../shared/activate-licence-modals/approve-modal';
 import RejectLicenseModal from '../../../shared/activate-licence-modals/reject-modal';
 import GenericTable from '../../../shared/generic-component/generic-table';
 import ViewProfile from '../../../shared/view-profile/view-profile';
-import {
-  getActivateLicenseList,
-  // reActivateLicenseStatus,
-} from '../../../store/actions/common-actions';
+import { getActivateLicenseList } from '../../../store/actions/common-actions';
 import successToast from '../../../ui/core/toaster';
 import UserProfile from '../../user-profile';
 import TableSearch from '../components/table-search/table-search';
@@ -32,7 +30,6 @@ const ActivateLicence = (props) => {
   const dispatch = useDispatch();
   const [reactiveLicenseRequestHPApplicationData, setReactiveLicenseRequestHPApplicationData] =
     useState();
-  // const [searchQueryParams, setSearchQueryParams] = useState();
 
   function createData(
     SNo,
@@ -42,8 +39,8 @@ const ActivateLicence = (props) => {
     reactivationFromDate,
     typeOfSuspension,
     Remark,
-    Action,
-    RequestId
+    RequestId,
+    Action
   ) {
     return {
       SNo,
@@ -53,8 +50,8 @@ const ActivateLicence = (props) => {
       reactivationFromDate,
       typeOfSuspension,
       Remark,
-      Action,
       RequestId,
+      Action,
     };
   }
 
@@ -158,7 +155,7 @@ const ActivateLicence = (props) => {
               type: 'reactivationFromDate',
               value: application?.reactivation,
             },
-            { type: 'typeOfSuspension', value: application?.type_of_suspension },
+            { type: 'typeOfSuspension', value: workflowStatusId(application?.type_of_suspension) },
             {
               type: 'Remark',
               value: application?.remarks,
@@ -185,8 +182,6 @@ const ActivateLicence = (props) => {
         successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
       }
     }
-
-    // setSearchQueryParams(data);
   };
 
   const handleChangePage = (event, newPage) => {

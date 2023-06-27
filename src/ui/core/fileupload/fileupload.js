@@ -227,7 +227,7 @@ export const UploadFile = (props) => {
                           <UploadFileIcon color="primary" fontSize="large" />
                           <div className={styles.fileDetailsArea}>
                             <Typography color="inputTextColor.main">
-                              {file.fileName || fileName}
+                              {fileName === 'undefined.undefined' ? '' : fileName}
                             </Typography>
                             {fileData.length === 1 || uploadStatus === 'successful' ? (
                               <div className={styles.timeInfo}>

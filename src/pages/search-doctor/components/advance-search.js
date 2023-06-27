@@ -82,13 +82,13 @@ const AdvanceSearch = ({ setDoSearch, setSearchData, setScrollDown }) => {
           variant="outlined"
           name={'DoctorName'}
           placeholder="Enter Doctor Name"
-          label={'Doctor Name'}
+          label={'Doctor name'}
           fullWidth
           defaultValue={getValues().DoctorName}
           {...register('DoctorName', {
             pattern: {
               value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
-              message: 'Please Enter Valid Name',
+              message: 'Please enter valid name',
             },
             // required: 'Doctor Name is Required',
             // maxLength: {
@@ -102,7 +102,7 @@ const AdvanceSearch = ({ setDoSearch, setSearchData, setScrollDown }) => {
       <Grid item xs={4}>
         <Grid>
           <Typography color="inputTextColor.main">
-            Registration Number{' '}
+            Registration number{' '}
             {/* <ErrorOutlineIcon
               fontSize="width12"
               sx={{
@@ -114,7 +114,7 @@ const AdvanceSearch = ({ setDoSearch, setSearchData, setScrollDown }) => {
         <TextField
           variant="outlined"
           name={'RegistrationNumber'}
-          placeholder="Enter Registration Number"
+          placeholder="Enter registration number"
           fullWidth
           defaultValue={getValues().RegistrationNumber}
           {...register('RegistrationNumber', {
@@ -129,13 +129,13 @@ const AdvanceSearch = ({ setDoSearch, setSearchData, setScrollDown }) => {
       </Grid>
       <Grid item xs={4}>
         <Typography component="span" color="inputTextColor.main">
-          Year of Registration
+          Year of registration
         </Typography>
 
         <Select
           fullWidth
           name={'YearofRegistration'}
-          placeholder="Select Year of Registration"
+          placeholder="Select year of registration"
           defaultValue={getValues().YearofRegistration}
           error={errors.YearofRegistration?.message}
           {...register('YearofRegistration', {
@@ -146,7 +146,7 @@ const AdvanceSearch = ({ setDoSearch, setSearchData, setScrollDown }) => {
       </Grid>
       <Grid item xs={8}>
         <Typography component="span" color="inputTextColor.main">
-          State Medical Council
+          State medical council
         </Typography>
         <Select
           sx={{
@@ -155,7 +155,7 @@ const AdvanceSearch = ({ setDoSearch, setSearchData, setScrollDown }) => {
           fullWidth
           error={errors.Statemedicalcouncil?.message}
           name="Statemedicalcouncil"
-          placeholder="Select State medical council"
+          placeholder="Select state medical council"
           defaultValue={getValues().Statemedicalcouncil}
           {...register('Statemedicalcouncil', {
             // required: 'state medical council is required',

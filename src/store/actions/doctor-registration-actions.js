@@ -186,3 +186,18 @@ export const createHealthProfessional = (data) => async (dispatch) => {
       });
   });
 };
+
+export const verifyHealthProfessional = (data) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: GET,
+      url: API.doctorRegistration.validateUserRegistration.replace('{mobileNumber}', data),
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
@@ -63,6 +63,9 @@ const ReadRegisterAndAcademicDetails = ({
       body: QualificationDetailsContent,
     },
   ];
+
+  const [registrationDetailsData, setRegistrationDetailsData] = useState('');
+
   const handleChange = (accordionValue) => () => {
     if (accordionKeys.includes(accordionValue)) {
       setAccordionKeys(accordionKeys.filter((a) => a !== accordionValue));
@@ -95,6 +98,31 @@ const ReadRegisterAndAcademicDetails = ({
     setShowReactivateLicense(false);
     setShowSuccessPopup(true);
   };
+
+  useEffect(() => {
+    if (!isNaN(selectedDataIndex)) {
+      let filteredQualificationDetails = [];
+
+      registrationDetails?.qualification_detail_response_tos?.map((element) => {
+        if (
+          element &&
+          element?.request_id ===
+            dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]?.request_id
+        ) {
+          filteredQualificationDetails.push(element);
+        }
+      });
+      let newRegistrationDetails = {};
+      newRegistrationDetails.hp_profile_id = registrationDetails?.hp_profile_id;
+      newRegistrationDetails.nbe_response_to = registrationDetails?.nbe_response_to;
+      newRegistrationDetails.registration_detail_to = registrationDetails?.registration_detail_to;
+      newRegistrationDetails.request_id = registrationDetails?.request_id;
+      newRegistrationDetails.qualification_detail_response_tos = filteredQualificationDetails;
+      setRegistrationDetailsData(newRegistrationDetails);
+    } else {
+      setRegistrationDetailsData(registrationDetails);
+    }
+  }, []);
 
   return (
     <Box>
@@ -130,7 +158,7 @@ const ReadRegisterAndAcademicDetails = ({
               </AccordionSummary>
               <AccordionDetails>
                 <Component
-                  registrationDetails={registrationDetails}
+                  registrationDetails={registrationDetailsData}
                   selectedDataIndex={selectedDataIndex}
                 />
               </AccordionDetails>
@@ -162,9 +190,10 @@ const ReadRegisterAndAcademicDetails = ({
           >
             Back
           </Button>
-          {userActiveTab === 'dashboard' &&
+          {(userActiveTab === 'dashboard' || userActiveTab === 'Activate Licence') &&
             (selectedAcademicStatus?.toUpperCase() === 'PENDING' ||
               selectedAcademicStatus === 'College Verified' ||
+              userActiveTab === 'Activate Licence' ||
               selectedAcademicStatus === 'Temporary Suspension Requests Received' ||
               selectedAcademicStatus === 'Permanent Suspension Requests Received' ||
               selectedAcademicStatus === 'Temporary Suspension Requests Approved' ||
@@ -173,7 +202,7 @@ const ReadRegisterAndAcademicDetails = ({
                 <PopupState>
                   {(popupState) => (
                     <React.Fragment>
-                      {data?.user_type === 4 && data?.user_sub_type === 6
+                      {data?.user_sub_type === 6
                         ? ''
                         : selectedAcademicStatus !== 'Temporary Suspension Requests Approved' &&
                           selectedAcademicStatus !== 'Permanent Suspension Requests Approved' && (
@@ -245,7 +274,7 @@ const ReadRegisterAndAcademicDetails = ({
                                     Forward
                                   </Button>
                                 )}{' '}
-                              {loggedInUserType !== 'SMC' && (
+                              {loggedInUserType !== 'SMC' && userActiveTab !== 'Activate Licence' && (
                                 <Button
                                   variant="contained"
                                   color="secondary"
@@ -310,19 +339,18 @@ const ReadRegisterAndAcademicDetails = ({
                               Verify
                             </MenuItem>
                           )}
-                        {/* Commenting the below block for future use
-                        {loggedInUserType === 'SMC' &&
-                          selectedAcademicStatus !== 'College Verified' &&
-                          registrationDetails?.qualification_detail_response_tos.length < 2 && (
-                            <MenuItem onClick={selectionChangeHandler} data-my-value={'forward'}>
-                              Forward
+                        {userActiveTab === 'Activate Licence' &&
+                          selectedAcademicStatus !== 'College Verified' && (
+                            <MenuItem onClick={selectionChangeHandler} data-my-value={'verify'}>
+                              Approve
                             </MenuItem>
-                          )} */}
+                          )}
                         <MenuItem onClick={selectionChangeHandler} data-my-value={'reject'}>
                           Reject
                         </MenuItem>
                         {personalDetails.nmr_id !== undefined &&
                           loggedInUserType === 'NMC' &&
+                          userActiveTab !== 'Activate Licence' &&
                           selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
                           selectedAcademicStatus !== 'Permanent Suspension Requests Received' && (
                             <MenuItem onClick={selectionChangeHandler} data-my-value={'suspend'}>
@@ -331,6 +359,7 @@ const ReadRegisterAndAcademicDetails = ({
                           )}
                         {personalDetails.nmr_id !== undefined &&
                           loggedInUserType === 'NMC' &&
+                          userActiveTab !== 'Activate Licence' &&
                           selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
                           selectedAcademicStatus !== 'Permanent Suspension Requests Received' && (
                             <MenuItem onClick={selectionChangeHandler} data-my-value={'blacklist'}>
@@ -385,6 +414,10 @@ const ReadRegisterAndAcademicDetails = ({
                 setSuccessPopupMessage={setSuccessPopupMessage}
                 setActionVerified={setActionVerified}
                 selectedAcademicStatus={selectedAcademicStatus}
+                requestID={
+                  dashboardTableDetailsData?.data?.dashboard_tolist &&
+                  dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]?.request_id
+                }
               />
             </Box>
           ) : (

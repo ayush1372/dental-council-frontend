@@ -15,6 +15,7 @@ import successToast from '../../ui/core/toaster';
 
 export function SuspendLicenseVoluntaryRetirement({
   tabName,
+  requestID,
   selectedValue,
   handleClose,
   closeActionModal,
@@ -119,9 +120,9 @@ export function SuspendLicenseVoluntaryRetirement({
           : '',
       application_type_id: temp_application_type_id,
       action_id:
-        selectedValue === 'suspend'
+        userActiveTab !== 'voluntary-suspend-license' && selectedValue === 'suspend'
           ? 7
-          : selectedValue === 'blacklist'
+          : userActiveTab !== 'voluntary-suspend-license' && selectedValue === 'blacklist'
           ? 6
           : userActiveTab === 'voluntary-suspend-license'
           ? 1
@@ -134,12 +135,14 @@ export function SuspendLicenseVoluntaryRetirement({
     };
 
     let workFlowData = {
-      request_id: personalDetails?.request_id,
-      application_type_id: personalDetails?.application_type_id
-        ? personalDetails?.application_type_id
-        : userActiveTab === 'Activate Licence'
-        ? 5
-        : 1,
+      request_id:
+        requestID || selectedSuspendLicenseProfile?.RequestId?.value || personalDetails?.request_id,
+      application_type_id:
+        userActiveTab === 'Activate Licence'
+          ? 5
+          : personalDetails?.application_type_id
+          ? personalDetails?.application_type_id
+          : 1,
       actor_id: loginData?.data?.user_group_id,
       action_id: action_id,
       hp_profile_id: personalDetails?.hp_profile_id
@@ -163,13 +166,14 @@ export function SuspendLicenseVoluntaryRetirement({
         : '',
       remarks: getValues()?.remark ? getValues()?.remark : '',
     };
+
     let raiseQueryBody = {
       queries: queries,
       hpProfileId: personalDetails?.hp_profile_id ? personalDetails?.hp_profile_id : '',
       commonComment: getValues().remark,
 
       groupId: user_group_id?.user_group_id,
-      requestId: personalDetails?.request_id ? personalDetails?.request_id : '',
+      requestId: requestID || '',
       applicationTypeId: personalDetails?.application_type_id
         ? personalDetails?.application_type_id
         : 1,
@@ -206,6 +210,9 @@ export function SuspendLicenseVoluntaryRetirement({
               'error',
               'top-center'
             );
+            if (userActiveTab === 'voluntary-suspend-license') {
+              setConfirmationModal(false);
+            }
             if (userActiveTab !== 'voluntary-suspend-license') {
               closeActionModal(false);
             }
