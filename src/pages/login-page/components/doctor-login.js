@@ -264,8 +264,8 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
     handleNext();
   };
   return (
-    <Box p={4} bgcolor="white.main" boxShadow="4">
-      <Typography variant="h2" color="textPrimary.main" mb={5}>
+    <Box p={3} bgcolor="white.main" boxShadow="4">
+      <Typography variant="h2" color="textPrimary.main" mb={2}>
         {loginName} Login
       </Typography>
       <Typography variant="body1" color="textPrimary.main">
@@ -352,7 +352,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
           </Button>
         </Grid>
       </Grid>
-      <Box my={4}>
+      <Box my={2}>
         {selectedLoginOption === 'nmrId' ? (
           <>
             <TextField
@@ -438,6 +438,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
             />
             <Typography display={'flex'} justifyContent="flex-end">
               <Button
+                size="small"
                 color="secondary"
                 onClick={handleUserForgetUserName}
                 sx={{ cursor: 'pointer', display: 'contents' }}
@@ -464,6 +465,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
             />
             <Typography display={'flex'} justifyContent="flex-end">
               <Button
+                size="small"
                 color="secondary"
                 onClick={handleUserForgotPassword}
                 sx={{ cursor: 'pointer', display: 'contents' }}
