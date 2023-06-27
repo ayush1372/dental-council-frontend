@@ -89,7 +89,6 @@ export default function ReactivateLicencePopup(props) {
                 </Typography>
 
                 <DatePicker
-                  value={getValues()?.fromDate ? new Date(getValues()?.fromDate) : undefined}
                   onChangeDate={(newDateValue) => {
                     setValue('fromDate', new Date(newDateValue)?.toLocaleDateString('en-GB'));
                     setShowFromDateError(false);
