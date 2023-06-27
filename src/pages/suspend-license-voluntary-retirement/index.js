@@ -360,7 +360,6 @@ export function SuspendLicenseVoluntaryRetirement({
                 </Typography>
               </Typography>
               <DatePicker
-                value={getValues()?.fromDate ? new Date(getValues()?.fromDate) : undefined}
                 onChangeDate={(newDateValue) => {
                   if (
                     selectedSuspension === 'permanent-suspension-check' ||
@@ -407,7 +406,6 @@ export function SuspendLicenseVoluntaryRetirement({
                   </Typography>
 
                   <DatePicker
-                    value={getValues()?.toDate ? new Date(getValues()?.toDate) : undefined}
                     onChangeDate={(newDateValue) => {
                       setValue('toDate', new Date(newDateValue)?.toLocaleDateString('en-GB'));
                       if (getValues().toDate !== undefined) {

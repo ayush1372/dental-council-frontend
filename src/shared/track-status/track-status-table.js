@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import UserProfile from '../../../src/pages/user-profile';
 import { verboseLog } from '../../config/debug';
 import { capitalize } from '../../helpers/functions/common-functions';
-import TableSearch from '../../pages/profile/components/table-search/table-search';
 import GenericTable from '../../shared/generic-component/generic-table';
 import ViewProfile from '../../shared/view-profile/view-profile';
 import { trackStatus } from '../../store/actions/common-actions';
@@ -245,7 +244,6 @@ function TrackStatusTable(props) {
     </Box>
   ) : (
     <Grid p={'0px'}>
-      <TableSearch exportData={props.trackStatusData} flag={'trackStatusData'} />
       <GenericTable
         order={order}
         orderBy={orderBy}
