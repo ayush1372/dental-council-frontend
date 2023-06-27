@@ -226,8 +226,9 @@ const ReadRegisterAndAcademicDetails = ({
                               >
                                 Action <MoreHorizIcon />
                               </Button>
-                              {selectedAcademicStatus === 'College Verified' &&
-                                loggedInUserType === 'SMC' && (
+                              {(selectedAcademicStatus === 'College Verified' ||
+                                userActiveTab === 'Activate Licence') &&
+                                (loggedInUserType === 'SMC' || loggedInUserType === 'NMC') && (
                                   <Button
                                     variant="contained"
                                     color="secondary"
@@ -253,6 +254,7 @@ const ReadRegisterAndAcademicDetails = ({
                                   </Button>
                                 )}
                               {loggedInUserType === 'SMC' &&
+                                userActiveTab !== 'Activate Licence' &&
                                 selectedAcademicStatus !== 'College Verified' && (
                                   <Button
                                     variant="contained"
@@ -334,15 +336,10 @@ const ReadRegisterAndAcademicDetails = ({
                             </MenuItem>
                           )}
                         {loggedInUserType === 'SMC' &&
+                          userActiveTab !== 'Activate Licence' &&
                           selectedAcademicStatus !== 'College Verified' && (
                             <MenuItem onClick={selectionChangeHandler} data-my-value={'verify'}>
                               Verify
-                            </MenuItem>
-                          )}
-                        {userActiveTab === 'Activate Licence' &&
-                          selectedAcademicStatus !== 'College Verified' && (
-                            <MenuItem onClick={selectionChangeHandler} data-my-value={'verify'}>
-                              Approve
                             </MenuItem>
                           )}
                         <MenuItem onClick={selectionChangeHandler} data-my-value={'reject'}>
