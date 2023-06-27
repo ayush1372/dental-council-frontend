@@ -484,9 +484,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               </Typography>
             </Typography>
             <DatePicker
-              value={
-                getValues()?.RegistrationDate ? new Date(getValues()?.RegistrationDate) : undefined
-              }
               onChangeDate={(newDateValue) => {
                 setValue('RegistrationDate', new Date(newDateValue)?.toLocaleDateString('en-GB'));
               }}
