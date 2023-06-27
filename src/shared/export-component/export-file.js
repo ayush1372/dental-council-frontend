@@ -48,16 +48,16 @@ const ExportFiles = ({ exportData, flag }) => {
     if (flag === 'trackStatusData') {
       setColumns(TrackStatus);
 
-      data = exportData?.health_professional_applications.map((elementData) => {
-        if (elementData.created_at) {
+      data = exportData?.health_professional_applications?.map((elementData) => {
+        if (elementData?.created_at) {
           return {
-            request_id: elementData.request_id,
-            registration_no: elementData.registration_no,
-            applicant_full_name: elementData.applicant_full_name,
-            council_name: elementData.council_name,
-            smc_status: elementData.smc_status,
-            college_status: elementData.college_status,
-            nmc_status: elementData.nmc_status,
+            request_id: elementData?.request_id,
+            registration_no: elementData?.registration_no,
+            applicant_full_name: elementData?.applicant_full_name,
+            council_name: elementData?.council_name,
+            smc_status: elementData?.smc_status,
+            college_status: elementData?.college_status,
+            nmc_status: elementData?.nmc_status,
             created_at: moment(elementData?.created_at).format('DD-MM-YYYY hh:mm A'),
             pendency: elementData?.pendency,
           };

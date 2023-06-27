@@ -231,8 +231,8 @@ export const TrackApplication = [
 export const TrackStatus = [
   { header: 'Request ID', key: 'request_id' },
   { header: 'Registration No', key: 'registration_no' },
-  { header: 'Name Of Applicant', key: 'applicant_full_name' },
-  { header: 'Name Of State Council', key: 'council_name' },
+  { header: 'Name of Applicant', key: 'applicant_full_name' },
+  { header: 'Name of State Council', key: 'council_name' },
   { header: 'Council Verification Status', key: 'smc_status' },
   { header: 'College Verification Status', key: 'college_status' },
   { header: 'NMC Verification Status', key: 'nmc_status' },
