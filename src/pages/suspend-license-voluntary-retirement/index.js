@@ -135,12 +135,14 @@ export function SuspendLicenseVoluntaryRetirement({
     };
 
     let workFlowData = {
-      request_id: requestID || '',
-      application_type_id: personalDetails?.application_type_id
-        ? personalDetails?.application_type_id
-        : userActiveTab === 'Activate Licence'
-        ? 5
-        : 1,
+      request_id:
+        requestID || selectedSuspendLicenseProfile?.RequestId?.value || personalDetails?.request_id,
+      application_type_id:
+        userActiveTab === 'Activate Licence'
+          ? 5
+          : personalDetails?.application_type_id
+          ? personalDetails?.application_type_id
+          : 1,
       actor_id: loginData?.data?.user_group_id,
       action_id: action_id,
       hp_profile_id: personalDetails?.hp_profile_id
@@ -164,6 +166,7 @@ export function SuspendLicenseVoluntaryRetirement({
         : '',
       remarks: getValues()?.remark ? getValues()?.remark : '',
     };
+
     let raiseQueryBody = {
       queries: queries,
       hpProfileId: personalDetails?.hp_profile_id ? personalDetails?.hp_profile_id : '',
@@ -357,7 +360,6 @@ export function SuspendLicenseVoluntaryRetirement({
                 </Typography>
               </Typography>
               <DatePicker
-                value={getValues()?.fromDate ? new Date(getValues()?.fromDate) : undefined}
                 onChangeDate={(newDateValue) => {
                   if (
                     selectedSuspension === 'permanent-suspension-check' ||
@@ -404,7 +406,6 @@ export function SuspendLicenseVoluntaryRetirement({
                   </Typography>
 
                   <DatePicker
-                    value={getValues()?.toDate ? new Date(getValues()?.toDate) : undefined}
                     onChangeDate={(newDateValue) => {
                       setValue('toDate', new Date(newDateValue)?.toLocaleDateString('en-GB'));
                       if (getValues().toDate !== undefined) {

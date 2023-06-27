@@ -30,7 +30,6 @@ const ActivateLicence = (props) => {
   const dispatch = useDispatch();
   const [reactiveLicenseRequestHPApplicationData, setReactiveLicenseRequestHPApplicationData] =
     useState();
-  // const [searchQueryParams, setSearchQueryParams] = useState();
 
   function createData(
     SNo,
@@ -40,8 +39,8 @@ const ActivateLicence = (props) => {
     reactivationFromDate,
     typeOfSuspension,
     Remark,
-    Action,
-    RequestId
+    RequestId,
+    Action
   ) {
     return {
       SNo,
@@ -51,8 +50,8 @@ const ActivateLicence = (props) => {
       reactivationFromDate,
       typeOfSuspension,
       Remark,
-      Action,
       RequestId,
+      Action,
     };
   }
 
@@ -183,8 +182,6 @@ const ActivateLicence = (props) => {
         successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
       }
     }
-
-    // setSearchQueryParams(data);
   };
 
   const handleChangePage = (event, newPage) => {
