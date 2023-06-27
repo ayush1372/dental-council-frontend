@@ -228,6 +228,17 @@ export const TrackApplication = [
   { header: 'Current Status', key: 'doctor_status' },
   { header: 'Pendency', key: 'pendency' },
 ];
+export const TrackStatus = [
+  { header: 'Request ID', key: 'request_id' },
+  { header: 'Registration No', key: 'registration_no' },
+  { header: 'Name Of Applicant', key: 'applicant_full_name' },
+  { header: 'Name Of State Council', key: 'council_name' },
+  { header: 'Council Verification Status', key: 'smc_status' },
+  { header: 'College Verification Status', key: 'college_status' },
+  { header: 'NMC Verification Status', key: 'nmc_status' },
+  { header: 'Date of Submission', key: 'created_at' },
+  { header: 'Pendency', key: 'pendency' },
+];
 
 export const applicationType = [
   { id: 1, name: 'HP Registration' },

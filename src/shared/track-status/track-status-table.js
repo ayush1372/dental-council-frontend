@@ -5,10 +5,10 @@ import { Box, Grid, TablePagination } from '@mui/material';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 
-// import TableSearch from '../../../src/pages/profile/components/table-search/table-search';
 import UserProfile from '../../../src/pages/user-profile';
 import { verboseLog } from '../../config/debug';
 import { capitalize } from '../../helpers/functions/common-functions';
+import TableSearch from '../../pages/profile/components/table-search/table-search';
 import GenericTable from '../../shared/generic-component/generic-table';
 import ViewProfile from '../../shared/view-profile/view-profile';
 import { trackStatus } from '../../store/actions/common-actions';
@@ -244,9 +244,8 @@ function TrackStatusTable(props) {
       </Box>
     </Box>
   ) : (
-    <Grid sx={{ mx: 2 }} p={'0px'}>
-      {/* <TableSearch trackApplication /> */}
-
+    <Grid p={'0px'}>
+      <TableSearch exportData={props.trackStatusData} flag={'trackStatusData'} />
       <GenericTable
         order={order}
         orderBy={orderBy}
