@@ -64,11 +64,8 @@ const RaiseQueryPopup = ({ ClosePopup, queryRaisedField }) => {
 
   return (
     <Box>
-      <Modal open={open} onClose={handleClose} sx={{ mt: 5 }}>
-        <Container
-          maxWidth="sm"
-          sx={{ backgroundColor: 'white.main', borderRadius: '10px', height: '75%' }}
-        >
+      <Modal open={open} onClose={handleClose} sx={{ mt: 5, height: '85vh' }}>
+        <Container maxWidth="sm" sx={{ backgroundColor: 'white.main', borderRadius: '10px' }}>
           <Box py={3}>
             <Box display="flex" justifyContent="flex-end">
               <CloseIcon color="grey.context" onClick={handleClose} />

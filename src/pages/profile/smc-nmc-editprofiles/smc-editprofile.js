@@ -162,30 +162,6 @@ const SmcEditProfile = (props) => {
       <Grid container item spacing={2} mt={3}>
         <Grid item xs={12} md={4}>
           <Typography variant="body1" color="inputTextColor.main">
-            User ID
-          </Typography>
-          <Typography component="span" color="error.main">
-            *
-          </Typography>
-          <TextField
-            fullWidth
-            required
-            name={'user_id'}
-            placeholder={'Enter user ID'}
-            defaultValue={getValues().user_id}
-            error={errors.user_id?.message}
-            {...register('user_id', {
-              required: 'User ID is required',
-              pattern: {
-                value: /^[a-zA-Z0-9@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
-                message: 'Provide a Valid User ID',
-              },
-            })}
-          />{' '}
-        </Grid>
-
-        <Grid item xs={12} md={4}>
-          <Typography variant="body1" color="inputTextColor.main">
             Council
           </Typography>
           <Typography component="span" color="error.main">

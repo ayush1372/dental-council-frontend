@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { doctorTabs } from '../../helpers/components/sidebar-drawer-list-item';
 import { capitalizeFirstLetter } from '../../helpers/functions/common-functions';
 import useWizard from '../../hooks/use-wizard';
-import CircularLoader from '../../shared/circular-loader/circular-loader';
 import ReactivateLicencePopup from '../../shared/reactivate-licence-popup/re-activate-licence-popup';
 import SuccessPopup from '../../shared/reactivate-licence-popup/success-popup';
 import {
@@ -26,6 +25,7 @@ import {
 } from '../../store/actions/doctor-user-profile-actions';
 import { changeUserActiveTab } from '../../store/reducers/common-reducers';
 import { getEsignDetails } from '../../store/reducers/doctor-user-profile-reducer';
+import { Loader } from '../../ui/core';
 import BreadcrumbContainer from '../../ui/core/breadcrumb/breadcrumb';
 import { Button } from '../../ui/core/button/button';
 import successToast from '../../ui/core/toaster';
@@ -183,11 +183,11 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
     if (loginData?.data?.work_flow_status_id === 1) {
       setIsApplicationPending(false);
     }
-    // if (loginData?.data?.hp_profile_status_id === 7) {
-    //   setIsReadMode(false);
-    // } else {
-    //   setIsReadMode(true);
-    // }
+    if (loginData?.data?.hp_profile_status_id === 7) {
+      setIsReadMode(false);
+    } else {
+      setIsReadMode(true);
+    }
     if (personalDetails?.hp_profile_id !== undefined) {
       dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id)).then((response) => {
         if (response?.data?.registration_detail_to?.registration_certificate) {
@@ -345,7 +345,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
         />
       )}
       {showSuccessPopup && <SuccessPopup />}
-      {personalDetails?.hp_profile_status_id === undefined && <CircularLoader />}
+      {personalDetails?.hp_profile_status_id === undefined && <Loader />}
       {personalDetails?.hp_profile_status_id !== undefined && (
         <Box>
           {!showViewProfile ? (
