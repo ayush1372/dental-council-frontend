@@ -319,7 +319,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                 <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
                 <Typography
                   component="span"
-                  variant="subtitle2"
+                  variant="body2"
                   sx={{ cursor: 'pointer' }}
                   color="primary.main"
                   ml={0.5}
@@ -394,7 +394,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                 <Typography
                   sx={{ cursor: 'pointer' }}
                   component="span"
-                  variant="subtitle2"
+                  variant="body2"
                   color="primary.main"
                   ml={0.5}
                   onClick={() => {
