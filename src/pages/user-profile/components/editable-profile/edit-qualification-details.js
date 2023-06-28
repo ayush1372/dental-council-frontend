@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { monthsData, yearsData } from '../../../../constants/common-data';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
 import { getCollegesList, getUniversitiesList } from '../../../../store/actions/common-actions';
+// import { restateCollegeList, restateUniversityList } from '../../../../store/reducers/common-reducers';
 import { selectedQualificationType } from '../../../../store/reducers/doctor-user-profile-reducer';
 import { RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
@@ -63,14 +64,28 @@ const EditQualificationDetails = ({
     if (selectedState && qualificationfrom !== 'International') {
       dispatch(getCollegesList(selectedState)).then((dataResponse) => {
         setColleges(dataResponse.data);
+        // setValue(`qualification[${index}].college`, watchCollege);
       });
     }
   };
-  useEffect(() => {
-    setUniversitiesListData(universitiesList?.data);
-  }, [universitiesList]);
+
+  const fetchUniversities = (selectedUniversity) => {
+    if (selectedUniversity && qualificationfrom !== 'International') {
+      dispatch(getUniversitiesList(selectedUniversity)).then((dataResponse) => {
+        setUniversitiesListData(dataResponse?.data);
+        // setValue(`qualification[${index}].university`, selectedUniversity);
+      });
+    }
+  };
+
+  // useEffect(() => {
+  //   setUniversitiesListData(universitiesList?.data);
+  // }, [universitiesList]);
 
   useEffect(() => {
+    // dispatch(restateCollegeList());
+    // dispatch(restateStateList());
+    // dispatch(restateUniversityList());
     fetchColleges(selectedState);
 
     setValue(`qualification[${index}].university`, '');
@@ -79,11 +94,15 @@ const EditQualificationDetails = ({
   }, [selectedState]);
 
   useEffect(() => {
-    if (watchCollege && qualificationfrom !== 'International') {
-      const obj = colleges?.find((x) => x.id === watchCollege);
-      setValue(`qualification[${index}].collegeObj`, obj);
-      dispatch(getUniversitiesList(watchCollege));
-    }
+    fetchUniversities(watchCollege);
+    // if (watchCollege && qualificationfrom !== 'International') {
+    //   dispatch(getUniversitiesList(watchCollege)).then((dataResponse) => {
+    //     setColleges(dataResponse.data);
+    //   });
+    // const obj = colleges?.find((x) => x.id === watchCollege);
+    // setValue(`qualification[${index}].collegeObj`, obj);
+    //   dispatch(getUniversitiesList(watchCollege));
+    // }
   }, [watchCollege]);
 
   useEffect(() => {
@@ -897,12 +916,16 @@ const EditQualificationDetails = ({
               defaultValue={getValues().Speciality}
               required={true}
               {...register(
-                'Speciality',
-
+                `qualification[${index}].Speciality`,
                 showBroadSpeciality &&
                   getValues()?.Speciality?.length <= 0 && {
                     required: 'Specialty is Required',
-                  }
+                  },
+                {
+                  onChange: (e) => {
+                    setValue(`qualification[${index}].Speciality`, e.target.value);
+                  },
+                }
               )}
               options={createSelectFieldData(specialitiesList.data)}
             />

@@ -1,7 +1,5 @@
-/* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 
-// import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Box } from '@mui/material';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +11,10 @@ import { changeUserActiveTab } from '../../../../store/reducers/common-reducers'
 import { Button } from '../../../../ui/core';
 import successToast from '../../../../ui/core/toaster';
 import EditQualificationDetails from '../editable-profile/edit-qualification-details';
+import {
+  getAdditionalCollegesList,
+  getAdditionalUniversitiesList,
+} from './additional-qualification-api';
 
 const qualificationObjTemplate = [
   {
@@ -25,11 +27,12 @@ const qualificationObjTemplate = [
     year: '',
     files: '',
     qualificationfrom: '',
+    Speciality: '',
+    subSpeciality: '',
   },
 ];
 
 const AdditionalQualifications = () => {
-  // const [data, setData] = useState({});
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
 
   const { qualification_detail_response_tos } = registrationDetails || {};
@@ -44,11 +47,10 @@ const AdditionalQualifications = () => {
 
   const {
     statesList,
-    collegesList,
-    universitiesList,
     coursesList,
     countriesList,
     specialitiesList,
+    // collegesList
   } = useSelector((state) => state?.common);
 
   const dispatch = useDispatch();
@@ -75,6 +77,11 @@ const AdditionalQualifications = () => {
     name: 'qualification',
   });
 
+  const [colleges, setColleges] = useState([]);
+  const [stateID, setStateID] = useState([]);
+  const [collegeID, setCollegeID] = useState([]);
+  const [universityData, setUniversityData] = useState([]);
+
   const handleQualificationFilesData = (fileName, files) => {
     //setQualificationFilesData(files);
     qualificationFilesData[fileName] = files;
@@ -82,19 +89,41 @@ const AdditionalQualifications = () => {
   };
 
   const getStateData = (stateId) => {
-    return statesList?.find((obj) => obj.id === stateId);
+    return statesList?.find((obj) => obj?.id === stateId);
   };
 
-  const getCollegeData = (collegeId) => {
-    return collegesList?.data?.find((obj) => obj.id === collegeId);
+  const getCollegeData = (stateId) => {
+    dispatch(getAdditionalCollegesList(stateId)).then((response) => {
+      setColleges(response?.data);
+    });
   };
+
+  const getUniversityData = async (collegeId) => {
+    await dispatch(getAdditionalUniversitiesList(collegeId)).then((response) => {
+      setUniversityData(response?.data);
+    });
+  };
+  const getCollege = (collegeId) => {
+    const data = colleges?.find((obj) => obj?.id === collegeId);
+    return data;
+  };
+
+  const getUniverity = async (univerityId) => {
+    const data = await universityData?.find((obj) => obj?.id === univerityId);
+    return data;
+  };
+
+  useEffect(() => {
+    getCollegeData(stateID);
+  }, [stateID]);
+
+  useEffect(() => {
+    getUniversityData(collegeID);
+  }, [collegeID]);
 
   const broadSpeciality = (broadSpl) => {
-    return specialitiesList?.data?.find((obj) => obj.id === broadSpl);
-  };
-
-  const getUniversityData = (university) => {
-    return universitiesList?.data?.find((obj) => obj.id === university);
+    const specialityobject = specialitiesList?.data?.find((obj) => obj?.id === broadSpl);
+    return specialityobject?.id;
   };
 
   const getCourseData = (course) => {
@@ -116,34 +145,35 @@ const AdditionalQualifications = () => {
     const formData = new FormData();
     let qualification_detail_response_tos = [],
       updatedQualificationDetailsArray = [];
-    let updatedQualificationDetails;
 
     qualification?.forEach((qualification) => {
-      updatedQualificationDetails = {
-        country:
-          qualification?.qualificationfrom === 'International'
-            ? countriesList.find((obj) => obj.id === qualification?.country)
-            : qualification?.country,
-        state:
-          qualification?.qualificationfrom === 'International'
-            ? { name: qualification?.state }
-            : getStateData(qualification?.state),
-        college:
-          qualification?.qualificationfrom === 'International'
-            ? { name: qualification?.college }
-            : getCollegeData(qualification?.college),
-        university:
-          qualification?.qualificationfrom === 'International'
-            ? { name: qualification?.university }
-            : getUniversityData(qualification?.university),
+      if (qualification?.qualificationfrom !== 'International') {
+        setStateID(qualification?.state);
+        setCollegeID(qualification?.college);
+      }
+
+      const isInternationalQualification = qualification?.qualificationfrom === 'International';
+      const updatedQualificationDetails = {
+        country: isInternationalQualification
+          ? countriesList.find((obj) => obj.id === qualification?.country)
+          : qualification?.country,
+        state: isInternationalQualification
+          ? { name: qualification?.state }
+          : getStateData(qualification?.state),
+        college: isInternationalQualification
+          ? { name: qualification?.college }
+          : getCollege(qualification?.college),
+        university: isInternationalQualification
+          ? { name: qualification?.university }
+          : getUniverity(qualification?.university),
         course: getCourseData(qualification?.qualification),
         qualification_year: qualification?.year,
         qualification_month: qualification?.month,
         is_name_change: 0,
         is_verified: 0,
         request_id: '',
-        broad_speciality_id: broadSpeciality(qualification?.id),
-        super_speciality_name: '',
+        broad_speciality_id: broadSpeciality(qualification?.Speciality),
+        super_speciality_name: qualification?.subSpeciality,
         qualification_from:
           qualification?.qualificationfrom === '' ? 'India' : qualification?.qualificationfrom,
       };
@@ -177,13 +207,15 @@ const AdditionalQualifications = () => {
         reset();
       })
       .catch((error) => {
-        reset();
         successToast(
           'ERROR: ' + error?.data?.response?.data?.message,
           'auth-error',
           'error',
           'top-center'
         );
+        update({
+          qualification: [...qualificationObjTemplate],
+        });
       });
   };
 
@@ -238,6 +270,9 @@ const AdditionalQualifications = () => {
             color="primary"
             onClick={() => {
               append({ ...qualificationObjTemplate });
+              // dispatch(restateCollegeList());
+              // dispatch(restateStateList());
+              // dispatch(restateUniversityList());
             }}
           >
             Add Additional Qualification
