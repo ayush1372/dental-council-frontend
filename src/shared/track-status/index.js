@@ -11,6 +11,7 @@ import TrackStatusTable from '../../shared/track-status/track-status-table';
 import { trackStatus } from '../../store/actions/common-actions';
 import { Button } from '../../ui/core';
 import successToast from '../../ui/core/toaster';
+import ExportFiles from '../export-component/export-file';
 export default function TrackStatus() {
   const [showTable, setShowTable] = useState(false);
   const [showHeader, setShowHeader] = useState(true);
@@ -18,6 +19,7 @@ export default function TrackStatus() {
   const [trackStatusId, setTrackStatusId] = useState('');
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const { councilNames, trackStatusData } = useSelector((state) => state.common);
+  const [viewExportIcon, setViewExportIcon] = useState(false);
 
   const dispatch = useDispatch();
   const {
@@ -51,7 +53,9 @@ export default function TrackStatus() {
       sortType: 'desc',
     };
     dispatch(trackStatus(trackData))
-      .then(() => {})
+      .then(() => {
+        setViewExportIcon(true);
+      })
       .catch((error) => {
         successToast(
           error?.data?.response?.data?.error,
@@ -165,6 +169,11 @@ export default function TrackStatus() {
                   Search
                 </Button>
               </Box>
+            </Grid>
+            <Grid item xs={12} md="auto">
+              {viewExportIcon === true && (
+                <ExportFiles exportData={trackStatusData?.data?.data} flag={'trackStatusData'} />
+              )}
             </Grid>
           </Grid>
         </Box>

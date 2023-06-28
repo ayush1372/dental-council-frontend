@@ -231,8 +231,9 @@ export default function GenericTable(props) {
                                             'Blacklisted' ||
                                             props?.applicationData[rowIndex]?.doctor_status ===
                                               'Suspended')) ||
-                                        row['NMRID']?.value === '' ||
-                                        row['NMRID']?.value === undefined
+                                        (customPopupOptions === undefined &&
+                                          (row['NMRID']?.value === '' ||
+                                            row['NMRID']?.value === undefined))
                                       }
                                     >
                                       {option.keyName}
