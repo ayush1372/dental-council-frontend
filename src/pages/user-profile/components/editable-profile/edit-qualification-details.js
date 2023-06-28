@@ -155,7 +155,9 @@ const EditQualificationDetails = ({
             name={`qualification[${index}].qualificationfrom`}
             size="small"
             defaultValue={
-              qualification?.qualificationfrom === '' ? 'India' : qualification?.qualificationfrom
+              qualification?.qualificationfrom === 'India'
+                ? 'India'
+                : qualification?.qualificationfrom
             }
             items={[
               {
@@ -198,7 +200,10 @@ const EditQualificationDetails = ({
               placeholder="Enter roll no."
               required={true}
               fullWidth
-              error={errors?.qualification?.[index]?.rollno?.message}
+              error={
+                errors?.qualification?.[index]?.rollno?.message &&
+                getValues()[`qualification[${index}].rollno`]
+              }
               defaultValue={getValues()[`qualification[${index}].rollno`]}
               {...register(`qualification[${index}].rollno`, {
                 required: 'Awarding is required',
@@ -268,7 +273,10 @@ const EditQualificationDetails = ({
               required={true}
               type="number"
               fullWidth
-              error={errors?.qualification?.[index]?.marksobtained?.message}
+              error={
+                errors?.qualification?.[index]?.marksobtained?.message &&
+                getValues()[`qualification[${index}].marksobtained`]
+              }
               defaultValue={getValues()[`qualification[${index}].marksobtained`]}
               {...register(`qualification[${index}].marksobtained`, {
                 required: 'Marks obtained is required',
