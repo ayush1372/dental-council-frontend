@@ -247,28 +247,27 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                 )}
               </Grid>
             )}
-            {(trackApplication !== true || trackApplication === true) &&
-              flag !== 'trackStatusData' && (
-                <Grid item md="auto" xs={12}>
-                  <Button
-                    data-testid="filterButton"
-                    sx={{
-                      padding: '13px 10px',
-                      m: {
-                        md: '0px',
-                      },
-                      width: {
-                        xs: '100%',
-                        md: 'fit-content',
-                      },
-                    }}
-                    variant="contained"
-                    onClick={handleSubmit(onClickSearchButtonHandler)}
-                  >
-                    Search
-                  </Button>
-                </Grid>
-              )}
+            {(trackApplication !== true || trackApplication === true) && (
+              <Grid item md="auto" xs={12}>
+                <Button
+                  data-testid="filterButton"
+                  sx={{
+                    padding: '13px 10px',
+                    m: {
+                      md: '0px',
+                    },
+                    width: {
+                      xs: '100%',
+                      md: 'fit-content',
+                    },
+                  }}
+                  variant="contained"
+                  onClick={handleSubmit(onClickSearchButtonHandler)}
+                >
+                  Search
+                </Button>
+              </Grid>
+            )}
           </Grid>
         </Grid>
         <Grid
