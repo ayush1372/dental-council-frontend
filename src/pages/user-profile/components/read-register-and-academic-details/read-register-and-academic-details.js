@@ -194,6 +194,7 @@ const ReadRegisterAndAcademicDetails = ({
             (selectedAcademicStatus?.toUpperCase() === 'PENDING' ||
               selectedAcademicStatus === 'College Verified' ||
               userActiveTab === 'Activate Licence' ||
+              selectedAcademicStatus === 'Forwarded' ||
               selectedAcademicStatus === 'Temporary Suspension Requests Received' ||
               selectedAcademicStatus === 'Permanent Suspension Requests Received' ||
               selectedAcademicStatus === 'Temporary Suspension Requests Approved' ||
@@ -207,26 +208,29 @@ const ReadRegisterAndAcademicDetails = ({
                         : selectedAcademicStatus !== 'Temporary Suspension Requests Approved' &&
                           selectedAcademicStatus !== 'Permanent Suspension Requests Approved' && (
                             <>
-                              <Button
-                                variant="contained"
-                                color="secondary"
-                                {...bindTrigger(popupState)}
-                                sx={{
-                                  mr: 2,
-                                  mb: {
-                                    xs: 1,
-                                    md: 0,
-                                  },
-                                  width: {
-                                    xs: '100%',
-                                    md: 'fit-content',
-                                  },
-                                }}
-                                disabled={actionVerified}
-                              >
-                                Action <MoreHorizIcon />
-                              </Button>
+                              {selectedAcademicStatus !== 'Forwarded' && (
+                                <Button
+                                  variant="contained"
+                                  color="secondary"
+                                  {...bindTrigger(popupState)}
+                                  sx={{
+                                    mr: 2,
+                                    mb: {
+                                      xs: 1,
+                                      md: 0,
+                                    },
+                                    width: {
+                                      xs: '100%',
+                                      md: 'fit-content',
+                                    },
+                                  }}
+                                  disabled={actionVerified}
+                                >
+                                  Action <MoreHorizIcon />
+                                </Button>
+                              )}
                               {(selectedAcademicStatus === 'College Verified' ||
+                                selectedAcademicStatus === 'Forwarded' ||
                                 userActiveTab === 'Activate Licence') &&
                                 (loggedInUserType === 'SMC' || loggedInUserType === 'NMC') && (
                                   <Button
@@ -255,6 +259,7 @@ const ReadRegisterAndAcademicDetails = ({
                                 )}
                               {loggedInUserType === 'SMC' &&
                                 userActiveTab !== 'Activate Licence' &&
+                                selectedAcademicStatus !== 'Forwarded' &&
                                 selectedAcademicStatus !== 'College Verified' && (
                                   <Button
                                     variant="contained"
@@ -276,31 +281,33 @@ const ReadRegisterAndAcademicDetails = ({
                                     Forward
                                   </Button>
                                 )}{' '}
-                              {loggedInUserType !== 'SMC' && userActiveTab !== 'Activate Licence' && (
-                                <Button
-                                  variant="contained"
-                                  color="secondary"
-                                  onClick={selectionChangeHandler}
-                                  data-my-value={'verify'}
-                                  sx={{
-                                    mr: 2,
-                                    mb: {
-                                      xs: 1,
-                                      md: 0,
-                                    },
-                                    width: {
-                                      xs: '100%',
-                                      md: 'fit-content',
-                                    },
-                                  }}
-                                >
-                                  {loggedInUserType === 'SMC' ||
-                                  loggedInUserType === 'College' ||
-                                  loggedInUserType === 'NBE'
-                                    ? 'Verify'
-                                    : 'Approve'}
-                                </Button>
-                              )}
+                              {loggedInUserType !== 'SMC' &&
+                                userActiveTab !== 'Activate Licence' &&
+                                selectedAcademicStatus !== 'Forwarded' && (
+                                  <Button
+                                    variant="contained"
+                                    color="secondary"
+                                    onClick={selectionChangeHandler}
+                                    data-my-value={'verify'}
+                                    sx={{
+                                      mr: 2,
+                                      mb: {
+                                        xs: 1,
+                                        md: 0,
+                                      },
+                                      width: {
+                                        xs: '100%',
+                                        md: 'fit-content',
+                                      },
+                                    }}
+                                  >
+                                    {loggedInUserType === 'SMC' ||
+                                    loggedInUserType === 'College' ||
+                                    loggedInUserType === 'NBE'
+                                      ? 'Verify'
+                                      : 'Approve'}
+                                  </Button>
+                                )}
                             </>
                           )}
                       {(loggedInUserType === 'NMC' || loggedInUserType === 'SMC') &&

@@ -234,7 +234,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                     Additional Qualification :- {index}
                   </Typography>
                   <Grid container rowSpacing={{ xs: 2, md: 0 }}>
-                    <Grid item xs={12} sm={6} md={4}>
+                    <Grid item xs={12} sm={6} md={4} mb={2}>
                       <Typography
                         component="div"
                         variant="body1"
@@ -247,7 +247,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                         {q?.qualification}
                       </Typography>
                     </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
+                    <Grid item xs={12} sm={6} md={4} mb={2}>
                       <Typography
                         component="div"
                         variant="body1"
@@ -260,7 +260,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                         {q?.qualification_year}
                       </Typography>
                     </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
+                    <Grid item xs={12} sm={6} md={4} mb={2}>
                       <Typography
                         component="div"
                         variant="body1"
@@ -274,7 +274,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                       </Typography>
                     </Grid>
                     {q.super_speciality? 
-                      <Grid item xs={12} sm={6} md={4}>
+                      <Grid item xs={12} sm={6} md={4} mb={2}>
                         <Typography
                           component="div"
                           variant="body1"
