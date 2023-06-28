@@ -64,7 +64,6 @@ const EditQualificationDetails = ({
     if (selectedState && qualificationfrom !== 'International') {
       dispatch(getCollegesList(selectedState)).then((dataResponse) => {
         setColleges(dataResponse.data);
-        // setValue(`qualification[${index}].college`, watchCollege);
       });
     }
   };
@@ -73,19 +72,11 @@ const EditQualificationDetails = ({
     if (selectedUniversity && qualificationfrom !== 'International') {
       dispatch(getUniversitiesList(selectedUniversity)).then((dataResponse) => {
         setUniversitiesListData(dataResponse?.data);
-        // setValue(`qualification[${index}].university`, selectedUniversity);
       });
     }
   };
 
-  // useEffect(() => {
-  //   setUniversitiesListData(universitiesList?.data);
-  // }, [universitiesList]);
-
   useEffect(() => {
-    // dispatch(restateCollegeList());
-    // dispatch(restateStateList());
-    // dispatch(restateUniversityList());
     fetchColleges(selectedState);
 
     setValue(`qualification[${index}].university`, '');
@@ -95,14 +86,6 @@ const EditQualificationDetails = ({
 
   useEffect(() => {
     fetchUniversities(watchCollege);
-    // if (watchCollege && qualificationfrom !== 'International') {
-    //   dispatch(getUniversitiesList(watchCollege)).then((dataResponse) => {
-    //     setColleges(dataResponse.data);
-    //   });
-    // const obj = colleges?.find((x) => x.id === watchCollege);
-    // setValue(`qualification[${index}].collegeObj`, obj);
-    //   dispatch(getUniversitiesList(watchCollege));
-    // }
   }, [watchCollege]);
 
   useEffect(() => {
