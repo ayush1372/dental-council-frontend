@@ -109,7 +109,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
       case 'nmrId':
         loginTypeID = 'nmr_id';
         break;
-      case 'mobile':
+      case 'mobileNumber':
         loginTypeID = 2;
         break;
       case 'userName':

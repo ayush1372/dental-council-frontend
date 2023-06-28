@@ -171,120 +171,6 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
             </Grid>
           </Grid>
           <Grid container rowSpacing={3}>
-            <Grid item xs={12} sm={12} md={12}>
-              <Typography
-                component="div"
-                variant="body1"
-                fontWeight="400"
-                color="inputTextColor.main"
-              >
-                Father/Husband Name
-              </Typography>
-              <Typography component="div" variant="body1" color="textSecondary.main">
-                {searchDetailsById?.data?.data?.father_husband_name || '-'}
-              </Typography>
-            </Grid>
-            {/* <Grid item xs={12} sm={6} md={4}>
-              <Typography
-                component="div"
-                variant="body1"
-                fontWeight="400"
-                color="inputTextColor.main"
-              >
-                Date of Birth
-              </Typography>
-              <Typography component="div" variant="body1" color="textSecondary.main">
-                {searchDetailsById?.data?.data?.date_of_birth || '-'}
-              </Typography>
-            </Grid> */}
-            {/* <Grid item xs={12} sm={6} md={3}>
-              <Typography
-                component="div"
-                variant="body1"
-                fontWeight="400"
-                color="inputTextColor.main"
-              >
-                Mobile number
-              </Typography>
-              <Typography component="span" variant="body1" color="textSecondary.main">
-                {searchDetailsById?.data?.data?.mobile_number || ''}
-                {/* {searchDetailsById?.data?.data?.mobile_number ? (
-                  copiedItem === 'mobile' ? (
-                    <CheckCircleOutlineOutlinedIcon
-                      sx={{
-                        color: 'success.main',
-                        width: '16px',
-                        height: '16px',
-                        ml: 0.5,
-                        cursor: 'pointer',
-                      }}
-                      onClick={() => setCopiedItem('')}
-                    />
-                  ) : (
-                    <ContentCopyOutlinedIcon
-                      sx={{
-                        color: 'inputFocusColor.main',
-                        width: '16px',
-                        height: '16px',
-                        ml: 0.5,
-                        cursor: 'pointer',
-                      }}
-                      onClick={() =>
-                        textCopier(searchDetailsById?.data?.data?.mobile_number, 'mobile')
-                      }
-                    />
-                  )
-                ) : (
-                  ''
-                )} 
-              </Typography>
-            </Grid> */}
-            {/* <Grid item xs={12} sm={6} md={3}>
-              <Typography
-                component="div"
-                variant="body1"
-                fontWeight="400"
-                color="inputTextColor.main"
-              >
-                Email address
-              </Typography>
-              <Typography
-                sx={{ wordBreak: 'break-word' }}
-                component="span"
-                variant="body1"
-                color="textSecondary.main"
-              >
-                {searchDetailsById?.data?.data?.email || ''}
-                {/* {searchDetailsById?.data?.data?.email ? (
-                  copiedItem === 'email' ? (
-                    <CheckCircleOutlineOutlinedIcon
-                      sx={{
-                        color: 'success.main',
-                        width: '16px',
-                        height: '16px',
-                        ml: 0.5,
-                        cursor: 'pointer',
-                      }}
-                      onClick={() => setCopiedItem('')}
-                    />
-                  ) : (
-                    <ContentCopyOutlinedIcon
-                      sx={{
-                        color: 'inputFocusColor.main',
-                        width: '16px',
-                        height: '16px',
-                        ml: 0.5,
-                        cursor: 'pointer',
-                      }}
-                      onClick={() => textCopier(searchDetailsById?.data?.data?.email, 'email')}
-                    />
-                  )
-                ) : (
-                  ''
-                )}
-              </Typography>
-            </Grid> */}
-
             <Grid item xs={12} sm={6} md={4}>
               <Typography
                 component="div"
@@ -348,7 +234,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                     Additional Qualification :- {index}
                   </Typography>
                   <Grid container rowSpacing={{ xs: 2, md: 0 }}>
-                    <Grid item xs={12} sm={6} md={4}>
+                    <Grid item xs={12} sm={6} md={4} mb={2}>
                       <Typography
                         component="div"
                         variant="body1"
@@ -361,7 +247,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                         {q?.qualification}
                       </Typography>
                     </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
+                    <Grid item xs={12} sm={6} md={4} mb={2}>
                       <Typography
                         component="div"
                         variant="body1"
@@ -374,7 +260,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                         {q?.qualification_year}
                       </Typography>
                     </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
+                    <Grid item xs={12} sm={6} md={4} mb={2}>
                       <Typography
                         component="div"
                         variant="body1"
@@ -387,6 +273,22 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                         {q?.university_name}
                       </Typography>
                     </Grid>
+                    {q.super_speciality? 
+                      <Grid item xs={12} sm={6} md={4} mb={2}>
+                        <Typography
+                          component="div"
+                          variant="body1"
+                          fontWeight="400"
+                          color="inputTextColor.main"
+                        >
+                          Super Speciality
+                        </Typography>
+                        <Typography component="div" variant="body1" color="textSecondary.main">
+                          {q?.super_speciality}
+                        </Typography>
+                      </Grid>:
+                      ''  
+                    }
                   </Grid>
                 </Box>
               ) : (

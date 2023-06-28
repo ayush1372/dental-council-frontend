@@ -626,14 +626,10 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
             <SuccessModalPopup
               open={showSuccess}
               setOpen={() => setShowSuccess(false)}
-              existHprId={true}
+              successRegistration={true}
               text={`Your username ${existUSerName
                 .replace('@hpr.abdm', '')
-                ?.replace(
-                  '@dr.abdm',
-                  ''
-                )} has been already created. Please proceed to set your password`}
-              isHpIdCreated={true}
+                ?.replace('@dr.abdm', '')} has been already created. Please proceed to login`}
             />
           )}
         </>

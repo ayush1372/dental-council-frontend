@@ -18,6 +18,7 @@ const tabNames = {
   'Registration number': RegistrationNumber,
   'State medical council': StateMedicalCouncil,
   'Advance search': AdvanceSearch,
+
   // 'Blacklisted Doctor': BlacklistedDoctor,
   'Suspended doctor': SuspendedDoctor,
 };
@@ -28,7 +29,7 @@ const SearchDoctor = () => {
   const [doSearch, setDoSearch] = useState(false);
   const [scrolldown, setScrollDown] = useState(false);
   const [searchData, setSearchData] = useState({});
-  const [tabValue, setTabValue] = useState('Advance Search');
+  const [tabValue, setTabValue] = useState('Advance search');
   const handleTabChange = (event, newValue) => {
     setSearchData({});
     dispatch(searchDoctor({ results: [], count: undefined }));
