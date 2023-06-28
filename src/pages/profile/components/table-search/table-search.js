@@ -179,7 +179,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                       setDashBoardCardId(currentValue.id);
                     }}
                   />
-                ) : (
+                ) : exportData?.data?.college_details ? (
                   <SearchableDropdown
                     fullWidth
                     data-testid="freesearch"
@@ -192,6 +192,8 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                       setValue('collegeApprovalId', currentValue.id);
                     }}
                   />
+                ) : (
+                  ''
                 )}
               </Grid>
             )}
@@ -225,7 +227,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                     {...register('dashBoardCardFilter', {})}
                     error={errors.dashBoardCardFilter?.message}
                   />
-                ) : (
+                ) : exportData?.data?.college_details ? (
                   <TextField
                     data-testid="filter_By_RegNo"
                     inputProps={{ maxLength: 100 }}
@@ -240,34 +242,46 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                     error={errors.collegeApprovalFilter?.message}
                     {...register('collegeApprovalFilter')}
                   />
+                ) : (
+                  ''
                 )}
               </Grid>
             )}
-            {(trackApplication !== true || trackApplication === true) && (
-              <Grid item md="auto" xs={12}>
-                <Button
-                  data-testid="filterButton"
-                  sx={{
-                    padding: '13px 10px',
-                    m: {
-                      md: '0px',
-                    },
-                    width: {
-                      xs: '100%',
-                      md: 'fit-content',
-                    },
-                  }}
-                  variant="contained"
-                  onClick={handleSubmit(onClickSearchButtonHandler)}
-                >
-                  Search
-                </Button>
-              </Grid>
-            )}
+            {(trackApplication !== true || trackApplication === true) &&
+              flag !== 'trackStatusData' && (
+                <Grid item md="auto" xs={12}>
+                  <Button
+                    data-testid="filterButton"
+                    sx={{
+                      padding: '13px 10px',
+                      m: {
+                        md: '0px',
+                      },
+                      width: {
+                        xs: '100%',
+                        md: 'fit-content',
+                      },
+                    }}
+                    variant="contained"
+                    onClick={handleSubmit(onClickSearchButtonHandler)}
+                  >
+                    Search
+                  </Button>
+                </Grid>
+              )}
           </Grid>
         </Grid>
-        <Grid item xs={12} md="auto">
-          {/* {exportData.length > 0 && <ExportFiles exportData={exportData} flag={flag} />} */}
+        <Grid
+          item
+          xs={12}
+          md="auto"
+          sx={{
+            position: exportData?.health_professional_applications ? 'absolute' : '',
+            right: exportData?.health_professional_applications ? '10%' : '',
+            bottom: exportData?.health_professional_applications ? '60%' : '',
+          }}
+        >
+          {' '}
           <ExportFiles exportData={exportData} flag={flag} />
         </Grid>
       </Grid>

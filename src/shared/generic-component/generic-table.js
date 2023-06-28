@@ -226,10 +226,14 @@ export default function GenericTable(props) {
                                         row['NMCVerificationStatus']?.value === 'Blacklisted' ||
                                         row['NMCVerificationStatus']?.value === 'Suspended' ||
                                         row['councilVerificationStatus']?.value === 'Blacklisted' ||
-                                        props?.applicationData[rowIndex]?.doctor_status ===
-                                          'Blacklisted' ||
-                                        props?.applicationData[rowIndex]?.doctor_status ===
-                                          'Suspended'
+                                        (props?.applicationData &&
+                                          (props?.applicationData[rowIndex]?.doctor_status ===
+                                            'Blacklisted' ||
+                                            props?.applicationData[rowIndex]?.doctor_status ===
+                                              'Suspended')) ||
+                                        (customPopupOptions === undefined &&
+                                          (row['NMRID']?.value === '' ||
+                                            row['NMRID']?.value === undefined))
                                       }
                                     >
                                       {option.keyName}

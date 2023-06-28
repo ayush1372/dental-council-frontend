@@ -23,6 +23,7 @@ import {
   generateMobileOtp,
   getHprIdSuggestions,
   getSessionAccessToken,
+  verifyHealthProfessional,
   verifyMobileOtp,
 } from '../../../store/actions/doctor-registration-actions';
 import {
@@ -251,26 +252,28 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
     }
   };
   const onSubmit = () => {
-    if (imrDataNotFound || kycstatus !== 'Success') {
-      dispatch(UserNotFoundDetails({ imrDataNotFound, aadhaarFormValues }));
-    }
-    dispatch(
-      checkHpidExists({
-        txnId: aadhaarTxnId,
-      })
-    ).then((response) => {
-      if (response?.data?.hprIdNumber === null || response?.data?.hprIdNumber === '') {
-        setShowCreateHprIdPage(true);
-        dispatch(
-          getHprIdSuggestions({
-            txnId: aadhaarTxnId,
-          })
-        );
-      } else {
-        if (response?.data?.hprId && response?.data?.hprIdNumber) {
-          setShowSuccess(true);
-        }
+    dispatch(verifyHealthProfessional(getValues().MobileNumber)).then(() => {
+      if (imrDataNotFound || kycstatus !== 'Success') {
+        dispatch(UserNotFoundDetails({ imrDataNotFound, aadhaarFormValues }));
       }
+      dispatch(
+        checkHpidExists({
+          txnId: aadhaarTxnId,
+        })
+      ).then((response) => {
+        if (response?.data?.hprIdNumber === null || response?.data?.hprIdNumber === '') {
+          setShowCreateHprIdPage(true);
+          dispatch(
+            getHprIdSuggestions({
+              txnId: aadhaarTxnId,
+            })
+          );
+        } else {
+          if (response?.data?.hprId && response?.data?.hprIdNumber) {
+            setShowSuccess(true);
+          }
+        }
+      });
     });
   };
 
@@ -623,14 +626,10 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
             <SuccessModalPopup
               open={showSuccess}
               setOpen={() => setShowSuccess(false)}
-              existHprId={true}
+              successRegistration={true}
               text={`Your username ${existUSerName
                 .replace('@hpr.abdm', '')
-                ?.replace(
-                  '@dr.abdm',
-                  ''
-                )} has been already created. Please proceed to set your password`}
-              isHpIdCreated={true}
+                ?.replace('@dr.abdm', '')} has been already created. Please proceed to login`}
             />
           )}
         </>
