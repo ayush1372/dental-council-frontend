@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { monthsData, yearsData } from '../../../../constants/common-data';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
 import { getCollegesList, getUniversitiesList } from '../../../../store/actions/common-actions';
-// import { restateCollegeList, restateUniversityList } from '../../../../store/reducers/common-reducers';
 import { selectedQualificationType } from '../../../../store/reducers/doctor-user-profile-reducer';
 import { RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';

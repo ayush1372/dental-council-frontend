@@ -270,9 +270,6 @@ const AdditionalQualifications = () => {
             color="primary"
             onClick={() => {
               append({ ...qualificationObjTemplate });
-              // dispatch(restateCollegeList());
-              // dispatch(restateStateList());
-              // dispatch(restateUniversityList());
             }}
           >
             Add Additional Qualification
