@@ -16,6 +16,7 @@ export default function ErrorModalPopup({
   handleAadhaarPage,
   accountExist,
   onReset,
+  handleClose,
 }) {
   const theme = useTheme();
   const navigate = useNavigate();
@@ -108,6 +109,17 @@ export default function ErrorModalPopup({
                   onClick={handleCloseModal}
                 >
                   Continue to login
+                </Button>
+              </Box>
+            ) : handleClose ? (
+              <Box pl={15} mt={3} display="flex" justifyContent="right">
+                <Button
+                  variant="outlined"
+                  size="small"
+                  onClick={handleClose}
+                  sx={{ backgroundColor: 'grey.main', color: 'black.textBlack', border: 'none' }}
+                >
+                  Cancel
                 </Button>
               </Box>
             ) : (
