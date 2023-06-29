@@ -50,6 +50,8 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
   const [isOtpValidMobile, setisOtpValidMobile] = useState(false);
   const [isOtpValidAadhar, setisOtpValidAadhar] = useState(false);
   const [showCreateHprIdPage, setShowCreateHprIdPage] = useState(false);
+  const [existHprId, setExistHprId] = useState(false);
+  const [successRegistration, setSuccessRegistration] = useState(false);
 
   const { speak, cancel } = useSpeechSynthesis();
 
@@ -252,7 +254,8 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
     }
   };
   const onSubmit = () => {
-    dispatch(verifyHealthProfessional(getValues().MobileNumber)).then(() => {
+    dispatch(verifyHealthProfessional(getValues().MobileNumber)).then((validationResponse) => {
+      let responseLength = validationResponse && validationResponse?.data?.length;
       if (imrDataNotFound || kycstatus !== 'Success') {
         dispatch(UserNotFoundDetails({ imrDataNotFound, aadhaarFormValues }));
       }
@@ -268,9 +271,18 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
               txnId: aadhaarTxnId,
             })
           );
+          setExistHprId(true);
+          setSuccessRegistration(false);
         } else {
-          if (response?.data?.hprId && response?.data?.hprIdNumber) {
+          if (response?.data?.hprId && response?.data?.hprIdNumber && responseLength !== 0) {
             setShowSuccess(true);
+            setExistHprId(false);
+            setSuccessRegistration(true);
+          }
+          if (response?.data?.hprId && response?.data?.hprIdNumber && responseLength === 0) {
+            setShowSuccess(true);
+            setExistHprId(true);
+            setSuccessRegistration(false);
           }
         }
       });
@@ -626,10 +638,15 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
             <SuccessModalPopup
               open={showSuccess}
               setOpen={() => setShowSuccess(false)}
-              successRegistration={true}
+              successRegistration={successRegistration}
+              existHprId={existHprId}
+              isHpIdCreated={existHprId}
               text={`Your username ${existUSerName
                 .replace('@hpr.abdm', '')
-                ?.replace('@dr.abdm', '')} has been already created. Please proceed to login`}
+                ?.replace(
+                  '@dr.abdm',
+                  ''
+                )} has been already created. Please click on below button to proceed`}
             />
           )}
         </>
