@@ -27,13 +27,17 @@ import successToast from '../../../../ui/core/toaster';
 import styles from './profile-image.module.scss';
 
 export default function ProfileImage(props) {
+  const theme = useTheme();
+  const dispatch = useDispatch();
+
+  const { loginData } = useSelector((state) => state?.loginReducer);
+  const name = useSelector((state) => state.college.collegeData.data.name);
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const profileId = useSelector((state) => state.loginReducer.loginData.data.profile_id);
   const currentStatus = useSelector(
     (state) => state.doctorUserProfileReducer?.personalDetails?.hp_profile_status_id
   );
-
-  const profileId = useSelector((state) => state.loginReducer.loginData.data.profile_id);
-  const name = useSelector((state) => state.college.collegeData.data.name);
   const profileImage = useSelector(
     (state) => state.doctorUserProfileReducer?.personalDetails?.personal_details?.profile_photo
   );
@@ -43,21 +47,19 @@ export default function ProfileImage(props) {
   const nmrIdData = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.nmr_id
   );
-  const dispatch = useDispatch();
-  const [imageChanged, setImageChanged] = useState(false);
-  const [imageTypeError, setImageTypeError] = useState(false);
-  const [imageErrorMessage, setImageErrorMessage] = useState('');
-  const [showReactivateLicense, setShowReactivateLicense] = useState(false);
-  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const logInDoctorStatus = useSelector(
     (state) => state?.loginReducer?.loginData?.data?.blacklisted
   );
   const doctorEsignStatus = useSelector(
     (state) => state?.loginReducer?.loginData?.data?.esign_status
   );
-  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
-  const { loginData } = useSelector((state) => state?.loginReducer);
-  const theme = useTheme();
+
+  const [imageChanged, setImageChanged] = useState(false);
+  const [imageTypeError, setImageTypeError] = useState(false);
+  const [imageErrorMessage, setImageErrorMessage] = useState('');
+  const [showReactivateLicense, setShowReactivateLicense] = useState(false);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+
   const useStyles = makeStyles(() => ({
     avtarImage: {
       width: '30px',
@@ -70,7 +72,9 @@ export default function ProfileImage(props) {
     },
   }));
   const classes = useStyles(theme);
+
   useEffect(() => {}, [profileImage, imageChanged]);
+
   const changeImage = (e) => {
     const requestObjNew = new FormData();
     if (
@@ -105,13 +109,16 @@ export default function ProfileImage(props) {
       setImageTypeError(true);
     }
   };
+
   const renderSuccess = () => {
     setShowReactivateLicense(false);
     setShowSuccessPopup(true);
   };
+
   const closeReactivateLicense = () => {
     setShowReactivateLicense(false);
   };
+
   const fetchDoctorUserPersonalDetails = () => {
     dispatch(getPersonalDetailsData(loginData?.data?.profile_id))
       .then(() => {})
@@ -119,6 +126,7 @@ export default function ProfileImage(props) {
         successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
       });
   };
+
   const getIconAndText = (currentStatus) => {
     switch (currentStatus) {
       case 1:
@@ -146,6 +154,7 @@ export default function ProfileImage(props) {
         return { icon: null, text: 'Unknown Status' };
     }
   };
+
   const { icon, text } = getIconAndText(currentStatus);
 
   return (
@@ -205,7 +214,7 @@ export default function ProfileImage(props) {
         </Grid>
         <Grid item>
           <Typography component="div" title={text}>
-            {icon}
+            {loggedInUserType === 'Doctor' && icon}
           </Typography>
         </Grid>
       </Grid>
