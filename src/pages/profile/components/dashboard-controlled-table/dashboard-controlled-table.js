@@ -187,6 +187,10 @@ function DashboardControlledTable(props) {
     };
     dispatch(setSelectedAcademicStatus(props?.selectedCardData?.responseKey));
     dispatch(getDashboardTableData(requestObj));
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
 
   const searchParams = (data) => {
