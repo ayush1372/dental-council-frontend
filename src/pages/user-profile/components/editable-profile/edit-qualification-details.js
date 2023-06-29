@@ -66,9 +66,14 @@ const EditQualificationDetails = ({
       });
     }
   };
-  useEffect(() => {
-    setUniversitiesListData(universitiesList?.data);
-  }, [universitiesList]);
+
+  const fetchUniversities = (selectedUniversity) => {
+    if (selectedUniversity && qualificationfrom !== 'International') {
+      dispatch(getUniversitiesList(selectedUniversity)).then((dataResponse) => {
+        setUniversitiesListData(dataResponse?.data);
+      });
+    }
+  };
 
   useEffect(() => {
     fetchColleges(selectedState);
@@ -79,11 +84,7 @@ const EditQualificationDetails = ({
   }, [selectedState]);
 
   useEffect(() => {
-    if (watchCollege && qualificationfrom !== 'International') {
-      const obj = colleges?.find((x) => x.id === watchCollege);
-      setValue(`qualification[${index}].collegeObj`, obj);
-      dispatch(getUniversitiesList(watchCollege));
-    }
+    fetchUniversities(watchCollege);
   }, [watchCollege]);
 
   useEffect(() => {
@@ -897,12 +898,16 @@ const EditQualificationDetails = ({
               defaultValue={getValues().Speciality}
               required={true}
               {...register(
-                'Speciality',
-
+                `qualification[${index}].Speciality`,
                 showBroadSpeciality &&
                   getValues()?.Speciality?.length <= 0 && {
                     required: 'Specialty is Required',
-                  }
+                  },
+                {
+                  onChange: (e) => {
+                    setValue(`qualification[${index}].Speciality`, e.target.value);
+                  },
+                }
               )}
               options={createSelectFieldData(specialitiesList.data)}
             />

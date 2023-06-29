@@ -42,6 +42,7 @@ export default function TrackStatus() {
   });
 
   const onSubmit = () => {
+    setViewExportIcon(true);
     const trackData = {
       smcId: getValues().RegistrationCouncilId,
       // registrationNo: parseInt(getValues().RegistrationNumber),
@@ -53,9 +54,7 @@ export default function TrackStatus() {
       sortType: 'desc',
     };
     dispatch(trackStatus(trackData))
-      .then(() => {
-        setViewExportIcon(true);
-      })
+      .then(() => {})
       .catch((error) => {
         successToast(
           error?.data?.response?.data?.error,
@@ -129,7 +128,7 @@ export default function TrackStatus() {
                 />
               </Box>
             </Grid>
-            <Grid item xs={12} md={3}>
+            <Grid item xs={12} md={2}>
               <Box pb={{ xs: 2, md: 4 }}>
                 {/* <Typography color="inputTextColor.main">
                   label
@@ -170,7 +169,7 @@ export default function TrackStatus() {
                 </Button>
               </Box>
             </Grid>
-            <Grid item xs={12} md="auto">
+            <Grid item xs={12} md={1}>
               {viewExportIcon === true && (
                 <ExportFiles exportData={trackStatusData?.data?.data} flag={'trackStatusData'} />
               )}
