@@ -78,8 +78,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
   function checkEmail(e) {
     if (e?.target?.value?.length > 0) {
       const re =
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/;
-
+        /(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))/gm;
       if (re.test(e.target.value.trim())) {
         setValidDetails({ ...validDetails, email: false });
       } else {
@@ -336,9 +335,6 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
         <Grid item xs={12} sm={6} lg={4} mb={{ xs: 1, lg: 0 }} pl={2}>
           <Typography component="div" variant="body3" color="grey.label">
             Email
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
           </Typography>
 
           <Box display="flex" alignItems="center">
@@ -349,7 +345,6 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                     sx={{ ml: 1, flex: 1 }}
                     placeholder="Enter your email address"
                     name="email"
-                    required={true}
                     defaultValue={getValues().email}
                     {...register('email', {
                       required: 'Email id is required',

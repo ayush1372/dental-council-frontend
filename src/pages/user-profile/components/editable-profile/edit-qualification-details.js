@@ -66,9 +66,14 @@ const EditQualificationDetails = ({
       });
     }
   };
-  useEffect(() => {
-    setUniversitiesListData(universitiesList?.data);
-  }, [universitiesList]);
+
+  const fetchUniversities = (selectedUniversity) => {
+    if (selectedUniversity && qualificationfrom !== 'International') {
+      dispatch(getUniversitiesList(selectedUniversity)).then((dataResponse) => {
+        setUniversitiesListData(dataResponse?.data);
+      });
+    }
+  };
 
   useEffect(() => {
     fetchColleges(selectedState);
@@ -79,11 +84,7 @@ const EditQualificationDetails = ({
   }, [selectedState]);
 
   useEffect(() => {
-    if (watchCollege && qualificationfrom !== 'International') {
-      const obj = colleges?.find((x) => x.id === watchCollege);
-      setValue(`qualification[${index}].collegeObj`, obj);
-      dispatch(getUniversitiesList(watchCollege));
-    }
+    fetchUniversities(watchCollege);
   }, [watchCollege]);
 
   useEffect(() => {
@@ -155,7 +156,9 @@ const EditQualificationDetails = ({
             name={`qualification[${index}].qualificationfrom`}
             size="small"
             defaultValue={
-              qualification?.qualificationfrom === '' ? 'India' : qualification?.qualificationfrom
+              qualification?.qualificationfrom === 'India'
+                ? 'India'
+                : qualification?.qualificationfrom
             }
             items={[
               {
@@ -198,7 +201,10 @@ const EditQualificationDetails = ({
               placeholder="Enter roll no."
               required={true}
               fullWidth
-              error={errors?.qualification?.[index]?.rollno?.message}
+              error={
+                errors?.qualification?.[index]?.rollno?.message &&
+                getValues()[`qualification[${index}].rollno`]
+              }
               defaultValue={getValues()[`qualification[${index}].rollno`]}
               {...register(`qualification[${index}].rollno`, {
                 required: 'Awarding is required',
@@ -268,7 +274,10 @@ const EditQualificationDetails = ({
               required={true}
               type="number"
               fullWidth
-              error={errors?.qualification?.[index]?.marksobtained?.message}
+              error={
+                errors?.qualification?.[index]?.marksobtained?.message &&
+                getValues()[`qualification[${index}].marksobtained`]
+              }
               defaultValue={getValues()[`qualification[${index}].marksobtained`]}
               {...register(`qualification[${index}].marksobtained`, {
                 required: 'Marks obtained is required',
@@ -889,12 +898,16 @@ const EditQualificationDetails = ({
               defaultValue={getValues().Speciality}
               required={true}
               {...register(
-                'Speciality',
-
+                `qualification[${index}].Speciality`,
                 showBroadSpeciality &&
                   getValues()?.Speciality?.length <= 0 && {
                     required: 'Specialty is Required',
-                  }
+                  },
+                {
+                  onChange: (e) => {
+                    setValue(`qualification[${index}].Speciality`, e.target.value);
+                  },
+                }
               )}
               options={createSelectFieldData(specialitiesList.data)}
             />
