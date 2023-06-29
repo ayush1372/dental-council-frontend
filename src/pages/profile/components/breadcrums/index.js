@@ -22,7 +22,7 @@ export default function BreadcrumbsCompnent(props) {
             color={props.showViewProfile ? 'primary.main' : 'black.main'}
             sx={{ cursor: 'pointer' }}
           >
-            {`${props?.selectedCardData?.responseKey} Applications`}
+            {`${props?.selectedCardData?.name}`}
           </Typography>
         )}
         {props.showViewProfile && (
