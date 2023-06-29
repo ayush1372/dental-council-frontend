@@ -255,7 +255,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
   };
   const onSubmit = () => {
     dispatch(verifyHealthProfessional(getValues().MobileNumber)).then((validationResponse) => {
-      let responseLength = validationResponse && validationResponse?.data?.length();
+      let responseLength = validationResponse && validationResponse?.data?.length;
       if (imrDataNotFound || kycstatus !== 'Success') {
         dispatch(UserNotFoundDetails({ imrDataNotFound, aadhaarFormValues }));
       }
