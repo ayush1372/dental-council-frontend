@@ -53,16 +53,17 @@ export default function ReactivateLicencePopup(props) {
     });
     formData.append('data', reactivateLicaneseDetailsBlob);
 
-    dispatch(createReActivateLicense(formData))
-      .then((response) => {
-        if (response?.data?.toString()?.length > 0) {
-          props.renderSuccess();
-        }
-      })
-      .catch((error) => {
-        props?.closeReactivateLicense();
-        successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
-      });
+    if (reason !== '' && fromDate !== undefined)
+      dispatch(createReActivateLicense(formData))
+        .then((response) => {
+          if (response?.data?.toString()?.length > 0) {
+            props.renderSuccess();
+          }
+        })
+        .catch((error) => {
+          props?.closeReactivateLicense();
+          successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
+        });
   }
 
   return (
@@ -190,7 +191,7 @@ export default function ReactivateLicencePopup(props) {
                 if (reason === undefined || reason === '') {
                   setShowReasonError(true);
                 }
-                if ((reason !== undefined || reason !== '') && fromDate !== undefined) {
+                if (reason !== undefined && fromDate !== undefined) {
                   handleReactivate();
                 }
               }}
