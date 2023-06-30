@@ -46,8 +46,14 @@ export default function ReactivateLicencePopup(props) {
           from_date: fromDate?.split('/')?.reverse()?.join('-'),
           remarks: reason,
         };
+    const formData = new FormData();
+    const reactivateLicaneseDetailsJson = JSON.stringify(reActivateLicensebody);
+    const reactivateLicaneseDetailsBlob = new Blob([reactivateLicaneseDetailsJson], {
+      type: 'application/json',
+    });
+    formData.append('data', reactivateLicaneseDetailsBlob);
 
-    dispatch(createReActivateLicense(reActivateLicensebody))
+    dispatch(createReActivateLicense(formData))
       .then((response) => {
         if (response?.data?.toString()?.length > 0) {
           props.renderSuccess();
