@@ -36,18 +36,6 @@ function NMCCollegeRegistration() {
     subDistrictList,
     universitiesList,
   } = useSelector((state) => state.common);
-  const { updateCollegeDetails, collegeRegisterDetails } = useSelector((state) => state.college);
-
-  useEffect(() => {
-    if (updateCollegeDetails?.data.length !== 0) {
-      setSuccessModalPopup(true);
-    }
-  }, [updateCollegeDetails?.data]);
-  useEffect(() => {
-    if (collegeRegisterDetails?.data.length !== 0) {
-      setSuccessModalPopup(true);
-    }
-  }, [collegeRegisterDetails?.data]);
 
   let collegesList = [];
   collegesList.push(...allcollegesList.data, { id: 'other', name: 'other' });
@@ -105,17 +93,19 @@ function NMCCollegeRegistration() {
       const collegeDetailValues = {
         id: getValues().CollegeNameID,
         name: getValues().Name,
-        state_id: getValues().StateID,
-        course_id: null,
+        state_to: statesList?.find((obj) => obj?.id === Number(getValues()?.StateID)),
+        course_to: null,
         college_code: getValues().CollegeCode,
         website: getValues().Website,
         address_line1: getValues().AddressLine1,
         address_line2: getValues().AddressLine2,
-        district_id: getValues().DistrictID,
-        village_id: getValues().TownID,
+        district_to: districtsList?.find((x) => x.iso_code === getValues()?.DistrictID),
+        villages_to: subDistrictList?.find((x) => x.iso_code === getValues()?.TownID),
         pin_code: getValues().Pincode,
-        state_medical_council_id: getValues().CouncilID,
-        university_id: getValues().UniversityID,
+        state_medical_council_to: councilNames?.find((x) => x.id === Number(getValues().CouncilID)),
+        university_to: universitiesList?.data?.find(
+          (x) => x.id === Number(getValues().UniversityID)
+        ),
         email_id: getValues().Email,
         mobile_number: getValues().MobileNumber,
       };
@@ -147,17 +137,19 @@ function NMCCollegeRegistration() {
       const collegeDetailValues = {
         id: getValues().CollegeNameID,
         name: getValues().CollegeName,
-        state_id: getValues().StateID,
-        course_id: null,
+        state_to: statesList?.find((obj) => obj?.id === Number(getValues()?.StateID)),
+        course_to: null,
         college_code: getValues().CollegeCode,
         website: getValues().Website,
         address_line1: getValues().AddressLine1,
         address_line2: getValues().AddressLine2,
-        district_id: getValues().DistrictID,
-        village_id: getValues().TownID,
+        district_to: districtsList?.find((x) => x.iso_code === getValues()?.DistrictID),
+        village_to: subDistrictList?.find((x) => x.iso_code === getValues()?.TownID),
         pin_code: getValues().Pincode,
-        state_medical_council_id: getValues().CouncilID,
-        university_id: getValues().UniversityID,
+        state_medical_council_to: councilNames?.find((x) => x.id === Number(getValues().CouncilID)),
+        university_to: universitiesList?.data?.find(
+          (x) => x.id === Number(getValues().UniversityID)
+        ),
         email_id: getValues().Email,
         mobile_number: getValues().MobileNumber,
       };

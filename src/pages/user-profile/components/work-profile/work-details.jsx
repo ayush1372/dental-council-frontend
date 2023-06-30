@@ -55,7 +55,6 @@ const WorkDetails = ({
     (state) => state.doctorUserProfileReducer
   );
 
-  // eslint-disable-next-line no-unused-vars
   const [facilityResponseData, setFacilityResponseData] = useState([]);
 
   useEffect(() => {
