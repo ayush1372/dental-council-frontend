@@ -273,7 +273,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                         {q?.university_name}
                       </Typography>
                     </Grid>
-                    {q.super_speciality? 
+                    {q.broad_speciality? 
                       <Grid item xs={12} sm={6} md={4} mb={2}>
                         <Typography
                           component="div"
