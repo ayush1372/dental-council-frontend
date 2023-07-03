@@ -39,6 +39,8 @@ const CollegeEditProfile = (props) => {
       dispatch(getDistrictList(getCollegeDetail?.data?.state_to?.id)).then((res) => {
         setDistrictList(res?.data);
       });
+    if (userData?.district_to?.id !== undefined)
+      dispatch(getSubDistrictsList(userData?.district_to?.id));
   }, []);
 
   const {
@@ -64,6 +66,9 @@ const CollegeEditProfile = (props) => {
       StateName: '',
       StateId: userData?.state_id,
       CollegeWebsite: userData?.website,
+      District: userData?.district_to?.id,
+      DistrictID: userData?.district_to?.id,
+      Area: userData?.villages_to?.id,
     },
   });
   const onSubmitClickHandler = () => {
@@ -76,7 +81,8 @@ const CollegeEditProfile = (props) => {
       address_line1: getValues()?.AddressLine1 || '',
       address_line2: getValues()?.AddressLine2 || '',
       district_to: districtsList?.find((x) => x.id === getValues()?.DistrictID),
-      villages_to: subDistrictList?.find((x) => x.name === getValues()?.Area),
+      villages_to:
+        subDistrictList?.find((x) => x.name === getValues()?.Area) || userData?.villages_to,
       pin_code: getValues()?.CollegePincode,
       state_medical_council_to: councilNames?.find((x) => x.id === getValues()?.CouncilID),
       mobile_number: getValues()?.CollegePhoneNumber,
@@ -350,7 +356,9 @@ const CollegeEditProfile = (props) => {
                 items={createEditFieldData(districtsList)}
                 placeholder="Select District"
                 defaultValue={userData?.district_to}
-                value={getDistrictNameData(getCollegeDetail?.data?.district_id)}
+                value={getDistrictNameData(
+                  getCollegeDetail?.data?.district_id || userData?.district_to?.id
+                )}
                 clearErrors={clearErrors}
                 error={errors.District?.message}
                 {...register('District', {
