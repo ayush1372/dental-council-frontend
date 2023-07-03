@@ -47,9 +47,7 @@ export default function ProfileImage(props) {
   const nmrIdData = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.nmr_id
   );
-  const logInDoctorStatus = useSelector(
-    (state) => state?.loginReducer?.loginData?.data?.blacklisted
-  );
+
   const doctorEsignStatus = useSelector(
     (state) => state?.loginReducer?.loginData?.data?.esign_status
   );
@@ -228,59 +226,58 @@ export default function ProfileImage(props) {
           </Typography>{' '}
         </Grid>
       )}
-      {logInDoctorStatus &&
-        (personalDetails?.hp_profile_status_id === 5 ||
-          personalDetails?.hp_profile_status_id === 6) && (
-          <Grid container mt={1}>
-            <Grid item xs={12}>
-              <Typography
-                color="suspendAlert.dark"
-                component="div"
-                textAlign="center"
-                display="inline-flex"
-                variant="body2"
-              >
-                Your profile is set to suspend mode.
-                <br />
-                You will not be able to perform actions <br />
-                on the profile.
-              </Typography>
-            </Grid>
-            <Grid item xs={12} textAlign="center" mt={1} mr={2}>
-              <img
-                src={ReactivationLogo}
-                alt="Reactivation license logo"
-                width="15px"
-                height="15px"
-              />
-              <Link
-                sx={{
-                  cursor: 'pointer',
-                  'pointer-events':
-                    (personalDetails?.hp_profile_status_id === 5 ||
-                      personalDetails?.hp_profile_status_id === 6) &&
-                    personalDetails?.work_flow_status_id === 1
-                      ? 'none'
-                      : 'unset',
-                  opacity:
-                    (personalDetails?.hp_profile_status_id === 5 ||
-                      personalDetails?.hp_profile_status_id === 6) &&
-                    personalDetails?.work_flow_status_id === 1
-                      ? 0.5
-                      : 'unset',
-                }}
-                ml={1}
-                variant="subtitle2"
-                onClick={() => {
-                  setShowReactivateLicense(true);
-                  setShowSuccessPopup(false);
-                }}
-              >
-                Reactivate License
-              </Link>
-            </Grid>
+      {(personalDetails?.hp_profile_status_id === 5 ||
+        personalDetails?.hp_profile_status_id === 6) && (
+        <Grid container mt={1}>
+          <Grid item xs={12}>
+            <Typography
+              color="suspendAlert.dark"
+              component="div"
+              textAlign="center"
+              display="inline-flex"
+              variant="body2"
+            >
+              Your profile is set to suspend mode.
+              <br />
+              You will not be able to perform actions <br />
+              on the profile.
+            </Typography>
           </Grid>
-        )}
+          <Grid item xs={12} textAlign="center" mt={1} mr={2}>
+            <img
+              src={ReactivationLogo}
+              alt="Reactivation license logo"
+              width="15px"
+              height="15px"
+            />
+            <Link
+              sx={{
+                cursor: 'pointer',
+                'pointer-events':
+                  (personalDetails?.hp_profile_status_id === 5 ||
+                    personalDetails?.hp_profile_status_id === 6) &&
+                  personalDetails?.work_flow_status_id === 1
+                    ? 'none'
+                    : 'unset',
+                opacity:
+                  (personalDetails?.hp_profile_status_id === 5 ||
+                    personalDetails?.hp_profile_status_id === 6) &&
+                  personalDetails?.work_flow_status_id === 1
+                    ? 0.5
+                    : 'unset',
+              }}
+              ml={1}
+              variant="subtitle2"
+              onClick={() => {
+                setShowReactivateLicense(true);
+                setShowSuccessPopup(false);
+              }}
+            >
+              Reactivate License
+            </Link>
+          </Grid>
+        </Grid>
+      )}
       {doctorEsignStatus === 2 && loginData?.data?.hp_profile_status_id !== 7 && (
         <Grid container mt={1}>
           <Grid item>

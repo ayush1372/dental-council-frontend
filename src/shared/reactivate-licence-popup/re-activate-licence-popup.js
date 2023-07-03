@@ -74,7 +74,7 @@ export default function ReactivateLicencePopup(props) {
   }
 
   return (
-    <Modal open={open} onClose={handleClose} sx={{ mt: 5 }}>
+    <Modal open={open} onClose={handleClose} sx={{ mt: 5, maxHeight: '100vh', overflow: 'auto' }}>
       <Container maxWidth="sm" sx={{ backgroundColor: 'white.main', borderRadius: '10px' }}>
         <Box py={3}>
           <Box mt={1} p={1} mb={2} width="100%" display="flex">
