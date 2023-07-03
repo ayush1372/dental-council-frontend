@@ -89,23 +89,23 @@ function FacilityDetailsTable({ declaredFacilityData, trackStatusData, currentWo
     return createData(
       {
         type: 'name',
-        value: application?.work_organization,
+        value: application?.work_organization || '-',
       },
       {
         type: 'address',
-        value: application?.address?.address_line1,
+        value: application?.address?.address_line1 || '-',
       },
       {
         type: 'state',
-        value: application?.address?.state?.name,
+        value: application?.address?.state?.name || '-',
       },
       {
         type: 'district',
-        value: application?.address?.district?.name,
+        value: application?.address?.district?.name || '-',
       },
       {
         type: 'type',
-        value: application?.organization_type,
+        value: application?.organization_type || '-',
       },
 
       { type: 'systemOfMedicine', value: application?.system_of_medicine || '-' },

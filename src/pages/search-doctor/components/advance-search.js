@@ -81,7 +81,7 @@ const AdvanceSearch = ({ setDoSearch, setSearchData, setScrollDown }) => {
           }}
           variant="outlined"
           name={'DoctorName'}
-          placeholder="Enter Doctor Name"
+          placeholder="Enter doctor name"
           label={'Doctor name'}
           fullWidth
           defaultValue={getValues().DoctorName}

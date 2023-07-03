@@ -53,7 +53,7 @@ const RegistrationNumber = ({ setDoSearch, setSearchData, setScrollDown }) => {
           color="tabHighlightedBackgroundColor.main"
           variant="h3"
         >
-          Browse by Registration Number*
+          Browse by registration number*
         </Typography>
       </Grid>
       <Grid item xs={8}>
@@ -63,8 +63,8 @@ const RegistrationNumber = ({ setDoSearch, setSearchData, setScrollDown }) => {
           }}
           variant="outlined"
           name={'RegistrationNumber'}
-          placeholder="Enter Registration Number"
-          label={'Registration Number'}
+          placeholder="Enter registration number"
+          label={'Registration number'}
           fullWidth
           defaultValue={getValues().RegistrationNumber}
           {...register('RegistrationNumber', {
