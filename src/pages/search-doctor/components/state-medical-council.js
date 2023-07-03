@@ -57,7 +57,7 @@ const StateMedicalCouncil = ({ setDoSearch, setSearchData, setScrollDown }) => {
           color="tabHighlightedBackgroundColor.main"
           variant="h3"
         >
-          Browse by State medical council*
+          Browse by state medical council*
         </Typography>
       </Grid>
       <Grid item xs={8}>
@@ -72,8 +72,8 @@ const StateMedicalCouncil = ({ setDoSearch, setSearchData, setScrollDown }) => {
           fullWidth
           error={errors.Statemedicalcouncil?.message}
           name={'Statemedicalcouncil'}
-          label=" State Medical Council"
-          placeholder="Select State medical council"
+          label=" State medical council"
+          placeholder="Select state medical council"
           defaultValue={getValues().Statemedicalcouncil}
           {...register('Statemedicalcouncil', {
             // required: 'state medical council is required',
