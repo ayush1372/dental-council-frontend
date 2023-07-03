@@ -318,7 +318,10 @@ export default function ProfileImage(props) {
         />
       )}{' '}
       {showSuccessPopup && (
-        <SuccessPopup fetchDoctorUserPersonalDetails={fetchDoctorUserPersonalDetails} />
+        <SuccessPopup
+          fetchDoctorUserPersonalDetails={fetchDoctorUserPersonalDetails}
+          reactivate={true}
+        />
       )}
     </Grid>
   );

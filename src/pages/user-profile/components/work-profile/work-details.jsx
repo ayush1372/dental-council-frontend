@@ -398,7 +398,7 @@ const WorkDetails = ({
           required={true}
           placeholder={'Nature Of Work'}
           {...register('NatureOfWork', {
-            required: 'This field is required',
+            required: 'Nature of work is required',
           })}
           error={errors.NatureOfWork?.message}
           options={createSelectFieldData(natureOfWork)}
@@ -498,10 +498,7 @@ const WorkDetails = ({
           value={languages}
           error={getValues()?.LanguageSpoken?.length < 1 && errors?.LanguageSpoken?.message}
           multiple={true}
-          // required={true}
-          {...register('LanguageSpoken', {
-            // required: 'This field is required',
-          })}
+          {...register('LanguageSpoken')}
           onChange={(value) => {
             handleLanguageSpokenChange('LanguageSpoken', value);
           }}
@@ -589,7 +586,7 @@ const WorkDetails = ({
                     placeholder="Facility Id"
                     defaultValue={getValues()?.facilityId}
                     {...register(`facilityId`, {
-                      required: 'This field is required',
+                      required: 'Facility Id is required',
                     })}
                   />
                 </Box>
@@ -631,12 +628,12 @@ const WorkDetails = ({
 
                 <Select
                   fullWidth
-                  error={getValues().stateLGDCode?.length === 0 && 'This field is required'}
+                  error={getValues().stateLGDCode?.length === 0 && 'State is required'}
                   name={'stateLGDCode'}
                   defaultValue={getValues().stateLGDCode}
                   required={true}
                   {...register('stateLGDCode', {
-                    required: 'This field is required',
+                    required: 'State is required',
                   })}
                   options={createSelectFieldData(statesList)}
                 />
@@ -650,12 +647,12 @@ const WorkDetails = ({
                 </Typography>
                 <Select
                   fullWidth
-                  error={getValues().districtLGDCode?.length === 0 && 'This field is required'}
+                  error={getValues().districtLGDCode?.length === 0 && 'District is required'}
                   name={'districtLGDCode'}
                   defaultValue={getValues().districtLGDCode}
                   required={true}
                   {...register('districtLGDCode', {
-                    required: 'This field is required',
+                    required: 'District is required',
                   })}
                   options={createSelectFieldData(facilityDistrict)}
                 />
@@ -737,7 +734,7 @@ const WorkDetails = ({
                 fullWidth
                 defaultValue={getValues().workingOrganizationName}
                 {...register('workingOrganizationName', {
-                  required: 'This field is required',
+                  required: 'Name of the organization is required',
                   maxLength: {
                     value: 300,
                     message: 'Length should be less than 300.',
@@ -782,7 +779,7 @@ const WorkDetails = ({
                 placeholder="Address"
                 defaultValue={getValues().Address}
                 {...register('Address', {
-                  required: 'This field is required',
+                  required: 'Address is required',
                   maxLength: {
                     value: 300,
                     message: 'Should be less than 300 characters',
@@ -806,7 +803,7 @@ const WorkDetails = ({
                 placeholder="Enter Street"
                 defaultValue={getValues().Street}
                 {...register('Street', {
-                  required: 'This field is required',
+                  required: 'Street is required',
                   maxLength: {
                     value: 300,
                     message: 'Should be less than 300 characters',
@@ -833,7 +830,7 @@ const WorkDetails = ({
                 placeholder="Enter Landmark"
                 defaultValue={getValues().Landmark}
                 {...register('Landmark', {
-                  required: 'This field is required',
+                  required: 'Landmark is required',
                   maxLength: {
                     value: 300,
                     message: 'Should be less than 300 characters',
@@ -857,7 +854,7 @@ const WorkDetails = ({
                 placeholder="Enter Locality"
                 defaultValue={getValues().Locality}
                 {...register('Locality', {
-                  required: 'This field is required',
+                  required: 'Locality is required',
                   maxLength: {
                     value: 300,
                     message: 'Should be less than 300 characters',
@@ -904,7 +901,7 @@ const WorkDetails = ({
                 defaultValue={getValues().state}
                 required={true}
                 {...register('state', {
-                  required: 'This field is required',
+                  required: 'State is required',
                 })}
                 options={createSelectFieldData(statesList)}
               />
@@ -923,7 +920,7 @@ const WorkDetails = ({
                 defaultValue={getValues().District}
                 required={true}
                 {...register('District', {
-                  required: 'This field is required',
+                  required: 'District is required',
                 })}
                 options={createSelectFieldData(districtsList, 'iso_code')}
               />
@@ -944,7 +941,7 @@ const WorkDetails = ({
                 required={true}
                 defaultValue={getValues().SubDistrict}
                 {...register('SubDistrict', {
-                  required: 'This field is required',
+                  required: 'Sub District is required',
                 })}
                 options={createSelectFieldData(subDistrictList, 'iso_code')}
                 MenuProps={{
@@ -999,7 +996,7 @@ const WorkDetails = ({
                 error={errors.pincode?.message}
                 defaultValue={getValues().pincode}
                 {...register('pincode', {
-                  required: 'This field is required',
+                  required: 'Pincode is required',
                   pattern: {
                     value: /^[0-9]{6}$/,
                     message: 'Should only contains 6 digits',
