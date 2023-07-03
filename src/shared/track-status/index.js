@@ -42,7 +42,6 @@ export default function TrackStatus() {
   });
 
   const onSubmit = () => {
-    setViewExportIcon(true);
     const trackData = {
       smcId: getValues().RegistrationCouncilId,
       // registrationNo: parseInt(getValues().RegistrationNumber),
@@ -66,6 +65,7 @@ export default function TrackStatus() {
 
     setShowTable(true);
     setTrackValues(trackData);
+    setViewExportIcon(true);
   };
   return (
     <Box>

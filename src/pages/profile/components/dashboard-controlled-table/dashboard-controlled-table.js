@@ -180,6 +180,7 @@ function DashboardControlledTable(props) {
       name: searchQueryParams ? searchQueryParams?.filterByName : '',
       nmr_id: searchQueryParams ? searchQueryParams?.filterByRegNo : '',
       search: searchQueryParams ? searchQueryParams?.search : '',
+      value: searchQueryParams ? searchQueryParams?.value : '',
       page_no: pageNo,
       offset: noOfRecords,
       sort_by: '',
