@@ -281,6 +281,22 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                           fontWeight="400"
                           color="inputTextColor.main"
                         >
+                          Broad Speciality
+                        </Typography>
+                        <Typography component="div" variant="body1" color="textSecondary.main">
+                          {q?.broad_speciality}
+                        </Typography>
+                      </Grid>:
+                      ''  
+                    }
+                    {q.super_speciality? 
+                      <Grid item xs={12} sm={6} md={4} mb={2}>
+                        <Typography
+                          component="div"
+                          variant="body1"
+                          fontWeight="400"
+                          color="inputTextColor.main"
+                        >
                           Super Speciality
                         </Typography>
                         <Typography component="div" variant="body1" color="textSecondary.main">

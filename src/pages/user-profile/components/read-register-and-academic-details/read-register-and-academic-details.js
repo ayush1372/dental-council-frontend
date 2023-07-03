@@ -106,8 +106,9 @@ const ReadRegisterAndAcademicDetails = ({
       registrationDetails?.qualification_detail_response_tos?.map((element) => {
         if (
           element &&
-          element?.request_id ===
-            dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]?.request_id
+          (element?.is_verified === 1 ||
+            element?.request_id ===
+              dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]?.request_id)
         ) {
           filteredQualificationDetails.push(element);
         }
