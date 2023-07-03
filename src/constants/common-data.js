@@ -32,7 +32,6 @@ export const getNMCProfileDetails = (details) => [
 ];
 
 export const getNBEProfileDetails = (details) => [
-  { label: 'User ID', value: details.id, id: '2' },
   { label: 'Name', value: details.display_name, id: '1' },
   { label: 'Phone Number', value: details.mobile_no, id: '4' },
   { label: 'Email Address', value: details.email_id, id: '5' },
