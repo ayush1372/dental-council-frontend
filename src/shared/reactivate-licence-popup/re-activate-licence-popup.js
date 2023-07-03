@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, Container, Grid, Modal, Typography } from '@mui/material';
@@ -15,6 +15,7 @@ export default function ReactivateLicencePopup(props) {
   const [showFromDateError, setShowFromDateError] = useState(false);
   const [showReasonError, setShowReasonError] = useState(false);
   const [reActivateFileData, setReActivateFileData] = useState([]);
+  const [supportingDocumentError, setsupportingDocumentError] = useState(false);
 
   const { loginData } = useSelector((state) => state?.loginReducer);
   const dispatch = useDispatch();
@@ -27,6 +28,11 @@ export default function ReactivateLicencePopup(props) {
     setOpen(false);
     props.closeReactivateLicense();
   };
+  useEffect(() => {
+    if (reActivateFileData?.length > 0 || reActivateFileData === []) {
+      setsupportingDocumentError(false);
+    }
+  }, [reActivateFileData]);
 
   function handleReactivate() {
     const { fromDate, reason } = getValues();
@@ -169,7 +175,18 @@ export default function ReactivateLicencePopup(props) {
               fileData={reActivateFileData}
               setFileData={setReActivateFileData}
               uploadFileLabel="Upload the Supporting Document"
+              borderColor={supportingDocumentError}
             />
+            {supportingDocumentError && (
+              <Typography
+                color="suspendAlert.dark"
+                component="div"
+                display="inline-flex"
+                variant="body2"
+              >
+                Please upload the supporting Document.
+              </Typography>
+            )}
           </Box>
           <Box display="flex" justifyContent="flex-end" mt={5}>
             <Button
@@ -192,7 +209,17 @@ export default function ReactivateLicencePopup(props) {
                 if (reason === undefined || reason === '') {
                   setShowReasonError(true);
                 }
-                if (reason !== undefined && fromDate !== undefined) {
+                if (
+                  reActivateFileData?.length === 0 ||
+                  reActivateFileData?.[0].file === undefined
+                ) {
+                  setsupportingDocumentError(true);
+                }
+                if (
+                  reason !== undefined &&
+                  fromDate !== undefined &&
+                  reActivateFileData?.length !== 0
+                ) {
                   handleReactivate();
                 }
               }}
