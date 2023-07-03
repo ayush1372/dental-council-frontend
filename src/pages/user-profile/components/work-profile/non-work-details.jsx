@@ -41,8 +41,8 @@ const NonWorkDetails = ({
 
   const [successModalPopup, setSuccessModalPopup] = useState(false);
   const { loginData } = useSelector((state) => state?.loginReducer);
-  const { reason } = useSelector(
-    (state) => state?.doctorUserProfileReducer?.workProfileDetails?.work_details
+  const { work_details } = useSelector(
+    (state) => state?.doctorUserProfileReducer?.workProfileDetails
   );
 
   const handleSave = () => {
@@ -80,7 +80,7 @@ const NonWorkDetails = ({
           error={errors.reason?.message}
           name="reason"
           label="Please select the reason for presently not working"
-          defaultValue={reason}
+          defaultValue={work_details?.reason}
           value={getValues()?.reason}
           required={true}
           {...register(
