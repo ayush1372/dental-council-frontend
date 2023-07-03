@@ -46,25 +46,30 @@ export default function ReactivateLicencePopup(props) {
           from_date: fromDate?.split('/')?.reverse()?.join('-'),
           remarks: reason,
         };
+    const formData = new FormData();
+    const reactivateLicaneseDetailsJson = JSON.stringify(reActivateLicensebody);
+    const reactivateLicaneseDetailsBlob = new Blob([reactivateLicaneseDetailsJson], {
+      type: 'application/json',
+    });
+    formData.append('data', reactivateLicaneseDetailsBlob);
+    formData.append('reactivationFile', reActivateFileData?.[0].file);
 
-    dispatch(createReActivateLicense(reActivateLicensebody))
-      .then((response) => {
-        if (response?.data?.toString()?.length > 0) {
-          props.renderSuccess();
-        }
-      })
-      .catch((error) => {
-        props?.closeReactivateLicense();
-        successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
-      });
+    if (reason !== '' && fromDate !== undefined)
+      dispatch(createReActivateLicense(formData))
+        .then((response) => {
+          if (response?.data?.toString()?.length > 0) {
+            props.renderSuccess();
+          }
+        })
+        .catch((error) => {
+          props?.closeReactivateLicense();
+          successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
+        });
   }
 
   return (
-    <Modal open={open} onClose={handleClose} sx={{ mt: 5, height: '575px' }}>
-      <Container
-        maxWidth="sm"
-        sx={{ backgroundColor: 'white.main', borderRadius: '10px', height: '535px' }}
-      >
+    <Modal open={open} onClose={handleClose} sx={{ mt: 5 }}>
+      <Container maxWidth="sm" sx={{ backgroundColor: 'white.main', borderRadius: '10px' }}>
         <Box py={3}>
           <Box mt={1} p={1} mb={2} width="100%" display="flex">
             <img
@@ -187,7 +192,7 @@ export default function ReactivateLicencePopup(props) {
                 if (reason === undefined || reason === '') {
                   setShowReasonError(true);
                 }
-                if ((reason !== undefined || reason !== '') && fromDate !== undefined) {
+                if (reason !== undefined && fromDate !== undefined) {
                   handleReactivate();
                 }
               }}
