@@ -2,13 +2,16 @@ import { useState } from 'react';
 
 import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined';
 import { Box, Container, Modal, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 
+import { doctorTabs } from '../../helpers/components/sidebar-drawer-list-item';
+import { changeUserActiveTab } from '../../store/reducers/common-reducers';
 import { Button } from '../../ui/core';
 
-export default function SuccessPopup({ fetchDoctorUserPersonalDetails }) {
+export default function SuccessPopup({ fetchDoctorUserPersonalDetails, reactivate }) {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [open, setOpen] = useState(true);
   const logInDoctorStatus = useSelector(
@@ -17,6 +20,10 @@ export default function SuccessPopup({ fetchDoctorUserPersonalDetails }) {
   const handleClose = () => {
     setOpen(false);
     fetchDoctorUserPersonalDetails && fetchDoctorUserPersonalDetails();
+
+    if (reactivate) {
+      dispatch(changeUserActiveTab(doctorTabs[1].tabName));
+    }
     navigate('/profile');
     window.scrollTo({
       top: 0,
