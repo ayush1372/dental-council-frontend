@@ -29,10 +29,8 @@ export default function ReactivateLicencePopup(props) {
     props.closeReactivateLicense();
   };
   useEffect(() => {
-    if (reActivateFileData?.length > 0) {
+    if (reActivateFileData?.length > 0 || reActivateFileData === []) {
       setsupportingDocumentError(false);
-    } else {
-      setsupportingDocumentError(true);
     }
   }, [reActivateFileData]);
 
