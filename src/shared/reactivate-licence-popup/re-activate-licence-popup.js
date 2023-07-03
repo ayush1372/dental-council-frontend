@@ -52,6 +52,7 @@ export default function ReactivateLicencePopup(props) {
       type: 'application/json',
     });
     formData.append('data', reactivateLicaneseDetailsBlob);
+    formData.append('reactivationFile', reActivateFileData?.[0].file);
 
     dispatch(createReActivateLicense(formData))
       .then((response) => {
