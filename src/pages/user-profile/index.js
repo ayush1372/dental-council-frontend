@@ -198,6 +198,12 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
         }
       });
     }
+    if (
+      personalDetails?.work_flow_status_id === undefined &&
+      personalDetails?.hp_profile_status_id === 2
+    ) {
+      setIsApplicationPending(true);
+    }
   }, []);
 
   useEffect(() => {
