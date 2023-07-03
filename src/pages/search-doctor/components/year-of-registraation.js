@@ -56,7 +56,7 @@ const YearOfRegistration = ({ setDoSearch, setSearchData, setScrollDown }) => {
           color="tabHighlightedBackgroundColor.main"
           variant="h3"
         >
-          Browse by Year of Registration*
+          Browse by year of registration*
         </Typography>
       </Grid>
       <Grid item xs={8}>
@@ -71,8 +71,8 @@ const YearOfRegistration = ({ setDoSearch, setSearchData, setScrollDown }) => {
           fullWidth
           name="YearofRegistration"
           items={yeardata}
-          placeholder="Select Year of Registration"
-          label=" Year of Registration"
+          placeholder="Select year of registration"
+          label=" Year of registration"
           clearErrors={clearErrors}
           error={errors.YearofRegistration?.message}
           {...register('YearofRegistration')}

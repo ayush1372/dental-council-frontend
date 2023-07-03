@@ -63,7 +63,7 @@ const Name = ({ setDoSearch, setSearchData, setScrollDown }) => {
       <Grid item xs={8}>
         <Grid>
           <Typography color="inputTextColor.main">
-            Doctor Name{' '}
+            Doctor name
             {/* <ErrorOutlineIcon
               fontSize="width12"
               sx={{
@@ -84,7 +84,7 @@ const Name = ({ setDoSearch, setSearchData, setScrollDown }) => {
           }}
           variant="outlined"
           name={'DoctorName'}
-          placeholder="Enter Doctor Name"
+          placeholder="Enter doctor name"
           fullWidth
           defaultValue={getValues().DoctorName}
           {...register('DoctorName', {
