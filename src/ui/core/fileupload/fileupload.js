@@ -162,7 +162,9 @@ export const UploadFile = (props) => {
       <div className={styles.inputDiv}>
         <Grid container mt={1} spacing={1} sx={{ alignItems: 'flex-start' }}>
           <Grid item sm={6}>
-            <div className={styles.fileUploadArea}>
+            <div
+              className={props?.borderColor ? styles.fileUploadAreaError : styles.fileUploadArea}
+            >
               <div>
                 <UploadFileIcon color="primary" />
               </div>

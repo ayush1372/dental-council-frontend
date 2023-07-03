@@ -12,6 +12,32 @@
     color: red;
     font-size: 10px;
   }
+
+  .fileUploadAreaError {
+    position: relative;
+    border-radius: 5px;
+    border: 1px dashed red;
+    color: white;
+    text-align: center;
+    padding: 8px;
+    .dragDropFiles {
+      color: #7687af;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .browseFiles {
+      color: #264488;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .fileFormat {
+      font-size: 12px;
+    }
+    .uploadIconBlack {
+      color: #264488;
+    }
+  }
+
   .fileUploadArea {
     position: relative;
     border: 1px dashed #808080;
