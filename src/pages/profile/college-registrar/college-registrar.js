@@ -13,7 +13,6 @@ import {
 } from '../../../store/actions/college-actions';
 import { Button, TextField } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
-// import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 export function CollegeRegistrar({ showPage, updateShowPage }) {
   const { t } = useTranslation();
@@ -91,7 +90,6 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
       </Grid>
       <Grid item xs={12} md={6} sm={6} lg={4}>
         <Typography variant="body1" color="inputTextColor.main">
-          {/* <b>{t('College Registrar Name')}</b> */}
           <b>{t(' Name')}</b>
         </Typography>
         <Typography component="span" color="error.main">
@@ -116,7 +114,28 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
       </Grid>
       <Grid item xs={12} md={6} sm={6} lg={4}>
         <Typography variant="body1" color="inputTextColor.main">
-          {/* <b>{t('College Registrar Phone Number')}</b> */}
+          <b>{t(' Designation')}</b>
+        </Typography>
+        <Typography component="span" color="error.main">
+          *
+        </Typography>
+        <TextField
+          fullWidth
+          inputProps={{ maxLength: 100 }}
+          id="outlined-basic"
+          variant="outlined"
+          type="text"
+          name="designation"
+          required="true"
+          placeholder={t('College Registrar')}
+          margin="dense"
+          defaultValue={'College Registrar'}
+          value={'College Registrar'}
+          disabled
+        />
+      </Grid>
+      <Grid item xs={12} md={6} sm={6} lg={4}>
+        <Typography variant="body1" color="inputTextColor.main">
           <b>{t(' Phone Number')}</b>
         </Typography>
         <Typography component="span" color="error.main">
@@ -145,7 +164,6 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
       </Grid>
       <Grid item xs={12} md={6} sm={6} lg={4}>
         <Typography variant="body1" color="inputTextColor.main">
-          {/* <b>{t('College Registrar Email Address')}</b> */}
           <b>{t(' Email Address')}</b>
         </Typography>
         <Typography component="span" color="error.main">
@@ -173,53 +191,6 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
           })}
         />
       </Grid>
-      {/* <Grid item xs={12} md={6} sm={6} lg={4}>
-        <Typography variant="body1" color="inputTextColor.main">
-          <b>{t('College Registrar User ID')}</b>
-        </Typography>
-        <Typography component="span" color="error.main">
-          *
-        </Typography>
-        <TextField
-          fullWidth
-          inputProps={{ maxLength: 100 }}
-          id="outlined-basic"
-          variant="outlined"
-          type="text"
-          name="registrarUserId"
-          required="true"
-          placeholder={t('College Registrar User ID')}
-          margin="dense"
-          defaultValue={getValues().registrarUserId}
-          error={errors.registrarUserId?.message}
-          {...register('registrarUserId', {
-            required: 'Enter valid user ID',
-          })}
-        />
-      </Grid> */}
-      {/* <Grid item xs={12} md={6} sm={6} lg={4}>
-        <Typography variant="body1" color="inputTextColor.main">
-          <b>{t('College Registrar Password')}</b>
-        </Typography>
-        <Typography component="span" color="error.main">
-          *
-        </Typography>
-        <TextField
-          fullWidth
-          inputProps={{ maxLength: 100 }}
-          variant="outlined"
-          type="Password"
-          name="registrarPassword"
-          required="true"
-          placeholder={t('College Registrar Password')}
-          margin="dense"
-          defaultValue={getValues().registrarPassword}
-          error={errors.registrarPassword?.message}
-          {...register('registrarPassword', PasswordRegexValidation, {
-            required: 'Enter valid password',
-          })}
-        />
-      </Grid> */}
       <Grid container item spacing={2} mt={{ lg: 1 }}>
         <Grid item xs={12} sm="auto">
           <Button fullWidth variant="contained" color="secondary" onClick={handleSubmit(onSubmit)}>
