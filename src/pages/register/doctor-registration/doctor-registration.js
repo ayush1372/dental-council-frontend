@@ -152,7 +152,7 @@ const DoctorRegistrationWelcomePage = () => {
                     {...register('RegistrationNumber', {
                       required: 'Registration Number is required',
                       pattern: {
-                        value: /^[A-Za-z0-9_.,?!@#$%^&*():;]{1,100}$/,
+                        value: /^[A-Za-z0-9_.,?!@#$%^&*():;-]{1,100}$/,
                         message: 'Enter valid registration number',
                       },
                       minLength: {

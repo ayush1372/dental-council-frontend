@@ -156,9 +156,7 @@ const EditQualificationDetails = ({
             name={`qualification[${index}].qualificationfrom`}
             size="small"
             defaultValue={
-              qualification?.qualificationfrom === 'India'
-                ? 'India'
-                : qualification?.qualificationfrom
+              qualificationfrom !== 'International' ? 'India' : qualification?.qualificationfrom
             }
             items={[
               {
