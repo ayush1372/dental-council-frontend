@@ -119,6 +119,8 @@ export function SuspendLicenseVoluntaryRetirement({
           ? loginData?.data?.profile_id
           : userActiveTab === 'track-status'
           ? selectedSuspendLicenseProfile?.view?.value
+          : userActiveTab === 'dashboard'
+          ? personalDetails?.hp_profile_id
           : '',
       application_type_id: temp_application_type_id,
       action_id:

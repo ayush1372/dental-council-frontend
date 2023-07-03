@@ -46,17 +46,25 @@ export default function ReactivateLicencePopup(props) {
           from_date: fromDate?.split('/')?.reverse()?.join('-'),
           remarks: reason,
         };
+    const formData = new FormData();
+    const reactivateLicaneseDetailsJson = JSON.stringify(reActivateLicensebody);
+    const reactivateLicaneseDetailsBlob = new Blob([reactivateLicaneseDetailsJson], {
+      type: 'application/json',
+    });
+    formData.append('data', reactivateLicaneseDetailsBlob);
+    formData.append('reactivationFile', reActivateFileData?.[0].file);
 
-    dispatch(createReActivateLicense(reActivateLicensebody))
-      .then((response) => {
-        if (response?.data?.toString()?.length > 0) {
-          props.renderSuccess();
-        }
-      })
-      .catch((error) => {
-        props?.closeReactivateLicense();
-        successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
-      });
+    if (reason !== '' && fromDate !== undefined)
+      dispatch(createReActivateLicense(formData))
+        .then((response) => {
+          if (response?.data?.toString()?.length > 0) {
+            props.renderSuccess();
+          }
+        })
+        .catch((error) => {
+          props?.closeReactivateLicense();
+          successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
+        });
   }
 
   return (
@@ -184,7 +192,7 @@ export default function ReactivateLicencePopup(props) {
                 if (reason === undefined || reason === '') {
                   setShowReasonError(true);
                 }
-                if ((reason !== undefined || reason !== '') && fromDate !== undefined) {
+                if (reason !== undefined && fromDate !== undefined) {
                   handleReactivate();
                 }
               }}
