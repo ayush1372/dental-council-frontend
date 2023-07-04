@@ -82,8 +82,8 @@ const SuspendedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
           }}
           variant="outlined"
           name={'DoctorName'}
-          placeholder="Enter Doctor Name"
-          label={'Doctor Name'}
+          placeholder="Enter doctor name"
+          label={'Doctor name'}
           fullWidth
           defaultValue={getValues().DoctorName}
           {...register('DoctorName', {
@@ -103,7 +103,7 @@ const SuspendedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
       <Grid item xs={4}>
         <Grid>
           <Typography color="inputTextColor.main">
-            Registration Number{' '}
+            Registration number
             {/* <ErrorOutlineIcon
               fontSize="width12"
               sx={{
@@ -115,7 +115,7 @@ const SuspendedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
         <TextField
           variant="outlined"
           name={'RegistrationNumber'}
-          placeholder="Enter Registration Number"
+          placeholder="Enter registration number"
           fullWidth
           defaultValue={getValues().RegistrationNumber}
           {...register('RegistrationNumber', {
@@ -137,8 +137,8 @@ const SuspendedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
             fullWidth
             error={errors.YearofRegistration?.message}
             name="YearofRegistration"
-            label=" Year of Registration"
-            placeholder="Select year of Registration"
+            label=" Year of registration"
+            placeholder="Select year of registration"
             defaultValue={getValues().yearofRegistration}
             {...register('YearofRegistration', {
               // required: 'Year of Registration is required',
@@ -154,8 +154,8 @@ const SuspendedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
             fullWidth
             error={errors.Statemedicalcouncil?.message}
             name="Statemedicalcouncil"
-            label=" State Medical Council"
-            placeholder="Select State medical council"
+            label=" State medical council"
+            placeholder="Select state medical council"
             defaultValue={getValues().Statemedicalcouncil}
             {...register('Statemedicalcouncil', {
               // required: 'state medical council is required',

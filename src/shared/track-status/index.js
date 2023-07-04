@@ -42,7 +42,6 @@ export default function TrackStatus() {
   });
 
   const onSubmit = () => {
-    setViewExportIcon(true);
     const trackData = {
       smcId: getValues().RegistrationCouncilId,
       // registrationNo: parseInt(getValues().RegistrationNumber),
@@ -66,6 +65,7 @@ export default function TrackStatus() {
 
     setShowTable(true);
     setTrackValues(trackData);
+    setViewExportIcon(true);
   };
   return (
     <Box>
@@ -99,7 +99,7 @@ export default function TrackStatus() {
                     {...register('RegistrationCouncil')}
                     disabled={loggedInUserType === 'SMC'}
                     onChange={(currentValue) => {
-                      setValue('RegistrationCouncilId', currentValue.id);
+                      setValue('RegistrationCouncilId', currentValue?.id);
                     }}
                   />
                 </Box>
@@ -123,7 +123,7 @@ export default function TrackStatus() {
                   clearErrors={clearErrors}
                   {...register('trackStatus')}
                   onChange={(currentValue) => {
-                    setTrackStatusId(currentValue.id);
+                    setTrackStatusId(currentValue?.id);
                   }}
                 />
               </Box>

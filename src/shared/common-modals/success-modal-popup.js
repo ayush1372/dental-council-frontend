@@ -11,6 +11,7 @@ import {
   smcTabs,
 } from '../../helpers/components/sidebar-drawer-list-item';
 import { getCardCount } from '../../store/actions/dashboard-actions';
+import { getPersonalDetailsData } from '../../store/actions/doctor-user-profile-actions';
 import {
   changeUserActiveTab,
   logout,
@@ -19,6 +20,7 @@ import {
 import { setBreadcrumbsActivetab } from '../../store/reducers/common-reducers';
 import { loginActiveState } from '../../store/reducers/login-reducer';
 import { Button } from '../../ui/core';
+import successToast from '../../ui/core/toaster';
 
 export default function SuccessModalPopup({
   open,
@@ -43,6 +45,7 @@ export default function SuccessModalPopup({
   const dispatch = useDispatch();
 
   const loggedInUserType = useSelector((state) => state?.common?.loggedInUserType);
+  const { loginData } = useSelector((state) => state?.loginReducer);
 
   const handleCloseModal = () => {
     if (workDetails) {
@@ -67,6 +70,7 @@ export default function SuccessModalPopup({
     dispatch(setBreadcrumbsActivetab('DASHBOARD'));
     if (SuspensionCall) {
       let ActiveTab;
+
       switch (loggedInUserType) {
         case 'SMC':
           ActiveTab = smcTabs[0].tabName;
@@ -84,7 +88,7 @@ export default function SuccessModalPopup({
           ActiveTab = '';
           break;
       }
-      if (loggedInUserType === 'Doctor') {
+      if (loggedInUserType === 'Doctor' && SuspensionCall !== true) {
         localStorage.clear();
         dispatch(logout());
         dispatch(resetCommonReducer());
@@ -94,8 +98,14 @@ export default function SuccessModalPopup({
           behavior: 'smooth',
         });
       } else {
+        dispatch(getPersonalDetailsData(loginData?.data?.profile_id))
+          .then(() => {})
+          .catch((allFailMsg) => {
+            successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+          });
         dispatch(getCardCount());
         dispatch(changeUserActiveTab(ActiveTab));
+
         window.scrollTo({
           top: 0,
           behavior: 'smooth',

@@ -82,31 +82,6 @@ const NbeEditProfile = (props) => {
       <Grid container item spacing={2} mt={3}>
         <Grid item xs={12} md={3}>
           <Typography variant="body3" color="grey.label">
-            {t('User ID')}
-          </Typography>
-          <Typography component="span" color="error.main">
-            *
-          </Typography>
-          <TextField
-            fullWidth
-            required
-            name={'user_id'}
-            placeholder={'Enter User ID'}
-            defaultValue={getValues().user_id}
-            error={errors.user_id?.message}
-            {...register('user_id', {
-              required: 'User ID is required',
-
-              pattern: {
-                value: /^[a-zA-Z0-9@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
-                message: 'Provide a Valid User ID',
-              },
-            })}
-            disabled
-          />
-        </Grid>
-        <Grid item xs={12} md={3}>
-          <Typography variant="body3" color="grey.label">
             {t('Name')}
           </Typography>
           <Typography component="span" color="error.main">

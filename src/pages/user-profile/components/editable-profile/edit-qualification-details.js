@@ -49,6 +49,10 @@ const EditQualificationDetails = ({
 
   const handleQualificationFrom = (event) => {
     setValue(event.target.name, event.target.value);
+    setValue(`qualification[${index}].state`, null);
+    setValue(`qualification[${index}].university`, null);
+    setValue(`qualification[${index}].college`, null);
+    handleQualificationFilesData(`qualification.${index}.files`, []);
     dispatch(selectedQualificationType(event.target.value));
   };
 
@@ -156,9 +160,7 @@ const EditQualificationDetails = ({
             name={`qualification[${index}].qualificationfrom`}
             size="small"
             defaultValue={
-              qualification?.qualificationfrom === 'India'
-                ? 'India'
-                : qualification?.qualificationfrom
+              qualificationfrom !== 'International' ? 'India' : qualification?.qualificationfrom
             }
             items={[
               {
