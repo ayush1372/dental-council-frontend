@@ -197,6 +197,7 @@ const ReadRegisterAndAcademicDetails = ({
           </Button>
           {(userActiveTab === 'dashboard' || userActiveTab === 'Activate Licence') &&
             (selectedAcademicStatus?.toUpperCase() === 'PENDING' ||
+              selectedAcademicStatus === 'Update Request Received' ||
               selectedAcademicStatus === 'College Verified' ||
               userActiveTab === 'Activate Licence' ||
               selectedAcademicStatus === 'Forwarded' ||
@@ -361,8 +362,10 @@ const ReadRegisterAndAcademicDetails = ({
                           Reject
                         </MenuItem>
                         {personalDetails.nmr_id !== undefined &&
-                          loggedInUserType === 'NMC' &&
                           userActiveTab !== 'Activate Licence' &&
+                          (loggedInUserType === 'NMC' ||
+                            (loggedInUserType === 'SMC' &&
+                              selectedAcademicStatus === 'Update Request Received')) &&
                           selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
                           selectedAcademicStatus !== 'Permanent Suspension Requests Received' && (
                             <MenuItem onClick={selectionChangeHandler} data-my-value={'suspend'}>
@@ -370,8 +373,10 @@ const ReadRegisterAndAcademicDetails = ({
                             </MenuItem>
                           )}
                         {personalDetails.nmr_id !== undefined &&
-                          loggedInUserType === 'NMC' &&
                           userActiveTab !== 'Activate Licence' &&
+                          (loggedInUserType === 'NMC' ||
+                            (loggedInUserType === 'SMC' &&
+                              selectedAcademicStatus === 'Update Request Received')) &&
                           selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
                           selectedAcademicStatus !== 'Permanent Suspension Requests Received' && (
                             <MenuItem onClick={selectionChangeHandler} data-my-value={'blacklist'}>
