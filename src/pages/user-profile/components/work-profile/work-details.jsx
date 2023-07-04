@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import RemoveCircleOutlineRoundedIcon from '@mui/icons-material/RemoveCircleOutlineRounded';
 import { Box, Grid, Tab, Tabs, Typography } from '@mui/material';
@@ -49,6 +48,7 @@ const WorkDetails = ({
   const [organizationChecked, setOrganizationChecked] = useState(false);
   const [declaredFacilityData, setDeclaredFacilityDistrict] = useState([]);
   const [defaultFacilityData, setDefaultFacilityData] = useState([]);
+  const [workExperianceError, setWorkExperianceError] = useState(false);
 
   const { loginData } = useSelector((state) => state.loginReducer);
   const { registrationDetails, workProfileDetails } = useSelector(
@@ -387,6 +387,12 @@ const WorkDetails = ({
     return languageData;
   };
 
+  useEffect(() => {
+    if (Object.keys(errors).length !== 0) {
+      workExpierence === 0 ? setWorkExperianceError(true) : setWorkExperianceError(false);
+    }
+  }, [errors.NatureOfWork?.message, errors.workStatus?.message, errors?.LanguageSpoken?.message]);
+
   return (
     <>
       <Grid item xs={12} md={4}>
@@ -421,23 +427,7 @@ const WorkDetails = ({
           required={true}
           error={errors.workStatus?.message}
           {...register('workStatus', {
-            required: (
-              <div>
-                <Typography
-                  style={{ display: 'flex', alignItems: 'center' }}
-                  variant="body2"
-                  color="error"
-                >
-                  <ErrorOutlineIcon
-                    color={'error'}
-                    icon={'helpOutline'}
-                    fontSize="small"
-                    sx={{ height: '16px' }}
-                  />
-                  {`This field is required`}
-                </Typography>
-              </div>
-            ),
+            required: `workStatus is required`,
           })}
         />
       </Grid>{' '}
@@ -460,6 +450,7 @@ const WorkDetails = ({
           <RemoveCircleOutlineRoundedIcon
             color="primary"
             onClick={() => {
+              setWorkExperianceError(true);
               setWorkExpierence((exp) => (exp ? exp - 1 : 0));
             }}
           />
@@ -480,10 +471,21 @@ const WorkDetails = ({
           <AddCircleOutlineRoundedIcon
             color="primary"
             onClick={() => {
+              setWorkExperianceError(false);
               setWorkExpierence(workExpierence + 1);
             }}
           />
         </Box>
+        {workExperianceError && (
+          <Typography
+            color="suspendAlert.dark"
+            component="div"
+            display="inline-flex"
+            variant="body2"
+          >
+            Please add the work experiance.
+          </Typography>
+        )}
       </Grid>
       <Grid item xs={12} md={4}>
         <Typography variant="body1" color="inputTextColor.main">
@@ -498,7 +500,9 @@ const WorkDetails = ({
           value={languages}
           error={getValues()?.LanguageSpoken?.length < 1 && errors?.LanguageSpoken?.message}
           multiple={true}
-          {...register('LanguageSpoken')}
+          {...register('LanguageSpoken', {
+            required: `LanguageSpoken is required`,
+          })}
           onChange={(value) => {
             handleLanguageSpokenChange('LanguageSpoken', value);
           }}
