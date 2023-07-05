@@ -919,10 +919,10 @@ const WorkDetails = ({
                 error={errors.District?.message}
                 name={'District'}
                 defaultValue={getValues().District}
-                required={districtsList?.length > 0 || statesList?.length > 0 ? true : false}
+                required={districtsList?.length > 0 && statesList?.length > 0 ? true : false}
                 {...register('District', {
                   required:
-                    districtsList?.length > 0 || statesList?.length > 0
+                    districtsList?.length > 0 && statesList?.length > 0
                       ? 'District is required'
                       : '',
                 })}
@@ -943,15 +943,15 @@ const WorkDetails = ({
                 name="SubDistrict"
                 placeholder="Sub District"
                 required={
-                  subDistrictList?.length > 0 || districtsList?.length > 0 || statesList?.length > 0
+                  subDistrictList?.length > 0 && districtsList?.length > 0 && statesList?.length > 0
                     ? true
                     : false
                 }
                 defaultValue={getValues().SubDistrict}
                 {...register('SubDistrict', {
                   required:
-                    subDistrictList?.length > 0 ||
-                    districtsList?.length > 0 ||
+                    subDistrictList?.length > 0 &&
+                    districtsList?.length > 0 &&
                     statesList?.length > 0
                       ? 'Sub District is required'
                       : '',
@@ -974,24 +974,21 @@ const WorkDetails = ({
                   *
                 </Typography>
               </Typography>
+
               <Select
                 fullWidth
                 error={errors.Area?.message}
-                name={'Area'}
+                name="Area"
                 defaultValue={getValues().Area}
                 required={
-                  citiesList?.length > 0 ||
-                  subDistrictList?.length > 0 ||
-                  districtsList?.length > 0 ||
-                  statesList?.length > 0
+                  subDistrictList?.length > 0 && districtsList?.length > 0 && statesList?.length > 0
                     ? true
                     : false
                 }
                 {...register('Area', {
                   required:
-                    citiesList?.length > 0 ||
-                    subDistrictList?.length > 0 ||
-                    districtsList?.length > 0 ||
+                    subDistrictList?.length > 0 &&
+                    districtsList?.length > 0 &&
                     statesList?.length > 0
                       ? 'City/Town/Village is required'
                       : '',
