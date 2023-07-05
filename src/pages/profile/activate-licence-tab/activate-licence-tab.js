@@ -13,9 +13,10 @@ import ViewProfile from '../../../shared/view-profile/view-profile';
 import { getActivateLicenseList } from '../../../store/actions/common-actions';
 import successToast from '../../../ui/core/toaster';
 import UserProfile from '../../user-profile';
+import BreadcrumbsCompnent from '../components/breadcrums';
 import TableSearch from '../components/table-search/table-search';
 
-const ActivateLicence = (props) => {
+const ActivateLicence = () => {
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState({});
@@ -120,7 +121,6 @@ const ActivateLicence = (props) => {
     event.stopPropagation();
     setRowData(row);
     setShowViewPorfile(true);
-    props?.setShowHeader(false);
   };
 
   const handleDataRowClick = (dataRow) => {
@@ -240,10 +240,25 @@ const ActivateLicence = (props) => {
   //   }
   // };
 
+  function handleBreadCrumClick(event) {
+    event.preventDefault();
+    if (event.target.id === '1') {
+      setShowViewPorfile(false);
+    } else if (event.target.id === '2') {
+      setShowViewPorfile(false);
+    }
+  }
+
   return (
     <>
       {showViewProfile ? (
         <Box bgcolor="grey1.lighter">
+          <BreadcrumbsCompnent
+            showViewProfile={showViewProfile}
+            handleBreadCrumClick={handleBreadCrumClick}
+            levelOneText="Activate License Applications"
+            levelthreeText="View Profile"
+          />
           <ViewProfile />
           <UserProfile
             showViewProfile={true}

@@ -161,7 +161,7 @@ const CollegeMyProfile = () => {
             {loginData?.data?.user_sub_type === 1 ? (
               <Grid item xs={12} md={4} sm={6}>
                 <Typography variant="body3" color="grey.label">
-                  Select University Name
+                  University Name
                 </Typography>
 
                 <Typography variant="subtitle2" color="inputTextColor.main">
