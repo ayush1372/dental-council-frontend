@@ -215,6 +215,9 @@ export default function Dashboard() {
               showTable={showTable}
               showViewProfile={showViewProfile}
               handleBreadCrumClick={handleBreadCrumClick}
+              levelOneText="Dashboard"
+              levelTwoText={selectedCardData?.name}
+              levelthreeText="View Profile"
             />
           </Grid>
           <Grid item xs={6}>
