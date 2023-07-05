@@ -894,14 +894,15 @@ const WorkDetails = ({
                   *
                 </Typography>
               </Typography>
+
               <Select
                 fullWidth
                 error={errors.state?.message}
                 name={'state'}
                 defaultValue={getValues().state}
-                required={true}
+                required={statesList?.length > 0 ? true : false}
                 {...register('state', {
-                  required: 'State is required',
+                  required: statesList?.length > 0 ? 'State is required' : '',
                 })}
                 options={createSelectFieldData(statesList)}
               />
@@ -918,9 +919,12 @@ const WorkDetails = ({
                 error={errors.District?.message}
                 name={'District'}
                 defaultValue={getValues().District}
-                required={true}
+                required={districtsList?.length > 0 || statesList?.length > 0 ? true : false}
                 {...register('District', {
-                  required: 'District is required',
+                  required:
+                    districtsList?.length > 0 || statesList?.length > 0
+                      ? 'District is required'
+                      : '',
                 })}
                 options={createSelectFieldData(districtsList, 'iso_code')}
               />
@@ -938,10 +942,19 @@ const WorkDetails = ({
                 error={errors.SubDistrict?.message}
                 name="SubDistrict"
                 placeholder="Sub District"
-                required={true}
+                required={
+                  subDistrictList?.length > 0 || districtsList?.length > 0 || statesList?.length > 0
+                    ? true
+                    : false
+                }
                 defaultValue={getValues().SubDistrict}
                 {...register('SubDistrict', {
-                  required: 'Sub District is required',
+                  required:
+                    subDistrictList?.length > 0 ||
+                    districtsList?.length > 0 ||
+                    statesList?.length > 0
+                      ? 'Sub District is required'
+                      : '',
                 })}
                 options={createSelectFieldData(subDistrictList, 'iso_code')}
                 MenuProps={{
@@ -966,9 +979,22 @@ const WorkDetails = ({
                 error={errors.Area?.message}
                 name={'Area'}
                 defaultValue={getValues().Area}
-                required={true}
+                required={
+                  citiesList?.length > 0 ||
+                  subDistrictList?.length > 0 ||
+                  districtsList?.length > 0 ||
+                  statesList?.length > 0
+                    ? true
+                    : false
+                }
                 {...register('Area', {
-                  required: 'City/Town/Village is required',
+                  required:
+                    citiesList?.length > 0 ||
+                    subDistrictList?.length > 0 ||
+                    districtsList?.length > 0 ||
+                    statesList?.length > 0
+                      ? 'City/Town/Village is required'
+                      : '',
                 })}
                 options={createSelectFieldData(citiesList)}
                 MenuProps={{
