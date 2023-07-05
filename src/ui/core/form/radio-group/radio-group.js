@@ -1,5 +1,6 @@
 import { forwardRef } from 'react';
 
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import {
   Box,
   FormControl,
@@ -61,6 +62,12 @@ const RadioField = (
       </MuiRadioGroup>
       {error && (
         <Typography variant="body2" color="error">
+          <ErrorOutlineIcon
+            color={'error'}
+            icon={'helpOutline'}
+            fontSize="small"
+            sx={{ height: '16px' }}
+          />
           {error}
         </Typography>
       )}

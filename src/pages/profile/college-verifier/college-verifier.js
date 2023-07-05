@@ -6,10 +6,12 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { TextField } from '../../../../src/ui/core/form/textfield/textfield';
+import { colgTabs } from '../../../helpers/components/sidebar-drawer-list-item';
 import { createEditFieldData } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import { getAdminDesignation, getAdminVerifier } from '../../../store/actions/college-actions';
+import { changeUserActiveTab } from '../../../store/reducers/common-reducers';
 import { Button } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
 
@@ -79,6 +81,11 @@ function CollegeVerifier() {
   };
 
   const onCancel = () => {
+    dispatch(changeUserActiveTab(colgTabs[0].tabName));
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
     reset();
   };
 
