@@ -147,7 +147,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                     clearErrors={clearErrors}
                     {...register('Status')}
                     onChange={(currentValue) => {
-                      setValue('StatusId', currentValue.id);
+                      setValue('StatusId', currentValue?.id);
                     }}
                   />
                 </Grid>
@@ -164,7 +164,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                     clearErrors={clearErrors}
                     {...register('ActivateLicence')}
                     onChange={(currentValue) => {
-                      setValue('ActivateLicenceId', currentValue.id);
+                      setValue('ActivateLicenceId', currentValue?.id);
                     }}
                   />
                 ) : exportData?.data?.dashboard_tolist ? (
@@ -176,24 +176,24 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                     clearErrors={clearErrors}
                     {...register('dashBoardCard')}
                     onChange={(currentValue) => {
-                      setDashBoardCardId(currentValue.id);
-                    }}
-                  />
-                ) : exportData?.data?.college_details ? (
-                  <SearchableDropdown
-                    fullWidth
-                    data-testid="freesearch"
-                    name="collegeApproval"
-                    items={createEditFieldData(CollegeApprovalFieldList)}
-                    placeholder="Please Select"
-                    clearErrors={clearErrors}
-                    {...register('collegeApproval')}
-                    onChange={(currentValue) => {
-                      setValue('collegeApprovalId', currentValue.id);
+                      setDashBoardCardId(currentValue?.id);
                     }}
                   />
                 ) : (
-                  ''
+                  exportData?.data?.college_details && (
+                    <SearchableDropdown
+                      fullWidth
+                      data-testid="freesearch"
+                      name="collegeApproval"
+                      items={createEditFieldData(CollegeApprovalFieldList)}
+                      placeholder="Please Select"
+                      clearErrors={clearErrors}
+                      {...register('collegeApproval')}
+                      onChange={(currentValue) => {
+                        setValue('collegeApprovalId', currentValue?.id);
+                      }}
+                    />
+                  )
                 )}
               </Grid>
             )}
@@ -227,48 +227,47 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                     {...register('dashBoardCardFilter', {})}
                     error={errors.dashBoardCardFilter?.message}
                   />
-                ) : exportData?.data?.college_details ? (
-                  <TextField
-                    data-testid="filter_By_RegNo"
-                    inputProps={{ maxLength: 100 }}
-                    fullWidth
-                    id="outlined-basic"
-                    variant="outlined"
-                    type="text"
-                    name="collegeApprovalFilter"
-                    required={false}
-                    placeholder={'Enter keywords'}
-                    defaultValue={getValues().collegeApprovalFilter}
-                    error={errors.collegeApprovalFilter?.message}
-                    {...register('collegeApprovalFilter')}
-                  />
                 ) : (
-                  ''
+                  exportData?.data?.college_details && (
+                    <TextField
+                      data-testid="filter_By_RegNo"
+                      inputProps={{ maxLength: 100 }}
+                      fullWidth
+                      id="outlined-basic"
+                      variant="outlined"
+                      type="text"
+                      name="collegeApprovalFilter"
+                      required={false}
+                      placeholder={'Enter keywords'}
+                      defaultValue={getValues().collegeApprovalFilter}
+                      error={errors.collegeApprovalFilter?.message}
+                      {...register('collegeApprovalFilter')}
+                    />
+                  )
                 )}
               </Grid>
             )}
-            {(trackApplication !== true || trackApplication === true) &&
-              flag !== 'trackStatusData' && (
-                <Grid item md="auto" xs={12}>
-                  <Button
-                    data-testid="filterButton"
-                    sx={{
-                      padding: '13px 10px',
-                      m: {
-                        md: '0px',
-                      },
-                      width: {
-                        xs: '100%',
-                        md: 'fit-content',
-                      },
-                    }}
-                    variant="contained"
-                    onClick={handleSubmit(onClickSearchButtonHandler)}
-                  >
-                    Search
-                  </Button>
-                </Grid>
-              )}
+            {(trackApplication !== true || trackApplication === true) && (
+              <Grid item md="auto" xs={12}>
+                <Button
+                  data-testid="filterButton"
+                  sx={{
+                    padding: '13px 10px',
+                    m: {
+                      md: '0px',
+                    },
+                    width: {
+                      xs: '100%',
+                      md: 'fit-content',
+                    },
+                  }}
+                  variant="contained"
+                  onClick={handleSubmit(onClickSearchButtonHandler)}
+                >
+                  Search
+                </Button>
+              </Grid>
+            )}
           </Grid>
         </Grid>
         <Grid

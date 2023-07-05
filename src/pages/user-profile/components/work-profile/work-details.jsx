@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
-import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import RemoveCircleOutlineRoundedIcon from '@mui/icons-material/RemoveCircleOutlineRounded';
 import { Box, Grid, Tab, Tabs, Typography } from '@mui/material';
@@ -49,13 +48,13 @@ const WorkDetails = ({
   const [organizationChecked, setOrganizationChecked] = useState(false);
   const [declaredFacilityData, setDeclaredFacilityDistrict] = useState([]);
   const [defaultFacilityData, setDefaultFacilityData] = useState([]);
+  const [workExperianceError, setWorkExperianceError] = useState(false);
 
   const { loginData } = useSelector((state) => state.loginReducer);
   const { registrationDetails, workProfileDetails } = useSelector(
     (state) => state.doctorUserProfileReducer
   );
 
-  // eslint-disable-next-line no-unused-vars
   const [facilityResponseData, setFacilityResponseData] = useState([]);
 
   useEffect(() => {
@@ -388,6 +387,12 @@ const WorkDetails = ({
     return languageData;
   };
 
+  useEffect(() => {
+    if (Object.keys(errors).length !== 0) {
+      workExpierence === 0 ? setWorkExperianceError(true) : setWorkExperianceError(false);
+    }
+  }, [errors.NatureOfWork?.message, errors.workStatus?.message, errors?.LanguageSpoken?.message]);
+
   return (
     <>
       <Grid item xs={12} md={4}>
@@ -399,7 +404,7 @@ const WorkDetails = ({
           required={true}
           placeholder={'Nature Of Work'}
           {...register('NatureOfWork', {
-            required: 'This field is required',
+            required: 'Nature of work is required',
           })}
           error={errors.NatureOfWork?.message}
           options={createSelectFieldData(natureOfWork)}
@@ -422,23 +427,7 @@ const WorkDetails = ({
           required={true}
           error={errors.workStatus?.message}
           {...register('workStatus', {
-            required: (
-              <div>
-                <Typography
-                  style={{ display: 'flex', alignItems: 'center' }}
-                  variant="body2"
-                  color="error"
-                >
-                  <ErrorOutlineIcon
-                    color={'error'}
-                    icon={'helpOutline'}
-                    fontSize="small"
-                    sx={{ height: '16px' }}
-                  />
-                  {`This field is required`}
-                </Typography>
-              </div>
-            ),
+            required: `workStatus is required`,
           })}
         />
       </Grid>{' '}
@@ -461,6 +450,7 @@ const WorkDetails = ({
           <RemoveCircleOutlineRoundedIcon
             color="primary"
             onClick={() => {
+              setWorkExperianceError(true);
               setWorkExpierence((exp) => (exp ? exp - 1 : 0));
             }}
           />
@@ -481,10 +471,21 @@ const WorkDetails = ({
           <AddCircleOutlineRoundedIcon
             color="primary"
             onClick={() => {
+              setWorkExperianceError(false);
               setWorkExpierence(workExpierence + 1);
             }}
           />
         </Box>
+        {workExperianceError && (
+          <Typography
+            color="suspendAlert.dark"
+            component="div"
+            display="inline-flex"
+            variant="body2"
+          >
+            Please add the work experiance.
+          </Typography>
+        )}
       </Grid>
       <Grid item xs={12} md={4}>
         <Typography variant="body1" color="inputTextColor.main">
@@ -499,9 +500,8 @@ const WorkDetails = ({
           value={languages}
           error={getValues()?.LanguageSpoken?.length < 1 && errors?.LanguageSpoken?.message}
           multiple={true}
-          // required={true}
           {...register('LanguageSpoken', {
-            // required: 'This field is required',
+            required: `LanguageSpoken is required`,
           })}
           onChange={(value) => {
             handleLanguageSpokenChange('LanguageSpoken', value);
@@ -590,7 +590,7 @@ const WorkDetails = ({
                     placeholder="Facility Id"
                     defaultValue={getValues()?.facilityId}
                     {...register(`facilityId`, {
-                      required: 'This field is required',
+                      required: 'Facility Id is required',
                     })}
                   />
                 </Box>
@@ -632,12 +632,12 @@ const WorkDetails = ({
 
                 <Select
                   fullWidth
-                  error={getValues().stateLGDCode?.length === 0 && 'This field is required'}
+                  error={getValues().stateLGDCode?.length === 0 && 'State is required'}
                   name={'stateLGDCode'}
                   defaultValue={getValues().stateLGDCode}
                   required={true}
                   {...register('stateLGDCode', {
-                    required: 'This field is required',
+                    required: 'State is required',
                   })}
                   options={createSelectFieldData(statesList)}
                 />
@@ -651,12 +651,12 @@ const WorkDetails = ({
                 </Typography>
                 <Select
                   fullWidth
-                  error={getValues().districtLGDCode?.length === 0 && 'This field is required'}
+                  error={getValues().districtLGDCode?.length === 0 && 'District is required'}
                   name={'districtLGDCode'}
                   defaultValue={getValues().districtLGDCode}
                   required={true}
                   {...register('districtLGDCode', {
-                    required: 'This field is required',
+                    required: 'District is required',
                   })}
                   options={createSelectFieldData(facilityDistrict)}
                 />
@@ -738,7 +738,7 @@ const WorkDetails = ({
                 fullWidth
                 defaultValue={getValues().workingOrganizationName}
                 {...register('workingOrganizationName', {
-                  required: 'This field is required',
+                  required: 'Name of the organization is required',
                   maxLength: {
                     value: 300,
                     message: 'Length should be less than 300.',
@@ -783,7 +783,7 @@ const WorkDetails = ({
                 placeholder="Address"
                 defaultValue={getValues().Address}
                 {...register('Address', {
-                  required: 'This field is required',
+                  required: 'Address is required',
                   maxLength: {
                     value: 300,
                     message: 'Should be less than 300 characters',
@@ -807,7 +807,7 @@ const WorkDetails = ({
                 placeholder="Enter Street"
                 defaultValue={getValues().Street}
                 {...register('Street', {
-                  required: 'This field is required',
+                  required: 'Street is required',
                   maxLength: {
                     value: 300,
                     message: 'Should be less than 300 characters',
@@ -834,7 +834,7 @@ const WorkDetails = ({
                 placeholder="Enter Landmark"
                 defaultValue={getValues().Landmark}
                 {...register('Landmark', {
-                  required: 'This field is required',
+                  required: 'Landmark is required',
                   maxLength: {
                     value: 300,
                     message: 'Should be less than 300 characters',
@@ -858,7 +858,7 @@ const WorkDetails = ({
                 placeholder="Enter Locality"
                 defaultValue={getValues().Locality}
                 {...register('Locality', {
-                  required: 'This field is required',
+                  required: 'Locality is required',
                   maxLength: {
                     value: 300,
                     message: 'Should be less than 300 characters',
@@ -898,14 +898,15 @@ const WorkDetails = ({
                   *
                 </Typography>
               </Typography>
+
               <Select
                 fullWidth
                 error={errors.state?.message}
                 name={'state'}
                 defaultValue={getValues().state}
-                required={true}
+                required={statesList?.length > 0 ? true : false}
                 {...register('state', {
-                  required: 'This field is required',
+                  required: statesList?.length > 0 ? 'State is required' : '',
                 })}
                 options={createSelectFieldData(statesList)}
               />
@@ -922,9 +923,12 @@ const WorkDetails = ({
                 error={errors.District?.message}
                 name={'District'}
                 defaultValue={getValues().District}
-                required={true}
+                required={districtsList?.length > 0 && statesList?.length > 0 ? true : false}
                 {...register('District', {
-                  required: 'This field is required',
+                  required:
+                    districtsList?.length > 0 && statesList?.length > 0
+                      ? 'District is required'
+                      : '',
                 })}
                 options={createSelectFieldData(districtsList, 'iso_code')}
               />
@@ -942,10 +946,19 @@ const WorkDetails = ({
                 error={errors.SubDistrict?.message}
                 name="SubDistrict"
                 placeholder="Sub District"
-                required={true}
+                required={
+                  subDistrictList?.length > 0 && districtsList?.length > 0 && statesList?.length > 0
+                    ? true
+                    : false
+                }
                 defaultValue={getValues().SubDistrict}
                 {...register('SubDistrict', {
-                  required: 'This field is required',
+                  required:
+                    subDistrictList?.length > 0 &&
+                    districtsList?.length > 0 &&
+                    statesList?.length > 0
+                      ? 'Sub District is required'
+                      : '',
                 })}
                 options={createSelectFieldData(subDistrictList, 'iso_code')}
                 MenuProps={{
@@ -965,14 +978,24 @@ const WorkDetails = ({
                   *
                 </Typography>
               </Typography>
+
               <Select
                 fullWidth
                 error={errors.Area?.message}
-                name={'Area'}
+                name="Area"
                 defaultValue={getValues().Area}
-                required={true}
+                required={
+                  subDistrictList?.length > 0 && districtsList?.length > 0 && statesList?.length > 0
+                    ? true
+                    : false
+                }
                 {...register('Area', {
-                  required: 'City/Town/Village is required',
+                  required:
+                    subDistrictList?.length > 0 &&
+                    districtsList?.length > 0 &&
+                    statesList?.length > 0
+                      ? 'City/Town/Village is required'
+                      : '',
                 })}
                 options={createSelectFieldData(citiesList)}
                 MenuProps={{
@@ -1000,7 +1023,7 @@ const WorkDetails = ({
                 error={errors.pincode?.message}
                 defaultValue={getValues().pincode}
                 {...register('pincode', {
-                  required: 'This field is required',
+                  required: 'Pincode is required',
                   pattern: {
                     value: /^[0-9]{6}$/,
                     message: 'Should only contains 6 digits',

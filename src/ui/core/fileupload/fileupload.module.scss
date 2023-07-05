@@ -1,3 +1,5 @@
+@use '../../../assets/styles/variables' as v;
+
 .inputDiv {
   input {
     cursor: pointer;
@@ -12,6 +14,33 @@
     color: red;
     font-size: 10px;
   }
+
+  .fileUploadAreaError {
+    position: relative;
+    border-radius: 5px;
+    border: 1px dashed;
+    border-color: map-get(v.$palette, 'error');
+    color: map-get(v.$palette, 'white');
+    text-align: center;
+    padding: 8px;
+    .dragDropFiles {
+      color: #7687af;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .browseFiles {
+      color: map-get(v.$palette, 'primary');
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .fileFormat {
+      font-size: 12px;
+    }
+    .uploadIconBlack {
+      color: map-get(v.$palette, 'primary');
+    }
+  }
+
   .fileUploadArea {
     position: relative;
     border: 1px dashed #808080;

@@ -90,7 +90,7 @@ export default function DatafoundModalPopup({
                     Name
                   </Typography>
                   <Typography variant="subtitle2" component="div" color="primary">
-                    {hpName ? hpName : '-'}
+                    {registrationNumber === registrationData?.registrationNumber ? hpName : '-'}
                   </Typography>
                 </Box>
                 <Box>
@@ -103,7 +103,7 @@ export default function DatafoundModalPopup({
                     Registration Number
                   </Typography>
                   <Typography variant="subtitle2" component="div" color="primary">
-                    {registrationNumber || registrationData?.registrationNumber}
+                    {registrationData?.registrationNumber}
                   </Typography>
                 </Box>
               </Box>

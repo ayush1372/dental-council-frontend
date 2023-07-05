@@ -180,12 +180,19 @@ function DashboardControlledTable(props) {
       name: searchQueryParams ? searchQueryParams?.filterByName : '',
       nmr_id: searchQueryParams ? searchQueryParams?.filterByRegNo : '',
       search: searchQueryParams ? searchQueryParams?.search : '',
+      value: searchQueryParams ? searchQueryParams?.value : '',
       page_no: pageNo,
       offset: noOfRecords,
       sort_by: '',
       sort_order: '',
     };
-    dispatch(setSelectedAcademicStatus(props?.selectedCardData?.responseKey));
+    dispatch(
+      setSelectedAcademicStatus(
+        props?.selectedCardData?.name === 'Update Request Received'
+          ? props?.selectedCardData?.name
+          : props?.selectedCardData?.responseKey
+      )
+    );
     dispatch(getDashboardTableData(requestObj));
     window.scrollTo({
       top: 0,

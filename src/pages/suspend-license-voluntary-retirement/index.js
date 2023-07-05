@@ -9,6 +9,7 @@ import { Box, Dialog, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
+import ErrorModalPopup from '../../shared/common-modals/error-modal-popup';
 import { getInitiateWorkFlow, raiseQuery, suspendDoctor } from '../../store/actions/common-actions';
 import { Button, Checkbox, DatePicker, RadioGroup, TextField } from '../../ui/core';
 import successToast from '../../ui/core/toaster';
@@ -35,6 +36,7 @@ export function SuspendLicenseVoluntaryRetirement({
 
   const [selectedSuspension, setSelectedSuspension] = useState('voluntary-suspension-check');
 
+  const [rejectPopup, setRejectPopup] = useState(false);
   const [conformSuspend, setConformSuspend] = useState(false);
   const [confirmationModal, setConfirmationModal] = useState(false);
   const [queries, setQueries] = useState([]);
@@ -117,6 +119,8 @@ export function SuspendLicenseVoluntaryRetirement({
           ? loginData?.data?.profile_id
           : userActiveTab === 'track-status'
           ? selectedSuspendLicenseProfile?.view?.value
+          : userActiveTab === 'dashboard'
+          ? personalDetails?.hp_profile_id
           : '',
       application_type_id: temp_application_type_id,
       action_id:
@@ -389,7 +393,6 @@ export function SuspendLicenseVoluntaryRetirement({
                 id="fromDate"
                 name="fromDate"
                 required={true}
-                defaultValue={getValues()?.fromDate ? new Date(getValues()?.fromDate) : undefined}
                 error={showFromDateError ? 'Enter From Date' : false}
               />
             </Grid>
@@ -575,8 +578,12 @@ export function SuspendLicenseVoluntaryRetirement({
             color="secondary"
             onClick={() => {
               if (tabName === 'voluntary-suspend-license') {
-                setConformSuspend(true);
-                setConfirmationModal(true);
+                if (personalDetails?.work_flow_status_id === 1) {
+                  setRejectPopup(true);
+                } else {
+                  setConformSuspend(true);
+                  setConfirmationModal(true);
+                }
               } else {
                 handleSubmit(onSubmit);
               }
@@ -618,6 +625,16 @@ export function SuspendLicenseVoluntaryRetirement({
             Cancel
           </Button>
         </Box>
+      )}
+      {rejectPopup && (
+        <ErrorModalPopup
+          open={setRejectPopup}
+          text={`Your account data is pending status.
+                  You cannot suspend now. `}
+          handleClose={() => {
+            setRejectPopup(false);
+          }}
+        />
       )}
       {selectedValue && (
         <Box align="right" my={2}>

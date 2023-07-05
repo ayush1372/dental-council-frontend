@@ -24,11 +24,14 @@ import { getNBEProfileData } from '../../../store/actions/nbe-actions';
 import { getNMCProfileData } from '../../../store/actions/nmc-actions';
 import { getSMCProfileData } from '../../../store/actions/smc-actions';
 import { login, userLoggedInType } from '../../../store/reducers/common-reducers';
+import { loginActiveState } from '../../../store/reducers/login-reducer';
 import { Button, TextField } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 import successToast from '../../../ui/core/toaster';
 import { LoginPasswordRegexValidation } from '../../../utilities/common-validations';
 export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetails }) => {
+  const activeIndex = useSelector((state) => state.loginReducer.activeState?.activeIndex);
+
   const [captchaAnswer, setcaptachaAnswer] = useState();
   const { generateCaptcha } = useSelector((state) => state.loginReducer);
   const theme = useTheme();
@@ -58,6 +61,13 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
     setcaptachaAnswer(num);
   };
 
+  const handleNext = () => {
+    dispatch(loginActiveState({ activeIndex: activeIndex + 1 }));
+  };
+  const handleUserForgetUserName = () => {
+    otpData({ ...otpData, page: 'forgetUserName' });
+    handleNext();
+  };
   const sendNotificationOTPHandler = () => {
     let OTPTypeID = 'sms';
 
@@ -339,6 +349,16 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
                 maxLength: 100,
               }}
             />
+            <Typography display={'flex'} justifyContent="flex-end">
+              <Button
+                color="secondary"
+                onClick={handleUserForgetUserName}
+                sx={{ cursor: 'pointer', display: 'contents' }}
+              >
+                Forgot Username ?
+              </Button>
+            </Typography>
+
             <TextField
               sx={{ mb: 2 }}
               required={true}

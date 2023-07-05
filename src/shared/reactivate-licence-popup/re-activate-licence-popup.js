@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, Container, Grid, Modal, Typography } from '@mui/material';
@@ -15,6 +15,7 @@ export default function ReactivateLicencePopup(props) {
   const [showFromDateError, setShowFromDateError] = useState(false);
   const [showReasonError, setShowReasonError] = useState(false);
   const [reActivateFileData, setReActivateFileData] = useState([]);
+  const [supportingDocumentError, setsupportingDocumentError] = useState(false);
 
   const { loginData } = useSelector((state) => state?.loginReducer);
   const dispatch = useDispatch();
@@ -27,6 +28,11 @@ export default function ReactivateLicencePopup(props) {
     setOpen(false);
     props.closeReactivateLicense();
   };
+  useEffect(() => {
+    if (reActivateFileData?.length > 0 || reActivateFileData === []) {
+      setsupportingDocumentError(false);
+    }
+  }, [reActivateFileData]);
 
   function handleReactivate() {
     const { fromDate, reason } = getValues();
@@ -46,27 +52,32 @@ export default function ReactivateLicencePopup(props) {
           from_date: fromDate?.split('/')?.reverse()?.join('-'),
           remarks: reason,
         };
+    const formData = new FormData();
+    const reactivateLicaneseDetailsJson = JSON.stringify(reActivateLicensebody);
+    const reactivateLicaneseDetailsBlob = new Blob([reactivateLicaneseDetailsJson], {
+      type: 'application/json',
+    });
+    formData.append('data', reactivateLicaneseDetailsBlob);
+    formData.append('reactivationFile', reActivateFileData?.[0].file);
 
-    dispatch(createReActivateLicense(reActivateLicensebody))
-      .then((response) => {
-        if (response?.data?.toString()?.length > 0) {
-          props.renderSuccess();
-        }
-      })
-      .catch((error) => {
-        props?.closeReactivateLicense();
-        successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
-      });
+    if (reason !== '' && fromDate !== undefined)
+      dispatch(createReActivateLicense(formData))
+        .then((response) => {
+          if (response?.data?.toString()?.length > 0) {
+            props.renderSuccess();
+          }
+        })
+        .catch((error) => {
+          props?.closeReactivateLicense();
+          successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
+        });
   }
 
   return (
-    <Modal open={open} onClose={handleClose} sx={{ mt: 5, height: '575px' }}>
-      <Container
-        maxWidth="sm"
-        sx={{ backgroundColor: 'white.main', borderRadius: '10px', height: '535px' }}
-      >
+    <Modal open={open} onClose={handleClose} sx={{ mt: 5, maxHeight: '100vh', overflow: 'auto' }}>
+      <Container maxWidth="sm" sx={{ backgroundColor: 'white.main', borderRadius: '10px' }}>
         <Box py={3}>
-          <Box mt={1} p={1} mb={2} width="100%" display="flex">
+          <Box p={1} mb={2} width="100%" display="flex">
             <img
               src={ReactivationLogo}
               alt="Reactivation licence logo"
@@ -78,7 +89,7 @@ export default function ReactivateLicencePopup(props) {
             </Typography>
             <CloseIcon color="grey.context" onClick={handleClose} />
           </Box>
-          <Grid container item spacing={2} mt={1}>
+          <Grid container item spacing={2}>
             <Grid item xs={6}>
               <Box>
                 <Typography variant="subtitle2" color="inputTextColor.main" component="span">
@@ -153,7 +164,7 @@ export default function ReactivateLicencePopup(props) {
           <Box display="flex" textAlign="right">
             <Typography color="grey1.main">150 words only</Typography>
           </Box>
-          <Box mt={1}>
+          <Box>
             <UploadFile
               fileID={'registrationFileData'}
               uploadFiles="single"
@@ -164,9 +175,20 @@ export default function ReactivateLicencePopup(props) {
               fileData={reActivateFileData}
               setFileData={setReActivateFileData}
               uploadFileLabel="Upload the Supporting Document"
+              borderColor={supportingDocumentError}
             />
+            {supportingDocumentError && (
+              <Typography
+                color="suspendAlert.dark"
+                component="div"
+                display="inline-flex"
+                variant="body2"
+              >
+                Please upload the supporting Document.
+              </Typography>
+            )}
           </Box>
-          <Box display="flex" justifyContent="flex-end" mt={5}>
+          <Box display="flex" justifyContent="flex-end" mt={2}>
             <Button
               onClick={() => handleClose()}
               variant="contained"
@@ -187,7 +209,17 @@ export default function ReactivateLicencePopup(props) {
                 if (reason === undefined || reason === '') {
                   setShowReasonError(true);
                 }
-                if ((reason !== undefined || reason !== '') && fromDate !== undefined) {
+                if (
+                  reActivateFileData?.length === 0 ||
+                  reActivateFileData?.[0].file === undefined
+                ) {
+                  setsupportingDocumentError(true);
+                }
+                if (
+                  reason !== undefined &&
+                  fromDate !== undefined &&
+                  reActivateFileData?.length !== 0
+                ) {
                   handleReactivate();
                 }
               }}

@@ -86,7 +86,7 @@ const WorkProfile = () => {
             onChange={handleCurrentWorking}
             name={'currentWorkingSelection'}
             size="small"
-            defaultValue={work_details?.is_user_currently_working === 1 ? 'no' : 'yes'}
+            defaultValue={work_details?.is_user_currently_working === 1 ? 'no' : ''}
             items={[
               {
                 value: 'yes',
