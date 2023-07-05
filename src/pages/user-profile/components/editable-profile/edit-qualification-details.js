@@ -82,8 +82,8 @@ const EditQualificationDetails = ({
   useEffect(() => {
     fetchColleges(selectedState);
 
-    setValue(`qualification[${index}].university`, '');
-    setValue(`qualification[${index}].college`, '');
+    setValue(`qualification[${index}].university`, null);
+    setValue(`qualification[${index}].college`, null);
     setUniversitiesListData([]);
   }, [selectedState]);
 
@@ -584,7 +584,10 @@ const EditQualificationDetails = ({
           {qualificationfrom === 'International' ? (
             <TextField
               fullWidth
-              error={errors?.qualification?.[index]?.state?.message}
+              error={
+                getValues()?.qualification?.[index]?.state === '' &&
+                errors?.qualification?.[index]?.state?.message
+              }
               name="state"
               label="State (in which college is located)"
               placeholder="Enter state"
@@ -660,7 +663,7 @@ const EditQualificationDetails = ({
               name="college"
               label="Name of the college"
               error={
-                getValues().qualification[index].college === '' &&
+                getValues()?.qualification?.[index]?.college === '' &&
                 errors?.qualification?.[index]?.college?.message
               }
               placeholder="Enter college name"
@@ -733,7 +736,10 @@ const EditQualificationDetails = ({
           {qualificationfrom === 'International' ? (
             <TextField
               fullWidth
-              error={errors?.qualification?.[index]?.university?.message}
+              error={
+                getValues()?.qualification?.[index]?.university === '' &&
+                errors?.qualification?.[index]?.university?.message
+              }
               name="University"
               label="University"
               placeholder="Enter university"
