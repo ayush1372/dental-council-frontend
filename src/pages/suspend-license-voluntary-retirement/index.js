@@ -42,6 +42,8 @@ export function SuspendLicenseVoluntaryRetirement({
   const [queries, setQueries] = useState([]);
   const [showToDateError, setShowToDateError] = useState(false);
   const [showFromDateError, setShowFromDateError] = useState(false);
+  const [showRemarkError, setShowRemarkError] = useState(false);
+  const [showConsentError, setShowConsentError] = useState(false);
 
   const {
     register,
@@ -470,12 +472,17 @@ export function SuspendLicenseVoluntaryRetirement({
                   : ''
               }
               defaultValue={getValues().remark}
-              error={errors.remark?.message}
+              error={showRemarkError ? 'Enter Remarks' : errors.remark?.message}
               {...register('remark', {
                 required: 'Enter Remarks',
                 pattern: {
                   value: /^\W*(?:\w+\b\W*){1,300}?$/i,
                   message: 'Maximum word limit exceeded',
+                },
+                onChange: (e) => {
+                  if (e.target.value !== '') {
+                    setShowRemarkError(false);
+                  }
                 },
               })}
             />
@@ -521,6 +528,13 @@ export function SuspendLicenseVoluntaryRetirement({
               name="notification"
               {...register('notification', {
                 required: 'Please indicate that you accept the Terms and Conditions',
+                onChange: (e) => {
+                  if (e.target.checked) {
+                    setShowConsentError(false);
+                  } else {
+                    setShowConsentError(true);
+                  }
+                },
               })}
               sx={{ padding: '0 8px 0 0' }}
               label={
@@ -530,7 +544,11 @@ export function SuspendLicenseVoluntaryRetirement({
                   ? 'Doctor will no longer be able to receive notifications or perform actions on his/her profile.'
                   : ''
               }
-              error={errors.notification?.message}
+              error={
+                showConsentError
+                  ? 'Please indicate that you accept the Terms and Conditions'
+                  : errors.notification?.message
+              }
             />
           </Box>
         </>
@@ -578,20 +596,33 @@ export function SuspendLicenseVoluntaryRetirement({
             color="secondary"
             onClick={() => {
               if (tabName === 'voluntary-suspend-license') {
-                if (personalDetails?.work_flow_status_id === 1) {
-                  setRejectPopup(true);
-                } else {
-                  setConformSuspend(true);
-                  setConfirmationModal(true);
+                if (getValues().toDate === undefined) {
+                  setShowToDateError(true);
+                }
+                if (getValues().fromDate === undefined) {
+                  setShowFromDateError(true);
+                }
+                if (getValues()?.remark === undefined || getValues()?.remark === '') {
+                  setShowRemarkError(true);
+                }
+                if (getValues().notification === false) {
+                  setShowConsentError(true);
+                }
+                if (
+                  getValues().toDate !== undefined &&
+                  getValues().fromDate !== undefined &&
+                  getValues().notification !== false &&
+                  (getValues()?.remark !== undefined || getValues()?.remark !== '')
+                ) {
+                  if (personalDetails?.work_flow_status_id === 1) {
+                    setRejectPopup(true);
+                  } else {
+                    setConformSuspend(true);
+                    setConfirmationModal(true);
+                  }
                 }
               } else {
                 handleSubmit(onSubmit);
-              }
-              if (getValues().toDate === undefined) {
-                setShowToDateError(true);
-              }
-              if (getValues().fromDate === undefined) {
-                setShowFromDateError(true);
               }
             }}
             sx={{
