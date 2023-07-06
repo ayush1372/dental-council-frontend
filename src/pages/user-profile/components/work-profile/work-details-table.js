@@ -33,10 +33,12 @@ function createData(
 }
 
 function WorkDetailsTable({
+  statesList,
   FacilityData,
   trackStatusData,
-  setFacilityResponseData,
+  facilityDistrict,
   declaredFacilityData,
+  setFacilityResponseData,
   setDeclaredFacilityDistrict,
 }) {
   const [page, setPage] = React.useState(0);
@@ -90,23 +92,44 @@ function WorkDetailsTable({
     setCurrentRowIndex(rowIndex);
   };
 
+  const getStateISOCode = (State) => {
+    let stateData = [];
+
+    statesList?.map((elementData) => {
+      if (elementData.iso_code === State) {
+        stateData.push(elementData);
+      }
+    });
+
+    return stateData[0]?.name;
+  };
+  const getDistrictISOCode = (District) => {
+    let DistrictData = [];
+    facilityDistrict?.map((elementData) => {
+      if (elementData.iso_code === District) {
+        DistrictData.push(elementData);
+      }
+    });
+    return DistrictData[0]?.name;
+  };
+
   const newRowsData = FacilityData?.map((application) => {
     return createData(
       {
         type: 'name',
-        value: toUpperCase(application?.facilityName),
+        value: toUpperCase(application?.name),
       },
       {
         type: 'address',
-        value: application?.address,
+        value: application?.address?.addressLine1,
       },
       {
         type: 'state',
-        value: capitalizeFirstLetter(application?.stateName),
+        value: capitalizeFirstLetter(getStateISOCode(application?.address?.state, true)),
       },
       {
         type: 'district',
-        value: application.districtName,
+        value: getDistrictISOCode(application?.address?.district, true),
       },
       {
         type: 'type',

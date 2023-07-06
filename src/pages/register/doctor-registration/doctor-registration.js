@@ -81,11 +81,11 @@ const DoctorRegistrationWelcomePage = () => {
 
       <Box>
         {isNext === false ? (
-          <Box my={9}>
+          <Box my={4}>
             <Container
               sx={{
                 boxShadow: '1',
-                pt: 4,
+                pt: 2,
                 width: {
                   xs: '100%',
                   md: '679px',
@@ -93,7 +93,7 @@ const DoctorRegistrationWelcomePage = () => {
               }}
             >
               <Box>
-                <Box pt={2} pb={4}>
+                <Box pt={1} pb={1}>
                   <Typography variant="h2" color="textSecondary.main">
                     Register Your Profile
                   </Typography>
@@ -136,7 +136,7 @@ const DoctorRegistrationWelcomePage = () => {
                     />
                   </Box>
                 </Box>
-                <Box pb={5}>
+                <Box pb={4}>
                   <Typography variant="body1" color="textSecondary.main">
                     Registration Number
                     <Typography component="span" color="error.main">
@@ -162,7 +162,7 @@ const DoctorRegistrationWelcomePage = () => {
                     })}
                   />
                 </Box>
-                <Box display="flex" pb={6}>
+                <Box display="flex" pb={4}>
                   <Button
                     onClick={handleSubmit(onSubmit)}
                     variant="contained"
