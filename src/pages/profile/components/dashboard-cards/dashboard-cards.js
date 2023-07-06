@@ -22,7 +22,10 @@ import {
 } from '../../../../constants/common-data';
 import ViewProfile from '../../../../shared/view-profile/view-profile';
 import { getCardCount } from '../../../../store/actions/dashboard-actions';
-import { setBreadcrumbsActivetab } from '../../../../store/reducers/common-reducers';
+import {
+  navigateDashboard,
+  setBreadcrumbsActivetab,
+} from '../../../../store/reducers/common-reducers';
 import { Button } from '../../../../ui/core';
 import UserProfile from '../../../user-profile/index';
 import BreadcrumbsCompnent from '../breadcrums';
@@ -39,6 +42,7 @@ export default function Dashboard() {
   const [selectedCardData, setSelectedCardData] = useState();
   const [selectedRowData, setSelectedRowData] = useState();
   const dispatch = useDispatch();
+  const { redirectDashboard } = useSelector((state) => state.common);
 
   const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(3),
@@ -92,6 +96,15 @@ export default function Dashboard() {
       'Suspension Request': suspensionRequestData,
     });
   }
+  useEffect(() => {
+    if (redirectDashboard) {
+      setShowTable(false);
+      setShowDashboard(true);
+      setShowViewPorfile(false);
+      setSelectedRowData();
+      dispatch(navigateDashboard(false));
+    }
+  }, [redirectDashboard]);
 
   function getDataFromResponse(count, mapper, key) {
     let dataArr = [];
@@ -113,7 +126,6 @@ export default function Dashboard() {
 
     return dataArr;
   }
-
   function handleBreadCrumClick(event) {
     event.preventDefault();
     if (event.target.id === '1') {
