@@ -17,7 +17,11 @@ import {
   getSpecialitiesList,
   getStatesList,
 } from '../../store/actions/common-actions';
-import { changeUserActiveTab, userLoggedInType } from '../../store/reducers/common-reducers';
+import {
+  changeUserActiveTab,
+  navigateDashboard,
+  userLoggedInType,
+} from '../../store/reducers/common-reducers';
 import MiniDrawer from './components/profile-sidebar/profile-sidebar';
 import ProfileTabContainer from './components/profile-sidebar/profile-tab-container';
 
@@ -41,11 +45,10 @@ export function Profile() {
   const setActiveTab = (activeTab) => {
     setIsActiveTab(activeTab);
     dispatch(changeUserActiveTab(activeTab));
+    if (activeTab === 'dashboard') {
+      dispatch(navigateDashboard(true));
+    }
   };
-
-  useEffect(() => {
-    //dispatch(changeUserActiveTab(isActiveTab));
-  }, [isActiveTab]);
 
   useEffect(() => {
     dispatch(
