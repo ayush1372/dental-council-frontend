@@ -111,7 +111,8 @@ const ProfileConsent = ({
       templateId: 'TEMPLATE_1',
       signingPlace:
         personalDetails?.communication_address?.village?.name ||
-        personalDetails?.communication_address?.district?.name,
+        personalDetails?.communication_address?.district?.name ||
+        personalDetails?.communication_address?.state?.name,
       nmrDetails: {
         nmrPersonalDetail: {
           fullName: personalDetails?.personal_details?.full_name || '',
