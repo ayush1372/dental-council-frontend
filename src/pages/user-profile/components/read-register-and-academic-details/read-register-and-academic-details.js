@@ -243,6 +243,7 @@ const ReadRegisterAndAcademicDetails = ({
                                 (loggedInUserType !== 'SMC' &&
                                   userActiveTab !== 'Activate Licence' &&
                                   selectedAcademicStatus !== 'Forwarded')) && (
+                                // eslint-disable-next-line react/jsx-indent
                                 <Button
                                   variant="contained"
                                   color="secondary"
