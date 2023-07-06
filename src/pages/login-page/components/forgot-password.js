@@ -111,7 +111,7 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep })
   };
 
   return (
-    <Box p={4} bgcolor="white.main" boxShadow="4">
+    <Box p={3} bgcolor="white.main" boxShadow="4">
       <Typography
         variant="h2"
         component="div"
