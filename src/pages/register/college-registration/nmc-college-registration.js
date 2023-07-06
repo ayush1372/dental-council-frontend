@@ -126,7 +126,7 @@ function NMCCollegeRegistration() {
         })
         .catch((error) => {
           successToast(
-            error?.data?.response?.data?.error,
+            error?.data?.response?.data?.message,
             'RegistrationError',
             'error',
             'top-center'
