@@ -167,27 +167,27 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }
       <ToastContainer></ToastContainer>
       <Box
         data-testid="new-password-setup"
-        p={4}
+        p={3}
         bgcolor="white.main"
         boxShadow="4"
         width={otpData?.page === 'forgotPasswordPage' ? '100%' : '40%'}
       >
-        <Typography mt={2} variant="h4" component="div" textAlign="center" data-testid="Password">
+        <Typography variant="h4" component="div" textAlign="center" data-testid="Password">
           {uniqueHpId ? `Welcome, ${uniqueHpId} ! ` : 'Welcome !'}
         </Typography>
         <Typography
-          mt={2}
+          
           variant="body1"
           component="div"
           textAlign="center"
           data-testid="Password"
-          pb={1}
+         
         >
           {`Please set your password `}
         </Typography>
 
         <Box>
-          <Box mt={2} sx={{ minHeight: '120px' }}>
+          <Box mt={1}>
             <Typography variant="body1">
               New Password
               <Typography component="span" color="error.main">
@@ -212,7 +212,7 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }
               newPassword={true}
             />
           </Box>
-          <Box mt={2}>
+          <Box mt={3}>
             <Typography variant="body1" data-testid="confirmPassword">
               Confirm Password
               <Typography component="span" color="error.main">
