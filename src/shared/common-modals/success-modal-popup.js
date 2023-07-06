@@ -98,11 +98,14 @@ export default function SuccessModalPopup({
           behavior: 'smooth',
         });
       } else {
-        dispatch(getPersonalDetailsData(loginData?.data?.profile_id))
-          .then(() => {})
-          .catch((allFailMsg) => {
-            successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-          });
+        if (loggedInUserType !== 'SMC' && loggedInUserType !== 'NMC') {
+          dispatch(getPersonalDetailsData(loginData?.data?.profile_id))
+            .then(() => {})
+            .catch((allFailMsg) => {
+              successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+            });
+        }
+
         dispatch(getCardCount());
         dispatch(changeUserActiveTab(ActiveTab));
 
