@@ -18,14 +18,12 @@ import {
 } from '../../../../store/actions/common-actions';
 import {
   getFacilitiesData,
-  getWorkProfileDetailsData,
   updateDoctorWorkDetails,
 } from '../../../../store/actions/doctor-user-profile-actions';
 import { Button, Checkbox, RadioGroup, Select, TextField } from '../../../../ui/core';
 import { SvgImageComponent } from '../../../../ui/core/svg-icons/index';
 import successToast from '../../../../ui/core/toaster';
 import { getFacilityDistrictList } from './district-api';
-import FacilityDetailsTable from './facility-details-table';
 import WorkDetailsTable from './work-details-table';
 
 const WorkDetails = ({
@@ -39,42 +37,21 @@ const WorkDetails = ({
 }) => {
   const dispatch = useDispatch();
 
+  const { loginData } = useSelector((state) => state.loginReducer);
+  const { registrationDetails } = useSelector((state) => state.doctorUserProfileReducer);
+
   const [tabValue, setTabValue] = useState(0);
   const [languages, setLanguages] = useState([]);
   const [showTable, setShowTable] = useState(false);
   const [workExpierence, setWorkExpierence] = useState(0);
+  const [languageError, setLanguageError] = useState(false);
   const [facilityDistrict, setFacilityDistrict] = useState([]);
   const [facilityChecked, setFacilityChecked] = useState(true);
   const [successModalPopup, setSuccessModalPopup] = useState(false);
+  const [facilityResponseData, setFacilityResponseData] = useState([]);
+  const [workExperianceError, setWorkExperianceError] = useState(false);
   const [organizationChecked, setOrganizationChecked] = useState(false);
   const [declaredFacilityData, setDeclaredFacilityDistrict] = useState([]);
-  const [defaultFacilityData, setDefaultFacilityData] = useState([]);
-  const [workExperianceError, setWorkExperianceError] = useState(false);
-  const [languageError, setLanguageError] = useState(false);
-
-  const { loginData } = useSelector((state) => state.loginReducer);
-  const { registrationDetails, workProfileDetails } = useSelector(
-    (state) => state.doctorUserProfileReducer
-  );
-
-  const [facilityResponseData, setFacilityResponseData] = useState([]);
-
-  useEffect(() => {
-    dispatch(getWorkProfileDetailsData(loginData?.data?.profile_id))
-      .then((response) => {
-        if (response?.data) {
-          setDefaultFacilityData(response?.data);
-        }
-      })
-      .catch(() => {
-        successToast(
-          'No matching work profile details found for the given hp_profile_id.',
-          'auth-error',
-          'error',
-          'top-center'
-        );
-      });
-  }, []);
 
   const onSubmit = () => {
     const currentWorkDetails = {
@@ -1107,27 +1084,6 @@ const WorkDetails = ({
               text={'Your Work-Details has been submitted successfully.'}
             />
           )}
-        </Grid>
-      )}
-      {defaultFacilityData?.current_work_details?.length > 0 && (
-        <Grid container>
-          <Grid item xs={12}>
-            <Typography
-              bgcolor="grey1.light"
-              p={1}
-              component="div"
-              color="tabHighlightedBackgroundColor.main"
-              variant="h3"
-            >
-              Declared Place Of Work
-            </Typography>
-          </Grid>
-          <Grid item xs={12} padding="10px 0 !important">
-            <FacilityDetailsTable
-              declaredFacilityData={defaultFacilityData}
-              currentWorkDetails={workProfileDetails?.current_work_details}
-            />
-          </Grid>
         </Grid>
       )}
     </>
