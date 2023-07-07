@@ -98,7 +98,12 @@ export default function SuccessModalPopup({
           behavior: 'smooth',
         });
       } else {
-        if (loggedInUserType !== 'SMC' && loggedInUserType !== 'NMC') {
+        if (
+          loggedInUserType !== 'SMC' &&
+          loggedInUserType !== 'NMC' &&
+          loggedInUserType !== 'College' &&
+          loggedInUserType !== 'NBE'
+        ) {
           dispatch(getPersonalDetailsData(loginData?.data?.profile_id))
             .then(() => {})
             .catch((allFailMsg) => {

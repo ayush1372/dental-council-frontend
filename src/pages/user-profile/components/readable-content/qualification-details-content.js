@@ -214,7 +214,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
           <Grid container item spacing={2} mt={1}>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="grey.label">
-                Name of the College
+                Name of the college
                 <Typography component="span" color="error.main">
                   *
                 </Typography>
