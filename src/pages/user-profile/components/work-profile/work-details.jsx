@@ -252,6 +252,10 @@ const WorkDetails = ({
   };
 
   useEffect(() => {
+    dispatch(getStatesList(356));
+  }, []);
+
+  useEffect(() => {
     fetchState(watchCountry);
   }, [watchCountry]);
 
@@ -673,7 +677,6 @@ const WorkDetails = ({
                   <WorkDetailsTable
                     FacilityData={facilityResponseData}
                     register={register}
-                    statesList={statesList}
                     facilityDistrict={facilityDistrict}
                     setFacilityResponseData={setFacilityResponseData}
                     setDeclaredFacilityDistrict={setDeclaredFacilityDistrict}
