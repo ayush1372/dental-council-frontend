@@ -129,7 +129,7 @@ function WorkDetailsTable({
       },
       {
         type: 'district',
-        value: getDistrictISOCode(application?.address?.district, true),
+        value: getDistrictISOCode(application?.address?.district, true) || '-',
       },
       {
         type: 'type',
