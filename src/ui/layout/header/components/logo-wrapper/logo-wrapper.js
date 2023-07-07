@@ -110,7 +110,7 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
       },
       [theme.breakpoints.down('xs')]: {
         height: '36px',
-      }
+      },
     },
     loader: {
       display: 'flex',

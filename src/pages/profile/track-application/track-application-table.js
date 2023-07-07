@@ -208,7 +208,7 @@ function TrackAppicationTable({
         },
         { type: 'pendency', value: data?.pendency },
 
-        { type: 'view', value: data?.view || 'view more', onClickCallback: viewCallback }
+        { type: 'view', value: data?.view || 'View', onClickCallback: viewCallback }
       );
     }
   );
