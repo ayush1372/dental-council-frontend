@@ -7,6 +7,7 @@ import {
   Box,
   IconButton,
   InputAdornment,
+  StyledEngineProvider,
   TextField as MuiTextField,
   Typography,
 } from '@mui/material';
@@ -88,7 +89,7 @@ const InputField = (
       />
     ) : null;
   return (
-    <>
+    <StyledEngineProvider injectFirst>
       {label && (
         <Box>
           <Typography
@@ -139,7 +140,7 @@ const InputField = (
         }
       />
       {addon}
-    </>
+    </StyledEngineProvider>
   );
 };
 

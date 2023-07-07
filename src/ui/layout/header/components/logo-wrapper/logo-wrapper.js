@@ -267,7 +267,7 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
               <Button
                 variant="contained"
                 color="secondary"
-                // size="small"
+                size="small"
                 onClick={handleClickLoginRegister}
                 endIcon={<KeyboardArrowDownIcon />}
               >

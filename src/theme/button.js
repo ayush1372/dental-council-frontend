@@ -28,35 +28,26 @@ export const Button = (palette, appFontType) => ({
       borderRadius: '3px',
       fontSize: changeAppFontSize(14, appFontType),
       lineHeight: '22px',
-      padding: '7px 16px',
+      padding: '8px 16px',
     },
     sizeMedium: {
       borderRadius: '5px',
-      fontSize: changeAppFontSize(16, appFontType),
-      lineHeight: '24px',
-      padding: '10px 24px',
+      fontSize: changeAppFontSize(18, appFontType),
+      lineHeight: '28px',
+      padding: '12px 24px',
     },
     sizeLarge: {
       borderRadius: '8px',
       fontSize: changeAppFontSize(18, appFontType),
       lineHeight: '28px',
-      padding: '14px 32px',
+      padding: '16px 32px',
       '@media (max-width: 600px)': {
         fontSize: changeAppFontSize(16, appFontType),
-        padding: '10px 24px',
+        padding: '12px 24px',
       },
     },
     outlined: {
       borderWidth: '2px',
-    },
-    outlinedSizeSmall: {
-      padding: '5px 16px',
-    },
-    outlinedSizeMedium: {
-      padding: '8px 24px',
-    },
-    outlinedSizeLarge: {
-      padding: '12px 32px',
     },
     outlinedPrimary: {
       color: palette.primary.main,

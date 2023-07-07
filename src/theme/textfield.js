@@ -5,10 +5,8 @@ export const TextField = (palette, appFontType) => ({
     {
       props: { size: 'large' },
       style: {
-        input: {
-          padding: '16px',
-          fontSize: changeAppFontSize(18, appFontType),
-        },
+        fontSize: changeAppFontSize(18, appFontType),
+        lineHeight: '28px',
       },
     },
     {
@@ -62,10 +60,7 @@ export const TextField = (palette, appFontType) => ({
         paddingRight: '0',
       },
     },
-    input: {
-      height: 'auto',
-      padding: '10px 16px',
-    },
+
     colorSuccess: {
       '&:hover .MuiOutlinedInput-notchedOutline': {
         border: `2px solid ${palette.success.main}`,
@@ -81,7 +76,7 @@ export const TextField = (palette, appFontType) => ({
     inputSizeSmall: {
       fontSize: changeAppFontSize(14, appFontType),
       lineHeight: '22px',
-      padding: '7px 16px',
+      padding: '9px 16px',
     },
     success: {
       color: palette.success.main,
