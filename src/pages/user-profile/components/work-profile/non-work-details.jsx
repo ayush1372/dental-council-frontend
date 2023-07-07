@@ -130,6 +130,7 @@ const NonWorkDetails = ({
       {successModalPopup && (
         <SuccessModalPopup
           open={successModalPopup}
+          workDetails={true}
           setOpen={() => setSuccessModalPopup(false)}
           text={'Your Work Details has been successfully updated'}
         />
