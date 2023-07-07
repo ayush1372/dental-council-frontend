@@ -22,6 +22,7 @@ import {
   updateDoctorWorkDetails,
 } from '../../../../store/actions/doctor-user-profile-actions';
 import { Button, Checkbox, RadioGroup, Select, TextField } from '../../../../ui/core';
+import { SvgImageComponent } from '../../../../ui/core/svg-icons/index';
 import successToast from '../../../../ui/core/toaster';
 import { getFacilityDistrictList } from './district-api';
 import FacilityDetailsTable from './facility-details-table';
@@ -49,6 +50,7 @@ const WorkDetails = ({
   const [declaredFacilityData, setDeclaredFacilityDistrict] = useState([]);
   const [defaultFacilityData, setDefaultFacilityData] = useState([]);
   const [workExperianceError, setWorkExperianceError] = useState(false);
+  const [languageError, setLanguageError] = useState(false);
 
   const { loginData } = useSelector((state) => state.loginReducer);
   const { registrationDetails, workProfileDetails } = useSelector(
@@ -78,7 +80,6 @@ const WorkDetails = ({
     const currentWorkDetails = {
       work_details: {
         is_user_currently_working: currentWorkingSelection === 'yes' ? 0 : 1,
-        work_status: getWorkStatus(getValues().workStatus),
         work_nature: getWorkNature(getValues().NatureOfWork),
       },
       current_work_details: [
@@ -105,33 +106,23 @@ const WorkDetails = ({
           experience_in_years: workExpierence,
         },
       ],
-      registration_no: registrationDetails?.registration_detail_to?.registration_number,
+      hp_profile_id: loginData?.data?.profile_id,
       languages_known_ids: getLanguageData(getValues().LanguageSpoken),
     };
     if (declaredFacilityData?.length > 0) {
       let facilityDetailsDeclared = {
-        facility_id: declaredFacilityData[0]?.facilityId,
-        facility_type_id: declaredFacilityData[0]?.facilityTypeCode,
+        facility_id: declaredFacilityData[0]?.id,
         organization_type: getValues().organizationType,
-        work_organization: getValues().workingOrganizationName,
+        work_organization: declaredFacilityData[0]?.name,
         url: getValues().telecommunicationURL,
         address: {
-          id: null,
-
-          pincode: declaredFacilityData[0]?.pincode,
-          systemOfMedicine: declaredFacilityData[0]?.systemOfMedicine,
+          pincode: declaredFacilityData[0]?.address?.pincode,
           country: {
             id: 386,
             name: 'india',
           },
-          state: {
-            iso_code: declaredFacilityData[0]?.stateLGDCode,
-            name: declaredFacilityData[0]?.stateName,
-          },
-          district: {
-            iso_code: declaredFacilityData[0]?.districtLGDCode,
-            name: declaredFacilityData[0]?.districtName,
-          },
+          state: getStateData(declaredFacilityData[0]?.address?.state, true),
+          district: getFacilityDistrict(declaredFacilityData[0]?.address?.district),
           village: {
             iso_code: declaredFacilityData[0]?.villageCityTownLGDCode,
             name: declaredFacilityData[0]?.villageCityTownName,
@@ -140,12 +131,15 @@ const WorkDetails = ({
             iso_code: declaredFacilityData[0]?.subDistrictLGDCode,
             name: declaredFacilityData[0]?.subDistrictName,
           },
-          address_line1: declaredFacilityData[0]?.Address,
+          address_line1: declaredFacilityData[0]?.address?.addressLine1,
           street: getValues().Street,
           landmark: getValues().Landmark,
         },
         registration_no: registrationDetails?.registration_detail_to?.registration_number,
         experience_in_years: workExpierence,
+        system_of_medicine: declaredFacilityData[0]?.systemOfMedicine,
+        department: declaredFacilityData[0]?.department || 'department',
+        designation: declaredFacilityData[0]?.designation || 'desgination',
       };
       currentWorkDetails?.current_work_details.push(facilityDetailsDeclared);
     }
@@ -223,16 +217,16 @@ const WorkDetails = ({
         : '';
     const searchFacilities = {
       page: 0,
-      ownershipCode: ownerCode,
+      ownership: ownerCode,
       resultsPerPage: 10,
-      facilityId: values.facilityId || '',
-      facilityName: values.facilityName || '',
-      stateLGDCode: getStateISOCode(values.stateLGDCode) || '',
-      districtLGDCode: getDistrictISOCode(values.districtLGDCode) || '',
+      id: values.facilityId || null,
+      facilityName: values.facilityName || null,
+      state: getStateISOCode(values.stateLGDCode) || '',
+      district: getDistrictISOCode(values.districtLGDCode) || '',
     };
     dispatch(getFacilitiesData(searchFacilities))
       .then((response) => {
-        if (response?.data?.message === 'Request processed successfully') {
+        if (response?.data) {
           setFacilityResponseData(response?.data?.facilities);
         }
       })
@@ -242,6 +236,15 @@ const WorkDetails = ({
     setShowTable(true);
   };
 
+  const getFacilityDistrict = (District) => {
+    let DistrictData = [];
+    facilityDistrict?.map((elementData) => {
+      if (elementData.iso_code === District) {
+        DistrictData.push(elementData);
+      }
+    });
+    return DistrictData[0];
+  };
   // watches
   const watchCountry = watch('Country');
   const watchState = watch('state');
@@ -293,26 +296,31 @@ const WorkDetails = ({
 
   const getCountryData = (country) => {
     let CountryData = [];
-
     countriesList?.map((elementData) => {
       if (elementData.id === country) {
         CountryData.push(elementData);
       }
     });
-
     return CountryData[0];
   };
-  const getStateData = (State) => {
+
+  const getStateData = (State, facility) => {
     let stateData = [];
     Array.isArray(statesList) &&
       statesList?.map((elementData) => {
-        if (elementData.id === State) {
-          stateData.push(elementData);
+        if (facility) {
+          if (elementData.iso_code === State) {
+            stateData.push(elementData);
+          }
+        } else {
+          if (elementData.id === State) {
+            stateData.push(elementData);
+          }
         }
       });
-
     return stateData[0];
   };
+
   const getDistrictData = (District) => {
     let DistrictData = [];
     Array.isArray(districtsList) &&
@@ -356,40 +364,24 @@ const WorkDetails = ({
     return workNatureData[0];
   };
 
-  const getWorkStatus = (workstatus) => {
-    let workStatusData = [];
-    workStatusOptions?.map((elementData) => {
-      if (elementData.id === Number(workstatus)) {
-        if (elementData.name === 'Government only') {
-          workStatusData.push({ id: elementData.id, name: 'G' });
-        }
-        if (elementData.name === 'Private Practice only') {
-          workStatusData.push({ id: elementData.id, name: 'P' });
-        }
-        if (elementData.name === 'Both') {
-          workStatusData.push({ id: elementData.id, name: 'PP' });
-        }
-      }
-    });
-
-    return workStatusData[0];
-  };
   const getLanguageData = (language) => {
     let languageData = [];
     Array.isArray(languagesList?.data) &&
       languagesList?.data?.map((elementData) => {
-        language?.map((langdata) => {
-          if (elementData.id === langdata.id) {
-            languageData.push(elementData.id);
-          }
-        });
+        Array.isArray(language) &&
+          language?.map((langdata) => {
+            if (elementData.id === langdata.id) {
+              languageData.push(elementData.id);
+            }
+          });
       });
     return languageData;
   };
 
   useEffect(() => {
-    if (Object.keys(errors).length !== 0) {
+    if (Object.keys(errors).length > 1) {
       workExpierence === 0 ? setWorkExperianceError(true) : setWorkExperianceError(false);
+      getValues()?.LanguageSpoken?.length === 0 ? setLanguageError(true) : setLanguageError(false);
     }
   }, [errors.NatureOfWork?.message, errors.workStatus?.message, errors?.LanguageSpoken?.message]);
 
@@ -498,15 +490,23 @@ const WorkDetails = ({
           name={'LanguageSpoken'}
           options={languagesList?.data || []}
           value={languages}
-          error={getValues()?.LanguageSpoken?.length < 1 && errors?.LanguageSpoken?.message}
           multiple={true}
-          {...register('LanguageSpoken', {
-            required: `LanguageSpoken is required`,
-          })}
+          {...register('LanguageSpoken')}
           onChange={(value) => {
+            setLanguageError(false);
             handleLanguageSpokenChange('LanguageSpoken', value);
           }}
         />
+        {languageError && (
+          <Typography
+            style={{ display: 'flex', alignItems: 'center' }}
+            variant="body2"
+            color="error"
+          >
+            <SvgImageComponent color={'error'} icon={'error'} />
+            {`LanguageSpoken is required`}
+          </Typography>
+        )}
 
         <Typography variant="body4" color="messageBlue.main" display="flex" alignItems="center">
           <InfoOutlinedIcon sx={{ fontSize: '20px', padding: '2px' }} />
@@ -696,6 +696,8 @@ const WorkDetails = ({
                   <WorkDetailsTable
                     FacilityData={facilityResponseData}
                     register={register}
+                    statesList={statesList}
+                    facilityDistrict={facilityDistrict}
                     setFacilityResponseData={setFacilityResponseData}
                     setDeclaredFacilityDistrict={setDeclaredFacilityDistrict}
                     declaredFacilityData={declaredFacilityData}

@@ -11,6 +11,7 @@ const initialState = {
   mobileNumber: undefined,
   loggedInUserType: '',
   userActiveTab: '',
+  redirectDashboard: false,
   statesList: { data: [], isLoading: Boolean(true), isError: false },
   citiesList: { data: [], isLoading: Boolean(true), isError: false },
   countriesList: { data: [], isLoading: Boolean(true), isError: false },
@@ -61,6 +62,9 @@ export const CommonActivity = createSlice({
     },
     changeUserActiveTab: (state, action) => {
       state.userActiveTab = action.payload;
+    },
+    navigateDashboard: (state, action) => {
+      state.redirectDashboard = action.payload;
     },
     getStates: (state, action) => {
       state.statesList = action.payload;
@@ -146,6 +150,7 @@ export const {
   resetCommonReducer,
   setApiLoading,
   changeUserActiveTab,
+  navigateDashboard,
   getStates,
   getCities,
   getCountries,
