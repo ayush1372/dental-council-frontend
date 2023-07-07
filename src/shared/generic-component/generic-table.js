@@ -271,14 +271,16 @@ export default function GenericTable(props) {
                   } else if (item.title === 'Action' && userActiveTab === 'track-application') {
                     return (
                       <TableCell maxWidth={`${tableCellWidth}%`} key={index} align="left">
-                        <Link
-                          sx={{ cursor: 'pointer' }}
-                          variant="body1"
-                          fontWeight="500"
+                        <Button
+                          variant="contained"
+                          size="small"
+                          sx={{
+                            backgroundColor: 'secondary.main',
+                          }}
                           onClick={(event) => row[item.name]?.onClickCallback(event, row)}
                         >
                           {row[item.name]?.value}
-                        </Link>
+                        </Button>
                       </TableCell>
                     );
                   } else if (
