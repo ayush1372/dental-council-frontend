@@ -22,6 +22,7 @@ const RadioField = (
     inline,
     defaultValue,
     dataTestid,
+    value,
     ...props
   },
   ref
@@ -43,6 +44,7 @@ const RadioField = (
         name={name}
         defaultValue={defaultValue}
         sx={{ display: inline ? '' : 'block' }}
+        value={value}
       >
         {items.map((o) => (
           <FormControlLabel

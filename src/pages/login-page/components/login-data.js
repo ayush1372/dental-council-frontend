@@ -381,7 +381,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
                 onClick={() => handleForgotPassword()}
                 sx={{ cursor: 'pointer', display: 'contents' }}
               >
-                Forgot Password?
+                Forgot Password ?
               </Button>
             </Typography>
           </>
