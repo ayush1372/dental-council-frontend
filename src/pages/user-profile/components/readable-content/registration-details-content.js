@@ -217,7 +217,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
         </Grid>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
-            Upload the Registration Certificate
+            Upload Registration Certificate
             <Typography component="span" color="error.main">
               *
             </Typography>
