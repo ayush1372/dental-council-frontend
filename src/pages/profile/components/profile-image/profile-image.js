@@ -216,100 +216,108 @@ export default function ProfileImage(props) {
           </Typography>
         </Grid>
       </Grid>
-      {loggedInUserType === 'Doctor' && nmrIdData && (
-        <Grid display="flex" borderRight={`1px solid ${theme.palette.inputBorderColor.main}`} item>
-          <Typography variant="subtitle2" color="grey.label" sx={{ mr: '5px' }}>
-            NMR ID :
-          </Typography>
-          <Typography variant="subtitle2" color="textPrimary.main">
-            {nmrIdData ? nmrIdData : ''}
-          </Typography>{' '}
-        </Grid>
-      )}
-      {(personalDetails?.hp_profile_status_id === 5 ||
-        personalDetails?.hp_profile_status_id === 6) && (
-        <Grid container mt={1}>
-          <Grid item xs={12}>
-            <Typography
-              color="suspendAlert.dark"
-              component="div"
-              textAlign="center"
-              display="inline-flex"
-              variant="body2"
+      {loggedInUserType === 'Doctor' && (
+        <>
+          {nmrIdData && (
+            <Grid
+              display="flex"
+              borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
+              item
             >
-              Your profile is set to suspend mode.
-              <br />
-              You will not be able to perform actions <br />
-              on the profile.
-            </Typography>
-          </Grid>
-          <Grid item xs={12} textAlign="center" mt={1} mr={2}>
-            <img
-              src={ReactivationLogo}
-              alt="Reactivation license logo"
-              width="15px"
-              height="15px"
-            />
-            <Link
-              sx={{
-                cursor: 'pointer',
-                'pointer-events':
-                  (personalDetails?.hp_profile_status_id === 5 ||
-                    personalDetails?.hp_profile_status_id === 6) &&
-                  personalDetails?.work_flow_status_id === 1
-                    ? 'none'
-                    : 'unset',
-                opacity:
-                  (personalDetails?.hp_profile_status_id === 5 ||
-                    personalDetails?.hp_profile_status_id === 6) &&
-                  personalDetails?.work_flow_status_id === 1
-                    ? 0.5
-                    : 'unset',
-              }}
-              ml={1}
-              variant="subtitle2"
-              onClick={() => {
-                setShowReactivateLicense(true);
-                setShowSuccessPopup(false);
-              }}
-            >
-              Reactivate License
-            </Link>
-          </Grid>
-        </Grid>
-      )}
-      {doctorEsignStatus === 2 && loginData?.data?.hp_profile_status_id !== 7 && (
-        <Grid container mt={1}>
-          <Grid item>
-            <Typography
-              color="suspendAlert.dark"
-              component="div"
-              display="inline-flex"
-              variant="body2"
-            >
-              You have done E-sign with different
-              <br /> account. Please verify and re-do the <br />
-              E-sign process correctly.
-            </Typography>
-          </Grid>
-        </Grid>
-      )}
-      {doctorEsignStatus === 3 && loginData?.data?.hp_profile_status_id !== 7 && (
-        <Grid container mt={1}>
-          <Grid item>
-            <Typography
-              color="suspendAlert.dark"
-              component="div"
-              display="inline-flex"
-              variant="body2"
-            >
-              Your profile has to complete E-sign <br />
-              process. You will not be able to perform <br /> actions on the profile untill you{' '}
-              <br />
-              complete E-sign process.
-            </Typography>
-          </Grid>
-        </Grid>
+              <Typography variant="subtitle2" color="grey.label" sx={{ mr: '5px' }}>
+                NMR ID :
+              </Typography>
+              <Typography variant="subtitle2" color="textPrimary.main">
+                {nmrIdData ? nmrIdData : ''}
+              </Typography>{' '}
+            </Grid>
+          )}
+          {(personalDetails?.hp_profile_status_id === 5 ||
+            personalDetails?.hp_profile_status_id === 6) && (
+            <Grid container mt={1}>
+              <Grid item xs={12}>
+                <Typography
+                  color="suspendAlert.dark"
+                  component="div"
+                  textAlign="center"
+                  display="inline-flex"
+                  variant="body2"
+                >
+                  Your profile is set to suspend mode.
+                  <br />
+                  You will not be able to perform actions <br />
+                  on the profile.
+                </Typography>
+              </Grid>
+              <Grid item xs={12} textAlign="center" mt={1} mr={2}>
+                <img
+                  src={ReactivationLogo}
+                  alt="Reactivation license logo"
+                  width="15px"
+                  height="15px"
+                />
+                <Link
+                  sx={{
+                    cursor: 'pointer',
+                    'pointer-events':
+                      (personalDetails?.hp_profile_status_id === 5 ||
+                        personalDetails?.hp_profile_status_id === 6) &&
+                      personalDetails?.work_flow_status_id === 1
+                        ? 'none'
+                        : 'unset',
+                    opacity:
+                      (personalDetails?.hp_profile_status_id === 5 ||
+                        personalDetails?.hp_profile_status_id === 6) &&
+                      personalDetails?.work_flow_status_id === 1
+                        ? 0.5
+                        : 'unset',
+                  }}
+                  ml={1}
+                  variant="subtitle2"
+                  onClick={() => {
+                    setShowReactivateLicense(true);
+                    setShowSuccessPopup(false);
+                  }}
+                >
+                  Reactivate License
+                </Link>
+              </Grid>
+            </Grid>
+          )}
+          {doctorEsignStatus === 2 && loginData?.data?.hp_profile_status_id !== 7 && (
+            <Grid container mt={1}>
+              <Grid item>
+                <Typography
+                  color="suspendAlert.dark"
+                  component="div"
+                  display="inline-flex"
+                  variant="body2"
+                >
+                  You have done E-sign with different
+                  <br /> account. Please verify and re-do the <br />
+                  E-sign process correctly.
+                </Typography>
+              </Grid>
+            </Grid>
+          )}
+          {doctorEsignStatus === 3 && loginData?.data?.hp_profile_status_id !== 7 && (
+            <Grid container mt={1}>
+              <Grid item>
+                <Typography
+                  color="suspendAlert.dark"
+                  component="div"
+                  display="inline-flex"
+                  variant="body2"
+                >
+                  Your profile has to complete E-sign <br />
+                  process. You will not be able to perform <br /> actions on the profile untill you{' '}
+                  <br />
+                  complete E-sign process.
+                </Typography>
+              </Grid>
+            </Grid>
+          )}
+        </>
       )}
       {showReactivateLicense && (
         <ReactivateLicencePopup
