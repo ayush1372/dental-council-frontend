@@ -223,17 +223,18 @@ export default function GenericTable(props) {
                                         selectionChangeHandler(e, row)
                                       }
                                       disabled={
-                                        row['NMCVerificationStatus']?.value === 'Blacklisted' ||
-                                        row['NMCVerificationStatus']?.value === 'Suspended' ||
-                                        row['councilVerificationStatus']?.value === 'Blacklisted' ||
-                                        (props?.applicationData &&
-                                          (props?.applicationData[rowIndex]?.doctor_status ===
-                                            'Blacklisted' ||
-                                            props?.applicationData[rowIndex]?.doctor_status ===
-                                              'Suspended')) ||
-                                        (customPopupOptions === undefined &&
-                                          (row['NMRID']?.value === '' ||
-                                            row['NMRID']?.value === undefined))
+                                        customPopupOptions !== undefined
+                                          ? row['NMCVerificationStatus']?.value === 'Blacklisted' ||
+                                            row['NMCVerificationStatus']?.value === 'Suspended' ||
+                                            row['councilVerificationStatus']?.value ===
+                                              'Blacklisted' ||
+                                            (props?.applicationData &&
+                                              (props?.applicationData[rowIndex]?.doctor_status ===
+                                                'Blacklisted' ||
+                                                props?.applicationData[rowIndex]?.doctor_status ===
+                                                  'Suspended'))
+                                          : row['NMRID']?.value === '' ||
+                                            row['NMRID']?.value === undefined
                                       }
                                     >
                                       {option.keyName}
