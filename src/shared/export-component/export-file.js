@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
-import { Grid, IconButton } from '@mui/material';
+import { Grid, IconButton, Tooltip } from '@mui/material';
 import Excel from 'exceljs';
 import { saveAs } from 'file-saver';
 import moment from 'moment';
@@ -164,31 +164,33 @@ const ExportFiles = ({ exportData, flag }) => {
 
   return (
     <Grid item md={1} xs={12} data-testid="exportButton">
-      <IconButton
-        data-testid="export_Button"
-        aria-label="fontSize-options"
-        aria-controls="menu-appbar"
-        variant="contained"
-        aria-haspopup="true"
-        sx={{
-          width: 60,
-          height: 60,
-          color: 'blue',
-        }}
-        onClick={(e) => {
-          e.preventDefault();
-          onExportClick('xlsx');
-        }}
-        color="blue"
-      >
-        <FileDownloadOutlinedIcon
+      <Tooltip title={'Export'}>
+        <IconButton
+          data-testid="export_Button"
+          aria-label="fontSize-options"
+          aria-controls="menu-appbar"
+          variant="contained"
+          aria-haspopup="true"
           sx={{
-            width: 40,
-            height: 40,
+            width: 60,
+            height: 60,
             color: 'blue',
           }}
-        />
-      </IconButton>
+          onClick={(e) => {
+            e.preventDefault();
+            onExportClick('xlsx');
+          }}
+          color="blue"
+        >
+          <FileDownloadOutlinedIcon
+            sx={{
+              width: 40,
+              height: 40,
+              color: 'blue',
+            }}
+          />
+        </IconButton>
+      </Tooltip>
     </Grid>
   );
 };
