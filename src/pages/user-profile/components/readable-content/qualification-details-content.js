@@ -64,40 +64,47 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
           borderBottom={qualification_detail_response_tos?.length > 1 ? 1 : 'none'}
           borderColor={qualification_detail_response_tos?.length > 1 ? 'grey2.light' : 'none'}
         >
-          {element?.is_verified === 1 ? (
-            <Typography
-              ml={2}
-              spacing={2}
-              color="success.main"
-              display={'flex'}
-              justifyContent={'right'}
-            >
-              Approved
+          <Grid item xs={12} md={8}>
+            <Typography variant="h3" color="grey.label">
+              {index === 0 ? 'Basic qualification' : `Additional qualification ${index}`}
             </Typography>
-          ) : element?.is_verified === 0 ? (
-            <Typography
-              ml={2}
-              spacing={2}
-              color="secondary.main"
-              display={'flex'}
-              justifyContent={'right'}
-            >
-              Pending Approval
-            </Typography>
-          ) : element?.is_verified === 2 ? (
-            <Typography
-              ml={2}
-              spacing={2}
-              color="error.main"
-              display={'flex'}
-              justifyContent={'right'}
-            >
-              Rejected
-            </Typography>
-          ) : (
-            ''
-          )}
-          <Grid container item spacing={2}>
+          </Grid>
+          <Grid item xs={12} md={4}>
+            {element?.is_verified === 1 ? (
+              <Typography
+                ml={2}
+                spacing={2}
+                color="success.main"
+                display={'flex'}
+                justifyContent={'right'}
+              >
+                Approved
+              </Typography>
+            ) : element?.is_verified === 0 ? (
+              <Typography
+                ml={2}
+                spacing={2}
+                color="secondary.main"
+                display={'flex'}
+                justifyContent={'right'}
+              >
+                Pending Approval
+              </Typography>
+            ) : element?.is_verified === 2 ? (
+              <Typography
+                ml={2}
+                spacing={2}
+                color="error.main"
+                display={'flex'}
+                justifyContent={'right'}
+              >
+                Rejected
+              </Typography>
+            ) : (
+              ''
+            )}
+          </Grid>
+          <Grid container item spacing={2} mt={1}>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="grey.label">
                 Name of the Degree Obtained
@@ -207,7 +214,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
           <Grid container item spacing={2} mt={1}>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="grey.label">
-                Name of the College
+                Name of the college
                 <Typography component="span" color="error.main">
                   *
                 </Typography>

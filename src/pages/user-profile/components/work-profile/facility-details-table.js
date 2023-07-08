@@ -5,6 +5,7 @@ import ErrorIcon from '@mui/icons-material/Error';
 import { Box, Button, Dialog, Grid, TablePagination, Typography } from '@mui/material';
 import { useDispatch } from 'react-redux';
 
+import { capitalizeFirstLetter } from '../../../../helpers/functions/common-functions';
 import SuccessModalPopup from '../../../../shared/common-modals/success-modal-popup';
 import GenericTable from '../../../../shared/generic-component/generic-table';
 import { deleteWorkProfileDetailsData } from '../../../../store/actions/doctor-user-profile-actions';
@@ -97,11 +98,11 @@ function FacilityDetailsTable({ declaredFacilityData, trackStatusData, currentWo
       },
       {
         type: 'state',
-        value: application?.address?.state?.name || '-',
+        value: capitalizeFirstLetter(application?.address?.state?.name) || '-',
       },
       {
         type: 'district',
-        value: application?.address?.district?.name || '-',
+        value: capitalizeFirstLetter(application?.address?.district?.name) || '-',
       },
       {
         type: 'type',

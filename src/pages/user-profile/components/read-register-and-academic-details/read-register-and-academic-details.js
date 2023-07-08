@@ -113,7 +113,15 @@ const ReadRegisterAndAcademicDetails = ({
         ) {
           filteredQualificationDetails.push(element);
           if (element?.is_verified !== 1) {
-            setShowForwardButton(element?.qualification_from === 'India' ? true : false);
+            setShowForwardButton(
+              element?.qualification_from === 'India'
+                ? true
+                : element?.qualification_from === 'International' &&
+                  loggedInUserType === 'SMC' &&
+                  selectedAcademicStatus === 'Pending'
+                ? true
+                : false
+            );
           }
         }
       });
@@ -235,35 +243,40 @@ const ReadRegisterAndAcademicDetails = ({
                                   Action <MoreHorizIcon />
                                 </Button>
                               )}
-                              {(selectedAcademicStatus === 'College Verified' ||
+                              {(((selectedAcademicStatus === 'College Verified' ||
                                 selectedAcademicStatus === 'Forwarded' ||
                                 userActiveTab === 'Activate Licence' ||
-                                !showForwardButton) &&
-                                (loggedInUserType === 'SMC' || loggedInUserType === 'NMC') && (
-                                  <Button
-                                    variant="contained"
-                                    color="secondary"
-                                    onClick={selectionChangeHandler}
-                                    data-my-value={'verify'}
-                                    sx={{
-                                      mr: 2,
-                                      mb: {
-                                        xs: 1,
-                                        md: 0,
-                                      },
-                                      width: {
-                                        xs: '100%',
-                                        md: 'fit-content',
-                                      },
-                                    }}
-                                  >
-                                    {loggedInUserType === 'SMC' ||
-                                    loggedInUserType === 'College' ||
-                                    loggedInUserType === 'NBE'
-                                      ? 'Verify'
-                                      : 'Approve'}
-                                  </Button>
-                                )}
+                                (loggedInUserType === 'SMC' && showForwardButton) ||
+                                (loggedInUserType === 'NMC' && !showForwardButton)) &&
+                                (loggedInUserType === 'SMC' || loggedInUserType === 'NMC')) ||
+                                (loggedInUserType !== 'SMC' &&
+                                  userActiveTab !== 'Activate Licence' &&
+                                  selectedAcademicStatus !== 'Forwarded')) && (
+                                // eslint-disable-next-line react/jsx-indent
+                                <Button
+                                  variant="contained"
+                                  color="secondary"
+                                  onClick={selectionChangeHandler}
+                                  data-my-value={'verify'}
+                                  sx={{
+                                    mr: 2,
+                                    mb: {
+                                      xs: 1,
+                                      md: 0,
+                                    },
+                                    width: {
+                                      xs: '100%',
+                                      md: 'fit-content',
+                                    },
+                                  }}
+                                >
+                                  {loggedInUserType === 'SMC' ||
+                                  loggedInUserType === 'College' ||
+                                  loggedInUserType === 'NBE'
+                                    ? 'Verify'
+                                    : 'Approve'}
+                                </Button>
+                              )}
                               {loggedInUserType === 'SMC' &&
                                 userActiveTab !== 'Activate Licence' &&
                                 showForwardButton &&
@@ -289,33 +302,6 @@ const ReadRegisterAndAcademicDetails = ({
                                     Forward
                                   </Button>
                                 )}{' '}
-                              {loggedInUserType !== 'SMC' &&
-                                userActiveTab !== 'Activate Licence' &&
-                                selectedAcademicStatus !== 'Forwarded' && (
-                                  <Button
-                                    variant="contained"
-                                    color="secondary"
-                                    onClick={selectionChangeHandler}
-                                    data-my-value={'verify'}
-                                    sx={{
-                                      mr: 2,
-                                      mb: {
-                                        xs: 1,
-                                        md: 0,
-                                      },
-                                      width: {
-                                        xs: '100%',
-                                        md: 'fit-content',
-                                      },
-                                    }}
-                                  >
-                                    {loggedInUserType === 'SMC' ||
-                                    loggedInUserType === 'College' ||
-                                    loggedInUserType === 'NBE'
-                                      ? 'Verify'
-                                      : 'Approve'}
-                                  </Button>
-                                )}
                             </>
                           )}
                       {(loggedInUserType === 'NMC' || loggedInUserType === 'SMC') &&

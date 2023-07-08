@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Box, Grid, TablePagination } from '@mui/material';
 import { Checkbox } from '@mui/material';
+import { useSelector } from 'react-redux';
 
-import { verboseLog } from '../../../../config/debug';
 import { capitalizeFirstLetter, toUpperCase } from '../../../../helpers/functions/common-functions';
 import GenericTable from '../../../../shared/generic-component/generic-table';
 import { TextField } from '../../../../ui/core';
@@ -35,18 +35,20 @@ function createData(
 function WorkDetailsTable({
   FacilityData,
   trackStatusData,
-  setFacilityResponseData,
+  facilityDistrict,
   declaredFacilityData,
+  setFacilityResponseData,
   setDeclaredFacilityDistrict,
 }) {
-  const [page, setPage] = React.useState(0);
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState({});
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [selectedRowData, setRowData] = React.useState({});
-  const [currentRowIndex, setCurrentRowIndex] = React.useState(0);
+  const { statesList } = useSelector((state) => state?.common);
 
-  verboseLog('selectedRowData', selectedRowData, FacilityData, trackStatusData);
+  const [page, setPage] = useState(0);
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState({});
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  // eslint-disable-next-line no-unused-vars
+  const [selectedRowData, setRowData] = useState({});
+  const [currentRowIndex, setCurrentRowIndex] = useState(0);
 
   const dataHeader = [
     {
@@ -90,23 +92,44 @@ function WorkDetailsTable({
     setCurrentRowIndex(rowIndex);
   };
 
+  const getStateISOCode = (State) => {
+    let stateData = [];
+
+    statesList?.map((elementData) => {
+      if (elementData.iso_code === State) {
+        stateData.push(elementData);
+      }
+    });
+
+    return stateData[0]?.name;
+  };
+  const getDistrictISOCode = (District) => {
+    let DistrictData = [];
+    facilityDistrict?.map((elementData) => {
+      if (elementData.iso_code === District) {
+        DistrictData.push(elementData);
+      }
+    });
+    return DistrictData[0]?.name;
+  };
+
   const newRowsData = FacilityData?.map((application) => {
     return createData(
       {
         type: 'name',
-        value: toUpperCase(application?.facilityName),
+        value: toUpperCase(application?.name),
       },
       {
         type: 'address',
-        value: application?.address,
+        value: application?.address?.addressLine1,
       },
       {
         type: 'state',
-        value: capitalizeFirstLetter(application?.stateName),
+        value: capitalizeFirstLetter(getStateISOCode(application?.address?.state, true)),
       },
       {
         type: 'district',
-        value: application.districtName,
+        value: getDistrictISOCode(application?.address?.district, true) || '-',
       },
       {
         type: 'type',

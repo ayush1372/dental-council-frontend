@@ -264,7 +264,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
     handleNext();
   };
   return (
-    <Box p={3} bgcolor="white.main" boxShadow="4">
+    <Box p={2} bgcolor="white.main" boxShadow="4">
       <Typography variant="h2" color="textPrimary.main" mb={2}>
         {loginName} Login
       </Typography>
@@ -352,7 +352,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
           </Button>
         </Grid>
       </Grid>
-      <Box my={2}>
+      <Box my={1}>
         {selectedLoginOption === 'nmrId' ? (
           <>
             <TextField

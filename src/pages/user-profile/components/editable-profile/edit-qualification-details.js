@@ -52,6 +52,9 @@ const EditQualificationDetails = ({
     setValue(`qualification[${index}].state`, null);
     setValue(`qualification[${index}].university`, null);
     setValue(`qualification[${index}].college`, null);
+    setValue(`qualification[${index}].year`, null);
+    setValue(`qualification[${index}].month`, null);
+    setValue(`qualification[${index}].Speciality`, null);
     handleQualificationFilesData(`qualification.${index}.files`, []);
     dispatch(selectedQualificationType(event.target.value));
   };
@@ -113,7 +116,7 @@ const EditQualificationDetails = ({
       });
       if (!isAdditionalQualification) setValue(`qualification[${index}].qualification`, 69);
     }
-    setValue(`qualification[${index}].qualificationfrom`, fields[index].qualificationfrom);
+    setValue(`qualification[${index}].qualificationfrom`, 'India');
     setValue(`qualification[${index}].university`, fields[index].university);
     setValue(`qualification[${index}].college`, fields[index].college);
   }, []);
@@ -125,7 +128,6 @@ const EditQualificationDetails = ({
     if (selectedYear === `${fullYear}`) {
       return monthsData.slice(0, monthIndex + 1);
     }
-
     return monthsData;
   }, [selectedYear]);
 
@@ -846,12 +848,14 @@ const EditQualificationDetails = ({
                   : false
               }
               options={customMonthsData}
+              placeholder={'Month of Awarding'}
               MenuProps={{
                 style: {
                   maxHeight: 250,
                   maxWidth: 130,
                 },
               }}
+              value={getValues().qualification[index].month}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -893,6 +897,7 @@ const EditQualificationDetails = ({
               disabled={
                 work_flow_status_id === 3 ? getQueryRaised('year') : isVerified === 1 ? true : false
               }
+              value={getValues().qualification[index].year}
             />
           </Grid>
         </Grid>
@@ -918,6 +923,7 @@ const EditQualificationDetails = ({
                 }
               )}
               options={createSelectFieldData(specialitiesList.data)}
+              value={getValues().Speciality}
             />
           </Grid>
         )}

@@ -261,8 +261,8 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
     setValue('password', '');
   }, [loginName]);
   return (
-    <Box p={4} bgcolor="white.main" boxShadow="4">
-      <Typography variant="h2" color="primary.dark" mb={5}>
+    <Box p={3} bgcolor="white.main" boxShadow="4">
+      <Typography variant="h2" color="primary.dark" mb={1}>
         {loginName} Login
       </Typography>
       <Typography variant="body1" color="textPrimary.main">
@@ -323,11 +323,11 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
           </Button>
         </Grid>
       </Grid>
-      <Box my={4}>
+      <Box my={2}>
         {selectedLoginOption === 'userName' ? (
           <>
             <TextField
-              sx={{ mb: 2 }}
+              sx={{ mb: 1 }}
               required
               fullWidth
               label={'Username'}
@@ -351,6 +351,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
             />
             <Typography display={'flex'} justifyContent="flex-end">
               <Button
+                size="small"
                 color="secondary"
                 onClick={handleUserForgetUserName}
                 sx={{ cursor: 'pointer', display: 'contents' }}
@@ -360,7 +361,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
             </Typography>
 
             <TextField
-              sx={{ mb: 2 }}
+              sx={{ mb: 1 }}
               required={true}
               fullWidth
               label={'Password'}
@@ -375,11 +376,12 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
             />
             <Typography display={'flex'} justifyContent="flex-end">
               <Button
+                size="small"
                 color="secondary"
                 onClick={() => handleForgotPassword()}
                 sx={{ cursor: 'pointer', display: 'contents' }}
               >
-                Forgot Password?
+                Forgot Password ?
               </Button>
             </Typography>
           </>
@@ -413,7 +415,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
         )}
       </Box>
       <CaptchaComponent captchaResult={captchaResult} />
-      <Box my={4} width={'100%'} display={'flex'} justifyContent={'space-between'}>
+      <Box my={2} width={'100%'} display={'flex'} justifyContent={'space-between'}>
         <Button
           variant="contained"
           color="secondary"
