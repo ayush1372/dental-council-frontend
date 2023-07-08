@@ -23,7 +23,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
   const [applicationTypeValue, setApplicationTypeValue] = useState(false);
   const [statusTypeValue, setStatusTypeValue] = useState(false);
   const [filterId, setFilterId] = useState('');
-  const [dashBoardCardId, setDashBoardCardId] = useState('');
+  const [dashBoardCardId, setDashBoardCardId] = useState();
   const { userActiveTab } = useSelector((state) => state.common);
 
   useEffect(() => {
@@ -102,6 +102,26 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
       search: '',
     });
   };
+  const onClickResetButtonHandler = () => {
+    reset({
+      filterByName: '',
+      filterByRegNo: '',
+      registrationCouncil: '',
+      RegistrationCouncilId: '',
+      search: '',
+    });
+    setValue('Filter', '');
+    setValue('Status', '');
+    setValue('ActivateLicence', '');
+    setValue('dashBoardCard', '');
+    setValue('collegeApproval', '');
+    setValue('ActivateLicenceFilter', '');
+    setValue('dashBoardCardFilter', '');
+    setValue('collegeApprovalFilter', '');
+    setFilterId('');
+    setValue('StatusId', '');
+    setDashBoardCardId();
+  };
 
   const onApplicationChange = (currentValue) => {
     setFilterId(currentValue.id);
@@ -170,6 +190,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                 ) : exportData?.data?.dashboard_tolist ? (
                   <SearchableDropdown
                     fullWidth
+                    value={dashBoardCardId}
                     name="dashBoardCard"
                     items={createEditFieldData(DashBoardCardsFieldList)}
                     placeholder="Please Select"
@@ -268,6 +289,25 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                 </Button>
               </Grid>
             )}
+            <Grid item md="auto" xs={12}>
+              <Button
+                data-testid="filterButton"
+                sx={{
+                  padding: '13px 10px',
+                  m: {
+                    md: '0px',
+                  },
+                  width: {
+                    xs: '100%',
+                    md: 'fit-content',
+                  },
+                }}
+                variant="contained"
+                onClick={handleSubmit(onClickResetButtonHandler)}
+              >
+                Reset
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
         <Grid

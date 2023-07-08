@@ -7,18 +7,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getWorkProfileDetailsData } from '../../../../store/actions/doctor-user-profile-actions';
 import { RadioGroup } from '../../../../ui/core';
 import successToast from '../../../../ui/core/toaster';
+import FacilityDetailsTable from './facility-details-table';
 import NonWorkDetails from './non-work-details';
 import WorkDetails from './work-details';
 
 const WorkProfile = () => {
   const dispatch = useDispatch();
   const { loginData } = useSelector((state) => state.loginReducer);
+  const { workProfileDetails } = useSelector((state) => state.doctorUserProfileReducer);
 
   const [currentlyWorking, setCurrentlyWorking] = useState('');
   const [workingDetails, setWorkingDetails] = useState('');
-  const { work_details } = useSelector(
-    (state) => state?.doctorUserProfileReducer?.workProfileDetails
-  );
+  const [defaultFacilityData, setDefaultFacilityData] = useState([]);
 
   useEffect(() => {
     dispatch(getWorkProfileDetailsData(loginData?.data?.profile_id))
@@ -28,6 +28,7 @@ const WorkProfile = () => {
             response?.data?.work_details?.is_user_currently_working === 1 ? 'no' : 'yes'
           );
           setWorkingDetails(response?.data?.current_work_details);
+          setDefaultFacilityData(response?.data);
         }
       })
       .catch(() => {
@@ -86,7 +87,6 @@ const WorkProfile = () => {
             onChange={handleCurrentWorking}
             name={'currentWorkingSelection'}
             size="small"
-            defaultValue={work_details?.is_user_currently_working === 1 ? 'no' : ''}
             items={[
               {
                 value: 'yes',
@@ -121,6 +121,38 @@ const WorkProfile = () => {
             handleSubmit={handleSubmit}
             watch={watch}
           />
+        )}
+        {defaultFacilityData?.current_work_details?.length > 0 && (
+          <Grid container>
+            <Grid item xs={12}>
+              <Typography
+                bgcolor="grey1.light"
+                p={1}
+                component="div"
+                color="tabHighlightedBackgroundColor.main"
+                variant="h3"
+              >
+                Declared Place Of Work
+              </Typography>
+            </Grid>
+            {(workProfileDetails?.current_work_details?.work_details?.is_user_currently_working ===
+              1 ||
+              workProfileDetails?.current_work_details?.work_details?.is_user_currently_working ===
+                '1') && (
+              // eslint-disable-next-line react/jsx-indent
+              <Grid item xs={12} padding="10px 0 !important" ml={1}>
+                <Typography p={1} component="div" color="error.main" variant="h3">
+                  Currently not working
+                </Typography>
+              </Grid>
+            )}
+            <Grid item xs={12} padding="10px 0 !important">
+              <FacilityDetailsTable
+                declaredFacilityData={defaultFacilityData}
+                currentWorkDetails={workProfileDetails?.current_work_details}
+              />
+            </Grid>
+          </Grid>
         )}
       </Grid>
     </Container>

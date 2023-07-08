@@ -113,7 +113,15 @@ const ReadRegisterAndAcademicDetails = ({
         ) {
           filteredQualificationDetails.push(element);
           if (element?.is_verified !== 1) {
-            setShowForwardButton(element?.qualification_from === 'India' ? true : false);
+            setShowForwardButton(
+              element?.qualification_from === 'India'
+                ? true
+                : element?.qualification_from === 'International' &&
+                  loggedInUserType === 'SMC' &&
+                  selectedAcademicStatus === 'Pending'
+                ? true
+                : false
+            );
           }
         }
       });
@@ -238,7 +246,8 @@ const ReadRegisterAndAcademicDetails = ({
                               {(((selectedAcademicStatus === 'College Verified' ||
                                 selectedAcademicStatus === 'Forwarded' ||
                                 userActiveTab === 'Activate Licence' ||
-                                !showForwardButton) &&
+                                (loggedInUserType === 'SMC' && showForwardButton) ||
+                                (loggedInUserType === 'NMC' && !showForwardButton)) &&
                                 (loggedInUserType === 'SMC' || loggedInUserType === 'NMC')) ||
                                 (loggedInUserType !== 'SMC' &&
                                   userActiveTab !== 'Activate Licence' &&
