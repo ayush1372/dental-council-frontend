@@ -400,7 +400,7 @@ const WorkDetails = ({
           required={true}
           error={errors.workStatus?.message}
           {...register('workStatus', {
-            required: `workStatus is required`,
+            required: `work status is required`,
           })}
         />
       </Grid>{' '}
@@ -485,7 +485,7 @@ const WorkDetails = ({
             color="error"
           >
             <SvgImageComponent color={'error'} icon={'error'} />
-            {`LanguageSpoken is required`}
+            {`Language spoken is required`}
           </Typography>
         )}
 
