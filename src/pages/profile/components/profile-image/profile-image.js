@@ -284,39 +284,43 @@ export default function ProfileImage(props) {
               </Grid>
             </Grid>
           )}
-          {doctorEsignStatus === 2 && loginData?.data?.hp_profile_status_id !== 7 && (
-            <Grid container mt={1}>
-              <Grid item>
-                <Typography
-                  color="suspendAlert.dark"
-                  component="div"
-                  display="inline-flex"
-                  variant="body2"
-                >
-                  You have done E-sign with different
-                  <br /> account. Please verify and re-do the <br />
-                  E-sign process correctly.
-                </Typography>
+          {personalDetails?.esign_status !== 1 &&
+            doctorEsignStatus === 2 &&
+            loginData?.data?.hp_profile_status_id !== 7 && (
+              <Grid container mt={1}>
+                <Grid item>
+                  <Typography
+                    color="suspendAlert.dark"
+                    component="div"
+                    display="inline-flex"
+                    variant="body2"
+                  >
+                    You have done E-sign with different
+                    <br /> account. Please verify and re-do the <br />
+                    E-sign process correctly.
+                  </Typography>
+                </Grid>
               </Grid>
-            </Grid>
-          )}
-          {doctorEsignStatus === 3 && loginData?.data?.hp_profile_status_id !== 7 && (
-            <Grid container mt={1}>
-              <Grid item>
-                <Typography
-                  color="suspendAlert.dark"
-                  component="div"
-                  display="inline-flex"
-                  variant="body2"
-                >
-                  Your profile has to complete E-sign <br />
-                  process. You will not be able to perform <br /> actions on the profile untill you{' '}
-                  <br />
-                  complete E-sign process.
-                </Typography>
+            )}
+          {personalDetails?.esign_status !== 1 &&
+            doctorEsignStatus === 3 &&
+            loginData?.data?.hp_profile_status_id !== 7 && (
+              <Grid container mt={1}>
+                <Grid item>
+                  <Typography
+                    color="suspendAlert.dark"
+                    component="div"
+                    display="inline-flex"
+                    variant="body2"
+                  >
+                    Your profile has to complete E-sign <br />
+                    process. You will not be able to perform <br /> actions on the profile untill
+                    you <br />
+                    complete E-sign process.
+                  </Typography>
+                </Grid>
               </Grid>
-            </Grid>
-          )}
+            )}
         </>
       )}
       {showReactivateLicense && (
