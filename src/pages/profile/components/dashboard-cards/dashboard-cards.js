@@ -281,7 +281,7 @@ export default function Dashboard() {
                   />
                   {element[0]}
                 </Typography>
-                {element[0].includes('Registration') ?  
+                {element[0].includes('Registration') && (loggedInUserType === 'SMC')?  
                   <Grid container display="flex" flexWrap="wrap" gap={{ xs: 1, xl: 2 }}>
                     <Grid item textAlign={'center'} sx={{marginLeft: '14.28%', width: '28.05%', backgroundColor: theme.palette.secondary.pendingBg, padding: '2px 10px', borderRadius:'4px 4px 0 0'}}>
                       <Typography variant='body1'>Total Pending Requests {element[1][1]?.value + element[1][2]?.value }</Typography>
