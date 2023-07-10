@@ -246,8 +246,7 @@ const ReadRegisterAndAcademicDetails = ({
                               {(((selectedAcademicStatus === 'College Verified' ||
                                 selectedAcademicStatus === 'Forwarded' ||
                                 userActiveTab === 'Activate Licence' ||
-                                (loggedInUserType === 'SMC' && showForwardButton) ||
-                                (loggedInUserType === 'NMC' && !showForwardButton)) &&
+                                !showForwardButton) &&
                                 (loggedInUserType === 'SMC' || loggedInUserType === 'NMC')) ||
                                 (loggedInUserType !== 'SMC' &&
                                   userActiveTab !== 'Activate Licence' &&
