@@ -98,10 +98,10 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
   };
 
   useEffect(() => {
-    if (loginData?.data?.work_flow_status_id === 1) {
+    if (loginData?.data?.work_flow_status_id === 1 || personalDetails?.work_flow_status_id === 1) {
       setIsApplicationPending(false);
     }
-  }, [loginData?.data?.work_flow_status_id]);
+  }, [loginData?.data?.work_flow_status_id, personalDetails?.work_flow_status_id]);
   const { activeStep, handleNext, handleBack, resetStep, completed, progress, handleStep } =
     useWizard(
       ['Doctor', 'SMC', 'NMC'].includes(loggedInUserType) ? 0 : 1,
@@ -183,7 +183,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
   useEffect(() => {
     fetchDoctorUserPersonalDetails();
     fetchDoctorUserRegistrationDetails();
-    if (loginData?.data?.work_flow_status_id === 1) {
+    if (loginData?.data?.work_flow_status_id === 1 || personalDetails?.work_flow_status_id === 1) {
       setIsApplicationPending(false);
     }
     if (loginData?.data?.hp_profile_status_id === 7) {
