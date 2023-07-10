@@ -59,8 +59,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
           spacing={2}
           mt={2}
           key={index}
-          borderBottom={qualification_detail_response_tos?.length > 1 ? 1 : 'none'}
-          borderColor={qualification_detail_response_tos?.length > 1 ? 'grey2.light' : 'none'}
+          borderBottom={qualification_detail_response_tos?.length > 1 && index < qualification_detail_response_tos?.length - 1 ? 1 : 'none'}
+          borderColor={qualification_detail_response_tos?.length > 1 && index < qualification_detail_response_tos?.length - 1 ? 'grey2.light' : 'none'}
         >
           <Grid item xs={12} md={8}>
             <Typography variant="h3" color="grey.label">
