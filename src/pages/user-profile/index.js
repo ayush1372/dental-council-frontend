@@ -342,6 +342,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
         });
       } catch (allFailMsg) {
         successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+        setESignLoader(false);
       }
     }, 24000);
   };
