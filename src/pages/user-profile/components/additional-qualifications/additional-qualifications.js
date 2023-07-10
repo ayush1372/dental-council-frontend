@@ -263,7 +263,7 @@ const AdditionalQualifications = () => {
         <Button variant="contained" color="grey" sx={{ marginLeft: '20px' }} onClick={handleClose}>
           Cancel
         </Button>
-        {qualification.length <= 6 && (
+        {qualification_detail_response_tos?.length + qualification?.length < 8 && (
           <Button
             sx={{ ml: 'auto' }}
             variant="outlined"

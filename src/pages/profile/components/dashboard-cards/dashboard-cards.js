@@ -20,8 +20,14 @@ import {
   suspensionRequestMapper,
   updationRequestMapper,
 } from '../../../../constants/common-data';
+import { userGroupType } from '../../../../helpers/functions/common-functions';
 import ViewProfile from '../../../../shared/view-profile/view-profile';
+import { collegeProfileData } from '../../../../store/actions/college-actions';
+import { getCollegeData } from '../../../../store/actions/common-actions';
 import { getCardCount } from '../../../../store/actions/dashboard-actions';
+import { getNBEProfileData } from '../../../../store/actions/nbe-actions';
+import { getNMCProfileData } from '../../../../store/actions/nmc-actions';
+import { getSMCProfileData } from '../../../../store/actions/smc-actions';
 import {
   navigateDashboard,
   setBreadcrumbsActivetab,
@@ -43,6 +49,8 @@ export default function Dashboard() {
   const [selectedRowData, setSelectedRowData] = useState();
   const dispatch = useDispatch();
   const { redirectDashboard } = useSelector((state) => state.common);
+  const { loginData } = useSelector((state) => state.loginReducer);
+
   const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(3),
     borderRadius: '5px !important',
@@ -167,8 +175,45 @@ export default function Dashboard() {
     setSelectedRowData(data);
   };
 
+  const getCommonData = () => {
+    const userType = userGroupType(loginData?.data?.user_group_id);
+    let colgUserType = loginData?.data?.user_sub_type;
+
+    if (loginData?.data?.user_group_id === 4) {
+      dispatch(
+        collegeProfileData(
+          loginData?.data?.college_id,
+          loginData?.data?.profile_id,
+          loginData?.data?.user_sub_type
+        )
+      );
+    } else if (userType === 'State Medical Council') {
+      dispatch(getSMCProfileData(loginData?.data?.profile_id));
+    } else if (userType === 'National Medical Council') {
+      dispatch(getNMCProfileData(loginData?.data?.profile_id));
+    } else if (userType === 'NBE') {
+      dispatch(getNBEProfileData(loginData?.data?.profile_id));
+    }
+    if (colgUserType === 1) {
+      colgUserType = 'College Admin';
+    } else if (colgUserType === 2) {
+      colgUserType = 'College Registrar';
+    } else if (colgUserType === 3) {
+      colgUserType = 'College Dean';
+    }
+
+    if (colgUserType === 'College Dean') {
+      dispatch(collegeProfileData(loginData?.data?.college_id, loginData?.data?.profile_id));
+    } else if (colgUserType === 'College Registrar') {
+      dispatch(collegeProfileData(loginData?.data?.college_id, loginData?.data?.profile_id));
+    } else if (colgUserType === 'College Admin') {
+      dispatch(getCollegeData(loginData?.data?.college_id));
+    }
+  };
+
   useEffect(() => {
     dispatch(getCardCount());
+    getCommonData();
   }, []);
 
   const getCardIcons = (item) => {

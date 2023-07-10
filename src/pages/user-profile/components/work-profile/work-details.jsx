@@ -400,7 +400,7 @@ const WorkDetails = ({
           required={true}
           error={errors.workStatus?.message}
           {...register('workStatus', {
-            required: `workStatus is required`,
+            required: `work status is required`,
           })}
         />
       </Grid>{' '}
@@ -485,7 +485,7 @@ const WorkDetails = ({
             color="error"
           >
             <SvgImageComponent color={'error'} icon={'error'} />
-            {`LanguageSpoken is required`}
+            {`Language spoken is required`}
           </Typography>
         )}
 
@@ -621,6 +621,7 @@ const WorkDetails = ({
                     required: 'State is required',
                   })}
                   options={createSelectFieldData(statesList)}
+                  placeholder={'Enter State'}
                 />
               </Grid>
               <Grid item xs={12} md={3} lg={3}>
@@ -632,7 +633,7 @@ const WorkDetails = ({
                 </Typography>
                 <Select
                   fullWidth
-                  error={getValues().districtLGDCode?.length === 0 && 'District is required'}
+                  error={errors.districtLGDCode?.message}
                   name={'districtLGDCode'}
                   defaultValue={getValues().districtLGDCode}
                   required={true}
@@ -640,6 +641,7 @@ const WorkDetails = ({
                     required: 'District is required',
                   })}
                   options={createSelectFieldData(facilityDistrict)}
+                  placeholder={'Enter District'}
                 />
               </Grid>
               <Grid item xs={12} md={3} lg={3}>
