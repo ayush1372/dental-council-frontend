@@ -247,7 +247,7 @@ export const applicationType = [
   { id: 5, name: 'Activate License' },
   { id: 6, name: 'College Registration' },
   { id: 7, name: 'Foreign HP Registration' },
-  { id: 8, name: 'Qualification Workflow' },
+  { id: 8, name: 'Additional Qualification' },
 ];
 export const applicationStatus = [
   { id: 1, name: 'Pending' },

@@ -393,7 +393,6 @@ export function SuspendLicenseVoluntaryRetirement({
                     setShowFromDateError(false);
                   }
                 }}
-                defaultValue={new Date()}
                 data-testid="fromDate"
                 id="fromDate"
                 name="fromDate"
