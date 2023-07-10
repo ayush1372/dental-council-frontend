@@ -34,6 +34,7 @@ axios.interceptors.response.use(
           return Axios.post(process.env.REACT_APP_V1_API_URL + API.login.refreshToken, '', {
             headers: {
               Authorization: 'Bearer ' + localStorage.getItem('refreshtoken'),
+              apikey: process.env.REACT_APP_API_KEY,
             },
           }).then((response) => {
             localStorage.setItem('accesstoken', response.headers['access-token']);
