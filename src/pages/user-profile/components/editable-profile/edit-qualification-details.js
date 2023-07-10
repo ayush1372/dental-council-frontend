@@ -35,21 +35,21 @@ const EditQualificationDetails = ({
   const [colleges, setColleges] = useState([]);
   const qualificationObjTemplate = [
     {
-      qualification: '',
-      country: '',
-      state: '',
-      college: '',
-      university: '',
-      month: '',
-      year: '',
-      nameindegree: '',
-      files: '',
-      qualificationfrom: '',
-      id: '',
-      FEstate: '',
-      FEcollege: '',
-      FEuniversity: '',
-      Speciality: '',
+      qualification: null,
+      country: null,
+      state: null,
+      college: null,
+      university: null,
+      month: null,
+      year: null,
+      nameindegree: null,
+      files: null,
+      qualificationfrom: null,
+      id: null,
+      FEstate: null,
+      FEcollege: null,
+      FEuniversity: null,
+      Speciality: null,
     },
   ];
 
@@ -222,7 +222,10 @@ const EditQualificationDetails = ({
               placeholder="Enter roll no."
               required={true}
               fullWidth
-              error={errors?.qualification?.[index]?.rollno?.message}
+              error={
+                errors?.qualification?.[index]?.rollno?.message &&
+                getValues()[`qualification[${index}].rollno`]
+              }
               defaultValue={getValues()[`qualification[${index}].rollno`]}
               {...register(`qualification[${index}].rollno`, {
                 required: 'Roll no is required',
@@ -292,7 +295,10 @@ const EditQualificationDetails = ({
               required={true}
               type="number"
               fullWidth
-              error={errors?.qualification?.[index]?.marksobtained?.message}
+              error={
+                errors?.qualification?.[index]?.marksobtained?.message &&
+                getValues()[`qualification[${index}].marksobtained`]
+              }
               defaultValue={getValues()[`qualification[${index}].marksobtained`]}
               {...register(`qualification[${index}].marksobtained`, {
                 required: 'Marks obtained is required',
@@ -476,16 +482,14 @@ const EditQualificationDetails = ({
             <Select
               fullWidth
               error={
-                isAdditionalQualification
-                  ? errors?.qualification?.[index]?.qualification?.message
-                  : errors?.qualification?.[index]?.result?.message
+                getValues()?.qualification?.[index]?.qualification === '' &&
+                errors?.qualification?.[index]?.qualification?.message
               }
               name="Qualification"
               placeholder={'Select degree'}
               label="Name of the degree"
               isAdditionalQualification={isAdditionalQualification}
               required={true}
-              defaultValue={qualification?.qualification}
               disabled={
                 work_flow_status_id === 3
                   ? getQueryRaised('Name of the Degree Obtained')
@@ -523,7 +527,11 @@ const EditQualificationDetails = ({
           ) : (
             <Select
               fullWidth
-              error={errors?.qualification?.[index]?.qualification?.message}
+              error={
+                getValues()?.qualification[index]?.qualification?.length === 0
+                  ? errors?.qualification?.[index]?.qualification?.message
+                  : ''
+              }
               name="Qualification"
               label="Name of the degree"
               placeholder={'Enter degree'}
@@ -592,7 +600,11 @@ const EditQualificationDetails = ({
                   maxWidth: 130,
                 },
               }}
-              error={errors?.qualification?.[index]?.country?.message}
+              error={
+                getValues()?.qualification[index]?.country?.length === 0
+                  ? errors?.qualification?.[index]?.country?.message
+                  : ''
+              }
             />
           </Grid>
         )}
@@ -923,10 +935,7 @@ const EditQualificationDetails = ({
           <Grid item xs={12} md={4}>
             <Select
               fullWidth
-              error={
-                getValues().qualification[index].Speciality === '' &&
-                errors?.qualification?.[index]?.Speciality?.message
-              }
+              error={!getValues().Speciality && errors.Speciality?.message}
               placeholder={'Select broad speciality'}
               name="Specialty"
               label="Broad Specialty"
