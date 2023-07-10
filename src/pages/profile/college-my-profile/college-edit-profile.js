@@ -30,7 +30,6 @@ const CollegeEditProfile = (props) => {
 
   useEffect(() => {
     dispatch(getStatesList());
-    setValue('CouncilID', getCollegeDetail?.data?.state_medical_council_to?.id);
   }, []);
 
   useEffect(() => {
@@ -60,11 +59,11 @@ const CollegeEditProfile = (props) => {
       CollegeAddress: userData?.address,
       CollegePincode: userData?.pin_code,
       UniversityName: '',
-      UniversityId: userData?.university_id,
-      RegistrationCouncil: '',
-      CouncilID: '',
+      UniversityId: userData?.university_to,
+      CouncilName: userData?.state_medical_council_to?.name,
+      CouncilID: userData?.state_medical_council_to?.id,
       StateName: '',
-      StateId: userData?.state_id,
+      StateId: userData?.state_to,
       CollegeWebsite: userData?.website,
       District: userData?.district_to?.id,
       DistrictID: userData?.district_to?.id,
@@ -77,15 +76,15 @@ const CollegeEditProfile = (props) => {
       name: getValues()?.CollegeName || '',
       state_id: getValues()?.StateId,
       college_code: getValues()?.CollegeId,
-      website: getValues().CollegeWebsite,
+      website: getValues().Website,
       address_line1: getValues()?.AddressLine1 || '',
       address_line2: getValues()?.AddressLine2 || '',
       district_to: districtsList?.find((x) => x.id === getValues()?.DistrictID),
       villages_to:
         subDistrictList?.find((x) => x.name === getValues()?.Area) || userData?.villages_to,
-      pin_code: getValues()?.CollegePincode,
+      pin_code: getValues()?.Pincode,
       state_medical_council_to: councilNames?.find((x) => x.id === getValues()?.CouncilID),
-      mobile_number: getValues()?.CollegePhoneNumber,
+      mobile_number: getValues()?.MobileNumber,
       email_id: getValues()?.CollegeEmailId,
       university_id: getValues()?.UniversityId,
     };
@@ -123,7 +122,7 @@ const CollegeEditProfile = (props) => {
   };
 
   const getStateData = (stateId) => {
-    return statesList?.find((obj) => obj?.id === stateId);
+    return statesList?.find((obj) => obj?.id === stateId?.id);
   };
 
   const getDistrictNameData = (district_id) => {
@@ -223,21 +222,21 @@ const CollegeEditProfile = (props) => {
               *
             </Typography>
             <SearchableDropdown
-              fullWidth
               name="CouncilName"
               items={createEditFieldData(councilNames)}
-              defaultValue={userData?.state_medical_council_to}
-              placeholder="Select Council"
+              placeholder="Select Registered Council"
               clearErrors={clearErrors}
-              error={
-                (getValues()?.CouncilID === '' || getValues()?.CouncilID === undefined) &&
-                errors.CouncilName?.message
-              }
+              error={errors.CouncilName?.message}
               {...register('CouncilName', {
-                required: 'Council name is required',
+                required: 'Council is required',
               })}
+              value={{
+                id: getValues()?.CouncilID !== undefined ? getValues()?.CouncilID : '',
+                name: getValues()?.CouncilName !== undefined ? getValues()?.CouncilName : '',
+              }}
               onChange={(currentValue) => {
                 setValue('CouncilID', currentValue?.id);
+                setValue('CouncilName', currentValue?.name);
               }}
             />
           </Grid>
@@ -333,7 +332,7 @@ const CollegeEditProfile = (props) => {
               clearErrors={clearErrors}
               placeholder={'Select State '}
               defaultValue={userData?.state_to}
-              value={getStateData(getCollegeDetail?.data?.state_id)}
+              value={getStateData(getCollegeDetail?.data?.state_to)}
               onChange={(currentValue) => {
                 onStateChange(currentValue);
               }}
