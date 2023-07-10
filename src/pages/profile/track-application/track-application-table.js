@@ -76,9 +76,8 @@ function TrackAppicationTable({
   };
 
   useEffect(() => {
-    if (orderBy && getTableData && page !== null && profileId)
-      dispatch(getTableData(profileId, trackData));
-  }, [orderBy, getTableData, page, profileId]);
+    if (getTableData && profileId) dispatch(getTableData(profileId, trackData));
+  }, [getTableData, profileId]);
   useEffect(() => {
     dispatch(getTableData(profileId, trackData));
     window.scrollTo(0, 0);
@@ -225,7 +224,7 @@ function TrackAppicationTable({
     }
     if (page > newPage) {
       setPage(newPage);
-      updatedvalue(page - 1);
+      updatedvalue = page - 1;
     }
 
     window.scrollTo({
@@ -251,6 +250,7 @@ function TrackAppicationTable({
         trackApplication={userType}
         exportData={tableData?.data?.data?.health_professional_applications}
         flag={'trackApplicationData'}
+        profileId={profileId}
       />
       <Box>
         <GenericTable

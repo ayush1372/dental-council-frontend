@@ -102,29 +102,9 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
       search: '',
     });
   };
-  const onClickResetButtonHandler = () => {
-    reset({
-      filterByName: '',
-      filterByRegNo: '',
-      registrationCouncil: '',
-      RegistrationCouncilId: '',
-      search: '',
-    });
-    setValue('Filter', '');
-    setValue('Status', '');
-    setValue('ActivateLicence', '');
-    setValue('dashBoardCard', '');
-    setValue('collegeApproval', '');
-    setValue('ActivateLicenceFilter', '');
-    setValue('dashBoardCardFilter', '');
-    setValue('collegeApprovalFilter', '');
-    setFilterId('');
-    setValue('StatusId', '');
-    setDashBoardCardId();
-  };
 
   const onApplicationChange = (currentValue) => {
-    setFilterId(currentValue.id);
+    if (currentValue !== null && currentValue !== undefined) setFilterId(currentValue.id);
   };
   return (
     <Box data-testid="table-search" mb={2}>
@@ -289,25 +269,6 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                 </Button>
               </Grid>
             )}
-            <Grid item md="auto" xs={12}>
-              <Button
-                data-testid="filterButton"
-                sx={{
-                  padding: '13px 10px',
-                  m: {
-                    md: '0px',
-                  },
-                  width: {
-                    xs: '100%',
-                    md: 'fit-content',
-                  },
-                }}
-                variant="contained"
-                onClick={handleSubmit(onClickResetButtonHandler)}
-              >
-                Reset
-              </Button>
-            </Grid>
           </Grid>
         </Grid>
         <Grid
