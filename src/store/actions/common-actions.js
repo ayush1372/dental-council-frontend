@@ -347,7 +347,7 @@ export const trackStatus = (trackData) => async (dispatch) => {
     useAxiosCall({
       method: GET,
       url: `${API.common.trackStatus}?${path}`,
-      // url: `${API.common.trackStatus}?smcId=${trackData.smcId}&registrationNo=${trackData.registrationNo}&pageNo=${trackData.pageNo}&offset=${trackData.offset}&sortBy=${trackData.sortBy}&sortType=${trackData.sortType}`,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(searchTrackStatusData(response));
