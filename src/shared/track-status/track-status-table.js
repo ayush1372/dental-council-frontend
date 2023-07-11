@@ -204,7 +204,7 @@ function TrackStatusTable(props) {
       top: 0,
       behavior: 'smooth',
     });
-    let finalSearchData = { ...props.trackValues, pageNo: newPage };
+    let finalSearchData = { ...props.trackValues, pageNo: newPage + 1 };
     dispatch(trackStatus(finalSearchData));
   };
 
