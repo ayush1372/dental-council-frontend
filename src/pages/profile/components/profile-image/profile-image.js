@@ -285,7 +285,7 @@ export default function ProfileImage(props) {
             </Grid>
           )}
           {personalDetails?.esign_status !== 1 &&
-            doctorEsignStatus === 2 &&
+            (doctorEsignStatus === 2 || personalDetails?.esign_status === 2) &&
             loginData?.data?.hp_profile_status_id !== 7 && (
               <Grid container mt={1}>
                 <Grid item>
@@ -303,7 +303,7 @@ export default function ProfileImage(props) {
               </Grid>
             )}
           {personalDetails?.esign_status !== 1 &&
-            doctorEsignStatus === 3 &&
+            (doctorEsignStatus === 3 || personalDetails?.esign_status === 3) &&
             loginData?.data?.hp_profile_status_id !== 7 && (
               <Grid container mt={1}>
                 <Grid item>
