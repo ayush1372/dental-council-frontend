@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useEffect, useMemo, useState } from 'react';
 
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -70,7 +69,6 @@ const EditQualificationDetails = ({
   const nmrIdData = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.nmr_id
   );
-  console.log('nmrIdData1234', nmrIdData);
   const handleQualificationFrom = (event) => {
     setValue(`qualification`, [...qualificationObjTemplate]);
     handleQualificationFilesData(`qualification.${index}.files`, '');
