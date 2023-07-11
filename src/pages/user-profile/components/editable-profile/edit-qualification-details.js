@@ -12,7 +12,7 @@ import { RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
 
 const EditQualificationDetails = ({
-  clearErrors,
+  // clearErrors,
   index,
   showDeleteIcon,
   errors,
@@ -33,25 +33,25 @@ const EditQualificationDetails = ({
 }) => {
   const dispatch = useDispatch();
   const [colleges, setColleges] = useState([]);
-  const qualificationObjTemplate = [
-    {
-      qualification: null,
-      country: null,
-      state: null,
-      college: null,
-      university: null,
-      month: null,
-      year: null,
-      nameindegree: null,
-      files: null,
-      qualificationfrom: null,
-      id: null,
-      FEstate: null,
-      FEcollege: null,
-      FEuniversity: null,
-      Speciality: null,
-    },
-  ];
+  // const qualificationObjTemplate = [
+  //   {
+  //     qualification: null,
+  //     country: null,
+  //     state: null,
+  //     college: null,
+  //     university: null,
+  //     month: null,
+  //     year: null,
+  //     nameindegree: null,
+  //     files: null,
+  //     qualificationfrom: null,
+  //     id: null,
+  //     FEstate: null,
+  //     FEcollege: null,
+  //     FEuniversity: null,
+  //     Speciality: null,
+  //   },
+  // ];
 
   const [degree] = useState([
     {
@@ -68,9 +68,9 @@ const EditQualificationDetails = ({
   const [universitiesListData, setUniversitiesListData] = useState(universitiesList?.data);
 
   const handleQualificationFrom = (event) => {
-    setValue(`qualification`, [...qualificationObjTemplate]);
-    handleQualificationFilesData(`qualification.${index}.files`, '');
-    clearErrors(`qualification`);
+    // setValue(`qualification`, [...qualificationObjTemplate]);
+    // handleQualificationFilesData(`qualification.${index}.files`, '');
+    // clearErrors(`qualification`);
     setValue(event.target.name, event.target.value);
 
     dispatch(selectedQualificationType(event.target.value));
