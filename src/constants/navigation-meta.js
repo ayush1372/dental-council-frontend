@@ -83,7 +83,7 @@ const NAV_META = [
     isPrivate: 'PUBLIC',
   },
   {
-    path: '/nmr/v3/user/verify-email/:id', ////:request_id',
+    path: 'user/verify-email/:id', ////:request_id',
     title: 'User Verify Email',
     component: 'user-verify-email',
   },

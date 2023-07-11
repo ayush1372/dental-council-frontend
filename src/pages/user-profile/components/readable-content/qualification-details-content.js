@@ -30,8 +30,6 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
 
   const { qualification_detail_response_tos } = registrationDetails || {};
 
-  // let requestId = registrationDetails?.request_id;
-
   const CloseAttachmentPopup = () => {
     setAttachmentViewProfile(false);
   };
@@ -61,8 +59,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
           spacing={2}
           mt={2}
           key={index}
-          borderBottom={qualification_detail_response_tos?.length > 1 ? 1 : 'none'}
-          borderColor={qualification_detail_response_tos?.length > 1 ? 'grey2.light' : 'none'}
+          borderBottom={qualification_detail_response_tos?.length > 1 && index < qualification_detail_response_tos?.length - 1 ? 1 : 'none'}
+          borderColor={qualification_detail_response_tos?.length > 1 && index < qualification_detail_response_tos?.length - 1 ? 'grey2.light' : 'none'}
         >
           <Grid item xs={12} md={8}>
             <Typography variant="h3" color="grey.label">
@@ -214,7 +212,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
           <Grid container item spacing={2} mt={1}>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="grey.label">
-                Name of the College
+                Name of the college
                 <Typography component="span" color="error.main">
                   *
                 </Typography>
@@ -316,6 +314,178 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   )}
               </Grid>
             </Grid>
+
+            {index === 0 && element?.country?.name !== 'India' && (
+              <>
+                <Grid item xs={12}>
+                  <Typography variant="h3" color="grey.label">
+                    {'FMGE Details'}
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={12} md={4}>
+                  <Typography variant="subtitle2" color="grey.label">
+                    Roll no.
+                  </Typography>
+                  {getQueryRaised('Roll no.') !== undefined && (
+                    <Tooltip title={getQueryRaised('Roll no.')}>
+                      <ReportIcon color="secondary" ml={2} />
+                    </Tooltip>
+                  )}
+                  <Grid display="flex" alignItems="center">
+                    <Typography variant="subtitle2" color="textPrimary.main">
+                      {element?.rollno ? element?.rollno : ''}
+                    </Typography>{' '}
+                    {(data?.user_type === 2 ||
+                      data?.user_type === 3 ||
+                      (data?.user_type === 4 && index !== 0) ||
+                      data?.user_type === 5) &&
+                      element.is_verified !== 1 &&
+                      selectedAcademicStatus !== 'College Verified' &&
+                      college_status !== 'Approved' && (
+                        <ContactSupportOutlinedIcon
+                          cursor="pointer"
+                          color="primary"
+                          onClick={() => {
+                            setOpenModal(true);
+                            setQueryRaisedField('Roll no.');
+                          }}
+                          fontSize="width24"
+                        />
+                      )}
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Typography variant="subtitle2" color="grey.label">
+                    Passport number
+                  </Typography>
+                  {getQueryRaised('Passport number') !== undefined && (
+                    <Tooltip title={getQueryRaised('Passport number')}>
+                      <ReportIcon color="secondary" ml={2} />
+                    </Tooltip>
+                  )}
+                  <Grid display="flex" alignItems="center">
+                    <Typography variant="subtitle2" color="textPrimary.main">
+                      {element?.passportNumber ? element?.passportNumber : ''}
+                    </Typography>{' '}
+                    {(data?.user_type === 2 ||
+                      data?.user_type === 3 ||
+                      (data?.user_type === 4 && index !== 0) ||
+                      data?.user_type === 5) &&
+                      element.is_verified !== 1 &&
+                      selectedAcademicStatus !== 'College Verified' &&
+                      college_status !== 'Approved' && (
+                        <ContactSupportOutlinedIcon
+                          cursor="pointer"
+                          color="primary"
+                          onClick={() => {
+                            setOpenModal(true);
+                            setQueryRaisedField('Passport number');
+                          }}
+                          fontSize="width24"
+                        />
+                      )}
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Typography variant="subtitle2" color="grey.label">
+                    Marks obtained
+                  </Typography>
+                  {getQueryRaised('Marks obtained') !== undefined && (
+                    <Tooltip title={getQueryRaised('Marks obtained')}>
+                      <ReportIcon color="secondary" ml={2} />
+                    </Tooltip>
+                  )}
+                  <Grid display="flex" alignItems="center">
+                    <Typography variant="subtitle2" color="textPrimary.main">
+                      {element?.marksobtained ? element?.marksobtained : ''}
+                    </Typography>{' '}
+                    {(data?.user_type === 2 ||
+                      data?.user_type === 3 ||
+                      (data?.user_type === 4 && index !== 0) ||
+                      data?.user_type === 5) &&
+                      element.is_verified !== 1 &&
+                      selectedAcademicStatus !== 'College Verified' &&
+                      college_status !== 'Approved' && (
+                        <ContactSupportOutlinedIcon
+                          cursor="pointer"
+                          color="primary"
+                          onClick={() => {
+                            setOpenModal(true);
+                            setQueryRaisedField('Marks obtained');
+                          }}
+                          fontSize="width24"
+                        />
+                      )}
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Typography variant="subtitle2" color="grey.label">
+                    Result
+                  </Typography>
+                  {getQueryRaised('Result') !== undefined && (
+                    <Tooltip title={getQueryRaised('Result')}>
+                      <ReportIcon color="secondary" ml={2} />
+                    </Tooltip>
+                  )}
+                  <Grid display="flex" alignItems="center">
+                    <Typography variant="subtitle2" color="textPrimary.main">
+                      {element?.result ? element?.result : ''}
+                    </Typography>{' '}
+                    {(data?.user_type === 2 ||
+                      data?.user_type === 3 ||
+                      (data?.user_type === 4 && index !== 0) ||
+                      data?.user_type === 5) &&
+                      element.is_verified !== 1 &&
+                      selectedAcademicStatus !== 'College Verified' &&
+                      college_status !== 'Approved' && (
+                        <ContactSupportOutlinedIcon
+                          cursor="pointer"
+                          color="primary"
+                          onClick={() => {
+                            setOpenModal(true);
+                            setQueryRaisedField('Result');
+                          }}
+                          fontSize="width24"
+                        />
+                      )}
+                  </Grid>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <Typography variant="subtitle2" color="grey.label">
+                    Month & Year of FMGE qualified
+                  </Typography>
+                  {getQueryRaised('Month & Year of FMGE qualified') !== undefined && (
+                    <Tooltip title={getQueryRaised('Month & Year of FMGE qualified')}>
+                      <ReportIcon color="secondary" ml={2} />
+                    </Tooltip>
+                  )}
+                  <Grid display="flex" alignItems="center">
+                    <Typography variant="subtitle2" color="textPrimary.main">
+                      {element?.monthfmge ? element?.monthfmge + ',' : ''}{' '}
+                      {element?.yearfmge ? element?.yearfmge : ''}
+                    </Typography>{' '}
+                    {(data?.user_type === 2 ||
+                      data?.user_type === 3 ||
+                      (data?.user_type === 4 && index !== 0) ||
+                      data?.user_type === 5) &&
+                      element.is_verified !== 1 &&
+                      selectedAcademicStatus !== 'College Verified' &&
+                      college_status !== 'Approved' && (
+                        <ContactSupportOutlinedIcon
+                          cursor="pointer"
+                          color="primary"
+                          onClick={() => {
+                            setOpenModal(true);
+                            setQueryRaisedField('Month & Year of FMGE qualified');
+                          }}
+                          fontSize="width24"
+                        />
+                      )}
+                  </Grid>
+                </Grid>
+              </>
+            )}
           </Grid>
           <Grid container item spacing={2} mt={1}>
             <Grid item xs={12} md={4}>

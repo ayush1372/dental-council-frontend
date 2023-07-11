@@ -263,7 +263,7 @@ const AdditionalQualifications = () => {
         <Button variant="contained" color="grey" sx={{ marginLeft: '20px' }} onClick={handleClose}>
           Cancel
         </Button>
-        {qualification.length <= 6 && (
+        {qualification_detail_response_tos?.length + qualification?.length < 8 && (
           <Button
             sx={{ ml: 'auto' }}
             variant="outlined"
@@ -282,7 +282,7 @@ const AdditionalQualifications = () => {
           open={successModalPopup}
           setOpen={() => setSuccessModalPopup(false)}
           text={
-            'The additional qualification details has been sent for verification. You can check the verification status in the Track Status tab'
+            'The additional qualification details has been sent for verification. You can check the verification status in the Track Application tab'
           }
           navigateToTrackApplication={navigateToTrackApplication}
         />

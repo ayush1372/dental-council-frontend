@@ -7,10 +7,9 @@ import { useNavigate } from 'react-router-dom';
 
 import MobileIcon from '../../../assets/images/mobile-icon.svg';
 import ProfileIcon from '../../../assets/images/profile-icon.svg';
-import { encryptData, userGroupType, usersType } from '../../../helpers/functions/common-functions';
+import { encryptData, usersType } from '../../../helpers/functions/common-functions';
 import CaptchaComponent from '../../../shared/captcha-component/captcha-component';
 import OtpForm from '../../../shared/otp-form/otp-component';
-import { collegeProfileData } from '../../../store/actions/college-actions';
 import {
   getRegistrationCouncilList,
   sendNotificationOtp,
@@ -20,9 +19,6 @@ import {
   loginAction,
   validateCaptchaImage,
 } from '../../../store/actions/login-action';
-import { getNBEProfileData } from '../../../store/actions/nbe-actions';
-import { getNMCProfileData } from '../../../store/actions/nmc-actions';
-import { getSMCProfileData } from '../../../store/actions/smc-actions';
 import { login, userLoggedInType } from '../../../store/reducers/common-reducers';
 import { loginActiveState } from '../../../store/reducers/login-reducer';
 import { Button, TextField } from '../../../ui/core';
@@ -99,20 +95,6 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
     setOtpFormEnable(false);
   }, [loginName]);
 
-  const getCommonData = (response) => {
-    const userType = userGroupType(response?.data?.user_group_id);
-
-    if (response?.data?.user_group_id === 4) {
-      dispatch(collegeProfileData(response?.data?.college_id, response?.data?.profile_id));
-    } else if (userType === 'State Medical Council') {
-      dispatch(getSMCProfileData(response?.data?.profile_id));
-    } else if (userType === 'National Medical Council') {
-      dispatch(getNMCProfileData(response?.data?.profile_id));
-    } else if (userType === 'NBE') {
-      dispatch(getNBEProfileData(response?.data?.profile_id));
-    }
-  };
-
   const handleLogin = () => {
     let loginTypeID;
     switch (selectedLoginOption) {
@@ -150,12 +132,11 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
               otp_trans_id: transaction_id,
             };
             dispatch(loginAction(requestObj))
-              .then((resp) => {
+              .then(() => {
                 dispatch(login());
                 dispatch(userLoggedInType(loginName));
                 dispatch(getRegistrationCouncilList());
                 navigate(`/profile`);
-                getCommonData(resp);
               })
               .catch((error) => {
                 setOtpFormEnable(false);
@@ -207,12 +188,11 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
               login_type: loginTypeID,
             };
             dispatch(loginAction(requestObj))
-              .then((resp) => {
+              .then(() => {
                 dispatch(login());
                 dispatch(userLoggedInType(loginName));
                 dispatch(getRegistrationCouncilList());
                 navigate(`/profile`);
-                getCommonData(resp);
               })
               .catch((error) => {
                 dispatch(generateCaptchaImage()).catch((error) => {
@@ -381,7 +361,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
                 onClick={() => handleForgotPassword()}
                 sx={{ cursor: 'pointer', display: 'contents' }}
               >
-                Forgot Password?
+                Forgot Password ?
               </Button>
             </Typography>
           </>

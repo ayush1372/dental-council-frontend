@@ -223,17 +223,18 @@ export default function GenericTable(props) {
                                         selectionChangeHandler(e, row)
                                       }
                                       disabled={
-                                        row['NMCVerificationStatus']?.value === 'Blacklisted' ||
-                                        row['NMCVerificationStatus']?.value === 'Suspended' ||
-                                        row['councilVerificationStatus']?.value === 'Blacklisted' ||
-                                        (props?.applicationData &&
-                                          (props?.applicationData[rowIndex]?.doctor_status ===
-                                            'Blacklisted' ||
-                                            props?.applicationData[rowIndex]?.doctor_status ===
-                                              'Suspended')) ||
-                                        (customPopupOptions === undefined &&
-                                          (row['NMRID']?.value === '' ||
-                                            row['NMRID']?.value === undefined))
+                                        customPopupOptions !== undefined
+                                          ? row['NMCVerificationStatus']?.value === 'Blacklisted' ||
+                                            row['NMCVerificationStatus']?.value === 'Suspended' ||
+                                            row['councilVerificationStatus']?.value ===
+                                              'Blacklisted' ||
+                                            (props?.applicationData &&
+                                              (props?.applicationData[rowIndex]?.doctor_status ===
+                                                'Blacklisted' ||
+                                                props?.applicationData[rowIndex]?.doctor_status ===
+                                                  'Suspended'))
+                                          : row['NMRID']?.value === '' ||
+                                            row['NMRID']?.value === undefined
                                       }
                                     >
                                       {option.keyName}
@@ -271,14 +272,16 @@ export default function GenericTable(props) {
                   } else if (item.title === 'Action' && userActiveTab === 'track-application') {
                     return (
                       <TableCell maxWidth={`${tableCellWidth}%`} key={index} align="left">
-                        <Link
-                          sx={{ cursor: 'pointer' }}
-                          variant="body1"
-                          fontWeight="500"
+                        <Button
+                          variant="contained"
+                          size="small"
+                          sx={{
+                            backgroundColor: 'secondary.main',
+                          }}
                           onClick={(event) => row[item.name]?.onClickCallback(event, row)}
                         >
                           {row[item.name]?.value}
-                        </Link>
+                        </Button>
                       </TableCell>
                     );
                   } else if (
@@ -329,7 +332,7 @@ export default function GenericTable(props) {
                           color="secondary"
                           size="small"
                         >
-                          DeLink
+                          Delete
                         </Button>
                       </TableCell>
                     );

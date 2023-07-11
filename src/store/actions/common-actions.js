@@ -30,6 +30,7 @@ export const getStatesList = (countryId) => async (dispatch) => {
     useAxiosCall({
       method: GET,
       url: API.common.states.replace('356', id),
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(getStates(response.data));
@@ -46,6 +47,7 @@ export const getSubDistrictsList = (districtId) => async (dispatch) => {
     useAxiosCall({
       method: GET,
       url: API.common.subDistricts.replace('{district_id}', districtId),
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(getSubDistricts(response.data));
@@ -62,6 +64,7 @@ export const getCountriesList = () => async (dispatch) => {
     useAxiosCall({
       method: GET,
       url: API.common.countries,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(getCountries(response.data));
@@ -78,6 +81,7 @@ export const getDistrictList = (stateId) => async (dispatch) => {
     useAxiosCall({
       method: GET,
       url: API.common.districts.replace('{state_id}', stateId),
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(getDistricts(response.data));
@@ -94,6 +98,7 @@ export const getLanguagesList = () => async (dispatch) => {
     useAxiosCall({
       method: GET,
       url: API.common.languages,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(getLanguages(response.data));
@@ -115,6 +120,7 @@ export const getUniversitiesList = (selectedCollegeID) => async (dispatch) => {
     useAxiosCall({
       method: GET,
       url: `${API.common.universities}?${path}`,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(getUniversities(response.data));
@@ -131,6 +137,7 @@ export const getCoursesList = () => async (dispatch) => {
     useAxiosCall({
       method: GET,
       url: API.common.courses,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(getCourses(response.data));
@@ -151,6 +158,7 @@ export const getCollegesList = (selectedState) => async (dispatch) => {
     useAxiosCall({
       method: GET,
       url: `${API.common.colleges}${path}`,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(getColleges(response.data));
@@ -216,6 +224,7 @@ export const getSpecialitiesList = () => async (dispatch) => {
     useAxiosCall({
       method: GET,
       url: API.common.specialities,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(getSpecialities(response.data));
@@ -247,6 +256,7 @@ export const getCitiesList = (sub_district_id) => async (dispatch) => {
     useAxiosCall({
       method: GET,
       url: API.common.cities.replace('{sub_district_id}', sub_district_id),
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(getCities(response.data));
@@ -347,7 +357,7 @@ export const trackStatus = (trackData) => async (dispatch) => {
     useAxiosCall({
       method: GET,
       url: `${API.common.trackStatus}?${path}`,
-      // url: `${API.common.trackStatus}?smcId=${trackData.smcId}&registrationNo=${trackData.registrationNo}&pageNo=${trackData.pageNo}&offset=${trackData.offset}&sortBy=${trackData.sortBy}&sortType=${trackData.sortType}`,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(searchTrackStatusData(response));
@@ -455,6 +465,7 @@ export const reActivateLicenseStatus = (body) => async () => {
       method: PATCH,
       url: API.common.healthProfessionalApplicationStatus,
       data: body,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
       .then((response) => {
         return resolve(response);
@@ -506,6 +517,7 @@ export const getRaisedQuery = (profileID) => async (dispatch) => {
     useAxiosCall({
       method: GET,
       url: API.common.raisedQuery.replace('{healthProfessionalId}', profileID),
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(getRaiseQueryData({ raisedQueryData: response?.data }));
@@ -540,6 +552,7 @@ export const getPostalAddress = (postalID) => async () => {
     useAxiosCall({
       method: GET,
       url: API.common.LGDService + postalID,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
       .then((response) => {
         return resolve(response);

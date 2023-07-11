@@ -23,7 +23,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
   const [applicationTypeValue, setApplicationTypeValue] = useState(false);
   const [statusTypeValue, setStatusTypeValue] = useState(false);
   const [filterId, setFilterId] = useState('');
-  const [dashBoardCardId, setDashBoardCardId] = useState('');
+  const [dashBoardCardId, setDashBoardCardId] = useState();
   const { userActiveTab } = useSelector((state) => state.common);
 
   useEffect(() => {
@@ -104,7 +104,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
   };
 
   const onApplicationChange = (currentValue) => {
-    setFilterId(currentValue.id);
+    if (currentValue !== null && currentValue !== undefined) setFilterId(currentValue.id);
   };
   return (
     <Box data-testid="table-search" mb={2}>
@@ -170,6 +170,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                 ) : exportData?.data?.dashboard_tolist ? (
                   <SearchableDropdown
                     fullWidth
+                    value={dashBoardCardId}
                     name="dashBoardCard"
                     items={createEditFieldData(DashBoardCardsFieldList)}
                     placeholder="Please Select"

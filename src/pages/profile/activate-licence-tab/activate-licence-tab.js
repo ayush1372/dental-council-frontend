@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Box, Grid, TablePagination } from '@mui/material';
+import { Box, Button, Container, Grid, TablePagination } from '@mui/material';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -248,26 +248,60 @@ const ActivateLicence = () => {
       setShowViewPorfile(false);
     }
   }
+  const onClickBackButtonHandler = () => {
+    if (showViewProfile) {
+      setShowViewPorfile(false);
+    }
+  };
 
   return (
     <>
       {showViewProfile ? (
-        <Box bgcolor="grey1.lighter">
-          <BreadcrumbsCompnent
-            showViewProfile={showViewProfile}
-            handleBreadCrumClick={handleBreadCrumClick}
-            levelOneText="Activate License Applications"
-            levelthreeText="View Profile"
-          />
-          <ViewProfile />
-          <UserProfile
-            showViewProfile={true}
-            selectedRowData={
-              activateLicenseList?.data.health_professional_details[selectedRowData?.SNo?.value - 1]
-            }
-            tabName={'Activate License'}
-          />
-        </Box>
+        <>
+          <Grid container>
+            <Grid item xs={6}>
+              <BreadcrumbsCompnent
+                showViewProfile={showViewProfile}
+                handleBreadCrumClick={handleBreadCrumClick}
+                levelOneText="Activate License Applications"
+                levelthreeText="View Profile"
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <Box align="right" mt={2} mr={2}>
+                <Button
+                  size="small"
+                  variant="outlined"
+                  sx={{
+                    backgroundColor: 'white.main',
+                    ml: 2,
+                    '&:hover': {
+                      color: 'primary.main',
+                      backgroundColor: 'white.main',
+                    },
+                  }}
+                  onClick={onClickBackButtonHandler}
+                >
+                  Back
+                </Button>
+              </Box>
+            </Grid>
+          </Grid>
+          <Box>
+            <Container sx={{ marginTop: 2 }}>
+              <ViewProfile />
+              <UserProfile
+                showViewProfile={true}
+                selectedRowData={
+                  activateLicenseList?.data.health_professional_details[
+                    selectedRowData?.SNo?.value - 1
+                  ]
+                }
+                tabName={'Activate License'}
+              />
+            </Container>
+          </Box>
+        </>
       ) : (
         <Grid sx={{ m: 2 }} lg={12} md={12}>
           <Grid mt={3}>

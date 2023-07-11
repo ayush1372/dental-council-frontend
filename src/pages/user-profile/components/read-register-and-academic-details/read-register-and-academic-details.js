@@ -113,7 +113,15 @@ const ReadRegisterAndAcademicDetails = ({
         ) {
           filteredQualificationDetails.push(element);
           if (element?.is_verified !== 1) {
-            setShowForwardButton(element?.qualification_from === 'India' ? true : false);
+            setShowForwardButton(
+              element?.qualification_from === 'India'
+                ? true
+                : element?.qualification_from === 'International' &&
+                  loggedInUserType === 'SMC' &&
+                  selectedAcademicStatus === 'Pending'
+                ? true
+                : false
+            );
           }
         }
       });
@@ -174,7 +182,7 @@ const ReadRegisterAndAcademicDetails = ({
       {showActions && (
         <Box
           paddingBottom={'30px'}
-          pl={3}
+          pl={2}
           display="flex"
           justifyContent="space-between"
           flexDirection={{ xs: 'column', md: 'row' }}
@@ -189,7 +197,7 @@ const ReadRegisterAndAcademicDetails = ({
                 md: 'fit-content',
               },
               margin: {
-                xs: '10px 0',
+                xs: '16px 0',
               },
             }}
           >

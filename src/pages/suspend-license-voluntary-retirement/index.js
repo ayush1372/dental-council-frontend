@@ -366,6 +366,8 @@ export function SuspendLicenseVoluntaryRetirement({
                 </Typography>
               </Typography>
               <DatePicker
+                minDate={new Date()}
+                maxDate={new Date()}
                 onChangeDate={(newDateValue) => {
                   if (
                     selectedSuspension === 'permanent-suspension-check' ||

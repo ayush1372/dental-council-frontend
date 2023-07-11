@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 
 import { doctorTabs } from '../../helpers/components/sidebar-drawer-list-item';
+import { getPersonalDetailsData } from '../../store/actions/doctor-user-profile-actions';
 import { changeUserActiveTab } from '../../store/reducers/common-reducers';
 import { Button } from '../../ui/core';
 
@@ -14,15 +15,20 @@ export default function SuccessPopup({ fetchDoctorUserPersonalDetails, reactivat
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(true);
+
   const logInDoctorStatus = useSelector(
     (state) => state?.loginReducer?.loginData?.data?.blacklisted
   );
+  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+
   const handleClose = () => {
     setOpen(false);
     fetchDoctorUserPersonalDetails && fetchDoctorUserPersonalDetails();
 
     if (reactivate) {
       dispatch(changeUserActiveTab(doctorTabs[1].tabName));
+      if (personalDetails?.hp_profile_id !== undefined)
+        dispatch(getPersonalDetailsData(personalDetails?.hp_profile_id));
     }
     navigate('/profile');
     window.scrollTo({
@@ -69,8 +75,7 @@ export default function SuccessPopup({ fetchDoctorUserPersonalDetails, reactivat
           >
             {logInDoctorStatus
               ? `Your profile has been successfully re-activated. You can able to perform action on your profile now.`
-              : `Your username has been successfully created.
-            <br /> A link to create your password has been sent to the registered mobile number.`}
+              : `Your username has been successfully created. A link to create your password has been sent to the registered mobile number.`}
           </Typography>
           <Button
             sx={{ width: '408px', mt: 8 }}

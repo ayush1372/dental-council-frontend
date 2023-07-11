@@ -20,8 +20,14 @@ import {
   suspensionRequestMapper,
   updationRequestMapper,
 } from '../../../../constants/common-data';
+import { userGroupType } from '../../../../helpers/functions/common-functions';
 import ViewProfile from '../../../../shared/view-profile/view-profile';
+import { collegeProfileData } from '../../../../store/actions/college-actions';
+import { getCollegeData } from '../../../../store/actions/common-actions';
 import { getCardCount } from '../../../../store/actions/dashboard-actions';
+import { getNBEProfileData } from '../../../../store/actions/nbe-actions';
+import { getNMCProfileData } from '../../../../store/actions/nmc-actions';
+import { getSMCProfileData } from '../../../../store/actions/smc-actions';
 import {
   navigateDashboard,
   setBreadcrumbsActivetab,
@@ -43,6 +49,7 @@ export default function Dashboard() {
   const [selectedRowData, setSelectedRowData] = useState();
   const dispatch = useDispatch();
   const { redirectDashboard } = useSelector((state) => state.common);
+  const { loginData } = useSelector((state) => state.loginReducer);
 
   const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(3),
@@ -168,8 +175,45 @@ export default function Dashboard() {
     setSelectedRowData(data);
   };
 
+  const getCommonData = () => {
+    const userType = userGroupType(loginData?.data?.user_group_id);
+    let colgUserType = loginData?.data?.user_sub_type;
+
+    if (loginData?.data?.user_group_id === 4) {
+      dispatch(
+        collegeProfileData(
+          loginData?.data?.college_id,
+          loginData?.data?.profile_id,
+          loginData?.data?.user_sub_type
+        )
+      );
+    } else if (userType === 'State Medical Council') {
+      dispatch(getSMCProfileData(loginData?.data?.profile_id));
+    } else if (userType === 'National Medical Council') {
+      dispatch(getNMCProfileData(loginData?.data?.profile_id));
+    } else if (userType === 'NBE') {
+      dispatch(getNBEProfileData(loginData?.data?.profile_id));
+    }
+    if (colgUserType === 1) {
+      colgUserType = 'College Admin';
+    } else if (colgUserType === 2) {
+      colgUserType = 'College Registrar';
+    } else if (colgUserType === 3) {
+      colgUserType = 'College Dean';
+    }
+
+    if (colgUserType === 'College Dean') {
+      dispatch(collegeProfileData(loginData?.data?.college_id, loginData?.data?.profile_id));
+    } else if (colgUserType === 'College Registrar') {
+      dispatch(collegeProfileData(loginData?.data?.college_id, loginData?.data?.profile_id));
+    } else if (colgUserType === 'College Admin') {
+      dispatch(getCollegeData(loginData?.data?.college_id));
+    }
+  };
+
   useEffect(() => {
     dispatch(getCardCount());
+    getCommonData();
   }, []);
 
   const getCardIcons = (item) => {
@@ -254,7 +298,7 @@ export default function Dashboard() {
         </Grid>
       )}
       {showDashboard ? (
-        <Box display="flex" flexWrap="wrap" gap={{ xs: 1, xl: 2 }} p={3} pb={0}>
+        <Box p={3} pb={0}>
           {Object.entries(dashboard).map((element) => {
             return (
               <>
@@ -282,47 +326,57 @@ export default function Dashboard() {
                   />
                   {element[0]}
                 </Typography>
-                {element[1].map((item) => {
-                  return (
-                    <Box
-                      mb={{ xs: 2, md: 4 }}
-                      flex={{ xs: '1 0 100%', sm: '1 0 32%', md: '1 0 13%', lg: '1 0 13%' }}
-                      key={item?.name}
-                    >
-                      <Item id={item?.id} onClick={() => showTableFun(item)}>
-                        <Box
-                          display="flex"
-                          justifyContent="space-between"
-                          alignItems="center"
-                          mb={2}
-                        >
-                          <Typography color="inputFocusColor.main" variant="h2">
-                            {item.value}
+                {(element[0].includes('Registration') || element[0].includes('Updation')) && (loggedInUserType === 'SMC')?  
+                  <Grid container display="flex" flexWrap="wrap" gap={{ xs: 1, xl: 2 }}>
+                    <Grid item textAlign={'center'} sx={{marginLeft: '14.28%', width: '28.05%', backgroundColor: theme.palette.secondary.pendingBg, padding: '2px 10px', borderRadius:'4px 4px 0 0'}}>
+                      <Typography variant='body1'>Total Pending Requests {element[1][1]?.value + element[1][2]?.value }</Typography>
+                    </Grid>
+                  </Grid>
+                  : ''
+                }
+                <Grid display="flex" flexWrap="wrap" gap={{ xs: 1, xl: 2 }}>
+                  {element[1].map((item) => {
+                    return (
+                      <Box
+                        mb={{ xs: 2, md: 4 }}
+                        flex={{ xs: '1 0 100%', sm: '1 0 32%', md: '1 0 13%', lg: '1 0 13%' }}
+                        key={item?.name}
+                      >
+                        <Item id={item?.id} onClick={() => showTableFun(item)}>
+                          <Box
+                            display="flex"
+                            justifyContent="space-between"
+                            alignItems="center"
+                            mb={2}
+                          >
+                            <Typography color="inputFocusColor.main" variant="h2">
+                              {item.value}
+                            </Typography>
+                            <img className={classes.iconImage} src={getCardIcons(item)} alt="icon" />
+                          </Box>
+                          <Typography
+                            color="primary"
+                            component="div"
+                            fontSize={{ xs: '12px', sm: '12px', md: '14px', lg: '16px' }}
+                            lineHeight={{ xs: '14px', sm: '16px', md: '18px', lg: '24px' }}
+                            mb={1}
+                          >
+                            {item.name}
                           </Typography>
-                          <img className={classes.iconImage} src={getCardIcons(item)} alt="icon" />
-                        </Box>
-                        <Typography
-                          color="primary"
-                          component="div"
-                          fontSize={{ xs: '12px', sm: '12px', md: '14px', lg: '16px' }}
-                          lineHeight={{ xs: '14px', sm: '16px', md: '18px', lg: '24px' }}
-                          mb={1}
-                        >
-                          {item.name}
-                        </Typography>
-                        <Typography
-                          color="primary"
-                          component="div"
-                          fontWeight="400"
-                          fontSize={{ xs: '12px', sm: '12px', md: '12px', lg: '16px' }}
-                          lineHeight={{ xs: '14px', sm: '16px', md: '16px', lg: '24px' }}
-                        >
-                          {getTextLabelIcons(item)}
-                        </Typography>
-                      </Item>
-                    </Box>
-                  );
-                })}
+                          <Typography
+                            color="primary"
+                            component="div"
+                            fontWeight="400"
+                            fontSize={{ xs: '12px', sm: '12px', md: '12px', lg: '16px' }}
+                            lineHeight={{ xs: '14px', sm: '16px', md: '16px', lg: '24px' }}
+                          >
+                            {getTextLabelIcons(item)}
+                          </Typography>
+                        </Item>
+                      </Box>
+                    );
+                  })}
+                </Grid>
               </>
             );
           })}
