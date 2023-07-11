@@ -52,11 +52,6 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
 
   return (
     <Grid container spacing={2} mt={2}>
-      <Grid item xs={12} md={8}>
-        <Typography variant="h3" color="grey.label">
-          Registration details
-        </Typography>
-      </Grid>
       <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
@@ -198,7 +193,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
             <Typography color="textPrimary.main" variant="subtitle2">
               {renewable_registration_date && is_renewable === '1'
                 ? moment(renewable_registration_date).format('DD-MM-YYYY')
-                : ''}
+                : '-'}
             </Typography>
             {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
               data?.user_type === 3) &&

@@ -24,7 +24,6 @@ import successToast from '../../../ui/core/toaster';
 import {
   EmailRegexValidation,
   MobileNumberRegexValidation,
-  PostalCodeRegexValidation,
 } from '../../../utilities/common-validations';
 
 function NMCCollegeRegistration() {
@@ -187,6 +186,14 @@ function NMCCollegeRegistration() {
       e.target.value = isNaN(e.target.value)
         ? e.target.value.toString().slice(0, -1)
         : Math.max(0, parseInt(e.target.value)).toString().slice(0, 10);
+    }
+  };
+  const handleInputPostalCode = (e) => {
+    e.preventDefault();
+    if (e.target.value.length > 0) {
+      e.target.value = isNaN(e.target.value)
+        ? e.target.value.toString().slice(0, -1)
+        : Math.max(0, parseInt(e.target.value)).toString().slice(0, 6);
     }
   };
 
@@ -542,12 +549,21 @@ function NMCCollegeRegistration() {
           </Typography>
           <TextField
             fullWidth
+            id="outlined-basic"
             type="number"
             name="Pincode"
-            required
+            required="true"
+            onInput={(e) => handleInputPostalCode(e)}
+            defaultValue={getValues().Pincode}
             placeholder={'Enter postal code'}
             error={errors.Pincode?.message}
-            {...register('Pincode', PostalCodeRegexValidation)}
+            {...register('Pincode', {
+              required: 'Enter valid postal code',
+              pattern: {
+                value: /^(\d{6})$/i,
+                message: 'Should contains only 6 digits',
+              },
+            })}
           />
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
