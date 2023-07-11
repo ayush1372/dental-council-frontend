@@ -588,7 +588,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                Maximum size allowed for the attachment is 5MB.`}
               fileData={registrationFileData}
               setFileData={setRegistrationFileData}
-              uploadFileLabel="Upload the Registration Certificate"
+              uploadFileLabel="Upload Registration Certificate"
               fileName={file_name + '.' + file_type}
               disabled={
                 work_flow_status_id === 3
