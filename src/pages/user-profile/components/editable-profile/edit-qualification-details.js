@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useEffect, useMemo, useState } from 'react';
 
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -66,7 +67,10 @@ const EditQualificationDetails = ({
     (state) => state?.doctorUserProfileReducer?.personalDetails
   );
   const [universitiesListData, setUniversitiesListData] = useState(universitiesList?.data);
-
+  const nmrIdData = useSelector(
+    (state) => state?.doctorUserProfileReducer?.personalDetails?.nmr_id
+  );
+  console.log('nmrIdData1234', nmrIdData);
   const handleQualificationFrom = (event) => {
     setValue(`qualification`, [...qualificationObjTemplate]);
     handleQualificationFilesData(`qualification.${index}.files`, '');
@@ -192,7 +196,15 @@ const EditQualificationDetails = ({
               },
             ]}
             error={errors?.qualification?.[index]?.qualificationfrom?.message}
-            disabled={work_flow_status_id === 3 ? true : isVerified === 1 ? true : false}
+            disabled={
+              !isAdditionalQualification && (nmrIdData !== '' || nmrIdData !== undefined)
+                ? true
+                : false || work_flow_status_id === 3
+                ? true
+                : isVerified === 1
+                ? true
+                : false
+            }
           />
         </Grid>
       </Grid>
@@ -241,7 +253,9 @@ const EditQualificationDetails = ({
                 },
               }}
               disabled={
-                work_flow_status_id === 3
+                !isAdditionalQualification && (nmrIdData !== '' || nmrIdData !== undefined)
+                  ? true
+                  : false || work_flow_status_id === 3
                   ? getQueryRaised('RollNo')
                   : isVerified === 1
                   ? true
@@ -277,7 +291,9 @@ const EditQualificationDetails = ({
                 },
               }}
               disabled={
-                work_flow_status_id === 3
+                !isAdditionalQualification && (nmrIdData !== '' || nmrIdData !== undefined)
+                  ? true
+                  : false || work_flow_status_id === 3
                   ? getQueryRaised('PassportNumber')
                   : isVerified === 1
                   ? true
@@ -319,7 +335,9 @@ const EditQualificationDetails = ({
               }}
               InputProps={{ maxlength: 4 }}
               disabled={
-                work_flow_status_id === 3
+                !isAdditionalQualification && (nmrIdData !== '' || nmrIdData !== undefined)
+                  ? true
+                  : false || work_flow_status_id === 3
                   ? getQueryRaised('MarksObtained')
                   : isVerified === 1
                   ? true
@@ -373,7 +391,9 @@ const EditQualificationDetails = ({
                     : '',
               }}
               disabled={
-                work_flow_status_id === 3
+                !isAdditionalQualification && (nmrIdData !== '' || nmrIdData !== undefined)
+                  ? true
+                  : false || work_flow_status_id === 3
                   ? getQueryRaised('Result')
                   : isVerified === 1
                   ? true
@@ -406,7 +426,9 @@ const EditQualificationDetails = ({
                     : '',
               }}
               disabled={
-                work_flow_status_id === 3
+                !isAdditionalQualification && (nmrIdData !== '' || nmrIdData !== undefined)
+                  ? true
+                  : false || work_flow_status_id === 3
                   ? getQueryRaised('MonthFMGE')
                   : isVerified === 1
                   ? true
@@ -453,7 +475,9 @@ const EditQualificationDetails = ({
                     : '',
               }}
               disabled={
-                work_flow_status_id === 3
+                !isAdditionalQualification && (nmrIdData !== '' || nmrIdData !== undefined)
+                  ? true
+                  : false || work_flow_status_id === 3
                   ? getQueryRaised('YearFMGE')
                   : isVerified === 1
                   ? true
@@ -491,7 +515,9 @@ const EditQualificationDetails = ({
               isAdditionalQualification={isAdditionalQualification}
               required={true}
               disabled={
-                work_flow_status_id === 3
+                !isAdditionalQualification && (nmrIdData !== '' || nmrIdData !== undefined)
+                  ? true
+                  : false || work_flow_status_id === 3
                   ? getQueryRaised('Name of the Degree Obtained')
                   : isVerified === 1
                   ? true
@@ -551,7 +577,11 @@ const EditQualificationDetails = ({
                   },
                 }
               )}
-              disabled={true}
+              disabled={
+                !isAdditionalQualification && (nmrIdData !== '' || nmrIdData !== undefined)
+                  ? true
+                  : false
+              }
               options={createSelectFieldData(coursesList.data)}
               MenuProps={{
                 style: {
@@ -587,7 +617,9 @@ const EditQualificationDetails = ({
                     : '',
               }}
               disabled={
-                work_flow_status_id === 3
+                !isAdditionalQualification && (nmrIdData !== '' || nmrIdData !== undefined)
+                  ? true
+                  : false || work_flow_status_id === 3
                   ? getQueryRaised('Country Name')
                   : isVerified === 1
                   ? true
@@ -635,7 +667,9 @@ const EditQualificationDetails = ({
                 },
               }}
               disabled={
-                work_flow_status_id === 3
+                !isAdditionalQualification && (nmrIdData !== '' || nmrIdData !== undefined)
+                  ? true
+                  : false || work_flow_status_id === 3
                   ? getQueryRaised('State')
                   : isVerified === 1
                   ? true
@@ -670,7 +704,9 @@ const EditQualificationDetails = ({
                     : '',
               }}
               disabled={
-                work_flow_status_id === 3
+                !isAdditionalQualification && (nmrIdData !== '' || nmrIdData !== undefined)
+                  ? true
+                  : false || work_flow_status_id === 3
                   ? getQueryRaised('State')
                   : isVerified === 1
                   ? true
@@ -712,7 +748,9 @@ const EditQualificationDetails = ({
                 },
               }}
               disabled={
-                work_flow_status_id === 3
+                !isAdditionalQualification && (nmrIdData !== '' || nmrIdData !== undefined)
+                  ? true
+                  : false || work_flow_status_id === 3
                   ? getQueryRaised('Name of the College')
                   : isVerified === 1
                   ? true
@@ -747,7 +785,9 @@ const EditQualificationDetails = ({
                     : '',
               }}
               disabled={
-                work_flow_status_id === 3
+                !isAdditionalQualification && (nmrIdData !== '' || nmrIdData !== undefined)
+                  ? true
+                  : false || work_flow_status_id === 3
                   ? getQueryRaised('Name of the College')
                   : isVerified === 1
                   ? true
@@ -786,7 +826,9 @@ const EditQualificationDetails = ({
                 },
               }}
               disabled={
-                work_flow_status_id === 3
+                !isAdditionalQualification && (nmrIdData !== '' || nmrIdData !== undefined)
+                  ? true
+                  : false || work_flow_status_id === 3
                   ? getQueryRaised('University')
                   : isVerified === 1
                   ? true
@@ -824,7 +866,9 @@ const EditQualificationDetails = ({
                     : '',
               }}
               disabled={
-                work_flow_status_id === 3
+                !isAdditionalQualification && (nmrIdData !== '' || nmrIdData !== undefined)
+                  ? true
+                  : false || work_flow_status_id === 3
                   ? getQueryRaised('University')
                   : isVerified === 1
                   ? true
@@ -871,7 +915,9 @@ const EditQualificationDetails = ({
                     : '',
               }}
               disabled={
-                work_flow_status_id === 3
+                !isAdditionalQualification && (nmrIdData !== '' || nmrIdData !== undefined)
+                  ? true
+                  : false || work_flow_status_id === 3
                   ? getQueryRaised('Month')
                   : isVerified === 1
                   ? true
@@ -924,7 +970,13 @@ const EditQualificationDetails = ({
                     : '',
               }}
               disabled={
-                work_flow_status_id === 3 ? getQueryRaised('year') : isVerified === 1 ? true : false
+                !isAdditionalQualification && (nmrIdData !== '' || nmrIdData !== undefined)
+                  ? true
+                  : false || work_flow_status_id === 3
+                  ? getQueryRaised('year')
+                  : isVerified === 1
+                  ? true
+                  : false
               }
               value={getValues().qualification[index].year}
             />
@@ -992,7 +1044,9 @@ const EditQualificationDetails = ({
             isDigiLockcerVisible={true}
             uploadFileLabel="Upload qualification degree"
             disabled={
-              work_flow_status_id === 3
+              !isAdditionalQualification && (nmrIdData !== '' || nmrIdData !== undefined)
+                ? true
+                : false || work_flow_status_id === 3
                 ? getQueryRaised('Upload Qualification Degree')
                 : isVerified === 1
                 ? true
