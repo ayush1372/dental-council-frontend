@@ -45,25 +45,25 @@ const NmcEditProfile = (props) => {
     },
   });
 
-  let nmcUpdatedData = {
-    id: userData?.id,
-    user_id: getValues().user_id,
-    first_name: getValues().first_name,
-    last_name: getValues().last_name,
-    middle_name: getValues().middle_name,
-    state_medical_council: {
-      id: getValues().state_medical_council?.id,
-      code: getValues().state_medical_council?.code,
-      name: getValues().state_medical_council?.name,
-    },
-    ndhm_enrollment: getValues().ndhm_enrollment,
-    enrolled_number: getValues().enrolled_number,
-    display_name: getValues().first_name,
-    email_id: getValues().email_id,
-    mobile_no: getValues().mobile_no,
-  };
   const dispatch = useDispatch();
   const onsubmit = () => {
+    let nmcUpdatedData = {
+      id: userData?.id,
+      user_id: getValues().user_id,
+      first_name: getValues().first_name,
+      last_name: getValues().last_name,
+      middle_name: getValues().middle_name,
+      state_medical_council: {
+        id: getValues().state_medical_council?.id,
+        code: getValues().state_medical_council?.code,
+        name: getValues().state_medical_council?.name,
+      },
+      ndhm_enrollment: getValues().ndhm_enrollment,
+      enrolled_number: getValues().enrolled_number,
+      display_name: getValues().first_name,
+      email_id: getValues().email_id,
+      mobile_no: getValues().mobile_no,
+    };
     dispatch(getUpdatedNmcProfileData(nmcUpdatedData)).then((response) => {
       if (response?.data?.email_id.length > 0) {
         setSuccessModalPopup(true);
