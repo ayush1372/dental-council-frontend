@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import AttachmentViewPopup from '../../../../shared/query-modal-popup/attachement-view-popup';
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
-const RegistrationDetailsContent = ({ selectedDataIndex }) => {
+const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus }) => {
   const { data } = useSelector((state) => state.loginReducer?.loginData);
   const { registrationDetails } = useSelector((state) => state.doctorUserProfileReducer);
   const { raisedQueryData } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
@@ -77,6 +77,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
 
             {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
               data?.user_type === 3) &&
+              selectedAcademicStatus !== 'Approved' &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
@@ -108,6 +109,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
             </Typography>
             {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
               data?.user_type === 3) &&
+              selectedAcademicStatus !== 'Approved' &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
@@ -139,6 +141,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
             </Typography>
             {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
               data?.user_type === 3) &&
+              selectedAcademicStatus !== 'Approved' &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
@@ -172,6 +175,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
             </Typography>
             {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
               data?.user_type === 3) &&
+              selectedAcademicStatus !== 'Approved' &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
@@ -202,6 +206,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
             </Typography>
             {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
               data?.user_type === 3) &&
+              selectedAcademicStatus !== 'Approved' &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
@@ -244,6 +249,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
             </Typography>
             {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
               data?.user_type === 3) &&
+              selectedAcademicStatus !== 'Approved' &&
               dashboardTableDetails !== 'Approved' && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"

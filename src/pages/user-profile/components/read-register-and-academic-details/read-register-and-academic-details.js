@@ -173,6 +173,7 @@ const ReadRegisterAndAcademicDetails = ({
                 <Component
                   registrationDetails={registrationDetailsData}
                   selectedDataIndex={selectedDataIndex}
+                  selectedAcademicStatus={selectedAcademicStatus}
                 />
               </AccordionDetails>
             </Accordion>
