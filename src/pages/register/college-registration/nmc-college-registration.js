@@ -393,7 +393,7 @@ function NMCCollegeRegistration() {
                 required: ' Council name is required',
               })}
               onChange={(currentValue) => {
-                setValue('CouncilID', currentValue.id);
+                setValue('CouncilID', currentValue?.id);
               }}
             />
           </Box>
@@ -418,7 +418,7 @@ function NMCCollegeRegistration() {
               required: 'University name is required',
             })}
             onChange={(currentValue) => {
-              setValue('UniversityID', currentValue.id);
+              setValue('UniversityID', currentValue?.id);
             }}
           />
         </Grid>
@@ -534,7 +534,7 @@ function NMCCollegeRegistration() {
             {...register('Town')}
             onChange={(currentValue) => {
               if (currentValue !== null) {
-                setValue('TownID', currentValue.id);
+                setValue('TownID', currentValue?.id);
               }
             }}
           />
