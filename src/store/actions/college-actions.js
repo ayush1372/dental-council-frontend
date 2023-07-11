@@ -166,6 +166,7 @@ export const registerCollegeDetails = (collegeDetails) => async (dispatch) => {
       method: POST,
       url: API.college.register,
       data: collegeDetails,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(collegeRegister(response));

@@ -75,8 +75,7 @@ export default function SuccessPopup({ fetchDoctorUserPersonalDetails, reactivat
           >
             {logInDoctorStatus
               ? `Your profile has been successfully re-activated. You can able to perform action on your profile now.`
-              : `Your username has been successfully created.
-            <br /> A link to create your password has been sent to the registered mobile number.`}
+              : `Your username has been successfully created. A link to create your password has been sent to the registered mobile number.`}
           </Typography>
           <Button
             sx={{ width: '408px', mt: 8 }}

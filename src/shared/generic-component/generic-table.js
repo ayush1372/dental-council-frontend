@@ -332,7 +332,7 @@ export default function GenericTable(props) {
                           color="secondary"
                           size="small"
                         >
-                          DeLink
+                          Delete
                         </Button>
                       </TableCell>
                     );

@@ -183,7 +183,7 @@ const ReadRegisterAndAcademicDetails = ({
       {showActions && (
         <Box
           paddingBottom={'30px'}
-          pl={3}
+          pl={2}
           display="flex"
           justifyContent="space-between"
           flexDirection={{ xs: 'column', md: 'row' }}
@@ -198,7 +198,7 @@ const ReadRegisterAndAcademicDetails = ({
                 md: 'fit-content',
               },
               margin: {
-                xs: '10px 0',
+                xs: '16px 0',
               },
             }}
           >
