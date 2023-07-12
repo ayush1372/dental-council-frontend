@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
@@ -70,7 +71,16 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   const [qualificationFilesData, setQualificationFilesData] = useState({
     'qualification.0.files': degree_certificate ? [{ file: degree_certificate }] : [],
   });
-
+  console.log(
+    'registrationDate123',
+    registration_date,
+    registration_number,
+    state_medical_council,
+    is_renewable,
+    renewable_registration_date,
+    is_name_change,
+    registration_certificate
+  );
   const [viewCertificate] = useState({
     registration: registration_certificate,
     qualification: degree_certificate,

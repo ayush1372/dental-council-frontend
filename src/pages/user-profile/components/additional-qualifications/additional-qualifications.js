@@ -34,16 +34,16 @@ const qualificationObjTemplate = [
 
 const AdditionalQualifications = () => {
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const [supportingDocumentError, setsupportingDocumentError] = useState(false);
 
   const { qualification_detail_response_tos } = registrationDetails || {};
 
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
-  const { degree_certificate } = qualification_detail_response_tos?.[0] || {};
-  const [qualificationFilesData, setQualificationFilesData] = useState({
-    'qualification.0.files': degree_certificate ? [{ file: degree_certificate }] : [],
-  });
+
+  const [qualificationFilesData, setQualificationFilesData] = useState([]);
 
   const [successModalPopup, setSuccessModalPopup] = useState(false);
+  const [addMore, setAddmore] = useState(false);
 
   const {
     statesList,
@@ -54,15 +54,15 @@ const AdditionalQualifications = () => {
   } = useSelector((state) => state?.common);
 
   const dispatch = useDispatch();
-  // const [qualificationFilesData, setQualificationFilesData] = useState([]);
   const {
-    formState: { errors },
+    formState: { errors, isSubmitting },
     getValues,
     handleSubmit,
     register,
     unregister,
     setValue,
     control,
+    clearErrors,
     reset,
     watch,
   } = useForm({
@@ -83,10 +83,15 @@ const AdditionalQualifications = () => {
   const [universityData, setUniversityData] = useState([]);
 
   const handleQualificationFilesData = (fileName, files) => {
-    //setQualificationFilesData(files);
     qualificationFilesData[fileName] = files;
-    setQualificationFilesData({ ...qualificationFilesData });
+    setQualificationFilesData(files === '' ? [] : { ...qualificationFilesData });
+    setsupportingDocumentError(false);
   };
+  useEffect(() => {
+    if (isSubmitting && (qualificationFilesData?.length === 0 || qualificationFilesData === [])) {
+      setsupportingDocumentError(true);
+    }
+  }, [qualificationFilesData, isSubmitting]);
 
   const getStateData = (stateId) => {
     return statesList?.find((obj) => obj?.id === stateId);
@@ -108,8 +113,8 @@ const AdditionalQualifications = () => {
     return data;
   };
 
-  const getUniverity = async (univerityId) => {
-    const data = await universityData?.find((obj) => obj?.id === univerityId);
+  const getUniverity = (univerityId) => {
+    const data = universityData?.find((obj) => obj?.id === univerityId);
     return data;
   };
 
@@ -130,13 +135,7 @@ const AdditionalQualifications = () => {
     return coursesList?.data?.find((obj) => obj.id === course);
   };
 
-  // this below code is storing qualification details
   const { qualification } = getValues();
-
-  useEffect(() => {
-    setQualificationFilesData([]);
-  }, []);
-
   const navigateToTrackApplication = () => {
     dispatch(changeUserActiveTab(doctorTabs[1].tabName));
   };
@@ -195,28 +194,30 @@ const AdditionalQualifications = () => {
       type: 'application/json',
     });
     // const filesBlob = new Blob([filesArray]);
-
     formData.append('data', doctorRegistrationDetailsBlob);
     filesArray.forEach((file) => {
       formData.append('degreeCertificates', file);
     });
+    // handleFileError();
 
-    dispatch(additionalQualificationsData(formData, personalDetails?.hp_profile_id))
-      .then(() => {
-        setSuccessModalPopup(true);
-        reset();
-      })
-      .catch((error) => {
-        successToast(
-          'ERROR: ' + error?.data?.response?.data?.message,
-          'auth-error',
-          'error',
-          'top-center'
-        );
-        update({
-          qualification: [...qualificationObjTemplate],
+    if (!supportingDocumentError) {
+      dispatch(additionalQualificationsData(formData, personalDetails?.hp_profile_id))
+        .then(() => {
+          setSuccessModalPopup(true);
+          reset();
+        })
+        .catch((error) => {
+          successToast(
+            'ERROR: ' + error?.data?.response?.data?.message,
+            'auth-error',
+            'error',
+            'top-center'
+          );
+          update({
+            qualification: [...qualificationObjTemplate],
+          });
         });
-      });
+    }
   };
 
   const handleClose = () => {
@@ -234,6 +235,8 @@ const AdditionalQualifications = () => {
           const showDeleteIcon = index > 0;
           return (
             <EditQualificationDetails
+              addMore={addMore}
+              clearErrors={clearErrors}
               key={qualification.id}
               index={index}
               showDeleteIcon={showDeleteIcon}
@@ -251,6 +254,10 @@ const AdditionalQualifications = () => {
               update={update}
               remove={remove}
               showBroadSpeciality={true}
+              supportingDocumentError={supportingDocumentError}
+              setsupportingDocumentError={(val) => {
+                setsupportingDocumentError(val);
+              }}
             />
           );
         })}
@@ -270,6 +277,7 @@ const AdditionalQualifications = () => {
             color="primary"
             onClick={() => {
               append({ ...qualificationObjTemplate });
+              setAddmore(true);
             }}
           >
             Add Additional Qualification
