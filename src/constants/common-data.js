@@ -168,7 +168,7 @@ export const registrationRequestMapper = {
   Suspended: 'Suspended',
   Blacklisted: 'Blacklisted',
   Pending: 'Pending',
-  'College Verified': 'College Verified',
+  'College/NBE Verified': 'College/NBE Verified',
   Forwarded: 'Forwarded',
 };
 export const updationRequestMapper = {
@@ -179,7 +179,7 @@ export const updationRequestMapper = {
   Suspended: 'Suspended',
   Blacklisted: 'Blacklisted',
   Pending: 'Update Request Received',
-  'College Verified': 'College Verified',
+  'College/NBE Verified': 'College/NBE Verified',
   Forwarded: 'Forwarded',
 };
 
