@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 
-import { encryptData } from '../../../helpers/functions/common-functions';
+import { encryptData, usersType } from '../../../helpers/functions/common-functions';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import { createHealthProfessional } from '../../../store/actions/doctor-registration-actions';
 import { forgotPassword, setPassword } from '../../../store/actions/forgot-password-actions';
@@ -78,10 +78,12 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }
 
   const onSubmit = () => {
     if (otpData?.page === 'forgotPasswordPage') {
+      const userTypeId = usersType(loginName);
       const reSetPasswordBody = {
         username: otpData?.contact,
         password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
         transaction_id: sendNotificationOtpData?.data?.transaction_id,
+        user_type: userTypeId,
       };
       dispatch(forgotPassword(reSetPasswordBody))
         .then((response) => {
@@ -175,14 +177,7 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }
         <Typography variant="h4" component="div" textAlign="center" data-testid="Password">
           {uniqueHpId ? `Welcome, ${uniqueHpId} ! ` : 'Welcome !'}
         </Typography>
-        <Typography
-          
-          variant="body1"
-          component="div"
-          textAlign="center"
-          data-testid="Password"
-         
-        >
+        <Typography variant="body1" component="div" textAlign="center" data-testid="Password">
           {`Please set your password `}
         </Typography>
 

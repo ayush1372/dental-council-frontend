@@ -39,6 +39,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
   const mobileNumber = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.personal_details?.mobile
   );
+  const { loginData } = useSelector((state) => state?.loginReducer);
   const [userData, setData] = useState({ contact: '', type: '', page: '' });
   const dispatch = useDispatch();
   const theme = useTheme();
@@ -121,6 +122,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
         let sendOTPData = {
           contact: type === 'sms' ? getValues().mobileNo : '',
           type: type === 'sms' ? 'sms' : '',
+          user_type: loginData?.data?.user_type,
         };
         dispatch(sendNotificationOtp(sendOTPData))
           .then((response) => {
