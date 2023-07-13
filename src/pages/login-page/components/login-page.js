@@ -108,6 +108,7 @@ export function LoginPage() {
           userData={data}
           activeStep={activeStep}
           resetStep={resetStep}
+          loginName={loginFormNames[loginFormname]}
         />
       )}
       {activeIndex === 2 && (

@@ -84,6 +84,9 @@ export default function SuccessModalPopup({
         case 'College':
           ActiveTab = colgTabs[0].tabName;
           break;
+        case 'NBE':
+          ActiveTab = nmcTabs[0].tabName;
+          break;
         default:
           ActiveTab = '';
           break;

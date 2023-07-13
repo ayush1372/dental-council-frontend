@@ -451,7 +451,11 @@ export function SuspendLicenseVoluntaryRetirement({
               ? 'Add Reason'
               : 'Remarks'}
             <Typography variant="body4" color="error.main">
-              *
+              {tabName === 'voluntary-suspend-license' ||
+              selectedValue === 'approve' ||
+              selectedValue === 'forward'
+                ? '*'
+                : ''}
             </Typography>
           </Typography>
           <Grid item xs={12}>
@@ -463,7 +467,13 @@ export function SuspendLicenseVoluntaryRetirement({
               multiline
               minRows={4}
               name="remark"
-              required={true}
+              required={
+                tabName === 'voluntary-suspend-license' ||
+                selectedValue === 'approve' ||
+                selectedValue === 'forward'
+                  ? true
+                  : false
+              }
               placeholder={
                 tabName || selectedValue === 'suspend' || selectedValue === 'blacklist'
                   ? 'Add a reason...'
@@ -474,16 +484,38 @@ export function SuspendLicenseVoluntaryRetirement({
                   : ''
               }
               defaultValue={getValues().remark}
-              error={showRemarkError ? 'Enter Remarks' : errors.remark?.message}
+              error={
+                selectedValue === 'raise' ||
+                selectedValue === 'reject' ||
+                selectedValue === 'suspend' ||
+                selectedValue === 'blacklist'
+                  ? false
+                  : showRemarkError
+                  ? 'Enter Remarks'
+                  : errors.remark?.message
+              }
               {...register('remark', {
-                required: 'Enter Remarks',
-                pattern: {
-                  value: /^\W*(?:\w+\b\W*){1,300}?$/i,
-                  message: 'Maximum word limit exceeded',
-                },
+                required:
+                  tabName === 'voluntary-suspend-license' ||
+                  selectedValue === 'approve' ||
+                  selectedValue === 'forward'
+                    ? 'Enter Remarks'
+                    : false,
+                pattern:
+                  selectedValue === 'approve'
+                    ? {}
+                    : {
+                        value: /^\W*(?:\w+\b\W*){1,300}?$/i,
+                        message: 'Maximum word limit exceeded',
+                      },
                 onChange: (e) => {
                   if (e.target.value !== '') {
-                    setShowRemarkError(false);
+                    if (
+                      tabName === 'voluntary-suspend-license' ||
+                      selectedValue === 'approve' ||
+                      selectedValue === 'forward'
+                    )
+                      return setShowRemarkError(false);
                   }
                 },
               })}
@@ -541,7 +573,7 @@ export function SuspendLicenseVoluntaryRetirement({
               sx={{ padding: '0 8px 0 0' }}
               label={
                 tabName
-                  ? 'I understand that during the period of my suspension, I will not be able to practice, and my NMR profile will be deactivated.'
+                  ? 'I understand that during the period of my suspension, I will not be able to practice and my NMR profile will be deactivated.'
                   : selectedValue === 'blacklist' || selectedValue === 'suspend'
                   ? 'Doctor will no longer be able to receive notifications or perform actions on his/her profile.'
                   : ''
@@ -559,7 +591,12 @@ export function SuspendLicenseVoluntaryRetirement({
       )}
       {selectedValue === 'raise' && (
         <Box>
-          <Typography>Raise a Query for the following*</Typography>
+          <Typography>
+            Raise a Query for the following
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
+          </Typography>
           <Box display={'flex'}>
             <Box my={4} color="inputTextColor.main">
               {queryRaisedFor?.map((fieldData, index) => {

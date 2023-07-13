@@ -129,12 +129,7 @@ export default function DatafoundModalPopup({
                 >
                   Yes
                 </Button>
-                <Button
-                  variant="outlined"
-                  size="small"
-                  onClick={handleNo}
-                  sx={{ backgroundColor: 'grey.main', color: 'black.textBlack', border: 'none' }}
-                >
+                <Button variant="contained" size="small" color="primary" onClick={handleNo}>
                   No
                 </Button>
               </Box>
