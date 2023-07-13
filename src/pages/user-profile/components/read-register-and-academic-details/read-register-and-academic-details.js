@@ -207,7 +207,7 @@ const ReadRegisterAndAcademicDetails = ({
           {(userActiveTab === 'dashboard' || userActiveTab === 'Activate Licence') &&
             (selectedAcademicStatus?.toUpperCase() === 'PENDING' ||
               selectedAcademicStatus === 'Update Request Received' ||
-              selectedAcademicStatus === 'College Verified' ||
+              selectedAcademicStatus === 'College/NBE Verified' ||
               userActiveTab === 'Activate Licence' ||
               selectedAcademicStatus === 'Forwarded' ||
               selectedAcademicStatus === 'Temporary Suspension Requests Received' ||
@@ -244,7 +244,7 @@ const ReadRegisterAndAcademicDetails = ({
                                   Action <MoreHorizIcon />
                                 </Button>
                               )}
-                              {(((selectedAcademicStatus === 'College Verified' ||
+                              {(((selectedAcademicStatus === 'College/NBE Verified' ||
                                 selectedAcademicStatus === 'Forwarded' ||
                                 userActiveTab === 'Activate Licence' ||
                                 !showForwardButton) &&
@@ -281,7 +281,7 @@ const ReadRegisterAndAcademicDetails = ({
                                 userActiveTab !== 'Activate Licence' &&
                                 showForwardButton &&
                                 selectedAcademicStatus !== 'Forwarded' &&
-                                selectedAcademicStatus !== 'College Verified' && (
+                                selectedAcademicStatus !== 'College/NBE Verified' && (
                                   <Button
                                     variant="contained"
                                     color="secondary"
@@ -339,7 +339,7 @@ const ReadRegisterAndAcademicDetails = ({
                         {loggedInUserType === 'SMC' &&
                           showForwardButton &&
                           userActiveTab !== 'Activate Licence' &&
-                          selectedAcademicStatus !== 'College Verified' && (
+                          selectedAcademicStatus !== 'College/NBE Verified' && (
                             <MenuItem onClick={selectionChangeHandler} data-my-value={'verify'}>
                               Verify
                             </MenuItem>
