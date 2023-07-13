@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 import { Box, Grid, TablePagination } from '@mui/material';
 import { Checkbox } from '@mui/material';
-import { useSelector } from 'react-redux';
 
 import { capitalizeFirstLetter, toUpperCase } from '../../../../helpers/functions/common-functions';
 import GenericTable from '../../../../shared/generic-component/generic-table';
@@ -35,13 +34,10 @@ function createData(
 function WorkDetailsTable({
   FacilityData,
   trackStatusData,
-  facilityDistrict,
   declaredFacilityData,
   setFacilityResponseData,
   setDeclaredFacilityDistrict,
 }) {
-  const { statesList } = useSelector((state) => state?.common);
-
   const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState({});
@@ -92,27 +88,6 @@ function WorkDetailsTable({
     setCurrentRowIndex(rowIndex);
   };
 
-  const getStateISOCode = (State) => {
-    let stateData = [];
-
-    statesList?.map((elementData) => {
-      if (elementData.iso_code === State) {
-        stateData.push(elementData);
-      }
-    });
-
-    return stateData[0]?.name;
-  };
-  const getDistrictISOCode = (District) => {
-    let DistrictData = [];
-    facilityDistrict?.map((elementData) => {
-      if (elementData.iso_code === District) {
-        DistrictData.push(elementData);
-      }
-    });
-    return DistrictData[0]?.name;
-  };
-
   const newRowsData = FacilityData?.map((application) => {
     return createData(
       {
@@ -125,11 +100,11 @@ function WorkDetailsTable({
       },
       {
         type: 'state',
-        value: capitalizeFirstLetter(getStateISOCode(application?.address?.state, true)),
+        value: capitalizeFirstLetter(application?.address?.state_to?.name) || '-',
       },
       {
         type: 'district',
-        value: getDistrictISOCode(application?.address?.district, true) || '-',
+        value: capitalizeFirstLetter(application?.address?.district_to?.name) || '-',
       },
       {
         type: 'type',
