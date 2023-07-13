@@ -451,7 +451,11 @@ export function SuspendLicenseVoluntaryRetirement({
               ? 'Add Reason'
               : 'Remarks'}
             <Typography variant="body4" color="error.main">
-              {selectedValue === 'approve' ? '*' : ''}
+              {tabName === 'voluntary-suspend-license' ||
+              selectedValue === 'approve' ||
+              selectedValue === 'forward'
+                ? '*'
+                : ''}
             </Typography>
           </Typography>
           <Grid item xs={12}>
@@ -463,7 +467,13 @@ export function SuspendLicenseVoluntaryRetirement({
               multiline
               minRows={4}
               name="remark"
-              required={false}
+              required={
+                tabName === 'voluntary-suspend-license' ||
+                selectedValue === 'approve' ||
+                selectedValue === 'forward'
+                  ? true
+                  : false
+              }
               placeholder={
                 tabName || selectedValue === 'suspend' || selectedValue === 'blacklist'
                   ? 'Add a reason...'
@@ -486,12 +496,11 @@ export function SuspendLicenseVoluntaryRetirement({
               }
               {...register('remark', {
                 required:
-                  selectedValue === 'raise' ||
-                  selectedValue === 'reject' ||
-                  selectedValue === 'suspend' ||
-                  selectedValue === 'blacklist'
-                    ? false
-                    : 'Enter Remarks',
+                  tabName === 'voluntary-suspend-license' ||
+                  selectedValue === 'approve' ||
+                  selectedValue === 'forward'
+                    ? 'Enter Remarks'
+                    : false,
                 pattern:
                   selectedValue === 'approve'
                     ? {}
@@ -501,7 +510,12 @@ export function SuspendLicenseVoluntaryRetirement({
                       },
                 onChange: (e) => {
                   if (e.target.value !== '') {
-                    if (selectedValue !== 'approve') return setShowRemarkError(false);
+                    if (
+                      tabName === 'voluntary-suspend-license' ||
+                      selectedValue === 'approve' ||
+                      selectedValue === 'forward'
+                    )
+                      return setShowRemarkError(false);
                   }
                 },
               })}
