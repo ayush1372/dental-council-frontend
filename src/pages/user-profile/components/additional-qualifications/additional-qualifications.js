@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 
 import { Box } from '@mui/material';
@@ -56,6 +57,7 @@ const AdditionalQualifications = () => {
   const dispatch = useDispatch();
   const {
     formState: { errors, isSubmitting },
+    formState,
     getValues,
     handleSubmit,
     register,
@@ -72,10 +74,11 @@ const AdditionalQualifications = () => {
     },
   });
 
-  const { fields, update, append, remove } = useFieldArray({
+  const { fields, update, append, remove, replace, insert } = useFieldArray({
     control,
     name: 'qualification',
   });
+  console.log('formState123456', formState);
 
   const [colleges, setColleges] = useState([]);
   const [stateID, setStateID] = useState([]);
@@ -253,6 +256,10 @@ const AdditionalQualifications = () => {
               isAdditionalQualification={true}
               update={update}
               remove={remove}
+              replace={replace}
+              control={control}
+              append={append}
+              insert={insert}
               showBroadSpeciality={true}
               supportingDocumentError={supportingDocumentError}
               setsupportingDocumentError={(val) => {

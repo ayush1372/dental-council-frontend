@@ -12,6 +12,22 @@ import { selectedQualificationType } from '../../../../store/reducers/doctor-use
 import { RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
 
+const qualificationObjTemplate = [
+  {
+    qualification: undefined,
+    country: '',
+    state: '',
+    college: '',
+    university: '',
+    month: '',
+    year: '',
+    files: '',
+    qualificationfrom: '',
+    Speciality: '',
+    subSpeciality: '',
+  },
+];
+
 const EditQualificationDetails = ({
   // addMore,
   // clearErrors,
@@ -33,6 +49,10 @@ const EditQualificationDetails = ({
   isAdditionalQualification,
   handleQualificationFilesData,
   supportingDocumentError,
+  // replace,
+  insert,
+  // append,
+  // control,
   // setsupportingDocumentError,
 
   showBroadSpeciality = false,
@@ -57,8 +77,17 @@ const EditQualificationDetails = ({
   const [universitiesListData, setUniversitiesListData] = useState(universitiesList?.data);
 
   const handleQualificationFrom = (event) => {
-    // !addMore && setValue(`qualification`, [...qualificationObjTemplate]);
-    // handleQualificationFilesData(`qualification.${index}.files`, '');
+    // setValue(`qualification`, [...qualificationObjTemplate]);
+    console.log('123456', index, fields);
+
+    insert(index, { ...qualificationObjTemplate });
+    remove(index + 1);
+    // index > 0 && ((remove(index); append({ ...qualificationObjTemplate }););
+    console.log('handle234', fields);
+    handleQualificationFilesData(`qualification.${index}.files`, '');
+
+    // replace(index, { ...qualificationObjTemplate });
+
     // setsupportingDocumentError(false);
 
     // clearErrors(`qualification`);

@@ -133,7 +133,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
       qualification: [...qualificationObjTemplate],
     },
   });
-  const { fields, update } = useFieldArray({
+  const { fields, update, insert, remove } = useFieldArray({
     control,
     name: 'qualification',
   });
@@ -632,8 +632,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               setValue={setValue}
               getValues={getValues}
               fields={fields}
+              insert={insert}
               qualification={qualification}
               watch={watch}
+              remove={remove}
               register={register}
               unregister={unregister}
               qualificationFilesData={qualificationFilesData}
