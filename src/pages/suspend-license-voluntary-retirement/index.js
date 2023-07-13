@@ -489,7 +489,7 @@ export function SuspendLicenseVoluntaryRetirement({
                 selectedValue === 'reject' ||
                 selectedValue === 'suspend' ||
                 selectedValue === 'blacklist'
-                  ? null
+                  ? false
                   : showRemarkError
                   ? 'Enter Remarks'
                   : errors.remark?.message
