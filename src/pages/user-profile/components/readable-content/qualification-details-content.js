@@ -28,7 +28,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
   const [queryRaisedField, setQueryRaisedField] = useState('');
   const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
 
-  const { qualification_detail_response_tos } = registrationDetails || {};
+  const { qualification_detail_response_tos, nbe_response_to } = registrationDetails || {};
 
   const CloseAttachmentPopup = () => {
     setAttachmentViewProfile(false);
@@ -344,7 +344,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   )}
                   <Grid display="flex" alignItems="center">
                     <Typography variant="subtitle2" color="textPrimary.main">
-                      {element?.rollno ? element?.rollno : ''}
+                      {nbe_response_to?.roll_no ? nbe_response_to?.roll_no : '-'}
                     </Typography>{' '}
                     {(data?.user_type === 2 ||
                       data?.user_type === 3 ||
@@ -376,7 +376,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   )}
                   <Grid display="flex" alignItems="center">
                     <Typography variant="subtitle2" color="textPrimary.main">
-                      {element?.passportNumber ? element?.passportNumber : ''}
+                      {nbe_response_to?.passport_number ? nbe_response_to?.passport_number : '-'}
                     </Typography>{' '}
                     {(data?.user_type === 2 ||
                       data?.user_type === 3 ||
@@ -408,7 +408,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   )}
                   <Grid display="flex" alignItems="center">
                     <Typography variant="subtitle2" color="textPrimary.main">
-                      {element?.marksobtained ? element?.marksobtained : ''}
+                      {nbe_response_to?.marks_obtained ? nbe_response_to?.marks_obtained : '-'}
                     </Typography>{' '}
                     {(data?.user_type === 2 ||
                       data?.user_type === 3 ||
@@ -440,7 +440,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   )}
                   <Grid display="flex" alignItems="center">
                     <Typography variant="subtitle2" color="textPrimary.main">
-                      {element?.result ? element?.result : ''}
+                      {nbe_response_to?.result ? nbe_response_to?.result : '-'}
                     </Typography>{' '}
                     {(data?.user_type === 2 ||
                       data?.user_type === 3 ||
@@ -472,8 +472,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   )}
                   <Grid display="flex" alignItems="center">
                     <Typography variant="subtitle2" color="textPrimary.main">
-                      {element?.monthfmge ? element?.monthfmge + ',' : ''}{' '}
-                      {element?.yearfmge ? element?.yearfmge : ''}
+                      {nbe_response_to?.month ? nbe_response_to?.month + ',' : '-'}{' '}
+                      {nbe_response_to?.year ? nbe_response_to?.year : ''}
                     </Typography>{' '}
                     {(data?.user_type === 2 ||
                       data?.user_type === 3 ||

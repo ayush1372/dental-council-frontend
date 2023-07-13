@@ -679,7 +679,6 @@ const WorkDetails = ({
                   <WorkDetailsTable
                     FacilityData={facilityResponseData}
                     register={register}
-                    facilityDistrict={facilityDistrict}
                     setFacilityResponseData={setFacilityResponseData}
                     setDeclaredFacilityDistrict={setDeclaredFacilityDistrict}
                     declaredFacilityData={declaredFacilityData}

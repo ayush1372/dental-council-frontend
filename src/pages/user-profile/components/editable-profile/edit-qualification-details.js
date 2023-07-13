@@ -66,6 +66,7 @@ const EditQualificationDetails = ({
     (state) => state?.doctorUserProfileReducer?.personalDetails
   );
   const [universitiesListData, setUniversitiesListData] = useState(universitiesList?.data);
+  const [qualificationID, setQualificationID] = useState('');
 
   const handleQualificationFrom = (event) => {
     // setValue(`qualification`, [...qualificationObjTemplate]);
@@ -497,17 +498,7 @@ const EditQualificationDetails = ({
                   ? true
                   : false
               }
-              {...register(
-                `qualification[${index}].qualification`,
-                {
-                  required: 'Degree is required',
-                },
-                {
-                  onChange: (e) => {
-                    setValue(`qualification[${index}].qualification`, e.target.value);
-                  },
-                }
-              )}
+              {...register(`qualification[${index}].qualification`)}
               style={{
                 backgroundColor:
                   work_flow_status_id === 3 && getQueryRaised('Name of the Degree Obtained')
@@ -516,7 +507,12 @@ const EditQualificationDetails = ({
                     ? '#F0F0F0'
                     : '',
               }}
+              onChange={(e) => {
+                setQualificationID(e?.target?.value);
+                setValue(`qualification[${index}].qualification`, e?.target?.value);
+              }}
               options={createSelectFieldData(coursesList.data)}
+              value={qualificationID}
               MenuProps={{
                 style: {
                   maxHeight: 250,
