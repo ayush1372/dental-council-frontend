@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useEffect, useMemo, useState } from 'react';
 
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -480,22 +479,18 @@ const EditQualificationDetails = ({
       </Grid>
       <Grid container item spacing={2}>
         <Grid item xs={12} md={6} lg={4}>
-          {
-            // eslint-disable-next-line no-console
-            console.log(getValues()?.qualification?.[index]?.qualification)
-          }
           {qualificationfrom === 'International' || isAdditionalQualification ? (
             <Select
               fullWidth
-              required={true}
-              name="Qualification"
-              label="Name of the degree"
-              placeholder={'Select degree'}
-              isAdditionalQualification={isAdditionalQualification}
               error={
                 getValues()?.qualification?.[index]?.qualification === '' &&
                 errors?.qualification?.[index]?.qualification?.message
               }
+              name="Qualification"
+              placeholder={'Select degree'}
+              label="Name of the degree"
+              isAdditionalQualification={isAdditionalQualification}
+              required={true}
               disabled={
                 work_flow_status_id === 3
                   ? getQueryRaised('Name of the Degree Obtained')
