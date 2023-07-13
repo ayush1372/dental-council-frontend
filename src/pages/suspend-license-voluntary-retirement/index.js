@@ -475,12 +475,10 @@ export function SuspendLicenseVoluntaryRetirement({
               }
               defaultValue={getValues().remark}
               error={
-                selectedValue === 'approve'
-                  ? null
-                  : selectedValue === 'raise' ||
-                    selectedValue === 'reject' ||
-                    selectedValue === 'suspend' ||
-                    selectedValue === 'blacklist'
+                selectedValue === 'raise' ||
+                selectedValue === 'reject' ||
+                selectedValue === 'suspend' ||
+                selectedValue === 'blacklist'
                   ? null
                   : showRemarkError
                   ? 'Enter Remarks'
@@ -488,12 +486,10 @@ export function SuspendLicenseVoluntaryRetirement({
               }
               {...register('remark', {
                 required:
-                  selectedValue === 'approve'
-                    ? false
-                    : selectedValue === 'raise' ||
-                      selectedValue === 'reject' ||
-                      selectedValue === 'suspend' ||
-                      selectedValue === 'blacklist'
+                  selectedValue === 'raise' ||
+                  selectedValue === 'reject' ||
+                  selectedValue === 'suspend' ||
+                  selectedValue === 'blacklist'
                     ? false
                     : 'Enter Remarks',
                 pattern:
