@@ -87,6 +87,7 @@ const WorkDetails = ({
       languages_known_ids: getLanguageData(getValues().LanguageSpoken),
     };
     if (declaredFacilityData?.length > 0) {
+      fetchDistricts(declaredFacilityData[0]?.address?.state, true);
       let facilityDetailsDeclared = {
         facility_id: declaredFacilityData[0]?.id,
         organization_type: getValues().organizationType,
@@ -99,7 +100,7 @@ const WorkDetails = ({
             name: 'india',
           },
           state: getStateData(declaredFacilityData[0]?.address?.state, true),
-          district: getFacilityDistrict(declaredFacilityData[0]?.address?.district),
+          district: getFacilityDistrict(declaredFacilityData[0]?.address?.district_to?.id),
           village: {
             iso_code: declaredFacilityData[0]?.villageCityTownLGDCode,
             name: declaredFacilityData[0]?.villageCityTownName,
