@@ -62,6 +62,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
   const sendNotificationOTPHandler = (enableOTP, OTPType) => {
     OTPType !== undefined && setOtpFormEnable(enableOTP);
     let OTPTypeID;
+    const userTypeId = usersType(loginName);
     switch (OTPType) {
       case 'NMR':
         OTPTypeID = 'nmr_id';
@@ -76,6 +77,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
     let sendOTPData = {
       contact: selectedLoginOption === 'nmrId' ? getValues().nmrID : getValues().mobileNo,
       type: OTPTypeID,
+      user_type: userTypeId,
     };
     otpData({
       ...otpData,
