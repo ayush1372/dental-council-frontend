@@ -619,7 +619,8 @@ export function SuspendLicenseVoluntaryRetirement({
                   getValues().toDate !== undefined &&
                   getValues().fromDate !== undefined &&
                   getValues().notification !== false &&
-                  (getValues()?.remark !== undefined || getValues()?.remark !== '')
+                  getValues()?.remark !== undefined &&
+                  getValues()?.remark !== ''
                 ) {
                   if (personalDetails?.work_flow_status_id === 1) {
                     setRejectPopup(true);
