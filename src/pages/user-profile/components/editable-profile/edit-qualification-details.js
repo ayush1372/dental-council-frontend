@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useEffect, useMemo, useState } from 'react';
 
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -66,6 +67,7 @@ const EditQualificationDetails = ({
     (state) => state?.doctorUserProfileReducer?.personalDetails
   );
   const [universitiesListData, setUniversitiesListData] = useState(universitiesList?.data);
+  const [qualificationID, setQualificationID] = useState('');
 
   const handleQualificationFrom = (event) => {
     // setValue(`qualification`, [...qualificationObjTemplate]);
@@ -478,18 +480,22 @@ const EditQualificationDetails = ({
       </Grid>
       <Grid container item spacing={2}>
         <Grid item xs={12} md={6} lg={4}>
+          {
+            // eslint-disable-next-line no-console
+            console.log(getValues()?.qualification?.[index]?.qualification)
+          }
           {qualificationfrom === 'International' || isAdditionalQualification ? (
             <Select
               fullWidth
+              required={true}
+              name="Qualification"
+              label="Name of the degree"
+              placeholder={'Select degree'}
+              isAdditionalQualification={isAdditionalQualification}
               error={
                 getValues()?.qualification?.[index]?.qualification === '' &&
                 errors?.qualification?.[index]?.qualification?.message
               }
-              name="Qualification"
-              placeholder={'Select degree'}
-              label="Name of the degree"
-              isAdditionalQualification={isAdditionalQualification}
-              required={true}
               disabled={
                 work_flow_status_id === 3
                   ? getQueryRaised('Name of the Degree Obtained')
@@ -497,17 +503,7 @@ const EditQualificationDetails = ({
                   ? true
                   : false
               }
-              {...register(
-                `qualification[${index}].qualification`,
-                {
-                  required: 'Degree is required',
-                },
-                {
-                  onChange: (e) => {
-                    setValue(`qualification[${index}].qualification`, e.target.value);
-                  },
-                }
-              )}
+              {...register(`qualification[${index}].qualification`)}
               style={{
                 backgroundColor:
                   work_flow_status_id === 3 && getQueryRaised('Name of the Degree Obtained')
@@ -516,7 +512,12 @@ const EditQualificationDetails = ({
                     ? '#F0F0F0'
                     : '',
               }}
+              onChange={(e) => {
+                setQualificationID(e?.target?.value);
+                setValue(`qualification[${index}].qualification`, e?.target?.value);
+              }}
               options={createSelectFieldData(coursesList.data)}
+              value={qualificationID}
               MenuProps={{
                 style: {
                   maxHeight: 250,
