@@ -338,20 +338,36 @@ export const trackStatus = (trackData) => async (dispatch) => {
   }
 
   if (trackData.pageNo !== undefined && trackData.pageNo !== null && trackData.pageNo !== '') {
-    path += '&pageNo=' + trackData.pageNo;
+    if (path === '') {
+      path += 'pageNo=' + trackData.pageNo;
+    } else {
+      path += '&pageNo=' + trackData.pageNo;
+    }
   }
   if (trackData.offset !== undefined && trackData.offset !== null && trackData.offset !== '') {
-    path += '&offset=' + trackData.offset;
+    if (path === '') {
+      path += 'offset=' + trackData.offset;
+    } else {
+      path += '&offset=' + trackData.offset;
+    }
   }
   if (trackData.sortBy !== undefined && trackData.sortBy !== null && trackData.sortBy !== '') {
-    path += '&sortBy=' + trackData.sortBy;
+    if (path === '') {
+      path += 'sortBy=' + trackData.sortBy;
+    } else {
+      path += '&sortBy=' + trackData.sortBy;
+    }
   }
   if (
-    trackData.sortType !== undefined &&
-    trackData.sortType !== null &&
-    trackData.sortType !== ''
+    trackData.sortOrder !== undefined &&
+    trackData.sortOrder !== null &&
+    trackData.sortOrder !== ''
   ) {
-    path += '&sortType=' + trackData.sortType;
+    if (path === '') {
+      path += 'sortOrder=' + trackData.sortOrder;
+    } else {
+      path += '&sortOrder=' + trackData.sortOrder;
+    }
   }
   return await new Promise((resolve, reject) => {
     useAxiosCall({

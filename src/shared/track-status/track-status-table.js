@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Box, Grid, TablePagination } from '@mui/material';
 import moment from 'moment';
@@ -130,6 +129,22 @@ function TrackStatusTable(props) {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
+
+  useEffect(() => {
+    let finalTrackData = { ...props.trackValues };
+    finalTrackData.sortBy = orderBy.name;
+    finalTrackData.sortOrder = order;
+
+    if (
+      finalTrackData.sortBy !== undefined &&
+      finalTrackData.sortBy !== null &&
+      finalTrackData.sortBy !== '' &&
+      finalTrackData.sortOrder !== undefined &&
+      finalTrackData.sortOrder !== null &&
+      finalTrackData.sortOrder !== ''
+    )
+      dispatch(trackStatus(finalTrackData));
+  }, [order, orderBy, dispatch]);
 
   const newRowsData = props?.trackStatusData?.health_professional_applications?.map(
     (application, index) => {
