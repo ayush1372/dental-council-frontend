@@ -66,10 +66,11 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
   };
   const sendNotificationOTPHandler = () => {
     let OTPTypeID = 'sms';
-
+    const userTypeId = usersType(loginName);
     let sendOTPData = {
       contact: getValues().mobileNo,
       type: OTPTypeID,
+      user_type: userTypeId,
     };
     otpData({ ...otpData, contact: getValues().mobileNo, type: OTPTypeID, page: 'LogInPage' });
 
