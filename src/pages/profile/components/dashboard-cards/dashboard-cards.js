@@ -219,7 +219,7 @@ export default function Dashboard() {
   const getCardIcons = (item) => {
     if (item?.name?.includes('Pending') || item?.name?.includes('Received')) {
       return PendingApplication;
-    } else if (item?.name === 'College Verified') {
+    } else if (item?.name === 'College/NBE Verified') {
       return PendingApplication;
     } else if (item?.name?.includes('Verified') || item?.name?.includes('Approved')) {
       return ApprovedApplication;
@@ -237,7 +237,7 @@ export default function Dashboard() {
   const getTextLabelIcons = (item) => {
     if (item?.name?.includes('Pending') || item?.name?.includes('Received')) {
       return 'Total number of pending applications';
-    } else if (item?.name === 'College Verified') {
+    } else if (item?.name === 'College/NBE Verified') {
       return 'Total number of college verified applications';
     } else if (item?.name?.includes('Approved')) {
       return 'Total number of approved applications';
@@ -326,14 +326,28 @@ export default function Dashboard() {
                   />
                   {element[0]}
                 </Typography>
-                {(element[0].includes('Registration') || element[0].includes('Updation')) && (loggedInUserType === 'SMC')?  
+                {(element[0].includes('Registration') || element[0].includes('Updation')) &&
+                loggedInUserType === 'SMC' ? (
                   <Grid container display="flex" flexWrap="wrap" gap={{ xs: 1, xl: 2 }}>
-                    <Grid item textAlign={'center'} sx={{marginLeft: '14.28%', width: '28.05%', backgroundColor: theme.palette.secondary.pendingBg, padding: '2px 10px', borderRadius:'4px 4px 0 0'}}>
-                      <Typography variant='body1'>Total Pending Requests {element[1][1]?.value + element[1][2]?.value }</Typography>
+                    <Grid
+                      item
+                      textAlign={'center'}
+                      sx={{
+                        marginLeft: '14.28%',
+                        width: '28.05%',
+                        backgroundColor: theme.palette.secondary.pendingBg,
+                        padding: '2px 10px',
+                        borderRadius: '4px 4px 0 0',
+                      }}
+                    >
+                      <Typography variant="body1">
+                        Total Pending Requests {element[1][1]?.value + element[1][2]?.value}
+                      </Typography>
                     </Grid>
                   </Grid>
-                  : ''
-                }
+                ) : (
+                  ''
+                )}
                 <Grid display="flex" flexWrap="wrap" gap={{ xs: 1, xl: 2 }}>
                   {element[1].map((item) => {
                     return (
@@ -352,7 +366,11 @@ export default function Dashboard() {
                             <Typography color="inputFocusColor.main" variant="h2">
                               {item.value}
                             </Typography>
-                            <img className={classes.iconImage} src={getCardIcons(item)} alt="icon" />
+                            <img
+                              className={classes.iconImage}
+                              src={getCardIcons(item)}
+                              alt="icon"
+                            />
                           </Box>
                           <Typography
                             color="primary"
