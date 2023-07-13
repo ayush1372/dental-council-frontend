@@ -53,6 +53,8 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
                 (!personalDetails?.nmr_id ||
                   doctorEsignStatus === 3 ||
                   doctorEsignStatus === 2 ||
+                  personalDetails?.esign_status === 2 ||
+                  personalDetails?.esign_status === 3 ||
                   (logInDoctorStatus &&
                     (personalDetails?.hp_profile_status_id === 5 ||
                       personalDetails?.hp_profile_status_id === 6))) &&

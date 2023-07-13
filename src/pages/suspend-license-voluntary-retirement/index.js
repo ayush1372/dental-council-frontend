@@ -541,7 +541,7 @@ export function SuspendLicenseVoluntaryRetirement({
               sx={{ padding: '0 8px 0 0' }}
               label={
                 tabName
-                  ? 'I understand that during the period of my suspension, I will not be able to practice, and my NMR profile will be deactivated.'
+                  ? 'I understand that during the period of my suspension, I will not be able to practice and my NMR profile will be deactivated.'
                   : selectedValue === 'blacklist' || selectedValue === 'suspend'
                   ? 'Doctor will no longer be able to receive notifications or perform actions on his/her profile.'
                   : ''
@@ -559,7 +559,12 @@ export function SuspendLicenseVoluntaryRetirement({
       )}
       {selectedValue === 'raise' && (
         <Box>
-          <Typography>Raise a Query for the following*</Typography>
+          <Typography>
+            Raise a Query for the following
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
+          </Typography>
           <Box display={'flex'}>
             <Box my={4} color="inputTextColor.main">
               {queryRaisedFor?.map((fieldData, index) => {
@@ -614,7 +619,8 @@ export function SuspendLicenseVoluntaryRetirement({
                   getValues().toDate !== undefined &&
                   getValues().fromDate !== undefined &&
                   getValues().notification !== false &&
-                  (getValues()?.remark !== undefined || getValues()?.remark !== '')
+                  getValues()?.remark !== undefined &&
+                  getValues()?.remark !== ''
                 ) {
                   if (personalDetails?.work_flow_status_id === 1) {
                     setRejectPopup(true);
