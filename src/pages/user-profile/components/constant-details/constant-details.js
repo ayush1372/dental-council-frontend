@@ -318,17 +318,15 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                   {mobileNumber && mobileNumber}
                 </Typography>
                 <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
-                <Typography
-                  component="span"
-                  variant="body2"
-                  sx={{ cursor: 'pointer' }}
-                  color="primary.main"
-                  ml={0.5}
-                  onClick={() => {
-                    setMobileNumberChange(true);
-                  }}
-                >
-                  Change
+                <Typography variant="body2" color="primary.main" ml={0.5}>
+                  <span
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => {
+                      setMobileNumberChange(true);
+                    }}
+                  >
+                    Change
+                  </span>
                 </Typography>
               </>
             )}
@@ -336,7 +334,10 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
         </Grid>
         <Grid item xs={12} sm={6} lg={4} mb={{ xs: 1, lg: 0 }} pl={2}>
           <Typography component="div" variant="body3" color="grey.label">
-            Email
+            Email{' '}
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
 
           <Box display="flex" alignItems="center">
@@ -388,17 +389,15 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                 ) : (
                   ''
                 )}
-                <Typography
-                  sx={{ cursor: 'pointer' }}
-                  component="span"
-                  variant="body2"
-                  color="primary.main"
-                  ml={0.5}
-                  onClick={() => {
-                    emailIdVerify ? setEmailChange(true) : onSubmit('email');
-                  }}
-                >
-                  {emailIdVerify ? 'Change' : 'Get Verified'}
+                <Typography variant="body2" color="primary.main" ml={0.5}>
+                  <span
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => {
+                      emailIdVerify ? setEmailChange(true) : onSubmit('email');
+                    }}
+                  >
+                    {emailIdVerify ? 'Change' : 'Get Verified'}
+                  </span>
                 </Typography>
               </>
             )}

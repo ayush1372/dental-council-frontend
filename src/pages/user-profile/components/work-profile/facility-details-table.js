@@ -201,7 +201,7 @@ function FacilityDetailsTable({ declaredFacilityData, trackStatusData, currentWo
           </Box>
           <Box mt={2}>
             <Typography color="textPrimary.main">
-              Are you sure you want to delink this facilty?
+              Are you sure you want to delete this facilty?
             </Typography>
           </Box>
           <Box display={'flex'} justifyContent={'flex-end'} mt={1}>
