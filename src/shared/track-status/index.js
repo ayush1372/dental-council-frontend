@@ -49,8 +49,6 @@ export default function TrackStatus() {
       value: getValues().trackStatusFilter,
       pageNo: 1,
       offset: 10,
-      sortBy: 'createdAt',
-      sortType: 'desc',
     };
     dispatch(trackStatus(trackData))
       .then(() => {})
