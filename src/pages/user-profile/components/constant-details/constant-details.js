@@ -318,17 +318,15 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                   {mobileNumber && mobileNumber}
                 </Typography>
                 <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
-                <Typography
-                  component="span"
-                  variant="body2"
-                  sx={{ cursor: 'pointer' }}
-                  color="primary.main"
-                  ml={0.5}
-                  onClick={() => {
-                    setMobileNumberChange(true);
-                  }}
-                >
-                  Change
+                <Typography variant="body2" color="primary.main" ml={0.5}>
+                  <span
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => {
+                      setMobileNumberChange(true);
+                    }}
+                  >
+                    Change
+                  </span>
                 </Typography>
               </>
             )}
@@ -391,17 +389,15 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                 ) : (
                   ''
                 )}
-                <Typography
-                  sx={{ cursor: 'pointer' }}
-                  component="span"
-                  variant="body2"
-                  color="primary.main"
-                  ml={0.5}
-                  onClick={() => {
-                    emailIdVerify ? setEmailChange(true) : onSubmit('email');
-                  }}
-                >
-                  {emailIdVerify ? 'Change' : 'Get Verified'}
+                <Typography variant="body2" color="primary.main" ml={0.5}>
+                  <span
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => {
+                      emailIdVerify ? setEmailChange(true) : onSubmit('email');
+                    }}
+                  >
+                    {emailIdVerify ? 'Change' : 'Get Verified'}
+                  </span>
                 </Typography>
               </>
             )}
