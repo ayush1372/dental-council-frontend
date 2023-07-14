@@ -109,9 +109,9 @@ function DashboardControlledTable(props) {
   };
   useEffect(() => {
     if (
-      orderBy.name !== undefined &&
-      orderBy.name !== null &&
-      orderBy.name !== '' &&
+      orderBy?.name !== undefined &&
+      orderBy?.name !== null &&
+      orderBy?.name !== '' &&
       order !== undefined &&
       order !== null &&
       order !== ''
@@ -131,7 +131,7 @@ function DashboardControlledTable(props) {
         value: searchQueryParams ? searchQueryParams?.value : '',
         page_no: 1,
         offset: 10,
-        sortBy: orderBy.name,
+        sortBy: orderBy?.name,
         sortOrder: order,
       };
 

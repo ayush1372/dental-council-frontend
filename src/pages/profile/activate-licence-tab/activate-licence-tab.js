@@ -134,9 +134,9 @@ const ActivateLicence = () => {
   };
   useEffect(() => {
     if (
-      orderBy.name !== undefined &&
-      orderBy.name !== null &&
-      orderBy.name !== '' &&
+      orderBy?.name !== undefined &&
+      orderBy?.name !== null &&
+      orderBy?.name !== '' &&
       order !== undefined &&
       order !== null &&
       order !== ''
@@ -144,7 +144,7 @@ const ActivateLicence = () => {
       let ActivateLicenseListbody = {
         pageNo: 1,
         offset: 10,
-        sortBy: orderBy.name,
+        sortBy: orderBy?.name,
         sortOrder: order,
       };
       dispatch(getActivateLicenseList(ActivateLicenseListbody));

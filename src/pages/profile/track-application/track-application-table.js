@@ -141,16 +141,16 @@ function TrackAppicationTable({
   };
 
   useEffect(() => {
-    trackData.sortBy = orderBy.name;
+    trackData.sortBy = orderBy?.name;
     trackData.sortOrder = order;
 
     if (
-      trackData.sortBy !== undefined &&
-      trackData.sortBy !== null &&
-      trackData.sortBy !== '' &&
-      trackData.sortOrder !== undefined &&
-      trackData.sortOrder !== null &&
-      trackData.sortOrder !== ''
+      trackData?.sortBy !== undefined &&
+      trackData?.sortBy !== null &&
+      trackData?.sortBy !== '' &&
+      trackData?.sortOrder !== undefined &&
+      trackData?.sortOrder !== null &&
+      trackData?.sortOrder !== ''
     )
       dispatch(getTableData(profileId, trackData));
   }, [order, orderBy, dispatch]);

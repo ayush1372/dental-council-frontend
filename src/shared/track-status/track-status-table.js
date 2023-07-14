@@ -132,16 +132,16 @@ function TrackStatusTable(props) {
 
   useEffect(() => {
     let finalTrackData = { ...props.trackValues };
-    finalTrackData.sortBy = orderBy.name;
+    finalTrackData.sortBy = orderBy?.name;
     finalTrackData.sortOrder = order;
 
     if (
-      finalTrackData.sortBy !== undefined &&
-      finalTrackData.sortBy !== null &&
-      finalTrackData.sortBy !== '' &&
-      finalTrackData.sortOrder !== undefined &&
-      finalTrackData.sortOrder !== null &&
-      finalTrackData.sortOrder !== ''
+      finalTrackData?.sortBy !== undefined &&
+      finalTrackData?.sortBy !== null &&
+      finalTrackData?.sortBy !== '' &&
+      finalTrackData?.sortOrder !== undefined &&
+      finalTrackData?.sortOrder !== null &&
+      finalTrackData?.sortOrder !== ''
     )
       dispatch(trackStatus(finalTrackData));
   }, [order, orderBy, dispatch]);
