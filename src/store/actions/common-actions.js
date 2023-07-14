@@ -435,12 +435,33 @@ export const getActivateLicenseList = (body) => async (dispatch) => {
       path += '&value=' + body.value;
     }
   }
-
   if (body.pageNo !== undefined && body.pageNo !== null && body.pageNo !== '') {
-    path += '&pageNo=' + body.pageNo;
+    if (path === '') {
+      path += 'pageNo=' + body.pageNo;
+    } else {
+      path += '&pageNo=' + body.pageNo;
+    }
   }
   if (body.offset !== undefined && body.offset !== null && body.offset !== '') {
-    path += '&offset=' + body.offset;
+    if (path === '') {
+      path += 'offset=' + body.offset;
+    } else {
+      path += '&offset=' + body.offset;
+    }
+  }
+  if (body.sortBy !== undefined && body.sortBy !== null && body.sortBy !== '') {
+    if (path === '') {
+      path += 'sortBy=' + body.sortBy;
+    } else {
+      path += '&sortBy=' + body.sortBy;
+    }
+  }
+  if (body.sortOrder !== undefined && body.sortOrder !== null && body.sortOrder !== '') {
+    if (path === '') {
+      path += 'sortOrder=' + body.sortOrder;
+    } else {
+      path += '&sortOrder=' + body.sortOrder;
+    }
   }
   return await new Promise((resolve, reject) => {
     useAxiosCall({
