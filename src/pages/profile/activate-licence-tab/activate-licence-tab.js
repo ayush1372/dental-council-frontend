@@ -136,7 +136,7 @@ const ActivateLicence = () => {
     if (
       orderBy?.name !== undefined &&
       orderBy?.name !== null &&
-      orderBy.name !== '' &&
+      orderBy?.name !== '' &&
       order !== undefined &&
       order !== null &&
       order !== ''
