@@ -132,6 +132,24 @@ const ActivateLicence = () => {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
+  useEffect(() => {
+    if (
+      orderBy.name !== undefined &&
+      orderBy.name !== null &&
+      orderBy.name !== '' &&
+      order !== undefined &&
+      order !== null &&
+      order !== ''
+    ) {
+      let ActivateLicenseListbody = {
+        pageNo: 1,
+        offset: 10,
+        sortBy: orderBy.name,
+        sortOrder: order,
+      };
+      dispatch(getActivateLicenseList(ActivateLicenseListbody));
+    }
+  }, [order, orderBy, dispatch]);
 
   const newRowsData =
     activateLicenseList?.data?.health_professional_details?.length >= 1
