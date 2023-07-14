@@ -72,7 +72,6 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
 
             {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
               data?.user_type === 3) &&
-              selectedAcademicStatus !== 'Approved' &&
               dashboardTableDetails !== 'Approved' &&
               (selectedAcademicStatus === 'Pending' ||
                 selectedAcademicStatus === 'Update Request Received') && (
@@ -106,7 +105,6 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
             </Typography>
             {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
               data?.user_type === 3) &&
-              selectedAcademicStatus !== 'Approved' &&
               dashboardTableDetails !== 'Approved' &&
               (selectedAcademicStatus === 'Pending' ||
                 selectedAcademicStatus === 'Update Request Received') && (
@@ -140,7 +138,6 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
             </Typography>
             {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
               data?.user_type === 3) &&
-              selectedAcademicStatus !== 'Approved' &&
               dashboardTableDetails !== 'Approved' &&
               (selectedAcademicStatus === 'Pending' ||
                 selectedAcademicStatus === 'Update Request Received') && (
@@ -176,7 +173,6 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
             </Typography>
             {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
               data?.user_type === 3) &&
-              selectedAcademicStatus !== 'Approved' &&
               dashboardTableDetails !== 'Approved' &&
               (selectedAcademicStatus === 'Pending' ||
                 selectedAcademicStatus === 'Update Request Received') && (
@@ -209,7 +205,6 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
             </Typography>
             {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
               data?.user_type === 3) &&
-              selectedAcademicStatus !== 'Approved' &&
               dashboardTableDetails !== 'Approved' &&
               (selectedAcademicStatus === 'Pending' ||
                 selectedAcademicStatus === 'Update Request Received') && (
@@ -254,7 +249,6 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
             </Typography>
             {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
               data?.user_type === 3) &&
-              selectedAcademicStatus !== 'Approved' &&
               dashboardTableDetails !== 'Approved' &&
               (selectedAcademicStatus === 'Pending' ||
                 selectedAcademicStatus === 'Update Request Received') && (
