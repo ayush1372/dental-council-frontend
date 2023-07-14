@@ -17,6 +17,11 @@ export function ViewProfile(props) {
   const emailId = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.personal_details?.email
   );
+  const emailIconVerified = useSelector(
+    (state) => state?.doctorUserProfileReducer?.personalDetails?.email_verified
+  );
+  // eslint-disable-next-line no-console
+  console.log('emailId', emailId);
   const mobileNumber = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.personal_details?.mobile
   );
@@ -118,7 +123,9 @@ export function ViewProfile(props) {
                   sx={{ wordBreak: 'break-word' }}
                 >
                   {emailId}
-                  <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
+                  {emailIconVerified === true && (
+                    <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
+                  )}
                 </Typography>
               ) : (
                 <Typography variant="subtitle2" color="textPrimary.main">
