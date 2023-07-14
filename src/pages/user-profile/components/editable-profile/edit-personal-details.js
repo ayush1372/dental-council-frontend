@@ -22,6 +22,7 @@ import { getPersonalDetails } from '../../../../store/reducers/doctor-user-profi
 import { Checkbox } from '../../../../ui/core';
 import { DatePicker, RadioGroup, Select, TextField } from '../../../../ui/core';
 import successToast from '../../../../ui/core/toaster';
+import { EmailRegexValidation } from '../../../../utilities/common-validations';
 
 const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValidDetails }) => {
   const { t } = useTranslation();
@@ -410,15 +411,14 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
   };
 
   async function onHandleSave() {
-    // CS-2173 Commenting for future use
-    // if (!email) {
-    //   setValidDetails({ ...validDetails, email: true });
-    //   window.scrollTo({
-    //     top: 0,
-    //     behavior: 'smooth',
-    //   });
-    //   return;
-    // }
+    if (!EmailRegexValidation?.pattern?.value?.test(document.getElementsByName('email')[0].value)) {
+      setValidDetails({ ...validDetails, email: true });
+      window.scrollTo({
+        top: 2,
+        behavior: 'smooth',
+      });
+      return;
+    }
     const {
       MiddleName,
       LastName,
