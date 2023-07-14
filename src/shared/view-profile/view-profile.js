@@ -20,8 +20,7 @@ export function ViewProfile(props) {
   const emailIconVerified = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.email_verified
   );
-  // eslint-disable-next-line no-console
-  console.log('emailId', emailId);
+
   const mobileNumber = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.personal_details?.mobile
   );
