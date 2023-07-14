@@ -74,7 +74,6 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
               data?.user_type === 3) &&
               selectedAcademicStatus !== 'Approved' &&
               dashboardTableDetails !== 'Approved' &&
-              selectedAcademicStatus === 'Pending' &&
               (selectedAcademicStatus === 'Pending' ||
                 selectedAcademicStatus === 'Update Request Received') && (
                 <ContactSupportOutlinedIcon
