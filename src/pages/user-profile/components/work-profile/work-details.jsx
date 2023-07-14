@@ -1037,7 +1037,14 @@ const WorkDetails = ({
         </>
       )}
       {(organizationChecked || facilityChecked) && (
-        <Grid container display="flex" justifyContent="space-between" alignItems="center" ml={2}>
+        <Grid
+          container
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          mt={1}
+          ml={2}
+        >
           <Grid item xs={12} md={8} lg={6} mb={1}>
             <Button
               onClick={handleSubmit(onSubmit)}
