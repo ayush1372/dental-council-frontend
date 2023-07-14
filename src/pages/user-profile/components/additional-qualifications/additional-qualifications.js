@@ -44,7 +44,7 @@ const AdditionalQualifications = () => {
   const [qualificationFilesData, setQualificationFilesData] = useState([]);
 
   const [successModalPopup, setSuccessModalPopup] = useState(false);
-  const [addMore, setAddmore] = useState(false);
+  // const [addMore, setAddmore] = useState(false);
 
   const {
     statesList,
@@ -86,10 +86,13 @@ const AdditionalQualifications = () => {
   const [universityData, setUniversityData] = useState([]);
 
   const handleQualificationFilesData = (fileName, files) => {
+    console.log('filename12', fileName, files);
     qualificationFilesData[fileName] = files;
-    setQualificationFilesData(files === '' ? [] : { ...qualificationFilesData });
+    console.log(qualificationFilesData);
+    setQualificationFilesData(files !== [] && { ...qualificationFilesData });
     setsupportingDocumentError(false);
   };
+
   useEffect(() => {
     if (isSubmitting && (qualificationFilesData?.length === 0 || qualificationFilesData === [])) {
       setsupportingDocumentError(true);
@@ -238,7 +241,6 @@ const AdditionalQualifications = () => {
           const showDeleteIcon = index > 0;
           return (
             <EditQualificationDetails
-              addMore={addMore}
               clearErrors={clearErrors}
               key={qualification.id}
               index={index}
@@ -284,7 +286,7 @@ const AdditionalQualifications = () => {
             color="primary"
             onClick={() => {
               append({ ...qualificationObjTemplate });
-              setAddmore(true);
+              // setAddmore(true);
             }}
           >
             Add Additional Qualification
