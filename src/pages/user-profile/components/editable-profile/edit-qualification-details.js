@@ -659,7 +659,7 @@ const EditQualificationDetails = ({
               name="state"
               label="State (in which college is located)"
               placeholder={'Enter state'}
-              defaultValue={fields[index].state}
+              defaultValue={getValues().qualification?.state}
               required={true}
               {...register(`qualification[${index}].state`, {
                 required: 'State is required',
@@ -674,6 +674,7 @@ const EditQualificationDetails = ({
                       : '',
                 },
               }}
+              onChange={(e) => e.target.value}
               disabled={
                 work_flow_status_id === 3
                   ? getQueryRaised('State')
