@@ -107,6 +107,37 @@ function DashboardControlledTable(props) {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
+  useEffect(() => {
+    if (
+      orderBy?.name !== undefined &&
+      orderBy?.name !== null &&
+      orderBy?.name !== '' &&
+      order !== undefined &&
+      order !== null &&
+      order !== ''
+    ) {
+      const requestObj = {
+        work_flow_status_id: '',
+        application_type_id: props?.selectedCardData?.applicationTypeID
+          ? props?.selectedCardData?.applicationTypeID.toString()
+          : '',
+        user_group_status: props?.selectedCardData?.responseKey
+          ? props?.selectedCardData?.responseKey
+          : '',
+        smc_id: searchQueryParams ? searchQueryParams?.RegistrationCouncilId : '',
+        name: searchQueryParams ? searchQueryParams?.filterByName : '',
+        nmr_id: searchQueryParams ? searchQueryParams?.filterByRegNo : '',
+        search: searchQueryParams ? searchQueryParams?.search : '',
+        value: searchQueryParams ? searchQueryParams?.value : '',
+        page_no: 1,
+        offset: 10,
+        sortBy: orderBy?.name,
+        sortOrder: order,
+      };
+
+      dispatch(getDashboardTableData(requestObj));
+    }
+  }, [order, orderBy, dispatch]);
 
   const newRowsData = dashboardTableDetails?.data?.dashboard_tolist?.map((application, index) => {
     const formattedDate = moment(application?.created_at).format('DD-MM-YYYY');
@@ -183,8 +214,8 @@ function DashboardControlledTable(props) {
       value: searchQueryParams ? searchQueryParams?.value : '',
       page_no: pageNo,
       offset: noOfRecords,
-      sort_by: '',
-      sort_order: '',
+      orderBy: '',
+      sortOrder: '',
     };
     dispatch(
       setSelectedAcademicStatus(
