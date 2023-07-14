@@ -336,7 +336,10 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
         </Grid>
         <Grid item xs={12} sm={6} lg={4} mb={{ xs: 1, lg: 0 }} pl={2}>
           <Typography component="div" variant="body3" color="grey.label">
-            Email
+            Email{' '}
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
 
           <Box display="flex" alignItems="center">
