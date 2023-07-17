@@ -69,19 +69,10 @@ function TrackAppicationTable({
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
   const tableData = useSelector((state) => state.common.trackApplicationTableData);
-
   let trackData = {
     pageNo: 1,
     offset: 10,
   };
-
-  useEffect(() => {
-    if (getTableData && profileId) dispatch(getTableData(profileId, trackData));
-  }, [getTableData, profileId]);
-  useEffect(() => {
-    dispatch(getTableData(profileId, trackData));
-    window.scrollTo(0, 0);
-  }, []);
 
   const viewNameOfApplicant = (event, row) => {
     event.preventDefault();
@@ -138,11 +129,32 @@ function TrackAppicationTable({
       });
   };
 
+  useEffect(() => {
+    dispatch(getTableData(profileId, trackData));
+    window.scrollTo(0, 0);
+  }, []);
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy.name === property.name && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
+
+  useEffect(() => {
+    trackData.sortBy = orderBy?.name;
+    trackData.sortOrder = order;
+
+    if (
+      trackData?.sortBy !== undefined &&
+      trackData?.sortBy !== null &&
+      trackData?.sortBy !== '' &&
+      trackData?.sortOrder !== undefined &&
+      trackData?.sortOrder !== null &&
+      trackData?.sortOrder !== ''
+    )
+      dispatch(getTableData(profileId, trackData));
+  }, [order, orderBy, dispatch]);
+
   const newRowsData = tableData?.data?.data?.health_professional_applications?.map(
     (data, index) => {
       return createData(

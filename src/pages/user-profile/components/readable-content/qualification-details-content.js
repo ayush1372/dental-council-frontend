@@ -28,7 +28,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
   const [queryRaisedField, setQueryRaisedField] = useState('');
   const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
 
-  const { qualification_detail_response_tos } = registrationDetails || {};
+  const { qualification_detail_response_tos, nbe_response_to } = registrationDetails || {};
 
   const CloseAttachmentPopup = () => {
     setAttachmentViewProfile(false);
@@ -59,8 +59,18 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
           spacing={2}
           mt={2}
           key={index}
-          borderBottom={qualification_detail_response_tos?.length > 1 && index < qualification_detail_response_tos?.length - 1 ? 1 : 'none'}
-          borderColor={qualification_detail_response_tos?.length > 1 && index < qualification_detail_response_tos?.length - 1 ? 'grey2.light' : 'none'}
+          borderBottom={
+            qualification_detail_response_tos?.length > 1 &&
+            index < qualification_detail_response_tos?.length - 1
+              ? 1
+              : 'none'
+          }
+          borderColor={
+            qualification_detail_response_tos?.length > 1 &&
+            index < qualification_detail_response_tos?.length - 1
+              ? 'grey2.light'
+              : 'none'
+          }
         >
           <Grid item xs={12} md={8}>
             <Typography variant="h3" color="grey.label">
@@ -124,7 +134,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  selectedAcademicStatus !== 'College Verified' &&
+                  selectedAcademicStatus !== 'College/NBE Verified' &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
@@ -159,7 +169,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  selectedAcademicStatus !== 'College Verified' &&
+                  selectedAcademicStatus !== 'College/NBE Verified' &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
@@ -194,7 +204,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  selectedAcademicStatus !== 'College Verified' &&
+                  selectedAcademicStatus !== 'College/NBE Verified' &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
@@ -232,7 +242,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  selectedAcademicStatus !== 'College Verified' &&
+                  selectedAcademicStatus !== 'College/NBE Verified' &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
@@ -267,7 +277,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  selectedAcademicStatus !== 'College Verified' &&
+                  selectedAcademicStatus !== 'College/NBE Verified' &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
@@ -300,7 +310,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  selectedAcademicStatus !== 'College Verified' &&
+                  selectedAcademicStatus !== 'College/NBE Verified' &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
@@ -334,14 +344,14 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   )}
                   <Grid display="flex" alignItems="center">
                     <Typography variant="subtitle2" color="textPrimary.main">
-                      {element?.rollno ? element?.rollno : ''}
+                      {nbe_response_to?.roll_no ? nbe_response_to?.roll_no : '-'}
                     </Typography>{' '}
                     {(data?.user_type === 2 ||
                       data?.user_type === 3 ||
                       (data?.user_type === 4 && index !== 0) ||
                       data?.user_type === 5) &&
                       element.is_verified !== 1 &&
-                      selectedAcademicStatus !== 'College Verified' &&
+                      selectedAcademicStatus !== 'College/NBE Verified' &&
                       college_status !== 'Approved' && (
                         <ContactSupportOutlinedIcon
                           cursor="pointer"
@@ -366,14 +376,14 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   )}
                   <Grid display="flex" alignItems="center">
                     <Typography variant="subtitle2" color="textPrimary.main">
-                      {element?.passportNumber ? element?.passportNumber : ''}
+                      {nbe_response_to?.passport_number ? nbe_response_to?.passport_number : '-'}
                     </Typography>{' '}
                     {(data?.user_type === 2 ||
                       data?.user_type === 3 ||
                       (data?.user_type === 4 && index !== 0) ||
                       data?.user_type === 5) &&
                       element.is_verified !== 1 &&
-                      selectedAcademicStatus !== 'College Verified' &&
+                      selectedAcademicStatus !== 'College/NBE Verified' &&
                       college_status !== 'Approved' && (
                         <ContactSupportOutlinedIcon
                           cursor="pointer"
@@ -398,14 +408,14 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   )}
                   <Grid display="flex" alignItems="center">
                     <Typography variant="subtitle2" color="textPrimary.main">
-                      {element?.marksobtained ? element?.marksobtained : ''}
+                      {nbe_response_to?.marks_obtained ? nbe_response_to?.marks_obtained : '-'}
                     </Typography>{' '}
                     {(data?.user_type === 2 ||
                       data?.user_type === 3 ||
                       (data?.user_type === 4 && index !== 0) ||
                       data?.user_type === 5) &&
                       element.is_verified !== 1 &&
-                      selectedAcademicStatus !== 'College Verified' &&
+                      selectedAcademicStatus !== 'College/NBE Verified' &&
                       college_status !== 'Approved' && (
                         <ContactSupportOutlinedIcon
                           cursor="pointer"
@@ -430,14 +440,14 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   )}
                   <Grid display="flex" alignItems="center">
                     <Typography variant="subtitle2" color="textPrimary.main">
-                      {element?.result ? element?.result : ''}
+                      {nbe_response_to?.result ? nbe_response_to?.result : '-'}
                     </Typography>{' '}
                     {(data?.user_type === 2 ||
                       data?.user_type === 3 ||
                       (data?.user_type === 4 && index !== 0) ||
                       data?.user_type === 5) &&
                       element.is_verified !== 1 &&
-                      selectedAcademicStatus !== 'College Verified' &&
+                      selectedAcademicStatus !== 'College/NBE Verified' &&
                       college_status !== 'Approved' && (
                         <ContactSupportOutlinedIcon
                           cursor="pointer"
@@ -462,15 +472,15 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   )}
                   <Grid display="flex" alignItems="center">
                     <Typography variant="subtitle2" color="textPrimary.main">
-                      {element?.monthfmge ? element?.monthfmge + ',' : ''}{' '}
-                      {element?.yearfmge ? element?.yearfmge : ''}
+                      {nbe_response_to?.month ? nbe_response_to?.month + ',' : '-'}{' '}
+                      {nbe_response_to?.year ? nbe_response_to?.year : ''}
                     </Typography>{' '}
                     {(data?.user_type === 2 ||
                       data?.user_type === 3 ||
                       (data?.user_type === 4 && index !== 0) ||
                       data?.user_type === 5) &&
                       element.is_verified !== 1 &&
-                      selectedAcademicStatus !== 'College Verified' &&
+                      selectedAcademicStatus !== 'College/NBE Verified' &&
                       college_status !== 'Approved' && (
                         <ContactSupportOutlinedIcon
                           cursor="pointer"
@@ -521,7 +531,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  selectedAcademicStatus !== 'College Verified' &&
+                  selectedAcademicStatus !== 'College/NBE Verified' &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"

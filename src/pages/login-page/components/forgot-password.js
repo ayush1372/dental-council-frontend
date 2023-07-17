@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 
+import { usersType } from '../../../helpers/functions/common-functions';
 import { sendNotificationOtp } from '../../../store/actions/common-actions';
 import { loginActiveState } from '../../../store/reducers/login-reducer';
 import { Button, TextField } from '../../../ui/core';
@@ -11,7 +12,7 @@ import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 import successToast from '../../../ui/core/toaster';
 import { EmailRegexValidation } from '../../../utilities/common-validations';
 
-const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep }) => {
+const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep, loginName }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const doctorTitle = 'Enter Email ID';
@@ -46,14 +47,18 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep })
       handleSubmit()();
       return;
     }
-
+    const userTypeId = usersType(loginName);
     let sendNotificationOtpBody = {};
     if (getValues()?.mobileNo) {
-      sendNotificationOtpBody = { contact: getValues().mobileNo, type: 'sms' };
+      sendNotificationOtpBody = {
+        contact: getValues().mobileNo,
+        type: 'sms',
+        user_type: userTypeId,
+      };
     } else if (getValues()?.Id?.includes('@')) {
-      sendNotificationOtpBody = { contact: getValues().Id, type: 'email' };
+      sendNotificationOtpBody = { contact: getValues().Id, type: 'email', user_type: userTypeId };
     } else {
-      sendNotificationOtpBody = { contact: getValues().Id, type: 'nmr_id' };
+      sendNotificationOtpBody = { contact: getValues().Id, type: 'nmr_id', user_type: userTypeId };
     }
 
     dispatch(sendNotificationOtp(sendNotificationOtpBody))

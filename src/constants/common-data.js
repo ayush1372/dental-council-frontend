@@ -168,7 +168,7 @@ export const registrationRequestMapper = {
   Suspended: 'Suspended',
   Blacklisted: 'Blacklisted',
   Pending: 'Pending',
-  'College Verified': 'College Verified',
+  'College/NBE Verified': 'College/NBE Verified',
   Forwarded: 'Forwarded',
 };
 export const updationRequestMapper = {
@@ -179,7 +179,7 @@ export const updationRequestMapper = {
   Suspended: 'Suspended',
   Blacklisted: 'Blacklisted',
   Pending: 'Update Request Received',
-  'College Verified': 'College Verified',
+  'College/NBE Verified': 'College/NBE Verified',
   Forwarded: 'Forwarded',
 };
 
@@ -281,11 +281,6 @@ export const ActivateLicenceFieldList = [
   { id: 'yearOfRegistration', name: 'Year of Registration' },
 ];
 
-// export const ActivateLicenceFieldList = [
-//   { id: 'healthProfessionalName', name: 'Applicant Name' },
-//   { id: 'registrationNumber', name: 'Registration No' },
-// ];
-
 export const DashBoardCardsFieldList = [
   { id: 'applicantFullName', name: 'Name of Applicant' },
   { id: 'registrationNumber', name: 'Registration No' },
@@ -294,6 +289,7 @@ export const DashBoardCardsFieldList = [
   { id: 'gender', name: 'Gender' },
   { id: 'mobileNumber', name: 'Mobile Number' },
   { id: 'yearOfRegistration', name: 'Year of Registration' },
+  { id: 'requestid', name: 'Request ID' },
 ];
 
 export const TrackStatusFieldList = [
@@ -303,4 +299,5 @@ export const TrackStatusFieldList = [
   { id: 'gender', name: 'Gender' },
   { id: 'mobileNumber', name: 'Mobile Number' },
   { id: 'yearOfRegistration', name: 'Year of Registration' },
+  { id: 'requestid', name: 'Request ID' },
 ];

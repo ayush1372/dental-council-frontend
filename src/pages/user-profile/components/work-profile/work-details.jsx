@@ -87,6 +87,7 @@ const WorkDetails = ({
       languages_known_ids: getLanguageData(getValues().LanguageSpoken),
     };
     if (declaredFacilityData?.length > 0) {
+      fetchDistricts(declaredFacilityData[0]?.address?.state, true);
       let facilityDetailsDeclared = {
         facility_id: declaredFacilityData[0]?.id,
         organization_type: getValues().organizationType,
@@ -99,7 +100,7 @@ const WorkDetails = ({
             name: 'india',
           },
           state: getStateData(declaredFacilityData[0]?.address?.state, true),
-          district: getFacilityDistrict(declaredFacilityData[0]?.address?.district),
+          district: getFacilityDistrict(declaredFacilityData[0]?.address?.district_to?.id),
           village: {
             iso_code: declaredFacilityData[0]?.villageCityTownLGDCode,
             name: declaredFacilityData[0]?.villageCityTownName,
@@ -679,7 +680,6 @@ const WorkDetails = ({
                   <WorkDetailsTable
                     FacilityData={facilityResponseData}
                     register={register}
-                    facilityDistrict={facilityDistrict}
                     setFacilityResponseData={setFacilityResponseData}
                     setDeclaredFacilityDistrict={setDeclaredFacilityDistrict}
                     declaredFacilityData={declaredFacilityData}
@@ -1042,7 +1042,7 @@ const WorkDetails = ({
           display="flex"
           justifyContent="space-between"
           alignItems="center"
-          mt={5}
+          mt={1}
           ml={2}
         >
           <Grid item xs={12} md={8} lg={6} mb={1}>

@@ -338,20 +338,36 @@ export const trackStatus = (trackData) => async (dispatch) => {
   }
 
   if (trackData.pageNo !== undefined && trackData.pageNo !== null && trackData.pageNo !== '') {
-    path += '&pageNo=' + trackData.pageNo;
+    if (path === '') {
+      path += 'pageNo=' + trackData.pageNo;
+    } else {
+      path += '&pageNo=' + trackData.pageNo;
+    }
   }
   if (trackData.offset !== undefined && trackData.offset !== null && trackData.offset !== '') {
-    path += '&offset=' + trackData.offset;
+    if (path === '') {
+      path += 'offset=' + trackData.offset;
+    } else {
+      path += '&offset=' + trackData.offset;
+    }
   }
   if (trackData.sortBy !== undefined && trackData.sortBy !== null && trackData.sortBy !== '') {
-    path += '&sortBy=' + trackData.sortBy;
+    if (path === '') {
+      path += 'sortBy=' + trackData.sortBy;
+    } else {
+      path += '&sortBy=' + trackData.sortBy;
+    }
   }
   if (
-    trackData.sortType !== undefined &&
-    trackData.sortType !== null &&
-    trackData.sortType !== ''
+    trackData.sortOrder !== undefined &&
+    trackData.sortOrder !== null &&
+    trackData.sortOrder !== ''
   ) {
-    path += '&sortType=' + trackData.sortType;
+    if (path === '') {
+      path += 'sortOrder=' + trackData.sortOrder;
+    } else {
+      path += '&sortOrder=' + trackData.sortOrder;
+    }
   }
   return await new Promise((resolve, reject) => {
     useAxiosCall({
@@ -419,12 +435,33 @@ export const getActivateLicenseList = (body) => async (dispatch) => {
       path += '&value=' + body.value;
     }
   }
-
   if (body.pageNo !== undefined && body.pageNo !== null && body.pageNo !== '') {
-    path += '&pageNo=' + body.pageNo;
+    if (path === '') {
+      path += 'pageNo=' + body.pageNo;
+    } else {
+      path += '&pageNo=' + body.pageNo;
+    }
   }
   if (body.offset !== undefined && body.offset !== null && body.offset !== '') {
-    path += '&offset=' + body.offset;
+    if (path === '') {
+      path += 'offset=' + body.offset;
+    } else {
+      path += '&offset=' + body.offset;
+    }
+  }
+  if (body.sortBy !== undefined && body.sortBy !== null && body.sortBy !== '') {
+    if (path === '') {
+      path += 'sortBy=' + body.sortBy;
+    } else {
+      path += '&sortBy=' + body.sortBy;
+    }
+  }
+  if (body.sortOrder !== undefined && body.sortOrder !== null && body.sortOrder !== '') {
+    if (path === '') {
+      path += 'sortOrder=' + body.sortOrder;
+    } else {
+      path += '&sortOrder=' + body.sortOrder;
+    }
   }
   return await new Promise((resolve, reject) => {
     useAxiosCall({
