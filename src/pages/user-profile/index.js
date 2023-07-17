@@ -194,8 +194,10 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
       )
     )
       .then()
-      .catch((allFailMsg) => {
-        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      .catch((error) => {
+        successToast(
+          `ERR_INT: ${error.data.response.data.error}, 'auth-error', 'error', 'top-center'`
+        );
       });
   };
 

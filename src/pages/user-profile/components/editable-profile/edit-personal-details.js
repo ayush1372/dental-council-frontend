@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
-import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
+import { createSelectFieldData, scrollToTop } from '../../../../helpers/functions/common-functions';
 import {
   getCitiesList,
   getDistrictList,
@@ -416,10 +416,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
         !EmailRegexValidation?.pattern?.value?.test(document.getElementsByName('email')[0]?.value)
       ) {
         setValidDetails({ ...validDetails, email: true });
-        window.scrollTo({
-          top: 2,
-          behavior: 'smooth',
-        });
+        scrollToTop();
         return;
       }
     }
