@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 
 import { parserJWT, userGroupTypeForSession } from '../../../helpers/functions/common-functions';
 import CircularLoader from '../../../shared/circular-loader/circular-loader';
@@ -49,7 +48,6 @@ export const MainLayout = () => {
       <div style={{ fontSize: ZoomSize() }}>
         <main>
           <Header />
-          <ToastContainer />
           <section className={styles.main}>
             <Outlet />
           </section>
