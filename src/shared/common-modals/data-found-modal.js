@@ -72,7 +72,7 @@ export default function DatafoundModalPopup({
               display="flex"
               alignItems="felx-start"
             >
-              Info !
+              Info!
             </Typography>
             <Typography
               display="flex"

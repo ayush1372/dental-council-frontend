@@ -234,8 +234,7 @@ const DoctorRegistrationWelcomePage = () => {
             smcId: getValues().RegistrationCouncilId,
             registrationNumber: getValues().RegistrationNumber,
           }}
-          text={`We found below details as per provided information.
-          If the details are correct, click yes to continue registration. `}
+          text={`We could not find any records against the provided details in Council. Do you still want to continue?`}
         />
       )}
       {accountExists && (
