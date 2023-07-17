@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { FontSize } from '../../../../../helpers/components/fontsize-toggle';
-import { MultilingualDropdown } from '../../../../../helpers/components/multilingual-dropdown';
+//import { MultilingualDropdown } from '../../../../../helpers/components/multilingual-dropdown';
 import { ColorModeContext } from '../../../../../theme/theme-provider-wrapper';
 import { Button } from '../../../../core/button/button';
 
@@ -81,9 +81,9 @@ export const TopBar = () => {
               )}
             </ColorModeContext.Consumer>
 
-            <Button sx={{ ml: { xs: '2px' } }} className={styles.multilingualDropdown}>
+            {/* <Button sx={{ ml: { xs: '2px' } }} className={styles.multilingualDropdown}>
               <MultilingualDropdown />
-            </Button>
+            </Button> */}
           </Grid>
         </Grid>
       </Container>
