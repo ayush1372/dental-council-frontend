@@ -337,7 +337,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
                 onClick={handleUserForgetUserName}
                 sx={{ cursor: 'pointer', display: 'contents' }}
               >
-                Forgot Username ?
+                Forgot Username?
               </Button>
             </Typography>
 
@@ -362,7 +362,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
                 onClick={() => handleForgotPassword()}
                 sx={{ cursor: 'pointer', display: 'contents' }}
               >
-                Forgot Password ?
+                Forgot Password?
               </Button>
             </Typography>
           </>
