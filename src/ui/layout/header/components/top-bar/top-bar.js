@@ -1,17 +1,17 @@
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
+//import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined';
-import { Box, Container, Grid, Typography } from '@mui/material';
+import { Box, Container, Grid } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import { useTheme } from '@mui/material/styles';
 import CN from 'clsx';
-import { useTranslation } from 'react-i18next';
+// { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { FontSize } from '../../../../../helpers/components/fontsize-toggle';
-import { MultilingualDropdown } from '../../../../../helpers/components/multilingual-dropdown';
+//import { MultilingualDropdown } from '../../../../../helpers/components/multilingual-dropdown';
 import { ColorModeContext } from '../../../../../theme/theme-provider-wrapper';
 import { Button } from '../../../../core/button/button';
 
@@ -19,7 +19,7 @@ import styles from './top-bar.module.scss';
 
 export const TopBar = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  //const { t } = useTranslation();
   const { palette } = useTheme();
   const userLoggedIn = useSelector((state) => state.common.isloggedIn);
 
@@ -29,10 +29,10 @@ export const TopBar = () => {
         <Grid container justifyContent="space-between" alignItems="start">
           <Grid alignSelf="center" item xs={12} sm={5}>
             <Box display="flex" alignItems="center">
-              <LocalPhoneOutlinedIcon sx={{ width: '16px', height: '16px' }} color="primary" />
-              <Typography variant="body4" m="0 0 0 5px" color="primary">
+              {/* <LocalPhoneOutlinedIcon sx={{ width: '16px', height: '16px' }} color="primary" /> */}
+              {/* <Typography variant="body4" m="0 0 0 5px" color="primary">
                 {t('Our Toll Free Number')}: 1800-11-4477 / 14477
-              </Typography>
+              </Typography> */}
             </Box>
           </Grid>
           <Grid
@@ -81,9 +81,9 @@ export const TopBar = () => {
               )}
             </ColorModeContext.Consumer>
 
-            <Button sx={{ ml: { xs: '2px' } }} className={styles.multilingualDropdown}>
+            {/* <Button sx={{ ml: { xs: '2px' } }} className={styles.multilingualDropdown}>
               <MultilingualDropdown />
-            </Button>
+            </Button> */}
           </Grid>
         </Grid>
       </Container>
