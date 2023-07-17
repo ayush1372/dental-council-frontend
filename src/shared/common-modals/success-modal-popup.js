@@ -124,7 +124,10 @@ export default function SuccessModalPopup({
       }
     }
   };
+
   const navigateLogin = () => {
+    // eslint-disable-next-line no-console
+    console.log('loginName', loginName);
     dispatch(loginActiveState({ activeIndex: 0 }));
     navigate('/login-page', { state: { loginFormname: loginName } });
   };
