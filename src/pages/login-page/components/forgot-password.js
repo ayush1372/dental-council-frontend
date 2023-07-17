@@ -1,24 +1,24 @@
-import { Box, Divider, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 
+//import { useLocation } from 'react-router-dom';
 import { usersType } from '../../../helpers/functions/common-functions';
 import { sendNotificationOtp } from '../../../store/actions/common-actions';
 import { loginActiveState } from '../../../store/reducers/login-reducer';
-import { Button, TextField } from '../../../ui/core';
+import { Button } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 import successToast from '../../../ui/core/toaster';
-import { EmailRegexValidation } from '../../../utilities/common-validations';
+//import { EmailRegexValidation } from '../../../utilities/common-validations';
 
 const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep, loginName }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const doctorTitle = 'Enter Email ID';
-  const userTitle = 'Enter User ID/Email ID';
-  const { state } = useLocation();
-  const { loginFormname } = state;
+  //const doctorTitle = 'Enter Email ID';
+  //const userTitle = 'Enter User ID/Email ID';
+  // const { state } = useLocation();
+  //const { loginFormname } = state;
   const {
     register,
     handleSubmit,
@@ -35,7 +35,7 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep, l
 
   const watchMobileNum = watch('mobileNo')?.trim();
   const watchId = watch('Id')?.trim();
-  const isIdActive = (!watchMobileNum && !watchId) || !watchMobileNum;
+  // const isIdActive = (!watchMobileNum && !watchId) || !watchMobileNum;
   const isMobileNumActive = (!watchMobileNum && !watchId) || !watchId;
 
   const onSubmit = (reSetPassword) => {
@@ -120,20 +120,21 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep, l
       <Typography
         variant="h2"
         component="div"
-        textAlign={userData?.page === 'forgetUserName' ? 'left' : 'center'}
+        textAlign={userData?.page === 'forgetUserName' ? 'left' : 'left'}
       >
-        {userData?.page === 'forgetUserName' ? 'Forgot Username' : 'Forgot Password'}
+        {userData?.page === 'forgetUserName' ? 'Recover Your Username' : 'Recover Your Password'}
       </Typography>
+
       {userData?.page !== 'forgetUserName' && (
         <>
           <Box mt={2}>
-            <Typography variant="body1">
+            {/* <Typography variant="body1">
               {loginFormname === 'Doctor' ? doctorTitle : userTitle}
               <Typography component="span" color="error.main">
                 *
               </Typography>
-            </Typography>
-            <TextField
+            </Typography> */}
+            {/* <TextField
               inputProps={{ maxLength: 100 }}
               fullWidth
               id="outlined-basic"
@@ -147,9 +148,9 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep, l
               error={isIdActive && errors.Id?.message}
               {...register('Id', EmailRegexValidation)}
               disabled={!isIdActive}
-            />
+            /> */}
           </Box>
-          <Divider
+          {/* <Divider
             sx={{
               paddingTop: '15px',
             }}
@@ -157,12 +158,12 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep, l
             <Typography variant="body1" color="inputTextColor.main">
               OR
             </Typography>
-          </Divider>
+          </Divider> */}
         </>
       )}
       <Box mt={2}>
         <Typography variant="body1">
-          Enter Mobile Number
+          Mobile number
           <Typography component="span" color="error.main">
             *
           </Typography>
@@ -170,7 +171,7 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep, l
         <MobileNumber
           register={register}
           getValues={getValues}
-          placeholder="Enter Mobile Number"
+          placeholder="Please enter mobile number"
           errors={isMobileNumActive ? errors : {}}
           showCircleCheckIcon={false}
           showhint={false}
