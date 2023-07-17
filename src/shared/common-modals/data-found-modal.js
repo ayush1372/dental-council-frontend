@@ -44,6 +44,7 @@ export default function DatafoundModalPopup({
     handleAadhaarPage(true);
     setIsNext(true);
     setOpen(false);
+    handleClose(false);
   };
   const handleNo = () => {
     handleClose(false);

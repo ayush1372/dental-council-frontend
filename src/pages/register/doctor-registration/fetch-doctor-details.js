@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import VolumeOffIcon from '@mui/icons-material/VolumeOff';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
-import { Alert, Container, Divider, Grid, IconButton, Typography } from '@mui/material';
+import { Container, Divider, Grid, IconButton, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
@@ -329,26 +329,6 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
               },
             }}
           >
-            <Box sx={{ width: '100%', height: '53px', marginBottom: '30px', marginTop: '32px ' }}>
-              <Alert
-                sx={{
-                  m: 2,
-                  marginLeft: '0px',
-                  borderRadius: '5px',
-                  width: {
-                    xs: '100%',
-                    md: '680px',
-                  },
-                  boxShadow: '1',
-                  color: 'inputSuccessTextColor.main',
-                  backgroundColor: 'inputSuccessBackgroundColor.main',
-                }}
-              >
-                Record fetched successfully. Please verify your details to proceed further.
-              </Alert>
-            </Box>
-            {/* )} */}
-
             <Box p="30px 32px 0px 32px" width={{ xs: '100%', md: '679px' }} sx={{ boxShadow: '2' }}>
               <Box mb={4}>
                 <Typography variant="h2" color="textSecondary.main">
