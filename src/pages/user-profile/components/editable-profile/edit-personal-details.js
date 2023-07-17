@@ -411,13 +411,17 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
   };
 
   async function onHandleSave() {
-    if (!EmailRegexValidation?.pattern?.value?.test(document.getElementsByName('email')[0].value)) {
-      setValidDetails({ ...validDetails, email: true });
-      window.scrollTo({
-        top: 2,
-        behavior: 'smooth',
-      });
-      return;
+    if (document?.getElementsByName('email')[0]?.value !== undefined) {
+      if (
+        !EmailRegexValidation?.pattern?.value?.test(document.getElementsByName('email')[0]?.value)
+      ) {
+        setValidDetails({ ...validDetails, email: true });
+        window.scrollTo({
+          top: 2,
+          behavior: 'smooth',
+        });
+        return;
+      }
     }
     const {
       MiddleName,
