@@ -485,8 +485,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                 >
                   <Box pt={1}>
                     <Typography variant="body1">
-                      Please enter the OTP sent on your mobile number {mobileNumber} which is
-                      registered with Aadhaar.
+                      OTP sent to Aadhaar registered mobile number ending with {mobileNumber}
                     </Typography>
                     {otpform}
                   </Box>
@@ -511,8 +510,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                 </Box>
               )}
 
-              <Divider sx={{ mb: 4, mt: 4 }} variant="fullWidth" />
-              <Box sx={{ marginTop: '20px', paddingBottom: '48px' }}>
+              <Box sx={{ marginTop: '20px', paddingBottom: '48px', alignItems: 'flex-start' }}>
                 <Typography variant="subtitle2">
                   Mobile Number
                   <Typography component="span" sx={{ color: 'error.main' }}>
@@ -536,10 +534,10 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                     defaultValue={getValues().MobileNumber}
                     error={errors.MobileNumber?.message}
                     {...register('MobileNumber', {
-                      required: 'Mobile Number is required',
+                      required: 'Please enter a valid 10 digit mobile number',
                       pattern: {
                         value: /^\d{10}$/i,
-                        message: 'Enter Valid Mobile Number',
+                        message: 'Please enter a valid mobile number',
                       },
                     })}
                   />
@@ -621,12 +619,21 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
               successRegistration={successRegistration}
               existHprId={existHprId}
               isHpIdCreated={existHprId}
-              text={`Your username ${existUSerName
-                .replace('@hpr.abdm', '')
-                ?.replace(
-                  '@dr.abdm',
-                  ''
-                )} has been already created. Please click on below button to proceed`}
+              text={
+                existHprId
+                  ? `Your account with username "${existUSerName
+                      .replace('@hpr.abdm', '')
+                      ?.replace(
+                        '@dr.abdm',
+                        ''
+                      )}" has been created. Please click on set password to proceed.`
+                  : `Your account with username "${existUSerName
+                      .replace('@hpr.abdm', '')
+                      ?.replace(
+                        '@dr.abdm',
+                        ''
+                      )}" has been created. Please click on login to proceed.`
+              }
             />
           )}
         </>
