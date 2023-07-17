@@ -86,6 +86,27 @@ function NMCCollegeRegistration() {
       Email: '',
     },
   });
+  const onReset = () => {
+    collegesList = [];
+    setValue('CouncilName', '');
+    setValue('CouncilID', '');
+    setValue('Name', '');
+    setValue('CollegeCode', '');
+    setValue('MobileNumber', '');
+    setValue('Website', '');
+    setValue('AddressLine1', '');
+    setValue('AddressLine2', '');
+    setValue('Pincode', '');
+    setValue('Email', '');
+    setValue('UniversityName', '');
+    setValue('UniversityID', '');
+    setValue('StateName', '');
+    setValue('StateID', '');
+    setValue('District', '');
+    setValue('DistrictID', '');
+    setValue('Town', '');
+    setValue('TownID', '');
+  };
 
   const onsubmit = () => {
     if (showCollegeName === true) {
@@ -112,16 +133,10 @@ function NMCCollegeRegistration() {
       dispatch(registerCollegeDetail(collegeDetailValues))
         .then(() => {
           setSuccessModalPopup(true);
-          setValue('CouncilName', '');
-          setValue('CouncilID', '');
-          setValue('Name', '');
-          setValue('CollegeCode', '');
-          setValue('MobileNumber', '');
-          setValue('Website', '');
-          setValue('AddressLine1', '');
-          setValue('AddressLine2', '');
-          setValue('Pincode', '');
-          setValue('Email', '');
+          onReset();
+          reset();
+          reset({ UniversityName: '' });
+          reset({ UniversityID: '' });
         })
         .catch((error) => {
           successToast(
@@ -131,7 +146,6 @@ function NMCCollegeRegistration() {
             'top-center'
           );
         });
-      reset();
     } else {
       const collegeDetailValues = {
         id: getValues().CollegeNameID,
@@ -157,16 +171,7 @@ function NMCCollegeRegistration() {
         .then(() => {
           setSuccessModalPopup(true);
           reset();
-          setValue('CouncilName', '');
-          setValue('CouncilID', '');
-          setValue('Name', '');
-          setValue('CollegeCode', '');
-          setValue('MobileNumber', '');
-          setValue('Website', '');
-          setValue('AddressLine1', '');
-          setValue('AddressLine2', '');
-          setValue('Pincode', '');
-          setValue('Email', '');
+          onReset();
         })
         .catch((error) => {
           successToast(
@@ -177,7 +182,6 @@ function NMCCollegeRegistration() {
           );
         });
     }
-    reset();
   };
 
   const handleInput = (e) => {
@@ -215,7 +219,6 @@ function NMCCollegeRegistration() {
   const onNameChange = (currentValue) => {
     if (currentValue?.id === 'other') {
       setShowCollegeName(true);
-      // reset();
     } else {
       setValue('CouncilName', '');
       setValue('CouncilID', '');
@@ -600,6 +603,7 @@ function NMCCollegeRegistration() {
           Submit
         </Button>
       </Box>
+
       {successModalPopup && (
         <SuccessModalPopup
           open={successModalPopup}
