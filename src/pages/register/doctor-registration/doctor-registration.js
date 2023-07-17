@@ -18,7 +18,7 @@ const DoctorRegistrationWelcomePage = () => {
   const [isNext, setIsNext] = useState(false);
   const [imrDataNotFound, setImrDataNotFound] = useState(false);
   const [rejectPopup, setRejectPopup] = useState(false);
-  const [datafoundModalPopup, setDatafoundModalPopup] = useState(false);
+  // const [datafoundModalPopup, setDatafoundModalPopup] = useState(false);
   const [accountExists, setAccountExists] = useState(false);
   const {
     register,
@@ -42,7 +42,8 @@ const DoctorRegistrationWelcomePage = () => {
   const dispatch = useDispatch();
   const handleAadhaarPage = (data) => {
     setImrDataNotFound(data);
-    setDatafoundModalPopup(false);
+    setRejectPopup(false);
+    // setDatafoundModalPopup(false);
   };
   useEffect(() => {
     dispatch(getRegistrationCouncilList());
@@ -59,7 +60,8 @@ const DoctorRegistrationWelcomePage = () => {
         if (response?.data?.already_registered_in_nmr) {
           setAccountExists(true);
         } else {
-          setIsNext(true);
+          setRejectPopup(true);
+          // setIsNext(true);
         }
       })
       .catch((err) => {
@@ -200,7 +202,8 @@ const DoctorRegistrationWelcomePage = () => {
           />
         )}
       </Box>
-      {rejectPopup && (
+      {/* Commneted by, Ashvini For future use */}
+      {/* {rejectPopup && (
         <ErrorModalPopup
           open={setRejectPopup}
           setOpen={() => {
@@ -213,13 +216,15 @@ const DoctorRegistrationWelcomePage = () => {
           text={` Your data is not found in the NMR.
            Do you want to continue the registration in the NMR ? `}
         />
-      )}
-      {datafoundModalPopup && (
+      )} */}
+      {rejectPopup && (
         <DatafoundModalPopup
           open={setRejectPopup}
-          setOpen={() => setRejectPopup(false)}
+          setOpen={() => {
+            setRejectPopup(true);
+          }}
           handleClose={() => {
-            setDatafoundModalPopup(false);
+            setRejectPopup(false);
           }}
           imrData={true}
           handleAadhaarPage={handleAadhaarPage}
@@ -229,8 +234,7 @@ const DoctorRegistrationWelcomePage = () => {
             smcId: getValues().RegistrationCouncilId,
             registrationNumber: getValues().RegistrationNumber,
           }}
-          text={`We found below details as per provided information. 
-          If the details are correct, click yes to continue registration. `}
+          text={`We could not find any records against the provided details in Council. Do you still want to continue?`}
         />
       )}
       {accountExists && (

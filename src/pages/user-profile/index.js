@@ -22,6 +22,7 @@ import {
   getEsignFormDetails,
   getPersonalDetailsData,
   getRegistrationDetailsData,
+  getWorkProfileDetailsData,
   updateDoctorContactDetails,
 } from '../../store/actions/doctor-user-profile-actions';
 import { changeUserActiveTab } from '../../store/reducers/common-reducers';
@@ -47,7 +48,9 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
   const eSignResponse = useSelector((state) => state?.doctorUserProfileReducer?.esignDetails?.data);
   const { loginData } = useSelector((state) => state?.loginReducer);
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
-  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const { personalDetails, workProfileDetails } = useSelector(
+    (state) => state?.doctorUserProfileReducer
+  );
   const emailNotify = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.email_notification_enabled
   );
@@ -180,9 +183,28 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
       });
   };
 
+  const fetchDoctorUserWorkDetails = () => {
+    dispatch(
+      getWorkProfileDetailsData(
+        showViewProfile && tabName === 'Activate License'
+          ? selectedRowData?.health_professional_id
+          : showViewProfile
+          ? selectedRowData?.profileID?.value || selectedRowData?.view?.value
+          : loginData?.data?.profile_id
+      )
+    )
+      .then()
+      .catch((error) => {
+        successToast(
+          `ERR_INT: ${error.data.response.data.error}, 'auth-error', 'error', 'top-center'`
+        );
+      });
+  };
+
   useEffect(() => {
     fetchDoctorUserPersonalDetails();
     fetchDoctorUserRegistrationDetails();
+    fetchDoctorUserWorkDetails();
     if (loginData?.data?.work_flow_status_id === 1 || personalDetails?.work_flow_status_id === 1) {
       setIsApplicationPending(false);
     }
@@ -404,10 +426,16 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
                   <ProgressBar
                     width="302px"
                     progress={
-                      showStaticFormProgress ||
-                      personalDetails?.nmr_id ||
-                      personalDetails?.work_flow_status_id === 1 ||
-                      personalDetails?.work_flow_status_id === 3
+                      workProfileDetails?.work_details?.is_user_currently_working !== undefined &&
+                      workProfileDetails !== undefined &&
+                      typeof workProfileDetails === 'object' &&
+                      workProfileDetails !== null &&
+                      Object?.keys(workProfileDetails)?.length !== 0
+                        ? 100
+                        : showStaticFormProgress ||
+                          personalDetails?.nmr_id ||
+                          personalDetails?.work_flow_status_id === 1 ||
+                          personalDetails?.work_flow_status_id === 3
                         ? 75
                         : progress
                     }

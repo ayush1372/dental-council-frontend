@@ -44,6 +44,7 @@ export default function DatafoundModalPopup({
     handleAadhaarPage(true);
     setIsNext(true);
     setOpen(false);
+    handleClose(false);
   };
   const handleNo = () => {
     handleClose(false);
@@ -71,7 +72,7 @@ export default function DatafoundModalPopup({
               display="flex"
               alignItems="felx-start"
             >
-              Info !
+              Info!
             </Typography>
             <Typography
               display="flex"

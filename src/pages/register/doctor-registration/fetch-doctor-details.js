@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import VolumeOffIcon from '@mui/icons-material/VolumeOff';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
-import { Alert, Container, Divider, Grid, IconButton, Typography } from '@mui/material';
+import { Container, Divider, Grid, IconButton, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
@@ -329,26 +329,6 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
               },
             }}
           >
-            <Box sx={{ width: '100%', height: '53px', marginBottom: '30px', marginTop: '32px ' }}>
-              <Alert
-                sx={{
-                  m: 2,
-                  marginLeft: '0px',
-                  borderRadius: '5px',
-                  width: {
-                    xs: '100%',
-                    md: '680px',
-                  },
-                  boxShadow: '1',
-                  color: 'inputSuccessTextColor.main',
-                  backgroundColor: 'inputSuccessBackgroundColor.main',
-                }}
-              >
-                Record fetched successfully. Please verify your details to proceed further.
-              </Alert>
-            </Box>
-            {/* )} */}
-
             <Box p="30px 32px 0px 32px" width={{ xs: '100%', md: '679px' }} sx={{ boxShadow: '2' }}>
               <Box mb={4}>
                 <Typography variant="h2" color="textSecondary.main">
@@ -505,8 +485,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                 >
                   <Box pt={1}>
                     <Typography variant="body1">
-                      Please enter the OTP sent on your mobile number {mobileNumber} which is
-                      registered with Aadhaar.
+                      OTP sent to Aadhaar registered mobile number ending with {mobileNumber}
                     </Typography>
                     {otpform}
                   </Box>
@@ -531,8 +510,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                 </Box>
               )}
 
-              <Divider sx={{ mb: 4, mt: 4 }} variant="fullWidth" />
-              <Box sx={{ marginTop: '20px', paddingBottom: '48px' }}>
+              <Box sx={{ marginTop: '20px', paddingBottom: '48px', alignItems: 'flex-start' }}>
                 <Typography variant="subtitle2">
                   Mobile Number
                   <Typography component="span" sx={{ color: 'error.main' }}>
@@ -556,10 +534,10 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                     defaultValue={getValues().MobileNumber}
                     error={errors.MobileNumber?.message}
                     {...register('MobileNumber', {
-                      required: 'Mobile Number is required',
+                      required: 'Please enter a valid 10 digit mobile number',
                       pattern: {
                         value: /^\d{10}$/i,
-                        message: 'Enter Valid Mobile Number',
+                        message: 'Please enter a valid mobile number',
                       },
                     })}
                   />
@@ -641,12 +619,21 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
               successRegistration={successRegistration}
               existHprId={existHprId}
               isHpIdCreated={existHprId}
-              text={`Your username ${existUSerName
-                .replace('@hpr.abdm', '')
-                ?.replace(
-                  '@dr.abdm',
-                  ''
-                )} has been already created. Please click on below button to proceed`}
+              text={
+                existHprId
+                  ? `Your account with username "${existUSerName
+                      .replace('@hpr.abdm', '')
+                      ?.replace(
+                        '@dr.abdm',
+                        ''
+                      )}" has been created. Please click on set password to proceed.`
+                  : `Your account with username "${existUSerName
+                      .replace('@hpr.abdm', '')
+                      ?.replace(
+                        '@dr.abdm',
+                        ''
+                      )}" has been created. Please click on login to proceed.`
+              }
             />
           )}
         </>

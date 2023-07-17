@@ -167,7 +167,7 @@ export default function TrackStatus() {
                 </Button>
               </Box>
             </Grid>
-            <Grid item xs={12} md={1}>
+            <Grid item xs="auto" ml="auto">
               {viewExportIcon === true && (
                 <ExportFiles exportData={trackStatusData?.data?.data} flag={'trackStatusData'} />
               )}
