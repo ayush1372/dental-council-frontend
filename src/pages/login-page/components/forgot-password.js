@@ -10,6 +10,7 @@ import { loginActiveState } from '../../../store/reducers/login-reducer';
 import { Button } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 import successToast from '../../../ui/core/toaster';
+
 //import { EmailRegexValidation } from '../../../utilities/common-validations';
 
 const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep, loginName }) => {

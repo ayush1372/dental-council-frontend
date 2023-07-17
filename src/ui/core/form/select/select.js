@@ -46,7 +46,7 @@ const SelectField = (
             {label}
           </Typography>
           <Typography variant="body2" color="error">
-            {required ? ' *' : ''}
+            {required ? '*' : ''}
           </Typography>
         </Box>
       )}
