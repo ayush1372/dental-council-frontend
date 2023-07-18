@@ -124,16 +124,6 @@ const DoctorRegistrationWelcomePage = () => {
                       {...register('RegistrationCouncil', {
                         required: 'Registration Council is required',
                       })}
-                      value={{
-                        id:
-                          getValues()?.RegistrationCouncilId !== undefined
-                            ? getValues()?.RegistrationCouncilId
-                            : '',
-                        name:
-                          getValues()?.RegistrationCouncil !== undefined
-                            ? getValues()?.RegistrationCouncil
-                            : '',
-                      }}
                       onChange={(currentValue) => {
                         setValue('RegistrationCouncilId', currentValue?.id);
                         setValue('RegistrationCouncil', currentValue?.name);
