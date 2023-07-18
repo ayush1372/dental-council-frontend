@@ -100,7 +100,7 @@ const WorkDetails = ({
             name: 'india',
           },
           state: getStateData(declaredFacilityData[0]?.address?.state, true),
-          district: getFacilityDistrict(declaredFacilityData[0]?.address?.district),
+          district: declaredFacilityData[0]?.address?.district_to,
           village: {
             iso_code: declaredFacilityData[0]?.villageCityTownLGDCode,
             name: declaredFacilityData[0]?.villageCityTownName,
@@ -214,15 +214,6 @@ const WorkDetails = ({
     setShowTable(true);
   };
 
-  const getFacilityDistrict = (District) => {
-    let DistrictData = [];
-    facilityDistrict?.map((elementData) => {
-      if (elementData.iso_code === District) {
-        DistrictData.push(elementData);
-      }
-    });
-    return DistrictData[0];
-  };
   // watches
   const watchCountry = watch('Country');
   const watchState = watch('state');
