@@ -1,6 +1,7 @@
 // import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useEffect, useState } from 'react';
 
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Box, Dialog, Grid, Link, Typography, useTheme } from '@mui/material';
 import InputBase from '@mui/material/InputBase';
 import Paper from '@mui/material/Paper';
@@ -284,10 +285,10 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                     placeholder="Enter your mobile number"
                     defaultValue={getValues().mobileNo}
                     {...register('mobileNo', {
-                      required: 'Mobile number is required',
+                      required: 'Please enter the mobile number',
                       pattern: {
                         value: /^\d{10}$/i,
-                        message: 'Please enter a valid 10-digit mobile number',
+                        message: 'Please enter a valid 10 digit mobile number',
                       },
                     })}
                     onKeyDown={(e) => ['e', 'E', '+', '-'].includes(e.key) && e.preventDefault()}
@@ -308,7 +309,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                 {validDetails?.mobileNo && (
                   <Typography color="error" mt={1}>
                     {' '}
-                    Please enter a valid 10-digit mobile number
+                    Please enter a valid 10 digit mobile number
                   </Typography>
                 )}
               </Box>
@@ -317,17 +318,27 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                 <Typography variant="subtitle2" color="textPrimary.main" width="auto" mr={0.5}>
                   {mobileNumber && mobileNumber}
                 </Typography>
-                <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
-                <Typography variant="body2" color="primary.main" ml={0.5}>
-                  <span
-                    style={{ cursor: 'pointer' }}
+                <Box>
+                  <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
+                  {/* <Typography variant="body2" color="primary.main" ml={0.5}>
+                    <span
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => {
+                        setMobileNumberChange(true);
+                      }}
+                    >
+                      Change
+                    </span>
+                  </Typography> */}
+                  <EditOutlinedIcon
+                    color={'primary'}
+                    fontSize={'inherit'}
+                    sx={{ ml: 0.5 }}
                     onClick={() => {
                       setMobileNumberChange(true);
                     }}
-                  >
-                    Change
-                  </span>
-                </Typography>
+                  />
+                </Box>
               </>
             )}
           </Box>

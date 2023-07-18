@@ -321,10 +321,10 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
                   value: /^[\s.]*([^\s.][\s.]*){0,100}$/,
                   message: 'Please enter a valid username',
                 },
-                minLength: {
-                  value: 8,
-                  message: 'Should contains 8 character',
-                },
+                // minLength: {
+                //   value: 8,
+                //   message: 'Should contain 8 character',
+                // },
               })}
               inputProps={{
                 maxLength: 100,
