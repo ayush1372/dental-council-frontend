@@ -531,6 +531,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
                         <Switch
                           color="primary"
                           checked={emailNotify}
+                          disabled={emailNotify === 'true' ? false : true}
                           onChange={(e) => {
                             handleNotification(e, 'email');
                           }}

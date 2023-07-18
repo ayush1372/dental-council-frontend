@@ -173,7 +173,7 @@ const EditQualificationDetails = ({
       <Grid container item spacing={2}>
         <Grid item xs={12}>
           <Typography component="div" variant="body1" color="inputTextColor">
-            Qualification From
+            Qualification Degree Completed From
           </Typography>
           <RadioGroup
             onChange={handleQualificationFrom}
@@ -202,7 +202,7 @@ const EditQualificationDetails = ({
         <Grid container item spacing={2} display="flex" alignItems="center" mb={2}>
           <Grid item xs="auto">
             <Typography color="grey2.lighter" variant="body1">
-              FMGE QUALIFICATION DETAILS
+              FMGE Qualification Details
             </Typography>
           </Grid>
           <Grid item xs>
@@ -219,8 +219,8 @@ const EditQualificationDetails = ({
             <TextField
               variant="outlined"
               name="RollNo"
-              label="Roll no."
-              placeholder="Enter roll no."
+              label="Roll Number"
+              placeholder="Enter roll number"
               required={true}
               fullWidth
               error={
@@ -470,7 +470,7 @@ const EditQualificationDetails = ({
       <Grid container item spacing={2} display="flex" alignItems="center" mb={2}>
         <Grid item xs="auto">
           <Typography color="grey2.lighter" variant="body1" pt={2}>
-            {isAdditionalQualification ? '' : 'BASIC'} QUALIFICATION
+            {isAdditionalQualification ? '' : 'Basic'} Qualification
           </Typography>
         </Grid>
         <Grid item xs>
@@ -488,7 +488,7 @@ const EditQualificationDetails = ({
               }
               name="Qualification"
               placeholder={'Select degree'}
-              label="Name of the degree"
+              label="Degree Name"
               isAdditionalQualification={isAdditionalQualification}
               required={true}
               disabled={
@@ -531,7 +531,7 @@ const EditQualificationDetails = ({
                   : ''
               }
               name="Qualification"
-              label="Name of the degree"
+              label="Degree Name"
               placeholder={'Enter degree'}
               defaultValue={degree[0]?.id}
               value={degree[0]?.id}
@@ -571,7 +571,7 @@ const EditQualificationDetails = ({
             <Select
               fullWidth
               name="country"
-              label="Country name"
+              label="Country Name"
               placeholder={'Select country'}
               defaultValue={qualification?.country}
               required={true}
@@ -688,7 +688,7 @@ const EditQualificationDetails = ({
             <TextField
               fullWidth
               name="college"
-              label="Name of the college"
+              label="College Name"
               error={
                 getValues()?.qualification?.[index]?.college === '' &&
                 errors?.qualification?.[index]?.college?.message
@@ -725,7 +725,7 @@ const EditQualificationDetails = ({
                 errors?.qualification?.[index]?.college?.message
               }
               name="College"
-              label="Name of the college"
+              label="College Name"
               placeholder={'Select college'}
               defaultValue={fields[index].college}
               required={true}
@@ -769,7 +769,7 @@ const EditQualificationDetails = ({
                 errors?.qualification?.[index]?.university?.message
               }
               name="University"
-              label="University"
+              label="University Name"
               placeholder="Enter university"
               defaultValue={qualification?.university}
               required={true}
@@ -803,7 +803,7 @@ const EditQualificationDetails = ({
               }
               placeholder={'Select university'}
               name="University"
-              label="University"
+              label="University Name"
               defaultValue={fields[index].university}
               required={true}
               {...register(
@@ -992,7 +992,7 @@ const EditQualificationDetails = ({
             }}
             fileName={fileName || ''}
             isDigiLockcerVisible={true}
-            uploadFileLabel="Upload qualification degree"
+            uploadFileLabel="Upload Qualification Degree"
             disabled={
               work_flow_status_id === 3
                 ? getQueryRaised('Upload Qualification Degree')

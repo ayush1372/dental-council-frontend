@@ -552,7 +552,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
-              Name
+              Full Name
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -583,12 +583,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
-              Father&apos;s Name
+              Father Name
             </Typography>
             <TextField
               variant="outlined"
               name={'FatherName'}
-              placeholder="Father's name"
+              placeholder="Father name"
               fullWidth
               defaultValue={getValues().FatherName}
               {...register('FatherName', {
@@ -619,12 +619,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
-              Mother&apos;s Name
+              Mother Name
             </Typography>
             <TextField
               variant="outlined"
               name={'MotherName'}
-              placeholder="Mother's name"
+              placeholder="Mother name"
               fullWidth
               defaultValue={getValues().MotherName}
               {...register('MotherName', {
