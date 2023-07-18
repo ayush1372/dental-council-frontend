@@ -270,9 +270,9 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
       <Typography variant="h2" color="textPrimary.main" mb={2}>
         {loginName} Login
       </Typography>
-      <Typography variant="body1" color="textPrimary.main">
+      {/* <Typography variant="body1" color="textPrimary.main">
         Login via
-      </Typography>
+      </Typography> */}
 
       <Grid container xs={12} columnSpacing={1} mt={1}>
         <Grid item xs={12} sm={4.5}>
@@ -493,7 +493,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
             {otpFormEnabled && (
               <Box mt={2}>
                 <Typography variant="body1">
-                  Please enter the OTP sent on your Mobile Number{' '}
+                  Please enter the OTP sent on your mobile number{' '}
                   {getValues().mobileNo.replace(/^.{6}/g, 'XXXXXX')}.
                 </Typography>
                 {otpform}
