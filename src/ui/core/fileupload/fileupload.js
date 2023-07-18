@@ -84,7 +84,7 @@ export const UploadFile = (props) => {
       const fileErrorExtension = !fileTypes.includes(e.target.files[0].type);
       const uploadFileError = fileSizeError || fileErrorExtension;
       if (uploadFileError) {
-        setUploadFileError(`File must be less than ${sizeAllowed}MB; ${fileMessage}`);
+        setUploadFileError(`${fileMessage}`);
       } else {
         // setIsDisable(true);
 
@@ -169,7 +169,7 @@ export const UploadFile = (props) => {
                 <UploadFileIcon color="primary" />
               </div>
               <div>
-                <span className={styles.browseFiles}>Drag and drop files,or </span>
+                <span className={styles.browseFiles}>Drag and drop files or click to </span>
                 <span className={styles.browseFiles}>browse</span>
               </div>
               <div className={styles.dragDropFiles}>{fileMessage}</div>

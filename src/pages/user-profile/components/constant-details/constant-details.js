@@ -301,7 +301,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                       handleSubmit(onSubmit('sms'));
                     }}
                   >
-                    Get Verified
+                    Verify
                   </Link>
                 </Paper>
 
@@ -346,15 +346,15 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                 <Paper display={'flex'} alignItems="center" sx={{ p: '2px 4px' }}>
                   <InputBase
                     sx={{ ml: 1, flex: 1 }}
-                    placeholder="Enter your email address"
+                    placeholder="Email"
                     name="email"
                     defaultValue={getValues().email}
                     {...register('email', {
-                      required: 'Email id is required',
+                      required: 'Email is required',
                       pattern: {
                         value:
                           /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-                        message: 'Enter Valid Email Address',
+                        message: 'Please enter a valid email',
                       },
                     })}
                     error={errors.email?.message}
@@ -369,13 +369,13 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                       handleSubmit(onSubmit('email'));
                     }}
                   >
-                    Get Verified
+                    Verify
                   </Link>
                 </Paper>
                 {validDetails?.email && (
                   <Typography color="error" mt={1}>
                     {''}
-                    Please enter a valid Email ID
+                    Please enter a valid email
                   </Typography>
                 )}
               </Box>
@@ -396,7 +396,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                       emailIdVerify ? setEmailChange(true) : onSubmit('email');
                     }}
                   >
-                    {emailIdVerify ? 'Change' : 'Get Verified'}
+                    {emailIdVerify ? 'Change' : 'Verify'}
                   </span>
                 </Typography>
               </>

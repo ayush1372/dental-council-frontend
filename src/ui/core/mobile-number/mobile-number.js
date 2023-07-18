@@ -90,12 +90,12 @@ export function MobileNumber(props) {
           {showVerify && (
             <Button
               variant="contained"
-              sx={{ height: '56px' }}
+              sx={{ height: '56px', minWidth: '120px' }}
               color="primary"
               onClick={verifyOnClick}
               disabled={otpSend || getValues().mobileNo.length < 10}
             >
-              GetOTP
+              Get OTP
             </Button>
           )}
           {showhint && (

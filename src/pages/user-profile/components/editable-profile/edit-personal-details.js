@@ -525,7 +525,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
               color="tabHighlightedBackgroundColor.main"
               variant="h3"
             >
-              Personal Details*
+              Personal Details
             </Typography>
           </Grid>
           {false && (
@@ -694,7 +694,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
-              Select Nationality
+              Nationality
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -876,10 +876,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 color="tabHighlightedBackgroundColor.main"
                 variant="h3"
               >
-                Communication Address*
+                Communication Address
               </Typography>
             </Grid>
-            <Box p={2} display="flex" alignItems="center">
+            <Box p={2} display="flex" justifyContent="center">
               <Checkbox
                 value={isSameAddress}
                 defaultChecked={
@@ -892,7 +892,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 disabled={work_flow_status_id === 3 ? true : false}
               />
               <Typography component="div" mt={1} variant="body7" color="textPrimary.main">
-                Is the communication address same as your address as per your KYC?
+                Click if communication address is same as KYC address.
               </Typography>
             </Box>
             <Grid container item columnSpacing={2}>
@@ -1451,7 +1451,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                     },
                     minLength: {
                       value: 6,
-                      message: 'Should contains 6 digits',
+                      message: 'Please enter a valid 6 digit pincode',
                     },
                     maxLength: {
                       value: 6,
