@@ -6,6 +6,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { doctorTabs } from '../../helpers/components/sidebar-drawer-list-item';
 import { capitalizeFirstLetter } from '../../helpers/functions/common-functions';
@@ -44,6 +45,7 @@ const readWizardSteps = ['Personal Details', 'Registration & Academic Details'];
 export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const eSignResponse = useSelector((state) => state?.doctorUserProfileReducer?.esignDetails?.data);
   const { loginData } = useSelector((state) => state?.loginReducer);
@@ -237,6 +239,10 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
 
   const handleEsign = () => {
     document.getElementById('formid')?.submit();
+  };
+
+  const navigateToProfile = () => {
+    navigate(`/profile`);
   };
 
   function eSignHandler() {
@@ -447,6 +453,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
                     primary="My Profile"
                     primaryLink={'/profile'}
                     secondary={'Edit Profile'}
+                    onClick={navigateToProfile}
                   />
                 )}
               </Grid>
