@@ -74,7 +74,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
         >
           <Grid item xs={12} md={8}>
             <Typography variant="h3" color="grey.label">
-              {index === 0 ? 'Basic qualification' : `Additional qualification ${index}`}
+              {index === 0 ? 'Basic Qualification' : `Additional Qualification ${index}`}
             </Typography>
           </Grid>
           <Grid item xs={12} md={4}>
@@ -115,12 +115,12 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
           <Grid container item spacing={2} mt={1}>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="grey.label">
-                Name of the Degree Obtained
+                Degree Name
                 <Typography component="span" color="error.main">
                   *
                 </Typography>
                 {getQueryRaised('Name of the Degree Obtained') !== undefined && (
-                  <Tooltip title={getQueryRaised('Name of the Degree Obtained')}>
+                  <Tooltip title={getQueryRaised('Degree Name ')}>
                     <ReportIcon color="secondary" ml={2} />
                   </Tooltip>
                 )}
@@ -134,8 +134,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  (selectedAcademicStatus === 'Pending' ||
-                    selectedAcademicStatus === 'Update Request Received') &&
+                  (selectedAcademicStatus === 'Pending' || selectedAcademicStatus === 'Pending') &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
@@ -170,8 +169,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  (selectedAcademicStatus === 'Pending' ||
-                    selectedAcademicStatus === 'Update Request Received') &&
+                  (selectedAcademicStatus === 'Pending' || selectedAcademicStatus === 'Pending') &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
@@ -206,8 +204,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  (selectedAcademicStatus === 'Pending' ||
-                    selectedAcademicStatus === 'Update Request Received') &&
+                  (selectedAcademicStatus === 'Pending' || selectedAcademicStatus === 'Pending') &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
@@ -225,7 +222,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
           <Grid container item spacing={2} mt={1}>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="grey.label">
-                Name of the college
+                College Name
                 <Typography component="span" color="error.main">
                   *
                 </Typography>
@@ -245,8 +242,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  (selectedAcademicStatus === 'Pending' ||
-                    selectedAcademicStatus === 'Update Request Received') &&
+                  (selectedAcademicStatus === 'Pending' || selectedAcademicStatus === 'Pending') &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
@@ -262,7 +258,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
             </Grid>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="grey.label">
-                University
+                University Name
                 <Typography component="span" color="error.main">
                   *
                 </Typography>
@@ -281,8 +277,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  (selectedAcademicStatus === 'Pending' ||
-                    selectedAcademicStatus === 'Update Request Received') &&
+                  (selectedAcademicStatus === 'Pending' || selectedAcademicStatus === 'Pending') &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
@@ -315,8 +310,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  (selectedAcademicStatus === 'Pending' ||
-                    selectedAcademicStatus === 'Update Request Received') &&
+                  (selectedAcademicStatus === 'Pending' || selectedAcademicStatus === 'Pending') &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
@@ -358,7 +352,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       data?.user_type === 5) &&
                       element.is_verified !== 1 &&
                       (selectedAcademicStatus === 'Pending' ||
-                        selectedAcademicStatus === 'Update Request Received') &&
+                        selectedAcademicStatus === 'Pending') &&
                       college_status !== 'Approved' && (
                         <ContactSupportOutlinedIcon
                           cursor="pointer"
@@ -391,7 +385,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       data?.user_type === 5) &&
                       element.is_verified !== 1 &&
                       (selectedAcademicStatus === 'Pending' ||
-                        selectedAcademicStatus === 'Update Request Received') &&
+                        selectedAcademicStatus === 'Pending') &&
                       college_status !== 'Approved' && (
                         <ContactSupportOutlinedIcon
                           cursor="pointer"
@@ -424,7 +418,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       data?.user_type === 5) &&
                       element.is_verified !== 1 &&
                       (selectedAcademicStatus === 'Pending' ||
-                        selectedAcademicStatus === 'Update Request Received') &&
+                        selectedAcademicStatus === 'Pending') &&
                       college_status !== 'Approved' && (
                         <ContactSupportOutlinedIcon
                           cursor="pointer"
@@ -457,7 +451,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       data?.user_type === 5) &&
                       element.is_verified !== 1 &&
                       (selectedAcademicStatus === 'Pending' ||
-                        selectedAcademicStatus === 'Update Request Received') &&
+                        selectedAcademicStatus === 'Pending') &&
                       college_status !== 'Approved' && (
                         <ContactSupportOutlinedIcon
                           cursor="pointer"
@@ -491,7 +485,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       data?.user_type === 5) &&
                       element.is_verified !== 1 &&
                       (selectedAcademicStatus === 'Pending' ||
-                        selectedAcademicStatus === 'Update Request Received') &&
+                        selectedAcademicStatus === 'Pending') &&
                       college_status !== 'Approved' && (
                         <ContactSupportOutlinedIcon
                           cursor="pointer"
@@ -542,8 +536,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  (selectedAcademicStatus === 'Pending' ||
-                    selectedAcademicStatus === 'Update Request Received') &&
+                  (selectedAcademicStatus === 'Pending' || selectedAcademicStatus === 'Pending') &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"

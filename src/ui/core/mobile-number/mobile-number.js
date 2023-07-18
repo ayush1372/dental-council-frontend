@@ -66,10 +66,10 @@ export function MobileNumber(props) {
             }}
             onKeyDown={(e) => ['e', 'E', '+', '-'].includes(e.key) && e.preventDefault()}
             {...register('mobileNo', {
-              required: 'Mobile number is required',
+              required: 'Please enter the mobile number',
               pattern: {
                 value: /^\d{10}$/i,
-                message: 'Please enter a valid 10-digit mobile number',
+                message: 'Please enter a valid 10 digit mobile number',
               },
             })}
             onInput={(e) => handleInput(e)}

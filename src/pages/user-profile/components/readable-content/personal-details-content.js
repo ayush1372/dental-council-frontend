@@ -50,8 +50,8 @@ const PersonalDetails = ({ personalDetails }) => {
       </Grid>
       <Grid container item spacing={2}>
         <Grid item xs={12} md={3}>
-          <Typography variant="body5" color="grey.label">
-            Name
+          <Typography variant="subtitle2" color="grey.label">
+            Full Name
             <Typography component="span" color="error.main">
               *
             </Typography>
@@ -63,19 +63,19 @@ const PersonalDetails = ({ personalDetails }) => {
           </Grid>
         </Grid>
         <Grid item xs={12} md={3}>
-          <Typography variant="body5" color="grey.label">
-            Father&apos;s Name
+          <Typography variant="subtitle2" color="grey.label">
+            Father Name
           </Typography>
 
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
-              {father_name ? father_name : ''}
+              {father_name === '' || father_name === undefined ? '-' : father_name}
             </Typography>
           </Grid>
         </Grid>
         <Grid item xs={12} md={3}>
-          <Typography variant="body5" color="grey.label">
-            Mother&apos;s Name
+          <Typography variant="subtitle2" color="grey.label">
+            Mother Name
           </Typography>
 
           <Grid display="flex" alignItems="center">
@@ -85,7 +85,7 @@ const PersonalDetails = ({ personalDetails }) => {
           </Grid>
         </Grid>
         <Grid item xs={12} md={3}>
-          <Typography variant="body5" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             Spouse Name
           </Typography>
 
@@ -98,7 +98,7 @@ const PersonalDetails = ({ personalDetails }) => {
       </Grid>
       <Grid container item spacing={2}>
         <Grid item xs={12} md={3}>
-          <Typography variant="body5" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             Gender
             <Typography component="span" color="error.main">
               *
@@ -112,7 +112,7 @@ const PersonalDetails = ({ personalDetails }) => {
         </Grid>
 
         <Grid item xs={12} md={3}>
-          <Typography variant="body5" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             Date of Birth
             <Typography component="span" color="error.main">
               *
@@ -126,7 +126,7 @@ const PersonalDetails = ({ personalDetails }) => {
         </Grid>
 
         <Grid item xs={12} md={3}>
-          <Typography variant="body5" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             Nationality
             <Typography component="span" color="error.main">
               *

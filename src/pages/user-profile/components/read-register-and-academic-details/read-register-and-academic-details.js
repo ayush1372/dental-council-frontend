@@ -100,16 +100,26 @@ const ReadRegisterAndAcademicDetails = ({
     setShowSuccessPopup(true);
   };
 
+  //Helper method to identify the qualification is primary or addtional qualification.
+  const isPrimaryQualification = (elementIndex) => {
+    if (elementIndex === 0) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   useEffect(() => {
     if (!isNaN(selectedDataIndex)) {
       let filteredQualificationDetails = [];
 
-      registrationDetails?.qualification_detail_response_tos?.map((element) => {
+      registrationDetails?.qualification_detail_response_tos?.map((element, index) => {
         if (
           element &&
           (element?.is_verified === 1 ||
             element?.request_id ===
-              dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]?.request_id)
+              dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]?.request_id) &&
+          isPrimaryQualification(index)
         ) {
           filteredQualificationDetails.push(element);
           if (element?.is_verified !== 1) {
@@ -123,6 +133,8 @@ const ReadRegisterAndAcademicDetails = ({
                 : false
             );
           }
+        } else if (!isPrimaryQualification(index)) {
+          filteredQualificationDetails.push(element);
         }
       });
       let newRegistrationDetails = {};
@@ -206,7 +218,7 @@ const ReadRegisterAndAcademicDetails = ({
           </Button>
           {(userActiveTab === 'dashboard' || userActiveTab === 'Activate Licence') &&
             (selectedAcademicStatus?.toUpperCase() === 'PENDING' ||
-              selectedAcademicStatus === 'Update Request Received' ||
+              selectedAcademicStatus === 'Pending' ||
               selectedAcademicStatus === 'College/NBE Verified' ||
               userActiveTab === 'Activate Licence' ||
               selectedAcademicStatus === 'Forwarded' ||
@@ -350,8 +362,7 @@ const ReadRegisterAndAcademicDetails = ({
                         {personalDetails.nmr_id !== undefined &&
                           userActiveTab !== 'Activate Licence' &&
                           (loggedInUserType === 'NMC' ||
-                            (loggedInUserType === 'SMC' &&
-                              selectedAcademicStatus === 'Update Request Received')) &&
+                            (loggedInUserType === 'SMC' && selectedAcademicStatus === 'Pending')) &&
                           selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
                           selectedAcademicStatus !== 'Permanent Suspension Requests Received' && (
                             <MenuItem onClick={selectionChangeHandler} data-my-value={'suspend'}>
@@ -361,8 +372,7 @@ const ReadRegisterAndAcademicDetails = ({
                         {personalDetails.nmr_id !== undefined &&
                           userActiveTab !== 'Activate Licence' &&
                           (loggedInUserType === 'NMC' ||
-                            (loggedInUserType === 'SMC' &&
-                              selectedAcademicStatus === 'Update Request Received')) &&
+                            (loggedInUserType === 'SMC' && selectedAcademicStatus === 'Pending')) &&
                           selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
                           selectedAcademicStatus !== 'Permanent Suspension Requests Received' && (
                             <MenuItem onClick={selectionChangeHandler} data-my-value={'blacklist'}>
