@@ -116,7 +116,7 @@ const BlacklistedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
         <TextField
           variant="outlined"
           name={'RegistrationNumber'}
-          placeholder="Enter Registration Number"
+          placeholder="Enter registration number"
           fullWidth
           defaultValue={getValues().RegistrationNumber}
           {...register('RegistrationNumber', {

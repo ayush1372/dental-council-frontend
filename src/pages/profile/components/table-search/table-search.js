@@ -124,7 +124,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                     fullWidth
                     name="Filter"
                     data-testid="filterByName"
-                    placeholder="Please Select"
+                    placeholder="Select"
                     clearErrors={clearErrors}
                     {...register('Filter')}
                     items={createEditFieldData(filterDropDownData)}
@@ -143,7 +143,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                         ? createEditFieldData(applicationStatus)
                         : createEditFieldData(emptyData)
                     }
-                    placeholder="Please Select"
+                    placeholder="Select"
                     clearErrors={clearErrors}
                     {...register('Status')}
                     onChange={(currentValue) => {
@@ -173,7 +173,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                     value={dashBoardCardId}
                     name="dashBoardCard"
                     items={createEditFieldData(DashBoardCardsFieldList)}
-                    placeholder="Please Select"
+                    placeholder="Select"
                     clearErrors={clearErrors}
                     {...register('dashBoardCard')}
                     onChange={(currentValue) => {
@@ -187,7 +187,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                       data-testid="freesearch"
                       name="collegeApproval"
                       items={createEditFieldData(CollegeApprovalFieldList)}
-                      placeholder="Please Select"
+                      placeholder="Select"
                       clearErrors={clearErrors}
                       {...register('collegeApproval')}
                       onChange={(currentValue) => {

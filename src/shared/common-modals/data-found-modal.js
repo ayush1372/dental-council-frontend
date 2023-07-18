@@ -82,9 +82,7 @@ export default function DatafoundModalPopup({
               component="div"
               flexDirection="column"
             >
-              {!hpName
-                ? text
-                : 'We found below data against the provided details. Please check the details, and if it belongs to you, click "Yes" to continue.'}
+              {!hpName ? text : 'Please review the details and click "Yes" to continue'}
             </Typography>
             {hpName && (
               <Box
