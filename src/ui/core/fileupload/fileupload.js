@@ -128,7 +128,8 @@ export const UploadFile = (props) => {
       <Box>
         {!isDigiLockcerVisible && (
           <Typography color="inputTextColor.main" fontWeight="500" component="div">
-            {uploadFileLabel} <Typography color="error"> *</Typography>
+            {uploadFileLabel}
+            <Typography color="error">*</Typography>
           </Typography>
         )}
 
@@ -142,9 +143,7 @@ export const UploadFile = (props) => {
               flexGrow="1"
             >
               {uploadFileLabel}
-              <Typography component="span" color="error">
-                *
-              </Typography>
+              <Typography color="error">*</Typography>
             </Typography>
             <Box
               component="div"

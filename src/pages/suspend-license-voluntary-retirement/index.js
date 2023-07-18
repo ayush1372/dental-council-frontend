@@ -322,7 +322,7 @@ export function SuspendLicenseVoluntaryRetirement({
             <Grid item xs={12} md={12} mb={2}>
               <Typography variant="subtitle2" color="textPrimary.main">
                 {'Select Suspension'}
-                <Typography variant="body4" color="error.main">
+                <Typography component="span" color="error.main">
                   *
                 </Typography>
               </Typography>
@@ -353,7 +353,7 @@ export function SuspendLicenseVoluntaryRetirement({
 
           <Typography variant="subtitle2">
             {'Add Timeline'}
-            <Typography variant="body4" color="error.main">
+            <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
@@ -361,7 +361,7 @@ export function SuspendLicenseVoluntaryRetirement({
             <Grid item xs={12} md={6} lg={6}>
               <Typography component={'p'} variant="body1">
                 Select From Date
-                <Typography variant="body2" color="error">
+                <Typography component="span" color="error">
                   {'*'}
                 </Typography>
               </Typography>
@@ -407,7 +407,7 @@ export function SuspendLicenseVoluntaryRetirement({
                 <>
                   <Typography component={'p'} variant="body1">
                     Select To Date
-                    <Typography variant="body2" color="error">
+                    <Typography component="span" color="error">
                       {'*'}
                     </Typography>
                   </Typography>
@@ -450,7 +450,7 @@ export function SuspendLicenseVoluntaryRetirement({
             {selectedValue === 'raise' || selectedValue === 'reject' || selectedValue === 'approve'
               ? 'Add Reason'
               : 'Remarks'}
-            <Typography variant="body4" color="error.main">
+            <Typography component="span" color="error.main">
               {tabName === 'voluntary-suspend-license' ||
               selectedValue === 'approve' ||
               selectedValue === 'forward'
@@ -553,7 +553,7 @@ export function SuspendLicenseVoluntaryRetirement({
         <>
           <Typography variant="subtitle2">
             {'Consent'}
-            <Typography variant="body4" color="error.main">
+            <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>

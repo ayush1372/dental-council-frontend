@@ -213,7 +213,7 @@ export const workflowStatusId = (actionType) => {
     3: ' Query Raised',
     4: ' Rejected',
     5: ' Suspended',
-    6: ' Suspended',
+    6: ' Blacklisted',
   };
   return actionTypeObj[actionType];
 };

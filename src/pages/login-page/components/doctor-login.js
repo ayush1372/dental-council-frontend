@@ -275,7 +275,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
       </Typography> */}
 
       <Grid container xs={12} columnSpacing={1} mt={1}>
-        <Grid item xs={12} sm={4.5}>
+        <Grid item xs={12} sm={4}>
           <Button
             fullWidth
             variant="outlined"
@@ -301,7 +301,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
             </Typography>
           </Button>
         </Grid>
-        <Grid item xs={12} sm={3.5}>
+        <Grid item xs={12} sm={4}>
           <Button
             fullWidth
             variant="outlined"
@@ -505,7 +505,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
         )}
       </Box>
       <CaptchaComponent captchaResult={captchaResult} />
-      <Box my={4} width={'100%'} display={'flex'} justifyContent={'space-between'}>
+      <Box mt={4} mb={2} width={'100%'} display={'flex'} justifyContent={'space-between'}>
         <Button
           variant="contained"
           color="secondary"

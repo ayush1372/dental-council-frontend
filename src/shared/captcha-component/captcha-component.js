@@ -87,6 +87,7 @@ const CaptchaComponent = ({ captchaResult }) => {
               </Grid>
               <Grid item xs={5} alignItems="center" display="flex" justifyContent="center">
                 <TextField
+                  fullWidth
                   name="anwser"
                   placeholder="Enter answer"
                   defaultValue={getValues().anwser}

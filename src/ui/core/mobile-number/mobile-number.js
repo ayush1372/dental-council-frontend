@@ -31,13 +31,13 @@ export function MobileNumber(props) {
   };
   return (
     <StyledEngineProvider injectFirst>
-      <Box data-testid="mobile-number">
+      <Box data-testid="mobile-number" my={2}>
         <Box>
           <Typography variant="subtitle2" component={'span'}>
             {label}
           </Typography>
-          <Typography variant="body2" color="error">
-            {required ? ' *' : ''}
+          <Typography component="span" color="error">
+            {required ? '*' : ''}
           </Typography>
         </Box>
         <Box
@@ -62,6 +62,7 @@ export function MobileNumber(props) {
               '& .MuiInputBase-root.MuiOutlinedInput-root': {
                 paddingLeft: 0,
               },
+              marginRight: '16px',
             }}
             onKeyDown={(e) => ['e', 'E', '+', '-'].includes(e.key) && e.preventDefault()}
             {...register('mobileNo', {
