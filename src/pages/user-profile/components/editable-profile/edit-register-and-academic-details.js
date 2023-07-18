@@ -375,7 +375,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               color="tabHighlightedBackgroundColor.main"
               variant="h3"
             >
-              Registration Details*
+              Registration Details
             </Typography>
           </Grid>
           <Grid item xs={12} md={4}>
@@ -517,7 +517,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           </Grid>
         </Grid>
         <Grid container item spacing={2} mt={1}>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={6}>
             <Typography variant="subtitle2" color="inputTextColor.main">
               Is this Registration Permanent or Renewable?
               <Typography component="span" color="error.main">
@@ -584,8 +584,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               uploadFiles="single"
               sizeAllowed={5}
               fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
-              fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
-               Maximum size allowed for the attachment is 5MB.`}
+              fileMessage={`PDF, PNG, JPG, JPEG file types are supported.
+               Maximum size allowed is 5MB.`}
               fileData={registrationFileData}
               setFileData={setRegistrationFileData}
               uploadFileLabel="Upload Registration Certificate"
