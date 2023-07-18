@@ -28,7 +28,7 @@ export const Policies = () => {
                 color="white.main"
                 fontWeight="400"
                 lineHeight="28px"
-                underline="always"
+                underline="hover"
                 target="_blank"
               >
                 {item.title}

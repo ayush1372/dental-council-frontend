@@ -36,7 +36,7 @@ export function MobileNumber(props) {
           <Typography variant="subtitle2" component={'span'}>
             {label}
           </Typography>
-          <Typography variant="body2" color="error">
+          <Typography component="span" color="error">
             {required ? '*' : ''}
           </Typography>
         </Box>
