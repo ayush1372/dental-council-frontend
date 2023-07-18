@@ -94,13 +94,13 @@ export default function Dashboard() {
   );
 
   let dashboard = {
-    'Registration Request': registrationRequestData,
-    'Updation Request': updationRequestData,
+    'Registration Requests': registrationRequestData,
+    'Updation Requests': updationRequestData,
   };
 
   if (loggedInUserType === 'NMC' || loggedInUserType === 'SMC') {
     dashboard = Object.assign(dashboard, {
-      'Suspension Request': suspensionRequestData,
+      'Suspension Requests': suspensionRequestData,
     });
   }
   useEffect(() => {
@@ -238,13 +238,13 @@ export default function Dashboard() {
     if (item?.name?.includes('Pending') || item?.name?.includes('Received')) {
       return 'Total number of pending applications';
     } else if (item?.name === 'College/NBE Verified') {
-      return 'Total number of college verified applications';
+      return 'Total number of verified applications by College/NBE';
     } else if (item?.name?.includes('Approved')) {
       return 'Total number of approved applications';
     } else if (item?.name?.includes('Verified') || item?.name?.includes('Approved')) {
       return 'Total number of verified applications';
     } else if (item?.name?.includes('Raised')) {
-      return 'Total number of query raised on applications';
+      return 'Total number of query raised applications';
     } else if (item?.name?.includes('Forwarded')) {
       return 'Total number of forwarded applications';
     } else if (item?.name?.includes('Rejected') || item?.name?.includes('Blacklisted')) {
@@ -308,7 +308,7 @@ export default function Dashboard() {
                   component="div"
                   display="flex"
                   alignItems="center"
-                  gap={2}
+                  gap={3}
                   flex="1 0 100%"
                 >
                   <img
@@ -341,7 +341,7 @@ export default function Dashboard() {
                       }}
                     >
                       <Typography variant="body1">
-                        Total Pending Requests {element[1][1]?.value + element[1][2]?.value}
+                        Total Pending Requests - {element[1][1]?.value + element[1][2]?.value}
                       </Typography>
                     </Grid>
                   </Grid>
