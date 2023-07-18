@@ -73,7 +73,7 @@ export default function DatafoundModalPopup({
               display="flex"
               alignItems="felx-start"
             >
-              Info!
+              {!hpName? 'No Data Found' : 'Data Found'}
             </Typography>
             <Typography
               display="flex"
@@ -83,13 +83,13 @@ export default function DatafoundModalPopup({
               component="div"
               flexDirection="column"
             >
-              {text}
+              {!hpName? text: 'We found below data against the provided details. Please check the details, and if it belongs to you, click "Yes" to continue.'}
             </Typography>
             {hpName && (
               <Box
-                p="30px 32px 0px 32px"
-                width={{ xs: '100%', md: '679px' }}
-                sx={{ boxShadow: '2' }}
+                p="16px 16px 0px 16px"
+                width={{ xs: '100%'}}
+                sx={{ boxShadow: '2', marginTop: '16px' }}
               >
                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                   <Box>
@@ -114,7 +114,7 @@ export default function DatafoundModalPopup({
                     </Typography>
                   </Box>
                 </Box>
-                <Box sx={{ paddingTop: '34px', paddingBottom: '20px' }}>
+                <Box sx={{ paddingTop: '16px', paddingBottom: '16px' }}>
                   <Typography variant="body3" component="div" color="grey.label">
                     Council
                   </Typography>
