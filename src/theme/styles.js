@@ -89,6 +89,7 @@ const themeWrapper = (mode, appFontType) => {
           },
         },
       },
+
       MuiSelect: {
         styleOverrides: {
           root: {
