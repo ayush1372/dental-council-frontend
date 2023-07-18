@@ -1,6 +1,6 @@
-// import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useEffect, useState } from 'react';
 
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Box, Dialog, Grid, Link, Typography, useTheme } from '@mui/material';
 import InputBase from '@mui/material/InputBase';
 import Paper from '@mui/material/Paper';
@@ -151,7 +151,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
           clearInterval(timer);
           setShowOTPPOPUp(false);
           setVerifyEmailID(false);
-          setEmailChange(false);
+          // setEmailChange(false); for future changes.
           return;
         }
         dispatch(getPersonalDetailsData(personalDetails?.hp_profile_id)).then((response) => {
@@ -396,7 +396,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                       emailIdVerify ? setEmailChange(true) : onSubmit('email');
                     }}
                   >
-                    {emailIdVerify ? 'Change' : 'Verify'}
+                    <EditOutlinedIcon color={'inherit'} fontSize={'inherit'} sx={{ mr: 0.5 }} />
                   </span>
                 </Typography>
               </>
