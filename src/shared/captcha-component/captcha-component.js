@@ -83,12 +83,13 @@ const CaptchaComponent = ({ captchaResult }) => {
                 />
               </Grid>
               <Grid item xs={2} alignItems="center" display="flex" justifyContent="center">
-                <RefreshIcon color="primary.dark" onClick={reloadCaptcha} cursor="pointer"/>
+                <RefreshIcon color="primary.dark" onClick={reloadCaptcha} cursor="pointer" />
               </Grid>
               <Grid item xs={5} alignItems="center" display="flex" justifyContent="center">
                 <TextField
+                  fullWidth
                   name="anwser"
-                  placeholder="Type Answer"
+                  placeholder="Enter answer"
                   defaultValue={getValues().anwser}
                   required
                   {...register('anwser', {

@@ -73,7 +73,7 @@ export function TrackApplicationDetails({
                 >
                   {nmcApproveStatus
                     ? 'Application approved by NMC'
-                    : 'Application pending verification by NMC'}
+                    : 'Application status: Verification pending by NMC'}
                   <CheckCircle
                     sx={{
                       color: nmcApproveStatus ? `${theme.palette.success.main}` : '',
@@ -85,11 +85,11 @@ export function TrackApplicationDetails({
                   />
                 </Typography>
 
-                <Typography component="div" variant="body1" color="textPrimary.main">
+                {/* <Typography component="div" variant="body1" color="textPrimary.main">
                   {nmcApproveStatus
                     ? 'Your application has been approved by all authorities.'
                     : 'Your application is pending verification by NMC'}
-                </Typography>
+                </Typography> */}
               </Box>
             </Box>
             <Chip

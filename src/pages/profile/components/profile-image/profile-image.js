@@ -225,7 +225,7 @@ export default function ProfileImage(props) {
               item
             >
               <Typography variant="subtitle2" color="grey.label" sx={{ mr: '5px' }}>
-                NMR ID :
+                NMR ID:
               </Typography>
               <Typography variant="subtitle2" color="textPrimary.main">
                 {nmrIdData ? nmrIdData : ''}
@@ -243,10 +243,7 @@ export default function ProfileImage(props) {
                   display="inline-flex"
                   variant="body2"
                 >
-                  Your profile is set to suspend mode.
-                  <br />
-                  You will not be able to perform actions <br />
-                  on the profile.
+                  Your profile is suspended and you will not be able to perform any action.
                 </Typography>
               </Grid>
               <Grid item xs={12} textAlign="center" mt={1} mr={2}>
@@ -279,7 +276,7 @@ export default function ProfileImage(props) {
                     setShowSuccessPopup(false);
                   }}
                 >
-                  Reactivate License
+                  Reactivate Licence
                 </Link>
               </Grid>
             </Grid>

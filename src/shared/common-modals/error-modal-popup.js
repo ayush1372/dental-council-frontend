@@ -62,7 +62,7 @@ export default function ErrorModalPopup({
               display="flex"
               alignItems="felx-start"
             >
-              Info !
+              Info!
             </Typography>
             <Typography
               display="flex"

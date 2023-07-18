@@ -30,7 +30,7 @@ export const Address = () => {
               lineHeight="1"
             >
               <EmailOutlinedIcon sx={{ mr: 1, fontSize: '16px' }} />
-              E-mail:<a href="mailto: ndhm@nha.gov.in"> abdm[@]nha[dot]gov[dot]in</a>
+              E-mail:<a href="mailto: ndhm@nha.gov.in">&nbsp;abdm[@]nha[dot]gov[dot]in</a>
             </Typography>
           </ListItemText>
         </ListItem>
@@ -44,7 +44,7 @@ export const Address = () => {
               alignItems="flex-start"
             >
               <CallOutlinedIcon sx={{ mr: 1, fontSize: '16px' }} />
-              Toll-Free Number : 1800-11-4477 / 14477
+              Toll-Free Number: 1800-11-4477 / 14477
             </Typography>
           </ListItemText>
         </ListItem>

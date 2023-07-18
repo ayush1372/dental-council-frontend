@@ -270,12 +270,12 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
       <Typography variant="h2" color="textPrimary.main" mb={2}>
         {loginName} Login
       </Typography>
-      <Typography variant="body1" color="textPrimary.main">
+      {/* <Typography variant="body1" color="textPrimary.main">
         Login via
-      </Typography>
+      </Typography> */}
 
       <Grid container xs={12} columnSpacing={1} mt={1}>
-        <Grid item xs={12} sm={4.5}>
+        <Grid item  xs={12} sm={4}>
           <Button
             fullWidth
             variant="outlined"
@@ -301,7 +301,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
             </Typography>
           </Button>
         </Grid>
-        <Grid item xs={12} sm={3.5}>
+        <Grid item xs={12} sm={4}>
           <Button
             fullWidth
             variant="outlined"
@@ -445,7 +445,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
                 onClick={handleUserForgetUserName}
                 sx={{ cursor: 'pointer', display: 'contents' }}
               >
-                Forgot Username ?
+                Forgot Username?
               </Button>
             </Typography>
             <TextField
@@ -472,7 +472,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
                 onClick={handleUserForgotPassword}
                 sx={{ cursor: 'pointer', display: 'contents' }}
               >
-                Forgot Password ?
+                Forgot Password?
               </Button>
             </Typography>
           </>
@@ -493,7 +493,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
             {otpFormEnabled && (
               <Box mt={2}>
                 <Typography variant="body1">
-                  Please enter the OTP sent on your Mobile Number{' '}
+                  Please enter the OTP sent on your mobile number{' '}
                   {getValues().mobileNo.replace(/^.{6}/g, 'XXXXXX')}.
                 </Typography>
                 {otpform}
@@ -505,7 +505,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
         )}
       </Box>
       <CaptchaComponent captchaResult={captchaResult} />
-      <Box my={4} width={'100%'} display={'flex'} justifyContent={'space-between'}>
+      <Box mt={4} mb={2} width={'100%'} display={'flex'} justifyContent={'space-between'}>
         <Button
           variant="contained"
           color="secondary"

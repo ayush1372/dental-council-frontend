@@ -100,7 +100,7 @@ const WorkDetails = ({
             name: 'india',
           },
           state: getStateData(declaredFacilityData[0]?.address?.state, true),
-          district: getFacilityDistrict(declaredFacilityData[0]?.address?.district_to?.id),
+          district: getFacilityDistrict(declaredFacilityData[0]?.address?.district),
           village: {
             iso_code: declaredFacilityData[0]?.villageCityTownLGDCode,
             name: declaredFacilityData[0]?.villageCityTownName,

@@ -124,7 +124,9 @@ export default function SuccessModalPopup({
       }
     }
   };
+
   const navigateLogin = () => {
+    // eslint-disable-next-line no-console
     dispatch(loginActiveState({ activeIndex: 0 }));
     navigate('/login-page', { state: { loginFormname: loginName } });
   };
@@ -214,9 +216,9 @@ export default function SuccessModalPopup({
             }
           >
             {successRegistration
-              ? 'Continue to login'
+              ? 'Login'
               : existHprId
-              ? 'Continue to set your password'
+              ? 'Set Password'
               : changeUserData
               ? 'Okay'
               : 'Ok'}

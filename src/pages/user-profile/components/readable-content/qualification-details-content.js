@@ -134,7 +134,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  selectedAcademicStatus !== 'College/NBE Verified' &&
+                  (selectedAcademicStatus === 'Pending' ||
+                    selectedAcademicStatus === 'Update Request Received') &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
@@ -169,7 +170,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  selectedAcademicStatus !== 'College/NBE Verified' &&
+                  (selectedAcademicStatus === 'Pending' ||
+                    selectedAcademicStatus === 'Update Request Received') &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
@@ -204,7 +206,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  selectedAcademicStatus !== 'College/NBE Verified' &&
+                  (selectedAcademicStatus === 'Pending' ||
+                    selectedAcademicStatus === 'Update Request Received') &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
@@ -242,7 +245,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  selectedAcademicStatus !== 'College/NBE Verified' &&
+                  (selectedAcademicStatus === 'Pending' ||
+                    selectedAcademicStatus === 'Update Request Received') &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
@@ -277,7 +281,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  selectedAcademicStatus !== 'College/NBE Verified' &&
+                  (selectedAcademicStatus === 'Pending' ||
+                    selectedAcademicStatus === 'Update Request Received') &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
@@ -310,7 +315,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  selectedAcademicStatus !== 'College/NBE Verified' &&
+                  (selectedAcademicStatus === 'Pending' ||
+                    selectedAcademicStatus === 'Update Request Received') &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
@@ -351,7 +357,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       (data?.user_type === 4 && index !== 0) ||
                       data?.user_type === 5) &&
                       element.is_verified !== 1 &&
-                      selectedAcademicStatus !== 'College/NBE Verified' &&
+                      (selectedAcademicStatus === 'Pending' ||
+                        selectedAcademicStatus === 'Update Request Received') &&
                       college_status !== 'Approved' && (
                         <ContactSupportOutlinedIcon
                           cursor="pointer"
@@ -383,7 +390,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       (data?.user_type === 4 && index !== 0) ||
                       data?.user_type === 5) &&
                       element.is_verified !== 1 &&
-                      selectedAcademicStatus !== 'College/NBE Verified' &&
+                      (selectedAcademicStatus === 'Pending' ||
+                        selectedAcademicStatus === 'Update Request Received') &&
                       college_status !== 'Approved' && (
                         <ContactSupportOutlinedIcon
                           cursor="pointer"
@@ -415,7 +423,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       (data?.user_type === 4 && index !== 0) ||
                       data?.user_type === 5) &&
                       element.is_verified !== 1 &&
-                      selectedAcademicStatus !== 'College/NBE Verified' &&
+                      (selectedAcademicStatus === 'Pending' ||
+                        selectedAcademicStatus === 'Update Request Received') &&
                       college_status !== 'Approved' && (
                         <ContactSupportOutlinedIcon
                           cursor="pointer"
@@ -447,7 +456,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       (data?.user_type === 4 && index !== 0) ||
                       data?.user_type === 5) &&
                       element.is_verified !== 1 &&
-                      selectedAcademicStatus !== 'College/NBE Verified' &&
+                      (selectedAcademicStatus === 'Pending' ||
+                        selectedAcademicStatus === 'Update Request Received') &&
                       college_status !== 'Approved' && (
                         <ContactSupportOutlinedIcon
                           cursor="pointer"
@@ -480,7 +490,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       (data?.user_type === 4 && index !== 0) ||
                       data?.user_type === 5) &&
                       element.is_verified !== 1 &&
-                      selectedAcademicStatus !== 'College/NBE Verified' &&
+                      (selectedAcademicStatus === 'Pending' ||
+                        selectedAcademicStatus === 'Update Request Received') &&
                       college_status !== 'Approved' && (
                         <ContactSupportOutlinedIcon
                           cursor="pointer"
@@ -531,7 +542,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  selectedAcademicStatus !== 'College/NBE Verified' &&
+                  (selectedAcademicStatus === 'Pending' ||
+                    selectedAcademicStatus === 'Update Request Received') &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"

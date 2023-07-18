@@ -246,9 +246,9 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
       <Typography variant="h2" color="primary.dark" mb={1}>
         {loginName} Login
       </Typography>
-      <Typography variant="body1" color="textPrimary.main">
+      {/* <Typography variant="body1" color="textPrimary.main">
         Login via
-      </Typography>
+      </Typography> */}
 
       <Grid container xs={12} columnSpacing={1} mt={1}>
         <Grid item xs={12} sm={6}>
@@ -337,7 +337,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
                 onClick={handleUserForgetUserName}
                 sx={{ cursor: 'pointer', display: 'contents' }}
               >
-                Forgot Username ?
+                Forgot Username?
               </Button>
             </Typography>
 
@@ -362,7 +362,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
                 onClick={() => handleForgotPassword()}
                 sx={{ cursor: 'pointer', display: 'contents' }}
               >
-                Forgot Password ?
+                Forgot Password?
               </Button>
             </Typography>
           </>
