@@ -36,7 +36,6 @@ export default function DatafoundModalPopup({
   const hpName = useSelector(
     (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.hp_name
   );
-  // eslint-disable-next-line no-console
   const handleCloseModal = () => {
     setOpen(false);
     window.location.reload();
@@ -73,7 +72,7 @@ export default function DatafoundModalPopup({
               display="flex"
               alignItems="felx-start"
             >
-              {!hpName? 'No Data Found' : 'Data Found'}
+              {!hpName ? 'No Data Found' : 'Data Found'}
             </Typography>
             <Typography
               display="flex"
@@ -83,12 +82,14 @@ export default function DatafoundModalPopup({
               component="div"
               flexDirection="column"
             >
-              {!hpName? text: 'We found below data against the provided details. Please check the details, and if it belongs to you, click "Yes" to continue.'}
+              {!hpName
+                ? text
+                : 'We found below data against the provided details. Please check the details, and if it belongs to you, click "Yes" to continue.'}
             </Typography>
             {hpName && (
               <Box
                 p="16px 16px 0px 16px"
-                width={{ xs: '100%'}}
+                width={{ xs: '100%' }}
                 sx={{ boxShadow: '2', marginTop: '16px' }}
               >
                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>

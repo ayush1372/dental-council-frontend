@@ -569,7 +569,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                 >
                   <Box>
                     <Typography variant="body1">
-                      Please enter the OTP sent on your Mobile Number.
+                      Please enter the OTP sent on your mobile number.
                     </Typography>
                     {otpform}
                   </Box>

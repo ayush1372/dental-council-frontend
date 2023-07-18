@@ -41,6 +41,7 @@ function NMCCollegeRegistration() {
 
   const [successModalPopup, setSuccessModalPopup] = useState(false);
   const [showCollegeName, setShowCollegeName] = useState(false);
+
   // eslint-disable-next-line no-unused-vars
   const [collegeResponse, setCollegeResponse] = useState([]);
 
