@@ -188,7 +188,7 @@ function WorkDetailsTable({
         <TablePagination
           rowsPerPageOptions={[]}
           component="div"
-          count={newRowsData?.length || '0'}
+          count={newRowsData?.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onRowsPerPageChange={handleChangeRowsPerPage}
