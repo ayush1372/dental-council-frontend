@@ -161,7 +161,7 @@ function FacilityDetailsTable({ declaredFacilityData, currentWorkDetails }) {
           <TablePagination
             rowsPerPageOptions={[]}
             component="div"
-            count={newRowsData?.length}
+            count={newRowsData?.length || 0}
             rowsPerPage={rowsPerPage}
             page={page}
             onRowsPerPageChange={handleChangeRowsPerPage}
