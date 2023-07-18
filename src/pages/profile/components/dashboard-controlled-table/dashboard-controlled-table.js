@@ -219,7 +219,7 @@ function DashboardControlledTable(props) {
     };
     dispatch(
       setSelectedAcademicStatus(
-        props?.selectedCardData?.name === 'Update Request Received'
+        props?.selectedCardData?.name === 'Pending'
           ? props?.selectedCardData?.name
           : props?.selectedCardData?.responseKey
       )
