@@ -100,6 +100,15 @@ const ReadRegisterAndAcademicDetails = ({
     setShowSuccessPopup(true);
   };
 
+  //Helper method to identify the qualification is primary or addtional qualification.
+  const isPrimaryQualification = (elementIndex) => {
+    if (elementIndex === 0) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   useEffect(() => {
     if (!isNaN(selectedDataIndex)) {
       let filteredQualificationDetails = [];
@@ -110,7 +119,7 @@ const ReadRegisterAndAcademicDetails = ({
           (element?.is_verified === 1 ||
             element?.request_id ===
               dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]?.request_id) &&
-          index !== 0
+          isPrimaryQualification(index)
         ) {
           filteredQualificationDetails.push(element);
           if (element?.is_verified !== 1) {
@@ -124,7 +133,7 @@ const ReadRegisterAndAcademicDetails = ({
                 : false
             );
           }
-        } else if (index === 0) {
+        } else if (!isPrimaryQualification(index)) {
           filteredQualificationDetails.push(element);
         }
       });
