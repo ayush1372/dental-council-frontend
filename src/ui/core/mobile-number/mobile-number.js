@@ -37,7 +37,7 @@ export function MobileNumber(props) {
             {label}
           </Typography>
           <Typography variant="body2" color="error">
-            {required ? ' *' : ''}
+            {required ? '*' : ''}
           </Typography>
         </Box>
         <Box

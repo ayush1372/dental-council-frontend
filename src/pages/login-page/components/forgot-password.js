@@ -10,6 +10,7 @@ import { loginActiveState } from '../../../store/reducers/login-reducer';
 import { Button } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
 import successToast from '../../../ui/core/toaster';
+
 //import { EmailRegexValidation } from '../../../utilities/common-validations';
 
 const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep, loginName }) => {
@@ -117,11 +118,7 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep, l
 
   return (
     <Box p={3} bgcolor="white.main" boxShadow="4">
-      <Typography
-        variant="h2"
-        component="div"
-        textAlign={userData?.page === 'forgetUserName' ? 'left' : 'left'}
-      >
+      <Typography variant="h2" component="div" textAlign={'left'}>
         {userData?.page === 'forgetUserName' ? 'Recover Your Username' : 'Recover Your Password'}
       </Typography>
 
