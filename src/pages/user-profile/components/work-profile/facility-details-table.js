@@ -35,7 +35,7 @@ function createData(
   };
 }
 
-function FacilityDetailsTable({ declaredFacilityData, trackStatusData, currentWorkDetails }) {
+function FacilityDetailsTable({ declaredFacilityData, currentWorkDetails }) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState({});
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -164,10 +164,9 @@ function FacilityDetailsTable({ declaredFacilityData, trackStatusData, currentWo
           <TablePagination
             rowsPerPageOptions={[]}
             component="div"
-            count={trackStatusData?.total_no_of_records || 0}
+            count={newRowsData?.length || '0'}
             rowsPerPage={rowsPerPage}
             page={page}
-            //   onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
             sx={{
               display: 'flex',

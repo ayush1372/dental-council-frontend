@@ -33,7 +33,6 @@ function createData(
 
 function WorkDetailsTable({
   FacilityData,
-  trackStatusData,
   declaredFacilityData,
   setFacilityResponseData,
   setDeclaredFacilityDistrict,
@@ -189,7 +188,7 @@ function WorkDetailsTable({
         <TablePagination
           rowsPerPageOptions={[]}
           component="div"
-          count={trackStatusData?.total_no_of_records || '0'}
+          count={newRowsData?.length || '0'}
           rowsPerPage={rowsPerPage}
           page={page}
           onRowsPerPageChange={handleChangeRowsPerPage}
