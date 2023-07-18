@@ -109,7 +109,7 @@ export const OtpForm = ({
             <Typography className={styles.invalid}>
               <SvgImageComponent icon="error" height="14px" width="16px" />
               <Typography variant="body2" p="1px 0 0 4px">
-                {'Please Enter a Valid OTP'}
+                {'Please enter a valid OTP'}
               </Typography>
             </Typography>
           )

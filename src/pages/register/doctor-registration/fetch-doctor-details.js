@@ -614,6 +614,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
 
           {showSuccess && (
             <SuccessModalPopup
+              loginName={'Doctor'}
               open={showSuccess}
               setOpen={() => setShowSuccess(false)}
               successRegistration={successRegistration}

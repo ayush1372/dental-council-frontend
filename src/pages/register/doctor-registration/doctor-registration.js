@@ -12,6 +12,7 @@ import DatafoundModalPopup from '../../../shared/common-modals/data-found-modal'
 import ErrorModalPopup from '../../../shared/common-modals/error-modal-popup';
 import { getRegistrationCouncilList } from '../../../store/actions/common-actions';
 import { fetchSmcRegistrationDetails } from '../../../store/actions/doctor-registration-actions';
+import { resetDoctorHPName } from '../../../store/reducers/doctor-registration-reducer';
 import { Button, TextField } from '../../../ui/core';
 import FetchDoctorDetails from './fetch-doctor-details';
 const DoctorRegistrationWelcomePage = () => {
@@ -51,6 +52,7 @@ const DoctorRegistrationWelcomePage = () => {
   }, []);
 
   const onSubmit = () => {
+    dispatch(resetDoctorHPName());
     let registrationData = {
       smcId: getValues().RegistrationCouncilId,
       registrationNumber: getValues().RegistrationNumber,
@@ -100,7 +102,8 @@ const DoctorRegistrationWelcomePage = () => {
                     Register Your Profile
                   </Typography>
                   <Typography variant="body3" color="textSecondary.main">
-                    Select registration council from dropdown and enter registration number
+                    Please choose a registration council from the provided options and enter your
+                    registration number.
                   </Typography>
                 </Box>
 
@@ -168,23 +171,24 @@ const DoctorRegistrationWelcomePage = () => {
                   <Button
                     onClick={handleSubmit(onSubmit)}
                     variant="contained"
+                    color="secondary"
+                    size="small"
                     sx={{
                       mr: 3,
                       width: '105px',
                       height: '45px',
-                      backgroundColor: 'secondary.main',
                     }}
                   >
                     Submit
                   </Button>
                   <Button
                     onClick={onReset}
-                    variant="outlined"
+                    variant="contained"
+                    color="grey"
+                    size="small"
                     sx={{
                       width: '105px',
                       height: '45px',
-                      backgroundColor: 'grey.main',
-                      color: 'black',
                     }}
                   >
                     Reset
@@ -234,7 +238,7 @@ const DoctorRegistrationWelcomePage = () => {
             smcId: getValues().RegistrationCouncilId,
             registrationNumber: getValues().RegistrationNumber,
           }}
-          text={`We could not find any records against the provided details in Council. Do you still want to continue?`}
+          text={`We could not find any data against the provided details. Do you still want to continue with the registration?`}
         />
       )}
       {accountExists && (
