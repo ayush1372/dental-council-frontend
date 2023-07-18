@@ -498,7 +498,9 @@ const EditQualificationDetails = ({
                   ? true
                   : false
               }
-              {...register(`qualification[${index}].qualification`)}
+              {...register(`qualification[${index}].qualification`, {
+                required: 'Degree is required',
+              })}
               style={{
                 backgroundColor:
                   work_flow_status_id === 3 && getQueryRaised('Name of the Degree Obtained')
@@ -931,7 +933,10 @@ const EditQualificationDetails = ({
           <Grid item xs={12} md={4}>
             <Select
               fullWidth
-              error={!getValues().Speciality && errors.Speciality?.message}
+              error={
+                getValues().qualification[index].Speciality === '' &&
+                errors?.qualification?.[index]?.Speciality?.message
+              }
               placeholder={'Select broad speciality'}
               name="Specialty"
               label="Broad Specialty"
@@ -975,11 +980,12 @@ const EditQualificationDetails = ({
         <Grid item xs={12}>
           <UploadFile
             fileID={'qualification'}
+            name={'UploadFileName'}
             uploadFiles="single"
             sizeAllowed={5}
             fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
-            fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
-                 Maximum size allowed for the attachment is 5MB.`}
+            fileMessage={`PDF, PNG, JPG, JPEG file types are supported.
+                 Maximum size allowed is 5MB.`}
             fileData={qualificationFilesData[`qualification.${index}.files`] || []}
             setFileData={(files) => {
               handleQualificationFilesData(`qualification.${index}.files`, files);

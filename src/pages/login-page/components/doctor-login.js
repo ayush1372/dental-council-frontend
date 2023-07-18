@@ -275,7 +275,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
       </Typography> */}
 
       <Grid container xs={12} columnSpacing={1} mt={1}>
-        <Grid item  xs={12} sm={4}>
+        <Grid item xs={12} sm={4}>
           <Button
             fullWidth
             variant="outlined"
