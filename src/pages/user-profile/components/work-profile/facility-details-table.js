@@ -148,8 +148,6 @@ function FacilityDetailsTable({ declaredFacilityData, currentWorkDetails }) {
   return (
     <>
       <Grid sx={{ mx: 2 }} p={'0px'}>
-        {/* <TableSearch trackApplication /> */}
-
         <GenericTable
           order={order}
           orderBy={orderBy}
@@ -159,12 +157,11 @@ function FacilityDetailsTable({ declaredFacilityData, currentWorkDetails }) {
           rowsPerPage={rowsPerPage}
           page={page}
         />
-
         <Box>
           <TablePagination
             rowsPerPageOptions={[]}
             component="div"
-            count={newRowsData?.length || '0'}
+            count={newRowsData?.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onRowsPerPageChange={handleChangeRowsPerPage}
