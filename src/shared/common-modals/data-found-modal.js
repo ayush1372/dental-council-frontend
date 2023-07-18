@@ -37,7 +37,6 @@ export default function DatafoundModalPopup({
     (state) => state?.doctorRegistration?.getSmcRegistrationDetails?.data?.hp_name
   );
   // eslint-disable-next-line no-console
-  console.log('hpName', hpName);
   const handleCloseModal = () => {
     setOpen(false);
     window.location.reload();
