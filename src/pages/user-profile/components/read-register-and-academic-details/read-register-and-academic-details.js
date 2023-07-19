@@ -333,22 +333,23 @@ const ReadRegisterAndAcademicDetails = ({
                           </Button>
                         )}
                       <Menu {...bindMenu(popupState)}>
-                        {selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
-                          selectedAcademicStatus !== 'Permanent Suspension Requests Received' &&
-                          !!dashboardTableDetails &&
-                          dashboardTableDetails !== 'Approved' && (
-                            <MenuItem onClick={selectionChangeHandler} data-my-value={'raise'}>
-                              Verify
-                            </MenuItem>
-                          )}
                         {loggedInUserType === 'SMC' &&
                           showForwardButton &&
                           userActiveTab !== 'Activate Licence' &&
                           selectedAcademicStatus !== 'College/NBE Verified' && (
                             <MenuItem onClick={selectionChangeHandler} data-my-value={'verify'}>
+                              Verify
+                            </MenuItem>
+                          )}
+                        {selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
+                          selectedAcademicStatus !== 'Permanent Suspension Requests Received' &&
+                          !!dashboardTableDetails &&
+                          dashboardTableDetails !== 'Approved' && (
+                            <MenuItem onClick={selectionChangeHandler} data-my-value={'raise'}>
                               Raise a Query
                             </MenuItem>
                           )}
+
                         <MenuItem onClick={selectionChangeHandler} data-my-value={'reject'}>
                           Reject
                         </MenuItem>
@@ -358,7 +359,7 @@ const ReadRegisterAndAcademicDetails = ({
                             (loggedInUserType === 'SMC' && selectedAcademicStatus === 'Pending')) &&
                           selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
                           selectedAcademicStatus !== 'Permanent Suspension Requests Received' && (
-                            <MenuItem onClick={selectionChangeHandler} data-my-value={'suspend'}>
+                            <MenuItem onClick={selectionChangeHandler} data-my-value={'blacklist'}>
                               Temporary Suspend
                             </MenuItem>
                           )}
@@ -368,7 +369,7 @@ const ReadRegisterAndAcademicDetails = ({
                             (loggedInUserType === 'SMC' && selectedAcademicStatus === 'Pending')) &&
                           selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
                           selectedAcademicStatus !== 'Permanent Suspension Requests Received' && (
-                            <MenuItem onClick={selectionChangeHandler} data-my-value={'blacklist'}>
+                            <MenuItem onClick={selectionChangeHandler} data-my-value={'suspend'}>
                               Permanent Suspend
                             </MenuItem>
                           )}
