@@ -159,7 +159,7 @@ const SearchResults = ({ searchData, scrolldown }) => {
             <TablePagination
               rowsPerPageOptions={[]}
               component="div"
-              count={searchDetails?.data?.data?.count ? searchDetails?.data?.data?.count : 0}
+              count={searchDetails?.data?.data?.count || 0}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}
