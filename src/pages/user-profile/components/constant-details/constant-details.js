@@ -123,6 +123,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
           contact: type === 'sms' ? getValues().mobileNo : '',
           type: type === 'sms' ? 'sms' : '',
           user_type: loginData?.data?.user_type,
+          is_registration: true,
         };
         dispatch(sendNotificationOtp(sendOTPData))
           .then((response) => {

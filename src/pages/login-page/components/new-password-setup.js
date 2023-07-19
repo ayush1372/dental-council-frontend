@@ -177,9 +177,9 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }
         <Typography variant="h4" component="div" textAlign="center" data-testid="Password">
           {uniqueHpId ? `Welcome, ${uniqueHpId}` : 'Welcome !'}
         </Typography>
-        <Typography variant="body1" component="div" textAlign="center" data-testid="Password">
+        {/* <Typography variant="body1" component="div" textAlign="center" data-testid="Password">
           {`Please set your password `}
-        </Typography>
+        </Typography> */}
 
         <Box>
           <Box mt={1}>

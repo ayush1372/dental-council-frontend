@@ -152,7 +152,7 @@ export default function DatafoundModalPopup({
                   color="warning"
                   onClick={handleCloseModal}
                 >
-                  Ok
+                  Done
                 </Button>
               </Box>
             ) : (
