@@ -5,7 +5,6 @@ import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 
 import UserProfile from '../../../src/pages/user-profile';
-import { verboseLog } from '../../config/debug';
 import { capitalize } from '../../helpers/functions/common-functions';
 import GenericTable from '../../shared/generic-component/generic-table';
 import ViewProfile from '../../shared/view-profile/view-profile';
@@ -64,7 +63,6 @@ function TrackStatusTable(props) {
     // props?.setShowTrackApplicationTable(false);
   };
 
-  verboseLog('selectedRowData', selectedRowData, props);
   const dataHeader = [
     { title: 'S.No.', name: 'SNo', sorting: true, type: 'string' },
     {
@@ -74,46 +72,40 @@ function TrackStatusTable(props) {
       type: 'string',
     },
     {
-      title: 'IMR ID/ Registration No.',
+      title: 'Registration Number',
       name: 'registrationNo',
       sorting: true,
       type: 'string',
     },
     {
-      title: 'Name of Applicant',
+      title: 'Applicant Name',
       name: 'nameofApplicant',
       sorting: true,
       type: 'string',
     },
-    { title: 'Name of State Council', name: 'nameofStateCouncil', sorting: true, type: 'date' },
+    { title: 'State Medical Council', name: 'nameofStateCouncil', sorting: true, type: 'date' },
     {
-      title: 'Council Verification Status',
+      title: 'Council Status',
       name: 'councilVerificationStatus',
       sorting: true,
       type: 'string',
     },
     {
-      title: 'College/NBE Verification Status',
+      title: 'College/NBE Status',
       name: 'collegeVerificationStatus',
       sorting: true,
       type: 'string',
     },
     {
-      title: 'NMC Verification Status',
+      title: 'NMC Status',
       name: 'NMCVerificationStatus',
       sorting: true,
       type: 'string',
     },
-    { title: 'Date of Submission', name: 'dateofSubmission', sorting: true, type: 'string' },
+    { title: 'Submission Date', name: 'dateofSubmission', sorting: true, type: 'string' },
     { title: 'Pendency (in days)', name: 'pendency', sorting: true, type: 'string' },
-    { title: 'Pending with user', name: 'pending', sorting: true, type: 'string' },
     loggedInUserType !== 'College' && {
-      title:
-        loggedInUserType === 'NMC'
-          ? 'Action'
-          : loggedInUserType === 'SMC'
-          ? 'Request NMC'
-          : 'Request NMC',
+      title: 'Action',
       name: 'requestNMC',
       sorting: true,
       type: 'string',

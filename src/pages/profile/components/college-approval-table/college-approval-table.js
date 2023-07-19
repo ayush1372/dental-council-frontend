@@ -51,7 +51,7 @@ function CollegeApprovalTable(props) {
   const dataHeader = [
     { title: 'S.No.', name: 'SNo', sorting: true, type: 'string' },
     {
-      title: 'College Id',
+      title: 'College ID',
       name: 'collegeId',
       sorting: true,
       type: 'string',
@@ -62,14 +62,14 @@ function CollegeApprovalTable(props) {
       sorting: true,
       type: 'string',
     },
-    { title: 'Name of State Council', name: 'nameofStateCouncil', sorting: true, type: 'string' },
+    { title: 'State Medical Council', name: 'nameofStateCouncil', sorting: true, type: 'string' },
     {
-      title: 'Council Verification Status',
+      title: 'Council Status',
       name: 'councilVerificationStatus',
       sorting: true,
       type: 'string',
     },
-    { title: 'Date of Submission', name: 'dateofSubmission', sorting: true, type: 'date' },
+    { title: 'Submission Date', name: 'dateofSubmission', sorting: true, type: 'date' },
     { title: 'Pendency (in days)', name: 'pendency', sorting: true, type: 'string' },
     { title: 'View', name: 'view', sorting: false, type: 'string' },
   ];
