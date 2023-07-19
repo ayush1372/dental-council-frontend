@@ -12,7 +12,6 @@ import {
   IconButton,
 } from '@mui/material';
 import PropTypes from 'prop-types';
-import { ToastContainer } from 'react-toastify';
 
 import { Button } from '../../ui/core';
 import successToast from '../../ui/core/toaster';
@@ -82,8 +81,6 @@ export function ModalOTP({
   return {
     otpPopup: (
       <Box>
-        <ToastContainer></ToastContainer>
-
         <Dialog
           open={open}
           onClose={handleClose}

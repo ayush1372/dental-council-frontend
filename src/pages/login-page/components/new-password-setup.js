@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 
 import { encryptData, usersType } from '../../../helpers/functions/common-functions';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
@@ -164,112 +163,108 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }
     navigate('/');
   };
   return (
-    <>
-      {' '}
-      <ToastContainer></ToastContainer>
-      <Box
-        data-testid="new-password-setup"
-        p={3}
-        bgcolor="white.main"
-        boxShadow="4"
-        width={otpData?.page === 'forgotPasswordPage' ? '100%' : '40%'}
-      >
-        <Typography variant="h4" component="div" textAlign="center" data-testid="Password">
-          {uniqueHpId ? `Welcome, ${uniqueHpId}` : 'Welcome !'}
-        </Typography>
-        {/* <Typography variant="body1" component="div" textAlign="center" data-testid="Password">
+    <Box
+      data-testid="new-password-setup"
+      p={3}
+      bgcolor="white.main"
+      boxShadow="4"
+      width={otpData?.page === 'forgotPasswordPage' ? '100%' : '40%'}
+    >
+      <Typography variant="h4" component="div" textAlign="center" data-testid="Password">
+        {uniqueHpId ? `Welcome, ${uniqueHpId}` : 'Welcome !'}
+      </Typography>
+      {/* <Typography variant="body1" component="div" textAlign="center" data-testid="Password">
           {`Please set your password `}
         </Typography> */}
 
-        <Box>
-          <Box mt={1}>
-            <Typography variant="body1">
-              Set Password
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
+      <Box>
+        <Box mt={1}>
+          <Typography variant="body1">
+            Set Password
+            <Typography component="span" color="error.main">
+              *
             </Typography>
-            <TextField
-              inputProps={{ maxLength: 100 }}
-              fullWidth
-              id="outlined-basic"
-              variant="outlined"
-              type="Password"
-              name="password"
-              required="true"
-              placeholder={t('Enter New Password')}
-              margin="dense"
-              defaultValue={getValues().password}
-              error={errors.password?.message}
-              {...register('password', PasswordRegexValidation, {
-                required: 'Provide Password',
-              })}
-              newPassword={true}
-            />
-          </Box>
-          <Box mt={3}>
-            <Typography variant="body1" data-testid="confirmPassword">
-              Confirm Password
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
-            </Typography>
-            <TextField
-              inputProps={{ maxLength: 100 }}
-              fullWidth
-              id="outlined-basic"
-              variant="outlined"
-              type="Password"
-              name="confirmPassword"
-              required="true"
-              placeholder={t('Enter Confirm Password')}
-              margin="dense"
-              defaultValue={getValues().confirmPassword}
-              error={errors.confirmPassword?.message}
-              {...register('confirmPassword', {
-                required: 'Provide Confirm Password',
-                validate: (val) => {
-                  if (watch('password') !== val) {
-                    return 'Password does not match';
-                  }
-                },
-              })}
-            />
-          </Box>
-
-          <Box align="end" mt={3}>
-            <Button
-              onClick={onCancel}
-              variant="contained"
-              color="grey"
-              sx={{
-                mr: 2,
-              }}
-            >
-              Cancel
-            </Button>
-            <Button variant="contained" color="secondary" onClick={handleSubmit(onSubmit)}>
-              {t('Submit')}
-            </Button>
-          </Box>
-        </Box>
-        {showSuccess && (
-          <SuccessModalPopup
-            open={showSuccess}
-            setOpen={() => setShowSuccess(false)}
-            text={
-              collegeRegisterSuccess
-                ? 'Password has been set'
-                : uniqueHpId === undefined
-                ? 'Password has been set'
-                : `Password has been set for "${uniqueHpId}"`
-            }
-            successRegistration={true}
-            loginName={loginName}
+          </Typography>
+          <TextField
+            inputProps={{ maxLength: 100 }}
+            fullWidth
+            id="outlined-basic"
+            variant="outlined"
+            type="Password"
+            name="password"
+            required="true"
+            placeholder={t('Enter New Password')}
+            margin="dense"
+            defaultValue={getValues().password}
+            error={errors.password?.message}
+            {...register('password', PasswordRegexValidation, {
+              required: 'Provide Password',
+            })}
+            newPassword={true}
           />
-        )}
+        </Box>
+        <Box mt={3}>
+          <Typography variant="body1" data-testid="confirmPassword">
+            Confirm Password
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
+          </Typography>
+          <TextField
+            inputProps={{ maxLength: 100 }}
+            fullWidth
+            id="outlined-basic"
+            variant="outlined"
+            type="Password"
+            name="confirmPassword"
+            required="true"
+            placeholder={t('Enter Confirm Password')}
+            margin="dense"
+            defaultValue={getValues().confirmPassword}
+            error={errors.confirmPassword?.message}
+            {...register('confirmPassword', {
+              required: 'Provide Confirm Password',
+              validate: (val) => {
+                if (watch('password') !== val) {
+                  return 'Password does not match';
+                }
+              },
+            })}
+          />
+        </Box>
+
+        <Box align="end" mt={3}>
+          <Button
+            onClick={onCancel}
+            variant="contained"
+            color="grey"
+            sx={{
+              mr: 2,
+            }}
+          >
+            Cancel
+          </Button>
+          <Button variant="contained" color="secondary" onClick={handleSubmit(onSubmit)}>
+            {t('Submit')}
+          </Button>
+        </Box>
       </Box>
-    </>
+      {showSuccess && (
+        <SuccessModalPopup
+          open={showSuccess}
+          setOpen={() => setShowSuccess(false)}
+          text={
+            collegeRegisterSuccess
+              ? 'Password has been set'
+              : uniqueHpId === undefined
+              ? 'Password has been set'
+              : `Password has been set for "${uniqueHpId}"`
+          }
+          successRegistration={true}
+          loginName={loginName}
+        />
+      )}
+    </Box>
   );
 };
 export default NewPasswordSetup;

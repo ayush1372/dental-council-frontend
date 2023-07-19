@@ -4,7 +4,6 @@ import { Box, Button, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { ToastContainer } from 'react-toastify';
 
 import { createSelectFieldData, scrollToTop } from '../../../../helpers/functions/common-functions';
 import {
@@ -514,7 +513,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
         },
       }}
     >
-      <ToastContainer></ToastContainer>
       <Grid container spacing={2}>
         {/* layer 1 */}
         <Grid container item>

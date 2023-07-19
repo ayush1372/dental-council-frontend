@@ -11,7 +11,6 @@ import VerifiedIcon from '@mui/icons-material/Verified';
 import { Box, FormGroup, Grid, IconButton, Link, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { ToastContainer } from 'react-toastify';
 
 import ReactivationLogo from '../../../../../src/assets/images/reactivate-license-icon.png';
 import avtarImg from '../../../../assets/images/user.png';
@@ -157,7 +156,6 @@ export default function ProfileImage(props) {
 
   return (
     <Grid container className={styles.profileImageDetailsContainer} justifyContent="center">
-      <ToastContainer></ToastContainer>
       {loggedInUserType === 'Doctor' ? (
         <Grid item xs={12} mt={2} display="flex" justifyContent="center">
           <Box maxWidth="110px" width="100%" position="relative">

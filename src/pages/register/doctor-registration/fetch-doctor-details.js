@@ -10,7 +10,6 @@ import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSpeechSynthesis } from 'react-speech-kit';
-import { ToastContainer } from 'react-toastify';
 
 import { consentDescription } from '../../../constants/common-data';
 import { validateAadharNumber } from '../../../constants/common-data';
@@ -314,7 +313,6 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
   };
   return (
     <>
-      <ToastContainer></ToastContainer>
       {kycError && (
         <KycErrorPopup
           open={kycError}
