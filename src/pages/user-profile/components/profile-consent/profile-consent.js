@@ -259,7 +259,7 @@ const ProfileConsent = ({
           variant="body1"
           mb={2}
         >
-          Consent
+          Consent Collection
           <Typography component="span" color="error.main">
             *
           </Typography>
@@ -313,7 +313,7 @@ const ProfileConsent = ({
               error={errors.HPR?.message}
             />
             <Typography component="div" variant="body7">
-              Save my time, share my details with HPR
+              Save my time and share my details with HPR
             </Typography>
           </Grid>
           <Grid item sx="auto" display="flex" alignItems="center">

@@ -361,14 +361,14 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
               required
               disabled={otpFormEnabled}
               label={'NMR ID'}
-              placeholder={'Please enter NMR ID'}
+              placeholder={'Enter NMR ID'}
               inputProps={{ maxLength: 12 }}
               name={'nmrID'}
               {...register('nmrID', {
-                required: 'Please Enter an NMR ID',
+                required: 'Please enter a valid NMR ID',
                 pattern: {
                   value: /^\d{12}$/,
-                  message: 'Please Enter a valid NMR ID',
+                  message: 'Please enter a valid NMR ID',
                 },
               })}
               min={12}
@@ -420,7 +420,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
               required
               fullWidth
               label={'Username'}
-              placeholder={'Please enter username'}
+              placeholder={'Enter username'}
               name={'userID'}
               error={errors.userID?.message}
               {...register('userID', {
@@ -431,7 +431,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
                 },
                 minLength: {
                   value: 2,
-                  message: 'Enter valid username',
+                  message: 'Please enter a valid username',
                 },
               })}
               inputProps={{
@@ -456,7 +456,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
               type="Password"
               name="password"
               required="true"
-              placeholder={'Please enter password'}
+              placeholder={'Enter password'}
               error={errors.password?.message}
               margin="dense"
               inputProps={{
@@ -480,12 +480,12 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
           <>
             <MobileNumber
               showhint={false}
-              placeholder="Enter Mobile Number"
+              placeholder="Mobile number"
               required
               register={register}
               getValues={getValues}
               errors={errors}
-              label={'Enter Mobile Number'}
+              label={'Mobile Number'}
               showVerify
               verifyOnClick={sendNotificationOTPHandler}
               otpSend={otpSend}

@@ -242,6 +242,7 @@ export default function ProfileImage(props) {
                   textAlign="center"
                   display="inline-flex"
                   variant="body2"
+                  sx={{ whiteSpace: 'break-spaces' }}
                 >
                   Your profile is suspended and you will not be able to perform any action.
                 </Typography>
@@ -291,10 +292,10 @@ export default function ProfileImage(props) {
                     component="div"
                     display="inline-flex"
                     variant="body2"
+                    sx={{ whiteSpace: 'break-spaces' }}
                   >
-                    You have done E-sign with different
-                    <br /> account. Please verify and re-do the <br />
-                    E-sign process correctly.
+                    You have done E-sign with different account. Please verify and re-do the E-sign
+                    process correctly.
                   </Typography>
                 </Grid>
               </Grid>
@@ -309,11 +310,10 @@ export default function ProfileImage(props) {
                     component="div"
                     display="inline-flex"
                     variant="body2"
+                    sx={{ whiteSpace: 'break-spaces' }}
                   >
-                    Your profile has to complete E-sign <br />
-                    process. You will not be able to perform <br /> actions on the profile untill
-                    you <br />
-                    complete E-sign process.
+                    Your profile has to complete E-sign process. You will not be able to perform
+                    actions on the profile untill you complete E-sign process.
                   </Typography>
                 </Grid>
               </Grid>

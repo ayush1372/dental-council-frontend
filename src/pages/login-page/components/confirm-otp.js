@@ -157,19 +157,22 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup 
           </Typography>
         </>
       ) : otpData.page === 'doctorConstantDetailsPage' && otpData.type === 'email' ? (
-        <Box display={'flex'} mb={3} justifyContent="space-between">
-          <Box display={'flex'} alignItems="center">
-            <Box mr={1}>
-              <img width="20px" height="20px" src={IconVerified} alt="verified icon" />
-            </Box>
-            <Box display="flex">
-              <Typography variant="h2">Email Sent Successfully</Typography>
+        <>
+          <Box flex-grow={1} textAlign="right">
+            <CloseIcon onClick={otpData.handleClose} sx={{ cursor: 'pointer' }} />
+          </Box>
+
+          <Box display={'flex'} mb={3} justifyContent="space-between">
+            <Box display={'flex'} alignItems="center">
+              <Box mr={1}>
+                <img width="20px" height="20px" src={IconVerified} alt="verified icon" />
+              </Box>
+              <Box display="flex">
+                <Typography variant="h2">Email Sent Successfully</Typography>
+              </Box>
             </Box>
           </Box>
-          <Box flex-grow={1}>
-            <CloseIcon onClick={otpData.handleClose} />
-          </Box>
-        </Box>
+        </>
       ) : (
         <Typography variant="h2" component="div">
           Confirm OTP

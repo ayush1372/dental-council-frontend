@@ -161,7 +161,7 @@ export const workStatusOptions = [
 // dashboard count mapping
 // mapping BE keys -> card titles on FE
 export const registrationRequestMapper = {
-  'Total Registration Requests': 'Total Registration request',
+  'Total Registration Requests': 'Total Registration Requests',
   Rejected: 'Rejected',
   Approved: 'Approved',
   'Query Raised': 'Query Raised',
@@ -172,19 +172,19 @@ export const registrationRequestMapper = {
   Forwarded: 'Forwarded',
 };
 export const updationRequestMapper = {
-  'Total Modification Requests': 'Total Updation request',
-  Rejected: 'Request Rejected',
-  Approved: 'Update Request Approved',
-  'Query Raised': 'Query Raised on Update Request',
+  'Total Modification Requests': 'Total Updation Requests',
+  Rejected: 'Rejected',
+  Approved: 'Approved',
+  'Query Raised': 'Query Raised',
   Suspended: 'Suspended',
   Blacklisted: 'Blacklisted',
-  Pending: 'Update Request Received',
+  Pending: 'Pending',
   'College/NBE Verified': 'College/NBE Verified',
   Forwarded: 'Forwarded',
 };
 
 export const suspensionRequestMapper = {
-  'Total Suspension Requests': 'Total Suspension request',
+  'Total Suspension Requests': 'Total Suspension Requests',
   'Permanent Suspension Requests Received': 'Permanent Suspension Requests Received',
   'Temporary Suspension Requests Approved': 'Temporary Suspension Requests Approved',
   'Permanent Suspension Requests Approved': 'Permanent Suspension Requests Approved',
@@ -272,7 +272,7 @@ export const CollegeApprovalFieldList = [
 ];
 export const ActivateLicenceFieldList = [
   { id: 'applicantFullName', name: 'Name of Applicant' },
-  { id: 'registrationNumber', name: 'Registration No' },
+  { id: 'registrationNumber', name: 'Registration No.' },
   { id: 'emailId', name: 'Email ID' },
   { id: 'gender', name: 'Gender' },
   { id: 'mobileNumber', name: 'Mobile Number' },
@@ -281,7 +281,7 @@ export const ActivateLicenceFieldList = [
 
 export const DashBoardCardsFieldList = [
   { id: 'applicantFullName', name: 'Name of Applicant' },
-  { id: 'registrationNumber', name: 'Registration No' },
+  { id: 'registrationNumber', name: 'Registration No.' },
   { id: 'councilName', name: 'Name of Council' },
   { id: 'emailId', name: 'Email ID' },
   { id: 'gender', name: 'Gender' },
@@ -292,7 +292,7 @@ export const DashBoardCardsFieldList = [
 
 export const TrackStatusFieldList = [
   { id: 'applicantFullName', name: 'Name of Applicant' },
-  { id: 'registrationNumber', name: 'Registration No' },
+  { id: 'registrationNumber', name: 'Registration No.' },
   { id: 'emailId', name: 'Email ID' },
   { id: 'gender', name: 'Gender' },
   { id: 'mobileNumber', name: 'Mobile Number' },

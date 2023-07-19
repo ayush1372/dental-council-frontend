@@ -55,7 +55,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
       <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
-            Registered with Council
+            Registered Council Name
             <Typography component="span" color="error.main">
               *
             </Typography>
@@ -154,7 +154,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
       <Grid container item spacing={2} mt={1}>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
-            Registration
+            Registration Type
             <Typography component="span" color="error.main">
               *
             </Typography>
