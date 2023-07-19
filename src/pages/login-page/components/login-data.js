@@ -370,7 +370,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
           <>
             <MobileNumber
               showhint={false}
-              placeholder="Enter Mobile Number"
+              placeholder="Enter mobile number"
               required
               register={register}
               getValues={getValues}
