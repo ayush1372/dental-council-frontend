@@ -12,13 +12,14 @@ import DatafoundModalPopup from '../../../shared/common-modals/data-found-modal'
 import ErrorModalPopup from '../../../shared/common-modals/error-modal-popup';
 import { getRegistrationCouncilList } from '../../../store/actions/common-actions';
 import { fetchSmcRegistrationDetails } from '../../../store/actions/doctor-registration-actions';
+import { resetDoctorHPName } from '../../../store/reducers/doctor-registration-reducer';
 import { Button, TextField } from '../../../ui/core';
 import FetchDoctorDetails from './fetch-doctor-details';
 const DoctorRegistrationWelcomePage = () => {
   const [isNext, setIsNext] = useState(false);
   const [imrDataNotFound, setImrDataNotFound] = useState(false);
   const [rejectPopup, setRejectPopup] = useState(false);
-  const [datafoundModalPopup, setDatafoundModalPopup] = useState(false);
+  // const [datafoundModalPopup, setDatafoundModalPopup] = useState(false);
   const [accountExists, setAccountExists] = useState(false);
   const {
     register,
@@ -42,7 +43,8 @@ const DoctorRegistrationWelcomePage = () => {
   const dispatch = useDispatch();
   const handleAadhaarPage = (data) => {
     setImrDataNotFound(data);
-    setDatafoundModalPopup(false);
+    setRejectPopup(false);
+    // setDatafoundModalPopup(false);
   };
   useEffect(() => {
     dispatch(getRegistrationCouncilList());
@@ -50,6 +52,7 @@ const DoctorRegistrationWelcomePage = () => {
   }, []);
 
   const onSubmit = () => {
+    dispatch(resetDoctorHPName());
     let registrationData = {
       smcId: getValues().RegistrationCouncilId,
       registrationNumber: getValues().RegistrationNumber,
@@ -59,7 +62,8 @@ const DoctorRegistrationWelcomePage = () => {
         if (response?.data?.already_registered_in_nmr) {
           setAccountExists(true);
         } else {
-          setIsNext(true);
+          setRejectPopup(true);
+          // setIsNext(true);
         }
       })
       .catch((err) => {
@@ -98,7 +102,8 @@ const DoctorRegistrationWelcomePage = () => {
                     Register Your Profile
                   </Typography>
                   <Typography variant="body3" color="textSecondary.main">
-                    Select registration council from dropdown and enter registration number
+                    Please choose a registration council from the provided options and enter your
+                    registration number.
                   </Typography>
                 </Box>
 
@@ -113,22 +118,12 @@ const DoctorRegistrationWelcomePage = () => {
                     <SearchableDropdown
                       name="RegistrationCouncil"
                       items={createEditFieldData(councilNames)}
-                      placeholder="Select Registered Council"
+                      placeholder="Select registered council"
                       clearErrors={clearErrors}
                       error={errors.RegistrationCouncil?.message}
                       {...register('RegistrationCouncil', {
                         required: 'Registration Council is required',
                       })}
-                      value={{
-                        id:
-                          getValues()?.RegistrationCouncilId !== undefined
-                            ? getValues()?.RegistrationCouncilId
-                            : '',
-                        name:
-                          getValues()?.RegistrationCouncil !== undefined
-                            ? getValues()?.RegistrationCouncil
-                            : '',
-                      }}
                       onChange={(currentValue) => {
                         setValue('RegistrationCouncilId', currentValue?.id);
                         setValue('RegistrationCouncil', currentValue?.name);
@@ -146,7 +141,7 @@ const DoctorRegistrationWelcomePage = () => {
                   <TextField
                     fullWidth
                     name={'RegistrationNumber'}
-                    placeholder={t('Enter Registration Number')}
+                    placeholder={t('Enter registration number')}
                     defaultValue={getValues().RegistrationNumber}
                     error={errors.RegistrationNumber?.message}
                     {...register('RegistrationNumber', {
@@ -166,23 +161,24 @@ const DoctorRegistrationWelcomePage = () => {
                   <Button
                     onClick={handleSubmit(onSubmit)}
                     variant="contained"
+                    color="secondary"
+                    size="small"
                     sx={{
                       mr: 3,
                       width: '105px',
                       height: '45px',
-                      backgroundColor: 'secondary.main',
                     }}
                   >
                     Submit
                   </Button>
                   <Button
                     onClick={onReset}
-                    variant="outlined"
+                    variant="contained"
+                    color="grey"
+                    size="small"
                     sx={{
                       width: '105px',
                       height: '45px',
-                      backgroundColor: 'grey.main',
-                      color: 'black',
                     }}
                   >
                     Reset
@@ -200,7 +196,8 @@ const DoctorRegistrationWelcomePage = () => {
           />
         )}
       </Box>
-      {rejectPopup && (
+      {/* Commneted by, Ashvini For future use */}
+      {/* {rejectPopup && (
         <ErrorModalPopup
           open={setRejectPopup}
           setOpen={() => {
@@ -213,13 +210,15 @@ const DoctorRegistrationWelcomePage = () => {
           text={` Your data is not found in the NMR.
            Do you want to continue the registration in the NMR ? `}
         />
-      )}
-      {datafoundModalPopup && (
+      )} */}
+      {rejectPopup && (
         <DatafoundModalPopup
           open={setRejectPopup}
-          setOpen={() => setRejectPopup(false)}
+          setOpen={() => {
+            setRejectPopup(true);
+          }}
           handleClose={() => {
-            setDatafoundModalPopup(false);
+            setRejectPopup(false);
           }}
           imrData={true}
           handleAadhaarPage={handleAadhaarPage}
@@ -229,8 +228,7 @@ const DoctorRegistrationWelcomePage = () => {
             smcId: getValues().RegistrationCouncilId,
             registrationNumber: getValues().RegistrationNumber,
           }}
-          text={`We found below details as per provided information. 
-          If the details are correct, click yes to continue registration. `}
+          text={`No data found for the provided details. Do you still want to continue with the registration?`}
         />
       )}
       {accountExists && (

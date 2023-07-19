@@ -246,7 +246,7 @@ const EditQualificationDetails = ({
       <Grid container item spacing={2}>
         <Grid item xs={12}>
           <Typography component="div" variant="body1" color="inputTextColor">
-            Qualification From
+            Qualification Degree Completed From
           </Typography>
           <RadioGroup
             onChange={handleQualificationFrom}
@@ -275,7 +275,7 @@ const EditQualificationDetails = ({
         <Grid container item spacing={2} display="flex" alignItems="center" mb={2}>
           <Grid item xs="auto">
             <Typography color="grey2.lighter" variant="body1">
-              FMGE QUALIFICATION DETAILS
+              FMGE Qualification Details
             </Typography>
           </Grid>
           <Grid item xs>
@@ -292,8 +292,8 @@ const EditQualificationDetails = ({
             <TextField
               variant="outlined"
               name="RollNo"
-              label="Roll no."
-              placeholder="Enter roll no."
+              label="Roll Number"
+              placeholder="Enter roll number"
               required={true}
               fullWidth
               error={errors?.qualification?.[index]?.rollno?.message}
@@ -537,7 +537,7 @@ const EditQualificationDetails = ({
       <Grid container item spacing={2} display="flex" alignItems="center" mb={2}>
         <Grid item xs="auto">
           <Typography color="grey2.lighter" variant="body1" pt={2}>
-            {isAdditionalQualification ? '' : 'BASIC'} QUALIFICATION
+            {isAdditionalQualification ? '' : 'Basic'} Qualification
           </Typography>
         </Grid>
         <Grid item xs>
@@ -557,7 +557,7 @@ const EditQualificationDetails = ({
               }
               name="Qualification"
               placeholder={'Select degree'}
-              label="Name of the degree"
+              label="Degree Name"
               isAdditionalQualification={isAdditionalQualification}
               required={true}
               defaultValue={fields[index].qualification}
@@ -597,7 +597,7 @@ const EditQualificationDetails = ({
               fullWidth
               error={errors?.qualification?.[index]?.qualification?.message}
               name="Qualification"
-              label="Name of the degree"
+              label="Degree Name"
               placeholder={'Enter degree'}
               defaultValue={degree[0]?.id}
               value={degree[0]?.id}
@@ -637,7 +637,7 @@ const EditQualificationDetails = ({
             <Select
               fullWidth
               name="country"
-              label="Country name"
+              label="Country Name"
               placeholder={'Select country'}
               defaultValue={qualification?.country}
               required={true}
@@ -754,8 +754,11 @@ const EditQualificationDetails = ({
             <TextField
               fullWidth
               name="college"
-              label="Name of the college"
-              error={errors?.qualification?.[index]?.college?.message}
+              label="College Name"
+              error={
+                getValues()?.qualification?.[index]?.college === '' &&
+                errors?.qualification?.[index]?.college?.message
+              }
               placeholder="Enter college name"
               // defaultValue={getValues().qualification[index]?.college}
               defaultValue={qualification?.college}
@@ -786,7 +789,7 @@ const EditQualificationDetails = ({
               fullWidth
               error={errors?.qualification?.[index]?.college?.message}
               name="College"
-              label="Name of the college"
+              label="College Name"
               placeholder={'Select college'}
               defaultValue={getValues().qualification[index]?.college}
               required={true}
@@ -824,7 +827,7 @@ const EditQualificationDetails = ({
               fullWidth
               error={errors?.qualification?.[index]?.university?.message}
               name="University"
-              label="University"
+              label="University Name"
               placeholder="Enter university"
               defaultValue={getValues()?.qualification[index]?.university}
               required={true}
@@ -1021,11 +1024,12 @@ const EditQualificationDetails = ({
         <Grid item xs={12}>
           <UploadFile
             fileID={'qualification'}
+            name={'UploadFileName'}
             uploadFiles="single"
             sizeAllowed={5}
             fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
-            fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
-                 Maximum size allowed for the attachment is 5MB.`}
+            fileMessage={`PDF, PNG, JPG, JPEG file types are supported.
+                 Maximum size allowed is 5MB.`}
             fileData={qualificationFilesData[`qualification.${index}.files`] || []}
             setFileData={(files) => {
               handleQualificationFilesData(`qualification.${index}.files`, files);

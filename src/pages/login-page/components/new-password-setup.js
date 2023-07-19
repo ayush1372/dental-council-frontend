@@ -175,16 +175,16 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }
         width={otpData?.page === 'forgotPasswordPage' ? '100%' : '40%'}
       >
         <Typography variant="h4" component="div" textAlign="center" data-testid="Password">
-          {uniqueHpId ? `Welcome, ${uniqueHpId} ! ` : 'Welcome !'}
+          {uniqueHpId ? `Welcome, ${uniqueHpId}` : 'Welcome !'}
         </Typography>
-        <Typography variant="body1" component="div" textAlign="center" data-testid="Password">
+        {/* <Typography variant="body1" component="div" textAlign="center" data-testid="Password">
           {`Please set your password `}
-        </Typography>
+        </Typography> */}
 
         <Box>
           <Box mt={1}>
             <Typography variant="body1">
-              New Password
+              Set Password
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -230,7 +230,7 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }
                 required: 'Provide Confirm Password',
                 validate: (val) => {
                   if (watch('password') !== val) {
-                    return 'Entered passwords does not match';
+                    return 'Password does not match';
                   }
                 },
               })}
@@ -259,10 +259,10 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }
             setOpen={() => setShowSuccess(false)}
             text={
               collegeRegisterSuccess
-                ? 'Your password has been successfully created.'
+                ? 'Password has been set'
                 : uniqueHpId === undefined
-                ? 'Your password has been successfully created.'
-                : `Your password for ${uniqueHpId} has been successfully created.`
+                ? 'Password has been set'
+                : `Password has been set for "${uniqueHpId}"`
             }
             successRegistration={true}
             loginName={loginName}

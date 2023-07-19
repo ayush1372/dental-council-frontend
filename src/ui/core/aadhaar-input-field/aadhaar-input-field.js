@@ -48,7 +48,7 @@ export const AadhaarInputField = (props) => {
           })}
         >
           <SvgImageComponent color={'error'} icon={'error'} height={'16px'} />
-          {'Enter valid Aadhaar number'}
+          {'Enter a valid Aadhaar number'}
         </Typography>
       );
     } else if (
@@ -58,7 +58,7 @@ export const AadhaarInputField = (props) => {
       return (
         <Typography style={{ display: 'flex', alignItems: 'center' }} variant="body2" color="error">
           <SvgImageComponent color={'error'} icon={'error'} height={'16px'} />
-          {'Enter valid Aadhaar Number'}
+          {'Enter a valid Aadhaar number'}
         </Typography>
       );
     }
@@ -71,7 +71,7 @@ export const AadhaarInputField = (props) => {
           <Typography variant="subtitle2" component={'span'}>
             {'Enter Aadhaar Number'}
           </Typography>
-          <Typography variant="body2" color="error">
+          <Typography component="span" color="error">
             {'*'}
           </Typography>
         </Box>

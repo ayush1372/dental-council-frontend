@@ -31,13 +31,13 @@ export function MobileNumber(props) {
   };
   return (
     <StyledEngineProvider injectFirst>
-      <Box data-testid="mobile-number">
+      <Box data-testid="mobile-number" my={2}>
         <Box>
           <Typography variant="subtitle2" component={'span'}>
             {label}
           </Typography>
-          <Typography variant="body2" color="error">
-            {required ? ' *' : ''}
+          <Typography component="span" color="error">
+            {required ? '*' : ''}
           </Typography>
         </Box>
         <Box
@@ -62,13 +62,14 @@ export function MobileNumber(props) {
               '& .MuiInputBase-root.MuiOutlinedInput-root': {
                 paddingLeft: 0,
               },
+              marginRight: '16px',
             }}
             onKeyDown={(e) => ['e', 'E', '+', '-'].includes(e.key) && e.preventDefault()}
             {...register('mobileNo', {
-              required: 'Mobile number is required',
+              required: 'Please enter the mobile number',
               pattern: {
                 value: /^\d{10}$/i,
-                message: 'Please enter a valid 10-digit mobile number',
+                message: 'Please enter a valid 10 digit mobile number',
               },
             })}
             onInput={(e) => handleInput(e)}
@@ -90,12 +91,12 @@ export function MobileNumber(props) {
           {showVerify && (
             <Button
               variant="contained"
-              sx={{ height: '56px' }}
+              sx={{ height: '56px', minWidth: '120px' }}
               color="primary"
               onClick={verifyOnClick}
               disabled={otpSend || getValues().mobileNo.length < 10}
             >
-              GetOTP
+              Get OTP
             </Button>
           )}
           {showhint && (

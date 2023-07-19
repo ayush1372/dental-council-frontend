@@ -83,12 +83,13 @@ const CaptchaComponent = ({ captchaResult }) => {
                 />
               </Grid>
               <Grid item xs={2} alignItems="center" display="flex" justifyContent="center">
-                <RefreshIcon color="primary.dark" onClick={reloadCaptcha} cursor="pointer"/>
+                <RefreshIcon color="primary.dark" onClick={reloadCaptcha} cursor="pointer" />
               </Grid>
-              <Grid item xs={5} alignItems="center" display="flex" justifyContent="center">
+              <Grid item xs={5} alignItems="center" justifyContent="center">
                 <TextField
+                  fullWidth
                   name="anwser"
-                  placeholder="Type Answer"
+                  placeholder="Enter answer"
                   defaultValue={getValues().anwser}
                   required
                   {...register('anwser', {
@@ -101,12 +102,13 @@ const CaptchaComponent = ({ captchaResult }) => {
                   })}
                 />
               </Grid>
+
+              <Typography color="error.main" display={'flex'} justifyContent="flex-end" mr={12}>
+                {error && error.length > 0 && <span>{error}</span>}
+              </Typography>
             </Grid>
           )}
         </Box>
-        <Typography color="error.main">
-          {error && error.length > 0 && <span>{error}</span>}
-        </Typography>
       </Box>
     </>
   );

@@ -84,7 +84,7 @@ export const UploadFile = (props) => {
       const fileErrorExtension = !fileTypes.includes(e.target.files[0].type);
       const uploadFileError = fileSizeError || fileErrorExtension;
       if (uploadFileError) {
-        setUploadFileError(`File must be less than ${sizeAllowed}MB; ${fileMessage}`);
+        setUploadFileError(`${fileMessage}`);
       } else {
         // setIsDisable(true);
 
@@ -128,7 +128,8 @@ export const UploadFile = (props) => {
       <Box>
         {!isDigiLockcerVisible && (
           <Typography color="inputTextColor.main" fontWeight="500" component="div">
-            {uploadFileLabel} <Typography color="error"> *</Typography>
+            {uploadFileLabel}
+            <Typography color="error">*</Typography>
           </Typography>
         )}
 
@@ -142,9 +143,7 @@ export const UploadFile = (props) => {
               flexGrow="1"
             >
               {uploadFileLabel}
-              <Typography component="span" color="error">
-                *
-              </Typography>
+              <Typography color="error">*</Typography>
             </Typography>
             <Box
               component="div"
@@ -169,7 +168,7 @@ export const UploadFile = (props) => {
                 <UploadFileIcon color="primary" />
               </div>
               <div>
-                <span className={styles.browseFiles}>Drag and drop files,or </span>
+                <span className={styles.browseFiles}>Drag and drop files or click to </span>
                 <span className={styles.browseFiles}>browse</span>
               </div>
               <div className={styles.dragDropFiles}>{fileMessage}</div>
@@ -214,7 +213,7 @@ export const UploadFile = (props) => {
             <div className={styles.uploadFileArea}>
               {uploadFiles === 'single' && fileData.length === 1 && (
                 <Typography color="grey1.main" variant="caption">
-                  01 FILE UPLOADED
+                  FILE UPLOADED
                 </Typography>
               )}
               {uploadFiles === 'multiple' && fileData?.length > 0 && (

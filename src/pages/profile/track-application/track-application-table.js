@@ -91,13 +91,13 @@ function TrackAppicationTable({
       type: 'string',
     },
     {
-      title: 'Type of Application',
+      title: 'Application Type',
       name: 'application_type_name',
       sorting: true,
       type: 'string',
     },
 
-    { title: 'Date of Submission', name: 'created_at', sorting: true, type: 'date' },
+    { title: 'Submission Date', name: 'created_at', sorting: true, type: 'date' },
     {
       title: 'Current Status',
       name: 'doctor_status',
@@ -141,16 +141,16 @@ function TrackAppicationTable({
   };
 
   useEffect(() => {
-    trackData.sortBy = orderBy.name;
+    trackData.sortBy = orderBy?.name;
     trackData.sortOrder = order;
 
     if (
-      trackData.sortBy !== undefined &&
-      trackData.sortBy !== null &&
-      trackData.sortBy !== '' &&
-      trackData.sortOrder !== undefined &&
-      trackData.sortOrder !== null &&
-      trackData.sortOrder !== ''
+      trackData?.sortBy !== undefined &&
+      trackData?.sortBy !== null &&
+      trackData?.sortBy !== '' &&
+      trackData?.sortOrder !== undefined &&
+      trackData?.sortOrder !== null &&
+      trackData?.sortOrder !== ''
     )
       dispatch(getTableData(profileId, trackData));
   }, [order, orderBy, dispatch]);

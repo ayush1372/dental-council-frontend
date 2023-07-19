@@ -246,9 +246,9 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
       <Typography variant="h2" color="primary.dark" mb={1}>
         {loginName} Login
       </Typography>
-      <Typography variant="body1" color="textPrimary.main">
+      {/* <Typography variant="body1" color="textPrimary.main">
         Login via
-      </Typography>
+      </Typography> */}
 
       <Grid container xs={12} columnSpacing={1} mt={1}>
         <Grid item xs={12} sm={6}>
@@ -312,7 +312,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
               required
               fullWidth
               label={'Username'}
-              placeholder={'Please enter username'}
+              placeholder={'Enter username'}
               name={'userID'}
               error={errors.userID?.message}
               {...register('userID', {
@@ -321,10 +321,10 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
                   value: /^[\s.]*([^\s.][\s.]*){0,100}$/,
                   message: 'Please enter a valid username',
                 },
-                minLength: {
-                  value: 8,
-                  message: 'Should contains 8 character',
-                },
+                // minLength: {
+                //   value: 8,
+                //   message: 'Should contain 8 character',
+                // },
               })}
               inputProps={{
                 maxLength: 100,
@@ -337,7 +337,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
                 onClick={handleUserForgetUserName}
                 sx={{ cursor: 'pointer', display: 'contents' }}
               >
-                Forgot Username ?
+                Forgot Username?
               </Button>
             </Typography>
 
@@ -347,7 +347,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
               fullWidth
               label={'Password'}
               variant="outlined"
-              placeholder={'Please enter password'}
+              placeholder={'Enter password'}
               type={'Password'}
               inputProps={{ maxLength: 100 }}
               name={'password'}
@@ -362,7 +362,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
                 onClick={() => handleForgotPassword()}
                 sx={{ cursor: 'pointer', display: 'contents' }}
               >
-                Forgot Password ?
+                Forgot Password?
               </Button>
             </Typography>
           </>
@@ -370,7 +370,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
           <>
             <MobileNumber
               showhint={false}
-              placeholder="Enter Mobile Number"
+              placeholder="Enter mobile number"
               required
               register={register}
               getValues={getValues}

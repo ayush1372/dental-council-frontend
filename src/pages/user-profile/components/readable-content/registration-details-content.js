@@ -51,11 +51,11 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
   };
 
   return (
-    <Grid container spacing={2} mt={2}>
-      <Grid container item spacing={2} mt={1}>
+    <Grid container spacing={1} mt={1}>
+      <Grid container item spacing={1}>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
-            Registered with Council
+            Registered Council Name
             <Typography component="span" color="error.main">
               *
             </Typography>
@@ -72,8 +72,8 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
 
             {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
               data?.user_type === 3) &&
-              selectedAcademicStatus !== 'Approved' &&
-              dashboardTableDetails !== 'Approved' && (
+              dashboardTableDetails !== 'Approved' &&
+              selectedAcademicStatus === 'Pending' && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
                   color="primary"
@@ -104,8 +104,8 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
             </Typography>
             {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
               data?.user_type === 3) &&
-              selectedAcademicStatus !== 'Approved' &&
-              dashboardTableDetails !== 'Approved' && (
+              dashboardTableDetails !== 'Approved' &&
+              selectedAcademicStatus === 'Pending' && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
                   color="primary"
@@ -136,8 +136,8 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
             </Typography>
             {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
               data?.user_type === 3) &&
-              selectedAcademicStatus !== 'Approved' &&
-              dashboardTableDetails !== 'Approved' && (
+              dashboardTableDetails !== 'Approved' &&
+              selectedAcademicStatus === 'Pending' && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
                   color="primary"
@@ -151,10 +151,10 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
           </Grid>
         </Grid>
       </Grid>
-      <Grid container item spacing={2} mt={1}>
+      <Grid container item spacing={1}>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
-            Registration
+            Registration Type
             <Typography component="span" color="error.main">
               *
             </Typography>
@@ -170,8 +170,8 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
             </Typography>
             {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
               data?.user_type === 3) &&
-              selectedAcademicStatus !== 'Approved' &&
-              dashboardTableDetails !== 'Approved' && (
+              dashboardTableDetails !== 'Approved' &&
+              selectedAcademicStatus === 'Pending' && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
                   color="primary"
@@ -201,8 +201,8 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
             </Typography>
             {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
               data?.user_type === 3) &&
-              selectedAcademicStatus !== 'Approved' &&
-              dashboardTableDetails !== 'Approved' && (
+              dashboardTableDetails !== 'Approved' &&
+              selectedAcademicStatus === 'Pending' && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
                   color="primary"
@@ -244,8 +244,8 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
             </Typography>
             {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
               data?.user_type === 3) &&
-              selectedAcademicStatus !== 'Approved' &&
-              dashboardTableDetails !== 'Approved' && (
+              dashboardTableDetails !== 'Approved' &&
+              selectedAcademicStatus === 'Pending' && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
                   color="primary"

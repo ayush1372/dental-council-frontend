@@ -163,7 +163,7 @@ const CollegeEditProfile = (props) => {
               disabled
               required
               name={'CollegeName'}
-              placeholder={'Enter College Name'}
+              placeholder={'Enter name'}
               defaultValue={getCollegeDetail?.data?.name}
             />
           </Grid>
@@ -180,7 +180,7 @@ const CollegeEditProfile = (props) => {
               disabled
               name="CollegeId"
               required
-              placeholder={'Enter College Code'}
+              placeholder={'Enter code'}
               defaultValue={getCollegeDetail?.data?.college_code}
               error={errors.CollegePhoneNumber?.message}
             />
@@ -198,15 +198,15 @@ const CollegeEditProfile = (props) => {
               fullWidth
               name="MobileNumber"
               required
-              placeholder={'Enter Mobile Number'}
+              placeholder={'Enter mobile number'}
               defaultValue={getCollegeDetail?.data?.mobile_number}
               onInput={(e) => handleInput(e)}
               error={errors.MobileNumber?.message}
               {...register('MobileNumber', {
-                required: 'Mobile number is required',
+                required: 'Please enter mobile number',
                 pattern: {
                   value: /^\d{10}$/i,
-                  message: 'Provide a valid mobile number',
+                  message: 'Please enter a valid mobile number',
                 },
               })}
             />
@@ -224,11 +224,11 @@ const CollegeEditProfile = (props) => {
             <SearchableDropdown
               name="CouncilName"
               items={createEditFieldData(councilNames)}
-              placeholder="Select Registered Council"
+              placeholder="Select council"
               clearErrors={clearErrors}
               error={errors.CouncilName?.message}
               {...register('CouncilName', {
-                required: 'Council is required',
+                required: 'Please select council',
               })}
               value={{
                 id: getValues()?.CouncilID !== undefined ? getValues()?.CouncilID : '',
@@ -254,7 +254,7 @@ const CollegeEditProfile = (props) => {
               name="UniversityName"
               clearErrors={clearErrors}
               items={createEditFieldData(universitiesList?.data)}
-              placeholder="Select University"
+              placeholder="Select university"
               defaultValue={userData?.university_to}
               value={getUniversityData(getCollegeDetail?.data?.university_id)}
               onChange={(currentValue) => {
@@ -271,7 +271,7 @@ const CollegeEditProfile = (props) => {
             <TextField
               fullWidth
               name={'Website'}
-              placeholder={'Enter College Website'}
+              placeholder={'Enter website'}
               defaultValue={getCollegeDetail?.data?.website}
               {...register('Website', {})}
             />
@@ -292,11 +292,11 @@ const CollegeEditProfile = (props) => {
               rows={1}
               fullWidth
               name="AddressLine1"
-              placeholder="Enter Address line1"
+              placeholder="Enter address"
               defaultValue={getCollegeDetail?.data?.address_line1}
               error={errors.AddressLine1?.message}
               {...register('AddressLine1', {
-                required: 'Address line1 is required',
+                required: 'Please enter an address',
               })}
             />
           </Grid>
@@ -309,7 +309,7 @@ const CollegeEditProfile = (props) => {
             <TextField
               fullWidth
               name="AddressLine2"
-              placeholder={'Enter Address Line 2'}
+              placeholder={'Enter address'}
               defaultValue={getCollegeDetail?.data?.address_line2}
               error={errors.AddressLine2?.message}
               {...register('AddressLine2', {})}
@@ -330,7 +330,7 @@ const CollegeEditProfile = (props) => {
               name="StateName"
               items={createEditFieldData(statesList)}
               clearErrors={clearErrors}
-              placeholder={'Select State '}
+              placeholder={'Select state '}
               defaultValue={userData?.state_to}
               value={getStateData(getCollegeDetail?.data?.state_to)}
               onChange={(currentValue) => {
@@ -353,7 +353,7 @@ const CollegeEditProfile = (props) => {
                 fullWidth
                 name="District"
                 items={createEditFieldData(districtsList)}
-                placeholder="Select District"
+                placeholder="Select district"
                 defaultValue={userData?.district_to}
                 value={getDistrictNameData(
                   getCollegeDetail?.data?.district_id || userData?.district_to?.id
@@ -361,7 +361,7 @@ const CollegeEditProfile = (props) => {
                 clearErrors={clearErrors}
                 error={errors.District?.message}
                 {...register('District', {
-                  required: 'District name is required',
+                  required: 'Please select district',
                 })}
                 onChange={(currentValue) => {
                   onDistrictChange(currentValue);
@@ -384,11 +384,11 @@ const CollegeEditProfile = (props) => {
                 name="Area"
                 clearErrors={clearErrors}
                 items={createEditFieldData(subDistrictList)}
-                placeholder="Select Area"
+                placeholder="Select area"
                 defaultValue={userData?.villages_to}
                 error={errors.Area?.message}
                 {...register('Area', {
-                  required: 'Town name is required',
+                  required: 'Please select area',
                 })}
               />
             </Box>
@@ -408,14 +408,14 @@ const CollegeEditProfile = (props) => {
                 type="number"
                 name="Pincode"
                 required
-                placeholder={'Enter Pin Code'}
+                placeholder={'Enter pincode'}
                 defaultValue={getCollegeDetail?.data?.pin_code}
                 error={errors.Pincode?.message}
                 {...register('Pincode', {
-                  required: 'Pin Code is required',
+                  required: 'Please enter pincode',
                   pattern: {
                     value: /^[0-9]{6}$/i,
-                    message: 'Please enter valid pincode',
+                    message: 'Please enter a valid pincode',
                   },
                 })}
               />
@@ -428,7 +428,7 @@ const CollegeEditProfile = (props) => {
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={4}>
             <Typography variant="body1" color="inputTextColor.main">
-              College Email ID
+              Email
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -442,15 +442,15 @@ const CollegeEditProfile = (props) => {
               type="text"
               name="Email"
               required
-              placeholder={'Enter Email ID'}
+              placeholder={'Enter email'}
               defaultValue={getCollegeDetail?.data?.email_id}
               error={errors.Email?.message}
               {...register('Email', {
-                required: 'Email id is required',
+                required: 'Please enter email',
                 pattern: {
                   value:
                     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-                  message: 'Provide valid email id',
+                  message: 'Please enter a valid email',
                 },
               })}
             />

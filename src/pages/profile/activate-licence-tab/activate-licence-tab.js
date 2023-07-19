@@ -59,7 +59,7 @@ const ActivateLicence = () => {
   const dataHeader = [
     { title: 'S.No.', name: 'SNo', sorting: true, type: 'string' },
     {
-      title: 'IMR ID/ Registration No.',
+      title: 'Registration Number',
       name: 'registrationNo',
       sorting: true,
       type: 'string',
@@ -70,11 +70,11 @@ const ActivateLicence = () => {
       sorting: true,
       type: 'string',
     },
-    { title: 'Date of Submission', name: 'dateOfSubmission', sorting: true, type: 'date' },
+    { title: 'Submission Date', name: 'dateOfSubmission', sorting: true, type: 'date' },
 
-    { title: 'Reactivation from Date', name: 'reactivationFromDate', sorting: true, type: 'date' },
+    { title: 'Reactivation From Date', name: 'reactivationFromDate', sorting: true, type: 'date' },
     {
-      title: 'Type of Suspension',
+      title: 'Suspension Type',
       name: 'typeOfSuspension',
       sorting: true,
       type: 'string',
@@ -134,9 +134,9 @@ const ActivateLicence = () => {
   };
   useEffect(() => {
     if (
-      orderBy.name !== undefined &&
-      orderBy.name !== null &&
-      orderBy.name !== '' &&
+      orderBy?.name !== undefined &&
+      orderBy?.name !== null &&
+      orderBy?.name !== '' &&
       order !== undefined &&
       order !== null &&
       order !== ''
@@ -144,7 +144,7 @@ const ActivateLicence = () => {
       let ActivateLicenseListbody = {
         pageNo: 1,
         offset: 10,
-        sortBy: orderBy.name,
+        sortBy: orderBy?.name,
         sortOrder: order,
       };
       dispatch(getActivateLicenseList(ActivateLicenseListbody));
@@ -322,7 +322,7 @@ const ActivateLicence = () => {
         </>
       ) : (
         <Grid sx={{ m: 2 }} lg={12} md={12}>
-          <Grid mt={3}>
+          <Grid>
             <TableSearch
               data-testid="tab-heading"
               searchParams={searchParams}
@@ -346,7 +346,7 @@ const ActivateLicence = () => {
             <TablePagination
               rowsPerPageOptions={[]}
               component="div"
-              count={activateLicenseList?.data?.total_no_of_records}
+              count={activateLicenseList?.data?.total_no_of_records || 0}
               rowsPerPage={rowsPerPage}
               page={page}
               onPageChange={handleChangePage}

@@ -91,22 +91,22 @@ const NbeEditProfile = (props) => {
             fullWidth
             required
             name={'first_name'}
-            placeholder={'Enter Name'}
+            placeholder={'Enter name'}
             defaultValue={getValues().first_name}
             error={errors.first_name?.message}
             {...register('first_name', {
-              required: 'Name is required',
+              required: 'Please enter name',
 
               pattern: {
                 value: /^([a-zA-Z]+\s)*[a-zA-Z]+$/i,
-                message: 'Provide a Valid Name',
+                message: 'Please enter a valid name',
               },
             })}
           />
         </Grid>
         <Grid item xs={12} md={3}>
           <Typography variant="body3" color="grey.label">
-            {t('Phone Number')}
+            {t('Mobile Number')}
           </Typography>
           <Typography component="span" color="error.main">
             *
@@ -115,14 +115,14 @@ const NbeEditProfile = (props) => {
             fullWidth
             required
             name={'mobile_no'}
-            placeholder={'Enter Phone Number '}
+            placeholder={'Enter mobile number '}
             defaultValue={getValues().mobile_no}
             error={errors.mobile_no?.message}
             {...register('mobile_no', {
-              required: 'Enter Valid Phone Number',
+              required: 'Please enter mobile number',
               pattern: {
                 value: /^(\d{10})$/i,
-                message: 'Enter Valid Phone Number',
+                message: 'Please enter a valid mobile number',
               },
             })}
           />
@@ -130,7 +130,7 @@ const NbeEditProfile = (props) => {
 
         <Grid item xs={12} md={3}>
           <Typography variant="body3" color="grey.label">
-            {t('Email ID')}
+            {t('Email')}
           </Typography>
           <Typography component="span" color="error.main">
             *
@@ -140,16 +140,16 @@ const NbeEditProfile = (props) => {
             fullWidth
             required
             name={'email_id'}
-            placeholder={'Enter Email ID'}
+            placeholder={'Enter email'}
             defaultValue={getValues().email_id}
             error={errors.email_id?.message}
             {...register('email_id', {
-              required: 'Email ID is required',
+              required: 'Please enter email',
 
               pattern: {
                 value:
                   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-                message: 'Provide a Valid Email Id',
+                message: 'Please enter a valid email',
               },
             })}
           />

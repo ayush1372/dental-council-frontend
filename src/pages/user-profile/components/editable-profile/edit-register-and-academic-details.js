@@ -196,9 +196,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
         id: qualification_detail_response_tos[0]?.id
           ? qualification_detail_response_tos[0]?.id
           : '',
-        country: isInternational
-          ? countriesList.find((x) => x.id === q?.country)
-          : countriesList.find((x) => x.id === q?.country?.id),
+        country: countriesList.find((x) => x.id === q?.country?.id),
         course: coursesList.data?.find((x) => x.id === q?.qualification),
         university: isInternational
           ? { name: q?.university }
@@ -444,12 +442,12 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               color="tabHighlightedBackgroundColor.main"
               variant="h3"
             >
-              Registration Details*
+              Registration Details
             </Typography>
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
-              Registered with Council
+              Registered Council Name
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -586,9 +584,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           </Grid>
         </Grid>
         <Grid container item spacing={2} mt={1}>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={6}>
             <Typography variant="subtitle2" color="inputTextColor.main">
-              Is this Registration Permanent or Renewable?
+              Registration Type
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -653,8 +651,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               uploadFiles="single"
               sizeAllowed={5}
               fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
-              fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
-               Maximum size allowed for the attachment is 5MB.`}
+              fileMessage={`PDF, PNG, JPG, JPEG file types are supported.
+               Maximum size allowed is 5MB.`}
               fileData={registrationFileData}
               setFileData={setRegistrationFileData}
               uploadFileLabel="Upload Registration Certificate"
@@ -676,7 +674,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               color="tabHighlightedBackgroundColor.main"
               variant="h3"
             >
-              Qualification Details*
+              Qualification Details
             </Typography>
           </Grid>
         </Grid>

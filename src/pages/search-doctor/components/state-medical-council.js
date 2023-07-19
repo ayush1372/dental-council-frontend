@@ -1,4 +1,4 @@
-import { Grid, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -49,7 +49,7 @@ const StateMedicalCouncil = ({ setDoSearch, setSearchData, setScrollDown }) => {
   };
   return (
     <Grid container spacing={2} mt={2}>
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         <Typography
           bgcolor="grey1.light"
           p={1}
@@ -59,7 +59,7 @@ const StateMedicalCouncil = ({ setDoSearch, setSearchData, setScrollDown }) => {
         >
           Browse by state medical council*
         </Typography>
-      </Grid>
+      </Grid> */}
       <Grid item xs={8}>
         <Select
           sx={{
@@ -72,7 +72,7 @@ const StateMedicalCouncil = ({ setDoSearch, setSearchData, setScrollDown }) => {
           fullWidth
           error={errors.Statemedicalcouncil?.message}
           name={'Statemedicalcouncil'}
-          label=" State medical council"
+          label=" State Medical Council"
           placeholder="Select state medical council"
           defaultValue={getValues().Statemedicalcouncil}
           {...register('Statemedicalcouncil', {

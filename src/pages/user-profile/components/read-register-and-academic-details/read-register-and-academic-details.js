@@ -104,14 +104,19 @@ const ReadRegisterAndAcademicDetails = ({
     if (!isNaN(selectedDataIndex)) {
       let filteredQualificationDetails = [];
 
-      registrationDetails?.qualification_detail_response_tos?.map((element) => {
-        if (
-          element &&
-          (element?.is_verified === 1 ||
-            element?.request_id ===
-              dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]?.request_id)
-        ) {
-          filteredQualificationDetails.push(element);
+      registrationDetails?.qualification_detail_response_tos?.map((element, elementIndex) => {
+        if (element) {
+          if (
+            (element?.is_verified === 1 ||
+              element?.request_id ===
+                dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]?.request_id) &&
+            elementIndex !== 0
+          ) {
+            filteredQualificationDetails.push(element);
+          }
+          if (elementIndex === 0) {
+            filteredQualificationDetails.push(element);
+          }
           if (element?.is_verified !== 1) {
             setShowForwardButton(
               element?.qualification_from === 'India'
@@ -206,7 +211,7 @@ const ReadRegisterAndAcademicDetails = ({
           </Button>
           {(userActiveTab === 'dashboard' || userActiveTab === 'Activate Licence') &&
             (selectedAcademicStatus?.toUpperCase() === 'PENDING' ||
-              selectedAcademicStatus === 'Update Request Received' ||
+              selectedAcademicStatus === 'Pending' ||
               selectedAcademicStatus === 'College/NBE Verified' ||
               userActiveTab === 'Activate Licence' ||
               selectedAcademicStatus === 'Forwarded' ||
@@ -247,6 +252,7 @@ const ReadRegisterAndAcademicDetails = ({
                               {(((selectedAcademicStatus === 'College/NBE Verified' ||
                                 selectedAcademicStatus === 'Forwarded' ||
                                 userActiveTab === 'Activate Licence' ||
+                                selectedAcademicStatus !== 'Pending' ||
                                 !showForwardButton) &&
                                 (loggedInUserType === 'SMC' || loggedInUserType === 'NMC')) ||
                                 (loggedInUserType !== 'SMC' &&
@@ -279,7 +285,6 @@ const ReadRegisterAndAcademicDetails = ({
                               )}
                               {loggedInUserType === 'SMC' &&
                                 userActiveTab !== 'Activate Licence' &&
-                                showForwardButton &&
                                 selectedAcademicStatus !== 'Forwarded' &&
                                 selectedAcademicStatus !== 'College/NBE Verified' && (
                                   <Button
@@ -328,14 +333,6 @@ const ReadRegisterAndAcademicDetails = ({
                           </Button>
                         )}
                       <Menu {...bindMenu(popupState)}>
-                        {selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
-                          selectedAcademicStatus !== 'Permanent Suspension Requests Received' &&
-                          !!dashboardTableDetails &&
-                          dashboardTableDetails !== 'Approved' && (
-                            <MenuItem onClick={selectionChangeHandler} data-my-value={'raise'}>
-                              Raise a Query
-                            </MenuItem>
-                          )}
                         {loggedInUserType === 'SMC' &&
                           showForwardButton &&
                           userActiveTab !== 'Activate Licence' &&
@@ -344,29 +341,36 @@ const ReadRegisterAndAcademicDetails = ({
                               Verify
                             </MenuItem>
                           )}
+                        {selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
+                          selectedAcademicStatus !== 'Permanent Suspension Requests Received' &&
+                          !!dashboardTableDetails &&
+                          dashboardTableDetails !== 'Approved' && (
+                            <MenuItem onClick={selectionChangeHandler} data-my-value={'raise'}>
+                              Raise a Query
+                            </MenuItem>
+                          )}
+
                         <MenuItem onClick={selectionChangeHandler} data-my-value={'reject'}>
                           Reject
                         </MenuItem>
                         {personalDetails.nmr_id !== undefined &&
                           userActiveTab !== 'Activate Licence' &&
                           (loggedInUserType === 'NMC' ||
-                            (loggedInUserType === 'SMC' &&
-                              selectedAcademicStatus === 'Update Request Received')) &&
+                            (loggedInUserType === 'SMC' && selectedAcademicStatus === 'Pending')) &&
                           selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
                           selectedAcademicStatus !== 'Permanent Suspension Requests Received' && (
-                            <MenuItem onClick={selectionChangeHandler} data-my-value={'suspend'}>
-                              Permanent suspend
+                            <MenuItem onClick={selectionChangeHandler} data-my-value={'blacklist'}>
+                              Temporary Suspend
                             </MenuItem>
                           )}
                         {personalDetails.nmr_id !== undefined &&
                           userActiveTab !== 'Activate Licence' &&
                           (loggedInUserType === 'NMC' ||
-                            (loggedInUserType === 'SMC' &&
-                              selectedAcademicStatus === 'Update Request Received')) &&
+                            (loggedInUserType === 'SMC' && selectedAcademicStatus === 'Pending')) &&
                           selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
                           selectedAcademicStatus !== 'Permanent Suspension Requests Received' && (
-                            <MenuItem onClick={selectionChangeHandler} data-my-value={'blacklist'}>
-                              Temporary suspend
+                            <MenuItem onClick={selectionChangeHandler} data-my-value={'suspend'}>
+                              Permanent Suspend
                             </MenuItem>
                           )}
                       </Menu>

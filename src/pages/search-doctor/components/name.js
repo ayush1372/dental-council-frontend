@@ -49,7 +49,7 @@ const Name = ({ setDoSearch, setSearchData, setScrollDown }) => {
   };
   return (
     <Grid container spacing={2} mt={2}>
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         <Typography
           bgcolor="grey1.light"
           p={1}
@@ -59,11 +59,11 @@ const Name = ({ setDoSearch, setSearchData, setScrollDown }) => {
         >
           Browse by doctors name*
         </Typography>
-      </Grid>
+      </Grid> */}
       <Grid item xs={8}>
         <Grid>
           <Typography color="inputTextColor.main">
-            Doctor name
+            Doctor Name
             {/* <ErrorOutlineIcon
               fontSize="width12"
               sx={{

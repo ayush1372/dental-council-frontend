@@ -62,7 +62,7 @@ export default function ErrorModalPopup({
               display="flex"
               alignItems="felx-start"
             >
-              Info !
+              Info
             </Typography>
             <Typography
               display="flex"
@@ -103,7 +103,7 @@ export default function ErrorModalPopup({
                   color="warning"
                   onClick={handleCloseModal}
                 >
-                  Continue to login
+                  Login
                 </Button>
               </Box>
             ) : handleClose ? (

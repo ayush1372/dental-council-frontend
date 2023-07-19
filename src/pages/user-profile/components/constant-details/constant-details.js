@@ -1,6 +1,6 @@
-// import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useEffect, useState } from 'react';
 
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { Box, Dialog, Grid, Link, Typography, useTheme } from '@mui/material';
 import InputBase from '@mui/material/InputBase';
 import Paper from '@mui/material/Paper';
@@ -123,6 +123,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
           contact: type === 'sms' ? getValues().mobileNo : '',
           type: type === 'sms' ? 'sms' : '',
           user_type: loginData?.data?.user_type,
+          is_registration: true,
         };
         dispatch(sendNotificationOtp(sendOTPData))
           .then((response) => {
@@ -151,7 +152,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
           clearInterval(timer);
           setShowOTPPOPUp(false);
           setVerifyEmailID(false);
-          setEmailChange(false);
+          // setEmailChange(false); for future changes.
           return;
         }
         dispatch(getPersonalDetailsData(personalDetails?.hp_profile_id)).then((response) => {
@@ -170,7 +171,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
   }, [verifyEmailID]);
 
   return (
-    <Box bgcolor="white.main" py={3} mb={2} boxShadow="1">
+    <Box bgcolor="white.main" py={2} mb={2} boxShadow="1">
       <Grid container>
         <Grid
           borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
@@ -284,10 +285,10 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                     placeholder="Enter your mobile number"
                     defaultValue={getValues().mobileNo}
                     {...register('mobileNo', {
-                      required: 'Mobile number is required',
+                      required: 'Please enter the mobile number',
                       pattern: {
                         value: /^\d{10}$/i,
-                        message: 'Please enter a valid 10-digit mobile number',
+                        message: 'Please enter a valid 10 digit mobile number',
                       },
                     })}
                     onKeyDown={(e) => ['e', 'E', '+', '-'].includes(e.key) && e.preventDefault()}
@@ -301,14 +302,14 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                       handleSubmit(onSubmit('sms'));
                     }}
                   >
-                    Get Verified
+                    Verify
                   </Link>
                 </Paper>
 
                 {validDetails?.mobileNo && (
                   <Typography color="error" mt={1}>
                     {' '}
-                    Please enter a valid 10-digit mobile number
+                    Please enter a valid 10 digit mobile number
                   </Typography>
                 )}
               </Box>
@@ -317,19 +318,27 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                 <Typography variant="subtitle2" color="textPrimary.main" width="auto" mr={0.5}>
                   {mobileNumber && mobileNumber}
                 </Typography>
-                <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
-                <Typography
-                  component="span"
-                  variant="body2"
-                  sx={{ cursor: 'pointer' }}
-                  color="primary.main"
-                  ml={0.5}
-                  onClick={() => {
-                    setMobileNumberChange(true);
-                  }}
-                >
-                  Change
-                </Typography>
+                <Box>
+                  <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
+                  {/* <Typography variant="body2" color="primary.main" ml={0.5}>
+                    <span
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => {
+                        setMobileNumberChange(true);
+                      }}
+                    >
+                      Change
+                    </span>
+                  </Typography> */}
+                  <EditOutlinedIcon
+                    color={'primary'}
+                    fontSize={'inherit'}
+                    sx={{ ml: 0.5 }}
+                    onClick={() => {
+                      setMobileNumberChange(true);
+                    }}
+                  />
+                </Box>
               </>
             )}
           </Box>
@@ -337,6 +346,9 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
         <Grid item xs={12} sm={6} lg={4} mb={{ xs: 1, lg: 0 }} pl={2}>
           <Typography component="div" variant="body3" color="grey.label">
             Email
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
 
           <Box display="flex" alignItems="center">
@@ -345,15 +357,15 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                 <Paper display={'flex'} alignItems="center" sx={{ p: '2px 4px' }}>
                   <InputBase
                     sx={{ ml: 1, flex: 1 }}
-                    placeholder="Enter your email address"
+                    placeholder="Email"
                     name="email"
                     defaultValue={getValues().email}
                     {...register('email', {
-                      required: 'Email id is required',
+                      required: 'Email is required',
                       pattern: {
                         value:
                           /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-                        message: 'Enter Valid Email Address',
+                        message: 'Please enter a valid email',
                       },
                     })}
                     error={errors.email?.message}
@@ -368,13 +380,13 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                       handleSubmit(onSubmit('email'));
                     }}
                   >
-                    Get Verified
+                    Verify
                   </Link>
                 </Paper>
                 {validDetails?.email && (
                   <Typography color="error" mt={1}>
                     {''}
-                    Please enter a valid Email ID
+                    Please enter a valid email
                   </Typography>
                 )}
               </Box>
@@ -383,23 +395,22 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                 <Typography variant="subtitle2" color="textPrimary.main" width="auto" mr={0.5}>
                   {emailId ? emailId : ''}
                 </Typography>
-                {emailIdVerify ? (
-                  <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
-                ) : (
-                  ''
-                )}
-                <Typography
-                  sx={{ cursor: 'pointer' }}
-                  component="span"
-                  variant="body2"
-                  color="primary.main"
-                  ml={0.5}
-                  onClick={() => {
-                    emailIdVerify ? setEmailChange(true) : onSubmit('email');
-                  }}
-                >
-                  {emailIdVerify ? 'Change' : 'Get Verified'}
-                </Typography>
+                <Box>
+                  {emailIdVerify ? (
+                    <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
+                  ) : (
+                    ' '
+                  )}
+
+                  <EditOutlinedIcon
+                    color={'primary'}
+                    fontSize={'inherit'}
+                    sx={{ mr: 0.5, cursor: 'pointer' }}
+                    onClick={() => {
+                      setEmailChange(true);
+                    }}
+                  />
+                </Box>
               </>
             )}
           </Box>

@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
-import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
+import { createSelectFieldData, scrollToTop } from '../../../../helpers/functions/common-functions';
 import {
   getCitiesList,
   getDistrictList,
@@ -22,6 +22,7 @@ import { getPersonalDetails } from '../../../../store/reducers/doctor-user-profi
 import { Checkbox } from '../../../../ui/core';
 import { DatePicker, RadioGroup, Select, TextField } from '../../../../ui/core';
 import successToast from '../../../../ui/core/toaster';
+import { EmailRegexValidation } from '../../../../utilities/common-validations';
 
 const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValidDetails }) => {
   const { t } = useTranslation();
@@ -410,15 +411,15 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
   };
 
   async function onHandleSave() {
-    // CS-2173 Commenting for future use
-    // if (!email) {
-    //   setValidDetails({ ...validDetails, email: true });
-    //   window.scrollTo({
-    //     top: 0,
-    //     behavior: 'smooth',
-    //   });
-    //   return;
-    // }
+    if (document?.getElementsByName('email')[0]?.value !== undefined) {
+      if (
+        !EmailRegexValidation?.pattern?.value?.test(document.getElementsByName('email')[0]?.value)
+      ) {
+        setValidDetails({ ...validDetails, email: true });
+        scrollToTop();
+        return;
+      }
+    }
     const {
       MiddleName,
       LastName,
@@ -459,6 +460,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
     doctorProfileValues.personal_details.country_nationality =
       nationalities.find((x) => x.id === Nationality) || {};
     doctorProfileValues.personal_details.gender = Gender;
+    doctorProfileValues.personal_details.email = EmailAddress;
 
     doctorProfileValues.communication_address.pincode = PostalCode;
     doctorProfileValues.communication_address.address_line1 = Address;
@@ -524,7 +526,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
               color="tabHighlightedBackgroundColor.main"
               variant="h3"
             >
-              Personal Details*
+              Personal Details
             </Typography>
           </Grid>
           {false && (
@@ -551,7 +553,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
-              Name
+              Full Name
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -582,12 +584,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
-              Father&apos;s Name
+              Father Name
             </Typography>
             <TextField
               variant="outlined"
               name={'FatherName'}
-              placeholder="Father's name"
+              placeholder="Father name"
               fullWidth
               defaultValue={getValues().FatherName}
               {...register('FatherName', {
@@ -618,12 +620,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
-              Mother&apos;s Name
+              Mother Name
             </Typography>
             <TextField
               variant="outlined"
               name={'MotherName'}
-              placeholder="Mother's name"
+              placeholder="Mother name"
               fullWidth
               defaultValue={getValues().MotherName}
               {...register('MotherName', {
@@ -693,7 +695,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
-              Select Nationality
+              Nationality
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -875,10 +877,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 color="tabHighlightedBackgroundColor.main"
                 variant="h3"
               >
-                Communication Address*
+                Communication Address
               </Typography>
             </Grid>
-            <Box p={2} display="flex" alignItems="center">
+            <Box p={2} display="flex" justifyContent="center">
               <Checkbox
                 value={isSameAddress}
                 defaultChecked={
@@ -891,7 +893,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 disabled={work_flow_status_id === 3 ? true : false}
               />
               <Typography component="div" mt={1} variant="body7" color="textPrimary.main">
-                Is the communication address same as your address as per your KYC?
+                Click if communication address is same as KYC address.
               </Typography>
             </Box>
             <Grid container item columnSpacing={2}>
@@ -1450,7 +1452,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                     },
                     minLength: {
                       value: 6,
-                      message: 'Should contains 6 digits',
+                      message: 'Please enter a valid 6 digit pincode',
                     },
                     maxLength: {
                       value: 6,

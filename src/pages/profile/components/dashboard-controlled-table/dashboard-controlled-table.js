@@ -58,37 +58,37 @@ function DashboardControlledTable(props) {
       type: 'string',
     },
     {
-      title: 'IMR ID/ Registration No.',
+      title: 'Registration Number',
       name: 'registrationNo',
       sorting: true,
       type: 'string',
     },
     {
-      title: 'Name of Applicant',
+      title: 'Applicant Name',
       name: 'nameofApplicant',
       sorting: true,
       type: 'string',
     },
-    { title: 'Name of State Council', name: 'nameofStateCouncil', sorting: true, type: 'string' },
+    { title: 'State Medical Council', name: 'nameofStateCouncil', sorting: true, type: 'string' },
     {
-      title: 'Council Verification Status',
+      title: 'Council Status',
       name: 'councilVerificationStatus',
       sorting: true,
       type: 'string',
     },
     {
-      title: 'College/NBE Verification Status',
+      title: 'College/NBE Status',
       name: 'collegeVerificationStatus',
       sorting: true,
       type: 'string',
     },
     {
-      title: 'NMC Verification Status',
+      title: 'NMC Status',
       name: 'NMCVerificationStatus',
       sorting: true,
       type: 'string',
     },
-    { title: 'Date of Submission', name: 'dateofSubmission', sorting: true, type: 'date' },
+    { title: 'Submission Date', name: 'dateofSubmission', sorting: true, type: 'date' },
     { title: 'Pendency (in days)', name: 'pendency', sorting: true, type: 'string' },
     { title: 'View', name: 'view', sorting: false, type: 'string' },
   ];
@@ -109,9 +109,9 @@ function DashboardControlledTable(props) {
   };
   useEffect(() => {
     if (
-      orderBy.name !== undefined &&
-      orderBy.name !== null &&
-      orderBy.name !== '' &&
+      orderBy?.name !== undefined &&
+      orderBy?.name !== null &&
+      orderBy?.name !== '' &&
       order !== undefined &&
       order !== null &&
       order !== ''
@@ -131,7 +131,7 @@ function DashboardControlledTable(props) {
         value: searchQueryParams ? searchQueryParams?.value : '',
         page_no: 1,
         offset: 10,
-        sortBy: orderBy.name,
+        sortBy: orderBy?.name,
         sortOrder: order,
       };
 
@@ -140,10 +140,12 @@ function DashboardControlledTable(props) {
   }, [order, orderBy, dispatch]);
 
   const newRowsData = dashboardTableDetails?.data?.dashboard_tolist?.map((application, index) => {
-    const formattedDate = moment(application?.created_at).format('DD-MM-YYYY');
     const capitalize = (str) => {
       if (!str) {
         return '';
+      }
+      if (str === 'College/NBE Verified') {
+        return 'College/NBE verified';
       }
       return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
     };
@@ -174,7 +176,7 @@ function DashboardControlledTable(props) {
             : capitalize(application?.college_status),
       },
       { type: 'NMCVerificationStatus', value: capitalize(application?.nmc_status) },
-      { type: 'dateofSubmission', value: formattedDate },
+      { type: 'dateofSubmission', value: moment(application?.created_at).format('DD-MM-YYYY') },
       { type: 'pendency', value: application?.pendency },
       { type: 'view', value: 'View', onClickCallback: viewCallback },
       { type: 'profileID', value: application?.hp_profile_id }
@@ -219,7 +221,7 @@ function DashboardControlledTable(props) {
     };
     dispatch(
       setSelectedAcademicStatus(
-        props?.selectedCardData?.name === 'Update Request Received'
+        props?.selectedCardData?.name === 'Pending'
           ? props?.selectedCardData?.name
           : props?.selectedCardData?.responseKey
       )
@@ -276,7 +278,7 @@ function DashboardControlledTable(props) {
         <TablePagination
           rowsPerPageOptions={[]}
           component="div"
-          count={dashboardTableDetails?.data?.total_no_of_records}
+          count={dashboardTableDetails?.data?.total_no_of_records || 0}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}

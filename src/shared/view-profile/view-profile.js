@@ -17,6 +17,10 @@ export function ViewProfile(props) {
   const emailId = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.personal_details?.email
   );
+  const emailIconVerified = useSelector(
+    (state) => state?.doctorUserProfileReducer?.personalDetails?.email_verified
+  );
+
   const mobileNumber = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.personal_details?.mobile
   );
@@ -37,7 +41,7 @@ export function ViewProfile(props) {
         </Typography>
       </Box>
 
-      <Box bgcolor="white.main" py={3} mb={2} boxShadow="1">
+      <Box bgcolor="white.main" py={2} mb={2} boxShadow="1">
         <Grid container>
           <Grid
             borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
@@ -90,7 +94,7 @@ export function ViewProfile(props) {
             {mobileNumber ? (
               <Typography variant="subtitle2" color="textPrimary.main">
                 {mobileNumber}
-                <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
+                <img width="15px" height="15px" src={IconVerified} alt="verified icon" />
 
                 {loggedInUserType === 'Doctor' ? (
                   <Typography component="span" variant="subtitle2" color="primary.main" ml={1}>
@@ -118,7 +122,9 @@ export function ViewProfile(props) {
                   sx={{ wordBreak: 'break-word' }}
                 >
                   {emailId}
-                  <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
+                  {emailIconVerified === true && (
+                    <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
+                  )}
                 </Typography>
               ) : (
                 <Typography variant="subtitle2" color="textPrimary.main">

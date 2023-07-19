@@ -259,7 +259,7 @@ const ProfileConsent = ({
           variant="body1"
           mb={2}
         >
-          Consent
+          Consent Collection
           <Typography component="span" color="error.main">
             *
           </Typography>
@@ -313,7 +313,7 @@ const ProfileConsent = ({
               error={errors.HPR?.message}
             />
             <Typography component="div" variant="body7">
-              Save my time, share my details with HPR
+              Save my time and share my details with HPR
             </Typography>
           </Grid>
           <Grid item sx="auto" display="flex" alignItems="center">
@@ -355,53 +355,36 @@ const ProfileConsent = ({
               Back
             </Button>
           </Grid>
-          {/* <Grid item xs={12} md="auto" display="flex" justifyContent="flex-end">
-            <Button
-              variant="outlined"
-              color="secondary"
-              sx={{
-                margin: {
-                  xs: '5px 0',
-                  md: '0',
-                },
-                width: {
-                  xs: '100%',
-                  md: 'fit-content',
-                },
-              }}
+
+          {loggedInUserType !== 'SMC' && (
+            <Grid
+              item
+              xs={12}
+              md="auto"
+              ml={{ xs: 0, md: 1 }}
+              display="flex"
+              justifyContent="flex-end"
             >
-              Print & Save as PDF
-            </Button>
-          </Grid> */}
+              <Button
+                onClick={handleSubmit(eSignHandler)}
+                color="secondary"
+                variant="contained"
+                sx={{
+                  margin: {
+                    xs: '5px 0',
+                    md: '0',
+                  },
+                  width: {
+                    xs: '100%',
+                    md: 'fit-content',
+                  },
+                }}
+              >
+                E-sign Profile
+              </Button>
+            </Grid>
+          )}
         </Grid>
-        {loggedInUserType !== 'SMC' && (
-          <Grid
-            item
-            xs={12}
-            md="auto"
-            ml={{ xs: 0, md: 1 }}
-            display="flex"
-            justifyContent="flex-end"
-          >
-            <Button
-              onClick={handleSubmit(eSignHandler)}
-              color="secondary"
-              variant="contained"
-              sx={{
-                margin: {
-                  xs: '5px 0',
-                  md: '0',
-                },
-                width: {
-                  xs: '100%',
-                  md: 'fit-content',
-                },
-              }}
-            >
-              E-sign Profile
-            </Button>
-          </Grid>
-        )}
         {/* <Grid item xs={12} md="auto" ml={{ xs: 0, md: 1 }} display="flex" justifyContent="flex-end">
           <Button
             color="secondary"

@@ -94,13 +94,13 @@ export default function Dashboard() {
   );
 
   let dashboard = {
-    'Registration Request': registrationRequestData,
-    'Updation Request': updationRequestData,
+    'Registration Requests': registrationRequestData,
+    'Additional Qualification Requests': updationRequestData,
   };
 
   if (loggedInUserType === 'NMC' || loggedInUserType === 'SMC') {
     dashboard = Object.assign(dashboard, {
-      'Suspension Request': suspensionRequestData,
+      'Suspension Requests': suspensionRequestData,
     });
   }
   useEffect(() => {
@@ -238,13 +238,13 @@ export default function Dashboard() {
     if (item?.name?.includes('Pending') || item?.name?.includes('Received')) {
       return 'Total number of pending applications';
     } else if (item?.name === 'College/NBE Verified') {
-      return 'Total number of college verified applications';
+      return 'Total number of verified applications by College/NBE';
     } else if (item?.name?.includes('Approved')) {
       return 'Total number of approved applications';
     } else if (item?.name?.includes('Verified') || item?.name?.includes('Approved')) {
       return 'Total number of verified applications';
     } else if (item?.name?.includes('Raised')) {
-      return 'Total number of query raised on applications';
+      return 'Total number of query raised applications';
     } else if (item?.name?.includes('Forwarded')) {
       return 'Total number of forwarded applications';
     } else if (item?.name?.includes('Rejected') || item?.name?.includes('Blacklisted')) {
@@ -308,7 +308,7 @@ export default function Dashboard() {
                   component="div"
                   display="flex"
                   alignItems="center"
-                  gap={2}
+                  gap={3}
                   flex="1 0 100%"
                 >
                   <img
@@ -316,7 +316,7 @@ export default function Dashboard() {
                     src={
                       element[0].includes('Registration')
                         ? RegistrationRequest
-                        : element[0].includes('Updation')
+                        : element[0].includes('Additional')
                         ? UpdationRequest
                         : element[0].includes('Suspension')
                         ? SuspensionRequest
@@ -326,7 +326,7 @@ export default function Dashboard() {
                   />
                   {element[0]}
                 </Typography>
-                {(element[0].includes('Registration') || element[0].includes('Updation')) &&
+                {(element[0].includes('Registration') || element[0].includes('Additional')) &&
                 loggedInUserType === 'SMC' ? (
                   <Grid container display="flex" flexWrap="wrap" gap={{ xs: 1, xl: 2 }}>
                     <Grid
@@ -341,7 +341,7 @@ export default function Dashboard() {
                       }}
                     >
                       <Typography variant="body1">
-                        Total Pending Requests {element[1][1]?.value + element[1][2]?.value}
+                        Total Pending Requests - {element[1][1]?.value + element[1][2]?.value}
                       </Typography>
                     </Grid>
                   </Grid>
@@ -363,7 +363,7 @@ export default function Dashboard() {
                             alignItems="center"
                             mb={2}
                           >
-                            <Typography color="inputFocusColor.main" variant="h2">
+                            <Typography color="inputFocusColor.main" variant="h1">
                               {item.value}
                             </Typography>
                             <img
@@ -375,18 +375,17 @@ export default function Dashboard() {
                           <Typography
                             color="primary"
                             component="div"
-                            fontSize={{ xs: '12px', sm: '12px', md: '14px', lg: '16px' }}
-                            lineHeight={{ xs: '14px', sm: '16px', md: '18px', lg: '24px' }}
+                            fontSize={{ xs: '10px', sm: '12px', md: '12px', lg: '14px' }}
+                            lineHeight={{ xs: '14px', sm: '16px', md: '18px', lg: '18px' }}
                             mb={1}
                           >
                             {item.name}
                           </Typography>
                           <Typography
-                            color="primary"
                             component="div"
                             fontWeight="400"
-                            fontSize={{ xs: '12px', sm: '12px', md: '12px', lg: '16px' }}
-                            lineHeight={{ xs: '14px', sm: '16px', md: '16px', lg: '24px' }}
+                            fontSize={{ xs: '9px', sm: '11px', md: '11px', lg: '12px' }}
+                            lineHeight={{ xs: '14px', sm: '16px', md: '16px', lg: '16px' }}
                           >
                             {getTextLabelIcons(item)}
                           </Typography>

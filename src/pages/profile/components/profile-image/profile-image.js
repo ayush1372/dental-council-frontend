@@ -225,7 +225,7 @@ export default function ProfileImage(props) {
               item
             >
               <Typography variant="subtitle2" color="grey.label" sx={{ mr: '5px' }}>
-                NMR ID :
+                NMR ID:
               </Typography>
               <Typography variant="subtitle2" color="textPrimary.main">
                 {nmrIdData ? nmrIdData : ''}
@@ -242,11 +242,9 @@ export default function ProfileImage(props) {
                   textAlign="center"
                   display="inline-flex"
                   variant="body2"
+                  sx={{ whiteSpace: 'break-spaces' }}
                 >
-                  Your profile is set to suspend mode.
-                  <br />
-                  You will not be able to perform actions <br />
-                  on the profile.
+                  Your profile is suspended and you will not be able to perform any action.
                 </Typography>
               </Grid>
               <Grid item xs={12} textAlign="center" mt={1} mr={2}>
@@ -279,13 +277,16 @@ export default function ProfileImage(props) {
                     setShowSuccessPopup(false);
                   }}
                 >
-                  Reactivate License
+                  Reactivate Licence
                 </Link>
               </Grid>
             </Grid>
           )}
           {personalDetails?.esign_status !== 1 &&
-            (doctorEsignStatus === 2 || personalDetails?.esign_status === 2) &&
+            (doctorEsignStatus === 2 ||
+              doctorEsignStatus === 3 ||
+              personalDetails?.esign_status === 2 ||
+              personalDetails?.esign_status === 3) &&
             loginData?.data?.hp_profile_status_id !== 7 && (
               <Grid container mt={1}>
                 <Grid item>
@@ -294,29 +295,9 @@ export default function ProfileImage(props) {
                     component="div"
                     display="inline-flex"
                     variant="body2"
+                    sx={{ whiteSpace: 'break-spaces' }}
                   >
-                    You have done E-sign with different
-                    <br /> account. Please verify and re-do the <br />
-                    E-sign process correctly.
-                  </Typography>
-                </Grid>
-              </Grid>
-            )}
-          {personalDetails?.esign_status !== 1 &&
-            (doctorEsignStatus === 3 || personalDetails?.esign_status === 3) &&
-            loginData?.data?.hp_profile_status_id !== 7 && (
-              <Grid container mt={1}>
-                <Grid item>
-                  <Typography
-                    color="suspendAlert.dark"
-                    component="div"
-                    display="inline-flex"
-                    variant="body2"
-                  >
-                    Your profile has to complete E-sign <br />
-                    process. You will not be able to perform <br /> actions on the profile untill
-                    you <br />
-                    complete E-sign process.
+                    Please complete E-sign process to perform further actions.
                   </Typography>
                 </Grid>
               </Grid>

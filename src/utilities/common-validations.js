@@ -69,26 +69,26 @@ export const getMaskedMobileNumber = (mobileNumber) => {
 };
 
 export const PasswordRegexValidation = {
-  required: 'Enter valid  Password',
-  pattern: {
-    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&])[A-Za-z\d@$!%*?#&]{8,100}$/,
-    message:
-      'Create valid password with eight characters including an uppercase, a lowercase, a number and a special character.',
-  },
+  required: 'Enter valid  password',
+  // pattern: {
+  //   value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&])[A-Za-z\d@$!%*?#&]{8,100}$/,
+  //   message:
+  //     'Password should contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character.',
+  // },
 };
 
 export const LoginPasswordRegexValidation = {
-  required: 'Please enter Password',
-  pattern: {
-    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&])[A-Za-z\d@$!%*?#&]{8,100}$/,
-    message: 'Enter correct password',
-  },
+  required: 'Please enter password',
+  // pattern: {
+  //   value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&])[A-Za-z\d@$!%*?#&]{8,100}$/,
+  //   message: 'Please enter a valid password',
+  // },
 };
 export const AadharRegexValidation = {
-  required: 'Enter a valid aadhaar number',
+  required: 'Enter a valid Aadhaar number',
   pattern: {
     value: /^[0-9]{4}$/,
-    message: 'Provide a valid aadhaar number',
+    message: 'Please enter a valid Aadhaar number',
   },
 };
 
@@ -118,10 +118,10 @@ export const PostalCodeRegexValidation = {
 };
 
 export const MobileNumberRegexValidation = {
-  required: 'Mobile Number is required',
+  required: 'Please enter the mobile number',
   pattern: {
     value: /^\d{10}$/i,
-    message: 'Please enter a valid 10-digit mobile number',
+    message: 'Please enter a valid 10 digit mobile number',
   },
 };
 

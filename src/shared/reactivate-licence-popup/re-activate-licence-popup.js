@@ -170,7 +170,7 @@ export default function ReactivateLicencePopup(props) {
               uploadFiles="single"
               sizeAllowed={5}
               fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
-              fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
+              fileMessage={`PDF, PNG, JPG, JPEG file types are supported.
                Maximum size allowed for the attachment is 5MB.`}
               fileData={reActivateFileData}
               setFileData={setReActivateFileData}

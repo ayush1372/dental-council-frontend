@@ -95,14 +95,14 @@ const SmcEditProfile = (props) => {
             fullWidth
             required
             name={'first_name'}
-            placeholder={'Enter Name'}
+            placeholder={'Enter name'}
             defaultValue={getValues().first_name}
             error={errors.first_name?.message}
             {...register('first_name', {
-              required: ' Name is required',
+              required: 'Please enter name',
               pattern: {
                 value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
-                message: 'Enter Valid Name',
+                message: 'Please enter a valid name',
               },
             })}
           />
@@ -110,7 +110,7 @@ const SmcEditProfile = (props) => {
 
         <Grid item xs={12} md={4}>
           <Typography variant="body1" color="inputTextColor.main">
-            Phone Number
+            Mobile Number
           </Typography>
           <Typography component="span" color="error.main">
             *
@@ -119,14 +119,14 @@ const SmcEditProfile = (props) => {
             fullWidth
             required
             name={'mobile_no'}
-            placeholder={'Enter Phone Number '}
+            placeholder={'Enter mobile number '}
             defaultValue={getValues().mobile_no}
             error={errors.mobile_no?.message}
             {...register('mobile_no', {
-              required: 'Phone Number is required',
+              required: 'Please enter mobile number',
               pattern: {
                 value: /^[0-9]{10}$/i,
-                message: 'Enter  Valid Phone Number',
+                message: 'Please enter a valid mobile number',
               },
             })}
           />
@@ -134,7 +134,7 @@ const SmcEditProfile = (props) => {
 
         <Grid item xs={12} md={4}>
           <Typography variant="body1" color="inputTextColor.main">
-            Email ID
+            Email
           </Typography>
           <Typography component="span" color="error.main">
             *
@@ -144,15 +144,15 @@ const SmcEditProfile = (props) => {
             fullWidth
             required
             name={'email_id'}
-            placeholder={'Enter Email ID'}
+            placeholder={'Enter email'}
             defaultValue={getValues().email_id}
             error={errors.email_id?.message}
             {...register('email_id', {
-              required: 'Email ID is required',
+              required: 'Please enter email',
               pattern: {
                 value:
                   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-                message: 'Provide a Valid Email Id',
+                message: 'Please enter a valid email',
               },
             })}
           />
@@ -172,12 +172,12 @@ const SmcEditProfile = (props) => {
             items={createEditFieldData(councilNames)}
             value={getValues().RegistrationCouncil}
             defaultValue={getValues().RegistrationCouncil}
-            placeholder="Select Your Registration Council"
+            placeholder="Select council"
             clearErrors={clearErrors}
             error={errors.RegistrationCouncil?.message}
             disabled={true}
             {...register('RegistrationCouncil', {
-              required: 'Registration Council is required',
+              required: 'Please select council',
             })}
             onChange={(currentValue) => {
               setValue('RegistrationCouncil', {

@@ -35,7 +35,7 @@ function createData(
   };
 }
 
-function FacilityDetailsTable({ declaredFacilityData, trackStatusData, currentWorkDetails }) {
+function FacilityDetailsTable({ declaredFacilityData, currentWorkDetails }) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState({});
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -148,8 +148,6 @@ function FacilityDetailsTable({ declaredFacilityData, trackStatusData, currentWo
   return (
     <>
       <Grid sx={{ mx: 2 }} p={'0px'}>
-        {/* <TableSearch trackApplication /> */}
-
         <GenericTable
           order={order}
           orderBy={orderBy}
@@ -159,15 +157,13 @@ function FacilityDetailsTable({ declaredFacilityData, trackStatusData, currentWo
           rowsPerPage={rowsPerPage}
           page={page}
         />
-
         <Box>
           <TablePagination
             rowsPerPageOptions={[]}
             component="div"
-            count={trackStatusData?.total_no_of_records || 0}
+            count={newRowsData?.length || 0}
             rowsPerPage={rowsPerPage}
             page={page}
-            //   onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
             sx={{
               display: 'flex',
@@ -201,10 +197,22 @@ function FacilityDetailsTable({ declaredFacilityData, trackStatusData, currentWo
           </Box>
           <Box mt={2}>
             <Typography color="textPrimary.main">
-              Are you sure you want to delink this facilty?
+              Are you sure you want to delete this facilty?
             </Typography>
           </Box>
           <Box display={'flex'} justifyContent={'flex-end'} mt={1}>
+            <Button
+              onClick={() => {
+                facilityDeLinkHandler(selectedRowIndex);
+              }}
+              color="secondary"
+              variant="contained"
+              sx={{
+                margin: '0 4px',
+              }}
+            >
+              Yes
+            </Button>
             <Button
               onClick={() => {
                 setConfirmationModal(false);
@@ -217,18 +225,6 @@ function FacilityDetailsTable({ declaredFacilityData, trackStatusData, currentWo
               }}
             >
               No
-            </Button>
-            <Button
-              onClick={() => {
-                facilityDeLinkHandler(selectedRowIndex);
-              }}
-              color="secondary"
-              variant="contained"
-              sx={{
-                margin: '0 4px',
-              }}
-            >
-              Yes
             </Button>
           </Box>
         </Box>

@@ -270,12 +270,12 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
       <Typography variant="h2" color="textPrimary.main" mb={2}>
         {loginName} Login
       </Typography>
-      <Typography variant="body1" color="textPrimary.main">
+      {/* <Typography variant="body1" color="textPrimary.main">
         Login via
-      </Typography>
+      </Typography> */}
 
       <Grid container xs={12} columnSpacing={1} mt={1}>
-        <Grid item xs={12} sm={4.5}>
+        <Grid item xs={12} sm={4}>
           <Button
             fullWidth
             variant="outlined"
@@ -301,7 +301,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
             </Typography>
           </Button>
         </Grid>
-        <Grid item xs={12} sm={3.5}>
+        <Grid item xs={12} sm={4}>
           <Button
             fullWidth
             variant="outlined"
@@ -361,14 +361,14 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
               required
               disabled={otpFormEnabled}
               label={'NMR ID'}
-              placeholder={'Please enter NMR ID'}
+              placeholder={'Enter NMR ID'}
               inputProps={{ maxLength: 12 }}
               name={'nmrID'}
               {...register('nmrID', {
-                required: 'Please Enter an NMR ID',
+                required: 'Please enter a valid NMR ID',
                 pattern: {
                   value: /^\d{12}$/,
-                  message: 'Please Enter a valid NMR ID',
+                  message: 'Please enter a valid NMR ID',
                 },
               })}
               min={12}
@@ -406,8 +406,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
             {otpFormEnabled && (
               <Box mt={2}>
                 <Typography variant="body1">
-                  Please enter the OTP sent on your Registered Mobile Number {maskedMobileNumber}{' '}
-                  linked with your NMR ID.
+                  OTP sent to registered mobile number ending with{maskedMobileNumber}
                 </Typography>
                 {otpform}
               </Box>
@@ -420,7 +419,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
               required
               fullWidth
               label={'Username'}
-              placeholder={'Please enter username'}
+              placeholder={'Enter username'}
               name={'userID'}
               error={errors.userID?.message}
               {...register('userID', {
@@ -431,7 +430,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
                 },
                 minLength: {
                   value: 2,
-                  message: 'Enter valid username',
+                  message: 'Please enter a valid username',
                 },
               })}
               inputProps={{
@@ -445,7 +444,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
                 onClick={handleUserForgetUserName}
                 sx={{ cursor: 'pointer', display: 'contents' }}
               >
-                Forgot Username ?
+                Forgot Username?
               </Button>
             </Typography>
             <TextField
@@ -456,7 +455,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
               type="Password"
               name="password"
               required="true"
-              placeholder={'Please enter password'}
+              placeholder={'Enter password'}
               error={errors.password?.message}
               margin="dense"
               inputProps={{
@@ -472,7 +471,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
                 onClick={handleUserForgotPassword}
                 sx={{ cursor: 'pointer', display: 'contents' }}
               >
-                Forgot Password ?
+                Forgot Password?
               </Button>
             </Typography>
           </>
@@ -480,12 +479,12 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
           <>
             <MobileNumber
               showhint={false}
-              placeholder="Enter Mobile Number"
+              placeholder="Mobile number"
               required
               register={register}
               getValues={getValues}
               errors={errors}
-              label={'Enter Mobile Number'}
+              label={'Mobile Number'}
               showVerify
               verifyOnClick={sendNotificationOTPHandler}
               otpSend={otpSend}
@@ -493,7 +492,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
             {otpFormEnabled && (
               <Box mt={2}>
                 <Typography variant="body1">
-                  Please enter the OTP sent on your Mobile Number{' '}
+                  Please enter the OTP sent on your mobile number{' '}
                   {getValues().mobileNo.replace(/^.{6}/g, 'XXXXXX')}.
                 </Typography>
                 {otpform}
@@ -505,7 +504,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
         )}
       </Box>
       <CaptchaComponent captchaResult={captchaResult} />
-      <Box my={4} width={'100%'} display={'flex'} justifyContent={'space-between'}>
+      <Box mt={4} mb={2} width={'100%'} display={'flex'} justifyContent={'space-between'}>
         <Button
           variant="contained"
           color="secondary"

@@ -6,6 +6,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { doctorTabs } from '../../helpers/components/sidebar-drawer-list-item';
 import { capitalizeFirstLetter } from '../../helpers/functions/common-functions';
@@ -22,6 +23,7 @@ import {
   getEsignFormDetails,
   getPersonalDetailsData,
   getRegistrationDetailsData,
+  getWorkProfileDetailsData,
   updateDoctorContactDetails,
 } from '../../store/actions/doctor-user-profile-actions';
 import { changeUserActiveTab } from '../../store/reducers/common-reducers';
@@ -43,13 +45,19 @@ const readWizardSteps = ['Personal Details', 'Registration & Academic Details'];
 export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const eSignResponse = useSelector((state) => state?.doctorUserProfileReducer?.esignDetails?.data);
   const { loginData } = useSelector((state) => state?.loginReducer);
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
-  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const { personalDetails, workProfileDetails } = useSelector(
+    (state) => state?.doctorUserProfileReducer
+  );
   const emailNotify = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.email_notification_enabled
+  );
+  const emailVerified = useSelector(
+    (state) => state?.doctorUserProfileReducer?.personalDetails?.email_verified
   );
   const mobileNotify = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.sms_notification_enabled
@@ -180,9 +188,28 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
       });
   };
 
+  const fetchDoctorUserWorkDetails = () => {
+    dispatch(
+      getWorkProfileDetailsData(
+        showViewProfile && tabName === 'Activate License'
+          ? selectedRowData?.health_professional_id
+          : showViewProfile
+          ? selectedRowData?.profileID?.value || selectedRowData?.view?.value
+          : loginData?.data?.profile_id
+      )
+    )
+      .then()
+      .catch((error) => {
+        successToast(
+          `ERR_INT: ${error.data.response.data.error}, 'auth-error', 'error', 'top-center'`
+        );
+      });
+  };
+
   useEffect(() => {
     fetchDoctorUserPersonalDetails();
     fetchDoctorUserRegistrationDetails();
+    fetchDoctorUserWorkDetails();
     if (loginData?.data?.work_flow_status_id === 1 || personalDetails?.work_flow_status_id === 1) {
       setIsApplicationPending(false);
     }
@@ -217,7 +244,12 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
     document.getElementById('formid')?.submit();
   };
 
-  // eslint-disable-next-line no-unused-vars
+  const navigateToProfile = () => {
+    navigate(`/profile`);
+    resetStep(0);
+    setIsReadMode(true);
+  };
+
   function eSignHandler() {
     let data = {
       templateId: 'TEMPLATE_1',
@@ -405,10 +437,16 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
                   <ProgressBar
                     width="302px"
                     progress={
-                      showStaticFormProgress ||
-                      personalDetails?.nmr_id ||
-                      personalDetails?.work_flow_status_id === 1 ||
-                      personalDetails?.work_flow_status_id === 3
+                      workProfileDetails?.work_details?.is_user_currently_working !== undefined &&
+                      workProfileDetails !== undefined &&
+                      typeof workProfileDetails === 'object' &&
+                      workProfileDetails !== null &&
+                      Object?.keys(workProfileDetails)?.length !== 0
+                        ? 100
+                        : showStaticFormProgress ||
+                          personalDetails?.nmr_id ||
+                          personalDetails?.work_flow_status_id === 1 ||
+                          personalDetails?.work_flow_status_id === 3
                         ? 75
                         : progress
                     }
@@ -418,8 +456,8 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
                 {!isReadMode && (
                   <BreadcrumbContainer
                     primary="My Profile"
-                    primaryLink={'/profile'}
                     secondary={'Edit Profile'}
+                    onClick={navigateToProfile}
                   />
                 )}
               </Grid>
@@ -468,7 +506,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
                   <Button
                     variant="contained"
                     color="secondary"
-                    onClick={openDoctorEditProfile}
+                    onClick={eSignHandler}
                     sx={{
                       width: '100%',
                     }}
@@ -497,6 +535,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
                         <Switch
                           color="primary"
                           checked={emailNotify}
+                          disabled={!emailVerified}
                           onChange={(e) => {
                             handleNotification(e, 'email');
                           }}

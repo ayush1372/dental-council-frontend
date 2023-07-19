@@ -56,8 +56,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
       return (
         <Grid
           container
-          spacing={2}
-          mt={2}
+          spacing={1}
+          mt={1}
           key={index}
           borderBottom={
             qualification_detail_response_tos?.length > 1 &&
@@ -74,14 +74,14 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
         >
           <Grid item xs={12} md={8}>
             <Typography variant="h3" color="grey.label">
-              {index === 0 ? 'Basic qualification' : `Additional qualification ${index}`}
+              {index === 0 ? 'Basic Qualification' : `Additional Qualification ${index}`}
             </Typography>
           </Grid>
           <Grid item xs={12} md={4}>
             {element?.is_verified === 1 ? (
               <Typography
                 ml={2}
-                spacing={2}
+                spacing={1}
                 color="success.main"
                 display={'flex'}
                 justifyContent={'right'}
@@ -91,7 +91,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
             ) : element?.is_verified === 0 ? (
               <Typography
                 ml={2}
-                spacing={2}
+                spacing={1}
                 color="secondary.main"
                 display={'flex'}
                 justifyContent={'right'}
@@ -101,7 +101,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
             ) : element?.is_verified === 2 ? (
               <Typography
                 ml={2}
-                spacing={2}
+                spacing={1}
                 color="error.main"
                 display={'flex'}
                 justifyContent={'right'}
@@ -112,15 +112,15 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
               ''
             )}
           </Grid>
-          <Grid container item spacing={2} mt={1}>
+          <Grid container item spacing={1} mt={0.5}>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="grey.label">
-                Name of the Degree Obtained
+                Degree Name
                 <Typography component="span" color="error.main">
                   *
                 </Typography>
                 {getQueryRaised('Name of the Degree Obtained') !== undefined && (
-                  <Tooltip title={getQueryRaised('Name of the Degree Obtained')}>
+                  <Tooltip title={getQueryRaised('Degree Name ')}>
                     <ReportIcon color="secondary" ml={2} />
                   </Tooltip>
                 )}
@@ -134,7 +134,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  selectedAcademicStatus !== 'College/NBE Verified' &&
+                  (selectedAcademicStatus === 'Pending' || selectedAcademicStatus === 'Pending') &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
@@ -169,7 +169,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  selectedAcademicStatus !== 'College/NBE Verified' &&
+                  (selectedAcademicStatus === 'Pending' || selectedAcademicStatus === 'Pending') &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
@@ -204,7 +204,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  selectedAcademicStatus !== 'College/NBE Verified' &&
+                  (selectedAcademicStatus === 'Pending' || selectedAcademicStatus === 'Pending') &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
@@ -219,10 +219,10 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
               </Grid>
             </Grid>
           </Grid>
-          <Grid container item spacing={2} mt={1}>
+          <Grid container item spacing={1} mt={0.5}>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="grey.label">
-                Name of the college
+                College Name
                 <Typography component="span" color="error.main">
                   *
                 </Typography>
@@ -242,7 +242,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  selectedAcademicStatus !== 'College/NBE Verified' &&
+                  (selectedAcademicStatus === 'Pending' || selectedAcademicStatus === 'Pending') &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
@@ -258,7 +258,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
             </Grid>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="grey.label">
-                University
+                University Name
                 <Typography component="span" color="error.main">
                   *
                 </Typography>
@@ -277,7 +277,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  selectedAcademicStatus !== 'College/NBE Verified' &&
+                  (selectedAcademicStatus === 'Pending' || selectedAcademicStatus === 'Pending') &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
@@ -310,7 +310,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  selectedAcademicStatus !== 'College/NBE Verified' &&
+                  (selectedAcademicStatus === 'Pending' || selectedAcademicStatus === 'Pending') &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
@@ -351,7 +351,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       (data?.user_type === 4 && index !== 0) ||
                       data?.user_type === 5) &&
                       element.is_verified !== 1 &&
-                      selectedAcademicStatus !== 'College/NBE Verified' &&
+                      (selectedAcademicStatus === 'Pending' ||
+                        selectedAcademicStatus === 'Pending') &&
                       college_status !== 'Approved' && (
                         <ContactSupportOutlinedIcon
                           cursor="pointer"
@@ -383,7 +384,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       (data?.user_type === 4 && index !== 0) ||
                       data?.user_type === 5) &&
                       element.is_verified !== 1 &&
-                      selectedAcademicStatus !== 'College/NBE Verified' &&
+                      (selectedAcademicStatus === 'Pending' ||
+                        selectedAcademicStatus === 'Pending') &&
                       college_status !== 'Approved' && (
                         <ContactSupportOutlinedIcon
                           cursor="pointer"
@@ -415,7 +417,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       (data?.user_type === 4 && index !== 0) ||
                       data?.user_type === 5) &&
                       element.is_verified !== 1 &&
-                      selectedAcademicStatus !== 'College/NBE Verified' &&
+                      (selectedAcademicStatus === 'Pending' ||
+                        selectedAcademicStatus === 'Pending') &&
                       college_status !== 'Approved' && (
                         <ContactSupportOutlinedIcon
                           cursor="pointer"
@@ -447,7 +450,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       (data?.user_type === 4 && index !== 0) ||
                       data?.user_type === 5) &&
                       element.is_verified !== 1 &&
-                      selectedAcademicStatus !== 'College/NBE Verified' &&
+                      (selectedAcademicStatus === 'Pending' ||
+                        selectedAcademicStatus === 'Pending') &&
                       college_status !== 'Approved' && (
                         <ContactSupportOutlinedIcon
                           cursor="pointer"
@@ -480,7 +484,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       (data?.user_type === 4 && index !== 0) ||
                       data?.user_type === 5) &&
                       element.is_verified !== 1 &&
-                      selectedAcademicStatus !== 'College/NBE Verified' &&
+                      (selectedAcademicStatus === 'Pending' ||
+                        selectedAcademicStatus === 'Pending') &&
                       college_status !== 'Approved' && (
                         <ContactSupportOutlinedIcon
                           cursor="pointer"
@@ -497,7 +502,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
               </>
             )}
           </Grid>
-          <Grid container item spacing={2} mt={1}>
+          <Grid container item spacing={1} mt={0.5}>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="grey.label">
                 Upload Qualification Degree
@@ -531,7 +536,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   (data?.user_type === 4 && index !== 0) ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  selectedAcademicStatus !== 'College/NBE Verified' &&
+                  (selectedAcademicStatus === 'Pending' || selectedAcademicStatus === 'Pending') &&
                   college_status !== 'Approved' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
