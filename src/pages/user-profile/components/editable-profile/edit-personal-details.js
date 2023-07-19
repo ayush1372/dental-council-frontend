@@ -550,7 +550,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
             </Grid>
           )}
         </Grid>
-        <Grid container item spacing={2} mt={1}>
+        <Grid container item spacing={2} mt={0.5}>
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
               Full Name
@@ -655,7 +655,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
             />
           </Grid>
         </Grid>
-        <Grid container item spacing={2} mt={1}>
+        <Grid container item spacing={2} mt={0.5}>
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
               Spouse Name
@@ -751,7 +751,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
             </Grid>
           </Grid>
         </Grid>
-        <Grid container item spacing={2} mt={1}>
+        <Grid container item spacing={2} mt={0.5}>
           <Grid item xs={12} md={4}>
             <Typography variant="body1" color="inputTextColor.main">
               Date of Birth (DD/MM/YYYY)
@@ -824,7 +824,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
 
         {/*Layer 2*/}
 
-        <Grid container item spacing={2} mt={1}>
+        <Grid container item spacing={2} mt={0.5}>
           <Grid item xs={12}>
             <Typography
               bgcolor="grey1.light"
@@ -868,7 +868,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
           </Grid>
 
           {/* layer 3 */}
-          <Grid container item spacing={2} mt={1}>
+          <Grid container item spacing={2} mt={0.5}>
             <Grid item xs={12}>
               <Typography
                 bgcolor="grey1.light"
