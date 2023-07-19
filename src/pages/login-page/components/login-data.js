@@ -312,7 +312,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
               required
               fullWidth
               label={'Username'}
-              placeholder={'Please enter username'}
+              placeholder={'Enter username'}
               name={'userID'}
               error={errors.userID?.message}
               {...register('userID', {
@@ -347,7 +347,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
               fullWidth
               label={'Password'}
               variant="outlined"
-              placeholder={'Please enter password'}
+              placeholder={'Enter password'}
               type={'Password'}
               inputProps={{ maxLength: 100 }}
               name={'password'}
