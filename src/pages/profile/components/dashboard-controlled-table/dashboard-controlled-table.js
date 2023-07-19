@@ -145,6 +145,9 @@ function DashboardControlledTable(props) {
       if (!str) {
         return '';
       }
+      if (str === 'College/NBE Verified') {
+        return 'College/NBE verified';
+      }
       return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
     };
     return createData(
