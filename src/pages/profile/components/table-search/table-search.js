@@ -128,7 +128,13 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                     clearErrors={clearErrors}
                     {...register('Filter')}
                     items={createEditFieldData(filterDropDownData)}
-                    onChange={(currentValue) => onApplicationChange(currentValue)}
+                    onChange={(currentValue) => {
+                      if (currentValue === null) {
+                        setValue('Status', '');
+                        setValue('StatusId', '');
+                      }
+                      onApplicationChange(currentValue);
+                    }}
                   />
                 </Grid>
                 <Grid item md={3} xs={12}>
@@ -148,7 +154,9 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                     {...register('Status')}
                     onChange={(currentValue) => {
                       setValue('StatusId', currentValue?.id);
+                      setValue('Status', currentValue?.name);
                     }}
+                    value={{ name: getValues()?.Status || '', id: getValues()?.StatusId || '' }}
                   />
                 </Grid>
               </>
@@ -160,11 +168,14 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                     fullWidth
                     name="ActivateLicence"
                     items={createEditFieldData(ActivateLicenceFieldList)}
-                    placeholder=""
+                    placeholder="Please Select"
                     clearErrors={clearErrors}
                     {...register('ActivateLicence')}
                     onChange={(currentValue) => {
                       setValue('ActivateLicenceId', currentValue?.id);
+                      if (currentValue === null) {
+                        setValue('ActivateLicenceFilter', null);
+                      }
                     }}
                   />
                 ) : exportData?.data?.dashboard_tolist ? (
@@ -178,6 +189,9 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                     {...register('dashBoardCard')}
                     onChange={(currentValue) => {
                       setDashBoardCardId(currentValue?.id);
+                      if (currentValue === null) {
+                        setValue('dashBoardCardFilter', null);
+                      }
                     }}
                   />
                 ) : (
@@ -192,6 +206,9 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                       {...register('collegeApproval')}
                       onChange={(currentValue) => {
                         setValue('collegeApprovalId', currentValue?.id);
+                        if (currentValue === null) {
+                          setValue('collegeApprovalFilter', null);
+                        }
                       }}
                     />
                   )

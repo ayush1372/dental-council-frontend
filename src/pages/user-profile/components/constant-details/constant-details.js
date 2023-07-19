@@ -1,4 +1,3 @@
-// import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useEffect, useState } from 'react';
 
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
@@ -152,7 +151,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
           clearInterval(timer);
           setShowOTPPOPUp(false);
           setVerifyEmailID(false);
-          setEmailChange(false);
+          // setEmailChange(false); for future changes.
           return;
         }
         dispatch(getPersonalDetailsData(personalDetails?.hp_profile_id)).then((response) => {
@@ -395,21 +394,22 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                 <Typography variant="subtitle2" color="textPrimary.main" width="auto" mr={0.5}>
                   {emailId ? emailId : ''}
                 </Typography>
-                {emailIdVerify ? (
-                  <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
-                ) : (
-                  ''
-                )}
-                <Typography variant="body2" color="primary.main" ml={0.5}>
-                  <span
-                    style={{ cursor: 'pointer' }}
+                <Box>
+                  {emailIdVerify ? (
+                    <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
+                  ) : (
+                    ' '
+                  )}
+
+                  <EditOutlinedIcon
+                    color={'primary'}
+                    fontSize={'inherit'}
+                    sx={{ mr: 0.5, cursor: 'pointer' }}
                     onClick={() => {
-                      emailIdVerify ? setEmailChange(true) : onSubmit('email');
+                      setEmailChange(true);
                     }}
-                  >
-                    {emailIdVerify ? 'Change' : 'Verify'}
-                  </span>
-                </Typography>
+                  />
+                </Box>
               </>
             )}
           </Box>
