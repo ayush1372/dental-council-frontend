@@ -103,12 +103,12 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
           type="text"
           name="registrarName"
           required="true"
-          placeholder={t('College Registrar Name')}
+          placeholder={t('Enter name')}
           margin="dense"
           defaultValue={getValues().registrarName}
           error={errors.registrarName?.message}
           {...register('registrarName', {
-            required: 'Enter valid name',
+            required: 'Please enter a valid name',
           })}
         />
       </Grid>
@@ -127,7 +127,7 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
           type="text"
           name="designation"
           required="true"
-          placeholder={t('College Registrar')}
+          placeholder={t('Enter designation')}
           margin="dense"
           defaultValue={'College Registrar'}
           value={'College Registrar'}
@@ -136,7 +136,7 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
       </Grid>
       <Grid item xs={12} md={6} sm={6} lg={4}>
         <Typography variant="body1" color="inputTextColor.main">
-          <b>{t(' Phone Number')}</b>
+          <b>{t(' Mobile Number')}</b>
         </Typography>
         <Typography component="span" color="error.main">
           *
@@ -149,22 +149,22 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
           type="text"
           name="registrarPhoneNumber"
           required="true"
-          placeholder={t('College Registrar Phone Number')}
+          placeholder={t('Enter mobile number')}
           margin="dense"
           defaultValue={getValues().registrarPhoneNumber}
           error={errors.registrarPhoneNumber?.message}
           {...register('registrarPhoneNumber', {
-            required: 'Enter valid phone number',
+            required: 'Please enter mobile number',
             pattern: {
               value: /^(\d{10})$/i,
-              message: 'Enter valid phone number',
+              message: 'Please enter a valid mobile number',
             },
           })}
         />
       </Grid>
       <Grid item xs={12} md={6} sm={6} lg={4}>
         <Typography variant="body1" color="inputTextColor.main">
-          <b>{t(' Email Address')}</b>
+          <b>{t(' Email')}</b>
         </Typography>
         <Typography component="span" color="error.main">
           *
@@ -177,16 +177,16 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
           type="email"
           name="registrarEmail"
           required="true"
-          placeholder={t('College Registrar Email Address')}
+          placeholder={t('Enter email')}
           margin="dense"
           defaultValue={getValues().registrarEmail}
           error={errors.registrarEmail?.message}
           {...register('registrarEmail', {
-            required: 'Enter valid email address',
+            required: 'Please enter email',
             pattern: {
               value:
                 /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-              message: 'Enter valid email address',
+              message: 'Please enter a valid email',
             },
           })}
         />
