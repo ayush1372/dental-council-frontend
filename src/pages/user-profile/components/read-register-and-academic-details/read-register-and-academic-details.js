@@ -259,6 +259,7 @@ const ReadRegisterAndAcademicDetails = ({
                               {(((selectedAcademicStatus === 'College/NBE Verified' ||
                                 selectedAcademicStatus === 'Forwarded' ||
                                 userActiveTab === 'Activate Licence' ||
+                                selectedAcademicStatus !== 'Pending' ||
                                 !showForwardButton) &&
                                 (loggedInUserType === 'SMC' || loggedInUserType === 'NMC')) ||
                                 (loggedInUserType !== 'SMC' &&
