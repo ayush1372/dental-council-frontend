@@ -48,12 +48,12 @@ export default function GenericTable(props) {
   };
   const [popUpOptions] = useState([
     {
-      keyName: 'Permanent suspend',
+      keyName: 'Suspend Permanently',
       dataValue: 'suspend',
       onClick: selectionChangeHandler,
     },
     {
-      keyName: ' Temporary suspend',
+      keyName: 'Suspend Temporarily',
       dataValue: 'blacklist',
       onClick: selectionChangeHandler,
     },
@@ -86,23 +86,44 @@ export default function GenericTable(props) {
                     align="left"
                     sortDirection={orderBy.name === item.name ? order : false}
                   >
-                    <TableSortLabel
-                      active={orderBy.name === item.name}
-                      direction={orderBy.name === item.name ? order : 'asc'}
-                      onClick={createSortHandler(item)}
-                    >
-                      {item.title}
-                      {orderBy.name === item.name ? (
-                        <Box component="span" sx={visuallyHidden}>
-                          {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                        </Box>
-                      ) : null}
-                    </TableSortLabel>
+                    {item.title === 'Pendency (in days)' || item.name === 'registrationNo' ? (
+                      <TableSortLabel
+                        active={orderBy.name === item.name}
+                        direction={orderBy.name === item.name ? order : 'asc'}
+                        onClick={createSortHandler(item)}
+                        sx={{ color: 'white.main', width: '90px !important' }}
+                      >
+                        {item.title}
+                        {orderBy.name === item.name ? (
+                          <Box component="span" sx={visuallyHidden}>
+                            {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                          </Box>
+                        ) : null}
+                      </TableSortLabel>
+                    ) : (
+                      <TableSortLabel
+                        active={orderBy.name === item.name}
+                        direction={orderBy.name === item.name ? order : 'asc'}
+                        onClick={createSortHandler(item)}
+                        sx={{ color: 'white.main', width: 'max-content !important' }}
+                      >
+                        {item.title}
+                        {orderBy.name === item.name ? (
+                          <Box component="span" sx={visuallyHidden}>
+                            {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                          </Box>
+                        ) : null}
+                      </TableSortLabel>
+                    )}
                   </TableCell>
                 );
               } else {
                 return (
-                  <TableCell key={index} align="left" sx={{ color: 'white.main' }}>
+                  <TableCell
+                    key={index}
+                    align="left"
+                    sx={{ color: 'white.main', width: 'max-content !important' }}
+                  >
                     {item.title}
                   </TableCell>
                 );
@@ -134,7 +155,7 @@ export default function GenericTable(props) {
                     </TableCell>
                   );
                 } else if (
-                  (item.title === 'Name of Applicant' || item.title === 'Applicant Name') &&
+                  (item.title === 'Applicant Name' || item.title === 'Applicant Name') &&
                   userActiveTab !== 'dashboard'
                 ) {
                   return (
@@ -208,7 +229,7 @@ export default function GenericTable(props) {
                   return (
                     <TableCell maxWidth={`${tableCellWidth}%`} key={index} align="left">
                       <Chip
-                        sx={{ width: '100px' }}
+                        sx={{ width: '120px' }}
                         type={
                           row[item.name]?.value === 'Submitted'
                             ? 'submitted'
@@ -293,18 +314,15 @@ export default function GenericTable(props) {
                       </Button>
                     </TableCell>
                   );
-                } else if (item.title === 'S.No.') {
+                } else if (item.title === 'S.No.' || item.title === 'Pendency (in days)') {
                   return (
                     <TableCell
                       key={index}
                       className={row.read?.value === false ? 'style-bold' : ''}
+                      align="center"
                       sx={{
-                        whiteSpace: 'nowrap',
-                        textOverflow: 'ellipsis',
-                        maxWidth: '112px',
-                        overflow: 'hidden',
+                        width: '5em',
                       }}
-                      align="left"
                     >
                       {++sno}
                     </TableCell>
@@ -316,10 +334,7 @@ export default function GenericTable(props) {
                         key={index}
                         className={row.read?.value === false ? 'style-bold' : ''}
                         sx={{
-                          whiteSpace: 'nowrap',
-                          textOverflow: 'ellipsis',
-                          maxWidth: '112px',
-                          overflow: 'hidden',
+                          whiteSpace: 'break-spaces',
                         }}
                         align="left"
                       >
