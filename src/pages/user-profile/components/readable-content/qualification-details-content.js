@@ -56,8 +56,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
       return (
         <Grid
           container
-          spacing={2}
-          mt={2}
+          spacing={1}
+          mt={1}
           key={index}
           borderBottom={
             qualification_detail_response_tos?.length > 1 &&
@@ -112,7 +112,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
               ''
             )}
           </Grid>
-          <Grid container item spacing={2} mt={1}>
+          <Grid container item spacing={1} mt={1}>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="grey.label">
                 Degree Name
@@ -219,7 +219,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
               </Grid>
             </Grid>
           </Grid>
-          <Grid container item spacing={2} mt={1}>
+          <Grid container item spacing={1} mt={1}>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="grey.label">
                 College Name
@@ -502,7 +502,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
               </>
             )}
           </Grid>
-          <Grid container item spacing={2} mt={1}>
+          <Grid container item spacing={1} mt={1}>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="grey.label">
                 Upload Qualification Degree
