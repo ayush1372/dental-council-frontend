@@ -217,6 +217,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
     document.getElementById('formid')?.submit();
   };
 
+  // eslint-disable-next-line no-unused-vars
   function eSignHandler() {
     let data = {
       templateId: 'TEMPLATE_1',
@@ -467,7 +468,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
                   <Button
                     variant="contained"
                     color="secondary"
-                    onClick={eSignHandler}
+                    onClick={openDoctorEditProfile}
                     sx={{
                       width: '100%',
                     }}

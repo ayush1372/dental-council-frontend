@@ -50,6 +50,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   );
   const { work_flow_status_id } = personalDetails || {};
   const { raisedQueryData } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
+  const [supportingDocumentError, setsupportingDocumentError] = useState([]);
 
   const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
   const { registration_detail_to, qualification_detail_response_tos } = registrationDetails || {};
@@ -68,9 +69,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   const [registrationFileData, setRegistrationFileData] = useState(
     registration_certificate ? [{ file: registration_certificate }] : []
   );
-  const [qualificationFilesData, setQualificationFilesData] = useState({
-    'qualification.0.files': degree_certificate ? [{ file: degree_certificate }] : [],
-  });
+  const [qualificationFilesData, setQualificationFilesData] = useState([]);
   console.log(
     'registrationDate123',
     registration_date,
@@ -100,7 +99,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   });
 
   const {
-    formState: { errors },
+    formState: { errors, isSubmitting },
     getValues,
     handleSubmit,
     register,
@@ -255,21 +254,57 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     formData.append('degreeCertificate', qualificationFile);
 
     formData.append('registrationCertificate', registrationFile);
-    dispatch(
-      updateDoctorRegistrationDetails(
-        formData,
-        loggedInUserType === 'Doctor'
-          ? updatedPersonalDetails?.hp_profile_id
-          : loggedInUserType === 'SMC' && personalDetails?.hp_profile_id
-      )
-    ).then(() => {
-      if (moveToNext) handleNext();
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
+    let checkDocumentError;
+    for (const index in supportingDocumentError) {
+      checkDocumentError = supportingDocumentError[index] === true;
+      console.log('1234567', index, checkDocumentError, supportingDocumentError[index]);
+      if (checkDocumentError) {
+        console.log('1234567', index);
+        break;
+      }
+    }
+
+    if (!checkDocumentError) {
+      dispatch(
+        updateDoctorRegistrationDetails(
+          formData,
+          loggedInUserType === 'Doctor'
+            ? updatedPersonalDetails?.hp_profile_id
+            : loggedInUserType === 'SMC' && personalDetails?.hp_profile_id
+        )
+      ).then(() => {
+        if (moveToNext && qualificationFile !== undefined) handleNext();
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
       });
-    });
+    }
   };
+  useEffect(() => {
+    let checkDocumentError;
+    if (isSubmitting) {
+      for (const index in qualificationFilesData) {
+        checkDocumentError = supportingDocumentError[index]?.length > 0;
+        if (!checkDocumentError) {
+          supportingDocumentError[index] = true;
+          setsupportingDocumentError({ ...supportingDocumentError });
+        }
+      }
+      // for (const index in supportingDocumentError) {
+    }
+
+    console.log('qualf12345', supportingDocumentError, checkDocumentError);
+  }, [qualificationFilesData, isSubmitting]);
+
+  useEffect(() => {
+    let index = fields?.length - 1;
+    qualificationFilesData[`qualification.${[index]}.files`] = [];
+    setQualificationFilesData({ ...qualificationFilesData });
+    supportingDocumentError[`qualification.${[index]}.files`] = false;
+    setsupportingDocumentError({ ...supportingDocumentError });
+    console.log('qualf12345', fields, qualificationFilesData, supportingDocumentError);
+  }, [fields]);
 
   useEffect(() => {
     setValue('RegisteredWithCouncil', registeredCouncil[0]);
@@ -355,8 +390,12 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   }, [registrationDetails]);
 
   const handleQualificationFilesData = (fileName, files) => {
+    console.log('filename12', fileName, files);
     qualificationFilesData[fileName] = files;
-    setQualificationFilesData({ ...qualificationFilesData });
+    // supportingDocumentError[fileName] = ;
+    setQualificationFilesData(files !== [] && { ...qualificationFilesData });
+    // setsupportingDocumentError({ ...supportingDocumentError });
+    console.log('Fname11', fileName.length);
   };
 
   //Helper Method to get the data of the query raised against the field
@@ -631,12 +670,17 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               errors={errors}
               setValue={setValue}
               getValues={getValues}
+              update={update}
               fields={fields}
               insert={insert}
               qualification={qualification}
               watch={watch}
               remove={remove}
               register={register}
+              supportingDocumentError={supportingDocumentError}
+              setsupportingDocumentError={(val) => {
+                setsupportingDocumentError(val);
+              }}
               unregister={unregister}
               qualificationFilesData={qualificationFilesData}
               handleQualificationFilesData={handleQualificationFilesData}

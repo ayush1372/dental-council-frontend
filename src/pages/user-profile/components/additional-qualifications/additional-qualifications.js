@@ -35,8 +35,8 @@ const qualificationObjTemplate = [
 
 const AdditionalQualifications = () => {
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
-  const [supportingDocumentError, setsupportingDocumentError] = useState(false);
-
+  const [supportingDocumentError, setsupportingDocumentError] = useState([]);
+  console.log('errormsg1', supportingDocumentError);
   const { qualification_detail_response_tos } = registrationDetails || {};
 
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
@@ -44,15 +44,10 @@ const AdditionalQualifications = () => {
   const [qualificationFilesData, setQualificationFilesData] = useState([]);
 
   const [successModalPopup, setSuccessModalPopup] = useState(false);
-  // const [addMore, setAddmore] = useState(false);
 
-  const {
-    statesList,
-    coursesList,
-    countriesList,
-    specialitiesList,
-    // collegesList
-  } = useSelector((state) => state?.common);
+  const { statesList, coursesList, countriesList, specialitiesList } = useSelector(
+    (state) => state?.common
+  );
 
   const dispatch = useDispatch();
   const {
@@ -88,16 +83,35 @@ const AdditionalQualifications = () => {
   const handleQualificationFilesData = (fileName, files) => {
     console.log('filename12', fileName, files);
     qualificationFilesData[fileName] = files;
-    console.log(qualificationFilesData);
+    // supportingDocumentError[fileName] = ;
     setQualificationFilesData(files !== [] && { ...qualificationFilesData });
-    setsupportingDocumentError(false);
+    // setsupportingDocumentError({ ...supportingDocumentError });
+    console.log('Fname11', fileName.length);
   };
+  useEffect(() => {
+    let checkDocumentError;
+    if (isSubmitting) {
+      for (const index in qualificationFilesData) {
+        checkDocumentError = qualificationFilesData[index]?.length > 0;
+        if (!checkDocumentError) {
+          supportingDocumentError[index] = true;
+          setsupportingDocumentError({ ...supportingDocumentError });
+        }
+      }
+      // for (const index in supportingDocumentError) {
+    }
+
+    console.log('qualf12345', supportingDocumentError, checkDocumentError);
+  }, [qualificationFilesData, isSubmitting]);
 
   useEffect(() => {
-    if (isSubmitting && (qualificationFilesData?.length === 0 || qualificationFilesData === [])) {
-      setsupportingDocumentError(true);
-    }
-  }, [qualificationFilesData, isSubmitting]);
+    let index = fields?.length - 1;
+    qualificationFilesData[`qualification.${[index]}.files`] = [];
+    setQualificationFilesData({ ...qualificationFilesData });
+    supportingDocumentError[`qualification.${[index]}.files`] = false;
+    setsupportingDocumentError({ ...supportingDocumentError });
+    console.log('qualf12345', fields, qualificationFilesData, supportingDocumentError);
+  }, [fields]);
 
   const getStateData = (stateId) => {
     return statesList?.find((obj) => obj?.id === stateId);
@@ -147,6 +161,7 @@ const AdditionalQualifications = () => {
   };
 
   const onSubmit = () => {
+    alert('Hiii');
     const formData = new FormData();
     let qualification_detail_response_tos = [],
       updatedQualificationDetailsArray = [];
@@ -192,21 +207,30 @@ const AdditionalQualifications = () => {
     Object.values(qualificationFilesData)?.forEach((data) => {
       filesArray.push(data[0]?.file);
     });
-    // const firstFile = Object.values(qualificationFilesData)?.[0]?.[0]?.file;
-    // filesArray?.push(firstFile);
 
     const doctorRegistrationDetailsJson = JSON.stringify(qualification_detail_response_tos);
+    console.log('submittingform12', doctorRegistrationDetailsJson);
+
     const doctorRegistrationDetailsBlob = new Blob([doctorRegistrationDetailsJson], {
       type: 'application/json',
     });
-    // const filesBlob = new Blob([filesArray]);
     formData.append('data', doctorRegistrationDetailsBlob);
     filesArray.forEach((file) => {
       formData.append('degreeCertificates', file);
     });
-    // handleFileError();
+    console.log('supportingDocumentError12', supportingDocumentError);
 
-    if (!supportingDocumentError) {
+    let checkDocumentError;
+    for (const index in supportingDocumentError) {
+      checkDocumentError = supportingDocumentError[index] === false;
+      console.log('1234567', checkDocumentError, supportingDocumentError[index]);
+      if (checkDocumentError) {
+        break;
+      }
+    }
+
+    if (!checkDocumentError) {
+      console.log('reached here');
       dispatch(additionalQualificationsData(formData, personalDetails?.hp_profile_id))
         .then(() => {
           setSuccessModalPopup(true);
