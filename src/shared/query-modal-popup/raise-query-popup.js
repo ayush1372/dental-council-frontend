@@ -84,12 +84,12 @@ const RaiseQueryPopup = ({ ClosePopup, queryRaisedField }) => {
                 justifyContent: 'center',
               }}
             >
-              Raise a Query for the Field - {queryRaisedField}
+              Raise a Query - {queryRaisedField}
             </Typography>
             <Box>
               <Box>
                 <Typography variant="body1" color="inputTextColor.main" component="span">
-                  Details of Query
+                  Add Reason
                 </Typography>
                 <Typography component="span" color="error.main">
                   *

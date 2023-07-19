@@ -53,6 +53,8 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
   const [showCreateHprIdPage, setShowCreateHprIdPage] = useState(false);
   const [existHprId, setExistHprId] = useState(false);
   const [successRegistration, setSuccessRegistration] = useState(false);
+  const [editBUtton, setEditButton] = useState(false);
+  //const [isDisabled, setIsDisabled] = useState(false);
 
   const { speak, cancel } = useSpeechSynthesis();
 
@@ -201,11 +203,19 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
       dispatch(generateMobileOtp(data))
         .then(() => {
           setShowOtpMobile(true);
+          setEditButton(true);
+          setisOtpValidMobile(true);
         })
         .catch((error) => {
           successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
         });
     });
+  };
+
+  const handleEdit = () => {
+    setShowOtpMobile(false);
+    setisOtpValidMobile(false);
+    setEditButton(false);
   };
 
   useEffect(() => {
@@ -223,6 +233,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
       dispatch(verifyMobileOtp(data)).then(() => {
         setisOtpValidMobile(true);
         setShowOtpMobile(false);
+        setEditButton(false);
         handleClear();
       });
     }
@@ -477,7 +488,6 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
               {showOtpAadhar && (
                 <Box
                   sx={{
-                    display: 'flex',
                     flexDirection: {
                       xs: 'column',
                       sm: 'row',
@@ -488,26 +498,28 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                     <Typography variant="body1">
                       OTP sent to Aadhaar registered mobile number ending with {mobileNumber}
                     </Typography>
-                    {otpform}
                   </Box>
-                  <Button
-                    sx={{ width: '114px', height: '53px', marginTop: '77px' }}
-                    component="span"
-                    variant="contained"
-                    color="secondary"
-                    onClick={handleValidateAadhar}
-                    disabled={
-                      consentD
-                        ? validationOtpInvalid
+                  <Box display={{ md: 'flex' }}>
+                    {otpform}
+                    <Button
+                      sx={{ width: '114px', height: '53px', mt: 2, ml: 2 }}
+                      component="span"
+                      variant="contained"
+                      color="secondary"
+                      onClick={handleValidateAadhar}
+                      disabled={
+                        consentD
                           ? validationOtpInvalid
-                          : otpValue === ''
-                          ? true
-                          : false
-                        : true
-                    }
-                  >
-                    Validate
-                  </Button>
+                            ? validationOtpInvalid
+                            : otpValue === ''
+                            ? true
+                            : false
+                          : true
+                      }
+                    >
+                      Validate
+                    </Button>
+                  </Box>
                 </Box>
               )}
 
@@ -542,19 +554,36 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                       },
                     })}
                   />
-
-                  {isOtpValidMobile ? <CheckCircleIcon color="success" /> : ''}
+                  {(isOtpValidMobile && !editBUtton) ||
+                  demographicAuthMobileVerify?.data?.verified ? (
+                    <CheckCircleIcon color="success" />
+                  ) : (
+                    ''
+                  )}
                   <Box>
-                    {!showOtpMobile && !isOtpValidMobile && (
+                    {editBUtton && !demographicAuthMobileVerify?.data?.verified ? (
                       <Button
                         variant="contained"
                         color="secondary"
                         width="95px"
-                        onClick={handleVerifyMobile}
-                        disabled={getValues().MobileNumber.length < 10}
+                        onClick={handleEdit}
                       >
-                        Verify
+                        Edit
                       </Button>
+                    ) : (
+                      !showOtpMobile &&
+                      !isOtpValidMobile &&
+                      !editBUtton && (
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          width="95px"
+                          onClick={handleVerifyMobile}
+                          disabled={getValues().MobileNumber.length < 10}
+                        >
+                          Verify
+                        </Button>
+                      )
                     )}
                   </Box>
                 </Box>
@@ -602,7 +631,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                   color="secondary"
                   sx={{ marginRight: '10px', width: '105px', height: '48px' }}
                   onClick={handleSubmit(onSubmit)}
-                  disabled={!isOtpValidMobile}
+                  disabled={!isOtpValidMobile || editBUtton}
                 >
                   Submit
                 </Button>
