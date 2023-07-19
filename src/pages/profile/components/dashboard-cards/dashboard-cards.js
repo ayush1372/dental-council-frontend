@@ -363,7 +363,7 @@ export default function Dashboard() {
                             alignItems="center"
                             mb={2}
                           >
-                            <Typography color="inputFocusColor.main" variant="h2">
+                            <Typography color="inputFocusColor.main" variant="h1">
                               {item.value}
                             </Typography>
                             <img
@@ -375,18 +375,17 @@ export default function Dashboard() {
                           <Typography
                             color="primary"
                             component="div"
-                            fontSize={{ xs: '12px', sm: '12px', md: '14px', lg: '16px' }}
-                            lineHeight={{ xs: '14px', sm: '16px', md: '18px', lg: '24px' }}
+                            fontSize={{ xs: '12px', sm: '12px', md: '14px', lg: '14px' }}
+                            lineHeight={{ xs: '14px', sm: '16px', md: '18px', lg: '18px' }}
                             mb={1}
                           >
                             {item.name}
                           </Typography>
                           <Typography
-                            color="primary"
                             component="div"
                             fontWeight="400"
-                            fontSize={{ xs: '12px', sm: '12px', md: '12px', lg: '16px' }}
-                            lineHeight={{ xs: '14px', sm: '16px', md: '16px', lg: '24px' }}
+                            fontSize={{ xs: '12px', sm: '12px', md: '12px', lg: '13px' }}
+                            lineHeight={{ xs: '14px', sm: '16px', md: '16px', lg: '16px' }}
                           >
                             {getTextLabelIcons(item)}
                           </Typography>
