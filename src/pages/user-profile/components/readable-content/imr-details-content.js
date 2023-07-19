@@ -12,8 +12,8 @@ const IMRDetails = ({ personalDetails }) => {
   const subDistrictName = sub_district?.name || '';
   const villageName = village?.name || '';
   return (
-    <Grid container spacing={2} mt={1}>
-      <Grid container item spacing={2}>
+    <Grid container spacing={1} mt={1}>
+      <Grid container item spacing={1}>
         <Grid item xs={12}>
           <Typography variant="subtitle2" color="grey.label">
             Aadhaar Verified Address

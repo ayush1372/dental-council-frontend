@@ -283,7 +283,10 @@ export default function ProfileImage(props) {
             </Grid>
           )}
           {personalDetails?.esign_status !== 1 &&
-            (doctorEsignStatus === 2 || personalDetails?.esign_status === 2) &&
+            (doctorEsignStatus === 2 ||
+              doctorEsignStatus === 3 ||
+              personalDetails?.esign_status === 2 ||
+              personalDetails?.esign_status === 3) &&
             loginData?.data?.hp_profile_status_id !== 7 && (
               <Grid container mt={1}>
                 <Grid item>
@@ -294,26 +297,7 @@ export default function ProfileImage(props) {
                     variant="body2"
                     sx={{ whiteSpace: 'break-spaces' }}
                   >
-                    You have done E-sign with different account. Please verify and re-do the E-sign
-                    process correctly.
-                  </Typography>
-                </Grid>
-              </Grid>
-            )}
-          {personalDetails?.esign_status !== 1 &&
-            (doctorEsignStatus === 3 || personalDetails?.esign_status === 3) &&
-            loginData?.data?.hp_profile_status_id !== 7 && (
-              <Grid container mt={1}>
-                <Grid item>
-                  <Typography
-                    color="suspendAlert.dark"
-                    component="div"
-                    display="inline-flex"
-                    variant="body2"
-                    sx={{ whiteSpace: 'break-spaces' }}
-                  >
-                    Your profile has to complete E-sign process. You will not be able to perform
-                    actions on the profile untill you complete E-sign process.
+                    Please complete E-sign process to perform further actions.
                   </Typography>
                 </Grid>
               </Grid>
