@@ -118,22 +118,12 @@ const DoctorRegistrationWelcomePage = () => {
                     <SearchableDropdown
                       name="RegistrationCouncil"
                       items={createEditFieldData(councilNames)}
-                      placeholder="Select Registered Council"
+                      placeholder="Select registered council"
                       clearErrors={clearErrors}
                       error={errors.RegistrationCouncil?.message}
                       {...register('RegistrationCouncil', {
                         required: 'Registration Council is required',
                       })}
-                      value={{
-                        id:
-                          getValues()?.RegistrationCouncilId !== undefined
-                            ? getValues()?.RegistrationCouncilId
-                            : '',
-                        name:
-                          getValues()?.RegistrationCouncil !== undefined
-                            ? getValues()?.RegistrationCouncil
-                            : '',
-                      }}
                       onChange={(currentValue) => {
                         setValue('RegistrationCouncilId', currentValue?.id);
                         setValue('RegistrationCouncil', currentValue?.name);
@@ -151,7 +141,7 @@ const DoctorRegistrationWelcomePage = () => {
                   <TextField
                     fullWidth
                     name={'RegistrationNumber'}
-                    placeholder={t('Enter Registration Number')}
+                    placeholder={t('Enter registration number')}
                     defaultValue={getValues().RegistrationNumber}
                     error={errors.RegistrationNumber?.message}
                     {...register('RegistrationNumber', {
@@ -238,7 +228,7 @@ const DoctorRegistrationWelcomePage = () => {
             smcId: getValues().RegistrationCouncilId,
             registrationNumber: getValues().RegistrationNumber,
           }}
-          text={`We could not find any data against the provided details. Do you still want to continue with the registration?`}
+          text={`No data found for the provided details. Do you still want to continue with the registration?`}
         />
       )}
       {accountExists && (
