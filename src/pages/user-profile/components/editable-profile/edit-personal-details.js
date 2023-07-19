@@ -754,7 +754,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
         <Grid container item spacing={2} mt={0.5}>
           <Grid item xs={12} md={4}>
             <Typography variant="body1" color="inputTextColor.main">
-              Date of Birth (DD/MM/YYYY)
+              Date of Birth (DD-MM-YYYY)
               <Typography component="span" color="error.main">
                 *
               </Typography>
