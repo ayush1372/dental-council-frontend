@@ -254,6 +254,26 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     formData.append('degreeCertificate', qualificationFile);
 
     formData.append('registrationCertificate', registrationFile);
+
+    let setdocumenterror;
+    for (const index in qualificationFilesData) {
+      setdocumenterror = qualificationFilesData[index]?.length > 0;
+      if (!setdocumenterror) {
+        supportingDocumentError[index] = true;
+        setsupportingDocumentError({ ...supportingDocumentError });
+
+        console.log(
+          'qualf12345',
+          supportingDocumentError,
+          setdocumenterror,
+          qualificationFilesData[index]?.length
+        );
+      } else {
+        supportingDocumentError[index] = false;
+        setsupportingDocumentError({ ...supportingDocumentError });
+      }
+    }
+
     let checkDocumentError;
     for (const index in supportingDocumentError) {
       checkDocumentError = supportingDocumentError[index] === true;

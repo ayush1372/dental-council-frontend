@@ -93,6 +93,12 @@ const AdditionalQualifications = () => {
     if (isSubmitting) {
       for (const index in qualificationFilesData) {
         checkDocumentError = qualificationFilesData[index]?.length > 0;
+        // console.log(
+        //   'qualf12345',
+        //   supportingDocumentError,
+        //   checkDocumentError,
+        //   qualificationFilesData[index]?.length
+        // );
         if (!checkDocumentError) {
           supportingDocumentError[index] = true;
           setsupportingDocumentError({ ...supportingDocumentError });
@@ -100,8 +106,6 @@ const AdditionalQualifications = () => {
       }
       // for (const index in supportingDocumentError) {
     }
-
-    console.log('qualf12345', supportingDocumentError, checkDocumentError);
   }, [qualificationFilesData, isSubmitting]);
 
   useEffect(() => {
@@ -219,10 +223,28 @@ const AdditionalQualifications = () => {
       formData.append('degreeCertificates', file);
     });
     console.log('supportingDocumentError12', supportingDocumentError);
+    let setdocumenterror;
+    for (const index in qualificationFilesData) {
+      setdocumenterror = qualificationFilesData[index]?.length > 0;
+      if (!setdocumenterror) {
+        supportingDocumentError[index] = true;
+        setsupportingDocumentError({ ...supportingDocumentError });
+
+        console.log(
+          'qualf12345',
+          supportingDocumentError,
+          setdocumenterror,
+          qualificationFilesData[index]?.length
+        );
+      } else {
+        supportingDocumentError[index] = false;
+        setsupportingDocumentError({ ...supportingDocumentError });
+      }
+    }
 
     let checkDocumentError;
     for (const index in supportingDocumentError) {
-      checkDocumentError = supportingDocumentError[index] === false;
+      checkDocumentError = supportingDocumentError[index] === true;
       console.log('1234567', checkDocumentError, supportingDocumentError[index]);
       if (checkDocumentError) {
         break;
