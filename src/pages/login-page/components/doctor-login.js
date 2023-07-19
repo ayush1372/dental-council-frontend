@@ -406,8 +406,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
             {otpFormEnabled && (
               <Box mt={2}>
                 <Typography variant="body1">
-                  Please enter the OTP sent on your Registered Mobile Number {maskedMobileNumber}{' '}
-                  linked with your NMR ID.
+                  OTP sent to registered mobile number ending with{maskedMobileNumber}
                 </Typography>
                 {otpform}
               </Box>
