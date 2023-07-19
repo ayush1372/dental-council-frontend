@@ -118,11 +118,15 @@ const AdditionalQualifications = () => {
   };
 
   useEffect(() => {
-    getCollegeData(stateID);
+    if (stateID !== undefined) {
+      getCollegeData(stateID);
+    }
   }, [stateID]);
 
   useEffect(() => {
-    getUniversityData(collegeID);
+    if (collegeID !== undefined) {
+      getUniversityData(collegeID);
+    }
   }, [collegeID]);
 
   const broadSpeciality = (broadSpl) => {
