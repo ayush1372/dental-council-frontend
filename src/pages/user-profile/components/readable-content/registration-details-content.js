@@ -51,8 +51,8 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
   };
 
   return (
-    <Grid container spacing={2} mt={2}>
-      <Grid container item spacing={2} mt={1}>
+    <Grid container spacing={1} mt={1}>
+      <Grid container item spacing={1}>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
             Registered Council Name
@@ -151,7 +151,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
           </Grid>
         </Grid>
       </Grid>
-      <Grid container item spacing={2} mt={1}>
+      <Grid container item spacing={1}>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
             Registration Type
