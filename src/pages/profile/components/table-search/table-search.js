@@ -109,7 +109,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
   return (
     <Box data-testid="table-search" mb={2}>
       <Grid container>
-        <Grid item xs={11} mt={userActiveTab === 'Activate Licence' ? 3 : 0}>
+        <Grid item xs={11} mt={userActiveTab === 'Activate Licence' ? 2 : 0}>
           <Grid
             container
             item
@@ -124,7 +124,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                     fullWidth
                     name="Filter"
                     data-testid="filterByName"
-                    placeholder="Please Select"
+                    placeholder="Select"
                     clearErrors={clearErrors}
                     {...register('Filter')}
                     items={createEditFieldData(filterDropDownData)}
@@ -149,7 +149,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                         ? createEditFieldData(applicationStatus)
                         : createEditFieldData(emptyData)
                     }
-                    placeholder="Please Select"
+                    placeholder="Select"
                     clearErrors={clearErrors}
                     {...register('Status')}
                     onChange={(currentValue) => {
@@ -184,7 +184,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                     value={dashBoardCardId}
                     name="dashBoardCard"
                     items={createEditFieldData(DashBoardCardsFieldList)}
-                    placeholder="Please Select"
+                    placeholder="Select"
                     clearErrors={clearErrors}
                     {...register('dashBoardCard')}
                     onChange={(currentValue) => {
@@ -201,7 +201,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                       data-testid="freesearch"
                       name="collegeApproval"
                       items={createEditFieldData(CollegeApprovalFieldList)}
-                      placeholder="Please Select"
+                      placeholder="Select"
                       clearErrors={clearErrors}
                       {...register('collegeApproval')}
                       onChange={(currentValue) => {
@@ -288,17 +288,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
             )}
           </Grid>
         </Grid>
-        <Grid
-          item
-          xs={12}
-          md="auto"
-          sx={{
-            position: exportData?.health_professional_applications ? 'absolute' : '',
-            right: exportData?.health_professional_applications ? '10%' : '',
-            bottom: exportData?.health_professional_applications ? '60%' : '',
-          }}
-        >
-          {' '}
+        <Grid item xs={12} md="auto" mt={userActiveTab === 'Activate Licence' ? 2 : 0}>
           <ExportFiles exportData={exportData} flag={flag} />
         </Grid>
       </Grid>
