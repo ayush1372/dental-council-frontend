@@ -41,7 +41,7 @@ export function ViewProfile(props) {
         </Typography>
       </Box>
 
-      <Box bgcolor="white.main" py={3} mb={2} boxShadow="1">
+      <Box bgcolor="white.main" py={2} mb={2} boxShadow="1">
         <Grid container>
           <Grid
             borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
