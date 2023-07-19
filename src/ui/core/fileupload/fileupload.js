@@ -213,7 +213,7 @@ export const UploadFile = (props) => {
             <div className={styles.uploadFileArea}>
               {uploadFiles === 'single' && fileData.length === 1 && (
                 <Typography color="grey1.main" variant="caption">
-                  01 FILE UPLOADED
+                  FILE UPLOADED
                 </Typography>
               )}
               {uploadFiles === 'multiple' && fileData?.length > 0 && (

@@ -198,12 +198,12 @@ const CollegeEditProfile = (props) => {
               fullWidth
               name="MobileNumber"
               required
-              placeholder={'Enter Mobile Number'}
+              placeholder={'Enter mobile number'}
               defaultValue={getCollegeDetail?.data?.mobile_number}
               onInput={(e) => handleInput(e)}
               error={errors.MobileNumber?.message}
               {...register('MobileNumber', {
-                required: 'Mobile number is required',
+                required: 'Please enter the mobile number',
                 pattern: {
                   value: /^\d{10}$/i,
                   message: 'Provide a valid mobile number',

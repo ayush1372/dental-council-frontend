@@ -83,12 +83,9 @@ const NonWorkDetails = ({
           defaultValue={work_details?.reason}
           value={getValues()?.reason}
           required={true}
-          {...register(
-            'reason',
-            getValues()?.reason?.length <= 0 && {
-              required: 'This field is required',
-            }
-          )}
+          {...register('reason', {
+            required: 'Reason is required',
+          })}
           options={reasonOptions}
         />
       </Grid>

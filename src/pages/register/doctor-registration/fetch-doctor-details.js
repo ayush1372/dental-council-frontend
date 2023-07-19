@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import VolumeOffIcon from '@mui/icons-material/VolumeOff';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import { Container, Divider, Grid, IconButton, Typography } from '@mui/material';
@@ -530,7 +531,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                     onInput={(e) => handleInput(e)}
                     name={'MobileNumber'}
                     disabled={isOtpValidMobile}
-                    placeholder={t('Enter Mobile Number')}
+                    placeholder={t('Enter mobile number')}
                     defaultValue={getValues().MobileNumber}
                     error={errors.MobileNumber?.message}
                     {...register('MobileNumber', {
@@ -541,6 +542,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                       },
                     })}
                   />
+
                   {isOtpValidMobile ? <CheckCircleIcon color="success" /> : ''}
                   <Box>
                     {!showOtpMobile && !isOtpValidMobile && (
@@ -555,6 +557,15 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                       </Button>
                     )}
                   </Box>
+                </Box>
+                <Box mt={1} sx={{ alignItems: 'center', display: 'flex' }}>
+                  <InfoOutlinedIcon
+                    color="messageBlue.main"
+                    sx={{ fontSize: '20px', padding: '2px' }}
+                  />
+                  <Typography variant="body4" color="messageBlue.main">
+                    This mobile number will be used for all the communications related to Council
+                  </Typography>
                 </Box>
               </Box>
               {showOtpMobile && (

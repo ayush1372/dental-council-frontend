@@ -122,19 +122,19 @@ const ReadRegisterAndAcademicDetails = ({
           isPrimaryQualification(index)
         ) {
           filteredQualificationDetails.push(element);
-          if (element?.is_verified !== 1) {
-            setShowForwardButton(
-              element?.qualification_from === 'India'
-                ? true
-                : element?.qualification_from === 'International' &&
-                  loggedInUserType === 'SMC' &&
-                  selectedAcademicStatus === 'Pending'
-                ? true
-                : false
-            );
-          }
         } else if (!isPrimaryQualification(index)) {
           filteredQualificationDetails.push(element);
+        }
+        if (element && element?.is_verified !== 1) {
+          setShowForwardButton(
+            element?.qualification_from === 'India'
+              ? true
+              : element?.qualification_from === 'International' &&
+                loggedInUserType === 'SMC' &&
+                selectedAcademicStatus === 'Pending'
+              ? true
+              : false
+          );
         }
       });
       let newRegistrationDetails = {};
@@ -218,7 +218,7 @@ const ReadRegisterAndAcademicDetails = ({
           </Button>
           {(userActiveTab === 'dashboard' || userActiveTab === 'Activate Licence') &&
             (selectedAcademicStatus?.toUpperCase() === 'PENDING' ||
-              selectedAcademicStatus === 'Update Request Received' ||
+              selectedAcademicStatus === 'Pending' ||
               selectedAcademicStatus === 'College/NBE Verified' ||
               userActiveTab === 'Activate Licence' ||
               selectedAcademicStatus === 'Forwarded' ||
@@ -291,7 +291,6 @@ const ReadRegisterAndAcademicDetails = ({
                               )}
                               {loggedInUserType === 'SMC' &&
                                 userActiveTab !== 'Activate Licence' &&
-                                showForwardButton &&
                                 selectedAcademicStatus !== 'Forwarded' &&
                                 selectedAcademicStatus !== 'College/NBE Verified' && (
                                   <Button
@@ -362,8 +361,7 @@ const ReadRegisterAndAcademicDetails = ({
                         {personalDetails.nmr_id !== undefined &&
                           userActiveTab !== 'Activate Licence' &&
                           (loggedInUserType === 'NMC' ||
-                            (loggedInUserType === 'SMC' &&
-                              selectedAcademicStatus === 'Update Request Received')) &&
+                            (loggedInUserType === 'SMC' && selectedAcademicStatus === 'Pending')) &&
                           selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
                           selectedAcademicStatus !== 'Permanent Suspension Requests Received' && (
                             <MenuItem onClick={selectionChangeHandler} data-my-value={'suspend'}>
@@ -373,8 +371,7 @@ const ReadRegisterAndAcademicDetails = ({
                         {personalDetails.nmr_id !== undefined &&
                           userActiveTab !== 'Activate Licence' &&
                           (loggedInUserType === 'NMC' ||
-                            (loggedInUserType === 'SMC' &&
-                              selectedAcademicStatus === 'Update Request Received')) &&
+                            (loggedInUserType === 'SMC' && selectedAcademicStatus === 'Pending')) &&
                           selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
                           selectedAcademicStatus !== 'Permanent Suspension Requests Received' && (
                             <MenuItem onClick={selectionChangeHandler} data-my-value={'blacklist'}>

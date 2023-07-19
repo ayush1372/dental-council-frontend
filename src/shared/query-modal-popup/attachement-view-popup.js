@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import CloseIcon from '@mui/icons-material/Close';
-import { Box, Button, Card, Container, Modal, Typography } from '@mui/material';
+import { Box, Card, Container, Modal, Typography } from '@mui/material';
 
 export default function AttachmentViewPopup(props) {
   const [open, setOpen] = useState(true);
@@ -64,7 +64,7 @@ export default function AttachmentViewPopup(props) {
                 />
               )}
             </Box>
-            <Box display="flex" justifyContent="flex-end" mt={1}>
+            {/* <Box display="flex" justifyContent="flex-end" mt={1}>
               <Button
                 size="small"
                 onClick={handleClose}
@@ -76,7 +76,7 @@ export default function AttachmentViewPopup(props) {
               >
                 Close
               </Button>
-            </Box>
+            </Box> */}
           </Box>
         </Container>
       </Modal>

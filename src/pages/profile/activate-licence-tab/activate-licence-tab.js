@@ -322,7 +322,7 @@ const ActivateLicence = () => {
         </>
       ) : (
         <Grid sx={{ m: 2 }} lg={12} md={12}>
-          <Grid mt={3}>
+          <Grid>
             <TableSearch
               data-testid="tab-heading"
               searchParams={searchParams}
