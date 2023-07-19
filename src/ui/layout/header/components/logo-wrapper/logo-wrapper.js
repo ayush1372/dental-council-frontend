@@ -25,8 +25,10 @@ import { IdleTimer } from '../../../../../helpers/components/idle-timer';
 import { colgTabs, doctorTabs } from '../../../../../helpers/components/sidebar-drawer-list-item';
 import {
   changeUserActiveTab,
+  login,
   logout,
   resetCommonReducer,
+  userLoggedInType,
 } from '../../../../../store/reducers/common-reducers';
 import { resetDoctorProfileReducer } from '../../../../../store/reducers/doctor-user-profile-reducer';
 import { Button } from '../../../../core';
@@ -149,10 +151,17 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
         behavior: 'smooth',
       });
     } else if (optionType === 'Dashboard') {
-      loggedInUserType === 'Doctor'
-        ? dispatch(changeUserActiveTab(doctorTabs[0].tabName))
-        : dispatch(changeUserActiveTab(colgTabs[0].tabName));
-
+      if (loggedInUserType === 'Doctor') {
+        dispatch(changeUserActiveTab(doctorTabs[0].tabName));
+        dispatch(login());
+        dispatch(userLoggedInType(loggedInUserType));
+        navigate(`/profile`);
+      } else {
+        dispatch(changeUserActiveTab(colgTabs[0].tabName));
+        dispatch(login());
+        dispatch(userLoggedInType(loggedInUserType));
+        navigate(`/profile`);
+      }
       window.scrollTo({
         top: 0,
         behavior: 'smooth',

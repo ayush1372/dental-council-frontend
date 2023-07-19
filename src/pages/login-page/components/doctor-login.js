@@ -361,7 +361,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
               required
               disabled={otpFormEnabled}
               label={'NMR ID'}
-              placeholder={'Please enter NMR ID'}
+              placeholder={'Enter NMR ID'}
               inputProps={{ maxLength: 12 }}
               name={'nmrID'}
               {...register('nmrID', {
@@ -420,7 +420,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
               required
               fullWidth
               label={'Username'}
-              placeholder={'Please enter username'}
+              placeholder={'Enter username'}
               name={'userID'}
               error={errors.userID?.message}
               {...register('userID', {
@@ -456,7 +456,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
               type="Password"
               name="password"
               required="true"
-              placeholder={'Please enter password'}
+              placeholder={'Enter password'}
               error={errors.password?.message}
               margin="dense"
               inputProps={{
