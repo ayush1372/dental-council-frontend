@@ -91,13 +91,13 @@ function TrackAppicationTable({
       type: 'string',
     },
     {
-      title: 'Type of Application',
+      title: 'Application Type',
       name: 'application_type_name',
       sorting: true,
       type: 'string',
     },
 
-    { title: 'Date of Submission', name: 'created_at', sorting: true, type: 'date' },
+    { title: 'Submission Date', name: 'created_at', sorting: true, type: 'date' },
     {
       title: 'Current Status',
       name: 'doctor_status',

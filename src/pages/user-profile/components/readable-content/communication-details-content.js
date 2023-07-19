@@ -24,8 +24,8 @@ const CommunicationAddress = ({ personalDetails }) => {
     : village?.name || '';
 
   return (
-    <Grid container spacing={2} mt={2}>
-      <Grid container item spacing={2}>
+    <Grid container spacing={1} mt={1}>
+      <Grid container item spacing={1}>
         <Grid item xs={12} md={3}>
           <Typography variant="subtitle2" color="grey.label">
             House
@@ -81,7 +81,7 @@ const CommunicationAddress = ({ personalDetails }) => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid container item spacing={2}>
+      <Grid container item spacing={1}>
         <Grid item xs={12} md={3}>
           <Typography variant="subtitle2" color="grey.label">
             District
@@ -134,7 +134,7 @@ const CommunicationAddress = ({ personalDetails }) => {
         </Grid>
       </Grid>
 
-      <Grid container item spacing={2}>
+      <Grid container item spacing={1}>
         <Grid item xs={12} md={3}>
           <Typography variant="subtitle2" color="grey.label">
             Pincode
