@@ -203,6 +203,18 @@ function FacilityDetailsTable({ declaredFacilityData, currentWorkDetails }) {
           <Box display={'flex'} justifyContent={'flex-end'} mt={1}>
             <Button
               onClick={() => {
+                facilityDeLinkHandler(selectedRowIndex);
+              }}
+              color="secondary"
+              variant="contained"
+              sx={{
+                margin: '0 4px',
+              }}
+            >
+              Yes
+            </Button>
+            <Button
+              onClick={() => {
                 setConfirmationModal(false);
               }}
               data-testid="confirmModal"
@@ -213,18 +225,6 @@ function FacilityDetailsTable({ declaredFacilityData, currentWorkDetails }) {
               }}
             >
               No
-            </Button>
-            <Button
-              onClick={() => {
-                facilityDeLinkHandler(selectedRowIndex);
-              }}
-              color="secondary"
-              variant="contained"
-              sx={{
-                margin: '0 4px',
-              }}
-            >
-              Yes
             </Button>
           </Box>
         </Box>

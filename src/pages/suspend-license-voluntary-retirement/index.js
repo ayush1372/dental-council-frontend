@@ -67,39 +67,39 @@ export function SuspendLicenseVoluntaryRetirement({
     switch (selectedValue) {
       case 'forward':
         action_id = 2;
-        setSuccessPopupMessage('Forwarded Successfully');
+        setSuccessPopupMessage('Application has been forwarded');
         break;
       case 'raise':
         action_id = 3;
-        setSuccessPopupMessage('Query Raised Successfully');
+        setSuccessPopupMessage('Query has been raised');
         break;
       case 'verify':
         action_id = 4;
         user_group_id === 3
-          ? setSuccessPopupMessage('Approved Successfully')
-          : setSuccessPopupMessage('Verified Successfully');
+          ? setSuccessPopupMessage('Application has been approved')
+          : setSuccessPopupMessage('Application has been verified');
         break;
       case 'approve':
         action_id = 4;
         user_group_id === 3
-          ? setSuccessPopupMessage('Approved Successfully')
-          : setSuccessPopupMessage('Verified Successfully');
+          ? setSuccessPopupMessage('Application has been approved')
+          : setSuccessPopupMessage('Application has been verified');
         break;
       case 'reject':
         action_id = 5;
-        setSuccessPopupMessage('Rejected Successfully');
+        setSuccessPopupMessage('Application has been rejected');
         break;
       case 'blacklist':
         action_id = 6;
-        setSuccessPopupMessage('Permanently Suspended');
+        setSuccessPopupMessage('Temporarily Suspended');
         break;
       case 'suspend':
         action_id = 7;
-        setSuccessPopupMessage('Voluntary Suspended');
+        setSuccessPopupMessage('Permanently Suspended');
         break;
       default:
         action_id = 1;
-        setSuccessPopupMessage('User ID suspended successfully');
+        setSuccessPopupMessage('User has been suspended');
         break;
     }
     let temp_application_type_id;
@@ -295,19 +295,19 @@ export function SuspendLicenseVoluntaryRetirement({
         </Typography>
       )}
 
-      <Typography variant="h2" mt={2} mb={4} color="primary" textAlign={'center'}>
+      <Typography variant="h2" mb={4} color="primary" textAlign={'center'}>
         {selectedValue === 'verify'
-          ? 'VERIFY!'
+          ? 'Verify'
           : selectedValue === 'raise'
-          ? 'Raise a Query for all'
+          ? 'Raise a Query'
           : selectedValue === 'approve'
-          ? 'Reason to Approve Application'
+          ? 'Approve Application'
           : selectedValue === 'reject'
-          ? 'Reason to Reject Application'
+          ? 'Reject Application'
           : selectedValue === 'suspend'
-          ? 'Want to Permanent Suspend?'
+          ? 'Permanently Suspend'
           : selectedValue === 'blacklist'
-          ? 'Request NMC to Temporary Suspend?'
+          ? 'Temporarily Suspend'
           : ''}
       </Typography>
       {selectedValue === 'raise' ||
@@ -530,7 +530,7 @@ export function SuspendLicenseVoluntaryRetirement({
       )}
       <Box align={selectedValue === 'verify' ? 'center' : ''}>
         <Typography
-          mt={2}
+          mt={1}
           color="grey.context"
           textAlign={selectedValue === 'verify' || selectedValue === 'forward' ? 'center' : ''}
           variant="h3"
@@ -538,13 +538,13 @@ export function SuspendLicenseVoluntaryRetirement({
           {selectedValue === 'verify' &&
           (selectedAcademicStatus !== 'Temporary Suspension Requests Received' ||
             selectedAcademicStatus !== 'Permanent Suspension Requests Received')
-            ? 'Are you sure you want to approve the details of the doctor?'
+            ? 'Are you sure you want to verify this application?'
             : selectedValue === 'verify' &&
               (selectedAcademicStatus === 'Temporary Suspension Requests Received' ||
                 selectedAcademicStatus === 'Permanent Suspension Requests Received')
-            ? 'Are you sure you want to approve suspension request of the doctor.'
+            ? 'Are you sure you want to approve this request?'
             : selectedValue === 'forward'
-            ? 'Are you sure you want to forward the doctor details to College/NBE?'
+            ? 'Are you sure you want to forward this application to College/NBE?'
             : ''}
         </Typography>
       </Box>
@@ -592,7 +592,7 @@ export function SuspendLicenseVoluntaryRetirement({
       {selectedValue === 'raise' && (
         <Box>
           <Typography>
-            Raise a Query for the following
+            Raise a query for the following
             <Typography component="span" color="error.main">
               *
             </Typography>
@@ -755,9 +755,6 @@ export function SuspendLicenseVoluntaryRetirement({
           )}
           {selectedValue === 'verify' || selectedValue === 'forward' ? (
             <Box align="center">
-              <Button color="grey" variant="contained" sx={{ marginLeft: 2 }} onClick={handleClose}>
-                No
-              </Button>
               <Button
                 color="secondary"
                 variant="contained"
@@ -765,6 +762,9 @@ export function SuspendLicenseVoluntaryRetirement({
                 onClick={handleSubmit(onSubmit)}
               >
                 Yes
+              </Button>
+              <Button color="grey" variant="contained" sx={{ marginLeft: 2 }} onClick={handleClose}>
+                No
               </Button>
             </Box>
           ) : (
@@ -808,6 +808,16 @@ export function SuspendLicenseVoluntaryRetirement({
             </Box>
             <Box display={'flex'} justifyContent={'flex-end'} mt={1}>
               <Button
+                onClick={handleSubmit(onSubmit)}
+                color="secondary"
+                variant="contained"
+                sx={{
+                  margin: '0 4px',
+                }}
+              >
+                Yes
+              </Button>
+              <Button
                 onClick={() => {
                   setConformSuspend(false);
                   setConfirmationModal(false);
@@ -820,16 +830,6 @@ export function SuspendLicenseVoluntaryRetirement({
                 }}
               >
                 No
-              </Button>
-              <Button
-                onClick={handleSubmit(onSubmit)}
-                color="secondary"
-                variant="contained"
-                sx={{
-                  margin: '0 4px',
-                }}
-              >
-                Yes
               </Button>
             </Box>
           </Box>

@@ -27,7 +27,6 @@ export default function SuccessModalPopup({
   setOpen,
   text,
   loginName,
-  workDetails,
   handleClose,
   SuspensionCall,
   isHpIdCreated,
@@ -48,9 +47,6 @@ export default function SuccessModalPopup({
   const { loginData } = useSelector((state) => state?.loginReducer);
 
   const handleCloseModal = () => {
-    if (workDetails) {
-      dispatch(changeUserActiveTab(doctorTabs[1].tabName));
-    }
     setOpen(false);
   };
   const navigateToSetPassword = () => {
@@ -221,7 +217,7 @@ export default function SuccessModalPopup({
               ? 'Set Password'
               : changeUserData
               ? 'Okay'
-              : 'Ok'}
+              : 'Done'}
           </Button>
         </Box>
       </Container>

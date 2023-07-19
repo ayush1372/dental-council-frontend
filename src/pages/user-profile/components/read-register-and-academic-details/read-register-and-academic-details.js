@@ -344,7 +344,7 @@ const ReadRegisterAndAcademicDetails = ({
                           !!dashboardTableDetails &&
                           dashboardTableDetails !== 'Approved' && (
                             <MenuItem onClick={selectionChangeHandler} data-my-value={'raise'}>
-                              Raise a Query
+                              Verify
                             </MenuItem>
                           )}
                         {loggedInUserType === 'SMC' &&
@@ -352,7 +352,7 @@ const ReadRegisterAndAcademicDetails = ({
                           userActiveTab !== 'Activate Licence' &&
                           selectedAcademicStatus !== 'College/NBE Verified' && (
                             <MenuItem onClick={selectionChangeHandler} data-my-value={'verify'}>
-                              Verify
+                              Raise a Query
                             </MenuItem>
                           )}
                         <MenuItem onClick={selectionChangeHandler} data-my-value={'reject'}>
@@ -365,7 +365,7 @@ const ReadRegisterAndAcademicDetails = ({
                           selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
                           selectedAcademicStatus !== 'Permanent Suspension Requests Received' && (
                             <MenuItem onClick={selectionChangeHandler} data-my-value={'suspend'}>
-                              Permanent suspend
+                              Temporary Suspend
                             </MenuItem>
                           )}
                         {personalDetails.nmr_id !== undefined &&
@@ -375,7 +375,7 @@ const ReadRegisterAndAcademicDetails = ({
                           selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
                           selectedAcademicStatus !== 'Permanent Suspension Requests Received' && (
                             <MenuItem onClick={selectionChangeHandler} data-my-value={'blacklist'}>
-                              Temporary suspend
+                              Permanent Suspend
                             </MenuItem>
                           )}
                       </Menu>
