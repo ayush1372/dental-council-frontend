@@ -100,41 +100,34 @@ const ReadRegisterAndAcademicDetails = ({
     setShowSuccessPopup(true);
   };
 
-  //Helper method to identify the qualification is primary or addtional qualification.
-  const isPrimaryQualification = (elementIndex) => {
-    if (elementIndex === 0) {
-      return false;
-    } else {
-      return true;
-    }
-  };
-
   useEffect(() => {
     if (!isNaN(selectedDataIndex)) {
       let filteredQualificationDetails = [];
 
-      registrationDetails?.qualification_detail_response_tos?.map((element, index) => {
-        if (
-          element &&
-          (element?.is_verified === 1 ||
-            element?.request_id ===
-              dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]?.request_id) &&
-          isPrimaryQualification(index)
-        ) {
-          filteredQualificationDetails.push(element);
-        } else if (!isPrimaryQualification(index)) {
-          filteredQualificationDetails.push(element);
-        }
-        if (element && element?.is_verified !== 1) {
-          setShowForwardButton(
-            element?.qualification_from === 'India'
-              ? true
-              : element?.qualification_from === 'International' &&
-                loggedInUserType === 'SMC' &&
-                selectedAcademicStatus === 'Pending'
-              ? true
-              : false
-          );
+      registrationDetails?.qualification_detail_response_tos?.map((element, elementIndex) => {
+        if (element) {
+          if (
+            (element?.is_verified === 1 ||
+              element?.request_id ===
+                dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]?.request_id) &&
+            elementIndex !== 0
+          ) {
+            filteredQualificationDetails.push(element);
+          }
+          if (elementIndex === 0) {
+            filteredQualificationDetails.push(element);
+          }
+          if (element?.is_verified !== 1) {
+            setShowForwardButton(
+              element?.qualification_from === 'India'
+                ? true
+                : element?.qualification_from === 'International' &&
+                  loggedInUserType === 'SMC' &&
+                  selectedAcademicStatus === 'Pending'
+                ? true
+                : false
+            );
+          }
         }
       });
       let newRegistrationDetails = {};
