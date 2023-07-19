@@ -23,7 +23,7 @@ const WizardSteps = ({
             data-testid={`step_${index}_button`}
             sx={{
               width: '100%',
-              height: '102px',
+              height: '80px',
               padding: '12px',
               border: '1px solid',
               borderColor: 'inputBorderColor.main',
