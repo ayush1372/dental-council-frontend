@@ -39,7 +39,6 @@ export default function GenericTable(props) {
   const [confirmationModal, setConfirmationModal] = useState(false);
   const [selectedSuspendLicenseProfile, setSelectedSuspendLicenseProfile] = useState();
 
-  let sno = 0;
   const selectionChangeHandler = (event, row) => {
     const { myValue } = event.currentTarget.dataset;
     setSelected(myValue);
@@ -324,7 +323,7 @@ export default function GenericTable(props) {
                         width: '5em',
                       }}
                     >
-                      {++sno}
+                      {row[item.name]?.value}
                     </TableCell>
                   );
                 } else {
