@@ -1,4 +1,4 @@
-import { Grid, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
@@ -48,7 +48,7 @@ const YearOfRegistration = ({ setDoSearch, setSearchData, setScrollDown }) => {
   };
   return (
     <Grid container spacing={2} mt={2}>
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         <Typography
           bgcolor="grey1.light"
           p={1}
@@ -58,7 +58,7 @@ const YearOfRegistration = ({ setDoSearch, setSearchData, setScrollDown }) => {
         >
           Browse by year of registration*
         </Typography>
-      </Grid>
+      </Grid> */}
       <Grid item xs={8}>
         <SearchableDropdown
           sx={{
@@ -72,7 +72,7 @@ const YearOfRegistration = ({ setDoSearch, setSearchData, setScrollDown }) => {
           name="YearofRegistration"
           items={yeardata}
           placeholder="Select year of registration"
-          label=" Year of registration"
+          label=" Year of Registration"
           clearErrors={clearErrors}
           error={errors.YearofRegistration?.message}
           {...register('YearofRegistration')}

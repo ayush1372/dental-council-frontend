@@ -63,7 +63,7 @@ const AdvanceSearch = ({ setDoSearch, setSearchData, setScrollDown }) => {
   };
   return (
     <Grid container spacing={2} mt={2}>
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         <Typography
           bgcolor="grey1.light"
           p={1}
@@ -73,7 +73,7 @@ const AdvanceSearch = ({ setDoSearch, setSearchData, setScrollDown }) => {
         >
           Browse by any details*
         </Typography>
-      </Grid>
+      </Grid> */}
       <Grid item xs={4}>
         <TextField
           sx={{
@@ -82,7 +82,7 @@ const AdvanceSearch = ({ setDoSearch, setSearchData, setScrollDown }) => {
           variant="outlined"
           name={'DoctorName'}
           placeholder="Enter doctor name"
-          label={'Doctor name'}
+          label={'Doctor Name'}
           fullWidth
           defaultValue={getValues().DoctorName}
           {...register('DoctorName', {
@@ -102,7 +102,7 @@ const AdvanceSearch = ({ setDoSearch, setSearchData, setScrollDown }) => {
       <Grid item xs={4}>
         <Grid>
           <Typography color="inputTextColor.main">
-            Registration number{' '}
+            Registration Number{' '}
             {/* <ErrorOutlineIcon
               fontSize="width12"
               sx={{
@@ -129,7 +129,7 @@ const AdvanceSearch = ({ setDoSearch, setSearchData, setScrollDown }) => {
       </Grid>
       <Grid item xs={4}>
         <Typography component="span" color="inputTextColor.main">
-          Year of registration
+          Year of Registration
         </Typography>
 
         <Select
@@ -146,7 +146,7 @@ const AdvanceSearch = ({ setDoSearch, setSearchData, setScrollDown }) => {
       </Grid>
       <Grid item xs={8}>
         <Typography component="span" color="inputTextColor.main">
-          State medical council
+          State Medical Council
         </Typography>
         <Select
           sx={{

@@ -100,19 +100,19 @@ export function CollegeDean({ showPage, updateShowPage }) {
           type="text"
           name="deanName"
           required="true"
-          placeholder={t('College Dean Name')}
+          placeholder={t('Enter name')}
           margin="dense"
           defaultValue={getValues().deanName}
           error={errors.deanName?.message}
           {...register('deanName', {
-            required: 'Enter valid name',
+            required: 'Please enter a valid name',
           })}
         />
       </Grid>
       <Grid item xs={12} md={6} sm={6} lg={4}>
         <Typography variant="body1" color="inputTextColor.main">
           {/* <b>{t('College Dean Phone Number')}</b> */}
-          <b>{t(' Phone Number')}</b>
+          <b>{t(' Mobile Number')}</b>
         </Typography>
         <Typography component="span" color="error.main">
           *
@@ -125,15 +125,15 @@ export function CollegeDean({ showPage, updateShowPage }) {
           type="text"
           name="deanPhoneNumber"
           required="true"
-          placeholder={t('College Dean Phone Number')}
+          placeholder={t('Enter mobile number')}
           margin="dense"
           defaultValue={getValues().deanPhoneNumber}
           error={errors.deanPhoneNumber?.message}
           {...register('deanPhoneNumber', {
-            required: 'Enter valid phone number',
+            required: 'Please enter mobile number',
             pattern: {
               value: /^(\d{10})$/i,
-              message: 'Enter valid phone number',
+              message: 'Please enter a valid mobile number',
             },
           })}
         />
@@ -141,7 +141,7 @@ export function CollegeDean({ showPage, updateShowPage }) {
       <Grid item xs={12} md={6} sm={6} lg={4}>
         <Typography variant="body1" color="inputTextColor.main">
           {/* <b>{t('College Dean Email Address')}</b> */}
-          <b>{t(' Email Address')}</b>
+          <b>{t(' Email')}</b>
         </Typography>
         <Typography component="span" color="error.main">
           *
@@ -154,16 +154,16 @@ export function CollegeDean({ showPage, updateShowPage }) {
           type="email"
           name="deanEmail"
           required="true"
-          placeholder={t('College Dean Email Address')}
+          placeholder={t('Enter email')}
           margin="dense"
           defaultValue={getValues().deanEmail}
           error={errors.deanEmail?.message}
           {...register('deanEmail', {
-            required: 'Enter valid email address',
+            required: 'Please enter email',
             pattern: {
               value:
                 /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-              message: 'Enter Valid Email Address',
+              message: 'Please enter a valid email',
             },
           })}
         />

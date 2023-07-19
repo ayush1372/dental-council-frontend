@@ -93,10 +93,17 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
             borderRadius="5px"
             border={`1px solid ${theme?.palette?.inputBorderColor?.main}`}
           >
-
-            <Grid item pl={2} pr={2} py={2} xs={12} sm={6} md={4}
+            <Grid
+              item
+              pl={2}
+              pr={2}
+              py={2}
+              xs={12}
+              sm={6}
+              md={4}
               borderRight={`1px solid ${theme?.palette?.inputBorderColor?.main}`}
-              borderBottom={`1px solid ${theme?.palette?.inputBorderColor?.main}`}>
+              borderBottom={`1px solid ${theme?.palette?.inputBorderColor?.main}`}
+            >
               <Typography
                 component="div"
                 variant="body1"
@@ -110,61 +117,93 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
               </Typography>
             </Grid>
 
-            <Grid item pl={2} pr={2} py={2} xs={12} sm={6} md={4}
+            <Grid
+              item
+              pl={2}
+              pr={2}
+              py={2}
+              xs={12}
+              sm={6}
+              md={4}
               borderRight={`1px solid ${theme?.palette?.inputBorderColor?.main}`}
-              borderBottom={`1px solid ${theme?.palette?.inputBorderColor?.main}`}>
+              borderBottom={`1px solid ${theme?.palette?.inputBorderColor?.main}`}
+            >
               <Typography
                 component="div"
                 variant="body1"
                 fontWeight="400"
                 color="inputTextColor.main"
               >
-                Registration number
+                Registration Number
               </Typography>
               <Typography component="div" variant="body1" color="textSecondary.main">
                 {searchDetailsById?.data?.data?.registration_number || '-'}
               </Typography>
             </Grid>
 
-            <Grid item pl={2} pr={2} py={2} xs={12} sm={6} md={4}
-            borderBottom={`1px solid ${theme?.palette?.inputBorderColor?.main}`}>
+            <Grid
+              item
+              pl={2}
+              pr={2}
+              py={2}
+              xs={12}
+              sm={6}
+              md={4}
+              borderBottom={`1px solid ${theme?.palette?.inputBorderColor?.main}`}
+            >
               <Typography
                 component="div"
                 variant="body1"
                 fontWeight="400"
                 color="inputTextColor.main"
               >
-                Year of registration
+                Year of Registration
               </Typography>
               <Typography component="div" variant="body1" color="textSecondary.main">
                 {searchDetailsById?.data?.data?.registration_year || '-'}
               </Typography>
             </Grid>
 
-            <Grid item pl={2} pr={2} py={2} xs={12} sm={6} md={4}
-              borderRight={`1px solid ${theme?.palette?.inputBorderColor?.main}`}>
+            <Grid
+              item
+              pl={2}
+              pr={2}
+              py={2}
+              xs={12}
+              sm={6}
+              md={4}
+              borderRight={`1px solid ${theme?.palette?.inputBorderColor?.main}`}
+            >
               <Typography
                 component="div"
                 variant="body1"
                 fontWeight="400"
                 color="inputTextColor.main"
               >
-                Basic qualification
+                Qualification
               </Typography>
               <Typography component="span" variant="body1" color="textSecondary.main">
                 {searchDetailsById?.data?.data?.qualifications[0]?.qualification || '-'}
               </Typography>
             </Grid>
 
-            <Grid item pl={2} pr={2} py={2} xs={12} sm={6} md={4}
-              borderRight={`1px solid ${theme?.palette?.inputBorderColor?.main}`}>
+            <Grid
+              item
+              pl={2}
+              pr={2}
+              py={2}
+              xs={12}
+              sm={6}
+              md={4}
+              borderRight={`1px solid ${theme?.palette?.inputBorderColor?.main}`}
+            >
               <Typography
                 component="div"
                 variant="body1"
                 fontWeight="400"
                 color="inputTextColor.main"
               >
-                Qualification year
+                Qualification Year
               </Typography>
               <Typography component="span" variant="body1" color="textSecondary.main">
                 {searchDetailsById?.data?.data?.qualifications[0]?.qualification_year || '-'}
@@ -178,14 +217,13 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                 fontWeight="400"
                 color="inputTextColor.main"
               >
-                University name
+                University Name
               </Typography>
               <Typography component="span" variant="body1" color="textSecondary.main">
                 {searchDetailsById?.data?.data?.qualifications[0]?.university_name || '-'}
               </Typography>
             </Grid>
           </Grid>
-          
         </Box>
 
         {searchDetailsById?.data?.data?.qualifications
@@ -204,14 +242,24 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                     mb={3}
                     borderLeft={`3px solid ${theme?.palette?.secondary?.main}`}
                   >
-                    Additional Qualification :- {index}
+                    Additional Qualification: {index}
                   </Typography>
-                  <Grid container
+                  <Grid
+                    container
                     borderRadius="5px"
-                    border={`1px solid ${theme?.palette?.inputBorderColor?.main}`}>
-                    <Grid item pl={2} pr={2} py={2} xs={12} sm={6} md={4}
+                    border={`1px solid ${theme?.palette?.inputBorderColor?.main}`}
+                  >
+                    <Grid
+                      item
+                      pl={2}
+                      pr={2}
+                      py={2}
+                      xs={12}
+                      sm={6}
+                      md={4}
                       borderRight={`1px solid ${theme?.palette?.inputBorderColor?.main}`}
-                      borderBottom={`1px solid ${theme?.palette?.inputBorderColor?.main}`}>
+                      borderBottom={`1px solid ${theme?.palette?.inputBorderColor?.main}`}
+                    >
                       <Typography
                         component="div"
                         variant="body1"
@@ -224,23 +272,39 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                         {q?.qualification}
                       </Typography>
                     </Grid>
-                    <Grid item pl={2} pr={2} py={2} xs={12} sm={6} md={4}
+                    <Grid
+                      item
+                      pl={2}
+                      pr={2}
+                      py={2}
+                      xs={12}
+                      sm={6}
+                      md={4}
                       borderRight={`1px solid ${theme?.palette?.inputBorderColor?.main}`}
-                      borderBottom={`1px solid ${theme?.palette?.inputBorderColor?.main}`}>
+                      borderBottom={`1px solid ${theme?.palette?.inputBorderColor?.main}`}
+                    >
                       <Typography
                         component="div"
                         variant="body1"
                         fontWeight="400"
                         color="inputTextColor.main"
                       >
-                        Qualification year
+                        Qualification Year
                       </Typography>
                       <Typography component="div" variant="body1" color="textSecondary.main">
                         {q?.qualification_year}
                       </Typography>
                     </Grid>
-                    <Grid item pl={2} pr={2} py={2} xs={12} sm={6} md={4}
-                      borderBottom={`1px solid ${theme?.palette?.inputBorderColor?.main}`}>
+                    <Grid
+                      item
+                      pl={2}
+                      pr={2}
+                      py={2}
+                      xs={12}
+                      sm={6}
+                      md={4}
+                      borderBottom={`1px solid ${theme?.palette?.inputBorderColor?.main}`}
+                    >
                       <Typography
                         component="div"
                         variant="body1"
@@ -253,9 +317,16 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                         {q?.university_name}
                       </Typography>
                     </Grid>
-                    {q.broad_speciality? 
-                      <Grid item pl={2} pr={2} py={2} xs={12} sm={6} md={4}
-                      borderRight={`1px solid ${theme?.palette?.inputBorderColor?.main}`}
+                    {q.broad_speciality ? (
+                      <Grid
+                        item
+                        pl={2}
+                        pr={2}
+                        py={2}
+                        xs={12}
+                        sm={6}
+                        md={4}
+                        borderRight={`1px solid ${theme?.palette?.inputBorderColor?.main}`}
                       >
                         <Typography
                           component="div"
@@ -268,12 +339,20 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                         <Typography component="div" variant="body1" color="textSecondary.main">
                           {q?.broad_speciality}
                         </Typography>
-                      </Grid>:
-                      ''  
-                    }
-                    {q.super_speciality? 
-                      <Grid item pl={2} pr={2} py={2} xs={12} sm={6} md={4}
-                      borderRight={`1px solid ${theme?.palette?.inputBorderColor?.main}`}
+                      </Grid>
+                    ) : (
+                      ''
+                    )}
+                    {q.super_speciality ? (
+                      <Grid
+                        item
+                        pl={2}
+                        pr={2}
+                        py={2}
+                        xs={12}
+                        sm={6}
+                        md={4}
+                        borderRight={`1px solid ${theme?.palette?.inputBorderColor?.main}`}
                       >
                         <Typography
                           component="div"
@@ -286,9 +365,10 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                         <Typography component="div" variant="body1" color="textSecondary.main">
                           {q?.super_speciality}
                         </Typography>
-                      </Grid>:
-                      ''  
-                    }
+                      </Grid>
+                    ) : (
+                      ''
+                    )}
                   </Grid>
                 </Box>
               ) : (

@@ -95,11 +95,11 @@ const ChangePassword = () => {
                 type="Password"
                 name="oldPassword"
                 required="true"
-                placeholder={t('Old Password')}
+                placeholder={t('Old password')}
                 defaultValue={getValues().oldPassword}
                 error={errors.oldPassword?.message}
                 {...register('oldPassword', {
-                  required: 'Enter old password',
+                  required: 'Please enter a valid old password',
                 })}
               />
             </Box>
@@ -118,11 +118,11 @@ const ChangePassword = () => {
                 type="Password"
                 name="newPassword"
                 required="true"
-                placeholder={t('New Password')}
+                placeholder={t('New password')}
                 defaultValue={getValues().newPassword}
                 error={errors.newPassword?.message}
                 {...register('newPassword', {
-                  required: 'Enter new password',
+                  required: 'Please enter a valid new password',
                 })}
               />
             </Box>
@@ -141,11 +141,11 @@ const ChangePassword = () => {
                 type="Password"
                 name="confirmPassword"
                 required="true"
-                placeholder={t('Confirm Password')}
+                placeholder={t('Confirm password')}
                 defaultValue={getValues().confirmPassword}
                 error={errors.confirmPassword?.message}
                 {...register('confirmPassword', {
-                  required: 'Enter confirm password',
+                  required: 'Please enter a valid password',
                   validate: (val) => {
                     if (watch('newPassword') !== val) {
                       return 'Password does not match';
