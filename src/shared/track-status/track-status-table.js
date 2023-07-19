@@ -140,8 +140,6 @@ function TrackStatusTable(props) {
 
   const newRowsData = props?.trackStatusData?.health_professional_applications?.map(
     (application, index) => {
-      const formattedDate = moment(application?.created_at).format('DD-MM-YYYY:HH:MM:SS.SSSSSS');
-
       return createData(
         { type: 'SNo', value: index + 1 },
         {
@@ -186,7 +184,7 @@ function TrackStatusTable(props) {
           value: application?.nmc_status ? capitalize(application?.nmc_status) : '',
         },
 
-        { type: 'dateofSubmission', value: formattedDate },
+        { type: 'dateofSubmission', value: moment(application?.created_at).format('DD-MM-YYYY') },
         { type: 'pendency', value: application?.pendency },
         { type: 'pending', value: '-' },
         { type: 'HPProfileId', value: application?.hp_profile_id },

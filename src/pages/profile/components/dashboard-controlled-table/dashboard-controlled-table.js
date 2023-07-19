@@ -140,7 +140,6 @@ function DashboardControlledTable(props) {
   }, [order, orderBy, dispatch]);
 
   const newRowsData = dashboardTableDetails?.data?.dashboard_tolist?.map((application, index) => {
-    const formattedDate = moment(application?.created_at).format('DD-MM-YYYY');
     const capitalize = (str) => {
       if (!str) {
         return '';
@@ -177,7 +176,7 @@ function DashboardControlledTable(props) {
             : capitalize(application?.college_status),
       },
       { type: 'NMCVerificationStatus', value: capitalize(application?.nmc_status) },
-      { type: 'dateofSubmission', value: formattedDate },
+      { type: 'dateofSubmission', value: moment(application?.created_at).format('DD-MM-YYYY') },
       { type: 'pendency', value: application?.pendency },
       { type: 'view', value: 'View', onClickCallback: viewCallback },
       { type: 'profileID', value: application?.hp_profile_id }
