@@ -235,19 +235,6 @@ const CollegeDetails = ({ collegeDetails, setShowTable }) => {
               <Button
                 onClick={() => {
                   setConfirmationModal(false);
-                }}
-                data-testid="confirmModal"
-                color="grey"
-                variant="contained"
-                sx={{
-                  margin: '0 4px',
-                }}
-              >
-                No
-              </Button>
-              <Button
-                onClick={() => {
-                  setConfirmationModal(false);
                   setShowTable(true);
                   initiateCollegeFlow();
                 }}
@@ -258,6 +245,19 @@ const CollegeDetails = ({ collegeDetails, setShowTable }) => {
                 }}
               >
                 Yes
+              </Button>
+              <Button
+                onClick={() => {
+                  setConfirmationModal(false);
+                }}
+                data-testid="confirmModal"
+                color="grey"
+                variant="contained"
+                sx={{
+                  margin: '0 4px',
+                }}
+              >
+                No
               </Button>
             </Box>
           </Box>

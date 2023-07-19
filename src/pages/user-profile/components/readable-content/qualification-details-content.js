@@ -81,7 +81,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
             {element?.is_verified === 1 ? (
               <Typography
                 ml={2}
-                spacing={2}
+                spacing={1}
                 color="success.main"
                 display={'flex'}
                 justifyContent={'right'}
@@ -91,7 +91,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
             ) : element?.is_verified === 0 ? (
               <Typography
                 ml={2}
-                spacing={2}
+                spacing={1}
                 color="secondary.main"
                 display={'flex'}
                 justifyContent={'right'}
@@ -101,7 +101,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
             ) : element?.is_verified === 2 ? (
               <Typography
                 ml={2}
-                spacing={2}
+                spacing={1}
                 color="error.main"
                 display={'flex'}
                 justifyContent={'right'}
@@ -112,7 +112,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
               ''
             )}
           </Grid>
-          <Grid container item spacing={1} mt={1}>
+          <Grid container item spacing={1} mt={0.5}>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="grey.label">
                 Degree Name
@@ -219,7 +219,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
               </Grid>
             </Grid>
           </Grid>
-          <Grid container item spacing={1} mt={1}>
+          <Grid container item spacing={1} mt={0.5}>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="grey.label">
                 College Name
@@ -502,7 +502,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
               </>
             )}
           </Grid>
-          <Grid container item spacing={1} mt={1}>
+          <Grid container item spacing={1} mt={0.5}>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="grey.label">
                 Upload Qualification Degree

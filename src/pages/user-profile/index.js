@@ -246,6 +246,8 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
 
   const navigateToProfile = () => {
     navigate(`/profile`);
+    resetStep(0);
+    setIsReadMode(true);
   };
 
   function eSignHandler() {
@@ -454,7 +456,6 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
                 {!isReadMode && (
                   <BreadcrumbContainer
                     primary="My Profile"
-                    primaryLink={'/profile'}
                     secondary={'Edit Profile'}
                     onClick={navigateToProfile}
                   />
