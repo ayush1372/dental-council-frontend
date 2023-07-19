@@ -95,7 +95,7 @@ export default function Dashboard() {
 
   let dashboard = {
     'Registration Requests': registrationRequestData,
-    'Updation Requests': updationRequestData,
+    'Additional Qualification Requests': updationRequestData,
   };
 
   if (loggedInUserType === 'NMC' || loggedInUserType === 'SMC') {
@@ -316,7 +316,7 @@ export default function Dashboard() {
                     src={
                       element[0].includes('Registration')
                         ? RegistrationRequest
-                        : element[0].includes('Updation')
+                        : element[0].includes('Additional')
                         ? UpdationRequest
                         : element[0].includes('Suspension')
                         ? SuspensionRequest
@@ -326,7 +326,7 @@ export default function Dashboard() {
                   />
                   {element[0]}
                 </Typography>
-                {(element[0].includes('Registration') || element[0].includes('Updation')) &&
+                {(element[0].includes('Registration') || element[0].includes('Additional')) &&
                 loggedInUserType === 'SMC' ? (
                   <Grid container display="flex" flexWrap="wrap" gap={{ xs: 1, xl: 2 }}>
                     <Grid
@@ -375,7 +375,7 @@ export default function Dashboard() {
                           <Typography
                             color="primary"
                             component="div"
-                            fontSize={{ xs: '12px', sm: '12px', md: '14px', lg: '14px' }}
+                            fontSize={{ xs: '10px', sm: '12px', md: '12px', lg: '14px' }}
                             lineHeight={{ xs: '14px', sm: '16px', md: '18px', lg: '18px' }}
                             mb={1}
                           >
@@ -384,7 +384,7 @@ export default function Dashboard() {
                           <Typography
                             component="div"
                             fontWeight="400"
-                            fontSize={{ xs: '12px', sm: '12px', md: '12px', lg: '13px' }}
+                            fontSize={{ xs: '9px', sm: '11px', md: '11px', lg: '12px' }}
                             lineHeight={{ xs: '14px', sm: '16px', md: '16px', lg: '16px' }}
                           >
                             {getTextLabelIcons(item)}
