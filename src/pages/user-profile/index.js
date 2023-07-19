@@ -56,6 +56,9 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
   const emailNotify = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.email_notification_enabled
   );
+  const emailVerified = useSelector(
+    (state) => state?.doctorUserProfileReducer?.personalDetails?.email_verified
+  );
   const mobileNotify = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.sms_notification_enabled
   );
@@ -243,6 +246,8 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
 
   const navigateToProfile = () => {
     navigate(`/profile`);
+    resetStep(0);
+    setIsReadMode(true);
   };
 
   function eSignHandler() {
@@ -451,7 +456,6 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
                 {!isReadMode && (
                   <BreadcrumbContainer
                     primary="My Profile"
-                    primaryLink={'/profile'}
                     secondary={'Edit Profile'}
                     onClick={navigateToProfile}
                   />
@@ -531,7 +535,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
                         <Switch
                           color="primary"
                           checked={emailNotify}
-                          disabled={emailNotify === 'true' ? false : true}
+                          disabled={!emailVerified}
                           onChange={(e) => {
                             handleNotification(e, 'email');
                           }}
