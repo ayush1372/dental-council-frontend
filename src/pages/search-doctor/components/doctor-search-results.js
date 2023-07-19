@@ -123,7 +123,7 @@ const SearchResults = ({ searchData, scrolldown }) => {
                       >
                         <Box>
                           <Typography component="div" variant="body5" color="grey.label">
-                            Registration number
+                            Registration Number
                           </Typography>
                           <Typography component="div" variant="body3" color="primary">
                             {doctor?.registration_number || ''}
