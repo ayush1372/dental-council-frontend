@@ -505,6 +505,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
   const handleGender = (event) => {
     setValue(event.target.name, event.target.value, true);
   };
+
   return (
     <Box
       sx={{
@@ -936,7 +937,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                     'House',
                     isSameAddress
                       ? ''
-                      : getValues()?.House?.length <= 0 && {
+                      : {
                           required: 'House is Required',
                           maxLength: {
                             value: 300,
@@ -1188,11 +1189,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                   }
                   {...register(
                     'State',
-                    !isSameAddress
-                      ? getValues()?.District?.length <= 0 && {
-                          required: 'State/Union territory is required',
-                        }
-                      : ''
+                    !isSameAddress && {
+                      required: 'State/Union territory is required',
+                    }
                   )}
                   options={createSelectFieldData(statesList)}
                   MenuProps={{
@@ -1238,6 +1237,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 />
               ) : (
                 <Select
+                  placeholder={'Select district'}
                   style={{
                     backgroundColor: isSameAddress
                       ? '#F0F0F0'
@@ -1425,9 +1425,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 placeholder="Pincode"
                 required={isSameAddress ? false : true}
                 fullWidth
-                style={{
+                sx={{
                   backgroundColor: isSameAddress
-                    ? '#F0F0F0'
+                    ? 'grey1.main'
                     : work_flow_status_id === 3 && getQueryRaised('Pincode')
                     ? '#F0F0F0'
                     : '',

@@ -442,12 +442,8 @@ const WorkDetails = ({
           />
         </Box>
         {workExperianceError && (
-          <Typography
-            color="suspendAlert.dark"
-            component="div"
-            display="inline-flex"
-            variant="body2"
-          >
+          <Typography sx={{ display: 'flex', alignItems: 'center' }} variant="body2" color="error">
+            <SvgImageComponent color={'error'} icon={'error'} />
             Please add the work experience
           </Typography>
         )}
@@ -473,18 +469,14 @@ const WorkDetails = ({
           // error={`Language spoken is required`}
         />
         {languageError && (
-          <Typography
-            style={{ display: 'flex', alignItems: 'center' }}
-            variant="body1"
-            color="error"
-          >
+          <Typography sx={{ display: 'flex', alignItems: 'center' }} variant="body2" color="error">
             <SvgImageComponent color={'error'} icon={'error'} />
             {`Please select the language spoken`}
           </Typography>
         )}
 
         <Typography variant="body4" color="messageBlue.main" display="flex" alignItems="center">
-          <InfoOutlinedIcon sx={{ fontSize: '20px', padding: '2px' }} />
+          <InfoOutlinedIcon sx={{ fontSize: 'large', padding: '2px' }} />
           Multiple languages can be selected
         </Typography>
       </Grid>

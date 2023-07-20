@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { Box, Typography, useTheme } from '@mui/material';
+import moment from 'moment';
 import { useSelector } from 'react-redux';
 
 import QueryRaiseIcon from '../../assets/images/query-raised-icon.svg';
@@ -14,7 +15,6 @@ import {
   userGroupTypeId,
 } from '../../helpers/functions/common-functions';
 import { Chip } from '../../ui/core';
-import moment from 'moment'
 export default function VerticalLinearStepper() {
   const ApplicationStatus = useSelector(
     (state) => state?.common?.doctorTrackApplicationTableData?.data?.data

@@ -492,7 +492,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               defaultValue={
                 getValues()?.RegistrationDate ? new Date(getValues()?.RegistrationDate) : undefined
               }
-              error={false}
+              // error={errors.RegistrationDate?.message}
+              // {...register('RegistrationDate', { required: 'Please select a valid date' })}
               backgroundColor={
                 work_flow_status_id === 3
                   ? '#F0F0F0'
@@ -511,6 +512,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                   ? false
                   : true
               }
+              disableFuture
             />
           </Grid>
         </Grid>
@@ -539,6 +541,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               ]}
               required={true}
               error={errors.registration?.message}
+              {...register('registration', { required: 'Please select registration type' })}
               disabled={work_flow_status_id === 3 ? getQueryRaised('Registration') : false}
             />
           </Grid>

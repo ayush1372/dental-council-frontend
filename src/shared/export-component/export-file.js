@@ -126,7 +126,7 @@ const ExportFiles = ({ exportData, flag }) => {
           column.header = 'Date of Submission (DD-MM-YYYY HH:MM )';
         }
         if (column.header === 'Pendency') {
-          column.header = 'Pendency (In Days)';
+          column.header = 'Pendency (Days)';
         }
         column.width = column.header.length + 20;
       });

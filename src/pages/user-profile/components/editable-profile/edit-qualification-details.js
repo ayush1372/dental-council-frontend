@@ -223,10 +223,7 @@ const EditQualificationDetails = ({
               placeholder="Enter roll number"
               required={true}
               fullWidth
-              error={
-                errors?.qualification?.[index]?.rollno?.message &&
-                getValues()[`qualification[${index}].rollno`]
-              }
+              error={errors?.qualification?.[index]?.rollno?.message}
               defaultValue={getValues()[`qualification[${index}].rollno`]}
               {...register(`qualification[${index}].rollno`, {
                 required: 'Roll no is required',
@@ -296,10 +293,7 @@ const EditQualificationDetails = ({
               required={true}
               type="number"
               fullWidth
-              error={
-                errors?.qualification?.[index]?.marksobtained?.message &&
-                getValues()[`qualification[${index}].marksobtained`]
-              }
+              error={errors?.qualification?.[index]?.marksobtained?.message}
               defaultValue={getValues()[`qualification[${index}].marksobtained`]}
               {...register(`qualification[${index}].marksobtained`, {
                 required: 'Marks obtained is required',
@@ -482,10 +476,7 @@ const EditQualificationDetails = ({
           {qualificationfrom === 'International' || isAdditionalQualification ? (
             <Select
               fullWidth
-              error={
-                getValues()?.qualification?.[index]?.qualification === '' &&
-                errors?.qualification?.[index]?.qualification?.message
-              }
+              error={errors?.qualification?.[index]?.qualification?.message}
               name="Qualification"
               placeholder={'Select degree'}
               label="Degree Name"
@@ -575,6 +566,7 @@ const EditQualificationDetails = ({
               placeholder={'Select country'}
               defaultValue={qualification?.country}
               required={true}
+              error={errors?.qualification?.[index]?.country?.message}
               {...register(`qualification[${index}].country`, { required: 'Country is required' })}
               style={{
                 backgroundColor:
@@ -598,11 +590,6 @@ const EditQualificationDetails = ({
                   maxWidth: 130,
                 },
               }}
-              error={
-                getValues()?.qualification[index]?.country?.length === 0
-                  ? errors?.qualification?.[index]?.country?.message
-                  : ''
-              }
             />
           </Grid>
         )}
@@ -689,10 +676,7 @@ const EditQualificationDetails = ({
               fullWidth
               name="college"
               label="College Name"
-              error={
-                getValues()?.qualification?.[index]?.college === '' &&
-                errors?.qualification?.[index]?.college?.message
-              }
+              error={errors?.qualification?.[index]?.college?.message}
               placeholder="Enter college name"
               defaultValue={qualification?.college}
               required={true}
@@ -720,10 +704,7 @@ const EditQualificationDetails = ({
           ) : (
             <Select
               fullWidth
-              error={
-                getValues().qualification[index].college === '' &&
-                errors?.qualification?.[index]?.college?.message
-              }
+              error={errors?.qualification?.[index]?.college?.message}
               name="College"
               label="College Name"
               placeholder={'Select college'}
@@ -764,10 +745,7 @@ const EditQualificationDetails = ({
           {qualificationfrom === 'International' ? (
             <TextField
               fullWidth
-              error={
-                getValues()?.qualification?.[index]?.university === '' &&
-                errors?.qualification?.[index]?.university?.message
-              }
+              error={errors?.qualification?.[index]?.university?.message}
               name="University"
               label="University Name"
               placeholder="Enter university"
@@ -797,10 +775,7 @@ const EditQualificationDetails = ({
           ) : (
             <Select
               fullWidth
-              error={
-                getValues().qualification[index].university === '' &&
-                errors?.qualification?.[index]?.university?.message
-              }
+              error={errors?.qualification?.[index]?.university?.message}
               placeholder={'Select university'}
               name="University"
               label="University Name"

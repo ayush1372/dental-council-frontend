@@ -192,12 +192,14 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep, l
         </Button>
         <Button
           variant="contained"
-          sx={{
-            backgroundColor: 'secondary.lightOrange',
-            '&:hover': {
-              backgroundColor: 'secondary.lightOrange',
-            },
-          }}
+          color="secondary"
+          sx={
+            {
+              // '&:hover': {
+              //   backgroundColor: 'secondary.lightOrange',
+              // },
+            }
+          }
           onClick={onSubmit}
         >
           {t('Submit')}
