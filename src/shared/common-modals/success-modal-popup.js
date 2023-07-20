@@ -23,7 +23,7 @@ import {
 import { setBreadcrumbsActivetab } from '../../store/reducers/common-reducers';
 import { loginActiveState } from '../../store/reducers/login-reducer';
 import { Button } from '../../ui/core';
-import successToast from '../../ui/core/toaster';
+// import successToast from '../../ui/core/toaster';
 
 export default function SuccessModalPopup({
   open,
@@ -128,11 +128,10 @@ export default function SuccessModalPopup({
           loggedInUserType !== 'College' &&
           loggedInUserType !== 'NBE'
         ) {
-          dispatch(getPersonalDetailsData(loginData?.data?.profile_id))
-            .then(() => {})
-            .catch((allFailMsg) => {
-              successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-            });
+          dispatch(getPersonalDetailsData(loginData?.data?.profile_id)).then(() => {});
+          // .catch((allFailMsg) => {
+          //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+          // });
         }
 
         dispatch(getCardCount());

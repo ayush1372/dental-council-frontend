@@ -18,7 +18,7 @@ import { getDistricts } from '../../../../store/reducers/common-reducers';
 import { getWorkProfileDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
 import { Button, RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
-import successToast from '../../../../ui/core/toaster';
+// import successToast from '../../../../ui/core/toaster';
 import { PostalCodeRegexValidation } from '../../../../utilities/common-validations';
 
 const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
@@ -92,20 +92,19 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
 
   const fetchSubDistricts = (districtId) => {
     if (districtId) {
-      dispatch(getSubDistrictsList(districtId))
-        .then(() => {})
-        .catch((allFailMsg) => {
-          successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-        });
+      dispatch(getSubDistrictsList(districtId)).then(() => {});
+      // .catch((allFailMsg) => {
+      //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      // });
     }
   };
 
   const fetchCities = (subDistrictId) => {
-    try {
-      dispatch(getCitiesList(subDistrictId)).then(() => {});
-    } catch (allFailMsg) {
-      successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-    }
+    // try {
+    dispatch(getCitiesList(subDistrictId)).then(() => {});
+    // } catch (allFailMsg) {
+    //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    // }
   };
 
   const changedState = watch('state');
@@ -196,14 +195,13 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
     formData.append('data', JSON.stringify(workDetails));
     formData.append('proof', workProof?.[0].file);
 
-    dispatch(updateDoctorWorkDetails(formData, loginData.data.profile_id))
-      .then(() => {
-        setSuccessModalPopup(true);
-        handleNext();
-      })
-      .catch((allFailMsg) => {
-        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-      });
+    dispatch(updateDoctorWorkDetails(formData, loginData.data.profile_id)).then(() => {
+      setSuccessModalPopup(true);
+      handleNext();
+    });
+    // .catch((allFailMsg) => {
+    //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    // });
   };
 
   return (

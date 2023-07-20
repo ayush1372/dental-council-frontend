@@ -12,7 +12,7 @@ import {
   getCaptchaEnabledFlagValue,
 } from '../../../store/actions/login-action';
 import { loginActiveState } from '../../../store/reducers/login-reducer';
-import successToast from '../../../ui/core/toaster';
+// import successToast from '../../../ui/core/toaster';
 // import LoginWrapper from '../index';
 import ConfirmOTP from './confirm-otp';
 import { DoctorLogin } from './doctor-login';
@@ -58,17 +58,18 @@ export function LoginPage() {
 
   useEffect(() => {
     reset();
-    dispatch(getCaptchaEnabledFlagValue())
-      .then((response) => {
-        if (response?.data) {
-          dispatch(generateCaptchaImage()).catch((error) => {
-            successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-          });
-        }
-      })
-      .catch((error) => {
-        successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-      });
+    dispatch(getCaptchaEnabledFlagValue()).then((response) => {
+      if (response?.data) {
+        dispatch(generateCaptchaImage());
+
+        // .catch((error) => {
+        //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+        // });
+      }
+    });
+    // .catch((error) => {
+    //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+    // });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loginFormNames[loginFormname]]);
 

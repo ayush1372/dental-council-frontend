@@ -106,18 +106,14 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
         let sendOTPData = {
           email: type === 'email' ? type === 'email' && getValues().email : '',
         };
-        try {
-          dispatch(verifyEmail(sendOTPData, personalDetails?.hp_profile_id)).then((response) => {
-            if (response?.data?.message === 'Success') {
-              setShowOTPPOPUp(true);
-              setVerifyEmailID(true);
-            } else {
-              successToast(response?.data?.message, 'auth-error', 'error', 'top-center');
-            }
-          });
-        } catch (allFailMsg) {
-          successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-        }
+        dispatch(verifyEmail(sendOTPData, personalDetails?.hp_profile_id)).then((response) => {
+          if (response?.data?.message === 'Success') {
+            setShowOTPPOPUp(true);
+            setVerifyEmailID(true);
+          } else {
+            successToast(response?.data?.message, 'auth-error', 'error', 'top-center');
+          }
+        });
       } else {
         let sendOTPData = {
           contact: type === 'sms' ? getValues().mobileNo : '',
@@ -125,20 +121,19 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
           user_type: loginData?.data?.user_type,
           is_registration: true,
         };
-        dispatch(sendNotificationOtp(sendOTPData))
-          .then((response) => {
-            response?.data?.message === 'Success'
-              ? setShowOTPPOPUp(true)
-              : successToast(response?.data?.message, 'auth-error', 'error', 'top-center');
-          })
-          .catch((allFailMsg) => {
-            successToast(
-              allFailMsg?.data?.response?.data?.message,
-              'auth-error',
-              'error',
-              'top-center'
-            );
-          });
+        dispatch(sendNotificationOtp(sendOTPData)).then((response) => {
+          response?.data?.message === 'Success'
+            ? setShowOTPPOPUp(true)
+            : successToast(response?.data?.message, 'auth-error', 'error', 'top-center');
+        });
+        // .catch((allFailMsg) => {
+        //   successToast(
+        //     allFailMsg?.data?.response?.data?.message,
+        //     'auth-error',
+        //     'error',
+        //     'top-center'
+        //   );
+        // });
       }
     }
   };
@@ -147,22 +142,22 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
     let clearTimer = false;
     if (!verifyEmailID) return;
     const timer = setInterval(() => {
-      try {
-        if (clearTimer) {
-          clearInterval(timer);
-          setShowOTPPOPUp(false);
-          setVerifyEmailID(false);
-          // setEmailChange(false); for future changes.
-          return;
-        }
-        dispatch(getPersonalDetailsData(personalDetails?.hp_profile_id)).then((response) => {
-          if (response?.data?.email_verified) {
-            clearTimer = true;
-          }
-        });
-      } catch (allFailMsg) {
-        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      // try {
+      if (clearTimer) {
+        clearInterval(timer);
+        setShowOTPPOPUp(false);
+        setVerifyEmailID(false);
+        // setEmailChange(false); for future changes.
+        return;
       }
+      dispatch(getPersonalDetailsData(personalDetails?.hp_profile_id)).then((response) => {
+        if (response?.data?.email_verified) {
+          clearTimer = true;
+        }
+      });
+      // } catch (allFailMsg) {
+      //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      // }
     }, 6000);
     return () => {
       clearInterval(timer);
@@ -184,7 +179,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
           mb={{ xs: 1, lg: 0 }}
         >
           <Typography variant="body3" color="grey.label">
-            IMR/Registration Number
+            IMR/Registration Numbers
           </Typography>
           <Typography variant="subtitle2" color="textPrimary.main">
             {registration_number ? registration_number : ''}
@@ -307,7 +302,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                 </Paper>
 
                 {validDetails?.mobileNo && (
-                  <Typography color="error" mt={1}>
+                  <Typography color="error" mt={1} variant="body2">
                     {' '}
                     Please enter a valid 10 digit mobile number
                   </Typography>
@@ -319,7 +314,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                   {mobileNumber && mobileNumber}
                 </Typography>
                 <Box>
-                  <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
+                  <img width="16px" height="16px" src={IconVerified} alt="verified icon" />
                   {/* <Typography variant="body2" color="primary.main" ml={0.5}>
                     <span
                       style={{ cursor: 'pointer' }}
@@ -384,7 +379,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                   </Link>
                 </Paper>
                 {validDetails?.email && (
-                  <Typography color="error" mt={1}>
+                  <Typography color="error" mt={1} variant="body2">
                     {''}
                     Please enter a valid email
                   </Typography>
@@ -397,7 +392,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                 </Typography>
                 <Box>
                   {emailIdVerify ? (
-                    <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
+                    <img width="16px" height="16px" src={IconVerified} alt="verified icon" />
                   ) : (
                     ' '
                   )}

@@ -10,7 +10,7 @@ import {
   searchDoctorDetailsById,
 } from '../../../store/actions/doctor-search-actions';
 import { Button } from '../../../ui/core/button/button';
-import successToast from '../../../ui/core/toaster';
+// import successToast from '../../../ui/core/toaster';
 import DoctorProfileModal from './doctor-profile-modal';
 
 const SearchResults = ({ searchData, scrolldown }) => {
@@ -47,18 +47,17 @@ const SearchResults = ({ searchData, scrolldown }) => {
 
   const handleViewProfile = (id, imagePath) => {
     verboseLog('ID', id);
-    dispatch(searchDoctorDetailsById(id))
-      .then(() => {
-        setConfirmationModal(true);
-      })
-      .catch((error) => {
-        successToast(
-          error?.data?.response?.data?.error,
-          'RegistrationError',
-          'error',
-          'top-center'
-        );
-      });
+    dispatch(searchDoctorDetailsById(id)).then(() => {
+      setConfirmationModal(true);
+    });
+    // .catch((error) => {
+    //   successToast(
+    //     error?.data?.response?.data?.error,
+    //     'RegistrationError',
+    //     'error',
+    //     'top-center'
+    //   );
+    // });
 
     setImagePath(imagePath);
   };
@@ -80,7 +79,9 @@ const SearchResults = ({ searchData, scrolldown }) => {
           Search Results
         </Typography>
         <Typography color="primary.main" component="div" variant="subtitle2">
-          {`${searchDetails?.data?.data?.count || '0'}  Matching Records Found `}
+          {searchDetails?.data?.data?.count === 1
+            ? `${searchDetails?.data?.data?.count || '0'}  Matching Record Found `
+            : `${searchDetails?.data?.data?.count || '0'}  Matching Records Found `}
         </Typography>
         <Box mt={3}>
           <Box className="search-results" mt={3}>
