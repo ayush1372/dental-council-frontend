@@ -363,13 +363,14 @@ export default function Dashboard() {
                             alignItems="center"
                             mb={2}
                           >
-                            <Typography color="inputFocusColor.main" variant="h1">
+                            <Typography color="inputFocusColor.main" sx={{ fontSize: '30px' }}>
                               {item.value}
                             </Typography>
                             <img
                               className={classes.iconImage}
                               src={getCardIcons(item)}
                               alt="icon"
+                              width="36px"
                             />
                           </Box>
                           <Typography
