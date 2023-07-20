@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import SuccessModalPopup from '../../../../shared/common-modals/success-modal-popup';
 import { updateDoctorWorkDetails } from '../../../../store/actions/doctor-user-profile-actions';
 import { Button, Select, TextField } from '../../../../ui/core';
-import successToast from '../../../../ui/core/toaster';
+// import successToast from '../../../../ui/core/toaster';
 
 const reasonOptions = [
   {
@@ -59,13 +59,12 @@ const NonWorkDetails = ({
       hp_profile_id: loginData.data.profile_id,
     };
 
-    dispatch(updateDoctorWorkDetails(workDetails, loginData.data.profile_id))
-      .then(() => {
-        setSuccessModalPopup(true);
-      })
-      .catch((allFailMsg) => {
-        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-      });
+    dispatch(updateDoctorWorkDetails(workDetails, loginData.data.profile_id)).then(() => {
+      setSuccessModalPopup(true);
+    });
+    // .catch((allFailMsg) => {
+    //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    // });
   };
 
   useEffect(() => {
@@ -79,7 +78,7 @@ const NonWorkDetails = ({
           fullWidth
           error={errors.reason?.message}
           name="reason"
-          label="Please select the reason for presently not working"
+          label="Please select the reason"
           defaultValue={work_details?.reason}
           value={getValues()?.reason}
           required={true}
@@ -129,7 +128,7 @@ const NonWorkDetails = ({
           open={successModalPopup}
           workDetails={true}
           setOpen={() => setSuccessModalPopup(false)}
-          text={'Your Work Details has been successfully updated'}
+          text={'Work detail have been updated'}
         />
       )}
     </>

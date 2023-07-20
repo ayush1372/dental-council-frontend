@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 import MobileIcon from '../../../assets/images/mobile-icon.svg';
 import ProfileIcon from '../../../assets/images/profile-icon.svg';
+import { ErrorMessages } from '../../../constants/error-messages';
 import { encryptData, usersType } from '../../../helpers/functions/common-functions';
 import CaptchaComponent from '../../../shared/captcha-component/captcha-component';
 import OtpForm from '../../../shared/otp-form/otp-component';
@@ -74,17 +75,16 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
     };
     otpData({ ...otpData, contact: getValues().mobileNo, type: OTPTypeID, page: 'LogInPage' });
 
-    dispatch(sendNotificationOtp(sendOTPData))
-      .then((response) => {
-        if (response) {
-          setTransaction_id(response?.data?.transaction_id);
-          setOtpSend(true);
-          setOtpFormEnable(true);
-        }
-      })
-      .catch((error) => {
-        successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
-      });
+    dispatch(sendNotificationOtp(sendOTPData)).then((response) => {
+      if (response) {
+        setTransaction_id(response?.data?.transaction_id);
+        setOtpSend(true);
+        setOtpFormEnable(true);
+      }
+    });
+    // .catch((error) => {
+    //   successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
+    // });
   };
   const { otpform, otpValue, handleClear } = OtpForm({
     sendOTP: sendNotificationOTPHandler,
@@ -119,113 +119,100 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
           transaction_id: generateCaptcha?.transaction_id,
           result: parseInt(captchaAnswer),
         })
-      )
-        .then((response) => {
-          if (response?.data?.validity) {
-            const usertypeId = usersType(loginName);
+      ).then((response) => {
+        if (response?.data?.validity) {
+          const usertypeId = usersType(loginName);
 
-            const requestObj = {
-              username: getValues()?.mobileNo,
-              password: encryptData(otpValue, process.env.REACT_APP_PASS_SITE_KEY),
-              user_type: usertypeId,
-              login_type: loginTypeID,
-              captcha_trans_id: generateCaptcha?.transaction_id,
-              otp_trans_id: transaction_id,
-            };
-            dispatch(loginAction(requestObj))
-              .then(() => {
-                dispatch(login());
-                dispatch(userLoggedInType(loginName));
-                dispatch(getRegistrationCouncilList());
-                navigate(`/profile`);
-              })
-              .catch((error) => {
-                setOtpFormEnable(false);
-                dispatch(generateCaptchaImage()).catch((error) => {
-                  successToast(
-                    'ERROR: ' + error?.data?.message,
-                    'auth-error',
-                    'error',
-                    'top-center'
-                  );
-                });
-                successToast(
-                  'ERROR: ' + error?.data?.response?.data?.message,
-                  'auth-error',
-                  'error',
-                  'top-center'
-                );
-              });
-          } else {
-            dispatch(generateCaptchaImage()).catch((error) => {
-              successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+          const requestObj = {
+            username: getValues()?.mobileNo,
+            password: encryptData(otpValue, process.env.REACT_APP_PASS_SITE_KEY),
+            user_type: usertypeId,
+            login_type: loginTypeID,
+            captcha_trans_id: generateCaptcha?.transaction_id,
+            otp_trans_id: transaction_id,
+          };
+          dispatch(loginAction(requestObj))
+            .then(() => {
+              dispatch(login());
+              dispatch(userLoggedInType(loginName));
+              dispatch(getRegistrationCouncilList());
+              navigate(`/profile`);
+            })
+            .catch(() => {
+              setOtpFormEnable(false);
+              dispatch(generateCaptchaImage());
+              // .catch((error) => {
+              //   successToast(
+              //     'ERROR: ' + error?.data?.message,
+              //     'auth-error',
+              //     'error',
+              //     'top-center'
+              //   );
+              // });
+              // successToast(
+              //   'ERROR: ' + error?.data?.response?.data?.message,
+              //   'auth-error',
+              //   'error',
+              //   'top-center'
+              // );
             });
-            successToast(
-              'ERROR: Invalid captcha, please try with new captcha',
-              'auth-error',
-              'error',
-              'top-center'
-            );
-          }
-        })
-        .catch((error) => {
-          successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-        });
+        } else {
+          dispatch(generateCaptchaImage());
+          // .catch((error) => {
+          //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+          // });
+          successToast(ErrorMessages.invalidCaptchaMessage, 'auth-error', 'error', 'top-center');
+        }
+      });
+      // .catch((error) => {
+      //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+      // });
     } else if (selectedLoginOption === 'userName') {
       dispatch(
         validateCaptchaImage({
           transaction_id: generateCaptcha?.transaction_id,
           result: parseInt(captchaAnswer),
         })
-      )
-        .then((response) => {
-          if (response?.data?.validity) {
-            const usertypeId = usersType(loginName);
-            const requestObj = {
-              username: getValues()?.userID,
-              password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
-              user_type: usertypeId,
-              captcha_trans_id: generateCaptcha?.transaction_id,
-              login_type: loginTypeID,
-            };
-            dispatch(loginAction(requestObj))
-              .then(() => {
-                dispatch(login());
-                dispatch(userLoggedInType(loginName));
-                dispatch(getRegistrationCouncilList());
-                navigate(`/profile`);
-              })
-              .catch((error) => {
-                dispatch(generateCaptchaImage()).catch((error) => {
-                  successToast(
-                    'ERROR: ' + error?.data?.message,
-                    'auth-error',
-                    'error',
-                    'top-center'
-                  );
-                });
-                successToast(
-                  'ERROR: ' + error?.data?.response?.data?.message,
-                  'auth-error',
-                  'error',
-                  'top-center'
-                );
-              });
-          } else {
-            dispatch(generateCaptchaImage()).catch((error) => {
-              successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+      ).then((response) => {
+        if (response?.data?.validity) {
+          const usertypeId = usersType(loginName);
+          const requestObj = {
+            username: getValues()?.userID,
+            password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
+            user_type: usertypeId,
+            captcha_trans_id: generateCaptcha?.transaction_id,
+            login_type: loginTypeID,
+          };
+          dispatch(loginAction(requestObj))
+            .then(() => {
+              dispatch(login());
+              dispatch(userLoggedInType(loginName));
+              dispatch(getRegistrationCouncilList());
+              navigate(`/profile`);
+            })
+            .catch(() => {
+              dispatch(generateCaptchaImage());
+              // .catch((error) => {
+              //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+              // });
+              // successToast(
+              //   'ERROR: ' + error?.data?.response?.data?.message,
+              //   'auth-error',
+              //   'error',
+              //   'top-center'
+              // );
             });
-            successToast(
-              'ERROR: Invalid captcha, please try with new captcha',
-              'auth-error',
-              'error',
-              'top-center'
-            );
-          }
-        })
-        .catch((error) => {
-          successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-        });
+        } else {
+          dispatch(generateCaptchaImage());
+          // .catch((error) => {
+          //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+          // });
+          successToast(ErrorMessages.invalidCaptchaMessage, 'auth-error', 'error', 'top-center');
+        }
+      });
+      // .catch((error) => {
+      //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+      // });
     } else {
       successToast('Wrong Login Attempt', 'login-error', 'error', 'top-center');
     }
@@ -316,7 +303,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
               name={'userID'}
               error={errors.userID?.message}
               {...register('userID', {
-                required: 'Please enter username',
+                required: 'Please enter a username',
                 pattern: {
                   value: /^[\s.]*([^\s.][\s.]*){0,100}$/,
                   message: 'Please enter a valid username',

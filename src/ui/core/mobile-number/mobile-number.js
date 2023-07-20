@@ -64,7 +64,7 @@ export function MobileNumber(props) {
               },
               marginRight: '16px',
             }}
-            onKeyDown={(e) => ['e', 'E', '+', '-'].includes(e.key) && e.preventDefault()}
+            onKeyDown={(e) => ['e', 'E', '+', '-', ' '].includes(e.key) && e.preventDefault()}
             {...register('mobileNo', {
               required: 'Please enter the mobile number',
               pattern: {

@@ -58,15 +58,17 @@ const RadioField = (
         ))}
       </MuiRadioGroup>
       {error && (
-        <Typography variant="body2" color="error">
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <ErrorOutlineIcon
             color={'error'}
             icon={'helpOutline'}
             fontSize="small"
             sx={{ height: '16px' }}
           />
-          {error}
-        </Typography>
+          <Typography variant="body2" color="error">
+            {error}
+          </Typography>
+        </Box>
       )}
     </FormControl>
   );

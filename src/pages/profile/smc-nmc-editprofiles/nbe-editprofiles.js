@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import { getUpdatedNBEProfileData } from '../../../store/actions/nbe-actions';
 import { Button, TextField } from '../../../ui/core';
-import successToast from '../../../ui/core/toaster';
+// import successToast from '../../../ui/core/toaster';
 
 const NbeEditProfile = (props) => {
   const { t } = useTranslation();
@@ -46,15 +46,14 @@ const NbeEditProfile = (props) => {
       display_name: getValues().first_name,
     };
 
-    dispatch(getUpdatedNBEProfileData(updatedNbeData, nbeUpdatedData?.id))
-      .then((response) => {
-        if (response?.isError === false) {
-          setSuccessModalPopup(true);
-        }
-      })
-      .catch((error) => {
-        successToast(error?.data?.response?.data?.message, 'UpdateError', 'error', 'top-center');
-      });
+    dispatch(getUpdatedNBEProfileData(updatedNbeData, nbeUpdatedData?.id)).then((response) => {
+      if (response?.isError === false) {
+        setSuccessModalPopup(true);
+      }
+    });
+    // .catch((error) => {
+    //   successToast(error?.data?.response?.data?.message, 'UpdateError', 'error', 'top-center');
+    // });
   };
 
   return (
@@ -66,7 +65,7 @@ const NbeEditProfile = (props) => {
             props?.sentDetails('Profile');
             setSuccessModalPopup(false);
           }}
-          text={'NBE Profile Data has been Updated Successfully.'}
+          text={'NBE profile data has been updated.'}
         />
       )}
       <Grid container spacing={2} mt={2}>
@@ -144,7 +143,7 @@ const NbeEditProfile = (props) => {
             defaultValue={getValues().email_id}
             error={errors.email_id?.message}
             {...register('email_id', {
-              required: 'Please enter email',
+              required: 'Please enter an email ID',
 
               pattern: {
                 value:

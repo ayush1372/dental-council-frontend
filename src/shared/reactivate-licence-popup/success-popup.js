@@ -63,7 +63,7 @@ export default function SuccessPopup({ fetchDoctorUserPersonalDetails, reactivat
             justifyContent="center"
             mt={2}
           >
-            SUCCESS!
+            SUCCESS
           </Typography>
           <Typography
             display="flex"

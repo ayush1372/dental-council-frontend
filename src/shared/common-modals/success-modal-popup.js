@@ -20,7 +20,6 @@ import {
 import { setBreadcrumbsActivetab } from '../../store/reducers/common-reducers';
 import { loginActiveState } from '../../store/reducers/login-reducer';
 import { Button } from '../../ui/core';
-import successToast from '../../ui/core/toaster';
 
 export default function SuccessModalPopup({
   open,
@@ -28,6 +27,7 @@ export default function SuccessModalPopup({
   text,
   loginName,
   handleClose,
+  workDetails,
   SuspensionCall,
   isHpIdCreated,
   successRegistration,
@@ -48,6 +48,9 @@ export default function SuccessModalPopup({
 
   const handleCloseModal = () => {
     setOpen(false);
+    if (loggedInUserType === 'Doctor' && workDetails === true) {
+      dispatch(changeUserActiveTab(doctorTabs[0].tabName));
+    }
   };
   const navigateToSetPassword = () => {
     navigate('/reset-password');
@@ -103,11 +106,7 @@ export default function SuccessModalPopup({
           loggedInUserType !== 'College' &&
           loggedInUserType !== 'NBE'
         ) {
-          dispatch(getPersonalDetailsData(loginData?.data?.profile_id))
-            .then(() => {})
-            .catch((allFailMsg) => {
-              successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-            });
+          dispatch(getPersonalDetailsData(loginData?.data?.profile_id)).then(() => {});
         }
 
         dispatch(getCardCount());
@@ -122,7 +121,6 @@ export default function SuccessModalPopup({
   };
 
   const navigateLogin = () => {
-    // eslint-disable-next-line no-console
     dispatch(loginActiveState({ activeIndex: 0 }));
     navigate('/login-page', { state: { loginFormname: loginName } });
   };
@@ -176,7 +174,7 @@ export default function SuccessModalPopup({
             justifyContent="center"
             mt={2}
           >
-            SUCCESS!
+            SUCCESS
           </Typography>
           <Typography
             display="flex"

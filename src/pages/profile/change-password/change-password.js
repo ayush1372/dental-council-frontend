@@ -10,7 +10,7 @@ import { encryptData } from '../../../helpers/functions/common-functions';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import { changePasswordData } from '../../../store/actions/common-actions';
 import { TextField } from '../../../ui/core';
-import successToast from '../../../ui/core/toaster';
+// import successToast from '../../../ui/core/toaster';
 
 const ChangePassword = () => {
   const theme = useTheme();
@@ -38,13 +38,12 @@ const ChangePassword = () => {
       oldPassword: encryptData(getValues().oldPassword, process.env.REACT_APP_PASS_SITE_KEY),
       newPassword: encryptData(getValues().newPassword, process.env.REACT_APP_PASS_SITE_KEY),
     };
-    dispatch(changePasswordData(data))
-      .then(() => {
-        setSuccessModalPopup(true);
-      })
-      .catch((error) => {
-        successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
-      });
+    dispatch(changePasswordData(data)).then(() => {
+      setSuccessModalPopup(true);
+    });
+    // .catch((error) => {
+    //   successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
+    // });
   };
 
   return (

@@ -1,5 +1,3 @@
-import { ToastContainer } from 'react-toastify';
-
 import LogoSlider from '../../shared/logo-slider/logo-slider';
 import HeroBanner from './components/hero-banner/hero-banner';
 
@@ -8,7 +6,6 @@ export function Home() {
     <div data-testid="homepage">
       <HeroBanner />
       <LogoSlider />
-      <ToastContainer></ToastContainer>
     </div>
   );
 }

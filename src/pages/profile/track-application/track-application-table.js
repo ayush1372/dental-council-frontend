@@ -9,7 +9,7 @@ import {
   getDoctorTrackApplicationData,
   getDoctorTrackApplicationStatus,
 } from '../../../store/actions/doctor-user-profile-actions';
-import successToast from '../../../ui/core/toaster';
+// import successToast from '../../../ui/core/toaster';
 import TableSearch from '../components/table-search/table-search';
 
 function createData(
@@ -104,7 +104,7 @@ function TrackAppicationTable({
       sorting: true,
       type: 'string',
     },
-    { title: 'Pendency (in days)', name: 'pendency', sorting: true, type: 'string' },
+    { title: 'Pendency (Days)', name: 'pendency', sorting: true, type: 'string' },
     { title: 'Action', name: 'view', sorting: false, type: 'string' },
   ];
 
@@ -112,21 +112,20 @@ function TrackAppicationTable({
     setRowData(dataRow);
   };
   const viewCallback = (event, row) => {
-    dispatch(getDoctorTrackApplicationStatus(row?.request_id?.value))
-      .then(() => {
-        setShowTrackApplication(true);
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth',
-        });
-        setShowTrackApplicationTable(false);
-        event.preventDefault();
-        event.stopPropagation();
-        setRowData(row);
-      })
-      .catch((error) => {
-        successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+    dispatch(getDoctorTrackApplicationStatus(row?.request_id?.value)).then(() => {
+      setShowTrackApplication(true);
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
       });
+      setShowTrackApplicationTable(false);
+      event.preventDefault();
+      event.stopPropagation();
+      setRowData(row);
+    });
+    // .catch((error) => {
+    //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+    // });
   };
 
   useEffect(() => {

@@ -84,6 +84,7 @@ export const loginAction = (body) => async (dispatch) => {
         );
         JSON.stringify(localStorage.setItem('esignStatus', response.data['esign_status']));
         JSON.stringify(localStorage.setItem('blacklistedStatus', response.data['blacklisted']));
+        JSON.stringify(localStorage.setItem('userType', response.data['user_type']));
         return resolve(response);
       })
       .catch((error) => {
