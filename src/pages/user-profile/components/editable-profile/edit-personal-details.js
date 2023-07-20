@@ -457,7 +457,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
     doctorProfileValues.personal_details.country_nationality =
       nationalities.find((x) => x.id === Nationality) || {};
     doctorProfileValues.personal_details.gender = Gender;
-    doctorProfileValues.personal_details.email = EmailAddress;
+    doctorProfileValues.personal_details.email = document?.getElementsByName('email')[0]?.value;
 
     doctorProfileValues.communication_address.pincode = PostalCode;
     doctorProfileValues.communication_address.address_line1 = Address;
