@@ -556,13 +556,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
             <TextField
               variant="outlined"
               name={`Dr. ${'Name'}`}
-              placeholder="First name"
+              placeholder="Enter name"
               fullWidth
               defaultValue={getValues().Name}
               {...register('Name', {
                 pattern: {
                   value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
-                  message: 'Please Enter Valid Name',
+                  message: 'Please enter Name',
                 },
                 maxLength: {
                   value: 100,
