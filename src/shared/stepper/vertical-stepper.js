@@ -14,7 +14,7 @@ import {
   userGroupTypeId,
 } from '../../helpers/functions/common-functions';
 import { Chip } from '../../ui/core';
-
+import moment from 'moment'
 export default function VerticalLinearStepper() {
   const ApplicationStatus = useSelector(
     (state) => state?.common?.doctorTrackApplicationTableData?.data?.data
@@ -210,7 +210,7 @@ export default function VerticalLinearStepper() {
                 {`${label?.remarks ? label?.remarks : ''}`}
               </Typography>
               <Typography component="div" variant="body3" fontWeight="500">
-                {`${getDate(label?.action_date) ? getDate(label?.action_date) : ''} - ${
+                {`${moment(getDate(ApplicationStatus?.submission_date)).format('DD-MM-YYYY')} - ${
                   getTime(label?.action_date) ? getTime(label?.action_date) : ''
                 }`}
               </Typography>
