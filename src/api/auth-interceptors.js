@@ -9,25 +9,25 @@ const authInterceptors = (error) => {
   if (error && error?.response) {
     if (error?.response?.status) {
       if (error?.response?.status >= 500) {
-        successToast(allFailMsg, 'auth-error', 'testing', 'top-center');
+        successToast(allFailMsg, 'auth-error', 'error', 'top-center');
         return Promise.reject(allFailMsg);
       } else if (error?.response?.status < 500) {
         let data = error?.response?.data;
 
         if (data?.message === 'Network Error') {
-          successToast(allFailMsg, 'auth-error-Network', 'testing', 'top-center');
+          successToast(allFailMsg, 'auth-error-Network', 'error', 'top-center');
           return Promise.reject(allFailMsg);
         }
 
-        successToast(data?.message, 'auth-error-Network', 'testing', 'top-center');
+        successToast(data?.message, 'auth-error-Network', 'error', 'top-center');
         return Promise.reject(data?.message);
       }
     } else if (error?.message && error?.message.includes('Network')) {
-      successToast(allFailMsg, 'auth-error-Network', 'testing', 'top-center');
+      successToast(allFailMsg, 'auth-error-Network', 'error', 'top-center');
       return Promise.reject(allFailMsg);
     }
   } else {
-    successToast(allFailMsg, 'auth-error', 'testing', 'top-center');
+    successToast(allFailMsg, 'auth-error', 'error', 'top-center');
     return Promise.reject(allFailMsg);
   }
 };

@@ -47,31 +47,12 @@ const successToast = (message, toastId, toastType, toastPosition = 'top-center')
     className: styles.toastMessage,
     style: {
       border: `1px solid ${
-        toastType === 'info'
-          ? '#8174cb'
-          : toastType === 'success'
-          ? '#49ba8a'
-          : toastType === 'testing'
-          ? 'yellow'
-          : '#ff512b'
+        toastType === 'info' ? '#8174cb' : toastType === 'success' ? '#49ba8a' : '#ff512b'
       }`,
       background: `${
-        toastType === 'info'
-          ? '#f2f1fa'
-          : toastType === 'success'
-          ? '#daf1e8'
-          : toastType === 'testing'
-          ? 'yellow'
-          : '#ffe0d9'
+        toastType === 'info' ? '#f2f1fa' : toastType === 'success' ? '#daf1e8' : '#ffe0d9'
       }`,
-      color:
-        toastType === 'info'
-          ? '#56499b'
-          : toastType === 'success'
-          ? '#1f6648'
-          : toastType === 'testing'
-          ? '#e33d19'
-          : '#e33d19',
+      color: toastType === 'info' ? '#56499b' : toastType === 'success' ? '#1f6648' : '#e33d19',
       fontSize: '16px',
       fontWeight: 'bold',
     },
