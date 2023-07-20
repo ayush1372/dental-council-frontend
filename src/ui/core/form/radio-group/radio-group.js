@@ -54,11 +54,6 @@ const RadioField = (
             key={o.label}
             control={<Radio data-testid={dataTestid} size={size} />}
             label={o.label}
-            sx={{
-              span: {
-                color: 'inputTextColor.main',
-              },
-            }}
           />
         ))}
       </MuiRadioGroup>

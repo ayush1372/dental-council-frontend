@@ -50,7 +50,7 @@ CustomDialogTitle.propTypes = {
 export function ModalOTP({
   afterConfirm = undefined,
   reSentOtp = undefined,
-  headerText = 'Please enter the OTP sent on your registered Mobile Number  XXXXXX2182 linked with your Aadhaar.',
+  headerText = 'Please enter the OTP sent on your registered mobile number  XXXXXX2182 linked with your Aadhaar.',
 }) {
   const [open, setOpen] = useState(false);
   const [otpEmailVerify, setOtpEmailVerify] = useState(true);

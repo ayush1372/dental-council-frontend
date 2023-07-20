@@ -96,14 +96,14 @@ const NmcEditProfile = (props) => {
             fullWidth
             required
             name={'first_name'}
-            placeholder={'Enter Name'}
+            placeholder={'Enter name'}
             defaultValue={getValues().first_name}
             error={errors.first_name?.message}
             {...register('first_name', {
-              required: 'Name is required',
+              required: 'Please enter name',
               pattern: {
                 value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
-                message: 'Enter Valid Name',
+                message: 'Please enter a valid name',
               },
             })}
           />
@@ -174,7 +174,7 @@ const NmcEditProfile = (props) => {
 
         <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
-            Phone number
+            Mobile Number
           </Typography>
           <Typography component="span" color="error.main">
             *
@@ -183,14 +183,14 @@ const NmcEditProfile = (props) => {
             fullWidth
             required
             name={'mobile_no'}
-            placeholder={'Enter phone number '}
+            placeholder={'Enter mobile number '}
             defaultValue={getValues().mobile_no}
             error={errors.mobile_no?.message}
             {...register('mobile_no', {
-              required: 'Phone number is required',
+              required: 'Please enter mobile number',
               pattern: {
                 value: /^[0-9]{10}$/i,
-                message: 'Enter valid phone number',
+                message: 'Please enter a valid mobile number',
               },
             })}
           />
@@ -198,7 +198,7 @@ const NmcEditProfile = (props) => {
 
         <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
-            Email ID
+            Email
           </Typography>
           <Typography component="span" color="error.main">
             *
@@ -208,7 +208,7 @@ const NmcEditProfile = (props) => {
             fullWidth
             required
             name={'email_id'}
-            placeholder={'Enter Email ID'}
+            placeholder={'Enter email'}
             defaultValue={getValues().email_id}
             error={errors.email_id?.message}
             {...register('email_id', EmailRegexValidation)}
@@ -232,11 +232,11 @@ const NmcEditProfile = (props) => {
               defaultValue={getValues().user_id}
               error={errors.user_id?.message}
               {...register('user_id', {
-                required: 'User ID is required',
+                required: 'Please enter user ID',
 
                 pattern: {
                   value: /^[a-zA-Z0-9@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
-                  message: 'Provide a Valid User ID',
+                  message: 'Please enter a valid user ID',
                 },
               })}
             />
@@ -253,11 +253,11 @@ const NmcEditProfile = (props) => {
               name="RegistrationCouncil"
               items={createEditFieldData(councilNames)}
               defaultValue={userData?.state_medical_council}
-              placeholder="Select Your Registration Council"
+              placeholder="Select council"
               clearErrors={clearErrors}
               error={errors.RegistrationCouncil?.message}
               {...register('RegistrationCouncil', {
-                required: 'Registration Council is required',
+                required: 'Please select council',
               })}
               onChange={(currentValue) => {
                 setValue('RegistrationCouncilId', currentValue?.name);

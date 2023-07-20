@@ -460,6 +460,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
     doctorProfileValues.personal_details.country_nationality =
       nationalities.find((x) => x.id === Nationality) || {};
     doctorProfileValues.personal_details.gender = Gender;
+    doctorProfileValues.personal_details.email = EmailAddress;
 
     doctorProfileValues.communication_address.pincode = PostalCode;
     doctorProfileValues.communication_address.address_line1 = Address;
@@ -549,7 +550,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
             </Grid>
           )}
         </Grid>
-        <Grid container item spacing={2} mt={1}>
+        <Grid container item spacing={2} mt={0.5}>
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
               Full Name
@@ -654,7 +655,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
             />
           </Grid>
         </Grid>
-        <Grid container item spacing={2} mt={1}>
+        <Grid container item spacing={2} mt={0.5}>
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
               Spouse Name
@@ -750,10 +751,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
             </Grid>
           </Grid>
         </Grid>
-        <Grid container item spacing={2} mt={1}>
+        <Grid container item spacing={2} mt={0.5}>
           <Grid item xs={12} md={4}>
             <Typography variant="body1" color="inputTextColor.main">
-              Date of Birth (DD/MM/YYYY)
+              Date of Birth (DD-MM-YYYY)
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -823,7 +824,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
 
         {/*Layer 2*/}
 
-        <Grid container item spacing={2} mt={1}>
+        <Grid container item spacing={2} mt={0.5}>
           <Grid item xs={12}>
             <Typography
               bgcolor="grey1.light"
@@ -867,7 +868,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
           </Grid>
 
           {/* layer 3 */}
-          <Grid container item spacing={2} mt={1}>
+          <Grid container item spacing={2} mt={0.5}>
             <Grid item xs={12}>
               <Typography
                 bgcolor="grey1.light"

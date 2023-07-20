@@ -100,41 +100,34 @@ const ReadRegisterAndAcademicDetails = ({
     setShowSuccessPopup(true);
   };
 
-  //Helper method to identify the qualification is primary or addtional qualification.
-  const isPrimaryQualification = (elementIndex) => {
-    if (elementIndex === 0) {
-      return false;
-    } else {
-      return true;
-    }
-  };
-
   useEffect(() => {
     if (!isNaN(selectedDataIndex)) {
       let filteredQualificationDetails = [];
 
-      registrationDetails?.qualification_detail_response_tos?.map((element, index) => {
-        if (
-          element &&
-          (element?.is_verified === 1 ||
-            element?.request_id ===
-              dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]?.request_id) &&
-          isPrimaryQualification(index)
-        ) {
-          filteredQualificationDetails.push(element);
-        } else if (!isPrimaryQualification(index)) {
-          filteredQualificationDetails.push(element);
-        }
-        if (element && element?.is_verified !== 1) {
-          setShowForwardButton(
-            element?.qualification_from === 'India'
-              ? true
-              : element?.qualification_from === 'International' &&
-                loggedInUserType === 'SMC' &&
-                selectedAcademicStatus === 'Pending'
-              ? true
-              : false
-          );
+      registrationDetails?.qualification_detail_response_tos?.map((element, elementIndex) => {
+        if (element) {
+          if (
+            (element?.is_verified === 1 ||
+              element?.request_id ===
+                dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]?.request_id) &&
+            elementIndex !== 0
+          ) {
+            filteredQualificationDetails.push(element);
+          }
+          if (elementIndex === 0) {
+            filteredQualificationDetails.push(element);
+          }
+          if (element?.is_verified !== 1) {
+            setShowForwardButton(
+              element?.qualification_from === 'India'
+                ? true
+                : element?.qualification_from === 'International' &&
+                  loggedInUserType === 'SMC' &&
+                  selectedAcademicStatus === 'Pending'
+                ? true
+                : false
+            );
+          }
         }
       });
       let newRegistrationDetails = {};
@@ -259,6 +252,7 @@ const ReadRegisterAndAcademicDetails = ({
                               {(((selectedAcademicStatus === 'College/NBE Verified' ||
                                 selectedAcademicStatus === 'Forwarded' ||
                                 userActiveTab === 'Activate Licence' ||
+                                selectedAcademicStatus !== 'Pending' ||
                                 !showForwardButton) &&
                                 (loggedInUserType === 'SMC' || loggedInUserType === 'NMC')) ||
                                 (loggedInUserType !== 'SMC' &&
@@ -339,14 +333,6 @@ const ReadRegisterAndAcademicDetails = ({
                           </Button>
                         )}
                       <Menu {...bindMenu(popupState)}>
-                        {selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
-                          selectedAcademicStatus !== 'Permanent Suspension Requests Received' &&
-                          !!dashboardTableDetails &&
-                          dashboardTableDetails !== 'Approved' && (
-                            <MenuItem onClick={selectionChangeHandler} data-my-value={'raise'}>
-                              Raise a Query
-                            </MenuItem>
-                          )}
                         {loggedInUserType === 'SMC' &&
                           showForwardButton &&
                           userActiveTab !== 'Activate Licence' &&
@@ -355,6 +341,15 @@ const ReadRegisterAndAcademicDetails = ({
                               Verify
                             </MenuItem>
                           )}
+                        {selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
+                          selectedAcademicStatus !== 'Permanent Suspension Requests Received' &&
+                          !!dashboardTableDetails &&
+                          dashboardTableDetails !== 'Approved' && (
+                            <MenuItem onClick={selectionChangeHandler} data-my-value={'raise'}>
+                              Raise a Query
+                            </MenuItem>
+                          )}
+
                         <MenuItem onClick={selectionChangeHandler} data-my-value={'reject'}>
                           Reject
                         </MenuItem>
@@ -364,8 +359,8 @@ const ReadRegisterAndAcademicDetails = ({
                             (loggedInUserType === 'SMC' && selectedAcademicStatus === 'Pending')) &&
                           selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
                           selectedAcademicStatus !== 'Permanent Suspension Requests Received' && (
-                            <MenuItem onClick={selectionChangeHandler} data-my-value={'suspend'}>
-                              Permanent suspend
+                            <MenuItem onClick={selectionChangeHandler} data-my-value={'blacklist'}>
+                              Temporary Suspend
                             </MenuItem>
                           )}
                         {personalDetails.nmr_id !== undefined &&
@@ -374,8 +369,8 @@ const ReadRegisterAndAcademicDetails = ({
                             (loggedInUserType === 'SMC' && selectedAcademicStatus === 'Pending')) &&
                           selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
                           selectedAcademicStatus !== 'Permanent Suspension Requests Received' && (
-                            <MenuItem onClick={selectionChangeHandler} data-my-value={'blacklist'}>
-                              Temporary suspend
+                            <MenuItem onClick={selectionChangeHandler} data-my-value={'suspend'}>
+                              Permanent Suspend
                             </MenuItem>
                           )}
                       </Menu>

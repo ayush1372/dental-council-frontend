@@ -83,7 +83,7 @@ const SuspendedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
           variant="outlined"
           name={'DoctorName'}
           placeholder="Enter doctor name"
-          label={'Doctor name'}
+          label={'Doctor Name'}
           fullWidth
           defaultValue={getValues().DoctorName}
           {...register('DoctorName', {
@@ -103,7 +103,7 @@ const SuspendedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
       <Grid item xs={4}>
         <Grid>
           <Typography color="inputTextColor.main">
-            Registration number
+            Registration Number
             {/* <ErrorOutlineIcon
               fontSize="width12"
               sx={{
@@ -137,7 +137,7 @@ const SuspendedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
             fullWidth
             error={errors.YearofRegistration?.message}
             name="YearofRegistration"
-            label=" Year of registration"
+            label=" Year of Registration"
             placeholder="Select year of registration"
             defaultValue={getValues().yearofRegistration}
             {...register('YearofRegistration', {
@@ -154,7 +154,7 @@ const SuspendedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
             fullWidth
             error={errors.Statemedicalcouncil?.message}
             name="Statemedicalcouncil"
-            label=" State medical council"
+            label=" State Medical Council"
             placeholder="Select state medical council"
             defaultValue={getValues().Statemedicalcouncil}
             {...register('Statemedicalcouncil', {

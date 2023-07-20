@@ -8,7 +8,7 @@ const successToast = (message, operation, toastType, toastPosition = 'bottom-rig
     position: toastPosition,
     transition: Slide,
     type: toastType,
-    autoClose: 2000,
+    autoClose: 12000,
     hideProgressBar: true,
     closeButton: false,
     closeOnClick: false,
