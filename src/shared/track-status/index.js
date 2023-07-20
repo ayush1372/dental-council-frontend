@@ -122,6 +122,9 @@ export default function TrackStatus() {
                   {...register('trackStatus')}
                   onChange={(currentValue) => {
                     setTrackStatusId(currentValue?.id);
+                    if (currentValue === null) {
+                      setValue('trackStatusFilter', null);
+                    }
                   }}
                 />
               </Box>

@@ -354,7 +354,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
           </Button>
         </Grid>
       </Grid>
-      <Box my={1}>
+      <Box mt={2} mb={1}>
         {selectedLoginOption === 'nmrId' ? (
           <>
             <TextField
@@ -393,8 +393,12 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
                       }}
                       color={'white.main'}
                       onClick={() => {
-                        getValues()?.nmrID?.length === 12 &&
+                        if(!otpFormEnabled){
+                          getValues()?.nmrID?.length === 12 &&
                           sendNotificationOTPHandler(!otpFormEnabled, 'NMR');
+                        } else{
+                          setOtpFormEnable(false);
+                        }
                       }}
                     >
                       {otpFormEnabled ? 'Re-Enter' : 'Verify'}
@@ -404,7 +408,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
               }}
             />
             {otpFormEnabled && (
-              <Box mt={2}>
+              <Box mt={1}>
                 <Typography variant="body1">
                   OTP sent to registered mobile number ending with{maskedMobileNumber}
                 </Typography>
