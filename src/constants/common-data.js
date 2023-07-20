@@ -272,7 +272,7 @@ export const CollegeApprovalFieldList = [
 ];
 export const ActivateLicenceFieldList = [
   { id: 'applicantFullName', name: 'Name of Applicant' },
-  { id: 'registrationNumber', name: 'Registration No.' },
+  { id: 'registrationNumber', name: 'Registration No' },
   { id: 'emailId', name: 'Email ID' },
   { id: 'gender', name: 'Gender' },
   { id: 'mobileNumber', name: 'Mobile Number' },
@@ -281,7 +281,7 @@ export const ActivateLicenceFieldList = [
 
 export const DashBoardCardsFieldList = [
   { id: 'applicantFullName', name: 'Name of Applicant' },
-  { id: 'registrationNumber', name: 'Registration No.' },
+  { id: 'registrationNumber', name: 'Registration No' },
   { id: 'councilName', name: 'Name of Council' },
   { id: 'emailId', name: 'Email ID' },
   { id: 'gender', name: 'Gender' },
@@ -292,7 +292,7 @@ export const DashBoardCardsFieldList = [
 
 export const TrackStatusFieldList = [
   { id: 'applicantFullName', name: 'Name of Applicant' },
-  { id: 'registrationNumber', name: 'Registration No.' },
+  { id: 'registrationNumber', name: 'Registration No' },
   { id: 'emailId', name: 'Email ID' },
   { id: 'gender', name: 'Gender' },
   { id: 'mobileNumber', name: 'Mobile Number' },

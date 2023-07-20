@@ -126,7 +126,6 @@ export function TrackApplicationDetails({
                 <Typography
                   variant="subtitle2"
                   color="textPrimary.main"
-                  sx={{ wordBreak: 'break-all' }}
                 >
                   {`${
                     typeOfApplication(applicationStatus?.application_type)
