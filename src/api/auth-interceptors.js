@@ -1,85 +1,43 @@
 /* eslint import/no-cycle: [2, { maxDepth: 1 }] */
 
+// import { ErrorMessages } from '../constants/error-messages';
+// import { expireSession } from '../helpers/components/session';
 import successToast from '../ui/core/toaster';
-import { expireSession } from './session';
-
-const capitalizeFirstLetter = (s) => {
-  if (typeof s !== 'string') return '';
-  return s.charAt(0).toUpperCase() + s.slice(1);
-};
 
 const authInterceptors = (error) => {
-  const allFailMsg =
-    'System encountered an unexpected request failure. Please try again in sometime.';
-
+  const allFailMsg = 'Unexpected error occurred. Please try again in sometime.';
   if (error && error?.response) {
-    if (error?.response?.status && error?.response?.status === 401) {
-      let data = error?.response?.data;
-      if (
-        data?.details &&
-        data?.details.length > 0 &&
-        data?.details[0] &&
-        data?.details[0].message
-      ) {
-        if (data?.details[0]?.attribute && data?.details[0]?.attribute.key) {
-          successToast(
-            `${capitalizeFirstLetter(data?.details[0]?.attribute?.key)}: ${
-              data.details[0].message
-            }`,
-            'auth-error',
-            'error',
-            'top-center'
-          );
-          return Promise.reject(error?.response?.data);
-        } else {
-          successToast(data?.details[0]?.message, 'auth-error', 'error', 'top-center');
-          return Promise.reject(error?.response?.data);
-        }
-      } else {
-        // expireSession("ERR_SESSION: Session error. Please clear cache or use private/incognito window.");
-        expireSession(error?.response?.data?.message);
-        return Promise.reject(error?.response);
-      }
-    } else if (error?.response?.status >= 500) {
-      successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-    } else if (error?.response?.data) {
-      let data = error?.response?.data;
-      if (
-        data?.details &&
-        data?.details?.length > 0 &&
-        data?.details[0] &&
-        data?.details[0].message
-      ) {
-        if (data?.details[0]?.attribute && data?.details[0]?.attribute.key) {
-          if (data.details[0].attribute.key === 'mobile') {
-            successToast(data.details[0].message, 'auth-error', 'error', 'top-center');
-          } else {
-            successToast(
-              `${capitalizeFirstLetter(data.details[0].attribute.key)}: ${
-                data?.details[0]?.message
-              }`,
-              'auth-error',
-              'error',
-              'top-center'
-            );
-          }
+    if (error?.response?.status) {
+      if (error?.response?.status >= 500) {
+        successToast(allFailMsg, 'auth-error', 'error', 'top-center');
+        return Promise.reject(allFailMsg);
+      } else if (error?.response?.status < 500) {
+        let data = error?.response?.data;
 
-          return Promise.reject(error?.response?.data);
-        } else {
-          successToast(data?.details[0]?.message, 'auth-error', 'error', 'top-center');
-          return Promise.reject(error?.response?.data);
+        if (data?.message === 'Network Error') {
+          successToast(allFailMsg, 'auth-error-Network', 'error', 'top-center');
+          return Promise.reject(allFailMsg);
         }
-      } else {
-        return Promise?.reject(error?.response?.data?.message || error);
+
+        if (data?.path === '/health-professional' && data?.code === 'ABDM-NMR-003') {
+          return Promise.reject(data?.message);
+        }
+        if (
+          data?.details[0]?.code === 'HIS-2011' &&
+          data?.details[0]?.message === '“Pi” (basic) attributes of demographic data did not match.'
+        ) {
+          return Promise.reject(data?.message);
+        }
+        successToast(data?.message, 'auth-error-Network', 'error', 'top-center');
+        return Promise.reject(data?.message);
       }
+    } else if (error?.message && error?.message.includes('Network')) {
+      successToast(allFailMsg, 'auth-error-Network', 'error', 'top-center');
+      return Promise.reject(allFailMsg);
     }
-  } else if (error?.message && error?.message.includes('Network')) {
-    return successToast(
-      'ERR_CONN: Error while connecting to server. Please check that your internet connection is working.'
-    );
   } else {
-    successToast('ERR_UNA: ' + allFailMsg, 'auth-error-Network', 'error', 'top-center');
-    return Promise.reject('ERR_UNA: ' + allFailMsg);
+    successToast(allFailMsg, 'auth-error', 'error', 'top-center');
+    return Promise.reject(allFailMsg);
   }
 };
 

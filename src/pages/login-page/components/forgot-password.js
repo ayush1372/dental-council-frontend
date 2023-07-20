@@ -9,7 +9,7 @@ import { sendNotificationOtp } from '../../../store/actions/common-actions';
 import { loginActiveState } from '../../../store/reducers/login-reducer';
 import { Button } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
-import successToast from '../../../ui/core/toaster';
+// import successToast from '../../../ui/core/toaster';
 
 //import { EmailRegexValidation } from '../../../utilities/common-validations';
 
@@ -62,58 +62,57 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep, l
       sendNotificationOtpBody = { contact: getValues().Id, type: 'nmr_id', user_type: userTypeId };
     }
 
-    dispatch(sendNotificationOtp(sendNotificationOtpBody))
-      .then((response) => {
-        if (response) {
-          otpData(sendNotificationOtpBody);
-          if (userData?.page === 'forgotPasswordPage') {
-            let otpValue = {
-              contact: getValues()?.mobileNo
-                ? getValues().mobileNo
-                : getValues()?.Id?.includes('@')
-                ? getValues().Id
-                : getValues().Id,
-              type: getValues().mobileNo
-                ? 'sms'
-                : getValues()?.Id?.includes('@')
-                ? 'email'
-                : 'nmr_id',
-              page: userData?.page,
-              reSetPasswordOtp: onSubmit,
-            };
-            otpData(otpValue);
-          }
-          if (userData?.page === 'forgetUserName') {
-            let otpValue = {
-              contact: getValues()?.mobileNo
-                ? getValues().mobileNo
-                : getValues()?.Id?.includes('@')
-                ? getValues().Id
-                : getValues().Id,
-              type: getValues().mobileNo
-                ? 'sms'
-                : getValues()?.Id?.includes('@')
-                ? 'email'
-                : 'nmr_id',
-              page: userData?.page,
-              reSetPasswordOtp: onSubmit,
-              handleClose: () => {
-                resetStep(0);
-              },
-            };
-            otpData(otpValue);
-          }
-          reSetPassword !== 'reSetPassword' && handleConfirmPassword();
+    dispatch(sendNotificationOtp(sendNotificationOtpBody)).then((response) => {
+      if (response) {
+        otpData(sendNotificationOtpBody);
+        if (userData?.page === 'forgotPasswordPage') {
+          let otpValue = {
+            contact: getValues()?.mobileNo
+              ? getValues().mobileNo
+              : getValues()?.Id?.includes('@')
+              ? getValues().Id
+              : getValues().Id,
+            type: getValues().mobileNo
+              ? 'sms'
+              : getValues()?.Id?.includes('@')
+              ? 'email'
+              : 'nmr_id',
+            page: userData?.page,
+            reSetPasswordOtp: onSubmit,
+          };
+          otpData(otpValue);
         }
-      })
-      .catch((allFailMsg) => {
-        successToast(
-          'ERR_INT: ' + allFailMsg?.data?.response?.data?.message,
-          'auth-error',
-          'error',
-          'top-center'
-        );
-      });
+        if (userData?.page === 'forgetUserName') {
+          let otpValue = {
+            contact: getValues()?.mobileNo
+              ? getValues().mobileNo
+              : getValues()?.Id?.includes('@')
+              ? getValues().Id
+              : getValues().Id,
+            type: getValues().mobileNo
+              ? 'sms'
+              : getValues()?.Id?.includes('@')
+              ? 'email'
+              : 'nmr_id',
+            page: userData?.page,
+            reSetPasswordOtp: onSubmit,
+            handleClose: () => {
+              resetStep(0);
+            },
+          };
+          otpData(otpValue);
+        }
+        reSetPassword !== 'reSetPassword' && handleConfirmPassword();
+      }
+    });
+    // .catch((allFailMsg) => {
+    //   successToast(
+    //     'ERR_INT: ' + allFailMsg?.data?.response?.data?.message,
+    //     'auth-error',
+    //     'error',
+    //     'top-center'
+    //   );
+    // });
   };
 
   return (

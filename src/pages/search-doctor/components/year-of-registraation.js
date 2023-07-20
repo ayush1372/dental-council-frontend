@@ -6,7 +6,7 @@ import { yeardata } from '../../../constants/common-data';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
 import { searchDoctorDetails } from '../../../store/actions/doctor-search-actions';
 import { Button } from '../../../ui/core';
-import successToast from '../../../ui/core/toaster';
+// import successToast from '../../../ui/core/toaster';
 
 const YearOfRegistration = ({ setDoSearch, setSearchData, setScrollDown }) => {
   const dispatch = useDispatch();
@@ -32,16 +32,15 @@ const YearOfRegistration = ({ setDoSearch, setSearchData, setScrollDown }) => {
 
     setDoSearch(true);
 
-    dispatch(searchDoctorDetails(searchValues))
-      .then(() => {})
-      .catch((error) => {
-        successToast(
-          error?.data?.response?.data?.error,
-          'RegistrationError',
-          'error',
-          'top-center'
-        );
-      });
+    dispatch(searchDoctorDetails(searchValues)).then(() => {});
+    // .catch((error) => {
+    //   successToast(
+    //     error?.data?.response?.data?.error,
+    //     'RegistrationError',
+    //     'error',
+    //     'top-center'
+    //   );
+    // });
 
     setSearchData(searchValues);
     setScrollDown(true);

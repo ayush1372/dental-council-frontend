@@ -251,14 +251,14 @@ const EditQualificationDetails = ({
             <TextField
               variant="outlined"
               name="PassportNumber"
-              label="Passport number"
+              label="Passport Number"
               placeholder="Enter passport number"
               required={true}
               fullWidth
               error={errors?.qualification?.[index]?.passportNumber?.message}
               defaultValue={getValues()[`qualification[${index}].passportNumber`]}
               {...register(`qualification[${index}].passportNumber`, {
-                required: 'Passport number is required',
+                required: 'Please enter passport number',
                 pattern: {
                   value: /^[A-PR-WY][1-9]\d\s?\d{4}[1-9]$/gi,
                   message: 'Please enter valid 8character Passport Number,Example:P1234567',
@@ -340,7 +340,7 @@ const EditQualificationDetails = ({
                 `qualification[${index}].result`,
 
                 {
-                  required: 'Result is required',
+                  required: 'Please select result ',
                 }
               )}
               options={[
@@ -386,11 +386,11 @@ const EditQualificationDetails = ({
               }
               name="MonthFMGE"
               placeholder={'Select month-fmge'}
-              label="Month (FMGE qualified)"
+              label="Month (FMGE Qualified)"
               defaultValue={fields[index].monthfmge}
               required={true}
               {...register(`qualification[${index}].monthfmge`, {
-                required: 'Month-FMGE qualified is required',
+                required: 'Please select month',
               })}
               style={{
                 backgroundColor:
@@ -425,12 +425,12 @@ const EditQualificationDetails = ({
                   : ''
               }
               name="YearFMGE"
-              label="Year (FMGE qualified)"
+              label="Year (FMGE Qualified)"
               placeholder={'Select fmge qualified'}
               defaultValue={fields[index].yearfmge}
               required={true}
               {...register(`qualification[${index}].yearfmge`, {
-                required: 'Year-FMGE qualified is required',
+                required: 'Please select year',
               })}
               options={yearsData}
               MenuProps={{
@@ -607,7 +607,7 @@ const EditQualificationDetails = ({
               defaultValue={fields[index].state}
               required={true}
               {...register(`qualification[${index}].state`, {
-                required: 'State is required',
+                required: 'Please select state',
               })}
               sx={{
                 input: {
@@ -642,7 +642,7 @@ const EditQualificationDetails = ({
               {...register(
                 `qualification[${index}].state`,
                 getValues().qualification[index].state === '' && {
-                  required: 'State is required',
+                  required: 'Please select state',
                 }
               )}
               options={createSelectFieldData(statesList)}
@@ -681,7 +681,7 @@ const EditQualificationDetails = ({
               defaultValue={qualification?.college}
               required={true}
               {...register(`qualification[${index}].college`, {
-                required: 'College is required',
+                required: 'Please enter college name',
               })}
               sx={{
                 input: {
@@ -713,7 +713,7 @@ const EditQualificationDetails = ({
               {...register(
                 `qualification[${index}].college`,
                 getValues().qualification[index].college === '' && {
-                  required: 'College is required',
+                  required: 'Please select college',
                 }
               )}
               options={createSelectFieldData(colleges)}
@@ -769,7 +769,7 @@ const EditQualificationDetails = ({
                   : false
               }
               {...register(`qualification[${index}].university`, {
-                required: 'University is required',
+                required: 'Please enter university name',
               })}
             />
           ) : (
@@ -784,7 +784,7 @@ const EditQualificationDetails = ({
               {...register(
                 `qualification[${index}].university`,
                 getValues()?.qualification[index]?.university === '' && {
-                  required: 'University is required',
+                  required: 'Please select university',
                 }
               )}
               options={createSelectFieldData(universitiesListData, 'id') || []}
@@ -814,7 +814,7 @@ const EditQualificationDetails = ({
         </Grid>
         <Grid container item xs={12} md={6} lg={4} columnSpacing={2}>
           <Typography pl={2} fontWeight="500" color="inputTextColor.main">
-            Month & Year of Awarding Degree
+            Month & Year of Degree Awarded
             <Typography component="span" color="error.main">
               *
             </Typography>
@@ -827,12 +827,12 @@ const EditQualificationDetails = ({
                 errors?.qualification?.[index]?.month?.message
               }
               name="Month"
-              placeholder={'Select month of awarding'}
+              placeholder={'Select month'}
               defaultValue={qualification?.month}
               {...register(
                 `qualification[${index}].month`,
                 getValues().qualification[index].month?.length <= 0 && {
-                  required: 'Awarding month is required',
+                  required: 'Please select month',
                 }
               )}
               style={{
@@ -866,7 +866,7 @@ const EditQualificationDetails = ({
               name="year"
               options={yearsData}
               required={true}
-              placeholder={'Select year of awarding'}
+              placeholder={'Select year'}
               fullWidth
               error={
                 getValues().qualification[index].year === '' &&
@@ -876,7 +876,7 @@ const EditQualificationDetails = ({
               {...register(
                 `qualification[${index}].year`,
                 getValues().qualification[index].year?.length <= 0 && {
-                  required: 'Awarding year is required',
+                  required: 'Please select year',
                   pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
                 }
               )}

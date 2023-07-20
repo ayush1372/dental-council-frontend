@@ -97,7 +97,7 @@ export default function MiniDrawer({ DrawerOptions = [], handleSwitch }) {
       variant="permanent"
       open={open}
       PaperProps={{ sx: { position: 'relative', border: 'none' } }}
-      sx={{borderTopLeftRadius: '8px', borderTopRightRadius: '8px',}}
+      sx={{ borderTopLeftRadius: '8px', borderTopRightRadius: '8px' }}
     >
       <DrawerHeader
         sx={
