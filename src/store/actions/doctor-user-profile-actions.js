@@ -1,7 +1,7 @@
 import { API } from '../../api/api-endpoints';
 import { DELETE, GET, PATCH, POST, PUT } from '../../constants/requests';
 import { useAxiosCall } from '../../hooks/use-axios';
-import successToast from '../../ui/core/toaster';
+// import successToast from '../../ui/core/toaster';
 import {
   updateDoctorTrackApplication,
   updateTrackApplicationTableData,
@@ -295,14 +295,13 @@ export const getDoctorTrackApplicationStatus = (nmr_id) => async (dispatch) => {
       method: GET,
       url: `${API.DoctorUserProfileData.trackApplicationStatus.replace('{requestId}', nmr_id)}`,
       headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
-    })
-      .then((response) => {
-        dispatch(updateDoctorTrackApplication(response));
-        return resolve(response);
-      })
-      .catch((error) => {
-        successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-      });
+    }).then((response) => {
+      dispatch(updateDoctorTrackApplication(response));
+      return resolve(response);
+    });
+    // .catch((error) => {
+    //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+    // });
   });
 };
 export const getEsignFormDetails = (data) => async (dispatch) => {

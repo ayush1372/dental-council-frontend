@@ -9,7 +9,7 @@ import ReactivationLogo from '../../../src/assets/images/reactivate-license-icon
 import { createReActivateLicense } from '../../store/actions/common-actions';
 import { Button, DatePicker, TextField } from '../../ui/core';
 import UploadFile from '../../ui/core/fileupload/fileupload';
-import successToast from '../../ui/core/toaster';
+// import successToast from '../../ui/core/toaster';
 export default function ReactivateLicencePopup(props) {
   const [open, setOpen] = useState(true);
   const [showFromDateError, setShowFromDateError] = useState(false);
@@ -67,9 +67,9 @@ export default function ReactivateLicencePopup(props) {
             props.renderSuccess();
           }
         })
-        .catch((error) => {
+        .catch(() => {
           props?.closeReactivateLicense();
-          successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
+          // successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
         });
   }
 

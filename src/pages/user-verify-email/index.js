@@ -6,7 +6,7 @@ import { useTheme } from '@mui/material/styles';
 import { useDispatch } from 'react-redux';
 
 import { userVerifyEmail } from '../../store/actions/doctor-user-profile-actions';
-import successToast from '../../ui/core/toaster';
+// import successToast from '../../ui/core/toaster';
 const UserVerifyUser = () => {
   const [emailVerify, setEmailVerify] = useState(false);
   // const handleClose = () => setOpen(false);
@@ -16,13 +16,13 @@ const UserVerifyUser = () => {
     let userVerifyEmailBody = {
       token: window.location.href.substring(window.location.href.indexOf('email/') + 6),
     };
-    try {
-      dispatch(userVerifyEmail(userVerifyEmailBody)).then(() => {
-        setEmailVerify(true);
-      });
-    } catch (allFailMsg) {
-      successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-    }
+    // try {
+    dispatch(userVerifyEmail(userVerifyEmailBody)).then(() => {
+      setEmailVerify(true);
+    });
+    // } catch (allFailMsg) {
+    //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    // }
   }, []);
   return (
     emailVerify && (
