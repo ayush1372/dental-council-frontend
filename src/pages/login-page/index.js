@@ -113,7 +113,7 @@ const LoginWrapper = () => {
               display={'flex'}
               justifyContent="center"
             >
-              Success!
+              Success
             </Typography>
           </Box>
           <Box mt={2} textAlign="center">
