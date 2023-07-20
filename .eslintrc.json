@@ -16,6 +16,8 @@
         // TODO: Update this rule while starting the project use prop-type or Typescript
         "react/prop-types": "off",
         // ------------------------------------------------------------------------------
+        "editor.formatOnPaste": true,
+        "editor.formatOnSave": true,
         "filename-rules/match": [2, "kebabcase"],
         "no-console": ["error"],
         "lodash/import-scope": [2, "method"],
