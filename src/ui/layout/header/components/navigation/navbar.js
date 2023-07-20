@@ -23,7 +23,7 @@ const Nav = ({ menuToggleHandler }) => {
       justifyContent: 'flex-start',
       alignItems: 'center',
       position: 'relative',
-      padding: '10px 20px',
+      padding: '14px 20px 10px',
       lineHeight: '1',
       borderBottom: '4px solid',
       borderBottomColor: theme.palette.primary.main,

@@ -38,6 +38,7 @@ export const MainLayout = () => {
           work_flow_status_id: Number(localStorage.getItem('workProfileStatusID')),
           esign_status: Number(localStorage.getItem('esignStatus')),
           blacklisted: Number(localStorage.getItem('blacklistedStatus')),
+          user_type: Number(localStorage.getItem('userType')),
         },
       };
       dispatch(loginUser(dataObj));

@@ -22,6 +22,12 @@ const authInterceptors = (error) => {
         if (data?.path === '/health-professional' && data?.code === 'ABDM-NMR-003') {
           return Promise.reject(data?.message);
         }
+        if (
+          data?.details[0]?.code === 'HIS-2011' &&
+          data?.details[0]?.message === '“Pi” (basic) attributes of demographic data did not match.'
+        ) {
+          return Promise.reject(data?.message);
+        }
         successToast(data?.message, 'auth-error-Network', 'error', 'top-center');
         return Promise.reject(data?.message);
       }

@@ -89,7 +89,7 @@ function DashboardControlledTable(props) {
       type: 'string',
     },
     { title: 'Submission Date', name: 'dateofSubmission', sorting: true, type: 'date' },
-    { title: 'Pendency (in days)', name: 'pendency', sorting: true, type: 'string' },
+    { title: 'Pendency (Days)', name: 'pendency', sorting: true, type: 'string' },
     { title: 'View', name: 'view', sorting: false, type: 'string' },
   ];
 

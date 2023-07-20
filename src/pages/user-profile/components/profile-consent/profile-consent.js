@@ -282,7 +282,7 @@ const ProfileConsent = ({
             error={errors.consent?.message}
           />
           <Typography component="div" variant="body7">
-            I hereby declare that I am voluntarily sharing above mentioned particulars and
+            I, hereby declare that I am voluntarily sharing above mentioned particulars and
             information. I certify that the above information furnished by me is true, complete, and
             correct to the best of my knowledge. I understand that in the event of my information
             being found false or incorrect at any stage, I shall be held liable for the same.

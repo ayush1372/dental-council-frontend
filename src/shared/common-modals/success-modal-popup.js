@@ -11,7 +11,10 @@ import {
   smcTabs,
 } from '../../helpers/components/sidebar-drawer-list-item';
 import { getCardCount } from '../../store/actions/dashboard-actions';
-import { getPersonalDetailsData } from '../../store/actions/doctor-user-profile-actions';
+import {
+  getPersonalDetailsData,
+  getWorkProfileDetailsData,
+} from '../../store/actions/doctor-user-profile-actions';
 import {
   changeUserActiveTab,
   logout,
@@ -20,7 +23,6 @@ import {
 import { setBreadcrumbsActivetab } from '../../store/reducers/common-reducers';
 import { loginActiveState } from '../../store/reducers/login-reducer';
 import { Button } from '../../ui/core';
-// import successToast from '../../ui/core/toaster';
 
 export default function SuccessModalPopup({
   open,
@@ -28,6 +30,7 @@ export default function SuccessModalPopup({
   text,
   loginName,
   handleClose,
+  workDetails,
   SuspensionCall,
   isHpIdCreated,
   successRegistration,
@@ -37,6 +40,8 @@ export default function SuccessModalPopup({
   navigateToTrackApplication,
   fetchDoctorUserPersonalDetails,
   setChangeUserData,
+  setCurrentlyWorking,
+  setDefaultFacilityData,
   PasswordChange,
 }) {
   const theme = useTheme();
@@ -48,6 +53,16 @@ export default function SuccessModalPopup({
 
   const handleCloseModal = () => {
     setOpen(false);
+    if (loggedInUserType === 'Doctor' && workDetails === true) {
+      dispatch(getWorkProfileDetailsData(loginData?.data?.profile_id)).then((response) => {
+        if (response?.data) {
+          setCurrentlyWorking(
+            response?.data?.work_details?.is_user_currently_working === 1 ? 'no' : 'yes'
+          );
+          setDefaultFacilityData(response?.data);
+        }
+      });
+    }
   };
   const navigateToSetPassword = () => {
     navigate('/reset-password');
@@ -121,7 +136,6 @@ export default function SuccessModalPopup({
   };
 
   const navigateLogin = () => {
-    // eslint-disable-next-line no-console
     dispatch(loginActiveState({ activeIndex: 0 }));
     navigate('/login-page', { state: { loginFormname: loginName } });
   };

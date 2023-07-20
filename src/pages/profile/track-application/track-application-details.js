@@ -123,10 +123,7 @@ export function TrackApplicationDetails({
                 <Typography variant="body3" color="grey.label">
                   Type of Application
                 </Typography>
-                <Typography
-                  variant="subtitle2"
-                  color="textPrimary.main"
-                >
+                <Typography variant="subtitle2" color="textPrimary.main">
                   {`${
                     typeOfApplication(applicationStatus?.application_type)
                       ? typeOfApplication(applicationStatus?.application_type)
@@ -148,7 +145,7 @@ export function TrackApplicationDetails({
               </Grid>
               <Grid item xs={12} xl={6}>
                 <Typography variant="body3" color="grey.label">
-                  Pendency days
+                  Pendency (Days)
                 </Typography>
                 <Typography variant="subtitle2" color="textPrimary.main">
                   {`${applicationStatus?.pendency}`}
