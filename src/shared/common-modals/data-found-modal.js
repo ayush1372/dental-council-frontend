@@ -88,7 +88,12 @@ export default function DatafoundModalPopup({
               <Box
                 p="16px 16px 0px 16px"
                 width={{ xs: '100%' }}
-                sx={{ border: 'solid 1px', borderColor: theme.inputBorderColor, borderRadius: '8px', marginTop: '16px' }}
+                sx={{
+                  border: 'solid 1px',
+                  borderColor: theme.inputBorderColor,
+                  borderRadius: '8px',
+                  marginTop: '16px',
+                }}
               >
                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                   <Box>

@@ -138,7 +138,7 @@ const CollegeEditProfile = (props) => {
         <SuccessModalPopup
           open={successModalPopup}
           setOpen={() => setSuccessModalPopup(false)}
-          text={'College Profile Updated  Successfully'}
+          text={'College profile has been updated'}
         />
       )}
       <Grid container spacing={2} mt={1}>
@@ -152,7 +152,7 @@ const CollegeEditProfile = (props) => {
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={4}>
             <Typography variant="body1" color="inputTextColor.main">
-              Name
+              College Name
             </Typography>
             <Typography component="span" color="error.main">
               *
@@ -187,7 +187,7 @@ const CollegeEditProfile = (props) => {
 
           <Grid item xs={12} md={4}>
             <Typography variant="body1" color="inputTextColor.main">
-              Mobile
+              Mobile Number
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -215,7 +215,7 @@ const CollegeEditProfile = (props) => {
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={4}>
             <Typography variant="body1" color="inputTextColor.main">
-              Select Council
+              Council
             </Typography>
             <Typography component="span" color="error.main">
               *
@@ -242,7 +242,7 @@ const CollegeEditProfile = (props) => {
 
           <Grid item xs={12} md={4}>
             <Typography variant="body1" color="inputTextColor.main">
-              Select University Name
+              University Name
             </Typography>
             <Typography component="span" color="error.main">
               *
@@ -280,7 +280,7 @@ const CollegeEditProfile = (props) => {
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={4}>
             <Typography variant="body1" color="inputTextColor.main">
-              Address line 1
+              Address Line 1
             </Typography>
             <Typography component="span" color="error.main">
               *
@@ -302,7 +302,7 @@ const CollegeEditProfile = (props) => {
 
           <Grid item xs={12} md={4}>
             <Typography variant="body1" color="inputTextColor.main">
-              Address line 2
+              Address Line 2
             </Typography>
 
             <TextField
@@ -317,7 +317,7 @@ const CollegeEditProfile = (props) => {
 
           <Grid item xs={12} md={4}>
             <Typography variant="body1" color="inputTextColor.main">
-              State Name
+              State
             </Typography>
             <Typography component="span" color="error.main">
               *
@@ -445,7 +445,7 @@ const CollegeEditProfile = (props) => {
               defaultValue={getCollegeDetail?.data?.email_id}
               error={errors.Email?.message}
               {...register('Email', {
-                required: 'Please enter email',
+                required: 'Please enter an email ID',
                 pattern: {
                   value:
                     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,

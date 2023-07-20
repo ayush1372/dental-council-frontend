@@ -585,7 +585,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
             <TextField
               variant="outlined"
               name={'FatherName'}
-              placeholder="Enter father&apos;s name"
+              placeholder="Enter father's name"
               fullWidth
               defaultValue={getValues().FatherName}
               {...register('FatherName', {
@@ -906,7 +906,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                   variant="outlined"
                   name={'House'}
                   fullWidth
-                  placeholder="House Address"
+                  placeholder="House"
                   disabled={
                     isSameAddress
                       ? isSameAddress
@@ -932,8 +932,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                     'House',
                     isSameAddress
                       ? ''
-                      : {
-                          required: 'House is Required',
+                      : getValues()?.House?.length <= 0 && {
+                          required: 'Please enter house',
                           maxLength: {
                             value: 300,
                             message: 'Length should be less than 300.',

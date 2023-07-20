@@ -628,7 +628,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                 <Button
                   variant="contained"
                   color="secondary"
-                  sx={{ marginRight: '16px'}}
+                  sx={{ marginRight: '16px' }}
                   onClick={handleSubmit(onSubmit)}
                   disabled={!isOtpValidMobile || editBUtton}
                 >
