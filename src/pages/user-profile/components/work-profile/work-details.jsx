@@ -7,6 +7,7 @@ import { Box, Grid, Tab, Tabs, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { natureOfWork, workStatusOptions } from '../../../../constants/common-data';
+import { doctorTabs } from '../../../../helpers/components/sidebar-drawer-list-item';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
 import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
 import SuccessModalPopup from '../../../../shared/common-modals/success-modal-popup';
@@ -20,6 +21,7 @@ import {
   getFacilitiesData,
   updateDoctorWorkDetails,
 } from '../../../../store/actions/doctor-user-profile-actions';
+import { changeUserActiveTab } from '../../../../store/reducers/common-reducers';
 import { Button, Checkbox, RadioGroup, Select, TextField } from '../../../../ui/core';
 import { SvgImageComponent } from '../../../../ui/core/svg-icons/index';
 import successToast from '../../../../ui/core/toaster';
@@ -1067,6 +1069,10 @@ const WorkDetails = ({
                   xs: '100%',
                   md: 'fit-content',
                 },
+              }}
+              onClick={(e) => {
+                e.preventDefault();
+                dispatch(changeUserActiveTab(doctorTabs[0].tabName));
               }}
             >
               Cancel
