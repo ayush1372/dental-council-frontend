@@ -782,7 +782,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
             Date:09/03/2023
           <Grid item xs={12} md={4}>
             <Typography variant="body1" color="inputTextColor.main">
-              Language Spoken
+              Language spoken
               <Typography component="span" color="error.main">
                 *
               </Typography>

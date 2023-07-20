@@ -78,7 +78,7 @@ const WorkProfile = () => {
       <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor.main">
-            Are you currently working
+            Are you Currently Working?
             <Typography component="span" color="error.main">
               *
             </Typography>

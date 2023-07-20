@@ -32,7 +32,7 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
       <Grid container item spacing={2}>
         <Grid item xs={12} md={4}>
           <Typography variant="body5" color="grey.label">
-            Name of the organization where you work
+            Organisation Name
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
@@ -50,7 +50,7 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
           <Typography variant="body5" color="grey.label">
-            Organization Type
+            Organisation Type
           </Typography>
           <Grid display="flex" alignItems="center">
             <Typography variant="subtitle2" color="textPrimary.main">
@@ -254,7 +254,7 @@ const CurrentWorkDetails = ({ workProfileDetails }) => {
         {openModal && <RaiseQueryPopup ClosePopup={ClosePopup} />}
         <Grid item xs={12} md={4}>
           <Typography variant="body5" color="grey.label">
-            Pin Code
+            Pincode
             <Typography component="span" color="error.main">
               *
             </Typography>

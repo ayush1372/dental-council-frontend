@@ -79,7 +79,7 @@ const NonWorkDetails = ({
           fullWidth
           error={errors.reason?.message}
           name="reason"
-          label="Please select the reason for presently not working"
+          label="Please select the reason"
           defaultValue={work_details?.reason}
           value={getValues()?.reason}
           required={true}
@@ -129,7 +129,7 @@ const NonWorkDetails = ({
           open={successModalPopup}
           workDetails={true}
           setOpen={() => setSuccessModalPopup(false)}
-          text={'Your Work Details has been successfully updated'}
+          text={'Work detail have been updated'}
         />
       )}
     </>

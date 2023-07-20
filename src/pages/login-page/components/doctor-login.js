@@ -93,7 +93,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
 
         if (response) {
           setTransaction_id(response?.data?.transaction_id);
-          setMaskedMobileNumber(response?.data?.sent_on.replace(/^.{6}/g, 'XXXXXX'));
+          setMaskedMobileNumber(response?.data?.sent_on.replace(/^.{6}/g, '******'));
           setOtpSend(true);
         }
       })
@@ -110,7 +110,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
   const handleResponse = (response) => {
     setOtpFormEnable(true);
     setTransaction_id(response?.data?.transaction_id);
-    setMaskedMobileNumber(response?.data?.sent_on.replace(/^.{6}/g, 'XXXXXX'));
+    setMaskedMobileNumber(response?.data?.sent_on.replace(/^.{6}/g, '******'));
     setOtpSend(true);
   };
   const handleLogin = () => {
@@ -406,7 +406,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
             {otpFormEnabled && (
               <Box mt={2}>
                 <Typography variant="body1">
-                  OTP sent to registered mobile number ending with{maskedMobileNumber}
+                  OTP sent to registered mobile number ending with {maskedMobileNumber}
                 </Typography>
                 {otpform}
               </Box>
