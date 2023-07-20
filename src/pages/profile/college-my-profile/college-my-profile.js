@@ -318,7 +318,7 @@ const CollegeMyProfile = () => {
             {userData?.pin_code ? (
               <Grid item xs={12} md={4} sm={6}>
                 <Typography variant="body3" color="grey.label">
-                  College PIN Code
+                  College Pincode
                 </Typography>
                 <Typography variant="subtitle2" color="primary.main">
                   {userData.pin_code}

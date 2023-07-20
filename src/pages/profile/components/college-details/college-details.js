@@ -132,7 +132,7 @@ const CollegeDetails = ({ collegeDetails, setShowTable }) => {
             </Grid>
             <Grid item xs={12} sm={6} md={4}>
               <Typography variant="subtitle2" color="grey.label">
-                College Pin Code
+                College Pincode
               </Typography>
               <Typography variant="body1" color="primary.main">
                 {userData?.pin_code}
