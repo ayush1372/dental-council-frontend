@@ -120,21 +120,91 @@ const CollegeDetails = ({ collegeDetails, setShowTable }) => {
             </Typography>
           </Grid>
 
-          <Grid item xs={12} sm={6} md={4}>
-            <Typography variant="subtitle2" color="grey.label">
-              College Address
-            </Typography>
-            <Typography variant="body1" color="primary.main">
-              {userData?.address}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6} md={4}>
-            <Typography variant="subtitle2" color="grey.label">
-              College Pin Code
-            </Typography>
-            <Typography variant="body1" color="primary.main">
-              {userData?.pin_code}
-            </Typography>
+          <Grid container item spacing={2} mt={1}>
+            <Grid item xs={12} sm={6} md={4}>
+              <Typography variant="subtitle2" color="grey.label" data-testid="College Name">
+                College Name
+              </Typography>
+
+              <Typography variant="body1" color="primary.main">
+                {userData?.name ? userData.name : ''}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <Typography variant="subtitle2" color="grey.label">
+                College ID
+              </Typography>
+
+              <Typography variant="body1" color="primary.main">
+                {userData?.college_code}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <Typography variant="subtitle2" color="grey.label">
+                College Phone Number
+              </Typography>
+
+              <Typography variant="body1" color="primary.main">
+                {userData?.phone_number ? userData.phone_number : ''}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <Typography variant="subtitle2" color="grey.label">
+                College Email ID
+              </Typography>
+              <Typography variant="body1" color="primary.main">
+                {userData?.email_id ? userData.email_id : ''}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <Typography variant="subtitle2" color="grey.label">
+                Select Council
+              </Typography>
+              <Typography variant="body1" color="primary.main">
+                {collegeDetails?.nameofStateCouncil}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <Typography variant="subtitle2" color="grey.label">
+                Select University name
+              </Typography>
+              <Typography variant="body1" color="primary.main">
+                {collegeDetails?.universityName}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <Typography variant="subtitle2" color="grey.label">
+                College Website
+              </Typography>
+              <Typography variant="body1" color="primary.main">
+                {userData?.website}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <Typography variant="subtitle2" color="grey.label">
+                State Name
+              </Typography>
+              <Typography variant="body1" color="primary.main">
+                {userData?.state_name}
+              </Typography>
+            </Grid>
+
+            <Grid item xs={12} sm={6} md={4}>
+              <Typography variant="subtitle2" color="grey.label">
+                College Address
+              </Typography>
+              <Typography variant="body1" color="primary.main">
+                {userData?.address}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6} md={4}>
+              <Typography variant="subtitle2" color="grey.label">
+                College Pincode
+              </Typography>
+              <Typography variant="body1" color="primary.main">
+                {userData?.pin_code}
+              </Typography>
+            </Grid>
           </Grid>
         </Grid>
       </Grid>

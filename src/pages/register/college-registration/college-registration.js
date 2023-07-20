@@ -447,18 +447,18 @@ export function CollegeRegistration() {
 
         <Grid item xs={12} md={6} lg={4}>
           <Typography variant="body3" color="inputTextColor.main">
-            College Pin Code
+            College Pincode
           </Typography>
           <TextField
             fullWidth
             required
             name={'CollegePincode'}
-            placeholder={'Enter College Pin Code'}
+            placeholder={'Enter college pincode'}
             {...register('CollegePincode', {
-              required: 'College PinCode  is required',
+              required: 'College pincode is required',
               pattern: {
                 value: /^[0-9]{6}$/i,
-                message: 'Please Enter Valid Pincode',
+                message: 'Please enter a valid pincode',
               },
             })}
           />

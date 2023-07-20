@@ -53,7 +53,7 @@ const ReadWorkProfile = ({ handleEdit }) => {
             <Grid container item spacing={2} mt={2}>
               <Grid item xs={12} md={4}>
                 <Typography variant="body5" color="grey.label">
-                  Are you currently working
+                  Are you Currently Working?
                   <Typography component="span" color="error.main">
                     *
                   </Typography>
@@ -113,24 +113,24 @@ const ReadWorkProfile = ({ handleEdit }) => {
             <Grid container mt={2}>
               <Grid item xs={12} md={3} mt={1}>
                 <Typography variant="body5" color="grey.label">
-                  Name of the organization where you work
+                  Organisation Name
                   <Typography component="span" color="error.main">
                     *
                   </Typography>
                 </Typography>
                 <Grid display="flex" alignItems="center">
                   <Typography variant="subtitle2" color=" mt={2}.main">
-                    Name of the organization where you work
+                    Organisation Name
                   </Typography>
                 </Grid>
               </Grid>
               <Grid item xs={12} md={3} mt={1}>
                 <Typography variant="body5" color="grey.label">
-                  Origanization Type
+                  Origanisation Type
                 </Typography>
                 <Grid display="flex" alignItems="center">
                   <Typography variant="subtitle2" color=" mt={2}.main">
-                    Origanization Type
+                    Origanisation Type
                   </Typography>
                 </Grid>
               </Grid>

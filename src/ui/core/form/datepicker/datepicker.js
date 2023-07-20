@@ -48,7 +48,7 @@ const InputField = ({
             pr: 2,
           }}
           id={props?.id}
-          format="dd/MM/yyyy"
+          format="dd-MM-yyyy"
           className={classes.root}
           disabled={disabled || false}
           minDate={props?.minDate}

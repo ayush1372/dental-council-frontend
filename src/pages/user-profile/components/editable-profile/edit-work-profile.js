@@ -210,7 +210,7 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
         <Grid container>
           <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
-              Are you currently working
+              Are you Currently Working
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -240,10 +240,10 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
               fullWidth
               error={getValues()?.NatureOfWork?.length === 0 && errors.NatureOfWork?.message}
               name="NatureOfWork"
-              label="Nature of work"
+              label="Nature of Work"
               defaultValue={getValues().NatureOfWork}
               required={true}
-              placeholder={'Nature Of Work'}
+              placeholder={'Nature of work'}
               {...register(
                 'NatureOfWork',
                 getValues()?.NatureOfWork?.length === 0 && {
@@ -255,7 +255,7 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
           </Grid>
           <Grid item xs={12} md={4} lg={12}>
             <Typography variant="subtitle2" color="inputTextColor.main">
-              Choose work status
+              Choose Work Status
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -298,14 +298,14 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
               color="tabHighlightedBackgroundColor.main"
               variant="h3"
             >
-              Current Work Details*
+              Current Work Details
             </Typography>
           </Grid>
         </Grid>
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={5} lg={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
-              Name of the organization where you work
+              Organisation Name
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -329,18 +329,18 @@ const EditWorkProfile = ({ handleNext, handleBack, showSuccessModal }) => {
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
-              Organization Type
+              Organisation Type
             </Typography>
             <TextField
               variant="outlined"
               name={'organizationType'}
-              placeholder="Organization type"
+              placeholder="Organisation type"
               fullWidth
               defaultValue={getValues().organizationType}
               {...register('organizationType', {
                 maxLength: {
                   value: 100,
-                  message: 'Organization type is required.',
+                  message: 'Organisation type is required.',
                 },
               })}
               error={errors.organizationType?.message}

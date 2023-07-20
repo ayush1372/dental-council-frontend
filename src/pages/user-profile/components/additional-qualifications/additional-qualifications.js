@@ -93,32 +93,40 @@ const AdditionalQualifications = () => {
   };
 
   const getCollegeData = (stateId) => {
-    dispatch(getAdditionalCollegesList(stateId)).then((response) => {
-      setColleges(response?.data);
-    });
+    if (stateId !== undefined) {
+      dispatch(getAdditionalCollegesList(stateId)).then((response) => {
+        setColleges(response?.data);
+      });
+    }
   };
 
-  const getUniversityData = async (collegeId) => {
-    await dispatch(getAdditionalUniversitiesList(collegeId)).then((response) => {
-      setUniversityData(response?.data);
-    });
+  const getUniversityData = (collegeId) => {
+    if (collegeId !== undefined) {
+      dispatch(getAdditionalUniversitiesList(collegeId)).then((response) => {
+        setUniversityData(response?.data);
+      });
+    }
   };
   const getCollege = (collegeId) => {
     const data = colleges?.find((obj) => obj?.id === collegeId);
     return data;
   };
 
-  const getUniverity = async (univerityId) => {
-    const data = await universityData?.find((obj) => obj?.id === univerityId);
+  const getUniverity = (univerityId) => {
+    const data = universityData?.find((obj) => obj?.id === univerityId);
     return data;
   };
 
   useEffect(() => {
-    getCollegeData(stateID);
+    if (stateID !== undefined) {
+      getCollegeData(stateID);
+    }
   }, [stateID]);
 
   useEffect(() => {
-    getUniversityData(collegeID);
+    if (collegeID !== undefined) {
+      getUniversityData(collegeID);
+    }
   }, [collegeID]);
 
   const broadSpeciality = (broadSpl) => {
