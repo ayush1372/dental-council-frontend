@@ -888,7 +888,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 disabled={work_flow_status_id === 3 ? true : false}
               />
               <Typography component="div" mt={1} variant="body7" color="textPrimary.main">
-                Click if communication address is same as KYC address.
+                Click if communication address is same as KYC address
               </Typography>
             </Box>
             <Grid container item columnSpacing={2}>
