@@ -561,13 +561,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
             <TextField
               variant="outlined"
               name={`Dr. ${'Name'}`}
-              placeholder="First name"
+              placeholder="Enter name"
               fullWidth
               defaultValue={getValues().Name}
               {...register('Name', {
                 pattern: {
                   value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
-                  message: 'Please Enter Valid Name',
+                  message: 'Please enter Name',
                 },
                 maxLength: {
                   value: 100,
@@ -589,13 +589,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
             <TextField
               variant="outlined"
               name={'FatherName'}
-              placeholder="Father name"
+              placeholder="Enter father name"
               fullWidth
               defaultValue={getValues().FatherName}
               {...register('FatherName', {
                 pattern: {
                   value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
-                  message: 'Please Enter Valid Father Name',
+                  message: 'Please enter name',
                 },
                 maxLength: {
                   value: 100,
@@ -625,13 +625,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
             <TextField
               variant="outlined"
               name={'MotherName'}
-              placeholder="Mother name"
+              placeholder="Enter mother name"
               fullWidth
               defaultValue={getValues().MotherName}
               {...register('MotherName', {
                 pattern: {
                   value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
-                  message: 'Please Enter Valid Mother Name',
+                  message: 'Please enter name',
                 },
                 maxLength: {
                   value: 100,
@@ -663,14 +663,14 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
             <TextField
               variant="outlined"
               name={'SpouseName'}
-              placeholder="Spouse name"
+              placeholder="Enter spouse name"
               fullWidth
               defaultValue={getValues().SpouseName}
               {...register('SpouseName', {
                 pattern: {
                   value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
 
-                  message: 'Please Enter Valid Spouse Name',
+                  message: 'Please enter name',
                 },
                 maxLength: {
                   value: 100,

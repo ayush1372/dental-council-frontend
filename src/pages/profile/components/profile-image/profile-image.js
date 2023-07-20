@@ -54,7 +54,7 @@ export default function ProfileImage(props) {
 
   const [imageChanged, setImageChanged] = useState(false);
   const [imageTypeError, setImageTypeError] = useState(false);
-  const [imageErrorMessage, setImageErrorMessage] = useState('');
+  const [imageErrorMessage, setImageSizeError] = useState(false);
   const [showReactivateLicense, setShowReactivateLicense] = useState(false);
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
@@ -81,14 +81,15 @@ export default function ProfileImage(props) {
       e.target.files[0].type === 'image/png'
     ) {
       if (e.target.files[0].size > 5000000) {
-        setImageErrorMessage('Maximum allowed file size is 5MB');
-        setImageTypeError(true);
-      } else {
+        setImageSizeError(true);
         setImageTypeError(false);
+      } else {
         requestObjNew.append('file', e.target.files[0]);
         dispatch(getUserProfileImage(profileId, requestObjNew))
           .then((response) => {
             if (response) {
+              setImageSizeError(false);
+              setImageTypeError(false);
               dispatch(getPersonalDetailsData(profileId));
             }
           })
@@ -103,7 +104,7 @@ export default function ProfileImage(props) {
         setImageChanged(true);
       }
     } else {
-      setImageErrorMessage('Allowed file types are JPEG/PNG');
+      setImageSizeError(false);
       setImageTypeError(true);
     }
   };
@@ -204,7 +205,25 @@ export default function ProfileImage(props) {
           </Box>
         </Grid>
       )}
-      <Grid textAlign="center" container xs={12} mt={4} justifyContent="center" flexWrap="nowrap">
+      {(imageTypeError === true || imageErrorMessage === true) && (
+        <Box mt={2}>
+          <Typography variant="body2" color="error.main">
+            {imageTypeError === true && imageErrorMessage === false
+              ? 'JPG/JPEG/PNG file format allowed.'
+              : imageTypeError === false && imageErrorMessage === true
+              ? 'File size should be less than 5MB.'
+              : ''}
+          </Typography>
+        </Box>
+      )}
+      <Grid
+        textAlign="center"
+        container
+        xs={12}
+        mt={imageTypeError === true || imageErrorMessage === true ? 1 : 4}
+        justifyContent="center"
+        flexWrap="nowrap"
+      >
         <Grid item>
           <Typography component="span" variant="subtitle2" whiteSpace="initial" display="flex">
             {props.name || name}
