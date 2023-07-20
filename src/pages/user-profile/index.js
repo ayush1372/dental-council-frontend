@@ -8,6 +8,7 @@ import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import { ErrorMessages } from '../../constants/error-messages';
 import { doctorTabs } from '../../helpers/components/sidebar-drawer-list-item';
 import { capitalizeFirstLetter } from '../../helpers/functions/common-functions';
 import useWizard from '../../hooks/use-wizard';
@@ -339,7 +340,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
           });
       })
       .catch(() => {
-        successToast('Server Error', 'auth-error', 'error', 'top-center');
+        successToast(ErrorMessages.serverError, 'auth-error', 'error', 'top-center');
       });
   }
 
