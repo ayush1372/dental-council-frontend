@@ -842,18 +842,20 @@ const WorkDetails = ({
               />
             </Grid>
             <Grid item xs={12} md={4}>
+              <Typography variant="subtitle2" color="inputTextColor.main">
+                Country
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
+              </Typography>
               <Select
                 fullWidth
-                error={errors.Country?.message}
                 name="Country"
-                label="Country"
                 placeholder={'Select Country'}
                 defaultValue={356}
+                value={356}
                 disabled={true}
-                required={true}
-                {...register('Country', {
-                  required: 'Please select a country ',
-                })}
+                {...register('Country')}
                 options={
                   countriesList?.length > 0 ? createSelectFieldData(countriesList, 'id') : []
                 }
