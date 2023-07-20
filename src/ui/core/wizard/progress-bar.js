@@ -51,7 +51,7 @@ export function LinearProgressWithLabel(props) {
             componentsProps={{
               tooltip: {
                 sx: {
-                  backgroundColor: 'textPrimary.main',
+                  backgroundColor: 'primary.main',
                   fontSize: '13px',
                   borderRadius: '5px',
                 },
@@ -59,7 +59,7 @@ export function LinearProgressWithLabel(props) {
             }}
           >
             <Box display="flex" alignItems={'center'} justifyContent="center">
-              {props?.value === 75 && <InfoOutlinedIcon />}
+              {props?.value === 75 && <InfoOutlinedIcon color='primary.main' sx={{ color: 'primary.main' }}/>}
             </Box>
           </Tooltip>
         </Box>

@@ -544,7 +544,7 @@ const WorkDetails = ({
             >
               <Tab label="Facility ID" />
               <Tab label="Facility Name" />
-              <Tab label="On The Map" />
+              {/* <Tab label="On The Map" /> */}
             </Tabs>
           </Grid>
           {tabValue === 0 && (
