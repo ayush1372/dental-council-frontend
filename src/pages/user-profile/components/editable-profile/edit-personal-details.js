@@ -616,18 +616,18 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
-              Mother Name
+              Mother&apos;s Name
             </Typography>
             <TextField
               variant="outlined"
               name={'MotherName'}
-              placeholder="Enter mother name"
+              placeholder="Enter mother's name"
               fullWidth
               defaultValue={getValues().MotherName}
               {...register('MotherName', {
                 pattern: {
                   value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
-                  message: 'Please enter mother name',
+                  message: 'Please enter mother&apos;s name',
                 },
                 maxLength: {
                   value: 100,
