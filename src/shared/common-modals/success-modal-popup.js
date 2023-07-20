@@ -11,10 +11,7 @@ import {
   smcTabs,
 } from '../../helpers/components/sidebar-drawer-list-item';
 import { getCardCount } from '../../store/actions/dashboard-actions';
-import {
-  getPersonalDetailsData,
-  getWorkProfileDetailsData,
-} from '../../store/actions/doctor-user-profile-actions';
+import { getPersonalDetailsData } from '../../store/actions/doctor-user-profile-actions';
 import {
   changeUserActiveTab,
   logout,
@@ -40,8 +37,6 @@ export default function SuccessModalPopup({
   navigateToTrackApplication,
   fetchDoctorUserPersonalDetails,
   setChangeUserData,
-  setCurrentlyWorking,
-  setDefaultFacilityData,
   PasswordChange,
 }) {
   const theme = useTheme();
@@ -54,14 +49,7 @@ export default function SuccessModalPopup({
   const handleCloseModal = () => {
     setOpen(false);
     if (loggedInUserType === 'Doctor' && workDetails === true) {
-      dispatch(getWorkProfileDetailsData(loginData?.data?.profile_id)).then((response) => {
-        if (response?.data) {
-          setCurrentlyWorking(
-            response?.data?.work_details?.is_user_currently_working === 1 ? 'no' : 'yes'
-          );
-          setDefaultFacilityData(response?.data);
-        }
-      });
+      dispatch(changeUserActiveTab(doctorTabs[0].tabName));
     }
   };
   const navigateToSetPassword = () => {
@@ -119,9 +107,6 @@ export default function SuccessModalPopup({
           loggedInUserType !== 'NBE'
         ) {
           dispatch(getPersonalDetailsData(loginData?.data?.profile_id)).then(() => {});
-          // .catch((allFailMsg) => {
-          //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-          // });
         }
 
         dispatch(getCardCount());
