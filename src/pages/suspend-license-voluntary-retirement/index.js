@@ -201,9 +201,9 @@ export function SuspendLicenseVoluntaryRetirement({
                 getValues()?.voluntarySuspendLicense === 'permanent-suspension-check' ||
                 selectedValue === 'suspend'
               ) {
-                setSuccessPopupMessage('You have been permanently suspended');
+                setSuccessPopupMessage('Applicant has been permanently suspended');
               } else if (getValues()?.voluntarySuspendLicense === 'voluntary-suspension-check') {
-                setSuccessPopupMessage('You have been temporarily suspended');
+                setSuccessPopupMessage('Applicant has been temporarily suspended');
               }
               showSuccessPopup(true);
               setConfirmationModal(false);

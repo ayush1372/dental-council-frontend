@@ -44,7 +44,7 @@ const ReadRegisterAndAcademicDetails = ({
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [successPopupMessage, setSuccessPopupMessage] = useState('');
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
-  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  const { trackStatusData, loggedInUserType } = useSelector((state) => state.common);
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
 
   const { data } = useSelector((state) => state.loginReducer?.loginData);
@@ -103,8 +103,13 @@ const ReadRegisterAndAcademicDetails = ({
   useEffect(() => {
     if (!isNaN(selectedDataIndex)) {
       let filteredQualificationDetails = [];
-
-      registrationDetails?.qualification_detail_response_tos?.map((element, elementIndex) => {
+      let updatedTableData =
+        dashboardTableDetailsData?.data?.dashboard_tolist?.length > 0
+          ? dashboardTableDetailsData?.data?.dashboard_tolist
+          : trackStatusData?.data?.data?.health_professional_applications?.length > 0
+          ? trackStatusData?.data?.data?.health_professional_applications
+          : [];
+      updatedTableData?.map((element, elementIndex) => {
         if (element) {
           if (
             (element?.is_verified === 1 ||
@@ -130,6 +135,7 @@ const ReadRegisterAndAcademicDetails = ({
           }
         }
       });
+
       let newRegistrationDetails = {};
       newRegistrationDetails.hp_profile_id = registrationDetails?.hp_profile_id;
       newRegistrationDetails.nbe_response_to = registrationDetails?.nbe_response_to;
