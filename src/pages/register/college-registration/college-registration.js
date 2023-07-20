@@ -242,7 +242,7 @@ export function CollegeRegistration() {
             defaultValue={getValues().CollegeName}
             error={errors.CollegeName?.message}
             {...register('CollegeName', {
-              required: 'College Name is required',
+              required: 'Please enter college name',
             })}
           />
         </Grid>
@@ -340,11 +340,11 @@ export function CollegeRegistration() {
             placeholder={t('Email')}
             error={errors.email?.message}
             {...register('email', {
-              required: 'Email ID is required',
+              required: 'Please enter an email ID',
               pattern: {
                 value:
                   /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-                message: 'Provide a Valid Email ID',
+                message: 'Please enter a valid email ID',
               },
             })}
             InputProps={{
@@ -380,7 +380,7 @@ export function CollegeRegistration() {
               clearErrors={clearErrors}
               error={errors.RegistrationCouncil?.message}
               {...register('RegistrationCouncil', {
-                required: 'Registration Council is required',
+                required: 'Please select registration council',
               })}
               onChange={(currentValue) => {
                 setValue('RegistrationCouncilId', currentValue.id);
