@@ -19,6 +19,9 @@ const authInterceptors = (error) => {
           return Promise.reject(allFailMsg);
         }
 
+        if (data?.path === '/health-professional' && data?.code === 'ABDM-NMR-003') {
+          return Promise.reject(data?.message);
+        }
         successToast(data?.message, 'auth-error-Network', 'error', 'top-center');
         return Promise.reject(data?.message);
       }
