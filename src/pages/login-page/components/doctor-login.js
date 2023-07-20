@@ -418,7 +418,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
               name={'userID'}
               error={errors.userID?.message}
               {...register('userID', {
-                required: 'Please enter username',
+                required: 'Please enter a username',
                 pattern: {
                   value: /^[\s.]*([^\s.][\s.]*){0,100}$/,
                   message: 'Please enter a valid username',
@@ -536,7 +536,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
             sx={{ cursor: 'pointer' }}
             onClick={() => navigate('/register/doctor-registration')}
           >
-            Register Here
+            Register here
           </Link>
         </Typography>
       </Box>

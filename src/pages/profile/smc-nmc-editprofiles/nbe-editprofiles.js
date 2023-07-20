@@ -65,7 +65,7 @@ const NbeEditProfile = (props) => {
             props?.sentDetails('Profile');
             setSuccessModalPopup(false);
           }}
-          text={'NBE Profile Data has been Updated Successfully.'}
+          text={'NBE profile data has been updated.'}
         />
       )}
       <Grid container spacing={2} mt={2}>
@@ -143,7 +143,7 @@ const NbeEditProfile = (props) => {
             defaultValue={getValues().email_id}
             error={errors.email_id?.message}
             {...register('email_id', {
-              required: 'Please enter email',
+              required: 'Please enter an email ID',
 
               pattern: {
                 value:

@@ -165,11 +165,7 @@ const DoctorRegistrationWelcomePage = () => {
                   >
                     Submit
                   </Button>
-                  <Button
-                    onClick={onReset}
-                    variant="contained"
-                    color="grey"
-                  >
+                  <Button onClick={onReset} variant="contained" color="grey">
                     Reset
                   </Button>
                 </Box>

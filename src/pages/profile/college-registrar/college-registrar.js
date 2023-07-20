@@ -183,7 +183,7 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
           defaultValue={getValues().registrarEmail}
           error={errors.registrarEmail?.message}
           {...register('registrarEmail', {
-            required: 'Please enter email',
+            required: 'Please enter an email ID',
             pattern: {
               value:
                 /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
