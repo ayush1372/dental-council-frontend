@@ -11,7 +11,7 @@ import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup
 import { createHealthProfessional } from '../../../store/actions/doctor-registration-actions';
 import { forgotPassword, setPassword } from '../../../store/actions/forgot-password-actions';
 import { Button, TextField } from '../../../ui/core';
-import successToast from '../../../ui/core/toaster';
+// import successToast from '../../../ui/core/toaster';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }) => {
@@ -84,16 +84,15 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }
         transaction_id: sendNotificationOtpData?.data?.transaction_id,
         user_type: userTypeId,
       };
-      dispatch(forgotPassword(reSetPasswordBody))
-        .then((response) => {
-          if (response?.data?.message === 'Success') {
-            setShowSuccessPopUp(true);
-            resetStep(0);
-          }
-        })
-        .catch((error) => {
-          successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
-        });
+      dispatch(forgotPassword(reSetPasswordBody)).then((response) => {
+        if (response?.data?.message === 'Success') {
+          setShowSuccessPopUp(true);
+          resetStep(0);
+        }
+      });
+      // .catch((error) => {
+      //   successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
+      // });
 
       return;
     } else {
@@ -103,14 +102,13 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }
           password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
         };
 
-        dispatch(setPassword(newPasswordData))
-          .then(() => {
-            setCollegeRegisterSuccess(true);
-            setShowSuccess(true);
-          })
-          .catch((error) => {
-            successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-          });
+        dispatch(setPassword(newPasswordData)).then(() => {
+          setCollegeRegisterSuccess(true);
+          setShowSuccess(true);
+        });
+        // .catch((error) => {
+        //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+        // });
         return;
       }
       let councilID = getCouncilID(councilName);
@@ -144,18 +142,17 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }
         new: isNewFlag,
       };
 
-      dispatch(createHealthProfessional(reqObj))
-        .then(() => {
-          setShowSuccess(true);
-        })
-        .catch((error) => {
-          successToast(
-            'ERROR: ' + error?.data?.response?.data?.message,
-            'auth-error',
-            'error',
-            'top-center'
-          );
-        });
+      dispatch(createHealthProfessional(reqObj)).then(() => {
+        setShowSuccess(true);
+      });
+      // .catch((error) => {
+      //   successToast(
+      //     'ERROR: ' + error?.data?.response?.data?.message,
+      //     'auth-error',
+      //     'error',
+      //     'top-center'
+      //   );
+      // });
     }
   };
 

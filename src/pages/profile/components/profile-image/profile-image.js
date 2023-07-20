@@ -117,11 +117,10 @@ export default function ProfileImage(props) {
   };
 
   const fetchDoctorUserPersonalDetails = () => {
-    dispatch(getPersonalDetailsData(loginData?.data?.profile_id))
-      .then(() => {})
-      .catch((allFailMsg) => {
-        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-      });
+    dispatch(getPersonalDetailsData(loginData?.data?.profile_id)).then(() => {});
+    // .catch((allFailMsg) => {
+    //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    // });
   };
 
   const getIconAndText = (currentStatus) => {

@@ -8,7 +8,7 @@ import { verboseLog } from '../../../../config/debug';
 import GenericTable from '../../../../shared/generic-component/generic-table';
 import { getCollegeAdminProfileData } from '../../../../store/actions/college-actions';
 import { getCollegeApprovalData } from '../../../../store/actions/nmc-actions';
-import successToast from '../../../../ui/core/toaster';
+// import successToast from '../../../../ui/core/toaster';
 import TableSearch from '../table-search/table-search';
 
 function createData(
@@ -110,9 +110,11 @@ function CollegeApprovalTable(props) {
     // setRowData(row);
     props.setShowViewPorfile(true);
     props.setShowTable(false);
-    dispatch(getCollegeAdminProfileData(row?.id?.value)).catch((error) => {
-      successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-    });
+    dispatch(getCollegeAdminProfileData(row?.id?.value));
+
+    // .catch((error) => {
+    //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+    // });
   };
 
   const handleRequestSort = (event, property) => {

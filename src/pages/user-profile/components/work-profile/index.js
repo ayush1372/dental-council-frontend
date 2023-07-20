@@ -4,6 +4,7 @@ import { Container, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { ErrorMessages } from '../../../../constants/error-messages';
 import { getWorkProfileDetailsData } from '../../../../store/actions/doctor-user-profile-actions';
 import { RadioGroup } from '../../../../ui/core';
 import successToast from '../../../../ui/core/toaster';
@@ -32,12 +33,7 @@ const WorkProfile = () => {
         }
       })
       .catch(() => {
-        successToast(
-          'No matching work profile details found for the given hp_profile_id.',
-          'auth-error',
-          'error',
-          'top-center'
-        );
+        successToast(ErrorMessages.noMatchingWork, 'auth-error', 'error', 'top-center');
       });
   }, []);
 

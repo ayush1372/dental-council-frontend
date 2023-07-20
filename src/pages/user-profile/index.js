@@ -127,18 +127,10 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
     setShowReactivateLicense(false);
   };
   const fetchStates = () => {
-    try {
-      dispatch(getStatesList()).then(() => {});
-    } catch (allFailMsg) {
-      successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-    }
+    dispatch(getStatesList()).then(() => {});
   };
   const fetchCountries = () => {
-    try {
-      dispatch(getCountriesList()).then(() => {});
-    } catch (allFailMsg) {
-      successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-    }
+    dispatch(getCountriesList()).then(() => {});
   };
 
   const openDoctorEditProfile = () => {
@@ -181,11 +173,10 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
           ? selectedRowData?.profileID?.value || selectedRowData?.view?.value
           : loginData?.data?.profile_id
       )
-    )
-      .then()
-      .catch((allFailMsg) => {
-        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-      });
+    ).then();
+    // .catch((allFailMsg) => {
+    //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    // });
   };
 
   const fetchDoctorUserWorkDetails = () => {
@@ -197,13 +188,12 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
           ? selectedRowData?.profileID?.value || selectedRowData?.view?.value
           : loginData?.data?.profile_id
       )
-    )
-      .then()
-      .catch((error) => {
-        successToast(
-          `ERR_INT: ${error.data.response.data.error}, 'auth-error', 'error', 'top-center'`
-        );
-      });
+    ).then();
+    // .catch((error) => {
+    //   successToast(
+    //     `ERR_INT: ${error.data.response.data.error}, 'auth-error', 'error', 'top-center'`
+    //   );
+    // });
   };
 
   useEffect(() => {
@@ -338,14 +328,14 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
             handleEsign();
             dispatch(getEsignDetails());
           })
-          .catch((error) => {
+          .catch(() => {
             dispatch(getEsignDetails([]));
-            successToast(
-              'ERROR: ' + error.data.response.data.error,
-              'auth-error',
-              'error',
-              'top-center'
-            );
+            // successToast(
+            //   'ERROR: ' + error.data.response.data.error,
+            //   'auth-error',
+            //   'error',
+            //   'top-center'
+            // );
           });
       })
       .catch(() => {
@@ -365,18 +355,17 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
         setESignLoader(false);
         setRejectPopup(true);
       }
-      try {
-        dispatch(getPersonalDetailsData(personalDetails?.hp_profile_id)).then((response) => {
+      dispatch(getPersonalDetailsData(personalDetails?.hp_profile_id))
+        .then((response) => {
           if (response?.data?.esign_status === 1) {
             clearInterval(interval);
             setESignLoader(false);
             dispatch(changeUserActiveTab(doctorTabs[1].tabName));
           }
+        })
+        .catch(() => {
+          setESignLoader(false);
         });
-      } catch (allFailMsg) {
-        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-        setESignLoader(false);
-      }
     }, 24000);
   };
 

@@ -10,7 +10,7 @@ import { userActionType } from '../../../../helpers/functions/common-functions';
 import { initiateCollegeWorkFlow } from '../../../../store/actions/college-actions';
 import { resetCollegeWorkflowReducer } from '../../../../store/reducers/college-reducer';
 import { Button } from '../../../../ui/core';
-import successToast from '../../../../ui/core/toaster';
+// import successToast from '../../../../ui/core/toaster';
 
 const CollegeDetails = ({ collegeDetails, setShowTable }) => {
   const [confirmationModal, setConfirmationModal] = useState(false);
@@ -35,9 +35,10 @@ const CollegeDetails = ({ collegeDetails, setShowTable }) => {
       actor_id: loginData?.data?.user_group_id,
       action_id: actionID,
     };
-    dispatch(initiateCollegeWorkFlow(requestObj)).catch((error) => {
-      successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-    });
+    dispatch(initiateCollegeWorkFlow(requestObj));
+    // .catch((error) => {
+    //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+    // });
     dispatch(resetCollegeWorkflowReducer());
   };
 

@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import PropTypes from 'prop-types';
 
+import { ErrorMessages } from '../../constants/error-messages';
 import { Button } from '../../ui/core';
 import successToast from '../../ui/core/toaster';
 import OtpForm from '../otp-form/otp-component';
@@ -56,7 +57,7 @@ export function ModalOTP({
   const [otpMobileVerify, setOtpMobileVerify] = useState(true);
 
   const otpResend = () => {
-    successToast('OTP Resent Successfully', 'otp-resent', 'success', 'top-center');
+    successToast(ErrorMessages.otpResend, 'otp-resent', 'success', 'top-center');
     reSentOtp();
   };
   const { otpform, otpValue, getOtpValidation, handleClear } = OtpForm({

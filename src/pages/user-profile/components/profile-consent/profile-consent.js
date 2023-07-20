@@ -9,6 +9,7 @@ import moment from 'moment';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { ErrorMessages } from '../../../../constants/error-messages';
 import { doctorTabs, smcTabs } from '../../../../helpers/components/sidebar-drawer-list-item';
 import { capitalizeFirstLetter } from '../../../../helpers/functions/common-functions';
 import {
@@ -94,14 +95,14 @@ const ProfileConsent = ({
         resetStep(0);
         dispatch(changeUserActiveTab(doctorTabs[1].tabName));
       })
-      .catch((error) => {
+      .catch(() => {
         setConfirmationModal(false);
-        successToast(
-          'ERROR: ' + error.data.response.data.error,
-          'auth-error',
-          'error',
-          'top-center'
-        );
+        // successToast(
+        //   'ERROR: ' + error.data.response.data.error,
+        //   'auth-error',
+        //   'error',
+        //   'top-center'
+        // );
       });
   };
 
@@ -200,19 +201,19 @@ const ProfileConsent = ({
 
             dispatch(changeUserActiveTab(doctorTabs[1].tabName));
           })
-          .catch((error) => {
+          .catch(() => {
             setConfirmationModal(false);
             dispatch(getEsignDetails([]));
-            successToast(
-              'ERROR: ' + error.data.response.data.error,
-              'auth-error',
-              'error',
-              'top-center'
-            );
+            // successToast(
+            //   'ERROR: ' + error.data.response.data.error,
+            //   'auth-error',
+            //   'error',
+            //   'top-center'
+            // );
           });
       })
       .catch(() => {
-        successToast('Server Error', 'auth-error', 'error', 'top-center');
+        successToast(ErrorMessages.serverError, 'auth-error', 'error', 'top-center');
       });
   }
   const handleEsign = () => {

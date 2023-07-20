@@ -7,6 +7,7 @@ import { Box, Grid, Tab, Tabs, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { natureOfWork, workStatusOptions } from '../../../../constants/common-data';
+import { ErrorMessages } from '../../../../constants/error-messages';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
 import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
 import SuccessModalPopup from '../../../../shared/common-modals/success-modal-popup';
@@ -209,7 +210,7 @@ const WorkDetails = ({
         }
       })
       .catch(() => {
-        successToast('ERR_INT:' + 'Invalid facility details', 'auth-error', 'error', 'top-center');
+        successToast(ErrorMessages.inValidFacilityDetails, 'auth-error', 'error', 'top-center');
       });
     setShowTable(true);
   };

@@ -9,7 +9,7 @@ import SuccessModalPopup from '../../../../shared/common-modals/success-modal-po
 import { additionalQualificationsData } from '../../../../store/actions/doctor-user-profile-actions';
 import { changeUserActiveTab } from '../../../../store/reducers/common-reducers';
 import { Button } from '../../../../ui/core';
-import successToast from '../../../../ui/core/toaster';
+// import successToast from '../../../../ui/core/toaster';
 import EditQualificationDetails from '../editable-profile/edit-qualification-details';
 import {
   getAdditionalCollegesList,
@@ -206,13 +206,13 @@ const AdditionalQualifications = () => {
         setSuccessModalPopup(true);
         reset();
       })
-      .catch((error) => {
-        successToast(
-          'ERROR: ' + error?.data?.response?.data?.message,
-          'auth-error',
-          'error',
-          'top-center'
-        );
+      .catch(() => {
+        // successToast(
+        //   'ERROR: ' + error?.data?.response?.data?.message,
+        //   'auth-error',
+        //   'error',
+        //   'top-center'
+        // );
         update({
           qualification: [...qualificationObjTemplate],
         });

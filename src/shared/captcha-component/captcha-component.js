@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { generateCaptchaImage } from '../../store/actions/login-action';
 import { TextField } from '../../ui/core';
-import successToast from '../../ui/core/toaster';
+// import successToast from '../../ui/core/toaster';
 import CircularLoader from '../circular-loader/circular-loader';
 
 const CaptchaComponent = ({ captchaResult }) => {
@@ -24,9 +24,11 @@ const CaptchaComponent = ({ captchaResult }) => {
   const reloadCaptcha = () => {
     setAnwser('');
     if (captchaEnabledFlag?.data) {
-      dispatch(generateCaptchaImage()).catch((error) => {
-        successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-      });
+      dispatch(generateCaptchaImage());
+
+      // .catch((error) => {
+      //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+      // });
     }
   };
 

@@ -20,7 +20,7 @@ import {
 import { getPersonalDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
 import { Checkbox } from '../../../../ui/core';
 import { DatePicker, RadioGroup, Select, TextField } from '../../../../ui/core';
-import successToast from '../../../../ui/core/toaster';
+// import successToast from '../../../../ui/core/toaster';
 import { EmailRegexValidation } from '../../../../utilities/common-validations';
 
 const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValidDetails }) => {
@@ -230,33 +230,31 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
 
   const fetchDistricts = (stateId) => {
     if (stateId) {
-      dispatch(getDistrictList(stateId))
-        .then((response) => {
-          setDistrictListData(response?.data);
-        })
-        .catch((allFailMsg) => {
-          successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-        });
+      dispatch(getDistrictList(stateId)).then((response) => {
+        setDistrictListData(response?.data);
+      });
+      // .catch((allFailMsg) => {
+      //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      // });
     }
   };
   const fetchSubDistricts = (districtId) => {
     if (districtId) {
-      dispatch(getSubDistrictsList(districtId))
-        .then((response) => {
-          setSubDistrictListData(response?.data);
-        })
-        .catch((allFailMsg) => {
-          successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-        });
+      dispatch(getSubDistrictsList(districtId)).then((response) => {
+        setSubDistrictListData(response?.data);
+      });
+      // .catch((allFailMsg) => {
+      //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      // });
     }
   };
 
   const fetchCities = (subDistrictId) => {
-    try {
-      dispatch(getCitiesList(subDistrictId)).then(() => {});
-    } catch (allFailMsg) {
-      successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-    }
+    // try {
+    dispatch(getCitiesList(subDistrictId)).then(() => {});
+    // } catch (allFailMsg) {
+    //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    // }
   };
 
   const selectedState = watch('State');
@@ -328,23 +326,23 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
   // }, [getValues().PostalCode]);
 
   const fetchUpdatedDoctorUserProfileData = (personalDetails) => {
-    dispatch(updateDoctorPersonalDetails(personalDetails, personalDetails?.hp_profile_id))
-      .then(() => {
-        dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id))
-          .then(() => {
-            handleNext();
-            window.scrollTo({
-              top: 0,
-              behavior: 'smooth',
-            });
-          })
-          .catch((allFailMsg) => {
-            successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    dispatch(updateDoctorPersonalDetails(personalDetails, personalDetails?.hp_profile_id)).then(
+      () => {
+        dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id)).then(() => {
+          handleNext();
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
           });
-      })
-      .catch((allFailMsg) => {
-        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-      });
+        });
+        // .catch((allFailMsg) => {
+        //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+        // });
+      }
+    );
+    // .catch((allFailMsg) => {
+    //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    // });
   };
 
   const handleBackButton = () => {
@@ -492,13 +490,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
     return doctorProfileValues;
   }
   async function onHandleOptionNext() {
-    await onHandleSave()
-      .then((response) => {
-        response && fetchUpdatedDoctorUserProfileData(response);
-      })
-      .catch((allFailMsg) => {
-        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-      });
+    await onHandleSave().then((response) => {
+      response && fetchUpdatedDoctorUserProfileData(response);
+    });
+    // .catch((allFailMsg) => {
+    //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    // });
   }
 
   const handleGender = (event) => {

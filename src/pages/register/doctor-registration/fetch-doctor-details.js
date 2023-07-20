@@ -37,7 +37,7 @@ import {
 } from '../../../store/reducers/doctor-registration-reducer';
 import { Button, Checkbox, TextField } from '../../../ui/core';
 import AadhaarInputField from '../../../ui/core/aadhaar-input-field/aadhaar-input-field';
-import successToast from '../../../ui/core/toaster';
+// import successToast from '../../../ui/core/toaster';
 import CreateHprId from './unique-username';
 
 function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onReset }) {
@@ -199,15 +199,14 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
         mobile: getValues().MobileNumber,
         txnId: aadhaarTxnId,
       };
-      dispatch(generateMobileOtp(data))
-        .then(() => {
-          setShowOtpMobile(true);
-          setEditButton(true);
-          setisOtpValidMobile(true);
-        })
-        .catch((error) => {
-          successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-        });
+      dispatch(generateMobileOtp(data)).then(() => {
+        setShowOtpMobile(true);
+        setEditButton(true);
+        setisOtpValidMobile(true);
+      });
+      // .catch((error) => {
+      //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+      // });
     });
   };
 

@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import SuccessModalPopup from '../../../../shared/common-modals/success-modal-popup';
 import { updateDoctorWorkDetails } from '../../../../store/actions/doctor-user-profile-actions';
 import { Button, Select, TextField } from '../../../../ui/core';
-import successToast from '../../../../ui/core/toaster';
+// import successToast from '../../../../ui/core/toaster';
 
 const reasonOptions = [
   {
@@ -59,13 +59,12 @@ const NonWorkDetails = ({
       hp_profile_id: loginData.data.profile_id,
     };
 
-    dispatch(updateDoctorWorkDetails(workDetails, loginData.data.profile_id))
-      .then(() => {
-        setSuccessModalPopup(true);
-      })
-      .catch((allFailMsg) => {
-        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-      });
+    dispatch(updateDoctorWorkDetails(workDetails, loginData.data.profile_id)).then(() => {
+      setSuccessModalPopup(true);
+    });
+    // .catch((allFailMsg) => {
+    //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    // });
   };
 
   useEffect(() => {
