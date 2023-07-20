@@ -424,7 +424,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                 <Grid Container xs={12} display="flex" sx={{ alignItems: 'center' }}>
                   <Grid item xs={11} display="flex">
                     <Checkbox
-                      label="I Agree"
+                      label="I agree"
                       sx={{ width: '18px', height: '18px', marginRight: 1, marginLeft: 2 }}
                       name="consent"
                       defaultChecked={getValues()?.consent}
@@ -628,7 +628,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                 <Button
                   variant="contained"
                   color="secondary"
-                  sx={{ marginRight: '10px', width: '105px', height: '48px' }}
+                  sx={{ marginRight: '16px'}}
                   onClick={handleSubmit(onSubmit)}
                   disabled={!isOtpValidMobile || editBUtton}
                 >
@@ -636,13 +636,10 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                 </Button>
                 <Button
                   onClick={onCancel}
-                  variant="outlined"
                   sx={{
                     backgroundColor: 'grey.main',
                     color: 'black.textBlack',
                     border: 'none',
-                    width: '105px',
-                    height: '48px',
                   }}
                 >
                   Cancel

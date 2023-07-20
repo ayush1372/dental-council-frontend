@@ -97,7 +97,6 @@ export default function ErrorModalPopup({
                   size="small"
                   sx={{
                     mt: 3,
-                    width: '40%',
                   }}
                   variant="contained"
                   color="warning"
