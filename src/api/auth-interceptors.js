@@ -23,6 +23,8 @@ const authInterceptors = (error) => {
           return Promise.reject(data?.message);
         }
         if (
+          data?.details &&
+          data?.details[0] &&
           data?.details[0]?.code === 'HIS-2011' &&
           data?.details[0]?.message === '“Pi” (basic) attributes of demographic data did not match.'
         ) {
