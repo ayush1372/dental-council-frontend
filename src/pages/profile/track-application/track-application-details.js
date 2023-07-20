@@ -123,10 +123,7 @@ export function TrackApplicationDetails({
                 <Typography variant="body3" color="grey.label">
                   Type of Application
                 </Typography>
-                <Typography
-                  variant="subtitle2"
-                  color="textPrimary.main"
-                >
+                <Typography variant="subtitle2" color="textPrimary.main">
                   {`${
                     typeOfApplication(applicationStatus?.application_type)
                       ? typeOfApplication(applicationStatus?.application_type)
