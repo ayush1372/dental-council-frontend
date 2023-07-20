@@ -451,7 +451,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               defaultValue={getValues().RegistrationNumber}
               error={errors.RegistrationNumber?.message}
               {...register('RegistrationNumber', {
-                required: 'Registration number is required',
+                required: 'Please enter registration number',
                 pattern: { message: 'Please Enter Valid Registration number' },
               })}
               sx={{

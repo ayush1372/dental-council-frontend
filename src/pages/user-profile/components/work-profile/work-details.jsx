@@ -607,12 +607,12 @@ const WorkDetails = ({
 
                 <Select
                   fullWidth
-                  error={getValues().stateLGDCode?.length === 0 && 'State is required'}
+                  error={getValues().stateLGDCode?.length === 0 && 'Please select state'}
                   name={'stateLGDCode'}
                   defaultValue={getValues().stateLGDCode}
                   required={true}
                   {...register('stateLGDCode', {
-                    required: 'State is required',
+                    required: 'Please select state',
                   })}
                   options={createSelectFieldData(statesList)}
                   placeholder={'Enter State'}
