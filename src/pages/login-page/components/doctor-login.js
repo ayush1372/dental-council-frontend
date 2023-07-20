@@ -393,10 +393,10 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
                       }}
                       color={'white.main'}
                       onClick={() => {
-                        if(!otpFormEnabled){
+                        if (!otpFormEnabled) {
                           getValues()?.nmrID?.length === 12 &&
-                          sendNotificationOTPHandler(!otpFormEnabled, 'NMR');
-                        } else{
+                            sendNotificationOTPHandler(!otpFormEnabled, 'NMR');
+                        } else {
                           setOtpFormEnable(false);
                         }
                       }}

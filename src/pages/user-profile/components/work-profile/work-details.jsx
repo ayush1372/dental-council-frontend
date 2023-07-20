@@ -7,6 +7,7 @@ import { Box, Grid, Tab, Tabs, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { natureOfWork, workStatusOptions } from '../../../../constants/common-data';
+import { doctorTabs } from '../../../../helpers/components/sidebar-drawer-list-item';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
 import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
 import SuccessModalPopup from '../../../../shared/common-modals/success-modal-popup';
@@ -20,6 +21,7 @@ import {
   getFacilitiesData,
   updateDoctorWorkDetails,
 } from '../../../../store/actions/doctor-user-profile-actions';
+import { changeUserActiveTab } from '../../../../store/reducers/common-reducers';
 import { Button, Checkbox, RadioGroup, Select, TextField } from '../../../../ui/core';
 import { SvgImageComponent } from '../../../../ui/core/svg-icons/index';
 import successToast from '../../../../ui/core/toaster';
@@ -68,7 +70,7 @@ const WorkDetails = ({
           url: getValues().telecommunicationURL,
           address: {
             id: null,
-            country: getCountryData(getValues().Country),
+            country: getCountryData(356),
             state: getStateData(getValues().state),
             district: getDistrictData(getValues().District),
             village: getVillageData(getValues().Area),
@@ -851,7 +853,8 @@ const WorkDetails = ({
                 name="Country"
                 label="Country"
                 placeholder={'Select Country'}
-                defaultValue={getValues().Country}
+                defaultValue={356}
+                disabled={true}
                 required={true}
                 {...register('Country', {
                   required: 'Please select a country ',
@@ -1072,6 +1075,10 @@ const WorkDetails = ({
                   xs: '100%',
                   md: 'fit-content',
                 },
+              }}
+              onClick={(e) => {
+                e.preventDefault();
+                dispatch(changeUserActiveTab(doctorTabs[0].tabName));
               }}
             >
               Cancel
