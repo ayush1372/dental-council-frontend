@@ -66,7 +66,7 @@ export default function SuccessModal({ text, userData, resetStep }) {
             justifyContent="center"
             mt={2}
           >
-            SUCCESS!
+            SUCCESS
           </Typography>
           <Typography
             display="flex"

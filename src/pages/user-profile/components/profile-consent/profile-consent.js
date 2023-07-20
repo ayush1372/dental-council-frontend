@@ -448,7 +448,7 @@ const ProfileConsent = ({
             >
               <TaskAltIcon color="success" fontSize="width80" />
               <Typography color="success.dark" variant="h2" textAlign={'center'}>
-                SUCCESS!
+                SUCCESS
               </Typography>
               <Typography
                 mt={4}
@@ -496,7 +496,7 @@ const ProfileConsent = ({
             <Box display={'flex'} justifyContent={'flex-start'} alignItems={'center'}>
               <CheckCircleIcon color="success" />
               <Typography color="textPrimary.main" variant="h3">
-                Success!
+                Success
               </Typography>
               <CloseIcon onClick={handleClose} />
             </Box>
