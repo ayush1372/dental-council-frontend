@@ -252,36 +252,28 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     formData.append('degreeCertificate', qualificationFile);
 
     formData.append('registrationCertificate', registrationFile);
-
+    //4
     let setdocumenterror;
     for (const index in qualificationFilesData) {
       setdocumenterror = qualificationFilesData[index]?.length > 0;
       if (!setdocumenterror) {
         supportingDocumentError[index] = true;
         setsupportingDocumentError({ ...supportingDocumentError });
-
-        console.log(
-          'qualf12345',
-          supportingDocumentError,
-          setdocumenterror,
-          qualificationFilesData[index]?.length
-        );
       } else {
         supportingDocumentError[index] = false;
         setsupportingDocumentError({ ...supportingDocumentError });
       }
     }
-
+    //5
     let checkDocumentError;
     for (const index in supportingDocumentError) {
       checkDocumentError = supportingDocumentError[index] === true;
-      console.log('1234567', index, checkDocumentError, supportingDocumentError[index]);
+      console.log('1234567', checkDocumentError, supportingDocumentError[index]);
       if (checkDocumentError) {
-        console.log('1234567', index);
         break;
       }
     }
-
+    //6
     if (!checkDocumentError) {
       dispatch(
         updateDoctorRegistrationDetails(
@@ -290,15 +282,25 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
             ? updatedPersonalDetails?.hp_profile_id
             : loggedInUserType === 'SMC' && personalDetails?.hp_profile_id
         )
-      ).then(() => {
-        if (moveToNext && qualificationFile !== undefined) handleNext();
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth',
+      )
+        .then(() => {
+          if (moveToNext && qualificationFile !== undefined) handleNext();
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+          });
+        })
+        .catch((error) => {
+          successToast(
+            'ERROR: ' + error?.data?.response?.data?.message,
+            'auth-error',
+            'error',
+            'top-center'
+          );
         });
-      });
     }
   };
+  //2
   useEffect(() => {
     let checkDocumentError;
     if (isSubmitting) {
@@ -313,8 +315,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     }
 
     console.log('qualf12345', supportingDocumentError, checkDocumentError);
-  }, [qualificationFilesData, isSubmitting]);
+  }, [isSubmitting]);
 
+  //3
   useEffect(() => {
     let index = fields?.length - 1;
     qualificationFilesData[`qualification.${[index]}.files`] = [];
@@ -406,7 +409,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
     update(0, { ...obj });
   }, [registrationDetails]);
-
+  //1
   const handleQualificationFilesData = (fileName, files) => {
     console.log('filename12', fileName, files);
     qualificationFilesData[fileName] = files;

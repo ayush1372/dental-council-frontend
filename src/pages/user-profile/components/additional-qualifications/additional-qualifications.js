@@ -83,7 +83,6 @@ const AdditionalQualifications = () => {
   const handleQualificationFilesData = (fileName, files) => {
     console.log('filename12', fileName, files);
     qualificationFilesData[fileName] = files;
-    // supportingDocumentError[fileName] = ;
     setQualificationFilesData(files !== [] && { ...qualificationFilesData });
     // setsupportingDocumentError({ ...supportingDocumentError });
     console.log('Fname11', fileName.length);
@@ -93,18 +92,11 @@ const AdditionalQualifications = () => {
     if (isSubmitting) {
       for (const index in qualificationFilesData) {
         checkDocumentError = qualificationFilesData[index]?.length > 0;
-        // console.log(
-        //   'qualf12345',
-        //   supportingDocumentError,
-        //   checkDocumentError,
-        //   qualificationFilesData[index]?.length
-        // );
         if (!checkDocumentError) {
           supportingDocumentError[index] = true;
           setsupportingDocumentError({ ...supportingDocumentError });
         }
       }
-      // for (const index in supportingDocumentError) {
     }
   }, [qualificationFilesData, isSubmitting]);
 
@@ -122,15 +114,22 @@ const AdditionalQualifications = () => {
   };
 
   const getCollegeData = (stateId) => {
-    dispatch(getAdditionalCollegesList(stateId)).then((response) => {
-      setColleges(response?.data);
-    });
+    // dispatch(getAdditionalCollegesList(stateId)).then((response) => {
+    //   setColleges(response?.data);
+    // });
+    if (stateId !== undefined) {
+      dispatch(getAdditionalCollegesList(stateId)).then((response) => {
+        setColleges(response?.data);
+      });
+    }
   };
 
-  const getUniversityData = async (collegeId) => {
-    await dispatch(getAdditionalUniversitiesList(collegeId)).then((response) => {
-      setUniversityData(response?.data);
-    });
+  const getUniversityData = (collegeId) => {
+    if (collegeId !== undefined) {
+      dispatch(getAdditionalUniversitiesList(collegeId)).then((response) => {
+        setUniversityData(response?.data);
+      });
+    }
   };
   const getCollege = (collegeId) => {
     const data = colleges?.find((obj) => obj?.id === collegeId);
@@ -143,11 +142,17 @@ const AdditionalQualifications = () => {
   };
 
   useEffect(() => {
-    getCollegeData(stateID);
+    // getCollegeData(stateID);
+    if (stateID !== undefined) {
+      getCollegeData(stateID);
+    }
   }, [stateID]);
 
   useEffect(() => {
-    getUniversityData(collegeID);
+    // getUniversityData(collegeID);
+    if (collegeID !== undefined) {
+      getUniversityData(collegeID);
+    }
   }, [collegeID]);
 
   const broadSpeciality = (broadSpl) => {
@@ -223,19 +228,13 @@ const AdditionalQualifications = () => {
       formData.append('degreeCertificates', file);
     });
     console.log('supportingDocumentError12', supportingDocumentError);
+
     let setdocumenterror;
     for (const index in qualificationFilesData) {
       setdocumenterror = qualificationFilesData[index]?.length > 0;
       if (!setdocumenterror) {
         supportingDocumentError[index] = true;
         setsupportingDocumentError({ ...supportingDocumentError });
-
-        console.log(
-          'qualf12345',
-          supportingDocumentError,
-          setdocumenterror,
-          qualificationFilesData[index]?.length
-        );
       } else {
         supportingDocumentError[index] = false;
         setsupportingDocumentError({ ...supportingDocumentError });
