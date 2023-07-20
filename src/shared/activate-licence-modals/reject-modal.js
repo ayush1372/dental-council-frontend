@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { reActivateLicenseStatus } from '../../store/actions/common-actions';
 import { Button, TextField } from '../../ui/core';
-import successToast from '../../ui/core/toaster';
+// import successToast from '../../ui/core/toaster';
 
 export default function RejectLicenseModal({
   ClosePopup,
@@ -36,15 +36,16 @@ export default function RejectLicenseModal({
       remarks: reason,
     };
 
-    dispatch(reActivateLicenseStatus(reActivateLicenseHealthProfessionalIdBody))
-      .then((response) => {
+    dispatch(reActivateLicenseStatus(reActivateLicenseHealthProfessionalIdBody)).then(
+      (response) => {
         if (response) {
           ClosePopup();
         }
-      })
-      .catch((allFailMsg) => {
-        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-      });
+      }
+    );
+    // .catch((allFailMsg) => {
+    //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    // });
   };
 
   const theme = useTheme();

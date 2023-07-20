@@ -15,7 +15,7 @@ import {
 import { getRegistrationDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
 import { Button, DatePicker, RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
-import successToast from '../../../../ui/core/toaster';
+// import successToast from '../../../../ui/core/toaster';
 import EditQualificationDetails from './edit-qualification-details';
 const qualificationObjTemplate = [
   {
@@ -268,35 +268,34 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           ? personalDetails?.hp_profile_id
           : updatedPersonalDetails?.hp_profile_id
       )
-    )
-      .then(() => {
-        // viewCertificate.qualification =
-        //   response?.data?.qualification_detail_response_tos[0]?.degree_certificate;
-        // setViewCertificate();
-        // const QualificationFile = [
-        //   {
-        //     fileName:
-        //       response?.data?.qualification_detail_response_tos[0]?.file_name +
-        //       '.' +
-        //       response?.data?.qualification_detail_response_tos[0]?.file_type,
-        //     fileBlob: response?.data?.qualification_detail_response_tos[0]?.degree_certificate,
-        //   },
-        // ];
-        // const RegistrationFile = [
-        //   {
-        //     fileName:
-        //       response?.data?.registration_detail_to?.file_name +
-        //       '.' +
-        //       response?.data?.registration_detail_to?.file_type,
-        //     fileBlob: response?.data?.registration_detail_to?.registration_certificate,
-        //   },
-        // ];
-        // setRegistrationFileData(RegistrationFile);
-        // setQualificationFilesData(QualificationFile);
-      })
-      .catch((allFailMsg) => {
-        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-      });
+    ).then(() => {
+      // viewCertificate.qualification =
+      //   response?.data?.qualification_detail_response_tos[0]?.degree_certificate;
+      // setViewCertificate();
+      // const QualificationFile = [
+      //   {
+      //     fileName:
+      //       response?.data?.qualification_detail_response_tos[0]?.file_name +
+      //       '.' +
+      //       response?.data?.qualification_detail_response_tos[0]?.file_type,
+      //     fileBlob: response?.data?.qualification_detail_response_tos[0]?.degree_certificate,
+      //   },
+      // ];
+      // const RegistrationFile = [
+      //   {
+      //     fileName:
+      //       response?.data?.registration_detail_to?.file_name +
+      //       '.' +
+      //       response?.data?.registration_detail_to?.file_type,
+      //     fileBlob: response?.data?.registration_detail_to?.registration_certificate,
+      //   },
+      // ];
+      // setRegistrationFileData(RegistrationFile);
+      // setQualificationFilesData(QualificationFile);
+    });
+    // .catch((allFailMsg) => {
+    //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    // });
   }, []);
 
   const CloseAttachmentPopup = () => {

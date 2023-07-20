@@ -4,7 +4,6 @@ import { Box, Container, Typography } from '@mui/material';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { ToastContainer } from 'react-toastify';
 
 import { createEditFieldData } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
@@ -81,8 +80,6 @@ const DoctorRegistrationWelcomePage = () => {
   };
   return (
     <>
-      <ToastContainer></ToastContainer>
-
       <Box>
         {isNext === false ? (
           <Box my={4}>

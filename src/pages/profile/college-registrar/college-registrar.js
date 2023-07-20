@@ -12,7 +12,7 @@ import {
   updateCollegeRegistrarData,
 } from '../../../store/actions/college-actions';
 import { Button, TextField } from '../../../ui/core';
-import successToast from '../../../ui/core/toaster';
+// import successToast from '../../../ui/core/toaster';
 
 export function CollegeRegistrar({ showPage, updateShowPage }) {
   const { t } = useTranslation();
@@ -54,16 +54,17 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
       email_id: showPage === 'edit' ? fieldData?.registrarEmail : null,
     };
     if (showPage === 'edit') {
-      dispatch(updateCollegeRegistrarData(registrarData, userData?.college_id, userData?.id))
-        .then((response) => {
+      dispatch(updateCollegeRegistrarData(registrarData, userData?.college_id, userData?.id)).then(
+        (response) => {
           dispatch(collegeProfileData(userData?.college_id, userData?.id));
           if (response?.isError === false) {
             setSuccessModalPopup(true);
           }
-        })
-        .catch((error) => {
-          successToast(error?.data?.response?.data?.message, 'UpdateError', 'error', 'top-center');
-        });
+        }
+      );
+      // .catch((error) => {
+      //   successToast(error?.data?.response?.data?.message, 'UpdateError', 'error', 'top-center');
+      // });
     } else {
       dispatch(sendRegistrarDetails(registrarData, userData?.id));
     }

@@ -13,7 +13,7 @@ import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup
 import { getAdminDesignation, getAdminVerifier } from '../../../store/actions/college-actions';
 import { changeUserActiveTab } from '../../../store/reducers/common-reducers';
 import { Button } from '../../../ui/core';
-import successToast from '../../../ui/core/toaster';
+// import successToast from '../../../ui/core/toaster';
 
 function CollegeVerifier() {
   const { collegeAdminDesignation } = useSelector((state) => state.college);
@@ -56,19 +56,18 @@ function CollegeVerifier() {
       college_id: loginData?.data?.college_id,
     };
 
-    dispatch(getAdminVerifier(collegeDetailValues))
-      .then(() => {
-        setSuccessModalPopup(true);
-        reset();
-      })
-      .catch((error) => {
-        successToast(
-          error?.data?.response?.data?.message,
-          'RegistrationError',
-          'error',
-          'top-center'
-        );
-      });
+    dispatch(getAdminVerifier(collegeDetailValues)).then(() => {
+      setSuccessModalPopup(true);
+      reset();
+    });
+    // .catch((error) => {
+    //   successToast(
+    //     error?.data?.response?.data?.message,
+    //     'RegistrationError',
+    //     'error',
+    //     'top-center'
+    //   );
+    // });
   };
 
   const handleInput = (e) => {
