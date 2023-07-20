@@ -174,7 +174,7 @@ export default function SuccessModalPopup({
             justifyContent="center"
             mt={2}
           >
-            SUCCESS!
+            SUCCESS
           </Typography>
           <Typography
             display="flex"
