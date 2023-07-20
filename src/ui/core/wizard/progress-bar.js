@@ -44,7 +44,7 @@ export function LinearProgressWithLabel(props) {
       {loggedInUserType === 'Doctor' && props?.value === 75 && (
         <Box display="flex" alignItems={'center'} justifyContent="center">
           <Tooltip
-            title="Add Work Details to Complete Your Profile"
+            title="Add work details to complete your profile"
             arrow
             placement="right"
             p={2}
