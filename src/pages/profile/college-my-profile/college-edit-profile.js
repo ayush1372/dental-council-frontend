@@ -15,7 +15,7 @@ import {
   getUniversitiesList,
 } from '../../../store/actions/common-actions';
 import { Button, TextField } from '../../../ui/core';
-import successToast from '../../../ui/core/toaster';
+// import successToast from '../../../ui/core/toaster';
 
 const CollegeEditProfile = (props) => {
   const [districtList, setDistrictList] = useState([]);
@@ -89,15 +89,14 @@ const CollegeEditProfile = (props) => {
       university_id: getValues()?.UniversityId,
     };
 
-    dispatch(updateCollegeAdminProfileData(updatedCollegeDetails))
-      .then(() => {
-        if (registrationSuccess) {
-          setSuccessModalPopup(true);
-        }
-      })
-      .catch((error) => {
-        successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
-      });
+    dispatch(updateCollegeAdminProfileData(updatedCollegeDetails)).then(() => {
+      if (registrationSuccess) {
+        setSuccessModalPopup(true);
+      }
+    });
+    // .catch((error) => {
+    //   successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+    // });
   };
 
   const handleInput = (e) => {
@@ -397,7 +396,7 @@ const CollegeEditProfile = (props) => {
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography variant="body1" color="inputTextColor.main">
-              Pin Code
+              Pincode
               <Typography component="span" color="error.main">
                 *
               </Typography>

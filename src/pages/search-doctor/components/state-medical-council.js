@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createSelectFieldData } from '../../../helpers/functions/common-functions';
 import { searchDoctorDetails } from '../../../store/actions/doctor-search-actions';
 import { Button, Select } from '../../../ui/core';
-import successToast from '../../../ui/core/toaster';
+// import successToast from '../../../ui/core/toaster';
 
 const StateMedicalCouncil = ({ setDoSearch, setSearchData, setScrollDown }) => {
   const { councilNames } = useSelector((state) => state.common);
@@ -33,16 +33,15 @@ const StateMedicalCouncil = ({ setDoSearch, setSearchData, setScrollDown }) => {
 
     setDoSearch(true);
 
-    dispatch(searchDoctorDetails(searchValues))
-      .then(() => {})
-      .catch((error) => {
-        successToast(
-          error?.data?.response?.data?.error,
-          'RegistrationError',
-          'error',
-          'top-center'
-        );
-      });
+    dispatch(searchDoctorDetails(searchValues)).then(() => {});
+    // .catch((error) => {
+    //   successToast(
+    //     error?.data?.response?.data?.error,
+    //     'RegistrationError',
+    //     'error',
+    //     'top-center'
+    //   );
+    // });
 
     setSearchData(searchValues);
     setScrollDown(true);

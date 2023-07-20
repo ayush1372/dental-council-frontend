@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import MobileIcon from '../../../assets/images/mobile-icon.svg';
 import ProfileIcon from '../../../assets/images/profile-icon.svg';
 import { verboseLog } from '../../../config/debug';
+import { ErrorMessages } from '../../../constants/error-messages';
 import { encryptData, usersType } from '../../../helpers/functions/common-functions';
 import CaptchaComponent from '../../../shared/captcha-component/captcha-component';
 import OtpForm from '../../../shared/otp-form/otp-component';
@@ -93,13 +94,13 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
 
         if (response) {
           setTransaction_id(response?.data?.transaction_id);
-          setMaskedMobileNumber(response?.data?.sent_on.replace(/^.{6}/g, 'XXXXXX'));
+          setMaskedMobileNumber(response?.data?.sent_on.replace(/^.{6}/g, '******'));
           setOtpSend(true);
         }
       })
-      .catch((error) => {
+      .catch(() => {
         setOtpFormEnable(false);
-        successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
+        // successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
       });
   };
   const { otpform, otpValue, handleClear } = OtpForm({
@@ -110,7 +111,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
   const handleResponse = (response) => {
     setOtpFormEnable(true);
     setTransaction_id(response?.data?.transaction_id);
-    setMaskedMobileNumber(response?.data?.sent_on.replace(/^.{6}/g, 'XXXXXX'));
+    setMaskedMobileNumber(response?.data?.sent_on.replace(/^.{6}/g, '******'));
     setOtpSend(true);
   };
   const handleLogin = () => {
@@ -137,58 +138,56 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
           transaction_id: generateCaptcha?.transaction_id,
           result: parseInt(captchaAnswer),
         })
-      )
-        .then((response) => {
-          if (response?.data?.validity) {
-            const usertypeId = usersType(loginName);
+      ).then((response) => {
+        if (response?.data?.validity) {
+          const usertypeId = usersType(loginName);
 
-            const requestObj = {
-              username:
-                selectedLoginOption === 'nmrId' ? getValues()?.nmrID : getValues()?.mobileNo,
-              password: encryptData(otpValue, process.env.REACT_APP_PASS_SITE_KEY),
-              user_type: usertypeId,
-              login_type: loginTypeID,
-              captcha_trans_id: generateCaptcha?.transaction_id,
-              otp_trans_id: transaction_id,
-            };
-            dispatch(loginAction(requestObj))
-              .then(() => {
-                dispatch(login());
-                dispatch(userLoggedInType(loginName));
-                dispatch(getRegistrationCouncilList());
-                navigate(`/profile`);
-              })
-              .catch((error) => {
-                dispatch(generateCaptchaImage()).catch((error) => {
-                  successToast(
-                    'ERROR: ' + error?.data?.message,
-                    'auth-error',
-                    'error',
-                    'top-center'
-                  );
-                });
-                successToast(
-                  'ERROR: ' + error?.data?.response?.data?.message,
-                  'auth-error',
-                  'error',
-                  'top-center'
-                );
-              });
-          } else {
-            dispatch(generateCaptchaImage()).catch((error) => {
-              successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+          const requestObj = {
+            username: selectedLoginOption === 'nmrId' ? getValues()?.nmrID : getValues()?.mobileNo,
+            password: encryptData(otpValue, process.env.REACT_APP_PASS_SITE_KEY),
+            user_type: usertypeId,
+            login_type: loginTypeID,
+            captcha_trans_id: generateCaptcha?.transaction_id,
+            otp_trans_id: transaction_id,
+          };
+          dispatch(loginAction(requestObj))
+            .then(() => {
+              dispatch(login());
+              dispatch(userLoggedInType(loginName));
+              dispatch(getRegistrationCouncilList());
+              navigate(`/profile`);
+            })
+            .catch(() => {
+              dispatch(generateCaptchaImage());
+
+              // .catch((error) => {
+              //   successToast(
+              //     'ERROR: ' + error?.data?.message,
+              //     'auth-error',
+              //     'error',
+              //     'top-center'
+              //   );
+              // });
+              // successToast(
+              //   'ERROR: ' + error?.data?.response?.data?.message,
+              //   'auth-error',
+              //   'error',
+              //   'top-center'
+              // );
             });
-            successToast(
-              'ERROR: Invalid captcha, please try with new captcha',
-              'auth-error',
-              'error',
-              'top-center'
-            );
-          }
-        })
-        .catch((error) => {
-          successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-        });
+        } else {
+          dispatch(generateCaptchaImage());
+
+          // .catch(() => {
+          // successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+          // });
+          successToast(ErrorMessages.invalidCaptchaMessage, 'auth-error', 'error', 'top-center');
+        }
+      });
+      // .catch(() => {
+      //   alert(3)
+      // successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+      // });
     } else if (selectedLoginOption === 'userName') {
       verboseLog('Login Data -> ', getValues()?.password);
       verboseLog('Login Data -> ', getValues()?.userID);
@@ -197,55 +196,47 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
           transaction_id: generateCaptcha?.transaction_id,
           result: parseInt(captchaAnswer),
         })
-      )
-        .then((response) => {
-          if (response?.data?.validity) {
-            const usertypeId = usersType(loginName);
-            const requestObj = {
-              username: getValues()?.userID,
-              password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
-              user_type: usertypeId,
-              captcha_trans_id: generateCaptcha?.transaction_id,
-              login_type: loginTypeID,
-            };
-            dispatch(loginAction(requestObj))
-              .then(() => {
-                dispatch(login());
-                dispatch(userLoggedInType(loginName));
-                dispatch(getRegistrationCouncilList());
-                navigate(`/profile`);
-              })
-              .catch((error) => {
-                dispatch(generateCaptchaImage()).catch((error) => {
-                  successToast(
-                    'ERROR: ' + error?.data?.message,
-                    'auth-error',
-                    'error',
-                    'top-center'
-                  );
-                });
-                successToast(
-                  'ERROR: ' + error?.data?.response?.data?.message,
-                  'auth-error',
-                  'error',
-                  'top-center'
-                );
-              });
-          } else {
-            dispatch(generateCaptchaImage()).catch((error) => {
-              successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+      ).then((response) => {
+        if (response?.data?.validity) {
+          const usertypeId = usersType(loginName);
+          const requestObj = {
+            username: getValues()?.userID,
+            password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
+            user_type: usertypeId,
+            captcha_trans_id: generateCaptcha?.transaction_id,
+            login_type: loginTypeID,
+          };
+          dispatch(loginAction(requestObj))
+            .then(() => {
+              dispatch(login());
+              dispatch(userLoggedInType(loginName));
+              dispatch(getRegistrationCouncilList());
+              navigate(`/profile`);
+            })
+            .catch(() => {
+              dispatch(generateCaptchaImage());
+
+              // .catch((error) => {
+              //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+              // });
+              // successToast(
+              //   'ERROR: ' + error?.data?.response?.data?.message,
+              //   'auth-error',
+              //   'error',
+              //   'top-center'
+              // );
             });
-            successToast(
-              'ERROR: Invalid captcha, please try with new captcha',
-              'auth-error',
-              'error',
-              'top-center'
-            );
-          }
-        })
-        .catch((error) => {
-          successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-        });
+        } else {
+          dispatch(generateCaptchaImage());
+          // .catch((error) => {
+          //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+          // });
+          successToast(ErrorMessages.invalidCaptchaMessage, 'auth-error', 'error', 'top-center');
+        }
+      });
+      // .catch((error) => {
+      //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+      // });
     } else {
       successToast('Wrong Login Attempt', 'login-error', 'error', 'top-center');
     }
@@ -393,10 +384,10 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
                       }}
                       color={'white.main'}
                       onClick={() => {
-                        if(!otpFormEnabled){
+                        if (!otpFormEnabled) {
                           getValues()?.nmrID?.length === 12 &&
-                          sendNotificationOTPHandler(!otpFormEnabled, 'NMR');
-                        } else{
+                            sendNotificationOTPHandler(!otpFormEnabled, 'NMR');
+                        } else {
                           setOtpFormEnable(false);
                         }
                       }}
@@ -410,7 +401,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
             {otpFormEnabled && (
               <Box mt={1}>
                 <Typography variant="body1">
-                  OTP sent to registered mobile number ending with{maskedMobileNumber}
+                  OTP sent to registered mobile number ending with {maskedMobileNumber}
                 </Typography>
                 {otpform}
               </Box>
@@ -483,7 +474,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
           <>
             <MobileNumber
               showhint={false}
-              placeholder="Mobile number"
+              placeholder="Enter mobile number"
               required
               register={register}
               getValues={getValues}

@@ -20,7 +20,7 @@ import {
   getUniversitiesList,
 } from '../../../store/actions/common-actions';
 import { Button } from '../../../ui/core';
-import successToast from '../../../ui/core/toaster';
+// import successToast from '../../../ui/core/toaster';
 import {
   EmailRegexValidation,
   MobileNumberRegexValidation,
@@ -131,22 +131,21 @@ function NMCCollegeRegistration() {
         mobile_number: getValues().MobileNumber,
       };
 
-      dispatch(registerCollegeDetail(collegeDetailValues))
-        .then(() => {
-          setSuccessModalPopup(true);
-          onReset();
-          reset();
-          reset({ UniversityName: '' });
-          reset({ UniversityID: '' });
-        })
-        .catch((error) => {
-          successToast(
-            error?.data?.response?.data?.message,
-            'RegistrationError',
-            'error',
-            'top-center'
-          );
-        });
+      dispatch(registerCollegeDetail(collegeDetailValues)).then(() => {
+        setSuccessModalPopup(true);
+        onReset();
+        reset();
+        reset({ UniversityName: '' });
+        reset({ UniversityID: '' });
+      });
+      // .catch((error) => {
+      //   successToast(
+      //     error?.data?.response?.data?.message,
+      //     'RegistrationError',
+      //     'error',
+      //     'top-center'
+      //   );
+      // });
     } else {
       const collegeDetailValues = {
         id: getValues().CollegeNameID,
@@ -168,20 +167,19 @@ function NMCCollegeRegistration() {
         mobile_number: getValues().MobileNumber,
       };
 
-      dispatch(updateCollegeDetail(collegeDetailValues))
-        .then(() => {
-          setSuccessModalPopup(true);
-          reset();
-          onReset();
-        })
-        .catch((error) => {
-          successToast(
-            error?.data?.response?.data?.error,
-            'RegistrationError',
-            'error',
-            'top-center'
-          );
-        });
+      dispatch(updateCollegeDetail(collegeDetailValues)).then(() => {
+        setSuccessModalPopup(true);
+        reset();
+        onReset();
+      });
+      // .catch((error) => {
+      //   successToast(
+      //     error?.data?.response?.data?.error,
+      //     'RegistrationError',
+      //     'error',
+      //     'top-center'
+      //   );
+      // });
     }
   };
 
