@@ -94,7 +94,7 @@ export function ViewProfile(props) {
             {mobileNumber ? (
               <Typography variant="subtitle2" color="textPrimary.main">
                 {mobileNumber}
-                <img width="15px" height="15px" src={IconVerified} alt="verified icon" />
+                <img width="16px" height="16px" src={IconVerified} alt="verified icon" />
 
                 {loggedInUserType === 'Doctor' ? (
                   <Typography component="span" variant="subtitle2" color="primary.main" ml={1}>
@@ -123,7 +123,7 @@ export function ViewProfile(props) {
                 >
                   {emailId}
                   {emailIconVerified === true && (
-                    <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
+                    <img width="16px" height="16px" src={IconVerified} alt="verified icon" />
                   )}
                 </Typography>
               ) : (

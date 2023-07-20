@@ -184,12 +184,12 @@ export const userActionId = (actionType) => {
 };
 export const trackApplicationLabel = (userGroupID) => {
   const userGroupTypeObj = {
-    Submitted: 'Completed',
-    Forwarded: 'Completed',
-    'Query Raised': 'Query Raised',
-    Approve: 'Completed',
-    Rejected: 'Rejected',
-    'Temporary suspension': 'Completed',
+    Submitted: 'COMPLETED',
+    Forwarded: 'COMPLETED',
+    'Query Raised': 'QUERY RAISED',
+    Approve: 'COMPLETED',
+    Rejected: 'REJECTED',
+    'Temporary suspension': 'COMPLETED',
   };
   return userGroupTypeObj[userGroupID];
 };

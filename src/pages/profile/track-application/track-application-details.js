@@ -145,7 +145,7 @@ export function TrackApplicationDetails({
               </Grid>
               <Grid item xs={12} xl={6}>
                 <Typography variant="body3" color="grey.label">
-                  Pendency days
+                  Pendency (Days)
                 </Typography>
                 <Typography variant="subtitle2" color="textPrimary.main">
                   {`${applicationStatus?.pendency}`}

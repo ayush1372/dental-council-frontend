@@ -378,25 +378,28 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
               <Divider sx={{ marginBottom: '25px' }} variant="fullWidth" />
               <Box
                 display="flex"
-                justifyContent="space-between"
+                //justifyContent="space-between"
+                alignItems={'center'}
                 flexDirection={{ xs: 'column', sm: 'row' }}
               >
-                <Box>
-                  <AadhaarInputField
-                    defaultValue={getValues().AadhaarNumber}
-                    name="AadhaarNumber"
-                    {...register('AadhaarNumber', {})}
-                    register={register}
-                    getValues={getValues}
-                    required={true}
-                    errors={errors}
-                    setValue={setValue}
-                    disabled={showOtpAadhar || isOtpValidAadhar}
-                  />
-                </Box>
-                <Box p="35px 32px 0px 32px">
+                <AadhaarInputField
+                  defaultValue={getValues().AadhaarNumber}
+                  name="AadhaarNumber"
+                  {...register('AadhaarNumber', {})}
+                  register={register}
+                  getValues={getValues}
+                  required={true}
+                  errors={errors}
+                  setValue={setValue}
+                  disabled={showOtpAadhar || isOtpValidAadhar}
+                />
+                <Box display={'flex'} justifyContent="center" ml={3} mt={2}>
                   {isOtpValidAadhar ? <CheckCircleIcon color="success" /> : ''}
                 </Box>
+
+                {/* <Box p="35px 32px 0px 32px">
+                  {isOtpValidAadhar ? <CheckCircleIcon color="success" /> : ''}
+                </Box> */}
               </Box>
               <Grid
                 container
@@ -586,8 +589,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                 </Box>
                 <Box mt={1} sx={{ alignItems: 'center', display: 'flex' }}>
                   <InfoOutlinedIcon
-                    color="messageBlue.main"
-                    sx={{ fontSize: '20px', padding: '2px' }}
+                    sx={{ fontSize: '20px', padding: '2px', color: 'messageBlue.main' }}
                   />
                   <Typography variant="body4" color="messageBlue.main">
                     This mobile number will be used for all the communications related to Council
