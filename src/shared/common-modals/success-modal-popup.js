@@ -23,7 +23,6 @@ import {
 import { setBreadcrumbsActivetab } from '../../store/reducers/common-reducers';
 import { loginActiveState } from '../../store/reducers/login-reducer';
 import { Button } from '../../ui/core';
-// import successToast from '../../ui/core/toaster';
 
 export default function SuccessModalPopup({
   open,
@@ -55,23 +54,14 @@ export default function SuccessModalPopup({
   const handleCloseModal = () => {
     setOpen(false);
     if (loggedInUserType === 'Doctor' && workDetails === true) {
-      dispatch(getWorkProfileDetailsData(loginData?.data?.profile_id))
-        .then((response) => {
-          if (response?.data) {
-            setCurrentlyWorking(
-              response?.data?.work_details?.is_user_currently_working === 1 ? 'no' : 'yes'
-            );
-            setDefaultFacilityData(response?.data);
-          }
-        })
-        .catch(() => {
-          successToast(
-            'No matching work profile details found for the given hp_profile_id.',
-            'auth-error',
-            'error',
-            'top-center'
+      dispatch(getWorkProfileDetailsData(loginData?.data?.profile_id)).then((response) => {
+        if (response?.data) {
+          setCurrentlyWorking(
+            response?.data?.work_details?.is_user_currently_working === 1 ? 'no' : 'yes'
           );
-        });
+          setDefaultFacilityData(response?.data);
+        }
+      });
     }
   };
   const navigateToSetPassword = () => {
