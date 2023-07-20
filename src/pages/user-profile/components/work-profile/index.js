@@ -120,6 +120,8 @@ const WorkProfile = () => {
             setValue={setValue}
             handleSubmit={handleSubmit}
             watch={watch}
+            setDefaultFacilityData={setDefaultFacilityData}
+            setCurrentlyWorking={setCurrentlyWorking}
           />
         )}
         {defaultFacilityData?.current_work_details?.length > 0 && (

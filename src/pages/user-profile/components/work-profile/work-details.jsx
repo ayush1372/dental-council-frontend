@@ -35,7 +35,9 @@ const WorkDetails = ({
   errors,
   handleSubmit,
   watch,
+  setCurrentlyWorking,
   currentWorkingSelection,
+  setDefaultFacilityData,
 }) => {
   const dispatch = useDispatch();
 
@@ -1089,6 +1091,8 @@ const WorkDetails = ({
               open={successModalPopup}
               workDetails={true}
               setOpen={() => setSuccessModalPopup(false)}
+              setDefaultFacilityData={setDefaultFacilityData}
+              setCurrentlyWorking={setCurrentlyWorking}
               text={'Your Work-Details has been submitted successfully.'}
             />
           )}
