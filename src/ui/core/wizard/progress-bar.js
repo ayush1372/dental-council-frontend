@@ -59,9 +59,7 @@ export function LinearProgressWithLabel(props) {
             }}
           >
             <Box display="flex" alignItems={'center'} justifyContent="center">
-              {props?.value === 75 && (
-                <InfoOutlinedIcon color="primary.main" sx={{ color: 'primary.main' }} />
-              )}
+              {props?.value === 75 && <InfoOutlinedIcon color="primary.main" />}
             </Box>
           </Tooltip>
         </Box>
