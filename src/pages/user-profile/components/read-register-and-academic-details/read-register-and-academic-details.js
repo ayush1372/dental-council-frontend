@@ -109,12 +109,11 @@ const ReadRegisterAndAcademicDetails = ({
           : trackStatusData?.data?.data?.health_professional_applications?.length > 0
           ? trackStatusData?.data?.data?.health_professional_applications
           : [];
-      updatedTableData?.map((element, elementIndex) => {
+      registrationDetails?.qualification_detail_response_tos?.map((element, elementIndex) => {
         if (element) {
           if (
             (element?.is_verified === 1 ||
-              element?.request_id ===
-                dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]?.request_id) &&
+              element?.request_id === updatedTableData[selectedDataIndex]?.request_id) &&
             elementIndex !== 0
           ) {
             filteredQualificationDetails.push(element);
