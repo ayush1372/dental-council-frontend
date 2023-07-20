@@ -457,7 +457,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
     doctorProfileValues.personal_details.country_nationality =
       nationalities.find((x) => x.id === Nationality) || {};
     doctorProfileValues.personal_details.gender = Gender;
-    doctorProfileValues.personal_details.email = document?.getElementsByName('email')[0]?.value;
+    doctorProfileValues.personal_details.email = document?.getElementsByName('email')[0]?.value
+      ? document?.getElementsByName('email')[0]?.value
+      : EmailAddress;
 
     doctorProfileValues.communication_address.pincode = PostalCode;
     doctorProfileValues.communication_address.address_line1 = Address;
@@ -580,18 +582,18 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
-              Father Name
+              Father&apos;s Name
             </Typography>
             <TextField
               variant="outlined"
               name={'FatherName'}
-              placeholder="Enter father name"
+              placeholder="Enter father's name"
               fullWidth
               defaultValue={getValues().FatherName}
               {...register('FatherName', {
                 pattern: {
                   value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
-                  message: 'Please enter father name',
+                  message: 'Please enter father&apos;s name',
                 },
                 maxLength: {
                   value: 100,
@@ -906,7 +908,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                   variant="outlined"
                   name={'House'}
                   fullWidth
-                  placeholder="House Address"
+                  placeholder="House"
                   disabled={
                     isSameAddress
                       ? isSameAddress
@@ -932,8 +934,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                     'House',
                     isSameAddress
                       ? ''
-                      : {
-                          required: 'House is Required',
+                      : getValues()?.House?.length <= 0 && {
+                          required: 'Please enter house',
                           maxLength: {
                             value: 300,
                             message: 'Length should be less than 300.',

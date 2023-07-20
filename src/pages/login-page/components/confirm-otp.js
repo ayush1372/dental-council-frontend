@@ -163,7 +163,7 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup 
                 <img width="20px" height="20px" src={IconVerified} alt="verified icon" />
               </Box>
               <Box display="flex">
-                <Typography variant="h2">Email Sent Successfully</Typography>
+                <Typography variant="h2">Email has been Sent</Typography>
               </Box>
             </Box>
           </Box>
@@ -194,7 +194,7 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup 
                     <Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
                       <CircularProgress color="secondary" />
                       <Typography textAlign="center" mt={2}>
-                        Waiting for Confirmation
+                        Awaiting Confirmation
                       </Typography>
                     </Box>
                   )}

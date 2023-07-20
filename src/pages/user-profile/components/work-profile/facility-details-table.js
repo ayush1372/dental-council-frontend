@@ -135,14 +135,6 @@ function FacilityDetailsTable({ declaredFacilityData, currentWorkDetails }) {
         setConfirmationModal(false);
         setSuccessDeLinkModalPopup(true);
       });
-    // .catch((error) => {
-    //   successToast(
-    //     error?.data?.response?.data?.error,
-    //     'RegistrationError',
-    //     'error',
-    //     'top-center'
-    //   );
-    // });
   };
 
   return (

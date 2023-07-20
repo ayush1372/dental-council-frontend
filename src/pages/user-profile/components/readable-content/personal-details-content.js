@@ -64,7 +64,7 @@ const PersonalDetails = ({ personalDetails }) => {
         </Grid>
         <Grid item xs={12} md={3}>
           <Typography variant="subtitle2" color="grey.label">
-            Father Name
+            Father&apos;s Name
           </Typography>
 
           <Grid display="flex" alignItems="center">

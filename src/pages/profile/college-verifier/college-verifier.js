@@ -104,11 +104,11 @@ function CollegeVerifier() {
               fullWidth
               name="Name"
               required
-              placeholder={t('Enter Name')}
+              placeholder={t('Enter name')}
               // onInput={(e) => handleInput(e)}
               error={errors.Name?.message}
               {...register('Name', {
-                required: 'Name is required',
+                required: 'Please enter name',
               })}
             />
           </Grid>
@@ -124,11 +124,11 @@ function CollegeVerifier() {
               fullWidth
               name="Designation"
               items={createEditFieldData(collegeAdminDesignation.data)}
-              placeholder="Select  Designation"
+              placeholder="Select  designation"
               clearErrors={clearErrors}
               error={errors.Designation?.message}
               {...register('Designation', {
-                required: 'Designation is required',
+                required: 'Please select designation',
               })}
               onChange={(currentValue) => {
                 setValue('DesignationID', currentValue.id);
@@ -138,7 +138,7 @@ function CollegeVerifier() {
 
           <Grid item xs={12} md={4} lg={4}>
             <Typography variant="body3" color="inputTextColor.main">
-              Phone Number
+              Mobile Number
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -148,18 +148,18 @@ function CollegeVerifier() {
               fullWidth
               name="Number"
               required
-              placeholder={t('Enter Phone Number')}
+              placeholder={t('Enter mobile number')}
               onInput={(e) => handleInput(e)}
               error={errors.Number?.message}
               {...register('Number', {
-                required: 'Phone Number is required',
+                required: 'Please enter mobile number',
               })}
             />
           </Grid>
 
           <Grid item xs={12} md={4} lg={4}>
             <Typography variant="body3" color="inputTextColor.main">
-              Email Address
+              Email
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -173,14 +173,14 @@ function CollegeVerifier() {
               type="text"
               name="Email"
               required
-              placeholder={t('Enter Email Address')}
+              placeholder={t('Enter email')}
               error={errors.Email?.message}
               {...register('Email', {
-                required: 'Email Address is required',
+                required: 'Please enter an email',
                 pattern: {
                   value:
                     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-                  message: 'Provide a Valid Email Address',
+                  message: 'Please enter an email',
                 },
               })}
             />

@@ -119,7 +119,7 @@ const DoctorRegistrationWelcomePage = () => {
                       clearErrors={clearErrors}
                       error={errors.RegistrationCouncil?.message}
                       {...register('RegistrationCouncil', {
-                        required: 'Registration Council is required',
+                        required: 'Please select the registration council',
                       })}
                       onChange={(currentValue) => {
                         setValue('RegistrationCouncilId', currentValue?.id);
@@ -142,14 +142,14 @@ const DoctorRegistrationWelcomePage = () => {
                     defaultValue={getValues().RegistrationNumber}
                     error={errors.RegistrationNumber?.message}
                     {...register('RegistrationNumber', {
-                      required: 'Registration Number is required',
+                      required: 'Please enter the registration number',
                       pattern: {
                         value: /^[A-Za-z0-9_.,?!@#$%^&*():;-]{1,100}$/,
-                        message: 'Enter valid registration number',
+                        message: 'Please enter valid registration number',
                       },
                       minLength: {
                         value: 1,
-                        message: 'Enter valid registration number',
+                        message: 'Please enter the registration number',
                       },
                     })}
                   />
@@ -159,25 +159,13 @@ const DoctorRegistrationWelcomePage = () => {
                     onClick={handleSubmit(onSubmit)}
                     variant="contained"
                     color="secondary"
-                    size="small"
                     sx={{
-                      mr: 3,
-                      width: '105px',
-                      height: '45px',
+                      mr: 2,
                     }}
                   >
                     Submit
                   </Button>
-                  <Button
-                    onClick={onReset}
-                    variant="contained"
-                    color="grey"
-                    size="small"
-                    sx={{
-                      width: '105px',
-                      height: '45px',
-                    }}
-                  >
+                  <Button onClick={onReset} variant="contained" color="grey">
                     Reset
                   </Button>
                 </Box>
@@ -233,7 +221,7 @@ const DoctorRegistrationWelcomePage = () => {
           open={setAccountExists}
           setOpen={() => setAccountExists(false)}
           accountExist={true}
-          text={`Your account already exists. Please login with your credentails`}
+          text={`Your account already exists. Please login with your credentials.`}
           loginFormName="Doctor"
         />
       )}
