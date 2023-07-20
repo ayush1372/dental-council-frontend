@@ -88,7 +88,7 @@ export default function DatafoundModalPopup({
               <Box
                 p="16px 16px 0px 16px"
                 width={{ xs: '100%' }}
-                sx={{ boxShadow: '2', marginTop: '16px' }}
+                sx={{ border: 'solid 1px', borderColor: theme.inputBorderColor, borderRadius: '8px', marginTop: '16px' }}
               >
                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                   <Box>
@@ -124,20 +124,20 @@ export default function DatafoundModalPopup({
               </Box>
             )}
             {imrData ? (
-              <Box pl={15} mt={3} display="flex" justifyContent="right">
+              <Box mt={3} display="flex" justifyContent="right">
+                <Button variant="contained" size="small" color="grey" onClick={handleNo}>
+                  No
+                </Button>
                 <Button
                   variant="contained"
                   color="secondary"
                   size="small"
                   sx={{
-                    mr: 3,
+                    ml: 2,
                   }}
                   onClick={handleYes}
                 >
                   Yes
-                </Button>
-                <Button variant="contained" size="small" color="primary" onClick={handleNo}>
-                  No
                 </Button>
               </Box>
             ) : accountExist ? (
