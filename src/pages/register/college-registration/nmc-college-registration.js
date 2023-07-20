@@ -316,7 +316,7 @@ function NMCCollegeRegistration() {
             clearErrors={clearErrors}
             error={errors.CollegeName?.message}
             {...register('CollegeName', {
-              required: 'College name is required',
+              required: 'Please enter college name',
             })}
             onChange={(currentValue) => {
               onNameChange(currentValue);
@@ -340,7 +340,7 @@ function NMCCollegeRegistration() {
               inputProps={{ maxLength: 300 }}
               error={errors.Name?.message}
               {...register('Name', {
-                required: 'College name is required',
+                required: 'Please enter college name',
               })}
             />
           </Grid>
@@ -372,7 +372,7 @@ function NMCCollegeRegistration() {
             fullWidth
             name="MobileNumber"
             required
-            placeholder={t('Enter Mobile Number')}
+            placeholder={t('Enter mobile number')}
             onInput={(e) => handleInput(e)}
             error={errors.MobileNumber?.message}
             {...register('MobileNumber', MobileNumberRegexValidation)}
@@ -390,11 +390,11 @@ function NMCCollegeRegistration() {
               fullWidth
               name="CouncilName"
               items={createEditFieldData(councilNames)}
-              placeholder="Select Council"
+              placeholder="Select council"
               clearErrors={clearErrors}
               error={errors.CouncilName?.message}
               {...register('CouncilName', {
-                required: ' Council name is required',
+                required: 'Please enter council name',
               })}
               onChange={(currentValue) => {
                 setValue('CouncilID', currentValue?.id);
@@ -416,10 +416,10 @@ function NMCCollegeRegistration() {
             name="UniversityName"
             clearErrors={clearErrors}
             items={createEditFieldData(universitiesList.data)}
-            placeholder="Select University"
+            placeholder="Select university"
             error={errors.UniversityName?.message}
             {...register('UniversityName', {
-              required: 'University name is required',
+              required: 'Please select university',
             })}
             onChange={(currentValue) => {
               setValue('UniversityID', currentValue?.id);
@@ -435,7 +435,7 @@ function NMCCollegeRegistration() {
           <TextField
             fullWidth
             name={'Website'}
-            placeholder={'Enter College Website'}
+            placeholder={'Enter college website'}
             inputProps={{ maxLength: 300 }}
             {...register('Website', {})}
           />
@@ -453,11 +453,11 @@ function NMCCollegeRegistration() {
             rows={1}
             fullWidth
             name="AddressLine1"
-            placeholder="Enter Address line1"
+            placeholder="Enter address line 1"
             inputProps={{ maxLength: 300 }}
             error={errors.AddressLine1?.message}
             {...register('AddressLine1', {
-              required: 'Address line1 is required',
+              required: 'Pease enter Address line 1',
             })}
           />
         </Grid>
@@ -469,7 +469,7 @@ function NMCCollegeRegistration() {
           <TextField
             fullWidth
             name="AddressLine2"
-            placeholder={'Enter Address Line 2'}
+            placeholder={'Enter address line 2'}
             error={errors.AddressLine2?.message}
             {...register('AddressLine2', {})}
           />
@@ -488,10 +488,10 @@ function NMCCollegeRegistration() {
             name="StateName"
             items={createEditFieldData(statesList)}
             clearErrors={clearErrors}
-            placeholder={'Select State '}
+            placeholder={'Select state '}
             error={errors.StateName?.message}
             {...register('StateName', {
-              required: 'State name is required',
+              required: 'Please select state',
             })}
             onChange={(currentValue) => {
               onStateChange(currentValue);
@@ -510,11 +510,11 @@ function NMCCollegeRegistration() {
               fullWidth
               name="District"
               items={createEditFieldData(districtsList, 'iso_code')}
-              placeholder="Select  District"
+              placeholder="Select district"
               clearErrors={clearErrors}
               error={errors.District?.message}
               {...register('District', {
-                required: 'District name is required',
+                required: 'Please select district',
               })}
               onChange={(currentValue) => {
                 onDistrictChange(currentValue);
@@ -533,7 +533,7 @@ function NMCCollegeRegistration() {
             name="Town"
             clearErrors={clearErrors}
             items={createEditFieldData(subDistrictList)}
-            placeholder="Select Town "
+            placeholder="Select town "
             error={errors.Town?.message}
             {...register('Town')}
             onChange={(currentValue) => {
@@ -562,7 +562,7 @@ function NMCCollegeRegistration() {
             placeholder={'Enter postal code'}
             error={errors.Pincode?.message}
             {...register('Pincode', {
-              required: 'Enter valid postal code',
+              required: 'Please enter valid postal code',
               pattern: {
                 value: /^(\d{6})$/i,
                 message: 'Should contains only 6 digits',
@@ -586,7 +586,7 @@ function NMCCollegeRegistration() {
             type="text"
             name="Email"
             required
-            placeholder={t('Enter Email ID')}
+            placeholder={t('Enter email ID')}
             inputProps={{ maxLength: 100 }}
             error={errors.Email?.message}
             {...register('Email', EmailRegexValidation)}

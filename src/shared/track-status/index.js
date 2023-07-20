@@ -89,8 +89,8 @@ export default function TrackStatus() {
                     items={createEditFieldData(councilNames)}
                     placeholder={
                       loggedInUserType !== 'SMC'
-                        ? 'Select Council Name'
-                        : 'Maharashtra Medical Council'
+                        ? 'Select council name'
+                        : 'Maharashtra medical council'
                     }
                     clearErrors={clearErrors}
                     error={loggedInUserType !== 'SMC' && errors.RegistrationCouncil?.message}
@@ -117,7 +117,7 @@ export default function TrackStatus() {
                   fullWidth
                   name="trackStatus"
                   items={createEditFieldData(TrackStatusFieldList)}
-                  placeholder="Please Select"
+                  placeholder="Please select"
                   clearErrors={clearErrors}
                   {...register('trackStatus')}
                   onChange={(currentValue) => {

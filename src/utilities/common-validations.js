@@ -101,7 +101,7 @@ export const QueryRaisedValidation = {
 };
 
 export const EmailRegexValidation = {
-  required: 'Email ID is required',
+  required: 'Please enter an email ID',
   pattern: {
     value:
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
