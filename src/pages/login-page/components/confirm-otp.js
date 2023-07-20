@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import IconVerified from '../../../assets/images/ico-verified.svg';
+import { ErrorMessages } from '../../../constants/error-messages';
 import { encryptData } from '../../../helpers/functions/common-functions';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import { OtpForm } from '../../../shared/otp-form/otp-component';
@@ -29,7 +30,7 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup 
   const { loginData } = useSelector((state) => state?.loginReducer);
 
   const otpResend = () => {
-    successToast('OTP Resent Successfully', 'otp-resent', 'success', 'top-center');
+    successToast(ErrorMessages.otpResend, 'otp-resent', 'success', 'top-center');
   };
 
   const { otpform, getOtpValidation, otpValue } = OtpForm({
@@ -40,11 +41,10 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup 
   });
 
   const fetchDoctorUserPersonalDetails = () => {
-    dispatch(getPersonalDetailsData(loginData?.data?.profile_id))
-      .then(() => {})
-      .catch((allFailMsg) => {
-        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-      });
+    dispatch(getPersonalDetailsData(loginData?.data?.profile_id)).then(() => {});
+    // .catch((allFailMsg) => {
+    //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    // });
   };
   const onHandleVerify = () => {
     if (getOtpValidation()) {
@@ -117,18 +117,13 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup 
                 }
               });
             } catch (allFailMsg) {
-              successToast(
-                'ERR_INT: ' + allFailMsg?.data?.message,
-                'auth-error',
-                'error',
-                'top-center'
-              );
+              successToast(allFailMsg?.data?.message, 'auth-error', 'error', 'top-center');
             }
           }
         }
       });
     } catch (allFailMsg) {
-      successToast('ERR_INT: ' + allFailMsg?.data?.message, 'auth-error', 'error', 'top-center');
+      successToast(allFailMsg?.data?.message, 'auth-error', 'error', 'top-center');
     }
   };
 

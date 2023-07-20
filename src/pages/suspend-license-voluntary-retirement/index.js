@@ -209,13 +209,13 @@ export function SuspendLicenseVoluntaryRetirement({
               setConfirmationModal(false);
             }
           })
-          .catch((allFailMsg) => {
-            successToast(
-              allFailMsg?.data?.response?.data?.message,
-              'auth-error',
-              'error',
-              'top-center'
-            );
+          .catch(() => {
+            // successToast(
+            //   allFailMsg?.data?.response?.data?.message,
+            //   'auth-error',
+            //   'error',
+            //   'top-center'
+            // );
             if (userActiveTab === 'voluntary-suspend-license') {
               setConfirmationModal(false);
             }

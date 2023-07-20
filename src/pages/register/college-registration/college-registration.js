@@ -19,7 +19,7 @@ import {
   verifyNotificationOtp,
 } from '../../../store/actions/common-actions';
 import { Button } from '../../../ui/core';
-import successToast from '../../../ui/core/toaster';
+// import successToast from '../../../ui/core/toaster';
 
 export function CollegeRegistration() {
   const { statesList, councilNames, universitiesList } = useSelector((state) => state.common);
@@ -55,9 +55,9 @@ export function CollegeRegistration() {
           setVerifyMobile(true);
           handleClose();
         })
-        .catch((error) => {
+        .catch(() => {
           setVerifyMobile(false);
-          successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+          // successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
         });
     } else {
       dispatch(
@@ -72,9 +72,9 @@ export function CollegeRegistration() {
           setVerifyEmail(true);
           handleClose();
         })
-        .catch((error) => {
+        .catch(() => {
           setVerifyEmail(false);
-          successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+          // successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
         });
     }
   };
@@ -87,9 +87,9 @@ export function CollegeRegistration() {
           setTransactionID(response?.data?.transaction_id);
           handleClickOpen();
         })
-        .catch((error) => {
+        .catch(() => {
           handleClose();
-          successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+          // successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
         });
     } else if (type === 'email' && otpEmailVerify) {
       setHeaderText(`Email Id ${getValues().email}`);
@@ -98,9 +98,9 @@ export function CollegeRegistration() {
           setTransactionID(response?.data?.transaction_id);
           handleClickOpen();
         })
-        .catch((error) => {
+        .catch(() => {
           handleClose();
-          successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+          // successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
         });
     }
   };
@@ -126,9 +126,9 @@ export function CollegeRegistration() {
             setTransactionID(response?.data?.transaction_id);
             handleClickOpen();
           })
-          .catch((error) => {
+          .catch(() => {
             handleClose();
-            successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+            // successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
           });
       }
     } else if (type === 'email' && otpEmailVerify && getValues().email.length > 8) {
@@ -138,9 +138,9 @@ export function CollegeRegistration() {
           setTransactionID(response?.data?.transaction_id);
           handleClickOpen();
         })
-        .catch((error) => {
+        .catch(() => {
           handleClose();
-          successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+          // successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
         });
     }
   };
@@ -197,21 +197,20 @@ export function CollegeRegistration() {
       state_id: getValues().StateId,
     };
 
-    dispatch(registerCollegeDetails(collegeDetailValues))
-      .then(() => {
-        if (registrationSuccess) {
-          setSuccessModalPopup(true);
-        }
-        reset();
-      })
-      .catch((error) => {
-        successToast(
-          error?.data?.response?.data?.error,
-          'RegistrationError',
-          'error',
-          'top-center'
-        );
-      });
+    dispatch(registerCollegeDetails(collegeDetailValues)).then(() => {
+      if (registrationSuccess) {
+        setSuccessModalPopup(true);
+      }
+      reset();
+    });
+    // .catch((error) => {
+    //   successToast(
+    //     error?.data?.response?.data?.error,
+    //     'RegistrationError',
+    //     'error',
+    //     'top-center'
+    //   );
+    // });
   };
   return (
     <Container sx={{ mt: 5 }}>

@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 
 import { searchDoctorDetails } from '../../../store/actions/doctor-search-actions';
 import { Button, TextField } from '../../../ui/core';
-import successToast from '../../../ui/core/toaster';
+// import successToast from '../../../ui/core/toaster';
 
 const Name = ({ setDoSearch, setSearchData, setScrollDown }) => {
   const dispatch = useDispatch();
@@ -33,16 +33,15 @@ const Name = ({ setDoSearch, setSearchData, setScrollDown }) => {
       behavior: 'smooth',
     });
 
-    dispatch(searchDoctorDetails(searchValues))
-      .then(() => {})
-      .catch((error) => {
-        successToast(
-          error?.data?.response?.data?.error,
-          'RegistrationError',
-          'error',
-          'top-center'
-        );
-      });
+    dispatch(searchDoctorDetails(searchValues)).then(() => {});
+    // .catch((error) => {
+    //   successToast(
+    //     error?.data?.response?.data?.error,
+    //     'RegistrationError',
+    //     'error',
+    //     'top-center'
+    //   );
+    // });
 
     setSearchData(searchValues);
     setScrollDown(true);

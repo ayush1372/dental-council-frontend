@@ -10,7 +10,7 @@ import { SearchableDropdown } from '../../shared/autocomplete/searchable-dropdow
 import TrackStatusTable from '../../shared/track-status/track-status-table';
 import { trackStatus } from '../../store/actions/common-actions';
 import { Button } from '../../ui/core';
-import successToast from '../../ui/core/toaster';
+// import successToast from '../../ui/core/toaster';
 import ExportFiles from '../export-component/export-file';
 export default function TrackStatus() {
   const [showTable, setShowTable] = useState(false);
@@ -50,16 +50,15 @@ export default function TrackStatus() {
       pageNo: 1,
       offset: 10,
     };
-    dispatch(trackStatus(trackData))
-      .then(() => {})
-      .catch((error) => {
-        successToast(
-          error?.data?.response?.data?.error,
-          'RegistrationError',
-          'error',
-          'top-center'
-        );
-      });
+    dispatch(trackStatus(trackData)).then(() => {});
+    // .catch((error) => {
+    //   successToast(
+    //     error?.data?.response?.data?.error,
+    //     'RegistrationError',
+    //     'error',
+    //     'top-center'
+    //   );
+    // });
 
     setShowTable(true);
     setTrackValues(trackData);
