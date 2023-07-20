@@ -905,7 +905,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                   variant="outlined"
                   name={'House'}
                   fullWidth
-                  placeholder="House Address"
+                  placeholder="House"
                   disabled={
                     isSameAddress
                       ? isSameAddress
@@ -932,7 +932,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                     isSameAddress
                       ? ''
                       : getValues()?.House?.length <= 0 && {
-                          required: 'House is Required',
+                          required: 'Please enter house',
                           maxLength: {
                             value: 300,
                             message: 'Length should be less than 300.',

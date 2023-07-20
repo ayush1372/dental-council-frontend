@@ -445,7 +445,7 @@ const CollegeEditProfile = (props) => {
               defaultValue={getCollegeDetail?.data?.email_id}
               error={errors.Email?.message}
               {...register('Email', {
-                required: 'Please enter email',
+                required: 'Please enter an email ID',
                 pattern: {
                   value:
                     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
