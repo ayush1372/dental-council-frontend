@@ -85,7 +85,7 @@ const EditQualificationDetails = ({
   const selectedYear = watch(`qualification[${index}].year`);
 
   const fetchColleges = (selectedState) => {
-    if (selectedState && qualificationfrom !== 'International') {
+    if (selectedState && selectedState !== '' && qualificationfrom !== 'International') {
       dispatch(getCollegesList(selectedState)).then((dataResponse) => {
         setColleges(dataResponse.data);
       });
@@ -93,7 +93,7 @@ const EditQualificationDetails = ({
   };
 
   const fetchUniversities = (selectedUniversity) => {
-    if (selectedUniversity && qualificationfrom !== 'International') {
+    if (selectedUniversity && selectedUniversity !== '' && qualificationfrom !== 'International') {
       dispatch(getUniversitiesList(selectedUniversity)).then((dataResponse) => {
         setUniversitiesListData(dataResponse?.data);
       });

@@ -1,4 +1,4 @@
-import { Grid, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
@@ -45,7 +45,7 @@ const RegistrationNumber = ({ setDoSearch, setSearchData, setScrollDown }) => {
   };
   return (
     <Grid container spacing={2} mt={2}>
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         <Typography
           bgcolor="grey1.light"
           p={1}
@@ -55,7 +55,7 @@ const RegistrationNumber = ({ setDoSearch, setSearchData, setScrollDown }) => {
         >
           Browse by registration number*
         </Typography>
-      </Grid>
+      </Grid> */}
       <Grid item xs={8}>
         <TextField
           sx={{
@@ -64,7 +64,7 @@ const RegistrationNumber = ({ setDoSearch, setSearchData, setScrollDown }) => {
           variant="outlined"
           name={'RegistrationNumber'}
           placeholder="Enter registration number"
-          label={'Registration number'}
+          label={'Registration Number'}
           fullWidth
           defaultValue={getValues().RegistrationNumber}
           {...register('RegistrationNumber', {
