@@ -536,7 +536,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
             sx={{ cursor: 'pointer' }}
             onClick={() => navigate('/register/doctor-registration')}
           >
-            Register Here
+            Register here
           </Link>
         </Typography>
       </Box>
