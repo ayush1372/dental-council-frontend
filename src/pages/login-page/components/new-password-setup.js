@@ -5,14 +5,13 @@ import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 
 import { encryptData, usersType } from '../../../helpers/functions/common-functions';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import { createHealthProfessional } from '../../../store/actions/doctor-registration-actions';
 import { forgotPassword, setPassword } from '../../../store/actions/forgot-password-actions';
 import { Button, TextField } from '../../../ui/core';
-import successToast from '../../../ui/core/toaster';
+// import successToast from '../../../ui/core/toaster';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }) => {
@@ -85,16 +84,15 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }
         transaction_id: sendNotificationOtpData?.data?.transaction_id,
         user_type: userTypeId,
       };
-      dispatch(forgotPassword(reSetPasswordBody))
-        .then((response) => {
-          if (response?.data?.message === 'Success') {
-            setShowSuccessPopUp(true);
-            resetStep(0);
-          }
-        })
-        .catch((error) => {
-          successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
-        });
+      dispatch(forgotPassword(reSetPasswordBody)).then((response) => {
+        if (response?.data?.message === 'Success') {
+          setShowSuccessPopUp(true);
+          resetStep(0);
+        }
+      });
+      // .catch((error) => {
+      //   successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
+      // });
 
       return;
     } else {
@@ -104,14 +102,13 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }
           password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
         };
 
-        dispatch(setPassword(newPasswordData))
-          .then(() => {
-            setCollegeRegisterSuccess(true);
-            setShowSuccess(true);
-          })
-          .catch((error) => {
-            successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-          });
+        dispatch(setPassword(newPasswordData)).then(() => {
+          setCollegeRegisterSuccess(true);
+          setShowSuccess(true);
+        });
+        // .catch((error) => {
+        //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+        // });
         return;
       }
       let councilID = getCouncilID(councilName);
@@ -145,18 +142,17 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }
         new: isNewFlag,
       };
 
-      dispatch(createHealthProfessional(reqObj))
-        .then(() => {
-          setShowSuccess(true);
-        })
-        .catch((error) => {
-          successToast(
-            'ERROR: ' + error?.data?.response?.data?.message,
-            'auth-error',
-            'error',
-            'top-center'
-          );
-        });
+      dispatch(createHealthProfessional(reqObj)).then(() => {
+        setShowSuccess(true);
+      });
+      // .catch((error) => {
+      //   successToast(
+      //     'ERROR: ' + error?.data?.response?.data?.message,
+      //     'auth-error',
+      //     'error',
+      //     'top-center'
+      //   );
+      // });
     }
   };
 
@@ -164,112 +160,108 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }
     navigate('/');
   };
   return (
-    <>
-      {' '}
-      <ToastContainer></ToastContainer>
-      <Box
-        data-testid="new-password-setup"
-        p={3}
-        bgcolor="white.main"
-        boxShadow="4"
-        width={otpData?.page === 'forgotPasswordPage' ? '100%' : '40%'}
-      >
-        <Typography variant="h4" component="div" textAlign="center" data-testid="Password">
-          {uniqueHpId ? `Welcome, ${uniqueHpId}` : 'Welcome !'}
-        </Typography>
-        {/* <Typography variant="body1" component="div" textAlign="center" data-testid="Password">
+    <Box
+      data-testid="new-password-setup"
+      p={3}
+      bgcolor="white.main"
+      boxShadow="4"
+      width={otpData?.page === 'forgotPasswordPage' ? '100%' : '40%'}
+    >
+      <Typography variant="h4" component="div" textAlign="center" data-testid="Password">
+        {uniqueHpId ? `Welcome, ${uniqueHpId}` : 'Welcome !'}
+      </Typography>
+      {/* <Typography variant="body1" component="div" textAlign="center" data-testid="Password">
           {`Please set your password `}
         </Typography> */}
 
-        <Box>
-          <Box mt={1}>
-            <Typography variant="body1">
-              Set Password
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
+      <Box>
+        <Box mt={1}>
+          <Typography variant="body1">
+            Set Password
+            <Typography component="span" color="error.main">
+              *
             </Typography>
-            <TextField
-              inputProps={{ maxLength: 100 }}
-              fullWidth
-              id="outlined-basic"
-              variant="outlined"
-              type="Password"
-              name="password"
-              required="true"
-              placeholder={t('Enter new password')}
-              margin="dense"
-              defaultValue={getValues().password}
-              error={errors.password?.message}
-              {...register('password', PasswordRegexValidation, {
-                required: 'Please enter password',
-              })}
-              newPassword={true}
-            />
-          </Box>
-          <Box mt={3}>
-            <Typography variant="body1" data-testid="confirmPassword">
-              Confirm Password
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
-            </Typography>
-            <TextField
-              inputProps={{ maxLength: 100 }}
-              fullWidth
-              id="outlined-basic"
-              variant="outlined"
-              type="Password"
-              name="confirmPassword"
-              required="true"
-              placeholder={t('Enter password')}
-              margin="dense"
-              defaultValue={getValues().confirmPassword}
-              error={errors.confirmPassword?.message}
-              {...register('confirmPassword', {
-                required: 'Please enter password',
-                validate: (val) => {
-                  if (watch('password') !== val) {
-                    return 'Password does not match';
-                  }
-                },
-              })}
-            />
-          </Box>
-
-          <Box align="end" mt={3}>
-            <Button
-              onClick={onCancel}
-              variant="contained"
-              color="grey"
-              sx={{
-                mr: 2,
-              }}
-            >
-              Cancel
-            </Button>
-            <Button variant="contained" color="secondary" onClick={handleSubmit(onSubmit)}>
-              {t('Submit')}
-            </Button>
-          </Box>
-        </Box>
-        {showSuccess && (
-          <SuccessModalPopup
-            open={showSuccess}
-            setOpen={() => setShowSuccess(false)}
-            text={
-              collegeRegisterSuccess
-                ? 'Password has been set'
-                : uniqueHpId === undefined
-                ? 'Password has been set'
-                : `Password has been set for "${uniqueHpId}"`
-            }
-            successRegistration={true}
-            loginName={loginName}
+          </Typography>
+          <TextField
+            inputProps={{ maxLength: 100 }}
+            fullWidth
+            id="outlined-basic"
+            variant="outlined"
+            type="Password"
+            name="password"
+            required="true"
+            placeholder={t('Enter new password')}
+            margin="dense"
+            defaultValue={getValues().password}
+            error={errors.password?.message}
+            {...register('password', PasswordRegexValidation, {
+              required: 'Please enter password',
+            })}
+            newPassword={true}
           />
-        )}
+        </Box>
+        <Box mt={3}>
+          <Typography variant="body1" data-testid="confirmPassword">
+            Confirm Password
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
+          </Typography>
+          <TextField
+            inputProps={{ maxLength: 100 }}
+            fullWidth
+            id="outlined-basic"
+            variant="outlined"
+            type="Password"
+            name="confirmPassword"
+            required="true"
+            placeholder={t('Enter password')}
+            margin="dense"
+            defaultValue={getValues().confirmPassword}
+            error={errors.confirmPassword?.message}
+            {...register('confirmPassword', {
+              required: 'Please enter password',
+              validate: (val) => {
+                if (watch('password') !== val) {
+                  return 'Password does not match';
+                }
+              },
+            })}
+          />
+        </Box>
+
+        <Box align="end" mt={3}>
+          <Button
+            onClick={onCancel}
+            variant="contained"
+            color="grey"
+            sx={{
+              mr: 2,
+            }}
+          >
+            Cancel
+          </Button>
+          <Button variant="contained" color="secondary" onClick={handleSubmit(onSubmit)}>
+            {t('Submit')}
+          </Button>
+        </Box>
       </Box>
-    </>
+      {showSuccess && (
+        <SuccessModalPopup
+          open={showSuccess}
+          setOpen={() => setShowSuccess(false)}
+          text={
+            collegeRegisterSuccess
+              ? 'Password has been set'
+              : uniqueHpId === undefined
+              ? 'Password has been set'
+              : `Password has been set for "${uniqueHpId}"`
+          }
+          successRegistration={true}
+          loginName={loginName}
+        />
+      )}
+    </Box>
   );
 };
 export default NewPasswordSetup;

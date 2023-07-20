@@ -4,7 +4,6 @@ import { Box, Button, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { ToastContainer } from 'react-toastify';
 
 import { createSelectFieldData, scrollToTop } from '../../../../helpers/functions/common-functions';
 import {
@@ -21,7 +20,7 @@ import {
 import { getPersonalDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
 import { Checkbox } from '../../../../ui/core';
 import { DatePicker, RadioGroup, Select, TextField } from '../../../../ui/core';
-import successToast from '../../../../ui/core/toaster';
+// import successToast from '../../../../ui/core/toaster';
 import { EmailRegexValidation } from '../../../../utilities/common-validations';
 
 const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValidDetails }) => {
@@ -231,33 +230,31 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
 
   const fetchDistricts = (stateId) => {
     if (stateId) {
-      dispatch(getDistrictList(stateId))
-        .then((response) => {
-          setDistrictListData(response?.data);
-        })
-        .catch((allFailMsg) => {
-          successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-        });
+      dispatch(getDistrictList(stateId)).then((response) => {
+        setDistrictListData(response?.data);
+      });
+      // .catch((allFailMsg) => {
+      //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      // });
     }
   };
   const fetchSubDistricts = (districtId) => {
     if (districtId) {
-      dispatch(getSubDistrictsList(districtId))
-        .then((response) => {
-          setSubDistrictListData(response?.data);
-        })
-        .catch((allFailMsg) => {
-          successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-        });
+      dispatch(getSubDistrictsList(districtId)).then((response) => {
+        setSubDistrictListData(response?.data);
+      });
+      // .catch((allFailMsg) => {
+      //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      // });
     }
   };
 
   const fetchCities = (subDistrictId) => {
-    try {
-      dispatch(getCitiesList(subDistrictId)).then(() => {});
-    } catch (allFailMsg) {
-      successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-    }
+    // try {
+    dispatch(getCitiesList(subDistrictId)).then(() => {});
+    // } catch (allFailMsg) {
+    //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    // }
   };
 
   const selectedState = watch('State');
@@ -329,23 +326,23 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
   // }, [getValues().PostalCode]);
 
   const fetchUpdatedDoctorUserProfileData = (personalDetails) => {
-    dispatch(updateDoctorPersonalDetails(personalDetails, personalDetails?.hp_profile_id))
-      .then(() => {
-        dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id))
-          .then(() => {
-            handleNext();
-            window.scrollTo({
-              top: 0,
-              behavior: 'smooth',
-            });
-          })
-          .catch((allFailMsg) => {
-            successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    dispatch(updateDoctorPersonalDetails(personalDetails, personalDetails?.hp_profile_id)).then(
+      () => {
+        dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id)).then(() => {
+          handleNext();
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
           });
-      })
-      .catch((allFailMsg) => {
-        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-      });
+        });
+        // .catch((allFailMsg) => {
+        //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+        // });
+      }
+    );
+    // .catch((allFailMsg) => {
+    //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    // });
   };
 
   const handleBackButton = () => {
@@ -493,13 +490,12 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
     return doctorProfileValues;
   }
   async function onHandleOptionNext() {
-    await onHandleSave()
-      .then((response) => {
-        response && fetchUpdatedDoctorUserProfileData(response);
-      })
-      .catch((allFailMsg) => {
-        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-      });
+    await onHandleSave().then((response) => {
+      response && fetchUpdatedDoctorUserProfileData(response);
+    });
+    // .catch((allFailMsg) => {
+    //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    // });
   }
 
   const handleGender = (event) => {
@@ -514,7 +510,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
         },
       }}
     >
-      <ToastContainer></ToastContainer>
       <Grid container spacing={2}>
         {/* layer 1 */}
         <Grid container item>
@@ -595,7 +590,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
               {...register('FatherName', {
                 pattern: {
                   value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
-                  message: 'Please enter name',
+                  message: 'Please enter father name',
                 },
                 maxLength: {
                   value: 100,
@@ -631,7 +626,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
               {...register('MotherName', {
                 pattern: {
                   value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
-                  message: 'Please enter name',
+                  message: 'Please enter mother name',
                 },
                 maxLength: {
                   value: 100,
@@ -670,7 +665,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 pattern: {
                   value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
 
-                  message: 'Please enter name',
+                  message: 'Please enter spouse name',
                 },
                 maxLength: {
                   value: 100,
@@ -1157,7 +1152,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                   fullWidth
                   value={getStateData(getValues()?.State)?.name}
                   {...register('State', {
-                    required: 'State is required',
+                    required: 'Please select state',
                   })}
                 />
               ) : (

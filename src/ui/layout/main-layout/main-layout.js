@@ -49,9 +49,8 @@ export const MainLayout = () => {
       <div style={{ fontSize: ZoomSize() }}>
         <main>
           <Header />
-
-          <ToastContainer />
           <section className={styles.main}>
+            <ToastContainer />
             <Outlet />
           </section>
         </main>

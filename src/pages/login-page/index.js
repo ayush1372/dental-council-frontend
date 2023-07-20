@@ -9,7 +9,7 @@ import { useLocation } from 'react-router-dom';
 import useWizard from '../../hooks/use-wizard';
 import { generateCaptchaImage, getCaptchaEnabledFlagValue } from '../../store/actions/login-action';
 import { Button } from '../../ui/core';
-import successToast from '../../ui/core/toaster';
+// import successToast from '../../ui/core/toaster';
 import ConfirmOTP from './components/confirm-otp';
 // import { DoctorLogin } from './components/doctor-login';
 import ForgotPassword from './components/forgot-password';
@@ -47,22 +47,22 @@ const LoginWrapper = () => {
 
   useEffect(() => {
     reset();
-    dispatch(getCaptchaEnabledFlagValue())
-      .then((response) => {
-        if (response?.data) {
-          dispatch(generateCaptchaImage()).catch((error) => {
-            successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-          });
-        }
-      })
-      .catch((error) => {
-        successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-      });
+    dispatch(getCaptchaEnabledFlagValue()).then((response) => {
+      if (response?.data) {
+        dispatch(generateCaptchaImage());
+        // .catch((error) => {
+        //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+        // });
+      }
+    });
+    // .catch((error) => {
+    //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+    // });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loginFormNames[loginFormname]]);
   useEffect(() => {
     resetStep();
-  }, [location.state?.loginFormname]);
+  }, [location.state.loginFormname, resetStep]);
 
   return (
     <Box sx={{ mt: 5, mb: 5, maxWidth: '648px', margin: '40px auto' }}>

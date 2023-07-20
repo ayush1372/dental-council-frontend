@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core';
 import { Box, Typography, useTheme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import OtpInput from 'react-otp-input';
-import { ToastContainer } from 'react-toastify';
 
 import { SessionTimer } from '../../constants/session-timer';
 import { Button } from '../../ui/core';
@@ -84,7 +83,6 @@ export const OtpForm = ({
 
   const OtpBox = (
     <Box pt={2}>
-      <ToastContainer></ToastContainer>
       <Box>
         <Box>
           <OtpInput

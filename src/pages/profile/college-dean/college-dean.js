@@ -12,7 +12,7 @@ import {
   updateCollegeRegistrarData,
 } from '../../../store/actions/college-actions';
 import { Button, TextField } from '../../../ui/core';
-import successToast from '../../../ui/core/toaster';
+// import successToast from '../../..//ui/core/toaster';
 // import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 export function CollegeDean({ showPage, updateShowPage }) {
@@ -53,16 +53,17 @@ export function CollegeDean({ showPage, updateShowPage }) {
     };
 
     if (showPage === 'edit') {
-      dispatch(updateCollegeRegistrarData(deanData, userData?.college_id, userData?.id))
-        .then((response) => {
+      dispatch(updateCollegeRegistrarData(deanData, userData?.college_id, userData?.id)).then(
+        (response) => {
           dispatch(collegeProfileData(userData?.college_id, userData?.id));
           if (response?.isError === false) {
             setSuccessModalPopup(true);
           }
-        })
-        .catch((error) => {
-          successToast(error?.data?.response?.data?.message, 'UpdateError', 'error', 'top-center');
-        });
+        }
+      );
+      // .catch((error) => {
+      //   successToast(error?.data?.response?.data?.message, 'UpdateError', 'error', 'top-center');
+      // });
     } else {
       dispatch(sendDeanDetails(deanData));
     }
