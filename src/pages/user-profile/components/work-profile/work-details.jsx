@@ -70,7 +70,7 @@ const WorkDetails = ({
           url: getValues().telecommunicationURL,
           address: {
             id: null,
-            country: getCountryData(getValues().Country),
+            country: getCountryData(356),
             state: getStateData(getValues().state),
             district: getDistrictData(getValues().District),
             village: getVillageData(getValues().Area),
@@ -850,7 +850,8 @@ const WorkDetails = ({
                 error={errors.Country?.message}
                 name="Country"
                 label="Country"
-                defaultValue={getValues().Country}
+                defaultValue={356}
+                disabled={true}
                 required={true}
                 {...register('Country', {
                   required: 'Country is required',
