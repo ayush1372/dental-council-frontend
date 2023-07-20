@@ -93,7 +93,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
 
         if (response) {
           setTransaction_id(response?.data?.transaction_id);
-          setMaskedMobileNumber(response?.data?.sent_on.replace(/^.{6}/g, 'XXXXXX'));
+          setMaskedMobileNumber(response?.data?.sent_on.replace(/^.{6}/g, '******'));
           setOtpSend(true);
         }
       })
@@ -110,7 +110,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
   const handleResponse = (response) => {
     setOtpFormEnable(true);
     setTransaction_id(response?.data?.transaction_id);
-    setMaskedMobileNumber(response?.data?.sent_on.replace(/^.{6}/g, 'XXXXXX'));
+    setMaskedMobileNumber(response?.data?.sent_on.replace(/^.{6}/g, '******'));
     setOtpSend(true);
   };
   const handleLogin = () => {
@@ -354,7 +354,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
           </Button>
         </Grid>
       </Grid>
-      <Box my={1}>
+      <Box mt={2} mb={1}>
         {selectedLoginOption === 'nmrId' ? (
           <>
             <TextField
@@ -393,8 +393,12 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
                       }}
                       color={'white.main'}
                       onClick={() => {
-                        getValues()?.nmrID?.length === 12 &&
-                          sendNotificationOTPHandler(!otpFormEnabled, 'NMR');
+                        if (!otpFormEnabled) {
+                          getValues()?.nmrID?.length === 12 &&
+                            sendNotificationOTPHandler(!otpFormEnabled, 'NMR');
+                        } else {
+                          setOtpFormEnable(false);
+                        }
                       }}
                     >
                       {otpFormEnabled ? 'Re-Enter' : 'Verify'}
@@ -404,9 +408,9 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
               }}
             />
             {otpFormEnabled && (
-              <Box mt={2}>
+              <Box mt={1}>
                 <Typography variant="body1">
-                  OTP sent to registered mobile number ending with{maskedMobileNumber}
+                  OTP sent to registered mobile number ending with {maskedMobileNumber}
                 </Typography>
                 {otpform}
               </Box>

@@ -397,7 +397,7 @@ const CollegeEditProfile = (props) => {
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography variant="body1" color="inputTextColor.main">
-              Pin Code
+              Pincode
               <Typography component="span" color="error.main">
                 *
               </Typography>
