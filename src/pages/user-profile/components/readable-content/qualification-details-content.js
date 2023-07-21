@@ -293,10 +293,10 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
             </Grid>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="grey.label">
-                Month & Year of Awarding Degree
+                Month & Year of Degree Awarded
               </Typography>
-              {getQueryRaised('Month & Year of Awarding Degree') !== undefined && (
-                <Tooltip title={getQueryRaised('Month & Year of Awarding Degree')}>
+              {getQueryRaised('Month & Year of Degreee Awarded') !== undefined && (
+                <Tooltip title={getQueryRaised('Month & Year of Degree Awarded')}>
                   <ReportIcon color="secondary" ml={2} />
                 </Tooltip>
               )}
@@ -317,7 +317,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       color="primary"
                       onClick={() => {
                         setOpenModal(true);
-                        setQueryRaisedField('Month & Year of Awarding Degree');
+                        setQueryRaisedField('Month & Year of Degree Awarded');
                       }}
                       fontSize="width24"
                     />

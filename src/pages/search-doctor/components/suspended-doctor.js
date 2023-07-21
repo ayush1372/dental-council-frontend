@@ -7,7 +7,7 @@ import { yearsData } from '../../../constants/common-data';
 import { createSelectFieldData } from '../../../helpers/functions/common-functions';
 import { searchDoctorDetails } from '../../../store/actions/doctor-search-actions';
 import { Button, Select, TextField } from '../../../ui/core';
-import successToast from '../../../ui/core/toaster';
+// import successToast from '../../../ui/core/toaster';
 
 const SuspendedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
   const { councilNames } = useSelector((state) => state.common);
@@ -42,16 +42,15 @@ const SuspendedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
     setDoSearch(true);
     setSearchData(searchValues);
     setScrollDown(true);
-    dispatch(searchDoctorDetails(searchValues))
-      .then(() => {})
-      .catch((error) => {
-        successToast(
-          error?.data?.response?.data?.error,
-          'RegistrationError',
-          'error',
-          'top-center'
-        );
-      });
+    dispatch(searchDoctorDetails(searchValues)).then(() => {});
+    // .catch((error) => {
+    //   successToast(
+    //     error?.data?.response?.data?.error,
+    //     'RegistrationError',
+    //     'error',
+    //     'top-center'
+    //   );
+    // });
   };
   return (
     <Grid container spacing={2} mt={2}>

@@ -10,7 +10,6 @@ import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSpeechSynthesis } from 'react-speech-kit';
-import { ToastContainer } from 'react-toastify';
 
 import { consentDescription } from '../../../constants/common-data';
 import { validateAadharNumber } from '../../../constants/common-data';
@@ -38,7 +37,7 @@ import {
 } from '../../../store/reducers/doctor-registration-reducer';
 import { Button, Checkbox, TextField } from '../../../ui/core';
 import AadhaarInputField from '../../../ui/core/aadhaar-input-field/aadhaar-input-field';
-import successToast from '../../../ui/core/toaster';
+// import successToast from '../../../ui/core/toaster';
 import CreateHprId from './unique-username';
 
 function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onReset }) {
@@ -200,15 +199,14 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
         mobile: getValues().MobileNumber,
         txnId: aadhaarTxnId,
       };
-      dispatch(generateMobileOtp(data))
-        .then(() => {
-          setShowOtpMobile(true);
-          setEditButton(true);
-          setisOtpValidMobile(true);
-        })
-        .catch((error) => {
-          successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-        });
+      dispatch(generateMobileOtp(data)).then(() => {
+        setShowOtpMobile(true);
+        setEditButton(true);
+        setisOtpValidMobile(true);
+      });
+      // .catch((error) => {
+      //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+      // });
     });
   };
 
@@ -314,7 +312,6 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
   };
   return (
     <>
-      <ToastContainer></ToastContainer>
       {kycError && (
         <KycErrorPopup
           open={kycError}
@@ -381,25 +378,28 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
               <Divider sx={{ marginBottom: '25px' }} variant="fullWidth" />
               <Box
                 display="flex"
-                justifyContent="space-between"
+                //justifyContent="space-between"
+                alignItems={'center'}
                 flexDirection={{ xs: 'column', sm: 'row' }}
               >
-                <Box>
-                  <AadhaarInputField
-                    defaultValue={getValues().AadhaarNumber}
-                    name="AadhaarNumber"
-                    {...register('AadhaarNumber', {})}
-                    register={register}
-                    getValues={getValues}
-                    required={true}
-                    errors={errors}
-                    setValue={setValue}
-                    disabled={showOtpAadhar || isOtpValidAadhar}
-                  />
-                </Box>
-                <Box p="35px 32px 0px 32px">
+                <AadhaarInputField
+                  defaultValue={getValues().AadhaarNumber}
+                  name="AadhaarNumber"
+                  {...register('AadhaarNumber', {})}
+                  register={register}
+                  getValues={getValues}
+                  required={true}
+                  errors={errors}
+                  setValue={setValue}
+                  disabled={showOtpAadhar || isOtpValidAadhar}
+                />
+                <Box display={'flex'} justifyContent="center" ml={3} mt={2}>
                   {isOtpValidAadhar ? <CheckCircleIcon color="success" /> : ''}
                 </Box>
+
+                {/* <Box p="35px 32px 0px 32px">
+                  {isOtpValidAadhar ? <CheckCircleIcon color="success" /> : ''}
+                </Box> */}
               </Box>
               <Grid
                 container
@@ -424,7 +424,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                 <Grid Container xs={12} display="flex" sx={{ alignItems: 'center' }}>
                   <Grid item xs={11} display="flex">
                     <Checkbox
-                      label="I Agree"
+                      label="I agree"
                       sx={{ width: '18px', height: '18px', marginRight: 1, marginLeft: 2 }}
                       name="consent"
                       defaultChecked={getValues()?.consent}
@@ -589,8 +589,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                 </Box>
                 <Box mt={1} sx={{ alignItems: 'center', display: 'flex' }}>
                   <InfoOutlinedIcon
-                    color="messageBlue.main"
-                    sx={{ fontSize: '20px', padding: '2px' }}
+                    sx={{ fontSize: '20px', padding: '2px', color: 'messageBlue.main' }}
                   />
                   <Typography variant="body4" color="messageBlue.main">
                     This mobile number will be used for all the communications related to Council
@@ -629,7 +628,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                 <Button
                   variant="contained"
                   color="secondary"
-                  sx={{ marginRight: '10px', width: '105px', height: '48px' }}
+                  sx={{ marginRight: '16px' }}
                   onClick={handleSubmit(onSubmit)}
                   disabled={!isOtpValidMobile || editBUtton}
                 >
@@ -637,13 +636,10 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                 </Button>
                 <Button
                   onClick={onCancel}
-                  variant="outlined"
                   sx={{
                     backgroundColor: 'grey.main',
                     color: 'black.textBlack',
                     border: 'none',
-                    width: '105px',
-                    height: '48px',
                   }}
                 >
                   Cancel

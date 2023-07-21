@@ -156,6 +156,7 @@ export const userGroupTypeId = (userGroupID) => {
     5: 'College',
     6: 'College',
     7: 'NBE',
+    8: 'System',
   };
   return userGroupTypeObj[userGroupID];
 };
@@ -184,12 +185,12 @@ export const userActionId = (actionType) => {
 };
 export const trackApplicationLabel = (userGroupID) => {
   const userGroupTypeObj = {
-    Submitted: 'Completed',
-    Forwarded: 'Completed',
-    'Query Raised': 'Query Raised',
-    Approve: 'Completed',
-    Rejected: 'Rejected',
-    'Temporary suspension': 'Completed',
+    Submitted: 'COMPLETED',
+    Forwarded: 'COMPLETED',
+    'Query Raised': 'QUERY RAISED',
+    Approve: 'COMPLETED',
+    Rejected: 'REJECTED',
+    'Temporary suspension': 'COMPLETED',
   };
   return userGroupTypeObj[userGroupID];
 };

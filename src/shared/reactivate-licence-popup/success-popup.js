@@ -63,7 +63,7 @@ export default function SuccessPopup({ fetchDoctorUserPersonalDetails, reactivat
             justifyContent="center"
             mt={2}
           >
-            SUCCESS!
+            SUCCESS
           </Typography>
           <Typography
             display="flex"
@@ -74,7 +74,7 @@ export default function SuccessPopup({ fetchDoctorUserPersonalDetails, reactivat
             data-testid="popup-input-text"
           >
             {logInDoctorStatus
-              ? `Your profile has been successfully re-activated. You can able to perform action on your profile now.`
+              ? `Your profile has been re-activated. You can perform action on your profile now.`
               : `Your username has been successfully created. A link to create your password has been sent to the registered mobile number.`}
           </Typography>
           <Button

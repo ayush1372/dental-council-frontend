@@ -12,8 +12,8 @@ import {
   IconButton,
 } from '@mui/material';
 import PropTypes from 'prop-types';
-import { ToastContainer } from 'react-toastify';
 
+import { ErrorMessages } from '../../constants/error-messages';
 import { Button } from '../../ui/core';
 import successToast from '../../ui/core/toaster';
 import OtpForm from '../otp-form/otp-component';
@@ -57,7 +57,7 @@ export function ModalOTP({
   const [otpMobileVerify, setOtpMobileVerify] = useState(true);
 
   const otpResend = () => {
-    successToast('OTP Resent Successfully', 'otp-resent', 'success', 'top-center');
+    successToast(ErrorMessages.otpResend, 'otp-resent', 'success', 'top-center');
     reSentOtp();
   };
   const { otpform, otpValue, getOtpValidation, handleClear } = OtpForm({
@@ -82,8 +82,6 @@ export function ModalOTP({
   return {
     otpPopup: (
       <Box>
-        <ToastContainer></ToastContainer>
-
         <Dialog
           open={open}
           onClose={handleClose}

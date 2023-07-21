@@ -10,7 +10,7 @@ import { SearchableDropdown } from '../../shared/autocomplete/searchable-dropdow
 import TrackStatusTable from '../../shared/track-status/track-status-table';
 import { trackStatus } from '../../store/actions/common-actions';
 import { Button } from '../../ui/core';
-import successToast from '../../ui/core/toaster';
+// import successToast from '../../ui/core/toaster';
 import ExportFiles from '../export-component/export-file';
 export default function TrackStatus() {
   const [showTable, setShowTable] = useState(false);
@@ -50,16 +50,15 @@ export default function TrackStatus() {
       pageNo: 1,
       offset: 10,
     };
-    dispatch(trackStatus(trackData))
-      .then(() => {})
-      .catch((error) => {
-        successToast(
-          error?.data?.response?.data?.error,
-          'RegistrationError',
-          'error',
-          'top-center'
-        );
-      });
+    dispatch(trackStatus(trackData)).then(() => {});
+    // .catch((error) => {
+    //   successToast(
+    //     error?.data?.response?.data?.error,
+    //     'RegistrationError',
+    //     'error',
+    //     'top-center'
+    //   );
+    // });
 
     setShowTable(true);
     setTrackValues(trackData);
@@ -89,8 +88,8 @@ export default function TrackStatus() {
                     items={createEditFieldData(councilNames)}
                     placeholder={
                       loggedInUserType !== 'SMC'
-                        ? 'Select Council Name'
-                        : 'Maharashtra Medical Council'
+                        ? 'Select council name'
+                        : 'Maharashtra medical council'
                     }
                     clearErrors={clearErrors}
                     error={loggedInUserType !== 'SMC' && errors.RegistrationCouncil?.message}
@@ -117,11 +116,14 @@ export default function TrackStatus() {
                   fullWidth
                   name="trackStatus"
                   items={createEditFieldData(TrackStatusFieldList)}
-                  placeholder="Please Select"
+                  placeholder="Please select"
                   clearErrors={clearErrors}
                   {...register('trackStatus')}
                   onChange={(currentValue) => {
                     setTrackStatusId(currentValue?.id);
+                    if (currentValue === null) {
+                      setValue('trackStatusFilter', null);
+                    }
                   }}
                 />
               </Box>

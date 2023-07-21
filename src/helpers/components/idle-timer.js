@@ -69,7 +69,11 @@ export function IdleTimer() {
       handleNoText={'Stay'}
       handleYes={handleLogout}
       handleYesText={'Logout'}
-      text={{ heading: 'You Have Been Idle!', message: 'You will get timed out.' }}
+      text={{
+        heading: 'Session Idle',
+        message:
+          'The session has exceeded the time limit of inactivity. Please click "Stay" to resume the session.',
+      }}
     />
   );
 }

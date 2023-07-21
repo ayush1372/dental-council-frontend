@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
@@ -16,7 +15,6 @@ import {
 import { getRegistrationDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
 import { Button, DatePicker, RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
-import successToast from '../../../../ui/core/toaster';
 import EditQualificationDetails from './edit-qualification-details';
 const qualificationObjTemplate = [
   {
@@ -183,9 +181,11 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
     if (qualification?.length > 0) {
       updatedObj = qualification?.map((q) => ({
-        id: qualification_detail_response_tos[0]?.id
-          ? qualification_detail_response_tos[0]?.id
-          : '',
+        id:
+          qualification_detail_response_tos[0]?.id &&
+          qualification_detail_response_tos[0]?.qualification_from === q?.qualificationfrom
+            ? qualification_detail_response_tos[0]?.id
+            : '',
         country: countriesList.find((x) => x.id === q?.country?.id),
         course: coursesList.data?.find((x) => x.id === q?.qualification),
         university: isInternational
@@ -271,22 +271,13 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
             ? updatedPersonalDetails?.hp_profile_id
             : loggedInUserType === 'SMC' && personalDetails?.hp_profile_id
         )
-      )
-        .then(() => {
-          if (moveToNext && qualificationFile !== undefined) handleNext();
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth',
-          });
-        })
-        .catch((error) => {
-          successToast(
-            'ERROR: ' + error?.data?.response?.data?.message,
-            'auth-error',
-            'error',
-            'top-center'
-          );
+      ).then(() => {
+        if (moveToNext && qualificationFile !== undefined) handleNext();
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
         });
+      });
     }
   };
   //2
@@ -322,35 +313,34 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           ? personalDetails?.hp_profile_id
           : updatedPersonalDetails?.hp_profile_id
       )
-    )
-      .then(() => {
-        // viewCertificate.qualification =
-        //   response?.data?.qualification_detail_response_tos[0]?.degree_certificate;
-        // setViewCertificate();
-        // const QualificationFile = [
-        //   {
-        //     fileName:
-        //       response?.data?.qualification_detail_response_tos[0]?.file_name +
-        //       '.' +
-        //       response?.data?.qualification_detail_response_tos[0]?.file_type,
-        //     fileBlob: response?.data?.qualification_detail_response_tos[0]?.degree_certificate,
-        //   },
-        // ];
-        // const RegistrationFile = [
-        //   {
-        //     fileName:
-        //       response?.data?.registration_detail_to?.file_name +
-        //       '.' +
-        //       response?.data?.registration_detail_to?.file_type,
-        //     fileBlob: response?.data?.registration_detail_to?.registration_certificate,
-        //   },
-        // ];
-        // setRegistrationFileData(RegistrationFile);
-        // setQualificationFilesData(QualificationFile);
-      })
-      .catch((allFailMsg) => {
-        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-      });
+    ).then(() => {
+      // viewCertificate.qualification =
+      //   response?.data?.qualification_detail_response_tos[0]?.degree_certificate;
+      // setViewCertificate();
+      // const QualificationFile = [
+      //   {
+      //     fileName:
+      //       response?.data?.qualification_detail_response_tos[0]?.file_name +
+      //       '.' +
+      //       response?.data?.qualification_detail_response_tos[0]?.file_type,
+      //     fileBlob: response?.data?.qualification_detail_response_tos[0]?.degree_certificate,
+      //   },
+      // ];
+      // const RegistrationFile = [
+      //   {
+      //     fileName:
+      //       response?.data?.registration_detail_to?.file_name +
+      //       '.' +
+      //       response?.data?.registration_detail_to?.file_type,
+      //     fileBlob: response?.data?.registration_detail_to?.registration_certificate,
+      //   },
+      // ];
+      // setRegistrationFileData(RegistrationFile);
+      // setQualificationFilesData(QualificationFile);
+    });
+    // .catch((allFailMsg) => {
+    //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    // });
   }, []);
 
   const CloseAttachmentPopup = () => {
@@ -507,7 +497,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               defaultValue={getValues().RegistrationNumber}
               error={errors.RegistrationNumber?.message}
               {...register('RegistrationNumber', {
-                required: 'Registration number is required',
+                required: 'Please enter registration number',
                 pattern: { message: 'Please Enter Valid Registration number' },
               })}
               sx={{
@@ -548,7 +538,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               defaultValue={
                 getValues()?.RegistrationDate ? new Date(getValues()?.RegistrationDate) : undefined
               }
-              error={false}
+              // error={errors.RegistrationDate?.message}
+              // {...register('RegistrationDate', { required: 'Please select a valid date' })}
               backgroundColor={
                 work_flow_status_id === 3
                   ? '#F0F0F0'
@@ -567,6 +558,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                   ? false
                   : true
               }
+              disableFuture
             />
           </Grid>
         </Grid>
@@ -595,6 +587,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               ]}
               required={true}
               error={errors.registration?.message}
+              {...register('registration', { required: 'Please select registration type' })}
               disabled={work_flow_status_id === 3 ? getQueryRaised('Registration') : false}
             />
           </Grid>

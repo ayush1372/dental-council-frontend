@@ -10,9 +10,7 @@ export const ImportantLinks = () => {
   ];
   return (
     <>
-      <Typography variant="subtitle1" component="div">
-        Important Links
-      </Typography>
+      <Typography variant="h2">Important Links</Typography>
 
       <List sx={{ paddingTop: { xs: 0, md: 3 } }}>
         {Links.map((item) => (

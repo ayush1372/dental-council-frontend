@@ -61,8 +61,8 @@ export const SvgImageComponent = ({ icon, height, width, fill = 'currentColor', 
         [styles.grey]: fill === 'grey',
       })}
       fill={fill}
-      height={height ?? '24px'}
-      width={width ?? '24px'}
+      height={height ?? '14px'}
+      width={width ?? '14px'}
       style={{ 'margin-top': icon === 'error' ? (newPassword ? '-2px' : '0px') : '0px' }}
     />
   );

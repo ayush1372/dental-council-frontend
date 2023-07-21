@@ -85,7 +85,7 @@ export default function GenericTable(props) {
                     align="left"
                     sortDirection={orderBy.name === item.name ? order : false}
                   >
-                    {item.title === 'Pendency (in days)' || item.name === 'registrationNo' ? (
+                    {item.title === 'Pendency (Days)' ? (
                       <TableSortLabel
                         active={orderBy.name === item.name}
                         direction={orderBy.name === item.name ? order : 'asc'}
@@ -313,7 +313,7 @@ export default function GenericTable(props) {
                       </Button>
                     </TableCell>
                   );
-                } else if (item.title === 'S.No.' || item.title === 'Pendency (in days)') {
+                } else if (item.title === 'S.No.' || item.title === 'Pendency (Days)') {
                   return (
                     <TableCell
                       key={index}

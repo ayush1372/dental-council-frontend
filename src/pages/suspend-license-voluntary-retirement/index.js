@@ -25,7 +25,10 @@ export function SuspendLicenseVoluntaryRetirement({
   selectedAcademicStatus,
   setSuccessPopupMessage,
   selectedSuspendLicenseProfile,
+  selectedRowData,
 }) {
+  // eslint-disable-next-line no-console
+  console.log(selectedRowData);
   const dispatch = useDispatch();
 
   const { userActiveTab } = useSelector((state) => state.common);
@@ -146,8 +149,8 @@ export function SuspendLicenseVoluntaryRetirement({
       application_type_id:
         userActiveTab === 'Activate Licence'
           ? 5
-          : personalDetails?.application_type_id
-          ? personalDetails?.application_type_id
+          : selectedRowData?.application_type_id
+          ? selectedRowData?.application_type_id
           : 1,
       actor_id: loginData?.data?.user_group_id,
       action_id: action_id,
@@ -201,21 +204,21 @@ export function SuspendLicenseVoluntaryRetirement({
                 getValues()?.voluntarySuspendLicense === 'permanent-suspension-check' ||
                 selectedValue === 'suspend'
               ) {
-                setSuccessPopupMessage('You have been permanently suspended');
+                setSuccessPopupMessage('Applicant has been permanently suspended');
               } else if (getValues()?.voluntarySuspendLicense === 'voluntary-suspension-check') {
-                setSuccessPopupMessage('You have been temporarily suspended');
+                setSuccessPopupMessage('Applicant has been temporarily suspended');
               }
               showSuccessPopup(true);
               setConfirmationModal(false);
             }
           })
-          .catch((allFailMsg) => {
-            successToast(
-              allFailMsg?.data?.response?.data?.message,
-              'auth-error',
-              'error',
-              'top-center'
-            );
+          .catch(() => {
+            // successToast(
+            //   allFailMsg?.data?.response?.data?.message,
+            //   'auth-error',
+            //   'error',
+            //   'top-center'
+            // );
             if (userActiveTab === 'voluntary-suspend-license') {
               setConfirmationModal(false);
             }
@@ -353,14 +356,14 @@ export function SuspendLicenseVoluntaryRetirement({
 
           <Typography variant="subtitle2">
             {'Add Timeline'}
-            <Typography component="span" color="error.main">
+            {/* <Typography component="span" color="error.main">
               *
-            </Typography>
+            </Typography> */}
           </Typography>
           <Grid container mt={1} columnSpacing={4}>
             <Grid item xs={12} md={6} lg={6}>
               <Typography component={'p'} variant="body1">
-                Select From Date
+                From Date
                 <Typography component="span" color="error">
                   {'*'}
                 </Typography>
@@ -406,7 +409,7 @@ export function SuspendLicenseVoluntaryRetirement({
                 selectedValue === 'blacklist') && (
                 <>
                   <Typography component={'p'} variant="body1">
-                    Select To Date
+                    To Date
                     <Typography component="span" color="error">
                       {'*'}
                     </Typography>

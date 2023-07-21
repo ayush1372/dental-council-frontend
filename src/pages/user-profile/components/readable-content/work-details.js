@@ -25,7 +25,7 @@ const WorkDetails = ({ workProfileDetails }) => {
       <Grid container item spacing={2}>
         <Grid item xs={12} md={4}>
           <Typography variant="body5" color="grey.label">
-            Are you currently working
+            Are you Currently Working?
             <Typography component="span" color="error.main">
               *
             </Typography>

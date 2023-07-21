@@ -70,15 +70,15 @@ export const getMaskedMobileNumber = (mobileNumber) => {
 
 export const PasswordRegexValidation = {
   required: 'Enter valid  password',
-  // pattern: {
-  //   value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&])[A-Za-z\d@$!%*?#&]{8,100}$/,
-  //   message:
-  //     'Password should contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character.',
-  // },
+  pattern: {
+    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&])[A-Za-z\d@$!%*?#&]{8,100}$/,
+    message:
+      'Password should contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character.',
+  },
 };
 
 export const LoginPasswordRegexValidation = {
-  required: 'Please enter password',
+  required: 'Please enter the password',
   // pattern: {
   //   value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&])[A-Za-z\d@$!%*?#&]{8,100}$/,
   //   message: 'Please enter a valid password',
@@ -101,7 +101,7 @@ export const QueryRaisedValidation = {
 };
 
 export const EmailRegexValidation = {
-  required: 'Email ID is required',
+  required: 'Please enter an email ID',
   pattern: {
     value:
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,

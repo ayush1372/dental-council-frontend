@@ -4,6 +4,7 @@ import { Container, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { ErrorMessages } from '../../../../constants/error-messages';
 import { getWorkProfileDetailsData } from '../../../../store/actions/doctor-user-profile-actions';
 import { RadioGroup } from '../../../../ui/core';
 import successToast from '../../../../ui/core/toaster';
@@ -32,12 +33,7 @@ const WorkProfile = () => {
         }
       })
       .catch(() => {
-        successToast(
-          'No matching work profile details found for the given hp_profile_id.',
-          'auth-error',
-          'error',
-          'top-center'
-        );
+        successToast(ErrorMessages.noMatchingWork, 'auth-error', 'error', 'top-center');
       });
   }, []);
 
@@ -78,7 +74,7 @@ const WorkProfile = () => {
       <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="inputTextColor.main">
-            Are you currently working
+            Are you Currently Working?
             <Typography component="span" color="error.main">
               *
             </Typography>
@@ -120,6 +116,8 @@ const WorkProfile = () => {
             setValue={setValue}
             handleSubmit={handleSubmit}
             watch={watch}
+            setDefaultFacilityData={setDefaultFacilityData}
+            setCurrentlyWorking={setCurrentlyWorking}
           />
         )}
         {defaultFacilityData?.current_work_details?.length > 0 && (

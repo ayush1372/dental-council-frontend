@@ -9,7 +9,7 @@ import { capitalizeFirstLetter } from '../../../../helpers/functions/common-func
 import SuccessModalPopup from '../../../../shared/common-modals/success-modal-popup';
 import GenericTable from '../../../../shared/generic-component/generic-table';
 import { deleteWorkProfileDetailsData } from '../../../../store/actions/doctor-user-profile-actions';
-import successToast from '../../../../ui/core/toaster';
+// import successToast from '../../../../ui/core/toaster';
 
 function createData(
   name,
@@ -134,14 +134,6 @@ function FacilityDetailsTable({ declaredFacilityData, currentWorkDetails }) {
       .then(() => {
         setConfirmationModal(false);
         setSuccessDeLinkModalPopup(true);
-      })
-      .catch((error) => {
-        successToast(
-          error?.data?.response?.data?.error,
-          'RegistrationError',
-          'error',
-          'top-center'
-        );
       });
   };
 

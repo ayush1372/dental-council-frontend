@@ -139,6 +139,7 @@ export const hpIdDemographicUseAxiosCall = async (payload = axiosProps) => {
         });
       })
       .catch((error) => {
+        authInterceptors(error);
         return reject({
           data: error,
           isLoading: false,

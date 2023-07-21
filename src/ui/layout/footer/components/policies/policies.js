@@ -15,9 +15,7 @@ export const Policies = () => {
   ];
   return (
     <>
-      <Typography variant="subtitle1" component="div">
-        Policies
-      </Typography>
+      <Typography variant="h2">Policies</Typography>
 
       <List sx={{ paddingTop: { xs: 0, md: 3 } }}>
         {policies.map((item) => (

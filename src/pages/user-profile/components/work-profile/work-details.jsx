@@ -7,6 +7,8 @@ import { Box, Grid, Tab, Tabs, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { natureOfWork, workStatusOptions } from '../../../../constants/common-data';
+import { ErrorMessages } from '../../../../constants/error-messages';
+import { doctorTabs } from '../../../../helpers/components/sidebar-drawer-list-item';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
 import { AutoComplete } from '../../../../shared/autocomplete/searchable-autocomplete';
 import SuccessModalPopup from '../../../../shared/common-modals/success-modal-popup';
@@ -20,6 +22,7 @@ import {
   getFacilitiesData,
   updateDoctorWorkDetails,
 } from '../../../../store/actions/doctor-user-profile-actions';
+import { changeUserActiveTab } from '../../../../store/reducers/common-reducers';
 import { Button, Checkbox, RadioGroup, Select, TextField } from '../../../../ui/core';
 import { SvgImageComponent } from '../../../../ui/core/svg-icons/index';
 import successToast from '../../../../ui/core/toaster';
@@ -33,7 +36,9 @@ const WorkDetails = ({
   errors,
   handleSubmit,
   watch,
+  setCurrentlyWorking,
   currentWorkingSelection,
+  setDefaultFacilityData,
 }) => {
   const dispatch = useDispatch();
 
@@ -68,7 +73,7 @@ const WorkDetails = ({
           url: getValues().telecommunicationURL,
           address: {
             id: null,
-            country: getCountryData(getValues().Country),
+            country: getCountryData(356),
             state: getStateData(getValues().state),
             district: getDistrictData(getValues().District),
             village: getVillageData(getValues().Area),
@@ -209,7 +214,7 @@ const WorkDetails = ({
         }
       })
       .catch(() => {
-        successToast('ERR_INT:' + 'Invalid facility details', 'auth-error', 'error', 'top-center');
+        successToast(ErrorMessages.inValidFacilityDetails, 'auth-error', 'error', 'top-center');
       });
     setShowTable(true);
   };
@@ -364,12 +369,12 @@ const WorkDetails = ({
         <Select
           fullWidth
           name={'NatureOfWork'}
-          label="Nature of work"
+          label="Nature of Work"
           defaultValue={getValues().NatureOfWork}
           required={true}
-          placeholder={'Nature Of Work'}
+          placeholder={'Select nature of work'}
           {...register('NatureOfWork', {
-            required: 'Nature of work is required',
+            required: 'Please select the nature of work',
           })}
           error={errors.NatureOfWork?.message}
           options={createSelectFieldData(natureOfWork)}
@@ -377,7 +382,7 @@ const WorkDetails = ({
       </Grid>
       <Grid item xs={12} md={4}>
         <Typography variant="subtitle2" color="inputTextColor.main">
-          Choose work status
+          Choose Work Status
           <Typography component="span" color="error.main">
             *
           </Typography>
@@ -392,13 +397,13 @@ const WorkDetails = ({
           required={true}
           error={errors.workStatus?.message}
           {...register('workStatus', {
-            required: `work status is required`,
+            required: `Please choose the work status`,
           })}
         />
       </Grid>{' '}
       <Grid item xs={12} md={4}>
         <Typography variant="body1" color="inputTextColor.main">
-          Work Experience
+          Work Experience in years
           <Typography component="span" color="error.main">
             *
           </Typography>
@@ -442,13 +447,9 @@ const WorkDetails = ({
           />
         </Box>
         {workExperianceError && (
-          <Typography
-            color="suspendAlert.dark"
-            component="div"
-            display="inline-flex"
-            variant="body2"
-          >
-            Please add the work experiance.
+          <Typography sx={{ display: 'flex', alignItems: 'center' }} variant="body2" color="error">
+            <SvgImageComponent color={'error'} icon={'error'} />
+            Please add the work experience
           </Typography>
         )}
       </Grid>
@@ -463,26 +464,24 @@ const WorkDetails = ({
           name={'LanguageSpoken'}
           options={languagesList?.data || []}
           value={languages}
+          placeholder={'Select language'}
           multiple={true}
           {...register('LanguageSpoken')}
           onChange={(value) => {
             setLanguageError(false);
             handleLanguageSpokenChange('LanguageSpoken', value);
           }}
+          // error={`Language spoken is required`}
         />
         {languageError && (
-          <Typography
-            style={{ display: 'flex', alignItems: 'center' }}
-            variant="body2"
-            color="error"
-          >
+          <Typography sx={{ display: 'flex', alignItems: 'center' }} variant="body2" color="error">
             <SvgImageComponent color={'error'} icon={'error'} />
-            {`Language spoken is required`}
+            {`Please select the language spoken`}
           </Typography>
         )}
 
         <Typography variant="body4" color="messageBlue.main" display="flex" alignItems="center">
-          <InfoOutlinedIcon sx={{ fontSize: '20px', padding: '2px' }} />
+          <InfoOutlinedIcon sx={{ fontSize: 'large', padding: '2px' }} />
           Multiple languages can be selected
         </Typography>
       </Grid>
@@ -540,9 +539,9 @@ const WorkDetails = ({
                 },
               }}
             >
-              <Tab label="Facility Id" />
+              <Tab label="Facility ID" />
               <Tab label="Facility Name" />
-              <Tab label="On The Map" />
+              {/* <Tab label="On The Map" /> */}
             </Tabs>
           </Grid>
           {tabValue === 0 && (
@@ -558,12 +557,12 @@ const WorkDetails = ({
                     fullWidth
                     error={errors?.facilityId?.message}
                     name={'facilityId'}
-                    label="Enter Facility Id(If Known)"
+                    label="Facility ID"
                     required={true}
-                    placeholder="Facility Id"
+                    placeholder="Enter facility ID"
                     defaultValue={getValues()?.facilityId}
                     {...register(`facilityId`, {
-                      required: 'Facility Id is required',
+                      required: 'Please enter a valid facility ID',
                     })}
                   />
                 </Box>
@@ -605,12 +604,12 @@ const WorkDetails = ({
 
                 <Select
                   fullWidth
-                  error={getValues().stateLGDCode?.length === 0 && 'State is required'}
+                  error={getValues().stateLGDCode?.length === 0 && 'Please select state'}
                   name={'stateLGDCode'}
                   defaultValue={getValues().stateLGDCode}
                   required={true}
                   {...register('stateLGDCode', {
-                    required: 'State is required',
+                    required: 'Please select state',
                   })}
                   options={createSelectFieldData(statesList)}
                   placeholder={'Enter State'}
@@ -693,14 +692,14 @@ const WorkDetails = ({
                 color="tabHighlightedBackgroundColor.main"
                 variant="h3"
               >
-                Current Work Details*
+                Current Work Details
               </Typography>
             </Grid>
           </Grid>
           <Grid container item spacing={2} mt={1}>
             <Grid item xs={12} md={5} lg={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
-                Name of the organization where you work
+                Organisation Name
                 <Typography component="span" color="error.main">
                   *
                 </Typography>
@@ -709,11 +708,11 @@ const WorkDetails = ({
               <TextField
                 variant="outlined"
                 name={'workingOrganizationName'}
-                placeholder="Enter name of the organization"
+                placeholder="Enter organisation name"
                 fullWidth
                 defaultValue={getValues().workingOrganizationName}
                 {...register('workingOrganizationName', {
-                  required: 'Name of the organization is required',
+                  required: 'Please enter the organisation name',
                   maxLength: {
                     value: 300,
                     message: 'Length should be less than 300.',
@@ -724,18 +723,18 @@ const WorkDetails = ({
             </Grid>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
-                Organization Type
+                Organisation Type
               </Typography>
               <TextField
                 variant="outlined"
                 name={'organizationType'}
-                placeholder=" Enter Organization Type"
+                placeholder=" Enter organisation type"
                 fullWidth
                 defaultValue={getValues().organizationType}
                 {...register('organizationType', {
                   maxLength: {
                     value: 100,
-                    message: 'organizationType Is Reuired.',
+                    message: 'Please enter the organisation type.',
                   },
                 })}
                 error={errors.organizationType?.message}
@@ -755,10 +754,10 @@ const WorkDetails = ({
                 name={'Address'}
                 required={true}
                 fullWidth
-                placeholder="Address"
+                placeholder="Enter address"
                 defaultValue={getValues().Address}
                 {...register('Address', {
-                  required: 'Address is required',
+                  required: 'Please enter the address',
                   maxLength: {
                     value: 300,
                     message: 'Should be less than 300 characters',
@@ -769,7 +768,7 @@ const WorkDetails = ({
             </Grid>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
-                Street
+                Street Name
                 <Typography component="span" color="error.main">
                   *
                 </Typography>
@@ -779,10 +778,10 @@ const WorkDetails = ({
                 name={'Street'}
                 required={true}
                 fullWidth
-                placeholder="Enter Street"
+                placeholder="Enter street name"
                 defaultValue={getValues().Street}
                 {...register('Street', {
-                  required: 'Street is required',
+                  required: 'Please enter the street name',
                   maxLength: {
                     value: 300,
                     message: 'Should be less than 300 characters',
@@ -806,10 +805,10 @@ const WorkDetails = ({
                 name={'Landmark'}
                 required={true}
                 fullWidth
-                placeholder="Enter Landmark"
+                placeholder="Enter landmark"
                 defaultValue={getValues().Landmark}
                 {...register('Landmark', {
-                  required: 'Landmark is required',
+                  required: 'Please enter the landmark',
                   maxLength: {
                     value: 300,
                     message: 'Should be less than 300 characters',
@@ -830,10 +829,10 @@ const WorkDetails = ({
                 name={'Locality'}
                 required={true}
                 fullWidth
-                placeholder="Enter Locality"
+                placeholder="Enter locality"
                 defaultValue={getValues().Locality}
                 {...register('Locality', {
-                  required: 'Locality is required',
+                  required: 'Please enter the locality',
                   maxLength: {
                     value: 300,
                     message: 'Should be less than 300 characters',
@@ -843,16 +842,20 @@ const WorkDetails = ({
               />
             </Grid>
             <Grid item xs={12} md={4}>
+              <Typography variant="subtitle2" color="inputTextColor.main">
+                Country
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
+              </Typography>
               <Select
                 fullWidth
-                error={errors.Country?.message}
                 name="Country"
-                label="Country"
-                defaultValue={getValues().Country}
-                required={true}
-                {...register('Country', {
-                  required: 'Country is required',
-                })}
+                placeholder={'Select Country'}
+                defaultValue={356}
+                value={356}
+                disabled={true}
+                {...register('Country')}
                 options={
                   countriesList?.length > 0 ? createSelectFieldData(countriesList, 'id') : []
                 }
@@ -877,11 +880,12 @@ const WorkDetails = ({
               <Select
                 fullWidth
                 error={errors.state?.message}
+                placeholder={'Select state'}
                 name={'state'}
                 defaultValue={getValues().state}
                 required={statesList?.length > 0 ? true : false}
                 {...register('state', {
-                  required: statesList?.length > 0 ? 'State is required' : '',
+                  required: statesList?.length > 0 ? 'Please select a state' : '',
                 })}
                 options={createSelectFieldData(statesList)}
               />
@@ -920,7 +924,7 @@ const WorkDetails = ({
                 fullWidth
                 error={errors.SubDistrict?.message}
                 name="SubDistrict"
-                placeholder="Sub District"
+                placeholder="Select sub district"
                 required={
                   subDistrictList?.length > 0 && districtsList?.length > 0 && statesList?.length > 0
                     ? true
@@ -932,7 +936,7 @@ const WorkDetails = ({
                     subDistrictList?.length > 0 &&
                     districtsList?.length > 0 &&
                     statesList?.length > 0
-                      ? 'Sub District is required'
+                      ? 'Please select sub district'
                       : '',
                 })}
                 options={createSelectFieldData(subDistrictList, 'iso_code')}
@@ -957,6 +961,7 @@ const WorkDetails = ({
               <Select
                 fullWidth
                 error={errors.Area?.message}
+                placeholder={'Select City/Town/Village'}
                 name="Area"
                 defaultValue={getValues().Area}
                 required={
@@ -969,7 +974,7 @@ const WorkDetails = ({
                     subDistrictList?.length > 0 &&
                     districtsList?.length > 0 &&
                     statesList?.length > 0
-                      ? 'City/Town/Village is required'
+                      ? ' Please select a City/Town/Village'
                       : '',
                 })}
                 options={createSelectFieldData(citiesList)}
@@ -983,7 +988,7 @@ const WorkDetails = ({
             </Grid>
             <Grid item xs={12} md={3}>
               <Typography variant="subtitle2" color="inputTextColor.main">
-                Pin Code
+                Pincode
                 <Typography component="span" color="error.main">
                   *
                 </Typography>
@@ -993,12 +998,12 @@ const WorkDetails = ({
                 variant="outlined"
                 name={'pincode'}
                 required={true}
-                placeholder="Enter Pin Code"
+                placeholder="Enter pincode"
                 fullWidth
                 error={errors.pincode?.message}
                 defaultValue={getValues().pincode}
                 {...register('pincode', {
-                  required: 'Pincode is required',
+                  required: 'Please enter the pincode',
                   pattern: {
                     value: /^[0-9]{6}$/,
                     message: 'Should only contains 6 digits',
@@ -1068,6 +1073,10 @@ const WorkDetails = ({
                   md: 'fit-content',
                 },
               }}
+              onClick={(e) => {
+                e.preventDefault();
+                dispatch(changeUserActiveTab(doctorTabs[0].tabName));
+              }}
             >
               Cancel
             </Button>
@@ -1077,6 +1086,8 @@ const WorkDetails = ({
               open={successModalPopup}
               workDetails={true}
               setOpen={() => setSuccessModalPopup(false)}
+              setDefaultFacilityData={setDefaultFacilityData}
+              setCurrentlyWorking={setCurrentlyWorking}
               text={'Your Work-Details has been submitted successfully.'}
             />
           )}
