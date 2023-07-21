@@ -90,7 +90,7 @@ const NonWorkDetails = ({
             rows={4}
             fullWidth
             error={errors.otherReason?.message}
-            {...register('otherReason', {})}
+            {...register('otherReason')}
             placeholder="Write a reason here . . ."
           />
         </Grid>
