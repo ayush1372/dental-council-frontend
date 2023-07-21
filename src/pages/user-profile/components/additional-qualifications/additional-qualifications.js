@@ -1,5 +1,7 @@
+/* eslint-disable no-console */
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { useCallback } from 'react';
 
 import {
   Box,
@@ -15,35 +17,34 @@ import { useForm } from 'react-hook-form';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 
+import { verboseLog } from '../../../../config/debug';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
 import { getCollegesList } from '../../../../store/actions/common-actions';
 import { Button, Select, TextField, UploadFile } from '../../../../ui/core';
 
 const AdditionalQualifications = () => {
+  const dispatch = useDispatch();
+
   const {
-    //  countriesList,
     coursesList,
-    // universitiesList,
     statesList,
+    //  countriesList,
+    //  universitiesList,
     //  specialitiesList
   } = useSelector((state) => state?.common);
+
   const [qualificationFrom, setQualificationFrom] = useState('india');
   const [qualificationFilesData, setQualificationFilesData] = useState([]);
-  const [selectedDegree, setSelectedDegree] = useState('');
-  const [colleges, setColleges] = useState([]);
 
-  const handleChange = (event) => {
-    setQualificationFrom(event.target.value);
-  };
+  const [collegesData, setCollegesData] = useState([]);
 
   const {
     register,
     getValues,
     watch,
     setValue,
-    // handleSubmit
+    reset,
     handleSubmit,
-    onSubmit,
     formState: { errors },
   } = useForm({
     mode: 'onChange',
@@ -51,46 +52,83 @@ const AdditionalQualifications = () => {
       degree: '',
       state: '',
       collegeName: '',
-      countryName: '',
       university: '',
-      monthOfDegree: '',
-      yearOfDegree: '',
-      superSpeciality: '',
+      year: '',
+      month: '',
       broadSpeciality: '',
-      selectDegree: '',
-      selectState: '',
+      speciality: '',
+
+      int_degree: '',
+      int_countryName: '',
+      int_state: '',
+      int_collegeName: '',
+      int_university: '',
+      int_year: '',
+      int_month: '',
+      int_broadSpeciality: '',
+      int_superSpeciality: '',
     },
   });
-  const selectedState = watch(`selectState`);
-  const dispatch = useDispatch();
-  const handleDegreeSelect = (e) => {
-    setSelectedDegree(e.target.value);
-  };
-  const handleSelectedState = (e) => {
-    setValue('selectState', e.target.value);
+
+  const selectedState = watch('state');
+
+  const menuProps = {
+    style: {
+      maxHeight: 250,
+      maxWidth: 130,
+    },
   };
 
-  const fetchColleges = (selectedState) => {
-    if (selectedState && selectedState !== '' && qualificationFrom !== 'International') {
-      dispatch(getCollegesList(selectedState)).then((dataResponse) => {
-        setColleges(dataResponse.data);
-      });
-    }
+  const dummyOptions = [
+    { value: 'nihal', label: 'Nihal' },
+    { value: 'sanket', label: 'Sanket' },
+  ];
+
+  const handleChange = (event) => {
+    setQualificationFrom(event.target.value);
+    handleResetForm();
   };
+
+  const handleOnSubmit = () => {
+    verboseLog('All values -> ', getValues());
+    verboseLog('UploadFile -> ', qualificationFilesData);
+    console.log('All values -> ', getValues());
+    console.log('UploadFile -> ', qualificationFilesData);
+  };
+
+  const handleResetForm = () => {
+    reset();
+    setValue('speciality', '');
+    setValue('int_state', '');
+    setValue('int_collegeName', '');
+    setValue('int_superSpeciality', '');
+    setCollegesData([]);
+  };
+
+  const fetchColleges = useCallback(
+    (selectedState) => {
+      if (selectedState && selectedState !== '' && qualificationFrom !== 'International') {
+        dispatch(getCollegesList(selectedState)).then((dataResponse) => {
+          setCollegesData(dataResponse.data);
+        });
+      }
+    },
+    [dispatch, qualificationFrom]
+  );
+
   useEffect(() => {
     fetchColleges(selectedState);
-  }, [selectedState]);
-  useEffect(() => {}, []);
+  }, [selectedState, fetchColleges]);
 
   return (
-    <Box p={4}>
-      <Box mb={2}>
+    <Box p={3}>
+      <Box mb={1}>
         <FormControl>
-          <FormLabel id="demo-controlled-radio-buttons-group">
-            Qualification Degree Completed From
+          <FormLabel id="qualification-type-form-label">
+            Qualification Degree Completed Froms
           </FormLabel>
           <RadioGroup
-            name="controlled-radio-buttons-group"
+            name="qualification-type-radio-group"
             value={qualificationFrom}
             onChange={handleChange}
             row
@@ -100,77 +138,57 @@ const AdditionalQualifications = () => {
           </RadioGroup>
         </FormControl>
       </Box>
-      <Grid container spacing={3} mb={2}>
+      <Grid container spacing={2} mb={2}>
         <Grid item xs={4}>
           <Select
             fullWidth
-            error={errors.degree?.message}
+            required
             name="degree"
-            placeholder={'Select degree'}
             label="Degree Name"
-            required={true}
-            // defaultValue={getValues()?.degree}
-            {...register(`degree`, {
+            placeholder={'Select degree'}
+            value={getValues()?.degree}
+            defaultValue={getValues()?.degree}
+            error={errors.degree?.message}
+            options={createSelectFieldData(coursesList?.data)}
+            {...register('degree', {
               required: 'Degree is required',
             })}
-            onChange={(e) => handleDegreeSelect(e)}
-            options={createSelectFieldData(coursesList?.data)}
-            value={selectedDegree}
-            MenuProps={{
-              style: {
-                maxHeight: 250,
-                maxWidth: 130,
-              },
-            }}
+            MenuProps={menuProps}
           />
         </Grid>
         <Grid item xs={4}>
           {qualificationFrom === 'india' ? (
             <Select
               fullWidth
-              error={errors.state?.message}
+              required
               name="state"
-              placeholder={'Select state'}
               label="State (in which college is located)"
-              required={true}
-              defaultValue={getValues().state}
-              {...register(`state`, {
+              placeholder={'Select state'}
+              value={getValues()?.state}
+              error={errors?.state?.message}
+              defaultValue={getValues()?.state}
+              {...register('state', {
                 required: 'State is required',
               })}
-              onChange={(e) => handleSelectedState(e)}
               options={createSelectFieldData(statesList)}
-              // value={qualificationID}
-              MenuProps={{
-                style: {
-                  maxHeight: 250,
-                  maxWidth: 130,
-                },
-              }}
+              MenuProps={menuProps}
             />
           ) : (
             <Select
               fullWidth
-              error={errors.countryName?.message}
-              name="country"
-              placeholder={'Select country'}
+              required
+              name="int_countryName"
               label="Country Name"
-              required={true}
-              defaultValue={getValues().countryName}
-              {...register(`countryName`, {
+              placeholder={'Select country'}
+              value={getValues()?.int_countryName}
+              defaultValue={getValues()?.int_countryName}
+              error={errors?.int_countryName?.message}
+              {...register('int_countryName', {
                 required: 'Country is required',
               })}
-              onChange={() => {
-                // setQualificationID(e?.target?.value);
-                // setValue(`qualification[${index}].qualification`, e?.target?.value);
-              }}
+              options={dummyOptions}
               // options={createSelectFieldData(coursesList.data)}
-              // value={qualificationID}
-              MenuProps={{
-                style: {
-                  maxHeight: 250,
-                  maxWidth: 130,
-                },
-              }}
+              MenuProps={menuProps}
             />
           )}
         </Grid>
@@ -178,38 +196,30 @@ const AdditionalQualifications = () => {
           {qualificationFrom === 'india' ? (
             <Select
               fullWidth
-              error={errors.collegeName?.message}
+              required
               name="collegeName"
-              placeholder={'Select college'}
               label="College Name"
-              required={true}
-              defaultValue={getValues().collegeName}
-              {...register(`collegeName`, {
+              placeholder={'Select college'}
+              value={getValues()?.collegeName}
+              defaultValue={getValues()?.collegeName}
+              error={errors?.collegeName?.message}
+              {...register('collegeName', {
                 required: 'College is required',
               })}
-              onChange={() => {
-                // setQualificationID(e?.target?.value);
-                // setValue(`qualification[${index}].qualification`, e?.target?.value);
-              }}
-              options={createSelectFieldData(colleges)}
-              // value={qualificationID}
-              MenuProps={{
-                style: {
-                  maxHeight: 250,
-                  maxWidth: 130,
-                },
-              }}
+              options={createSelectFieldData(collegesData)}
+              // options={createSelectFieldData(collegesData)}
+              MenuProps={menuProps}
             />
           ) : (
             <TextField
               fullWidth
-              name="state"
+              required
+              name="int_state"
               label="State (in which college is located)"
               placeholder={'Enter state'}
-              required={true}
-              value={''}
-              {...register(`state`, {
-                required: 'state is required',
+              error={errors?.int_state?.message}
+              {...register('int_state', {
+                required: 'State is required',
               })}
             />
           )}
@@ -218,38 +228,30 @@ const AdditionalQualifications = () => {
           {qualificationFrom === 'india' ? (
             <Select
               fullWidth
-              error={errors.university?.message}
+              required
               name="university"
-              placeholder={'Select university'}
               label="University"
-              required={true}
-              defaultValue={getValues().university}
-              {...register(`university`, {
-                required: 'university is required',
+              placeholder={'Select university'}
+              value={getValues()?.university}
+              defaultValue={getValues()?.university}
+              error={errors.university?.message}
+              {...register('university', {
+                required: 'University is required',
               })}
-              onChange={() => {
-                // setQualificationID(e?.target?.value);
-                // setValue(`qualification[${index}].qualification`, e?.target?.value);
-              }}
               // options={createSelectFieldData(coursesList.data)}
-              // value={qualificationID}
-              MenuProps={{
-                style: {
-                  maxHeight: 250,
-                  maxWidth: 130,
-                },
-              }}
+              options={dummyOptions}
+              MenuProps={menuProps}
             />
           ) : (
             <TextField
               fullWidth
-              name="collegeName"
+              required
+              name="int_collegeName"
               label="College Name"
               placeholder={'Enter college'}
-              required={true}
-              value={'MIT'}
-              {...register(`state`, {
-                required: 'university is required',
+              error={errors?.int_collegeName?.message}
+              {...register('int_collegeName', {
+                required: 'College is required',
               })}
             />
           )}
@@ -257,74 +259,44 @@ const AdditionalQualifications = () => {
         {qualificationFrom === 'india' ? (
           <Grid container item xs={12} md={6} lg={4} columnSpacing={2}>
             <Typography pl={2} fontWeight="500" color="inputTextColor.main">
-              Month & Year of Awarding Degree
+              {`Month & Year of Awarding Degree`}
               <Typography component="span" color="error.main">
                 *
               </Typography>
             </Typography>
             <Grid item xs={12} md={6} mb={{ xs: 2, md: 0 }}>
               <Select
-                // fullWidth
+                required
+                name="month"
+                placeholder={'Select month of awarding'}
+                value={getValues()?.month}
+                defaultValue={getValues()?.month}
                 error={errors?.month?.message}
-                // name="Month"
-                // placeholder={'Select month of awarding'}
-                // defaultValue={getValues().qualification[index].month}
-                // {...register(`qualification[${index}].month`, {
-                //   required: 'Awarding month is required',
-                // })}
-                // style={{
-                //   backgroundColor:
-                //     work_flow_status_id === 3 && getQueryRaised('Month')
-                //       ? 'grey2.main'
-                //       : isVerified === 1
-                //       ? 'grey2.main'
-                //       : '',
-                // }}
-                // disabled={
-                //   work_flow_status_id === 3
-                //     ? getQueryRaised('Month')
-                //     : isVerified === 1
-                //     ? true
-                //     : false
-                // }
+                {...register('month', {
+                  required: 'Awarding month is required',
+                })}
                 // options={customMonthsData}
-                MenuProps={{
-                  style: {
-                    maxHeight: 250,
-                    maxWidth: 130,
-                  },
-                }}
-                // value={getValues().qualification[index].month}
+                MenuProps={menuProps}
+                options={dummyOptions}
               />
             </Grid>
             <Grid item xs={12} md={6}>
               <Select
-                variant="outlined"
-                name="year"
-                // options={yearsData}
-                required={true}
-                placeholder={'Select year of awarding'}
                 fullWidth
-                error={
-                  // (getValues().qualification[index].year === '' ||
-                  //   getValues().qualification[index].year === undefined) &&
-                  errors.year?.message
-                }
-                // defaultValue={qualification?.year}
-                // {...register(`qualification[${index}].year`, {
-                //   required: 'Awarding year is required',
-                //   pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
-                // })}
-                MenuProps={{
-                  style: {
-                    maxHeight: 250,
-                    maxWidth: 130,
-                  },
-                }}
-                // disabled={
-                //   work_flow_status_id === 3 ? getQueryRaised('year') : isVerified === 1 ? true : false
-                // }
-                // value={getValues().qualification[index].year}
+                required
+                name="year"
+                variant="outlined"
+                placeholder={'Select year of awarding'}
+                value={getValues()?.year}
+                defaultValue={getValues()?.year}
+                error={errors?.year?.message}
+                {...register('year', {
+                  required: 'Awarding year is required',
+                  pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
+                })}
+                MenuProps={menuProps}
+                options={dummyOptions}
+                // options={yearsData}
               />
             </Grid>
           </Grid>
@@ -332,27 +304,19 @@ const AdditionalQualifications = () => {
           <Grid item lg={4}>
             <Select
               fullWidth
-              error={errors.collegeName?.message}
-              name="university"
-              placeholder={'Select university'}
+              required
+              name="int_university"
               label="University"
-              required={true}
-              defaultValue={getValues().university}
-              {...register(`state`, {
-                required: 'Degree is required',
+              placeholder={'Select university'}
+              value={getValues()?.int_university}
+              defaultValue={getValues()?.int_university}
+              error={errors?.int_university?.message}
+              {...register('int_university', {
+                required: 'University is required',
               })}
-              onChange={() => {
-                // setQualificationID(e?.target?.value);
-                // setValue(`qualification[${index}].qualification`, e?.target?.value);
-              }}
+              MenuProps={menuProps}
+              options={dummyOptions}
               // options={createSelectFieldData(coursesList.data)}
-              // value={qualificationID}
-              MenuProps={{
-                style: {
-                  maxHeight: 250,
-                  maxWidth: 130,
-                },
-              }}
             />
           </Grid>
         )}
@@ -360,108 +324,66 @@ const AdditionalQualifications = () => {
         {qualificationFrom === 'international' ? (
           <Grid container item xs={12} md={6} lg={4} columnSpacing={2}>
             <Typography pl={2} fontWeight="500" color="inputTextColor.main">
-              Month & Year of Awarding Degree
+              {`Month & Year of Awarding Degree`}
               <Typography component="span" color="error.main">
                 *
               </Typography>
             </Typography>
             <Grid item xs={12} md={6} mb={{ xs: 2, md: 0 }}>
               <Select
-                // fullWidth
-                // error={errors?.qualification?.[index]?.month?.message}
-                // name="Month"
-                // placeholder={'Select month of awarding'}
-                // defaultValue={getValues().qualification[index].month}
-                // {...register(`qualification[${index}].month`, {
-                //   required: 'Awarding month is required',
-                // })}
-                // style={{
-                //   backgroundColor:
-                //     work_flow_status_id === 3 && getQueryRaised('Month')
-                //       ? 'grey2.main'
-                //       : isVerified === 1
-                //       ? 'grey2.main'
-                //       : '',
-                // }}
-                // disabled={
-                //   work_flow_status_id === 3
-                //     ? getQueryRaised('Month')
-                //     : isVerified === 1
-                //     ? true
-                //     : false
-                // }
+                name="int_month"
+                placeholder={'Select month of awarding'}
+                value={getValues().int_month}
+                defaultValue={getValues().int_month}
+                error={errors?.int_month?.message}
+                {...register('int_month', {
+                  required: 'Awarding month is required',
+                })}
+                MenuProps={menuProps}
+                options={dummyOptions}
                 // options={customMonthsData}
-                MenuProps={{
-                  style: {
-                    maxHeight: 250,
-                    maxWidth: 130,
-                  },
-                }}
-                // value={getValues().qualification[index].month}
               />
             </Grid>
             <Grid item xs={12} md={6}>
               <Select
-                variant="outlined"
-                name="year"
-                // options={yearsData}
-                required={true}
-                placeholder={'Select year of awarding'}
                 fullWidth
-                error={
-                  // (getValues().qualification[index].year === '' ||
-                  //   getValues().qualification[index].year === undefined) &&
-                  errors.year?.message
-                }
-                // defaultValue={qualification?.year}
-                // {...register(`qualification[${index}].year`, {
-                //   required: 'Awarding year is required',
-                //   pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
-                // })}
-                MenuProps={{
-                  style: {
-                    maxHeight: 250,
-                    maxWidth: 130,
-                  },
-                }}
-                // disabled={
-                //   work_flow_status_id === 3 ? getQueryRaised('year') : isVerified === 1 ? true : false
-                // }
-                // value={getValues().qualification[index].year}
+                required
+                name="int_year"
+                placeholder={'Select year of awarding'}
+                variant="outlined"
+                value={getValues()?.int_year}
+                defaultValue={getValues()?.int_year}
+                error={errors?.int_year?.message}
+                {...register('int_year', {
+                  required: 'Awarding year is required',
+                  pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
+                })}
+                MenuProps={menuProps}
+                options={dummyOptions}
+                // options={yearsData}
               />
             </Grid>
           </Grid>
         ) : (
           <Grid item xs={12} md={6} lg={4}>
             <Select
-              label="Broad speciality"
-              variant="outlined"
-              name="year"
-              // options={yearsData}
-              required={true}
-              placeholder={'Select year of awarding'}
               fullWidth
-              error={
-                // (getValues().qualification[index].year === '' ||
-                //   getValues().qualification[index].year === undefined) &&
-                errors.year?.message
-              }
-              // defaultValue={qualification?.year}
-              // {...register(`qualification[${index}].year`, {
-              //   required: 'Awarding year is required',
-              //   pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
-              // })}
-              MenuProps={{
-                style: {
-                  maxHeight: 250,
-                  maxWidth: 130,
-                },
-              }}
-              // disabled={
-              //   work_flow_status_id === 3 ? getQueryRaised('year') : isVerified === 1 ? true : false
-              // }
-              // value={getValues().qualification[index].year}
-            />{' '}
+              required
+              name="broadSpeciality"
+              label="Broad speciality"
+              placeholder={'Select year of awarding'}
+              variant="outlined"
+              value={getValues()?.broadSpeciality}
+              defaultValue={getValues()?.broadSpeciality}
+              error={errors?.broadSpeciality?.message}
+              {...register('broadSpeciality', {
+                required: 'Broad Speciality is required',
+                // pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
+              })}
+              MenuProps={menuProps}
+              options={dummyOptions}
+              // options={yearsData}
+            />
           </Grid>
         )}
 
@@ -469,41 +391,30 @@ const AdditionalQualifications = () => {
           {qualificationFrom === 'india' ? (
             <TextField
               fullWidth
-              name="state"
-              label="Super Speciality"
-              placeholder={'Enter state'}
-              // required={true}
-              value={'MIT'}
+              name="speciality"
+              label="Speciality"
+              placeholder={'Enter Speciality'}
+              error={errors?.speciality?.message}
+              {...register('speciality')}
             />
           ) : (
             <Select
-              label="Broad speciality"
-              variant="outlined"
-              name="year"
-              // options={yearsData}
-              required={true}
-              placeholder={'Select year of awarding'}
               fullWidth
-              error={
-                // (getValues().qualification[index].year === '' ||
-                //   getValues().qualification[index].year === undefined) &&
-                errors.year?.message
-              }
-              // defaultValue={qualification?.year}
-              // {...register(`qualification[${index}].year`, {
-              //   required: 'Awarding year is required',
-              //   pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
-              // })}
-              MenuProps={{
-                style: {
-                  maxHeight: 250,
-                  maxWidth: 130,
-                },
-              }}
-              // disabled={
-              //   work_flow_status_id === 3 ? getQueryRaised('year') : isVerified === 1 ? true : false
-              // }
-              // value={getValues().qualification[index].year}
+              required
+              name="int_broadSpeciality"
+              label="Broad speciality"
+              placeholder={'Select Broad Speciality'}
+              variant="outlined"
+              value={getValues()?.int_broadSpeciality}
+              defaultValue={getValues()?.int_broadSpeciality}
+              error={errors?.int_broadSpeciality?.message}
+              {...register('int_broadSpeciality', {
+                required: 'Broad Speciality is required',
+                // pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
+              })}
+              MenuProps={menuProps}
+              options={dummyOptions}
+              // options={yearsData}
             />
           )}
         </Grid>
@@ -512,11 +423,14 @@ const AdditionalQualifications = () => {
           <Grid item lg={4}>
             <TextField
               fullWidth
-              name="superSpeciality"
+              required
+              name="int_superSpeciality"
               label="Super Speciality"
               placeholder={'Enter super speciality'}
-              required={true}
-              value={''}
+              {...register('int_superSpeciality', {
+                required: 'Super Speciality is required',
+                // pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
+              })}
             />
           </Grid>
         )}
@@ -536,27 +450,21 @@ const AdditionalQualifications = () => {
         setFileData={setQualificationFilesData}
       />
 
-      <Box mt={3} display={'flex'} justifyContent={'space-between'}>
-        <Box>
-          <Button
-            variant={'contained'}
-            color={'secondary'}
-            sx={{ mr: 2 }}
-            onClick={handleSubmit(onSubmit)}
-          >
-            Submit
-          </Button>
-          <Button variant={'contained'} color={'grey'}>
-            Cancel
-          </Button>
-        </Box>
-        <Box>
-          <Button variant={'outlined'} color={'primary'}>
-            Add Additional Qualification
-          </Button>
-        </Box>
+      <Box mt={2}>
+        <Button
+          variant={'contained'}
+          color={'secondary'}
+          sx={{ mr: 2 }}
+          onClick={handleSubmit(handleOnSubmit)}
+        >
+          Submit
+        </Button>
+        <Button variant={'contained'} color={'grey'} onClick={handleResetForm}>
+          Cancel
+        </Button>
       </Box>
     </Box>
   );
 };
+
 export default AdditionalQualifications;
