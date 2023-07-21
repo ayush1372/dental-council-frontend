@@ -10,7 +10,7 @@ export const ImportantLinks = () => {
   ];
   return (
     <>
-      <Typography variant="subtitle1" component="div">
+      <Typography variant="h2">
         Important Links
       </Typography>
 

@@ -7,7 +7,7 @@ import MOBILEAAPSCAN from '../../../../../assets/images/mobileAppScan.png';
 export const AbdmHealthRecords = () => {
   return (
     <>
-      <Typography variant="subtitle1" component="div" mb={{ xs: 0, md: 3 }}>
+      <Typography variant="h2" mb={{ xs: 0, md: 3 }}>
         ABHA App
       </Typography>
 
