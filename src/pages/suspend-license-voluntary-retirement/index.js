@@ -147,11 +147,10 @@ export function SuspendLicenseVoluntaryRetirement({
       request_id:
         requestID || selectedSuspendLicenseProfile?.RequestId?.value || personalDetails?.request_id,
       application_type_id:
-
         userActiveTab === 'Activate Licence'
           ? 5
-          : selectedRowData.application_type_id
-          ? selectedRowData.application_type_id
+          : selectedRowData?.application_type_id
+          ? selectedRowData?.application_type_id
           : 1,
       actor_id: loginData?.data?.user_group_id,
       action_id: action_id,
