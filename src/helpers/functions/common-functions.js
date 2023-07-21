@@ -156,6 +156,7 @@ export const userGroupTypeId = (userGroupID) => {
     5: 'College',
     6: 'College',
     7: 'NBE',
+    8: 'System',
   };
   return userGroupTypeObj[userGroupID];
 };
