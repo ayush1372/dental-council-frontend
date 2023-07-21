@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useEffect, useMemo, useState } from 'react';
 
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -29,9 +28,6 @@ const qualificationObjTemplate = [
 ];
 
 const EditQualificationDetails = ({
-  // addMore,
-  // clearErrors,
-  // clearErrors,
   index,
   showDeleteIcon,
   errors,
@@ -49,20 +45,11 @@ const EditQualificationDetails = ({
   isAdditionalQualification,
   handleQualificationFilesData,
   supportingDocumentError = false,
-  // replace,
   insert,
-  // append,
-  // control,
   setsupportingDocumentError,
 
   showBroadSpeciality = false,
 }) => {
-  // eslint-disable-next-line no-console
-  console.log(
-    'supportingDocumentError12',
-    supportingDocumentError[`qualification.${index}.files`] === true
-  );
-  console.log(getValues()?.qualification, qualification, errors, 'getValues');
   const dispatch = useDispatch();
   const [colleges, setColleges] = useState([]);
 
@@ -80,27 +67,15 @@ const EditQualificationDetails = ({
   );
   const [universitiesListData, setUniversitiesListData] = useState(universitiesList?.data);
   const [qualificationID, setQualificationID] = useState('');
-  console.log('getvalues()', getValues(), qualificationID);
   const handleQualificationFrom = (event) => {
-    // setValue(`qualification`, [...qualificationObjTemplate]);
-    console.log('123456', index, fields);
-
     insert(index, { ...qualificationObjTemplate });
     remove(index + 1);
-    // index > 0 && ((remove(index); append({ ...qualificationObjTemplate }););
-    console.log('handle234', fields);
     handleQualificationFilesData(`qualification.${index}.files`, '');
 
-    // replace(index, { ...qualificationObjTemplate });
     supportingDocumentError[`qualification.${[index]}.files`] = false;
     setsupportingDocumentError({ ...supportingDocumentError });
     setsupportingDocumentError([]);
 
-    // clearErrors(`qualification`);
-
-    // setValue(`qualification`, [...qualificationObjTemplate]);
-    // handleQualificationFilesData(`qualification.${index}.files`, '');
-    // clearErrors(`qualification`);
     setValue(event.target.name, event.target.value);
 
     dispatch(selectedQualificationType(event.target.value));
@@ -114,7 +89,6 @@ const EditQualificationDetails = ({
   const selectedYear = watch(`qualification[${index}].year`);
 
   const fetchColleges = (selectedState) => {
-    // if (selectedState && qualificationfrom !== 'International') {
     if (selectedState && selectedState !== '' && qualificationfrom !== 'International') {
       dispatch(getCollegesList(selectedState)).then((dataResponse) => {
         setColleges(dataResponse.data);
@@ -123,7 +97,6 @@ const EditQualificationDetails = ({
   };
 
   const fetchUniversities = (selectedUniversity) => {
-    // if (selectedUniversity && qualificationfrom !== 'International') {
     if (selectedUniversity && selectedUniversity !== '' && qualificationfrom !== 'International') {
       dispatch(getUniversitiesList(selectedUniversity)).then((dataResponse) => {
         setUniversitiesListData(dataResponse?.data);
@@ -141,7 +114,6 @@ const EditQualificationDetails = ({
   useEffect(() => {
     fetchUniversities(watchCollege);
   }, [watchCollege]);
-  console.log('errrors12', errors, getValues());
   useEffect(() => {
     if (qualificationfrom !== 'International' || !isAdditionalQualification) {
       const removalArray = [
@@ -169,27 +141,8 @@ const EditQualificationDetails = ({
 
     supportingDocumentError[`qualification.${[index]}.files`] = false;
     setsupportingDocumentError({ ...supportingDocumentError });
-    console.log(
-      'chcking12',
-      qualificationFilesData[`qualification.${index}.files`],
-      supportingDocumentError[`qualification.${index}.files`] === true &&
-        (qualificationFilesData[`qualification.${index}.files`] === [] ||
-          qualificationFilesData[`qualification.${index}.files`].length === 0 ||
-          qualificationFilesData[`qualification.${index}.files`].length === '')
-    );
   }, [qualificationfrom]);
-  // useEffect(() => {
-  //   // console.log('qualification', qualification);
-  //   setValue(`qualification[${index}].college`, '');
-  //   setValue(`qualification.${index}.state`, '');
-  //   setValue(`qualification.${index}.university`, '');
-  //   setValue(`qualification.${index}.month`, '');
-  //   setValue(`qualification.${index}.year`, '');
-  //   setValue(`qualification.${index}.qualification`, null);
-  //   setValue(`qualification.${index}.Speciality`, null);
-  //   setValue(`qualification.${index}.subSpeciality`, '');
-  //   handleQualificationFilesData(`qualification.${index}.files`, '');
-  // }, []);
+
   useEffect(() => {
     if (qualificationfrom !== 'International' || !isAdditionalQualification) {
       setValue(`qualification[${index}].country`, {
@@ -205,7 +158,6 @@ const EditQualificationDetails = ({
       setValue(`qualification.${index}.state`, fields[index].state);
     }
     if (qualificationfrom === 'International') {
-      console.log('Came here');
       setValue(`qualification[${index}].college`, '');
       setValue(`qualification.${index}.state`, '');
       setValue(`qualification.${index}.university`, null);

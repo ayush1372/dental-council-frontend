@@ -70,16 +70,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     registration_certificate ? [{ file: registration_certificate }] : []
   );
   const [qualificationFilesData, setQualificationFilesData] = useState([]);
-  console.log(
-    'registrationDate123',
-    registration_date,
-    registration_number,
-    state_medical_council,
-    is_renewable,
-    renewable_registration_date,
-    is_name_change,
-    registration_certificate
-  );
   const [viewCertificate] = useState({
     registration: registration_certificate,
     qualification: degree_certificate,
@@ -268,7 +258,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     let checkDocumentError;
     for (const index in supportingDocumentError) {
       checkDocumentError = supportingDocumentError[index] === true;
-      console.log('1234567', checkDocumentError, supportingDocumentError[index]);
       if (checkDocumentError) {
         break;
       }
@@ -313,8 +302,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
       }
       // for (const index in supportingDocumentError) {
     }
-
-    console.log('qualf12345', supportingDocumentError, checkDocumentError);
   }, [isSubmitting]);
 
   //3
@@ -324,7 +311,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     setQualificationFilesData({ ...qualificationFilesData });
     supportingDocumentError[`qualification.${[index]}.files`] = false;
     setsupportingDocumentError({ ...supportingDocumentError });
-    console.log('qualf12345', fields, qualificationFilesData, supportingDocumentError);
   }, [fields]);
 
   useEffect(() => {
@@ -411,12 +397,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   }, [registrationDetails]);
   //1
   const handleQualificationFilesData = (fileName, files) => {
-    console.log('filename12', fileName, files);
     qualificationFilesData[fileName] = files;
     // supportingDocumentError[fileName] = ;
     setQualificationFilesData(files !== [] && { ...qualificationFilesData });
     // setsupportingDocumentError({ ...supportingDocumentError });
-    console.log('Fname11', fileName.length);
   };
 
   //Helper Method to get the data of the query raised against the field
