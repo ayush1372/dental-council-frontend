@@ -356,14 +356,14 @@ export function SuspendLicenseVoluntaryRetirement({
 
           <Typography variant="subtitle2">
             {'Add Timeline'}
-            <Typography component="span" color="error.main">
+            {/* <Typography component="span" color="error.main">
               *
-            </Typography>
+            </Typography> */}
           </Typography>
           <Grid container mt={1} columnSpacing={4}>
             <Grid item xs={12} md={6} lg={6}>
               <Typography component={'p'} variant="body1">
-                Select From Date
+                From Date
                 <Typography component="span" color="error">
                   {'*'}
                 </Typography>
@@ -409,7 +409,7 @@ export function SuspendLicenseVoluntaryRetirement({
                 selectedValue === 'blacklist') && (
                 <>
                   <Typography component={'p'} variant="body1">
-                    Select To Date
+                    To Date
                     <Typography component="span" color="error">
                       {'*'}
                     </Typography>
