@@ -4,9 +4,9 @@ import { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core';
 import CancelIcon from '@mui/icons-material/Cancel';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 import NoAccountsIcon from '@mui/icons-material/NoAccounts';
 import ReportIcon from '@mui/icons-material/Report';
-import TimerIcon from '@mui/icons-material/Timer';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import { Box, FormGroup, Grid, IconButton, Link, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
@@ -119,15 +119,15 @@ export default function ProfileImage(props) {
 
   const fetchDoctorUserPersonalDetails = () => {
     dispatch(getPersonalDetailsData(loginData?.data?.profile_id)).then(() => {});
-    // .catch((allFailMsg) => {
-    //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-    // });
   };
 
   const getIconAndText = (currentStatus) => {
     switch (currentStatus) {
       case 1:
-        return { icon: <TimerIcon sx={{ color: 'primary.main' }} />, text: workflowStatusId(1) };
+        return {
+          icon: <HourglassTopIcon sx={{ color: 'primary.main' }} />,
+          text: workflowStatusId(1),
+        };
       case 2:
         return { icon: <VerifiedIcon sx={{ color: 'success.main' }} />, text: workflowStatusId(2) };
       case 3:

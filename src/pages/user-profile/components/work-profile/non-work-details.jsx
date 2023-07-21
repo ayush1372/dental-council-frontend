@@ -62,13 +62,10 @@ const NonWorkDetails = ({
     dispatch(updateDoctorWorkDetails(workDetails, loginData.data.profile_id)).then(() => {
       setSuccessModalPopup(true);
     });
-    // .catch((allFailMsg) => {
-    //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-    // });
   };
 
   useEffect(() => {
-    setValue('reason', workingDetails[0]?.reason);
+    setValue('reason', workingDetails?.reason);
   }, [workingDetails]);
 
   return (

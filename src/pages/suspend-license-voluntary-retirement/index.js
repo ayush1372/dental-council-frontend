@@ -147,11 +147,10 @@ export function SuspendLicenseVoluntaryRetirement({
       request_id:
         requestID || selectedSuspendLicenseProfile?.RequestId?.value || personalDetails?.request_id,
       application_type_id:
-
         userActiveTab === 'Activate Licence'
           ? 5
-          : selectedRowData.application_type_id
-          ? selectedRowData.application_type_id
+          : selectedRowData?.application_type_id
+          ? selectedRowData?.application_type_id
           : 1,
       actor_id: loginData?.data?.user_group_id,
       action_id: action_id,
@@ -357,14 +356,14 @@ export function SuspendLicenseVoluntaryRetirement({
 
           <Typography variant="subtitle2">
             {'Add Timeline'}
-            <Typography component="span" color="error.main">
+            {/* <Typography component="span" color="error.main">
               *
-            </Typography>
+            </Typography> */}
           </Typography>
           <Grid container mt={1} columnSpacing={4}>
             <Grid item xs={12} md={6} lg={6}>
               <Typography component={'p'} variant="body1">
-                Select From Date
+                From Date
                 <Typography component="span" color="error">
                   {'*'}
                 </Typography>
@@ -410,7 +409,7 @@ export function SuspendLicenseVoluntaryRetirement({
                 selectedValue === 'blacklist') && (
                 <>
                   <Typography component={'p'} variant="body1">
-                    Select To Date
+                    To Date
                     <Typography component="span" color="error">
                       {'*'}
                     </Typography>

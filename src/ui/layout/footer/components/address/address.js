@@ -5,14 +5,15 @@ import { List, ListItem, ListItemText, Typography } from '@mui/material';
 export const Address = () => {
   return (
     <>
-      <Typography variant="subtitle1" component="div">
-        Address
+      <Typography variant="h2">
+        Contact
       </Typography>
 
       <List sx={{ paddingTop: { xs: 0, md: 3 } }}>
         <ListItem disableGutters disablePadding={true}>
           <ListItemText sx={{ margin: '0' }}>
-            <Typography variant="body1" fontWeight="400" lineHeight="28px" component="div" mb={2}>
+            <Typography variant="h6">Address</Typography>
+            <Typography sx={{fontSize: '14px', fontWeight: '300'}}>
               National Health Authority 9th Floor, Tower-l, Jeevan Bharati Building, Connaught
               Place, New Delhi - 110 001
             </Typography>
@@ -20,31 +21,27 @@ export const Address = () => {
         </ListItem>
         <ListItem disableGutters disablePadding={true}>
           <ListItemText sx={{ margin: '0' }}>
-            <Typography
-              variant="body1"
-              fontWeight="400"
-              component="div"
-              mb={2}
+            <Typography variant="h6" mt={1}>Toll-free number</Typography>
+            <Typography sx={{fontSize: '14px', fontWeight: '300'}}
               display="flex"
               alignItems="flex-start"
-              lineHeight="1"
             >
-              <EmailOutlinedIcon sx={{ mr: 1, fontSize: '16px' }} />
-              E-mail:<a href="mailto: ndhm@nha.gov.in">&nbsp;abdm[@]nha[dot]gov[dot]in</a>
+              <CallOutlinedIcon sx={{ mr: 1, fontSize: '16px' }} />
+              1800-11-4477
             </Typography>
           </ListItemText>
         </ListItem>
         <ListItem disableGutters disablePadding={true}>
           <ListItemText sx={{ margin: '0' }}>
+            <Typography variant="h6" mt={1}>Email</Typography>
             <Typography
-              variant="body1"
-              fontWeight="400"
-              component="div"
+              sx={{fontSize: '14px', fontWeight: '300'}}
               display="flex"
               alignItems="flex-start"
+              lineHeight="1"
             >
-              <CallOutlinedIcon sx={{ mr: 1, fontSize: '16px' }} />
-              Toll-Free Number: 1800-11-4477 / 14477
+              <EmailOutlinedIcon sx={{ mr: 1, fontSize: '16px' }} />
+              <a href="mailto: ndhm@nha.gov.in">&nbsp;abdm[@]nha[dot]gov[dot]in</a>
             </Typography>
           </ListItemText>
         </ListItem>
