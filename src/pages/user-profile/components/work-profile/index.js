@@ -18,7 +18,6 @@ const WorkProfile = () => {
   const { workProfileDetails } = useSelector((state) => state.doctorUserProfileReducer);
 
   const [currentlyWorking, setCurrentlyWorking] = useState('');
-  const [workingDetails, setWorkingDetails] = useState('');
   const [defaultFacilityData, setDefaultFacilityData] = useState([]);
 
   useEffect(() => {
@@ -28,7 +27,6 @@ const WorkProfile = () => {
           setCurrentlyWorking(
             response?.data?.work_details?.is_user_currently_working === 1 ? 'no' : 'yes'
           );
-          setWorkingDetails(response?.data?.current_work_details);
           setDefaultFacilityData(response?.data);
         }
       })
@@ -104,7 +102,7 @@ const WorkProfile = () => {
             setValue={setValue}
             handleSubmit={handleSubmit}
             watch={watch}
-            workingDetails={workingDetails}
+            workingDetails={workProfileDetails?.work_details}
           />
         )}
         {currentlyWorking === 'yes' && (
@@ -133,14 +131,13 @@ const WorkProfile = () => {
                 Declared Place Of Work
               </Typography>
             </Grid>
-            {(workProfileDetails?.current_work_details?.work_details?.is_user_currently_working ===
-              1 ||
-              workProfileDetails?.current_work_details?.work_details?.is_user_currently_working ===
-                '1') && (
+
+            {(workProfileDetails?.work_details?.is_user_currently_working === 1 ||
+              workProfileDetails?.work_details?.is_user_currently_working === '1') && (
               // eslint-disable-next-line react/jsx-indent
               <Grid item xs={12} padding="10px 0 !important" ml={1}>
                 <Typography p={1} component="div" color="error.main" variant="h3">
-                  Currently not working
+                  Currently not working - {'  '} {workProfileDetails?.work_details?.reason}
                 </Typography>
               </Grid>
             )}
