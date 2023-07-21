@@ -845,7 +845,7 @@ const EditQualificationDetails = ({
               }}
               disabled={
                 work_flow_status_id === 3
-                  ? getQueryRaised('Month')
+                  ? getQueryRaised('Month & Year of Degree Awarded')
                   : isVerified === 1
                   ? true
                   : false
@@ -897,7 +897,7 @@ const EditQualificationDetails = ({
                     : '',
               }}
               disabled={
-                work_flow_status_id === 3 ? getQueryRaised('year') : isVerified === 1 ? true : false
+                work_flow_status_id === 3 ? getQueryRaised('Month & Year of Degree Awarded') : isVerified === 1 ? true : false
               }
               value={getValues().qualification[index].year}
             />
