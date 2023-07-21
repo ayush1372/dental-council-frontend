@@ -55,9 +55,8 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
                   doctorEsignStatus === 2 ||
                   personalDetails?.esign_status === 2 ||
                   personalDetails?.esign_status === 3 ||
-                  (logInDoctorStatus &&
-                    (personalDetails?.hp_profile_status_id === 5 ||
-                      personalDetails?.hp_profile_status_id === 6))) &&
+                  personalDetails?.hp_profile_status_id === 5 ||
+                  personalDetails?.hp_profile_status_id === 6) &&
                 (item.tabName === 'voluntary-suspend-license' ||
                   item.tabName === 'additional-qualifications' ||
                   item.tabName === 'work-details')
