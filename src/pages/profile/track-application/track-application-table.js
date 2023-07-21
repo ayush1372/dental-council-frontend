@@ -9,7 +9,6 @@ import {
   getDoctorTrackApplicationData,
   getDoctorTrackApplicationStatus,
 } from '../../../store/actions/doctor-user-profile-actions';
-// import successToast from '../../../ui/core/toaster';
 import TableSearch from '../components/table-search/table-search';
 
 function createData(
@@ -253,9 +252,6 @@ function TrackAppicationTable({
 
   return (
     <Grid>
-      {/* <Typography variant="h2" py={3} bgcolor={`${theme.palette.white.main}`} mb={2} px={3}>
-        Track Application
-      </Typography>    */}
       <TableSearch
         searchParams={searchParams}
         trackApplication={userType}
