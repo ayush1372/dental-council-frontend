@@ -25,7 +25,10 @@ export function SuspendLicenseVoluntaryRetirement({
   selectedAcademicStatus,
   setSuccessPopupMessage,
   selectedSuspendLicenseProfile,
+  selectedRowData,
 }) {
+  // eslint-disable-next-line no-console
+  console.log(selectedRowData);
   const dispatch = useDispatch();
 
   const { userActiveTab } = useSelector((state) => state.common);
@@ -146,8 +149,8 @@ export function SuspendLicenseVoluntaryRetirement({
       application_type_id:
         userActiveTab === 'Activate Licence'
           ? 5
-          : personalDetails?.application_type_id
-          ? personalDetails?.application_type_id
+          : selectedRowData?.application_type_id
+          ? selectedRowData?.application_type_id
           : 1,
       actor_id: loginData?.data?.user_group_id,
       action_id: action_id,

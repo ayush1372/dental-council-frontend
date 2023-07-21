@@ -184,9 +184,11 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
     if (qualification?.length > 0) {
       updatedObj = qualification?.map((q) => ({
-        id: qualification_detail_response_tos[0]?.id
-          ? qualification_detail_response_tos[0]?.id
-          : '',
+        id:
+          qualification_detail_response_tos[0]?.id &&
+          qualification_detail_response_tos[0]?.qualification_from === q?.qualificationfrom
+            ? qualification_detail_response_tos[0]?.id
+            : '',
         country: countriesList.find((x) => x.id === q?.country?.id),
         course: coursesList.data?.find((x) => x.id === q?.qualification),
         university: isInternational
