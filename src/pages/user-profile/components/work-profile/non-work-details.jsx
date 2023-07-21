@@ -49,13 +49,9 @@ const NonWorkDetails = ({
     const workDetails = {
       work_details: {
         is_user_currently_working: 1,
+        reason: getValues()?.reason || '',
+        remark: getValues()?.otherReason || '',
       },
-      current_work_details: [
-        {
-          reason: getValues()?.reason,
-          remark: getValues()?.otherReason,
-        },
-      ],
       hp_profile_id: loginData.data.profile_id,
     };
 
