@@ -6,7 +6,11 @@ import { useSelector } from 'react-redux';
 
 import APPLICATIONICONBW from '../../../assets/images/application-approved-icon-BW.svg';
 import { monthsData } from '../../../constants/common-data';
-import { typeOfApplication, workflowStatusId } from '../../../helpers/functions/common-functions';
+import {
+  toUpperCase,
+  typeOfApplication,
+  workflowStatusId,
+} from '../../../helpers/functions/common-functions';
 import VerticalLinearStepper from '../../../shared/stepper/vertical-stepper';
 import { Chip } from '../../../ui/core';
 import { BreadcrumbContainer } from '../../../ui/core/breadcrumb/breadcrumb';
@@ -72,7 +76,7 @@ export function TrackApplicationDetails({
                   color="textPrimary.main"
                 >
                   {nmcApproveStatus
-                    ? 'Application approved by NMC'
+                    ? 'Application Approved by NMC'
                     : 'Application status: Verification pending by NMC'}
                   <CheckCircle
                     sx={{
@@ -156,7 +160,11 @@ export function TrackApplicationDetails({
                   Current Status
                 </Typography>
                 <Typography variant="subtitle2" component="div" color={`status.${currentStatus}`}>
-                  {`${workflowStatusId(currentStatus) ? workflowStatusId(currentStatus) : ''}`}
+                  {`${
+                    workflowStatusId(currentStatus)
+                      ? toUpperCase(workflowStatusId(currentStatus))
+                      : ''
+                  }`}
                 </Typography>
               </Grid>
             </Grid>
