@@ -28,13 +28,13 @@ export default function ConfirmationModal({
         <DialogContentText id="alert-dialog-description">{text?.message}</DialogContentText>
       </DialogContent>
       <DialogActions>
-        <Button color="grey" variant="contained" sx={{ marginLeft: 2 }} onClick={handleNo}>
+        <Button color="grey" variant="contained" onClick={handleNo}>
           {handleNoText}
         </Button>
         <Button
           color="secondary"
           variant="contained"
-          sx={{ marginLeft: 2 }}
+          ml={2}
           onClick={handleYes}
           autoFocus
         >
