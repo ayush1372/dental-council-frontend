@@ -15,7 +15,7 @@ export const Policies = () => {
   ];
   return (
     <>
-      <Typography variant="subtitle1" component="div">
+      <Typography variant="h2">
         Policies
       </Typography>
 
