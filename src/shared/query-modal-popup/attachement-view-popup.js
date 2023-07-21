@@ -15,7 +15,7 @@ export default function AttachmentViewPopup(props) {
       <Modal open={open} onClose={handleClose} sx={{ mt: 15 }}>
         <Container
           maxWidth="sm"
-          sx={{ backgroundColor: 'white.main', borderRadius: '10px', height: '450px' }}
+          sx={{ backgroundColor: 'white.main', borderRadius: '10px', minHeight: '450px', maxHeight:'100vh' }}
         >
           <Box py={3}>
             <Box display="flex" justifyContent="flex-end">
@@ -50,8 +50,8 @@ export default function AttachmentViewPopup(props) {
                   title={props?.alt}
                   src={`data:application/pdf;base64,${props?.certificate}`}
                   alt={props?.alt}
-                  width="90%"
-                  height="250px"
+                  width="100%"
+                  height="450px"
                   sx={{ padding: 0, borderRadius: 0 }}
                 />
               ) : (
@@ -59,8 +59,8 @@ export default function AttachmentViewPopup(props) {
                   component={'img'}
                   src={`data:image/*;base64,${props?.certificate}`}
                   alt={props?.alt}
-                  width="90%"
-                  height="250px"
+                  width="100%"
+                  height="450px"
                 />
               )}
             </Box>

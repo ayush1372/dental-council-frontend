@@ -62,8 +62,8 @@ const Nav = ({ menuToggleHandler }) => {
       },
     },
     search: {
-      backgroundColor: theme.palette.secondary.main,
-      borderBottom: `4px solid ${theme.palette.secondary.main}`,
+      backgroundColor: theme.palette.primary.dark,
+      borderBottom: `4px solid ${theme.palette.primary.dark}`,
       marginLeft: 'auto',
       borderRight: 0,
 
