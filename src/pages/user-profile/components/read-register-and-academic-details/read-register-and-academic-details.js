@@ -285,6 +285,11 @@ const ReadRegisterAndAcademicDetails = ({
                                   loggedInUserType === 'College' ||
                                   loggedInUserType === 'NBE'
                                     ? 'Verify'
+                                    : selectedAcademicStatus ===
+                                        'Temporary Suspension Requests Received' ||
+                                      selectedAcademicStatus ===
+                                        'Permanent Suspension Requests Received'
+                                    ? 'Suspend'
                                     : 'Approve'}
                                 </Button>
                               )}
@@ -426,7 +431,10 @@ const ReadRegisterAndAcademicDetails = ({
                 setSuccessPopupMessage={setSuccessPopupMessage}
                 setActionVerified={setActionVerified}
                 selectedAcademicStatus={selectedAcademicStatus}
-                selectedRowData={dashboardTableDetailsData?.data?.dashboard_tolist && dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]}
+                selectedRowData={
+                  dashboardTableDetailsData?.data?.dashboard_tolist &&
+                  dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]
+                }
                 requestID={
                   dashboardTableDetailsData?.data?.dashboard_tolist &&
                   dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]?.request_id
