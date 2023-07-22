@@ -271,6 +271,7 @@ const ProfileConsent = ({
         border="1px solid"
         borderColor="inputBorderColor.main"
         borderRadius="5px"
+        height={{ lg: '90px' }}
       >
         <Grid item xs={12} display="flex">
           <Checkbox
@@ -279,7 +280,6 @@ const ProfileConsent = ({
             {...register('consent', {
               required: 'Consent is Required',
             })}
-            error={errors.consent?.message}
           />
           <Typography component="div" variant="body7">
             I, hereby declare that I am voluntarily sharing above mentioned particulars and
@@ -288,6 +288,9 @@ const ProfileConsent = ({
             being found false or incorrect at any stage, I shall be held liable for the same.
           </Typography>
         </Grid>
+        <Typography variant="body2" component="div" color="error">
+          {errors.consent?.message}
+        </Typography>
       </Grid>
 
       <Grid
