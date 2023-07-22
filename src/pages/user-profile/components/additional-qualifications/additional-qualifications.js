@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
 
@@ -18,11 +18,21 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 
 import { verboseLog } from '../../../../config/debug';
+import { monthsData, yearsData } from '../../../../constants/common-data';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
-import { getCollegesList } from '../../../../store/actions/common-actions';
+import { getCollegesList, getUniversitiesList } from '../../../../store/actions/common-actions';
 import { Button, Select, TextField, UploadFile } from '../../../../ui/core';
 
 const AdditionalQualifications = () => {
+  const {
+    countriesList,
+    //  coursesList,
+    universitiesList,
+
+    // statesList,
+    specialitiesList,
+  } = useSelector((state) => state?.common);
+
   const dispatch = useDispatch();
 
   const {
@@ -35,6 +45,8 @@ const AdditionalQualifications = () => {
 
   const [qualificationFrom, setQualificationFrom] = useState('india');
   const [qualificationFilesData, setQualificationFilesData] = useState([]);
+  const [universitiesListData, setUniversitiesListData] = useState(universitiesList?.data);
+  // const [colleges, setColleges] = useState([]);
 
   const [collegesData, setCollegesData] = useState([]);
 
@@ -71,6 +83,33 @@ const AdditionalQualifications = () => {
   });
 
   const selectedState = watch('state');
+  const watchCollege = watch(`collegeName`);
+  const selectedYear = watch(`year`);
+
+  useEffect(() => {
+    fetchColleges(selectedState);
+
+    setValue(`university`, null);
+    setValue(`collegeName`, null);
+    setUniversitiesListData([]);
+  }, [selectedState]);
+
+  const customMonthsData = useMemo(() => {
+    const date = new Date();
+    const fullYear = date.getFullYear();
+    const monthIndex = date.getMonth();
+    if (selectedYear === `${fullYear}`) {
+      return monthsData.slice(0, monthIndex + 1);
+    }
+    return monthsData;
+  }, [selectedYear]);
+  const fetchUniversities = (selectedUniversity) => {
+    if (selectedUniversity && qualificationFrom !== 'international') {
+      dispatch(getUniversitiesList(selectedUniversity)).then((dataResponse) => {
+        setUniversitiesListData(dataResponse?.data);
+      });
+    }
+  };
 
   const menuProps = {
     style: {
@@ -79,10 +118,10 @@ const AdditionalQualifications = () => {
     },
   };
 
-  const dummyOptions = [
-    { value: 'nihal', label: 'Nihal' },
-    { value: 'sanket', label: 'Sanket' },
-  ];
+  // const dummyOptions = [
+  //   { value: 'nihal', label: 'Nihal' },
+  //   { value: 'sanket', label: 'Sanket' },
+  // ];
 
   const handleChange = (event) => {
     setQualificationFrom(event.target.value);
@@ -115,6 +154,9 @@ const AdditionalQualifications = () => {
     },
     [dispatch, qualificationFrom]
   );
+  useEffect(() => {
+    fetchUniversities(watchCollege);
+  }, [watchCollege]);
 
   useEffect(() => {
     fetchColleges(selectedState);
@@ -186,7 +228,7 @@ const AdditionalQualifications = () => {
               {...register('int_countryName', {
                 required: 'Country is required',
               })}
-              options={dummyOptions}
+              options={countriesList?.length > 0 ? createSelectFieldData(countriesList, 'id') : []}
               // options={createSelectFieldData(coursesList.data)}
               MenuProps={menuProps}
             />
@@ -234,12 +276,12 @@ const AdditionalQualifications = () => {
               placeholder={'Select university'}
               value={getValues()?.university}
               defaultValue={getValues()?.university}
-              error={errors.university?.message}
+              error={getValues()?.university === '' && errors.university?.message}
               {...register('university', {
                 required: 'University is required',
               })}
               // options={createSelectFieldData(coursesList.data)}
-              options={dummyOptions}
+              options={createSelectFieldData(universitiesListData, 'id') || []}
               MenuProps={menuProps}
             />
           ) : (
@@ -268,16 +310,16 @@ const AdditionalQualifications = () => {
               <Select
                 required
                 name="month"
-                placeholder={'Select month of awarding'}
+                placeholder={'Select month of awarding1'}
                 value={getValues()?.month}
                 defaultValue={getValues()?.month}
                 error={errors?.month?.message}
                 {...register('month', {
                   required: 'Awarding month is required',
                 })}
-                // options={customMonthsData}
+                options={customMonthsData}
                 MenuProps={menuProps}
-                options={dummyOptions}
+                // options={dummyOptions}
               />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -295,14 +337,14 @@ const AdditionalQualifications = () => {
                   pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
                 })}
                 MenuProps={menuProps}
-                options={dummyOptions}
-                // options={yearsData}
+                // options={dummyOptions}
+                options={yearsData}
               />
             </Grid>
           </Grid>
         ) : (
           <Grid item lg={4}>
-            <Select
+            {/* <Select
               fullWidth
               required
               name="int_university"
@@ -315,8 +357,18 @@ const AdditionalQualifications = () => {
                 required: 'University is required',
               })}
               MenuProps={menuProps}
-              options={dummyOptions}
+              // options={dummyOptions}
               // options={createSelectFieldData(coursesList.data)}
+            /> */}
+            <TextField
+              fullWidth
+              name="int_university"
+              label="University"
+              placeholder={'Enter University'}
+              error={getValues().int_university === '' && errors?.int_university?.message}
+              {...register('int_university', {
+                required: 'University is required',
+              })}
             />
           </Grid>
         )}
@@ -340,8 +392,7 @@ const AdditionalQualifications = () => {
                   required: 'Awarding month is required',
                 })}
                 MenuProps={menuProps}
-                options={dummyOptions}
-                // options={customMonthsData}
+                options={monthsData}
               />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -359,8 +410,7 @@ const AdditionalQualifications = () => {
                   pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
                 })}
                 MenuProps={menuProps}
-                options={dummyOptions}
-                // options={yearsData}
+                options={yearsData}
               />
             </Grid>
           </Grid>
@@ -378,11 +428,9 @@ const AdditionalQualifications = () => {
               error={errors?.broadSpeciality?.message}
               {...register('broadSpeciality', {
                 required: 'Broad Speciality is required',
-                // pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
               })}
               MenuProps={menuProps}
-              options={dummyOptions}
-              // options={yearsData}
+              options={createSelectFieldData(specialitiesList?.data)}
             />
           </Grid>
         )}
@@ -413,8 +461,8 @@ const AdditionalQualifications = () => {
                 // pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
               })}
               MenuProps={menuProps}
-              options={dummyOptions}
-              // options={yearsData}
+              // options={dummyOptions}
+              options={createSelectFieldData(specialitiesList?.data)}
             />
           )}
         </Grid>
