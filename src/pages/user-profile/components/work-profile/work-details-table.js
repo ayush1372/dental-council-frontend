@@ -170,7 +170,7 @@ function WorkDetailsTable({
   };
 
   return (
-    <Grid sx={{ mx: 2 }} p={'0px'}>
+    <Grid p={'0px'}>
       <GenericTable
         order={order}
         orderBy={orderBy}
