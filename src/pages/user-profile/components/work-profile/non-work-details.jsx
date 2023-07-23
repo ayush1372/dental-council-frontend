@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import SuccessModalPopup from '../../../../shared/common-modals/success-modal-popup';
 import { updateDoctorWorkDetails } from '../../../../store/actions/doctor-user-profile-actions';
 import { Button, Select, TextField } from '../../../../ui/core';
-// import successToast from '../../../../ui/core/toaster';
 
 const reasonOptions = [
   {
@@ -40,22 +39,23 @@ const NonWorkDetails = ({
   const reasonWatch = watch('reason');
 
   const [successModalPopup, setSuccessModalPopup] = useState(false);
+
   const { loginData } = useSelector((state) => state?.loginReducer);
   const { work_details } = useSelector(
     (state) => state?.doctorUserProfileReducer?.workProfileDetails
   );
 
+  useEffect(() => {
+    setValue('reason', workingDetails?.reason);
+  }, [workingDetails]);
+
   const handleSave = () => {
     const workDetails = {
       work_details: {
         is_user_currently_working: 1,
+        reason: getValues()?.reason || '',
+        remark: getValues()?.otherReason || '',
       },
-      current_work_details: [
-        {
-          reason: getValues()?.reason,
-          remark: getValues()?.otherReason,
-        },
-      ],
       hp_profile_id: loginData.data.profile_id,
     };
 
@@ -63,10 +63,6 @@ const NonWorkDetails = ({
       setSuccessModalPopup(true);
     });
   };
-
-  useEffect(() => {
-    setValue('reason', workingDetails?.reason);
-  }, [workingDetails]);
 
   return (
     <>
@@ -94,12 +90,11 @@ const NonWorkDetails = ({
             rows={4}
             fullWidth
             error={errors.otherReason?.message}
-            {...register('otherReason', {})}
+            {...register('otherReason')}
             placeholder="Write a reason here . . ."
           />
         </Grid>
       )}
-
       <Grid item xs={12} md={8} lg={6}>
         <Button
           onClick={handleSubmit(handleSave)}

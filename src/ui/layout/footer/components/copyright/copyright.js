@@ -1,11 +1,19 @@
-import { Box, Container, Grid, Typography } from '@mui/material';
+import { Box, Container, Grid, Typography, useTheme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 export const Copyright = () => {
   const { t } = useTranslation();
+  const theme = useTheme();
 
   return (
-    <Box bgcolor="tabHighlightedBackgroundColor.main" py={3}>
+    <Box
+      bgcolor={
+        theme.palette.mode === 'dark'
+          ? theme.palette.black.main
+          : theme.palette.tabHighlightedBackgroundColor.main
+      }
+      py={3}
+    >
       <Container>
         <Grid container>
           <Grid item xs={12} lg={8}>
