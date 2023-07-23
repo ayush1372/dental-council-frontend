@@ -13,7 +13,7 @@ const PersonalDetails = ({
   selectedDataIndex,
 }) => {
   return (
-    <Box mt={1} py={4}>
+    <Box mt={1} pb={2}>
       {isReadMode && loggedInUserType !== 'SMC' && (
         <ReadPersonalDetails
           handleNext={handleNext}

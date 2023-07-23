@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import BlockIcon from '@mui/icons-material/Block';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+// import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloseIcon from '@mui/icons-material/Close';
 import ErrorIcon from '@mui/icons-material/Error';
 import HelpIcon from '@mui/icons-material/Help';
@@ -27,8 +27,6 @@ export function SuspendLicenseVoluntaryRetirement({
   selectedSuspendLicenseProfile,
   selectedRowData,
 }) {
-  // eslint-disable-next-line no-console
-  console.log(selectedRowData);
   const dispatch = useDispatch();
 
   const { userActiveTab } = useSelector((state) => state.common);
@@ -272,8 +270,9 @@ export function SuspendLicenseVoluntaryRetirement({
           ) : selectedValue === 'reject' ? (
             <ErrorIcon color="error" sx={{ fontSize: '40px' }} />
           ) : selectedValue === 'verify' || selectedValue === 'approve' ? (
-            <CheckCircleIcon color="success" sx={{ fontSize: '50px' }} />
+            <ErrorIcon color="error" sx={{ fontSize: '40px' }} />
           ) : (
+            //<CheckCircleIcon color="success" sx={{ fontSize: '50px' }} />
             <BlockIcon color="error" fontSize="width40" />
           )}
         </Box>
@@ -539,13 +538,13 @@ export function SuspendLicenseVoluntaryRetirement({
           variant="h3"
         >
           {selectedValue === 'verify' &&
-          (selectedAcademicStatus !== 'Temporary Suspension Requests Received' ||
-            selectedAcademicStatus !== 'Permanent Suspension Requests Received')
+          (selectedAcademicStatus === 'Temporary Suspension Requests Received' ||
+            selectedAcademicStatus === 'Permanent Suspension Requests Received')
+            ? 'Are you sure you want to suspend this application?'
+            : selectedValue === 'verify' && user_group_id?.user_group_id !== 3
             ? 'Are you sure you want to verify this application?'
-            : selectedValue === 'verify' &&
-              (selectedAcademicStatus === 'Temporary Suspension Requests Received' ||
-                selectedAcademicStatus === 'Permanent Suspension Requests Received')
-            ? 'Are you sure you want to approve this request?'
+            : selectedValue === 'verify' && user_group_id?.user_group_id === 3
+            ? 'Are you sure you want to approve this application?'
             : selectedValue === 'forward'
             ? 'Are you sure you want to forward this application to College/NBE?'
             : ''}
