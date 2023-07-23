@@ -59,7 +59,7 @@ const SelectField = (
         {...props}
         data-testid={dataTestSelectId}
         error={error && showError ? true : false}
-        defaultValue={defaultValue}
+        defaultValue={defaultValue ?? ''}
         displayEmpty
         renderInput={() => <TextField {...props} placeholder={placeholder} />}
         onBlur={(e) => {
