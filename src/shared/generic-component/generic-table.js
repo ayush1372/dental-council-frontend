@@ -284,7 +284,12 @@ export default function GenericTable(props) {
                   (item.title === 'Designation' && item.flag === 'declareFacility')
                 ) {
                   return (
-                    <Tooltip key={index} title={row[item.name]?.value}>
+                    <Tooltip
+                      key={index}
+                      title={
+                        row[item.name]?.isIcon ? row[item.name]?.iconToolTip : row[item.name]?.value
+                      }
+                    >
                       <TableCell
                         key={index}
                         className={row.read?.value === false ? 'style-bold' : ''}
@@ -328,7 +333,12 @@ export default function GenericTable(props) {
                   );
                 } else {
                   return (
-                    <Tooltip key={index} title={row[item.name]?.value}>
+                    <Tooltip
+                      key={index}
+                      title={
+                        row[item.name]?.isIcon ? row[item.name]?.iconToolTip : row[item.name]?.value
+                      }
+                    >
                       <TableCell
                         key={index}
                         className={row.read?.value === false ? 'style-bold' : ''}

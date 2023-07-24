@@ -44,17 +44,18 @@ const AdditionalQualifications = () => {
 
   const dispatch = useDispatch();
 
-  const [qualificationFrom, setQualificationFrom] = useState('India');
-  const [qualificationFilesData, setQualificationFilesData] = useState([]);
-  const [universitiesListData, setUniversitiesListData] = useState(universitiesList?.data);
-
-  const [attachmentViewIndex, setAttachmentViewIndex] = useState();
-  const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
-  const [isAddForm, setIsAddForm] = useState(false);
-  const [successModalPopup, setSuccessModalPopup] = useState(false);
-  const [collegesData, setCollegesData] = useState([]);
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+
+  const [universitiesListData, setUniversitiesListData] = useState(universitiesList?.data);
+  const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
+  const [qualificationFilesData, setQualificationFilesData] = useState([]);
+  const [qualificationFrom, setQualificationFrom] = useState('India');
+  const [successModalPopup, setSuccessModalPopup] = useState(false);
+  const [attachmentViewIndex, setAttachmentViewIndex] = useState();
+  const [collegesData, setCollegesData] = useState([]);
+  const [isAddForm, setIsAddForm] = useState(false);
+
   const { qualification_detail_response_tos } = registrationDetails || {};
 
   const {
@@ -89,17 +90,34 @@ const AdditionalQualifications = () => {
     },
   });
 
+  const menuProps = {
+    style: {
+      maxHeight: 250,
+      maxWidth: 130,
+    },
+  };
+
+  const selectedDegree = watch('degree');
   const selectedState = watch('state');
-  const watchCollege = watch(`collegeName`);
-  const selectedYear = watch(`year`);
+  const watchCollege = watch('collegeName');
+  const selectedYear = watch('year');
 
-  useEffect(() => {
-    fetchColleges(selectedState);
-
-    setValue(`university`, null);
-    setValue(`collegeName`, null);
-    setUniversitiesListData([]);
-  }, [selectedState]);
+  watch([
+    'degree',
+    'university',
+    'month',
+    'broadSpeciality',
+    'speciality',
+    'int_degree',
+    'int_countryName',
+    'int_state',
+    'int_collegeName',
+    'int_university',
+    'int_year',
+    'int_month',
+    'int_broadSpeciality',
+    'int_superSpeciality',
+  ]);
 
   const customMonthsData = useMemo(() => {
     const date = new Date();
@@ -110,20 +128,6 @@ const AdditionalQualifications = () => {
     }
     return monthsData;
   }, [selectedYear]);
-  const fetchUniversities = (selectedUniversity) => {
-    if (selectedUniversity && qualificationFrom !== 'International') {
-      dispatch(getUniversitiesList(selectedUniversity)).then((dataResponse) => {
-        setUniversitiesListData(dataResponse?.data);
-      });
-    }
-  };
-
-  const menuProps = {
-    style: {
-      maxHeight: 250,
-      maxWidth: 130,
-    },
-  };
 
   const handleChange = (event) => {
     setQualificationFrom(event.target.value);
@@ -139,7 +143,7 @@ const AdditionalQualifications = () => {
     return data;
   };
 
-  const getUniverity = (univerityId) => {
+  const getUniversity = (univerityId) => {
     const data = universitiesList?.data?.find((obj) => obj?.id === univerityId);
     return data;
   };
@@ -152,8 +156,6 @@ const AdditionalQualifications = () => {
     const specialityobject = specialitiesList?.data?.find((obj) => obj?.id === broadSpl);
     return specialityobject?.id;
   };
-
-  //const { qualification } = getValues();
 
   const handleOnSubmit = () => {
     const formData = new FormData();
@@ -173,7 +175,7 @@ const AdditionalQualifications = () => {
         : getCollege(getValues()?.collegeName),
       university: isInternationalQualification
         ? { name: getValues()?.int_university }
-        : getUniverity(getValues()?.university),
+        : getUniversity(getValues()?.university),
       course: getCourseData(getValues()?.degree),
       qualification_year: getValues()?.int_year,
       qualification_month: isInternationalQualification
@@ -237,6 +239,8 @@ const AdditionalQualifications = () => {
     setValue('int_collegeName', '');
     setValue('int_superSpeciality', '');
     setCollegesData([]);
+
+    setQualificationFilesData([]);
   };
 
   const fetchColleges = useCallback(
@@ -249,10 +253,16 @@ const AdditionalQualifications = () => {
     },
     [dispatch, qualificationFrom]
   );
-  useEffect(() => {
-    fetchUniversities(watchCollege);
-  }, [watchCollege]);
 
+  const fetchUniversities = (selectedUniversity) => {
+    if (selectedUniversity && qualificationFrom !== 'International') {
+      dispatch(getUniversitiesList(selectedUniversity)).then((dataResponse) => {
+        setUniversitiesListData(dataResponse?.data);
+      });
+    }
+  };
+
+  // Table Methods
   function createData(
     sr_no,
     degree_name,
@@ -333,6 +343,8 @@ const AdditionalQualifications = () => {
       },
       {
         type: 'attachments',
+        isIcon: true,
+        iconToolTip: 'View Attachment',
         value: (
           <IconButton>
             <AttachFileIcon
@@ -348,14 +360,26 @@ const AdditionalQualifications = () => {
       }
     );
   });
+  // Table Methods Ends
+  useEffect(() => {
+    !isAddForm && dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id));
+  }, [dispatch, isAddForm, personalDetails]);
+
+  useEffect(() => {
+    fetchColleges(selectedState);
+    setValue('degree', selectedDegree);
+    setValue('university', null);
+    setValue('collegeName', null);
+    setUniversitiesListData([]);
+  }, [fetchColleges, selectedDegree, selectedState, setValue]);
 
   useEffect(() => {
     fetchColleges(selectedState);
   }, [selectedState, fetchColleges]);
 
   useEffect(() => {
-    dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id));
-  }, [dispatch]);
+    fetchUniversities(watchCollege);
+  }, [watchCollege]);
 
   return (
     <Box p={3}>
@@ -378,7 +402,7 @@ const AdditionalQualifications = () => {
             </FormControl>
           </Box>
           <Grid container spacing={2} mb={2}>
-            <Grid item xs={4}>
+            <Grid item xs={12} lg={4}>
               <Select
                 fullWidth
                 required
@@ -390,12 +414,12 @@ const AdditionalQualifications = () => {
                 error={errors.degree?.message}
                 options={createSelectFieldData(coursesList?.data)}
                 {...register('degree', {
-                  required: 'Degree is required',
+                  required: 'Please select the Degree.',
                 })}
                 MenuProps={menuProps}
               />
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} lg={4}>
               {qualificationFrom === 'India' ? (
                 <Select
                   fullWidth
@@ -407,7 +431,7 @@ const AdditionalQualifications = () => {
                   error={errors?.state?.message}
                   defaultValue={getValues()?.state}
                   {...register('state', {
-                    required: 'State is required',
+                    required: 'Please select the State.',
                   })}
                   options={createSelectFieldData(statesList)}
                   MenuProps={menuProps}
@@ -423,7 +447,7 @@ const AdditionalQualifications = () => {
                   defaultValue={getValues()?.int_countryName}
                   error={errors?.int_countryName?.message}
                   {...register('int_countryName', {
-                    required: 'Country is required',
+                    required: 'Please select the Country.',
                   })}
                   options={
                     countriesList?.length > 0 ? createSelectFieldData(countriesList, 'id') : []
@@ -433,7 +457,7 @@ const AdditionalQualifications = () => {
                 />
               )}
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} lg={4}>
               {qualificationFrom === 'India' ? (
                 <Select
                   fullWidth
@@ -445,10 +469,9 @@ const AdditionalQualifications = () => {
                   defaultValue={getValues()?.collegeName}
                   error={errors?.collegeName?.message}
                   {...register('collegeName', {
-                    required: 'College is required',
+                    required: 'Please select the College.',
                   })}
                   options={createSelectFieldData(collegesData)}
-                  // options={createSelectFieldData(collegesData)}
                   MenuProps={menuProps}
                 />
               ) : (
@@ -460,12 +483,12 @@ const AdditionalQualifications = () => {
                   placeholder={'Enter state'}
                   error={errors?.int_state?.message}
                   {...register('int_state', {
-                    required: 'State is required',
+                    required: 'Please enter the State.',
                   })}
                 />
               )}
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} lg={4}>
               {qualificationFrom === 'India' ? (
                 <Select
                   fullWidth
@@ -475,12 +498,11 @@ const AdditionalQualifications = () => {
                   placeholder={'Select university'}
                   value={getValues()?.university}
                   defaultValue={getValues()?.university}
-                  error={errors.university?.message}
+                  error={errors?.university?.message}
                   {...register('university', {
-                    required: 'University is required',
+                    required: 'Please select the University.',
                   })}
-                  // options={createSelectFieldData(coursesList.data)}
-                  options={createSelectFieldData(universitiesListData, 'id') || []}
+                  options={createSelectFieldData(universitiesListData, 'id')}
                   MenuProps={menuProps}
                 />
               ) : (
@@ -492,7 +514,7 @@ const AdditionalQualifications = () => {
                   placeholder={'Enter college'}
                   error={errors?.int_collegeName?.message}
                   {...register('int_collegeName', {
-                    required: 'College is required',
+                    required: 'Please enter the College.',
                   })}
                 />
               )}
@@ -505,7 +527,7 @@ const AdditionalQualifications = () => {
                     *
                   </Typography>
                 </Typography>
-                <Grid item xs={12} md={6} mb={{ xs: 2, md: 0 }}>
+                <Grid item xs={12} sm={6} mb={{ xs: 2, md: 0 }}>
                   <Select
                     required
                     name="month"
@@ -514,14 +536,13 @@ const AdditionalQualifications = () => {
                     defaultValue={getValues()?.month}
                     error={errors?.month?.message}
                     {...register('month', {
-                      required: 'Awarding month is required',
+                      required: 'Please select the Awarding month.',
                     })}
                     options={customMonthsData}
                     MenuProps={menuProps}
-                    // options={dummyOptions}
                   />
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} sm={6}>
                   <Select
                     fullWidth
                     required
@@ -532,7 +553,7 @@ const AdditionalQualifications = () => {
                     defaultValue={getValues()?.int_year}
                     error={errors?.int_year?.message}
                     {...register('int_year', {
-                      required: 'Awarding year is required',
+                      required: 'Please select the Awarding year.',
                       pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
                     })}
                     MenuProps={menuProps}
@@ -541,23 +562,7 @@ const AdditionalQualifications = () => {
                 </Grid>
               </Grid>
             ) : (
-              <Grid item lg={4}>
-                {/* <Select
-              fullWidth
-              required
-              name="int_university"
-              label="University"
-              placeholder={'Select university'}
-              value={getValues()?.int_university}
-              defaultValue={getValues()?.int_university}
-              error={errors?.int_university?.message}
-              {...register('int_university', {
-                required: 'University is required',
-              })}
-              MenuProps={menuProps}
-              // options={dummyOptions}
-              // options={createSelectFieldData(coursesList.data)}
-            /> */}
+              <Grid item xs={12} lg={4}>
                 <TextField
                   fullWidth
                   required
@@ -566,7 +571,7 @@ const AdditionalQualifications = () => {
                   placeholder={'Enter university'}
                   error={getValues().int_university === '' && errors?.int_university?.message}
                   {...register('int_university', {
-                    required: 'University is required',
+                    required: 'Please enter the University.',
                   })}
                 />
               </Grid>
@@ -588,7 +593,7 @@ const AdditionalQualifications = () => {
                     defaultValue={getValues().int_month}
                     error={errors?.int_month?.message}
                     {...register('int_month', {
-                      required: 'Awarding month is required',
+                      required: 'Please select the Awarding month.',
                     })}
                     MenuProps={menuProps}
                     options={monthsData}
@@ -605,7 +610,7 @@ const AdditionalQualifications = () => {
                     defaultValue={getValues()?.int_year}
                     error={errors?.int_year?.message}
                     {...register('int_year', {
-                      required: 'Awarding year is required',
+                      required: 'Please select the Awarding year.',
                       pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
                     })}
                     MenuProps={menuProps}
@@ -626,7 +631,7 @@ const AdditionalQualifications = () => {
                   defaultValue={getValues()?.broadSpeciality}
                   error={errors?.broadSpeciality?.message}
                   {...register('broadSpeciality', {
-                    required: 'Broad Speciality is required',
+                    required: 'Please select the Broad Speciality.',
                   })}
                   MenuProps={menuProps}
                   options={createSelectFieldData(specialitiesList?.data)}
@@ -634,7 +639,7 @@ const AdditionalQualifications = () => {
               </Grid>
             )}
 
-            <Grid item xs={4}>
+            <Grid item xs={12} lg={4}>
               {qualificationFrom === 'India' ? (
                 <TextField
                   fullWidth
@@ -656,7 +661,7 @@ const AdditionalQualifications = () => {
                   defaultValue={getValues()?.int_broadSpeciality}
                   error={errors?.int_broadSpeciality?.message}
                   {...register('int_broadSpeciality', {
-                    required: 'Broad Speciality is required',
+                    required: 'Please select the Broad Speciality.',
                     // pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
                   })}
                   MenuProps={menuProps}
@@ -665,50 +670,14 @@ const AdditionalQualifications = () => {
                 />
               )}
             </Grid>
-            {/* 
-            <Grid item xs={4}>
-              {qualificationFrom === 'India' ? (
-                <TextField
-                  fullWidth
-                  name="speciality"
-                  label="Speciality"
-                  placeholder={'Enter Speciality'}
-                  error={errors?.speciality?.message}
-                  {...register('speciality')}
-                />
-              ) : (
-                <Select
-                  fullWidth
-                  required
-                  name="int_broadSpeciality"
-                  label="Broad speciality"
-                  placeholder={'Select Broad Speciality'}
-                  variant="outlined"
-                  value={getValues()?.int_broadSpeciality}
-                  defaultValue={getValues()?.int_broadSpeciality}
-                  error={errors?.int_broadSpeciality?.message}
-                  {...register('int_broadSpeciality', {
-                    required: 'Broad Speciality is required',
-                    // pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
-                  })}
-                  MenuProps={menuProps}
-                  //options={dummyOptions}
-                  options={yearsData}
-                />
-              )}
-            </Grid> */}
-
             {qualificationFrom === 'International' && (
-              <Grid item lg={4}>
+              <Grid item xs={12} lg={4}>
                 <TextField
                   fullWidth
                   name="int_superSpeciality"
                   label="Super Speciality"
                   placeholder={'Enter super speciality'}
-                  {...register('int_superSpeciality', {
-                    required: 'Super Speciality is required',
-                    // pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
-                  })}
+                  {...register('int_superSpeciality', {})}
                 />
               </Grid>
             )}
@@ -735,7 +704,15 @@ const AdditionalQualifications = () => {
             >
               Submit
             </Button>
-            <Button variant={'contained'} color={'grey'} onClick={handleResetForm}>
+            <Button
+              variant={'contained'}
+              color={'grey'}
+              onClick={() => {
+                handleResetForm();
+                setIsAddForm(false);
+                setQualificationFrom('India');
+              }}
+            >
               Cancel
             </Button>
           </Box>
@@ -752,7 +729,16 @@ const AdditionalQualifications = () => {
         </>
       ) : (
         <>
-          <Box mt={2} display="flex" width="100%">
+          <Box
+            mt={2}
+            display="flex"
+            width="100%"
+            justifyContent={'space-between'}
+            alignItems={'center'}
+          >
+            <Typography variant={'h2'} color="primary.main" width={'auto'}>
+              Additional Qualification Details
+            </Typography>
             {qualification_detail_response_tos?.length < 8 && (
               <Button
                 sx={{ ml: 'auto' }}
