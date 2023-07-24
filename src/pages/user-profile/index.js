@@ -50,6 +50,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
 
   const eSignResponse = useSelector((state) => state?.doctorUserProfileReducer?.esignDetails?.data);
   const { loginData } = useSelector((state) => state?.loginReducer);
+
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const { personalDetails, workProfileDetails } = useSelector(
     (state) => state?.doctorUserProfileReducer
@@ -204,7 +205,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
     if (loginData?.data?.work_flow_status_id === 1 || personalDetails?.work_flow_status_id === 1) {
       setIsApplicationPending(false);
     }
-    if (loginData?.data?.hp_profile_status_id === 7) {
+    if (loginData?.data?.hp_profile_status_id === 7 || loginData?.data?.work_flow_status_id === 3) {
       setIsReadMode(false);
     } else {
       setIsReadMode(true);
@@ -374,7 +375,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
     <div>
       <form
         id="formid"
-        target="_blank"
+        target="_new"
         method="POST"
         action="https://es-staging.cdac.in/esignlevel2/2.1/form/signdoc"
       >

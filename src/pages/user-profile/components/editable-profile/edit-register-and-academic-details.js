@@ -525,15 +525,12 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 *
               </Typography>
             </Typography>
+
             <RadioGroup
               onChange={handleRegistration}
               name={'registration'}
               size="small"
-              defaultValue={
-                is_renewable !== undefined || is_renewable !== null || is_renewable !== ''
-                  ? is_renewable
-                  : '0'
-              }
+              defaultValue={is_renewable !== undefined ? is_renewable : '0'}
               items={[
                 {
                   value: '0',
