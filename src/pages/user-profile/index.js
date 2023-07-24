@@ -374,7 +374,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
     <div>
       <form
         id="formid"
-        target="_blank"
+        target="_new"
         method="POST"
         action="https://es-staging.cdac.in/esignlevel2/2.1/form/signdoc"
       >
