@@ -2,19 +2,19 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 
 import { makeStyles } from '@material-ui/core';
-import CancelIcon from '@mui/icons-material/Cancel';
+//import CancelIcon from '@mui/icons-material/Cancel';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import HourglassTopIcon from '@mui/icons-material/HourglassTop';
-import NoAccountsIcon from '@mui/icons-material/NoAccounts';
-import ReportIcon from '@mui/icons-material/Report';
-import VerifiedIcon from '@mui/icons-material/Verified';
+// import HourglassTopIcon from '@mui/icons-material/HourglassTop';
+// import NoAccountsIcon from '@mui/icons-material/NoAccounts';
+// import ReportIcon from '@mui/icons-material/Report';
+//  import VerifiedIcon from '@mui/icons-material/Verified';
 import { Box, FormGroup, Grid, IconButton, Link, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
 
 import ReactivationLogo from '../../../../../src/assets/images/reactivate-license-icon.png';
 import avtarImg from '../../../../assets/images/user.png';
-import { workflowStatusId } from '../../../../helpers/functions/common-functions';
+//import { workflowStatusId } from '../../../../helpers/functions/common-functions';
 import ReactivateLicencePopup from '../../../../shared/reactivate-licence-popup/re-activate-licence-popup';
 import SuccessPopup from '../../../../shared/reactivate-licence-popup/success-popup';
 import {
@@ -34,9 +34,9 @@ export default function ProfileImage(props) {
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const profileId = useSelector((state) => state.loginReducer.loginData.data.profile_id);
-  const currentStatus = useSelector(
-    (state) => state.doctorUserProfileReducer?.personalDetails?.hp_profile_status_id
-  );
+  // const currentStatus = useSelector(
+  //   (state) => state.doctorUserProfileReducer?.personalDetails?.hp_profile_status_id
+  // );
   const profileImage = useSelector(
     (state) => state.doctorUserProfileReducer?.personalDetails?.personal_details?.profile_photo
   );
@@ -45,6 +45,10 @@ export default function ProfileImage(props) {
   );
   const nmrIdData = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.nmr_id
+  );
+
+  const userStatus = useSelector(
+    (state) => state?.doctorUserProfileReducer?.personalDetails?.hp_profile_status_id
   );
 
   const doctorEsignStatus = useSelector(
@@ -121,38 +125,39 @@ export default function ProfileImage(props) {
     dispatch(getPersonalDetailsData(loginData?.data?.profile_id)).then(() => {});
   };
 
-  const getIconAndText = (currentStatus) => {
-    switch (currentStatus) {
-      case 1:
-        return {
-          icon: <HourglassTopIcon sx={{ color: 'primary.main' }} />,
-          text: workflowStatusId(1),
-        };
-      case 2:
-        return { icon: <VerifiedIcon sx={{ color: 'success.main' }} />, text: workflowStatusId(2) };
-      case 3:
-        return {
-          icon: <ReportIcon sx={{ color: 'secondary.lightOrange' }} />,
-          text: workflowStatusId(3),
-        };
-      case 4:
-        return { icon: <CancelIcon sx={{ color: 'error.main' }} />, text: workflowStatusId(4) };
-      case 5:
-        return {
-          icon: <NoAccountsIcon sx={{ color: 'error.main' }} />,
-          text: workflowStatusId(5),
-        };
-      case 6:
-        return {
-          icon: <NoAccountsIcon sx={{ color: 'error.main' }} />,
-          text: workflowStatusId(6),
-        };
-      default:
-        return { icon: null, text: 'Unknown Status' };
-    }
-  };
+  // const getIconAndText = (currentStatus) => {
+  //   switch (currentStatus) {
+  //     case 1:
+  //       return {
+  //         icon: <HourglassTopIcon sx={{ color: 'primary.main' }} />,
+  //         text: workflowStatusId(1),
+  //       };
+  //     case 2:
+  //       return { icon: <VerifiedIcon sx={{ color: 'success.main' }} />, text: workflowStatusId(2) };
+  //     case 3:
+  //       return {
+  //         icon: <ReportIcon sx={{ color: 'secondary.lightOrange' }} />,
+  //         text: workflowStatusId(3),
+  //       };
+  //     case 4:
+  //       return { icon: <CancelIcon sx={{ color: 'error.main' }} />, text: workflowStatusId(4) };
+  //     case 5:
+  //       return {
+  //         icon: <NoAccountsIcon sx={{ color: 'error.main' }} />,
+  //         text: workflowStatusId(5),
+  //       };
+  //     case 6:
+  //       return {
+  //         icon: <NoAccountsIcon sx={{ color: 'error.main' }} />,
+  //         text: workflowStatusId(6),
+  //       };
 
-  const { icon, text } = getIconAndText(currentStatus);
+  //     default:
+  //       return { icon: null, text: 'Unknown Status' };
+  //   }
+  // };
+
+  //const { icon, text } = getIconAndText(currentStatus);
 
   return (
     <Grid container className={styles.profileImageDetailsContainer} justifyContent="center">
@@ -222,22 +227,64 @@ export default function ProfileImage(props) {
         flexWrap="nowrap"
       >
         <Grid item>
-          <Typography component="span" variant="subtitle2" whiteSpace="initial" display="flex">
+          <Typography
+            component="span"
+            variant="subtitle2"
+            whiteSpace="initial"
+            display="flex"
+            color={'textPrimary.main'}
+          >
             {props.name || name}
-          </Typography>
-        </Grid>
-        <Grid item>
-          <Typography component="div" title={text}>
-            {loggedInUserType === 'Doctor' && icon}
           </Typography>
         </Grid>
       </Grid>
       {loggedInUserType === 'Doctor' && (
         <>
+          {userStatus && (
+            <Grid
+              display="flex"
+              //borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
+              item
+            >
+              <Typography variant="subtitle2" color="grey.label" sx={{ mr: '5px' }}>
+                Status:
+              </Typography>
+              <Typography
+                variant="subtitle2"
+                color={
+                  userStatus === 1 || userStatus === 7
+                    ? 'primary.main'
+                    : userStatus === 2
+                    ? 'success.main'
+                    : userStatus === 3
+                    ? 'secondary.main'
+                    : userStatus === 4 || userStatus === 5 || userStatus === 6
+                    ? 'error.main'
+                    : ''
+                }
+              >
+                {userStatus === 1
+                  ? 'Pending'
+                  : userStatus === 2
+                  ? 'Approved'
+                  : userStatus === 3
+                  ? 'Query Raised'
+                  : userStatus === 4
+                  ? 'Rejected'
+                  : userStatus === 5
+                  ? 'Suspended'
+                  : userStatus === 6
+                  ? 'Blacklisted'
+                  : userStatus === 7
+                  ? 'Draft'
+                  : 'Draft'}
+              </Typography>
+            </Grid>
+          )}
           {nmrIdData && (
             <Grid
               display="flex"
-              borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
+              // borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
               item
             >
               <Typography variant="subtitle2" color="grey.label" sx={{ mr: '5px' }}>

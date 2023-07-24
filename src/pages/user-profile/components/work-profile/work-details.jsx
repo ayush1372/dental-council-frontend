@@ -95,7 +95,7 @@ const WorkDetails = ({
       fetchDistricts(declaredFacilityData[0]?.address?.state, true);
       let facilityDetailsDeclared = {
         facility_id: declaredFacilityData[0]?.id,
-        organization_type: getValues().organizationType,
+        organization_type: getValues().organizationType || declaredFacilityData[0]?.facilityType,
         work_organization: declaredFacilityData[0]?.name,
         url: getValues().telecommunicationURL,
         address: {
@@ -570,7 +570,7 @@ const WorkDetails = ({
                   <Button
                     variant="contained"
                     color="secondary"
-                    sx={{ paddingTop: '15px', paddingBottom: '15px', }}
+                    sx={{ paddingTop: '15px', paddingBottom: '15px' }}
                     onClick={() => {
                       getValues()?.facilityId?.length > 0 && searchFacilitiesHandler();
                     }}
@@ -652,7 +652,7 @@ const WorkDetails = ({
                   <Button
                     variant="contained"
                     color="secondary"
-                    sx={{ paddingTop: '15px', paddingBottom: '15px', }}
+                    sx={{ paddingTop: '15px', paddingBottom: '15px' }}
                     onClick={() => {
                       typeof getValues()?.stateLGDCode === 'number' &&
                         typeof getValues()?.districtLGDCode === 'number' &&
@@ -1040,14 +1040,11 @@ const WorkDetails = ({
           display="flex"
           justifyContent="space-between"
           alignItems="center"
-          mb={3} mt={3} ml={3}
+          my={3}
+          ml={3}
         >
-          <Grid item xs={12} >
-            <Button
-              onClick={handleSubmit(onSubmit)}
-              variant="contained"
-              color="secondary"
-            >
+          <Grid item xs={12}>
+            <Button onClick={handleSubmit(onSubmit)} variant="contained" color="secondary">
               Submit
             </Button>
             <Button
