@@ -1040,8 +1040,7 @@ const WorkDetails = ({
           display="flex"
           justifyContent="space-between"
           alignItems="center"
-          mb={3}
-          mt={3}
+          my={3}
           ml={3}
         >
           <Grid item xs={12}>
