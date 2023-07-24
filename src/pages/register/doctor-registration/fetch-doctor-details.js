@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -42,7 +41,6 @@ import AadhaarInputField from '../../../ui/core/aadhaar-input-field/aadhaar-inpu
 import CreateHprId from './unique-username';
 
 function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onReset }) {
-  console.log('imrdataFound?? LINE45', imrDataNotFound);
   const [kycError, setKycError] = useState(false);
   const [consentD, setConsentD] = useState(false);
   const [textSpeech, setTextSpeech] = useState(false);
@@ -152,7 +150,6 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
         setshowOtpAadhar(false);
         handleClear();
         if (hpName !== undefined || hpName === '') {
-          console.log('imrdataFound??', !imrDataNotFound);
           let councilID = getCouncilID(councilName);
           dispatch(
             checkKycDetails(
