@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 
 import { Box, Container, Typography } from '@mui/material';
@@ -41,6 +42,7 @@ const DoctorRegistrationWelcomePage = () => {
   const { councilNames } = useSelector((state) => state.common);
   const dispatch = useDispatch();
   const handleAadhaarPage = (data) => {
+    console.log('handlePagedata1', handleAadhaarPage);
     setImrDataNotFound(data);
     setRejectPopup(false);
     // setDatafoundModalPopup(false);
