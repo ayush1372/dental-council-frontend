@@ -13,7 +13,6 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
     (state) => state?.loginReducer?.loginData?.data?.esign_status
   );
   const { data } = useSelector((state) => state?.loginReducer?.loginData);
-
   return (
     <List sx={{ p: 0 }}>
       {DrawerOptions?.map((item, index) => (
@@ -27,6 +26,8 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
             item.tabName === 'work-details' &&
             index === 4
               ? 'You will be able to add work details after Profile Verification'
+              : !open
+              ? `${item?.name} `
               : ''
           }
           key={`profileOption_${index}`}
@@ -89,7 +90,7 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
                       : theme.palette.grey1.main,
                 }}
               >
-                {!open ? item.icon : null}
+                {!open ? item.icon && <Tooltip>{item.icon}</Tooltip> : ''}
               </ListItemIcon>
               <ListItemText
                 primary={item.name}
