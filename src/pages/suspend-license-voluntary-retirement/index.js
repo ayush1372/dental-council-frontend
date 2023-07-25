@@ -107,6 +107,9 @@ export function SuspendLicenseVoluntaryRetirement({
     if (userActiveTab === 'track-status') {
       temp_application_type_id =
         selectedValue === 'suspend' ? 4 : selectedValue === 'blacklist' ? 3 : 1;
+    } else if (userActiveTab === 'dashboard') {
+      temp_application_type_id =
+        selectedValue === 'blacklist' ? 3 : selectedValue === 'suspend' ? 4 : 1;
     } else {
       temp_application_type_id =
         selectedSuspension === 'voluntary-suspension-check'
