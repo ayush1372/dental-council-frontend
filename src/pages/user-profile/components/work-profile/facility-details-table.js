@@ -149,20 +149,22 @@ function FacilityDetailsTable({ declaredFacilityData, currentWorkDetails }) {
           rowsPerPage={rowsPerPage}
           page={page}
         />
-        <Box>
-          <TablePagination
-            rowsPerPageOptions={[]}
-            component="div"
-            count={newRowsData?.length || 0}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          />
-        </Box>
+        {newRowsData?.length !== 0 && (
+          <Box>
+            <TablePagination
+              rowsPerPageOptions={[]}
+              component="div"
+              count={newRowsData?.length || 0}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            />
+          </Box>
+        )}
       </Grid>
       <Dialog
         open={confirmationModal}
