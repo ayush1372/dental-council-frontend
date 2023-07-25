@@ -34,6 +34,7 @@ function createData(
 function WorkDetailsTable({
   FacilityData,
   declaredFacilityData,
+  setFacilityTableError,
   setFacilityResponseData,
   setDeclaredFacilityDistrict,
 }) {
@@ -152,6 +153,7 @@ function WorkDetailsTable({
               if (e.target.checked) {
                 declaredFacilityData.push(FacilityData[currentRowIndex]);
                 setDeclaredFacilityDistrict([...declaredFacilityData]);
+                setFacilityTableError(false);
               } else {
                 declaredFacilityData.splice(currentRowIndex, 1);
                 setDeclaredFacilityDistrict([...declaredFacilityData]);
