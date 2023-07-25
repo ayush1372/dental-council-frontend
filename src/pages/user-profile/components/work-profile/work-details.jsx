@@ -66,7 +66,9 @@ const WorkDetails = ({
   const [tabValue, setTabValue] = useState(0);
   const [languages, setLanguages] = useState(getDefaultLanguageData(languages_known_ids));
   const [showTable, setShowTable] = useState(false);
-  const [workExpierence, setWorkExpierence] = useState(work_details?.experience_in_years);
+  const [workExpierence, setWorkExpierence] = useState(
+    work_details?.experience_in_years ? Number(work_details?.experience_in_years) : 0
+  );
   const [languageError, setLanguageError] = useState(false);
   const [facilityDistrict, setFacilityDistrict] = useState([]);
   const [facilityChecked, setFacilityChecked] = useState(true);
@@ -423,7 +425,7 @@ const WorkDetails = ({
           fullWidth
           name={'NatureOfWork'}
           label="Nature of Work"
-          defaultValue={work_details?.work_nature?.id}
+          defaultValue={work_details?.work_nature?.id || ''}
           required={true}
           placeholder={'Select nature of work'}
           {...register('NatureOfWork', {
