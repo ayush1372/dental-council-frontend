@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useState } from 'react';
 
 import BlockIcon from '@mui/icons-material/Block';
@@ -298,7 +297,6 @@ export function SuspendLicenseVoluntaryRetirement({
       )}
 
       <Typography variant="h2" mb={4} color="primary" textAlign={'center'}>
-        {console.log('selectedValue12', selectedValue)}
         {selectedValue === 'verify'
           ? loggedInUserType === 'NMC'
             ? 'Approve'
