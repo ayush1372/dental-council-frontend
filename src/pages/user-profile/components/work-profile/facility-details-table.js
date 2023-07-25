@@ -86,7 +86,11 @@ function FacilityDetailsTable({ declaredFacilityData, currentWorkDetails }) {
     setOrderBy(property);
   };
 
-  const newRowsData = defaultFacilityData?.current_work_details?.map((application) => {
+  const updatedFacilityData = defaultFacilityData?.current_work_details.filter(
+    (value) => JSON.stringify(value) !== '{}'
+  );
+
+  const newRowsData = updatedFacilityData?.map((application) => {
     return createData(
       {
         type: 'name',
