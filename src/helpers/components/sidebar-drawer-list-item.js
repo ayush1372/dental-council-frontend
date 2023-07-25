@@ -4,6 +4,7 @@ import BadgeIcon from '@mui/icons-material/Badge';
 import CreditCardOffIcon from '@mui/icons-material/CreditCardOff';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PasswordIcon from '@mui/icons-material/Password';
+import { IconButton, Tooltip } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 import ActivateLicence from '../../pages/profile/activate-licence-tab/activate-licence-tab';
@@ -37,35 +38,65 @@ export const doctorTabs = [
     option: 0,
     name: 'My Profile',
     tabName: 'my-profile',
-    icon: <AccountCircleIcon />,
+    icon: (
+      <IconButton>
+        <Tooltip title="My Profile" arrow placement="bottom-start">
+          <AccountCircleIcon />
+        </Tooltip>
+      </IconButton>
+    ),
     element: <UserProfile tabName={SideDrawerListItem} />,
   },
   {
     option: 1,
     name: 'Track Application',
     tabName: 'track-application',
-    icon: <CreditCardOffIcon />,
+    icon: (
+      <IconButton>
+        <Tooltip title="Track Application" arrow placement="bottom-start">
+          <CreditCardOffIcon />
+        </Tooltip>
+      </IconButton>
+    ),
     element: <TrackApplication getTableData={getDoctorTrackApplicationData} />,
   },
   {
     option: 2,
     name: 'Voluntary Suspend Licence',
     tabName: 'voluntary-suspend-license',
-    icon: <CreditCardOffIcon />,
+    icon: (
+      <IconButton>
+        <Tooltip title="Voluntary Suspend Licence" arrow placement="bottom-start">
+          <CreditCardOffIcon />
+        </Tooltip>
+      </IconButton>
+    ),
     element: <VoluntarySuspendLicense tabName={SideDrawerListItem} />,
   },
   {
     option: 4,
     name: 'Additional Qualifications',
     tabName: 'additional-qualifications',
-    icon: <AccountCircleIcon />,
+    icon: (
+      <IconButton>
+        <Tooltip title="Additional Qualifications" arrow placement="bottom-start">
+          <AccountCircleIcon />
+        </Tooltip>
+      </IconButton>
+    ),
     element: <AdditionalQualifications />,
   },
   {
     option: 5,
     name: 'Work Details',
     tabName: 'work-details',
-    icon: <AccountCircleIcon />,
+    icon: (
+      <IconButton>
+        <Tooltip title="Work Details" arrow placement="bottom-start">
+          <AccountCircleIcon />
+        </Tooltip>
+      </IconButton>
+    ),
     element: <WorkProfile />,
   },
   // {
@@ -82,21 +113,39 @@ export const smcTabs = [
     option: 0,
     name: 'Dashboard',
     tabName: 'dashboard',
-    icon: <DashboardIcon />,
+    icon: (
+      <Tooltip title="Dashboard" arrow placement="bottom-start">
+        <IconButton>
+          <DashboardIcon />
+        </IconButton>
+      </Tooltip>
+    ),
     element: <Dashboard tabName={SideDrawerListItem} />,
   },
   {
     option: 1,
     name: 'My Profile',
     tabName: 'my-profile',
-    icon: <AccountCircleIcon />,
+    icon: (
+      <IconButton>
+        <Tooltip title="My Profile" arrow placement="bottom-start">
+          <AccountCircleIcon />
+        </Tooltip>
+      </IconButton>
+    ),
     element: <MyProfile userType={'SMC'} />,
   },
   {
     option: 2,
     name: 'Track Status',
     tabName: 'track-status',
-    icon: <BadgeIcon />,
+    icon: (
+      <IconButton>
+        <Tooltip title="Track Status" arrow placement="bottom-start">
+          <BadgeIcon />
+        </Tooltip>
+      </IconButton>
+    ),
     element: <TrackStatus tabName={SideDrawerListItem} />,
   },
   // {
@@ -110,7 +159,13 @@ export const smcTabs = [
     option: 3,
     name: 'Activate Licence',
     tabName: 'Activate Licence',
-    icon: <AppRegistrationIcon />,
+    icon: (
+      <IconButton>
+        <Tooltip title="Activate Licence" arrow placement="bottom-start">
+          <AppRegistrationIcon />
+        </Tooltip>
+      </IconButton>
+    ),
     element: <ActivateLicence />,
   },
   // {
@@ -124,7 +179,13 @@ export const smcTabs = [
     option: 4,
     name: 'Change Password',
     tabName: 'change-password',
-    icon: <PasswordIcon />,
+    icon: (
+      <IconButton>
+        <Tooltip title="Change Password" arrow placement="bottom-start">
+          <PasswordIcon />
+        </Tooltip>
+      </IconButton>
+    ),
     element: <ChangePassword tabName={SideDrawerListItem} />,
   },
 ];
@@ -134,28 +195,52 @@ export const nmcTabs = [
     option: 0,
     name: 'Dashboard',
     tabName: 'dashboard',
-    icon: <DashboardIcon />,
+    icon: (
+      <IconButton>
+        <Tooltip title="Dashboard" arrow placement="bottom-start">
+          <DashboardIcon />
+        </Tooltip>
+      </IconButton>
+    ),
     element: <Dashboard tabName={SideDrawerListItem} />,
   },
   {
     option: 1,
     name: 'My Profile',
     tabName: 'my-profile',
-    icon: <AccountCircleIcon />,
+    icon: (
+      <IconButton>
+        <Tooltip title="My Profile" arrow placement="bottom-start">
+          <AccountCircleIcon />
+        </Tooltip>
+      </IconButton>
+    ),
     element: <MyProfile userType={'NMC'} />,
   },
   {
     option: 2,
     name: 'Track Status',
     tabName: 'track-status',
-    icon: <BadgeIcon />,
+    icon: (
+      <IconButton>
+        <Tooltip title="Track Status" arrow placement="bottom-start">
+          <BadgeIcon />
+        </Tooltip>
+      </IconButton>
+    ),
     element: <TrackStatus tabName={SideDrawerListItem} />,
   },
   {
     option: 3,
     name: 'Activate Licence',
     tabName: 'Activate Licence',
-    icon: <AppRegistrationIcon />,
+    icon: (
+      <IconButton>
+        <Tooltip title="Activate Licence" arrow placement="bottom-start">
+          <AppRegistrationIcon />
+        </Tooltip>
+      </IconButton>
+    ),
     element: <ActivateLicence />,
   },
   // {
@@ -169,14 +254,26 @@ export const nmcTabs = [
     option: 4,
     name: 'College Registration',
     tabName: 'college-registration',
-    icon: <AppRegistrationIcon />,
+    icon: (
+      <IconButton>
+        <Tooltip title="College Registration" arrow placement="bottom-start">
+          <AppRegistrationIcon />
+        </Tooltip>
+      </IconButton>
+    ),
     element: <NMCCollegeRegistration />,
   },
   {
     option: 5,
     name: 'Change Password',
     tabName: 'change-password',
-    icon: <PasswordIcon />,
+    icon: (
+      <IconButton>
+        <Tooltip title="Change Password" arrow placement="bottom-start">
+          <PasswordIcon />
+        </Tooltip>
+      </IconButton>
+    ),
     element: <ChangePassword tabName={SideDrawerListItem} />,
   },
 ];
@@ -186,35 +283,65 @@ export const colgTabs = [
     option: 0,
     name: 'Dashboard',
     tabName: 'dashboard',
-    icon: <DashboardIcon />,
+    icon: (
+      <IconButton>
+        <Tooltip title="Dashboard" arrow placement="bottom-start">
+          <DashboardIcon />
+        </Tooltip>
+      </IconButton>
+    ),
     element: <Dashboard tabName={SideDrawerListItem} />,
   },
   {
     option: 1,
     name: 'My Profile',
     tabName: 'my-profile',
-    icon: <AccountCircleIcon />,
+    icon: (
+      <IconButton title="My Profile" arrow placement="bottom-start">
+        <Tooltip>
+          <AccountCircleIcon />
+        </Tooltip>
+      </IconButton>
+    ),
     element: <CollegeMyProfile />,
   },
   {
     option: 2,
     name: 'Track Status',
     tabName: 'track-status',
-    icon: <BadgeIcon />,
+    icon: (
+      <IconButton>
+        <Tooltip title="Track Status" arrow placement="bottom-start">
+          <BadgeIcon />
+        </Tooltip>
+      </IconButton>
+    ),
     element: <TrackStatus tabName={SideDrawerListItem} />,
   },
   {
     option: 3,
     name: 'College Registrar',
     tabName: 'college-registrar',
-    icon: <AppRegistrationIcon />,
+    icon: (
+      <IconButton>
+        <Tooltip title="College Registrar" arrow placement="bottom-start">
+          <AppRegistrationIcon />
+        </Tooltip>
+      </IconButton>
+    ),
     element: <CollegeRegistrar />,
   },
   {
     option: 4,
     name: 'College Dean',
     tabName: 'college-dean',
-    icon: <AppRegistrationIcon />,
+    icon: (
+      <IconButton>
+        <Tooltip title="College Dean" arrow placement="bottom-start">
+          <AppRegistrationIcon />
+        </Tooltip>
+      </IconButton>
+    ),
     element: <CollegeDean />,
   },
 
@@ -222,7 +349,13 @@ export const colgTabs = [
     option: 5,
     name: 'Change Password',
     tabName: 'change-password',
-    icon: <PasswordIcon />,
+    icon: (
+      <IconButton>
+        <Tooltip title="Change Password" arrow placement="bottom-start">
+          <PasswordIcon />
+        </Tooltip>
+      </IconButton>
+    ),
     element: <ChangePassword tabName={SideDrawerListItem} />,
   },
 ];
@@ -232,28 +365,52 @@ export const nbeTabs = [
     option: 0,
     name: 'Dashboard',
     tabName: 'dashboard',
-    icon: <DashboardIcon />,
+    icon: (
+      <IconButton>
+        <Tooltip title="Dashboard" arrow placement="bottom-start">
+          <DashboardIcon />
+        </Tooltip>
+      </IconButton>
+    ),
     element: <Dashboard tabName={SideDrawerListItem} />,
   },
   {
     option: 1,
     name: 'My Profile',
     tabName: 'my-profile',
-    icon: <AccountCircleIcon />,
+    icon: (
+      <IconButton>
+        <Tooltip title="My Profile" arrow placement="bottom-start">
+          <AccountCircleIcon />
+        </Tooltip>
+      </IconButton>
+    ),
     element: <MyProfile userType={'NBE'} />,
   },
   {
     option: 2,
     name: 'Track Status',
     tabName: 'track-status',
-    icon: <BadgeIcon />,
+    icon: (
+      <IconButton>
+        <Tooltip title="Track Status" arrow placement="bottom-start">
+          <BadgeIcon />
+        </Tooltip>
+      </IconButton>
+    ),
     element: <TrackStatus tabName={SideDrawerListItem} />,
   },
   {
     option: 3,
     name: 'Change Password',
     tabName: 'change-password',
-    icon: <PasswordIcon />,
+    icon: (
+      <IconButton>
+        <Tooltip title="Change Password" arrow placement="bottom-start">
+          <PasswordIcon />
+        </Tooltip>
+      </IconButton>
+    ),
     element: <ChangePassword tabName={SideDrawerListItem} />,
   },
 ];
@@ -263,28 +420,52 @@ export const colgDeanRegTabs = [
     option: 0,
     name: 'Dashboard',
     tabName: 'dashboard',
-    icon: <DashboardIcon />,
+    icon: (
+      <IconButton>
+        <Tooltip title="Dashboard" arrow placement="bottom-start">
+          <DashboardIcon />
+        </Tooltip>
+      </IconButton>
+    ),
     element: <Dashboard tabName={SideDrawerListItem} />,
   },
   {
     option: 1,
     name: 'My Profile',
     tabName: 'my-profile',
-    icon: <AccountCircleIcon />,
+    icon: (
+      <IconButton>
+        <Tooltip title="My Profile" arrow placement="bottom-start">
+          <AccountCircleIcon />
+        </Tooltip>
+      </IconButton>
+    ),
     element: <CollegeMyProfile />,
   },
   {
     option: 2,
     name: 'Create Verifier',
     tabName: 'Create Verifier',
-    icon: <AppRegistrationIcon />,
+    icon: (
+      <IconButton>
+        <Tooltip title="Create Verifier" arrow placement="bottom-start">
+          <AppRegistrationIcon />
+        </Tooltip>
+      </IconButton>
+    ),
     element: <CollegeVerifier />,
   },
   {
     option: 3,
     name: 'Change Password',
     tabName: 'change-password',
-    icon: <PasswordIcon />,
+    icon: (
+      <IconButton>
+        <Tooltip title="Change Password" arrow placement="bottom-start">
+          <PasswordIcon />
+        </Tooltip>
+      </IconButton>
+    ),
     element: <ChangePassword tabName={SideDrawerListItem} />,
   },
 ];

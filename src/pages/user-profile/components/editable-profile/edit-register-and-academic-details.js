@@ -493,7 +493,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               defaultValue={
                 getValues()?.RegistrationDate ? new Date(getValues()?.RegistrationDate) : undefined
               }
-              // error={errors.RegistrationDate?.message}
+              // error={errors?.RegistrationDate?.message}
               // {...register('RegistrationDate', { required: 'Please select a valid date' })}
               backgroundColor={
                 work_flow_status_id === 3

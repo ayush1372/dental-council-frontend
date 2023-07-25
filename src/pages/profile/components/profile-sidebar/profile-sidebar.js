@@ -97,7 +97,7 @@ export default function MiniDrawer({ DrawerOptions = [], handleSwitch }) {
       variant="permanent"
       open={open}
       PaperProps={{ sx: { position: 'relative', border: 'none' } }}
-      sx={{ borderTopLeftRadius: '8px', borderTopRightRadius: '8px' }}
+      // sx={{ borderTopLeftRadius: '8px', borderTopRightRadius: '8px' }}
     >
       <DrawerHeader
         sx={
@@ -106,8 +106,8 @@ export default function MiniDrawer({ DrawerOptions = [], handleSwitch }) {
             : {
                 background: `linear-gradient(to bottom, ${theme.palette.grey.main} 0%,  ${theme.palette.grey.main} 100px, ${theme.palette.white.main} 20%,  ${theme.palette.white.main} 100%)`,
                 mb: 4,
-                borderTopLeftRadius: '8px',
-                borderTopRightRadius: '8px',
+                // borderTopLeftRadius: '8px',
+                // borderTopRightRadius: '8px',
               }
         }
       >

@@ -171,7 +171,14 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
       <Grid container>
         <Grid
           borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
-          item xs={12} sm={6} lg={3} xl={3} px={2} mb={{ xs: 1, lg: 0 }}>
+          item
+          xs={12}
+          sm={6}
+          lg={3}
+          xl={3}
+          px={2}
+          mb={{ xs: 1, lg: 0 }}
+        >
           <Typography variant="body3" color="grey.label">
             IMR/Registration Numbers
           </Typography>
@@ -179,25 +186,35 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
             {registration_number ? registration_number : ''}
           </Typography>
         </Grid>
-        
+
         <Grid
           borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
-          item xs={12} sm={6} lg={2} xl={2} px={2} mb={{ xs: 1, lg: 0 }}>
+          item
+          xs={12}
+          sm={6}
+          lg={2}
+          xl={2}
+          px={2}
+          mb={{ xs: 1, lg: 0 }}
+        >
           <Box>
             <Typography variant="body3" color="grey.label">
               NMR ID
             </Typography>
-            {!nmrIdData ?
-              <Tooltip title={'NMR ID will be displayed here once your application is approved by NMC'}>
+            {!nmrIdData ? (
+              <Tooltip
+                title={'NMR ID will be displayed here once your application is approved by NMC'}
+              >
                 <InfoOutlinedIcon color="primary" sx={{ width: '14px' }} ml={2} />
-              </Tooltip> : ''
-            }
+              </Tooltip>
+            ) : (
+              ''
+            )}
           </Box>
           <Typography variant="subtitle2" color="textPrimary.main">
             {nmrIdData ? nmrIdData : '-'}
           </Typography>{' '}
         </Grid>
-        
 
         {/* <Grid
           borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
@@ -253,7 +270,14 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
 
         <Grid
           borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
-          item xs={12} sm={6} lg={3} xl={3} px={2} mb={{ xs: 1, lg: 0 }}>
+          item
+          xs={12}
+          sm={6}
+          lg={3}
+          xl={3}
+          px={2}
+          mb={{ xs: 1, lg: 0 }}
+        >
           <Typography variant="body3" color="grey.label">
             Mobile Number
           </Typography>
@@ -340,6 +364,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
               <Box display={'flex'} flexDirection="column">
                 <Paper display={'flex'} alignItems="center" sx={{ p: '2px 4px' }}>
                   <InputBase
+                    required={true}
                     sx={{ ml: 1, flex: 1 }}
                     placeholder="Email"
                     name="email"
@@ -399,7 +424,6 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
             )}
           </Box>
         </Grid>
-        
       </Grid>
       <Dialog open={showOTPPOPUp} maxWidth={'600px'}>
         <ConfirmOTP otpData={userData} />
