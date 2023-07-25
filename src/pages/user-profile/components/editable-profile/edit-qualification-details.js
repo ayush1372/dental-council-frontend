@@ -350,11 +350,11 @@ const EditQualificationDetails = ({
               )}
               options={[
                 {
-                  value: 'pass',
+                  value: 'Pass',
                   label: 'Pass',
                 },
                 {
-                  value: 'fail',
+                  value: 'Fail',
                   label: 'Fail',
                 },
               ]}
@@ -390,7 +390,7 @@ const EditQualificationDetails = ({
                   : ''
               }
               name="MonthFMGE"
-              placeholder={'Select month-fmge'}
+              placeholder={'Select FMGE month'}
               label="Month (FMGE Qualified)"
               defaultValue={fields[index].monthfmge}
               required={true}
@@ -431,7 +431,7 @@ const EditQualificationDetails = ({
               }
               name="YearFMGE"
               label="Year (FMGE Qualified)"
-              placeholder={'Select fmge qualified'}
+              placeholder={'Select FMGE year'}
               defaultValue={fields[index].yearfmge}
               required={true}
               {...register(`qualification[${index}].yearfmge`, {

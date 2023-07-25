@@ -73,7 +73,7 @@ export default function SuccessPopup({ fetchDoctorUserPersonalDetails, reactivat
             variant="body1"
             data-testid="popup-input-text"
           >
-            {logInDoctorStatus
+            {logInDoctorStatus || personalDetails?.hp_profile_status_id === 6
               ? `Your profile has been re-activated. You can perform action on your profile now.`
               : `Your username has been successfully created. A link to create your password has been sent to the registered mobile number.`}
           </Typography>
