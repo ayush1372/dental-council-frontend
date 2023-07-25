@@ -86,7 +86,11 @@ function FacilityDetailsTable({ declaredFacilityData, currentWorkDetails }) {
     setOrderBy(property);
   };
 
-  const newRowsData = defaultFacilityData?.current_work_details?.map((application) => {
+  const updatedFacilityData = defaultFacilityData?.current_work_details.filter(
+    (value) => JSON.stringify(value) !== '{}'
+  );
+
+  const newRowsData = updatedFacilityData?.map((application) => {
     return createData(
       {
         type: 'name',
@@ -149,20 +153,22 @@ function FacilityDetailsTable({ declaredFacilityData, currentWorkDetails }) {
           rowsPerPage={rowsPerPage}
           page={page}
         />
-        <Box>
-          <TablePagination
-            rowsPerPageOptions={[]}
-            component="div"
-            count={newRowsData?.length || 0}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          />
-        </Box>
+        {newRowsData?.length !== 0 && (
+          <Box>
+            <TablePagination
+              rowsPerPageOptions={[]}
+              component="div"
+              count={newRowsData?.length || 0}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            />
+          </Box>
+        )}
       </Grid>
       <Dialog
         open={confirmationModal}

@@ -122,9 +122,6 @@ function TrackAppicationTable({
       event.stopPropagation();
       setRowData(row);
     });
-    // .catch((error) => {
-    //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-    // });
   };
 
   useEffect(() => {
@@ -270,19 +267,21 @@ function TrackAppicationTable({
           rowsPerPage={rowsPerPage}
           page={page}
         />
-        <TablePagination
-          rowsPerPageOptions={[]}
-          component="div"
-          count={tableData?.data?.data?.total_no_of_records || 0}
-          page={page}
-          rowsPerPage={rowsPerPage}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        />
+        {newRowsData?.length !== 0 && (
+          <TablePagination
+            rowsPerPageOptions={[]}
+            component="div"
+            count={tableData?.data?.data?.total_no_of_records || 0}
+            page={page}
+            rowsPerPage={rowsPerPage}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          />
+        )}
       </Box>
     </Grid>
   );

@@ -29,7 +29,7 @@ export function SuspendLicenseVoluntaryRetirement({
 }) {
   const dispatch = useDispatch();
 
-  const { userActiveTab } = useSelector((state) => state.common);
+  const { userActiveTab, loggedInUserType } = useSelector((state) => state.common);
   const { loginData } = useSelector((state) => state?.loginReducer);
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { queryRaisedFor } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
@@ -104,7 +104,7 @@ export function SuspendLicenseVoluntaryRetirement({
         break;
     }
     let temp_application_type_id;
-    if (userActiveTab === 'track-status') {
+    if (userActiveTab === 'track-status' || userActiveTab === 'dashboard') {
       temp_application_type_id =
         selectedValue === 'suspend' ? 4 : selectedValue === 'blacklist' ? 3 : 1;
     } else {
@@ -185,7 +185,6 @@ export function SuspendLicenseVoluntaryRetirement({
         ? personalDetails?.application_type_id
         : 1,
     };
-
     try {
       if (
         ((confirmationModal && userActiveTab === 'voluntary-suspend-license') ||
@@ -299,7 +298,9 @@ export function SuspendLicenseVoluntaryRetirement({
 
       <Typography variant="h2" mb={4} color="primary" textAlign={'center'}>
         {selectedValue === 'verify'
-          ? 'Verify'
+          ? loggedInUserType === 'NMC'
+            ? 'Approve'
+            : 'Verify'
           : selectedValue === 'raise'
           ? 'Raise a Query'
           : selectedValue === 'approve'
@@ -623,6 +624,7 @@ export function SuspendLicenseVoluntaryRetirement({
                     }}
                     label={fieldData?.filedName}
                     error={errors.notification?.message}
+                    defaultChecked={true}
                   />
                 );
               })}
