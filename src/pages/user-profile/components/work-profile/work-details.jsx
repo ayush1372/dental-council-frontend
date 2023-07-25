@@ -75,6 +75,9 @@ const WorkDetails = ({
   const [workExperianceError, setWorkExperianceError] = useState(false);
   const [organizationChecked, setOrganizationChecked] = useState(false);
   const [declaredFacilityData, setDeclaredFacilityDistrict] = useState([]);
+  const [facilityIDError, setFacilityIDError] = useState(false);
+  const [facilityStateError, setFacilityStateError] = useState(false);
+  const [facilityDistrictError, setFacilityDistrictError] = useState(false);
 
   const onSubmit = () => {
     const currentWorkDetails = {
@@ -82,6 +85,7 @@ const WorkDetails = ({
         is_user_currently_working: currentWorkingSelection === 'yes' ? 0 : 1,
         work_nature: getWorkNature(getValues().NatureOfWork),
         work_status: getWorkStatus(getValues().workStatus),
+        experience_in_years: workExpierence,
       },
       current_work_details: [
         {
@@ -104,7 +108,6 @@ const WorkDetails = ({
             locality: getValues().Locality,
           },
           registration_no: registrationDetails?.registration_detail_to?.registration_number,
-          experience_in_years: workExpierence,
         },
       ],
       hp_profile_id: loginData?.data?.profile_id,
@@ -584,16 +587,11 @@ const WorkDetails = ({
           </Grid>
           {tabValue === 0 && (
             <Grid container spacing={2} mt={2} ml={1}>
-              <Grid
-                item
-                md={8}
-                display="flex"
-                alignItems={errors?.facilityId?.message ? 'center' : 'end'}
-              >
+              <Grid item md={8} display="flex" alignItems={facilityIDError ? 'center' : 'end'}>
                 <Box>
                   <TextField
                     fullWidth
-                    error={errors?.facilityId?.message}
+                    error={facilityIDError && 'Please enter a valid facility ID'}
                     name={'facilityId'}
                     label="Facility ID"
                     required={true}
@@ -602,6 +600,9 @@ const WorkDetails = ({
                     {...register(`facilityId`, {
                       required: 'Please enter a valid facility ID',
                     })}
+                    onChange={(e) => {
+                      if (e.target.value !== '') setFacilityIDError(false);
+                    }}
                   />
                 </Box>
                 <Box ml={2}>
@@ -610,7 +611,9 @@ const WorkDetails = ({
                     color="secondary"
                     sx={{ paddingTop: '15px', paddingBottom: '15px' }}
                     onClick={() => {
-                      getValues()?.facilityId?.length > 0 && searchFacilitiesHandler();
+                      getValues()?.facilityId?.length > 0
+                        ? searchFacilitiesHandler()
+                        : setFacilityIDError(true);
                     }}
                   >
                     Search
@@ -643,7 +646,7 @@ const WorkDetails = ({
 
                 <Select
                   fullWidth
-                  error={getValues().stateLGDCode?.length === 0 && 'Please select state'}
+                  error={facilityStateError && 'Please select state'}
                   name={'stateLGDCode'}
                   defaultValue={getValues().stateLGDCode}
                   required={true}
@@ -651,7 +654,13 @@ const WorkDetails = ({
                     required: 'Please select state',
                   })}
                   options={createSelectFieldData(statesList)}
-                  placeholder={'Enter State'}
+                  placeholder={'Select State'}
+                  onChange={(e) => {
+                    if (e.target.value !== '') {
+                      setFacilityStateError(true);
+                      fetchDistricts(e.target.value, true);
+                    }
+                  }}
                 />
               </Grid>
               <Grid item xs={12} md={3} lg={3}>
@@ -663,7 +672,7 @@ const WorkDetails = ({
                 </Typography>
                 <Select
                   fullWidth
-                  error={errors.districtLGDCode?.message}
+                  error={facilityDistrictError && 'Please select district'}
                   name={'districtLGDCode'}
                   defaultValue={getValues().districtLGDCode}
                   required={true}
@@ -671,7 +680,12 @@ const WorkDetails = ({
                     required: 'District is required',
                   })}
                   options={createSelectFieldData(facilityDistrict)}
-                  placeholder={'Enter District'}
+                  placeholder={'Select District'}
+                  onChange={(e) => {
+                    if (e.target.value !== '') {
+                      setFacilityDistrictError(false);
+                    }
+                  }}
                 />
               </Grid>
               <Grid item xs={12} md={3} lg={3}>
@@ -692,9 +706,24 @@ const WorkDetails = ({
                     color="secondary"
                     sx={{ paddingTop: '15px', paddingBottom: '15px' }}
                     onClick={() => {
-                      typeof getValues()?.stateLGDCode === 'number' &&
-                        typeof getValues()?.districtLGDCode === 'number' &&
+                      if (
+                        getValues()?.stateLGDCode === undefined ||
+                        getValues()?.stateLGDCode === ''
+                      ) {
+                        setFacilityStateError(true);
+                      }
+                      if (
+                        getValues()?.districtLGDCode === undefined ||
+                        getValues()?.districtLGDCode === ''
+                      ) {
+                        setFacilityDistrictError(true);
+                      }
+                      if (
+                        typeof getValues()?.stateLGDCode === 'number' &&
+                        typeof getValues()?.districtLGDCode === 'number'
+                      ) {
                         searchFacilitiesHandler();
+                      }
                     }}
                     disabled={
                       getValues()?.stateLGDCode?.length > 0 &&
