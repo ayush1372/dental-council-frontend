@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import CancelIcon from '@mui/icons-material/Cancel';
-import { Divider, Grid, Typography } from '@mui/material';
+import ReportIcon from '@mui/icons-material/Report';
+import { Divider, Grid, Tooltip, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { monthsData, yearsData } from '../../../../constants/common-data';
@@ -153,6 +154,10 @@ const EditQualificationDetails = ({
   const getQueryRaised = (fieldName) => {
     let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
     return query === undefined;
+  };
+  const getQueryRaisedComment = (fieldName) => {
+    let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
+    return query?.query_comment;
   };
 
   return (
@@ -475,6 +480,9 @@ const EditQualificationDetails = ({
         <Grid item xs={12} md={6} lg={4}>
           {qualificationfrom === 'International' || isAdditionalQualification ? (
             <Select
+              queryRaiseIcon={
+                getQueryRaised('Name of the Degree Obtained') === false ? true : false
+              }
               fullWidth
               error={errors?.qualification?.[index]?.qualification?.message}
               name="Qualification"
@@ -515,6 +523,10 @@ const EditQualificationDetails = ({
             />
           ) : (
             <Select
+              queryRaiseIcon={
+                getQueryRaised('Name of the Degree Obtained') === false ? true : false
+              }
+              toolTipData={getQueryRaisedComment('Name of the Degree Obtained')}
               fullWidth
               error={
                 getValues()?.qualification[index]?.qualification?.length === 0
@@ -629,6 +641,8 @@ const EditQualificationDetails = ({
             />
           ) : (
             <Select
+              queryRaiseIcon={getQueryRaised('State') === false ? true : false}
+              toolTipData={getQueryRaisedComment('State')}
               fullWidth
               error={
                 getValues().qualification[index].state === '' &&
@@ -703,6 +717,8 @@ const EditQualificationDetails = ({
             />
           ) : (
             <Select
+              queryRaiseIcon={getQueryRaised('Name of the College') === false ? true : false}
+              toolTipData={getQueryRaisedComment('Name of the College')}
               fullWidth
               error={errors?.qualification?.[index]?.college?.message}
               name="College"
@@ -726,7 +742,9 @@ const EditQualificationDetails = ({
                     : '',
               }}
               disabled={
-                work_flow_status_id === 3
+                getQueryRaised('State') === false
+                  ? false
+                  : work_flow_status_id === 3
                   ? getQueryRaised('Name of the College')
                   : isVerified === 1
                   ? true
@@ -774,6 +792,8 @@ const EditQualificationDetails = ({
             />
           ) : (
             <Select
+              queryRaiseIcon={getQueryRaised('University') === false ? true : false}
+              toolTipData={getQueryRaisedComment('University')}
               fullWidth
               error={errors?.qualification?.[index]?.university?.message}
               placeholder={'Select university'}
@@ -797,7 +817,9 @@ const EditQualificationDetails = ({
                     : '',
               }}
               disabled={
-                work_flow_status_id === 3
+                getQueryRaised('Name of the College') === false || getQueryRaised('State') === false
+                  ? false
+                  : work_flow_status_id === 3
                   ? getQueryRaised('University')
                   : isVerified === 1
                   ? true
@@ -818,9 +840,16 @@ const EditQualificationDetails = ({
             <Typography component="span" color="error.main">
               *
             </Typography>
+            {getQueryRaised('Month & Year of Degree Awarded') === false && (
+              <Tooltip title={getQueryRaisedComment('Month & Year of Degree Awarded')}>
+                <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
+              </Tooltip>
+            )}
           </Typography>
           <Grid item xs={12} md={6} mb={{ xs: 2, md: 0 }}>
             <Select
+              queryRaiseIcon={getQueryRaised('Month') === false ? true : false}
+              toolTipData={getQueryRaisedComment('Month')}
               fullWidth
               error={
                 getValues().qualification[index].month === '' &&
@@ -862,6 +891,8 @@ const EditQualificationDetails = ({
           </Grid>
           <Grid item xs={12} md={6}>
             <Select
+              queryRaiseIcon={getQueryRaised('year') === false ? true : false}
+              toolTipData={getQueryRaisedComment('year')}
               variant="outlined"
               name="year"
               options={yearsData}
@@ -897,7 +928,11 @@ const EditQualificationDetails = ({
                     : '',
               }}
               disabled={
-                work_flow_status_id === 3 ? getQueryRaised('Month & Year of Degree Awarded') : isVerified === 1 ? true : false
+                work_flow_status_id === 3
+                  ? getQueryRaised('Month & Year of Degree Awarded')
+                  : isVerified === 1
+                  ? true
+                  : false
               }
               value={getValues().qualification[index].year}
             />
@@ -954,6 +989,8 @@ const EditQualificationDetails = ({
       <Grid container item spacing={2} mt={1}>
         <Grid item xs={12}>
           <UploadFile
+            queryRaiseIcon={getQueryRaised('Upload Qualification Degree') === false ? true : false}
+            toolTipData={getQueryRaisedComment('Upload Qualification Degree')}
             fileID={'qualification'}
             name={'UploadFileName'}
             uploadFiles="single"
@@ -968,8 +1005,12 @@ const EditQualificationDetails = ({
             fileName={fileName || ''}
             isDigiLockcerVisible={true}
             uploadFileLabel="Upload Qualification Degree"
-            disabled={
-              work_flow_status_id === 3
+            Upload
+            Qualification
+            fileDisabled={
+              getQueryRaised('Upload Qualification Degree') === false
+                ? false
+                : work_flow_status_id === 3
                 ? getQueryRaised('Upload Qualification Degree')
                 : isVerified === 1
                 ? true

@@ -2,8 +2,9 @@ import { useState } from 'react';
 
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import ReplayIcon from '@mui/icons-material/Replay';
+import ReportIcon from '@mui/icons-material/Report';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
-import { Box, Grid, Typography } from '@mui/material';
+import { Box, Grid, Tooltip, Typography } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 import moment from 'moment';
 import { AiOutlineEye } from 'react-icons/ai';
@@ -27,6 +28,9 @@ export const UploadFile = (props) => {
     isDigiLockcerVisible = false,
     uploadFileLabel,
     name = 'file',
+    queryRaiseIcon,
+    fileDisabled,
+    toolTipData,
     fileName,
   } = props;
   const [uploadPercentage, setUploadPercentage] = useState('');
@@ -130,6 +134,11 @@ export const UploadFile = (props) => {
           <Typography color="inputTextColor.main" fontWeight="500" component="div">
             {uploadFileLabel}
             <Typography color="error">*</Typography>
+            {queryRaiseIcon === true && (
+              <Tooltip title={toolTipData}>
+                <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
+              </Tooltip>
+            )}
           </Typography>
         )}
 
@@ -144,6 +153,11 @@ export const UploadFile = (props) => {
             >
               {uploadFileLabel}
               <Typography color="error">*</Typography>
+              {queryRaiseIcon === true && (
+                <Tooltip title={toolTipData}>
+                  <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
+                </Tooltip>
+              )}
             </Typography>
             <Box
               component="div"
@@ -174,6 +188,7 @@ export const UploadFile = (props) => {
               <div className={styles.dragDropFiles}>{fileMessage}</div>
               <input
                 type="file"
+                disabled={fileDisabled}
                 id={fileID}
                 data-testid={fileID}
                 onChange={(e) => handleChange(e)}
@@ -223,7 +238,10 @@ export const UploadFile = (props) => {
                 {fileData?.map((file) => {
                   return (
                     <tr key={file?.id}>
-                      <td key={file?.id}>
+                      <td
+                        key={file?.id}
+                        style={{ 'pointer-events': fileDisabled ? 'none' : 'unset' }}
+                      >
                         <div className={styles.fileDetailsContainer}>
                           <UploadFileIcon color="primary" fontSize="large" />
                           <div className={styles.fileDetailsArea}>
@@ -276,6 +294,7 @@ export const UploadFile = (props) => {
                                   setFileData([]);
                                 }}
                               />
+
                               {(file?.file || file?.fileBlob) && (
                                 <AiOutlineEye
                                   fill="#264488"
