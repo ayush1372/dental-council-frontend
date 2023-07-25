@@ -51,6 +51,7 @@ const NonWorkDetails = ({
 
   const handleSave = () => {
     const workDetails = {
+      current_work_details: [],
       work_details: {
         is_user_currently_working: 1,
         reason: getValues()?.reason || '',

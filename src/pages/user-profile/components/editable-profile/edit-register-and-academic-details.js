@@ -190,7 +190,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           qualification_detail_response_tos[0]?.qualification_from === q?.qualificationfrom
             ? qualification_detail_response_tos[0]?.id
             : '',
-        country: countriesList.find((x) => x.id === q?.country?.id),
+        country: isInternational
+          ? countriesList.find((x) => x.id === q?.country)
+          : countriesList.find((x) => x.id === q?.country?.id),
         course: coursesList.data?.find((x) => x.id === q?.qualification),
         university: isInternational
           ? { name: q?.university }

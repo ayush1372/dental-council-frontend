@@ -149,7 +149,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
 
         setshowOtpAadhar(false);
         handleClear();
-        if (!imrDataNotFound) {
+        if (hpName !== undefined || hpName === '') {
           let councilID = getCouncilID(councilName);
           dispatch(
             checkKycDetails(

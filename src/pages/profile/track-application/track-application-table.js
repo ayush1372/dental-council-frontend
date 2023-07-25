@@ -122,9 +122,6 @@ function TrackAppicationTable({
       event.stopPropagation();
       setRowData(row);
     });
-    // .catch((error) => {
-    //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-    // });
   };
 
   useEffect(() => {
