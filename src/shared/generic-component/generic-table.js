@@ -153,6 +153,15 @@ export default function GenericTable(props) {
                       </Button>
                     </TableCell>
                   );
+                }
+                if (item.title === 'Request ID' && userActiveTab === 'dashboard') {
+                  return (
+                    <TableCell maxWidth={`${tableCellWidth}%`} key={index} align="left">
+                      <Link onClick={(event) => row[item.name]?.onClickCallback(event, row)}>
+                        {row[item.name]?.value}
+                      </Link>
+                    </TableCell>
+                  );
                 } else if (
                   (item.title === 'Applicant Name' || item.title === 'Applicant Name') &&
                   userActiveTab !== 'dashboard'
