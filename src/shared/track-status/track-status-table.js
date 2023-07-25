@@ -250,22 +250,23 @@ function TrackStatusTable(props) {
         page={page}
         applicationData={props?.trackStatusData?.health_professional_applications}
       />
-
-      <Box>
-        <TablePagination
-          rowsPerPageOptions={[]}
-          component="div"
-          count={props?.trackStatusData?.total_no_of_records || 0}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        />
-      </Box>
+      {newRowsData?.length !== 0 && (
+        <Box>
+          <TablePagination
+            rowsPerPageOptions={[]}
+            component="div"
+            count={props?.trackStatusData?.total_no_of_records || 0}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          />
+        </Box>
+      )}
     </Grid>
   );
 }
