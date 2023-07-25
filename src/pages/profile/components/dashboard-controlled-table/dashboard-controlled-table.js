@@ -154,6 +154,7 @@ function DashboardControlledTable(props) {
       {
         type: 'requestId',
         value: application?.request_id,
+        onClickCallback: viewCallback,
       },
       {
         type: 'registrationNo',
