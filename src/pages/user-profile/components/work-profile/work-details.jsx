@@ -44,9 +44,27 @@ const WorkDetails = ({
 
   const { loginData } = useSelector((state) => state.loginReducer);
   const { registrationDetails } = useSelector((state) => state.doctorUserProfileReducer);
+  const { work_details, languages_known_ids } = useSelector(
+    (state) => state?.doctorUserProfileReducer?.workProfileDetails
+  );
+  const { languagesList, statesList, countriesList, districtsList, subDistrictList, citiesList } =
+    useSelector((state) => state?.common);
+
+  const getDefaultLanguageData = (language) => {
+    let languageData = [];
+    Array.isArray(language) &&
+      language?.map((elementID) => {
+        languagesList?.data?.map((element) => {
+          if (element?.id === elementID) {
+            languageData.push(element);
+          }
+        });
+      });
+    return languageData;
+  };
 
   const [tabValue, setTabValue] = useState(0);
-  const [languages, setLanguages] = useState([]);
+  const [languages, setLanguages] = useState(getDefaultLanguageData(languages_known_ids));
   const [showTable, setShowTable] = useState(false);
   const [workExpierence, setWorkExpierence] = useState(0);
   const [languageError, setLanguageError] = useState(false);
@@ -63,6 +81,7 @@ const WorkDetails = ({
       work_details: {
         is_user_currently_working: currentWorkingSelection === 'yes' ? 0 : 1,
         work_nature: getWorkNature(getValues().NatureOfWork),
+        work_status: getWorkStatus(getValues().workStatus),
       },
       current_work_details: [
         {
@@ -146,9 +165,6 @@ const WorkDetails = ({
       setSuccessModalPopup(true);
     });
   };
-
-  const { languagesList, statesList, countriesList, districtsList, subDistrictList, citiesList } =
-    useSelector((state) => state?.common);
 
   const handleWorkStatus = (event) => {
     setValue(event.target.name, event.target.value);
@@ -342,6 +358,29 @@ const WorkDetails = ({
     return workNatureData[0];
   };
 
+  const getWorkStatus = (statusID) => {
+    let workStatusData = [];
+    [
+      {
+        id: 3,
+        name: 'Government only',
+      },
+      {
+        id: 2,
+        name: 'Private Practice only',
+      },
+      {
+        id: 1,
+        name: 'Both',
+      },
+    ]?.map((elementData) => {
+      if (elementData.id === Number(statusID)) {
+        workStatusData.push(elementData);
+      }
+    });
+    return workStatusData[0];
+  };
+
   const getLanguageData = (language) => {
     let languageData = [];
     Array.isArray(languagesList?.data) &&
@@ -370,7 +409,7 @@ const WorkDetails = ({
           fullWidth
           name={'NatureOfWork'}
           label="Nature of Work"
-          defaultValue={getValues().NatureOfWork}
+          defaultValue={work_details?.work_nature?.id}
           required={true}
           placeholder={'Select nature of work'}
           {...register('NatureOfWork', {
@@ -392,7 +431,7 @@ const WorkDetails = ({
           onChange={handleWorkStatus}
           name={'workStatus'}
           size="small"
-          defaultValue={getValues().workStatus}
+          defaultValue={work_details?.work_status?.id}
           items={createSelectFieldData(workStatusOptions)}
           required={true}
           error={errors.workStatus?.message}
@@ -471,7 +510,6 @@ const WorkDetails = ({
             setLanguageError(false);
             handleLanguageSpokenChange('LanguageSpoken', value);
           }}
-          // error={`Language spoken is required`}
         />
         {languageError && (
           <Typography sx={{ display: 'flex', alignItems: 'center' }} variant="body2" color="error">
