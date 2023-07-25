@@ -66,7 +66,7 @@ const WorkDetails = ({
   const [tabValue, setTabValue] = useState(0);
   const [languages, setLanguages] = useState(getDefaultLanguageData(languages_known_ids));
   const [showTable, setShowTable] = useState(false);
-  const [workExpierence, setWorkExpierence] = useState(0);
+  const [workExpierence, setWorkExpierence] = useState(work_details?.experience_in_years);
   const [languageError, setLanguageError] = useState(false);
   const [facilityDistrict, setFacilityDistrict] = useState([]);
   const [facilityChecked, setFacilityChecked] = useState(true);
@@ -77,14 +77,17 @@ const WorkDetails = ({
   const [declaredFacilityData, setDeclaredFacilityDistrict] = useState([]);
   const [facilityIDError, setFacilityIDError] = useState(false);
   const [facilityStateError, setFacilityStateError] = useState(false);
-  const [facilityDistrictError, setFacilityDistrictError] = useState(false);
   const [facilityTableError, setFacilityTableError] = useState(false);
+  const [facilityDistrictError, setFacilityDistrictError] = useState(false);
 
   const onSubmit = () => {
     const currentWorkDetails = {
       work_details: {
         is_user_currently_working: currentWorkingSelection === 'yes' ? 0 : 1,
-        work_nature: getWorkNature(getValues().NatureOfWork),
+        work_nature:
+          getWorkNature(getValues().NatureOfWork) === undefined
+            ? getWorkNature(work_details?.work_nature?.id)
+            : getWorkNature(getValues().NatureOfWork),
         work_status: getWorkStatus(getValues().workStatus),
         experience_in_years: workExpierence,
       },
@@ -112,7 +115,10 @@ const WorkDetails = ({
         },
       ],
       hp_profile_id: loginData?.data?.profile_id,
-      languages_known_ids: getLanguageData(getValues().LanguageSpoken),
+      languages_known_ids:
+        getLanguageData(getValues().LanguageSpoken)?.length === 0
+          ? getLanguageData(languages)
+          : getLanguageData(getValues().LanguageSpoken),
     };
     if (declaredFacilityData?.length > 0) {
       fetchDistricts(declaredFacilityData[0]?.address?.state, true);
