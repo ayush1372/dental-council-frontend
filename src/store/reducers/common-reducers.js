@@ -36,6 +36,7 @@ const initialState = {
   doctorTrackApplicationTableData: { data: [], isLoading: Boolean(true), isError: false },
   selectedAcademicStatus: '',
   breadcrumbsActivetab: '',
+  ReactivationData: { data: [], isLoading: Boolean(true), isError: false },
 };
 
 export const CommonActivity = createSlice({
@@ -138,6 +139,9 @@ export const CommonActivity = createSlice({
     setBreadcrumbsActivetab: (state, action) => {
       state.breadcrumbsActivetab = action.payload;
     },
+    getReactivationData: (state, action) => {
+      state.ReactivationData = action.payload;
+    },
   },
 });
 
@@ -170,6 +174,7 @@ export const {
   searchTrackStatusData,
   getInitiateWorkFlow,
   getActivateLicense,
+  getReactivationData,
   updateTrackApplicationTableData,
   setNewPassword,
   setSelectedAcademicStatus,
