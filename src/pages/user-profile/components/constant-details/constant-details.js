@@ -428,7 +428,6 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
         maxWidth="sm"
         scroll="body"
         open={showOTPPOPUp}
-        // maxWidth={{ xs: '100%', sm: '600px' }}
         PaperProps={{ sx: { borderRadius: '10px' } }}
       >
         <ConfirmOTP otpData={userData} />

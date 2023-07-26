@@ -161,10 +161,8 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup 
 
           <Box display={'flex'} mb={3} justifyContent="space-between">
             <Box display={'flex'} alignItems="center">
-              <Box mr={1}>
-                <img width="20px" height="20px" src={IconVerified} alt="verified icon" />
-              </Box>
-              <Box display="flex">
+              <Box textAlign={'center'}>
+                <img src={IconVerified} alt="verified icon" width={'46px'} />
                 <Typography variant="h2">Email has been Sent</Typography>
               </Box>
             </Box>
