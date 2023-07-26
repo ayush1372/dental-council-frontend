@@ -573,12 +573,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                   message: 'Length should be less than 100.',
                 },
               })}
-              disabled
-              // sx={{
-              //   input: {
-              //     backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
-              //   },
-              // }}
+              sx={{
+                input: {
+                  backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
+                },
+              }}
               InputProps={{ readOnly: loggedInUserType === 'SMC' ? false : true }}
             />
           </Grid>
@@ -603,20 +602,19 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 },
               })}
               error={errors.FatherName?.message}
-              disabled
-              // sx={{
-              //   input: {
-              //     backgroundColor:
-              //       loggedInUserType === 'SMC'
-              //         ? ''
-              //         : work_flow_status_id === 3 && getQueryRaised('Fathers Name')
-              //         ? 'grey2.main'
-              //         : '',
-              //   },
-              // }}
-              // InputProps={{
-              //   readOnly: work_flow_status_id === 3 ? getQueryRaised('Fathers Name') : false,
-              // }}
+              sx={{
+                input: {
+                  backgroundColor:
+                    loggedInUserType === 'SMC'
+                      ? ''
+                      : work_flow_status_id === 3 && getQueryRaised('Fathers Name')
+                      ? 'grey2.main'
+                      : '',
+                },
+              }}
+              InputProps={{
+                readOnly: work_flow_status_id === 3 ? getQueryRaised('Fathers Name') : false,
+              }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -640,20 +638,19 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 },
               })}
               error={errors.MotherName?.message}
-              disabled
-              // InputProps={{
-              //   readOnly: work_flow_status_id === 3 ? getQueryRaised('Mothers Name') : false,
-              // }}
-              // sx={{
-              //   input: {
-              //     backgroundColor:
-              //       loggedInUserType === 'SMC'
-              //         ? ''
-              //         : work_flow_status_id === 3 && getQueryRaised('Mothers Name')
-              //         ? 'grey2.main'
-              //         : '',
-              //   },
-              // }}
+              InputProps={{
+                readOnly: work_flow_status_id === 3 ? getQueryRaised('Mothers Name') : false,
+              }}
+              sx={{
+                input: {
+                  backgroundColor:
+                    loggedInUserType === 'SMC'
+                      ? ''
+                      : work_flow_status_id === 3 && getQueryRaised('Mothers Name')
+                      ? 'grey2.main'
+                      : '',
+                },
+              }}
             />
           </Grid>
         </Grid>
@@ -680,20 +677,19 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 },
               })}
               error={errors.SpouseName?.message}
-              disabled
-              // InputProps={{
-              //   readOnly: work_flow_status_id === 3 ? getQueryRaised('Spouse Name') : false,
-              // }}
-              // sx={{
-              //   input: {
-              //     backgroundColor:
-              //       loggedInUserType === 'SMC'
-              //         ? ''
-              //         : work_flow_status_id === 3 && getQueryRaised('Spouse Name')
-              //         ? 'grey2.main'
-              //         : '',
-              //   },
-              // }}
+              InputProps={{
+                readOnly: work_flow_status_id === 3 ? getQueryRaised('Spouse Name') : false,
+              }}
+              sx={{
+                input: {
+                  backgroundColor:
+                    loggedInUserType === 'SMC'
+                      ? ''
+                      : work_flow_status_id === 3 && getQueryRaised('Spouse Name')
+                      ? 'grey2.main'
+                      : '',
+                },
+              }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -775,7 +771,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 getValues()?.dateOfBirth ? new Date(getValues()?.dateOfBirth) : undefined
               }
               error={errors.DateOfBirth?.message}
-              //backgroundColor={loggedInUserType === 'SMC' ? '' : '#F0F0F0'}
+              backgroundColor={loggedInUserType === 'SMC' ? '' : '#F0F0F0'}
               disabled={loggedInUserType === 'SMC' ? false : true}
             />
           </Grid>
