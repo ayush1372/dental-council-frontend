@@ -8,6 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import IconVerified from '../../../assets/images/ico-verified.svg';
+import OtpIcon from '../../../assets/images/otp-popup.png';
 import { ErrorMessages } from '../../../constants/error-messages';
 import { encryptData } from '../../../helpers/functions/common-functions';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
@@ -128,11 +129,11 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup 
   };
 
   return (
-    <Box p={4} bgcolor="white.main" boxShadow="4">
+    <Box p={3} bgcolor="white.main" boxShadow="4">
       {(otpData.page === 'doctorConstantDetailsPage' && otpData.type === 'sms') ||
       otpData.page === 'forgetUserName' ? (
         <>
-          <Box display={'flex'} justifyContent="flex-end" mb={3}>
+          <Box display={'flex'} justifyContent="flex-end" lineHeight={'1'}>
             {otpData.page === 'forgetUserName' && (
               <Typography variant="h2" component="div" flex-grow={11} align="center">
                 <BookOnlineIcon
@@ -147,9 +148,10 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup 
               <CloseIcon onClick={otpData.handleClose} sx={{ cursor: 'pointer' }} />
             </Box>
           </Box>
-          <Typography variant="h2" display={'flex'} justifyContent="center">
-            OTP Authentication
-          </Typography>
+          <Box textAlign={'center'}>
+            <img src={OtpIcon} alt="OTP" width={'46px'} />
+            <Typography variant="h2">OTP Authentication</Typography>
+          </Box>
         </>
       ) : otpData.page === 'doctorConstantDetailsPage' && otpData.type === 'email' ? (
         <>
@@ -184,7 +186,7 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup 
           }}
         >
           {otpData?.page === 'doctorConstantDetailsPage' ? (
-            <Typography textAlign="center">
+            <Typography component={'div'} textAlign="center">
               {otpData.page === 'doctorConstantDetailsPage' && otpData?.type === 'sms'
                 ? `Please enter the OTP sent on your mobile number ******${otpData?.contact.slice(
                     -4
@@ -200,7 +202,7 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup 
                   )}
             </Typography>
           ) : otpData?.page === 'forgotPasswordPage' ? (
-            <Typography variant="body" textAlign="center">
+            <Typography component={'div'} variant="body" textAlign="center">
               {otpData.page === 'forgotPasswordPage' && otpData?.type === 'sms'
                 ? `We just sent an OTP on your mobile number XXXXXX${otpData?.contact?.slice(-4)}.`
                 : otpData.page === 'forgotPasswordPage' &&
@@ -263,7 +265,7 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup 
           ((otpData.page === 'doctorConstantDetailsPage' && otpData?.type !== 'email') ||
             otpData.page === 'forgotPasswordPage' ||
             otpData?.type === 'sms') && (
-            <Box mt={3} textAlign="center">
+            <Box mt={2} textAlign="center">
               <Button
                 onClick={() => {
                   resetStep(0);
