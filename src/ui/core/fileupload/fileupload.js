@@ -297,7 +297,7 @@ export const UploadFile = (props) => {
 
                               {(file?.file || file?.fileBlob) && (
                                 <AiOutlineEye
-                                  fill="#264488"
+                                  fill="primary.main"
                                   size={20}
                                   onClick={() => viewAttachemnent(file)}
                                   mr={1}

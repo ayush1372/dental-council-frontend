@@ -410,7 +410,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 style={{
                   backgroundColor:
                     work_flow_status_id === 3 && getQueryRaised('Registered with council')
-                      ? '#F0F0F0'
+                      ? 'grey2.main'
                       : '',
                 }}
                 {...register('RegisteredWithCouncil')}
