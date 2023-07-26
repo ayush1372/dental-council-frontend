@@ -18,10 +18,9 @@ import {
   updateDoctorContactDetails,
 } from '../../../store/actions/doctor-user-profile-actions';
 import { retrieveUserName } from '../../../store/actions/forgot-username-actions';
-import { loginActiveState } from '../../../store/reducers/login-reducer';
 import { Button } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
-const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup }) => {
+const ConfirmOTP = ({ handleConfirmOTP, otpData, handlePasswordSetup }) => {
   const { t } = useTranslation();
   const [isOtpValid, setIsOtpValid] = useState(true);
   const dispatch = useDispatch();
@@ -248,10 +247,7 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup 
             otpData?.type === 'sms') && (
             <Box mt={2} textAlign="center">
               <Button
-                onClick={() => {
-                  resetStep(0);
-                  dispatch(loginActiveState({ activeIndex: 0 }));
-                }}
+                onClick={otpData.handleClose}
                 variant="contained"
                 color="grey"
                 sx={{

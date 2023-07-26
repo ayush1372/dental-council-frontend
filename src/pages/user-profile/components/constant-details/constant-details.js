@@ -91,51 +91,53 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
 
   const onSubmit = (type) => {
     const { email, mobileNo } = getValues();
-    if (validDetails.mobileNo === false && validDetails.email === false && email && mobileNo) {
+
+    if(mobileNo && validDetails.mobileNo === false){
       let otpValue = {};
       otpValue = {
-        contact: type === 'sms' ? getValues().mobileNo : type === 'email' && getValues().email,
-        type: type === 'sms' ? 'sms' : type === 'email' && 'email',
+        contact: getValues().mobileNo,
+        type: 'sms',
         page: 'doctorConstantDetailsPage',
         handleClose: handleClose,
         reSendOTP: onSubmit,
         setMobileNumberChange: setMobileNumberChange,
+      };
+      setData(otpValue);
+      let sendOTPData = {
+        contact: type === 'sms' ? getValues().mobileNo : '',
+        type: type === 'sms' ? 'sms' : '',
+        user_type: loginData?.data?.user_type,
+        is_registration: true,
+      };
+      dispatch(sendNotificationOtp(sendOTPData)).then((response) => {
+        response?.data?.message === 'Success'
+          ? setShowOTPPOPUp(true)
+          : successToast(response?.data?.message, 'auth-error', 'error', 'top-center');
+      });
+    } 
+    
+    if( email && validDetails.email === false ) {
+      let otpValue = {};
+      otpValue = {
+        contact: getValues().email,
+        type: 'email',
+        page: 'doctorConstantDetailsPage',
+        handleClose: handleClose,
+        reSendOTP: onSubmit,
         setEmailChange: setEmailChange,
       };
       setData(otpValue);
-      if (type === 'email') {
-        let sendOTPData = {
-          email: type === 'email' ? type === 'email' && getValues().email : '',
-        };
-        dispatch(verifyEmail(sendOTPData, personalDetails?.hp_profile_id)).then((response) => {
-          if (response?.data?.message === 'Success') {
-            setShowOTPPOPUp(true);
-            setVerifyEmailID(true);
-          } else {
-            successToast(response?.data?.message, 'auth-error', 'error', 'top-center');
-          }
-        });
-      } else {
-        let sendOTPData = {
-          contact: type === 'sms' ? getValues().mobileNo : '',
-          type: type === 'sms' ? 'sms' : '',
-          user_type: loginData?.data?.user_type,
-          is_registration: true,
-        };
-        dispatch(sendNotificationOtp(sendOTPData)).then((response) => {
-          response?.data?.message === 'Success'
-            ? setShowOTPPOPUp(true)
-            : successToast(response?.data?.message, 'auth-error', 'error', 'top-center');
-        });
-        // .catch((allFailMsg) => {
-        //   successToast(
-        //     allFailMsg?.data?.response?.data?.message,
-        //     'auth-error',
-        //     'error',
-        //     'top-center'
-        //   );
-        // });
-      }
+      let sendOTPData = {
+        email: type === 'email' ? type === 'email' && getValues().email : '',
+      };
+      dispatch(verifyEmail(sendOTPData, personalDetails?.hp_profile_id)).then((response) => {
+        if (response?.data?.message === 'Success') {
+          setShowOTPPOPUp(true);
+          setVerifyEmailID(true);
+        } else {
+          successToast(response?.data?.message, 'auth-error', 'error', 'top-center');
+        }
+      });
     }
   };
 
