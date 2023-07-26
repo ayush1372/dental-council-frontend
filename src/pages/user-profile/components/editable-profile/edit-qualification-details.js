@@ -32,6 +32,9 @@ const EditQualificationDetails = ({
   handleQualificationFilesData,
   showBroadSpeciality = false,
 }) => {
+  // eslint-disable-next-line no-console
+  console.log('qualification', qualification);
+
   const dispatch = useDispatch();
   const [colleges, setColleges] = useState([]);
   // const qualificationObjTemplate = [
@@ -127,7 +130,7 @@ const EditQualificationDetails = ({
   }, [qualificationfrom]);
 
   useEffect(() => {
-    if (qualificationfrom !== 'International' || !isAdditionalQualification) {
+    if (qualificationfrom !== 'International') {
       setValue(`qualification[${index}].country`, {
         id: 356,
         name: 'India',
@@ -135,7 +138,7 @@ const EditQualificationDetails = ({
       });
       if (!isAdditionalQualification) setValue(`qualification[${index}].qualification`, 69);
     }
-    setValue(`qualification[${index}].qualificationfrom`, 'India');
+    setValue(`qualification[${index}].qualificationfrom`, fields[index].qualificationfrom);
     setValue(`qualification[${index}].university`, fields[index].university);
     setValue(`qualification[${index}].college`, fields[index].college);
   }, []);
@@ -218,17 +221,31 @@ const EditQualificationDetails = ({
         ''
       )}
 
+      {
+        // eslint-disable-next-line no-console
+        console.log('isAdditionalQualification', isAdditionalQualification)
+      }
       {qualificationfrom === 'International' && !isAdditionalQualification ? (
         <Grid container item spacing={2}>
           <Grid item xs={12} md={4}>
+            {
+              // eslint-disable-next-line no-console
+              console.log('roll no value', getValues()[`qualification[${index}].rollno`])
+            }
             <TextField
+              queryRaiseIcon={getQueryRaised('RollNo') === false ? true : false}
+              toolTipData={getQueryRaisedComment('RollNo')}
               variant="outlined"
               name="RollNo"
               label="Roll Number"
               placeholder="Enter roll number"
               required={true}
               fullWidth
-              error={errors?.qualification?.[index]?.rollno?.message}
+              // error={errors?.qualification?.[index]?.rollno?.message}
+              // error={
+              //   getValues()?.qualification?.[index]?.rollno === '' &&
+              //   errors?.qualification?.[index]?.rollno?.message
+              // }
               defaultValue={getValues()[`qualification[${index}].rollno`]}
               {...register(`qualification[${index}].rollno`, {
                 required: 'Roll no is required',
@@ -254,6 +271,8 @@ const EditQualificationDetails = ({
           </Grid>
           <Grid item xs={12} md={4}>
             <TextField
+              queryRaiseIcon={getQueryRaised('PassportNumber') === false ? true : false}
+              toolTipData={getQueryRaisedComment('PassportNumber')}
               variant="outlined"
               name="PassportNumber"
               label="Passport Number"
@@ -291,14 +310,20 @@ const EditQualificationDetails = ({
 
           <Grid item xs={12} md={4}>
             <TextField
+              queryRaiseIcon={getQueryRaised('MarksObtained') === false ? true : false}
+              toolTipData={getQueryRaisedComment('MarksObtained')}
               variant="outlined"
               name="MarksObtained"
               label="Marks obtained"
               placeholder="Enter marks obtained"
-              required={true}
+              // required={true}
               type="number"
               fullWidth
-              error={errors?.qualification?.[index]?.marksobtained?.message}
+              // error={errors?.qualification?.[index]?.marksobtained?.message}
+              error={
+                getValues()?.qualification?.[index]?.marksobtained === '' &&
+                errors?.qualification?.[index]?.marksobtained?.message
+              }
               defaultValue={getValues()[`qualification[${index}].marksobtained`]}
               {...register(`qualification[${index}].marksobtained`, {
                 required: 'Marks obtained is required',
@@ -330,6 +355,8 @@ const EditQualificationDetails = ({
 
           <Grid item xs={12} md={4}>
             <Select
+              queryRaiseIcon={getQueryRaised('Result') === false ? true : false}
+              toolTipData={getQueryRaisedComment('Result')}
               fullWidth
               error={
                 getValues()?.qualification[index]?.result?.length === 0
@@ -383,6 +410,8 @@ const EditQualificationDetails = ({
           </Grid>
           <Grid item xs={12} md={4}>
             <Select
+              queryRaiseIcon={getQueryRaised('MonthFMGE') === false ? true : false}
+              toolTipData={getQueryRaisedComment('MonthFMGE')}
               fullWidth
               error={
                 getValues()?.qualification[index]?.monthfmge?.length === 0
@@ -423,6 +452,8 @@ const EditQualificationDetails = ({
           </Grid>
           <Grid item xs={12} md={4}>
             <Select
+              queryRaiseIcon={getQueryRaised('YearFMGE') === false ? true : false}
+              toolTipData={getQueryRaisedComment('YearFMGE')}
               fullWidth
               error={
                 getValues()?.qualification[index]?.yearfmge?.length === 0
@@ -478,18 +509,27 @@ const EditQualificationDetails = ({
       </Grid>
       <Grid container item spacing={2}>
         <Grid item xs={12} md={6} lg={4}>
+          {
+            // eslint-disable-next-line no-console
+            console.log('qualification.nameindegree', qualification.nameindegree)
+          }
           {qualificationfrom === 'International' || isAdditionalQualification ? (
             <Select
               queryRaiseIcon={
                 getQueryRaised('Name of the Degree Obtained') === false ? true : false
               }
+              toolTipData={getQueryRaisedComment('Name of the Degree Obtained')}
               fullWidth
-              error={errors?.qualification?.[index]?.qualification?.message}
+              // error={errors?.qualification?.[index]?.qualification?.message}
+              error={
+                getValues()?.qualification?.[index]?.qualification === '' &&
+                errors?.qualification?.[index]?.qualification?.message
+              }
               name="Qualification"
               placeholder={'Select degree'}
               label="Degree Name"
               isAdditionalQualification={isAdditionalQualification}
-              required={true}
+              // required={true}
               disabled={
                 work_flow_status_id === 3
                   ? getQueryRaised('Name of the Degree Obtained')
@@ -572,6 +612,8 @@ const EditQualificationDetails = ({
         {qualificationfrom === 'International' && (
           <Grid item xs={12} md={6} lg={4}>
             <Select
+              queryRaiseIcon={getQueryRaised('Country Name') === false ? true : false}
+              toolTipData={getQueryRaisedComment('Country Name')}
               fullWidth
               name="country"
               label="Country Name"
@@ -608,6 +650,8 @@ const EditQualificationDetails = ({
         <Grid item xs={12} md={6} lg={4}>
           {qualificationfrom === 'International' ? (
             <TextField
+              queryRaiseIcon={getQueryRaised('State') === false ? true : false}
+              toolTipData={getQueryRaisedComment('State')}
               fullWidth
               error={
                 getValues()?.qualification?.[index]?.state === '' &&
@@ -687,6 +731,8 @@ const EditQualificationDetails = ({
         <Grid item xs={12} md={6} lg={4}>
           {qualificationfrom === 'International' ? (
             <TextField
+              queryRaiseIcon={getQueryRaised('Name of the College') === false ? true : false}
+              toolTipData={getQueryRaisedComment('Name of the College')}
               fullWidth
               name="college"
               label="College Name"
@@ -762,6 +808,8 @@ const EditQualificationDetails = ({
         <Grid item xs={12} md={6} lg={4}>
           {qualificationfrom === 'International' ? (
             <TextField
+              queryRaiseIcon={getQueryRaised('University') === false ? true : false}
+              toolTipData={getQueryRaisedComment('University')}
               fullWidth
               error={errors?.qualification?.[index]?.university?.message}
               name="University"

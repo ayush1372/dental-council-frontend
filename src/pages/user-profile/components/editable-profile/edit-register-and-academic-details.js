@@ -148,6 +148,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   };
 
   const onHandleSave = (moveToNext = false) => {
+    // eslint-disable-next-line no-console
+    console.log('inside save and next');
     const {
       RegisteredWithCouncil,
       RegistrationNumber,
@@ -192,7 +194,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
             : '',
         country: isInternational
           ? countriesList.find((x) => x.id === q?.country)
-          : countriesList.find((x) => x.id === q?.country?.id),
+          : { id: 356, name: 'India', nationality: 'Indian' },
         course: coursesList.data?.find((x) => x.id === q?.qualification),
         university: isInternational
           ? { name: q?.university }
@@ -206,6 +208,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
         qualification_from: q?.qualificationfrom,
       }));
       if (isInternational) {
+        // eslint-disable-next-line no-console
+        console.log('isInternational', isInternational);
+        // eslint-disable-next-line no-console
+        console.log('qualification[0]', qualification[0]);
         fmgeObj = {
           roll_no: qualification[0]?.rollno,
           passport_number: qualification[0]?.passportNumber,
@@ -325,6 +331,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
     const isInternational = details?.qualification_from === 'International';
     // basic qualification
+    // eslint-disable-next-line no-console
+    console.log('details', details);
     obj.university = isInternational ? details?.university?.name : details?.university?.id;
     obj.qualification = details?.course?.id;
     obj.college = isInternational ? details?.college?.name : details?.college?.id;
@@ -333,6 +341,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     obj.state = isInternational ? details?.state?.name : details?.state?.id;
     obj.qualificationfrom = details?.qualification_from;
     obj.month = details?.qualification_month;
+    // obj.nameindegree = details?.course?.id;
     obj.nameindegree = details?.is_name_change;
 
     // FMGE qualification
