@@ -160,7 +160,7 @@ function FacilityDetailsTable({ declaredFacilityData }) {
               rowsPerPageOptions={[]}
               component="div"
               count={newRowsData?.length || 0}
-              rowsPerPage={rowsPerPage}
+              rowsPerPage={25}
               page={page}
               onRowsPerPageChange={handleChangeRowsPerPage}
               sx={{
