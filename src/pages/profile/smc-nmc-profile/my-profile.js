@@ -71,7 +71,7 @@ const MyProfile = (props) => {
           <CircularLoader />
         </Box>
       ) : (
-        <Grid boxShadow={2} mt={2} p={3}>
+        <Grid boxShadow={2} p={3}>
           {showPage === 'Profile' && (
             <Grid>
               <Grid container spacing={2}>

@@ -57,7 +57,7 @@ const CollegeMyProfile = () => {
   }, [dispatch, loginData?.data?.profile_id, loginData?.data?.user_group_id]);
 
   return (
-    <Grid boxShadow={2} mt={2} p={3}>
+    <Grid boxShadow={2} p={3}>
       {showPage === 'Profile' && (
         <Grid>
           <Grid container spacing={2}>
@@ -92,7 +92,7 @@ const CollegeMyProfile = () => {
             {loginData?.data?.user_sub_type === 1 || userData?.name ? (
               <Grid item xs={12} md={4} sm={6}>
                 <Typography variant="body3" color="grey.label">
-                  Name
+                  College Name
                 </Typography>
 
                 <Typography variant="subtitle2" color="inputTextColor.main">
@@ -133,7 +133,7 @@ const CollegeMyProfile = () => {
             {loginData?.data?.user_sub_type === 1 || userData?.mobile_number ? (
               <Grid item xs={12} md={4} sm={6}>
                 <Typography variant="body3" color="grey.label">
-                  Mobile
+                  Mobile Number
                 </Typography>
 
                 <Typography variant="subtitle2" color="inputTextColor.main">
@@ -147,7 +147,7 @@ const CollegeMyProfile = () => {
             {loginData?.data?.user_sub_type === 1 ? (
               <Grid item xs={12} md={4} sm={6}>
                 <Typography variant="body3" color="grey.label">
-                  Council Name
+                  Council
                 </Typography>
 
                 <Typography variant="subtitle2" color="inputTextColor.main">
@@ -161,7 +161,7 @@ const CollegeMyProfile = () => {
             {loginData?.data?.user_sub_type === 1 ? (
               <Grid item xs={12} md={4} sm={6}>
                 <Typography variant="body3" color="grey.label">
-                  University Name
+                  University
                 </Typography>
 
                 <Typography variant="subtitle2" color="inputTextColor.main">
@@ -179,7 +179,7 @@ const CollegeMyProfile = () => {
                 </Typography>
 
                 <Typography variant="subtitle2" color="inputTextColor.main">
-                  {getCollegeDetail?.data.website}
+                  {getCollegeDetail?.data?.website ? getCollegeDetail?.data?.website : '-'}
                 </Typography>
               </Grid>
             ) : (
@@ -207,7 +207,9 @@ const CollegeMyProfile = () => {
                 </Typography>
 
                 <Typography variant="subtitle2" color="inputTextColor.main">
-                  {getCollegeDetail?.data.address_line2}
+                  {getCollegeDetail?.data.address_line2
+                    ? getCollegeDetail?.data.address_line2
+                    : '-'}
                 </Typography>
               </Grid>
             ) : (
@@ -217,7 +219,7 @@ const CollegeMyProfile = () => {
             {loginData?.data?.user_sub_type === 1 ? (
               <Grid item xs={12} md={4} sm={6}>
                 <Typography variant="body3" color="grey.label">
-                  State Name
+                  State
                 </Typography>
                 <Typography variant="subtitle2" color="inputTextColor.main">
                   {getCollegeDetail?.data?.state_to?.name}
@@ -256,7 +258,7 @@ const CollegeMyProfile = () => {
             {loginData?.data?.user_sub_type === 1 ? (
               <Grid item xs={12} md={4} sm={6}>
                 <Typography variant="body3" color="grey.label">
-                  Postal Code
+                  Pincode
                 </Typography>
                 <Typography variant="subtitle2" color="inputTextColor.main">
                   {getCollegeDetail?.data.pin_code}
@@ -268,7 +270,7 @@ const CollegeMyProfile = () => {
 
             <Grid item xs={12} md={4} sm={6}>
               <Typography variant="body3" color="grey.label">
-                Email ID
+                Email
               </Typography>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 {userData?.email_id

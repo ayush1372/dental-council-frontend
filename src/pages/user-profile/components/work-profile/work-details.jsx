@@ -161,19 +161,20 @@ const WorkDetails = ({
       currentWorkDetails?.current_work_details.splice(0, 1);
     }
     if (facilityChecked) {
-      if (declaredFacilityData?.length > 0) {
-        updateWorkStatus(currentWorkDetails);
-        setFacilityTableError(false);
-      }
-      if (declaredFacilityData?.length === 0) {
-        setFacilityTableError(true);
-      }
-      if (organizationChecked) {
+      if (declaredFacilityData?.length > 0 || organizationChecked) {
         updateWorkStatus(currentWorkDetails);
       }
     } else {
       updateWorkStatus(currentWorkDetails);
     }
+  };
+
+  //Helper Function to make the facility error as false
+  const handleFacilityError = () => {
+    setFacilityIDError(false);
+    setFacilityStateError(false);
+    setFacilityTableError(false);
+    setFacilityDistrictError(false);
   };
 
   const updateWorkStatus = (currentWorkDetails) => {
@@ -192,6 +193,8 @@ const WorkDetails = ({
   };
 
   const handleTabChange = (_, value) => {
+    handleFacilityError();
+
     setFacilityResponseData([]);
     setDeclaredFacilityDistrict([]);
     setShowTable(false);
@@ -206,9 +209,9 @@ const WorkDetails = ({
         stateData.push(elementData);
       }
     });
-
     return stateData[0]?.iso_code;
   };
+
   const getDistrictISOCode = (District) => {
     let DistrictData = [];
     facilityDistrict?.map((elementData) => {
@@ -410,6 +413,10 @@ const WorkDetails = ({
       });
     return languageData;
   };
+
+  useEffect(() => {
+    handleFacilityError();
+  }, [facilityChecked]);
 
   useEffect(() => {
     if (Object.keys(errors).length > 1) {
@@ -1168,7 +1175,44 @@ const WorkDetails = ({
         ml={3}
       >
         <Grid item xs={12}>
-          <Button onClick={handleSubmit(onSubmit)} variant="contained" color="secondary">
+          <Button
+            onClick={
+              organizationChecked
+                ? handleSubmit(onSubmit)
+                : () => {
+                    if (facilityChecked) {
+                      if (
+                        tabValue === 0 &&
+                        (getValues()?.facilityId === undefined || getValues()?.facilityId === '')
+                      ) {
+                        setFacilityIDError(true);
+                      } else if (tabValue === 1) {
+                        if (
+                          getValues()?.stateLGDCode === undefined ||
+                          getValues()?.stateLGDCode === ''
+                        ) {
+                          setFacilityStateError(true);
+                        }
+                        if (
+                          getValues()?.districtLGDCode === undefined ||
+                          getValues()?.districtLGDCode === ''
+                        ) {
+                          setFacilityDistrictError(true);
+                        }
+                      }
+                      if (declaredFacilityData?.length === 0) {
+                        setFacilityTableError(true);
+                      } else if (declaredFacilityData?.length > 0) {
+                        onSubmit();
+                      }
+                    } else if (!facilityChecked && !organizationChecked) {
+                      onSubmit();
+                    }
+                  }
+            }
+            variant="contained"
+            color="secondary"
+          >
             Submit
           </Button>
           <Button

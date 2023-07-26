@@ -255,7 +255,10 @@ export default function GenericTable(props) {
                       />
                     </TableCell>
                   );
-                } else if (item.title === 'Action' && userActiveTab === 'track-application') {
+                } else if (
+                  item.title === 'Action' &&
+                  (userActiveTab === 'track-application' || userActiveTab === 'dashboard')
+                ) {
                   return (
                     <TableCell maxWidth={`${tableCellWidth}%`} key={index} align="left">
                       <Button
