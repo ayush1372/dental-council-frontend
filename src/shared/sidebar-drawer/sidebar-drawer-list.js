@@ -17,6 +17,8 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
     <List sx={{ p: 0 }}>
       {DrawerOptions?.map((item, index) => (
         <Tooltip
+          arrow
+          placement="bottom-start"
           title={
             loggedInUserType === 'Doctor' &&
             (!personalDetails?.nmr_id ||

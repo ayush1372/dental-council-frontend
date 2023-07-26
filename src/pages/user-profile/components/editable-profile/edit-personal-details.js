@@ -28,7 +28,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
   const dispatch = useDispatch();
   const loggedInUserType = useSelector((state) => state?.common?.loggedInUserType);
 
-  // eslint-disable-next-line no-unused-vars
+  // eslint-disable-setIsSameAddressnext-line no-unused-vars
   const { statesList, countriesList, districtsList, subDistrictList, citiesList } = useSelector(
     (state) => state?.common
   );
@@ -119,6 +119,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
     register,
     setValue,
     watch,
+    reset,
   } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -887,6 +888,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 checked={isSameAddress}
                 onChange={(e) => {
                   setIsSameAddress(e.target.checked);
+                  reset({ PostalCode: '' });
                 }}
                 disabled={work_flow_status_id === 3 ? true : false}
               />
@@ -934,7 +936,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                     'House',
                     isSameAddress
                       ? ''
-                      : getValues()?.House?.length <= 0 && {
+                      : {
                           required: 'Please enter house',
                           maxLength: {
                             value: 300,
@@ -1102,7 +1104,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                   value={getValues().Country}
                   required={isSameAddress ? false : true}
                   {...register('Country', {
-                    required: 'Country is required',
+                    required: 'Please select country',
                   })}
                   disabled
                   options={
@@ -1160,6 +1162,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 />
               ) : (
                 <Select
+                  placeholder={'Select state/union territory'}
                   style={{
                     backgroundColor: isSameAddress
                       ? '#F0F0F0'
@@ -1187,7 +1190,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                   {...register(
                     'State',
                     !isSameAddress && {
-                      required: 'State/Union territory is required',
+                      required: 'Please select state/union territory is required',
                     }
                   )}
                   options={createSelectFieldData(statesList)}
@@ -1312,7 +1315,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                   fullWidth
                   error={errors.SubDistrict?.message}
                   name="SubDistrict"
-                  placeholder="Sub District"
+                  placeholder="Select sub district"
                   disabled={
                     isSameAddress
                       ? isSameAddress
@@ -1371,6 +1374,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 />
               ) : (
                 <Select
+                  placeholder={'Please city/town/village'}
                   style={{
                     backgroundColor: isSameAddress
                       ? '#F0F0F0'
@@ -1442,7 +1446,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 {...register(
                   'PostalCode',
                   !isSameAddress && {
-                    required: 'Pincode is Required',
+                    required: 'Please enter pincode',
                     onChange: (event) => {
                       const pincode = event.target.value.replace(/[^0-9]/g, '');
                       setValue('PostalCode', pincode);
