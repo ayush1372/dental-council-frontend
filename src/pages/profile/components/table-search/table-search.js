@@ -26,6 +26,32 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
   const [dashBoardCardId, setDashBoardCardId] = useState();
   const { userActiveTab } = useSelector((state) => state.common);
 
+  const acendingOrderFilter = ActivateLicenceFieldList;
+  acendingOrderFilter?.sort((a, b) => {
+    let nameCompare1 = a?.name?.toLowerCase(),
+      nameCompare2 = b?.name?.toLowerCase();
+    if (nameCompare1 < nameCompare2) {
+      return -1;
+    }
+    if (nameCompare1 > nameCompare2) {
+      return 1;
+    }
+    return 0;
+  });
+
+  const acendingOrderDashBoradFilter = DashBoardCardsFieldList;
+  acendingOrderDashBoradFilter?.sort((a, b) => {
+    let nameCompare1 = a?.name?.toLowerCase(),
+      nameCompare2 = b?.name?.toLowerCase();
+    if (nameCompare1 < nameCompare2) {
+      return -1;
+    }
+    if (nameCompare1 > nameCompare2) {
+      return 1;
+    }
+    return 0;
+  });
+
   useEffect(() => {
     if (filterId === 'workFlowStatusId') {
       setApplicationTypeValue(false);
@@ -167,8 +193,8 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                   <SearchableDropdown
                     fullWidth
                     name="ActivateLicence"
-                    items={createEditFieldData(ActivateLicenceFieldList)}
-                    placeholder="Please Select"
+                    items={createEditFieldData(acendingOrderFilter)}
+                    placeholder="Please select"
                     clearErrors={clearErrors}
                     {...register('ActivateLicence')}
                     onChange={(currentValue) => {
@@ -183,7 +209,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                     fullWidth
                     value={dashBoardCardId}
                     name="dashBoardCard"
-                    items={createEditFieldData(DashBoardCardsFieldList)}
+                    items={createEditFieldData(acendingOrderDashBoradFilter)}
                     placeholder="Select"
                     clearErrors={clearErrors}
                     {...register('dashBoardCard')}
@@ -280,6 +306,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                     },
                   }}
                   variant="contained"
+                  color="secondary"
                   onClick={handleSubmit(onClickSearchButtonHandler)}
                 >
                   Search

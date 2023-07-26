@@ -15,6 +15,10 @@ import {
   getUniversitiesList,
 } from '../../../store/actions/common-actions';
 import { Button, TextField } from '../../../ui/core';
+import {
+  AddressLineValidation1,
+  AddressLineValidation2,
+} from '../../../utilities/common-validations';
 // import successToast from '../../../ui/core/toaster';
 
 const CollegeEditProfile = (props) => {
@@ -141,7 +145,7 @@ const CollegeEditProfile = (props) => {
           text={'College profile has been updated'}
         />
       )}
-      <Grid container spacing={2} mt={1}>
+      <Grid container spacing={2} mt={1} ml={1}>
         <Grid container item xs={12}>
           <Typography variant="h2" color="textPrimary.main">
             Edit Profile
@@ -242,7 +246,7 @@ const CollegeEditProfile = (props) => {
 
           <Grid item xs={12} md={4}>
             <Typography variant="body1" color="inputTextColor.main">
-              University Name
+              University
             </Typography>
             <Typography component="span" color="error.main">
               *
@@ -294,9 +298,7 @@ const CollegeEditProfile = (props) => {
               placeholder="Enter address"
               defaultValue={getCollegeDetail?.data?.address_line1}
               error={errors.AddressLine1?.message}
-              {...register('AddressLine1', {
-                required: 'Please enter an address',
-              })}
+              {...register('AddressLine1', AddressLineValidation1)}
             />
           </Grid>
 
@@ -311,7 +313,7 @@ const CollegeEditProfile = (props) => {
               placeholder={'Enter address'}
               defaultValue={getCollegeDetail?.data?.address_line2}
               error={errors.AddressLine2?.message}
-              {...register('AddressLine2', {})}
+              {...register('AddressLine2', AddressLineValidation2)}
             />
           </Grid>
 
@@ -456,8 +458,8 @@ const CollegeEditProfile = (props) => {
           </Grid>
         </Grid>
 
-        <Grid container alignItems="center" mt={1}>
-          <Grid item xs={12} sm="auto" alignItems="flex-start" mr={{ lg: 2, md: 2, sm: 2 }}>
+        <Grid container alignItems="center" mt={1} display="flex" justifyContent="flex-end">
+          <Grid item xs={12} sm="auto" mr={{ lg: 2, md: 2, sm: 2 }}>
             <Button
               sx={{
                 m: {
@@ -476,7 +478,7 @@ const CollegeEditProfile = (props) => {
               Submit
             </Button>
           </Grid>
-          <Grid item xs={12} sm="auto" alignItems="flex-start">
+          <Grid item xs={12} sm="auto">
             <Button
               variant="contained"
               color="grey"

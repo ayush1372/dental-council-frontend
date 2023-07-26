@@ -90,7 +90,7 @@ function DashboardControlledTable(props) {
     },
     { title: 'Submission Date', name: 'dateofSubmission', sorting: true, type: 'date' },
     { title: 'Pendency (Days)', name: 'pendency', sorting: true, type: 'string' },
-    { title: 'View', name: 'view', sorting: false, type: 'string' },
+    { title: 'Action', name: 'view', sorting: false, type: 'string' },
   ];
 
   const viewCallback = (event, row) => {

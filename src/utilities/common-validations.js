@@ -77,6 +77,14 @@ export const PasswordRegexValidation = {
   },
 };
 
+export const NewPasswordRegexValidation = {
+  required: 'Please enter a valid new password',
+  pattern: {
+    value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?#&])[A-Za-z\d@$!%*?#&]{8,100}$/,
+    message:
+      'Password should contain minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character.',
+  },
+};
 export const LoginPasswordRegexValidation = {
   required: 'Please enter the password',
   // pattern: {
@@ -101,19 +109,18 @@ export const QueryRaisedValidation = {
 };
 
 export const EmailRegexValidation = {
-  required: 'Please enter an email ID',
+  required: 'Please enter an email',
   pattern: {
-    value:
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-    message: 'Provide a valid Email ID',
+    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,3}$/i,
+    message: 'Please enter a valid email',
   },
 };
 
 export const PostalCodeRegexValidation = {
-  required: 'Postal code is required',
+  required: 'Please enter pincode',
   pattern: {
     value: /^\d{6}$/,
-    message: 'Should only contain 6 digits',
+    message: 'Should only contains 6 digits',
   },
 };
 
@@ -122,6 +129,21 @@ export const MobileNumberRegexValidation = {
   pattern: {
     value: /^\d{10}$/i,
     message: 'Please enter a valid 10 digit mobile number',
+  },
+};
+
+export const AddressLineValidation1 = {
+  required: 'Please enter address line 1',
+  pattern: {
+    value: /^[a-zA-Z0-9\s\-.,]*$/,
+    message: 'Please enter a valid address line 1',
+  },
+};
+
+export const AddressLineValidation2 = {
+  pattern: {
+    value: /^[a-zA-Z0-9\s\-.,]*$/,
+    message: 'Please enter a valid address line 1',
   },
 };
 

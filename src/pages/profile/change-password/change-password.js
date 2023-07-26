@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Grid, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
@@ -10,6 +10,7 @@ import { encryptData } from '../../../helpers/functions/common-functions';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import { changePasswordData } from '../../../store/actions/common-actions';
 import { TextField } from '../../../ui/core';
+import { NewPasswordRegexValidation } from '../../../utilities/common-validations';
 // import successToast from '../../../ui/core/toaster';
 
 const ChangePassword = () => {
@@ -56,13 +57,26 @@ const ChangePassword = () => {
           PasswordChange={true}
         />
       )}
-      {/* <Typography color="inputTextColor.main" variant="h2" textAlign="center" mt={3}>
-        Change Password
-      </Typography> */}
+      {
+        <Grid
+          item
+          xs={12}
+          sm="auto"
+          sx={{ mr: { xs: 0, sm: 'auto' } }}
+          p={2}
+          display="flex"
+          align={'center'}
+        >
+          <Typography variant="h2" color="textPrimary.main">
+            Change Password
+          </Typography>
+        </Grid>
+      }
+
       <Box
         display="flex"
         justifyContent="center"
-        pt={4}
+        pt={2}
         sx={{
           backgroundColor: `${theme.palette.white.main}`,
           boxShadow: 4,
@@ -120,9 +134,7 @@ const ChangePassword = () => {
                 placeholder={t('New password')}
                 defaultValue={getValues().newPassword}
                 error={errors.newPassword?.message}
-                {...register('newPassword', {
-                  required: 'Please enter a valid new password',
-                })}
+                {...register('newPassword', NewPasswordRegexValidation)}
               />
             </Box>
             <Box mt={2}>
@@ -154,7 +166,7 @@ const ChangePassword = () => {
               />
             </Box>
 
-            <Box align="center" mt={3}>
+            <Box align="right" mt={3}>
               <Button
                 variant="contained"
                 sx={{

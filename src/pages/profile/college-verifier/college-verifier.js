@@ -13,6 +13,7 @@ import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup
 import { getAdminDesignation, getAdminVerifier } from '../../../store/actions/college-actions';
 import { changeUserActiveTab } from '../../../store/reducers/common-reducers';
 import { Button } from '../../../ui/core';
+import { EmailRegexValidation } from '../../../utilities/common-validations';
 // import successToast from '../../../ui/core/toaster';
 
 function CollegeVerifier() {
@@ -90,8 +91,15 @@ function CollegeVerifier() {
 
   return (
     <>
-      <Container sx={{ mt: 5 }}>
-        <Grid container item spacing={2}>
+      <Container sx={{ mt: 2 }}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm="auto" sx={{ mr: { xs: 0, sm: 'auto' } }}>
+            <Typography variant="h2" color="textPrimary.main">
+              Create Verifier
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid container item spacing={2} mt={2}>
           <Grid item xs={12} md={4} lg={4}>
             <Typography variant="body3" color="inputTextColor.main">
               Name
@@ -109,6 +117,11 @@ function CollegeVerifier() {
               error={errors.Name?.message}
               {...register('Name', {
                 required: 'Please enter name',
+
+                pattern: {
+                  value: /^(?!^\s)[a-zA-Z\s']*$(?<!\s$)/,
+                  message: 'Please enter a valid name',
+                },
               })}
             />
           </Grid>
@@ -175,19 +188,12 @@ function CollegeVerifier() {
               required
               placeholder={t('Enter email')}
               error={errors.Email?.message}
-              {...register('Email', {
-                required: 'Please enter an email',
-                pattern: {
-                  value:
-                    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-                  message: 'Please enter an email',
-                },
-              })}
+              {...register('Email', EmailRegexValidation)}
             />
           </Grid>
         </Grid>
 
-        <Box display="flex" justifyContent="flex-start" mt={3}>
+        <Box display="flex" justifyContent="flex-end" mt={3}>
           <Button
             variant="contained"
             color="secondary"
