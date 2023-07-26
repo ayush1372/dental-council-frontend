@@ -423,7 +423,12 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
           </Box>
         </Grid>
       </Grid>
-      <Dialog open={showOTPPOPUp} maxWidth={'600px'}>
+      <Dialog
+        maxWidth="sm"
+        scroll="body"
+        open={showOTPPOPUp}
+        PaperProps={{ sx: { borderRadius: '10px' } }}
+      >
         <ConfirmOTP otpData={userData} />
       </Dialog>
     </Box>
