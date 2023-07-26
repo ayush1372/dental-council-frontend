@@ -340,7 +340,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                   <EditOutlinedIcon
                     color={'primary'}
                     fontSize={'inherit'}
-                    sx={{ ml: 0.5 }}
+                    sx={{ ml: 0.5, cursor: 'pointer' }}
                     onClick={() => {
                       setMobileNumberChange(true);
                     }}
@@ -382,7 +382,6 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
 
                   <Link
                     color="primary"
-                    cursor="pointer"
                     sx={{ p: '10px', cursor: 'pointer' }}
                     onClick={() => {
                       handleSubmit(onSubmit('email'));
