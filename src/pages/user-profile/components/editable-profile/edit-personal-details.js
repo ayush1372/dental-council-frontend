@@ -937,7 +937,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                     isSameAddress
                       ? ''
                       : {
-                          required: 'Please select house',
+                          required: 'Please enter house',
                           maxLength: {
                             value: 300,
                             message: 'Length should be less than 300.',
@@ -1251,8 +1251,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                   defaultValue={
                     isSameAddress
                       ? personalDetails?.kyc_address?.district?.iso_code
-                      : getValues()?.District?.length === 0
-                      ? 'Value'
                       : getValues()?.District
                   }
                   value={
@@ -1448,7 +1446,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 {...register(
                   'PostalCode',
                   !isSameAddress && {
-                    required: 'Please select pincode',
+                    required: 'Please enter pincode',
                     onChange: (event) => {
                       const pincode = event.target.value.replace(/[^0-9]/g, '');
                       setValue('PostalCode', pincode);
