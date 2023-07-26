@@ -1,6 +1,5 @@
 import { useState } from 'react';
 
-import BookOnlineIcon from '@mui/icons-material/BookOnline';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, Typography } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -134,16 +133,6 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup 
       otpData.page === 'forgetUserName' ? (
         <>
           <Box display={'flex'} justifyContent="flex-end" lineHeight={'1'}>
-            {otpData.page === 'forgetUserName' && (
-              <Typography variant="h2" component="div" flex-grow={11} align="center">
-                <BookOnlineIcon
-                  sx={{
-                    color: 'primary.main',
-                    fontSize: '40px',
-                  }}
-                />
-              </Typography>
-            )}
             <Box flex-grow={1}>
               <CloseIcon onClick={otpData.handleClose} sx={{ cursor: 'pointer' }} />
             </Box>
@@ -202,17 +191,17 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup 
           ) : otpData?.page === 'forgotPasswordPage' ? (
             <Typography component={'div'} variant="body" textAlign="center">
               {otpData.page === 'forgotPasswordPage' && otpData?.type === 'sms'
-                ? `We just sent an OTP on your mobile number XXXXXX${otpData?.contact?.slice(-4)}.`
+                ? `OTP sent to mobile number ending with ******${otpData?.contact?.slice(-4)}.`
                 : otpData.page === 'forgotPasswordPage' &&
                   otpData?.type === 'email' &&
-                  `Please enter the OTP sent on your Email ID XXXXXX${otpData?.contact?.slice(
+                  `Please enter the OTP sent on your Email ID ******${otpData?.contact?.slice(
                     -12
                   )}`}
             </Typography>
           ) : otpData?.page === 'forgetUserName' ? (
             <Typography variant="body" display={'flex'} justifyContent="center">
               {otpData.page === 'forgetUserName' && otpData?.type === 'sms'
-                ? `We have just sent an OTP on given Mobile No. XXXXXX${otpData?.contact?.slice(
+                ? `OTP sent to mobile number ending with ******${otpData?.contact?.slice(
                     -4
                   )}.`
                 : ''}
@@ -243,17 +232,11 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup 
           )}
         </Box>
         {otpData?.page === 'forgetUserName' ? (
-          <Box display={'flex'} justifyContent="center">
+          <Box display={'flex'} justifyContent="center" pt={2}>
             <Button
               size="medium"
               variant="contained"
-              sx={{
-                backgroundColor: 'secondary.lightOrange',
-                '&:hover': {
-                  backgroundColor: 'secondary.lightOrange',
-                },
-                width: '100%',
-              }}
+              color="secondary"
               onClick={onHandleVerify}
             >
               {t('Continue')}
@@ -303,7 +286,7 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup 
           setOpen={() => setChangeUserData(false)}
           text={`Your ${
             otpData?.page === 'forgetUserName'
-              ? `UserName is "Anand"  Please use this User Name to Log In`
+              ? `username is "Anand". Please use this username to login.`
               : otpData?.type === 'sms'
               ? 'Mobile Number'
               : otpData?.type === 'email' && 'Email Address'

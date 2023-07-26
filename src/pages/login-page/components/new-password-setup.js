@@ -195,7 +195,7 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }
             defaultValue={getValues().password}
             error={errors.password?.message}
             {...register('password', PasswordRegexValidation, {
-              required: 'Please enter password',
+              required: 'Please enter a valid password',
             })}
             newPassword={true}
           />
@@ -220,7 +220,7 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }
             defaultValue={getValues().confirmPassword}
             error={errors.confirmPassword?.message}
             {...register('confirmPassword', {
-              required: 'Please enter password',
+              required: 'Please enter a valid password',
               validate: (val) => {
                 if (watch('password') !== val) {
                   return 'Password does not match';
