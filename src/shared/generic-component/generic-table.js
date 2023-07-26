@@ -281,7 +281,6 @@ export default function GenericTable(props) {
                   return (
                     <TableCell maxWidth={`${tableCellWidth}%`} key={index} align="left">
                       <Typography
-                        bgcolor="grey1.light"
                         p={1}
                         component="div"
                         variant="subtitle"
