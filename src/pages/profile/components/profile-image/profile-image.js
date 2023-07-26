@@ -307,7 +307,10 @@ export default function ProfileImage(props) {
                   variant="body2"
                   sx={{ whiteSpace: 'break-spaces' }}
                 >
-                  Your profile is suspended and you will not be able to perform any action.
+                  {personalDetails?.hp_profile_status_id === 5 &&
+                    `Your profile is suspended and you will not be able to perform any action.`}
+                  {personalDetails?.hp_profile_status_id === 6 &&
+                    `Your profile is blacklisted and you will not be able to perform any action.`}
                 </Typography>
               </Grid>
               <Grid item xs={12} textAlign="center" mt={1} mr={2}>
