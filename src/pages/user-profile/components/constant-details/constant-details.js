@@ -364,6 +364,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
               <Box display={'flex'} flexDirection="column">
                 <Paper display={'flex'} alignItems="center" sx={{ p: '2px 4px' }}>
                   <InputBase
+                    required={true}
                     sx={{ ml: 1, flex: 1 }}
                     placeholder="Email"
                     name="email"
