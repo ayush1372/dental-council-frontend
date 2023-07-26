@@ -79,7 +79,7 @@ export default function SuccessModal({ text, userData, resetStep }) {
             flexDirection="column"
           >
             {userData?.page === 'forgetUserName'
-              ? `Your username is "${retrieveUserName}". Please use this username to login`
+              ? `Your username is "${retrieveUserName}". Please use this username to login.`
               : text}
           </Typography>
           <Button
