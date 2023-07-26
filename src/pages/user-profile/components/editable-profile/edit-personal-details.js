@@ -1095,7 +1095,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 />
               ) : (
                 <Select
-                  //style={{ backgroundColor: '#F0F0F0' }}
+                  style={{ backgroundColor: '#F0F0F0' }}
                   fullWidth
                   error={errors.Country?.message}
                   name="Country"
