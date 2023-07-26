@@ -35,7 +35,7 @@ function createData(
   };
 }
 
-function FacilityDetailsTable({ declaredFacilityData, currentWorkDetails }) {
+function FacilityDetailsTable({ declaredFacilityData }) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState({});
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -86,6 +86,7 @@ function FacilityDetailsTable({ declaredFacilityData, currentWorkDetails }) {
     setOrderBy(property);
   };
 
+  //Helper method to remove the empty object from the response.
   const updatedFacilityData = defaultFacilityData?.current_work_details?.filter(
     (value) => JSON.stringify(value) !== '{}'
   );
@@ -127,7 +128,7 @@ function FacilityDetailsTable({ declaredFacilityData, currentWorkDetails }) {
 
   const facilityDeLinkHandler = (facilityIndex) => {
     let facilityID = {
-      facility_id: [currentWorkDetails?.[facilityIndex]?.facility_id],
+      facility_id: [updatedFacilityData?.[facilityIndex]?.facility_id],
     };
     dispatch(deleteWorkProfileDetailsData(facilityID))
       .then((response) => {
