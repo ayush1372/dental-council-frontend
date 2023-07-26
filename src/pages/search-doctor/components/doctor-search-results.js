@@ -76,12 +76,12 @@ const SearchResults = ({ searchData, scrolldown }) => {
     >
       <Box>
         <Typography color="primary.main" component="div" variant="h2">
-          Search Results
+          Search Result
         </Typography>
         <Typography color="primary.main" component="div" variant="subtitle2">
-          {searchDetails?.data?.data?.count === 1
-            ? `${searchDetails?.data?.data?.count || '0'}  Matching Record Found `
-            : `${searchDetails?.data?.data?.count || '0'}  Matching Records Found `}
+          {searchDetails?.data?.data?.count > 1
+            ? `${searchDetails?.data?.data?.count}  Matching records found `
+            : `No record found `}
         </Typography>
         <Box mt={3}>
           <Box className="search-results" mt={3}>
