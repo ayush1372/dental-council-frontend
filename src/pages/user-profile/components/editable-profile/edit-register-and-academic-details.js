@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import { Box, Grid, Typography } from '@mui/material';
+import ReportIcon from '@mui/icons-material/Report';
+import { Box, Grid, Tooltip, Typography } from '@mui/material';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -355,6 +356,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
     return query === undefined;
   };
+  const getQueryRaisedComment = (fieldName) => {
+    let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
+    return query?.query_comment;
+  };
 
   return (
     <Box
@@ -384,6 +389,11 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               Registered Council Name
               <Typography component="span" color="error.main">
                 *
+                {getQueryRaised('Registered with council') === false && (
+                  <Tooltip title={getQueryRaisedComment('Registered with council')}>
+                    <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
+                  </Tooltip>
+                )}
               </Typography>
             </Typography>
             {personalDetails?.personal_details?.is_new ? (
@@ -399,7 +409,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 }
                 style={{
                   backgroundColor:
-                    work_flow_status_id === 3 && getQueryRaised('State') ? '#F0F0F0' : '',
+                    work_flow_status_id === 3 && getQueryRaised('Registered with council')
+                      ? 'grey2.main'
+                      : '',
                 }}
                 {...register('RegisteredWithCouncil')}
                 options={createSelectFieldData(councilNames)}
@@ -444,6 +456,11 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               <Typography component="span" color="error.main">
                 *
               </Typography>
+              {getQueryRaised('Registration Number') === false && (
+                <Tooltip title={getQueryRaisedComment('Registration Number')}>
+                  <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
+                </Tooltip>
+              )}
             </Typography>
             <TextField
               variant="outlined"
@@ -460,7 +477,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               sx={{
                 input: {
                   backgroundColor:
-                    work_flow_status_id === 3
+                    getQueryRaised('Registration Number') === false
+                      ? false
+                      : work_flow_status_id === 3
                       ? 'grey2.main'
                       : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
                       ? ''
@@ -483,6 +502,11 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               <Typography component="span" color="error.main">
                 *
               </Typography>
+              {getQueryRaised('Registration Date') === false && (
+                <Tooltip title={getQueryRaisedComment('Registration Date')}>
+                  <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
+                </Tooltip>
+              )}
             </Typography>
             <DatePicker
               onChangeDate={(newDateValue) => {
@@ -498,7 +522,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               // error={errors.RegistrationDate?.message}
               // {...register('RegistrationDate', { required: 'Please select a valid date' })}
               backgroundColor={
-                work_flow_status_id === 3
+                getQueryRaised('Registration Date') === false
+                  ? false
+                  : work_flow_status_id === 3
                   ? '#F0F0F0'
                   : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
                   ? ''
@@ -526,6 +552,11 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               <Typography component="span" color="error.main">
                 *
               </Typography>
+              {getQueryRaised('Registration') === false && (
+                <Tooltip title={getQueryRaisedComment('Registration')}>
+                  <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
+                </Tooltip>
+              )}
             </Typography>
 
             <RadioGroup
@@ -554,6 +585,11 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 <Typography component="span" color="error.main">
                   *
                 </Typography>
+                {getQueryRaised('Due Date of Renewal') === false && (
+                  <Tooltip title={getQueryRaisedComment('Due Date of Renewal')}>
+                    <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
+                  </Tooltip>
+                )}
               </Typography>
 
               <DatePicker
@@ -575,7 +611,13 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                     : ''
                 }
                 value={new Date()}
-                disabled={work_flow_status_id === 3 ? getQueryRaised('Due Date of Renewal') : false}
+                disabled={
+                  work_flow_status_id === 3 &&
+                  (getQueryRaised('Due Date of Renewal') === false ||
+                    getQueryRaised('Due Date of Renewal') === undefined)
+                    ? getQueryRaised('Due Date of Renewal')
+                    : false
+                }
               />
             </Grid>
           )}
@@ -583,6 +625,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12}>
             <UploadFile
+              queryRaiseIcon={
+                getQueryRaised('Upload the registration certificate') === false ? true : false
+              }
               fileID={'registrationFileData'}
               uploadFiles="single"
               sizeAllowed={5}
@@ -593,11 +638,14 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               setFileData={setRegistrationFileData}
               uploadFileLabel="Upload Registration Certificate"
               fileName={file_name + '.' + file_type}
-              disabled={
-                work_flow_status_id === 3
+              fileDisabled={
+                getQueryRaised('Upload the registration certificate') === false
+                  ? false
+                  : work_flow_status_id === 3
                   ? getQueryRaised('Upload the registration certificate')
                   : false
               }
+              toolTipData={getQueryRaisedComment('Upload the registration certificate')}
             />
           </Grid>
         </Grid>
