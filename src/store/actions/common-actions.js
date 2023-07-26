@@ -11,6 +11,7 @@ import {
   getCourses,
   getDistricts,
   getLanguages,
+  getReactivationData,
   getSpecialities,
   getStates,
   getSubDistricts,
@@ -479,7 +480,7 @@ export const getActivateLicenseList = (body) => async (dispatch) => {
   });
 };
 
-export const createReActivateLicense = (body) => async () => {
+export const createReActivateLicense = (body) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: POST,
@@ -488,6 +489,7 @@ export const createReActivateLicense = (body) => async () => {
       data: body,
     })
       .then((response) => {
+        dispatch(getReactivationData(response));
         return resolve(response);
       })
       .catch((error) => {
