@@ -34,6 +34,7 @@ function createData(
 function WorkDetailsTable({
   FacilityData,
   declaredFacilityData,
+  setFacilityTableError,
   setFacilityResponseData,
   setDeclaredFacilityDistrict,
 }) {
@@ -152,6 +153,7 @@ function WorkDetailsTable({
               if (e.target.checked) {
                 declaredFacilityData.push(FacilityData[currentRowIndex]);
                 setDeclaredFacilityDistrict([...declaredFacilityData]);
+                setFacilityTableError(false);
               } else {
                 declaredFacilityData.splice(currentRowIndex, 1);
                 setDeclaredFacilityDistrict([...declaredFacilityData]);
@@ -184,20 +186,22 @@ function WorkDetailsTable({
           bgcolor: 'red',
         }}
       />
-      <Box>
-        <TablePagination
-          rowsPerPageOptions={[]}
-          component="div"
-          count={newRowsData?.length || 0}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        />
-      </Box>
+      {newRowsData?.length !== 0 && (
+        <Box>
+          <TablePagination
+            rowsPerPageOptions={[]}
+            component="div"
+            count={newRowsData?.length || 0}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          />
+        </Box>
+      )}
     </Grid>
   );
 }

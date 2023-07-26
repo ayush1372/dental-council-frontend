@@ -156,23 +156,25 @@ const SearchResults = ({ searchData, scrolldown }) => {
               })}
             </Grid>
           </Box>
-          <Box>
-            <TablePagination
-              rowsPerPageOptions={[]}
-              component="div"
-              count={searchDetails?.data?.data?.count || 0}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                color: 'primary.main',
-                variant: 'body1',
-              }}
-            />
-          </Box>
+          {searchDetails?.data?.data?.results?.length !== 0 && (
+            <Box>
+              <TablePagination
+                rowsPerPageOptions={[]}
+                component="div"
+                count={searchDetails?.data?.data?.count || 0}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  color: 'primary.main',
+                  variant: 'body1',
+                }}
+              />
+            </Box>
+          )}
         </Box>
       </Box>
       {confirmationModal && (

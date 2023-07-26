@@ -341,7 +341,7 @@ export default function Dashboard() {
                       }}
                     >
                       <Typography variant="body1">
-                        Total Pending Requests - {element[1][1]?.value + element[1][2]?.value}
+                        Total Pending Requests : {element[1][1]?.value + element[1][2]?.value}
                       </Typography>
                     </Grid>
                   </Grid>
