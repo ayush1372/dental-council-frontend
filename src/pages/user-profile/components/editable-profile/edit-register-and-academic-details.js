@@ -148,8 +148,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   };
 
   const onHandleSave = (moveToNext = false) => {
-    // eslint-disable-next-line no-console
-    console.log('inside save and next');
     const {
       RegisteredWithCouncil,
       RegistrationNumber,
@@ -184,6 +182,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     const isInternational = qualification?.[0]?.qualificationfrom === 'International';
     let updatedObj = [];
     let fmgeObj = {};
+    let countryData = { id: 356, name: 'India', nationality: 'Indian' };
 
     if (qualification?.length > 0) {
       updatedObj = qualification?.map((q) => ({
@@ -193,9 +192,11 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
             ? qualification_detail_response_tos[0]?.id
             : '',
         country: isInternational
-          ? countriesList.find((x) => x.id === q?.country)
-          : { id: 356, name: 'India', nationality: 'Indian' },
-        course: coursesList.data?.find((x) => x.id === q?.qualification),
+          ? countriesList.find((item) => item.id === q?.country)
+          : countryData,
+        course: isInternational
+          ? coursesList.data?.find((x) => x.name === q?.qualification)
+          : coursesList.data?.find((x) => x.id === q?.qualification),
         university: isInternational
           ? { name: q?.university }
           : universitiesList.data?.find((x) => x.id === q?.university),
@@ -208,10 +209,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
         qualification_from: q?.qualificationfrom,
       }));
       if (isInternational) {
-        // eslint-disable-next-line no-console
-        console.log('isInternational', isInternational);
-        // eslint-disable-next-line no-console
-        console.log('qualification[0]', qualification[0]);
         fmgeObj = {
           roll_no: qualification[0]?.rollno,
           passport_number: qualification[0]?.passportNumber,
@@ -323,7 +320,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   const handleRegistration = (event) => {
     setValue(event.target.name, event.target.value, true);
   };
-
   useEffect(() => {
     const details = registrationDetails?.qualification_detail_response_tos?.[0] || {};
     const fmgeDetails = registrationDetails?.nbe_response_to || {};
@@ -331,17 +327,15 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
     const isInternational = details?.qualification_from === 'International';
     // basic qualification
-    // eslint-disable-next-line no-console
-    console.log('details', details);
+
     obj.university = isInternational ? details?.university?.name : details?.university?.id;
-    obj.qualification = details?.course?.id;
+    obj.qualification = details?.course?.course_name;
     obj.college = isInternational ? details?.college?.name : details?.college?.id;
     obj.year = details?.qualification_year;
     obj.country = details?.country?.id;
     obj.state = isInternational ? details?.state?.name : details?.state?.id;
     obj.qualificationfrom = details?.qualification_from;
     obj.month = details?.qualification_month;
-    // obj.nameindegree = details?.course?.id;
     obj.nameindegree = details?.is_name_change;
 
     // FMGE qualification

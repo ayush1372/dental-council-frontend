@@ -32,9 +32,6 @@ const EditQualificationDetails = ({
   handleQualificationFilesData,
   showBroadSpeciality = false,
 }) => {
-  // eslint-disable-next-line no-console
-  console.log('qualification', qualification);
-
   const dispatch = useDispatch();
   const [colleges, setColleges] = useState([]);
   // const qualificationObjTemplate = [
@@ -117,7 +114,8 @@ const EditQualificationDetails = ({
   }, [watchCollege]);
 
   useEffect(() => {
-    if (qualificationfrom !== 'International' || !isAdditionalQualification) {
+    // || !isAdditionalQualification
+    if (qualificationfrom !== 'International') {
       const removalArray = [
         `qualification[${index}].rollno`,
         `qualification[${index}].result`,
@@ -138,7 +136,7 @@ const EditQualificationDetails = ({
       });
       if (!isAdditionalQualification) setValue(`qualification[${index}].qualification`, 69);
     }
-    setValue(`qualification[${index}].qualificationfrom`, fields[index].qualificationfrom);
+    // setValue(`qualification[${index}].qualificationfrom`, fields[index].qualificationfrom);
     setValue(`qualification[${index}].university`, fields[index].university);
     setValue(`qualification[${index}].college`, fields[index].college);
   }, []);
@@ -162,7 +160,10 @@ const EditQualificationDetails = ({
     let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
     return query?.query_comment;
   };
-
+  const courseData = (courseName) => {
+    let degreeName = coursesList.data?.find((x) => x.name === courseName);
+    return degreeName?.id;
+  };
   return (
     <>
       {showDeleteIcon && (
@@ -221,31 +222,19 @@ const EditQualificationDetails = ({
         ''
       )}
 
-      {
-        // eslint-disable-next-line no-console
-        console.log('isAdditionalQualification', isAdditionalQualification)
-      }
       {qualificationfrom === 'International' && !isAdditionalQualification ? (
         <Grid container item spacing={2}>
           <Grid item xs={12} md={4}>
-            {
-              // eslint-disable-next-line no-console
-              console.log('roll no value', getValues()[`qualification[${index}].rollno`])
-            }
             <TextField
-              queryRaiseIcon={getQueryRaised('RollNo') === false ? true : false}
-              toolTipData={getQueryRaisedComment('RollNo')}
+              queryRaiseIcon={getQueryRaised('Roll no.') === false ? true : false}
+              toolTipData={getQueryRaisedComment('Roll no.')}
               variant="outlined"
               name="RollNo"
               label="Roll Number"
               placeholder="Enter roll number"
               required={true}
               fullWidth
-              // error={errors?.qualification?.[index]?.rollno?.message}
-              // error={
-              //   getValues()?.qualification?.[index]?.rollno === '' &&
-              //   errors?.qualification?.[index]?.rollno?.message
-              // }
+              error={errors?.qualification?.[index]?.rollno?.message}
               defaultValue={getValues()[`qualification[${index}].rollno`]}
               {...register(`qualification[${index}].rollno`, {
                 required: 'Roll no is required',
@@ -253,7 +242,7 @@ const EditQualificationDetails = ({
               sx={{
                 input: {
                   backgroundColor:
-                    work_flow_status_id === 3 && getQueryRaised('RollNo')
+                    work_flow_status_id === 3 && getQueryRaised('Roll no.')
                       ? '#F0F0F0'
                       : isVerified === 1
                       ? '#F0F0F0'
@@ -310,8 +299,8 @@ const EditQualificationDetails = ({
 
           <Grid item xs={12} md={4}>
             <TextField
-              queryRaiseIcon={getQueryRaised('MarksObtained') === false ? true : false}
-              toolTipData={getQueryRaisedComment('MarksObtained')}
+              queryRaiseIcon={getQueryRaised('Marks obtained') === false ? true : false}
+              toolTipData={getQueryRaisedComment('Marks obtained')}
               variant="outlined"
               name="MarksObtained"
               label="Marks obtained"
@@ -319,11 +308,7 @@ const EditQualificationDetails = ({
               // required={true}
               type="number"
               fullWidth
-              // error={errors?.qualification?.[index]?.marksobtained?.message}
-              error={
-                getValues()?.qualification?.[index]?.marksobtained === '' &&
-                errors?.qualification?.[index]?.marksobtained?.message
-              }
+              error={errors?.qualification?.[index]?.marksobtained?.message}
               defaultValue={getValues()[`qualification[${index}].marksobtained`]}
               {...register(`qualification[${index}].marksobtained`, {
                 required: 'Marks obtained is required',
@@ -335,7 +320,7 @@ const EditQualificationDetails = ({
               sx={{
                 input: {
                   backgroundColor:
-                    work_flow_status_id === 3 && getQueryRaised('MarksObtained')
+                    work_flow_status_id === 3 && getQueryRaised('Marks obtained')
                       ? 'grey2.main'
                       : isVerified === 1
                       ? 'grey2.main'
@@ -509,10 +494,6 @@ const EditQualificationDetails = ({
       </Grid>
       <Grid container item spacing={2}>
         <Grid item xs={12} md={6} lg={4}>
-          {
-            // eslint-disable-next-line no-console
-            console.log('qualification.nameindegree', qualification.nameindegree)
-          }
           {qualificationfrom === 'International' || isAdditionalQualification ? (
             <Select
               queryRaiseIcon={
@@ -520,16 +501,13 @@ const EditQualificationDetails = ({
               }
               toolTipData={getQueryRaisedComment('Name of the Degree Obtained')}
               fullWidth
-              // error={errors?.qualification?.[index]?.qualification?.message}
-              error={
-                getValues()?.qualification?.[index]?.qualification === '' &&
-                errors?.qualification?.[index]?.qualification?.message
-              }
+              error={errors?.qualification?.[index]?.qualification?.message}
               name="Qualification"
               placeholder={'Select degree'}
               label="Degree Name"
               isAdditionalQualification={isAdditionalQualification}
-              // required={true}
+              required={true}
+              defaultValue={getValues()[`qualification[${index}].qualification`]}
               disabled={
                 work_flow_status_id === 3
                   ? getQueryRaised('Name of the Degree Obtained')
@@ -553,7 +531,7 @@ const EditQualificationDetails = ({
                 setValue(`qualification[${index}].qualification`, e?.target?.value);
               }}
               options={createSelectFieldData(coursesList.data)}
-              value={qualificationID}
+              value={qualificationID ? qualificationID : courseData(qualification?.qualification)}
               MenuProps={{
                 style: {
                   maxHeight: 250,
