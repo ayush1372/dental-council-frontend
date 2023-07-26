@@ -533,7 +533,6 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                 <Box
                   sx={{
                     display: 'flex',
-                    alignItems: 'center',
                   }}
                 >
                   <TextField
@@ -554,12 +553,14 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                       },
                     })}
                   />
-                  {(isOtpValidMobile && !editBUtton) ||
-                  demographicAuthMobileVerify?.data?.verified ? (
-                    <CheckCircleIcon color="success" />
-                  ) : (
-                    ''
-                  )}
+                  <Box mt={2}>
+                    {(isOtpValidMobile && !editBUtton) ||
+                    demographicAuthMobileVerify?.data?.verified ? (
+                      <CheckCircleIcon color="success" />
+                    ) : (
+                      ''
+                    )}
+                  </Box>
                   <Box>
                     {editBUtton && !demographicAuthMobileVerify?.data?.verified ? (
                       <Button
@@ -606,7 +607,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                     },
                   }}
                 >
-                  <Box>
+                  <Box mb={1}>
                     <Typography variant="body1">
                       Please enter the OTP sent on your mobile number.
                     </Typography>
