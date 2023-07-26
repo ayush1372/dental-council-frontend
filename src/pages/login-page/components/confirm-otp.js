@@ -22,7 +22,7 @@ import { Button } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
 const ConfirmOTP = ({ handleConfirmOTP, otpData, handlePasswordSetup }) => {
   const { t } = useTranslation();
-  const [isOtpValid, setIsOtpValid] = useState(true);
+  const [isOtpValid, setIsOtpValid] = useState(false);
   const dispatch = useDispatch();
   const { sendNotificationOtpData } = useSelector((state) => state?.common);
   const [changeUserData, setChangeUserData] = useState(false);
@@ -35,7 +35,7 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, handlePasswordSetup }) => {
   const { otpform, getOtpValidation, otpValue } = OtpForm({
     resendAction: otpResend,
     resendTime: 90,
-    otpInvalidError: !isOtpValid,
+    otpInvalidError: isOtpValid,
     otpData: otpData,
   });
 
