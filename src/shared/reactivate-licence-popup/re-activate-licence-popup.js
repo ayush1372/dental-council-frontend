@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
 import ReactivationLogo from '../../../src/assets/images/reactivate-license-icon.png';
+import { getDateAndTimeFormat } from '../../helpers/functions/common-functions';
 import { createReActivateLicense } from '../../store/actions/common-actions';
 import { Button, DatePicker, TextField } from '../../ui/core';
 import UploadFile from '../../ui/core/fileupload/fileupload';
@@ -20,8 +21,11 @@ export default function ReactivateLicencePopup(props) {
   const { loginData } = useSelector((state) => state?.loginReducer);
   const dispatch = useDispatch();
 
-  const { register, getValues, setValue } = useForm({
+  const { register, getValues } = useForm({
     mode: 'onChange',
+    defaultValues: {
+      fromDate: getDateAndTimeFormat('dateFormat'),
+    },
   });
 
   const handleClose = () => {
@@ -100,10 +104,12 @@ export default function ReactivateLicencePopup(props) {
                 </Typography>
 
                 <DatePicker
-                  onChangeDate={(newDateValue) => {
-                    setValue('fromDate', new Date(newDateValue)?.toLocaleDateString('en-GB'));
-                    setShowFromDateError(false);
-                  }}
+                  defaultValue={new Date()}
+                  disabled
+                  // onChangeDate={(newDateValue) => {
+                  //   setValue('fromDate', new Date(newDateValue)?.toLocaleDateString('en-GB'));
+                  //   //setShowFromDateError(false);
+                  // }}
                   data-testid="fromDate"
                   id="fromDate"
                   name="fromDate"

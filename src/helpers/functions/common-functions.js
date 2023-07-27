@@ -1,4 +1,5 @@
 import JSEncrypt from 'jsencrypt';
+import moment from 'moment/moment';
 
 import {
   colgDeanRegTabs,
@@ -311,4 +312,36 @@ export const scrollToTop = () => {
     top: 0,
     behavior: 'smooth',
   });
+};
+
+export const dateAndTimeConstant = (format) => {
+  switch (format) {
+    case 'dateFormatWithMilliseconds':
+      return 'YYYY-MM-DD HH:mm:ss.SSS';
+
+    case 'idleTimerDateFormat':
+      return 'dddd Do MMMM, YYYY';
+
+    case 'kebabDateFormat':
+      return 'DD-MM-YYYY';
+
+    case 'withoutKebabDateFormat':
+      return 'DD MMMM, YYYY';
+
+    case 'onlyTimeFormat':
+      return 'HH:mm A';
+
+    case 'dateFormat':
+      return 'DD/MM/YYYY';
+
+    default:
+      return null;
+  }
+};
+export const getDateAndTimeFormat = (
+  dateFormat,
+  date = new Date(),
+  format = dateAndTimeConstant(dateFormat)
+) => {
+  return moment(date).format(format);
 };

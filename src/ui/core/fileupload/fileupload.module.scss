@@ -65,6 +65,41 @@
       color: #264488;
     }
   }
+  .uploadDisabled {
+    pointer-events: none;
+    user-select: none;
+    opacity: 0.6;
+    .fileIcon,
+    .browseFiles,
+    .uploadDeleteIcon {
+      opacity: 0.6;
+      user-select: none;
+    }
+
+    & + .uploadedBlock {
+      .actionArea {
+        pointer-events: none;
+        .uploadDeleteIcon {
+          opacity: 0.6;
+          user-select: none;
+        }
+        .uploadViewIcon {
+          pointer-events: all;
+          opacity: 1;
+        }
+      }
+      .fileDetailsArea {
+        opacity: 0.6;
+        user-select: none;
+      }
+      .fileDetailsContainer {
+        .uploadIconDefault {
+          opacity: 0.6;
+          user-select: none;
+        }
+      }
+    }
+  }
   .browseFileArea {
     margin-top: 8px;
   }
@@ -107,15 +142,20 @@
     }
     .fileDetailsContainer {
       display: flex;
+      align-items: center;
+      padding: 4px 8px;
     }
     .fileDetailsArea {
       display: flex;
       flex-direction: column;
       flex-grow: 1;
+      line-height: 1;
     }
     .actionArea {
       align-self: center;
       cursor: pointer;
+      display: flex;
+      align-items: center;
     }
     .tryAgainIcon {
       margin-right: 10px;
