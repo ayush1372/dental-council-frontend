@@ -18,9 +18,10 @@ import {
   updateDoctorContactDetails,
 } from '../../../store/actions/doctor-user-profile-actions';
 import { retrieveUserName } from '../../../store/actions/forgot-username-actions';
+import { loginActiveState } from '../../../store/reducers/login-reducer';
 import { Button } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
-const ConfirmOTP = ({ handleConfirmOTP, otpData, handlePasswordSetup }) => {
+const ConfirmOTP = ({ handleConfirmOTP, otpData,resetStep, handlePasswordSetup }) => {
   const { t } = useTranslation();
   const [isOtpValid, setIsOtpValid] = useState(false);
   const dispatch = useDispatch();
@@ -128,13 +129,28 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, handlePasswordSetup }) => {
 
   return (
     <Box p={3} bgcolor="white.main" boxShadow="4">
-      {(otpData.page === 'doctorConstantDetailsPage' && otpData.type === 'sms') ||
-      otpData.page === 'forgetUserName' ? (
+      {(
+          otpData.page === 'doctorConstantDetailsPage' && otpData.type === 'sms') ||
+          otpData.page === 'forgetUserName' ||
+          otpData.page === 'forgotPasswordPage'  ? 
+      (
         <>
           <Box display={'flex'} justifyContent="flex-end" lineHeight={'1'}>
-            <Box flex-grow={1}>
-              <CloseIcon onClick={otpData.handleClose} sx={{ cursor: 'pointer' }} />
-            </Box>
+            {(
+            otpData.page === 'doctorConstantDetailsPage'?
+             (
+               <Box flex-grow={1}>
+                 <CloseIcon onClick={otpData.handleClose} sx={{ cursor: 'pointer' }} />
+               </Box> ) :
+               <Box flex-grow={1}>
+                 <CloseIcon 
+                  onClick={() => {
+                    resetStep(0);
+                    dispatch(loginActiveState({ activeIndex: 0 }));
+                  }}
+                  sx={{ cursor: 'pointer' }} />
+               </Box>
+            )}
           </Box>
           <Box textAlign={'center'}>
             <img src={OtpIcon} alt="OTP" width={'46px'} />
@@ -230,8 +246,21 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, handlePasswordSetup }) => {
             </Box>
           )}
         </Box>
-        {otpData?.page === 'forgetUserName' ? (
+        {otpData?.page === 'forgetUserName' || otpData?.page === 'forgotPasswordPage' ? (
           <Box display={'flex'} justifyContent="center" pt={2}>
+            <Button
+                onClick={() => {
+                  resetStep(0);
+                  dispatch(loginActiveState({ activeIndex: 0 }));
+                }}
+                variant="contained"
+                color="grey"
+                sx={{
+                  mr: 2,
+                }}
+              >
+              Cancel
+            </Button>
             <Button
               size="medium"
               variant="contained"
@@ -242,8 +271,8 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, handlePasswordSetup }) => {
             </Button>
           </Box>
         ) : (
-          ((otpData.page === 'doctorConstantDetailsPage' && otpData?.type !== 'email') ||
-            otpData.page === 'forgotPasswordPage' ||
+          ((
+            otpData?.page === 'doctorConstantDetailsPage' && otpData?.type !== 'email') ||
             otpData?.type === 'sms') && (
             <Box mt={2} textAlign="center">
               <Button
@@ -260,14 +289,6 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, handlePasswordSetup }) => {
                 size="medium"
                 variant="contained"
                 color="secondary"
-                sx={
-                  {
-                    // backgroundColor: 'secondary.lightOrange',
-                    // '&:hover': {
-                    //   backgroundColor: 'secondary.lightOrange',
-                    // },
-                  }
-                }
                 onClick={onHandleVerify}
               >
                 {t('Submit')}
