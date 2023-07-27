@@ -123,39 +123,41 @@ const WorkDetails = ({
           : getLanguageData(getValues().LanguageSpoken),
     };
     if (declaredFacilityData?.length > 0) {
-      fetchDistricts(declaredFacilityData[0]?.address?.state, true);
-      let facilityDetailsDeclared = {
-        facility_id: declaredFacilityData[0]?.id,
-        organization_type: getValues().organizationType || declaredFacilityData[0]?.facilityType,
-        work_organization: declaredFacilityData[0]?.name,
-        url: getValues().telecommunicationURL,
-        address: {
-          pincode: declaredFacilityData[0]?.address?.pincode,
-          country: {
-            id: 386,
-            name: 'india',
+      declaredFacilityData?.map((elementData, index) => {
+        fetchDistricts(declaredFacilityData[index]?.address?.state, true);
+        let facilityDetailsDeclared = {
+          facility_id: elementData?.id,
+          organization_type: getValues().organizationType || elementData?.facilityType,
+          work_organization: elementData?.name,
+          url: getValues().telecommunicationURL,
+          address: {
+            pincode: elementData?.address?.pincode,
+            country: {
+              id: 386,
+              name: 'india',
+            },
+            state: getStateData(elementData?.address?.state, true),
+            district: elementData?.address?.district_to,
+            village: {
+              iso_code: elementData?.villageCityTownLGDCode,
+              name: elementData?.villageCityTownName,
+            },
+            sub_district: {
+              iso_code: elementData?.subDistrictLGDCode,
+              name: elementData?.subDistrictName,
+            },
+            address_line1: elementData?.address?.addressLine1,
+            street: getValues().Street,
+            landmark: getValues().Landmark,
           },
-          state: getStateData(declaredFacilityData[0]?.address?.state, true),
-          district: declaredFacilityData[0]?.address?.district_to,
-          village: {
-            iso_code: declaredFacilityData[0]?.villageCityTownLGDCode,
-            name: declaredFacilityData[0]?.villageCityTownName,
-          },
-          sub_district: {
-            iso_code: declaredFacilityData[0]?.subDistrictLGDCode,
-            name: declaredFacilityData[0]?.subDistrictName,
-          },
-          address_line1: declaredFacilityData[0]?.address?.addressLine1,
-          street: getValues().Street,
-          landmark: getValues().Landmark,
-        },
-        registration_no: registrationDetails?.registration_detail_to?.registration_number,
-        experience_in_years: workExpierence,
-        system_of_medicine: declaredFacilityData[0]?.systemOfMedicine,
-        department: declaredFacilityData[0]?.department || 'department',
-        designation: declaredFacilityData[0]?.designation || 'desgination',
-      };
-      currentWorkDetails?.current_work_details.push(facilityDetailsDeclared);
+          registration_no: registrationDetails?.registration_detail_to?.registration_number,
+          experience_in_years: workExpierence,
+          system_of_medicine: elementData?.systemOfMedicine,
+          department: elementData?.department || 'department',
+          designation: elementData?.designation || 'desgination',
+        };
+        currentWorkDetails?.current_work_details.push(facilityDetailsDeclared);
+      });
     }
     if (!organizationChecked) {
       currentWorkDetails?.current_work_details.splice(0, 1);
@@ -222,9 +224,9 @@ const WorkDetails = ({
     return DistrictData[0]?.iso_code;
   };
 
-  const searchFacilitiesHandler = () => {
+  const searchFacilitiesHandler = (page) => {
     const values = getValues();
-
+    let facilityResponse;
     let ownerCode =
       values?.workStatus === '3'
         ? 'G'
@@ -233,8 +235,9 @@ const WorkDetails = ({
         : values?.workStatus === '1'
         ? 'PP'
         : '';
+
     const searchFacilities = {
-      page: 0,
+      page: page || 0,
       ownership: ownerCode,
       resultsPerPage: 10,
       id: values.facilityId || null,
@@ -246,12 +249,14 @@ const WorkDetails = ({
       .then((response) => {
         if (response?.data) {
           setFacilityResponseData(response?.data?.facilities);
+          facilityResponse = response?.data?.facilities;
         }
       })
       .catch(() => {
         successToast(ErrorMessages.inValidFacilityDetails, 'auth-error', 'error', 'top-center');
       });
     setShowTable(true);
+    return facilityResponse;
   };
 
   // watches
@@ -807,6 +812,7 @@ const WorkDetails = ({
                     setDeclaredFacilityDistrict={setDeclaredFacilityDistrict}
                     declaredFacilityData={declaredFacilityData}
                     setFacilityTableError={setFacilityTableError}
+                    searchFacilitiesHandler={searchFacilitiesHandler}
                   />
                 </Grid>
               )}
