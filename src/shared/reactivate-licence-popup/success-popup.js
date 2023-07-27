@@ -16,10 +16,12 @@ export default function SuccessPopup({ fetchDoctorUserPersonalDetails, reactivat
 
   const [open, setOpen] = useState(true);
 
-  const logInDoctorStatus = useSelector(
-    (state) => state?.loginReducer?.loginData?.data?.blacklisted
-  );
+  // const logInDoctorStatus = useSelector(
+  //   (state) => state?.loginReducer?.loginData?.data?.blacklisted
+  // );
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+
+  const { ReactivationData } = useSelector((state) => state.common);
 
   const handleClose = () => {
     setOpen(false);
@@ -69,13 +71,18 @@ export default function SuccessPopup({ fetchDoctorUserPersonalDetails, reactivat
             display="flex"
             alignItems="center"
             textAlign="center"
+            justifyContent="center"
             mt={4}
             variant="body1"
             data-testid="popup-input-text"
           >
-            {logInDoctorStatus
+            {ReactivationData?.data?.self_reactivation
               ? `Your profile has been re-activated. You can perform action on your profile now.`
-              : `Your username has been successfully created. A link to create your password has been sent to the registered mobile number.`}
+              : `Reactivation request has been submitted`}
+
+            {/* {logInDoctorStatus &&
+              `Your username has been successfully created. A link to create your
+            password has been sent to the registered mobile number.`} */}
           </Typography>
           <Button
             sx={{ width: '408px', mt: 8 }}

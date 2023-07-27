@@ -572,12 +572,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                   message: 'Length should be less than 100.',
                 },
               })}
-              sx={{
-                input: {
-                  backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
-                },
-              }}
-              InputProps={{ readOnly: loggedInUserType === 'SMC' ? false : true }}
+              disabled
+              // sx={{
+              //   input: {
+              //     backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
+              //   },
+              // }}
+              // InputProps={{ readOnly: loggedInUserType === 'SMC' ? false : true }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -601,35 +602,36 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 },
               })}
               error={errors.FatherName?.message}
-              sx={{
-                input: {
-                  backgroundColor:
-                    loggedInUserType === 'SMC'
-                      ? ''
-                      : work_flow_status_id === 3 && getQueryRaised('Fathers Name')
-                      ? 'grey2.main'
-                      : '',
-                },
-              }}
-              InputProps={{
-                readOnly: work_flow_status_id === 3 ? getQueryRaised('Fathers Name') : false,
-              }}
+              disabled={work_flow_status_id === 3 ? getQueryRaised('Fathers Name') : false}
+              // sx={{
+              //   input: {
+              //     backgroundColor:
+              //       loggedInUserType === 'SMC'
+              //         ? ''
+              //         : work_flow_status_id === 3 && getQueryRaised('Fathers Name')
+              //         ? 'grey2.main'
+              //         : '',
+              //   },
+              // }}
+              // InputProps={{
+              //   readOnly: work_flow_status_id === 3 ? getQueryRaised('Fathers Name') : false,
+              // }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
-              Mother&apos;s Name
+              Mother Name
             </Typography>
             <TextField
               variant="outlined"
               name={'MotherName'}
-              placeholder="Enter mother's name"
+              placeholder="Enter mother name"
               fullWidth
               defaultValue={getValues().MotherName}
               {...register('MotherName', {
                 pattern: {
                   value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
-                  message: 'Please enter mother&apos;s name',
+                  message: 'Please enter mother name',
                 },
                 maxLength: {
                   value: 100,
@@ -637,19 +639,20 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 },
               })}
               error={errors.MotherName?.message}
-              InputProps={{
-                readOnly: work_flow_status_id === 3 ? getQueryRaised('Mothers Name') : false,
-              }}
-              sx={{
-                input: {
-                  backgroundColor:
-                    loggedInUserType === 'SMC'
-                      ? ''
-                      : work_flow_status_id === 3 && getQueryRaised('Mothers Name')
-                      ? 'grey2.main'
-                      : '',
-                },
-              }}
+              disabled={work_flow_status_id === 3 ? getQueryRaised('Mothers Name') : false}
+              // InputProps={{
+              //   readOnly: work_flow_status_id === 3 ? getQueryRaised('Mothers Name') : false,
+              // }}
+              // sx={{
+              //   input: {
+              //     backgroundColor:
+              //       loggedInUserType === 'SMC'
+              //         ? ''
+              //         : work_flow_status_id === 3 && getQueryRaised('Mothers Name')
+              //         ? 'grey2.main'
+              //         : '',
+              //   },
+              // }}
             />
           </Grid>
         </Grid>
@@ -676,19 +679,20 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 },
               })}
               error={errors.SpouseName?.message}
-              InputProps={{
-                readOnly: work_flow_status_id === 3 ? getQueryRaised('Spouse Name') : false,
-              }}
-              sx={{
-                input: {
-                  backgroundColor:
-                    loggedInUserType === 'SMC'
-                      ? ''
-                      : work_flow_status_id === 3 && getQueryRaised('Spouse Name')
-                      ? 'grey2.main'
-                      : '',
-                },
-              }}
+              disabled={work_flow_status_id === 3 ? getQueryRaised('Spouse Name') : false}
+              // InputProps={{
+              //   readOnly: work_flow_status_id === 3 ? getQueryRaised('Spouse Name') : false,
+              // }}
+              // sx={{
+              //   input: {
+              //     backgroundColor:
+              //       loggedInUserType === 'SMC'
+              //         ? ''
+              //         : work_flow_status_id === 3 && getQueryRaised('Spouse Name')
+              //         ? 'grey2.main'
+              //         : '',
+              //   },
+              // }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -700,7 +704,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
             </Typography>
             <Select
               fullWidth
-              sx={{ backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main' }}
+              // sx={{ backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main' }}
               error={errors.Nationality?.message}
               name="Nationality"
               defaultValue={getValues().Nationality}
@@ -709,9 +713,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
               {...register('Nationality', {
                 required: 'Nationality is required',
               })}
-              InputProps={{
-                readOnly: loggedInUserType === 'SMC' ? false : true,
-              }}
+              // InputProps={{
+              //   readOnly: loggedInUserType === 'SMC' ? false : true,
+              // }}
               options={createSelectFieldData(nationalities)}
             />
           </Grid>
@@ -770,7 +774,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 getValues()?.dateOfBirth ? new Date(getValues()?.dateOfBirth) : undefined
               }
               error={errors.DateOfBirth?.message}
-              backgroundColor={loggedInUserType === 'SMC' ? '' : '#F0F0F0'}
+              // backgroundColor={loggedInUserType === 'SMC' ? '' : '#F0F0F0'}
               disabled={loggedInUserType === 'SMC' ? false : true}
             />
           </Grid>
@@ -857,7 +861,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
               })}
               sx={{
                 input: {
-                  backgroundColor: 'grey2.main',
+                  // backgroundColor: 'grey2.main',
                   whiteSpace: 'nowrap',
                   wordWrap: 'break-word',
                 },
@@ -917,15 +921,15 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                       : false
                   }
                   required={isSameAddress ? false : true}
-                  sx={{
-                    input: {
-                      backgroundColor: isSameAddress
-                        ? 'grey2.main'
-                        : work_flow_status_id === 3 && getQueryRaised('House')
-                        ? 'grey2.main'
-                        : '',
-                    },
-                  }}
+                  // sx={{
+                  //   input: {
+                  //     // backgroundColor: isSameAddress
+                  //     //   ? 'grey2.main'
+                  //     //   : work_flow_status_id === 3 && getQueryRaised('House')
+                  //     //   ? 'grey2.main'
+                  //     //   : '',
+                  //   },
+                  // }}
                   defaultValue={
                     isSameAddress ? personalDetails?.kyc_address?.house : getValues()?.House
                   }
@@ -961,15 +965,15 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                       : false
                   }
                   fullWidth
-                  sx={{
-                    input: {
-                      backgroundColor: isSameAddress
-                        ? 'grey2.main'
-                        : work_flow_status_id === 3 && getQueryRaised('Street')
-                        ? 'grey2.main'
-                        : '',
-                    },
-                  }}
+                  // sx={{
+                  //   input: {
+                  //     backgroundColor: isSameAddress
+                  //       ? 'grey2.main'
+                  //       : work_flow_status_id === 3 && getQueryRaised('Street')
+                  //       ? 'grey2.main'
+                  //       : '',
+                  //   },
+                  // }}
                   defaultValue={
                     isSameAddress
                       ? personalDetails?.kyc_address?.street
@@ -999,15 +1003,15 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                       ? getQueryRaised('Landmark')
                       : false
                   }
-                  sx={{
-                    input: {
-                      backgroundColor: isSameAddress
-                        ? 'grey2.main'
-                        : work_flow_status_id === 3 && getQueryRaised('Landmark')
-                        ? 'grey2.main'
-                        : '',
-                    },
-                  }}
+                  // sx={{
+                  //   input: {
+                  //     backgroundColor: isSameAddress
+                  //       ? 'grey2.main'
+                  //       : work_flow_status_id === 3 && getQueryRaised('Landmark')
+                  //       ? 'grey2.main'
+                  //       : '',
+                  //   },
+                  // }}
                   required={false}
                   fullWidth
                   defaultValue={
@@ -1045,15 +1049,15 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                     ? getQueryRaised('Locality')
                     : false
                 }
-                sx={{
-                  input: {
-                    backgroundColor: isSameAddress
-                      ? 'grey2.main'
-                      : work_flow_status_id === 3 && getQueryRaised('Locality')
-                      ? 'grey2.main'
-                      : '',
-                  },
-                }}
+                // sx={{
+                //   input: {
+                //     backgroundColor: isSameAddress
+                //       ? 'grey2.main'
+                //       : work_flow_status_id === 3 && getQueryRaised('Locality')
+                //       ? 'grey2.main'
+                //       : '',
+                //   },
+                // }}
                 fullWidth
                 defaultValue={
                   isSameAddress
@@ -1079,21 +1083,21 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                       ? getQueryRaised('Country')
                       : false
                   }
-                  sx={{
-                    input: {
-                      backgroundColor: isSameAddress
-                        ? 'grey2.main'
-                        : work_flow_status_id === 3 && getQueryRaised('Country')
-                        ? 'grey2.main'
-                        : '',
-                    },
-                  }}
+                  // sx={{
+                  //   input: {
+                  //     backgroundColor: isSameAddress
+                  //       ? 'grey2.main'
+                  //       : work_flow_status_id === 3 && getQueryRaised('Country')
+                  //       ? 'grey2.main'
+                  //       : '',
+                  //   },
+                  // }}
                   fullWidth
                   value={'India'}
                 />
               ) : (
                 <Select
-                  style={{ backgroundColor: '#F0F0F0' }}
+                  // style={{ backgroundColor: '#F0F0F0' }}
                   fullWidth
                   error={errors.Country?.message}
                   name="Country"
@@ -1143,15 +1147,15 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                       ? getQueryRaised('State')
                       : false
                   }
-                  sx={{
-                    input: {
-                      backgroundColor: isSameAddress
-                        ? 'grey2.main'
-                        : work_flow_status_id === 3 && getQueryRaised('State')
-                        ? 'grey2.main'
-                        : '',
-                    },
-                  }}
+                  // sx={{
+                  //   input: {
+                  //     backgroundColor: isSameAddress
+                  //       ? 'grey2.main'
+                  //       : work_flow_status_id === 3 && getQueryRaised('State')
+                  //       ? 'grey2.main'
+                  //       : '',
+                  //   },
+                  // }}
                   fullWidth
                   value={getStateData(getValues()?.State)?.name}
                   {...register('State', {
@@ -1160,13 +1164,14 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 />
               ) : (
                 <Select
-                  style={{
-                    backgroundColor: isSameAddress
-                      ? '#F0F0F0'
-                      : work_flow_status_id === 3 && getQueryRaised('State')
-                      ? '#F0F0F0'
-                      : '',
-                  }}
+                  placeholder={'Select state/union territory'}
+                  // style={{
+                  //   backgroundColor: isSameAddress
+                  //     ? '#F0F0F0'
+                  //     : work_flow_status_id === 3 && getQueryRaised('State')
+                  //     ? '#F0F0F0'
+                  //     : '',
+                  // }}
                   fullWidth
                   error={errors.State?.message}
                   name="State"
@@ -1217,15 +1222,15 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                       ? getQueryRaised('District')
                       : false
                   }
-                  sx={{
-                    input: {
-                      backgroundColor: isSameAddress
-                        ? 'grey2.main'
-                        : work_flow_status_id === 3 && getQueryRaised('District')
-                        ? 'grey2.main'
-                        : '',
-                    },
-                  }}
+                  // sx={{
+                  //   input: {
+                  //     backgroundColor: isSameAddress
+                  //       ? 'grey2.main'
+                  //       : work_flow_status_id === 3 && getQueryRaised('District')
+                  //       ? 'grey2.main'
+                  //       : '',
+                  //   },
+                  // }}
                   fullWidth
                   value={getDistrictData(getValues()?.District)?.name}
                   {...register('District', {
@@ -1235,13 +1240,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
               ) : (
                 <Select
                   placeholder={'Select district'}
-                  style={{
-                    backgroundColor: isSameAddress
-                      ? '#F0F0F0'
-                      : work_flow_status_id === 3 && getQueryRaised('District')
-                      ? '#F0F0F0'
-                      : '',
-                  }}
+                  // style={{
+                  //   backgroundColor: isSameAddress
+                  //     ? '#F0F0F0'
+                  //     : work_flow_status_id === 3 && getQueryRaised('District')
+                  //     ? '#F0F0F0'
+                  //     : '',
+                  // }}
                   fullWidth
                   error={errors.District?.message}
                   name="District"
@@ -1288,27 +1293,27 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                       ? getQueryRaised('SubDistrict')
                       : false
                   }
-                  sx={{
-                    input: {
-                      backgroundColor: isSameAddress
-                        ? 'grey2.main'
-                        : work_flow_status_id === 3 && getQueryRaised('SubDistrict')
-                        ? 'grey2.main'
-                        : '',
-                    },
-                  }}
+                  // sx={{
+                  //   input: {
+                  //     backgroundColor: isSameAddress
+                  //       ? 'grey2.main'
+                  //       : work_flow_status_id === 3 && getQueryRaised('SubDistrict')
+                  //       ? 'grey2.main'
+                  //       : '',
+                  //   },
+                  // }}
                   fullWidth
                   value={getSubDistrictData(getValues()?.SubDistrict)?.name}
                 />
               ) : (
                 <Select
-                  style={{
-                    backgroundColor: isSameAddress
-                      ? '#F0F0F0'
-                      : work_flow_status_id === 3 && getQueryRaised('Sub District')
-                      ? '#F0F0F0'
-                      : '',
-                  }}
+                  // style={{
+                  //   backgroundColor: isSameAddress
+                  //     ? '#F0F0F0'
+                  //     : work_flow_status_id === 3 && getQueryRaised('Sub District')
+                  //     ? '#F0F0F0'
+                  //     : '',
+                  // }}
                   fullWidth
                   error={errors.SubDistrict?.message}
                   name="SubDistrict"
@@ -1357,27 +1362,28 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                       ? getQueryRaised('City/Town/Village')
                       : false
                   }
-                  sx={{
-                    input: {
-                      backgroundColor: isSameAddress
-                        ? 'grey2.main'
-                        : work_flow_status_id === 3 && getQueryRaised('City/Town/Village')
-                        ? 'grey2.main'
-                        : '',
-                    },
-                  }}
+                  // sx={{
+                  //   input: {
+                  //     backgroundColor: isSameAddress
+                  //       ? 'grey2.main'
+                  //       : work_flow_status_id === 3 && getQueryRaised('City/Town/Village')
+                  //       ? 'grey2.main'
+                  //       : '',
+                  //   },
+                  // }}
                   fullWidth
                   value={getVillageData(getValues()?.Area)?.name}
                 />
               ) : (
                 <Select
-                  style={{
-                    backgroundColor: isSameAddress
-                      ? '#F0F0F0'
-                      : work_flow_status_id === 3 && getQueryRaised('City/Town/Village')
-                      ? '#F0F0F0'
-                      : '',
-                  }}
+                  placeholder={'Please city/town/village'}
+                  // style={{
+                  //   backgroundColor: isSameAddress
+                  //     ? '#F0F0F0'
+                  //     : work_flow_status_id === 3 && getQueryRaised('City/Town/Village')
+                  //     ? '#F0F0F0'
+                  //     : '',
+                  // }}
                   fullWidth
                   name="Area"
                   defaultValue={
@@ -1422,13 +1428,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 placeholder="Pincode"
                 required={isSameAddress ? false : true}
                 fullWidth
-                sx={{
-                  backgroundColor: isSameAddress
-                    ? 'grey1.main'
-                    : work_flow_status_id === 3 && getQueryRaised('Pincode')
-                    ? '#F0F0F0'
-                    : '',
-                }}
+                // sx={{
+                //   backgroundColor: isSameAddress
+                //     ? 'grey1.main'
+                //     : work_flow_status_id === 3 && getQueryRaised('Pincode')
+                //     ? '#F0F0F0'
+                //     : '',
+                // }}
                 defaultValue={
                   isSameAddress ? personalDetails?.kyc_address?.pincode : getValues()?.PostalCode
                 }

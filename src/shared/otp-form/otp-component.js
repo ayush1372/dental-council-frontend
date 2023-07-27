@@ -62,8 +62,8 @@ export const OtpForm = ({
   const theme = useTheme();
   const useStyles = makeStyles(() => ({
     otpInputStyle: {
-      width: '56px !important',
-      height: '56px',
+      width: '48px !important',
+      height: '48px',
       marginRight: '12px',
       fontSize: '18px',
       borderRadius: 5,
@@ -71,8 +71,9 @@ export const OtpForm = ({
       borderColor: theme.palette.otpTextColor.main,
       color: theme.palette.textPrimary.main,
       [theme.breakpoints.down('sm')]: {
-        width: '40px !important',
-        height: '40px',
+        width: '38px !important',
+        height: '38px',
+        marginRight: '8px',
       },
     },
     focusStyle: {
@@ -139,6 +140,8 @@ export const OtpForm = ({
               textDecoration: 'underline',
               cursor: 'pointer',
               paddingLeft: '10px',
+              paddingTop: '0',
+              paddingBottom: '0',
               '&:hover': {
                 textDecoration: `underline ${theme.palette.secondary.main}`,
                 background: 'none',

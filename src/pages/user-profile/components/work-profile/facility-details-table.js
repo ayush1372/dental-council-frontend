@@ -35,7 +35,7 @@ function createData(
   };
 }
 
-function FacilityDetailsTable({ declaredFacilityData, currentWorkDetails }) {
+function FacilityDetailsTable({ declaredFacilityData }) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState({});
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -86,7 +86,12 @@ function FacilityDetailsTable({ declaredFacilityData, currentWorkDetails }) {
     setOrderBy(property);
   };
 
-  const newRowsData = defaultFacilityData?.current_work_details?.map((application) => {
+  //Helper method to remove the empty object from the response.
+  const updatedFacilityData = defaultFacilityData?.current_work_details?.filter(
+    (value) => JSON.stringify(value) !== '{}'
+  );
+
+  const newRowsData = updatedFacilityData?.map((application) => {
     return createData(
       {
         type: 'name',
@@ -123,7 +128,7 @@ function FacilityDetailsTable({ declaredFacilityData, currentWorkDetails }) {
 
   const facilityDeLinkHandler = (facilityIndex) => {
     let facilityID = {
-      facility_id: [currentWorkDetails?.[facilityIndex]?.facility_id],
+      facility_id: [updatedFacilityData?.[facilityIndex]?.facility_id],
     };
     dispatch(deleteWorkProfileDetailsData(facilityID))
       .then((response) => {
@@ -149,20 +154,22 @@ function FacilityDetailsTable({ declaredFacilityData, currentWorkDetails }) {
           rowsPerPage={rowsPerPage}
           page={page}
         />
-        <Box>
-          <TablePagination
-            rowsPerPageOptions={[]}
-            component="div"
-            count={newRowsData?.length || 0}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          />
-        </Box>
+        {newRowsData?.length !== 0 && (
+          <Box>
+            <TablePagination
+              rowsPerPageOptions={[]}
+              component="div"
+              count={newRowsData?.length || 0}
+              rowsPerPage={25}
+              page={page}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            />
+          </Box>
+        )}
       </Grid>
       <Dialog
         open={confirmationModal}

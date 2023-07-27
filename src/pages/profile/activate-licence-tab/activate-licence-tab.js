@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Box, Button, Container, Grid, TablePagination } from '@mui/material';
+import { Box, Button, Container, Grid, TablePagination, Typography } from '@mui/material';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -273,7 +273,12 @@ const ActivateLicence = () => {
   };
 
   return (
-    <>
+    <Grid p={1}>
+      <Grid item xs={12} sm="auto" sx={{ mr: { xs: 0, sm: 'auto' } }} p={2}>
+        <Typography variant="h2" color="textPrimary.main">
+          Activate Licence
+        </Typography>
+      </Grid>
       {showViewProfile ? (
         <>
           <Grid container>
@@ -342,21 +347,23 @@ const ActivateLicence = () => {
             customPopupOptions={customPopupOptions}
             setIsApproveModalOpen={setIsApproveModalOpen}
           />
-          <Box>
-            <TablePagination
-              rowsPerPageOptions={[]}
-              component="div"
-              count={activateLicenseList?.data?.total_no_of_records || 0}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-              }}
-            />
-          </Box>
+          {newRowsData?.length !== 0 && (
+            <Box>
+              <TablePagination
+                rowsPerPageOptions={[]}
+                component="div"
+                count={activateLicenseList?.data?.total_no_of_records || 0}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              />
+            </Box>
+          )}
         </Grid>
       )}
       {isApproveModalOpen && (
@@ -375,7 +382,7 @@ const ActivateLicence = () => {
           reactiveLicenseRequestHPApplicationData={reactiveLicenseRequestHPApplicationData}
         />
       )}
-    </>
+    </Grid>
   );
 };
 

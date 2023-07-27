@@ -34,7 +34,9 @@ function createData(
 function WorkDetailsTable({
   FacilityData,
   declaredFacilityData,
+  setFacilityTableError,
   setFacilityResponseData,
+  searchFacilitiesHandler,
   setDeclaredFacilityDistrict,
 }) {
   const [page, setPage] = useState(0);
@@ -85,6 +87,15 @@ function WorkDetailsTable({
 
   const viewCallback = (rowIndex) => {
     setCurrentRowIndex(rowIndex);
+  };
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+    searchFacilitiesHandler(newPage + 1);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
 
   const newRowsData = FacilityData?.map((application) => {
@@ -152,6 +163,7 @@ function WorkDetailsTable({
               if (e.target.checked) {
                 declaredFacilityData.push(FacilityData[currentRowIndex]);
                 setDeclaredFacilityDistrict([...declaredFacilityData]);
+                setFacilityTableError(false);
               } else {
                 declaredFacilityData.splice(currentRowIndex, 1);
                 setDeclaredFacilityDistrict([...declaredFacilityData]);
@@ -184,20 +196,23 @@ function WorkDetailsTable({
           bgcolor: 'red',
         }}
       />
-      <Box>
-        <TablePagination
-          rowsPerPageOptions={[]}
-          component="div"
-          count={newRowsData?.length || 0}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        />
-      </Box>
+      {newRowsData?.length !== 0 && (
+        <Box>
+          <TablePagination
+            rowsPerPageOptions={[]}
+            component="div"
+            count={newRowsData?.length || 0}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+            onPageChange={handleChangePage}
+          />
+        </Box>
+      )}
     </Grid>
   );
 }

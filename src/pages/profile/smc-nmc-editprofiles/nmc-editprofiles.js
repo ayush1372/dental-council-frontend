@@ -9,7 +9,10 @@ import { SearchableDropdown } from '../../../shared/autocomplete/searchable-drop
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import { getUpdatedNmcProfileData } from '../../../store/actions/nmc-actions';
 import { Button, TextField } from '../../../ui/core';
-import { EmailRegexValidation } from '../../../utilities/common-validations';
+import {
+  EmailRegexValidation,
+  MobileNumberRegexValidation,
+} from '../../../utilities/common-validations';
 const NmcEditProfile = (props) => {
   const userData = useSelector((state) => state?.nmc?.nmcProfileData?.data);
   const { councilNames } = useSelector((state) => state.common);
@@ -44,6 +47,15 @@ const NmcEditProfile = (props) => {
       mobile_no: userData?.mobile_no,
     },
   });
+
+  const handleInput = (e) => {
+    e.preventDefault();
+    if (e.target.value.length > 0) {
+      e.target.value = isNaN(e.target.value)
+        ? e.target.value.toString().slice(0, -1)
+        : Math.max(0, parseInt(e.target.value)).toString().slice(0, 10);
+    }
+  };
 
   const dispatch = useDispatch();
   const onsubmit = () => {
@@ -102,7 +114,7 @@ const NmcEditProfile = (props) => {
             {...register('first_name', {
               required: 'Please enter name',
               pattern: {
-                value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
+                value: /^(?!^\s)[a-zA-Z\s']*$(?<!\s$)/,
                 message: 'Please enter a valid name',
               },
             })}
@@ -185,14 +197,9 @@ const NmcEditProfile = (props) => {
             name={'mobile_no'}
             placeholder={'Enter mobile number '}
             defaultValue={getValues().mobile_no}
+            onInput={(e) => handleInput(e)}
             error={errors.mobile_no?.message}
-            {...register('mobile_no', {
-              required: 'Please enter mobile number',
-              pattern: {
-                value: /^[0-9]{10}$/i,
-                message: 'Please enter a valid mobile number',
-              },
-            })}
+            {...register('mobile_no', MobileNumberRegexValidation)}
           />
         </Grid>
 
@@ -267,7 +274,7 @@ const NmcEditProfile = (props) => {
         </Grid>
       )}
 
-      <Box display="flex" mt={10} md="auto">
+      <Box display="flex" mt={10} md="auto" justifyContent={'flex-end'}>
         <Button
           variant="contained"
           color="secondary"

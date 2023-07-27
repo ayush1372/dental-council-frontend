@@ -90,7 +90,7 @@ function DashboardControlledTable(props) {
     },
     { title: 'Submission Date', name: 'dateofSubmission', sorting: true, type: 'date' },
     { title: 'Pendency (Days)', name: 'pendency', sorting: true, type: 'string' },
-    { title: 'View', name: 'view', sorting: false, type: 'string' },
+    { title: 'Action', name: 'view', sorting: false, type: 'string' },
   ];
 
   const viewCallback = (event, row) => {
@@ -275,21 +275,23 @@ function DashboardControlledTable(props) {
         rowsPerPage={rowsPerPage}
         page={page}
       />
-      <Box>
-        <TablePagination
-          rowsPerPageOptions={[]}
-          component="div"
-          count={dashboardTableDetails?.data?.total_no_of_records || 0}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        />
-      </Box>
+      {newRowsData?.length !== 0 && (
+        <Box>
+          <TablePagination
+            rowsPerPageOptions={[]}
+            component="div"
+            count={dashboardTableDetails?.data?.total_no_of_records || 0}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          />
+        </Box>
+      )}
     </Grid>
   );
 }

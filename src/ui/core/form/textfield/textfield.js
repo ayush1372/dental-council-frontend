@@ -45,6 +45,8 @@ export const HelperText = ({ type, text, newPassword }) => (
       newPassword={newPassword}
     />
     <Typography
+      ml={0.5}
+      lineHeight={'1.4'}
       variant="body2"
       color={
         type === 'success'

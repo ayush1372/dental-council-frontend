@@ -124,6 +124,7 @@ const WorkProfile = () => {
               <Typography
                 bgcolor="grey1.light"
                 p={1}
+                mx={2}
                 component="div"
                 color="tabHighlightedBackgroundColor.main"
                 variant="h3"
