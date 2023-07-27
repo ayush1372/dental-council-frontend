@@ -92,7 +92,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
   const onSubmit = (type) => {
     const { email, mobileNo } = getValues();
 
-    if(type === 'sms' && mobileNo && validDetails.mobileNo === false){
+    if (type === 'sms' && mobileNo && validDetails.mobileNo === false) {
       let otpValue = {};
       otpValue = {
         contact: getValues().mobileNo,
@@ -114,9 +114,9 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
           ? setShowOTPPOPUp(true)
           : successToast(response?.data?.message, 'auth-error', 'error', 'top-center');
       });
-    } 
-    
-    if(type === 'email' &&  email && validDetails.email === false ) {
+    }
+
+    if (type === 'email' && email && validDetails.email === false) {
       let otpValue = {};
       otpValue = {
         contact: getValues().email,
