@@ -322,10 +322,10 @@ export const dateAndTimeConstant = (format) => {
     case 'idleTimerDateFormat':
       return 'dddd Do MMMM, YYYY';
 
-    case 'dobDateFormat':
+    case 'kebabDateFormat':
       return 'DD-MM-YYYY';
 
-    case 'onlyDateFormat':
+    case 'withoutKebabDateFormat':
       return 'DD MMMM, YYYY';
 
     case 'onlyTimeFormat':
