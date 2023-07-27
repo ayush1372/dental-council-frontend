@@ -704,7 +704,7 @@ export function SuspendLicenseVoluntaryRetirement({
       {rejectPopup && (
         <ErrorModalPopup
           open={setRejectPopup}
-          text={`Your account data is pending status.
+          text={`Your account data is in pending status.
                   You cannot suspend now. `}
           handleClose={() => {
             setRejectPopup(false);
