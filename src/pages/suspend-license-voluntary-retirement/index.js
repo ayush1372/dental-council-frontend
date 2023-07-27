@@ -174,7 +174,6 @@ export function SuspendLicenseVoluntaryRetirement({
       remarks: getValues()?.remark ? getValues()?.remark : '',
     };
 
-    // eslint-disable-next-line no-unused-vars
     let raiseQueryBody = {
       queries: queryRaisedFor,
       hpProfileId: personalDetails?.hp_profile_id ? personalDetails?.hp_profile_id : '',
