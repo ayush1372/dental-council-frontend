@@ -153,7 +153,7 @@ function FacilityDetailsTable({ declaredFacilityData }) {
           data={newRowsData}
           rowsPerPage={rowsPerPage}
           page={page}
-          noRecordFound={'No Work details found'}
+          noRecordFound={'Place of work not declared'}
         />
         {newRowsData?.length !== 0 && (
           <Box>
