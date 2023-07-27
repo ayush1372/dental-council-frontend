@@ -6,6 +6,7 @@ import ReportIcon from '@mui/icons-material/Report';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { Box, Grid, Tooltip, Typography } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
+// import CN from 'clsx';
 import moment from 'moment';
 import { AiOutlineEye } from 'react-icons/ai';
 
@@ -14,7 +15,6 @@ import { SvgImageComponent } from '../../../ui/core/svg-icons';
 import { Button } from '../button/button.js';
 
 import styles from './fileupload.module.scss';
-
 export const UploadFile = (props) => {
   const {
     fileID,
@@ -174,12 +174,12 @@ export const UploadFile = (props) => {
       </Box>
       <div className={styles.inputDiv}>
         <Grid container mt={1} spacing={1} sx={{ alignItems: 'flex-start' }}>
-          <Grid item sm={6}>
+          <Grid item sm={6} className={props?.uploadDisabled ? styles.uploadDisabled : ''}>
             <div
               className={props?.borderColor ? styles.fileUploadAreaError : styles.fileUploadArea}
             >
               <div>
-                <UploadFileIcon color="primary" />
+                <UploadFileIcon color="primary" className={styles.fileIcon} />
               </div>
               <div>
                 <span className={styles.browseFiles}>Drag and drop files or click to </span>
@@ -198,7 +198,7 @@ export const UploadFile = (props) => {
             </div>
           </Grid>
 
-          <Grid item sm={6}>
+          <Grid item sm={6} className={styles.uploadedBlock}>
             {showBrowse && (
               <div>
                 <label className={styles.modalLabelHeading}>Browse Files</label>
@@ -243,7 +243,11 @@ export const UploadFile = (props) => {
                         style={{ 'pointer-events': fileDisabled ? 'none' : 'unset' }}
                       >
                         <div className={styles.fileDetailsContainer}>
-                          <UploadFileIcon color="primary" fontSize="large" />
+                          <UploadFileIcon
+                            color="primary"
+                            fontSize="large"
+                            className={styles.uploadIconDefault}
+                          />
                           <div className={styles.fileDetailsArea}>
                             <Typography color="inputTextColor.main">
                               {fileName === 'undefined.undefined' ? '' : fileName}
@@ -266,9 +270,10 @@ export const UploadFile = (props) => {
                           {fileData?.length === 1 || uploadStatus === 'successful' ? (
                             <div className={styles.actionArea}>
                               <DeleteOutlineIcon
+                                className={styles.uploadDeleteIcon}
                                 id={fileID}
                                 color="error"
-                                size={20}
+                                size={18}
                                 onClick={(e) => {
                                   e.preventDefault();
                                   if (e?.target?.attributes?.id?.value === 'qualification') {
@@ -297,6 +302,7 @@ export const UploadFile = (props) => {
 
                               {(file?.file || file?.fileBlob) && (
                                 <AiOutlineEye
+                                  className={styles.uploadViewIcon}
                                   fill="primary.main"
                                   size={20}
                                   onClick={() => viewAttachemnent(file)}
