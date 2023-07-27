@@ -195,7 +195,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           ? countriesList.find((item) => item.id === q?.country)
           : countryData,
         course: isInternational
-          ? coursesList.data?.find((x) => x.name === q?.qualification)
+          ? typeof q?.qualification === 'string'
+            ? coursesList.data?.find((x) => x.name === q?.qualification)
+            : coursesList.data?.find((x) => x.id === q?.qualification)
           : coursesList.data?.find((x) => x.id === q?.qualification),
         university: isInternational
           ? { name: q?.university }

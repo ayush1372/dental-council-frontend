@@ -66,6 +66,7 @@ const EditQualificationDetails = ({
   const { work_flow_status_id } = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails
   );
+
   const [universitiesListData, setUniversitiesListData] = useState(universitiesList?.data);
   const [qualificationID, setQualificationID] = useState('');
 
@@ -74,7 +75,6 @@ const EditQualificationDetails = ({
     // handleQualificationFilesData(`qualification.${index}.files`, '');
     // clearErrors(`qualification`);
     setValue(event.target.name, event.target.value);
-
     dispatch(selectedQualificationType(event.target.value));
   };
 
@@ -135,8 +135,12 @@ const EditQualificationDetails = ({
         nationality: 'Indian',
       });
       if (!isAdditionalQualification) setValue(`qualification[${index}].qualification`, 69);
+      setValue(`qualification[${index}].qualificationfrom`, 'India');
     }
-    // setValue(`qualification[${index}].qualificationfrom`, fields[index].qualificationfrom);
+    if (qualificationfrom === 'International') {
+      setValue(`qualification[${index}].qualificationfrom`, 'International');
+    }
+
     setValue(`qualification[${index}].university`, fields[index].university);
     setValue(`qualification[${index}].college`, fields[index].college);
   }, []);
@@ -191,6 +195,7 @@ const EditQualificationDetails = ({
             defaultValue={
               qualificationfrom !== 'International' ? 'India' : qualification?.qualificationfrom
             }
+            {...register(`qualification[${index}].qualificationfrom`)}
             items={[
               {
                 value: 'India',
@@ -250,7 +255,9 @@ const EditQualificationDetails = ({
                 },
               }}
               disabled={
-                work_flow_status_id === 3
+                getQueryRaised('Roll no.') === false
+                  ? false
+                  : work_flow_status_id === 3
                   ? getQueryRaised('RollNo')
                   : isVerified === 1
                   ? true
@@ -260,8 +267,8 @@ const EditQualificationDetails = ({
           </Grid>
           <Grid item xs={12} md={4}>
             <TextField
-              queryRaiseIcon={getQueryRaised('PassportNumber') === false ? true : false}
-              toolTipData={getQueryRaisedComment('PassportNumber')}
+              queryRaiseIcon={getQueryRaised('Passport number') === false ? true : false}
+              toolTipData={getQueryRaisedComment('Passport number')}
               variant="outlined"
               name="PassportNumber"
               label="Passport Number"
@@ -280,7 +287,7 @@ const EditQualificationDetails = ({
               sx={{
                 input: {
                   backgroundColor:
-                    work_flow_status_id === 3 && getQueryRaised('PassportNumber')
+                    work_flow_status_id === 3 && getQueryRaised('Passport number')
                       ? 'grey2.main'
                       : isVerified === 1
                       ? 'grey2.main'
@@ -288,7 +295,9 @@ const EditQualificationDetails = ({
                 },
               }}
               disabled={
-                work_flow_status_id === 3
+                getQueryRaised('Passport number') === false
+                  ? false
+                  : work_flow_status_id === 3
                   ? getQueryRaised('PassportNumber')
                   : isVerified === 1
                   ? true
@@ -329,7 +338,9 @@ const EditQualificationDetails = ({
               }}
               InputProps={{ maxlength: 4 }}
               disabled={
-                work_flow_status_id === 3
+                getQueryRaised('Marks obtained') === false
+                  ? false
+                  : work_flow_status_id === 3
                   ? getQueryRaised('MarksObtained')
                   : isVerified === 1
                   ? true
@@ -385,7 +396,9 @@ const EditQualificationDetails = ({
                     : '',
               }}
               disabled={
-                work_flow_status_id === 3
+                getQueryRaised('Result') === false
+                  ? false
+                  : work_flow_status_id === 3
                   ? getQueryRaised('Result')
                   : isVerified === 1
                   ? true
@@ -420,7 +433,9 @@ const EditQualificationDetails = ({
                     : '',
               }}
               disabled={
-                work_flow_status_id === 3
+                getQueryRaised('MonthFMGE') === false
+                  ? false
+                  : work_flow_status_id === 3
                   ? getQueryRaised('MonthFMGE')
                   : isVerified === 1
                   ? true
@@ -469,7 +484,9 @@ const EditQualificationDetails = ({
                     : '',
               }}
               disabled={
-                work_flow_status_id === 3
+                getQueryRaised('YearFMGE') === false
+                  ? false
+                  : work_flow_status_id === 3
                   ? getQueryRaised('YearFMGE')
                   : isVerified === 1
                   ? true
@@ -509,7 +526,9 @@ const EditQualificationDetails = ({
               required={true}
               defaultValue={getValues()[`qualification[${index}].qualification`]}
               disabled={
-                work_flow_status_id === 3
+                getQueryRaised('Name of the Degree Obtained') === false
+                  ? false
+                  : work_flow_status_id === 3
                   ? getQueryRaised('Name of the Degree Obtained')
                   : isVerified === 1
                   ? true
@@ -609,7 +628,9 @@ const EditQualificationDetails = ({
                     : '',
               }}
               disabled={
-                work_flow_status_id === 3
+                getQueryRaised('Country Name') === false
+                  ? false
+                  : work_flow_status_id === 3
                   ? getQueryRaised('Country Name')
                   : isVerified === 1
                   ? true
@@ -766,9 +787,7 @@ const EditQualificationDetails = ({
                     : '',
               }}
               disabled={
-                getQueryRaised('State') === false
-                  ? false
-                  : work_flow_status_id === 3
+                work_flow_status_id === 3
                   ? getQueryRaised('Name of the College')
                   : isVerified === 1
                   ? true
