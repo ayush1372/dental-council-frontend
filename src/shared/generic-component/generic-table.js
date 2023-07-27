@@ -29,6 +29,7 @@ GenericTable.propTypes = {
   page: propTypes.number.isRequired,
   rowsPerPage: propTypes.number.isRequired,
   handleCellClick: propTypes.func,
+  noRecordFound: propTypes.string,
 };
 
 export default function GenericTable(props) {
@@ -360,7 +361,7 @@ export default function GenericTable(props) {
             <TableRow sx={{ textAlign: 'center' }}>
               <TableCell colSpan="100%" align="center">
                 <Box display="flex" justifyContent="center" width="100%">
-                  No Result Found
+                  { props.noRecordFound? props.noRecordFound: 'No Result Found' }
                 </Box>
               </TableCell>
             </TableRow>
