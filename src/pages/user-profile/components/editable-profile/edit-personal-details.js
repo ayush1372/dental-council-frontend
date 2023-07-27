@@ -28,7 +28,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
   const dispatch = useDispatch();
   const loggedInUserType = useSelector((state) => state?.common?.loggedInUserType);
 
-  // eslint-disable-setIsSameAddressnext-line no-unused-vars
+  // eslint-disable-next-line no-unused-vars
   const { statesList, countriesList, districtsList, subDistrictList, citiesList } = useSelector(
     (state) => state?.common
   );
@@ -119,7 +119,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
     register,
     setValue,
     watch,
-    reset,
   } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -621,18 +620,18 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
-              Mother&apos;s Name
+              Mother Name
             </Typography>
             <TextField
               variant="outlined"
               name={'MotherName'}
-              placeholder="Enter mother's name"
+              placeholder="Enter mother name"
               fullWidth
               defaultValue={getValues().MotherName}
               {...register('MotherName', {
                 pattern: {
                   value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
-                  message: 'Please enter mother&apos;s name',
+                  message: 'Please enter mother name',
                 },
                 maxLength: {
                   value: 100,
@@ -892,7 +891,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 checked={isSameAddress}
                 onChange={(e) => {
                   setIsSameAddress(e.target.checked);
-                  reset({ PostalCode: '' });
                 }}
                 disabled={work_flow_status_id === 3 ? true : false}
               />
@@ -940,7 +938,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                     'House',
                     isSameAddress
                       ? ''
-                      : {
+                      : getValues()?.House?.length <= 0 && {
                           required: 'Please enter house',
                           maxLength: {
                             value: 300,
@@ -1108,7 +1106,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                   value={getValues().Country}
                   required={isSameAddress ? false : true}
                   {...register('Country', {
-                    required: 'Please select country',
+                    required: 'Country is required',
                   })}
                   disabled
                   options={
@@ -1194,7 +1192,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                   {...register(
                     'State',
                     !isSameAddress && {
-                      required: 'Please select state/union territory is required',
+                      required: 'State/Union territory is required',
                     }
                   )}
                   options={createSelectFieldData(statesList)}
@@ -1319,7 +1317,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                   fullWidth
                   error={errors.SubDistrict?.message}
                   name="SubDistrict"
-                  placeholder="Select sub district"
+                  placeholder="Sub District"
                   disabled={
                     isSameAddress
                       ? isSameAddress
@@ -1450,7 +1448,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 {...register(
                   'PostalCode',
                   !isSameAddress && {
-                    required: 'Please enter pincode',
+                    required: 'Pincode is Required',
                     onChange: (event) => {
                       const pincode = event.target.value.replace(/[^0-9]/g, '');
                       setValue('PostalCode', pincode);
