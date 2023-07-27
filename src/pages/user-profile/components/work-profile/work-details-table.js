@@ -36,7 +36,6 @@ function WorkDetailsTable({
   declaredFacilityData,
   setFacilityTableError,
   setFacilityResponseData,
-  searchFacilitiesHandler,
   setDeclaredFacilityDistrict,
 }) {
   const [page, setPage] = useState(0);
@@ -87,15 +86,6 @@ function WorkDetailsTable({
 
   const viewCallback = (rowIndex) => {
     setCurrentRowIndex(rowIndex);
-  };
-
-  const handleChangePage = (event, newPage) => {
-    setPage(newPage);
-    searchFacilitiesHandler(newPage + 1);
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
   };
 
   const newRowsData = FacilityData?.map((application) => {
@@ -202,14 +192,13 @@ function WorkDetailsTable({
             rowsPerPageOptions={[]}
             component="div"
             count={newRowsData?.length || 0}
-            rowsPerPage={rowsPerPage}
+            rowsPerPage={100}
             page={page}
             onRowsPerPageChange={handleChangeRowsPerPage}
             sx={{
               display: 'flex',
               justifyContent: 'center',
             }}
-            onPageChange={handleChangePage}
           />
         </Box>
       )}
