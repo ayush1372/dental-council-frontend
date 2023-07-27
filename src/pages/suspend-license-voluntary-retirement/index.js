@@ -175,7 +175,7 @@ export function SuspendLicenseVoluntaryRetirement({
     };
 
     let raiseQueryBody = {
-      queries: queries,
+      queries: queryRaisedFor,
       hpProfileId: personalDetails?.hp_profile_id ? personalDetails?.hp_profile_id : '',
       commonComment: getValues().remark,
 
@@ -624,7 +624,7 @@ export function SuspendLicenseVoluntaryRetirement({
                     }}
                     label={fieldData?.filedName}
                     error={errors.notification?.message}
-                    // defaultChecked={true}
+                    defaultChecked={queryRaisedFor?.length !== 0 ? true : false}
                   />
                 );
               })}
