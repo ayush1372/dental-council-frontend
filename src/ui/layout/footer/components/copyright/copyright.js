@@ -10,12 +10,11 @@ export const Copyright = () => {
       bgcolor={
         theme.palette.mode === 'dark'
           ? theme.palette.black.main
-          : theme.palette.tabHighlightedBackgroundColor.main
+          : theme.palette.primary.main
       }
-      py={3}
     >
-      <Container>
-        <Grid container>
+      <Container >
+        <Grid container py={4} sx={{ borderTop : 'solid 1px #fff'}}>
           <Grid item xs={12} lg={8}>
             <Typography color="white.main" variant="body3" fontWeight="400">
               {t('copyright')}

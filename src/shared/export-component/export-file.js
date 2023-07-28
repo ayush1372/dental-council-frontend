@@ -17,6 +17,7 @@ import { userActionId, workSheetTheme } from '../../../src/helpers/functions/com
 import { verboseLog } from '../../config/debug';
 
 const ExportFiles = ({ exportData, flag }) => {
+  
   const [csvData, setCsvData] = useState([]);
   const [docType, setDocType] = useState();
   const [columns, setColumns] = useState([]);
@@ -166,6 +167,7 @@ const ExportFiles = ({ exportData, flag }) => {
     <Grid item md={1} xs={12} data-testid="exportButton">
       <Tooltip title={'Export'}>
         <IconButton
+          disabled={exportData.data.dashboard_tolist.length === 0}
           data-testid="export_Button"
           aria-label="fontSize-options"
           aria-controls="menu-appbar"
@@ -174,19 +176,17 @@ const ExportFiles = ({ exportData, flag }) => {
           sx={{
             width: 60,
             height: 60,
-            color: 'blue',
           }}
           onClick={(e) => {
             e.preventDefault();
             onExportClick('xlsx');
           }}
-          color="blue"
         >
           <FileDownloadOutlinedIcon
             sx={{
               width: 40,
               height: 40,
-              color: 'blue',
+              color: exportData.data.dashboard_tolist.length === 0? '' : 'blue',
             }}
           />
         </IconButton>
