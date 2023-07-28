@@ -158,7 +158,7 @@ export default function GenericTable(props) {
                 if (item.title === 'Request ID' && userActiveTab === 'dashboard') {
                   return (
                     <TableCell maxWidth={`${tableCellWidth}%`} key={index} align="left">
-                      <Link onClick={(event) => row[item.name]?.onClickCallback(event, row)}>
+                      <Link sx={{cursor: 'pointer'}} onClick={(event) => row[item.name]?.onClickCallback(event, row)}>
                         {row[item.name]?.value}
                       </Link>
                     </TableCell>
