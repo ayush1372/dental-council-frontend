@@ -13,7 +13,8 @@ import { RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
 
 const EditQualificationDetails = ({
-  // clearErrors,
+  clearErrors,
+  setError,
   index,
   showDeleteIcon,
   errors,
@@ -1037,7 +1038,6 @@ const EditQualificationDetails = ({
             queryRaiseIcon={getQueryRaised('Upload Qualification Degree') === false ? true : false}
             toolTipData={getQueryRaisedComment('Upload Qualification Degree')}
             fileID={'qualification'}
-            name={'UploadFileName'}
             uploadFiles="single"
             sizeAllowed={5}
             fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
@@ -1061,6 +1061,13 @@ const EditQualificationDetails = ({
                 ? true
                 : false
             }
+            {...register('qualificationCertificate', {
+              required: 'Please upload the  qualification degree certificate.',
+            })}
+            setError={setError}
+            clearErrors={clearErrors}
+            name={'qualificationCertificate'}
+            isError={errors.qualificationCertificate?.message}
           />
         </Grid>
       </Grid>

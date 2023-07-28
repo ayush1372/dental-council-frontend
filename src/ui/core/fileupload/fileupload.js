@@ -1,13 +1,14 @@
 import { useState } from 'react';
 
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import ErrorOutlineOutlinedIcon from '@mui/icons-material/ErrorOutlineOutlined';
 import ReplayIcon from '@mui/icons-material/Replay';
 import ReportIcon from '@mui/icons-material/Report';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { Box, Grid, Tooltip, Typography } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
-// import CN from 'clsx';
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
 import { AiOutlineEye } from 'react-icons/ai';
 
 import AttachmentViewPopup from '../../../shared/query-modal-popup/attachement-view-popup';
@@ -32,6 +33,9 @@ export const UploadFile = (props) => {
     fileDisabled,
     toolTipData,
     fileName,
+    isError = '',
+    setError,
+    clearErrors,
   } = props;
   const [uploadPercentage, setUploadPercentage] = useState('');
   const [browsedFileData, setBrowsedFileData] = useState();
@@ -41,6 +45,8 @@ export const UploadFile = (props) => {
   const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
   const [attachedFileData, setAttachedFileData] = useState('');
   const [viewFileType, setViewFileType] = useState('');
+
+  const { t } = useTranslation();
 
   const addFile = (e) => {
     setBrowsedFileData(e);
@@ -89,6 +95,7 @@ export const UploadFile = (props) => {
       const uploadFileError = fileSizeError || fileErrorExtension;
       if (uploadFileError) {
         setUploadFileError(`${fileMessage}`);
+        setError(name, `${fileMessage}`);
       } else {
         // setIsDisable(true);
 
@@ -108,6 +115,7 @@ export const UploadFile = (props) => {
         // TODO- harcoded value for upload status and percentage
         setUploadStatus('successful');
         setUploadPercentage(30);
+        clearErrors(name, '');
         const fileDetails = {
           id: fileData.length + 1,
           fileName: e.target.files[0].name,
@@ -196,6 +204,17 @@ export const UploadFile = (props) => {
                 accept={fileTypes}
               />
             </div>
+            {isError !== '' && (
+              <Typography
+                style={{ display: 'flex', alignItems: 'center', gap: 4, marginTop: '8px' }}
+                variant="body2"
+                color="error.main"
+                component={'div'}
+                lineHeight={'1.4'}
+              >
+                <ErrorOutlineOutlinedIcon style={{ fontSize: '16px' }} /> {t(isError)}
+              </Typography>
+            )}
           </Grid>
 
           <Grid item sm={6} className={styles.uploadedBlock}>
