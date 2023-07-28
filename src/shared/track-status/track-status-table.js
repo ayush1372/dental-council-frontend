@@ -66,7 +66,7 @@ function TrackStatusTable(props) {
   const dataHeader = [
     { title: 'S.No.', name: 'SNo', sorting: true, type: 'string' },
     {
-      title: 'Request ID 222',
+      title: 'Request ID',
       name: 'requestId',
       sorting: true,
       type: 'string',

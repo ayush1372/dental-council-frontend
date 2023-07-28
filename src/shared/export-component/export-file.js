@@ -167,7 +167,13 @@ const ExportFiles = ({ exportData, flag }) => {
     <Grid item md={1} xs={12} data-testid="exportButton">
       <Tooltip title={'Export'}>
         <IconButton
-          disabled={exportData.data.dashboard_tolist.length === 0}
+          disabled={
+          exportData?.length === 0 || 
+          exportData?.data?.dashboard_tolist?.length === 0 || 
+          exportData?.data?.health_professional_details?.length === 0 ||
+          exportData?.data?.college_details?.length === 0 ||
+          exportData?.health_professional_applications?.length === 0
+          }
           data-testid="export_Button"
           aria-label="fontSize-options"
           aria-controls="menu-appbar"
