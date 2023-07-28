@@ -412,12 +412,12 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                   !personalDetails?.personal_details?.is_new ||
                   (work_flow_status_id === 3 && getQueryRaised('Registered with council'))
                 }
-                style={{
-                  backgroundColor:
-                    work_flow_status_id === 3 && getQueryRaised('Registered with council')
-                      ? 'grey2.main'
-                      : '',
-                }}
+                // style={{
+                //   backgroundColor:
+                //     work_flow_status_id === 3 && getQueryRaised('Registered with council')
+                //       ? 'grey2.main'
+                //       : '',
+                // }}
                 {...register('RegisteredWithCouncil')}
                 options={createSelectFieldData(councilNames)}
                 MenuProps={{
@@ -438,20 +438,24 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                   required: 'Registered with council is Required',
                 })}
                 error={errors?.RegisteredWithCouncil?.message}
-                sx={{
-                  input: {
-                    backgroundColor:
-                      loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-                        ? ''
-                        : 'grey2.main',
-                  },
-                }}
-                InputProps={{
-                  readOnly:
-                    loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-                      ? false
-                      : true,
-                }}
+                disabled={
+                  loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                    ? false
+                    : true
+                }
+                //   input: {
+                //     backgroundColor:
+                //       loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                //         ? ''
+                //         : 'grey2.main',
+                //   },
+                // }}
+                // InputProps={{
+                //   readOnly:
+                //     loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                //       ? false
+                //       : true,
+                // }}
               />
             )}
           </Grid>
@@ -479,26 +483,33 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 required: 'Please enter registration number',
                 pattern: { message: 'Please Enter Valid Registration number' },
               })}
-              sx={{
-                input: {
-                  backgroundColor:
-                    getQueryRaised('Registration Number') === false
-                      ? false
-                      : work_flow_status_id === 3
-                      ? 'grey2.main'
-                      : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-                      ? ''
-                      : 'grey2.main',
-                },
-              }}
-              InputProps={{
-                readOnly:
-                  work_flow_status_id === 3
-                    ? getQueryRaised('Registration Number')
-                    : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-                    ? false
-                    : true,
-              }}
+              disabled={
+                work_flow_status_id === 3
+                  ? getQueryRaised('Registration Number')
+                  : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                  ? false
+                  : true
+              }
+              // sx={{
+              //   input: {
+              //     backgroundColor:
+              //       getQueryRaised('Registration Number') === false
+              //         ? false
+              //         : work_flow_status_id === 3
+              //         ? 'grey2.main'
+              //         : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+              //         ? ''
+              //         : 'grey2.main',
+              //   },
+              // }}
+              // InputProps={{
+              //   readOnly:
+              //     work_flow_status_id === 3
+              //       ? getQueryRaised('Registration Number')
+              //       : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+              //       ? false
+              //       : true,
+              // }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -526,17 +537,17 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               }
               // error={errors?.RegistrationDate?.message}
               // {...register('RegistrationDate', { required: 'Please select a valid date' })}
-              backgroundColor={
-                getQueryRaised('Registration Date') === false
-                  ? false
-                  : work_flow_status_id === 3
-                  ? '#F0F0F0'
-                  : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-                  ? ''
-                  : getValues().RegistrationDate === ''
-                  ? '#F0F0F0'
-                  : '#F0F0F0'
-              }
+              // backgroundColor={
+              //   getQueryRaised('Registration Date') === false
+              //     ? false
+              //     : work_flow_status_id === 3
+              //     ? '#F0F0F0'
+              //     : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+              //     ? ''
+              //     : getValues().RegistrationDate === ''
+              //     ? '#F0F0F0'
+              //     : '#F0F0F0'
+              // }
               disabled={
                 work_flow_status_id === 3
                   ? getQueryRaised('Registration Date')
@@ -608,13 +619,13 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 defaultValue={getValues().RenewalDate}
                 minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 5))}
                 maxDate={new Date(new Date().setFullYear(new Date().getFullYear() + 5))}
-                backgroundColor={
-                  work_flow_status_id === 3
-                    ? '#F0F0F0'
-                    : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-                    ? '#F0F0F0'
-                    : ''
-                }
+                // backgroundColor={
+                //   work_flow_status_id === 3
+                //     ? '#F0F0F0'
+                //     : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                //     ? '#F0F0F0'
+                //     : ''
+                // }
                 value={new Date()}
                 disabled={
                   work_flow_status_id === 3 &&
