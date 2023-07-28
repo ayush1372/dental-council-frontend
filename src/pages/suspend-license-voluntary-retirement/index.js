@@ -35,7 +35,6 @@ export function SuspendLicenseVoluntaryRetirement({
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { queryRaisedFor } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
   const user_group_id = useSelector((state) => state.loginReducer?.loginData?.data);
-
   const [selectedSuspension, setSelectedSuspension] = useState('voluntary-suspension-check');
 
   const [rejectPopup, setRejectPopup] = useState(false);
@@ -62,6 +61,14 @@ export function SuspendLicenseVoluntaryRetirement({
     },
   });
   const { activateLicenseList } = useSelector((state) => state?.common);
+
+  let raisedQueriesList = queryRaisedFor?.map((query) => {
+    let obj = {
+      fieldName: query?.filedName,
+      queryComment: query?.value,
+    };
+    return obj;
+  });
 
   const onSubmit = () => {
     setConformSuspend(true);
@@ -177,7 +184,7 @@ export function SuspendLicenseVoluntaryRetirement({
     };
 
     let raiseQueryBody = {
-      queries: queryRaisedFor,
+      queries: raisedQueriesList,
       hpProfileId: personalDetails?.hp_profile_id ? personalDetails?.hp_profile_id : '',
       commonComment: getValues().remark,
 
