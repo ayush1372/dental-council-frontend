@@ -938,7 +938,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                     'House',
                     isSameAddress
                       ? ''
-                      : getValues()?.House?.length <= 0 && {
+                      : {
                           required: 'Please enter house',
                           maxLength: {
                             value: 300,
