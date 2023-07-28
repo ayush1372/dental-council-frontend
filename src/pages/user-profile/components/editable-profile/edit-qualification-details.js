@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 
 import CancelIcon from '@mui/icons-material/Cancel';
-import { Divider, Grid, Typography } from '@mui/material';
+import ReportIcon from '@mui/icons-material/Report';
+import { Divider, Grid, Tooltip, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { monthsData, yearsData } from '../../../../constants/common-data';
@@ -12,7 +13,8 @@ import { RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
 
 const EditQualificationDetails = ({
-  // clearErrors,
+  clearErrors,
+  setError,
   index,
   showDeleteIcon,
   errors,
@@ -65,6 +67,7 @@ const EditQualificationDetails = ({
   const { work_flow_status_id } = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails
   );
+
   const [universitiesListData, setUniversitiesListData] = useState(universitiesList?.data);
   const [qualificationID, setQualificationID] = useState('');
 
@@ -73,7 +76,6 @@ const EditQualificationDetails = ({
     // handleQualificationFilesData(`qualification.${index}.files`, '');
     // clearErrors(`qualification`);
     setValue(event.target.name, event.target.value);
-
     dispatch(selectedQualificationType(event.target.value));
   };
 
@@ -113,7 +115,8 @@ const EditQualificationDetails = ({
   }, [watchCollege]);
 
   useEffect(() => {
-    if (qualificationfrom !== 'International' || !isAdditionalQualification) {
+    // || !isAdditionalQualification
+    if (qualificationfrom !== 'International') {
       const removalArray = [
         `qualification[${index}].rollno`,
         `qualification[${index}].result`,
@@ -126,15 +129,19 @@ const EditQualificationDetails = ({
   }, [qualificationfrom]);
 
   useEffect(() => {
-    if (qualificationfrom !== 'International' || !isAdditionalQualification) {
+    if (qualificationfrom !== 'International') {
       setValue(`qualification[${index}].country`, {
         id: 356,
         name: 'India',
         nationality: 'Indian',
       });
       if (!isAdditionalQualification) setValue(`qualification[${index}].qualification`, 69);
+      setValue(`qualification[${index}].qualificationfrom`, 'India');
     }
-    setValue(`qualification[${index}].qualificationfrom`, 'India');
+    if (qualificationfrom === 'International') {
+      setValue(`qualification[${index}].qualificationfrom`, 'International');
+    }
+
     setValue(`qualification[${index}].university`, fields[index].university);
     setValue(`qualification[${index}].college`, fields[index].college);
   }, []);
@@ -154,7 +161,14 @@ const EditQualificationDetails = ({
     let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
     return query === undefined;
   };
-
+  const getQueryRaisedComment = (fieldName) => {
+    let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
+    return query?.query_comment;
+  };
+  const courseData = (courseName) => {
+    let degreeName = coursesList.data?.find((x) => x.name === courseName);
+    return degreeName?.id;
+  };
   return (
     <>
       {showDeleteIcon && (
@@ -182,6 +196,7 @@ const EditQualificationDetails = ({
             defaultValue={
               qualificationfrom !== 'International' ? 'India' : qualification?.qualificationfrom
             }
+            {...register(`qualification[${index}].qualificationfrom`)}
             items={[
               {
                 value: 'India',
@@ -217,6 +232,8 @@ const EditQualificationDetails = ({
         <Grid container item spacing={2}>
           <Grid item xs={12} md={4}>
             <TextField
+              queryRaiseIcon={getQueryRaised('Roll no.') === false ? true : false}
+              toolTipData={getQueryRaisedComment('Roll no.')}
               variant="outlined"
               name="RollNo"
               label="Roll Number"
@@ -226,20 +243,22 @@ const EditQualificationDetails = ({
               error={errors?.qualification?.[index]?.rollno?.message}
               defaultValue={getValues()[`qualification[${index}].rollno`]}
               {...register(`qualification[${index}].rollno`, {
-                required: 'Roll no is required',
+                required: 'Please enter roll number',
               })}
-              sx={{
-                input: {
-                  backgroundColor:
-                    work_flow_status_id === 3 && getQueryRaised('RollNo')
-                      ? '#F0F0F0'
-                      : isVerified === 1
-                      ? '#F0F0F0'
-                      : '',
-                },
-              }}
+              // sx={{
+              //   input: {
+              //     backgroundColor:
+              //       work_flow_status_id === 3 && getQueryRaised('Roll no.')
+              //         ? '#F0F0F0'
+              //         : isVerified === 1
+              //         ? '#F0F0F0'
+              //         : '',
+              //   },
+              // }}
               disabled={
-                work_flow_status_id === 3
+                getQueryRaised('Roll no.') === false
+                  ? false
+                  : work_flow_status_id === 3
                   ? getQueryRaised('RollNo')
                   : isVerified === 1
                   ? true
@@ -249,6 +268,8 @@ const EditQualificationDetails = ({
           </Grid>
           <Grid item xs={12} md={4}>
             <TextField
+              queryRaiseIcon={getQueryRaised('Passport number') === false ? true : false}
+              toolTipData={getQueryRaisedComment('Passport number')}
               variant="outlined"
               name="PassportNumber"
               label="Passport Number"
@@ -264,18 +285,20 @@ const EditQualificationDetails = ({
                   message: 'Please enter valid 8character Passport Number,Example:P1234567',
                 },
               })}
-              sx={{
-                input: {
-                  backgroundColor:
-                    work_flow_status_id === 3 && getQueryRaised('PassportNumber')
-                      ? 'grey2.main'
-                      : isVerified === 1
-                      ? 'grey2.main'
-                      : '',
-                },
-              }}
+              // sx={{
+              //   input: {
+              //     backgroundColor:
+              //       work_flow_status_id === 3 && getQueryRaised('Passport number')
+              //         ? 'grey2.main'
+              //         : isVerified === 1
+              //         ? 'grey2.main'
+              //         : '',
+              //   },
+              // }}
               disabled={
-                work_flow_status_id === 3
+                getQueryRaised('Passport number') === false
+                  ? false
+                  : work_flow_status_id === 3
                   ? getQueryRaised('PassportNumber')
                   : isVerified === 1
                   ? true
@@ -286,35 +309,39 @@ const EditQualificationDetails = ({
 
           <Grid item xs={12} md={4}>
             <TextField
+              queryRaiseIcon={getQueryRaised('Marks obtained') === false ? true : false}
+              toolTipData={getQueryRaisedComment('Marks obtained')}
               variant="outlined"
               name="MarksObtained"
               label="Marks obtained"
               placeholder="Enter marks obtained"
-              required={true}
+              // required={true}
               type="number"
               fullWidth
               error={errors?.qualification?.[index]?.marksobtained?.message}
               defaultValue={getValues()[`qualification[${index}].marksobtained`]}
               {...register(`qualification[${index}].marksobtained`, {
-                required: 'Marks obtained is required',
+                required: 'please enter marks obtained',
                 pattern: {
                   value: /^([1-9][0-9]?$|^100)$/i,
                   message: 'Enter correct marks obtained',
                 },
               })}
-              sx={{
-                input: {
-                  backgroundColor:
-                    work_flow_status_id === 3 && getQueryRaised('MarksObtained')
-                      ? 'grey2.main'
-                      : isVerified === 1
-                      ? 'grey2.main'
-                      : '',
-                },
-              }}
+              // sx={{
+              //   input: {
+              //     backgroundColor:
+              //       work_flow_status_id === 3 && getQueryRaised('Marks obtained')
+              //         ? 'grey2.main'
+              //         : isVerified === 1
+              //         ? 'grey2.main'
+              //         : '',
+              //   },
+              // }}
               InputProps={{ maxlength: 4 }}
               disabled={
-                work_flow_status_id === 3
+                getQueryRaised('Marks obtained') === false
+                  ? false
+                  : work_flow_status_id === 3
                   ? getQueryRaised('MarksObtained')
                   : isVerified === 1
                   ? true
@@ -325,6 +352,8 @@ const EditQualificationDetails = ({
 
           <Grid item xs={12} md={4}>
             <Select
+              queryRaiseIcon={getQueryRaised('Result') === false ? true : false}
+              toolTipData={getQueryRaisedComment('Result')}
               fullWidth
               error={
                 getValues()?.qualification[index]?.result?.length === 0
@@ -340,7 +369,7 @@ const EditQualificationDetails = ({
                 `qualification[${index}].result`,
 
                 {
-                  required: 'Please select result ',
+                  required: 'Please select result',
                 }
               )}
               options={[
@@ -359,16 +388,18 @@ const EditQualificationDetails = ({
                   maxWidth: 130,
                 },
               }}
-              style={{
-                backgroundColor:
-                  work_flow_status_id === 3 && getQueryRaised('Result')
-                    ? '#F0F0F0'
-                    : isVerified === 1
-                    ? '#F0F0F0'
-                    : '',
-              }}
+              // style={{
+              //   backgroundColor:
+              //     work_flow_status_id === 3 && getQueryRaised('Result')
+              //       ? '#F0F0F0'
+              //       : isVerified === 1
+              //       ? '#F0F0F0'
+              //       : '',
+              // }}
               disabled={
-                work_flow_status_id === 3
+                getQueryRaised('Result') === false
+                  ? false
+                  : work_flow_status_id === 3
                   ? getQueryRaised('Result')
                   : isVerified === 1
                   ? true
@@ -378,6 +409,8 @@ const EditQualificationDetails = ({
           </Grid>
           <Grid item xs={12} md={4}>
             <Select
+              queryRaiseIcon={getQueryRaised('MonthFMGE') === false ? true : false}
+              toolTipData={getQueryRaisedComment('MonthFMGE')}
               fullWidth
               error={
                 getValues()?.qualification[index]?.monthfmge?.length === 0
@@ -392,16 +425,18 @@ const EditQualificationDetails = ({
               {...register(`qualification[${index}].monthfmge`, {
                 required: 'Please select month',
               })}
-              style={{
-                backgroundColor:
-                  work_flow_status_id === 3 && getQueryRaised('MonthFMGE')
-                    ? '#F0F0F0'
-                    : isVerified === 1
-                    ? '#F0F0F0'
-                    : '',
-              }}
+              // style={{
+              //   backgroundColor:
+              //     work_flow_status_id === 3 && getQueryRaised('MonthFMGE')
+              //       ? '#F0F0F0'
+              //       : isVerified === 1
+              //       ? '#F0F0F0'
+              //       : '',
+              // }}
               disabled={
-                work_flow_status_id === 3
+                getQueryRaised('MonthFMGE') === false
+                  ? false
+                  : work_flow_status_id === 3
                   ? getQueryRaised('MonthFMGE')
                   : isVerified === 1
                   ? true
@@ -418,6 +453,8 @@ const EditQualificationDetails = ({
           </Grid>
           <Grid item xs={12} md={4}>
             <Select
+              queryRaiseIcon={getQueryRaised('YearFMGE') === false ? true : false}
+              toolTipData={getQueryRaisedComment('YearFMGE')}
               fullWidth
               error={
                 getValues()?.qualification[index]?.yearfmge?.length === 0
@@ -439,16 +476,18 @@ const EditQualificationDetails = ({
                   maxWidth: 130,
                 },
               }}
-              style={{
-                backgroundColor:
-                  work_flow_status_id === 3 && getQueryRaised('YearFMGE')
-                    ? '#F0F0F0'
-                    : isVerified === 1
-                    ? '#F0F0F0'
-                    : '',
-              }}
+              // style={{
+              //   backgroundColor:
+              //     work_flow_status_id === 3 && getQueryRaised('YearFMGE')
+              //       ? '#F0F0F0'
+              //       : isVerified === 1
+              //       ? '#F0F0F0'
+              //       : '',
+              // }}
               disabled={
-                work_flow_status_id === 3
+                getQueryRaised('YearFMGE') === false
+                  ? false
+                  : work_flow_status_id === 3
                   ? getQueryRaised('YearFMGE')
                   : isVerified === 1
                   ? true
@@ -475,6 +514,10 @@ const EditQualificationDetails = ({
         <Grid item xs={12} md={6} lg={4}>
           {qualificationfrom === 'International' || isAdditionalQualification ? (
             <Select
+              queryRaiseIcon={
+                getQueryRaised('Name of the Degree Obtained') === false ? true : false
+              }
+              toolTipData={getQueryRaisedComment('Name of the Degree Obtained')}
               fullWidth
               error={errors?.qualification?.[index]?.qualification?.message}
               name="Qualification"
@@ -482,30 +525,33 @@ const EditQualificationDetails = ({
               label="Degree Name"
               isAdditionalQualification={isAdditionalQualification}
               required={true}
+              defaultValue={getValues()[`qualification[${index}].qualification`]}
               disabled={
-                work_flow_status_id === 3
+                getQueryRaised('Name of the Degree Obtained') === false
+                  ? false
+                  : work_flow_status_id === 3
                   ? getQueryRaised('Name of the Degree Obtained')
                   : isVerified === 1
                   ? true
                   : false
               }
               {...register(`qualification[${index}].qualification`, {
-                required: 'Degree is required',
+                required: 'Please select degree',
               })}
-              style={{
-                backgroundColor:
-                  work_flow_status_id === 3 && getQueryRaised('Name of the Degree Obtained')
-                    ? '#F0F0F0'
-                    : isVerified === 1
-                    ? '#F0F0F0'
-                    : '',
-              }}
+              // style={{
+              //   backgroundColor:
+              //     work_flow_status_id === 3 && getQueryRaised('Name of the Degree Obtained')
+              //       ? '#F0F0F0'
+              //       : isVerified === 1
+              //       ? '#F0F0F0'
+              //       : '',
+              // }}
               onChange={(e) => {
                 setQualificationID(e?.target?.value);
                 setValue(`qualification[${index}].qualification`, e?.target?.value);
               }}
               options={createSelectFieldData(coursesList.data)}
-              value={qualificationID}
+              value={qualificationID ? qualificationID : courseData(qualification?.qualification)}
               MenuProps={{
                 style: {
                   maxHeight: 250,
@@ -515,6 +561,10 @@ const EditQualificationDetails = ({
             />
           ) : (
             <Select
+              queryRaiseIcon={
+                getQueryRaised('Name of the Degree Obtained') === false ? true : false
+              }
+              toolTipData={getQueryRaisedComment('Name of the Degree Obtained')}
               fullWidth
               error={
                 getValues()?.qualification[index]?.qualification?.length === 0
@@ -530,7 +580,7 @@ const EditQualificationDetails = ({
               {...register(
                 `qualification[${index}].qualification`,
                 {
-                  required: 'Degree is required',
+                  required: 'Please select degree',
                 },
 
                 {
@@ -548,18 +598,20 @@ const EditQualificationDetails = ({
                   maxWidth: 130,
                 },
               }}
-              sx={{
-                '.MuiSelect-select': {
-                  backgroundColor: 'grey2.main',
-                },
-              }}
-              InputProps={{ readOnly: true }}
+              // sx={{
+              //   '.MuiSelect-select': {
+              //     backgroundColor: 'grey2.main',
+              //   },
+              // }}
+              // InputProps={{ readOnly: true }}
             />
           )}
         </Grid>
         {qualificationfrom === 'International' && (
           <Grid item xs={12} md={6} lg={4}>
             <Select
+              queryRaiseIcon={getQueryRaised('Country Name') === false ? true : false}
+              toolTipData={getQueryRaisedComment('Country Name')}
               fullWidth
               name="country"
               label="Country Name"
@@ -567,17 +619,21 @@ const EditQualificationDetails = ({
               defaultValue={qualification?.country}
               required={true}
               error={errors?.qualification?.[index]?.country?.message}
-              {...register(`qualification[${index}].country`, { required: 'Country is required' })}
-              style={{
-                backgroundColor:
-                  work_flow_status_id === 3 && getQueryRaised('Country Name')
-                    ? '#F0F0F0'
-                    : isVerified === 1
-                    ? '#F0F0F0'
-                    : '',
-              }}
+              {...register(`qualification[${index}].country`, {
+                required: 'Please select country',
+              })}
+              // style={{
+              //   backgroundColor:
+              //     work_flow_status_id === 3 && getQueryRaised('Country Name')
+              //       ? '#F0F0F0'
+              //       : isVerified === 1
+              //       ? '#F0F0F0'
+              //       : '',
+              // }}
               disabled={
-                work_flow_status_id === 3
+                getQueryRaised('Country Name') === false
+                  ? false
+                  : work_flow_status_id === 3
                   ? getQueryRaised('Country Name')
                   : isVerified === 1
                   ? true
@@ -596,6 +652,8 @@ const EditQualificationDetails = ({
         <Grid item xs={12} md={6} lg={4}>
           {qualificationfrom === 'International' ? (
             <TextField
+              queryRaiseIcon={getQueryRaised('State') === false ? true : false}
+              toolTipData={getQueryRaisedComment('State')}
               fullWidth
               error={
                 getValues()?.qualification?.[index]?.state === '' &&
@@ -609,16 +667,16 @@ const EditQualificationDetails = ({
               {...register(`qualification[${index}].state`, {
                 required: 'Please select state',
               })}
-              sx={{
-                input: {
-                  backgroundColor:
-                    work_flow_status_id === 3 && getQueryRaised('State')
-                      ? 'grey2.main'
-                      : isVerified === 1
-                      ? 'grey2.main'
-                      : '',
-                },
-              }}
+              // sx={{
+              //   input: {
+              //     backgroundColor:
+              //       work_flow_status_id === 3 && getQueryRaised('State')
+              //         ? 'grey2.main'
+              //         : isVerified === 1
+              //         ? 'grey2.main'
+              //         : '',
+              //   },
+              // }}
               disabled={
                 work_flow_status_id === 3
                   ? getQueryRaised('State')
@@ -629,6 +687,8 @@ const EditQualificationDetails = ({
             />
           ) : (
             <Select
+              queryRaiseIcon={getQueryRaised('State') === false ? true : false}
+              toolTipData={getQueryRaisedComment('State')}
               fullWidth
               error={
                 getValues().qualification[index].state === '' &&
@@ -646,14 +706,14 @@ const EditQualificationDetails = ({
                 }
               )}
               options={createSelectFieldData(statesList)}
-              style={{
-                backgroundColor:
-                  work_flow_status_id === 3 && getQueryRaised('State')
-                    ? 'grey2.main'
-                    : isVerified === 1
-                    ? 'grey2.main'
-                    : '',
-              }}
+              // style={{
+              //   backgroundColor:
+              //     work_flow_status_id === 3 && getQueryRaised('State')
+              //       ? 'grey2.main'
+              //       : isVerified === 1
+              //       ? 'grey2.main'
+              //       : '',
+              // }}
               disabled={
                 work_flow_status_id === 3
                   ? getQueryRaised('State')
@@ -673,6 +733,8 @@ const EditQualificationDetails = ({
         <Grid item xs={12} md={6} lg={4}>
           {qualificationfrom === 'International' ? (
             <TextField
+              queryRaiseIcon={getQueryRaised('Name of the College') === false ? true : false}
+              toolTipData={getQueryRaisedComment('Name of the College')}
               fullWidth
               name="college"
               label="College Name"
@@ -683,16 +745,16 @@ const EditQualificationDetails = ({
               {...register(`qualification[${index}].college`, {
                 required: 'Please enter college name',
               })}
-              sx={{
-                input: {
-                  backgroundColor:
-                    work_flow_status_id === 3 && getQueryRaised('Name of the College')
-                      ? 'grey2.main'
-                      : isVerified === 1
-                      ? 'grey2.main'
-                      : '',
-                },
-              }}
+              // sx={{
+              //   input: {
+              //     backgroundColor:
+              //       work_flow_status_id === 3 && getQueryRaised('Name of the College')
+              //         ? 'grey2.main'
+              //         : isVerified === 1
+              //         ? 'grey2.main'
+              //         : '',
+              //   },
+              // }}
               disabled={
                 work_flow_status_id === 3
                   ? getQueryRaised('Name of the College')
@@ -703,6 +765,8 @@ const EditQualificationDetails = ({
             />
           ) : (
             <Select
+              queryRaiseIcon={getQueryRaised('Name of the College') === false ? true : false}
+              toolTipData={getQueryRaisedComment('Name of the College')}
               fullWidth
               error={errors?.qualification?.[index]?.college?.message}
               name="College"
@@ -713,18 +777,18 @@ const EditQualificationDetails = ({
               {...register(
                 `qualification[${index}].college`,
                 getValues().qualification[index].college === '' && {
-                  required: 'Please select college',
+                  required: 'Please select college name',
                 }
               )}
               options={createSelectFieldData(colleges)}
-              style={{
-                backgroundColor:
-                  work_flow_status_id === 3 && getQueryRaised('Name of the College')
-                    ? 'grey2.main'
-                    : isVerified === 1
-                    ? 'grey2.main'
-                    : '',
-              }}
+              // style={{
+              //   backgroundColor:
+              //     work_flow_status_id === 3 && getQueryRaised('Name of the College')
+              //       ? 'grey2.main'
+              //       : isVerified === 1
+              //       ? 'grey2.main'
+              //       : '',
+              // }}
               disabled={
                 work_flow_status_id === 3
                   ? getQueryRaised('Name of the College')
@@ -744,6 +808,8 @@ const EditQualificationDetails = ({
         <Grid item xs={12} md={6} lg={4}>
           {qualificationfrom === 'International' ? (
             <TextField
+              queryRaiseIcon={getQueryRaised('University') === false ? true : false}
+              toolTipData={getQueryRaisedComment('University')}
               fullWidth
               error={errors?.qualification?.[index]?.university?.message}
               name="University"
@@ -751,16 +817,16 @@ const EditQualificationDetails = ({
               placeholder="Enter university"
               defaultValue={qualification?.university}
               required={true}
-              sx={{
-                input: {
-                  backgroundColor:
-                    work_flow_status_id === 3 && getQueryRaised('University')
-                      ? 'grey2.main'
-                      : isVerified === 1
-                      ? 'grey2.main'
-                      : '',
-                },
-              }}
+              // sx={{
+              //   input: {
+              //     backgroundColor:
+              //       work_flow_status_id === 3 && getQueryRaised('University')
+              //         ? 'grey2.main'
+              //         : isVerified === 1
+              //         ? 'grey2.main'
+              //         : '',
+              //   },
+              // }}
               disabled={
                 work_flow_status_id === 3
                   ? getQueryRaised('University')
@@ -774,6 +840,8 @@ const EditQualificationDetails = ({
             />
           ) : (
             <Select
+              queryRaiseIcon={getQueryRaised('University') === false ? true : false}
+              toolTipData={getQueryRaisedComment('University')}
               fullWidth
               error={errors?.qualification?.[index]?.university?.message}
               placeholder={'Select university'}
@@ -788,16 +856,18 @@ const EditQualificationDetails = ({
                 }
               )}
               options={createSelectFieldData(universitiesListData, 'id') || []}
-              style={{
-                backgroundColor:
-                  work_flow_status_id === 3 && getQueryRaised('University')
-                    ? 'grey2.main'
-                    : isVerified === 1
-                    ? 'grey2.main'
-                    : '',
-              }}
+              // style={{
+              //   backgroundColor:
+              //     work_flow_status_id === 3 && getQueryRaised('University')
+              //       ? 'grey2.main'
+              //       : isVerified === 1
+              //       ? 'grey2.main'
+              //       : '',
+              // }}
               disabled={
-                work_flow_status_id === 3
+                getQueryRaised('Name of the College') === false || getQueryRaised('State') === false
+                  ? false
+                  : work_flow_status_id === 3
                   ? getQueryRaised('University')
                   : isVerified === 1
                   ? true
@@ -818,9 +888,16 @@ const EditQualificationDetails = ({
             <Typography component="span" color="error.main">
               *
             </Typography>
+            {getQueryRaised('Month & Year of Degree Awarded') === false && (
+              <Tooltip title={getQueryRaisedComment('Month & Year of Degree Awarded')}>
+                <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
+              </Tooltip>
+            )}
           </Typography>
           <Grid item xs={12} md={6} mb={{ xs: 2, md: 0 }}>
             <Select
+              queryRaiseIcon={getQueryRaised('Month') === false ? true : false}
+              toolTipData={getQueryRaisedComment('Month')}
               fullWidth
               error={
                 getValues().qualification[index].month === '' &&
@@ -835,14 +912,14 @@ const EditQualificationDetails = ({
                   required: 'Please select month',
                 }
               )}
-              style={{
-                backgroundColor:
-                  work_flow_status_id === 3 && getQueryRaised('Month')
-                    ? 'grey2.main'
-                    : isVerified === 1
-                    ? 'grey2.main'
-                    : '',
-              }}
+              // style={{
+              //   backgroundColor:
+              //     work_flow_status_id === 3 && getQueryRaised('Month')
+              //       ? 'grey2.main'
+              //       : isVerified === 1
+              //       ? 'grey2.main'
+              //       : '',
+              // }}
               disabled={
                 work_flow_status_id === 3
                   ? getQueryRaised('Month & Year of Degree Awarded')
@@ -862,6 +939,8 @@ const EditQualificationDetails = ({
           </Grid>
           <Grid item xs={12} md={6}>
             <Select
+              queryRaiseIcon={getQueryRaised('year') === false ? true : false}
+              toolTipData={getQueryRaisedComment('year')}
               variant="outlined"
               name="year"
               options={yearsData}
@@ -886,16 +965,16 @@ const EditQualificationDetails = ({
                   maxWidth: 130,
                 },
               }}
-              style={{
-                backgroundColor:
-                  work_flow_status_id === 3 && getQueryRaised('year')
-                    ? 'grey2.main'
-                    : isVerified === 1
-                    ? 'grey2.main'
-                    : isVerified === 1
-                    ? 'grey2.main'
-                    : '',
-              }}
+              // style={{
+              //   backgroundColor:
+              //     work_flow_status_id === 3 && getQueryRaised('year')
+              //       ? 'grey2.main'
+              //       : isVerified === 1
+              //       ? 'grey2.main'
+              //       : isVerified === 1
+              //       ? 'grey2.main'
+              //       : '',
+              // }}
               disabled={
                 work_flow_status_id === 3
                   ? getQueryRaised('Month & Year of Degree Awarded')
@@ -925,7 +1004,7 @@ const EditQualificationDetails = ({
                 `qualification[${index}].Speciality`,
                 showBroadSpeciality &&
                   getValues().qualification[index].Speciality?.length <= 0 && {
-                    required: 'Specialty is required',
+                    required: 'Please select speciality',
                   },
                 {
                   onChange: (e) => {
@@ -958,8 +1037,9 @@ const EditQualificationDetails = ({
       <Grid container item spacing={2} mt={1}>
         <Grid item xs={12}>
           <UploadFile
+            queryRaiseIcon={getQueryRaised('Upload Qualification Degree') === false ? true : false}
+            toolTipData={getQueryRaisedComment('Upload Qualification Degree')}
             fileID={'qualification'}
-            name={'UploadFileName'}
             uploadFiles="single"
             sizeAllowed={5}
             fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
@@ -972,13 +1052,24 @@ const EditQualificationDetails = ({
             fileName={fileName || ''}
             isDigiLockcerVisible={true}
             uploadFileLabel="Upload Qualification Degree"
-            disabled={
-              work_flow_status_id === 3
+            Upload
+            Qualification
+            fileDisabled={
+              getQueryRaised('Upload Qualification Degree') === false
+                ? false
+                : work_flow_status_id === 3
                 ? getQueryRaised('Upload Qualification Degree')
                 : isVerified === 1
                 ? true
                 : false
             }
+            {...register('qualificationCertificate', {
+              required: 'Please upload the  qualification degree certificate.',
+            })}
+            setError={setError}
+            clearErrors={clearErrors}
+            name={'qualificationCertificate'}
+            isError={errors.qualificationCertificate?.message}
           />
         </Grid>
       </Grid>

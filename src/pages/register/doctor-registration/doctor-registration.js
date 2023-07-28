@@ -119,7 +119,7 @@ const DoctorRegistrationWelcomePage = () => {
                       clearErrors={clearErrors}
                       error={errors.RegistrationCouncil?.message}
                       {...register('RegistrationCouncil', {
-                        required: 'Please select the registration council',
+                        required: 'Please select the registered council',
                       })}
                       onChange={(currentValue) => {
                         setValue('RegistrationCouncilId', currentValue?.id);

@@ -192,7 +192,6 @@ const ReadRegisterAndAcademicDetails = ({
       </Box>
       {showActions && (
         <Box
-          paddingBottom={'30px'}
           pl={2}
           display="flex"
           justifyContent="space-between"

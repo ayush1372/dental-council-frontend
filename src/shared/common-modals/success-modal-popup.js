@@ -205,7 +205,7 @@ export default function SuccessModalPopup({
           <Button
             sx={{ mt: 5 }}
             variant="contained"
-            color="warning"
+            color="secondary"
             onClick={
               fetchDoctorScreenAlertIcon
                 ? navigateToDoctorRegistartion

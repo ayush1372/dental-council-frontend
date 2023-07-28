@@ -9,6 +9,7 @@ import { Box, Dialog, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { getDateAndTimeFormat } from '../../helpers/functions/common-functions';
 import ErrorModalPopup from '../../shared/common-modals/error-modal-popup';
 import { getInitiateWorkFlow, raiseQuery, suspendDoctor } from '../../store/actions/common-actions';
 import { Button, Checkbox, DatePicker, RadioGroup, TextField } from '../../ui/core';
@@ -34,7 +35,6 @@ export function SuspendLicenseVoluntaryRetirement({
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { queryRaisedFor } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
   const user_group_id = useSelector((state) => state.loginReducer?.loginData?.data);
-
   const [selectedSuspension, setSelectedSuspension] = useState('voluntary-suspension-check');
 
   const [rejectPopup, setRejectPopup] = useState(false);
@@ -42,7 +42,7 @@ export function SuspendLicenseVoluntaryRetirement({
   const [confirmationModal, setConfirmationModal] = useState(false);
   const [queries, setQueries] = useState([]);
   const [showToDateError, setShowToDateError] = useState(false);
-  const [showFromDateError, setShowFromDateError] = useState(false);
+  //const [showFromDateError, setShowFromDateError] = useState(false);
   const [showRemarkError, setShowRemarkError] = useState(false);
   const [showConsentError, setShowConsentError] = useState(false);
 
@@ -57,9 +57,18 @@ export function SuspendLicenseVoluntaryRetirement({
     mode: 'onChange',
     defaultValues: {
       voluntarySuspendLicense: 'voluntary-suspension-check',
+      fromDate: getDateAndTimeFormat('dateFormat'),
     },
   });
   const { activateLicenseList } = useSelector((state) => state?.common);
+
+  let raisedQueriesList = queryRaisedFor?.map((query) => {
+    let obj = {
+      fieldName: query?.filedName,
+      queryComment: query?.value,
+    };
+    return obj;
+  });
 
   const onSubmit = () => {
     setConformSuspend(true);
@@ -175,7 +184,7 @@ export function SuspendLicenseVoluntaryRetirement({
     };
 
     let raiseQueryBody = {
-      queries: queries,
+      queries: raisedQueriesList,
       hpProfileId: personalDetails?.hp_profile_id ? personalDetails?.hp_profile_id : '',
       commonComment: getValues().remark,
 
@@ -369,6 +378,8 @@ export function SuspendLicenseVoluntaryRetirement({
                 </Typography>
               </Typography>
               <DatePicker
+                disabled
+                defaultValue={new Date()}
                 minDate={new Date()}
                 maxDate={new Date()}
                 onChangeDate={(newDateValue) => {
@@ -388,19 +399,20 @@ export function SuspendLicenseVoluntaryRetirement({
                           ) + 99
                         )
                     );
-                  } else {
-                    setValue('fromDate', new Date(newDateValue)?.toLocaleDateString('en-GB'));
                   }
+                  //  else {
+                  //   setValue('fromDate', new Date(newDateValue)?.toLocaleDateString('en-GB'));
+                  // }
 
-                  if (getValues().fromDate !== undefined) {
-                    setShowFromDateError(false);
-                  }
+                  // if (getValues().fromDate !== undefined) {
+                  //   setShowFromDateError(false);
+                  // }
                 }}
                 data-testid="fromDate"
                 id="fromDate"
                 name="fromDate"
                 required={true}
-                error={showFromDateError ? 'Enter From Date' : false}
+                // error={showFromDateError ? 'Enter From Date' : false}
               />
             </Grid>
             <Grid item xs={12} md={6} my={{ xs: 1, md: 0 }}>
@@ -431,7 +443,7 @@ export function SuspendLicenseVoluntaryRetirement({
                         ? true
                         : false
                     }
-                    minDate={getValues()?.fromDate ? new Date(getValues()?.fromDate) : new Date()}
+                    minDate={new Date()}
                     required={true}
                     defaultValue={getValues()?.toDate ? new Date(getValues()?.toDate) : undefined}
                     error={showToDateError ? 'Enter To Date' : false}
@@ -624,7 +636,7 @@ export function SuspendLicenseVoluntaryRetirement({
                     }}
                     label={fieldData?.filedName}
                     error={errors.notification?.message}
-                    defaultChecked={true}
+                    defaultChecked={queryRaisedFor?.length !== 0 ? true : false}
                   />
                 );
               })}
@@ -642,9 +654,9 @@ export function SuspendLicenseVoluntaryRetirement({
                 if (getValues().toDate === undefined) {
                   setShowToDateError(true);
                 }
-                if (getValues().fromDate === undefined) {
-                  setShowFromDateError(true);
-                }
+                // if (getValues().fromDate === undefined) {
+                //   setShowFromDateError(true);
+                // }
                 if (getValues()?.remark === undefined || getValues()?.remark === '') {
                   setShowRemarkError(true);
                 }
@@ -704,7 +716,7 @@ export function SuspendLicenseVoluntaryRetirement({
       {rejectPopup && (
         <ErrorModalPopup
           open={setRejectPopup}
-          text={`Your account data is pending status.
+          text={`Your account data is in pending status.
                   You cannot suspend now. `}
           handleClose={() => {
             setRejectPopup(false);

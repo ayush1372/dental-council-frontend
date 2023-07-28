@@ -1,12 +1,14 @@
 import { forwardRef, useState } from 'react';
 
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import ReportIcon from '@mui/icons-material/Report';
 import {
   Box,
   MenuItem,
   Select as MuiSelect,
   StyledEngineProvider,
   TextField,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import CN from 'clsx';
@@ -28,6 +30,8 @@ const SelectField = (
     messageBlue,
     success,
     placeholder,
+    queryRaiseIcon,
+    toolTipData,
     ...props
   },
   ref
@@ -48,6 +52,11 @@ const SelectField = (
           <Typography component="span" color="error">
             {required ? '*' : ''}
           </Typography>
+          {queryRaiseIcon === true && (
+            <Tooltip title={toolTipData}>
+              <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
+            </Tooltip>
+          )}
         </Box>
       )}
       <MuiSelect
@@ -59,7 +68,7 @@ const SelectField = (
         {...props}
         data-testid={dataTestSelectId}
         error={error && showError ? true : false}
-        defaultValue={defaultValue}
+        defaultValue={defaultValue ?? ''}
         displayEmpty
         renderInput={() => <TextField {...props} placeholder={placeholder} />}
         onBlur={(e) => {

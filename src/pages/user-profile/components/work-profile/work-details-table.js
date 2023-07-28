@@ -192,7 +192,7 @@ function WorkDetailsTable({
             rowsPerPageOptions={[]}
             component="div"
             count={newRowsData?.length || 0}
-            rowsPerPage={rowsPerPage}
+            rowsPerPage={100}
             page={page}
             onRowsPerPageChange={handleChangeRowsPerPage}
             sx={{

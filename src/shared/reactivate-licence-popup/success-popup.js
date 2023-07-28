@@ -43,7 +43,7 @@ export default function SuccessPopup({ fetchDoctorUserPersonalDetails, reactivat
     <Modal open={open} onClose={handleClose} sx={{ mt: 15 }}>
       <Container
         maxWidth="xs"
-        sx={{ backgroundColor: 'white.main', borderRadius: '10px', height: '430px', p: '30px' }}
+        sx={{ backgroundColor: 'white.main', borderRadius: '10px', p: '30px' }}
       >
         <Box mb={1} display="flex" justifyContent="center">
           <TaskAltOutlinedIcon
@@ -59,6 +59,7 @@ export default function SuccessPopup({ fetchDoctorUserPersonalDetails, reactivat
           <Typography
             data-testid="popup-input-success-text"
             variant="h2"
+            fontSize="30px"
             color="success.dark"
             display="flex"
             alignItems="center"
@@ -85,7 +86,7 @@ export default function SuccessPopup({ fetchDoctorUserPersonalDetails, reactivat
             password has been sent to the registered mobile number.`} */}
           </Typography>
           <Button
-            sx={{ width: '408px', mt: 8 }}
+            sx={{ width: '400px', mt: 4 }}
             variant="contained"
             color="warning"
             onClick={handleClose}

@@ -90,6 +90,7 @@ const NonWorkDetails = ({
             multiline
             rows={4}
             fullWidth
+            defaultValue={work_details?.remark}
             error={errors.otherReason?.message}
             {...register('otherReason')}
             placeholder="Write a reason here . . ."

@@ -181,13 +181,11 @@ const ExportFiles = ({ exportData, flag }) => {
           sx={{
             width: 60,
             height: 60,
-            color: 'blue',
           }}
           onClick={(e) => {
             e.preventDefault();
             onExportClick('xlsx');
           }}
-          color="blue"
         >
           <FileDownloadOutlinedIcon
             sx={{

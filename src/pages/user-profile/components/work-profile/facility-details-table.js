@@ -35,7 +35,7 @@ function createData(
   };
 }
 
-function FacilityDetailsTable({ declaredFacilityData, currentWorkDetails }) {
+function FacilityDetailsTable({ declaredFacilityData }) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState({});
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -86,7 +86,8 @@ function FacilityDetailsTable({ declaredFacilityData, currentWorkDetails }) {
     setOrderBy(property);
   };
 
-  const updatedFacilityData = defaultFacilityData?.current_work_details.filter(
+  //Helper method to remove the empty object from the response.
+  const updatedFacilityData = defaultFacilityData?.current_work_details?.filter(
     (value) => JSON.stringify(value) !== '{}'
   );
 
@@ -127,7 +128,7 @@ function FacilityDetailsTable({ declaredFacilityData, currentWorkDetails }) {
 
   const facilityDeLinkHandler = (facilityIndex) => {
     let facilityID = {
-      facility_id: [currentWorkDetails?.[facilityIndex]?.facility_id],
+      facility_id: [updatedFacilityData?.[facilityIndex]?.facility_id],
     };
     dispatch(deleteWorkProfileDetailsData(facilityID))
       .then((response) => {
@@ -152,6 +153,7 @@ function FacilityDetailsTable({ declaredFacilityData, currentWorkDetails }) {
           data={newRowsData}
           rowsPerPage={rowsPerPage}
           page={page}
+          noRecordFound={'Place of work not declared'}
         />
         {newRowsData?.length !== 0 && (
           <Box>
@@ -159,7 +161,7 @@ function FacilityDetailsTable({ declaredFacilityData, currentWorkDetails }) {
               rowsPerPageOptions={[]}
               component="div"
               count={newRowsData?.length || 0}
-              rowsPerPage={rowsPerPage}
+              rowsPerPage={25}
               page={page}
               onRowsPerPageChange={handleChangeRowsPerPage}
               sx={{
@@ -232,7 +234,7 @@ function FacilityDetailsTable({ declaredFacilityData, currentWorkDetails }) {
           open={successDeLinkModalPopup}
           workDetails={true}
           setOpen={() => setSuccessDeLinkModalPopup(false)}
-          text={'Your Work-Details has been De-Linked successfully.'}
+          text={'Work-details has been de-linked'}
         />
       )}
     </>
