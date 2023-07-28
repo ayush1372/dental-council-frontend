@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useState } from 'react';
 
 import BlockIcon from '@mui/icons-material/Block';
@@ -36,7 +35,6 @@ export function SuspendLicenseVoluntaryRetirement({
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { queryRaisedFor } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
   const user_group_id = useSelector((state) => state.loginReducer?.loginData?.data);
-  console.log('query12344', queryRaisedFor);
   const [selectedSuspension, setSelectedSuspension] = useState('voluntary-suspension-check');
 
   const [rejectPopup, setRejectPopup] = useState(false);
@@ -65,14 +63,12 @@ export function SuspendLicenseVoluntaryRetirement({
   const { activateLicenseList } = useSelector((state) => state?.common);
 
   let raisedQueriesList = queryRaisedFor?.map((query) => {
-    // let payloadQuery = [];
     let obj = {
       fieldName: query?.filedName,
       queryComment: query?.value,
     };
     return obj;
   });
-  console.log('raisedQueriesList1245', raisedQueriesList);
 
   const onSubmit = () => {
     setConformSuspend(true);
@@ -198,7 +194,6 @@ export function SuspendLicenseVoluntaryRetirement({
         ? personalDetails?.application_type_id
         : 1,
     };
-    console.log('raiseQuerypayloadBody', raiseQueryBody);
     try {
       if (
         ((confirmationModal && userActiveTab === 'voluntary-suspend-license') ||
