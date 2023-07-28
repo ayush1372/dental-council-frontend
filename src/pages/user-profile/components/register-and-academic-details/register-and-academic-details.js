@@ -10,7 +10,7 @@ const RegisterAndAcademicDetails = ({
   selectedDataIndex,
 }) => {
   return (
-    <Box mt={1} py={4}>
+    <Box py={1}>
       {isReadMode && loggedInUserType !== 'SMC' && (
         <ReadRegisterAndAcademicDetails
           handleBack={handleBack}
