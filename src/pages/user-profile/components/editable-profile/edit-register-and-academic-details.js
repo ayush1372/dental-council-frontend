@@ -92,11 +92,13 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
   const {
     formState: { errors },
-    getValues,
-    handleSubmit,
     register,
     setValue,
+    setError,
+    getValues,
     unregister,
+    clearErrors,
+    handleSubmit,
     control,
     watch,
   } = useForm({
@@ -646,6 +648,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               fileMessage={`PDF, PNG, JPG, JPEG file types are supported.
                Maximum size allowed is 5MB.`}
               fileData={registrationFileData}
+              clearErrors={clearErrors}
+              setError={setError}
+              name={'registrationCertificate'}
+              isError={errors.registrationCertificate?.message}
               setFileData={setRegistrationFileData}
               uploadFileLabel="Upload Registration Certificate"
               fileName={file_name + '.' + file_type}
@@ -657,6 +663,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                   : false
               }
               toolTipData={getQueryRaisedComment('Upload the registration certificate')}
+              {...register('registrationCertificate', {
+                required: 'Please upload the registration certificate.',
+              })}
             />
           </Grid>
         </Grid>
