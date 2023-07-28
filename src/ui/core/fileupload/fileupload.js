@@ -95,7 +95,7 @@ export const UploadFile = (props) => {
       const uploadFileError = fileSizeError || fileErrorExtension;
       if (uploadFileError) {
         setUploadFileError(`${fileMessage}`);
-        setError(name, `${fileMessage}`);
+        if (fileData?.length === 0) setError(name, `${fileMessage}`);
       } else {
         // setIsDisable(true);
 
@@ -204,7 +204,7 @@ export const UploadFile = (props) => {
                 accept={fileTypes}
               />
             </div>
-            {isError !== '' && (
+            {isError !== '' && fileData?.length === 0 && (
               <Typography
                 style={{ display: 'flex', alignItems: 'center', gap: 4, marginTop: '8px' }}
                 variant="body2"
@@ -311,7 +311,11 @@ export const UploadFile = (props) => {
                                         .getElementsByTagName('input').file.value = '';
                                     }
                                   } else {
-                                    if (document.getElementsByTagName('input') !== undefined) {
+                                    if (
+                                      document?.getElementsByTagName('input') !== undefined &&
+                                      document?.getElementsByTagName('input')?.file?.value !==
+                                        undefined
+                                    ) {
                                       document.getElementsByTagName('input').file.value = '';
                                     }
                                   }
