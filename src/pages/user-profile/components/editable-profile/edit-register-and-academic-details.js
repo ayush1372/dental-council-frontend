@@ -310,6 +310,13 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     // });
   }, []);
 
+  useEffect(() => {
+    if (registrationFileData?.length > 0) {
+      setValue('registrationCertificate', registrationFileData);
+      clearErrors('registrationCertificate', '');
+    }
+  }, [registrationFileData]);
+
   const CloseAttachmentPopup = () => {
     setAttachmentViewProfile(false);
   };
@@ -668,9 +675,12 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                   : false
               }
               toolTipData={getQueryRaisedComment('Upload the registration certificate')}
-              {...register('registrationCertificate', {
-                required: 'Please upload the registration certificate.',
-              })}
+              {...register(
+                'registrationCertificate',
+                registrationFileData?.length === 0 && {
+                  required: 'Please upload the registration certificate.',
+                }
+              )}
             />
           </Grid>
         </Grid>
@@ -710,6 +720,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 qualification_detail_response_tos?.[index]?.file_type
               }
               isVerified={qualification_detail_response_tos?.[index]?.is_verified}
+              clearErrors={clearErrors}
             />
           );
         })}
