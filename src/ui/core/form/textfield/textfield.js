@@ -1,6 +1,7 @@
 import { forwardRef } from 'react';
 import { useState } from 'react';
 
+import ReportIcon from '@mui/icons-material/Report';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import {
@@ -9,6 +10,7 @@ import {
   InputAdornment,
   StyledEngineProvider,
   TextField as MuiTextField,
+  Tooltip,
   Typography,
 } from '@mui/material';
 import CN from 'clsx';
@@ -64,7 +66,19 @@ export const HelperText = ({ type, text, newPassword }) => (
 );
 
 const InputField = (
-  { success, helperMsg, error, addon, label, required, type, messageBlue, ...props },
+  {
+    success,
+    helperMsg,
+    error,
+    addon,
+    label,
+    required,
+    type,
+    messageBlue,
+    queryRaiseIcon,
+    toolTipData,
+    ...props
+  },
   ref
 ) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -104,6 +118,11 @@ const InputField = (
           </Typography>
           <Typography component="span" color="error">
             {required ? '*' : ''}
+            {queryRaiseIcon === true && (
+              <Tooltip title={toolTipData}>
+                <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
+              </Tooltip>
+            )}
           </Typography>
         </Box>
       )}
