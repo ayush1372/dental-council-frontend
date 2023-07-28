@@ -361,7 +361,7 @@ export default function GenericTable(props) {
             <TableRow sx={{ textAlign: 'center' }}>
               <TableCell colSpan="100%" align="center">
                 <Box display="flex" justifyContent="center" width="100%">
-                  { props.noRecordFound? props.noRecordFound: 'No Result Found' }
+                  {props.noRecordFound ? props.noRecordFound : 'No Result Found'}
                 </Box>
               </TableCell>
             </TableRow>
