@@ -65,6 +65,7 @@ const AdditionalQualifications = () => {
     control,
     reset,
     watch,
+    clearErrors,
   } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -259,6 +260,7 @@ const AdditionalQualifications = () => {
               update={update}
               remove={remove}
               showBroadSpeciality={true}
+              clearErrors={clearErrors}
             />
           );
         })}
