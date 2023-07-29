@@ -1,8 +1,10 @@
-import { Box, Button, Container, Grid, Typography } from '@mui/material';
+import { Box, Button, Container, Grid, Typography} from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 import styles from './page-not-found.module.scss';
 
 export function PageNotFound() {
+  const navigate = useNavigate();
   return (
     <Container maxWidth="lg">
       <Grid container p={8}>
@@ -19,7 +21,7 @@ export function PageNotFound() {
                 We are sorry, the page you requested could not be found. Please go back to homepage.
               </Typography>
             </Box>
-            <Button href="/" variant="contained" color="white">
+            <Button onClick={()=>navigate('/')} variant="contained" color="white">
               Go Back
             </Button>
           </Box>
