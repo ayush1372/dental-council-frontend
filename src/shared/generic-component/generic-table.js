@@ -29,6 +29,7 @@ GenericTable.propTypes = {
   page: propTypes.number.isRequired,
   rowsPerPage: propTypes.number.isRequired,
   handleCellClick: propTypes.func,
+  noRecordFound: propTypes.string,
 };
 
 export default function GenericTable(props) {
@@ -153,6 +154,18 @@ export default function GenericTable(props) {
                       </Button>
                     </TableCell>
                   );
+                }
+                if (item.title === 'Request ID' && userActiveTab === 'dashboard') {
+                  return (
+                    <TableCell maxWidth={`${tableCellWidth}%`} key={index} align="left">
+                      <Link
+                        sx={{ cursor: 'pointer' }}
+                        onClick={(event) => row[item.name]?.onClickCallback(event, row)}
+                      >
+                        {row[item.name]?.value}
+                      </Link>
+                    </TableCell>
+                  );
                 } else if (
                   (item.title === 'Applicant Name' || item.title === 'Applicant Name') &&
                   userActiveTab !== 'dashboard'
@@ -246,7 +259,10 @@ export default function GenericTable(props) {
                       />
                     </TableCell>
                   );
-                } else if (item.title === 'Action' && userActiveTab === 'track-application') {
+                } else if (
+                  item.title === 'Action' &&
+                  (userActiveTab === 'track-application' || userActiveTab === 'dashboard')
+                ) {
                   return (
                     <TableCell maxWidth={`${tableCellWidth}%`} key={index} align="left">
                       <Button
@@ -269,7 +285,6 @@ export default function GenericTable(props) {
                   return (
                     <TableCell maxWidth={`${tableCellWidth}%`} key={index} align="left">
                       <Typography
-                        bgcolor="grey1.light"
                         p={1}
                         component="div"
                         variant="subtitle"
@@ -359,7 +374,7 @@ export default function GenericTable(props) {
             <TableRow sx={{ textAlign: 'center' }}>
               <TableCell colSpan="100%" align="center">
                 <Box display="flex" justifyContent="center" width="100%">
-                  No Result Found
+                  {props.noRecordFound ? props.noRecordFound : 'No Result Found'}
                 </Box>
               </TableCell>
             </TableRow>

@@ -91,51 +91,53 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
 
   const onSubmit = (type) => {
     const { email, mobileNo } = getValues();
-    if (validDetails.mobileNo === false && validDetails.email === false && email && mobileNo) {
+
+    if (type === 'sms' && mobileNo && validDetails.mobileNo === false) {
       let otpValue = {};
       otpValue = {
-        contact: type === 'sms' ? getValues().mobileNo : type === 'email' && getValues().email,
-        type: type === 'sms' ? 'sms' : type === 'email' && 'email',
+        contact: getValues().mobileNo,
+        type: 'sms',
         page: 'doctorConstantDetailsPage',
         handleClose: handleClose,
         reSendOTP: onSubmit,
         setMobileNumberChange: setMobileNumberChange,
+      };
+      setData(otpValue);
+      let sendOTPData = {
+        contact: type === 'sms' ? getValues().mobileNo : '',
+        type: type === 'sms' ? 'sms' : '',
+        user_type: loginData?.data?.user_type,
+        is_registration: true,
+      };
+      dispatch(sendNotificationOtp(sendOTPData)).then((response) => {
+        response?.data?.message === 'Success'
+          ? setShowOTPPOPUp(true)
+          : successToast(response?.data?.message, 'auth-error', 'error', 'top-center');
+      });
+    }
+
+    if (type === 'email' && email && validDetails.email === false) {
+      let otpValue = {};
+      otpValue = {
+        contact: getValues().email,
+        type: 'email',
+        page: 'doctorConstantDetailsPage',
+        handleClose: handleClose,
+        reSendOTP: onSubmit,
         setEmailChange: setEmailChange,
       };
       setData(otpValue);
-      if (type === 'email') {
-        let sendOTPData = {
-          email: type === 'email' ? type === 'email' && getValues().email : '',
-        };
-        dispatch(verifyEmail(sendOTPData, personalDetails?.hp_profile_id)).then((response) => {
-          if (response?.data?.message === 'Success') {
-            setShowOTPPOPUp(true);
-            setVerifyEmailID(true);
-          } else {
-            successToast(response?.data?.message, 'auth-error', 'error', 'top-center');
-          }
-        });
-      } else {
-        let sendOTPData = {
-          contact: type === 'sms' ? getValues().mobileNo : '',
-          type: type === 'sms' ? 'sms' : '',
-          user_type: loginData?.data?.user_type,
-          is_registration: true,
-        };
-        dispatch(sendNotificationOtp(sendOTPData)).then((response) => {
-          response?.data?.message === 'Success'
-            ? setShowOTPPOPUp(true)
-            : successToast(response?.data?.message, 'auth-error', 'error', 'top-center');
-        });
-        // .catch((allFailMsg) => {
-        //   successToast(
-        //     allFailMsg?.data?.response?.data?.message,
-        //     'auth-error',
-        //     'error',
-        //     'top-center'
-        //   );
-        // });
-      }
+      let sendOTPData = {
+        email: type === 'email' ? type === 'email' && getValues().email : '',
+      };
+      dispatch(verifyEmail(sendOTPData, personalDetails?.hp_profile_id)).then((response) => {
+        if (response?.data?.message === 'Success') {
+          setShowOTPPOPUp(true);
+          setVerifyEmailID(true);
+        } else {
+          successToast(response?.data?.message, 'auth-error', 'error', 'top-center');
+        }
+      });
     }
   };
 
@@ -340,7 +342,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                   <EditOutlinedIcon
                     color={'primary'}
                     fontSize={'inherit'}
-                    sx={{ ml: 0.5 }}
+                    sx={{ ml: 0.5, cursor: 'pointer' }}
                     onClick={() => {
                       setMobileNumberChange(true);
                     }}
@@ -364,6 +366,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
               <Box display={'flex'} flexDirection="column">
                 <Paper display={'flex'} alignItems="center" sx={{ p: '2px 4px' }}>
                   <InputBase
+                    required={true}
                     sx={{ ml: 1, flex: 1 }}
                     placeholder="Email"
                     name="email"
@@ -382,7 +385,6 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
 
                   <Link
                     color="primary"
-                    cursor="pointer"
                     sx={{ p: '10px', cursor: 'pointer' }}
                     onClick={() => {
                       handleSubmit(onSubmit('email'));
@@ -424,7 +426,12 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
           </Box>
         </Grid>
       </Grid>
-      <Dialog open={showOTPPOPUp} maxWidth={'600px'}>
+      <Dialog
+        maxWidth="sm"
+        scroll="body"
+        open={showOTPPOPUp}
+        PaperProps={{ sx: { borderRadius: '10px' } }}
+      >
         <ConfirmOTP otpData={userData} />
       </Dialog>
     </Box>

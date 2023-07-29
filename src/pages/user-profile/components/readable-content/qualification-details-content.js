@@ -10,11 +10,12 @@ import { capitalizeFirstLetter } from '../../../../helpers/functions/common-func
 import AttachmentViewPopup from '../../../../shared/query-modal-popup/attachement-view-popup';
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
-const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex }) => {
+const QualificationDetailsContent = ({ selectedDataIndex }) => {
   const { data } = useSelector((state) => state.loginReducer?.loginData);
   const { selectedAcademicStatus } = useSelector((state) => state.common);
 
   const { raisedQueryData } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
+  const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { count } = useSelector((state) => state?.dashboard);
   const [attachmentViewIndex, setAttachmentViewIndex] = useState();
 
@@ -79,39 +80,22 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
           </Grid>
           <Grid item xs={12} md={4}>
             {element?.is_verified === 1 ? (
-              <Typography
-                ml={2}
-                spacing={1}
-                color="success.main"
-                display={'flex'}
-                justifyContent={'right'}
-              >
+              <Typography color="success.main" display={'flex'} justifyContent={'flex-end'}>
                 Approved
               </Typography>
             ) : element?.is_verified === 0 ? (
-              <Typography
-                ml={2}
-                spacing={1}
-                color="secondary.main"
-                display={'flex'}
-                justifyContent={'right'}
-              >
+              <Typography color="secondary.main" display={'flex'} justifyContent={'flex-end'}>
                 Pending Approval
               </Typography>
             ) : element?.is_verified === 2 ? (
-              <Typography
-                ml={2}
-                spacing={1}
-                color="error.main"
-                display={'flex'}
-                justifyContent={'right'}
-              >
+              <Typography color="error.main" display={'flex'} justifyContent={'flex-end'}>
                 Rejected
               </Typography>
             ) : (
               ''
             )}
           </Grid>
+
           <Grid container item spacing={1} mt={0.5}>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="grey.label">

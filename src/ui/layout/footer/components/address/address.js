@@ -1,8 +1,13 @@
 import CallOutlinedIcon from '@mui/icons-material/CallOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
-import { List, ListItem, ListItemText, Typography } from '@mui/material';
+import FacebookRoundedIcon from '@mui/icons-material/FacebookRounded';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import YouTubeIcon from '@mui/icons-material/YouTube';
+import { Link, List, ListItem, ListItemText, Typography, useTheme } from '@mui/material';
 
 export const Address = () => {
+  const theme = useTheme();
   return (
     <>
       <Typography variant="h2">Contact</Typography>
@@ -44,8 +49,45 @@ export const Address = () => {
               lineHeight="1"
             >
               <EmailOutlinedIcon sx={{ mr: 1, fontSize: '16px' }} />
-              <a href="mailto: ndhm@nha.gov.in">&nbsp;abdm[@]nha[dot]gov[dot]in</a>
+              <a href="mailto: ndhm@nha.gov.in">&nbsp;abdm[at]nha[dot]gov[dot]in</a>
             </Typography>
+          </ListItemText>
+        </ListItem>
+        <ListItem disableGutters disablePadding={true}>
+          <ListItemText sx={{ margin: '0' }}>
+            <Typography variant="h6" mt={1}>
+              Social Media
+            </Typography>
+
+            <Link
+              href="https://www.facebook.com/AyushmanBharatGoI"
+              sx={{ backgroundColor: theme.white }}
+              p={1}
+            >
+              <FacebookRoundedIcon sx={{ fontSize: '32px' }} color="white" />
+            </Link>
+
+            <Link
+              href="https://www.youtube.com/channel/UCkd7w2rww0HQB4lZ-l3dB6g"
+              sx={{ backgroundColor: theme.white }}
+              p={1}
+            >
+              <YouTubeIcon sx={{ fontSize: '32px' }} color="white" />
+            </Link>
+            <Link
+              href="https://twitter.com/AyushmanNHA"
+              sx={{ backgroundColor: theme.white }}
+              p={1}
+            >
+              <TwitterIcon sx={{ fontSize: '32px' }} color="white" />
+            </Link>
+            <Link
+              href="https://www.instagram.com/ayushmannha/"
+              sx={{ backgroundColor: theme.white }}
+              p={1}
+            >
+              <InstagramIcon sx={{ fontSize: '32px' }} color="white" />
+            </Link>
           </ListItemText>
         </ListItem>
       </List>

@@ -192,7 +192,6 @@ const ReadRegisterAndAcademicDetails = ({
       </Box>
       {showActions && (
         <Box
-          paddingBottom={'30px'}
           pl={2}
           display="flex"
           justifyContent="space-between"
@@ -268,7 +267,19 @@ const ReadRegisterAndAcademicDetails = ({
                                   variant="contained"
                                   color="secondary"
                                   onClick={selectionChangeHandler}
-                                  data-my-value={'verify'}
+                                  data-my-value={
+                                    loggedInUserType === 'SMC' ||
+                                    loggedInUserType === 'College' ||
+                                    loggedInUserType === 'NBE'
+                                      ? 'verify'
+                                      : selectedAcademicStatus ===
+                                        'Temporary Suspension Requests Received'
+                                      ? 'blacklist'
+                                      : selectedAcademicStatus ===
+                                        'Permanent Suspension Requests Received'
+                                      ? 'suspend'
+                                      : 'verify'
+                                  }
                                   sx={{
                                     mr: 2,
                                     mb: {

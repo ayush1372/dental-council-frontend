@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import { getUpdatedNBEProfileData } from '../../../store/actions/nbe-actions';
 import { Button, TextField } from '../../../ui/core';
+import { EmailRegexValidation } from '../../../utilities/common-validations';
 // import successToast from '../../../ui/core/toaster';
 
 const NbeEditProfile = (props) => {
@@ -30,6 +31,15 @@ const NbeEditProfile = (props) => {
       mobile_no: userData?.mobile_no,
     },
   });
+
+  const handleInput = (e) => {
+    e.preventDefault();
+    if (e.target.value.length > 0) {
+      e.target.value = isNaN(e.target.value)
+        ? e.target.value.toString().slice(0, -1)
+        : Math.max(0, parseInt(e.target.value)).toString().slice(0, 10);
+    }
+  };
 
   let nbeUpdatedData = {
     id: userData?.id,
@@ -68,7 +78,7 @@ const NbeEditProfile = (props) => {
           text={'NBE profile data has been updated.'}
         />
       )}
-      <Grid container spacing={2} mt={2}>
+      <Grid container spacing={2}>
         <Grid item xs={12}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
             <Typography variant="h2" color="textPrimary.main">
@@ -97,7 +107,7 @@ const NbeEditProfile = (props) => {
               required: 'Please enter name',
 
               pattern: {
-                value: /^([a-zA-Z]+\s)*[a-zA-Z]+$/i,
+                value: /^(?!^\s)[a-zA-Z\s']*$(?<!\s$)/,
                 message: 'Please enter a valid name',
               },
             })}
@@ -116,12 +126,13 @@ const NbeEditProfile = (props) => {
             name={'mobile_no'}
             placeholder={'Enter mobile number '}
             defaultValue={getValues().mobile_no}
+            onInput={(e) => handleInput(e)}
             error={errors.mobile_no?.message}
             {...register('mobile_no', {
               required: 'Please enter mobile number',
               pattern: {
                 value: /^(\d{10})$/i,
-                message: 'Please enter a valid mobile number',
+                message: 'Please enter a valid 10 digit mobile number',
               },
             })}
           />
@@ -142,15 +153,7 @@ const NbeEditProfile = (props) => {
             placeholder={'Enter email'}
             defaultValue={getValues().email_id}
             error={errors.email_id?.message}
-            {...register('email_id', {
-              required: 'Please enter an email ID',
-
-              pattern: {
-                value:
-                  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-                message: 'Please enter a valid email',
-              },
-            })}
+            {...register('email_id', EmailRegexValidation)}
           />
         </Grid>
       </Grid>

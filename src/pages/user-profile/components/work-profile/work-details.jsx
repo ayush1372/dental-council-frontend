@@ -44,11 +44,31 @@ const WorkDetails = ({
 
   const { loginData } = useSelector((state) => state.loginReducer);
   const { registrationDetails } = useSelector((state) => state.doctorUserProfileReducer);
+  const { work_details, languages_known_ids } = useSelector(
+    (state) => state?.doctorUserProfileReducer?.workProfileDetails
+  );
+  const { languagesList, statesList, countriesList, districtsList, subDistrictList, citiesList } =
+    useSelector((state) => state?.common);
+
+  const getDefaultLanguageData = (language) => {
+    let languageData = [];
+    Array.isArray(language) &&
+      language?.map((elementID) => {
+        languagesList?.data?.map((element) => {
+          if (element?.id === elementID) {
+            languageData.push(element);
+          }
+        });
+      });
+    return languageData;
+  };
 
   const [tabValue, setTabValue] = useState(0);
-  const [languages, setLanguages] = useState([]);
+  const [languages, setLanguages] = useState(getDefaultLanguageData(languages_known_ids));
   const [showTable, setShowTable] = useState(false);
-  const [workExpierence, setWorkExpierence] = useState(0);
+  const [workExpierence, setWorkExpierence] = useState(
+    work_details?.experience_in_years ? Number(work_details?.experience_in_years) : 0
+  );
   const [languageError, setLanguageError] = useState(false);
   const [facilityDistrict, setFacilityDistrict] = useState([]);
   const [facilityChecked, setFacilityChecked] = useState(true);
@@ -57,12 +77,21 @@ const WorkDetails = ({
   const [workExperianceError, setWorkExperianceError] = useState(false);
   const [organizationChecked, setOrganizationChecked] = useState(false);
   const [declaredFacilityData, setDeclaredFacilityDistrict] = useState([]);
+  const [facilityIDError, setFacilityIDError] = useState(false);
+  const [facilityStateError, setFacilityStateError] = useState(false);
+  const [facilityTableError, setFacilityTableError] = useState(false);
+  const [facilityDistrictError, setFacilityDistrictError] = useState(false);
 
   const onSubmit = () => {
     const currentWorkDetails = {
       work_details: {
         is_user_currently_working: currentWorkingSelection === 'yes' ? 0 : 1,
-        work_nature: getWorkNature(getValues().NatureOfWork),
+        work_nature:
+          getWorkNature(getValues().NatureOfWork) === undefined
+            ? getWorkNature(work_details?.work_nature?.id)
+            : getWorkNature(getValues().NatureOfWork),
+        work_status: getWorkStatus(getValues().workStatus),
+        experience_in_years: workExpierence,
       },
       current_work_details: [
         {
@@ -85,55 +114,56 @@ const WorkDetails = ({
             locality: getValues().Locality,
           },
           registration_no: registrationDetails?.registration_detail_to?.registration_number,
-          experience_in_years: workExpierence,
         },
       ],
       hp_profile_id: loginData?.data?.profile_id,
-      languages_known_ids: getLanguageData(getValues().LanguageSpoken),
+      languages_known_ids:
+        getLanguageData(getValues().LanguageSpoken)?.length === 0
+          ? getLanguageData(languages)
+          : getLanguageData(getValues().LanguageSpoken),
     };
     if (declaredFacilityData?.length > 0) {
-      fetchDistricts(declaredFacilityData[0]?.address?.state, true);
-      let facilityDetailsDeclared = {
-        facility_id: declaredFacilityData[0]?.id,
-        organization_type: getValues().organizationType || declaredFacilityData[0]?.facilityType,
-        work_organization: declaredFacilityData[0]?.name,
-        url: getValues().telecommunicationURL,
-        address: {
-          pincode: declaredFacilityData[0]?.address?.pincode,
-          country: {
-            id: 386,
-            name: 'india',
+      declaredFacilityData?.map((elementData, index) => {
+        fetchDistricts(declaredFacilityData[index]?.address?.state, true);
+        let facilityDetailsDeclared = {
+          facility_id: elementData?.id,
+          organization_type: getValues().organizationType || elementData?.facilityType,
+          work_organization: elementData?.name,
+          url: getValues().telecommunicationURL,
+          address: {
+            pincode: elementData?.address?.pincode,
+            country: {
+              id: 386,
+              name: 'india',
+            },
+            state: getStateData(elementData?.address?.state, true),
+            district: elementData?.address?.district_to,
+            village: {
+              iso_code: elementData?.villageCityTownLGDCode,
+              name: elementData?.villageCityTownName,
+            },
+            sub_district: {
+              iso_code: elementData?.subDistrictLGDCode,
+              name: elementData?.subDistrictName,
+            },
+            address_line1: elementData?.address?.addressLine1,
+            street: getValues().Street,
+            landmark: getValues().Landmark,
           },
-          state: getStateData(declaredFacilityData[0]?.address?.state, true),
-          district: declaredFacilityData[0]?.address?.district_to,
-          village: {
-            iso_code: declaredFacilityData[0]?.villageCityTownLGDCode,
-            name: declaredFacilityData[0]?.villageCityTownName,
-          },
-          sub_district: {
-            iso_code: declaredFacilityData[0]?.subDistrictLGDCode,
-            name: declaredFacilityData[0]?.subDistrictName,
-          },
-          address_line1: declaredFacilityData[0]?.address?.addressLine1,
-          street: getValues().Street,
-          landmark: getValues().Landmark,
-        },
-        registration_no: registrationDetails?.registration_detail_to?.registration_number,
-        experience_in_years: workExpierence,
-        system_of_medicine: declaredFacilityData[0]?.systemOfMedicine,
-        department: declaredFacilityData[0]?.department || 'department',
-        designation: declaredFacilityData[0]?.designation || 'desgination',
-      };
-      currentWorkDetails?.current_work_details.push(facilityDetailsDeclared);
+          registration_no: registrationDetails?.registration_detail_to?.registration_number,
+          experience_in_years: workExpierence,
+          system_of_medicine: elementData?.systemOfMedicine,
+          department: elementData?.department || 'department',
+          designation: elementData?.designation || 'desgination',
+        };
+        currentWorkDetails?.current_work_details.push(facilityDetailsDeclared);
+      });
     }
     if (!organizationChecked) {
       currentWorkDetails?.current_work_details.splice(0, 1);
     }
     if (facilityChecked) {
-      if (declaredFacilityData?.length > 0) {
-        updateWorkStatus(currentWorkDetails);
-      }
-      if (organizationChecked) {
+      if (declaredFacilityData?.length > 0 || organizationChecked) {
         updateWorkStatus(currentWorkDetails);
       }
     } else {
@@ -141,14 +171,19 @@ const WorkDetails = ({
     }
   };
 
+  //Helper Function to make the facility error as false
+  const handleFacilityError = () => {
+    setFacilityIDError(false);
+    setFacilityStateError(false);
+    setFacilityTableError(false);
+    setFacilityDistrictError(false);
+  };
+
   const updateWorkStatus = (currentWorkDetails) => {
     dispatch(updateDoctorWorkDetails(currentWorkDetails, loginData?.data?.profile_id)).then(() => {
       setSuccessModalPopup(true);
     });
   };
-
-  const { languagesList, statesList, countriesList, districtsList, subDistrictList, citiesList } =
-    useSelector((state) => state?.common);
 
   const handleWorkStatus = (event) => {
     setValue(event.target.name, event.target.value);
@@ -160,6 +195,8 @@ const WorkDetails = ({
   };
 
   const handleTabChange = (_, value) => {
+    handleFacilityError();
+
     setFacilityResponseData([]);
     setDeclaredFacilityDistrict([]);
     setShowTable(false);
@@ -174,9 +211,9 @@ const WorkDetails = ({
         stateData.push(elementData);
       }
     });
-
     return stateData[0]?.iso_code;
   };
+
   const getDistrictISOCode = (District) => {
     let DistrictData = [];
     facilityDistrict?.map((elementData) => {
@@ -187,9 +224,9 @@ const WorkDetails = ({
     return DistrictData[0]?.iso_code;
   };
 
-  const searchFacilitiesHandler = () => {
+  const searchFacilitiesHandler = (page) => {
     const values = getValues();
-
+    let facilityResponse;
     let ownerCode =
       values?.workStatus === '3'
         ? 'G'
@@ -198,8 +235,9 @@ const WorkDetails = ({
         : values?.workStatus === '1'
         ? 'PP'
         : '';
+
     const searchFacilities = {
-      page: 0,
+      page: page || 0,
       ownership: ownerCode,
       resultsPerPage: 10,
       id: values.facilityId || null,
@@ -211,12 +249,14 @@ const WorkDetails = ({
       .then((response) => {
         if (response?.data) {
           setFacilityResponseData(response?.data?.facilities);
+          facilityResponse = response?.data?.facilities;
         }
       })
       .catch(() => {
         successToast(ErrorMessages.inValidFacilityDetails, 'auth-error', 'error', 'top-center');
       });
     setShowTable(true);
+    return facilityResponse;
   };
 
   // watches
@@ -342,6 +382,29 @@ const WorkDetails = ({
     return workNatureData[0];
   };
 
+  const getWorkStatus = (statusID) => {
+    let workStatusData = [];
+    [
+      {
+        id: 3,
+        name: 'Government only',
+      },
+      {
+        id: 2,
+        name: 'Private Practice only',
+      },
+      {
+        id: 1,
+        name: 'Both',
+      },
+    ]?.map((elementData) => {
+      if (elementData.id === Number(statusID)) {
+        workStatusData.push(elementData);
+      }
+    });
+    return workStatusData[0];
+  };
+
   const getLanguageData = (language) => {
     let languageData = [];
     Array.isArray(languagesList?.data) &&
@@ -357,6 +420,10 @@ const WorkDetails = ({
   };
 
   useEffect(() => {
+    handleFacilityError();
+  }, [facilityChecked]);
+
+  useEffect(() => {
     if (Object.keys(errors).length > 1) {
       workExpierence === 0 ? setWorkExperianceError(true) : setWorkExperianceError(false);
       getValues()?.LanguageSpoken?.length === 0 ? setLanguageError(true) : setLanguageError(false);
@@ -370,7 +437,7 @@ const WorkDetails = ({
           fullWidth
           name={'NatureOfWork'}
           label="Nature of Work"
-          defaultValue={getValues().NatureOfWork}
+          defaultValue={work_details?.work_nature?.id || ''}
           required={true}
           placeholder={'Select nature of work'}
           {...register('NatureOfWork', {
@@ -392,7 +459,7 @@ const WorkDetails = ({
           onChange={handleWorkStatus}
           name={'workStatus'}
           size="small"
-          defaultValue={getValues().workStatus}
+          defaultValue={work_details?.work_status?.id}
           items={createSelectFieldData(workStatusOptions)}
           required={true}
           error={errors.workStatus?.message}
@@ -471,7 +538,6 @@ const WorkDetails = ({
             setLanguageError(false);
             handleLanguageSpokenChange('LanguageSpoken', value);
           }}
-          // error={`Language spoken is required`}
         />
         {languageError && (
           <Typography sx={{ display: 'flex', alignItems: 'center' }} variant="body2" color="error">
@@ -546,16 +612,11 @@ const WorkDetails = ({
           </Grid>
           {tabValue === 0 && (
             <Grid container spacing={2} mt={2} ml={1}>
-              <Grid
-                item
-                md={8}
-                display="flex"
-                alignItems={errors?.facilityId?.message ? 'center' : 'end'}
-              >
+              <Grid item md={8} display="flex" alignItems={facilityIDError ? 'center' : 'end'}>
                 <Box>
                   <TextField
                     fullWidth
-                    error={errors?.facilityId?.message}
+                    error={facilityIDError && 'Please enter a valid facility ID'}
                     name={'facilityId'}
                     label="Facility ID"
                     required={true}
@@ -564,21 +625,46 @@ const WorkDetails = ({
                     {...register(`facilityId`, {
                       required: 'Please enter a valid facility ID',
                     })}
+                    onChange={(e) => {
+                      if (e.target.value !== '') setFacilityIDError(false);
+                    }}
                   />
                 </Box>
-                <Box ml={2}>
+                <Box ml={3}>
                   <Button
                     variant="contained"
                     color="secondary"
                     sx={{ paddingTop: '15px', paddingBottom: '15px' }}
                     onClick={() => {
-                      getValues()?.facilityId?.length > 0 && searchFacilitiesHandler();
+                      getValues()?.facilityId?.length > 0
+                        ? searchFacilitiesHandler()
+                        : setFacilityIDError(true);
                     }}
                   >
                     Search
                   </Button>
                 </Box>
+                <Box ml={3}>
+                  <Button
+                    color="grey"
+                    variant="contained"
+                    onClick={() => {
+                      setValue('facilityId', '');
+                      setFacilityIDError(false);
+                      setShowTable(false);
+                    }}
+                  >
+                    Reset
+                  </Button>
+                </Box>
               </Grid>
+              {facilityTableError && (
+                <Grid item xs={12} padding="10px 0 !important" ml={1}>
+                  <Typography p={1} component="div" color="error.main" variant="h3">
+                    Please choose Facility details.
+                  </Typography>
+                </Grid>
+              )}
               {showTable && (
                 <Grid item xs={12}>
                   <WorkDetailsTable
@@ -587,6 +673,7 @@ const WorkDetails = ({
                     setFacilityResponseData={setFacilityResponseData}
                     setDeclaredFacilityDistrict={setDeclaredFacilityDistrict}
                     declaredFacilityData={declaredFacilityData}
+                    setFacilityTableError={setFacilityTableError}
                   />
                 </Grid>
               )}
@@ -605,15 +692,21 @@ const WorkDetails = ({
 
                 <Select
                   fullWidth
-                  error={getValues().stateLGDCode?.length === 0 && 'Please select state'}
+                  error={facilityStateError && 'Please select state'}
                   name={'stateLGDCode'}
-                  defaultValue={getValues().stateLGDCode}
                   required={true}
                   {...register('stateLGDCode', {
                     required: 'Please select state',
                   })}
                   options={createSelectFieldData(statesList)}
-                  placeholder={'Enter State'}
+                  placeholder={'Select State'}
+                  onChange={(e) => {
+                    if (e.target.value !== '') {
+                      setFacilityStateError(false);
+                      fetchDistricts(e.target.value, true);
+                      setValue('stateLGDCode', e.target.value);
+                    }
+                  }}
                 />
               </Grid>
               <Grid item xs={12} md={3} lg={3}>
@@ -625,15 +718,20 @@ const WorkDetails = ({
                 </Typography>
                 <Select
                   fullWidth
-                  error={errors.districtLGDCode?.message}
+                  error={facilityDistrictError && 'Please select district'}
                   name={'districtLGDCode'}
-                  defaultValue={getValues().districtLGDCode}
                   required={true}
                   {...register('districtLGDCode', {
                     required: 'District is required',
                   })}
                   options={createSelectFieldData(facilityDistrict)}
-                  placeholder={'Enter District'}
+                  placeholder={'Select District'}
+                  onChange={(e) => {
+                    if (e.target.value !== '') {
+                      setFacilityDistrictError(false);
+                      setValue('districtLGDCode', e.target.value);
+                    }
+                  }}
                 />
               </Grid>
               <Grid item xs={12} md={3} lg={3}>
@@ -647,16 +745,32 @@ const WorkDetails = ({
                   {...register('facilityName')}
                 />
               </Grid>
-              <Grid item xs={12} md={3} lg={3} mt={3}>
+              <Grid item xs={12} md={1} lg={1} mt={3}>
                 <Box ml={1}>
                   <Button
                     variant="contained"
                     color="secondary"
                     sx={{ paddingTop: '15px', paddingBottom: '15px' }}
                     onClick={() => {
-                      typeof getValues()?.stateLGDCode === 'number' &&
-                        typeof getValues()?.districtLGDCode === 'number' &&
+                      if (
+                        typeof getValues()?.stateLGDCode === 'number' &&
+                        typeof getValues()?.districtLGDCode === 'number'
+                      ) {
                         searchFacilitiesHandler();
+                      } else {
+                        if (
+                          getValues()?.stateLGDCode === undefined ||
+                          getValues()?.stateLGDCode === ''
+                        ) {
+                          setFacilityStateError(true);
+                        }
+                        if (
+                          getValues()?.districtLGDCode === undefined ||
+                          getValues()?.districtLGDCode === ''
+                        ) {
+                          setFacilityDistrictError(true);
+                        }
+                      }
                     }}
                     disabled={
                       getValues()?.stateLGDCode?.length > 0 &&
@@ -667,6 +781,30 @@ const WorkDetails = ({
                   </Button>
                 </Box>
               </Grid>
+              <Grid item xs={12} md={1} lg={1} mt={3}>
+                <Box ml={3}>
+                  <Button
+                    color="grey"
+                    variant="contained"
+                    onClick={() => {
+                      setValue('stateLGDCode', undefined);
+                      setValue('districtLGDCode', undefined);
+                      setFacilityStateError(false);
+                      setFacilityDistrictError(false);
+                      setShowTable(false);
+                    }}
+                  >
+                    Reset
+                  </Button>
+                </Box>
+              </Grid>
+              {facilityTableError && (
+                <Grid item xs={12} padding="10px 0 !important" ml={1}>
+                  <Typography p={1} component="div" color="error.main" variant="h3">
+                    Please choose Facility details.
+                  </Typography>
+                </Grid>
+              )}
               {showTable && (
                 <Grid item xs={12} padding="10px 0 !important">
                   <WorkDetailsTable
@@ -675,6 +813,8 @@ const WorkDetails = ({
                     setFacilityResponseData={setFacilityResponseData}
                     setDeclaredFacilityDistrict={setDeclaredFacilityDistrict}
                     declaredFacilityData={declaredFacilityData}
+                    setFacilityTableError={setFacilityTableError}
+                    searchFacilitiesHandler={searchFacilitiesHandler}
                   />
                 </Grid>
               )}
@@ -1034,45 +1174,80 @@ const WorkDetails = ({
           </Grid>
         </>
       )}
-      {(organizationChecked || facilityChecked) && (
-        <Grid
-          container
-          display="flex"
-          justifyContent="space-between"
-          alignItems="center"
-          my={3}
-          ml={3}
-        >
-          <Grid item xs={12}>
-            <Button onClick={handleSubmit(onSubmit)} variant="contained" color="secondary">
-              Submit
-            </Button>
-            <Button
-              color="grey"
-              variant="contained"
-              sx={{
-                marginLeft: '16px',
-              }}
-              onClick={(e) => {
-                e.preventDefault();
-                dispatch(changeUserActiveTab(doctorTabs[0].tabName));
-              }}
-            >
-              Cancel
-            </Button>
-          </Grid>
-          {successModalPopup && (
-            <SuccessModalPopup
-              open={successModalPopup}
-              workDetails={true}
-              setOpen={() => setSuccessModalPopup(false)}
-              setDefaultFacilityData={setDefaultFacilityData}
-              setCurrentlyWorking={setCurrentlyWorking}
-              text={'Your Work-Details has been submitted successfully.'}
-            />
-          )}
+      <Grid
+        container
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        my={3}
+        ml={3}
+      >
+        <Grid item xs={12}>
+          <Button
+            onClick={
+              organizationChecked
+                ? handleSubmit(onSubmit)
+                : () => {
+                    if (facilityChecked) {
+                      if (
+                        tabValue === 0 &&
+                        (getValues()?.facilityId === undefined || getValues()?.facilityId === '')
+                      ) {
+                        setFacilityIDError(true);
+                      } else if (tabValue === 1) {
+                        if (
+                          getValues()?.stateLGDCode === undefined ||
+                          getValues()?.stateLGDCode === ''
+                        ) {
+                          setFacilityStateError(true);
+                        }
+                        if (
+                          getValues()?.districtLGDCode === undefined ||
+                          getValues()?.districtLGDCode === ''
+                        ) {
+                          setFacilityDistrictError(true);
+                        }
+                      }
+                      if (declaredFacilityData?.length === 0) {
+                        setFacilityTableError(true);
+                      } else if (declaredFacilityData?.length > 0) {
+                        onSubmit();
+                      }
+                    } else if (!facilityChecked && !organizationChecked) {
+                      onSubmit();
+                    }
+                  }
+            }
+            variant="contained"
+            color="secondary"
+          >
+            Submit
+          </Button>
+          <Button
+            color="grey"
+            variant="contained"
+            sx={{
+              marginLeft: '16px',
+            }}
+            onClick={(e) => {
+              e.preventDefault();
+              dispatch(changeUserActiveTab(doctorTabs[0].tabName));
+            }}
+          >
+            Cancel
+          </Button>
         </Grid>
-      )}
+        {successModalPopup && (
+          <SuccessModalPopup
+            open={successModalPopup}
+            workDetails={true}
+            setOpen={() => setSuccessModalPopup(false)}
+            setDefaultFacilityData={setDefaultFacilityData}
+            setCurrentlyWorking={setCurrentlyWorking}
+            text={'Work-details has been submitted'}
+          />
+        )}
+      </Grid>
     </>
   );
 };

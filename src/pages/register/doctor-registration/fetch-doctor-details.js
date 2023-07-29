@@ -53,6 +53,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
   const [existHprId, setExistHprId] = useState(false);
   const [successRegistration, setSuccessRegistration] = useState(false);
   const [editBUtton, setEditButton] = useState(false);
+  const [userAccountName, setuserAccountName] = useState('');
   //const [isDisabled, setIsDisabled] = useState(false);
 
   const { speak, cancel } = useSpeechSynthesis();
@@ -265,6 +266,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
   };
   const onSubmit = () => {
     dispatch(verifyHealthProfessional(getValues().MobileNumber)).then((validationResponse) => {
+      setuserAccountName(validationResponse?.data[0]);
       let responseLength = validationResponse && validationResponse?.data?.length;
       if (imrDataNotFound || kycstatus !== 'Success') {
         dispatch(UserNotFoundDetails({ imrDataNotFound, aadhaarFormValues }));
@@ -533,7 +535,6 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                 <Box
                   sx={{
                     display: 'flex',
-                    alignItems: 'center',
                   }}
                 >
                   <TextField
@@ -554,12 +555,14 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                       },
                     })}
                   />
-                  {(isOtpValidMobile && !editBUtton) ||
-                  demographicAuthMobileVerify?.data?.verified ? (
-                    <CheckCircleIcon color="success" />
-                  ) : (
-                    ''
-                  )}
+                  <Box mt={2}>
+                    {(isOtpValidMobile && !editBUtton) ||
+                    demographicAuthMobileVerify?.data?.verified ? (
+                      <CheckCircleIcon color="success" />
+                    ) : (
+                      ''
+                    )}
+                  </Box>
                   <Box>
                     {editBUtton && !demographicAuthMobileVerify?.data?.verified ? (
                       <Button
@@ -606,7 +609,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                     },
                   }}
                 >
-                  <Box>
+                  <Box mb={1}>
                     <Typography variant="body1">
                       Please enter the OTP sent on your mobile number.
                     </Typography>
@@ -650,6 +653,12 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
 
           {showSuccess && (
             <SuccessModalPopup
+              fetchDoctorScreenAlertIcon={
+                existUSerName?.replace('@hpr.abdm', '')?.replace('@dr.abdm', '') !==
+                  userAccountName && !existHprId
+                  ? true
+                  : false
+              }
               loginName={'Doctor'}
               open={showSuccess}
               setOpen={() => setShowSuccess(false)}
@@ -657,7 +666,10 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
               existHprId={existHprId}
               isHpIdCreated={existHprId}
               text={
-                existHprId
+                !existHprId &&
+                existUSerName?.replace('@hpr.abdm', '')?.replace('@dr.abdm', '') !== userAccountName
+                  ? 'This mobile number is already registered with Council, please use different mobile number'
+                  : existHprId
                   ? `Your account with username "${existUSerName
                       .replace('@hpr.abdm', '')
                       ?.replace(

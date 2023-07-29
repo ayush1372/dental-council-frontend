@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Box, Grid, TextField } from '@mui/material';
+import { Box, Grid, TextField, Tooltip, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -41,6 +41,19 @@ export default function TrackStatus() {
     },
   });
 
+  const acendingOrderFilter = TrackStatusFieldList;
+  acendingOrderFilter?.sort((a, b) => {
+    let nameCompare1 = a?.name?.toLowerCase(),
+      nameCompare2 = b?.name?.toLowerCase();
+    if (nameCompare1 < nameCompare2) {
+      return -1;
+    }
+    if (nameCompare1 > nameCompare2) {
+      return 1;
+    }
+    return 0;
+  });
+
   const onSubmit = () => {
     const trackData = {
       smcId: getValues().RegistrationCouncilId,
@@ -65,7 +78,12 @@ export default function TrackStatus() {
     setViewExportIcon(true);
   };
   return (
-    <Box>
+    <Grid p={1}>
+      <Grid item xs={12} sm="auto" sx={{ mr: { xs: 0, sm: 'auto' } }} p={1}>
+        <Typography variant="h2" color="textPrimary.main">
+          Track Status
+        </Typography>
+      </Grid>
       {showHeader && (
         <Box px={3}>
           {/* <Typography variant="h2" color="textPrimary.main" component="div" mt={8}>
@@ -82,23 +100,26 @@ export default function TrackStatus() {
                   </Typography>
                 </Typography> */}
 
-                  <SearchableDropdown
-                    sx={{ mt: 1 }}
-                    name="RegistrationCouncil"
-                    items={createEditFieldData(councilNames)}
-                    placeholder={
-                      loggedInUserType !== 'SMC'
-                        ? 'Select council name'
-                        : 'Maharashtra medical council'
-                    }
-                    clearErrors={clearErrors}
-                    error={loggedInUserType !== 'SMC' && errors.RegistrationCouncil?.message}
-                    {...register('RegistrationCouncil')}
-                    disabled={loggedInUserType === 'SMC'}
-                    onChange={(currentValue) => {
-                      setValue('RegistrationCouncilId', currentValue?.id);
-                    }}
-                  />
+                  <Tooltip title={getValues().RegistrationCouncil} arrow placeholder="bottom-start">
+                    <SearchableDropdown
+                      sx={{ mt: 1 }}
+                      name="RegistrationCouncil"
+                      items={createEditFieldData(councilNames)}
+                      placeholder={
+                        loggedInUserType !== 'SMC'
+                          ? 'Select council'
+                          : 'Maharashtra medical council'
+                      }
+                      clearErrors={clearErrors}
+                      error={loggedInUserType !== 'SMC' && errors.RegistrationCouncil?.message}
+                      {...register('RegistrationCouncil')}
+                      disabled={loggedInUserType === 'SMC'}
+                      onChange={(currentValue) => {
+                        setValue('RegistrationCouncilId', currentValue?.id);
+                        setValue('RegistrationCouncil', currentValue?.name);
+                      }}
+                    />
+                  </Tooltip>
                 </Box>
               </Grid>
             )}
@@ -115,7 +136,7 @@ export default function TrackStatus() {
                   sx={{ mt: 1 }}
                   fullWidth
                   name="trackStatus"
-                  items={createEditFieldData(TrackStatusFieldList)}
+                  items={createEditFieldData(acendingOrderFilter)}
                   placeholder="Please select"
                   clearErrors={clearErrors}
                   {...register('trackStatus')}
@@ -128,7 +149,7 @@ export default function TrackStatus() {
                 />
               </Box>
             </Grid>
-            <Grid item xs={12} md={2}>
+            <Grid item xs={12} md={3}>
               <Box pb={{ xs: 2, md: 4 }}>
                 {/* <Typography color="inputTextColor.main">
                   label
@@ -168,11 +189,11 @@ export default function TrackStatus() {
                   Search
                 </Button>
               </Box>
-            </Grid>
-            <Grid item xs="auto" ml="auto">
-              {viewExportIcon === true && (
-                <ExportFiles exportData={trackStatusData?.data?.data} flag={'trackStatusData'} />
-              )}
+              <Grid item xs="auto" ml="auto" mb={2}>
+                {viewExportIcon === true && (
+                  <ExportFiles exportData={trackStatusData?.data?.data} flag={'trackStatusData'} />
+                )}
+              </Grid>
             </Grid>
           </Grid>
         </Box>
@@ -186,6 +207,6 @@ export default function TrackStatus() {
           trackStatusData={trackStatusData?.data?.data}
         />
       )}
-    </Box>
+    </Grid>
   );
 }
