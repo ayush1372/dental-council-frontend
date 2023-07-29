@@ -73,7 +73,6 @@ const QualificationDetailsContent = ({ selectedDataIndex }) => {
               : 'none'
           }
         >
-          
           <Grid item xs={12} md={8}>
             <Typography variant="h3" color="grey.label">
               {index === 0 ? 'Basic Qualification' : `Additional Qualification ${index}`}
@@ -81,34 +80,22 @@ const QualificationDetailsContent = ({ selectedDataIndex }) => {
           </Grid>
           <Grid item xs={12} md={4}>
             {element?.is_verified === 1 ? (
-              <Typography
-                color="success.main"
-                display={'flex'}
-                justifyContent={'flex-end'}
-              >
+              <Typography color="success.main" display={'flex'} justifyContent={'flex-end'}>
                 Approved
               </Typography>
             ) : element?.is_verified === 0 ? (
-              <Typography
-                color="secondary.main"
-                display={'flex'}
-                justifyContent={'flex-end'}
-              >
+              <Typography color="secondary.main" display={'flex'} justifyContent={'flex-end'}>
                 Pending Approval
               </Typography>
             ) : element?.is_verified === 2 ? (
-              <Typography
-                color="error.main"
-                display={'flex'}
-                justifyContent={'flex-end'}
-              >
+              <Typography color="error.main" display={'flex'} justifyContent={'flex-end'}>
                 Rejected
               </Typography>
             ) : (
               ''
             )}
           </Grid>
-          
+
           <Grid container item spacing={1} mt={0.5}>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="grey.label">

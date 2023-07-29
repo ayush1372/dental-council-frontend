@@ -250,7 +250,7 @@ const EditQualificationDetails = ({
               error={errors?.qualification?.[index]?.rollno?.message}
               defaultValue={getValues()[`qualification[${index}].rollno`]}
               {...register(`qualification[${index}].rollno`, {
-                required: 'Roll no is required',
+                required: 'Please enter roll number',
               })}
               // sx={{
               //   input: {
@@ -328,7 +328,7 @@ const EditQualificationDetails = ({
               error={errors?.qualification?.[index]?.marksobtained?.message}
               defaultValue={getValues()[`qualification[${index}].marksobtained`]}
               {...register(`qualification[${index}].marksobtained`, {
-                required: 'Marks obtained is required',
+                required: 'please enter marks obtained',
                 pattern: {
                   value: /^([1-9][0-9]?$|^100)$/i,
                   message: 'Enter correct marks obtained',
@@ -376,7 +376,7 @@ const EditQualificationDetails = ({
                 `qualification[${index}].result`,
 
                 {
-                  required: 'Please select result ',
+                  required: 'Please select result',
                 }
               )}
               options={[
@@ -543,7 +543,7 @@ const EditQualificationDetails = ({
                   : false
               }
               {...register(`qualification[${index}].qualification`, {
-                required: 'Degree is required',
+                required: 'Please select degree',
               })}
               // style={{
               //   backgroundColor:
@@ -587,7 +587,7 @@ const EditQualificationDetails = ({
               {...register(
                 `qualification[${index}].qualification`,
                 {
-                  required: 'Degree is required',
+                  required: 'Please select degree',
                 },
 
                 {
@@ -626,7 +626,9 @@ const EditQualificationDetails = ({
               defaultValue={qualification?.country}
               required={true}
               error={errors?.qualification?.[index]?.country?.message}
-              {...register(`qualification[${index}].country`, { required: 'Country is required' })}
+              {...register(`qualification[${index}].country`, {
+                required: 'Please select country',
+              })}
               // style={{
               //   backgroundColor:
               //     work_flow_status_id === 3 && getQueryRaised('Country Name')
@@ -782,7 +784,7 @@ const EditQualificationDetails = ({
               {...register(
                 `qualification[${index}].college`,
                 getValues().qualification[index].college === '' && {
-                  required: 'Please select college',
+                  required: 'Please select college name',
                 }
               )}
               options={createSelectFieldData(colleges)}
@@ -1009,7 +1011,7 @@ const EditQualificationDetails = ({
                 `qualification[${index}].Speciality`,
                 showBroadSpeciality &&
                   getValues().qualification[index].Speciality?.length <= 0 && {
-                    required: 'Specialty is required',
+                    required: 'Please select speciality',
                   },
                 {
                   onChange: (e) => {
