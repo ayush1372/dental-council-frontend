@@ -17,7 +17,6 @@ import { userActionId, workSheetTheme } from '../../../src/helpers/functions/com
 import { verboseLog } from '../../config/debug';
 
 const ExportFiles = ({ exportData, flag }) => {
-  
   const [csvData, setCsvData] = useState([]);
   const [docType, setDocType] = useState();
   const [columns, setColumns] = useState([]);
@@ -168,11 +167,11 @@ const ExportFiles = ({ exportData, flag }) => {
       <Tooltip title={'Export'}>
         <IconButton
           disabled={
-          exportData?.length === 0 || 
-          exportData?.data?.dashboard_tolist?.length === 0 || 
-          exportData?.data?.health_professional_details?.length === 0 ||
-          exportData?.data?.college_details?.length === 0 ||
-          exportData?.health_professional_applications?.length === 0
+            exportData?.length === 0 ||
+            exportData?.data?.dashboard_tolist?.length === 0 ||
+            exportData?.data?.health_professional_details?.length === 0 ||
+            exportData?.data?.college_details?.length === 0 ||
+            exportData?.health_professional_applications?.length === 0
           }
           data-testid="export_Button"
           aria-label="fontSize-options"
@@ -192,7 +191,14 @@ const ExportFiles = ({ exportData, flag }) => {
             sx={{
               width: 40,
               height: 40,
-              color: exportData.data.dashboard_tolist.length === 0? '' : 'blue',
+              color:
+                exportData?.length === 0 ||
+                exportData?.data?.dashboard_tolist?.length === 0 ||
+                exportData?.data?.health_professional_details?.length === 0 ||
+                exportData?.data?.college_details?.length === 0 ||
+                exportData?.health_professional_applications?.length === 0
+                  ? ''
+                  : 'blue',
             }}
           />
         </IconButton>

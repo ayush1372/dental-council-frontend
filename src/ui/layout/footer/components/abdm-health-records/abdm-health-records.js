@@ -15,13 +15,13 @@ export const AbdmHealthRecords = () => {
       <Grid container spacing={1} justifyContent="flex-start">
         <Grid item xs="6">
           <img width={'120px'} src={ABHASCANPLAYSTORE} alt="Mobile app scan for playstore" />
-          <Link href='https://play.google.com/store/apps/details?id=in.ndhm.phr'>
+          <Link href="https://play.google.com/store/apps/details?id=in.ndhm.phr">
             <img width={'120px'} src={PLAYSTORE} alt="Playstore link" />
           </Link>
         </Grid>
         <Grid item xs="6">
           <img width={'120px'} src={ABHASCANAPPSTORE} alt="Mobile app scan for playstore" />
-          <Link href='https://apps.apple.com/in/app/abha-abdm/id1630917266'>
+          <Link href="https://apps.apple.com/in/app/abha-abdm/id1630917266">
             <img width={'120px'} src={APPSTORE} alt="Playstore link" />
           </Link>
         </Grid>

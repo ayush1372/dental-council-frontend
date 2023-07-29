@@ -11,11 +11,23 @@ import { monthsData } from '../../constants/common-data';
 import {
   trackApplicationLabel,
   trackApplicationStatusColor,
-  userActionId,
   userGroupTypeId,
 } from '../../helpers/functions/common-functions';
 import { Chip } from '../../ui/core';
 export default function VerticalLinearStepper() {
+  const userTrackActionId = (actionType) => {
+    const actionTypeObj = {
+      1: 'Submitted',
+      2: 'Forwarded',
+      3: 'Query Raised',
+      4: 'Approve',
+      5: 'Rejected',
+      6: 'Temporarily suspended',
+      7: 'Permanently Suspended',
+    };
+    return actionTypeObj[actionType];
+  };
+
   const ApplicationStatus = useSelector(
     (state) => state?.common?.doctorTrackApplicationTableData?.data?.data
   );
@@ -84,7 +96,7 @@ export default function VerticalLinearStepper() {
                   sx={{
                     width: '20px',
                     height: '20px',
-                    color: trackApplicationStatusColor(userActionId(label?.action_id)),
+                    color: trackApplicationStatusColor(userTrackActionId(label?.action_id)),
                   }}
                 />
               ) : (
@@ -110,7 +122,7 @@ export default function VerticalLinearStepper() {
                   height="30px"
                   src={RejectedIcon}
                   alt="RejectedIcon"
-                  color={trackApplicationStatusColor(userActionId(label?.action_id))}
+                  color={trackApplicationStatusColor(userTrackActionId(label?.action_id))}
                 />
               )}
               {label?.action_id === 3 && (
@@ -119,18 +131,18 @@ export default function VerticalLinearStepper() {
                   height="25px"
                   src={QueryRaiseIcon}
                   alt="QueryRaiseIcon"
-                  color={trackApplicationStatusColor(userActionId(label?.action_id))}
+                  color={trackApplicationStatusColor(userTrackActionId(label?.action_id))}
                 />
               )}
 
               <Typography component="div" fontWeight="600" pl={1}>
-                {userActionId(label?.action_id) === 'Approve'
-                  ? `Application ${
+                {userTrackActionId(label?.action_id) === 'Approve'
+                  ? `Applications ${
                       label?.action_id === 4
                         ? label?.group_id === 3
-                          ? userActionId(label?.action_id) + 'd'
+                          ? userTrackActionId(label?.action_id) + 'd'
                           : 'Verified'
-                        : userActionId(label?.action_id) + 'd'
+                        : userTrackActionId(label?.action_id) + 'd'
                     } by ${userGroupTypeId(label?.group_id)}`
                   : (ApplicationStatus?.application_type === 3 ||
                       ApplicationStatus?.application_type === 4 ||
@@ -140,21 +152,21 @@ export default function VerticalLinearStepper() {
                       label?.workflow_status_id === 6) &&
                     label?.action_id === 1
                   ? `Application Submitted and Auto Approved`
-                  : `Application ${userActionId(label?.action_id)} by ${userGroupTypeId(
+                  : `Application ${userTrackActionId(label?.action_id)} by ${userGroupTypeId(
                       label?.group_id
                     )}`}
               </Typography>
               <Chip
-                label={trackApplicationLabel(userActionId(label?.action_id))}
+                label={trackApplicationLabel(userTrackActionId(label?.action_id))}
                 type={
-                  userActionId(label?.action_id) === 'Submitted' ||
-                  userActionId(label?.action_id) === 'Forwarded' ||
-                  userActionId(label?.action_id) === 'Approve' ||
-                  userActionId(label?.action_id) === 'Temporary suspension'
+                  userTrackActionId(label?.action_id) === 'Submitted' ||
+                  userTrackActionId(label?.action_id) === 'Forwarded' ||
+                  userTrackActionId(label?.action_id) === 'Approve' ||
+                  userTrackActionId(label?.action_id) === 'Temporary suspension'
                     ? 'approved'
-                    : userActionId(label?.action_id) === 'Rejected'
+                    : userTrackActionId(label?.action_id) === 'Rejected'
                     ? 'reject'
-                    : userActionId(label?.action_id) === 'Query Raised'
+                    : userTrackActionId(label?.action_id) === 'Query Raised'
                     ? 'queryRaised'
                     : null
                 }
@@ -189,19 +201,19 @@ export default function VerticalLinearStepper() {
               pb={1}
             >
               <Typography component="div" variant="body1" fontWeight="500">
-                {userActionId(label?.action_id) === 'Forwarded' &&
+                {userTrackActionId(label?.action_id) === 'Forwarded' &&
                 userGroupTypeId(label?.group_id) === 'SMC'
                   ? 'SMC reviewed the application and forwarded to college for further verification'
-                  : userActionId(label?.action_id) === 'Approve' &&
+                  : userTrackActionId(label?.action_id) === 'Approve' &&
                     userGroupTypeId(label?.group_id) === 'College'
                   ? 'College reviewed and verified the application. Application now has been sent to SMC for further verification.'
-                  : userActionId(label?.action_id) === 'Rejected' &&
+                  : userTrackActionId(label?.action_id) === 'Rejected' &&
                     userGroupTypeId(label?.group_id) === 'College'
                   ? 'Your application has been rejected by college for following reason'
-                  : userActionId(label?.action_id) === 'Approve' &&
+                  : userTrackActionId(label?.action_id) === 'Approve' &&
                     userGroupTypeId(label?.group_id) === 'SMC'
                   ? 'SMC reviewed and verified the application. Application now has been sent to NMC for further verification.'
-                  : userActionId(label?.action_id) === 'Approve' &&
+                  : userTrackActionId(label?.action_id) === 'Approve' &&
                     userGroupTypeId(label?.group_id) === 'NMC'
                   ? 'NMC reviewed and approved the application.'
                   : ''}

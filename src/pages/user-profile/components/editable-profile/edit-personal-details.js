@@ -119,6 +119,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
     register,
     setValue,
     watch,
+    clearErrors,
   } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -311,6 +312,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
       setValue('Locality', personalDetails?.communication_address?.locality);
       setValue('PostalCode', personalDetails?.communication_address?.pincode);
     }
+    clearErrors('House', '');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSameAddress]);
 
@@ -920,33 +922,25 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                       ? getQueryRaised('House')
                       : false
                   }
-                  required={isSameAddress ? false : true}
-                  // sx={{
-                  //   input: {
-                  //     // backgroundColor: isSameAddress
-                  //     //   ? 'grey2.main'
-                  //     //   : work_flow_status_id === 3 && getQueryRaised('House')
-                  //     //   ? 'grey2.main'
-                  //     //   : '',
-                  //   },
-                  // }}
+                  required={!isSameAddress ? true : false}
                   defaultValue={
                     isSameAddress ? personalDetails?.kyc_address?.house : getValues()?.House
                   }
-                  // value={getValues()?.House}
                   {...register(
                     'House',
-                    isSameAddress
-                      ? ''
-                      : {
+                    !isSameAddress
+                      ? {
                           required: 'Please enter house',
                           maxLength: {
                             value: 300,
                             message: 'Length should be less than 300.',
                           },
                         }
+                      : {
+                          required: false,
+                        }
                   )}
-                  error={errors.House?.message}
+                  error={!isSameAddress ? errors?.House?.message : ''}
                 />
               </Grid>
               <Grid item xs={12} md={4}>
