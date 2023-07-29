@@ -315,7 +315,13 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
             )}
           </Grid>
         </Grid>
-        <Grid item xs={12} md="auto" mt={userActiveTab === 'Activate Licence' ? 2 : 0}>
+        <Grid
+          item
+          xs={1}
+          justifyContent={'flex-end'}
+          md="auto"
+          mt={userActiveTab === 'Activate Licence' ? 2 : 0}
+        >
           <ExportFiles exportData={exportData} flag={flag} />
         </Grid>
       </Grid>

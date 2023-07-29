@@ -92,11 +92,13 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
   const {
     formState: { errors },
-    getValues,
-    handleSubmit,
     register,
     setValue,
+    setError,
+    getValues,
     unregister,
+    clearErrors,
+    handleSubmit,
     control,
     watch,
   } = useForm({
@@ -182,6 +184,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     const isInternational = qualification?.[0]?.qualificationfrom === 'International';
     let updatedObj = [];
     let fmgeObj = {};
+    let countryData = { id: 356, name: 'India', nationality: 'Indian' };
 
     if (qualification?.length > 0) {
       updatedObj = qualification?.map((q) => ({
@@ -191,9 +194,13 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
             ? qualification_detail_response_tos[0]?.id
             : '',
         country: isInternational
-          ? countriesList.find((x) => x.id === q?.country)
-          : countriesList.find((x) => x.id === q?.country?.id),
-        course: coursesList.data?.find((x) => x.id === q?.qualification),
+          ? countriesList.find((item) => item.id === q?.country)
+          : countryData,
+        course: isInternational
+          ? typeof q?.qualification === 'string'
+            ? coursesList.data?.find((x) => x.name === q?.qualification)
+            : coursesList.data?.find((x) => x.id === q?.qualification)
+          : coursesList.data?.find((x) => x.id === q?.qualification),
         university: isInternational
           ? { name: q?.university }
           : universitiesList.data?.find((x) => x.id === q?.university),
@@ -303,6 +310,13 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     // });
   }, []);
 
+  useEffect(() => {
+    if (registrationFileData?.length > 0) {
+      setValue('registrationCertificate', registrationFileData);
+      clearErrors('registrationCertificate', '');
+    }
+  }, [registrationFileData]);
+
   const CloseAttachmentPopup = () => {
     setAttachmentViewProfile(false);
   };
@@ -317,7 +331,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   const handleRegistration = (event) => {
     setValue(event.target.name, event.target.value, true);
   };
-
   useEffect(() => {
     const details = registrationDetails?.qualification_detail_response_tos?.[0] || {};
     const fmgeDetails = registrationDetails?.nbe_response_to || {};
@@ -325,8 +338,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
     const isInternational = details?.qualification_from === 'International';
     // basic qualification
+
     obj.university = isInternational ? details?.university?.name : details?.university?.id;
-    obj.qualification = details?.course?.id;
+    obj.qualification = details?.course?.course_name;
     obj.college = isInternational ? details?.college?.name : details?.college?.id;
     obj.year = details?.qualification_year;
     obj.country = details?.country?.id;
@@ -646,6 +660,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               fileMessage={`PDF, PNG, JPG, JPEG file types are supported.
                Maximum size allowed is 5MB.`}
               fileData={registrationFileData}
+              clearErrors={clearErrors}
+              setError={setError}
+              name={'registrationCertificate'}
+              isError={errors.registrationCertificate?.message}
               setFileData={setRegistrationFileData}
               uploadFileLabel="Upload Registration Certificate"
               fileName={file_name + '.' + file_type}
@@ -657,6 +675,12 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                   : false
               }
               toolTipData={getQueryRaisedComment('Upload the registration certificate')}
+              {...register(
+                'registrationCertificate',
+                registrationFileData?.length === 0 && {
+                  required: 'Please upload the registration certificate.',
+                }
+              )}
             />
           </Grid>
         </Grid>
@@ -696,6 +720,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 qualification_detail_response_tos?.[index]?.file_type
               }
               isVerified={qualification_detail_response_tos?.[index]?.is_verified}
+              clearErrors={clearErrors}
             />
           );
         })}
