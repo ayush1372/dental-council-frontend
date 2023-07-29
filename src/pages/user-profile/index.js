@@ -108,7 +108,14 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
   };
 
   useEffect(() => {
-    if (loginData?.data?.work_flow_status_id === 1 || personalDetails?.work_flow_status_id === 1) {
+    if (
+      loginData?.data?.work_flow_status_id === 1 ||
+      personalDetails?.work_flow_status_id === 1 ||
+      loginData?.data?.work_flow_status_id === 5 ||
+      personalDetails?.work_flow_status_id === 5 ||
+      loginData?.data?.work_flow_status_id === 6 ||
+      personalDetails?.work_flow_status_id === 6
+    ) {
       setIsApplicationPending(false);
     }
   }, [loginData?.data?.work_flow_status_id, personalDetails?.work_flow_status_id]);
@@ -202,7 +209,14 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
     fetchDoctorUserPersonalDetails();
     fetchDoctorUserRegistrationDetails();
     fetchDoctorUserWorkDetails();
-    if (loginData?.data?.work_flow_status_id === 1 || personalDetails?.work_flow_status_id === 1) {
+    if (
+      loginData?.data?.work_flow_status_id === 1 ||
+      personalDetails?.work_flow_status_id === 1 ||
+      loginData?.data?.work_flow_status_id === 5 ||
+      personalDetails?.work_flow_status_id === 5 ||
+      loginData?.data?.work_flow_status_id === 6 ||
+      personalDetails?.work_flow_status_id === 6
+    ) {
       setIsApplicationPending(false);
     }
     if (loginData?.data?.hp_profile_status_id === 7 || loginData?.data?.work_flow_status_id === 3) {
