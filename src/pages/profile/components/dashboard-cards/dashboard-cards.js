@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { makeStyles } from '@material-ui/core';
-import { Box, Container, Grid, Paper, Typography } from '@mui/material';
+import { Box, Grid, Paper, Typography } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
 import { useTheme } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
@@ -409,7 +409,7 @@ export default function Dashboard() {
         />
       ) : showViewProfile ? (
         <Box>
-          <Container sx={{ marginTop: 2 }}>
+          <Grid p={3}>
             <ViewProfile />
             <UserProfile
               setShowDashboard={setShowDashboard}
@@ -418,7 +418,7 @@ export default function Dashboard() {
               showViewProfile={showViewProfile}
               selectedRowData={selectedRowData}
             />
-          </Container>
+          </Grid>
         </Box>
       ) : (
         ''

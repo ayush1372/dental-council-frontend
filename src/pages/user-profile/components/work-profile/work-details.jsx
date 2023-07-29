@@ -95,7 +95,7 @@ const WorkDetails = ({
       fetchDistricts(declaredFacilityData[0]?.address?.state, true);
       let facilityDetailsDeclared = {
         facility_id: declaredFacilityData[0]?.id,
-        organization_type: getValues().organizationType,
+        organization_type: getValues().organizationType || declaredFacilityData[0]?.facilityType,
         work_organization: declaredFacilityData[0]?.name,
         url: getValues().telecommunicationURL,
         address: {
@@ -566,10 +566,11 @@ const WorkDetails = ({
                     })}
                   />
                 </Box>
-                <Box ml={1}>
+                <Box ml={2}>
                   <Button
                     variant="contained"
                     color="secondary"
+                    sx={{ paddingTop: '15px', paddingBottom: '15px' }}
                     onClick={() => {
                       getValues()?.facilityId?.length > 0 && searchFacilitiesHandler();
                     }}
@@ -579,7 +580,7 @@ const WorkDetails = ({
                 </Box>
               </Grid>
               {showTable && (
-                <Grid item xs={12} padding="10px 0 !important">
+                <Grid item xs={12}>
                   <WorkDetailsTable
                     FacilityData={facilityResponseData}
                     register={register}
@@ -651,6 +652,7 @@ const WorkDetails = ({
                   <Button
                     variant="contained"
                     color="secondary"
+                    sx={{ paddingTop: '15px', paddingBottom: '15px' }}
                     onClick={() => {
                       typeof getValues()?.stateLGDCode === 'number' &&
                         typeof getValues()?.districtLGDCode === 'number' &&
@@ -1038,40 +1040,18 @@ const WorkDetails = ({
           display="flex"
           justifyContent="space-between"
           alignItems="center"
-          mt={1}
-          ml={2}
+          my={3}
+          ml={3}
         >
-          <Grid item xs={12} md={8} lg={6} mb={1}>
-            <Button
-              onClick={handleSubmit(onSubmit)}
-              variant="contained"
-              color="secondary"
-              sx={{
-                margin: {
-                  xs: '5px 0',
-                  md: '0',
-                },
-                width: {
-                  xs: '100%',
-                  md: 'fit-content',
-                  height: '52px',
-                },
-              }}
-            >
+          <Grid item xs={12}>
+            <Button onClick={handleSubmit(onSubmit)} variant="contained" color="secondary">
               Submit
             </Button>
             <Button
               color="grey"
               variant="contained"
               sx={{
-                margin: {
-                  xs: '5px 0',
-                  md: '0 0 0 5px',
-                },
-                width: {
-                  xs: '100%',
-                  md: 'fit-content',
-                },
+                marginLeft: '16px',
               }}
               onClick={(e) => {
                 e.preventDefault();

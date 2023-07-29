@@ -9,11 +9,10 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
   const logInDoctorStatus = useSelector(
     (state) => state?.loginReducer?.loginData?.data?.blacklisted
   );
-  // const doctorEsignStatus = useSelector(
-  //   (state) => state?.loginReducer?.loginData?.data?.esign_status
-  // );
+  const doctorEsignStatus = useSelector(
+    (state) => state?.loginReducer?.loginData?.data?.esign_status
+  );
   const { data } = useSelector((state) => state?.loginReducer?.loginData);
-
   return (
     <List sx={{ p: 0 }}>
       {DrawerOptions?.map((item, index) => (
@@ -27,6 +26,8 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
             item.tabName === 'work-details' &&
             index === 4
               ? 'You will be able to add work details after Profile Verification'
+              : !open
+              ? `${item?.name} `
               : ''
           }
           key={`profileOption_${index}`}
@@ -51,13 +52,12 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
               disabled={
                 loggedInUserType === 'Doctor' &&
                 (!personalDetails?.nmr_id ||
-                  // doctorEsignStatus === 3 ||
-                  // doctorEsignStatus === 2 ||
-                  // personalDetails?.esign_status === 2 ||
-                  // personalDetails?.esign_status === 3 ||
-                  (logInDoctorStatus &&
-                    (personalDetails?.hp_profile_status_id === 5 ||
-                      personalDetails?.hp_profile_status_id === 6))) &&
+                  doctorEsignStatus === 3 ||
+                  doctorEsignStatus === 2 ||
+                  personalDetails?.esign_status === 2 ||
+                  personalDetails?.esign_status === 3 ||
+                  personalDetails?.hp_profile_status_id === 5 ||
+                  personalDetails?.hp_profile_status_id === 6) &&
                 (item.tabName === 'voluntary-suspend-license' ||
                   item.tabName === 'additional-qualifications' ||
                   item.tabName === 'work-details')
@@ -90,7 +90,7 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
                       : theme.palette.grey1.main,
                 }}
               >
-                {!open ? item.icon : null}
+                {!open ? item.icon && <Tooltip>{item.icon}</Tooltip> : ''}
               </ListItemIcon>
               <ListItemText
                 primary={item.name}

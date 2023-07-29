@@ -570,11 +570,12 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 *
               </Typography>
             </Typography>
+
             <RadioGroup
               onChange={handleRegistration}
               name={'registration'}
               size="small"
-              defaultValue={getValues().registration}
+              defaultValue={is_renewable !== undefined ? is_renewable : '0'}
               items={[
                 {
                   value: '0',
@@ -585,9 +586,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                   label: 'Renewable',
                 },
               ]}
-              required={true}
-              error={errors.registration?.message}
-              {...register('registration', { required: 'Please select registration type' })}
+              {...register('registration', {})}
               disabled={work_flow_status_id === 3 ? getQueryRaised('Registration') : false}
             />
           </Grid>

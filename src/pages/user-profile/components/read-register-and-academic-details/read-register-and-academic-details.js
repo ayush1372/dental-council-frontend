@@ -285,6 +285,11 @@ const ReadRegisterAndAcademicDetails = ({
                                   loggedInUserType === 'College' ||
                                   loggedInUserType === 'NBE'
                                     ? 'Verify'
+                                    : selectedAcademicStatus ===
+                                        'Temporary Suspension Requests Received' ||
+                                      selectedAcademicStatus ===
+                                        'Permanent Suspension Requests Received'
+                                    ? 'Suspend'
                                     : 'Approve'}
                                 </Button>
                               )}

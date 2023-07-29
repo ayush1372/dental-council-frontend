@@ -134,7 +134,6 @@ const WorkProfile = () => {
 
             {(workProfileDetails?.work_details?.is_user_currently_working === 1 ||
               workProfileDetails?.work_details?.is_user_currently_working === '1') && (
-              // eslint-disable-next-line react/jsx-indent
               <Grid item xs={12} padding="10px 0 !important" ml={1}>
                 <Typography p={1} component="div" color="error.main" variant="h3">
                   Currently not working - {'  '} {workProfileDetails?.work_details?.reason}

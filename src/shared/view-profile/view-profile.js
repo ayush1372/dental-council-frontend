@@ -48,8 +48,8 @@ export function ViewProfile(props) {
             item
             xs={12}
             sm={6}
-            md={3}
-            xl={2}
+            lg={3}
+            xl={3}
             px={2}
             mb={{ xs: 1, lg: 0 }}
           >
@@ -66,7 +66,7 @@ export function ViewProfile(props) {
             item
             xs={12}
             sm={6}
-            md={3}
+            lg={2}
             xl={2}
             px={2}
             mb={{ xs: 1, lg: 0 }}
@@ -84,8 +84,10 @@ export function ViewProfile(props) {
             xs={12}
             sm={6}
             md={3}
-            xl={2}
+            lg={3}
+            xl={3}
             px={2}
+            mb={{ xs: 1, lg: 0 }}
           >
             <Typography variant="body3" color="grey.label">
               Mobile Number
@@ -110,7 +112,7 @@ export function ViewProfile(props) {
               </Typography>
             )}
           </Grid>
-          <Grid item xs={12} sm={6} md={3} pl={2}>
+          <Grid item xs={12} sm={6} md={3} lg={4} xl={4} px={2} mb={{ xs: 1, lg: 0 }}>
             <Typography variant="body3" color="grey.label">
               Email
             </Typography>

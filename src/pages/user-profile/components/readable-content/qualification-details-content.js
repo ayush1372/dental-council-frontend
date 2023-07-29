@@ -294,12 +294,12 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="grey.label">
                 Month & Year of Degree Awarded
+                {getQueryRaised('Month & Year of Degree Awarded') !== undefined && (
+                  <Tooltip title={getQueryRaised('Month & Year of Degree Awarded')}>
+                    <ReportIcon color="secondary" ml={2} />
+                  </Tooltip>
+                )}
               </Typography>
-              {getQueryRaised('Month & Year of Degreee Awarded') !== undefined && (
-                <Tooltip title={getQueryRaised('Month & Year of Degree Awarded')}>
-                  <ReportIcon color="secondary" ml={2} />
-                </Tooltip>
-              )}
               <Grid display="flex" alignItems="center">
                 <Typography variant="subtitle2" color="textPrimary.main">
                   {element?.qualification_month ? element?.qualification_month : ''},{' '}

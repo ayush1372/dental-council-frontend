@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { Box, Dialog, Grid, Link, Typography, useTheme } from '@mui/material';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import { Box, Dialog, Grid, Link, Tooltip, Typography, useTheme } from '@mui/material';
 import InputBase from '@mui/material/InputBase';
 import Paper from '@mui/material/Paper';
 import { useForm } from 'react-hook-form';
@@ -174,7 +175,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
           xs={12}
           sm={6}
           lg={3}
-          xl={2}
+          xl={3}
           px={2}
           mb={{ xs: 1, lg: 0 }}
         >
@@ -185,25 +186,35 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
             {registration_number ? registration_number : ''}
           </Typography>
         </Grid>
-        {nmrIdData && (
-          <Grid
-            borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
-            item
-            xs={12}
-            sm={6}
-            lg={3}
-            xl={2}
-            px={2}
-            mb={{ xs: 1, lg: 0 }}
-          >
+
+        <Grid
+          borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
+          item
+          xs={12}
+          sm={6}
+          lg={2}
+          xl={2}
+          px={2}
+          mb={{ xs: 1, lg: 0 }}
+        >
+          <Box>
             <Typography variant="body3" color="grey.label">
               NMR ID
             </Typography>
-            <Typography variant="subtitle2" color="textPrimary.main">
-              {nmrIdData ? nmrIdData : ''}
-            </Typography>{' '}
-          </Grid>
-        )}
+            {!nmrIdData ? (
+              <Tooltip
+                title={'NMR ID will be displayed here once your application is approved by NMC'}
+              >
+                <InfoOutlinedIcon color="primary" sx={{ width: '14px' }} ml={2} />
+              </Tooltip>
+            ) : (
+              ''
+            )}
+          </Box>
+          <Typography variant="subtitle2" color="textPrimary.main">
+            {nmrIdData ? nmrIdData : '-'}
+          </Typography>{' '}
+        </Grid>
 
         {/* <Grid
           borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
@@ -256,14 +267,15 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
             <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
           </Typography>
         </Grid> */}
+
         <Grid
           borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
           item
           xs={12}
           sm={6}
-          lg={4}
-          pl={2}
-          pr={2}
+          lg={3}
+          xl={3}
+          px={2}
           mb={{ xs: 1, lg: 0 }}
         >
           <Typography variant="body3" color="grey.label">
@@ -338,7 +350,8 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
             )}
           </Box>
         </Grid>
-        <Grid item xs={12} sm={6} lg={4} mb={{ xs: 1, lg: 0 }} pl={2}>
+
+        <Grid item xs={12} sm={6} lg={2} xl={4} px={2} mb={{ xs: 1, lg: 0 }}>
           <Typography component="div" variant="body3" color="grey.label">
             Email
             <Typography component="span" color="error.main">
