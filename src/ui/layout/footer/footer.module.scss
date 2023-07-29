@@ -3,7 +3,7 @@
 .footerWrapper {
   background-color: map-get(v.$palette, 'primary');
   color: map-get(v.$palette, 'white');
-  padding: 48px 0;
+  padding: 48px 0 24px;
   // margin-top: 30px;
 }
 

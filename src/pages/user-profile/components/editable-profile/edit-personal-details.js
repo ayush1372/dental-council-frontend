@@ -119,6 +119,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
     register,
     setValue,
     watch,
+    clearErrors,
   } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -300,6 +301,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
       setValue('Landmark', personalDetails?.kyc_address?.landmark);
       setValue('Locality', personalDetails?.kyc_address?.locality);
       setValue('PostalCode', personalDetails?.kyc_address?.pincode);
+      clearErrors('House', '');
     } else {
       setValue('State', personalDetails?.communication_address?.state?.id);
       setValue('District', personalDetails?.communication_address?.district?.iso_code);
@@ -920,7 +922,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                       ? getQueryRaised('House')
                       : false
                   }
-                  required={isSameAddress ? false : true}
+                  required={!isSameAddress ? true : false}
                   // sx={{
                   //   input: {
                   //     // backgroundColor: isSameAddress
@@ -936,17 +938,17 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                   // value={getValues()?.House}
                   {...register(
                     'House',
-                    isSameAddress
-                      ? ''
-                      : getValues()?.House?.length <= 0 && {
+                    isSameAddress === false
+                      ? {
                           required: 'Please enter house',
                           maxLength: {
                             value: 300,
                             message: 'Length should be less than 300.',
                           },
                         }
+                      : ''
                   )}
-                  error={errors.House?.message}
+                  error={!isSameAddress ? errors.House?.message : ''}
                 />
               </Grid>
               <Grid item xs={12} md={4}>

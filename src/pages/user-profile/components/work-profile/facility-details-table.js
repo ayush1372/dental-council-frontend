@@ -234,7 +234,7 @@ function FacilityDetailsTable({ declaredFacilityData }) {
           open={successDeLinkModalPopup}
           workDetails={true}
           setOpen={() => setSuccessDeLinkModalPopup(false)}
-          text={'Your Work-Details has been De-Linked successfully.'}
+          text={'Work-details has been de-linked'}
         />
       )}
     </>
