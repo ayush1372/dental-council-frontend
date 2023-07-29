@@ -169,6 +169,13 @@ const EditQualificationDetails = ({
     let degreeName = coursesList.data?.find((x) => x.name === courseName);
     return degreeName?.id;
   };
+  useEffect(() => {
+    if (qualificationFilesData[`qualification.${index}.files`]?.length > 0) {
+      clearErrors('qualificationCertificate', '');
+      setValue('qualificationCertificate', qualificationFilesData[`qualification.${index}.files`]);
+    }
+  }, [qualificationFilesData[`qualification.${index}.files`]]);
+
   return (
     <>
       {showDeleteIcon && (
@@ -1063,9 +1070,12 @@ const EditQualificationDetails = ({
                 ? true
                 : false
             }
-            {...register('qualificationCertificate', {
-              required: 'Please upload the  qualification degree certificate.',
-            })}
+            {...register(
+              'qualificationCertificate',
+              qualificationFilesData[`qualification.${index}.files`]?.length === 0 && {
+                required: 'Please upload the qualification degree certificate.',
+              }
+            )}
             setError={setError}
             clearErrors={clearErrors}
             name={'qualificationCertificate'}
