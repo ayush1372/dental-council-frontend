@@ -581,6 +581,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
             <DatePicker
               onChangeDate={(newDateValue) => {
                 setValue('RegistrationDate', new Date(newDateValue)?.toLocaleDateString('en-GB'));
+                clearErrors('RegistrationDate', '');
               }}
               data-testid="RegistrationDate"
               id="RegistrationDate"
@@ -589,19 +590,13 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               defaultValue={
                 getValues()?.RegistrationDate ? new Date(getValues()?.RegistrationDate) : undefined
               }
-              // error={errors?.RegistrationDate?.message}
-              // {...register('RegistrationDate', { required: 'Please select a valid date' })}
-              // backgroundColor={
-              //   getQueryRaised('Registration Date') === false
-              //     ? false
-              //     : work_flow_status_id === 3
-              //     ? '#F0F0F0'
-              //     : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-              //     ? ''
-              //     : getValues().RegistrationDate === ''
-              //     ? '#F0F0F0'
-              //     : '#F0F0F0'
-              // }
+              error={errors?.RegistrationDate?.message}
+              {...register(
+                'RegistrationDate',
+                getValues().RegistrationDate === ''
+                  ? { required: 'Please select a valid date' }
+                  : { required: false }
+              )}
               disabled={
                 work_flow_status_id === 3
                   ? getQueryRaised('Registration Date')

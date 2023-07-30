@@ -219,7 +219,12 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
     ) {
       setIsApplicationPending(false);
     }
-    if (loginData?.data?.hp_profile_status_id === 7 || loginData?.data?.work_flow_status_id === 3) {
+    if (
+      loginData?.data?.hp_profile_status_id === 7 ||
+      loginData?.data?.work_flow_status_id === 3 ||
+      personalDetails?.hp_profile_status_id === 7 ||
+      personalDetails?.work_flow_status_id === 3
+    ) {
       setIsReadMode(false);
     } else {
       setIsReadMode(true);
