@@ -676,6 +676,13 @@ const AdditionalQualifications = () => {
     // isEditForm && setEditFormValues(editData);
   }, [watchCollege]);
 
+  useEffect(() => {
+    if (qualificationFilesData?.length > 0) {
+      setValue('qualificationCertificate', qualificationFilesData);
+      clearErrors('qualificationCertificate', '');
+    }
+  }, [qualificationFilesData]);
+
   return (
     <Box p={3}>
       {isAddForm || isEditForm ? (
@@ -1090,17 +1097,6 @@ const AdditionalQualifications = () => {
             </Box>
           )}
           <UploadFile
-            // fileID={'qualification'}
-            // name={'UploadFileName'}
-            // uploadFiles="single"
-            // sizeAllowed={5}
-            // fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
-            // fileMessage={`PDF, PNG, JPG, JPEG file types are supported.
-            //      Maximum size allowed is 5MB.`}
-            // fileData={qualificationFilesData}
-            // isDigiLockcerVisible={true}
-            // uploadFileLabel="Upload Qualification Degree"
-            // setFileData={setQualificationFilesData}
             queryRaiseIcon={
               queryfields.includes(field_names.regCertificate) ||
               queryfields?.includes(field_names.qualificationDegree)
@@ -1114,7 +1110,7 @@ const AdditionalQualifications = () => {
             fileData={qualificationFilesData}
             clearErrors={clearErrors}
             setError={setError}
-            name={'registrationCertificate'}
+            name={'qualificationCertificate'}
             isError={errors.registrationCertificate?.message}
             setFileData={setQualificationFilesData}
             uploadFileLabel="Upload Registration Certificate"
@@ -1133,9 +1129,9 @@ const AdditionalQualifications = () => {
                   getQueryTooltip(field_names.qualificationDegree)
             }
             {...register(
-              'registrationCertificate',
+              'qualificationCertificate',
               (isEditForm ? !deleteUploadedFile : qualificationFilesData[0]?.file === 0) && {
-                required: 'Please upload the registration certificate.',
+                required: 'Please upload the degree certificate.',
               }
             )}
           />
@@ -1145,7 +1141,6 @@ const AdditionalQualifications = () => {
               color={'secondary'}
               sx={{ mr: 2 }}
               onClick={handleSubmit(handleOnSubmit)}
-              // onClick={handleOnSubmit}
             >
               Submit
             </Button>
