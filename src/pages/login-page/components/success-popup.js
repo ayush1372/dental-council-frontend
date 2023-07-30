@@ -90,6 +90,7 @@ export default function SuccessModal({ text, userData, resetStep }) {
               userData?.page === 'forgetUserName'
                 ? () => {
                     resetStep(0);
+                    handleClose();
                   }
                 : handleClose
             }
