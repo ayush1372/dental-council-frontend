@@ -129,6 +129,6 @@ export const palette = (mode) => {
       4: '#FF5630',
       5: '#FF5630',
       6: '#FF5630',
-    }
+    },
   };
 };
