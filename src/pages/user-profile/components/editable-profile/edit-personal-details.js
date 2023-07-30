@@ -918,7 +918,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                     'House',
                     !isSameAddress
                       ? {
-                          required: 'Please enter house',
+                          required: 'House is required',
                           maxLength: {
                             value: 300,
                             message: 'Length should be less than 300.',
