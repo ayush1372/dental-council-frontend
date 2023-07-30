@@ -220,10 +220,9 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
       setIsApplicationPending(false);
     }
     if (
-      loginData?.data?.hp_profile_status_id === 7 ||
-      loginData?.data?.work_flow_status_id === 3 ||
-      personalDetails?.hp_profile_status_id === 7 ||
-      personalDetails?.work_flow_status_id === 3
+      (loginData?.data?.hp_profile_status_id === 7 &&
+        personalDetails?.hp_profile_status_id === 7) ||
+      (loginData?.data?.work_flow_status_id === 3 && personalDetails?.hp_profile_status_id === 7)
     ) {
       setIsReadMode(false);
     } else {
@@ -246,6 +245,18 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
       setIsApplicationPending(true);
     }
   }, []);
+
+  useEffect(() => {
+    if (
+      (loginData?.data?.hp_profile_status_id === 7 &&
+        (personalDetails?.isLoading === true || personalDetails?.hp_profile_status_id === 7)) ||
+      (loginData?.data?.work_flow_status_id === 3 && personalDetails?.hp_profile_status_id === 7)
+    ) {
+      setIsReadMode(false);
+    } else {
+      setIsReadMode(true);
+    }
+  }, [personalDetails?.hp_profile_status_id]);
 
   useEffect(() => {
     fetchDoctorUserPersonalDetails();
@@ -351,12 +362,6 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
           })
           .catch(() => {
             dispatch(getEsignDetails([]));
-            // successToast(
-            //   'ERROR: ' + error.data.response.data.error,
-            //   'auth-error',
-            //   'error',
-            //   'top-center'
-            // );
           });
       })
       .catch(() => {
@@ -364,24 +369,29 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
       });
   }
 
-  //Helper Function to capture the e-sign status from personal API call within 2 mins with interval of 5 times.
+  //Helper Function to capture the e-sign status from personal API call within 3.2 mins with interval of 8 times.
   const eSignStatusHandler = () => {
     let retry = 0;
     setESignLoader(true);
     let interval = setInterval(() => {
       retry = retry + 1;
 
-      if (retry === 5) {
+      if (retry === 8) {
         clearInterval(interval);
         setESignLoader(false);
         setRejectPopup(true);
       }
       dispatch(getPersonalDetailsData(personalDetails?.hp_profile_id))
         .then((response) => {
-          if (response?.data?.esign_status === 1) {
+          if (response?.data?.esign_status === 1 || response?.data?.esign_status === 2) {
             clearInterval(interval);
             setESignLoader(false);
-            dispatch(changeUserActiveTab(doctorTabs[1].tabName));
+            if (response?.data?.esign_status === 1) {
+              dispatch(changeUserActiveTab(doctorTabs[1].tabName));
+            }
+            if (response?.data?.esign_status === 2) {
+              setRejectPopup(true);
+            }
           }
         })
         .catch(() => {
@@ -473,7 +483,8 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
               </Grid>
               {doctorEsignStatus === 1 ||
               personalDetails?.esign_status === 1 ||
-              loginData?.data?.hp_profile_status_id === 7 ? (
+              (loginData?.data?.hp_profile_status_id === 7 &&
+                personalDetails?.hp_profile_status_id === 7) ? (
                 isReadMode &&
                 isApplicationPending &&
                 !logInDoctorStatus && (
@@ -629,6 +640,8 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
               handleBack={handleBack}
               resetStep={resetStep}
               setIsReadMode={setIsReadMode}
+              setESignLoader={setESignLoader}
+              setRejectPopup={setRejectPopup}
             />
           )}
         </Box>
@@ -636,8 +649,8 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
       {rejectPopup && (
         <ErrorModalPopup
           open={setRejectPopup}
-          text={`Your E-sign Process has not been completed! 
-              Please Logout and complete the E-sign to access further. `}
+          text={`We are verfying your E-sign details. 
+          Please login after sometime to check your E-sign status. `}
           handleClose={() => {
             setRejectPopup(false);
           }}

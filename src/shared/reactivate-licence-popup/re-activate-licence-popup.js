@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, Container, Grid, Modal, Typography } from '@mui/material';
@@ -10,18 +10,23 @@ import { getDateAndTimeFormat } from '../../helpers/functions/common-functions';
 import { createReActivateLicense } from '../../store/actions/common-actions';
 import { Button, DatePicker, TextField } from '../../ui/core';
 import UploadFile from '../../ui/core/fileupload/fileupload';
-// import successToast from '../../ui/core/toaster';
+
 export default function ReactivateLicencePopup(props) {
   const [open, setOpen] = useState(true);
   const [showFromDateError, setShowFromDateError] = useState(false);
   const [showReasonError, setShowReasonError] = useState(false);
   const [reActivateFileData, setReActivateFileData] = useState([]);
-  const [supportingDocumentError, setsupportingDocumentError] = useState(false);
 
   const { loginData } = useSelector((state) => state?.loginReducer);
   const dispatch = useDispatch();
 
-  const { register, getValues } = useForm({
+  const {
+    register,
+    getValues,
+    setError,
+    clearErrors,
+    formState: { errors },
+  } = useForm({
     mode: 'onChange',
     defaultValues: {
       fromDate: getDateAndTimeFormat('dateFormat'),
@@ -32,11 +37,6 @@ export default function ReactivateLicencePopup(props) {
     setOpen(false);
     props.closeReactivateLicense();
   };
-  useEffect(() => {
-    if (reActivateFileData?.length > 0 || reActivateFileData === []) {
-      setsupportingDocumentError(false);
-    }
-  }, [reActivateFileData]);
 
   function handleReactivate() {
     const { fromDate, reason } = getValues();
@@ -73,7 +73,6 @@ export default function ReactivateLicencePopup(props) {
         })
         .catch(() => {
           props?.closeReactivateLicense();
-          // successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
         });
   }
 
@@ -172,27 +171,26 @@ export default function ReactivateLicencePopup(props) {
           </Box>
           <Box>
             <UploadFile
-              fileID={'registrationFileData'}
+              fileID={'reactivationFileData'}
               uploadFiles="single"
               sizeAllowed={5}
               fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
               fileMessage={`PDF, PNG, JPG, JPEG file types are supported.
-               Maximum size allowed for the attachment is 5MB.`}
+               Maximum size allowed is 5MB.`}
               fileData={reActivateFileData}
+              clearErrors={clearErrors}
+              setError={setError}
+              name={'registrationCertificate'}
+              isError={errors.registrationCertificate?.message}
               setFileData={setReActivateFileData}
               uploadFileLabel="Upload the Supporting Document"
-              borderColor={supportingDocumentError}
+              {...register(
+                'registrationCertificate',
+                reActivateFileData?.length === 0 && {
+                  required: 'Please upload the supporting Document.',
+                }
+              )}
             />
-            {supportingDocumentError && (
-              <Typography
-                color="suspendAlert.dark"
-                component="div"
-                display="inline-flex"
-                variant="body2"
-              >
-                Please upload the supporting Document.
-              </Typography>
-            )}
           </Box>
           <Box display="flex" justifyContent="flex-end" mt={2}>
             <Button
@@ -214,12 +212,6 @@ export default function ReactivateLicencePopup(props) {
                 }
                 if (reason === undefined || reason === '') {
                   setShowReasonError(true);
-                }
-                if (
-                  reActivateFileData?.length === 0 ||
-                  reActivateFileData?.[0].file === undefined
-                ) {
-                  setsupportingDocumentError(true);
                 }
                 if (
                   reason !== undefined &&
