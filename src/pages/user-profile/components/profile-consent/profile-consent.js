@@ -14,9 +14,10 @@ import { doctorTabs, smcTabs } from '../../../../helpers/components/sidebar-draw
 import { capitalizeFirstLetter } from '../../../../helpers/functions/common-functions';
 import {
   getEsignFormDetails,
+  getPersonalDetailsData,
   getRegistrationDetailsData,
+  updateProfileConsent,
 } from '../../../../store/actions/doctor-user-profile-actions';
-import { updateProfileConsent } from '../../../../store/actions/doctor-user-profile-actions';
 import { changeUserActiveTab } from '../../../../store/reducers/common-reducers';
 import { getEsignDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
 import { Button, Checkbox } from '../../../../ui/core';
@@ -27,11 +28,14 @@ const ProfileConsent = ({
   setIsReadMode,
   resetStep,
   loggedInUserType,
+  setRejectPopup,
+  setESignLoader,
   setShowStaticFormProgress,
 }) => {
   const dispatch = useDispatch();
   const [degreeCertificate, setDegreeCertificate] = useState(false);
   const [registrationFile, setRegistrationFile] = useState(false);
+
   const doctorRegDetails = useSelector(
     (state) => state?.doctorUserProfileReducer?.registrationDetails
   );
@@ -191,6 +195,7 @@ const ProfileConsent = ({
           transaction_id: response?.data?.asp_txn_id,
           hpr_share_acknowledgement: getValues()?.HPR ? 1 : 0,
         };
+        eSignStatusHandler();
         dispatch(updateProfileConsent(payload))
           .then(() => {
             document.getElementById('formid')?.submit();
@@ -198,18 +203,10 @@ const ProfileConsent = ({
             resetStep(0);
             handleEsign();
             dispatch(getEsignDetails());
-
-            dispatch(changeUserActiveTab(doctorTabs[1].tabName));
           })
           .catch(() => {
             setConfirmationModal(false);
             dispatch(getEsignDetails([]));
-            // successToast(
-            //   'ERROR: ' + error.data.response.data.error,
-            //   'auth-error',
-            //   'error',
-            //   'top-center'
-            // );
           });
       })
       .catch(() => {
@@ -218,6 +215,37 @@ const ProfileConsent = ({
   }
   const handleEsign = () => {
     document.getElementById('formid')?.submit();
+  };
+
+  //Helper Function to capture the e-sign status from personal API call within 3.2 mins with interval of 8 times.
+  const eSignStatusHandler = () => {
+    let retry = 0;
+    setESignLoader(true);
+    let interval = setInterval(() => {
+      retry = retry + 1;
+
+      if (retry === 8) {
+        clearInterval(interval);
+        setESignLoader(false);
+        setRejectPopup(true);
+      }
+      dispatch(getPersonalDetailsData(personalDetails?.hp_profile_id))
+        .then((response) => {
+          if (response?.data?.esign_status === 1 || response?.data?.esign_status === 2) {
+            clearInterval(interval);
+            setESignLoader(false);
+            if (response?.data?.esign_status === 1) {
+              dispatch(changeUserActiveTab(doctorTabs[1].tabName));
+            }
+            if (response?.data?.esign_status === 2) {
+              setRejectPopup(true);
+            }
+          }
+        })
+        .catch(() => {
+          setESignLoader(false);
+        });
+    }, 24000);
   };
 
   useEffect(() => {}, [eSignResponse, getValues().consent, getValues()?.HPR]);

@@ -282,7 +282,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
             : loggedInUserType === 'SMC' && personalDetails?.hp_profile_id
         )
       ).then(() => {
-        if (moveToNext && qualificationFile !== undefined) handleNext();
+        if (moveToNext === true && qualificationFile !== undefined) handleNext();
         window.scrollTo({
           top: 0,
           behavior: 'smooth',
@@ -323,34 +323,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           ? personalDetails?.hp_profile_id
           : updatedPersonalDetails?.hp_profile_id
       )
-    ).then(() => {
-      // viewCertificate.qualification =
-      //   response?.data?.qualification_detail_response_tos[0]?.degree_certificate;
-      // setViewCertificate();
-      // const QualificationFile = [
-      //   {
-      //     fileName:
-      //       response?.data?.qualification_detail_response_tos[0]?.file_name +
-      //       '.' +
-      //       response?.data?.qualification_detail_response_tos[0]?.file_type,
-      //     fileBlob: response?.data?.qualification_detail_response_tos[0]?.degree_certificate,
-      //   },
-      // ];
-      // const RegistrationFile = [
-      //   {
-      //     fileName:
-      //       response?.data?.registration_detail_to?.file_name +
-      //       '.' +
-      //       response?.data?.registration_detail_to?.file_type,
-      //     fileBlob: response?.data?.registration_detail_to?.registration_certificate,
-      //   },
-      // ];
-      // setRegistrationFileData(RegistrationFile);
-      // setQualificationFilesData(QualificationFile);
-    });
-    // .catch((allFailMsg) => {
-    //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-    // });
+    );
   }, []);
 
   useEffect(() => {
