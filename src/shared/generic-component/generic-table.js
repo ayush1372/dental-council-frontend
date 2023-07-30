@@ -299,26 +299,30 @@ export default function GenericTable(props) {
                   (item.title === 'Designation' && item.flag === 'declareFacility')
                 ) {
                   return (
-                    <Tooltip
+                    <TableCell
                       key={index}
-                      title={
-                        row[item.name]?.isIcon ? row[item.name]?.iconToolTip : row[item.name]?.value
-                      }
+                      className={row.read?.value === false ? 'style-bold' : ''}
+                      sx={{
+                        whiteSpace: 'nowrap',
+                        textOverflow: 'ellipsis',
+                        maxWidth: '112px',
+                        overflow: 'hidden',
+                      }}
+                      align="left"
                     >
-                      <TableCell
+                      <Tooltip
                         key={index}
-                        className={row.read?.value === false ? 'style-bold' : ''}
-                        sx={{
-                          whiteSpace: 'nowrap',
-                          textOverflow: 'ellipsis',
-                          maxWidth: '112px',
-                          overflow: 'hidden',
-                        }}
-                        align="left"
+                        title={
+                          row[item.name]?.isIcon
+                            ? row[item.name]?.iconToolTip
+                            : row[item.name]?.tooltipText
+                            ? row[item.name]?.tooltipText
+                            : row[item.name]?.value
+                        }
                       >
                         {row[item.name]?.value}
-                      </TableCell>
-                    </Tooltip>
+                      </Tooltip>
+                    </TableCell>
                   );
                 } else if (item.title === 'Status' && userActiveTab === 'work-details') {
                   return (
@@ -348,23 +352,27 @@ export default function GenericTable(props) {
                   );
                 } else {
                   return (
-                    <Tooltip
+                    <TableCell
                       key={index}
-                      title={
-                        row[item.name]?.isIcon ? row[item.name]?.iconToolTip : row[item.name]?.value
-                      }
+                      className={row.read?.value === false ? 'style-bold' : ''}
+                      sx={{
+                        whiteSpace: 'break-spaces',
+                      }}
+                      align="left"
                     >
-                      <TableCell
+                      <Tooltip
                         key={index}
-                        className={row.read?.value === false ? 'style-bold' : ''}
-                        sx={{
-                          whiteSpace: 'break-spaces',
-                        }}
-                        align="left"
+                        title={
+                          row[item.name]?.isIcon
+                            ? row[item.name]?.iconToolTip
+                            : row[item.name]?.tooltipText
+                            ? row[item.name]?.tooltipText
+                            : row[item.name]?.value
+                        }
                       >
                         {row[item.name]?.value}
-                      </TableCell>
-                    </Tooltip>
+                      </Tooltip>
+                    </TableCell>
                   );
                 }
               })}
