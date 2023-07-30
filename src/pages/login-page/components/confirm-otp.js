@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import IconVerified from '../../../assets/images/ico-verified.svg';
 import OtpIcon from '../../../assets/images/otp-popup.png';
 import { ErrorMessages } from '../../../constants/error-messages';
-import { encryptData } from '../../../helpers/functions/common-functions';
+import { encryptData, usersType } from '../../../helpers/functions/common-functions';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import { OtpForm } from '../../../shared/otp-form/otp-component';
 import { verifyNotificationOtp } from '../../../store/actions/common-actions';
@@ -21,14 +21,14 @@ import { retrieveUserName } from '../../../store/actions/forgot-username-actions
 import { loginActiveState } from '../../../store/reducers/login-reducer';
 import { Button } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
-const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup }) => {
+const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup, loginName }) => {
   const { t } = useTranslation();
   const [isOtpValid, setIsOtpValid] = useState(false);
   const dispatch = useDispatch();
   const { sendNotificationOtpData } = useSelector((state) => state?.common);
   const [changeUserData, setChangeUserData] = useState(false);
   const { loginData } = useSelector((state) => state?.loginReducer);
-
+  const userTypeId = usersType(loginName);
   const otpResend = () => {
     successToast(ErrorMessages.otpResend, 'otp-resent', 'success', 'top-center');
   };
@@ -108,6 +108,7 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup 
             let retrieveUserNameBody = {
               transaction_id: sendNotificationOtpData.data?.transaction_id,
               contact: otpData?.contact,
+              user_type: userTypeId,
             };
             try {
               dispatch(retrieveUserName(retrieveUserNameBody)).then((response) => {

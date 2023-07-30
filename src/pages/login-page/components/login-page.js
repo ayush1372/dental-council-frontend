@@ -80,7 +80,6 @@ export function LoginPage() {
   const handleNext = () => {
     dispatch(loginActiveState({ activeIndex: activeIndex + 1 }));
   };
-
   return (
     <Box sx={{ mt: 5, mb: 5, maxWidth: '648px', margin: '40px auto' }}>
       {(activeIndex === 0 || activeIndex === undefined) &&
@@ -118,6 +117,7 @@ export function LoginPage() {
           otpData={data}
           resetStep={resetStep}
           handlePasswordSetup={handlePasswordSetup}
+          loginName={loginFormNames[loginFormname]}
         />
       )}
       {activeIndex === 3 && data?.page === 'forgetUserName' && showUserNamePopUp ? (
