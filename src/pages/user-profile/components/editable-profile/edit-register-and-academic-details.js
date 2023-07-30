@@ -263,7 +263,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           : loggedInUserType === 'SMC' && personalDetails?.hp_profile_id
       )
     ).then(() => {
-      if (moveToNext) handleNext();
+      if (moveToNext === true) handleNext();
       window.scrollTo({
         top: 0,
         behavior: 'smooth',
@@ -280,34 +280,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           ? personalDetails?.hp_profile_id
           : updatedPersonalDetails?.hp_profile_id
       )
-    ).then(() => {
-      // viewCertificate.qualification =
-      //   response?.data?.qualification_detail_response_tos[0]?.degree_certificate;
-      // setViewCertificate();
-      // const QualificationFile = [
-      //   {
-      //     fileName:
-      //       response?.data?.qualification_detail_response_tos[0]?.file_name +
-      //       '.' +
-      //       response?.data?.qualification_detail_response_tos[0]?.file_type,
-      //     fileBlob: response?.data?.qualification_detail_response_tos[0]?.degree_certificate,
-      //   },
-      // ];
-      // const RegistrationFile = [
-      //   {
-      //     fileName:
-      //       response?.data?.registration_detail_to?.file_name +
-      //       '.' +
-      //       response?.data?.registration_detail_to?.file_type,
-      //     fileBlob: response?.data?.registration_detail_to?.registration_certificate,
-      //   },
-      // ];
-      // setRegistrationFileData(RegistrationFile);
-      // setQualificationFilesData(QualificationFile);
-    });
-    // .catch((allFailMsg) => {
-    //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-    // });
+    );
   }, []);
 
   useEffect(() => {
@@ -536,6 +509,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
             <DatePicker
               onChangeDate={(newDateValue) => {
                 setValue('RegistrationDate', new Date(newDateValue)?.toLocaleDateString('en-GB'));
+                clearErrors('RegistrationDate', '');
               }}
               data-testid="RegistrationDate"
               id="RegistrationDate"
@@ -544,19 +518,13 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               defaultValue={
                 getValues()?.RegistrationDate ? new Date(getValues()?.RegistrationDate) : undefined
               }
-              // error={errors?.RegistrationDate?.message}
-              // {...register('RegistrationDate', { required: 'Please select a valid date' })}
-              // backgroundColor={
-              //   getQueryRaised('Registration Date') === false
-              //     ? false
-              //     : work_flow_status_id === 3
-              //     ? '#F0F0F0'
-              //     : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-              //     ? ''
-              //     : getValues().RegistrationDate === ''
-              //     ? '#F0F0F0'
-              //     : '#F0F0F0'
-              // }
+              error={errors?.RegistrationDate?.message}
+              {...register(
+                'RegistrationDate',
+                getValues().RegistrationDate === ''
+                  ? { required: 'Please select a valid date' }
+                  : { required: false }
+              )}
               disabled={
                 work_flow_status_id === 3
                   ? getQueryRaised('Registration Date')
