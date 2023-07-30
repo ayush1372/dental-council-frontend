@@ -316,35 +316,20 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSameAddress]);
 
-  // useEffect(() => {
-  //   if (getValues().PostalCode?.length === 6) {
-  //     dispatch(getPostalAddress(getValues().PostalCode))
-  //       .then(() => {})
-  //       .catch((allFailMsg) => {
-  //         successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-  //       });
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [getValues().PostalCode]);
-
-  const fetchUpdatedDoctorUserProfileData = (personalDetails) => {
+  const fetchUpdatedDoctorUserProfileData = (personalDetails, optionNext) => {
     dispatch(updateDoctorPersonalDetails(personalDetails, personalDetails?.hp_profile_id)).then(
       () => {
-        dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id)).then(() => {
-          handleNext();
-          window.scrollTo({
-            top: 0,
-            behavior: 'smooth',
+        if (optionNext) {
+          dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id)).then(() => {
+            handleNext();
           });
+        }
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
         });
-        // .catch((allFailMsg) => {
-        //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-        // });
       }
     );
-    // .catch((allFailMsg) => {
-    //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-    // });
   };
 
   const handleBackButton = () => {
@@ -495,11 +480,14 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
   }
   async function onHandleOptionNext() {
     await onHandleSave().then((response) => {
-      response && fetchUpdatedDoctorUserProfileData(response);
+      response && fetchUpdatedDoctorUserProfileData(response, true);
     });
-    // .catch((allFailMsg) => {
-    //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-    // });
+  }
+
+  async function onHandleOptionSave() {
+    await onHandleSave().then((response) => {
+      response && fetchUpdatedDoctorUserProfileData(response, false);
+    });
   }
 
   const handleGender = (event) => {
@@ -1485,7 +1473,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
           </Grid>
           <Grid item xs={12} md="auto" display="flex" ml="auto">
             <Button
-              onClick={handleSubmit(onHandleSave)}
+              onClick={handleSubmit(onHandleOptionSave)}
               variant="outlined"
               color="secondary"
               sx={{
