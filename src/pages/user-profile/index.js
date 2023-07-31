@@ -182,10 +182,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
           ? selectedRowData?.profileID?.value || selectedRowData?.view?.value
           : loginData?.data?.profile_id
       )
-    ).then();
-    // .catch((allFailMsg) => {
-    //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-    // });
+    );
   };
 
   const fetchDoctorUserWorkDetails = () => {
