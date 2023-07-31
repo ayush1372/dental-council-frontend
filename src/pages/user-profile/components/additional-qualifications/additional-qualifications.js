@@ -1,19 +1,17 @@
-/* eslint-disable no-console */
 import { useMemo, useState } from 'react';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
 
-import AttachFileIcon from '@mui/icons-material/AttachFile';
+// import AttachFileIcon from '@mui/icons-material/AttachFile';
+// import ReportOutlinedIcon from '@mui/icons-material/ReportOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import ReportIcon from '@mui/icons-material/Report';
-import ReportOutlinedIcon from '@mui/icons-material/ReportOutlined';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import {
   Box,
   FormControl,
   FormControlLabel,
   Grid,
-  IconButton,
   Link,
   Radio,
   RadioGroup,
@@ -30,7 +28,6 @@ import { field_names, monthsData, yearsData } from '../../../../constants/common
 import { doctorTabs } from '../../../../helpers/components/sidebar-drawer-list-item';
 import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
 import SuccessModalPopup from '../../../../shared/common-modals/success-modal-popup';
-import GenericTable from '../../../../shared/generic-component/generic-table';
 import AttachmentViewPopup from '../../../../shared/query-modal-popup/attachement-view-popup';
 import { getCollegesList, getUniversitiesList } from '../../../../store/actions/common-actions';
 import {
@@ -39,6 +36,7 @@ import {
 } from '../../../../store/actions/doctor-user-profile-actions';
 import { changeUserActiveTab } from '../../../../store/reducers/common-reducers';
 import { Button, Select, TextField, UploadFile } from '../../../../ui/core';
+import { AdditionalQualificationTable } from './additional-qualification-table';
 
 const AdditionalQualifications = () => {
   const {
@@ -59,15 +57,15 @@ const AdditionalQualifications = () => {
   const [universitiesListData, setUniversitiesListData] = useState(universitiesList?.data);
   const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
   const [qualificationFilesData, setQualificationFilesData] = useState([]);
+  const [deleteUploadedFile, setDeleteUploadedFile] = useState(false);
   const [qualificationFrom, setQualificationFrom] = useState('India');
   const [successModalPopup, setSuccessModalPopup] = useState(false);
   const [attachmentViewIndex, setAttachmentViewIndex] = useState();
-  const [collegesData, setCollegesData] = useState([]);
-  const [queryfields, setQueryFields] = useState([]);
   const [fieldComments, setFieldComments] = useState([]);
-  const [isAddForm, setIsAddForm] = useState(false);
+  const [collegesData, setCollegesData] = useState([]);
   const [isEditForm, setIsEditForm] = useState(false);
-  const [deleteUploadedFile, setDeleteUploadedFile] = useState(false);
+  const [queryfields, setQueryFields] = useState([]);
+  const [isAddForm, setIsAddForm] = useState(false);
   const [editData, setEditData] = useState({});
 
   const { qualification_detail_response_tos } = registrationDetails || {};
@@ -256,328 +254,6 @@ const AdditionalQualifications = () => {
     dispatch(changeUserActiveTab(doctorTabs[1].tabName));
   };
 
-  // Table Methods
-  function createData(
-    sr_no,
-    requestID,
-    degree_name,
-    country_name,
-    university_name,
-    state,
-    college_name,
-    month_year,
-    // broad_specialty,
-    // super_specialty,
-    attachments,
-    // isEditable
-    status
-  ) {
-    return {
-      sr_no,
-      requestID,
-      degree_name,
-      country_name,
-      university_name,
-      state,
-      college_name,
-      month_year,
-      // broad_specialty,
-      // super_specialty,
-      attachments,
-      // isEditable,
-      status,
-    };
-  }
-
-  const dataHeader = [
-    { title: 'Sr.no.', name: 'sr_no' },
-    { title: 'Request ID', name: 'requestID' },
-    { title: 'Degree', name: 'degree_name' },
-    { title: 'Country', name: 'country_name' },
-    { title: 'University', name: 'university_name' },
-    { title: 'State', name: 'state' },
-    { title: 'College', name: 'college_name' },
-    { title: 'Month & Year', name: 'month_year' },
-    // { title: 'Broad Specialty', name: 'broad_specialty' },
-    // { title: 'Super Specialty', name: 'super_specialty' },
-    { title: 'Attachments', name: 'attachments' },
-    { title: 'Status', name: 'status' },
-    // { title: 'Action', name: 'isEditable' },
-  ];
-
-  const newRowsData = registrationDetails?.qualification_detail_response_tos
-    ?.slice(1)
-    .map((data, index) => {
-      return createData(
-        {
-          type: 'sr_no',
-          value: index + 1,
-        },
-        {
-          type: 'requestId',
-          value:
-            data?.queries?.length > 0 ? (
-              <Link
-                color={'secondary.main'}
-                sx={{ textDecoration: 'none', cursor: 'pointer' }}
-                onClick={() => {
-                  console.log(data);
-                  setEditFormValues(data);
-
-                  setEditData(data);
-                  console.log(editData);
-                }}
-              >
-                {data?.request_id}
-              </Link>
-            ) : (
-              data?.request_id
-            ),
-          tooltipText: data?.request_id,
-        },
-        {
-          type: 'degree_name',
-          value:
-            data?.queries?.length > 0 ? (
-              <Box>
-                {data?.course?.course_name}
-                {data?.queries?.map((item) => {
-                  return (
-                    item?.field_name?.toUpperCase().toString() === field_names.degree && (
-                      <Typography>
-                        <ReportOutlinedIcon
-                          fontSize="inherit"
-                          sx={{ ml: 2, color: theme.palette.secondary.main }}
-                        />
-                      </Typography>
-                      // item?.common_comment
-                    )
-                  );
-                })}
-              </Box>
-            ) : (
-              data?.course?.course_name
-            ),
-          tooltipText: data?.course?.course_name,
-        },
-        {
-          type: 'country_name',
-          value:
-            data?.queries?.length > 0 ? (
-              <Box>
-                {data?.country?.name}
-                {data?.queries?.map((item) => {
-                  return (
-                    item?.field_name?.toUpperCase().toString() === field_names.country && (
-                      <Typography>
-                        <ReportOutlinedIcon
-                          fontSize="inherit"
-                          sx={{ ml: 2, color: theme.palette.secondary.main }}
-                        />
-                      </Typography>
-                      // item?.common_comment
-                    )
-                  );
-                })}
-              </Box>
-            ) : (
-              data?.country?.name
-            ),
-          tooltipText: data?.country?.name,
-
-          // (
-          //   <Box>
-          //     <Link
-          //   color={'secondary.main'}
-          //   sx={{ textDecoration: 'none', cursor: 'pointer' }}
-          //   onClick={() => {
-          //     console.log(data);
-          //     setEditFormValues(data);
-          //     setIsEditForm(true);
-          //     setEditData(setEditData);
-          //     console.log(editData);
-          //   }}
-          // >
-          //   {data?.course?.course_name}
-          // </Link>
-          //     {data?.queries?.length > 0 &&
-          //       data?.queries?.map((item) => {
-          //         return (
-          //           item?.field_name?.toUpperCase().toString() === field_names.degree && (
-          //             <Typography>
-          //               <ReportOutlinedIcon
-          //                 fontSize="inherit"
-          //                 sx={{ ml: 2, color: theme.palette.secondary.main }}
-          //               />
-          //             </Typography>
-          //             // item?.common_comment
-          //           )
-          //         );
-          //       })}
-          //   </Box>
-          // ),
-        },
-        {
-          type: 'university_name',
-          value: (
-            <Box>
-              <Typography>{data?.university?.name}</Typography>
-              {data?.queries?.length > 0 &&
-                data?.queries?.map((item) => {
-                  return (
-                    item?.field_name?.toUpperCase().toString() === field_names.university && (
-                      <Typography>
-                        <ReportOutlinedIcon
-                          fontSize="inherit"
-                          sx={{ ml: 1, color: theme.palette.secondary.main }}
-                        />
-                      </Typography>
-                      // item?.common_comment
-                    )
-                  );
-                })}
-            </Box>
-          ),
-          // (),
-        },
-        {
-          type: 'state',
-          value: (
-            <Box>
-              <Typography mr={1}>{data?.state?.name}</Typography>
-              {data?.queries?.length > 0 &&
-                data?.queries?.map((item) => {
-                  return (
-                    item?.field_name?.toUpperCase().toString() === field_names.state && (
-                      <Typography component={'span'}>
-                        {' '}
-                        <ReportOutlinedIcon
-                          fontSize="inherit"
-                          sx={{ color: theme.palette.secondary.main }}
-                        />
-                      </Typography>
-                      // item?.common_comment
-                    )
-                  );
-                })}
-            </Box>
-          ),
-        },
-
-        {
-          type: 'college_name',
-          value: (
-            <Box>
-              <Typography mr={1}>{data?.college?.name}</Typography>
-              {data?.queries?.length > 0 &&
-                data?.queries?.map((item) => {
-                  return (
-                    item?.field_name?.toUpperCase().toString() === field_names.college && (
-                      <Typography component={'span'}>
-                        {' '}
-                        <ReportOutlinedIcon
-                          fontSize="inherit"
-                          sx={{ color: theme.palette.secondary.main }}
-                        />
-                      </Typography>
-                      // item?.common_comment
-                    )
-                  );
-                })}
-            </Box>
-          ),
-        },
-        {
-          type: 'month_year',
-          value:
-            data?.queries?.length > 0 ? (
-              <Box>
-                {`${data?.qualification_month} ${data?.qualification_year} `}
-                {data?.queries?.map((item) => {
-                  return (
-                    item?.field_name?.toUpperCase().toString() === field_names.monthAwarded && (
-                      <Typography>
-                        <ReportOutlinedIcon
-                          fontSize="inherit"
-                          sx={{ ml: 2, color: theme.palette.secondary.main }}
-                        />
-                      </Typography>
-                      // item?.common_comment
-                    )
-                  );
-                })}
-              </Box>
-            ) : (
-              `${data?.qualification_month} ${data?.qualification_year} `
-            ),
-          tooltipText: `${data?.qualification_month} ${data?.qualification_year} `,
-        },
-        // {
-        //   type: 'broad_specialty',
-        //   value: '-',
-        // },
-        // {
-        //   type: 'super_specialty',
-        //   value: '-',
-        // },
-        {
-          type: 'attachments',
-          isIcon: true,
-          iconToolTip: 'View Attachment',
-          value: (
-            <IconButton>
-              <AttachFileIcon
-                fontSize="10px"
-                onClick={(e) => {
-                  e.preventDefault();
-                  setAttachmentViewIndex(index);
-                  setAttachmentViewProfile(true);
-                }}
-              />
-            </IconButton>
-          ),
-        },
-        {
-          type: 'status',
-
-          value:
-            data?.queries?.length <= 0 && data?.is_verified === 1 ? (
-              <Typography varaint={'body1'} color={'success.main'}>
-                {'Approved'}
-              </Typography>
-            ) : data?.queries?.length > 0 && data?.is_verified === 0 ? (
-              <Typography varaint={'body1'} color={'secondary.main'}>
-                {'Query Raised'}
-              </Typography>
-            ) : (
-              <Typography varaint={'body1'} color={'primary.main'}>
-                {'Pending'}
-              </Typography>
-            ),
-        }
-        // {
-        //   type: 'isEditable',
-        //   isIcon: true,
-        //   iconToolTip: 'Edit Qualification',
-        //   value: (
-        //     <IconButton>
-        //       <EditOutlinedIcon
-        //         fontSize="10px"
-        //         color={'secondary'}
-        //         onClick={() => {
-        //           console.log(data);
-        //           setEditFormValues(data);
-        //           setIsEditForm(true);
-        //           setEditData(setEditData);
-        //           console.log(editData);
-        //         }}
-        //       />
-        //     </IconButton>
-        //   ),
-        // }
-      );
-    });
-
   const setQueryFieldNames = (fields) => {
     let result = fields.map((item) => {
       verboseLog('fieldComments', item);
@@ -601,6 +277,7 @@ const AdditionalQualifications = () => {
 
     if (editData?.qualification_from.toUpperCase() === 'INDIA') {
       setQualificationFrom('India');
+
       setValue('state', getStateData(editData?.state?.id)?.id);
       setValue('collegeName', editData?.college?.id);
       setValue('university', editData?.university?.id);
@@ -619,15 +296,11 @@ const AdditionalQualifications = () => {
       setValue('int_month', editData?.qualification_month);
       setValue('int_broadSpeciality', editData?.brod_speciality?.id);
       setValue('int_superSpeciality', editData?.super_speciality);
-
-      // setQualificationFilesData(editData?.degree_certificate);
     } else {
       setQualificationFrom('India');
     }
     setIsEditForm(true);
   };
-
-  // Table Methods Ends
 
   const fetchColleges = useCallback(
     (selectedState) => {
@@ -681,7 +354,7 @@ const AdditionalQualifications = () => {
       setValue('qualificationCertificate', qualificationFilesData);
       clearErrors('qualificationCertificate', '');
     }
-  }, [qualificationFilesData]);
+  }, [clearErrors, qualificationFilesData, setValue]);
 
   return (
     <Box p={3}>
@@ -773,7 +446,6 @@ const AdditionalQualifications = () => {
                   options={
                     countriesList?.length > 0 ? createSelectFieldData(countriesList, 'id') : []
                   }
-                  // options={createSelectFieldData(coursesList.data)}
                   MenuProps={menuProps}
                 />
               )}
@@ -835,7 +507,6 @@ const AdditionalQualifications = () => {
                   }
                   queryRaiseIcon={isEditForm && queryfields.includes(field_names.university)}
                   toolTipData={isEditForm && getQueryTooltip(field_names.university)}
-                  // disabled={isEditForm && queryfields.includes(field_names.university)}
                   value={getValues()?.university}
                   defaultValue={getValues()?.university}
                   error={errors?.university?.message}
@@ -1070,7 +741,6 @@ const AdditionalQualifications = () => {
                 fontSize="10px"
                 onClick={(e) => {
                   e.preventDefault();
-                  // setAttachmentViewProfile(true);
                   setDeleteUploadedFile(true);
                 }}
                 sx={{ color: theme.palette.primary.main }}
@@ -1114,14 +784,6 @@ const AdditionalQualifications = () => {
             isError={errors.registrationCertificate?.message}
             setFileData={setQualificationFilesData}
             uploadFileLabel="Upload Registration Certificate"
-            // fileName={file_name + '.' + file_type}
-            // fileDisabled={
-            //   getQueryRaised('Upload the registration certificate') === false
-            //     ? false
-            //     : work_flow_status_id === 3
-            //     ? getQueryRaised('Upload the registration certificate')
-            //     : false
-            // }
             toolTipData={
               queryfields.includes(field_names.regCertificate)
                 ? getQueryTooltip(field_names.regCertificate)
@@ -1184,13 +846,7 @@ const AdditionalQualifications = () => {
         </>
       ) : (
         <>
-          <Box
-            mt={2}
-            display="flex"
-            width="100%"
-            justifyContent={'space-between'}
-            alignItems={'center'}
-          >
+          <Box display="flex" width="100%" justifyContent={'space-between'} alignItems={'center'}>
             <Typography variant={'h2'} color="primary.main" width={'auto'}>
               Additional Qualification Details
             </Typography>
@@ -1207,9 +863,13 @@ const AdditionalQualifications = () => {
               </Button>
             )}
           </Box>
-          <Box mt={2}>
-            <GenericTable tableHeader={dataHeader} data={newRowsData} />
-          </Box>
+          <AdditionalQualificationTable
+            rowData={registrationDetails?.qualification_detail_response_tos}
+            setEditData={setEditData}
+            setFormValues={setEditFormValues}
+            setAttachmentIndex={setAttachmentViewIndex}
+            setAttachmentFrame={setAttachmentViewProfile}
+          />
         </>
       )}
       {attachmentViewProfile && (
