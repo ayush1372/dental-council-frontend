@@ -299,30 +299,21 @@ export default function GenericTable(props) {
                   (item.title === 'Designation' && item.flag === 'declareFacility')
                 ) {
                   return (
-                    <TableCell
-                      key={index}
-                      className={row.read?.value === false ? 'style-bold' : ''}
-                      sx={{
-                        whiteSpace: 'nowrap',
-                        textOverflow: 'ellipsis',
-                        maxWidth: '112px',
-                        overflow: 'hidden',
-                      }}
-                      align="left"
-                    >
-                      <Tooltip
+                    <Tooltip key={index} title={row[item.name]?.value}>
+                      <TableCell
                         key={index}
-                        title={
-                          row[item.name]?.isIcon
-                            ? row[item.name]?.iconToolTip
-                            : row[item.name]?.tooltipText
-                            ? row[item.name]?.tooltipText
-                            : row[item.name]?.value
-                        }
+                        className={row.read?.value === false ? 'style-bold' : ''}
+                        sx={{
+                          whiteSpace: 'nowrap',
+                          textOverflow: 'ellipsis',
+                          maxWidth: '112px',
+                          overflow: 'hidden',
+                        }}
+                        align="left"
                       >
                         {row[item.name]?.value}
-                      </Tooltip>
-                    </TableCell>
+                      </TableCell>
+                    </Tooltip>
                   );
                 } else if (item.title === 'Status' && userActiveTab === 'work-details') {
                   return (
@@ -352,27 +343,18 @@ export default function GenericTable(props) {
                   );
                 } else {
                   return (
-                    <TableCell
-                      key={index}
-                      className={row.read?.value === false ? 'style-bold' : ''}
-                      sx={{
-                        whiteSpace: 'break-spaces',
-                      }}
-                      align="left"
-                    >
-                      <Tooltip
+                    <Tooltip key={index} title={row[item.name]?.value}>
+                      <TableCell
                         key={index}
-                        title={
-                          row[item.name]?.isIcon
-                            ? row[item.name]?.iconToolTip
-                            : row[item.name]?.tooltipText
-                            ? row[item.name]?.tooltipText
-                            : row[item.name]?.value
-                        }
+                        className={row.read?.value === false ? 'style-bold' : ''}
+                        sx={{
+                          whiteSpace: 'break-spaces',
+                        }}
+                        align="left"
                       >
                         {row[item.name]?.value}
-                      </Tooltip>
-                    </TableCell>
+                      </TableCell>
+                    </Tooltip>
                   );
                 }
               })}
