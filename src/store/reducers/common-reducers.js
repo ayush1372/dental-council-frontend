@@ -37,6 +37,7 @@ const initialState = {
   selectedAcademicStatus: '',
   breadcrumbsActivetab: '',
   ReactivationData: { data: [], isLoading: Boolean(true), isError: false },
+  enteredEmailMobileValues: { data: [], isLoading: Boolean(true), isError: false },
 };
 
 export const CommonActivity = createSlice({
@@ -142,6 +143,9 @@ export const CommonActivity = createSlice({
     getReactivationData: (state, action) => {
       state.ReactivationData = action.payload;
     },
+    getEnteredEmailValue: (state, action) => {
+      state.enteredEmailMobileValues = action.payload;
+    },
   },
 });
 
@@ -180,6 +184,7 @@ export const {
   setSelectedAcademicStatus,
   setBreadcrumbsActivetab,
   updateDoctorTrackApplication,
+  getEnteredEmailValue,
 } = CommonActivity.actions;
 
 export default CommonActivity.reducer;

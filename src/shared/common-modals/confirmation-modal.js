@@ -31,7 +31,13 @@ export default function ConfirmationModal({
         <Button color="grey" variant="contained" onClick={handleNo}>
           {handleNoText}
         </Button>
-        <Button color="secondary" variant="contained" ml={2} onClick={handleYes} autoFocus>
+        <Button
+          color="secondary"
+          variant="contained"
+          ml={2}
+          onClick={handleYes}
+          autoFocus
+        >
           {handleYesText}
         </Button>
       </DialogActions>

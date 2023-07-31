@@ -331,7 +331,7 @@ export function SuspendLicenseVoluntaryRetirement({
       ) : (
         <Box>
           {tabName === 'voluntary-suspend-license' && (
-            <Grid item xs={12} md={12} mb={2}>
+            <Grid item xs={12} mb={2}>
               <Typography variant="subtitle2" color="textPrimary.main">
                 {'Select Suspension'}
                 <Typography component="span" color="error.main">
@@ -572,7 +572,7 @@ export function SuspendLicenseVoluntaryRetirement({
               *
             </Typography>
           </Typography>
-          <Box ml={1}>
+          <Box>
             <Checkbox
               name="notification"
               {...register('notification', {
@@ -636,7 +636,7 @@ export function SuspendLicenseVoluntaryRetirement({
                     }}
                     label={fieldData?.filedName}
                     error={errors.notification?.message}
-                    defaultChecked={queryRaisedFor?.length !== 0 ? true : false}
+                    // defaultChecked={queryRaisedFor?.length !== 0 ? true : false}
                   />
                 );
               })}

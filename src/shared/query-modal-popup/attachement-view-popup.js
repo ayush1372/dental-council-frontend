@@ -15,12 +15,7 @@ export default function AttachmentViewPopup(props) {
       <Modal open={open} onClose={handleClose} sx={{ mt: 15 }}>
         <Container
           maxWidth="sm"
-          sx={{
-            backgroundColor: 'white.main',
-            borderRadius: '10px',
-            minHeight: '450px',
-            maxHeight: '100vh',
-          }}
+          sx={{ backgroundColor: 'white.main', borderRadius: '10px', minHeight: '450px', maxHeight:'100vh' }}
         >
           <Box py={3}>
             <Box display="flex" justifyContent="flex-end">

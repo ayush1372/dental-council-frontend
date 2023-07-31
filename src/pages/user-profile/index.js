@@ -182,10 +182,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
           ? selectedRowData?.profileID?.value || selectedRowData?.view?.value
           : loginData?.data?.profile_id
       )
-    ).then();
-    // .catch((allFailMsg) => {
-    //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-    // });
+    );
   };
 
   const fetchDoctorUserWorkDetails = () => {
@@ -376,7 +373,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
     let interval = setInterval(() => {
       retry = retry + 1;
 
-      if (retry === 8) {
+      if (retry === 10) {
         clearInterval(interval);
         setESignLoader(false);
         setRejectPopup(true);
@@ -397,7 +394,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
         .catch(() => {
           setESignLoader(false);
         });
-    }, 24000);
+    }, 30000);
   };
 
   return eSignResponse?.asp_txn_id ? (

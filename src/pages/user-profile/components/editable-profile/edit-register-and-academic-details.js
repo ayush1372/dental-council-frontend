@@ -16,6 +16,7 @@ import {
 import { getRegistrationDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
 import { Button, DatePicker, RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
+// import successToast from '../../../../ui/core/toaster';
 import EditQualificationDetails from './edit-qualification-details';
 const qualificationObjTemplate = [
   {
@@ -49,7 +50,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   );
   const { work_flow_status_id } = personalDetails || {};
   const { raisedQueryData } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
-  const [supportingDocumentError, setsupportingDocumentError] = useState([]);
 
   const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
   const { registration_detail_to, qualification_detail_response_tos } = registrationDetails || {};
@@ -68,7 +68,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   const [registrationFileData, setRegistrationFileData] = useState(
     registration_certificate ? [{ file: registration_certificate }] : []
   );
-  const [qualificationFilesData, setQualificationFilesData] = useState([]);
+  const [qualificationFilesData, setQualificationFilesData] = useState({
+    'qualification.0.files': degree_certificate ? [{ file: degree_certificate }] : [],
+  });
+
   const [viewCertificate] = useState({
     registration: registration_certificate,
     qualification: degree_certificate,
@@ -88,7 +91,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   });
 
   const {
-    formState: { errors, isSubmitting },
+    formState: { errors },
     register,
     setValue,
     setError,
@@ -123,7 +126,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
       qualification: [...qualificationObjTemplate],
     },
   });
-  const { fields, update, insert, remove } = useFieldArray({
+  const { fields, update } = useFieldArray({
     control,
     name: 'qualification',
   });
@@ -252,67 +255,21 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     formData.append('degreeCertificate', qualificationFile);
 
     formData.append('registrationCertificate', registrationFile);
-    //4
-    let setdocumenterror;
-    for (const index in qualificationFilesData) {
-      setdocumenterror = qualificationFilesData[index]?.length > 0;
-      if (!setdocumenterror) {
-        supportingDocumentError[index] = true;
-        setsupportingDocumentError({ ...supportingDocumentError });
-      } else {
-        supportingDocumentError[index] = false;
-        setsupportingDocumentError({ ...supportingDocumentError });
-      }
-    }
-    //5
-    let checkDocumentError;
-    for (const index in supportingDocumentError) {
-      checkDocumentError = supportingDocumentError[index] === true;
-      if (checkDocumentError) {
-        break;
-      }
-    }
-    //6
-    if (!checkDocumentError) {
-      dispatch(
-        updateDoctorRegistrationDetails(
-          formData,
-          loggedInUserType === 'Doctor'
-            ? updatedPersonalDetails?.hp_profile_id
-            : loggedInUserType === 'SMC' && personalDetails?.hp_profile_id
-        )
-      ).then(() => {
-        if (moveToNext === true && qualificationFile !== undefined) handleNext();
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth',
-        });
+    dispatch(
+      updateDoctorRegistrationDetails(
+        formData,
+        loggedInUserType === 'Doctor'
+          ? updatedPersonalDetails?.hp_profile_id
+          : loggedInUserType === 'SMC' && personalDetails?.hp_profile_id
+      )
+    ).then(() => {
+      if (moveToNext === true) handleNext();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
       });
-    }
+    });
   };
-  //2
-  useEffect(() => {
-    let checkDocumentError;
-    if (isSubmitting) {
-      for (const index in qualificationFilesData) {
-        checkDocumentError = supportingDocumentError[index]?.length > 0;
-        if (!checkDocumentError) {
-          supportingDocumentError[index] = true;
-          setsupportingDocumentError({ ...supportingDocumentError });
-        }
-      }
-      // for (const index in supportingDocumentError) {
-    }
-  }, [isSubmitting]);
-
-  //3
-  useEffect(() => {
-    let index = fields?.length - 1;
-    qualificationFilesData[`qualification.${[index]}.files`] = [];
-    setQualificationFilesData({ ...qualificationFilesData });
-    supportingDocumentError[`qualification.${[index]}.files`] = false;
-    setsupportingDocumentError({ ...supportingDocumentError });
-  }, [fields]);
 
   useEffect(() => {
     setValue('RegisteredWithCouncil', registeredCouncil[0]);
@@ -375,12 +332,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
     update(0, { ...obj });
   }, [registrationDetails]);
-  //1
+
   const handleQualificationFilesData = (fileName, files) => {
     qualificationFilesData[fileName] = files;
-    // supportingDocumentError[fileName] = ;
-    setQualificationFilesData(files !== [] && { ...qualificationFilesData });
-    // setsupportingDocumentError({ ...supportingDocumentError });
+    setQualificationFilesData({ ...qualificationFilesData });
   };
 
   //Helper Method to get the data of the query raised against the field
@@ -720,17 +675,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               errors={errors}
               setValue={setValue}
               getValues={getValues}
-              update={update}
               fields={fields}
-              insert={insert}
               qualification={qualification}
               watch={watch}
-              remove={remove}
               register={register}
-              supportingDocumentError={supportingDocumentError}
-              setsupportingDocumentError={(val) => {
-                setsupportingDocumentError(val);
-              }}
               unregister={unregister}
               qualificationFilesData={qualificationFilesData}
               handleQualificationFilesData={handleQualificationFilesData}
