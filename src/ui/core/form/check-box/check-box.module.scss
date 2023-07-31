@@ -5,3 +5,16 @@
   font-weight: 400;
   line-height: 1.66;
 }
+
+.helperTextMsg {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+  margin-left: -7px;
+  font-weight: 700;
+  svg {
+    height: 16px;
+    margin-right: 4px;
+  }
+}
