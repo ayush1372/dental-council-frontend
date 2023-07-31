@@ -341,29 +341,28 @@ export const updateProfileConsent = (payload) => async () => {
   });
 };
 
-export const additionalQualificationsData =
-  (formData, healthProfessionalId, isEditForm) => async () => {
-    return await new Promise((resolve, reject) => {
-      useAxiosCall({
-        method: isEditForm ? PUT : POST,
-        url: API.DoctorUserProfileData.additionalQualifications.replace(
-          '{healthProfessionalId}',
-          healthProfessionalId
-        ),
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + localStorage.getItem('accesstoken'),
-        },
-        data: formData,
+export const additionalQualificationsData = (formData, healthProfessionalId) => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.DoctorUserProfileData.additionalQualifications.replace(
+        '{healthProfessionalId}',
+        healthProfessionalId
+      ),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + localStorage.getItem('accesstoken'),
+      },
+      data: formData,
+    })
+      .then((response) => {
+        return resolve(response);
       })
-        .then((response) => {
-          return resolve(response);
-        })
-        .catch((error) => {
-          return reject(error);
-        });
-    });
-  };
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
 
 export const updateDoctorContactDetails = (body, doctor_profile_id) => async () => {
   return await new Promise((resolve, reject) => {

@@ -1,8 +1,9 @@
 import { Box, Container, Grid, Typography, useTheme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
-/* Commented for future reference */
-
+{
+  /* Commented for future reference */
+}
 // import useConfiguration from '../../../../../hooks/use-configuration';
 
 export const Copyright = () => {

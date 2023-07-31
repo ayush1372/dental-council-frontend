@@ -16,8 +16,8 @@ export const getSMCProfileDetails = (details) => [
   // Commenting the below fields from edit profile Issue ID - CS-2078
   // { label: 'Enrolment Number NDHM', value: details?.ndhm_enrollment, id: '2' },
   // { label: 'Enrolment Number', value: details?.enrolled_number, id: '5' },
-  { label: 'Phone Number', value: details?.mobile_no, id: '3' },
-  { label: 'Email Address', value: details?.email_id, id: '4' },
+  { label: 'Mobile Number', value: details?.mobile_no, id: '3' },
+  { label: 'Email', value: details?.email_id, id: '4' },
   { label: 'Council', value: details?.state_medical_council?.name, id: '6' },
 ];
 
@@ -27,14 +27,14 @@ export const getNMCProfileDetails = (details) => [
   // { label: 'Enrolment Number NDHM', value: details?.ndhm_enrollment, id: '2' },
   // { label: 'Enrolment Number', value: details?.enrolled_number, id: '3' },
   // { label: 'Council', value: details?.state_medical_council?.name, id: '4' },
-  { label: 'Phone Number', value: details?.mobile_no, id: '5' },
-  { label: 'Email Address', value: details?.email_id, id: '6' },
+  { label: 'Mobile Number', value: details?.mobile_no, id: '5' },
+  { label: 'Email', value: details?.email_id, id: '6' },
 ];
 
 export const getNBEProfileDetails = (details) => [
   { label: 'Name', value: details.display_name, id: '1' },
-  { label: 'Phone Number', value: details.mobile_no, id: '4' },
-  { label: 'Email Address', value: details.email_id, id: '5' },
+  { label: 'Mobile Number', value: details.mobile_no, id: '4' },
+  { label: 'Email', value: details.email_id, id: '5' },
 ];
 
 export const yearsData = get_year_data();
@@ -272,8 +272,8 @@ export const CollegeApprovalFieldList = [
 ];
 export const ActivateLicenceFieldList = [
   { id: 'applicantFullName', name: 'Name of Applicant' },
-  { id: 'registrationNumber', name: 'Registration No.' },
-  { id: 'emailId', name: 'Email ID' },
+  { id: 'registrationNumber', name: 'Registration Number' },
+  { id: 'emailId', name: 'Email' },
   { id: 'gender', name: 'Gender' },
   { id: 'mobileNumber', name: 'Mobile Number' },
   { id: 'yearOfRegistration', name: 'Year of Registration' },
@@ -281,9 +281,9 @@ export const ActivateLicenceFieldList = [
 
 export const DashBoardCardsFieldList = [
   { id: 'applicantFullName', name: 'Name of Applicant' },
-  { id: 'registrationNumber', name: 'Registration No.' },
+  { id: 'registrationNumber', name: 'Registration Number' },
   { id: 'councilName', name: 'Name of Council' },
-  { id: 'emailId', name: 'Email ID' },
+  { id: 'emailId', name: 'Email' },
   { id: 'gender', name: 'Gender' },
   { id: 'mobileNumber', name: 'Mobile Number' },
   { id: 'yearOfRegistration', name: 'Year of Registration' },
@@ -292,31 +292,10 @@ export const DashBoardCardsFieldList = [
 
 export const TrackStatusFieldList = [
   { id: 'applicantFullName', name: 'Name of Applicant' },
-  { id: 'registrationNumber', name: 'Registration No.' },
-  { id: 'emailId', name: 'Email ID' },
+  { id: 'registrationNumber', name: 'Registration Number' },
+  { id: 'emailId', name: 'Email' },
   { id: 'gender', name: 'Gender' },
   { id: 'mobileNumber', name: 'Mobile Number' },
   { id: 'yearOfRegistration', name: 'Year of Registration' },
   { id: 'requestid', name: 'Request ID' },
 ];
-
-export const field_names = {
-  degree: 'NAME OF THE DEGREE OBTAINED',
-  university: 'UNIVERSITY',
-  college: 'NAME OF THE COLLEGE',
-  state: 'STATE',
-  country: 'COUNTRY NAME',
-  monthAwarded: 'MONTH & YEAR OF DEGREE AWARDED',
-  rollNo: 'ROLL NO.',
-  passport: 'PASSPORT NUMBER',
-  marks: 'MARKS OBTAINED',
-  result: 'RESULT',
-  monthFmge: 'MONTH & YEAR OF FMGE QUALIFIED',
-  qualificationDegree: 'UPLOAD QUALIFICATION DEGREE',
-  regCouncil: 'REGISTERED WITH COUNCIL',
-  regNumber: 'REGISTRATION NUMBER',
-  regDate: 'REGISTRATION DATE',
-  registration: 'REGISTRATION',
-  renewal: 'DUE DATE OF RENEWAL',
-  regCertificate: 'UPLOAD THE REGISTRATION CERTIFICATE',
-};
