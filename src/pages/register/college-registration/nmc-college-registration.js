@@ -616,7 +616,7 @@ function NMCCollegeRegistration() {
         <SuccessModalPopup
           open={successModalPopup}
           setOpen={() => setSuccessModalPopup(false)}
-          text={'We have shared the password link with you via both email and mobile number'}
+          text={'We have shared the password link with you via email'}
           fromCollegeRegistration={true}
         />
       )}

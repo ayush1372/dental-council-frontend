@@ -29,9 +29,14 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
   const loggedInUserType = useSelector((state) => state?.common?.loggedInUserType);
 
   // eslint-disable-next-line no-unused-vars
-  const { statesList, countriesList, districtsList, subDistrictList, citiesList } = useSelector(
-    (state) => state?.common
-  );
+  const {
+    statesList,
+    countriesList,
+    districtsList,
+    subDistrictList,
+    citiesList,
+    enteredEmailMobileValues,
+  } = useSelector((state) => state?.common);
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { raisedQueryData } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
 
@@ -446,6 +451,8 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
     doctorProfileValues.personal_details.gender = Gender;
     doctorProfileValues.personal_details.email = document?.getElementsByName('email')[0]?.value
       ? document?.getElementsByName('email')[0]?.value
+      : enteredEmailMobileValues?.email
+      ? enteredEmailMobileValues?.email
       : EmailAddress;
 
     doctorProfileValues.communication_address.pincode = PostalCode;
