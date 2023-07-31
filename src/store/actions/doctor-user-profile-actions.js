@@ -28,7 +28,7 @@ export const getPersonalDetailsData = (doctor_profile_id) => async (dispatch) =>
       headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
       .then((response) => {
-        if (response?.data?.work_flow_status_id === 3) {
+        if (response?.data?.hp_profile_status_id === 3) {
           dispatch(getRaisedQuery(response?.data?.hp_profile_id));
         }
         dispatch(getPersonalDetails(response.data));

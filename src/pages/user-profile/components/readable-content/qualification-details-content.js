@@ -39,8 +39,14 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
   };
 
   //Helper Method to get the data of the query raised against the field
-  const getQueryRaised = (fieldName) => {
-    let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
+  const getQueryRaised = (fieldName, elementData) => {
+    let query;
+
+    if (raisedQueryData?.length > 0) {
+      query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
+    } else if (elementData?.length > 0) {
+      query = elementData?.find((obj) => obj.field_name === fieldName);
+    }
     return query?.query_comment;
   };
 
@@ -102,11 +108,14 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                 <Typography component="span" color="error.main">
                   *
                 </Typography>
-                {getQueryRaised('Name of the Degree Obtained') !== undefined && (
-                  <Tooltip title={getQueryRaised('Degree Name ')}>
-                    <ReportIcon color="secondary" ml={2} />
-                  </Tooltip>
-                )}
+                {element?.queries?.length > 0 &&
+                  getQueryRaised('Name of the Degree Obtained', element?.queries) !== undefined && (
+                    <Tooltip
+                      title={getQueryRaised('Name of the Degree Obtained', element?.queries)}
+                    >
+                      <ReportIcon color="secondary" ml={2} />
+                    </Tooltip>
+                  )}
               </Typography>
               <Grid display="flex" alignItems="center">
                 <Typography color="textPrimary.main" variant="subtitle2">
@@ -137,11 +146,12 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                 <Typography component="span" color="error.main">
                   *
                 </Typography>
-                {getQueryRaised('Country Name') !== undefined && (
-                  <Tooltip title={getQueryRaised('Country Name')}>
-                    <ReportIcon color="secondary" ml={2} />
-                  </Tooltip>
-                )}
+                {element?.queries?.length > 0 &&
+                  getQueryRaised('Country Name', element?.queries) !== undefined && (
+                    <Tooltip title={getQueryRaised('Country Name', element?.queries)}>
+                      <ReportIcon color="secondary" ml={2} />
+                    </Tooltip>
+                  )}
               </Typography>
               <Grid display="flex" alignItems="center">
                 <Typography variant="subtitle2" color="textPrimary.main">
@@ -172,11 +182,12 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                 <Typography component="span" color="error.main">
                   *
                 </Typography>
-                {getQueryRaised('State') !== undefined && (
-                  <Tooltip title={getQueryRaised('State')}>
-                    <ReportIcon color="secondary" ml={2} />
-                  </Tooltip>
-                )}
+                {element?.queries?.length > 0 &&
+                  getQueryRaised('State', element?.queries) !== undefined && (
+                    <Tooltip title={getQueryRaised('State', element?.queries)}>
+                      <ReportIcon color="secondary" ml={2} />
+                    </Tooltip>
+                  )}
               </Typography>
               <Grid display="flex" alignItems="center">
                 <Typography color="textPrimary.main" variant="subtitle2">
@@ -209,11 +220,12 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                 <Typography component="span" color="error.main">
                   *
                 </Typography>
-                {getQueryRaised('Name of the College') !== undefined && (
-                  <Tooltip title={getQueryRaised('Name of the College')}>
-                    <ReportIcon color="secondary" ml={2} />
-                  </Tooltip>
-                )}
+                {element?.queries?.length > 0 &&
+                  getQueryRaised('Name of the College', element?.queries) !== undefined && (
+                    <Tooltip title={getQueryRaised('Name of the College', element?.queries)}>
+                      <ReportIcon color="secondary" ml={2} />
+                    </Tooltip>
+                  )}
               </Typography>
               <Grid display="flex" alignItems="center">
                 <Typography variant="subtitle2" color="textPrimary.main">
@@ -245,11 +257,12 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                 <Typography component="span" color="error.main">
                   *
                 </Typography>
-                {getQueryRaised('University') !== undefined && (
-                  <Tooltip title={getQueryRaised('University')}>
-                    <ReportIcon color="secondary" ml={2} />
-                  </Tooltip>
-                )}
+                {element?.queries?.length > 0 &&
+                  getQueryRaised('University', element?.queries) !== undefined && (
+                    <Tooltip title={getQueryRaised('University', element?.queries)}>
+                      <ReportIcon color="secondary" ml={2} />
+                    </Tooltip>
+                  )}
               </Typography>
               <Grid display="flex" alignItems="center">
                 <Typography variant="subtitle2" color="textPrimary.main">
@@ -277,11 +290,15 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="grey.label">
                 Month & Year of Degree Awarded
-                {getQueryRaised('Month & Year of Degree Awarded') !== undefined && (
-                  <Tooltip title={getQueryRaised('Month & Year of Degree Awarded')}>
-                    <ReportIcon color="secondary" ml={2} />
-                  </Tooltip>
-                )}
+                {element?.queries?.length > 0 &&
+                  getQueryRaised('Month & Year of Degree Awarded', element?.queries) !==
+                    undefined && (
+                    <Tooltip
+                      title={getQueryRaised('Month & Year of Degree Awarded', element?.queries)}
+                    >
+                      <ReportIcon color="secondary" ml={2} />
+                    </Tooltip>
+                  )}
               </Typography>
               <Grid display="flex" alignItems="center">
                 <Typography variant="subtitle2" color="textPrimary.main">
@@ -320,11 +337,12 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   <Typography variant="subtitle2" color="grey.label">
                     Roll no.
                   </Typography>
-                  {getQueryRaised('Roll no.') !== undefined && (
-                    <Tooltip title={getQueryRaised('Roll no.')}>
-                      <ReportIcon color="secondary" ml={2} />
-                    </Tooltip>
-                  )}
+                  {element?.queries?.length > 0 &&
+                    getQueryRaised('Roll no.', element?.queries) !== undefined && (
+                      <Tooltip title={getQueryRaised('Roll no.', element?.queries)}>
+                        <ReportIcon color="secondary" ml={2} />
+                      </Tooltip>
+                    )}
                   <Grid display="flex" alignItems="center">
                     <Typography variant="subtitle2" color="textPrimary.main">
                       {nbe_response_to?.roll_no ? nbe_response_to?.roll_no : '-'}
@@ -353,11 +371,12 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   <Typography variant="subtitle2" color="grey.label">
                     Passport number
                   </Typography>
-                  {getQueryRaised('Passport number') !== undefined && (
-                    <Tooltip title={getQueryRaised('Passport number')}>
-                      <ReportIcon color="secondary" ml={2} />
-                    </Tooltip>
-                  )}
+                  {element?.queries?.length > 0 &&
+                    getQueryRaised('Passport number', element?.queries) !== undefined && (
+                      <Tooltip title={getQueryRaised('Passport number', element?.queries)}>
+                        <ReportIcon color="secondary" ml={2} />
+                      </Tooltip>
+                    )}
                   <Grid display="flex" alignItems="center">
                     <Typography variant="subtitle2" color="textPrimary.main">
                       {nbe_response_to?.passport_number ? nbe_response_to?.passport_number : '-'}
@@ -386,11 +405,12 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   <Typography variant="subtitle2" color="grey.label">
                     Marks obtained
                   </Typography>
-                  {getQueryRaised('Marks obtained') !== undefined && (
-                    <Tooltip title={getQueryRaised('Marks obtained')}>
-                      <ReportIcon color="secondary" ml={2} />
-                    </Tooltip>
-                  )}
+                  {element?.queries?.length > 0 &&
+                    getQueryRaised('Marks obtained', element?.queries) !== undefined && (
+                      <Tooltip title={getQueryRaised('Marks obtained', element?.queries)}>
+                        <ReportIcon color="secondary" ml={2} />
+                      </Tooltip>
+                    )}
                   <Grid display="flex" alignItems="center">
                     <Typography variant="subtitle2" color="textPrimary.main">
                       {nbe_response_to?.marks_obtained ? nbe_response_to?.marks_obtained : '-'}
@@ -419,11 +439,12 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   <Typography variant="subtitle2" color="grey.label">
                     Result
                   </Typography>
-                  {getQueryRaised('Result') !== undefined && (
-                    <Tooltip title={getQueryRaised('Result')}>
-                      <ReportIcon color="secondary" ml={2} />
-                    </Tooltip>
-                  )}
+                  {element?.queries?.length > 0 &&
+                    getQueryRaised('Result', element?.queries) !== undefined && (
+                      <Tooltip title={getQueryRaised('Result', element?.queries)}>
+                        <ReportIcon color="secondary" ml={2} />
+                      </Tooltip>
+                    )}
                   <Grid display="flex" alignItems="center">
                     <Typography variant="subtitle2" color="textPrimary.main">
                       {nbe_response_to?.result ? nbe_response_to?.result : '-'}
@@ -452,11 +473,15 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   <Typography variant="subtitle2" color="grey.label">
                     Month & Year of FMGE qualified
                   </Typography>
-                  {getQueryRaised('Month & Year of FMGE qualified') !== undefined && (
-                    <Tooltip title={getQueryRaised('Month & Year of FMGE qualified')}>
-                      <ReportIcon color="secondary" ml={2} />
-                    </Tooltip>
-                  )}
+                  {element?.queries?.length > 0 &&
+                    getQueryRaised('Month & Year of FMGE qualified', element?.queries) !==
+                      undefined && (
+                      <Tooltip
+                        title={getQueryRaised('Month & Year of FMGE qualified', element?.queries)}
+                      >
+                        <ReportIcon color="secondary" ml={2} />
+                      </Tooltip>
+                    )}
                   <Grid display="flex" alignItems="center">
                     <Typography variant="subtitle2" color="textPrimary.main">
                       {nbe_response_to?.month ? nbe_response_to?.month + ',' : '-'}{' '}
@@ -492,11 +517,14 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                 <Typography component="span" color="error.main">
                   *
                 </Typography>
-                {getQueryRaised('Upload Qualification Degree') !== undefined && (
-                  <Tooltip title={getQueryRaised('Upload Qualification Degree')}>
-                    <ReportIcon color="secondary" ml={2} />
-                  </Tooltip>
-                )}
+                {element?.queries?.length > 0 &&
+                  getQueryRaised('Upload Qualification Degree', element?.queries) !== undefined && (
+                    <Tooltip
+                      title={getQueryRaised('Upload Qualification Degree', element?.queries)}
+                    >
+                      <ReportIcon color="secondary" ml={2} />
+                    </Tooltip>
+                  )}
               </Typography>
               <Grid display="flex" alignItems="center">
                 <Typography

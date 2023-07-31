@@ -14,6 +14,7 @@ import {
   getPersonalDetailsData,
   verifyEmail,
 } from '../../../../store/actions/doctor-user-profile-actions';
+import { getEnteredEmailValue } from '../../../../store/reducers/common-reducers';
 import successToast from '../../../../ui/core/toaster';
 import ConfirmOTP from '../../../login-page/components/confirm-otp';
 const ConstantDetails = ({ validDetails, setValidDetails }) => {
@@ -91,7 +92,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
 
   const onSubmit = (type) => {
     const { email, mobileNo } = getValues();
-
+    dispatch(getEnteredEmailValue(getValues()));
     if (type === 'sms' && mobileNo && validDetails.mobileNo === false) {
       let otpValue = {};
       otpValue = {
