@@ -1,300 +1,891 @@
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
+import { useEffect } from 'react';
+import { useCallback } from 'react';
 
-import { Box } from '@mui/material';
-import { useFieldArray, useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-
-import { doctorTabs } from '../../../../helpers/components/sidebar-drawer-list-item';
-import SuccessModalPopup from '../../../../shared/common-modals/success-modal-popup';
-import { additionalQualificationsData } from '../../../../store/actions/doctor-user-profile-actions';
-import { changeUserActiveTab } from '../../../../store/reducers/common-reducers';
-import { Button } from '../../../../ui/core';
-// import successToast from '../../../../ui/core/toaster';
-import EditQualificationDetails from '../editable-profile/edit-qualification-details';
+// import AttachFileIcon from '@mui/icons-material/AttachFile';
+// import ReportOutlinedIcon from '@mui/icons-material/ReportOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import ReportIcon from '@mui/icons-material/Report';
+import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import {
-  getAdditionalCollegesList,
-  getAdditionalUniversitiesList,
-} from './additional-qualification-api';
+  Box,
+  FormControl,
+  FormControlLabel,
+  Grid,
+  Link,
+  Radio,
+  RadioGroup,
+  Tooltip,
+  Typography,
+  useTheme,
+} from '@mui/material';
+import { useForm } from 'react-hook-form';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-const qualificationObjTemplate = [
-  {
-    qualification: undefined,
-    country: '',
-    state: '',
-    college: '',
-    university: '',
-    month: '',
-    year: '',
-    files: '',
-    qualificationfrom: '',
-    Speciality: '',
-    subSpeciality: '',
-  },
-];
+import { verboseLog } from '../../../../config/debug';
+import { field_names, monthsData, yearsData } from '../../../../constants/common-data';
+import { doctorTabs } from '../../../../helpers/components/sidebar-drawer-list-item';
+import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
+import SuccessModalPopup from '../../../../shared/common-modals/success-modal-popup';
+import AttachmentViewPopup from '../../../../shared/query-modal-popup/attachement-view-popup';
+import { getCollegesList, getUniversitiesList } from '../../../../store/actions/common-actions';
+import {
+  additionalQualificationsData,
+  getRegistrationDetailsData,
+} from '../../../../store/actions/doctor-user-profile-actions';
+import { changeUserActiveTab } from '../../../../store/reducers/common-reducers';
+import { Button, Select, TextField, UploadFile } from '../../../../ui/core';
+import { AdditionalQualificationTable } from './additional-qualification-table';
 
 const AdditionalQualifications = () => {
-  const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
-
-  const { qualification_detail_response_tos } = registrationDetails || {};
-
-  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
-  const { degree_certificate } = qualification_detail_response_tos?.[0] || {};
-  const [qualificationFilesData, setQualificationFilesData] = useState({
-    'qualification.0.files': degree_certificate ? [{ file: degree_certificate }] : [],
-  });
-
-  const [successModalPopup, setSuccessModalPopup] = useState(false);
-
   const {
-    statesList,
-    coursesList,
     countriesList,
+    coursesList,
+    universitiesList,
+    collegesList,
+    statesList,
     specialitiesList,
-    // collegesList
   } = useSelector((state) => state?.common);
 
   const dispatch = useDispatch();
-  // const [qualificationFilesData, setQualificationFilesData] = useState([]);
+  const theme = useTheme();
+
+  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+
+  const [universitiesListData, setUniversitiesListData] = useState(universitiesList?.data);
+  const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
+  const [qualificationFilesData, setQualificationFilesData] = useState([]);
+  const [deleteUploadedFile, setDeleteUploadedFile] = useState(false);
+  const [qualificationFrom, setQualificationFrom] = useState('India');
+  const [successModalPopup, setSuccessModalPopup] = useState(false);
+  const [attachmentViewIndex, setAttachmentViewIndex] = useState();
+  const [fieldComments, setFieldComments] = useState([]);
+  const [collegesData, setCollegesData] = useState([]);
+  const [isEditForm, setIsEditForm] = useState(false);
+  const [queryfields, setQueryFields] = useState([]);
+  const [isAddForm, setIsAddForm] = useState(false);
+  const [editData, setEditData] = useState({});
+
+  const { qualification_detail_response_tos } = registrationDetails || {};
+
   const {
-    formState: { errors },
-    getValues,
-    handleSubmit,
     register,
-    unregister,
+    getValues,
     setValue,
-    control,
-    reset,
-    watch,
+    setError,
     clearErrors,
+    reset,
+    handleSubmit,
+    watch,
+    formState: { errors },
   } = useForm({
     mode: 'onChange',
     defaultValues: {
-      qualification: [...qualificationObjTemplate],
+      degree: '',
+      state: '',
+      collegeName: '',
+      university: '',
+      year: '',
+      month: '',
+      broadSpeciality: '',
+      speciality: '',
+
+      int_countryName: '',
+      int_state: '',
+      int_collegeName: '',
+      int_university: '',
+      int_year: '',
+      int_month: '',
+      int_broadSpeciality: '',
+      int_superSpeciality: '',
+
+      registrationCertificate: [],
     },
   });
 
-  const { fields, update, append, remove } = useFieldArray({
-    control,
-    name: 'qualification',
-  });
+  const selectedDegree = watch('degree');
+  const selectedState = watch('state');
+  const watchCollege = watch('collegeName');
+  const selectedYear = watch('year');
 
-  const [colleges, setColleges] = useState([]);
-  const [stateID, setStateID] = useState([]);
-  const [collegeID, setCollegeID] = useState([]);
-  const [universityData, setUniversityData] = useState([]);
+  watch([
+    'degree',
+    'university',
+    'month',
+    'broadSpeciality',
+    'speciality',
+    'int_countryName',
+    'int_state',
+    'int_collegeName',
+    'int_university',
+    'int_year',
+    'int_month',
+    'int_broadSpeciality',
+    'int_superSpeciality',
+  ]);
 
-  const handleQualificationFilesData = (fileName, files) => {
-    //setQualificationFilesData(files);
-    qualificationFilesData[fileName] = files;
-    setQualificationFilesData({ ...qualificationFilesData });
+  const menuProps = {
+    style: {
+      maxHeight: 250,
+      maxWidth: 130,
+    },
   };
+
+  const customMonthsData = useMemo(() => {
+    const date = new Date();
+    const fullYear = date.getFullYear();
+    const monthIndex = date.getMonth();
+    if (selectedYear === `${fullYear}` || editData?.qualification_year === `${fullYear}`) {
+      return monthsData.slice(0, monthIndex + 1);
+    }
+    return monthsData;
+  }, [selectedYear, editData]);
 
   const getStateData = (stateId) => {
     return statesList?.find((obj) => obj?.id === stateId);
   };
 
-  const getCollegeData = (stateId) => {
-    if (stateId !== undefined) {
-      dispatch(getAdditionalCollegesList(stateId)).then((response) => {
-        setColleges(response?.data);
-      });
-    }
-  };
-
-  const getUniversityData = (collegeId) => {
-    if (collegeId !== undefined) {
-      dispatch(getAdditionalUniversitiesList(collegeId)).then((response) => {
-        setUniversityData(response?.data);
-      });
-    }
-  };
   const getCollege = (collegeId) => {
-    const data = colleges?.find((obj) => obj?.id === collegeId);
+    const data = collegesList?.data?.find((obj) => obj?.id === collegeId);
     return data;
   };
 
-  const getUniverity = (univerityId) => {
-    const data = universityData?.find((obj) => obj?.id === univerityId);
+  const getUniversity = (univerityId) => {
+    const data = universitiesList?.data?.find((obj) => obj?.id === univerityId);
     return data;
-  };
-
-  useEffect(() => {
-    if (stateID !== undefined) {
-      getCollegeData(stateID);
-    }
-  }, [stateID]);
-
-  useEffect(() => {
-    if (collegeID !== undefined) {
-      getUniversityData(collegeID);
-    }
-  }, [collegeID]);
-
-  const broadSpeciality = (broadSpl) => {
-    const specialityobject = specialitiesList?.data?.find((obj) => obj?.id === broadSpl);
-    return specialityobject?.id;
   };
 
   const getCourseData = (course) => {
     return coursesList?.data?.find((obj) => obj.id === course);
   };
 
-  // this below code is storing qualification details
-  const { qualification } = getValues();
-
-  useEffect(() => {
-    setQualificationFilesData([]);
-  }, []);
-
-  const navigateToTrackApplication = () => {
-    dispatch(changeUserActiveTab(doctorTabs[1].tabName));
+  const broadSpeciality = (broadSpl) => {
+    const specialityobject = specialitiesList?.data?.find((obj) => obj?.id === broadSpl);
+    return specialityobject?.id;
   };
 
-  const onSubmit = () => {
+  const handleChange = (event) => {
+    setQualificationFrom(event.target.value);
+    handleResetForm();
+  };
+
+  const handleOnSubmit = () => {
     const formData = new FormData();
     let qualification_detail_response_tos = [],
       updatedQualificationDetailsArray = [];
 
-    qualification?.forEach((qualification) => {
-      if (qualification?.qualificationfrom !== 'International') {
-        setStateID(qualification?.state);
-        setCollegeID(qualification?.college);
-      }
+    const isInternationalQualification = qualificationFrom === 'International';
+    const updatedQualificationDetails = {
+      id: isEditForm ? editData?.id : null,
+      country: isInternationalQualification
+        ? countriesList.find((obj) => obj.id === getValues()?.int_countryName)
+        : { id: 356, name: 'India' },
+      state: isInternationalQualification
+        ? { name: getValues()?.int_state }
+        : getStateData(getValues()?.state),
+      college: isInternationalQualification
+        ? { name: getValues()?.int_collegeName }
+        : getCollege(getValues()?.collegeName),
+      university: isInternationalQualification
+        ? { name: getValues()?.int_university }
+        : getUniversity(getValues()?.university),
+      course: getCourseData(getValues()?.degree),
+      qualification_year: getValues()?.year || getValues()?.int_year,
+      qualification_month: isInternationalQualification
+        ? getValues()?.int_month
+        : getValues()?.month,
+      is_name_change: 0,
+      is_verified: 0,
+      request_id: isEditForm && editData?.request_id,
+      broad_speciality_id: isInternationalQualification
+        ? broadSpeciality(getValues()?.int_broadSpeciality)
+        : broadSpeciality(getValues()?.broadSpeciality),
+      super_speciality_name: isInternationalQualification
+        ? getValues()?.int_superSpeciality
+        : getValues()?.speciality,
+      qualification_from: qualificationFrom,
+    };
+    updatedQualificationDetailsArray.push(updatedQualificationDetails);
 
-      const isInternationalQualification = qualification?.qualificationfrom === 'International';
-      const updatedQualificationDetails = {
-        country: isInternationalQualification
-          ? countriesList.find((obj) => obj.id === qualification?.country)
-          : qualification?.country,
-        state: isInternationalQualification
-          ? { name: qualification?.state }
-          : getStateData(qualification?.state),
-        college: isInternationalQualification
-          ? { name: qualification?.college }
-          : getCollege(qualification?.college),
-        university: isInternationalQualification
-          ? { name: qualification?.university }
-          : getUniverity(qualification?.university),
-        course: getCourseData(qualification?.qualification),
-        qualification_year: qualification?.year,
-        qualification_month: qualification?.month,
-        is_name_change: 0,
-        is_verified: 0,
-        request_id: '',
-        broad_speciality_id: broadSpeciality(qualification?.Speciality),
-        super_speciality_name: qualification?.subSpeciality,
-        qualification_from:
-          qualification?.qualificationfrom === '' ? 'India' : qualification?.qualificationfrom,
-      };
-      updatedQualificationDetailsArray.push(updatedQualificationDetails);
-    });
     qualification_detail_response_tos = {
       qualification_detail_request_tos: updatedQualificationDetailsArray,
     };
-
-    let filesArray = [];
-    Object.values(qualificationFilesData)?.forEach((data) => {
-      filesArray.push(data[0]?.file);
-    });
-    // const firstFile = Object.values(qualificationFilesData)?.[0]?.[0]?.file;
-    // filesArray?.push(firstFile);
 
     const doctorRegistrationDetailsJson = JSON.stringify(qualification_detail_response_tos);
     const doctorRegistrationDetailsBlob = new Blob([doctorRegistrationDetailsJson], {
       type: 'application/json',
     });
-    // const filesBlob = new Blob([filesArray]);
 
     formData.append('data', doctorRegistrationDetailsBlob);
-    filesArray.forEach((file) => {
-      formData.append('degreeCertificates', file);
+    formData.append(
+      'degreeCertificates',
+      qualificationFilesData[0]?.file
+        ? qualificationFilesData[0]?.file
+        : !deleteUploadedFile && editData?.degree_certificate
+    );
+
+    dispatch(
+      additionalQualificationsData(formData, personalDetails?.hp_profile_id, isEditForm)
+    ).then(() => {
+      setSuccessModalPopup(true);
+      reset();
+    });
+    return true;
+  };
+
+  const handleResetForm = () => {
+    reset();
+    setValue('speciality', '');
+    setValue('int_state', '');
+    setValue('int_collegeName', '');
+    setValue('int_superSpeciality', '');
+    setCollegesData([]);
+
+    setQualificationFilesData([]);
+  };
+
+  const CloseAttachmentPopup = () => {
+    setAttachmentViewProfile(false);
+  };
+
+  const navigateToTrackApplication = () => {
+    dispatch(changeUserActiveTab(doctorTabs[1].tabName));
+  };
+
+  const setQueryFieldNames = (fields) => {
+    let result = fields.map((item) => {
+      verboseLog('fieldComments', item);
+
+      return Object.keys(item)[0].toUpperCase();
+    });
+    setQueryFields(result);
+  };
+
+  const setEditFormValues = (editData) => {
+    verboseLog('EditData->', editData);
+
+    let fieldData = editData?.queries?.map((item) => {
+      return { [item?.field_name]: item?.query_comment };
     });
 
-    dispatch(additionalQualificationsData(formData, personalDetails?.hp_profile_id))
-      .then(() => {
-        setSuccessModalPopup(true);
-        reset();
-      })
-      .catch(() => {
-        // successToast(
-        //   'ERROR: ' + error?.data?.response?.data?.message,
-        //   'auth-error',
-        //   'error',
-        //   'top-center'
-        // );
-        update({
-          qualification: [...qualificationObjTemplate],
+    setQueryFieldNames(fieldData);
+    setFieldComments(fieldData);
+
+    setValue('degree', editData?.course?.id);
+
+    if (editData?.qualification_from.toUpperCase() === 'INDIA') {
+      setQualificationFrom('India');
+
+      setValue('state', getStateData(editData?.state?.id)?.id);
+      setValue('collegeName', editData?.college?.id);
+      setValue('university', editData?.university?.id);
+      setValue('year', editData?.qualification_year);
+      setValue('month', editData?.qualification_month);
+      setValue('broadSpeciality', editData?.brod_speciality?.id);
+      setValue('speciality', editData?.super_speciality);
+    } else if (editData?.qualification_from.toUpperCase() === 'INTERNATIONAL') {
+      setQualificationFrom('International');
+
+      setValue('int_countryName', editData?.country?.id);
+      setValue('int_state', editData?.state?.name);
+      setValue('int_collegeName', editData?.college?.name);
+      setValue('int_university', editData?.university?.name);
+      setValue('int_year', editData?.qualification_year);
+      setValue('int_month', editData?.qualification_month);
+      setValue('int_broadSpeciality', editData?.brod_speciality?.id);
+      setValue('int_superSpeciality', editData?.super_speciality);
+    } else {
+      setQualificationFrom('India');
+    }
+    setIsEditForm(true);
+  };
+
+  const fetchColleges = useCallback(
+    (selectedState) => {
+      if (selectedState && selectedState !== '' && qualificationFrom !== 'International') {
+        dispatch(getCollegesList(selectedState)).then((dataResponse) => {
+          setCollegesData(dataResponse.data);
         });
+      }
+    },
+    [dispatch, qualificationFrom]
+  );
+
+  const fetchUniversities = (selectedUniversity) => {
+    if (selectedUniversity && qualificationFrom !== 'International') {
+      dispatch(getUniversitiesList(selectedUniversity)).then((dataResponse) => {
+        setUniversitiesListData(dataResponse?.data);
       });
+    }
   };
 
-  const handleClose = () => {
-    dispatch(changeUserActiveTab(doctorTabs[0].tabName));
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
+  const getQueryTooltip = (queryfieldName) => {
+    let result = fieldComments?.find((item) => {
+      return Object.keys(item)[0].toUpperCase() === queryfieldName && Object.values(item)[0];
     });
+    return result !== undefined ? Object.values(result) : '';
   };
+
+  useEffect(() => {
+    !isAddForm && dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id));
+  }, [dispatch, isAddForm, personalDetails]);
+
+  useEffect(() => {
+    fetchColleges(selectedState);
+    setValue('degree', isEditForm ? getValues()?.degree : selectedDegree);
+    setValue('university', isEditForm ? getValues()?.university : null);
+    setValue('collegeName', isEditForm ? getValues()?.collegeName : null);
+    setUniversitiesListData([]);
+  }, [fetchColleges, selectedDegree, selectedState, setValue]);
+
+  useEffect(() => {
+    fetchColleges(selectedState);
+  }, [selectedState, fetchColleges]);
+
+  useEffect(() => {
+    fetchUniversities(watchCollege);
+    // isEditForm && setEditFormValues(editData);
+  }, [watchCollege]);
+
+  useEffect(() => {
+    if (qualificationFilesData?.length > 0) {
+      setValue('qualificationCertificate', qualificationFilesData);
+      clearErrors('qualificationCertificate', '');
+    }
+  }, [clearErrors, qualificationFilesData, setValue]);
 
   return (
     <Box p={3}>
-      <Box mt={1}>
-        {fields?.map((qualification, index) => {
-          const showDeleteIcon = index > 0;
-          return (
-            <EditQualificationDetails
-              key={qualification.id}
-              index={index}
-              showDeleteIcon={showDeleteIcon}
-              errors={errors}
-              setValue={setValue}
-              getValues={getValues}
-              fields={fields}
-              watch={watch}
-              register={register}
-              unregister={unregister}
-              qualification={qualification}
-              qualificationFilesData={qualificationFilesData}
-              handleQualificationFilesData={handleQualificationFilesData}
-              isAdditionalQualification={true}
-              update={update}
-              remove={remove}
-              showBroadSpeciality={true}
-              clearErrors={clearErrors}
+      {isAddForm || isEditForm ? (
+        <>
+          <Box mb={1}>
+            <FormControl>
+              <Typography id="qualification-type-form-label" variant="h3">
+                Qualification Degree Completed From
+              </Typography>
+              <RadioGroup
+                name="qualification_type_radio_group"
+                value={qualificationFrom}
+                onChange={handleChange}
+                row
+              >
+                <FormControlLabel
+                  disabled={isEditForm}
+                  value="India"
+                  control={<Radio />}
+                  label="India"
+                />
+                <FormControlLabel
+                  disabled={isEditForm}
+                  value="International"
+                  control={<Radio />}
+                  label="International"
+                />
+              </RadioGroup>
+            </FormControl>
+          </Box>
+          <Grid container spacing={2} mb={2}>
+            <Grid item xs={12} lg={4}>
+              <Select
+                fullWidth
+                required
+                name="degree"
+                label={'Degree Name'}
+                queryRaiseIcon={isEditForm && queryfields.includes(field_names.degree)}
+                toolTipData={isEditForm && getQueryTooltip(field_names?.degree)}
+                placeholder={'Select degree'}
+                value={getValues()?.degree}
+                defaultValue={getValues()?.degree}
+                disabled={isEditForm && !queryfields.includes(field_names.degree)}
+                error={errors.degree?.message}
+                options={createSelectFieldData(coursesList?.data)}
+                {...register('degree', {
+                  required: 'Please select the Degree.',
+                })}
+                MenuProps={menuProps}
+              />
+            </Grid>
+            <Grid item xs={12} lg={4}>
+              {qualificationFrom === 'India' ? (
+                <Select
+                  fullWidth
+                  required
+                  name="state"
+                  label="State (in which college is located)"
+                  placeholder={'Select state'}
+                  queryRaiseIcon={isEditForm && queryfields.includes(field_names.state)}
+                  toolTipData={isEditForm && getQueryTooltip(field_names.state)}
+                  disabled={isEditForm && !queryfields.includes(field_names.state)}
+                  value={getValues()?.state}
+                  error={errors?.state?.message}
+                  defaultValue={getValues()?.state}
+                  {...register('state', {
+                    required: 'Please select the State.',
+                  })}
+                  options={createSelectFieldData(statesList)}
+                  MenuProps={menuProps}
+                />
+              ) : (
+                <Select
+                  fullWidth
+                  required
+                  name="int_countryName"
+                  label="Country Name"
+                  placeholder={'Select country'}
+                  queryRaiseIcon={isEditForm && queryfields.includes(field_names.country)}
+                  toolTipData={isEditForm && getQueryTooltip(field_names.country)}
+                  disabled={isEditForm && !queryfields.includes(field_names.country)}
+                  value={getValues()?.int_countryName}
+                  defaultValue={getValues()?.int_countryName}
+                  error={errors?.int_countryName?.message}
+                  {...register('int_countryName', {
+                    required: 'Please select the Country.',
+                  })}
+                  options={
+                    countriesList?.length > 0 ? createSelectFieldData(countriesList, 'id') : []
+                  }
+                  MenuProps={menuProps}
+                />
+              )}
+            </Grid>
+            <Grid item xs={12} lg={4}>
+              {qualificationFrom === 'India' ? (
+                <Select
+                  fullWidth
+                  required
+                  name="collegeName"
+                  label="College Name"
+                  placeholder={'Select college'}
+                  disabled={
+                    isEditForm &&
+                    !queryfields.includes(field_names.college) &&
+                    !queryfields.includes(field_names.state)
+                  }
+                  queryRaiseIcon={isEditForm && queryfields.includes(field_names.college)}
+                  toolTipData={isEditForm && getQueryTooltip(field_names.college)}
+                  value={getValues()?.collegeName}
+                  defaultValue={getValues()?.collegeName}
+                  error={errors?.collegeName?.message}
+                  {...register('collegeName', {
+                    required: 'Please select the College.',
+                  })}
+                  options={createSelectFieldData(collegesData)}
+                  MenuProps={menuProps}
+                />
+              ) : (
+                <TextField
+                  fullWidth
+                  required
+                  name="int_state"
+                  label="State (in which college is located)"
+                  placeholder={'Enter state'}
+                  queryRaiseIcon={isEditForm && queryfields.includes(field_names.state)}
+                  disabled={isEditForm && !queryfields.includes(field_names.state)}
+                  toolTipData={isEditForm && getQueryTooltip(field_names.state)}
+                  error={errors?.int_state?.message}
+                  {...register('int_state', {
+                    required: 'Please enter the State.',
+                  })}
+                />
+              )}
+            </Grid>
+            <Grid item xs={12} lg={4}>
+              {qualificationFrom === 'India' ? (
+                <Select
+                  fullWidth
+                  required
+                  name="university"
+                  label="University Name"
+                  placeholder={'Select university'}
+                  disabled={
+                    isEditForm &&
+                    !queryfields.includes(field_names.college) &&
+                    !queryfields.includes(field_names.state) &&
+                    !queryfields.includes(field_names.university)
+                  }
+                  queryRaiseIcon={isEditForm && queryfields.includes(field_names.university)}
+                  toolTipData={isEditForm && getQueryTooltip(field_names.university)}
+                  value={getValues()?.university}
+                  defaultValue={getValues()?.university}
+                  error={errors?.university?.message}
+                  {...register('university', {
+                    required: 'Please select the University.',
+                  })}
+                  options={createSelectFieldData(universitiesListData, 'id')}
+                  MenuProps={menuProps}
+                />
+              ) : (
+                <TextField
+                  fullWidth
+                  required
+                  name="int_collegeName"
+                  label="College Name"
+                  placeholder={'Enter college'}
+                  queryRaiseIcon={isEditForm && queryfields.includes(field_names.college)}
+                  disabled={isEditForm && !queryfields.includes(field_names.college)}
+                  toolTipData={isEditForm && getQueryTooltip(field_names.college)}
+                  error={errors?.int_collegeName?.message}
+                  {...register('int_collegeName', {
+                    required: 'Please enter the College.',
+                  })}
+                />
+              )}
+            </Grid>
+            {qualificationFrom === 'India' ? (
+              <Grid container item xs={12} md={6} lg={4} columnSpacing={2}>
+                <Typography pl={2} fontWeight="500" color="inputTextColor.main">
+                  {`Month & Year of Degree Awarded`}
+                  <Typography component="span" color="error.main">
+                    *
+                  </Typography>
+                  {isEditForm && queryfields.includes(field_names.monthAwarded) && (
+                    <Tooltip title={isEditForm && getQueryTooltip(field_names.monthAwarded)}>
+                      <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
+                    </Tooltip>
+                  )}
+                </Typography>
+                <Grid item xs={12} sm={6} mb={{ xs: 2, md: 0 }}>
+                  <Select
+                    required
+                    name="month"
+                    placeholder={'Select month of awarding1'}
+                    queryRaiseIcon={isEditForm && queryfields.includes(field_names.monthAwarded)}
+                    disabled={isEditForm && !queryfields.includes(field_names.monthAwarded)}
+                    value={getValues()?.month}
+                    defaultValue={getValues()?.month}
+                    error={errors?.month?.message}
+                    {...register('month', {
+                      required: 'Please select the Awarding month.',
+                    })}
+                    options={customMonthsData}
+                    MenuProps={menuProps}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <Select
+                    fullWidth
+                    required
+                    name="year"
+                    placeholder={'Select year of awarding'}
+                    queryRaiseIcon={isEditForm && queryfields.includes(field_names.monthAwarded)}
+                    disabled={isEditForm && !queryfields.includes(field_names.monthAwarded)}
+                    variant="outlined"
+                    value={getValues()?.year}
+                    defaultValue={getValues()?.year}
+                    error={errors?.year?.message}
+                    {...register('year', {
+                      required: 'Please select the Awarding year.',
+                      pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
+                    })}
+                    MenuProps={menuProps}
+                    options={yearsData}
+                  />
+                </Grid>
+              </Grid>
+            ) : (
+              <Grid item xs={12} lg={4}>
+                <TextField
+                  fullWidth
+                  required
+                  name="int_university"
+                  label="University Name"
+                  placeholder={'Enter university'}
+                  disabled={isEditForm && !queryfields.includes(field_names.university)}
+                  queryRaiseIcon={isEditForm && queryfields.includes(field_names.university)}
+                  toolTipData={isEditForm && getQueryTooltip(field_names.university)}
+                  error={getValues().int_university === '' && errors?.int_university?.message}
+                  {...register('int_university', {
+                    required: 'Please enter the University.',
+                  })}
+                />
+              </Grid>
+            )}
+
+            {qualificationFrom === 'International' ? (
+              <Grid container item xs={12} md={6} lg={4} columnSpacing={2}>
+                <Typography pl={2} fontWeight="500" color="inputTextColor.main">
+                  {`Month & Year of Awarding Degree`}
+                  <Typography component="span" color="error.main">
+                    *
+                  </Typography>
+                  {isEditForm && queryfields.includes(field_names.monthAwarded) && (
+                    <Tooltip title={isEditForm && getQueryTooltip(field_names.monthAwarded)}>
+                      <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
+                    </Tooltip>
+                  )}
+                </Typography>
+                <Grid item xs={12} md={6} mb={{ xs: 2, md: 0 }}>
+                  <Select
+                    name="int_month"
+                    placeholder={'Select month of awarding'}
+                    value={getValues().int_month}
+                    disabled={isEditForm && !queryfields.includes(field_names.monthAwarded)}
+                    defaultValue={getValues().int_month}
+                    error={errors?.int_month?.message}
+                    {...register('int_month', {
+                      required: 'Please select the Awarding month.',
+                    })}
+                    MenuProps={menuProps}
+                    options={monthsData}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6}>
+                  <Select
+                    fullWidth
+                    required
+                    name="int_year"
+                    placeholder={'Select year of awarding'}
+                    variant="outlined"
+                    value={getValues()?.int_year}
+                    disabled={isEditForm && !queryfields.includes(field_names.monthAwarded)}
+                    defaultValue={getValues()?.int_year}
+                    error={errors?.int_year?.message}
+                    {...register('int_year', {
+                      required: 'Please select the Awarding year.',
+                      pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
+                    })}
+                    MenuProps={menuProps}
+                    options={yearsData}
+                  />
+                </Grid>
+              </Grid>
+            ) : (
+              <Grid item xs={12} md={6} lg={4}>
+                <Select
+                  fullWidth
+                  required
+                  name="broadSpeciality"
+                  label="Broad Speciality"
+                  placeholder={'Select broad speciality'}
+                  // queryRaiseIcon={isEditForm && queryfields.includes(field_names.)}
+                  variant="outlined"
+                  value={getValues()?.broadSpeciality}
+                  defaultValue={getValues()?.broadSpeciality}
+                  error={errors?.broadSpeciality?.message}
+                  {...register('broadSpeciality', {
+                    required: 'Please select the Broad Speciality.',
+                  })}
+                  MenuProps={menuProps}
+                  options={createSelectFieldData(specialitiesList?.data)}
+                />
+              </Grid>
+            )}
+
+            <Grid item xs={12} lg={4}>
+              {qualificationFrom === 'India' ? (
+                <TextField
+                  fullWidth
+                  name="speciality"
+                  label="Super Speciality"
+                  placeholder={'Enter super speciality'}
+                  // queryRaiseIcon={isEditForm && queryfields.includes(field_names.degree)}
+                  error={errors?.speciality?.message}
+                  {...register('speciality')}
+                />
+              ) : (
+                <Select
+                  fullWidth
+                  required
+                  name="int_broadSpeciality"
+                  label="Broad speciality"
+                  placeholder={'Select Broad Speciality'}
+                  variant="outlined"
+                  value={getValues()?.int_broadSpeciality}
+                  defaultValue={getValues()?.int_broadSpeciality}
+                  // queryRaiseIcon={isEditForm && queryfields.includes(field_names.degree)}
+                  error={errors?.int_broadSpeciality?.message}
+                  {...register('int_broadSpeciality', {
+                    required: 'Please select the Broad Speciality.',
+                    // pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
+                  })}
+                  MenuProps={menuProps}
+                  // options={dummyOptions}
+                  options={createSelectFieldData(specialitiesList?.data)}
+                />
+              )}
+            </Grid>
+            {qualificationFrom === 'International' && (
+              <Grid item xs={12} lg={4}>
+                <TextField
+                  fullWidth
+                  name="int_superSpeciality"
+                  label="Super Speciality"
+                  placeholder={'Enter super speciality'}
+                  // queryRaiseIcon={isEditForm && queryfields.includes(field_names.degree)}
+                  {...register('int_superSpeciality', {})}
+                />
+              </Grid>
+            )}
+          </Grid>
+          {isEditForm && !deleteUploadedFile && (
+            <Box my={2} display={'flex'} alignItems={'center'} justifyContent={'flex-start'}>
+              <Typography mr={1} width={'auto'}>
+                View Attachment -
+              </Typography>
+              <Typography
+                variant={'body1'}
+                mr={1}
+                width={'auto'}
+                onClick={(e) => {
+                  e.preventDefault();
+                  setAttachmentViewProfile(true);
+                }}
+              >
+                <Link sx={{ cursor: 'pointer', textDecoration: 'none', font: 'inherit' }}>
+                  {`${editData?.file_name}.${editData?.file_type}`}
+                </Link>
+              </Typography>
+              <DeleteOutlineOutlinedIcon
+                fontSize="10px"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setDeleteUploadedFile(true);
+                }}
+                sx={{ color: theme.palette.primary.main }}
+              />
+              <VisibilityOutlinedIcon
+                fontSize="10px"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setAttachmentViewProfile(true);
+                }}
+                sx={{ color: theme.palette.primary.main }}
+              />
+              {queryfields.includes(field_names.regCertificate) ? (
+                <Tooltip title={isEditForm && getQueryTooltip(field_names.regCertificate)}>
+                  <ReportIcon color="secondary" sx={{ ml: 1, fontSize: 'large' }} />
+                </Tooltip>
+              ) : (
+                queryfields?.includes(field_names.qualificationDegree) && (
+                  <Tooltip title={isEditForm && getQueryTooltip(field_names.qualificationDegree)}>
+                    <ReportIcon color="secondary" sx={{ ml: 1, fontSize: 'large' }} />
+                  </Tooltip>
+                )
+              )}
+            </Box>
+          )}
+          <UploadFile
+            queryRaiseIcon={
+              queryfields.includes(field_names.regCertificate) ||
+              queryfields?.includes(field_names.qualificationDegree)
+            }
+            fileID={'qualificationFilesData'}
+            uploadFiles="single"
+            sizeAllowed={5}
+            fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
+            fileMessage={`PDF, PNG, JPG, JPEG file types are supported.
+               Maximum size allowed is 5MB.`}
+            fileData={qualificationFilesData}
+            clearErrors={clearErrors}
+            setError={setError}
+            name={'qualificationCertificate'}
+            isError={errors.registrationCertificate?.message}
+            setFileData={setQualificationFilesData}
+            uploadFileLabel="Upload Registration Certificate"
+            toolTipData={
+              queryfields.includes(field_names.regCertificate)
+                ? getQueryTooltip(field_names.regCertificate)
+                : queryfields?.includes(field_names.qualificationDegree) &&
+                  getQueryTooltip(field_names.qualificationDegree)
+            }
+            {...register(
+              'qualificationCertificate',
+              (isEditForm ? !deleteUploadedFile : qualificationFilesData[0]?.file === 0) && {
+                required: 'Please upload the degree certificate.',
+              }
+            )}
+          />
+          <Box mt={2}>
+            <Button
+              variant={'contained'}
+              color={'secondary'}
+              sx={{ mr: 2 }}
+              onClick={handleSubmit(handleOnSubmit)}
+            >
+              Submit
+            </Button>
+            <Button
+              variant={'contained'}
+              color={'grey'}
+              onClick={() => {
+                handleResetForm();
+                setIsAddForm(false);
+                setIsEditForm(false);
+                setQualificationFrom('India');
+              }}
+            >
+              Cancel
+            </Button>
+            {/* <Button
+              variant={'contained'}
+              sx={{ ml: 2 }}
+              color={'primary'}
+              onClick={() => {
+                verboseLog('Form Values -> ', getValues());
+                verboseLog('Attachment Values -> ', qualificationFilesData);
+                verboseLog('fieldComments', fieldComments);
+                verboseLog('QueryFields', queryfields);
+                verboseLog('QueryFields degree', queryfields.includes(field_names.degree));
+              }}
+            >
+              Form Values
+            </Button> */}
+          </Box>
+          {successModalPopup && (
+            <SuccessModalPopup
+              open={successModalPopup}
+              setOpen={() => setSuccessModalPopup(false)}
+              text={
+                'The additional qualification details has been sent for verification. You can check the verification status in the Track Application tab.'
+              }
+              navigateToTrackApplication={navigateToTrackApplication}
             />
-          );
-        })}
-      </Box>
-
-      <Box mt={2} display="flex" width="100%">
-        <Button variant="contained" color="secondary" onClick={handleSubmit(onSubmit)}>
-          Submit
-        </Button>
-        <Button variant="contained" color="grey" sx={{ marginLeft: '20px' }} onClick={handleClose}>
-          Cancel
-        </Button>
-        {qualification_detail_response_tos?.length + qualification?.length < 8 && (
-          <Button
-            sx={{ ml: 'auto' }}
-            variant="outlined"
-            color="primary"
-            onClick={() => {
-              append({ ...qualificationObjTemplate });
-            }}
-          >
-            Add Additional Qualification
-          </Button>
-        )}
-      </Box>
-
-      {successModalPopup && (
-        <SuccessModalPopup
-          open={successModalPopup}
-          setOpen={() => setSuccessModalPopup(false)}
-          text={
-            'The additional qualification details has been sent for verification. You can check the verification status in the Track Application tab.'
+          )}
+        </>
+      ) : (
+        <>
+          <Box display="flex" width="100%" justifyContent={'space-between'} alignItems={'center'}>
+            <Typography variant={'h2'} color="primary.main" width={'auto'}>
+              Additional Qualification Details
+            </Typography>
+            {qualification_detail_response_tos?.length < 8 && (
+              <Button
+                sx={{ ml: 'auto' }}
+                variant="outlined"
+                color="secondary"
+                onClick={() => {
+                  setIsAddForm(true);
+                }}
+              >
+                Add Additional Qualification
+              </Button>
+            )}
+          </Box>
+          <AdditionalQualificationTable
+            rowData={registrationDetails?.qualification_detail_response_tos}
+            setEditData={setEditData}
+            setFormValues={setEditFormValues}
+            setAttachmentIndex={setAttachmentViewIndex}
+            setAttachmentFrame={setAttachmentViewProfile}
+          />
+        </>
+      )}
+      {attachmentViewProfile && (
+        <AttachmentViewPopup
+          certificate={
+            isEditForm
+              ? editData?.degree_certificate
+              : qualification_detail_response_tos[attachmentViewIndex]?.degree_certificate
           }
-          navigateToTrackApplication={navigateToTrackApplication}
+          closePopup={CloseAttachmentPopup}
+          alt={'Qualification Certificate'}
+          certFileType={
+            isEditForm
+              ? editData?.file_type
+              : qualification_detail_response_tos[attachmentViewIndex]?.file_type
+          }
         />
       )}
     </Box>
