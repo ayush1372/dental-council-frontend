@@ -16,10 +16,12 @@ import {
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import PopupState, { bindMenu, bindTrigger } from 'material-ui-popup-state';
+import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
 import SuccessModalPopup from '../../../../shared/common-modals/success-modal-popup';
 import ReactivateLicencePopup from '../../../../shared/reactivate-licence-popup/re-activate-licence-popup';
+import { getRegistrationDetailsData } from '../../../../store/actions/doctor-user-profile-actions';
 import SuspendLicenseVoluntaryRetirement from '../../../suspend-license-voluntary-retirement';
 import QualificationDetailsContent from '../readable-content/qualification-details-content';
 import RegistrationDetailsContent from '../readable-content/registration-details-content';
@@ -33,6 +35,8 @@ const ReadRegisterAndAcademicDetails = ({
   setShowTable,
   selectedDataIndex,
 }) => {
+  const dispatch = useDispatch();
+
   const [accordionKeys, setAccordionKeys] = useState(['accordion-0', 'accordion-1', 'accordion-2']);
   const [selected, setSelected] = useState('');
   const [confirmationModal, setConfirmationModal] = useState(false);
@@ -100,48 +104,65 @@ const ReadRegisterAndAcademicDetails = ({
     setShowSuccessPopup(true);
   };
 
+  const renderRegistrationDetailData = (updatedTableData, registrationData) => {
+    let filteredQualificationDetails = [];
+    registrationData?.map((element, elementIndex) => {
+      if (element) {
+        if (
+          (element?.is_verified === 1 ||
+            element?.request_id === updatedTableData[selectedDataIndex]?.request_id) &&
+          elementIndex !== 0
+        ) {
+          filteredQualificationDetails.push(element);
+        }
+        if (elementIndex === 0) {
+          filteredQualificationDetails.push(element);
+        }
+        if (element?.is_verified !== 1) {
+          setShowForwardButton(
+            element?.qualification_from === 'India'
+              ? true
+              : element?.qualification_from === 'International' &&
+                loggedInUserType === 'SMC' &&
+                selectedAcademicStatus === 'Pending'
+              ? true
+              : false
+          );
+        }
+      }
+    });
+    return filteredQualificationDetails;
+  };
+
   useEffect(() => {
     if (!isNaN(selectedDataIndex)) {
-      let filteredQualificationDetails = [];
       let updatedTableData =
         dashboardTableDetailsData?.data?.dashboard_tolist?.length > 0
           ? dashboardTableDetailsData?.data?.dashboard_tolist
           : trackStatusData?.data?.data?.health_professional_applications?.length > 0
           ? trackStatusData?.data?.data?.health_professional_applications
           : [];
-      registrationDetails?.qualification_detail_response_tos?.map((element, elementIndex) => {
-        if (element) {
-          if (
-            (element?.is_verified === 1 ||
-              element?.request_id === updatedTableData[selectedDataIndex]?.request_id) &&
-            elementIndex !== 0
-          ) {
-            filteredQualificationDetails.push(element);
-          }
-          if (elementIndex === 0) {
-            filteredQualificationDetails.push(element);
-          }
-          if (element?.is_verified !== 1) {
-            setShowForwardButton(
-              element?.qualification_from === 'India'
-                ? true
-                : element?.qualification_from === 'International' &&
-                  loggedInUserType === 'SMC' &&
-                  selectedAcademicStatus === 'Pending'
-                ? true
-                : false
-            );
-          }
-        }
-      });
-
       let newRegistrationDetails = {};
       newRegistrationDetails.hp_profile_id = registrationDetails?.hp_profile_id;
       newRegistrationDetails.nbe_response_to = registrationDetails?.nbe_response_to;
       newRegistrationDetails.registration_detail_to = registrationDetails?.registration_detail_to;
       newRegistrationDetails.request_id = registrationDetails?.request_id;
-      newRegistrationDetails.qualification_detail_response_tos = filteredQualificationDetails;
-      setRegistrationDetailsData(newRegistrationDetails);
+
+      if (registrationDetails?.qualification_detail_response_tos === undefined) {
+        dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id)).then((response) => {
+          newRegistrationDetails.qualification_detail_response_tos = renderRegistrationDetailData(
+            updatedTableData,
+            response?.data?.qualification_detail_response_tos
+          );
+          setRegistrationDetailsData(newRegistrationDetails);
+        });
+      } else {
+        newRegistrationDetails.qualification_detail_response_tos = renderRegistrationDetailData(
+          updatedTableData,
+          registrationDetails?.qualification_detail_response_tos
+        );
+        setRegistrationDetailsData(newRegistrationDetails);
+      }
     } else {
       setRegistrationDetailsData(registrationDetails);
     }

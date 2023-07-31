@@ -10,12 +10,11 @@ import { capitalizeFirstLetter } from '../../../../helpers/functions/common-func
 import AttachmentViewPopup from '../../../../shared/query-modal-popup/attachement-view-popup';
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
-const QualificationDetailsContent = ({ selectedDataIndex }) => {
+const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex }) => {
   const { data } = useSelector((state) => state.loginReducer?.loginData);
   const { selectedAcademicStatus } = useSelector((state) => state.common);
 
   const { raisedQueryData } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
-  const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { count } = useSelector((state) => state?.dashboard);
   const [attachmentViewIndex, setAttachmentViewIndex] = useState();
 
