@@ -636,7 +636,7 @@ export function SuspendLicenseVoluntaryRetirement({
                     }}
                     label={fieldData?.filedName}
                     error={errors.notification?.message}
-                    defaultChecked={queryRaisedFor?.length !== 0 ? true : false}
+                    // defaultChecked={queryRaisedFor?.length !== 0 ? true : false}
                   />
                 );
               })}
