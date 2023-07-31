@@ -9,10 +9,10 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
   const logInDoctorStatus = useSelector(
     (state) => state?.loginReducer?.loginData?.data?.blacklisted
   );
-  const doctorEsignStatus = useSelector(
-    (state) => state?.loginReducer?.loginData?.data?.esign_status
-  );
-  const { data } = useSelector((state) => state?.loginReducer?.loginData);
+  // const doctorEsignStatus = useSelector(
+  //   (state) => state?.loginReducer?.loginData?.data?.esign_status
+  // );
+  // const { data } = useSelector((state) => state?.loginReducer?.loginData);
   return (
     <List sx={{ p: 0 }}>
       {DrawerOptions?.map((item, index) => (
@@ -51,27 +51,27 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
             }}
           >
             <ListItemButton
-              disabled={
-                loggedInUserType === 'Doctor' &&
-                (!personalDetails?.nmr_id ||
-                  doctorEsignStatus === 3 ||
-                  doctorEsignStatus === 2 ||
-                  personalDetails?.esign_status === 2 ||
-                  personalDetails?.esign_status === 3 ||
-                  personalDetails?.hp_profile_status_id === 5 ||
-                  personalDetails?.hp_profile_status_id === 6) &&
-                (item.tabName === 'voluntary-suspend-license' ||
-                  item.tabName === 'additional-qualifications' ||
-                  item.tabName === 'work-details')
-                  ? true
-                  : loggedInUserType === 'College' &&
-                    (data?.user_sub_type === 2 || data?.user_sub_type === 3) &&
-                    index === 2
-                  ? true
-                  : loggedInUserType === 'NMC' && data?.user_sub_type === 7 && index === 4
-                  ? true
-                  : false
-              }
+              // disabled={
+              //   loggedInUserType === 'Doctor' &&
+              //   (!personalDetails?.nmr_id ||
+              //     doctorEsignStatus === 3 ||
+              //     doctorEsignStatus === 2 ||
+              //     personalDetails?.esign_status === 2 ||
+              //     personalDetails?.esign_status === 3 ||
+              //     personalDetails?.hp_profile_status_id === 5 ||
+              //     personalDetails?.hp_profile_status_id === 6) &&
+              //   (item.tabName === 'voluntary-suspend-license' ||
+              //     item.tabName === 'additional-qualifications' ||
+              //     item.tabName === 'work-details')
+              //     ? true
+              //     : loggedInUserType === 'College' &&
+              //       (data?.user_sub_type === 2 || data?.user_sub_type === 3) &&
+              //       index === 2
+              //     ? true
+              //     : loggedInUserType === 'NMC' && data?.user_sub_type === 7 && index === 4
+              //     ? true
+              //     : false
+              // }
               sx={{
                 minHeight: 48,
                 justifyContent: open ? 'initial' : 'center',
