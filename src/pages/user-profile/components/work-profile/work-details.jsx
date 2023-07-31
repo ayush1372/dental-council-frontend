@@ -634,6 +634,7 @@ const WorkDetails = ({
                   <Button
                     variant="contained"
                     color="secondary"
+                    sx={{ paddingTop: '15px', paddingBottom: '15px' }}
                     onClick={() => {
                       getValues()?.facilityId?.length > 0
                         ? searchFacilitiesHandler()
@@ -749,6 +750,7 @@ const WorkDetails = ({
                   <Button
                     variant="contained"
                     color="secondary"
+                    sx={{ paddingTop: '15px', paddingBottom: '15px' }}
                     onClick={() => {
                       if (
                         typeof getValues()?.stateLGDCode === 'number' &&
