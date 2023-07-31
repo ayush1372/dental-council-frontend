@@ -299,3 +299,23 @@ export const TrackStatusFieldList = [
   { id: 'yearOfRegistration', name: 'Year of Registration' },
   { id: 'requestid', name: 'Request ID' },
 ];
+export const field_names = {
+  degree: 'NAME OF THE DEGREE OBTAINED',
+  university: 'UNIVERSITY',
+  college: 'NAME OF THE COLLEGE',
+  state: 'STATE',
+  country: 'COUNTRY NAME',
+  monthAwarded: 'MONTH & YEAR OF DEGREE AWARDED',
+  rollNo: 'ROLL NO.',
+  passport: 'PASSPORT NUMBER',
+  marks: 'MARKS OBTAINED',
+  result: 'RESULT',
+  monthFmge: 'MONTH & YEAR OF FMGE QUALIFIED',
+  qualificationDegree: 'UPLOAD QUALIFICATION DEGREE',
+  regCouncil: 'REGISTERED WITH COUNCIL',
+  regNumber: 'REGISTRATION NUMBER',
+  regDate: 'REGISTRATION DATE',
+  registration: 'REGISTRATION',
+  renewal: 'DUE DATE OF RENEWAL',
+  regCertificate: 'UPLOAD THE REGISTRATION CERTIFICATE',
+};
