@@ -1,11 +1,7 @@
 import { forwardRef } from 'react';
 
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import { Checkbox as MuiCheckbox, FormControl, FormControlLabel, Typography } from '@mui/material';
-import CN from 'clsx';
-
-import { SvgImageComponent } from '../../svg-icons';
-
-import styles from './check-box.module.scss';
 
 const CheckboxField = ({ name, label, error, dataTestid, ...props }, ref) => {
   return (
@@ -13,23 +9,25 @@ const CheckboxField = ({ name, label, error, dataTestid, ...props }, ref) => {
       <FormControlLabel
         control={<MuiCheckbox {...props} name={name} ref={ref} data-testid={dataTestid} />}
         label={label}
-        sx={{ alignItems: 'flex-start' }}
+        sx={{
+          alignItems: 'flex-start',
+          ml: 0,
+          '.MuiButtonBase-root': {
+            ml: 0,
+          },
+        }}
       />
       {error && (
-        <div
-          className={CN(styles.helperTextMsg, {
-            [styles.error]: 'error',
-          })}
+        <Typography
+          component={'div'}
+          display={'flex'}
+          alignItems={'center'}
+          variant="body2"
+          color="error"
         >
-          <Typography
-            style={{ display: 'flex', alignItems: 'center' }}
-            variant="body2"
-            color="error"
-          >
-            <SvgImageComponent color={'error'} icon={'error'} />
-            {error}
-          </Typography>
-        </div>
+          <InfoOutlinedIcon sx={{ fontSize: '14px !important', mr: 0.5 }} />
+          {error}
+        </Typography>
       )}
     </FormControl>
   );
