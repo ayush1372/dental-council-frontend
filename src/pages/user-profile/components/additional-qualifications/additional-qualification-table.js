@@ -247,7 +247,7 @@ export const AdditionalQualificationTable = ({
               fontSize="10px"
               onClick={(e) => {
                 e.preventDefault();
-                setAttachmentIndex(index);
+                setAttachmentIndex(index + 1);
                 setAttachmentFrame(true);
               }}
             />

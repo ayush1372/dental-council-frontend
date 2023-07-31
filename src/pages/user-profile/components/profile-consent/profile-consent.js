@@ -224,7 +224,7 @@ const ProfileConsent = ({
     let interval = setInterval(() => {
       retry = retry + 1;
 
-      if (retry === 8) {
+      if (retry === 10) {
         clearInterval(interval);
         setESignLoader(false);
         setRejectPopup(true);
@@ -245,7 +245,7 @@ const ProfileConsent = ({
         .catch(() => {
           setESignLoader(false);
         });
-    }, 24000);
+    }, 30000);
   };
 
   useEffect(() => {}, [eSignResponse, getValues().consent, getValues()?.HPR]);

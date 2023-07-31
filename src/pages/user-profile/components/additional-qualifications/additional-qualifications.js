@@ -814,6 +814,7 @@ const AdditionalQualifications = () => {
                 setIsAddForm(false);
                 setIsEditForm(false);
                 setQualificationFrom('India');
+                setDeleteUploadedFile(false);
               }}
             >
               Cancel

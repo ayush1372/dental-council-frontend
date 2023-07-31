@@ -12,22 +12,6 @@ import { selectedQualificationType } from '../../../../store/reducers/doctor-use
 import { RadioGroup, Select, TextField } from '../../../../ui/core';
 import UploadFile from '../../../../ui/core/fileupload/fileupload';
 
-const qualificationObjTemplate = [
-  {
-    qualification: undefined,
-    country: '',
-    state: '',
-    college: '',
-    university: '',
-    month: '',
-    year: '',
-    files: '',
-    qualificationfrom: '',
-    Speciality: '',
-    subSpeciality: '',
-  },
-];
-
 const EditQualificationDetails = ({
   clearErrors,
   setError,
@@ -47,14 +31,29 @@ const EditQualificationDetails = ({
   qualificationFilesData,
   isAdditionalQualification,
   handleQualificationFilesData,
-  supportingDocumentError = false,
-  insert,
-  setsupportingDocumentError,
-
   showBroadSpeciality = false,
 }) => {
   const dispatch = useDispatch();
   const [colleges, setColleges] = useState([]);
+  // const qualificationObjTemplate = [
+  //   {
+  //     qualification: null,
+  //     country: null,
+  //     state: null,
+  //     college: null,
+  //     university: null,
+  //     month: null,
+  //     year: null,
+  //     nameindegree: null,
+  //     files: null,
+  //     qualificationfrom: null,
+  //     id: null,
+  //     FEstate: null,
+  //     FEcollege: null,
+  //     FEuniversity: null,
+  //     Speciality: null,
+  //   },
+  // ];
 
   const [degree] = useState([
     {
@@ -71,15 +70,11 @@ const EditQualificationDetails = ({
 
   const [universitiesListData, setUniversitiesListData] = useState(universitiesList?.data);
   const [qualificationID, setQualificationID] = useState('');
+
   const handleQualificationFrom = (event) => {
-    insert(index, { ...qualificationObjTemplate });
-    remove(index + 1);
-    handleQualificationFilesData(`qualification.${index}.files`, '');
-
-    supportingDocumentError[`qualification.${[index]}.files`] = false;
-    setsupportingDocumentError({ ...supportingDocumentError });
-    setsupportingDocumentError([]);
-
+    // setValue(`qualification`, [...qualificationObjTemplate]);
+    // handleQualificationFilesData(`qualification.${index}.files`, '');
+    // clearErrors(`qualification`);
     setValue(event.target.name, event.target.value);
     dispatch(selectedQualificationType(event.target.value));
   };
@@ -109,6 +104,7 @@ const EditQualificationDetails = ({
 
   useEffect(() => {
     fetchColleges(selectedState);
+
     setValue(`qualification[${index}].university`, null);
     setValue(`qualification[${index}].college`, null);
     setUniversitiesListData([]);
@@ -117,34 +113,19 @@ const EditQualificationDetails = ({
   useEffect(() => {
     fetchUniversities(watchCollege);
   }, [watchCollege]);
+
   useEffect(() => {
     // || !isAdditionalQualification
     if (qualificationfrom !== 'International') {
       const removalArray = [
-        `qualification[${index}].state`,
         `qualification[${index}].rollno`,
         `qualification[${index}].result`,
         `qualification[${index}].monthfmge`,
         `qualification[${index}].yearfmge`,
         `qualification[${index}].marksobtained`,
-        `qualification[${index}].passportNumber`,
-      ];
-      unregister(removalArray);
-    } else if (qualificationfrom === 'International') {
-      const removalArray = [
-        `qualification[${index}].state`,
-        `qualification[${index}].rollno`,
-        `qualification[${index}].result`,
-        `qualification[${index}].monthfmge`,
-        `qualification[${index}].yearfmge`,
-        `qualification[${index}].marksobtained`,
-        `qualification[${index}].passportNumber`,
       ];
       unregister(removalArray);
     }
-
-    supportingDocumentError[`qualification.${[index]}.files`] = false;
-    setsupportingDocumentError({ ...supportingDocumentError });
   }, [qualificationfrom]);
 
   useEffect(() => {
@@ -592,7 +573,11 @@ const EditQualificationDetails = ({
               }
               toolTipData={getQueryRaisedComment('Name of the Degree Obtained')}
               fullWidth
-              error={errors?.qualification?.[index]?.qualification?.message}
+              error={
+                getValues()?.qualification[index]?.qualification?.length === 0
+                  ? errors?.qualification?.[index]?.qualification?.message
+                  : ''
+              }
               name="Qualification"
               label="Degree Name"
               placeholder={'Enter degree'}
@@ -684,13 +669,10 @@ const EditQualificationDetails = ({
               name="state"
               label="State (in which college is located)"
               placeholder={'Enter state'}
-              defaultValue={getValues().qualification[index]?.state}
+              defaultValue={fields[index].state}
               required={true}
               {...register(`qualification[${index}].state`, {
                 required: 'Please select state',
-                onChange: (e) => {
-                  setValue(`qualification[${index}].state`, e.target.value);
-                },
               })}
               // sx={{
               //   input: {
@@ -724,12 +706,12 @@ const EditQualificationDetails = ({
               placeholder={'Select state'}
               defaultValue={fields[index].state}
               required={true}
-              {...register(`qualification[${index}].state`, {
-                required: 'State is required',
-                onChange: (e) => {
-                  setValue(`qualification[${index}].state`, e.target.value);
-                },
-              })}
+              {...register(
+                `qualification[${index}].state`,
+                getValues().qualification[index].state === '' && {
+                  required: 'Please select state',
+                }
+              )}
               options={createSelectFieldData(statesList)}
               // style={{
               //   backgroundColor:
@@ -765,7 +747,6 @@ const EditQualificationDetails = ({
               label="College Name"
               error={errors?.qualification?.[index]?.college?.message}
               placeholder="Enter college name"
-              // defaultValue={getValues().qualification[index]?.college}
               defaultValue={qualification?.college}
               required={true}
               {...register(`qualification[${index}].college`, {
@@ -798,7 +779,7 @@ const EditQualificationDetails = ({
               name="College"
               label="College Name"
               placeholder={'Select college'}
-              defaultValue={getValues().qualification[index]?.college}
+              defaultValue={fields[index].college}
               required={true}
               {...register(
                 `qualification[${index}].college`,
@@ -841,7 +822,7 @@ const EditQualificationDetails = ({
               name="University"
               label="University Name"
               placeholder="Enter university"
-              defaultValue={getValues()?.qualification[index]?.university}
+              defaultValue={qualification?.university}
               required={true}
               // sx={{
               //   input: {
@@ -872,12 +853,15 @@ const EditQualificationDetails = ({
               error={errors?.qualification?.[index]?.university?.message}
               placeholder={'Select university'}
               name="University"
-              label="University"
-              defaultValue={getValues()?.qualification[index]?.university}
+              label="University Name"
+              defaultValue={fields[index].university}
               required={true}
-              {...register(`qualification[${index}].university`, {
-                required: 'Please select university',
-              })}
+              {...register(
+                `qualification[${index}].university`,
+                getValues()?.qualification[index]?.university === '' && {
+                  required: 'Please select university',
+                }
+              )}
               options={createSelectFieldData(universitiesListData, 'id') || []}
               // style={{
               //   backgroundColor:
@@ -922,7 +906,10 @@ const EditQualificationDetails = ({
               queryRaiseIcon={getQueryRaised('Month') === false ? true : false}
               toolTipData={getQueryRaisedComment('Month')}
               fullWidth
-              error={errors?.qualification?.[index]?.month?.message}
+              error={
+                getValues().qualification[index].month === '' &&
+                errors?.qualification?.[index]?.month?.message
+              }
               name="Month"
               placeholder={'Select month'}
               defaultValue={qualification?.month}
@@ -954,7 +941,7 @@ const EditQualificationDetails = ({
                   maxWidth: 130,
                 },
               }}
-              // value={getValues().qualification[index].month}
+              value={getValues().qualification[index].month}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -968,15 +955,17 @@ const EditQualificationDetails = ({
               placeholder={'Select year'}
               fullWidth
               error={
-                (getValues().qualification[index].year === '' ||
-                  getValues().qualification[index].year === undefined) &&
+                getValues().qualification[index].year === '' &&
                 errors?.qualification?.[index]?.year?.message
               }
               defaultValue={qualification?.year}
-              {...register(`qualification[${index}].year`, {
-                required: 'Please select year',
-                pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
-              })}
+              {...register(
+                `qualification[${index}].year`,
+                getValues().qualification[index].year?.length <= 0 && {
+                  required: 'Please select year',
+                  pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
+                }
+              )}
               MenuProps={{
                 style: {
                   maxHeight: 250,
@@ -1092,24 +1081,6 @@ const EditQualificationDetails = ({
             name={'qualificationCertificate'}
             isError={errors.qualificationCertificate?.message}
           />
-          {
-            // qualificationFilesData[`qualification.${index}.files`]
-            // ?
-            supportingDocumentError[`qualification.${index}.files`] === true &&
-              // qualificationFilesData[`qualification.${index}.files`] === []) ||
-              (qualificationFilesData[`qualification.${index}.files`]?.length > 0 || (
-                // qualificationFilesData[`qualification.${index}.files`]?.length === '') && (
-                // : supportingDocumentError
-                <Typography
-                  color="suspendAlert.dark"
-                  component="div"
-                  display="inline-flex"
-                  variant="body2"
-                >
-                  Please upload the supporting Document.
-                </Typography>
-              ))
-          }
         </Grid>
       </Grid>
     </>
