@@ -416,8 +416,10 @@ const EditQualificationDetails = ({
           </Grid>
           <Grid item xs={12} md={4}>
             <Select
-              queryRaiseIcon={getQueryRaised('MonthFMGE') === false ? true : false}
-              toolTipData={getQueryRaisedComment('MonthFMGE')}
+              queryRaiseIcon={
+                getQueryRaised('Month & Year of FMGE qualified') === false ? true : false
+              }
+              toolTipData={getQueryRaisedComment('Month & Year of FMGE qualified')}
               fullWidth
               error={
                 getValues()?.qualification[index]?.monthfmge?.length === 0
@@ -441,10 +443,10 @@ const EditQualificationDetails = ({
               //       : '',
               // }}
               disabled={
-                getQueryRaised('MonthFMGE') === false
+                getQueryRaised('Month & Year of FMGE qualified') === false
                   ? false
                   : work_flow_status_id === 3
-                  ? getQueryRaised('MonthFMGE')
+                  ? getQueryRaised('Month & Year of FMGE qualified')
                   : isVerified === 1
                   ? true
                   : false
@@ -460,8 +462,10 @@ const EditQualificationDetails = ({
           </Grid>
           <Grid item xs={12} md={4}>
             <Select
-              queryRaiseIcon={getQueryRaised('YearFMGE') === false ? true : false}
-              toolTipData={getQueryRaisedComment('YearFMGE')}
+              queryRaiseIcon={
+                getQueryRaised('Month & Year of FMGE qualified') === false ? true : false
+              }
+              toolTipData={getQueryRaisedComment('Month & Year of FMGE qualified')}
               fullWidth
               error={
                 getValues()?.qualification[index]?.yearfmge?.length === 0
@@ -492,10 +496,10 @@ const EditQualificationDetails = ({
               //       : '',
               // }}
               disabled={
-                getQueryRaised('YearFMGE') === false
+                getQueryRaised('Month & Year of FMGE qualified') === false
                   ? false
                   : work_flow_status_id === 3
-                  ? getQueryRaised('YearFMGE')
+                  ? getQueryRaised('Month & Year of FMGE qualified')
                   : isVerified === 1
                   ? true
                   : false
