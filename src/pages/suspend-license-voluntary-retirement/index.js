@@ -160,7 +160,11 @@ export function SuspendLicenseVoluntaryRetirement({
           ? selectedRowData?.application_type_id
           : 1,
       actor_id: loginData?.data?.user_group_id,
-      action_id: action_id,
+      action_id:
+        userActiveTab === 'dashboard' &&
+        (selectedValue === 'blacklist' || selectedValue === 'suspend')
+          ? 4
+          : action_id,
       hp_profile_id: personalDetails?.hp_profile_id
         ? personalDetails?.hp_profile_id
         : userActiveTab === 'voluntary-suspend-license'
