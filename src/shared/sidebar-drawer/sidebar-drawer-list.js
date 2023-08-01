@@ -1,11 +1,22 @@
-import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Tooltip } from '@mui/material';
+import ReportOutlinedIcon from '@mui/icons-material/ReportOutlined';
+import {
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
 
 export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOption, open }) {
   const theme = useTheme();
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
-  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const { personalDetails, registrationDetails } = useSelector(
+    (state) => state?.doctorUserProfileReducer
+  );
   const logInDoctorStatus = useSelector(
     (state) => state?.loginReducer?.loginData?.data?.blacklisted
   );
@@ -13,6 +24,18 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
     (state) => state?.loginReducer?.loginData?.data?.esign_status
   );
   const { data } = useSelector((state) => state?.loginReducer?.loginData);
+  const { qualification_detail_response_tos } = registrationDetails || {};
+
+  const getQueryRaisedIconView = () => {
+    let queryRaised;
+    qualification_detail_response_tos?.slice(1).map((data) => {
+      if (data?.queries?.length > 0) {
+        queryRaised = true;
+      }
+    });
+    return queryRaised;
+  };
+
   return (
     <List sx={{ p: 0 }}>
       {DrawerOptions?.map((item, index) => (
@@ -95,7 +118,23 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
                 {!open ? item.icon && <Tooltip>{item.icon}</Tooltip> : ''}
               </ListItemIcon>
               <ListItemText
-                primary={item.name}
+                primary={
+                  loggedInUserType === 'Doctor' &&
+                  item.tabName === 'additional-qualifications' &&
+                  getQueryRaisedIconView() ? (
+                    <>
+                      {item.name}
+                      <Typography>
+                        <ReportOutlinedIcon
+                          fontSize="inherit"
+                          sx={{ ml: 2, color: theme.palette.secondary.main }}
+                        />
+                      </Typography>
+                    </>
+                  ) : (
+                    item.name
+                  )
+                }
                 primaryTypographyProps={{ variant: 'body3' }}
                 sx={{
                   opacity: open ? 1 : 0,
