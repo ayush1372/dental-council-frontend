@@ -220,7 +220,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
     if (
       (loginData?.data?.hp_profile_status_id === 7 &&
         personalDetails?.hp_profile_status_id === 7) ||
-      (loginData?.data?.work_flow_status_id === 3 && personalDetails?.hp_profile_status_id === 7)
+      (loginData?.data?.work_flow_status_id === 3 && personalDetails?.hp_profile_status_id === 3)
     ) {
       setIsReadMode(false);
     } else {
@@ -248,7 +248,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
     if (
       (loginData?.data?.hp_profile_status_id === 7 &&
         (personalDetails?.isLoading === true || personalDetails?.hp_profile_status_id === 7)) ||
-      (loginData?.data?.work_flow_status_id === 3 && personalDetails?.hp_profile_status_id === 7)
+      (loginData?.data?.work_flow_status_id === 3 && personalDetails?.hp_profile_status_id === 3)
     ) {
       setIsReadMode(false);
     } else {
