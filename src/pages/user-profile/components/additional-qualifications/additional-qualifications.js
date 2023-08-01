@@ -217,10 +217,14 @@ const AdditionalQualifications = () => {
     const doctorRegistrationDetailsBlob = new Blob([doctorRegistrationDetailsJson], {
       type: 'application/json',
     });
-
+    const degreeCertificateBlob = new Blob([''], {
+      type: 'application/json',
+    });
     formData.append('data', doctorRegistrationDetailsBlob);
-    qualificationFilesData?.length > 0 &&
-      formData.append('degreeCertificates', qualificationFilesData[0]?.file);
+
+    qualificationFilesData[0]?.length > 0
+      ? formData.append('degreeCertificates', qualificationFilesData[0]?.file)
+      : formData.append('degreeCertificates', degreeCertificateBlob);
 
     dispatch(
       additionalQualificationsData(formData, personalDetails?.hp_profile_id, isEditForm)
