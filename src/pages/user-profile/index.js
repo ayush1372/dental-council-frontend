@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import EditIcon from '@mui/icons-material/Edit';
-import { Box, Grid, Typography, useTheme } from '@mui/material';
+import { Box, Dialog, Grid, Typography, useTheme } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import moment from 'moment';
@@ -40,6 +40,7 @@ import PersonalDetails from './components/personal-details/personal-details';
 import PreviewProfile from './components/preview-profile/preview-profile';
 import ProfileConsent from './components/profile-consent/profile-consent';
 import RegisterAndAcademicDetails from './components/register-and-academic-details/register-and-academic-details';
+import ConfirmEsignProcess from './e-sign-loader';
 
 const readWizardSteps = ['Personal Details', 'Registration & Academic Details']; //, 'Work Profile'
 
@@ -432,7 +433,21 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
         />
       )}
       {showSuccessPopup && <SuccessPopup />}
-      {(personalDetails?.hp_profile_status_id === undefined || eSignLoader) && <Loader />}
+      {personalDetails?.hp_profile_status_id === undefined && <Loader />}
+
+      <Dialog
+        maxWidth="sm"
+        scroll="body"
+        open={eSignLoader}
+        PaperProps={{ sx: { borderRadius: '10px' } }}
+      >
+        <ConfirmEsignProcess
+          handleClose={() => {
+            setESignLoader(false);
+          }}
+        />
+      </Dialog>
+
       {personalDetails?.hp_profile_status_id !== undefined && (
         <Box>
           {!showViewProfile ? (
@@ -647,7 +662,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
         <ErrorModalPopup
           open={setRejectPopup}
           text={`We are verfying your E-sign details. 
-          Please login after sometime to check your E-sign status. `}
+          Please check your E-sign status after sometime. `}
           handleClose={() => {
             setRejectPopup(false);
           }}

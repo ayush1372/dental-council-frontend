@@ -197,7 +197,6 @@ const EditQualificationDetails = ({
             Qualification Degree Completed From
           </Typography>
           <RadioGroup
-            onChange={handleQualificationFrom}
             name={`qualification[${index}].qualificationfrom`}
             size="small"
             defaultValue={
@@ -215,6 +214,7 @@ const EditQualificationDetails = ({
               },
             ]}
             error={errors?.qualification?.[index]?.qualificationfrom?.message}
+            onChange={handleQualificationFrom}
             disabled={work_flow_status_id === 3 ? true : isVerified === 1 ? true : false}
           />
         </Grid>
