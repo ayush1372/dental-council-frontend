@@ -1,5 +1,6 @@
 import ReportOutlinedIcon from '@mui/icons-material/ReportOutlined';
 import {
+  Grid,
   List,
   ListItem,
   ListItemButton,
@@ -118,19 +119,24 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
                 {!open ? item?.icon && <Tooltip>{item?.icon}</Tooltip> : ''}
               </ListItemIcon>
               <ListItemText
+                display="flex"
                 primary={
                   loggedInUserType === 'Doctor' &&
                   item?.tabName === 'additional-qualifications' &&
                   getQueryRaisedIconView() ? (
-                    <>
-                      {item?.name}
-                      <Typography>
-                        <ReportOutlinedIcon
-                          fontSize="inherit"
-                          sx={{ ml: 2, color: theme.palette.secondary.main }}
-                        />
-                      </Typography>
-                    </>
+                    <Grid container columnGap={1} alignItems={'center'}>
+                      <Grid item>
+                        {item?.name}
+                      </Grid>
+                      <Grid item>
+                        <Typography display={'flex'} alignItems={'center'}>
+                          <ReportOutlinedIcon
+                            fontSize="inherit"
+                            sx={{ color: theme.palette.secondary.main }}
+                          />
+                        </Typography>
+                      </Grid>
+                    </Grid>
                   ) : (
                     item?.name
                   )
