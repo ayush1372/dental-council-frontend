@@ -217,14 +217,14 @@ const AdditionalQualifications = () => {
     const doctorRegistrationDetailsBlob = new Blob([doctorRegistrationDetailsJson], {
       type: 'application/json',
     });
-
+    const degreeCertificateBlob = new Blob([''], {
+      type: 'application/json',
+    });
     formData.append('data', doctorRegistrationDetailsBlob);
-    formData.append(
-      'degreeCertificates',
-      qualificationFilesData[0]?.file
-        ? qualificationFilesData[0]?.file
-        : !deleteUploadedFile && editData?.degree_certificate
-    );
+
+    qualificationFilesData.length > 0
+      ? formData.append('degreeCertificates', qualificationFilesData[0]?.file)
+      : formData.append('degreeCertificates', degreeCertificateBlob);
 
     dispatch(
       additionalQualificationsData(formData, personalDetails?.hp_profile_id, isEditForm)
@@ -796,7 +796,7 @@ const AdditionalQualifications = () => {
             }
             {...register(
               'qualificationCertificate',
-              (isEditForm ? !deleteUploadedFile : qualificationFilesData[0]?.file === 0) && {
+              (isEditForm ? deleteUploadedFile : qualificationFilesData[0]?.file?.length === 0) && {
                 required: 'Please upload the degree certificate.',
               }
             )}
