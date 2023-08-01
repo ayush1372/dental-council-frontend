@@ -1,11 +1,22 @@
-import { List, ListItem, ListItemButton, ListItemIcon, ListItemText, Tooltip } from '@mui/material';
+import ReportOutlinedIcon from '@mui/icons-material/ReportOutlined';
+import {
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Tooltip,
+  Typography,
+} from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
 
 export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOption, open }) {
   const theme = useTheme();
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
-  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const { personalDetails, registrationDetails } = useSelector(
+    (state) => state?.doctorUserProfileReducer
+  );
   const logInDoctorStatus = useSelector(
     (state) => state?.loginReducer?.loginData?.data?.blacklisted
   );
@@ -13,6 +24,18 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
     (state) => state?.loginReducer?.loginData?.data?.esign_status
   );
   const { data } = useSelector((state) => state?.loginReducer?.loginData);
+  const { qualification_detail_response_tos } = registrationDetails || {};
+
+  const getQueryRaisedIconView = () => {
+    let queryRaised;
+    qualification_detail_response_tos?.slice(1)?.map((data) => {
+      if (data?.queries?.length > 0) {
+        queryRaised = true;
+      }
+    });
+    return queryRaised;
+  };
+
   return (
     <List sx={{ p: 0 }}>
       {DrawerOptions?.map((item, index) => (
@@ -25,7 +48,7 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
               logInDoctorStatus ||
               personalDetails?.hp_profile_status_id === 5 ||
               personalDetails?.hp_profile_status_id === 6) &&
-            item.tabName === 'work-details' &&
+            item?.tabName === 'work-details' &&
             index === 4
               ? 'You will be able to add work details after Profile Verification'
               : !open
@@ -41,7 +64,7 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
             sx={{
               display: 'block',
               borderLeft:
-                item.tabName === ActiveOption
+                item?.tabName === ActiveOption
                   ? `5px solid ${theme.palette.secondary.lightOrange}`
                   : null,
               borderBottom: `1px solid ${theme.palette.inputBorderColor.main}`,
@@ -60,9 +83,9 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
                   personalDetails?.esign_status === 3 ||
                   personalDetails?.hp_profile_status_id === 5 ||
                   personalDetails?.hp_profile_status_id === 6) &&
-                (item.tabName === 'voluntary-suspend-license' ||
-                  item.tabName === 'additional-qualifications' ||
-                  item.tabName === 'work-details')
+                (item?.tabName === 'voluntary-suspend-license' ||
+                  item?.tabName === 'additional-qualifications' ||
+                  item?.tabName === 'work-details')
                   ? true
                   : loggedInUserType === 'College' &&
                     (data?.user_sub_type === 2 || data?.user_sub_type === 3) &&
@@ -78,7 +101,7 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
                 px: 2.5,
               }}
               onClick={() => {
-                handleSwitch(item.tabName);
+                handleSwitch(item?.tabName);
               }}
             >
               <ListItemIcon
@@ -87,20 +110,36 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
                   mr: open ? 3 : 'auto',
                   justifyContent: 'center',
                   color:
-                    item.tabName === ActiveOption
+                    item?.tabName === ActiveOption
                       ? theme.palette.secondary.lightOrange
                       : theme.palette.grey1.main,
                 }}
               >
-                {!open ? item.icon && <Tooltip>{item.icon}</Tooltip> : ''}
+                {!open ? item?.icon && <Tooltip>{item?.icon}</Tooltip> : ''}
               </ListItemIcon>
               <ListItemText
-                primary={item.name}
+                primary={
+                  loggedInUserType === 'Doctor' &&
+                  item?.tabName === 'additional-qualifications' &&
+                  getQueryRaisedIconView() ? (
+                    <>
+                      {item?.name}
+                      <Typography>
+                        <ReportOutlinedIcon
+                          fontSize="inherit"
+                          sx={{ ml: 2, color: theme.palette.secondary.main }}
+                        />
+                      </Typography>
+                    </>
+                  ) : (
+                    item?.name
+                  )
+                }
                 primaryTypographyProps={{ variant: 'body3' }}
                 sx={{
                   opacity: open ? 1 : 0,
                   color:
-                    item.tabName === ActiveOption
+                    item?.tabName === ActiveOption
                       ? theme.palette.secondary.lightOrange
                       : theme.palette.textPrimary.main,
                 }}
