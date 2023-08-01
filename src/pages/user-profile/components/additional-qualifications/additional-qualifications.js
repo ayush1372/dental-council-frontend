@@ -222,7 +222,7 @@ const AdditionalQualifications = () => {
     });
     formData.append('data', doctorRegistrationDetailsBlob);
 
-    qualificationFilesData[0]?.length > 0
+    qualificationFilesData.length > 0
       ? formData.append('degreeCertificates', qualificationFilesData[0]?.file)
       : formData.append('degreeCertificates', degreeCertificateBlob);
 
