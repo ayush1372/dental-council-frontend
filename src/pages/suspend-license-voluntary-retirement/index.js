@@ -62,13 +62,13 @@ export function SuspendLicenseVoluntaryRetirement({
   });
   const { activateLicenseList } = useSelector((state) => state?.common);
 
-  let raisedQueriesList = queryRaisedFor?.map((query) => {
-    let obj = {
-      fieldName: query?.filedName,
-      queryComment: query?.value,
-    };
-    return obj;
-  });
+  // let raisedQueriesList = queries?.map((query) => {
+  //   let obj = {
+  //     fieldName: query?.filedName,
+  //     queryComment: query?.value,
+  //   };
+  //   return obj;
+  // });
 
   const onSubmit = () => {
     setConformSuspend(true);
@@ -188,7 +188,7 @@ export function SuspendLicenseVoluntaryRetirement({
     };
 
     let raiseQueryBody = {
-      queries: raisedQueriesList,
+      queries: queries,
       hpProfileId: personalDetails?.hp_profile_id ? personalDetails?.hp_profile_id : '',
       commonComment: getValues().remark,
 
