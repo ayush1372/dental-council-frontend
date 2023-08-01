@@ -12,7 +12,7 @@ import { TextField } from '../../ui/core';
 import CircularLoader from '../circular-loader/circular-loader';
 
 const CaptchaComponent = ({ selectedLoginOption, captchaResult }) => {
-  const { generateCaptcha, captchaEnabledFlag } = useSelector((state) => state.loginReducer);
+  const { generateCaptcha, captchaEnabledFlag } = useSelector((state) => state?.loginReducer);
   const [anwser, setAnwser] = useState();
   const [error, setError] = useState();
   const dispatch = useDispatch();
