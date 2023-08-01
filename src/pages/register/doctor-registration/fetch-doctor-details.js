@@ -543,14 +543,14 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                     type="text"
                     onInput={(e) => handleInput(e)}
                     name={'MobileNumber'}
-                    disabled={isOtpValidMobile}
+                    disabled={!isOtpValidAadhar || isOtpValidMobile}
                     placeholder={t('Enter mobile number')}
                     defaultValue={getValues().MobileNumber}
                     error={errors.MobileNumber?.message}
                     {...register('MobileNumber', {
                       required: 'Please enter a valid 10 digit mobile number',
                       pattern: {
-                        value: /^\d{10}$/i,
+                        value: /^(?:(?:\+|0{0,2})91(\s*[-]\s*)?|[0]?)?[6789]\d{9}$/,
                         message: 'Please enter a valid mobile number',
                       },
                     })}
