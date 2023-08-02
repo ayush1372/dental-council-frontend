@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import SendIcon from '@mui/icons-material/Send';
 import { Box, Dialog, Grid, Link, Tooltip, Typography, useTheme } from '@mui/material';
 import InputBase from '@mui/material/InputBase';
 import Paper from '@mui/material/Paper';
@@ -208,7 +209,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
               <Tooltip
                 title={'NMR ID will be displayed here once your application is approved by NMC'}
               >
-                <InfoOutlinedIcon color="primary" sx={{ width: '14px', marginLeft: '8px' }}/>
+                <InfoOutlinedIcon color="primary" sx={{ width: '14px', marginLeft: '8px' }} />
               </Tooltip>
             ) : (
               ''
@@ -406,21 +407,38 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                 <Typography variant="subtitle2" color="textPrimary.main" width="auto" mr={0.5}>
                   {emailId ? emailId : ''}
                 </Typography>
-                <Box>
+                <Box display={'flex'}>
                   {emailIdVerify ? (
                     <img width="16px" height="16px" src={IconVerified} alt="verified icon" />
                   ) : (
                     ' '
                   )}
-
-                  <EditOutlinedIcon
-                    color={'primary'}
-                    fontSize={'inherit'}
-                    sx={{ mr: 0.5, cursor: 'pointer' }}
-                    onClick={() => {
-                      setEmailChange(true);
-                    }}
-                  />
+                  <Box display={'flex'}>
+                    <Tooltip title="Edit email">
+                      <EditOutlinedIcon
+                        color={'primary'}
+                        fontSize={'inherit'}
+                        sx={{ mr: 0.5, cursor: 'pointer' }}
+                        onClick={() => {
+                          setEmailChange(true);
+                        }}
+                      />
+                    </Tooltip>
+                    {!emailIdVerify ? (
+                      <Tooltip title="Verify email">
+                        <SendIcon
+                          color={'primary'}
+                          fontSize={'inherit'}
+                          sx={{ mr: 0.5, cursor: 'pointer' }}
+                          onClick={() => {
+                            handleSubmit(onSubmit('email'));
+                          }}
+                        />
+                      </Tooltip>
+                    ) : (
+                      ''
+                    )}
+                  </Box>
                 </Box>
               </>
             )}
