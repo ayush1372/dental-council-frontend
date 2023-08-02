@@ -1048,6 +1048,15 @@ const EditQualificationDetails = ({
       <Grid container item spacing={2} mt={1}>
         <Grid item xs={12}>
           <UploadFile
+            uploadDisabled={
+              getQueryRaised('Upload Qualification Degree') === false
+                ? false
+                : work_flow_status_id === 3
+                ? getQueryRaised('Upload Qualification Degree')
+                : isVerified === 1
+                ? true
+                : false
+            }
             queryRaiseIcon={getQueryRaised('Upload Qualification Degree') === false ? true : false}
             toolTipData={getQueryRaisedComment('Upload Qualification Degree')}
             fileID={'qualification'}
