@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Box, Button, Container, Grid, TablePagination, Typography } from '@mui/material';
+import { Box, Button, Grid, TablePagination, Typography } from '@mui/material';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -310,19 +310,17 @@ const ActivateLicence = () => {
               </Box>
             </Grid>
           </Grid>
-          <Box>
-            <Container sx={{ marginTop: 2 }}>
-              <ViewProfile />
-              <UserProfile
-                showViewProfile={true}
-                selectedRowData={
-                  activateLicenseList?.data.health_professional_details[
-                    selectedRowData?.SNo?.value - 1
-                  ]
-                }
-                tabName={'Activate License'}
-              />
-            </Container>
+          <Box px={2}>
+            <ViewProfile />
+            <UserProfile
+              showViewProfile={true}
+              selectedRowData={
+                activateLicenseList?.data.health_professional_details[
+                  selectedRowData?.SNo?.value - 1
+                ]
+              }
+              tabName={'Activate License'}
+            />
           </Box>
         </>
       ) : (
