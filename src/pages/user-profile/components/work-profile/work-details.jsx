@@ -778,8 +778,7 @@ const WorkDetails = ({
                     Search
                   </Button>
                 </Box>
-              </Grid>
-              <Grid item xs={12} md={1} lg={1} mt={3}>
+
                 <Box ml={3}>
                   <Button
                     color="grey"
