@@ -67,8 +67,7 @@ const EditQualificationDetails = ({
   const { work_flow_status_id } = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails
   );
-  const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
-  const { qualification_detail_response_tos } = registrationDetails;
+
   const [universitiesListData, setUniversitiesListData] = useState(universitiesList?.data);
   const [qualificationID, setQualificationID] = useState('');
 
@@ -77,27 +76,7 @@ const EditQualificationDetails = ({
     // handleQualificationFilesData(`qualification.${index}.files`, '');
     // clearErrors(`qualification`);
     setValue(event.target.name, event.target.value);
-
     dispatch(selectedQualificationType(event.target.value));
-    // eslint-disable-next-line no-console
-    console.log('get month', getValues().qualification[index].month);
-    // eslint-disable-next-line no-console
-    console.log('get Year', getValues().qualification[index].year);
-
-    if (qualification_detail_response_tos.length <= 0) {
-      setValue(`qualification[${index}].state`, '');
-      clearErrors(`qualification[${index}].state`, '');
-      setValue(`qualification[${index}].college`, '');
-      clearErrors(`qualification[${index}].college`, '');
-      setValue(`qualification[${index}].university`, '');
-      clearErrors(`qualification[${index}].university`, '');
-      setValue(`qualification[${index}].month`, '');
-      clearErrors(`qualification[${index}].month`, '');
-      setValue(`qualification[${index}].year`, '');
-      clearErrors(`qualification[${index}].year`, '');
-      clearErrors(qualificationFilesData[`qualification.${index}.files`], '');
-      // setValue(`qualification[${index}].Month & Year of Degree Awarded`, '');
-    }
   };
 
   const noPointer = { cursor: 'pointer' };
@@ -694,7 +673,7 @@ const EditQualificationDetails = ({
               name="state"
               label="State (in which college is located)"
               placeholder={'Enter state'}
-              // defaultValue={fields[index].state}
+              defaultValue={fields[index].state}
               required={true}
               {...register(`qualification[${index}].state`, {
                 required: 'Please select state',
@@ -729,7 +708,7 @@ const EditQualificationDetails = ({
               name="state"
               label="State (in which college is located)"
               placeholder={'Select state'}
-              // defaultValue={fields[index].state}
+              defaultValue={fields[index].state}
               required={true}
               {...register(
                 `qualification[${index}].state`,
@@ -937,7 +916,7 @@ const EditQualificationDetails = ({
               }
               name="Month"
               placeholder={'Select month'}
-              // defaultValue={qualification?.month}
+              defaultValue={qualification?.month}
               {...register(
                 `qualification[${index}].month`,
                 getValues().qualification[index].month?.length <= 0 && {
@@ -966,7 +945,7 @@ const EditQualificationDetails = ({
                   maxWidth: 130,
                 },
               }}
-              // value={getValues().qualification[index].month}
+              value={getValues().qualification[index].month}
             />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -983,7 +962,7 @@ const EditQualificationDetails = ({
                 getValues().qualification[index].year === '' &&
                 errors?.qualification?.[index]?.year?.message
               }
-              // defaultValue={qualification?.year}
+              defaultValue={qualification?.year}
               {...register(
                 `qualification[${index}].year`,
                 getValues().qualification[index].year?.length <= 0 && {
@@ -1014,7 +993,7 @@ const EditQualificationDetails = ({
                   ? true
                   : false
               }
-              // value={getValues().qualification[index].year}
+              value={getValues().qualification[index].year}
             />
           </Grid>
         </Grid>
