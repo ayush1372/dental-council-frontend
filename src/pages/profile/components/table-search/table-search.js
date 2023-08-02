@@ -259,7 +259,6 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                 {exportData?.data?.health_professional_details ? (
                   genderDropdown === true ? (
                     <SearchableDropdown
-                      sx={{ mt: 1 }}
                       fullWidth
                       name="ActivateLicenceFilterGender"
                       items={createEditFieldData(GenderList)}
@@ -289,7 +288,6 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                 ) : exportData?.data?.dashboard_tolist ? (
                   genderDropdown === true ? (
                     <SearchableDropdown
-                      sx={{ mt: 1 }}
                       fullWidth
                       name="dashBoardCardFilterGender"
                       items={createEditFieldData(GenderList)}

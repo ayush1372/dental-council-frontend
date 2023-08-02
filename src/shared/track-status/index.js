@@ -194,7 +194,13 @@ export default function TrackStatus() {
                 )}
               </Box>
             </Grid>
-            <Grid item xs={12} md={3} display="flex" alignItems="center">
+            <Grid
+              item
+              xs={12}
+              md={loggedInUserType !== 'SMC' ? 3 : 6}
+              display="flex"
+              alignItems="center"
+            >
               <Box pb={{ xs: 2, md: 4 }} sx={{ mt: 1 }}>
                 <Button
                   sx={{
@@ -211,7 +217,7 @@ export default function TrackStatus() {
                   Search
                 </Button>
               </Box>
-              <Grid item xs="auto" ml="auto" mb={2}>
+              <Grid item xs="auto" ml={'auto'} mb={2}>
                 {viewExportIcon === true && (
                   <ExportFiles exportData={trackStatusData?.data?.data} flag={'trackStatusData'} />
                 )}
