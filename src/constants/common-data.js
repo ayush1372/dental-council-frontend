@@ -299,6 +299,11 @@ export const TrackStatusFieldList = [
   { id: 'yearOfRegistration', name: 'Year of Registration' },
   { id: 'requestid', name: 'Request ID' },
 ];
+export const GenderList = [
+  { id: 'm', name: 'Male' },
+  { id: 'f', name: 'Female' },
+  { id: 'o', name: 'Others' },
+];
 export const field_names = {
   degree: 'NAME OF THE DEGREE OBTAINED',
   university: 'UNIVERSITY',
