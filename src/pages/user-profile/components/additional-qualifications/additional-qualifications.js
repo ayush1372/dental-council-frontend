@@ -217,14 +217,14 @@ const AdditionalQualifications = () => {
     const doctorRegistrationDetailsBlob = new Blob([doctorRegistrationDetailsJson], {
       type: 'application/json',
     });
-
+    const degreeCertificateBlob = new Blob([''], {
+      type: 'application/json',
+    });
     formData.append('data', doctorRegistrationDetailsBlob);
-    formData.append(
-      'degreeCertificates',
-      qualificationFilesData[0]?.file
-        ? qualificationFilesData[0]?.file
-        : !deleteUploadedFile && editData?.degree_certificate
-    );
+
+    qualificationFilesData.length > 0
+      ? formData.append('degreeCertificates', qualificationFilesData[0]?.file)
+      : formData.append('degreeCertificates', degreeCertificateBlob);
 
     dispatch(
       additionalQualificationsData(formData, personalDetails?.hp_profile_id, isEditForm)
@@ -663,6 +663,7 @@ const AdditionalQualifications = () => {
                   variant="outlined"
                   value={getValues()?.broadSpeciality}
                   defaultValue={getValues()?.broadSpeciality}
+                  disabled={isEditForm}
                   error={errors?.broadSpeciality?.message}
                   {...register('broadSpeciality', {
                     required: 'Please select the Broad Speciality.',
@@ -682,6 +683,7 @@ const AdditionalQualifications = () => {
                   placeholder={'Enter super speciality'}
                   // queryRaiseIcon={isEditForm && queryfields.includes(field_names.degree)}
                   error={errors?.speciality?.message}
+                  disabled={isEditForm}
                   {...register('speciality')}
                 />
               ) : (
@@ -694,6 +696,7 @@ const AdditionalQualifications = () => {
                   variant="outlined"
                   value={getValues()?.int_broadSpeciality}
                   defaultValue={getValues()?.int_broadSpeciality}
+                  disabled={isEditForm}
                   // queryRaiseIcon={isEditForm && queryfields.includes(field_names.degree)}
                   error={errors?.int_broadSpeciality?.message}
                   {...register('int_broadSpeciality', {
@@ -713,6 +716,7 @@ const AdditionalQualifications = () => {
                   name="int_superSpeciality"
                   label="Super Speciality"
                   placeholder={'Enter super speciality'}
+                  disabled={isEditForm}
                   // queryRaiseIcon={isEditForm && queryfields.includes(field_names.degree)}
                   {...register('int_superSpeciality', {})}
                 />
@@ -792,10 +796,11 @@ const AdditionalQualifications = () => {
             }
             {...register(
               'qualificationCertificate',
-              (isEditForm ? !deleteUploadedFile : qualificationFilesData[0]?.file === 0) && {
+              (isEditForm ? deleteUploadedFile : qualificationFilesData[0]?.file?.length === 0) && {
                 required: 'Please upload the degree certificate.',
               }
             )}
+            fileDisabled={isEditForm && !queryfields.includes(field_names.qualificationDegree)}
           />
           <Box mt={2}>
             <Button
