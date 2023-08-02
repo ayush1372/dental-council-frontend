@@ -134,6 +134,24 @@ const ReadRegisterAndAcademicDetails = ({
     return filteredQualificationDetails;
   };
 
+  //Helper Method to identify the Addtional qualification request is for india or international.
+  const actionButtonHandler = () => {
+    let enableForwardButton;
+    if (selectedAcademicStatus === 'Pending' && personalDetails?.hp_profile_status_id === 2) {
+      registrationDetails?.qualification_detail_response_tos?.find((element) => {
+        if (
+          element?.request_id ===
+          dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]?.request_id
+        ) {
+          enableForwardButton = element?.qualification_from === 'India';
+        }
+      });
+    } else {
+      enableForwardButton = true;
+    }
+    return enableForwardButton;
+  };
+
   useEffect(() => {
     if (!isNaN(selectedDataIndex)) {
       let updatedTableData =
@@ -280,6 +298,7 @@ const ReadRegisterAndAcademicDetails = ({
                                 selectedAcademicStatus !== 'Pending' ||
                                 !showForwardButton) &&
                                 (loggedInUserType === 'SMC' || loggedInUserType === 'NMC')) ||
+                                (loggedInUserType === 'SMC' && actionButtonHandler() === false) ||
                                 (loggedInUserType !== 'SMC' &&
                                   userActiveTab !== 'Activate Licence' &&
                                   selectedAcademicStatus !== 'Forwarded')) && (
@@ -328,7 +347,8 @@ const ReadRegisterAndAcademicDetails = ({
                               {loggedInUserType === 'SMC' &&
                                 userActiveTab !== 'Activate Licence' &&
                                 selectedAcademicStatus !== 'Forwarded' &&
-                                selectedAcademicStatus !== 'College/NBE Verified' && (
+                                selectedAcademicStatus !== 'College/NBE Verified' &&
+                                actionButtonHandler() === true && (
                                   <Button
                                     variant="contained"
                                     color="secondary"
