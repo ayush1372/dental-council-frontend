@@ -4,7 +4,7 @@ import { Box, Grid, TextField, Tooltip, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { TrackStatusFieldList } from '../../constants/common-data';
+import { GenderList, TrackStatusFieldList } from '../../constants/common-data';
 import { createEditFieldData } from '../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../shared/autocomplete/searchable-dropdown';
 import TrackStatusTable from '../../shared/track-status/track-status-table';
@@ -17,6 +17,8 @@ export default function TrackStatus() {
   const [showHeader, setShowHeader] = useState(true);
   const [trackValues, setTrackValues] = useState({});
   const [trackStatusId, setTrackStatusId] = useState('');
+  const [trackStatusGenderId, setTrackStatusGenderId] = useState('');
+  const [genderDropdown, setGenderDropdown] = useState(false);
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const { councilNames, trackStatusData } = useSelector((state) => state.common);
   const [viewExportIcon, setViewExportIcon] = useState(false);
@@ -59,7 +61,7 @@ export default function TrackStatus() {
       smcId: getValues().RegistrationCouncilId,
       // registrationNo: parseInt(getValues().RegistrationNumber),
       search: trackStatusId,
-      value: getValues().trackStatusFilter,
+      value: genderDropdown === true ? trackStatusGenderId : getValues().trackStatusFilter,
       pageNo: 1,
       offset: 10,
     };
@@ -142,6 +144,11 @@ export default function TrackStatus() {
                   {...register('trackStatus')}
                   onChange={(currentValue) => {
                     setTrackStatusId(currentValue?.id);
+                    if (currentValue?.id === 'gender') {
+                      setGenderDropdown(true);
+                    } else {
+                      setGenderDropdown(false);
+                    }
                     if (currentValue === null) {
                       setValue('trackStatusFilter', null);
                     }
@@ -157,22 +164,43 @@ export default function TrackStatus() {
                     *
                   </Typography>
                 </Typography> */}
-                <TextField
-                  sx={{ mt: 1 }}
-                  data-testid="filter_By_RegNo"
-                  inputProps={{ maxLength: 100 }}
-                  fullWidth
-                  id="outlined-basic"
-                  variant="outlined"
-                  name={'trackStatusFilter'}
-                  placeholder={'Enter keywords'}
-                  defaultValue={getValues().trackStatusFilter}
-                  {...register('trackStatusFilter', {})}
-                  error={errors.trackStatusFilter?.message}
-                />
+                {genderDropdown === true ? (
+                  <SearchableDropdown
+                    sx={{ mt: 1 }}
+                    fullWidth
+                    name="trackStatusGender"
+                    items={createEditFieldData(GenderList)}
+                    placeholder="Please select"
+                    clearErrors={clearErrors}
+                    {...register('trackStatusGender')}
+                    onChange={(currentValue) => {
+                      setTrackStatusGenderId(currentValue?.id);
+                    }}
+                  />
+                ) : (
+                  <TextField
+                    sx={{ mt: 1 }}
+                    data-testid="filter_By_RegNo"
+                    inputProps={{ maxLength: 100 }}
+                    fullWidth
+                    id="outlined-basic"
+                    variant="outlined"
+                    name={'trackStatusFilter'}
+                    placeholder={'Enter keywords'}
+                    defaultValue={getValues().trackStatusFilter}
+                    {...register('trackStatusFilter', {})}
+                    error={errors.trackStatusFilter?.message}
+                  />
+                )}
               </Box>
             </Grid>
-            <Grid item xs={12} md={3} display="flex" alignItems="center">
+            <Grid
+              item
+              xs={12}
+              md={loggedInUserType !== 'SMC' ? 3 : 6}
+              display="flex"
+              alignItems="center"
+            >
               <Box pb={{ xs: 2, md: 4 }} sx={{ mt: 1 }}>
                 <Button
                   sx={{
@@ -189,7 +217,7 @@ export default function TrackStatus() {
                   Search
                 </Button>
               </Box>
-              <Grid item xs="auto" ml="auto" mb={2}>
+              <Grid item xs="auto" ml={'auto'} mb={2}>
                 {viewExportIcon === true && (
                   <ExportFiles exportData={trackStatusData?.data?.data} flag={'trackStatusData'} />
                 )}
