@@ -591,7 +591,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
               {...register('FatherName', {
                 pattern: {
                   value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
-                  message: 'Please enter father&apos;s name',
+                  message: `Please enter father's name`,
                 },
                 maxLength: {
                   value: 100,
@@ -1415,7 +1415,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 variant="outlined"
                 name={'PostalCode'}
                 placeholder="Pincode"
-                required={isSameAddress ? false : true}
+                required={!isSameAddress ? false : true}
                 fullWidth
                 // sx={{
                 //   backgroundColor: isSameAddress
@@ -1452,7 +1452,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                     },
                   }
                 )}
-                error={errors.PostalCode?.message}
+                error={!isSameAddress ? errors.PostalCode?.message : ''}
               />
             </Grid>
           </Grid>
