@@ -550,7 +550,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                     {...register('MobileNumber', {
                       required: 'Please enter a valid 10 digit mobile number',
                       pattern: {
-                        value: /^(?:(?:\+|0{0,2})91(\s*[-]\s*)?|[0]?)?[6789]\d{9}$/,
+                        value: /^\d{10}$/i,
                         message: 'Please enter a valid mobile number',
                       },
                     })}
