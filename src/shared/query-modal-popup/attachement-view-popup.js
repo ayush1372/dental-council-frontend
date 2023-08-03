@@ -12,10 +12,16 @@ export default function AttachmentViewPopup(props) {
 
   return (
     <Box>
-      <Modal open={open} onClose={handleClose} sx={{ mt: 15 }}>
+      <Modal open={open} onClose={handleClose} sx={{ mt: 1 }}>
         <Container
           maxWidth="sm"
-          sx={{ backgroundColor: 'white.main', borderRadius: '10px', minHeight: '450px', maxHeight:'100vh' }}
+          sx={{
+            backgroundColor: 'white.main',
+            borderRadius: '10px',
+            minHeight: '450px',
+            maxHeight: '100vh',
+            overflow: 'auto',
+          }}
         >
           <Box py={3}>
             <Box display="flex" justifyContent="flex-end">
@@ -60,7 +66,7 @@ export default function AttachmentViewPopup(props) {
                   src={`data:image/*;base64,${props?.certificate}`}
                   alt={props?.alt}
                   width="100%"
-                  height="450px"
+                  // height="450px"
                 />
               )}
             </Box>
