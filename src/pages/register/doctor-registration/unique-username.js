@@ -64,11 +64,10 @@ const UniqueUserNameForDoctorRegistration = () => {
 
   return (
     <Box>
-      <Box my={9}>
+      <Box my={3}>
         <Container
           sx={{
             boxShadow: '1',
-            pt: 4,
             width: {
               xs: '100%',
               sm: '712px',
@@ -76,7 +75,7 @@ const UniqueUserNameForDoctorRegistration = () => {
           }}
         >
           <Box>
-            <Box pt={2} pb={4}>
+            <Box pt={2} pb={2}>
               <Typography variant="h2" color="textPrimary.main">
                 Create Username
               </Typography>

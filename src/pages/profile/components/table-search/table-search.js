@@ -12,6 +12,7 @@ import {
   DashBoardCardsFieldList,
   emptyData,
   filterDropDownData,
+  GenderList,
 } from '../../../../../src/constants/common-data';
 import { createEditFieldData } from '../../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../../shared/autocomplete/searchable-dropdown';
@@ -24,6 +25,8 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
   const [statusTypeValue, setStatusTypeValue] = useState(false);
   const [filterId, setFilterId] = useState('');
   const [dashBoardCardId, setDashBoardCardId] = useState();
+  const [genderDropdown, setGenderDropdown] = useState(false);
+  const [genderId, setGenderId] = useState('');
   const { userActiveTab } = useSelector((state) => state.common);
 
   const acendingOrderFilter = ActivateLicenceFieldList;
@@ -99,14 +102,14 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
   });
   const onClickSearchButtonHandler = () => {
     if (exportData?.data?.dashboard_tolist) {
-      trackData.value = getValues().dashBoardCardFilter;
+      trackData.value = genderDropdown === true ? genderId : getValues().dashBoardCardFilter;
       trackData.search = dashBoardCardId;
       searchParams(trackData);
     }
 
     if (exportData?.data?.health_professional_details) {
       trackData.search = getValues().ActivateLicenceId;
-      trackData.value = getValues().ActivateLicenceFilter;
+      trackData.value = genderDropdown === true ? genderId : getValues().ActivateLicenceFilter;
       searchParams(trackData);
     }
     if (trackApplication) {
@@ -199,6 +202,11 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                     {...register('ActivateLicence')}
                     onChange={(currentValue) => {
                       setValue('ActivateLicenceId', currentValue?.id);
+                      if (currentValue?.id === 'gender') {
+                        setGenderDropdown(true);
+                      } else {
+                        setGenderDropdown(false);
+                      }
                       if (currentValue === null) {
                         setValue('ActivateLicenceFilter', null);
                       }
@@ -215,6 +223,11 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                     {...register('dashBoardCard')}
                     onChange={(currentValue) => {
                       setDashBoardCardId(currentValue?.id);
+                      if (currentValue?.id === 'gender') {
+                        setGenderDropdown(true);
+                      } else {
+                        setGenderDropdown(false);
+                      }
                       if (currentValue === null) {
                         setValue('dashBoardCardFilter', null);
                       }
@@ -244,33 +257,61 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
             {trackApplication !== true && (
               <Grid item md={3} xs={12}>
                 {exportData?.data?.health_professional_details ? (
-                  <TextField
-                    data-testid="filter_By_RegNo"
-                    inputProps={{ maxLength: 100 }}
-                    fullWidth
-                    id="outlined-basic"
-                    variant="outlined"
-                    type="text"
-                    name="ActivateLicenceFilter"
-                    required={false}
-                    placeholder={'Enter keywords'}
-                    defaultValue={getValues().ActivateLicenceFilter}
-                    error={errors.ActivateLicenceFilter?.message}
-                    {...register('ActivateLicenceFilter')}
-                  />
+                  genderDropdown === true ? (
+                    <SearchableDropdown
+                      fullWidth
+                      name="ActivateLicenceFilterGender"
+                      items={createEditFieldData(GenderList)}
+                      placeholder="Please select"
+                      clearErrors={clearErrors}
+                      {...register('ActivateLicenceFilterGender')}
+                      onChange={(currentValue) => {
+                        setGenderId(currentValue?.id);
+                      }}
+                    />
+                  ) : (
+                    <TextField
+                      data-testid="filter_By_RegNo"
+                      inputProps={{ maxLength: 100 }}
+                      fullWidth
+                      id="outlined-basic"
+                      variant="outlined"
+                      type="text"
+                      name="ActivateLicenceFilter"
+                      required={false}
+                      placeholder={'Enter keywords'}
+                      defaultValue={getValues().ActivateLicenceFilter}
+                      error={errors.ActivateLicenceFilter?.message}
+                      {...register('ActivateLicenceFilter')}
+                    />
+                  )
                 ) : exportData?.data?.dashboard_tolist ? (
-                  <TextField
-                    data-testid="filter_By_RegNo"
-                    inputProps={{ maxLength: 100 }}
-                    fullWidth
-                    id="outlined-basic"
-                    variant="outlined"
-                    name={'dashBoardCardFilter'}
-                    placeholder={'Enter keywords'}
-                    defaultValue={getValues().dashBoardCardFilter}
-                    {...register('dashBoardCardFilter', {})}
-                    error={errors.dashBoardCardFilter?.message}
-                  />
+                  genderDropdown === true ? (
+                    <SearchableDropdown
+                      fullWidth
+                      name="dashBoardCardFilterGender"
+                      items={createEditFieldData(GenderList)}
+                      placeholder="Please select"
+                      clearErrors={clearErrors}
+                      {...register('dashBoardCardFilterGender')}
+                      onChange={(currentValue) => {
+                        setGenderId(currentValue?.id);
+                      }}
+                    />
+                  ) : (
+                    <TextField
+                      data-testid="filter_By_RegNo"
+                      inputProps={{ maxLength: 100 }}
+                      fullWidth
+                      id="outlined-basic"
+                      variant="outlined"
+                      name={'dashBoardCardFilter'}
+                      placeholder={'Enter keywords'}
+                      defaultValue={getValues().dashBoardCardFilter}
+                      {...register('dashBoardCardFilter', {})}
+                      error={errors.dashBoardCardFilter?.message}
+                    />
+                  )
                 ) : (
                   exportData?.data?.college_details && (
                     <TextField

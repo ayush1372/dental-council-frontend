@@ -618,6 +618,13 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12}>
             <UploadFile
+              uploadDisabled={
+                getQueryRaised('Upload the registration certificate') === false
+                  ? false
+                  : work_flow_status_id === 3
+                  ? getQueryRaised('Upload the registration certificate')
+                  : false
+              }
               queryRaiseIcon={
                 getQueryRaised('Upload the registration certificate') === false ? true : false
               }
