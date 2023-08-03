@@ -17,7 +17,7 @@ export const AbdmHealthRecords = () => {
           <Box
             component={'img'}
             height="auto"
-            width={{ xs: '120px', md: '108px', lg: '150px' }}
+            width={{ xs: '120px', md: '108px', lg: '146px' }}
             src={ABHASCANPLAYSTORE}
             alt="Mobile App Scan"
           />
@@ -25,7 +25,7 @@ export const AbdmHealthRecords = () => {
             <Box
               component={'img'}
               height="auto"
-              width={{ xs: '120px', md: '108px', lg: '150px' }}
+              width={{ xs: '120px', md: '108px', lg: '146px' }}
               src={PLAYSTORE}
               alt="ios Icon"
             />
@@ -35,7 +35,7 @@ export const AbdmHealthRecords = () => {
           <Box
             component={'img'}
             height="auto"
-            width={{ xs: '120px', md: '108px', lg: '150px' }}
+            width={{ xs: '120px', md: '108px', lg: '146px' }}
             src={ABHASCANAPPSTORE}
             alt="Mobile App Scan"
           />
@@ -43,7 +43,7 @@ export const AbdmHealthRecords = () => {
             <Box
               component={'img'}
               height="auto"
-              width={{ xs: '120px', md: '108px', lg: '150px' }}
+              width={{ xs: '120px', md: '108px', lg: '146px' }}
               src={APPSTORE}
               alt="Android Icon"
             />
