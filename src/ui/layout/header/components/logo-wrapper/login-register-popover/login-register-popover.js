@@ -207,7 +207,7 @@ export const LoginRegisterPopover = ({
                 </Button>
                 <Button
                   size="small"
-                  variant="outlined"
+                  variant="contained"
                   color="secondary"
                   onClick={() => {
                     onClickLoginHandler();

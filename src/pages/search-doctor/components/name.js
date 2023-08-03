@@ -23,6 +23,7 @@ const Name = ({ setDoSearch, setSearchData, setScrollDown }) => {
   const onsubmit = () => {
     const searchValues = {
       fullName: getValues().DoctorName,
+      profileStatusId: 2,
       page: 0,
       size: 9,
     };

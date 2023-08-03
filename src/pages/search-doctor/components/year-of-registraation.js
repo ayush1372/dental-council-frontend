@@ -26,6 +26,7 @@ const YearOfRegistration = ({ setDoSearch, setSearchData, setScrollDown }) => {
   const onsubmit = () => {
     const searchValues = {
       registrationYear: getValues().YearofRegistration,
+      profileStatusId: 2,
       page: 0,
       size: 9,
     };

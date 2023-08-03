@@ -34,7 +34,7 @@ const SuspendedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
       registrationNumber: getValues().RegistrationNumber,
       registrationYear: getValues().YearofRegistration,
       stateMedicalCouncilId: getValues().RegistrationCouncilId,
-      profileStatusId: 5,
+      profileStatusId: `5,6`,
       page: 0,
       size: 9,
     };

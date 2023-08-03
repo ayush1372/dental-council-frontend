@@ -591,7 +591,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
               {...register('FatherName', {
                 pattern: {
                   value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
-                  message: 'Please enter father&apos;s name',
+                  message: `Please enter father's name`,
                 },
                 maxLength: {
                   value: 100,
