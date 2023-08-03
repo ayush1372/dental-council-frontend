@@ -331,7 +331,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
               </Grid>
             </Grid>
 
-            {index === 0 && element?.country?.name !== 'India' && (
+            {index === 0 && element?.qualification_from !== 'India' && (
               <>
                 <Grid item xs={12}>
                   <Typography variant="h3" color="grey.label">
