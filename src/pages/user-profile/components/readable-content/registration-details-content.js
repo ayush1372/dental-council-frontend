@@ -30,7 +30,6 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
     setOpenModal(false);
   };
   const { registration_detail_to } = registrationDetails || {};
-  const { personal_details } = personalDetails || {};
 
   const {
     registration_date,
@@ -78,7 +77,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' &&
               selectedAcademicStatus === 'Pending' &&
-              personal_details?.hp_profile_status_id === 1 &&
+              personalDetails?.hp_profile_status_id === 1 &&
               !data?.is_admin && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
@@ -112,7 +111,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' &&
               selectedAcademicStatus === 'Pending' &&
-              personal_details?.hp_profile_status_id === 1 &&
+              personalDetails?.hp_profile_status_id === 1 &&
               !data?.is_admin && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
@@ -146,7 +145,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' &&
               selectedAcademicStatus === 'Pending' &&
-              personal_details?.hp_profile_status_id === 1 &&
+              personalDetails?.hp_profile_status_id === 1 &&
               !data?.is_admin && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
@@ -182,7 +181,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' &&
               selectedAcademicStatus === 'Pending' &&
-              personal_details?.hp_profile_status_id === 1 &&
+              personalDetails?.hp_profile_status_id === 1 &&
               !data?.is_admin && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
@@ -215,7 +214,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' &&
               selectedAcademicStatus === 'Pending' &&
-              personal_details?.hp_profile_status_id === 1 &&
+              personalDetails?.hp_profile_status_id === 1 &&
               !data?.is_admin && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
@@ -260,7 +259,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' &&
               selectedAcademicStatus === 'Pending' &&
-              personal_details?.hp_profile_status_id === 1 &&
+              personalDetails?.hp_profile_status_id === 1 &&
               !data?.is_admin && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
