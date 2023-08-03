@@ -78,7 +78,8 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' &&
               selectedAcademicStatus === 'Pending' &&
-              personal_details?.hp_profile_status_id === 1 && (
+              personal_details?.hp_profile_status_id === 1 &&
+              !data?.is_admin && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
                   color="primary"
@@ -111,7 +112,8 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' &&
               selectedAcademicStatus === 'Pending' &&
-              personal_details?.hp_profile_status_id === 1 && (
+              personal_details?.hp_profile_status_id === 1 &&
+              !data?.is_admin && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
                   color="primary"
@@ -144,7 +146,8 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' &&
               selectedAcademicStatus === 'Pending' &&
-              personal_details?.hp_profile_status_id === 1 && (
+              personal_details?.hp_profile_status_id === 1 &&
+              !data?.is_admin && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
                   color="primary"
@@ -179,7 +182,8 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' &&
               selectedAcademicStatus === 'Pending' &&
-              personal_details?.hp_profile_status_id === 1 && (
+              personal_details?.hp_profile_status_id === 1 &&
+              !data?.is_admin && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
                   color="primary"
@@ -211,7 +215,8 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' &&
               selectedAcademicStatus === 'Pending' &&
-              personal_details?.hp_profile_status_id === 1 && (
+              personal_details?.hp_profile_status_id === 1 &&
+              !data?.is_admin && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
                   color="primary"
@@ -255,7 +260,8 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
               data?.user_type === 3) &&
               dashboardTableDetails !== 'Approved' &&
               selectedAcademicStatus === 'Pending' &&
-              personal_details?.hp_profile_status_id === 1 && (
+              personal_details?.hp_profile_status_id === 1 &&
+              !data?.is_admin && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
                   color="primary"

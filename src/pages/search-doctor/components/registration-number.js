@@ -23,6 +23,7 @@ const RegistrationNumber = ({ setDoSearch, setSearchData, setScrollDown }) => {
   const onsubmit = () => {
     const searchValues = {
       registrationNumber: getValues().RegistrationNumber,
+      profileStatusId: 2,
       page: 0,
       size: 9,
     };

@@ -27,6 +27,7 @@ const StateMedicalCouncil = ({ setDoSearch, setSearchData, setScrollDown }) => {
   const onsubmit = () => {
     const searchValues = {
       stateMedicalCouncilId: getValues().RegistrationCouncilId,
+      profileStatusId: 2,
       page: 0,
       size: 9,
     };
