@@ -172,6 +172,7 @@ const ReadRegisterAndAcademicDetails = ({
             updatedTableData,
             response?.data?.qualification_detail_response_tos
           );
+          newRegistrationDetails.nbe_response_to = response?.data?.nbe_response_to;
           setRegistrationDetailsData(newRegistrationDetails);
         });
       } else {
