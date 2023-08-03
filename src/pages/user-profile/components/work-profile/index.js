@@ -42,6 +42,7 @@ const WorkProfile = () => {
     register,
     setValue,
     watch,
+    clearErrors,
   } = useForm({
     mode: 'onChange',
     defaultValues: {},
@@ -116,6 +117,7 @@ const WorkProfile = () => {
             watch={watch}
             setDefaultFacilityData={setDefaultFacilityData}
             setCurrentlyWorking={setCurrentlyWorking}
+            clearErrors={clearErrors}
           />
         )}
         {defaultFacilityData?.current_work_details?.length > 0 && (

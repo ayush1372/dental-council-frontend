@@ -41,6 +41,7 @@ const AdvanceSearch = ({ setDoSearch, setSearchData, setScrollDown }) => {
       registrationNumber: getValues().RegistrationNumber,
       registrationYear: getValues().YearofRegistration,
       stateMedicalCouncilId: getValues().RegistrationCouncilId,
+      profileStatusId: 2,
       page: 0,
       size: 9,
     };

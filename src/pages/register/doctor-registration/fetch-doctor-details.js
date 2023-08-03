@@ -543,7 +543,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                     type="text"
                     onInput={(e) => handleInput(e)}
                     name={'MobileNumber'}
-                    disabled={isOtpValidMobile}
+                    disabled={!isOtpValidAadhar || isOtpValidMobile}
                     placeholder={t('Enter mobile number')}
                     defaultValue={getValues().MobileNumber}
                     error={errors.MobileNumber?.message}

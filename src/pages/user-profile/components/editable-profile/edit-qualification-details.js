@@ -801,7 +801,9 @@ const EditQualificationDetails = ({
               //       : '',
               // }}
               disabled={
-                work_flow_status_id === 3
+                getQueryRaised('State') === false
+                  ? false
+                  : work_flow_status_id === 3
                   ? getQueryRaised('Name of the College')
                   : isVerified === 1
                   ? true
