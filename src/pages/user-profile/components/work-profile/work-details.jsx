@@ -36,6 +36,7 @@ const WorkDetails = ({
   errors,
   handleSubmit,
   watch,
+  clearErrors,
   setCurrentlyWorking,
   currentWorkingSelection,
   setDefaultFacilityData,
@@ -419,6 +420,31 @@ const WorkDetails = ({
     return languageData;
   };
 
+  const workDetailsErrorHandler = () => {
+    if (facilityChecked) {
+      if (
+        tabValue === 0 &&
+        (getValues()?.facilityId === undefined || getValues()?.facilityId === '')
+      ) {
+        setFacilityIDError(true);
+      } else if (tabValue === 1) {
+        if (getValues()?.stateLGDCode === undefined || getValues()?.stateLGDCode === '') {
+          setFacilityStateError(true);
+        }
+        if (getValues()?.districtLGDCode === undefined || getValues()?.districtLGDCode === '') {
+          setFacilityDistrictError(true);
+        }
+      }
+      if (declaredFacilityData?.length === 0) {
+        setFacilityTableError(true);
+      } else if (declaredFacilityData?.length > 0) {
+        onSubmit();
+      }
+    } else if (!facilityChecked && !organizationChecked) {
+      onSubmit();
+    }
+  };
+
   useEffect(() => {
     handleFacilityError();
   }, [facilityChecked]);
@@ -607,16 +633,23 @@ const WorkDetails = ({
             >
               <Tab label="Facility ID" />
               <Tab label="Facility Name" />
-              {/* <Tab label="On The Map" /> */}
             </Tabs>
           </Grid>
           {tabValue === 0 && (
             <Grid container spacing={2} mt={2} ml={1}>
-              <Grid item md={8} display="flex" alignItems={facilityIDError ? 'center' : 'end'}>
+              <Grid
+                item
+                md={8}
+                display="flex"
+                alignItems={facilityIDError || errors?.facilityId?.message ? 'center' : 'end'}
+              >
                 <Box>
                   <TextField
                     fullWidth
-                    error={facilityIDError && 'Please enter a valid facility ID'}
+                    error={
+                      (facilityIDError || errors?.facilityId?.message) &&
+                      'Please enter a valid facility ID'
+                    }
                     name={'facilityId'}
                     label="Facility ID"
                     required={true}
@@ -626,7 +659,10 @@ const WorkDetails = ({
                       required: 'Please enter a valid facility ID',
                     })}
                     onChange={(e) => {
-                      if (e.target.value !== '') setFacilityIDError(false);
+                      if (e.target.value !== '') {
+                        setFacilityIDError(false);
+                        clearErrors('facilityId', '');
+                      }
                     }}
                   />
                 </Box>
@@ -691,7 +727,9 @@ const WorkDetails = ({
 
                 <Select
                   fullWidth
-                  error={facilityStateError && 'Please select state'}
+                  error={
+                    (facilityStateError || errors?.stateLGDCode?.message) && 'Please select state'
+                  }
                   name={'stateLGDCode'}
                   required={true}
                   {...register('stateLGDCode', {
@@ -702,6 +740,7 @@ const WorkDetails = ({
                   onChange={(e) => {
                     if (e.target.value !== '') {
                       setFacilityStateError(false);
+                      clearErrors('stateLGDCode', '');
                       fetchDistricts(e.target.value, true);
                       setValue('stateLGDCode', e.target.value);
                     }
@@ -717,7 +756,10 @@ const WorkDetails = ({
                 </Typography>
                 <Select
                   fullWidth
-                  error={facilityDistrictError && 'Please select district'}
+                  error={
+                    (facilityDistrictError || errors?.stateLGDCode?.message) &&
+                    'Please select district'
+                  }
                   name={'districtLGDCode'}
                   required={true}
                   {...register('districtLGDCode', {
@@ -727,6 +769,7 @@ const WorkDetails = ({
                   placeholder={'Select District'}
                   onChange={(e) => {
                     if (e.target.value !== '') {
+                      clearErrors('districtLGDCode', '');
                       setFacilityDistrictError(false);
                       setValue('districtLGDCode', e.target.value);
                     }
@@ -1182,38 +1225,7 @@ const WorkDetails = ({
         <Grid item xs={12}>
           <Button
             onClick={
-              organizationChecked
-                ? handleSubmit(onSubmit)
-                : () => {
-                    if (facilityChecked) {
-                      if (
-                        tabValue === 0 &&
-                        (getValues()?.facilityId === undefined || getValues()?.facilityId === '')
-                      ) {
-                        setFacilityIDError(true);
-                      } else if (tabValue === 1) {
-                        if (
-                          getValues()?.stateLGDCode === undefined ||
-                          getValues()?.stateLGDCode === ''
-                        ) {
-                          setFacilityStateError(true);
-                        }
-                        if (
-                          getValues()?.districtLGDCode === undefined ||
-                          getValues()?.districtLGDCode === ''
-                        ) {
-                          setFacilityDistrictError(true);
-                        }
-                      }
-                      if (declaredFacilityData?.length === 0) {
-                        setFacilityTableError(true);
-                      } else if (declaredFacilityData?.length > 0) {
-                        onSubmit();
-                      }
-                    } else if (!facilityChecked && !organizationChecked) {
-                      onSubmit();
-                    }
-                  }
+              organizationChecked ? handleSubmit(onSubmit) : handleSubmit(workDetailsErrorHandler)
             }
             variant="contained"
             color="secondary"

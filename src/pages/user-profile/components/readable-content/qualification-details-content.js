@@ -123,10 +123,10 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                 </Typography>
                 {(data?.user_type === 2 ||
                   data?.user_type === 3 ||
-                  (data?.user_type === 4 && index !== 0) ||
+                  data?.user_type === 4 ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  (selectedAcademicStatus === 'Pending' || selectedAcademicStatus === 'Pending') &&
+                  selectedAcademicStatus === 'Pending' &&
                   college_status !== 'Approved' &&
                   !data?.is_admin && (
                     <ContactSupportOutlinedIcon
@@ -160,10 +160,10 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                 </Typography>
                 {(data?.user_type === 2 ||
                   data?.user_type === 3 ||
-                  (data?.user_type === 4 && index !== 0) ||
+                  data?.user_type === 4 ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  (selectedAcademicStatus === 'Pending' || selectedAcademicStatus === 'Pending') &&
+                  selectedAcademicStatus === 'Pending' &&
                   college_status !== 'Approved' &&
                   !data?.is_admin && (
                     <ContactSupportOutlinedIcon
@@ -197,10 +197,10 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                 </Typography>
                 {(data?.user_type === 2 ||
                   data?.user_type === 3 ||
-                  (data?.user_type === 4 && index !== 0) ||
+                  data?.user_type === 4 ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  (selectedAcademicStatus === 'Pending' || selectedAcademicStatus === 'Pending') &&
+                  selectedAcademicStatus === 'Pending' &&
                   college_status !== 'Approved' &&
                   !data?.is_admin && (
                     <ContactSupportOutlinedIcon
@@ -237,10 +237,10 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
 
                 {(data?.user_type === 2 ||
                   data?.user_type === 3 ||
-                  (data?.user_type === 4 && index !== 0) ||
+                  data?.user_type === 4 ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  (selectedAcademicStatus === 'Pending' || selectedAcademicStatus === 'Pending') &&
+                  selectedAcademicStatus === 'Pending' &&
                   college_status !== 'Approved' &&
                   !data?.is_admin && (
                     <ContactSupportOutlinedIcon
@@ -274,10 +274,10 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                 </Typography>{' '}
                 {(data?.user_type === 2 ||
                   data?.user_type === 3 ||
-                  (data?.user_type === 4 && index !== 0) ||
+                  data?.user_type === 4 ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  (selectedAcademicStatus === 'Pending' || selectedAcademicStatus === 'Pending') &&
+                  selectedAcademicStatus === 'Pending' &&
                   college_status !== 'Approved' &&
                   !data?.is_admin && (
                     <ContactSupportOutlinedIcon
@@ -312,10 +312,10 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                 </Typography>{' '}
                 {(data?.user_type === 2 ||
                   data?.user_type === 3 ||
-                  (data?.user_type === 4 && index !== 0) ||
+                  data?.user_type === 4 ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  (selectedAcademicStatus === 'Pending' || selectedAcademicStatus === 'Pending') &&
+                  selectedAcademicStatus === 'Pending' &&
                   college_status !== 'Approved' &&
                   !data?.is_admin && (
                     <ContactSupportOutlinedIcon
@@ -355,11 +355,10 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                     </Typography>{' '}
                     {(data?.user_type === 2 ||
                       data?.user_type === 3 ||
-                      (data?.user_type === 4 && index !== 0) ||
+                      data?.user_type === 4 ||
                       data?.user_type === 5) &&
                       element.is_verified !== 1 &&
-                      (selectedAcademicStatus === 'Pending' ||
-                        selectedAcademicStatus === 'Pending') &&
+                      selectedAcademicStatus === 'Pending' &&
                       college_status !== 'Approved' &&
                       !data?.is_admin && (
                         <ContactSupportOutlinedIcon
@@ -390,11 +389,10 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                     </Typography>{' '}
                     {(data?.user_type === 2 ||
                       data?.user_type === 3 ||
-                      (data?.user_type === 4 && index !== 0) ||
+                      data?.user_type === 4 ||
                       data?.user_type === 5) &&
                       element.is_verified !== 1 &&
-                      (selectedAcademicStatus === 'Pending' ||
-                        selectedAcademicStatus === 'Pending') &&
+                      selectedAcademicStatus === 'Pending' &&
                       college_status !== 'Approved' &&
                       !data?.is_admin && (
                         <ContactSupportOutlinedIcon
@@ -425,11 +423,10 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                     </Typography>{' '}
                     {(data?.user_type === 2 ||
                       data?.user_type === 3 ||
-                      (data?.user_type === 4 && index !== 0) ||
+                      data?.user_type === 4 ||
                       data?.user_type === 5) &&
                       element.is_verified !== 1 &&
-                      (selectedAcademicStatus === 'Pending' ||
-                        selectedAcademicStatus === 'Pending') &&
+                      selectedAcademicStatus === 'Pending' &&
                       college_status !== 'Approved' &&
                       !data?.is_admin && (
                         <ContactSupportOutlinedIcon
@@ -460,11 +457,10 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                     </Typography>{' '}
                     {(data?.user_type === 2 ||
                       data?.user_type === 3 ||
-                      (data?.user_type === 4 && index !== 0) ||
+                      data?.user_type === 4 ||
                       data?.user_type === 5) &&
                       element.is_verified !== 1 &&
-                      (selectedAcademicStatus === 'Pending' ||
-                        selectedAcademicStatus === 'Pending') &&
+                      selectedAcademicStatus === 'Pending' &&
                       college_status !== 'Approved' &&
                       !data?.is_admin && (
                         <ContactSupportOutlinedIcon
@@ -499,11 +495,10 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                     </Typography>{' '}
                     {(data?.user_type === 2 ||
                       data?.user_type === 3 ||
-                      (data?.user_type === 4 && index !== 0) ||
+                      data?.user_type === 4 ||
                       data?.user_type === 5) &&
                       element.is_verified !== 1 &&
-                      (selectedAcademicStatus === 'Pending' ||
-                        selectedAcademicStatus === 'Pending') &&
+                      selectedAcademicStatus === 'Pending' &&
                       college_status !== 'Approved' &&
                       !data?.is_admin && (
                         <ContactSupportOutlinedIcon
@@ -555,10 +550,10 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                 </Typography>
                 {(data?.user_type === 2 ||
                   data?.user_type === 3 ||
-                  (data?.user_type === 4 && index !== 0) ||
+                  data?.user_type === 4 ||
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
-                  (selectedAcademicStatus === 'Pending' || selectedAcademicStatus === 'Pending') &&
+                  selectedAcademicStatus === 'Pending' &&
                   college_status !== 'Approved' &&
                   !data?.is_admin && (
                     <ContactSupportOutlinedIcon
