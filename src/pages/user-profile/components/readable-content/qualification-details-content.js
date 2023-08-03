@@ -127,7 +127,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
                   (selectedAcademicStatus === 'Pending' || selectedAcademicStatus === 'Pending') &&
-                  college_status !== 'Approved' && (
+                  college_status !== 'Approved' &&
+                  !data?.is_admin && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
                       color="primary"
@@ -163,7 +164,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
                   (selectedAcademicStatus === 'Pending' || selectedAcademicStatus === 'Pending') &&
-                  college_status !== 'Approved' && (
+                  college_status !== 'Approved' &&
+                  !data?.is_admin && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
                       color="primary"
@@ -199,7 +201,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
                   (selectedAcademicStatus === 'Pending' || selectedAcademicStatus === 'Pending') &&
-                  college_status !== 'Approved' && (
+                  college_status !== 'Approved' &&
+                  !data?.is_admin && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
                       color="primary"
@@ -238,7 +241,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
                   (selectedAcademicStatus === 'Pending' || selectedAcademicStatus === 'Pending') &&
-                  college_status !== 'Approved' && (
+                  college_status !== 'Approved' &&
+                  !data?.is_admin && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
                       color="primary"
@@ -274,7 +278,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
                   (selectedAcademicStatus === 'Pending' || selectedAcademicStatus === 'Pending') &&
-                  college_status !== 'Approved' && (
+                  college_status !== 'Approved' &&
+                  !data?.is_admin && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
                       color="primary"
@@ -311,7 +316,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
                   (selectedAcademicStatus === 'Pending' || selectedAcademicStatus === 'Pending') &&
-                  college_status !== 'Approved' && (
+                  college_status !== 'Approved' &&
+                  !data?.is_admin && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
                       color="primary"
@@ -354,7 +360,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       element.is_verified !== 1 &&
                       (selectedAcademicStatus === 'Pending' ||
                         selectedAcademicStatus === 'Pending') &&
-                      college_status !== 'Approved' && (
+                      college_status !== 'Approved' &&
+                      !data?.is_admin && (
                         <ContactSupportOutlinedIcon
                           cursor="pointer"
                           color="primary"
@@ -388,7 +395,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       element.is_verified !== 1 &&
                       (selectedAcademicStatus === 'Pending' ||
                         selectedAcademicStatus === 'Pending') &&
-                      college_status !== 'Approved' && (
+                      college_status !== 'Approved' &&
+                      !data?.is_admin && (
                         <ContactSupportOutlinedIcon
                           cursor="pointer"
                           color="primary"
@@ -422,7 +430,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       element.is_verified !== 1 &&
                       (selectedAcademicStatus === 'Pending' ||
                         selectedAcademicStatus === 'Pending') &&
-                      college_status !== 'Approved' && (
+                      college_status !== 'Approved' &&
+                      !data?.is_admin && (
                         <ContactSupportOutlinedIcon
                           cursor="pointer"
                           color="primary"
@@ -456,7 +465,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       element.is_verified !== 1 &&
                       (selectedAcademicStatus === 'Pending' ||
                         selectedAcademicStatus === 'Pending') &&
-                      college_status !== 'Approved' && (
+                      college_status !== 'Approved' &&
+                      !data?.is_admin && (
                         <ContactSupportOutlinedIcon
                           cursor="pointer"
                           color="primary"
@@ -494,7 +504,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       element.is_verified !== 1 &&
                       (selectedAcademicStatus === 'Pending' ||
                         selectedAcademicStatus === 'Pending') &&
-                      college_status !== 'Approved' && (
+                      college_status !== 'Approved' &&
+                      !data?.is_admin && (
                         <ContactSupportOutlinedIcon
                           cursor="pointer"
                           color="primary"
@@ -548,7 +559,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   data?.user_type === 5) &&
                   element.is_verified !== 1 &&
                   (selectedAcademicStatus === 'Pending' || selectedAcademicStatus === 'Pending') &&
-                  college_status !== 'Approved' && (
+                  college_status !== 'Approved' &&
+                  !data?.is_admin && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
                       color="primary"
