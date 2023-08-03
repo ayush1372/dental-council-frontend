@@ -1415,7 +1415,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 variant="outlined"
                 name={'PostalCode'}
                 placeholder="Pincode"
-                required={isSameAddress ? false : true}
+                required={!isSameAddress ? false : true}
                 fullWidth
                 // sx={{
                 //   backgroundColor: isSameAddress
@@ -1452,7 +1452,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                     },
                   }
                 )}
-                error={errors.PostalCode?.message}
+                error={!isSameAddress ? errors.PostalCode?.message : ''}
               />
             </Grid>
           </Grid>
