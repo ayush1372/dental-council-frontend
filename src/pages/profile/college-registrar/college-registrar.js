@@ -222,9 +222,7 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
             <SuccessModalPopup
               open={successModalPopup}
               setOpen={() => setSuccessModalPopup(false)}
-              text={
-                'You have registered your College Registrar. Link to set the password has been sent.'
-              }
+              text={`Registrar profile has been created. Further details would be sent on registrar's registered Email ID`}
             />
           )}
         </Grid>
