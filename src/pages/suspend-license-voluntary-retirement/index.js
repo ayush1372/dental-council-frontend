@@ -453,7 +453,9 @@ export function SuspendLicenseVoluntaryRetirement({
                     value={
                       loggedInUserType === 'NMC'
                         ? new Date(updatedDefaultDateValue?.toDate)
-                        : new Date(getValues()?.toDate)
+                        : getValues()?.toDate
+                        ? new Date(getValues()?.toDate)
+                        : undefined
                     }
                     minDate={
                       loggedInUserType === 'NMC'
