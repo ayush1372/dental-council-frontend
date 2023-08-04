@@ -518,7 +518,7 @@ export function SuspendLicenseVoluntaryRetirement({
                   : ''
               }
               disabled={loggedInUserType === 'NMC'}
-              defaultValue={getValues().remark || selectedRowData?.remark}
+              defaultValue={getValues()?.remark || selectedRowData?.remark}
               error={
                 selectedValue === 'raise' ||
                 selectedValue === 'reject' ||
@@ -527,7 +527,7 @@ export function SuspendLicenseVoluntaryRetirement({
                   ? false
                   : showRemarkError
                   ? 'Enter Remarks'
-                  : errors.remark?.message
+                  : errors?.remark?.message
               }
               {...register('remark', {
                 required:
