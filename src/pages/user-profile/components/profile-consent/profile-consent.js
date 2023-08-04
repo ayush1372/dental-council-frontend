@@ -88,6 +88,9 @@ const ProfileConsent = ({
         ? 2
         : selectedQualificationTypeValue === 'International'
         ? 7
+        : doctorRegDetails?.qualification_detail_response_tos[0]?.qualification_from ===
+          'International'
+        ? 7
         : 1,
     };
 
@@ -190,6 +193,9 @@ const ProfileConsent = ({
           application_type_id: personalDetails?.nmr_id
             ? 2
             : selectedQualificationTypeValue === 'International'
+            ? 7
+            : doctorRegDetails?.qualification_detail_response_tos[0]?.qualification_from ===
+              'International'
             ? 7
             : 1,
           transaction_id: response?.data?.asp_txn_id,

@@ -498,7 +498,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
           'Wrong Option'
         )}
       </Box>
-      <CaptchaComponent captchaResult={captchaResult} />
+      <CaptchaComponent selectedLoginOption={selectedLoginOption} captchaResult={captchaResult} />
       <Box mt={4} mb={2} width={'100%'} display={'flex'} justifyContent={'space-between'}>
         <Button
           variant="contained"

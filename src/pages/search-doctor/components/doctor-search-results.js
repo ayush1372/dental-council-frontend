@@ -79,7 +79,7 @@ const SearchResults = ({ searchData, scrolldown }) => {
           Search Result
         </Typography>
         <Typography color="primary.main" component="div" variant="subtitle2">
-          {searchDetails?.data?.data?.count > 1
+          {searchDetails?.data?.data?.count >= 1
             ? `${searchDetails?.data?.data?.count}  Matching records found `
             : `No record found `}
         </Typography>

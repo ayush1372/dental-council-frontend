@@ -11,8 +11,8 @@ import { TextField } from '../../ui/core';
 // import successToast from '../../ui/core/toaster';
 import CircularLoader from '../circular-loader/circular-loader';
 
-const CaptchaComponent = ({ captchaResult }) => {
-  const { generateCaptcha, captchaEnabledFlag } = useSelector((state) => state.loginReducer);
+const CaptchaComponent = ({ selectedLoginOption, captchaResult }) => {
+  const { generateCaptcha, captchaEnabledFlag } = useSelector((state) => state?.loginReducer);
   const [anwser, setAnwser] = useState();
   const [error, setError] = useState();
   const dispatch = useDispatch();
@@ -31,6 +31,13 @@ const CaptchaComponent = ({ captchaResult }) => {
       // });
     }
   };
+
+  useEffect(() => {
+    if (selectedLoginOption) {
+      reloadCaptcha();
+      setValue('anwser', '');
+    }
+  }, [selectedLoginOption]);
 
   useEffect(() => {
     setAnwser('');
