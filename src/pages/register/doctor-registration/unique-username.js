@@ -172,7 +172,7 @@ const UniqueUserNameForDoctorRegistration = () => {
                   backgroundColor: theme.palette.secondary.main,
                 }}
               >
-                Set Password
+                Create Username
               </Button>
               <Button variant="contained" color="grey" onClick={handleCancel}>
                 Cancel
