@@ -23,13 +23,18 @@ const CollegeMyProfile = () => {
   const { loginData } = useSelector((state) => state.loginReducer);
 
   let userType = loginData?.data?.user_sub_type;
+  // eslint-disable-next-line no-console
+  console.log('userType', userType);
+  // eslint-disable-next-line no-console
+  console.log('showPage', showPage);
+
   if (userType === 1) {
     userType = 'College Admin';
   }
   if (userType === 2) {
     userType = 'College Registrar';
   }
-  if (userType === 3) {
+  if (userType === (3 || 4 || 5)) {
     userType = 'College Dean';
   }
 
@@ -41,7 +46,7 @@ const CollegeMyProfile = () => {
         userType = 'College Admin';
       } else if (userType === 2) {
         userType = 'College Registrar';
-      } else if (userType === 3) {
+      } else if (userType === (3 || 4 || 5)) {
         userType = 'College Dean';
       }
 
