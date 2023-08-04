@@ -88,7 +88,7 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
             updateShowPage('Profile');
             setSuccessModalPopup(false);
           }}
-          text={'College Registrar Data has been Updated Successfully.'}
+          text={'College Registrar data has been updated.'}
         />
       )}
       <Grid item xs={12}>
@@ -121,7 +121,7 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
             required: 'Please enter name',
 
             pattern: {
-              value: /^(?!^\s)[a-zA-Z\s']*$(?<!\s$)/,
+              value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
               message: 'Please enter a valid name',
             },
           })}
@@ -223,7 +223,7 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
               open={successModalPopup}
               setOpen={() => setSuccessModalPopup(false)}
               text={
-                'You have successfully registered your College Registrar. Defined credentials have been sent on the Email ID and Phone number you registered'
+                'You have registered your College Registrar. Link to set the password has been sent.'
               }
             />
           )}
