@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
 import BlockIcon from '@mui/icons-material/Block';
-// import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloseIcon from '@mui/icons-material/Close';
 import ErrorIcon from '@mui/icons-material/Error';
 import HelpIcon from '@mui/icons-material/Help';
 import { Box, Dialog, Grid, Typography } from '@mui/material';
+import moment from 'moment';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -42,9 +42,13 @@ export function SuspendLicenseVoluntaryRetirement({
   const [confirmationModal, setConfirmationModal] = useState(false);
   const [queries, setQueries] = useState([]);
   const [showToDateError, setShowToDateError] = useState(false);
-  //const [showFromDateError, setShowFromDateError] = useState(false);
   const [showRemarkError, setShowRemarkError] = useState(false);
   const [showConsentError, setShowConsentError] = useState(false);
+
+  let updatedDefaultDateValue = {
+    fromDate: moment(selectedRowData?.start_date).format('YYYY-MM-DD'),
+    toDate: moment(selectedRowData?.end_date).format('YYYY-MM-DD'),
+  };
 
   const {
     register,
@@ -61,14 +65,6 @@ export function SuspendLicenseVoluntaryRetirement({
     },
   });
   const { activateLicenseList } = useSelector((state) => state?.common);
-
-  // let raisedQueriesList = queries?.map((query) => {
-  //   let obj = {
-  //     fieldName: query?.filedName,
-  //     queryComment: query?.value,
-  //   };
-  //   return obj;
-  // });
 
   const onSubmit = () => {
     setConformSuspend(true);
@@ -223,12 +219,6 @@ export function SuspendLicenseVoluntaryRetirement({
             }
           })
           .catch(() => {
-            // successToast(
-            //   allFailMsg?.data?.response?.data?.message,
-            //   'auth-error',
-            //   'error',
-            //   'top-center'
-            // );
             if (userActiveTab === 'voluntary-suspend-license') {
               setConfirmationModal(false);
             }
@@ -383,9 +373,21 @@ export function SuspendLicenseVoluntaryRetirement({
               </Typography>
               <DatePicker
                 disabled
-                defaultValue={new Date()}
-                minDate={new Date()}
-                maxDate={new Date()}
+                value={
+                  loggedInUserType === 'NMC'
+                    ? new Date(updatedDefaultDateValue?.fromDate)
+                    : new Date()
+                }
+                minDate={
+                  loggedInUserType === 'NMC'
+                    ? new Date(updatedDefaultDateValue?.fromDate)
+                    : new Date()
+                }
+                maxDate={
+                  loggedInUserType === 'NMC'
+                    ? new Date(updatedDefaultDateValue?.fromDate)
+                    : new Date()
+                }
                 onChangeDate={(newDateValue) => {
                   if (
                     selectedSuspension === 'permanent-suspension-check' ||
@@ -415,7 +417,7 @@ export function SuspendLicenseVoluntaryRetirement({
                 data-testid="fromDate"
                 id="fromDate"
                 name="fromDate"
-                required={true}
+                required={loggedInUserType === 'NMC' ? false : true}
                 // error={showFromDateError ? 'Enter From Date' : false}
               />
             </Grid>
@@ -443,14 +445,25 @@ export function SuspendLicenseVoluntaryRetirement({
                     name="toDate"
                     disabled={
                       selectedSuspension === 'permanent-suspension-check' ||
-                      selectedValue === 'suspend'
+                      selectedValue === 'suspend' ||
+                      loggedInUserType === 'NMC'
                         ? true
                         : false
                     }
-                    minDate={new Date()}
+                    value={
+                      loggedInUserType === 'NMC'
+                        ? new Date(updatedDefaultDateValue?.toDate)
+                        : new Date(getValues()?.toDate)
+                    }
+                    minDate={
+                      loggedInUserType === 'NMC'
+                        ? new Date(updatedDefaultDateValue?.toDate)
+                        : new Date()
+                    }
                     required={true}
-                    defaultValue={getValues()?.toDate ? new Date(getValues()?.toDate) : undefined}
-                    error={showToDateError ? 'Enter To Date' : false}
+                    error={
+                      loggedInUserType === 'NMC' ? false : showToDateError ? 'Enter To Date' : false
+                    }
                   />
                 </>
               )}
@@ -502,7 +515,8 @@ export function SuspendLicenseVoluntaryRetirement({
                   ? 'Add your reason here . . .'
                   : ''
               }
-              defaultValue={getValues().remark}
+              disabled={loggedInUserType === 'NMC'}
+              defaultValue={getValues().remark || selectedRowData?.remark}
               error={
                 selectedValue === 'raise' ||
                 selectedValue === 'reject' ||
@@ -590,6 +604,7 @@ export function SuspendLicenseVoluntaryRetirement({
                 },
               })}
               sx={{ padding: '0 8px 0 0' }}
+              checked={loggedInUserType === 'NMC' ? true : getValues()?.notification}
               label={
                 tabName
                   ? 'I understand that during the period of my suspension, I will not be able to practice and my NMR profile will be deactivated.'
@@ -658,9 +673,6 @@ export function SuspendLicenseVoluntaryRetirement({
                 if (getValues().toDate === undefined) {
                   setShowToDateError(true);
                 }
-                // if (getValues().fromDate === undefined) {
-                //   setShowFromDateError(true);
-                // }
                 if (getValues()?.remark === undefined || getValues()?.remark === '') {
                   setShowRemarkError(true);
                 }
