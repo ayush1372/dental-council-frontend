@@ -329,7 +329,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                 <Typography variant="subtitle2" color="textPrimary.main" width="auto" mr={0.5}>
                   {mobileNumber && mobileNumber}
                 </Typography>
-                <Box>
+                <Box display={'flex'}>
                   <img width="16px" height="16px" src={IconVerified} alt="verified icon" />
                   {/* <Typography variant="body2" color="primary.main" ml={0.5}>
                     <span
