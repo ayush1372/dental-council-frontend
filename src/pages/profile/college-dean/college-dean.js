@@ -77,7 +77,7 @@ export function CollegeDean({ showPage, updateShowPage }) {
             updateShowPage('Profile');
             setSuccessModalPopup(false);
           }}
-          text={'College Dean Data has been Updated Successfully.'}
+          text={'College Dean data has been updated.'}
         />
       )}
       <Grid item xs={12} mt={3}>
