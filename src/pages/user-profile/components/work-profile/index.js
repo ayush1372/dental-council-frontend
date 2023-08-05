@@ -70,7 +70,8 @@ const WorkProfile = () => {
 
   return (
     
-    <Grid container spacing={2} px={2}>
+    <Grid container spacing={2} px={3}>
+      <Typography variant={'h2'} color={'primary.main'} px={2} pt={3} pb={0}>Work Details</Typography>
       <Grid item xs={12} md={4}>
         <Typography variant="subtitle2" color="inputTextColor.main">
           Are you Currently Working?
@@ -152,7 +153,6 @@ const WorkProfile = () => {
         </Grid>
       )}
     </Grid>
-    
   );
 };
 
