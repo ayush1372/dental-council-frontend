@@ -116,7 +116,7 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep, l
   };
 
   return (
-    <Box p={3} bgcolor="white.main" boxShadow="4">
+    <Box p={3} sx={{ bgcolor:'white.main', boxShadow:'1', borderRadius: '8px' }}>
       <Typography variant="h2" component="div" textAlign={'left'}>
         {userData?.page === 'forgetUserName' ? 'Recover Your Username' : 'Recover Your Password'}
       </Typography>

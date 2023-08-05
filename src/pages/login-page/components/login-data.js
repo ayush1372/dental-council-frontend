@@ -229,7 +229,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
     setValue('password', '');
   }, [loginName]);
   return (
-    <Box p={3} bgcolor="white.main" boxShadow="4">
+    <Box p={3} sx={{ bgcolor:'white.main', boxShadow:'1', borderRadius: '8px' }}>
       <Typography variant="h2" color="primary.dark" mb={1}>
         {loginName} Login
       </Typography>

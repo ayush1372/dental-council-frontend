@@ -129,7 +129,7 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup,
   };
 
   return (
-    <Box p={3} bgcolor="white.main" boxShadow="4">
+    <Box p={3} sx={{ bgcolor:'white.main', boxShadow:'1', borderRadius: '8px' }}>
       {(otpData.page === 'doctorConstantDetailsPage' && otpData.type === 'sms') ||
       otpData.page === 'forgetUserName' ||
       otpData.page === 'forgotPasswordPage' ? (

@@ -162,9 +162,8 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }
   return (
     <Box
       data-testid="new-password-setup"
-      p={3}
-      bgcolor="white.main"
-      boxShadow="4"
+      p={3} 
+      sx={{ bgcolor:'white.main', boxShadow:'1', borderRadius: '8px' }}
       width={otpData?.page === 'forgotPasswordPage' ? '100%' : '40%'}
     >
       <Typography variant="h4" component="div" textAlign="center" data-testid="Password">
