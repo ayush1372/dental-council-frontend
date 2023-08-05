@@ -15,6 +15,7 @@ import { resetDoctorHPName } from '../../../store/reducers/doctor-registration-r
 import { Button, TextField } from '../../../ui/core';
 import FetchDoctorDetails from './fetch-doctor-details';
 const DoctorRegistrationWelcomePage = () => {
+
   const [isNext, setIsNext] = useState(false);
   const [imrDataNotFound, setImrDataNotFound] = useState(false);
   const [rejectPopup, setRejectPopup] = useState(false);
@@ -82,7 +83,7 @@ const DoctorRegistrationWelcomePage = () => {
     <>
       <Box>
         {isNext === false ? (
-          <Box my={4}>
+          <Box py={4} sx={{ backgroundColor : 'backgroundColor.main'}}>
             <Container
               sx={{
                 boxShadow: '1',
@@ -91,6 +92,8 @@ const DoctorRegistrationWelcomePage = () => {
                   xs: '100%',
                   md: '679px',
                 },
+                backgroundColor : 'white.main',
+                borderRadius: '8px'
               }}
             >
               <Box>
