@@ -16,12 +16,10 @@ export function VoluntarySuspendLicense() {
   const [successPopupMessage, setSuccessPopupMessage] = useState('Hello');
 
   return (
-    <Box bgcolor={`${theme.palette.white.main}`} px={3} py={2}>
+    <Box bgcolor={`${theme.palette.white.main}`} p={3}>
       <Box
         data-testid="voluntary-suspend-license"
         bgcolor={`${theme.palette.white.main}`}
-        px={3}
-        py={2}
       >
         <SuspendLicenseVoluntaryRetirement
           tabName={'voluntary-suspend-license'}
