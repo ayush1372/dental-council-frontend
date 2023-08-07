@@ -15,7 +15,7 @@ import { Button, TextField } from '../../../ui/core';
 // import successToast from '../../..//ui/core/toaster';
 // import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
-export function CollegeDean({ showPage, updateShowPage }) {
+export function CollegeDean({ showPage, updateShowPage, userType }) {
   const dispatch = useDispatch();
   const { collegeData } = useSelector((state) => state.college);
   const userData = collegeData?.data;
@@ -77,12 +77,22 @@ export function CollegeDean({ showPage, updateShowPage }) {
             updateShowPage('Profile');
             setSuccessModalPopup(false);
           }}
-          text={'College Dean data has been updated.'}
+          text={`College ${
+            userType === 'College Dean'
+              ? 'Dean'
+              : userType === 'College Principal'
+              ? 'Principal'
+              : 'Others'
+          }  data has been updated.`}
         />
       )}
       <Grid item xs={12} mt={3}>
         <Typography color="textPrimary.main" variant="h2" mt={2}>
-          {showPage === 'edit' ? 'Edit College Dean' : 'College Dean'}
+          {userType === 'College Dean'
+            ? 'Edit College Dean'
+            : userType === 'College Principal'
+            ? 'Edit College Principal'
+            : 'Edit College Others'}
         </Typography>
       </Grid>
       <Grid item xs={12} md={6} sm={6} lg={4}>
