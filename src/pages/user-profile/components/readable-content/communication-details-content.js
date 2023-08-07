@@ -7,21 +7,26 @@ const CommunicationAddress = ({ personalDetails }) => {
   const { country, state, district, sub_district, pincode, village, is_same_address } =
     communication_address || {};
 
-  const countryName = is_same_address
-    ? personalDetails?.kyc_address?.country?.name || ''
-    : country?.name || '';
-  const stateName = is_same_address
-    ? personalDetails?.kyc_address?.state?.name || ''
-    : state?.name || '';
-  const districtName = is_same_address
-    ? personalDetails?.kyc_address?.district?.name || ''
-    : district?.name || '';
-  const subDistrictName = is_same_address
-    ? personalDetails?.kyc_address?.sub_district?.name || ''
-    : sub_district?.name || '';
-  const villageName = is_same_address
-    ? personalDetails?.kyc_address?.village?.name || ''
-    : village?.name || '';
+  const countryName =
+    is_same_address === 'true'
+      ? personalDetails?.kyc_address?.country?.name || ''
+      : country?.name || '';
+  const stateName =
+    is_same_address === 'true'
+      ? personalDetails?.kyc_address?.state?.name || ''
+      : state?.name || '';
+  const districtName =
+    is_same_address === 'true'
+      ? personalDetails?.kyc_address?.district?.name || ''
+      : district?.name || '';
+  const subDistrictName =
+    is_same_address === 'true'
+      ? personalDetails?.kyc_address?.sub_district?.name || ''
+      : sub_district?.name || '';
+  const villageName =
+    is_same_address === 'true'
+      ? personalDetails?.kyc_address?.village?.name || ''
+      : village?.name || '';
 
   return (
     <Grid container spacing={1} mt={1}>
