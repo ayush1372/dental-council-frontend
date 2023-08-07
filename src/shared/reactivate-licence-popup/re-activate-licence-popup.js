@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, Container, Grid, Modal, Typography } from '@mui/material';
@@ -16,22 +16,23 @@ export default function ReactivateLicencePopup(props) {
   const [showFromDateError, setShowFromDateError] = useState(false);
   const [showReasonError, setShowReasonError] = useState(false);
   const [reActivateFileData, setReActivateFileData] = useState([]);
+  const [supportingDocumentError, setsupportingDocumentError] = useState(false);
 
   const { loginData } = useSelector((state) => state?.loginReducer);
   const dispatch = useDispatch();
 
-  const {
-    register,
-    getValues,
-    setError,
-    clearErrors,
-    formState: { errors },
-  } = useForm({
+  const { register, getValues, setError, clearErrors } = useForm({
     mode: 'onChange',
     defaultValues: {
       fromDate: getDateAndTimeFormat('dateFormat'),
     },
   });
+
+  useEffect(() => {
+    if (reActivateFileData?.length > 0 || reActivateFileData === []) {
+      setsupportingDocumentError(false);
+    }
+  }, [reActivateFileData]);
 
   const handleClose = () => {
     setOpen(false);
@@ -152,7 +153,7 @@ export default function ReactivateLicencePopup(props) {
                   placeholder="Add a reason..."
                   required={true}
                   defaultValue={getValues().reason}
-                  error={showReasonError ? 'Enter Re-activate reason' : false}
+                  error={showReasonError ? 'Enter reason for re-activation' : false}
                   {...register('reason', {
                     required: 'This field is required',
                     onChange: (event) => {
@@ -180,16 +181,11 @@ export default function ReactivateLicencePopup(props) {
               fileData={reActivateFileData}
               clearErrors={clearErrors}
               setError={setError}
-              name={'registrationCertificate'}
-              isError={errors.registrationCertificate?.message}
+              name={'supportingDocument'}
+              isError={supportingDocumentError ? 'Please upload the supporting document.' : ''}
               setFileData={setReActivateFileData}
               uploadFileLabel="Upload the Supporting Document"
-              {...register(
-                'registrationCertificate',
-                reActivateFileData?.length === 0 && {
-                  required: 'Please upload the supporting Document.',
-                }
-              )}
+              {...register('supportingDocument')}
             />
           </Box>
           <Box display="flex" justifyContent="flex-end" mt={2}>
@@ -212,6 +208,12 @@ export default function ReactivateLicencePopup(props) {
                 }
                 if (reason === undefined || reason === '') {
                   setShowReasonError(true);
+                }
+                if (
+                  reActivateFileData?.length === 0 ||
+                  reActivateFileData?.[0].file === undefined
+                ) {
+                  setsupportingDocumentError(true);
                 }
                 if (
                   reason !== undefined &&
