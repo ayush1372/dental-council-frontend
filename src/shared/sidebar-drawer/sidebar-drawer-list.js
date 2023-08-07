@@ -125,18 +125,24 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
                 display="flex"
                 primary={
                   loggedInUserType === 'Doctor' &&
-                  item?.tabName === 'additional-qualifications' &&
-                  getQueryRaisedIconView() ? (
+                  (item?.tabName === 'track-application' || 
+                   item?.tabName === 'additional-qualifications')
+                  ? (
                     <Grid container columnGap={1} alignItems={'center'}>
                       <Grid item>{item?.name}</Grid>
-                      <Grid item>
-                        <Typography display={'flex'} alignItems={'center'}>
-                          <ReportOutlinedIcon
-                            fontSize="inherit"
-                            sx={{ color: theme.palette.secondary.main }}
-                          />
-                        </Typography>
-                      </Grid>
+                      {(item?.tabName === 'track-application' && 
+                        !personalDetails.is_track_application_read_status) || 
+                        (item?.tabName === 'additional-qualifications' && 
+                        getQueryRaisedIconView()) ? 
+                          <Grid item>
+                            <Typography display={'flex'} alignItems={'center'}>
+                              <ReportOutlinedIcon
+                                fontSize="inherit"
+                                sx={{ color: theme.palette.secondary.main }}
+                              />
+                            </Typography>
+                          </Grid>
+                      : ''}
                     </Grid>
                   ) : (
                     item?.name
