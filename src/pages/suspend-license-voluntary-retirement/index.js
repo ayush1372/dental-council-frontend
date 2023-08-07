@@ -443,13 +443,13 @@ export function SuspendLicenseVoluntaryRetirement({
                     data-testid="toDate"
                     id="toDate"
                     name="toDate"
-                    disabled={
-                      selectedSuspension === 'permanent-suspension-check' ||
-                      selectedValue === 'suspend' ||
-                      loggedInUserType === 'NMC'
-                        ? true
-                        : false
-                    }
+                    // disabled={
+                    //   selectedSuspension === 'permanent-suspension-check' ||
+                    //   selectedValue === 'suspend' ||
+                    //   loggedInUserType === 'NMC'
+                    //     ? true
+                    //     : false
+                    // }
                     value={
                       loggedInUserType === 'NMC'
                         ? new Date(updatedDefaultDateValue?.toDate)
@@ -517,10 +517,10 @@ export function SuspendLicenseVoluntaryRetirement({
                   ? 'Add your reason here . . .'
                   : ''
               }
-              disabled={
-                loggedInUserType === 'NMC' &&
-                (selectedValue === 'suspend' || selectedValue === 'blacklist')
-              }
+              // disabled={
+              //   loggedInUserType === 'NMC' &&
+              //   (selectedValue === 'suspend' || selectedValue === 'blacklist')
+              // }
               defaultValue={getValues()?.remark || selectedRowData?.remark}
               error={
                 selectedValue === 'raise' ||
