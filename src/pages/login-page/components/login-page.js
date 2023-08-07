@@ -81,7 +81,7 @@ export function LoginPage() {
     dispatch(loginActiveState({ activeIndex: activeIndex + 1 }));
   };
   return (
-    <Box sx={{ mt: 5, mb: 5, maxWidth: '648px', margin: '40px auto' }}>
+    <Box sx={{ maxWidth: '648px', mx: 'auto'}}>
       {(activeIndex === 0 || activeIndex === undefined) &&
       loginFormNames[loginFormname] === 'Doctor' ? (
         <DoctorLogin

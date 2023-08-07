@@ -257,7 +257,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
     handleNext();
   };
   return (
-    <Box p={2} bgcolor="white.main" boxShadow="4">
+    <Box p={3} sx={{ bgcolor:'white.main', boxShadow:'1', borderRadius: '8px' }}>
       <Typography variant="h2" color="textPrimary.main" mb={2}>
         {loginName} Login
       </Typography>
@@ -287,7 +287,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
               },
             }}
           >
-            <Typography variant="body1" color="textPrimary.main">
+            <Typography variant="body1" textAlign={'center'} color="textPrimary.main">
               Mobile Number
             </Typography>
           </Button>
@@ -313,7 +313,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
               },
             }}
           >
-            <Typography variant="body1" color="textPrimary.main" textAlign={'left'} ml={1}>
+            <Typography variant="body1" color="textPrimary.main" textAlign={'center'} ml={1}>
               Username
             </Typography>
           </Button>
@@ -339,7 +339,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
               },
             }}
           >
-            <Typography variant="body1" color="textPrimary.main" textAlign={'left'} ml={1}>
+            <Typography variant="body1" color="textPrimary.main" textAlign={'center'} ml={1}>
               NMR ID
             </Typography>
           </Button>

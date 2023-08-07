@@ -291,7 +291,7 @@ const ProfileConsent = ({
         variant="body1"
         mb={2}
       >
-        Consent Collection
+        Declaration
         <Typography component="span" color="error.main">
           *
         </Typography>

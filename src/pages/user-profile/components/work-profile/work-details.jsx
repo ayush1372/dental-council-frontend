@@ -787,8 +787,8 @@ const WorkDetails = ({
                   {...register('facilityName')}
                 />
               </Grid>
-              <Grid item xs={12} md={1} lg={1} mt={3}>
-                <Box ml={1}>
+              <Grid item xs={12} md={3} lg={3} mt={3} display={'flex'}>
+                <Box>
                   <Button
                     variant="contained"
                     color="secondary"
@@ -822,7 +822,7 @@ const WorkDetails = ({
                   </Button>
                 </Box>
 
-                <Box ml={3}>
+                <Box ml={1}>
                   <Button
                     color="grey"
                     variant="contained"
@@ -1253,7 +1253,7 @@ const WorkDetails = ({
             setOpen={() => setSuccessModalPopup(false)}
             setDefaultFacilityData={setDefaultFacilityData}
             setCurrentlyWorking={setCurrentlyWorking}
-            text={'Work-details has been submitted'}
+            text={'Work details has been submitted'}
           />
         )}
       </Grid>

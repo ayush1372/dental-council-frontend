@@ -65,7 +65,7 @@ const LoginWrapper = () => {
   }, [location.state.loginFormname, resetStep]);
 
   return (
-    <Box sx={{ mt: 5, mb: 5, maxWidth: '648px', margin: '40px auto' }}>
+    <Box sx={{ py: 4, backgroundColor: 'backgroundColor.main' }}>
       {activeStep === 0 && (
         <LoginPage handleForgotPassword={handleNext} loginName={loginFormNames[loginFormname]} />
       )}

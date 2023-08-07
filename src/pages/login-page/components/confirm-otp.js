@@ -129,7 +129,7 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup,
   };
 
   return (
-    <Box p={3} bgcolor="white.main" boxShadow="4">
+    <Box p={3} sx={{ bgcolor:'white.main', boxShadow:'1', borderRadius: '8px' }}>
       {(otpData.page === 'doctorConstantDetailsPage' && otpData.type === 'sms') ||
       otpData.page === 'forgetUserName' ||
       otpData.page === 'forgotPasswordPage' ? (
@@ -166,7 +166,7 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup,
             <Box display={'flex'} alignItems="center">
               <Box textAlign={'center'}>
                 <img src={IconVerified} alt="verified icon" width={'46px'} />
-                <Typography variant="h2">Email has been sent</Typography>
+                <Typography variant="h2">Verification link has been sent to the email id’ </Typography>
               </Box>
             </Box>
           </Box>
