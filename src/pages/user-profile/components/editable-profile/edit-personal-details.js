@@ -270,6 +270,14 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
   useEffect(() => {
     if (selectedState !== undefined) {
       fetchDistricts(selectedState);
+      if (
+        personalDetails?.kyc_address?.district?.iso_code !== '' ||
+        personalDetails?.kyc_address?.district?.iso_code !== undefined ||
+        personalDetails?.kyc_address?.district?.iso_code !== null ||
+        isSameAddress
+      ) {
+        clearErrors('District', '');
+      }
     }
   }, [selectedState]);
 
@@ -318,6 +326,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
       setValue('PostalCode', personalDetails?.communication_address?.pincode);
     }
     clearErrors('House', '');
+    clearErrors('State', '');
     clearErrors('District', '');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSameAddress]);
@@ -1120,11 +1129,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 State/Union Territory
-                {!isSameAddress && (
-                  <Typography component="span" color="error.main">
-                    *
-                  </Typography>
-                )}
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
               </Typography>
               {isSameAddress || (work_flow_status_id === 3 && getQueryRaised('State')) ? (
                 <TextField
@@ -1147,6 +1154,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                   //   },
                   // }}
                   fullWidth
+                  error={errors.State?.message}
                   value={getStateData(getValues()?.State)?.name}
                   {...register('State', {
                     required: 'Please select state',
@@ -1200,11 +1208,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 District
-                {!isSameAddress && (
-                  <Typography component="span" color="error.main">
-                    *
-                  </Typography>
-                )}
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
               </Typography>
               {isSameAddress || (work_flow_status_id === 3 && getQueryRaised('District')) ? (
                 <TextField
@@ -1226,23 +1232,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                   //       : '',
                   //   },
                   // }}
-                  required={isSameAddress ? false : true}
-                  error={!isSameAddress ? errors.District?.message : ''}
+                  required={true}
+                  error={errors.District?.message}
                   fullWidth
                   value={getDistrictData(getValues()?.District)?.name}
-                  {...register(
-                    'District',
-                    !isSameAddress
-                      ? {
-                          required: 'District is required',
-                        }
-                      : {
-                          required: false,
-                        }
-                  )}
-                  // {...register('District', {
-                  //   // required: 'District is required',
-                  // })}
+                  {...register('District', {
+                    required: 'Please select district',
+                  })}
                 />
               ) : (
                 <Select
@@ -1255,7 +1251,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                   //     : '',
                   // }}
                   fullWidth
-                  error={!isSameAddress ? errors.District?.message : ''}
+                  error={errors.District?.message}
                   name="District"
                   defaultValue={
                     isSameAddress
@@ -1274,17 +1270,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                       ? getQueryRaised('District')
                       : false
                   }
-                  required={isSameAddress ? false : true}
-                  {...register(
-                    'District',
-                    !isSameAddress
-                      ? {
-                          required: 'District is required',
-                        }
-                      : {
-                          required: false,
-                        }
-                  )}
+                  required={true}
+                  {...register('District', {
+                    required: 'Please select district',
+                  })}
                   options={createSelectFieldData(districtsList, 'iso_code')}
                   MenuProps={{
                     style: {
