@@ -57,8 +57,12 @@ export default function AttachmentViewPopup(props) {
                   src={`data:application/pdf;base64,${props?.certificate}`}
                   alt={props?.alt}
                   width="100%"
-                  height="450px"
-                  sx={{ padding: 0, borderRadius: 0 }}
+                  sx={{ 
+                    padding: 0,
+                    borderRadius: 0,
+                    minHeight: '80vh',
+                    maxHeight: '100vh',
+                  }}
                 />
               ) : (
                 <Box

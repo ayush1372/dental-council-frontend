@@ -89,7 +89,10 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
                   item?.tabName === 'work-details')
                   ? true
                   : loggedInUserType === 'College' &&
-                    (data?.user_sub_type === 2 || data?.user_sub_type === 3) &&
+                    (data?.user_sub_type === 2 ||
+                      data?.user_sub_type === 3 ||
+                      data?.user_sub_type === 4 ||
+                      data?.user_sub_type === 5) &&
                     index === 2
                   ? true
                   : loggedInUserType === 'NMC' && data?.user_sub_type === 7 && index === 4
@@ -125,9 +128,7 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
                   item?.tabName === 'additional-qualifications' &&
                   getQueryRaisedIconView() ? (
                     <Grid container columnGap={1} alignItems={'center'}>
-                      <Grid item>
-                        {item?.name}
-                      </Grid>
+                      <Grid item>{item?.name}</Grid>
                       <Grid item>
                         <Typography display={'flex'} alignItems={'center'}>
                           <ReportOutlinedIcon

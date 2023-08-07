@@ -47,10 +47,6 @@ const ProfileConsent = ({
       if (response?.data?.qualification_detail_response_tos[0]?.degree_certificate) {
         setDegreeCertificate(true);
       }
-    });
-  }, []);
-  useEffect(() => {
-    dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id)).then((response) => {
       if (response?.data?.registration_detail_to?.registration_certificate) {
         setRegistrationFile(true);
       }
@@ -291,7 +287,7 @@ const ProfileConsent = ({
         variant="body1"
         mb={2}
       >
-        Consent Collection
+        Declaration
         <Typography component="span" color="error.main">
           *
         </Typography>
