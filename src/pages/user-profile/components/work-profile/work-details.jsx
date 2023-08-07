@@ -496,7 +496,7 @@ const WorkDetails = ({
       </Grid>{' '}
       <Grid item xs={12} md={4}>
         <Typography variant="body1" color="inputTextColor.main">
-          Work Experience in years
+          Work Experience in Years
           <Typography component="span" color="error.main">
             *
           </Typography>
