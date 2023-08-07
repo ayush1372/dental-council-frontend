@@ -357,12 +357,7 @@ export function SuspendLicenseVoluntaryRetirement({
             </Grid>
           )}
 
-          <Typography variant="subtitle2">
-            {'Add Timeline'}
-            {/* <Typography component="span" color="error.main">
-              *
-            </Typography> */}
-          </Typography>
+          <Typography variant="subtitle2">{'Add Timeline'}</Typography>
           <Grid container mt={1} columnSpacing={4}>
             <Grid item xs={12} md={6} lg={6}>
               <Typography component={'p'} variant="body1">
@@ -443,13 +438,13 @@ export function SuspendLicenseVoluntaryRetirement({
                     data-testid="toDate"
                     id="toDate"
                     name="toDate"
-                    // disabled={
-                    //   selectedSuspension === 'permanent-suspension-check' ||
-                    //   selectedValue === 'suspend' ||
-                    //   loggedInUserType === 'NMC'
-                    //     ? true
-                    //     : false
-                    // }
+                    disabled={
+                      selectedSuspension === 'permanent-suspension-check' ||
+                      selectedValue === 'suspend' ||
+                      (loggedInUserType === 'NMC' && selectedRowData?.end_date)
+                        ? true
+                        : false
+                    }
                     value={
                       loggedInUserType === 'NMC'
                         ? new Date(updatedDefaultDateValue?.toDate)
@@ -487,6 +482,7 @@ export function SuspendLicenseVoluntaryRetirement({
             <Typography component="span" color="error.main">
               {tabName === 'voluntary-suspend-license' ||
               selectedValue === 'approve' ||
+              selectedValue === 'reject' ||
               selectedValue === 'forward'
                 ? '*'
                 : ''}
@@ -517,10 +513,11 @@ export function SuspendLicenseVoluntaryRetirement({
                   ? 'Add your reason here . . .'
                   : ''
               }
-              // disabled={
-              //   loggedInUserType === 'NMC' &&
-              //   (selectedValue === 'suspend' || selectedValue === 'blacklist')
-              // }
+              disabled={
+                loggedInUserType === 'NMC' &&
+                selectedRowData?.remark &&
+                (selectedValue === 'suspend' || selectedValue === 'blacklist')
+              }
               defaultValue={getValues()?.remark || selectedRowData?.remark}
               error={
                 selectedValue === 'raise' ||
