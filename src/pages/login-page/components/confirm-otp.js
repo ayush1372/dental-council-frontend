@@ -166,7 +166,7 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup,
             <Box display={'flex'} alignItems="center">
               <Box textAlign={'center'}>
                 <img src={IconVerified} alt="verified icon" width={'46px'} />
-                <Typography variant="h2">Verification link has been sent to the email id’ </Typography>
+                <Typography variant="h2">Verification link has been sent to the email </Typography>
               </Box>
             </Box>
           </Box>
