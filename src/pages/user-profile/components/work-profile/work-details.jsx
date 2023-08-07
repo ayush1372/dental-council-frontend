@@ -1253,7 +1253,7 @@ const WorkDetails = ({
             setOpen={() => setSuccessModalPopup(false)}
             setDefaultFacilityData={setDefaultFacilityData}
             setCurrentlyWorking={setCurrentlyWorking}
-            text={'Work-details has been submitted'}
+            text={'Work details has been submitted'}
           />
         )}
       </Grid>
