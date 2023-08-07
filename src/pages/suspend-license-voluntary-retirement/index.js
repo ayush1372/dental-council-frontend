@@ -299,7 +299,7 @@ export function SuspendLicenseVoluntaryRetirement({
         </Typography>
       )}
 
-      <Typography variant="h2" mb={4} color="primary" textAlign={'center'}>
+      <Typography variant="h2" color="primary" textAlign={'center'}>
         {selectedValue === 'verify'
           ? loggedInUserType === 'NMC'
             ? 'Approve'
@@ -587,7 +587,7 @@ export function SuspendLicenseVoluntaryRetirement({
       {tabName || selectedValue === 'blacklist' || selectedValue === 'suspend' ? (
         <>
           <Typography variant="subtitle2">
-            {'Consent'}
+            {'Declaration'}
             <Typography component="span" color="error.main">
               *
             </Typography>
@@ -666,7 +666,7 @@ export function SuspendLicenseVoluntaryRetirement({
         </Box>
       )}
       {tabName && (
-        <Box align="left" my={5}>
+        <Box align="left" my={3} mb={0}>
           <Button
             variant="contained"
             color="secondary"

@@ -129,25 +129,25 @@ const UniqueUserNameForDoctorRegistration = () => {
               alignItems={{ xs: 'flex-start', sm: 'center' }}
             ></Box>
 
-            <Box pt={2} pb={4}>
+            <Box pt={1} pb={4}>
               <Typography>Suggestions: </Typography>
               {firstSuggestion
                 ? firstSuggestion.map((item, index) => {
                     return index < 6 ? (
                       index + 1 === 5 ? (
                         <Link
-                          sx={{ cursor: 'pointer' }}
+                          sx={{ cursor: 'pointer', textDecoration: 'none' }}
                           onClick={() => handleSuggestion(item)}
-                          color="secondary.main"
+                          color="primary.main"
                           fontSize="14px"
                         >
                           {`${item}`}
                         </Link>
                       ) : (
                         <Link
-                          sx={{ cursor: 'pointer' }}
+                          sx={{ cursor: 'pointer', textDecoration: 'none' }}
                           onClick={() => handleSuggestion(item)}
-                          color="secondary.main"
+                          color="primary.main"
                           fontSize="14px"
                         >
                           {`${item}, ` + ' '}
@@ -172,7 +172,7 @@ const UniqueUserNameForDoctorRegistration = () => {
                   backgroundColor: theme.palette.secondary.main,
                 }}
               >
-                Set Password
+                Create Username
               </Button>
               <Button variant="contained" color="grey" onClick={handleCancel}>
                 Cancel

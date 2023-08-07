@@ -44,7 +44,7 @@ export function MobileNumber(props) {
           width="100%"
           className={styles.mobileField}
           display="flex"
-          gap={{ xs: 1, sm: 0 }}
+          gap={1}
           flexWrap={{ xs: 'wrap', sm: 'nowrap' }}
         >
           <TextField
@@ -62,7 +62,6 @@ export function MobileNumber(props) {
               '& .MuiInputBase-root.MuiOutlinedInput-root': {
                 paddingLeft: 0,
               },
-              marginRight: '16px',
             }}
             onKeyDown={(e) => ['e', 'E', '+', '-', ' '].includes(e.key) && e.preventDefault()}
             {...register('mobileNo', {
