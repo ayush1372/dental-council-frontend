@@ -517,7 +517,10 @@ export function SuspendLicenseVoluntaryRetirement({
                   ? 'Add your reason here . . .'
                   : ''
               }
-              disabled={loggedInUserType === 'NMC'}
+              disabled={
+                loggedInUserType === 'NMC' &&
+                (selectedValue === 'suspend' || selectedValue === 'blacklist')
+              }
               defaultValue={getValues()?.remark || selectedRowData?.remark}
               error={
                 selectedValue === 'raise' ||
