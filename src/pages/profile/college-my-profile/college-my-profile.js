@@ -23,6 +23,7 @@ const CollegeMyProfile = () => {
   const { loginData } = useSelector((state) => state.loginReducer);
 
   let userType = loginData?.data?.user_sub_type;
+
   if (userType === 1) {
     userType = 'College Admin';
   }
@@ -31,6 +32,12 @@ const CollegeMyProfile = () => {
   }
   if (userType === 3) {
     userType = 'College Dean';
+  }
+  if (userType === 4) {
+    userType = 'College Principal';
+  }
+  if (userType === 5) {
+    userType = 'College Others';
   }
 
   useEffect(() => {
@@ -43,11 +50,19 @@ const CollegeMyProfile = () => {
         userType = 'College Registrar';
       } else if (userType === 3) {
         userType = 'College Dean';
+      } else if (userType === 4) {
+        userType = 'College Principal';
+      } else if (userType === 5) {
+        userType = 'College Others';
       }
 
       if (userType === 'College Dean') {
         dispatch(collegeProfileData(loginData?.data?.college_id, loginData?.data?.profile_id));
       } else if (userType === 'College Registrar') {
+        dispatch(collegeProfileData(loginData?.data?.college_id, loginData?.data?.profile_id));
+      } else if (userType === 'College Principal') {
+        dispatch(collegeProfileData(loginData?.data?.college_id, loginData?.data?.profile_id));
+      } else if (userType === 'College Others') {
         dispatch(collegeProfileData(loginData?.data?.college_id, loginData?.data?.profile_id));
       } else if (userType === 'College Admin') {
         dispatch(getCollegeData(loginData?.data?.college_id));
@@ -68,6 +83,10 @@ const CollegeMyProfile = () => {
                   ? '(Admin)'
                   : userType === 'College Registrar'
                   ? '(Registrar)'
+                  : userType === 'College Principal'
+                  ? '(Principal)'
+                  : userType === 'College Others'
+                  ? '(Others)'
                   : '(Dean)'}
               </Typography>
             </Grid>
@@ -359,9 +378,21 @@ const CollegeMyProfile = () => {
       {showPage === 'Edit' && userType === 'College Admin' && (
         <CollegeEditProfile setShowpage={setShowpage} />
       )}
+
       {showPage === 'Edit' && userType === 'College Dean' && (
-        <CollegeDean showPage={'edit'} updateShowPage={setShowpage} />
+        <CollegeDean showPage={'edit'} updateShowPage={setShowpage} userType={'College Dean'} />
       )}
+      {showPage === 'Edit' && userType === 'College Principal' && (
+        <CollegeDean
+          showPage={'edit'}
+          updateShowPage={setShowpage}
+          userType={'College Principal'}
+        />
+      )}
+      {showPage === 'Edit' && userType === 'College Others' && (
+        <CollegeDean showPage={'edit'} updateShowPage={setShowpage} userType={'College Others'} />
+      )}
+
       {showPage === 'Edit' && userType === 'College Registrar' && (
         <CollegeRegistrar showPage={'edit'} updateShowPage={setShowpage} />
       )}
