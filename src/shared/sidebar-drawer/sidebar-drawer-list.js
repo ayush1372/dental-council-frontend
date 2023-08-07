@@ -10,14 +10,20 @@ import {
   Typography,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import {
+  getPersonalDetailsData,
+  updateDoctorContactDetails,
+} from '../../../src/store/actions/doctor-user-profile-actions';
 export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOption, open }) {
+  const dispatch = useDispatch();
   const theme = useTheme();
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const { personalDetails, registrationDetails } = useSelector(
     (state) => state?.doctorUserProfileReducer
   );
+
   const logInDoctorStatus = useSelector(
     (state) => state?.loginReducer?.loginData?.data?.blacklisted
   );
@@ -35,6 +41,12 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
       }
     });
     return queryRaised;
+  };
+  const onTrackApplicationClick = () => {
+    let personalData = { track_application_read_status: true };
+    dispatch(updateDoctorContactDetails(personalData, personalDetails?.hp_profile_id)).then(() => {
+      dispatch(getPersonalDetailsData(personalDetails?.hp_profile_id));
+    });
   };
 
   return (
@@ -122,21 +134,35 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
                 {!open ? item?.icon && <Tooltip>{item?.icon}</Tooltip> : ''}
               </ListItemIcon>
               <ListItemText
+                onClick={
+                  item?.tabName === 'track-application' &&
+                  !personalDetails.is_track_application_read_status &&
+                  onTrackApplicationClick
+                }
                 display="flex"
                 primary={
                   loggedInUserType === 'Doctor' &&
-                  item?.tabName === 'additional-qualifications' &&
-                  getQueryRaisedIconView() ? (
+                  (item?.tabName === 'track-application' ||
+                    item?.tabName === 'additional-qualifications') ? (
+                    // eslint-disable-next-line react/jsx-indent
                     <Grid container columnGap={1} alignItems={'center'}>
                       <Grid item>{item?.name}</Grid>
-                      <Grid item>
-                        <Typography display={'flex'} alignItems={'center'}>
-                          <ReportOutlinedIcon
-                            fontSize="inherit"
-                            sx={{ color: theme.palette.secondary.main }}
-                          />
-                        </Typography>
-                      </Grid>
+                      {(item?.tabName === 'track-application' &&
+                        !personalDetails.is_track_application_read_status) ||
+                      (item?.tabName === 'additional-qualifications' &&
+                        getQueryRaisedIconView()) ? (
+                        // eslint-disable-next-line react/jsx-indent
+                        <Grid item>
+                          <Typography display={'flex'} alignItems={'center'}>
+                            <ReportOutlinedIcon
+                              fontSize="inherit"
+                              sx={{ color: theme.palette.secondary.main }}
+                            />
+                          </Typography>
+                        </Grid>
+                      ) : (
+                        ''
+                      )}
                     </Grid>
                   ) : (
                     item?.name
