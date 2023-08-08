@@ -122,6 +122,35 @@ export function CollegeDean({ showPage, updateShowPage, userType }) {
       </Grid>
       <Grid item xs={12} md={6} sm={6} lg={4}>
         <Typography variant="body1" color="inputTextColor.main">
+          <b>{t(' Designation')}</b>
+        </Typography>
+        <Typography component="span" color="error.main">
+          *
+        </Typography>
+        <TextField
+          fullWidth
+          inputProps={{ maxLength: 100 }}
+          id="outlined-basic"
+          variant="outlined"
+          type="text"
+          name="designation"
+          required="true"
+          placeholder={t('Enter designation')}
+          margin="dense"
+          defaultValue={
+            userType === 'College Dean'
+              ? 'College Dean'
+              : userType === 'College Principal'
+              ? 'College Principal'
+              : userType === 'College Others'
+              ? 'College Others'
+              : ''
+          }
+          disabled
+        />
+      </Grid>
+      <Grid item xs={12} md={6} sm={6} lg={4}>
+        <Typography variant="body1" color="inputTextColor.main">
           {/* <b>{t('College Dean Phone Number')}</b> */}
           <b>{t(' Mobile Number')}</b>
         </Typography>
