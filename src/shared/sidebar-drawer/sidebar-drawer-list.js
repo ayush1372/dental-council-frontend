@@ -136,8 +136,8 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
               <ListItemText
                 onClick={
                   item?.tabName === 'track-application' &&
-                  !personalDetails.is_track_application_read_status &&
-                  personalDetails.is_track_application_read_status !== undefined &&
+                  !personalDetails?.is_track_application_read_status &&
+                  personalDetails?.is_track_application_read_status !== undefined &&
                   onTrackApplicationClick
                 }
                 display="flex"
@@ -149,8 +149,8 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
                     <Grid container columnGap={1} alignItems={'center'}>
                       <Grid item>{item?.name}</Grid>
                       {(item?.tabName === 'track-application' &&
-                        !personalDetails.is_track_application_read_status &&
-                        personalDetails.is_track_application_read_status !== undefined) ||
+                        !personalDetails?.is_track_application_read_status &&
+                        personalDetails?.is_track_application_read_status !== undefined) ||
                       (item?.tabName === 'additional-qualifications' &&
                         getQueryRaisedIconView()) ? (
                         // eslint-disable-next-line react/jsx-indent
