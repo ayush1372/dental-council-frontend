@@ -568,11 +568,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 },
               ]}
               {...register('registration', {})}
-              disabled={
-                work_flow_status_id === 3 || !personalDetails?.personal_details?.is_new
-                  ? getQueryRaised('Registration')
-                  : false
-              }
+              disabled={work_flow_status_id === 3 ? getQueryRaised('Registration') : false}
             />
           </Grid>
           {isRenewable === '1' && (
@@ -627,8 +623,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                   ? false
                   : work_flow_status_id === 3
                   ? getQueryRaised('Upload the registration certificate')
-                  : !personalDetails?.personal_details?.is_new
-                  ? true
                   : false
               }
               queryRaiseIcon={
