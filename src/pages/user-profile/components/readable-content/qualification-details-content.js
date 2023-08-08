@@ -517,14 +517,15 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
           <Grid container item spacing={1} mt={0.5}>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="grey.label">
-                Upload Qualification Degree
+                Upload Qualification Certificate
                 <Typography component="span" color="error.main">
                   *
                 </Typography>
                 {element?.queries?.length > 0 &&
-                  getQueryRaised('Upload Qualification Degree', element?.queries) !== undefined && (
+                  getQueryRaised('Upload Qualification Certificate', element?.queries) !==
+                    undefined && (
                     <Tooltip
-                      title={getQueryRaised('Upload Qualification Degree', element?.queries)}
+                      title={getQueryRaised('Upload Qualification Certificate', element?.queries)}
                     >
                       <ReportIcon color="secondary" ml={2} />
                     </Tooltip>
@@ -559,7 +560,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       color="primary"
                       onClick={() => {
                         setOpenModal(true);
-                        setQueryRaisedField('Upload Qualification Degree');
+                        setQueryRaisedField('Upload Qualification Certificate');
                       }}
                       fontSize="width24"
                     />

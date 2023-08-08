@@ -787,7 +787,7 @@ const AdditionalQualifications = () => {
             name={'qualificationCertificate'}
             isError={errors.qualificationCertificate?.message}
             setFileData={setQualificationFilesData}
-            uploadFileLabel="Upload Registration Certificate"
+            uploadFileLabel="Upload Qualification Certificate"
             toolTipData={
               queryfields.includes(field_names.regCertificate)
                 ? getQueryTooltip(field_names.regCertificate)
@@ -800,7 +800,7 @@ const AdditionalQualifications = () => {
                 ? deleteUploadedFile
                 : qualificationFilesData[0]?.file?.length === 0 ||
                   qualificationFilesData[0]?.file?.length === undefined) && {
-                required: 'Please upload the degree certificate.',
+                required: 'Please upload the qualification certificate.',
               }
             )}
             fileDisabled={isEditForm && !queryfields.includes(field_names.qualificationDegree)}
