@@ -12,10 +12,10 @@ import {
   updateCollegeRegistrarData,
 } from '../../../store/actions/college-actions';
 import { Button, TextField } from '../../../ui/core';
-import successToast from '../../../ui/core/toaster';
+// import successToast from '../../..//ui/core/toaster';
 // import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
-export function CollegeDean({ showPage, updateShowPage }) {
+export function CollegeDean({ showPage, updateShowPage, userType }) {
   const dispatch = useDispatch();
   const { collegeData } = useSelector((state) => state.college);
   const userData = collegeData?.data;
@@ -53,16 +53,17 @@ export function CollegeDean({ showPage, updateShowPage }) {
     };
 
     if (showPage === 'edit') {
-      dispatch(updateCollegeRegistrarData(deanData, userData?.college_id, userData?.id))
-        .then((response) => {
+      dispatch(updateCollegeRegistrarData(deanData, userData?.college_id, userData?.id)).then(
+        (response) => {
           dispatch(collegeProfileData(userData?.college_id, userData?.id));
           if (response?.isError === false) {
             setSuccessModalPopup(true);
           }
-        })
-        .catch((error) => {
-          successToast(error?.data?.response?.data?.message, 'UpdateError', 'error', 'top-center');
-        });
+        }
+      );
+      // .catch((error) => {
+      //   successToast(error?.data?.response?.data?.message, 'UpdateError', 'error', 'top-center');
+      // });
     } else {
       dispatch(sendDeanDetails(deanData));
     }
@@ -76,12 +77,22 @@ export function CollegeDean({ showPage, updateShowPage }) {
             updateShowPage('Profile');
             setSuccessModalPopup(false);
           }}
-          text={'College Dean Data has been Updated Successfully.'}
+          text={`College ${
+            userType === 'College Dean'
+              ? 'Dean'
+              : userType === 'College Principal'
+              ? 'Principal'
+              : 'Others'
+          }  data has been updated.`}
         />
       )}
       <Grid item xs={12} mt={3}>
         <Typography color="textPrimary.main" variant="h2" mt={2}>
-          {showPage === 'edit' ? 'Edit College Dean' : 'College Dean'}
+          {userType === 'College Dean'
+            ? 'Edit College Dean'
+            : userType === 'College Principal'
+            ? 'Edit College Principal'
+            : 'Edit College Others'}
         </Typography>
       </Grid>
       <Grid item xs={12} md={6} sm={6} lg={4}>
@@ -100,19 +111,19 @@ export function CollegeDean({ showPage, updateShowPage }) {
           type="text"
           name="deanName"
           required="true"
-          placeholder={t('College Dean Name')}
+          placeholder={t('Enter name')}
           margin="dense"
           defaultValue={getValues().deanName}
           error={errors.deanName?.message}
           {...register('deanName', {
-            required: 'Enter valid name',
+            required: 'Please enter a valid name',
           })}
         />
       </Grid>
       <Grid item xs={12} md={6} sm={6} lg={4}>
         <Typography variant="body1" color="inputTextColor.main">
           {/* <b>{t('College Dean Phone Number')}</b> */}
-          <b>{t(' Phone Number')}</b>
+          <b>{t(' Mobile Number')}</b>
         </Typography>
         <Typography component="span" color="error.main">
           *
@@ -125,15 +136,15 @@ export function CollegeDean({ showPage, updateShowPage }) {
           type="text"
           name="deanPhoneNumber"
           required="true"
-          placeholder={t('College Dean Phone Number')}
+          placeholder={t('Enter mobile number')}
           margin="dense"
           defaultValue={getValues().deanPhoneNumber}
           error={errors.deanPhoneNumber?.message}
           {...register('deanPhoneNumber', {
-            required: 'Enter valid phone number',
+            required: 'Please enter mobile number',
             pattern: {
               value: /^(\d{10})$/i,
-              message: 'Enter valid phone number',
+              message: 'Please enter a valid mobile number',
             },
           })}
         />
@@ -141,7 +152,7 @@ export function CollegeDean({ showPage, updateShowPage }) {
       <Grid item xs={12} md={6} sm={6} lg={4}>
         <Typography variant="body1" color="inputTextColor.main">
           {/* <b>{t('College Dean Email Address')}</b> */}
-          <b>{t(' Email Address')}</b>
+          <b>{t(' Email')}</b>
         </Typography>
         <Typography component="span" color="error.main">
           *
@@ -154,16 +165,16 @@ export function CollegeDean({ showPage, updateShowPage }) {
           type="email"
           name="deanEmail"
           required="true"
-          placeholder={t('College Dean Email Address')}
+          placeholder={t('Enter email')}
           margin="dense"
           defaultValue={getValues().deanEmail}
           error={errors.deanEmail?.message}
           {...register('deanEmail', {
-            required: 'Enter valid email address',
+            required: 'Please enter an email ID',
             pattern: {
               value:
                 /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-              message: 'Enter Valid Email Address',
+              message: 'Please enter a valid email',
             },
           })}
         />

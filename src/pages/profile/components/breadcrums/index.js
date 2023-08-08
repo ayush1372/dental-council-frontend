@@ -13,16 +13,17 @@ export default function BreadcrumbsCompnent(props) {
         }}
       >
         <Typography id="1" variant="body1" color="primary.main" sx={{ cursor: 'pointer' }}>
-          Dashboard
+          {props?.levelOneText}
         </Typography>
-        {(props.showTable || props.showViewProfile) && (
+
+        {(props.showTable || props.showViewProfile) && props?.levelTwoText !== undefined && (
           <Typography
             id="2"
             variant="body1"
             color={props.showViewProfile ? 'primary.main' : 'black.main'}
             sx={{ cursor: 'pointer' }}
           >
-            {`${props?.selectedCardData?.name}`}
+            {props?.levelTwoText}
           </Typography>
         )}
         {props.showViewProfile && (
@@ -32,7 +33,7 @@ export default function BreadcrumbsCompnent(props) {
             color="breadCrumbActiveColor.main"
             sx={{ cursor: 'pointer' }}
           >
-            View Profile
+            {props?.levelthreeText}
           </Typography>
         )}
       </Breadcrumbs>

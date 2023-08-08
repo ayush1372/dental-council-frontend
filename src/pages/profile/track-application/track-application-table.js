@@ -9,7 +9,6 @@ import {
   getDoctorTrackApplicationData,
   getDoctorTrackApplicationStatus,
 } from '../../../store/actions/doctor-user-profile-actions';
-import successToast from '../../../ui/core/toaster';
 import TableSearch from '../components/table-search/table-search';
 
 function createData(
@@ -69,20 +68,10 @@ function TrackAppicationTable({
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
   const tableData = useSelector((state) => state.common.trackApplicationTableData);
-
   let trackData = {
     pageNo: 1,
     offset: 10,
   };
-
-  useEffect(() => {
-    if (orderBy && getTableData && page !== null && profileId)
-      dispatch(getTableData(profileId, trackData));
-  }, [orderBy, getTableData, page, profileId]);
-  useEffect(() => {
-    dispatch(getTableData(profileId, trackData));
-    window.scrollTo(0, 0);
-  }, []);
 
   const viewNameOfApplicant = (event, row) => {
     event.preventDefault();
@@ -101,20 +90,20 @@ function TrackAppicationTable({
       type: 'string',
     },
     {
-      title: 'Type of Application',
+      title: 'Application Type',
       name: 'application_type_name',
       sorting: true,
       type: 'string',
     },
 
-    { title: 'Date of Submission', name: 'created_at', sorting: true, type: 'date' },
+    { title: 'Submission Date', name: 'created_at', sorting: true, type: 'date' },
     {
       title: 'Current Status',
       name: 'doctor_status',
       sorting: true,
       type: 'string',
     },
-    { title: 'Pendency (in days)', name: 'pendency', sorting: true, type: 'string' },
+    { title: 'Pendency (Days)', name: 'pendency', sorting: true, type: 'string' },
     { title: 'Action', name: 'view', sorting: false, type: 'string' },
   ];
 
@@ -122,28 +111,45 @@ function TrackAppicationTable({
     setRowData(dataRow);
   };
   const viewCallback = (event, row) => {
-    dispatch(getDoctorTrackApplicationStatus(row?.request_id?.value))
-      .then(() => {
-        setShowTrackApplication(true);
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth',
-        });
-        setShowTrackApplicationTable(false);
-        event.preventDefault();
-        event.stopPropagation();
-        setRowData(row);
-      })
-      .catch((error) => {
-        successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+    dispatch(getDoctorTrackApplicationStatus(row?.request_id?.value)).then(() => {
+      setShowTrackApplication(true);
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
       });
+      setShowTrackApplicationTable(false);
+      event.preventDefault();
+      event.stopPropagation();
+      setRowData(row);
+    });
   };
+
+  useEffect(() => {
+    dispatch(getTableData(profileId, trackData));
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy.name === property.name && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
+
+  useEffect(() => {
+    trackData.sortBy = orderBy?.name;
+    trackData.sortOrder = order;
+
+    if (
+      trackData?.sortBy !== undefined &&
+      trackData?.sortBy !== null &&
+      trackData?.sortBy !== '' &&
+      trackData?.sortOrder !== undefined &&
+      trackData?.sortOrder !== null &&
+      trackData?.sortOrder !== ''
+    )
+      dispatch(getTableData(profileId, trackData));
+  }, [order, orderBy, dispatch]);
+
   const newRowsData = tableData?.data?.data?.health_professional_applications?.map(
     (data, index) => {
       return createData(
@@ -208,7 +214,7 @@ function TrackAppicationTable({
         },
         { type: 'pendency', value: data?.pendency },
 
-        { type: 'view', value: data?.view || 'view more', onClickCallback: viewCallback }
+        { type: 'view', value: data?.view || 'View', onClickCallback: viewCallback }
       );
     }
   );
@@ -225,7 +231,7 @@ function TrackAppicationTable({
     }
     if (page > newPage) {
       setPage(newPage);
-      updatedvalue(page - 1);
+      updatedvalue = page - 1;
     }
 
     window.scrollTo({
@@ -243,14 +249,12 @@ function TrackAppicationTable({
 
   return (
     <Grid>
-      {/* <Typography variant="h2" py={3} bgcolor={`${theme.palette.white.main}`} mb={2} px={3}>
-        Track Application
-      </Typography>    */}
       <TableSearch
         searchParams={searchParams}
         trackApplication={userType}
         exportData={tableData?.data?.data?.health_professional_applications}
         flag={'trackApplicationData'}
+        profileId={profileId}
       />
       <Box>
         <GenericTable
@@ -263,19 +267,21 @@ function TrackAppicationTable({
           rowsPerPage={rowsPerPage}
           page={page}
         />
-        <TablePagination
-          rowsPerPageOptions={[]}
-          component="div"
-          count={tableData?.data?.data?.total_no_of_records}
-          page={page}
-          rowsPerPage={rowsPerPage}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        />
+        {newRowsData?.length !== 0 && (
+          <TablePagination
+            rowsPerPageOptions={[]}
+            component="div"
+            count={tableData?.data?.data?.total_no_of_records || 0}
+            page={page}
+            rowsPerPage={rowsPerPage}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          />
+        )}
       </Box>
     </Grid>
   );

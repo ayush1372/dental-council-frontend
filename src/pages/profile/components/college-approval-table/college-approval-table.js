@@ -3,13 +3,12 @@ import React, { useEffect } from 'react';
 import { Box, Grid, TablePagination, Typography } from '@mui/material';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
-import { ToastContainer } from 'react-toastify';
 
 import { verboseLog } from '../../../../config/debug';
 import GenericTable from '../../../../shared/generic-component/generic-table';
 import { getCollegeAdminProfileData } from '../../../../store/actions/college-actions';
 import { getCollegeApprovalData } from '../../../../store/actions/nmc-actions';
-import successToast from '../../../../ui/core/toaster';
+// import successToast from '../../../../ui/core/toaster';
 import TableSearch from '../table-search/table-search';
 
 function createData(
@@ -51,7 +50,7 @@ function CollegeApprovalTable(props) {
   const dataHeader = [
     { title: 'S.No.', name: 'SNo', sorting: true, type: 'string' },
     {
-      title: 'College Id',
+      title: 'College ID',
       name: 'collegeId',
       sorting: true,
       type: 'string',
@@ -62,15 +61,15 @@ function CollegeApprovalTable(props) {
       sorting: true,
       type: 'string',
     },
-    { title: 'Name of State Council', name: 'nameofStateCouncil', sorting: true, type: 'string' },
+    { title: 'State Medical Council', name: 'nameofStateCouncil', sorting: true, type: 'string' },
     {
-      title: 'Council Verification Status',
+      title: 'Council Status',
       name: 'councilVerificationStatus',
       sorting: true,
       type: 'string',
     },
-    { title: 'Date of Submission', name: 'dateofSubmission', sorting: true, type: 'date' },
-    { title: 'Pendency (in days)', name: 'pendency', sorting: true, type: 'string' },
+    { title: 'Submission Date', name: 'dateofSubmission', sorting: true, type: 'date' },
+    { title: 'Pendency (Days)', name: 'pendency', sorting: true, type: 'string' },
     { title: 'View', name: 'view', sorting: false, type: 'string' },
   ];
 
@@ -111,9 +110,11 @@ function CollegeApprovalTable(props) {
     // setRowData(row);
     props.setShowViewPorfile(true);
     props.setShowTable(false);
-    dispatch(getCollegeAdminProfileData(row?.id?.value)).catch((error) => {
-      successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-    });
+    dispatch(getCollegeAdminProfileData(row?.id?.value));
+
+    // .catch((error) => {
+    //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+    // });
   };
 
   const handleRequestSort = (event, property) => {
@@ -170,32 +171,31 @@ function CollegeApprovalTable(props) {
   };
 
   return (
-    <>
-      <ToastContainer></ToastContainer>
-      <Grid sx={{ m: 2 }}>
-        <Typography variant="h2" py={2}>
-          College Applications Pending List
-        </Typography>
-        <TableSearch
-          searchParams={searchParams}
-          exportData={collegeApprovalData}
-          flag={'collegeApprovalData'}
-        />
-        <GenericTable
-          order={order}
-          orderBy={orderBy}
-          onRequestSort={handleRequestSort}
-          tableHeader={dataHeader}
-          data={newRowsData}
-          handleRowClick={handleDataRowClick}
-          rowsPerPage={rowsPerPage}
-          page={page}
-        />
+    <Grid sx={{ m: 2 }}>
+      <Typography variant="h2" py={2}>
+        College Applications Pending List
+      </Typography>
+      <TableSearch
+        searchParams={searchParams}
+        exportData={collegeApprovalData}
+        flag={'collegeApprovalData'}
+      />
+      <GenericTable
+        order={order}
+        orderBy={orderBy}
+        onRequestSort={handleRequestSort}
+        tableHeader={dataHeader}
+        data={newRowsData}
+        handleRowClick={handleDataRowClick}
+        rowsPerPage={rowsPerPage}
+        page={page}
+      />
+      {newRowsData?.length !== 0 && (
         <Box>
           <TablePagination
             rowsPerPageOptions={[]}
             component="div"
-            count={collegeApprovalData?.data?.total_no_of_records}
+            count={collegeApprovalData?.data?.total_no_of_records || 0}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
@@ -206,8 +206,8 @@ function CollegeApprovalTable(props) {
             }}
           />
         </Box>
-      </Grid>
-    </>
+      )}
+    </Grid>
   );
 }
 

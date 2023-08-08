@@ -12,11 +12,12 @@
 .helperTextMsg {
   width: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   font-size: 12px;
   margin-left: 0;
 
   svg {
+    padding-top: 2px;
     height: 16px;
   }
 }

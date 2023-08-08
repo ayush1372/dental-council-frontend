@@ -17,6 +17,10 @@ export function ViewProfile(props) {
   const emailId = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.personal_details?.email
   );
+  const emailIconVerified = useSelector(
+    (state) => state?.doctorUserProfileReducer?.personalDetails?.email_verified
+  );
+
   const mobileNumber = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.personal_details?.mobile
   );
@@ -37,18 +41,11 @@ export function ViewProfile(props) {
         </Typography>
       </Box>
 
-      <Box bgcolor="white.main" py={3} mb={2} boxShadow="1">
+      <Box bgcolor="white.main" py={2} mb={2} boxShadow="1">
         <Grid container>
           <Grid
             borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
-            item
-            xs={12}
-            sm={6}
-            md={3}
-            xl={2}
-            px={2}
-            mb={{ xs: 1, lg: 0 }}
-          >
+            item xs={12} sm={6} lg={3} xl={3} px={2} mb={{ xs: 1, lg: 0 }}>
             <Typography variant="body3" color="grey.label">
               IMR/Registration Number
             </Typography>
@@ -60,13 +57,7 @@ export function ViewProfile(props) {
           <Grid
             borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
             item
-            xs={12}
-            sm={6}
-            md={3}
-            xl={2}
-            px={2}
-            mb={{ xs: 1, lg: 0 }}
-          >
+            xs={12} sm={6} lg={2} xl={2} px={2} mb={{ xs: 1, lg: 0 }}>
             <Typography variant="body3" color="grey.label">
               NMR ID
             </Typography>
@@ -76,13 +67,7 @@ export function ViewProfile(props) {
           </Grid>
           <Grid
             borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
-            item
-            xs={12}
-            sm={6}
-            md={3}
-            xl={2}
-            px={2}
-          >
+            item xs={12} sm={6} md={3} lg={3} xl={3} px={2} mb={{ xs: 1, lg: 0 }}>
             <Typography variant="body3" color="grey.label">
               Mobile Number
             </Typography>
@@ -90,7 +75,7 @@ export function ViewProfile(props) {
             {mobileNumber ? (
               <Typography variant="subtitle2" color="textPrimary.main">
                 {mobileNumber}
-                <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
+                <img width="16px" height="16px" src={IconVerified} alt="verified icon" />
 
                 {loggedInUserType === 'Doctor' ? (
                   <Typography component="span" variant="subtitle2" color="primary.main" ml={1}>
@@ -106,7 +91,7 @@ export function ViewProfile(props) {
               </Typography>
             )}
           </Grid>
-          <Grid item xs={12} sm={6} md={3} pl={2}>
+          <Grid item xs={12} sm={6} md={3} lg={4} xl={4} px={2} mb={{ xs: 1, lg: 0 }}>
             <Typography variant="body3" color="grey.label">
               Email
             </Typography>
@@ -118,7 +103,9 @@ export function ViewProfile(props) {
                   sx={{ wordBreak: 'break-word' }}
                 >
                   {emailId}
-                  <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
+                  {emailIconVerified === true && (
+                    <img width="16px" height="16px" src={IconVerified} alt="verified icon" />
+                  )}
                 </Typography>
               ) : (
                 <Typography variant="subtitle2" color="textPrimary.main">

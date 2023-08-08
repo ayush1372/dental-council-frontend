@@ -32,7 +32,7 @@ const UniqueUserNameForDoctorRegistration = () => {
     getValues,
     handleSubmit,
     clearErrors,
-    formState: { errors },
+    //formState: {},
   } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -64,11 +64,10 @@ const UniqueUserNameForDoctorRegistration = () => {
 
   return (
     <Box>
-      <Box my={9}>
+      <Box my={3}>
         <Container
           sx={{
             boxShadow: '1',
-            pt: 4,
             width: {
               xs: '100%',
               sm: '712px',
@@ -76,25 +75,24 @@ const UniqueUserNameForDoctorRegistration = () => {
           }}
         >
           <Box>
-            <Box pt={2} pb={4}>
+            <Box pt={2} pb={2}>
               <Typography variant="h2" color="textPrimary.main">
                 Create Username
+              </Typography>
+              <Typography variant="body1" fontWeight="400">
+                Username will be used to login into Council. Please choose from suggestions below or
+                create your own username.
               </Typography>
             </Box>
 
             <Box pb={1}>
               <Typography variant="body3" color="textSecondary.main">
-                Create Username
+                Username
                 <Typography component="span" color="error.main">
                   *
                 </Typography>
                 <Tooltip
-                  title={
-                    <Box>
-                      You can use letters, numbers & symbols. Minimum length of the username should
-                      be 8 character.
-                    </Box>
-                  }
+                  title={<Box>You can use letters, numbers & symbols.</Box>}
                   placement="right"
                   arrow
                 >
@@ -106,18 +104,18 @@ const UniqueUserNameForDoctorRegistration = () => {
                   fullWidth
                   name="UniqueUserName"
                   defaultValue={getInputValue()}
-                  error={suggestion ? '' : errors.UniqueUserNameForDoctor?.message}
+                  // error={suggestion ? '' : errors.UniqueUserNameForDoctor?.message}
                   {...register(
-                    'UniqueUserNameForDoctor',
-                    suggestion
-                      ? ''
-                      : {
-                          required: 'UniqueUserNameForDoctor Number is required',
-                          minLength: {
-                            value: 8,
-                            message: 'Should contains 8 character',
-                          },
-                        }
+                    'UniqueUserNameForDoctor'
+                    // suggestion
+                    //   ? ''
+                    //   : {
+                    //       required: 'UniqueUserNameForDoctor Number is required',
+                    //       minLength: {
+                    //         value: 8,
+                    //         message: 'Username should be of minimum 8 characters',
+                    //       },
+                    //     }
                   )}
                   value={suggestion}
                   onChange={(e) => handleSuggestionName(e)}
@@ -131,25 +129,25 @@ const UniqueUserNameForDoctorRegistration = () => {
               alignItems={{ xs: 'flex-start', sm: 'center' }}
             ></Box>
 
-            <Box pt={2} pb={4}>
+            <Box pt={1} pb={4}>
               <Typography>Suggestions: </Typography>
               {firstSuggestion
                 ? firstSuggestion.map((item, index) => {
                     return index < 6 ? (
                       index + 1 === 5 ? (
                         <Link
-                          sx={{ cursor: 'pointer' }}
+                          sx={{ cursor: 'pointer', textDecoration: 'none' }}
                           onClick={() => handleSuggestion(item)}
-                          color="secondary.main"
+                          color="primary.main"
                           fontSize="14px"
                         >
                           {`${item}`}
                         </Link>
                       ) : (
                         <Link
-                          sx={{ cursor: 'pointer' }}
+                          sx={{ cursor: 'pointer', textDecoration: 'none' }}
                           onClick={() => handleSuggestion(item)}
-                          color="secondary.main"
+                          color="primary.main"
                           fontSize="14px"
                         >
                           {`${item}, ` + ' '}
@@ -167,13 +165,14 @@ const UniqueUserNameForDoctorRegistration = () => {
                 disabled={suggestion.length > 4 ? false : true}
                 onClick={handleSubmit(onSubmit)}
                 variant="contained"
+                color="secondary"
                 size="medium"
                 sx={{
                   mr: 3,
                   backgroundColor: theme.palette.secondary.main,
                 }}
               >
-                Continue to set password
+                Create Username
               </Button>
               <Button variant="contained" color="grey" onClick={handleCancel}>
                 Cancel

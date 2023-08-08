@@ -66,7 +66,7 @@ export default function SuccessModal({ text, userData, resetStep }) {
             justifyContent="center"
             mt={2}
           >
-            SUCCESS!
+            SUCCESS
           </Typography>
           <Typography
             display="flex"
@@ -79,7 +79,7 @@ export default function SuccessModal({ text, userData, resetStep }) {
             flexDirection="column"
           >
             {userData?.page === 'forgetUserName'
-              ? ` Your UserName is" ${retrieveUserName} "Please use this User Name to Log In`
+              ? `Your username is "${retrieveUserName}". Please use this username to login.`
               : text}
           </Typography>
           <Button
@@ -90,6 +90,7 @@ export default function SuccessModal({ text, userData, resetStep }) {
               userData?.page === 'forgetUserName'
                 ? () => {
                     resetStep(0);
+                    handleClose();
                   }
                 : handleClose
             }

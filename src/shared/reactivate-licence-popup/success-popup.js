@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 
 import { doctorTabs } from '../../helpers/components/sidebar-drawer-list-item';
+import { getPersonalDetailsData } from '../../store/actions/doctor-user-profile-actions';
 import { changeUserActiveTab } from '../../store/reducers/common-reducers';
 import { Button } from '../../ui/core';
 
@@ -14,15 +15,22 @@ export default function SuccessPopup({ fetchDoctorUserPersonalDetails, reactivat
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(true);
-  const logInDoctorStatus = useSelector(
-    (state) => state?.loginReducer?.loginData?.data?.blacklisted
-  );
+
+  // const logInDoctorStatus = useSelector(
+  //   (state) => state?.loginReducer?.loginData?.data?.blacklisted
+  // );
+  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+
+  const { ReactivationData } = useSelector((state) => state.common);
+
   const handleClose = () => {
     setOpen(false);
     fetchDoctorUserPersonalDetails && fetchDoctorUserPersonalDetails();
 
     if (reactivate) {
       dispatch(changeUserActiveTab(doctorTabs[1].tabName));
+      if (personalDetails?.hp_profile_id !== undefined)
+        dispatch(getPersonalDetailsData(personalDetails?.hp_profile_id));
     }
     navigate('/profile');
     window.scrollTo({
@@ -35,7 +43,7 @@ export default function SuccessPopup({ fetchDoctorUserPersonalDetails, reactivat
     <Modal open={open} onClose={handleClose} sx={{ mt: 15 }}>
       <Container
         maxWidth="xs"
-        sx={{ backgroundColor: 'white.main', borderRadius: '10px', height: '430px', p: '30px' }}
+        sx={{ backgroundColor: 'white.main', borderRadius: '10px', p: '30px' }}
       >
         <Box mb={1} display="flex" justifyContent="center">
           <TaskAltOutlinedIcon
@@ -51,29 +59,34 @@ export default function SuccessPopup({ fetchDoctorUserPersonalDetails, reactivat
           <Typography
             data-testid="popup-input-success-text"
             variant="h2"
+            fontSize="30px"
             color="success.dark"
             display="flex"
             alignItems="center"
             justifyContent="center"
             mt={2}
           >
-            SUCCESS!
+            SUCCESS
           </Typography>
           <Typography
             display="flex"
             alignItems="center"
             textAlign="center"
+            justifyContent="center"
             mt={4}
             variant="body1"
             data-testid="popup-input-text"
           >
-            {logInDoctorStatus
-              ? `Your profile has been successfully re-activated. You can able to perform action on your profile now.`
-              : `Your username has been successfully created.
-            <br /> A link to create your password has been sent to the registered mobile number.`}
+            {ReactivationData?.data?.self_reactivation
+              ? `Your profile has been re-activated. You can perform action on your profile now.`
+              : `Reactivation request has been submitted`}
+
+            {/* {logInDoctorStatus &&
+              `Your username has been successfully created. A link to create your
+            password has been sent to the registered mobile number.`} */}
           </Typography>
           <Button
-            sx={{ width: '408px', mt: 8 }}
+            sx={{ width: '400px', mt: 4 }}
             variant="contained"
             color="warning"
             onClick={handleClose}

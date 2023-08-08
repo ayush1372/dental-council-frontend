@@ -44,6 +44,7 @@ export default function DatafoundModalPopup({
     handleAadhaarPage(true);
     setIsNext(true);
     setOpen(false);
+    handleClose(false);
   };
   const handleNo = () => {
     handleClose(false);
@@ -71,7 +72,7 @@ export default function DatafoundModalPopup({
               display="flex"
               alignItems="felx-start"
             >
-              Info !
+              {!hpName ? 'No Data Found' : 'Data Found'}
             </Typography>
             <Typography
               display="flex"
@@ -81,61 +82,67 @@ export default function DatafoundModalPopup({
               component="div"
               flexDirection="column"
             >
-              {text}
+              {!hpName ? text : 'Please review the details and click "Yes" to continue'}
             </Typography>
-            <Box p="30px 32px 0px 32px" width={{ xs: '100%', md: '679px' }} sx={{ boxShadow: '2' }}>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Box>
+            {hpName && (
+              <Box
+                p="16px 16px 0px 16px"
+                width={{ xs: '100%' }}
+                sx={{
+                  border: 'solid 1px',
+                  borderColor: theme.inputBorderColor,
+                  borderRadius: '8px',
+                  marginTop: '16px',
+                }}
+              >
+                <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <Box>
+                    <Typography variant="body3" component="div" color="grey.label">
+                      Name
+                    </Typography>
+                    <Typography variant="subtitle2" component="div" color="primary">
+                      {registrationNumber === registrationData?.registrationNumber ? hpName : '-'}
+                    </Typography>
+                  </Box>
+                  <Box>
+                    <Typography
+                      variant="body3"
+                      component="div"
+                      paddingRight={{ xs: 0, sm: '169px' }}
+                      color="grey.label"
+                    >
+                      Registration Number
+                    </Typography>
+                    <Typography variant="subtitle2" component="div" color="primary">
+                      {registrationData?.registrationNumber}
+                    </Typography>
+                  </Box>
+                </Box>
+                <Box sx={{ paddingTop: '16px', paddingBottom: '16px' }}>
                   <Typography variant="body3" component="div" color="grey.label">
-                    Name
+                    Council
                   </Typography>
                   <Typography variant="subtitle2" component="div" color="primary">
-                    {registrationNumber === registrationData?.registrationNumber ? hpName : '-'}
-                  </Typography>
-                </Box>
-                <Box>
-                  <Typography
-                    variant="body3"
-                    component="div"
-                    paddingRight={{ xs: 0, sm: '169px' }}
-                    color="grey.label"
-                  >
-                    Registration Number
-                  </Typography>
-                  <Typography variant="subtitle2" component="div" color="primary">
-                    {registrationData?.registrationNumber}
+                    {getCouncilName()}
                   </Typography>
                 </Box>
               </Box>
-              <Box sx={{ paddingTop: '34px', paddingBottom: '20px' }}>
-                <Typography variant="body3" component="div" color="grey.label">
-                  Council
-                </Typography>
-                <Typography variant="subtitle2" component="div" color="primary">
-                  {getCouncilName()}
-                </Typography>
-              </Box>
-            </Box>
+            )}
             {imrData ? (
-              <Box pl={15} mt={3} display="flex" justifyContent="right">
+              <Box mt={3} display="flex" justifyContent="right">
+                <Button variant="contained" size="small" color="grey" onClick={handleNo}>
+                  No
+                </Button>
                 <Button
                   variant="contained"
                   color="secondary"
                   size="small"
                   sx={{
-                    mr: 3,
+                    ml: 2,
                   }}
                   onClick={handleYes}
                 >
                   Yes
-                </Button>
-                <Button
-                  variant="outlined"
-                  size="small"
-                  onClick={handleNo}
-                  sx={{ backgroundColor: 'grey.main', color: 'black.textBlack', border: 'none' }}
-                >
-                  No
                 </Button>
               </Box>
             ) : accountExist ? (
@@ -150,7 +157,7 @@ export default function DatafoundModalPopup({
                   color="warning"
                   onClick={handleCloseModal}
                 >
-                  Ok
+                  Done
                 </Button>
               </Box>
             ) : (

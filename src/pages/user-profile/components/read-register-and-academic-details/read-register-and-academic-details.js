@@ -16,10 +16,12 @@ import {
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import PopupState, { bindMenu, bindTrigger } from 'material-ui-popup-state';
+import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
 import SuccessModalPopup from '../../../../shared/common-modals/success-modal-popup';
 import ReactivateLicencePopup from '../../../../shared/reactivate-licence-popup/re-activate-licence-popup';
+import { getRegistrationDetailsData } from '../../../../store/actions/doctor-user-profile-actions';
 import SuspendLicenseVoluntaryRetirement from '../../../suspend-license-voluntary-retirement';
 import QualificationDetailsContent from '../readable-content/qualification-details-content';
 import RegistrationDetailsContent from '../readable-content/registration-details-content';
@@ -33,6 +35,8 @@ const ReadRegisterAndAcademicDetails = ({
   setShowTable,
   selectedDataIndex,
 }) => {
+  const dispatch = useDispatch();
+
   const [accordionKeys, setAccordionKeys] = useState(['accordion-0', 'accordion-1', 'accordion-2']);
   const [selected, setSelected] = useState('');
   const [confirmationModal, setConfirmationModal] = useState(false);
@@ -44,7 +48,7 @@ const ReadRegisterAndAcademicDetails = ({
   const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   const [successPopupMessage, setSuccessPopupMessage] = useState('');
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
-  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  const { trackStatusData, loggedInUserType } = useSelector((state) => state.common);
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
 
   const { data } = useSelector((state) => state.loginReducer?.loginData);
@@ -100,30 +104,84 @@ const ReadRegisterAndAcademicDetails = ({
     setShowSuccessPopup(true);
   };
 
-  useEffect(() => {
-    if (!isNaN(selectedDataIndex)) {
-      let filteredQualificationDetails = [];
-
-      registrationDetails?.qualification_detail_response_tos?.map((element) => {
+  const renderRegistrationDetailData = (updatedTableData, registrationData) => {
+    let filteredQualificationDetails = [];
+    registrationData?.map((element, elementIndex) => {
+      if (element) {
         if (
-          element &&
           (element?.is_verified === 1 ||
-            element?.request_id ===
-              dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]?.request_id)
+            element?.request_id === updatedTableData[selectedDataIndex]?.request_id) &&
+          elementIndex !== 0
         ) {
           filteredQualificationDetails.push(element);
-          if (element?.is_verified !== 1) {
-            setShowForwardButton(element?.qualification_from === 'India' ? true : false);
-          }
+        }
+        if (elementIndex === 0) {
+          filteredQualificationDetails.push(element);
+        }
+        if (element?.is_verified !== 1) {
+          setShowForwardButton(
+            element?.qualification_from === 'India'
+              ? true
+              : element?.qualification_from === 'International' &&
+                loggedInUserType === 'SMC' &&
+                selectedAcademicStatus === 'Pending'
+              ? true
+              : false
+          );
+        }
+      }
+    });
+    return filteredQualificationDetails;
+  };
+
+  //Helper Method to identify the Addtional qualification request is for india or international.
+  const actionButtonHandler = () => {
+    let enableForwardButton;
+    if (selectedAcademicStatus === 'Pending' && personalDetails?.hp_profile_status_id === 2) {
+      registrationDetails?.qualification_detail_response_tos?.find((element) => {
+        if (
+          element?.request_id ===
+          dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]?.request_id
+        ) {
+          enableForwardButton = element?.qualification_from === 'India';
         }
       });
+    } else {
+      enableForwardButton = true;
+    }
+    return enableForwardButton;
+  };
+
+  useEffect(() => {
+    if (!isNaN(selectedDataIndex)) {
+      let updatedTableData =
+        dashboardTableDetailsData?.data?.dashboard_tolist?.length > 0
+          ? dashboardTableDetailsData?.data?.dashboard_tolist
+          : trackStatusData?.data?.data?.health_professional_applications?.length > 0
+          ? trackStatusData?.data?.data?.health_professional_applications
+          : [];
       let newRegistrationDetails = {};
       newRegistrationDetails.hp_profile_id = registrationDetails?.hp_profile_id;
       newRegistrationDetails.nbe_response_to = registrationDetails?.nbe_response_to;
       newRegistrationDetails.registration_detail_to = registrationDetails?.registration_detail_to;
       newRegistrationDetails.request_id = registrationDetails?.request_id;
-      newRegistrationDetails.qualification_detail_response_tos = filteredQualificationDetails;
-      setRegistrationDetailsData(newRegistrationDetails);
+
+      if (registrationDetails?.qualification_detail_response_tos === undefined) {
+        dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id)).then((response) => {
+          newRegistrationDetails.qualification_detail_response_tos = renderRegistrationDetailData(
+            updatedTableData,
+            response?.data?.qualification_detail_response_tos
+          );
+          newRegistrationDetails.nbe_response_to = response?.data?.nbe_response_to;
+          setRegistrationDetailsData(newRegistrationDetails);
+        });
+      } else {
+        newRegistrationDetails.qualification_detail_response_tos = renderRegistrationDetailData(
+          updatedTableData,
+          registrationDetails?.qualification_detail_response_tos
+        );
+        setRegistrationDetailsData(newRegistrationDetails);
+      }
     } else {
       setRegistrationDetailsData(registrationDetails);
     }
@@ -165,6 +223,7 @@ const ReadRegisterAndAcademicDetails = ({
                 <Component
                   registrationDetails={registrationDetailsData}
                   selectedDataIndex={selectedDataIndex}
+                  selectedAcademicStatus={selectedAcademicStatus}
                 />
               </AccordionDetails>
             </Accordion>
@@ -173,8 +232,7 @@ const ReadRegisterAndAcademicDetails = ({
       </Box>
       {showActions && (
         <Box
-          paddingBottom={'30px'}
-          pl={3}
+          pl={2}
           display="flex"
           justifyContent="space-between"
           flexDirection={{ xs: 'column', md: 'row' }}
@@ -189,206 +247,219 @@ const ReadRegisterAndAcademicDetails = ({
                 md: 'fit-content',
               },
               margin: {
-                xs: '10px 0',
+                xs: '16px 0',
               },
             }}
           >
             Back
           </Button>
-          {(userActiveTab === 'dashboard' || userActiveTab === 'Activate Licence') &&
-            (selectedAcademicStatus?.toUpperCase() === 'PENDING' ||
-              selectedAcademicStatus === 'Update Request Received' ||
-              selectedAcademicStatus === 'College Verified' ||
-              userActiveTab === 'Activate Licence' ||
-              selectedAcademicStatus === 'Forwarded' ||
-              selectedAcademicStatus === 'Temporary Suspension Requests Received' ||
-              selectedAcademicStatus === 'Permanent Suspension Requests Received' ||
-              selectedAcademicStatus === 'Temporary Suspension Requests Approved' ||
-              selectedAcademicStatus === 'Permanent Suspension Requests Approved') && (
-              <Box mt={2}>
-                <PopupState>
-                  {(popupState) => (
-                    <React.Fragment>
-                      {data?.user_sub_type === 6
-                        ? ''
-                        : selectedAcademicStatus !== 'Temporary Suspension Requests Approved' &&
-                          selectedAcademicStatus !== 'Permanent Suspension Requests Approved' && (
-                            <>
-                              {selectedAcademicStatus !== 'Forwarded' && (
-                                <Button
-                                  variant="contained"
-                                  color="secondary"
-                                  {...bindTrigger(popupState)}
-                                  sx={{
-                                    mr: 2,
-                                    mb: {
-                                      xs: 1,
-                                      md: 0,
-                                    },
-                                    width: {
-                                      xs: '100%',
-                                      md: 'fit-content',
-                                    },
-                                  }}
-                                  disabled={actionVerified}
-                                >
-                                  Action <MoreHorizIcon />
-                                </Button>
+          {!data?.is_admin && (
+            <Box>
+              {(userActiveTab === 'dashboard' || userActiveTab === 'Activate Licence') &&
+                (selectedAcademicStatus?.toUpperCase() === 'PENDING' ||
+                  selectedAcademicStatus === 'Pending' ||
+                  selectedAcademicStatus === 'College/NBE Verified' ||
+                  userActiveTab === 'Activate Licence' ||
+                  selectedAcademicStatus === 'Forwarded' ||
+                  selectedAcademicStatus === 'Temporary Suspension Requests Received' ||
+                  selectedAcademicStatus === 'Permanent Suspension Requests Received' ||
+                  selectedAcademicStatus === 'Temporary Suspension Requests Approved' ||
+                  selectedAcademicStatus === 'Permanent Suspension Requests Approved') && (
+                  <Box mt={2}>
+                    <PopupState>
+                      {(popupState) => (
+                        <React.Fragment>
+                          {data?.user_sub_type === 6
+                            ? ''
+                            : selectedAcademicStatus !== 'Temporary Suspension Requests Approved' &&
+                              selectedAcademicStatus !==
+                                'Permanent Suspension Requests Approved' && (
+                                <>
+                                  {selectedAcademicStatus !== 'Forwarded' && (
+                                    <Button
+                                      variant="contained"
+                                      color="secondary"
+                                      {...bindTrigger(popupState)}
+                                      sx={{
+                                        mr: 2,
+                                        mb: {
+                                          xs: 1,
+                                          md: 0,
+                                        },
+                                        width: {
+                                          xs: '100%',
+                                          md: 'fit-content',
+                                        },
+                                      }}
+                                      disabled={actionVerified}
+                                    >
+                                      Action <MoreHorizIcon />
+                                    </Button>
+                                  )}
+                                  {(((selectedAcademicStatus === 'College/NBE Verified' ||
+                                    selectedAcademicStatus === 'Forwarded' ||
+                                    userActiveTab === 'Activate Licence' ||
+                                    selectedAcademicStatus !== 'Pending' ||
+                                    !showForwardButton) &&
+                                    (loggedInUserType === 'SMC' || loggedInUserType === 'NMC')) ||
+                                    (loggedInUserType === 'SMC' &&
+                                      actionButtonHandler() === false) ||
+                                    (loggedInUserType !== 'SMC' &&
+                                      userActiveTab !== 'Activate Licence' &&
+                                      selectedAcademicStatus !== 'Forwarded')) && (
+                                    // eslint-disable-next-line react/jsx-indent
+                                    <Button
+                                      variant="contained"
+                                      color="secondary"
+                                      onClick={selectionChangeHandler}
+                                      data-my-value={
+                                        loggedInUserType === 'SMC' ||
+                                        loggedInUserType === 'College' ||
+                                        loggedInUserType === 'NBE'
+                                          ? 'verify'
+                                          : selectedAcademicStatus ===
+                                            'Temporary Suspension Requests Received'
+                                          ? 'blacklist'
+                                          : selectedAcademicStatus ===
+                                            'Permanent Suspension Requests Received'
+                                          ? 'suspend'
+                                          : 'verify'
+                                      }
+                                      sx={{
+                                        mr: 2,
+                                        mb: {
+                                          xs: 1,
+                                          md: 0,
+                                        },
+                                        width: {
+                                          xs: '100%',
+                                          md: 'fit-content',
+                                        },
+                                      }}
+                                    >
+                                      {loggedInUserType === 'SMC' ||
+                                      loggedInUserType === 'College' ||
+                                      loggedInUserType === 'NBE'
+                                        ? 'Verify'
+                                        : selectedAcademicStatus ===
+                                            'Temporary Suspension Requests Received' ||
+                                          selectedAcademicStatus ===
+                                            'Permanent Suspension Requests Received'
+                                        ? 'Suspend'
+                                        : 'Approve'}
+                                    </Button>
+                                  )}
+                                  {loggedInUserType === 'SMC' &&
+                                    userActiveTab !== 'Activate Licence' &&
+                                    selectedAcademicStatus !== 'Forwarded' &&
+                                    selectedAcademicStatus !== 'College/NBE Verified' &&
+                                    actionButtonHandler() === true && (
+                                      <Button
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={selectionChangeHandler}
+                                        data-my-value={'forward'}
+                                        sx={{
+                                          mr: 2,
+                                          mb: {
+                                            xs: 1,
+                                            md: 0,
+                                          },
+                                          width: {
+                                            xs: '100%',
+                                            md: 'fit-content',
+                                          },
+                                        }}
+                                      >
+                                        Forward
+                                      </Button>
+                                    )}{' '}
+                                </>
                               )}
-                              {(selectedAcademicStatus === 'College Verified' ||
-                                selectedAcademicStatus === 'Forwarded' ||
-                                userActiveTab === 'Activate Licence' ||
-                                !showForwardButton) &&
-                                (loggedInUserType === 'SMC' || loggedInUserType === 'NMC') && (
-                                  <Button
-                                    variant="contained"
-                                    color="secondary"
-                                    onClick={selectionChangeHandler}
-                                    data-my-value={'verify'}
-                                    sx={{
-                                      mr: 2,
-                                      mb: {
-                                        xs: 1,
-                                        md: 0,
-                                      },
-                                      width: {
-                                        xs: '100%',
-                                        md: 'fit-content',
-                                      },
-                                    }}
-                                  >
-                                    {loggedInUserType === 'SMC' ||
-                                    loggedInUserType === 'College' ||
-                                    loggedInUserType === 'NBE'
-                                      ? 'Verify'
-                                      : 'Approve'}
-                                  </Button>
-                                )}
-                              {loggedInUserType === 'SMC' &&
-                                userActiveTab !== 'Activate Licence' &&
-                                showForwardButton &&
-                                selectedAcademicStatus !== 'Forwarded' &&
-                                selectedAcademicStatus !== 'College Verified' && (
-                                  <Button
-                                    variant="contained"
-                                    color="secondary"
-                                    onClick={selectionChangeHandler}
-                                    data-my-value={'forward'}
-                                    sx={{
-                                      mr: 2,
-                                      mb: {
-                                        xs: 1,
-                                        md: 0,
-                                      },
-                                      width: {
-                                        xs: '100%',
-                                        md: 'fit-content',
-                                      },
-                                    }}
-                                  >
-                                    Forward
-                                  </Button>
-                                )}{' '}
-                              {loggedInUserType !== 'SMC' &&
-                                userActiveTab !== 'Activate Licence' &&
-                                selectedAcademicStatus !== 'Forwarded' && (
-                                  <Button
-                                    variant="contained"
-                                    color="secondary"
-                                    onClick={selectionChangeHandler}
-                                    data-my-value={'verify'}
-                                    sx={{
-                                      mr: 2,
-                                      mb: {
-                                        xs: 1,
-                                        md: 0,
-                                      },
-                                      width: {
-                                        xs: '100%',
-                                        md: 'fit-content',
-                                      },
-                                    }}
-                                  >
-                                    {loggedInUserType === 'SMC' ||
-                                    loggedInUserType === 'College' ||
-                                    loggedInUserType === 'NBE'
-                                      ? 'Verify'
-                                      : 'Approve'}
-                                  </Button>
-                                )}
-                            </>
-                          )}
-                      {(loggedInUserType === 'NMC' || loggedInUserType === 'SMC') &&
-                        (selectedAcademicStatus === 'Temporary Suspension Requests Approved' ||
-                          selectedAcademicStatus === 'Permanent Suspension Requests Approved') && (
-                          <Button
-                            variant="contained"
-                            color="secondary"
-                            onClick={activateLicenceHandler}
-                            data-my-value={'Activate'}
-                            sx={{
-                              mr: 2,
-                              mb: {
-                                xs: 1,
-                                md: 0,
-                              },
-                              width: {
-                                xs: '100%',
-                                md: 'fit-content',
-                              },
-                            }}
-                          >
-                            Activate
-                          </Button>
-                        )}
-                      <Menu {...bindMenu(popupState)}>
-                        {selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
-                          selectedAcademicStatus !== 'Permanent Suspension Requests Received' &&
-                          !!dashboardTableDetails &&
-                          dashboardTableDetails !== 'Approved' && (
-                            <MenuItem onClick={selectionChangeHandler} data-my-value={'raise'}>
-                              Raise a Query
+                          {(loggedInUserType === 'NMC' || loggedInUserType === 'SMC') &&
+                            (selectedAcademicStatus === 'Temporary Suspension Requests Approved' ||
+                              selectedAcademicStatus ===
+                                'Permanent Suspension Requests Approved') && (
+                              // eslint-disable-next-line react/jsx-indent
+                              <Button
+                                variant="contained"
+                                color="secondary"
+                                onClick={activateLicenceHandler}
+                                data-my-value={'Activate'}
+                                sx={{
+                                  mr: 2,
+                                  mb: {
+                                    xs: 1,
+                                    md: 0,
+                                  },
+                                  width: {
+                                    xs: '100%',
+                                    md: 'fit-content',
+                                  },
+                                }}
+                              >
+                                Activate
+                              </Button>
+                            )}
+                          <Menu {...bindMenu(popupState)}>
+                            {loggedInUserType === 'SMC' &&
+                              showForwardButton &&
+                              userActiveTab !== 'Activate Licence' &&
+                              selectedAcademicStatus !== 'College/NBE Verified' && (
+                                <MenuItem onClick={selectionChangeHandler} data-my-value={'verify'}>
+                                  Verify
+                                </MenuItem>
+                              )}
+                            {selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
+                              selectedAcademicStatus !== 'Permanent Suspension Requests Received' &&
+                              !!dashboardTableDetails &&
+                              dashboardTableDetails !== 'Approved' && (
+                                <MenuItem onClick={selectionChangeHandler} data-my-value={'raise'}>
+                                  Raise a Query
+                                </MenuItem>
+                              )}
+
+                            <MenuItem onClick={selectionChangeHandler} data-my-value={'reject'}>
+                              Reject
                             </MenuItem>
-                          )}
-                        {loggedInUserType === 'SMC' &&
-                          showForwardButton &&
-                          userActiveTab !== 'Activate Licence' &&
-                          selectedAcademicStatus !== 'College Verified' && (
-                            <MenuItem onClick={selectionChangeHandler} data-my-value={'verify'}>
-                              Verify
-                            </MenuItem>
-                          )}
-                        <MenuItem onClick={selectionChangeHandler} data-my-value={'reject'}>
-                          Reject
-                        </MenuItem>
-                        {personalDetails.nmr_id !== undefined &&
-                          userActiveTab !== 'Activate Licence' &&
-                          (loggedInUserType === 'NMC' ||
-                            (loggedInUserType === 'SMC' &&
-                              selectedAcademicStatus === 'Update Request Received')) &&
-                          selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
-                          selectedAcademicStatus !== 'Permanent Suspension Requests Received' && (
-                            <MenuItem onClick={selectionChangeHandler} data-my-value={'suspend'}>
-                              Permanent suspend
-                            </MenuItem>
-                          )}
-                        {personalDetails.nmr_id !== undefined &&
-                          userActiveTab !== 'Activate Licence' &&
-                          (loggedInUserType === 'NMC' ||
-                            (loggedInUserType === 'SMC' &&
-                              selectedAcademicStatus === 'Update Request Received')) &&
-                          selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
-                          selectedAcademicStatus !== 'Permanent Suspension Requests Received' && (
-                            <MenuItem onClick={selectionChangeHandler} data-my-value={'blacklist'}>
-                              Temporary suspend
-                            </MenuItem>
-                          )}
-                      </Menu>
-                    </React.Fragment>
-                  )}
-                </PopupState>
-              </Box>
-            )}
+                            {personalDetails.nmr_id !== undefined &&
+                              userActiveTab !== 'Activate Licence' &&
+                              (loggedInUserType === 'NMC' ||
+                                (loggedInUserType === 'SMC' &&
+                                  selectedAcademicStatus === 'Pending')) &&
+                              selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
+                              selectedAcademicStatus !==
+                                'Permanent Suspension Requests Received' && (
+                                <MenuItem
+                                  onClick={selectionChangeHandler}
+                                  data-my-value={'blacklist'}
+                                >
+                                  Temporary Suspend
+                                </MenuItem>
+                              )}
+                            {personalDetails.nmr_id !== undefined &&
+                              userActiveTab !== 'Activate Licence' &&
+                              (loggedInUserType === 'NMC' ||
+                                (loggedInUserType === 'SMC' &&
+                                  selectedAcademicStatus === 'Pending')) &&
+                              selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
+                              selectedAcademicStatus !==
+                                'Permanent Suspension Requests Received' && (
+                                <MenuItem
+                                  onClick={selectionChangeHandler}
+                                  data-my-value={'suspend'}
+                                >
+                                  Permanent Suspend
+                                </MenuItem>
+                              )}
+                          </Menu>
+                        </React.Fragment>
+                      )}
+                    </PopupState>
+                  </Box>
+                )}
+            </Box>
+          )}
         </Box>
       )}
       <Dialog
@@ -431,6 +502,10 @@ const ReadRegisterAndAcademicDetails = ({
                 setSuccessPopupMessage={setSuccessPopupMessage}
                 setActionVerified={setActionVerified}
                 selectedAcademicStatus={selectedAcademicStatus}
+                selectedRowData={
+                  dashboardTableDetailsData?.data?.dashboard_tolist &&
+                  dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]
+                }
                 requestID={
                   dashboardTableDetailsData?.data?.dashboard_tolist &&
                   dashboardTableDetailsData?.data?.dashboard_tolist[selectedDataIndex]?.request_id

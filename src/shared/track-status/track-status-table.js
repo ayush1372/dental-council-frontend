@@ -1,12 +1,10 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Box, Grid, TablePagination } from '@mui/material';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 
 import UserProfile from '../../../src/pages/user-profile';
-import { verboseLog } from '../../config/debug';
 import { capitalize } from '../../helpers/functions/common-functions';
 import GenericTable from '../../shared/generic-component/generic-table';
 import ViewProfile from '../../shared/view-profile/view-profile';
@@ -65,7 +63,6 @@ function TrackStatusTable(props) {
     // props?.setShowTrackApplicationTable(false);
   };
 
-  verboseLog('selectedRowData', selectedRowData, props);
   const dataHeader = [
     { title: 'S.No.', name: 'SNo', sorting: true, type: 'string' },
     {
@@ -75,46 +72,40 @@ function TrackStatusTable(props) {
       type: 'string',
     },
     {
-      title: 'IMR ID/ Registration No.',
+      title: 'Registration Number',
       name: 'registrationNo',
       sorting: true,
       type: 'string',
     },
     {
-      title: 'Name of Applicant',
+      title: 'Applicant Name',
       name: 'nameofApplicant',
       sorting: true,
       type: 'string',
     },
-    { title: 'Name of State Council', name: 'nameofStateCouncil', sorting: true, type: 'date' },
+    { title: 'State Medical Council', name: 'nameofStateCouncil', sorting: true, type: 'date' },
     {
-      title: 'Council Verification Status',
+      title: 'Council Status',
       name: 'councilVerificationStatus',
       sorting: true,
       type: 'string',
     },
     {
-      title: 'College/NBE Verification Status',
+      title: 'College/NBE Status',
       name: 'collegeVerificationStatus',
       sorting: true,
       type: 'string',
     },
     {
-      title: 'NMC Verification Status',
+      title: 'NMC Status',
       name: 'NMCVerificationStatus',
       sorting: true,
       type: 'string',
     },
-    { title: 'Date of Submission', name: 'dateofSubmission', sorting: true, type: 'string' },
-    { title: 'Pendency (in days)', name: 'pendency', sorting: true, type: 'string' },
-    { title: 'Pending with user', name: 'pending', sorting: true, type: 'string' },
+    { title: 'Submission Date', name: 'dateofSubmission', sorting: true, type: 'string' },
+    { title: 'Pendency (Days)', name: 'pendency', sorting: true, type: 'string' },
     loggedInUserType !== 'College' && {
-      title:
-        loggedInUserType === 'NMC'
-          ? 'Action'
-          : loggedInUserType === 'SMC'
-          ? 'Request NMC'
-          : 'Request NMC',
+      title: 'Action',
       name: 'requestNMC',
       sorting: true,
       type: 'string',
@@ -131,10 +122,24 @@ function TrackStatusTable(props) {
     setOrderBy(property);
   };
 
+  useEffect(() => {
+    let finalTrackData = { ...props.trackValues };
+    finalTrackData.sortBy = orderBy?.name;
+    finalTrackData.sortOrder = order;
+
+    if (
+      finalTrackData?.sortBy !== undefined &&
+      finalTrackData?.sortBy !== null &&
+      finalTrackData?.sortBy !== '' &&
+      finalTrackData?.sortOrder !== undefined &&
+      finalTrackData?.sortOrder !== null &&
+      finalTrackData?.sortOrder !== ''
+    )
+      dispatch(trackStatus(finalTrackData));
+  }, [order, orderBy, dispatch]);
+
   const newRowsData = props?.trackStatusData?.health_professional_applications?.map(
     (application, index) => {
-      const formattedDate = moment(application?.created_at).format('DD-MM-YYYY:HH:MM:SS.SSSSSS');
-
       return createData(
         { type: 'SNo', value: index + 1 },
         {
@@ -164,22 +169,12 @@ function TrackStatusTable(props) {
             application?.application_type_id === 7
               ? capitalize(application?.nbe_status)
               : capitalize(application?.college_status),
-
-          // value:
-          //   application?.college_dean_status === ('NOT YET RECEIVED' || 'PENDING') &&
-          //   application?.college_registrar_status === 'Approved'
-          //     ? 'Pending'
-          //     : application?.college_dean_status === 'APPROVED' &&
-          //       application?.college_registrar_status === 'APPROVED'
-          //     ? 'Approved'
-          //     : 'Not yet received',
         },
         {
           type: 'NMCVerificationStatus',
           value: application?.nmc_status ? capitalize(application?.nmc_status) : '',
         },
-
-        { type: 'dateofSubmission', value: formattedDate },
+        { type: 'dateofSubmission', value: moment(application?.created_at).format('DD-MM-YYYY') },
         { type: 'pendency', value: application?.pendency },
         { type: 'pending', value: '-' },
         { type: 'HPProfileId', value: application?.hp_profile_id },
@@ -204,7 +199,7 @@ function TrackStatusTable(props) {
       top: 0,
       behavior: 'smooth',
     });
-    let finalSearchData = { ...props.trackValues, pageNo: newPage };
+    let finalSearchData = { ...props.trackValues, pageNo: newPage + 1 };
     dispatch(trackStatus(finalSearchData));
   };
 
@@ -255,22 +250,23 @@ function TrackStatusTable(props) {
         page={page}
         applicationData={props?.trackStatusData?.health_professional_applications}
       />
-
-      <Box>
-        <TablePagination
-          rowsPerPageOptions={[]}
-          component="div"
-          count={props?.trackStatusData?.total_no_of_records}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        />
-      </Box>
+      {newRowsData?.length !== 0 && (
+        <Box>
+          <TablePagination
+            rowsPerPageOptions={[]}
+            component="div"
+            count={props?.trackStatusData?.total_no_of_records || 0}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          />
+        </Box>
+      )}
     </Grid>
   );
 }

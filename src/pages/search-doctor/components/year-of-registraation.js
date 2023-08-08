@@ -1,4 +1,4 @@
-import { Grid, Typography } from '@mui/material';
+import { Grid } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
@@ -6,7 +6,7 @@ import { yeardata } from '../../../constants/common-data';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
 import { searchDoctorDetails } from '../../../store/actions/doctor-search-actions';
 import { Button } from '../../../ui/core';
-import successToast from '../../../ui/core/toaster';
+// import successToast from '../../../ui/core/toaster';
 
 const YearOfRegistration = ({ setDoSearch, setSearchData, setScrollDown }) => {
   const dispatch = useDispatch();
@@ -26,29 +26,29 @@ const YearOfRegistration = ({ setDoSearch, setSearchData, setScrollDown }) => {
   const onsubmit = () => {
     const searchValues = {
       registrationYear: getValues().YearofRegistration,
+      profileStatusId: 2,
       page: 0,
       size: 9,
     };
 
     setDoSearch(true);
 
-    dispatch(searchDoctorDetails(searchValues))
-      .then(() => {})
-      .catch((error) => {
-        successToast(
-          error?.data?.response?.data?.error,
-          'RegistrationError',
-          'error',
-          'top-center'
-        );
-      });
+    dispatch(searchDoctorDetails(searchValues)).then(() => {});
+    // .catch((error) => {
+    //   successToast(
+    //     error?.data?.response?.data?.error,
+    //     'RegistrationError',
+    //     'error',
+    //     'top-center'
+    //   );
+    // });
 
     setSearchData(searchValues);
     setScrollDown(true);
   };
   return (
     <Grid container spacing={2} mt={2}>
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         <Typography
           bgcolor="grey1.light"
           p={1}
@@ -58,7 +58,7 @@ const YearOfRegistration = ({ setDoSearch, setSearchData, setScrollDown }) => {
         >
           Browse by year of registration*
         </Typography>
-      </Grid>
+      </Grid> */}
       <Grid item xs={8}>
         <SearchableDropdown
           sx={{
@@ -72,7 +72,7 @@ const YearOfRegistration = ({ setDoSearch, setSearchData, setScrollDown }) => {
           name="YearofRegistration"
           items={yeardata}
           placeholder="Select year of registration"
-          label=" Year of registration"
+          label=" Year of Registration"
           clearErrors={clearErrors}
           error={errors.YearofRegistration?.message}
           {...register('YearofRegistration')}

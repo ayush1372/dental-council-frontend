@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Box, Grid, TablePagination } from '@mui/material';
+import { Box, Button, Grid, TablePagination, Typography } from '@mui/material';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -13,9 +13,10 @@ import ViewProfile from '../../../shared/view-profile/view-profile';
 import { getActivateLicenseList } from '../../../store/actions/common-actions';
 import successToast from '../../../ui/core/toaster';
 import UserProfile from '../../user-profile';
+import BreadcrumbsCompnent from '../components/breadcrums';
 import TableSearch from '../components/table-search/table-search';
 
-const ActivateLicence = (props) => {
+const ActivateLicence = () => {
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState({});
@@ -58,7 +59,7 @@ const ActivateLicence = (props) => {
   const dataHeader = [
     { title: 'S.No.', name: 'SNo', sorting: true, type: 'string' },
     {
-      title: 'IMR ID/ Registration No.',
+      title: 'Registration Number',
       name: 'registrationNo',
       sorting: true,
       type: 'string',
@@ -69,11 +70,11 @@ const ActivateLicence = (props) => {
       sorting: true,
       type: 'string',
     },
-    { title: 'Date of Submission', name: 'dateOfSubmission', sorting: true, type: 'date' },
+    { title: 'Submission Date', name: 'dateOfSubmission', sorting: true, type: 'date' },
 
-    { title: 'Reactivation from Date', name: 'reactivationFromDate', sorting: true, type: 'date' },
+    { title: 'Reactivation From Date', name: 'reactivationFromDate', sorting: true, type: 'date' },
     {
-      title: 'Type of Suspension',
+      title: 'Suspension Type',
       name: 'typeOfSuspension',
       sorting: true,
       type: 'string',
@@ -120,7 +121,6 @@ const ActivateLicence = (props) => {
     event.stopPropagation();
     setRowData(row);
     setShowViewPorfile(true);
-    props?.setShowHeader(false);
   };
 
   const handleDataRowClick = (dataRow) => {
@@ -132,6 +132,24 @@ const ActivateLicence = (props) => {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
+  useEffect(() => {
+    if (
+      orderBy?.name !== undefined &&
+      orderBy?.name !== null &&
+      orderBy?.name !== '' &&
+      order !== undefined &&
+      order !== null &&
+      order !== ''
+    ) {
+      let ActivateLicenseListbody = {
+        pageNo: 1,
+        offset: 10,
+        sortBy: orderBy?.name,
+        sortOrder: order,
+      };
+      dispatch(getActivateLicenseList(ActivateLicenseListbody));
+    }
+  }, [order, orderBy, dispatch]);
 
   const newRowsData =
     activateLicenseList?.data?.health_professional_details?.length >= 1
@@ -240,22 +258,74 @@ const ActivateLicence = (props) => {
   //   }
   // };
 
+  function handleBreadCrumClick(event) {
+    event.preventDefault();
+    if (event.target.id === '1') {
+      setShowViewPorfile(false);
+    } else if (event.target.id === '2') {
+      setShowViewPorfile(false);
+    }
+  }
+  const onClickBackButtonHandler = () => {
+    if (showViewProfile) {
+      setShowViewPorfile(false);
+    }
+  };
+
   return (
-    <>
+    <Grid p={1}>
+      <Grid item xs={12} sm="auto" sx={{ mr: { xs: 0, sm: 'auto' } }} p={2}>
+        <Typography variant="h2" color="textPrimary.main">
+          Activate Licence
+        </Typography>
+      </Grid>
       {showViewProfile ? (
-        <Box bgcolor="grey1.lighter">
-          <ViewProfile />
-          <UserProfile
-            showViewProfile={true}
-            selectedRowData={
-              activateLicenseList?.data.health_professional_details[selectedRowData?.SNo?.value - 1]
-            }
-            tabName={'Activate License'}
-          />
-        </Box>
+        <>
+          <Grid container>
+            <Grid item xs={6}>
+              <BreadcrumbsCompnent
+                showViewProfile={showViewProfile}
+                handleBreadCrumClick={handleBreadCrumClick}
+                levelOneText="Activate License Applications"
+                levelthreeText="View Profile"
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <Box align="right" mt={2} mr={2}>
+                <Button
+                  size="small"
+                  variant="outlined"
+                  sx={{
+                    backgroundColor: 'white.main',
+                    ml: 2,
+                    '&:hover': {
+                      color: 'primary.main',
+                      backgroundColor: 'white.main',
+                    },
+                  }}
+                  onClick={onClickBackButtonHandler}
+                >
+                  Back
+                </Button>
+              </Box>
+            </Grid>
+          </Grid>
+          <Box px={2}>
+            <ViewProfile />
+            <UserProfile
+              showViewProfile={true}
+              selectedRowData={
+                activateLicenseList?.data.health_professional_details[
+                  selectedRowData?.SNo?.value - 1
+                ]
+              }
+              tabName={'Activate License'}
+            />
+          </Box>
+        </>
       ) : (
         <Grid sx={{ m: 2 }} lg={12} md={12}>
-          <Grid mt={3}>
+          <Grid>
             <TableSearch
               data-testid="tab-heading"
               searchParams={searchParams}
@@ -275,21 +345,23 @@ const ActivateLicence = (props) => {
             customPopupOptions={customPopupOptions}
             setIsApproveModalOpen={setIsApproveModalOpen}
           />
-          <Box>
-            <TablePagination
-              rowsPerPageOptions={[]}
-              component="div"
-              count={activateLicenseList?.data?.total_no_of_records}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-              }}
-            />
-          </Box>
+          {newRowsData?.length !== 0 && (
+            <Box>
+              <TablePagination
+                rowsPerPageOptions={[]}
+                component="div"
+                count={activateLicenseList?.data?.total_no_of_records || 0}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                }}
+              />
+            </Box>
+          )}
         </Grid>
       )}
       {isApproveModalOpen && (
@@ -308,7 +380,7 @@ const ActivateLicence = (props) => {
           reactiveLicenseRequestHPApplicationData={reactiveLicenseRequestHPApplicationData}
         />
       )}
-    </>
+    </Grid>
   );
 };
 

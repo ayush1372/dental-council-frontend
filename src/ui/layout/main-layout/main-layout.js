@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { Outlet } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 import { parserJWT, userGroupTypeForSession } from '../../../helpers/functions/common-functions';
 import CircularLoader from '../../../shared/circular-loader/circular-loader';
@@ -37,6 +38,7 @@ export const MainLayout = () => {
           work_flow_status_id: Number(localStorage.getItem('workProfileStatusID')),
           esign_status: Number(localStorage.getItem('esignStatus')),
           blacklisted: Number(localStorage.getItem('blacklistedStatus')),
+          user_type: Number(localStorage.getItem('userType')),
         },
       };
       dispatch(loginUser(dataObj));
@@ -49,6 +51,7 @@ export const MainLayout = () => {
         <main>
           <Header />
           <section className={styles.main}>
+            <ToastContainer />
             <Outlet />
           </section>
         </main>

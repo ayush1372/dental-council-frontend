@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import VolumeOffIcon from '@mui/icons-material/VolumeOff';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
-import { Alert, Container, Divider, Grid, IconButton, Typography } from '@mui/material';
+import { Container, Divider, Grid, IconButton, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSpeechSynthesis } from 'react-speech-kit';
-import { ToastContainer } from 'react-toastify';
 
 import { consentDescription } from '../../../constants/common-data';
 import { validateAadharNumber } from '../../../constants/common-data';
@@ -37,7 +37,7 @@ import {
 } from '../../../store/reducers/doctor-registration-reducer';
 import { Button, Checkbox, TextField } from '../../../ui/core';
 import AadhaarInputField from '../../../ui/core/aadhaar-input-field/aadhaar-input-field';
-import successToast from '../../../ui/core/toaster';
+// import successToast from '../../../ui/core/toaster';
 import CreateHprId from './unique-username';
 
 function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onReset }) {
@@ -52,6 +52,9 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
   const [showCreateHprIdPage, setShowCreateHprIdPage] = useState(false);
   const [existHprId, setExistHprId] = useState(false);
   const [successRegistration, setSuccessRegistration] = useState(false);
+  const [editBUtton, setEditButton] = useState(false);
+  const [userAccountName, setuserAccountName] = useState('');
+  //const [isDisabled, setIsDisabled] = useState(false);
 
   const { speak, cancel } = useSpeechSynthesis();
 
@@ -147,7 +150,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
 
         setshowOtpAadhar(false);
         handleClear();
-        if (!imrDataNotFound) {
+        if (hpName !== undefined || hpName === '') {
           let councilID = getCouncilID(councilName);
           dispatch(
             checkKycDetails(
@@ -197,14 +200,21 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
         mobile: getValues().MobileNumber,
         txnId: aadhaarTxnId,
       };
-      dispatch(generateMobileOtp(data))
-        .then(() => {
-          setShowOtpMobile(true);
-        })
-        .catch((error) => {
-          successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-        });
+      dispatch(generateMobileOtp(data)).then(() => {
+        setShowOtpMobile(true);
+        setEditButton(true);
+        setisOtpValidMobile(true);
+      });
+      // .catch((error) => {
+      //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+      // });
     });
+  };
+
+  const handleEdit = () => {
+    setShowOtpMobile(false);
+    setisOtpValidMobile(false);
+    setEditButton(false);
   };
 
   useEffect(() => {
@@ -222,6 +232,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
       dispatch(verifyMobileOtp(data)).then(() => {
         setisOtpValidMobile(true);
         setShowOtpMobile(false);
+        setEditButton(false);
         handleClear();
       });
     }
@@ -255,6 +266,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
   };
   const onSubmit = () => {
     dispatch(verifyHealthProfessional(getValues().MobileNumber)).then((validationResponse) => {
+      setuserAccountName(validationResponse?.data[0]);
       let responseLength = validationResponse && validationResponse?.data?.length;
       if (imrDataNotFound || kycstatus !== 'Success') {
         dispatch(UserNotFoundDetails({ imrDataNotFound, aadhaarFormValues }));
@@ -302,7 +314,6 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
   };
   return (
     <>
-      <ToastContainer></ToastContainer>
       {kycError && (
         <KycErrorPopup
           open={kycError}
@@ -329,26 +340,6 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
               },
             }}
           >
-            <Box sx={{ width: '100%', height: '53px', marginBottom: '30px', marginTop: '32px ' }}>
-              <Alert
-                sx={{
-                  m: 2,
-                  marginLeft: '0px',
-                  borderRadius: '5px',
-                  width: {
-                    xs: '100%',
-                    md: '680px',
-                  },
-                  boxShadow: '1',
-                  color: 'inputSuccessTextColor.main',
-                  backgroundColor: 'inputSuccessBackgroundColor.main',
-                }}
-              >
-                Record fetched successfully. Please verify your details to proceed further.
-              </Alert>
-            </Box>
-            {/* )} */}
-
             <Box p="30px 32px 0px 32px" width={{ xs: '100%', md: '679px' }} sx={{ boxShadow: '2' }}>
               <Box mb={4}>
                 <Typography variant="h2" color="textSecondary.main">
@@ -389,25 +380,28 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
               <Divider sx={{ marginBottom: '25px' }} variant="fullWidth" />
               <Box
                 display="flex"
-                justifyContent="space-between"
+                //justifyContent="space-between"
+                alignItems={'center'}
                 flexDirection={{ xs: 'column', sm: 'row' }}
               >
-                <Box>
-                  <AadhaarInputField
-                    defaultValue={getValues().AadhaarNumber}
-                    name="AadhaarNumber"
-                    {...register('AadhaarNumber', {})}
-                    register={register}
-                    getValues={getValues}
-                    required={true}
-                    errors={errors}
-                    setValue={setValue}
-                    disabled={showOtpAadhar || isOtpValidAadhar}
-                  />
-                </Box>
-                <Box p="35px 32px 0px 32px">
+                <AadhaarInputField
+                  defaultValue={getValues().AadhaarNumber}
+                  name="AadhaarNumber"
+                  {...register('AadhaarNumber', {})}
+                  register={register}
+                  getValues={getValues}
+                  required={true}
+                  errors={errors}
+                  setValue={setValue}
+                  disabled={showOtpAadhar || isOtpValidAadhar}
+                />
+                <Box display={'flex'} justifyContent="center" ml={3} mt={2}>
                   {isOtpValidAadhar ? <CheckCircleIcon color="success" /> : ''}
                 </Box>
+
+                {/* <Box p="35px 32px 0px 32px">
+                  {isOtpValidAadhar ? <CheckCircleIcon color="success" /> : ''}
+                </Box> */}
               </Box>
               <Grid
                 container
@@ -430,10 +424,9 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                   </Box>
                 </Grid>
                 <Grid Container xs={12} display="flex" sx={{ alignItems: 'center' }}>
-                  <Grid item xs={11} display="flex">
+                  <Grid item xs={11} display="flex" alignItems={'center'}>
                     <Checkbox
-                      label="I Agree"
-                      sx={{ width: '18px', height: '18px', marginRight: 1, marginLeft: 2 }}
+                      sx={{ width: '18px', height: '18px' }}
                       name="consent"
                       defaultChecked={getValues()?.consent}
                       checked={consentD}
@@ -442,6 +435,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                       }}
                       disabled={isOtpValidAadhar}
                     />
+                    <Typography>I agree</Typography>
                   </Grid>
 
                   <Grid item xs={1} display="flex">
@@ -496,7 +490,6 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
               {showOtpAadhar && (
                 <Box
                   sx={{
-                    display: 'flex',
                     flexDirection: {
                       xs: 'column',
                       sm: 'row',
@@ -505,34 +498,34 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                 >
                   <Box pt={1}>
                     <Typography variant="body1">
-                      Please enter the OTP sent on your mobile number {mobileNumber} which is
-                      registered with Aadhaar.
+                      OTP sent to Aadhaar registered mobile number ending with {mobileNumber}
                     </Typography>
-                    {otpform}
                   </Box>
-                  <Button
-                    sx={{ width: '114px', height: '53px', marginTop: '77px' }}
-                    component="span"
-                    variant="contained"
-                    color="secondary"
-                    onClick={handleValidateAadhar}
-                    disabled={
-                      consentD
-                        ? validationOtpInvalid
+                  <Box display={{ md: 'flex' }}>
+                    {otpform}
+                    <Button
+                      sx={{ width: '114px', height: '53px', mt: 2, ml: 2 }}
+                      component="span"
+                      variant="contained"
+                      color="secondary"
+                      onClick={handleValidateAadhar}
+                      disabled={
+                        consentD
                           ? validationOtpInvalid
-                          : otpValue === ''
-                          ? true
-                          : false
-                        : true
-                    }
-                  >
-                    Validate
-                  </Button>
+                            ? validationOtpInvalid
+                            : otpValue === ''
+                            ? true
+                            : false
+                          : true
+                      }
+                    >
+                      Validate
+                    </Button>
+                  </Box>
                 </Box>
               )}
 
-              <Divider sx={{ mb: 4, mt: 4 }} variant="fullWidth" />
-              <Box sx={{ marginTop: '20px', paddingBottom: '48px' }}>
+              <Box sx={{ marginTop: '20px', paddingBottom: '48px', alignItems: 'flex-start' }}>
                 <Typography variant="subtitle2">
                   Mobile Number
                   <Typography component="span" sx={{ color: 'error.main' }}>
@@ -542,7 +535,6 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                 <Box
                   sx={{
                     display: 'flex',
-                    alignItems: 'center',
                   }}
                 >
                   <TextField
@@ -551,32 +543,60 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                     type="text"
                     onInput={(e) => handleInput(e)}
                     name={'MobileNumber'}
-                    disabled={isOtpValidMobile}
-                    placeholder={t('Enter Mobile Number')}
+                    disabled={!isOtpValidAadhar || isOtpValidMobile}
+                    placeholder={t('Enter mobile number')}
                     defaultValue={getValues().MobileNumber}
                     error={errors.MobileNumber?.message}
                     {...register('MobileNumber', {
-                      required: 'Mobile Number is required',
+                      required: 'Please enter a valid 10 digit mobile number',
                       pattern: {
                         value: /^\d{10}$/i,
-                        message: 'Enter Valid Mobile Number',
+                        message: 'Please enter a valid mobile number',
                       },
                     })}
                   />
-                  {isOtpValidMobile ? <CheckCircleIcon color="success" /> : ''}
+                  <Box mt={2}>
+                    {(isOtpValidMobile && !editBUtton) ||
+                    demographicAuthMobileVerify?.data?.verified ? (
+                      <CheckCircleIcon color="success" />
+                    ) : (
+                      ''
+                    )}
+                  </Box>
                   <Box>
-                    {!showOtpMobile && !isOtpValidMobile && (
+                    {editBUtton && !demographicAuthMobileVerify?.data?.verified ? (
                       <Button
                         variant="contained"
                         color="secondary"
                         width="95px"
-                        onClick={handleVerifyMobile}
-                        disabled={getValues().MobileNumber.length < 10}
+                        onClick={handleEdit}
                       >
-                        Verify
+                        Edit
                       </Button>
+                    ) : (
+                      !showOtpMobile &&
+                      !isOtpValidMobile &&
+                      !editBUtton && (
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          width="95px"
+                          onClick={handleVerifyMobile}
+                          disabled={getValues().MobileNumber.length < 10}
+                        >
+                          Verify
+                        </Button>
+                      )
                     )}
                   </Box>
+                </Box>
+                <Box mt={1} sx={{ alignItems: 'center', display: 'flex' }}>
+                  <InfoOutlinedIcon
+                    sx={{ fontSize: '20px', padding: '2px', color: 'messageBlue.main' }}
+                  />
+                  <Typography variant="body4" color="messageBlue.main">
+                    This mobile number will be used for all the communications related to Council
+                  </Typography>
                 </Box>
               </Box>
               {showOtpMobile && (
@@ -589,9 +609,9 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                     },
                   }}
                 >
-                  <Box>
+                  <Box mb={1}>
                     <Typography variant="body1">
-                      Please enter the OTP sent on your Mobile Number.
+                      Please enter the OTP sent on your mobile number.
                     </Typography>
                     {otpform}
                   </Box>
@@ -611,21 +631,18 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
                 <Button
                   variant="contained"
                   color="secondary"
-                  sx={{ marginRight: '10px', width: '105px', height: '48px' }}
+                  sx={{ marginRight: '16px' }}
                   onClick={handleSubmit(onSubmit)}
-                  disabled={!isOtpValidMobile}
+                  disabled={!isOtpValidMobile || editBUtton}
                 >
                   Submit
                 </Button>
                 <Button
                   onClick={onCancel}
-                  variant="outlined"
                   sx={{
                     backgroundColor: 'grey.main',
                     color: 'black.textBlack',
                     border: 'none',
-                    width: '105px',
-                    height: '48px',
                   }}
                 >
                   Cancel
@@ -636,17 +653,36 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
 
           {showSuccess && (
             <SuccessModalPopup
+              fetchDoctorScreenAlertIcon={
+                existUSerName?.replace('@hpr.abdm', '')?.replace('@dr.abdm', '') !==
+                  userAccountName && !existHprId
+                  ? true
+                  : false
+              }
+              loginName={'Doctor'}
               open={showSuccess}
               setOpen={() => setShowSuccess(false)}
               successRegistration={successRegistration}
               existHprId={existHprId}
               isHpIdCreated={existHprId}
-              text={`Your username ${existUSerName
-                .replace('@hpr.abdm', '')
-                ?.replace(
-                  '@dr.abdm',
-                  ''
-                )} has been already created. Please click on below button to proceed`}
+              text={
+                !existHprId &&
+                existUSerName?.replace('@hpr.abdm', '')?.replace('@dr.abdm', '') !== userAccountName
+                  ? 'This mobile number is already registered with Council, please use different mobile number'
+                  : existHprId
+                  ? `Your account with username "${existUSerName
+                      .replace('@hpr.abdm', '')
+                      ?.replace(
+                        '@dr.abdm',
+                        ''
+                      )}" has been created. Please click on set password to proceed.`
+                  : `Your account with username "${existUSerName
+                      .replace('@hpr.abdm', '')
+                      ?.replace(
+                        '@dr.abdm',
+                        ''
+                      )}" has been created. Please click on login to proceed.`
+              }
             />
           )}
         </>

@@ -12,8 +12,8 @@ import {
   IconButton,
 } from '@mui/material';
 import PropTypes from 'prop-types';
-import { ToastContainer } from 'react-toastify';
 
+import { ErrorMessages } from '../../constants/error-messages';
 import { Button } from '../../ui/core';
 import successToast from '../../ui/core/toaster';
 import OtpForm from '../otp-form/otp-component';
@@ -50,14 +50,14 @@ CustomDialogTitle.propTypes = {
 export function ModalOTP({
   afterConfirm = undefined,
   reSentOtp = undefined,
-  headerText = 'Please enter the OTP sent on your registered Mobile Number  XXXXXX2182 linked with your Aadhaar.',
+  headerText = 'Please enter the OTP sent on your registered mobile number  XXXXXX2182 linked with your Aadhaar.',
 }) {
   const [open, setOpen] = useState(false);
   const [otpEmailVerify, setOtpEmailVerify] = useState(true);
   const [otpMobileVerify, setOtpMobileVerify] = useState(true);
 
   const otpResend = () => {
-    successToast('OTP Resent Successfully', 'otp-resent', 'success', 'top-center');
+    successToast(ErrorMessages.otpResend, 'otp-resent', 'success', 'top-center');
     reSentOtp();
   };
   const { otpform, otpValue, getOtpValidation, handleClear } = OtpForm({
@@ -82,8 +82,6 @@ export function ModalOTP({
   return {
     otpPopup: (
       <Box>
-        <ToastContainer></ToastContainer>
-
         <Dialog
           open={open}
           onClose={handleClose}

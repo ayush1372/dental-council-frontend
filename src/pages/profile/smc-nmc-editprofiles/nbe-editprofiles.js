@@ -8,7 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import { getUpdatedNBEProfileData } from '../../../store/actions/nbe-actions';
 import { Button, TextField } from '../../../ui/core';
-import successToast from '../../../ui/core/toaster';
+import { EmailRegexValidation } from '../../../utilities/common-validations';
+// import successToast from '../../../ui/core/toaster';
 
 const NbeEditProfile = (props) => {
   const { t } = useTranslation();
@@ -31,6 +32,15 @@ const NbeEditProfile = (props) => {
     },
   });
 
+  const handleInput = (e) => {
+    e.preventDefault();
+    if (e.target.value.length > 0) {
+      e.target.value = isNaN(e.target.value)
+        ? e.target.value.toString().slice(0, -1)
+        : Math.max(0, parseInt(e.target.value)).toString().slice(0, 10);
+    }
+  };
+
   let nbeUpdatedData = {
     id: userData?.id,
     user_id: getValues().user_id,
@@ -46,15 +56,14 @@ const NbeEditProfile = (props) => {
       display_name: getValues().first_name,
     };
 
-    dispatch(getUpdatedNBEProfileData(updatedNbeData, nbeUpdatedData?.id))
-      .then((response) => {
-        if (response?.isError === false) {
-          setSuccessModalPopup(true);
-        }
-      })
-      .catch((error) => {
-        successToast(error?.data?.response?.data?.message, 'UpdateError', 'error', 'top-center');
-      });
+    dispatch(getUpdatedNBEProfileData(updatedNbeData, nbeUpdatedData?.id)).then((response) => {
+      if (response?.isError === false) {
+        setSuccessModalPopup(true);
+      }
+    });
+    // .catch((error) => {
+    //   successToast(error?.data?.response?.data?.message, 'UpdateError', 'error', 'top-center');
+    // });
   };
 
   return (
@@ -66,10 +75,10 @@ const NbeEditProfile = (props) => {
             props?.sentDetails('Profile');
             setSuccessModalPopup(false);
           }}
-          text={'NBE Profile Data has been Updated Successfully.'}
+          text={'NBE profile data has been updated.'}
         />
       )}
-      <Grid container spacing={2} mt={2}>
+      <Grid container spacing={2}>
         <Grid item xs={12}>
           <Box display="flex" justifyContent="space-between" alignItems="center">
             <Typography variant="h2" color="textPrimary.main">
@@ -91,22 +100,22 @@ const NbeEditProfile = (props) => {
             fullWidth
             required
             name={'first_name'}
-            placeholder={'Enter Name'}
+            placeholder={'Enter name'}
             defaultValue={getValues().first_name}
             error={errors.first_name?.message}
             {...register('first_name', {
-              required: 'Name is required',
+              required: 'Please enter name',
 
               pattern: {
-                value: /^([a-zA-Z]+\s)*[a-zA-Z]+$/i,
-                message: 'Provide a Valid Name',
+                value: /^(?!^\s)[a-zA-Z\s']*$(?<!\s$)/,
+                message: 'Please enter a valid name',
               },
             })}
           />
         </Grid>
         <Grid item xs={12} md={3}>
           <Typography variant="body3" color="grey.label">
-            {t('Phone Number')}
+            {t('Mobile Number')}
           </Typography>
           <Typography component="span" color="error.main">
             *
@@ -115,14 +124,15 @@ const NbeEditProfile = (props) => {
             fullWidth
             required
             name={'mobile_no'}
-            placeholder={'Enter Phone Number '}
+            placeholder={'Enter mobile number '}
             defaultValue={getValues().mobile_no}
+            onInput={(e) => handleInput(e)}
             error={errors.mobile_no?.message}
             {...register('mobile_no', {
-              required: 'Enter Valid Phone Number',
+              required: 'Please enter mobile number',
               pattern: {
                 value: /^(\d{10})$/i,
-                message: 'Enter Valid Phone Number',
+                message: 'Please enter a valid 10 digit mobile number',
               },
             })}
           />
@@ -130,7 +140,7 @@ const NbeEditProfile = (props) => {
 
         <Grid item xs={12} md={3}>
           <Typography variant="body3" color="grey.label">
-            {t('Email ID')}
+            {t('Email')}
           </Typography>
           <Typography component="span" color="error.main">
             *
@@ -140,18 +150,10 @@ const NbeEditProfile = (props) => {
             fullWidth
             required
             name={'email_id'}
-            placeholder={'Enter Email ID'}
+            placeholder={'Enter email'}
             defaultValue={getValues().email_id}
             error={errors.email_id?.message}
-            {...register('email_id', {
-              required: 'Email ID is required',
-
-              pattern: {
-                value:
-                  /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-                message: 'Provide a Valid Email Id',
-              },
-            })}
+            {...register('email_id', EmailRegexValidation)}
           />
         </Grid>
       </Grid>

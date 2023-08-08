@@ -21,6 +21,7 @@ const InputField = ({
   defaultValue,
   messageBlue,
   backgroundColor,
+
   ...props
 }) => {
   const useStyles = makeStyles({
@@ -48,9 +49,10 @@ const InputField = ({
             pr: 2,
           }}
           id={props?.id}
-          format="dd/MM/yyyy"
+          format="dd-MM-yyyy"
           className={classes.root}
           disabled={disabled || false}
+          disableFuture={props?.disableFuture}
           minDate={props?.minDate}
           maxDate={props?.maxDate}
           data-testid={props?.dataTestId}

@@ -51,6 +51,9 @@ export const registrationData = createSlice({
     UserNotFoundDetails: (state, action) => {
       state.UserNotFoundDetailsData = action.payload;
     },
+    resetDoctorHPName: (state) => {
+      state.getSmcRegistrationDetails = initialState.getSmcRegistrationDetails;
+    },
   },
 });
 
@@ -66,6 +69,7 @@ export const {
   setUserPasswordData,
   healthProfessionalDetails,
   UserNotFoundDetails,
+  resetDoctorHPName,
 } = registrationData.actions;
 
 export default registrationData.reducer;

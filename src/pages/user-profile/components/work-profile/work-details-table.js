@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Box, Grid, TablePagination } from '@mui/material';
 import { Checkbox } from '@mui/material';
 
-import { verboseLog } from '../../../../config/debug';
 import { capitalizeFirstLetter, toUpperCase } from '../../../../helpers/functions/common-functions';
 import GenericTable from '../../../../shared/generic-component/generic-table';
 import { TextField } from '../../../../ui/core';
@@ -34,19 +33,18 @@ function createData(
 
 function WorkDetailsTable({
   FacilityData,
-  trackStatusData,
-  setFacilityResponseData,
   declaredFacilityData,
+  setFacilityTableError,
+  setFacilityResponseData,
   setDeclaredFacilityDistrict,
 }) {
-  const [page, setPage] = React.useState(0);
-  const [order, setOrder] = React.useState('asc');
-  const [orderBy, setOrderBy] = React.useState({});
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const [selectedRowData, setRowData] = React.useState({});
-  const [currentRowIndex, setCurrentRowIndex] = React.useState(0);
-
-  verboseLog('selectedRowData', selectedRowData, FacilityData, trackStatusData);
+  const [page, setPage] = useState(0);
+  const [order, setOrder] = useState('asc');
+  const [orderBy, setOrderBy] = useState({});
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  // eslint-disable-next-line no-unused-vars
+  const [selectedRowData, setRowData] = useState({});
+  const [currentRowIndex, setCurrentRowIndex] = useState(0);
 
   const dataHeader = [
     {
@@ -94,19 +92,19 @@ function WorkDetailsTable({
     return createData(
       {
         type: 'name',
-        value: toUpperCase(application?.facilityName),
+        value: toUpperCase(application?.name),
       },
       {
         type: 'address',
-        value: application?.address,
+        value: application?.address?.addressLine1,
       },
       {
         type: 'state',
-        value: capitalizeFirstLetter(application?.stateName),
+        value: capitalizeFirstLetter(application?.address?.state_to?.name) || '-',
       },
       {
         type: 'district',
-        value: application.districtName,
+        value: capitalizeFirstLetter(application?.address?.district_to?.name) || '-',
       },
       {
         type: 'type',
@@ -155,6 +153,7 @@ function WorkDetailsTable({
               if (e.target.checked) {
                 declaredFacilityData.push(FacilityData[currentRowIndex]);
                 setDeclaredFacilityDistrict([...declaredFacilityData]);
+                setFacilityTableError(false);
               } else {
                 declaredFacilityData.splice(currentRowIndex, 1);
                 setDeclaredFacilityDistrict([...declaredFacilityData]);
@@ -173,7 +172,7 @@ function WorkDetailsTable({
   };
 
   return (
-    <Grid sx={{ mx: 2 }} p={'0px'}>
+    <Grid p={'0px'}>
       <GenericTable
         order={order}
         orderBy={orderBy}
@@ -187,20 +186,22 @@ function WorkDetailsTable({
           bgcolor: 'red',
         }}
       />
-      <Box>
-        <TablePagination
-          rowsPerPageOptions={[]}
-          component="div"
-          count={trackStatusData?.total_no_of_records || '0'}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        />
-      </Box>
+      {newRowsData?.length !== 0 && (
+        <Box>
+          <TablePagination
+            rowsPerPageOptions={[]}
+            component="div"
+            count={newRowsData?.length || 0}
+            rowsPerPage={100}
+            page={page}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          />
+        </Box>
+      )}
     </Grid>
   );
 }

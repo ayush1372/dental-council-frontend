@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Grid, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
@@ -10,7 +10,8 @@ import { encryptData } from '../../../helpers/functions/common-functions';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import { changePasswordData } from '../../../store/actions/common-actions';
 import { TextField } from '../../../ui/core';
-import successToast from '../../../ui/core/toaster';
+import { NewPasswordRegexValidation } from '../../../utilities/common-validations';
+// import successToast from '../../../ui/core/toaster';
 
 const ChangePassword = () => {
   const theme = useTheme();
@@ -38,13 +39,12 @@ const ChangePassword = () => {
       oldPassword: encryptData(getValues().oldPassword, process.env.REACT_APP_PASS_SITE_KEY),
       newPassword: encryptData(getValues().newPassword, process.env.REACT_APP_PASS_SITE_KEY),
     };
-    dispatch(changePasswordData(data))
-      .then(() => {
-        setSuccessModalPopup(true);
-      })
-      .catch((error) => {
-        successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
-      });
+    dispatch(changePasswordData(data)).then(() => {
+      setSuccessModalPopup(true);
+    });
+    // .catch((error) => {
+    //   successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
+    // });
   };
 
   return (
@@ -57,13 +57,26 @@ const ChangePassword = () => {
           PasswordChange={true}
         />
       )}
-      {/* <Typography color="inputTextColor.main" variant="h2" textAlign="center" mt={3}>
-        Change Password
-      </Typography> */}
+      {
+        <Grid
+          item
+          xs={12}
+          sm="auto"
+          sx={{ mr: { xs: 0, sm: 'auto' } }}
+          p={2}
+          display="flex"
+          align={'center'}
+        >
+          <Typography variant="h2" color="textPrimary.main">
+            Change Password
+          </Typography>
+        </Grid>
+      }
+
       <Box
         display="flex"
         justifyContent="center"
-        pt={4}
+        pt={2}
         sx={{
           backgroundColor: `${theme.palette.white.main}`,
           boxShadow: 4,
@@ -95,11 +108,11 @@ const ChangePassword = () => {
                 type="Password"
                 name="oldPassword"
                 required="true"
-                placeholder={t('Old Password')}
+                placeholder={t('Old password')}
                 defaultValue={getValues().oldPassword}
                 error={errors.oldPassword?.message}
                 {...register('oldPassword', {
-                  required: 'Enter old password',
+                  required: 'Please enter a valid old password',
                 })}
               />
             </Box>
@@ -118,12 +131,10 @@ const ChangePassword = () => {
                 type="Password"
                 name="newPassword"
                 required="true"
-                placeholder={t('New Password')}
+                placeholder={t('New password')}
                 defaultValue={getValues().newPassword}
                 error={errors.newPassword?.message}
-                {...register('newPassword', {
-                  required: 'Enter new password',
-                })}
+                {...register('newPassword', NewPasswordRegexValidation)}
               />
             </Box>
             <Box mt={2}>
@@ -141,11 +152,11 @@ const ChangePassword = () => {
                 type="Password"
                 name="confirmPassword"
                 required="true"
-                placeholder={t('Confirm Password')}
+                placeholder={t('Confirm password')}
                 defaultValue={getValues().confirmPassword}
                 error={errors.confirmPassword?.message}
                 {...register('confirmPassword', {
-                  required: 'Enter confirm password',
+                  required: 'Please enter a valid password',
                   validate: (val) => {
                     if (watch('newPassword') !== val) {
                       return 'Password does not match';
@@ -155,7 +166,7 @@ const ChangePassword = () => {
               />
             </Box>
 
-            <Box align="center" mt={3}>
+            <Box align="right" mt={3}>
               <Button
                 variant="contained"
                 sx={{

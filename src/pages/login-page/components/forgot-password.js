@@ -1,23 +1,25 @@
-import { Box, Divider, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 
+//import { useLocation } from 'react-router-dom';
+import { usersType } from '../../../helpers/functions/common-functions';
 import { sendNotificationOtp } from '../../../store/actions/common-actions';
 import { loginActiveState } from '../../../store/reducers/login-reducer';
-import { Button, TextField } from '../../../ui/core';
+import { Button } from '../../../ui/core';
 import MobileNumber from '../../../ui/core/mobile-number/mobile-number';
-import successToast from '../../../ui/core/toaster';
-import { EmailRegexValidation } from '../../../utilities/common-validations';
+// import successToast from '../../../ui/core/toaster';
 
-const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep }) => {
+//import { EmailRegexValidation } from '../../../utilities/common-validations';
+
+const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep, loginName }) => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const doctorTitle = 'Enter Email ID';
-  const userTitle = 'Enter User ID/Email ID';
-  const { state } = useLocation();
-  const { loginFormname } = state;
+  //const doctorTitle = 'Enter Email ID';
+  //const userTitle = 'Enter User ID/Email ID';
+  // const { state } = useLocation();
+  //const { loginFormname } = state;
   const {
     register,
     handleSubmit,
@@ -34,7 +36,7 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep })
 
   const watchMobileNum = watch('mobileNo')?.trim();
   const watchId = watch('Id')?.trim();
-  const isIdActive = (!watchMobileNum && !watchId) || !watchMobileNum;
+  // const isIdActive = (!watchMobileNum && !watchId) || !watchMobileNum;
   const isMobileNumActive = (!watchMobileNum && !watchId) || !watchId;
 
   const onSubmit = (reSetPassword) => {
@@ -46,89 +48,89 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep })
       handleSubmit()();
       return;
     }
-
+    const userTypeId = usersType(loginName);
     let sendNotificationOtpBody = {};
     if (getValues()?.mobileNo) {
-      sendNotificationOtpBody = { contact: getValues().mobileNo, type: 'sms' };
+      sendNotificationOtpBody = {
+        contact: getValues().mobileNo,
+        type: 'sms',
+        user_type: userTypeId,
+      };
     } else if (getValues()?.Id?.includes('@')) {
-      sendNotificationOtpBody = { contact: getValues().Id, type: 'email' };
+      sendNotificationOtpBody = { contact: getValues().Id, type: 'email', user_type: userTypeId };
     } else {
-      sendNotificationOtpBody = { contact: getValues().Id, type: 'nmr_id' };
+      sendNotificationOtpBody = { contact: getValues().Id, type: 'nmr_id', user_type: userTypeId };
     }
 
-    dispatch(sendNotificationOtp(sendNotificationOtpBody))
-      .then((response) => {
-        if (response) {
-          otpData(sendNotificationOtpBody);
-          if (userData?.page === 'forgotPasswordPage') {
-            let otpValue = {
-              contact: getValues()?.mobileNo
-                ? getValues().mobileNo
-                : getValues()?.Id?.includes('@')
-                ? getValues().Id
-                : getValues().Id,
-              type: getValues().mobileNo
-                ? 'sms'
-                : getValues()?.Id?.includes('@')
-                ? 'email'
-                : 'nmr_id',
-              page: userData?.page,
-              reSetPasswordOtp: onSubmit,
-            };
-            otpData(otpValue);
-          }
-          if (userData?.page === 'forgetUserName') {
-            let otpValue = {
-              contact: getValues()?.mobileNo
-                ? getValues().mobileNo
-                : getValues()?.Id?.includes('@')
-                ? getValues().Id
-                : getValues().Id,
-              type: getValues().mobileNo
-                ? 'sms'
-                : getValues()?.Id?.includes('@')
-                ? 'email'
-                : 'nmr_id',
-              page: userData?.page,
-              reSetPasswordOtp: onSubmit,
-              handleClose: () => {
-                resetStep(0);
-              },
-            };
-            otpData(otpValue);
-          }
-          reSetPassword !== 'reSetPassword' && handleConfirmPassword();
+    dispatch(sendNotificationOtp(sendNotificationOtpBody)).then((response) => {
+      if (response) {
+        otpData(sendNotificationOtpBody);
+        if (userData?.page === 'forgotPasswordPage') {
+          let otpValue = {
+            contact: getValues()?.mobileNo
+              ? getValues().mobileNo
+              : getValues()?.Id?.includes('@')
+              ? getValues().Id
+              : getValues().Id,
+            type: getValues().mobileNo
+              ? 'sms'
+              : getValues()?.Id?.includes('@')
+              ? 'email'
+              : 'nmr_id',
+            page: userData?.page,
+            reSetPasswordOtp: onSubmit,
+          };
+          otpData(otpValue);
         }
-      })
-      .catch((allFailMsg) => {
-        successToast(
-          'ERR_INT: ' + allFailMsg?.data?.response?.data?.message,
-          'auth-error',
-          'error',
-          'top-center'
-        );
-      });
+        if (userData?.page === 'forgetUserName') {
+          let otpValue = {
+            contact: getValues()?.mobileNo
+              ? getValues().mobileNo
+              : getValues()?.Id?.includes('@')
+              ? getValues().Id
+              : getValues().Id,
+            type: getValues().mobileNo
+              ? 'sms'
+              : getValues()?.Id?.includes('@')
+              ? 'email'
+              : 'nmr_id',
+            page: userData?.page,
+            reSetPasswordOtp: onSubmit,
+            handleClose: () => {
+              resetStep(0);
+            },
+          };
+          otpData(otpValue);
+        }
+        reSetPassword !== 'reSetPassword' && handleConfirmPassword();
+      }
+    });
+    // .catch((allFailMsg) => {
+    //   successToast(
+    //     'ERR_INT: ' + allFailMsg?.data?.response?.data?.message,
+    //     'auth-error',
+    //     'error',
+    //     'top-center'
+    //   );
+    // });
   };
 
   return (
-    <Box p={4} bgcolor="white.main" boxShadow="4">
-      <Typography
-        variant="h2"
-        component="div"
-        textAlign={userData?.page === 'forgetUserName' ? 'left' : 'center'}
-      >
-        {userData?.page === 'forgetUserName' ? 'Forgot Username' : 'Forgot Password'}
+    <Box p={3} sx={{ bgcolor:'white.main', boxShadow:'1', borderRadius: '8px' }}>
+      <Typography variant="h2" component="div" textAlign={'left'}>
+        {userData?.page === 'forgetUserName' ? 'Recover Your Username' : 'Recover Your Password'}
       </Typography>
+
       {userData?.page !== 'forgetUserName' && (
         <>
           <Box mt={2}>
-            <Typography variant="body1">
+            {/* <Typography variant="body1">
               {loginFormname === 'Doctor' ? doctorTitle : userTitle}
               <Typography component="span" color="error.main">
                 *
               </Typography>
-            </Typography>
-            <TextField
+            </Typography> */}
+            {/* <TextField
               inputProps={{ maxLength: 100 }}
               fullWidth
               id="outlined-basic"
@@ -142,9 +144,9 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep })
               error={isIdActive && errors.Id?.message}
               {...register('Id', EmailRegexValidation)}
               disabled={!isIdActive}
-            />
+            /> */}
           </Box>
-          <Divider
+          {/* <Divider
             sx={{
               paddingTop: '15px',
             }}
@@ -152,12 +154,12 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep })
             <Typography variant="body1" color="inputTextColor.main">
               OR
             </Typography>
-          </Divider>
+          </Divider> */}
         </>
       )}
       <Box mt={2}>
         <Typography variant="body1">
-          Enter Mobile Number
+          Mobile number
           <Typography component="span" color="error.main">
             *
           </Typography>
@@ -165,7 +167,7 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep })
         <MobileNumber
           register={register}
           getValues={getValues}
-          placeholder="Enter Mobile Number"
+          placeholder="Enter mobile number"
           errors={isMobileNumActive ? errors : {}}
           showCircleCheckIcon={false}
           showhint={false}
@@ -189,12 +191,14 @@ const ForgotPassword = ({ handleConfirmPassword, otpData, userData, resetStep })
         </Button>
         <Button
           variant="contained"
-          sx={{
-            backgroundColor: 'secondary.lightOrange',
-            '&:hover': {
-              backgroundColor: 'secondary.lightOrange',
-            },
-          }}
+          color="secondary"
+          sx={
+            {
+              // '&:hover': {
+              //   backgroundColor: 'secondary.lightOrange',
+              // },
+            }
+          }
           onClick={onSubmit}
         >
           {t('Submit')}

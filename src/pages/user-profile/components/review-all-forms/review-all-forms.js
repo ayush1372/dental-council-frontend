@@ -48,7 +48,7 @@ const ReviewAllForms = () => {
           }}
         >
           <Tab label="Personal Details" />
-          <Tab label="Registration and Academic Details" />
+          <Tab label="Registration & Academic Details" />
           {/* <Tab label="Work Details" /> */}
         </Tabs>
       </Box>

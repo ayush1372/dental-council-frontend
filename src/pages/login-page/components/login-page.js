@@ -12,7 +12,7 @@ import {
   getCaptchaEnabledFlagValue,
 } from '../../../store/actions/login-action';
 import { loginActiveState } from '../../../store/reducers/login-reducer';
-import successToast from '../../../ui/core/toaster';
+// import successToast from '../../../ui/core/toaster';
 // import LoginWrapper from '../index';
 import ConfirmOTP from './confirm-otp';
 import { DoctorLogin } from './doctor-login';
@@ -58,17 +58,18 @@ export function LoginPage() {
 
   useEffect(() => {
     reset();
-    dispatch(getCaptchaEnabledFlagValue())
-      .then((response) => {
-        if (response?.data) {
-          dispatch(generateCaptchaImage()).catch((error) => {
-            successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-          });
-        }
-      })
-      .catch((error) => {
-        successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-      });
+    dispatch(getCaptchaEnabledFlagValue()).then((response) => {
+      if (response?.data) {
+        dispatch(generateCaptchaImage());
+
+        // .catch((error) => {
+        //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+        // });
+      }
+    });
+    // .catch((error) => {
+    //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+    // });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loginFormNames[loginFormname]]);
 
@@ -79,9 +80,8 @@ export function LoginPage() {
   const handleNext = () => {
     dispatch(loginActiveState({ activeIndex: activeIndex + 1 }));
   };
-
   return (
-    <Box sx={{ mt: 5, mb: 5, maxWidth: '648px', margin: '40px auto' }}>
+    <Box sx={{ maxWidth: '648px', mx: 'auto'}}>
       {(activeIndex === 0 || activeIndex === undefined) &&
       loginFormNames[loginFormname] === 'Doctor' ? (
         <DoctorLogin
@@ -108,6 +108,7 @@ export function LoginPage() {
           userData={data}
           activeStep={activeStep}
           resetStep={resetStep}
+          loginName={loginFormNames[loginFormname]}
         />
       )}
       {activeIndex === 2 && (
@@ -116,6 +117,7 @@ export function LoginPage() {
           otpData={data}
           resetStep={resetStep}
           handlePasswordSetup={handlePasswordSetup}
+          loginName={loginFormNames[loginFormname]}
         />
       )}
       {activeIndex === 3 && data?.page === 'forgetUserName' && showUserNamePopUp ? (

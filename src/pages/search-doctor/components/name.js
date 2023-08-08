@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 
 import { searchDoctorDetails } from '../../../store/actions/doctor-search-actions';
 import { Button, TextField } from '../../../ui/core';
-import successToast from '../../../ui/core/toaster';
+// import successToast from '../../../ui/core/toaster';
 
 const Name = ({ setDoSearch, setSearchData, setScrollDown }) => {
   const dispatch = useDispatch();
@@ -23,6 +23,7 @@ const Name = ({ setDoSearch, setSearchData, setScrollDown }) => {
   const onsubmit = () => {
     const searchValues = {
       fullName: getValues().DoctorName,
+      profileStatusId: 2,
       page: 0,
       size: 9,
     };
@@ -33,23 +34,22 @@ const Name = ({ setDoSearch, setSearchData, setScrollDown }) => {
       behavior: 'smooth',
     });
 
-    dispatch(searchDoctorDetails(searchValues))
-      .then(() => {})
-      .catch((error) => {
-        successToast(
-          error?.data?.response?.data?.error,
-          'RegistrationError',
-          'error',
-          'top-center'
-        );
-      });
+    dispatch(searchDoctorDetails(searchValues)).then(() => {});
+    // .catch((error) => {
+    //   successToast(
+    //     error?.data?.response?.data?.error,
+    //     'RegistrationError',
+    //     'error',
+    //     'top-center'
+    //   );
+    // });
 
     setSearchData(searchValues);
     setScrollDown(true);
   };
   return (
     <Grid container spacing={2} mt={2}>
-      <Grid item xs={12}>
+      {/* <Grid item xs={12}>
         <Typography
           bgcolor="grey1.light"
           p={1}
@@ -59,11 +59,11 @@ const Name = ({ setDoSearch, setSearchData, setScrollDown }) => {
         >
           Browse by doctors name*
         </Typography>
-      </Grid>
+      </Grid> */}
       <Grid item xs={8}>
         <Grid>
           <Typography color="inputTextColor.main">
-            Doctor name
+            Doctor Name
             {/* <ErrorOutlineIcon
               fontSize="width12"
               sx={{

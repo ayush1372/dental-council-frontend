@@ -15,7 +15,11 @@ import {
   getUniversitiesList,
 } from '../../../store/actions/common-actions';
 import { Button, TextField } from '../../../ui/core';
-import successToast from '../../../ui/core/toaster';
+import {
+  AddressLineValidation1,
+  AddressLineValidation2,
+} from '../../../utilities/common-validations';
+// import successToast from '../../../ui/core/toaster';
 
 const CollegeEditProfile = (props) => {
   const [districtList, setDistrictList] = useState([]);
@@ -30,7 +34,6 @@ const CollegeEditProfile = (props) => {
 
   useEffect(() => {
     dispatch(getStatesList());
-    setValue('CouncilID', getCollegeDetail?.data?.state_medical_council_to?.id);
   }, []);
 
   useEffect(() => {
@@ -60,11 +63,11 @@ const CollegeEditProfile = (props) => {
       CollegeAddress: userData?.address,
       CollegePincode: userData?.pin_code,
       UniversityName: '',
-      UniversityId: userData?.university_id,
-      RegistrationCouncil: '',
-      CouncilID: '',
+      UniversityId: userData?.university_to,
+      CouncilName: userData?.state_medical_council_to?.name,
+      CouncilID: userData?.state_medical_council_to?.id,
       StateName: '',
-      StateId: userData?.state_id,
+      StateId: userData?.state_to,
       CollegeWebsite: userData?.website,
       District: userData?.district_to?.id,
       DistrictID: userData?.district_to?.id,
@@ -77,28 +80,27 @@ const CollegeEditProfile = (props) => {
       name: getValues()?.CollegeName || '',
       state_id: getValues()?.StateId,
       college_code: getValues()?.CollegeId,
-      website: getValues().CollegeWebsite,
+      website: getValues().Website,
       address_line1: getValues()?.AddressLine1 || '',
       address_line2: getValues()?.AddressLine2 || '',
       district_to: districtsList?.find((x) => x.id === getValues()?.DistrictID),
       villages_to:
         subDistrictList?.find((x) => x.name === getValues()?.Area) || userData?.villages_to,
-      pin_code: getValues()?.CollegePincode,
+      pin_code: getValues()?.Pincode,
       state_medical_council_to: councilNames?.find((x) => x.id === getValues()?.CouncilID),
-      mobile_number: getValues()?.CollegePhoneNumber,
+      mobile_number: getValues()?.MobileNumber,
       email_id: getValues()?.CollegeEmailId,
       university_id: getValues()?.UniversityId,
     };
 
-    dispatch(updateCollegeAdminProfileData(updatedCollegeDetails))
-      .then(() => {
-        if (registrationSuccess) {
-          setSuccessModalPopup(true);
-        }
-      })
-      .catch((error) => {
-        successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
-      });
+    dispatch(updateCollegeAdminProfileData(updatedCollegeDetails)).then(() => {
+      if (registrationSuccess) {
+        setSuccessModalPopup(true);
+      }
+    });
+    // .catch((error) => {
+    //   successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
+    // });
   };
 
   const handleInput = (e) => {
@@ -123,7 +125,7 @@ const CollegeEditProfile = (props) => {
   };
 
   const getStateData = (stateId) => {
-    return statesList?.find((obj) => obj?.id === stateId);
+    return statesList?.find((obj) => obj?.id === stateId?.id);
   };
 
   const getDistrictNameData = (district_id) => {
@@ -140,10 +142,10 @@ const CollegeEditProfile = (props) => {
         <SuccessModalPopup
           open={successModalPopup}
           setOpen={() => setSuccessModalPopup(false)}
-          text={'College Profile Updated  Successfully'}
+          text={'College profile has been updated'}
         />
       )}
-      <Grid container spacing={2} mt={1}>
+      <Grid container spacing={2} mt={1} ml={1}>
         <Grid container item xs={12}>
           <Typography variant="h2" color="textPrimary.main">
             Edit Profile
@@ -154,7 +156,7 @@ const CollegeEditProfile = (props) => {
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={4}>
             <Typography variant="body1" color="inputTextColor.main">
-              Name
+              College Name
             </Typography>
             <Typography component="span" color="error.main">
               *
@@ -164,7 +166,7 @@ const CollegeEditProfile = (props) => {
               disabled
               required
               name={'CollegeName'}
-              placeholder={'Enter College Name'}
+              placeholder={'Enter name'}
               defaultValue={getCollegeDetail?.data?.name}
             />
           </Grid>
@@ -181,7 +183,7 @@ const CollegeEditProfile = (props) => {
               disabled
               name="CollegeId"
               required
-              placeholder={'Enter College Code'}
+              placeholder={'Enter code'}
               defaultValue={getCollegeDetail?.data?.college_code}
               error={errors.CollegePhoneNumber?.message}
             />
@@ -189,7 +191,7 @@ const CollegeEditProfile = (props) => {
 
           <Grid item xs={12} md={4}>
             <Typography variant="body1" color="inputTextColor.main">
-              Mobile
+              Mobile Number
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -199,15 +201,15 @@ const CollegeEditProfile = (props) => {
               fullWidth
               name="MobileNumber"
               required
-              placeholder={'Enter Mobile Number'}
+              placeholder={'Enter mobile number'}
               defaultValue={getCollegeDetail?.data?.mobile_number}
               onInput={(e) => handleInput(e)}
               error={errors.MobileNumber?.message}
               {...register('MobileNumber', {
-                required: 'Mobile number is required',
+                required: 'Please enter mobile number',
                 pattern: {
                   value: /^\d{10}$/i,
-                  message: 'Provide a valid mobile number',
+                  message: 'Please enter a valid mobile number',
                 },
               })}
             />
@@ -217,34 +219,34 @@ const CollegeEditProfile = (props) => {
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={4}>
             <Typography variant="body1" color="inputTextColor.main">
-              Select Council
+              Council
             </Typography>
             <Typography component="span" color="error.main">
               *
             </Typography>
             <SearchableDropdown
-              fullWidth
               name="CouncilName"
               items={createEditFieldData(councilNames)}
-              defaultValue={userData?.state_medical_council_to}
-              placeholder="Select Council"
+              placeholder="Select council"
               clearErrors={clearErrors}
-              error={
-                (getValues()?.CouncilID === '' || getValues()?.CouncilID === undefined) &&
-                errors.CouncilName?.message
-              }
+              error={errors.CouncilName?.message}
               {...register('CouncilName', {
-                required: 'Council name is required',
+                required: 'Please select council',
               })}
+              value={{
+                id: getValues()?.CouncilID !== undefined ? getValues()?.CouncilID : '',
+                name: getValues()?.CouncilName !== undefined ? getValues()?.CouncilName : '',
+              }}
               onChange={(currentValue) => {
                 setValue('CouncilID', currentValue?.id);
+                setValue('CouncilName', currentValue?.name);
               }}
             />
           </Grid>
 
           <Grid item xs={12} md={4}>
             <Typography variant="body1" color="inputTextColor.main">
-              Select University Name
+              University
             </Typography>
             <Typography component="span" color="error.main">
               *
@@ -255,7 +257,7 @@ const CollegeEditProfile = (props) => {
               name="UniversityName"
               clearErrors={clearErrors}
               items={createEditFieldData(universitiesList?.data)}
-              placeholder="Select University"
+              placeholder="Select university"
               defaultValue={userData?.university_to}
               value={getUniversityData(getCollegeDetail?.data?.university_id)}
               onChange={(currentValue) => {
@@ -272,7 +274,7 @@ const CollegeEditProfile = (props) => {
             <TextField
               fullWidth
               name={'Website'}
-              placeholder={'Enter College Website'}
+              placeholder={'Enter website'}
               defaultValue={getCollegeDetail?.data?.website}
               {...register('Website', {})}
             />
@@ -282,7 +284,7 @@ const CollegeEditProfile = (props) => {
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={4}>
             <Typography variant="body1" color="inputTextColor.main">
-              Address line 1
+              Address Line 1
             </Typography>
             <Typography component="span" color="error.main">
               *
@@ -293,33 +295,31 @@ const CollegeEditProfile = (props) => {
               rows={1}
               fullWidth
               name="AddressLine1"
-              placeholder="Enter Address line1"
+              placeholder="Enter address"
               defaultValue={getCollegeDetail?.data?.address_line1}
               error={errors.AddressLine1?.message}
-              {...register('AddressLine1', {
-                required: 'Address line1 is required',
-              })}
+              {...register('AddressLine1', AddressLineValidation1)}
             />
           </Grid>
 
           <Grid item xs={12} md={4}>
             <Typography variant="body1" color="inputTextColor.main">
-              Address line 2
+              Address Line 2
             </Typography>
 
             <TextField
               fullWidth
               name="AddressLine2"
-              placeholder={'Enter Address Line 2'}
+              placeholder={'Enter address'}
               defaultValue={getCollegeDetail?.data?.address_line2}
               error={errors.AddressLine2?.message}
-              {...register('AddressLine2', {})}
+              {...register('AddressLine2', AddressLineValidation2)}
             />
           </Grid>
 
           <Grid item xs={12} md={4}>
             <Typography variant="body1" color="inputTextColor.main">
-              State Name
+              State
             </Typography>
             <Typography component="span" color="error.main">
               *
@@ -331,9 +331,9 @@ const CollegeEditProfile = (props) => {
               name="StateName"
               items={createEditFieldData(statesList)}
               clearErrors={clearErrors}
-              placeholder={'Select State '}
+              placeholder={'Select state '}
               defaultValue={userData?.state_to}
-              value={getStateData(getCollegeDetail?.data?.state_id)}
+              value={getStateData(getCollegeDetail?.data?.state_to)}
               onChange={(currentValue) => {
                 onStateChange(currentValue);
               }}
@@ -354,7 +354,7 @@ const CollegeEditProfile = (props) => {
                 fullWidth
                 name="District"
                 items={createEditFieldData(districtsList)}
-                placeholder="Select District"
+                placeholder="Select district"
                 defaultValue={userData?.district_to}
                 value={getDistrictNameData(
                   getCollegeDetail?.data?.district_id || userData?.district_to?.id
@@ -362,7 +362,7 @@ const CollegeEditProfile = (props) => {
                 clearErrors={clearErrors}
                 error={errors.District?.message}
                 {...register('District', {
-                  required: 'District name is required',
+                  required: 'Please select district',
                 })}
                 onChange={(currentValue) => {
                   onDistrictChange(currentValue);
@@ -385,11 +385,11 @@ const CollegeEditProfile = (props) => {
                 name="Area"
                 clearErrors={clearErrors}
                 items={createEditFieldData(subDistrictList)}
-                placeholder="Select Area"
+                placeholder="Select area"
                 defaultValue={userData?.villages_to}
                 error={errors.Area?.message}
                 {...register('Area', {
-                  required: 'Town name is required',
+                  required: 'Please select area',
                 })}
               />
             </Box>
@@ -398,7 +398,7 @@ const CollegeEditProfile = (props) => {
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography variant="body1" color="inputTextColor.main">
-              Pin Code
+              Pincode
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -409,14 +409,14 @@ const CollegeEditProfile = (props) => {
                 type="number"
                 name="Pincode"
                 required
-                placeholder={'Enter Pin Code'}
+                placeholder={'Enter pincode'}
                 defaultValue={getCollegeDetail?.data?.pin_code}
                 error={errors.Pincode?.message}
                 {...register('Pincode', {
-                  required: 'Pin Code is required',
+                  required: 'Please enter pincode',
                   pattern: {
                     value: /^[0-9]{6}$/i,
-                    message: 'Please enter valid pincode',
+                    message: 'Please enter a valid pincode',
                   },
                 })}
               />
@@ -429,7 +429,7 @@ const CollegeEditProfile = (props) => {
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={4}>
             <Typography variant="body1" color="inputTextColor.main">
-              College Email ID
+              Email
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -443,23 +443,23 @@ const CollegeEditProfile = (props) => {
               type="text"
               name="Email"
               required
-              placeholder={'Enter Email ID'}
+              placeholder={'Enter email'}
               defaultValue={getCollegeDetail?.data?.email_id}
               error={errors.Email?.message}
               {...register('Email', {
-                required: 'Email id is required',
+                required: 'Please enter an email ID',
                 pattern: {
                   value:
                     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-                  message: 'Provide valid email id',
+                  message: 'Please enter a valid email',
                 },
               })}
             />
           </Grid>
         </Grid>
 
-        <Grid container alignItems="center" mt={1}>
-          <Grid item xs={12} sm="auto" alignItems="flex-start" mr={{ lg: 2, md: 2, sm: 2 }}>
+        <Grid container alignItems="center" mt={1} display="flex" justifyContent="flex-end">
+          <Grid item xs={12} sm="auto" mr={{ lg: 2, md: 2, sm: 2 }}>
             <Button
               sx={{
                 m: {
@@ -478,7 +478,7 @@ const CollegeEditProfile = (props) => {
               Submit
             </Button>
           </Grid>
-          <Grid item xs={12} sm="auto" alignItems="flex-start">
+          <Grid item xs={12} sm="auto">
             <Button
               variant="contained"
               color="grey"

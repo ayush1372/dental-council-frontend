@@ -8,15 +8,16 @@ import { Box, Dialog, Grid, Link, Typography } from '@mui/material';
 import moment from 'moment';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { ToastContainer } from 'react-toastify';
 
+import { ErrorMessages } from '../../../../constants/error-messages';
 import { doctorTabs, smcTabs } from '../../../../helpers/components/sidebar-drawer-list-item';
 import { capitalizeFirstLetter } from '../../../../helpers/functions/common-functions';
 import {
   getEsignFormDetails,
+  getPersonalDetailsData,
   getRegistrationDetailsData,
+  updateProfileConsent,
 } from '../../../../store/actions/doctor-user-profile-actions';
-import { updateProfileConsent } from '../../../../store/actions/doctor-user-profile-actions';
 import { changeUserActiveTab } from '../../../../store/reducers/common-reducers';
 import { getEsignDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
 import { Button, Checkbox } from '../../../../ui/core';
@@ -27,11 +28,14 @@ const ProfileConsent = ({
   setIsReadMode,
   resetStep,
   loggedInUserType,
+  setRejectPopup,
+  setESignLoader,
   setShowStaticFormProgress,
 }) => {
   const dispatch = useDispatch();
   const [degreeCertificate, setDegreeCertificate] = useState(false);
   const [registrationFile, setRegistrationFile] = useState(false);
+
   const doctorRegDetails = useSelector(
     (state) => state?.doctorUserProfileReducer?.registrationDetails
   );
@@ -43,10 +47,6 @@ const ProfileConsent = ({
       if (response?.data?.qualification_detail_response_tos[0]?.degree_certificate) {
         setDegreeCertificate(true);
       }
-    });
-  }, []);
-  useEffect(() => {
-    dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id)).then((response) => {
       if (response?.data?.registration_detail_to?.registration_certificate) {
         setRegistrationFile(true);
       }
@@ -84,6 +84,9 @@ const ProfileConsent = ({
         ? 2
         : selectedQualificationTypeValue === 'International'
         ? 7
+        : doctorRegDetails?.qualification_detail_response_tos[0]?.qualification_from ===
+          'International'
+        ? 7
         : 1,
     };
 
@@ -95,14 +98,14 @@ const ProfileConsent = ({
         resetStep(0);
         dispatch(changeUserActiveTab(doctorTabs[1].tabName));
       })
-      .catch((error) => {
+      .catch(() => {
         setConfirmationModal(false);
-        successToast(
-          'ERROR: ' + error.data.response.data.error,
-          'auth-error',
-          'error',
-          'top-center'
-        );
+        // successToast(
+        //   'ERROR: ' + error.data.response.data.error,
+        //   'auth-error',
+        //   'error',
+        //   'top-center'
+        // );
       });
   };
 
@@ -111,7 +114,8 @@ const ProfileConsent = ({
       templateId: 'TEMPLATE_1',
       signingPlace:
         personalDetails?.communication_address?.village?.name ||
-        personalDetails?.communication_address?.district?.name,
+        personalDetails?.communication_address?.district?.name ||
+        personalDetails?.communication_address?.state?.name,
       nmrDetails: {
         nmrPersonalDetail: {
           fullName: personalDetails?.personal_details?.full_name || '',
@@ -186,10 +190,14 @@ const ProfileConsent = ({
             ? 2
             : selectedQualificationTypeValue === 'International'
             ? 7
+            : doctorRegDetails?.qualification_detail_response_tos[0]?.qualification_from ===
+              'International'
+            ? 7
             : 1,
           transaction_id: response?.data?.asp_txn_id,
           hpr_share_acknowledgement: getValues()?.HPR ? 1 : 0,
         };
+        eSignStatusHandler();
         dispatch(updateProfileConsent(payload))
           .then(() => {
             document.getElementById('formid')?.submit();
@@ -197,26 +205,49 @@ const ProfileConsent = ({
             resetStep(0);
             handleEsign();
             dispatch(getEsignDetails());
-
-            dispatch(changeUserActiveTab(doctorTabs[1].tabName));
           })
-          .catch((error) => {
+          .catch(() => {
             setConfirmationModal(false);
             dispatch(getEsignDetails([]));
-            successToast(
-              'ERROR: ' + error.data.response.data.error,
-              'auth-error',
-              'error',
-              'top-center'
-            );
           });
       })
       .catch(() => {
-        successToast('Server Error', 'auth-error', 'error', 'top-center');
+        successToast(ErrorMessages.serverError, 'auth-error', 'error', 'top-center');
       });
   }
   const handleEsign = () => {
     document.getElementById('formid')?.submit();
+  };
+
+  //Helper Function to capture the e-sign status from personal API call within 3.2 mins with interval of 8 times.
+  const eSignStatusHandler = () => {
+    let retry = 0;
+    setESignLoader(true);
+    let interval = setInterval(() => {
+      retry = retry + 1;
+
+      if (retry === 10) {
+        clearInterval(interval);
+        setESignLoader(false);
+        setRejectPopup(true);
+      }
+      dispatch(getPersonalDetailsData(personalDetails?.hp_profile_id))
+        .then((response) => {
+          if (response?.data?.esign_status === 1 || response?.data?.esign_status === 2) {
+            clearInterval(interval);
+            setESignLoader(false);
+            if (response?.data?.esign_status === 1) {
+              dispatch(changeUserActiveTab(doctorTabs[1].tabName));
+            }
+            if (response?.data?.esign_status === 2) {
+              setRejectPopup(true);
+            }
+          }
+        })
+        .catch(() => {
+          setESignLoader(false);
+        });
+    }, 30000);
   };
 
   useEffect(() => {}, [eSignResponse, getValues().consent, getValues()?.HPR]);
@@ -224,7 +255,7 @@ const ProfileConsent = ({
     <div>
       <form
         id="formid"
-        target="_blank"
+        target="_new"
         method="POST"
         action="https://es-staging.cdac.in/esignlevel2/2.1/form/signdoc"
       >
@@ -247,132 +278,114 @@ const ProfileConsent = ({
       </form>
     </div>
   ) : (
-    <>
-      <ToastContainer></ToastContainer>
-      <Box bgcolor="white.main" py={2} px={{ xs: 1, md: 4 }} mt={2} boxShadow={1}>
-        <Typography
-          // id="name"
-          // value="123"
-          component="div"
-          color="primary.main"
-          variant="body1"
-          mb={2}
-        >
-          Consent
-          <Typography component="span" color="error.main">
-            *
-          </Typography>
+    <Box bgcolor="white.main" py={2} px={{ xs: 1, md: 4 }} mt={2} boxShadow={1}>
+      <Typography
+        // id="name"
+        // value="123"
+        component="div"
+        color="primary.main"
+        variant="body1"
+        mb={2}
+      >
+        Declaration
+        <Typography component="span" color="error.main">
+          *
         </Typography>
-        <Grid
-          container
-          bgcolor="backgroundColor.light"
-          p={3}
-          mb={2}
-          display="flex"
-          border="1px solid"
-          borderColor="inputBorderColor.main"
-          borderRadius="5px"
-        >
-          <Grid item xs={12} display="flex">
-            <Checkbox
-              sx={{ width: '18px', height: '18px', marginLeft: 1 }}
-              name="consent"
-              {...register('consent', {
-                required: 'Consent is Required',
-              })}
-              error={errors.consent?.message}
-            />
-            <Typography component="div" variant="body7">
-              I hereby declare that I am voluntarily sharing above mentioned particulars and
-              information. I certify that the above information furnished by me is true, complete,
-              and correct to the best of my knowledge. I understand that in the event of my
-              information being found false or incorrect at any stage, I shall be held liable for
-              the same.
-            </Typography>
-          </Grid>
+      </Typography>
+      <Grid
+        container
+        bgcolor="backgroundColor.light"
+        p={3}
+        mb={2}
+        display="flex"
+        border="1px solid"
+        borderColor="inputBorderColor.main"
+        borderRadius="5px"
+        height={{ lg: '90px' }}
+      >
+        <Grid item xs={12} display="flex">
+          <Checkbox
+            sx={{ width: '18px', height: '18px', marginLeft: 1 }}
+            name="consent"
+            {...register('consent', {
+              required: 'Consent is Required',
+            })}
+          />
+          <Typography component="div" variant="body7">
+            I, hereby declare that I am voluntarily sharing above mentioned particulars and
+            information. I certify that the above information furnished by me is true, complete, and
+            correct to the best of my knowledge. I understand that in the event of my information
+            being found false or incorrect at any stage, I shall be held liable for the same.
+          </Typography>
+        </Grid>
+        <Typography variant="body2" component="div" color="error">
+          {errors.consent?.message}
+        </Typography>
+      </Grid>
+
+      <Grid
+        container
+        alignItems="center"
+        columnGap={1}
+        bgcolor="success.background"
+        p={3}
+        mb={2}
+        display="flex"
+        border="1px solid"
+        borderColor="inputBorderColor.main"
+        borderRadius="5px"
+      >
+        <Grid item sx="auto" display="flex" alignItems="center">
+          <Checkbox
+            sx={{ width: '18px', height: '18px', marginLeft: 1 }}
+            name="HPR"
+            {...register('HPR')}
+            error={errors.HPR?.message}
+          />
+          <Typography component="div" variant="body7">
+            Save my time and share my details with HPR
+          </Typography>
+        </Grid>
+        <Grid item sx="auto" display="flex" alignItems="center">
+          <InfoOutlinedIcon
+            sx={{ height: '14px', width: '14px', color: 'messageBlue.main', mr: 1 }}
+          />
+          <Link
+            href={process.env.REACT_APP_HPR_CONCENT_API}
+            target="_blank"
+            component="a"
+            variant="body8"
+            color="messageBlue.main"
+            fontWeight="500"
+            underline="none"
+          >
+            Know more about HPR
+          </Link>
+        </Grid>
+      </Grid>
+
+      {/* </Box> */}
+      <Grid container mt={3}>
+        <Grid item xs={12} md>
+          <Button
+            variant="contained"
+            color="grey"
+            sx={{
+              margin: {
+                xs: '5px 0',
+                md: '0',
+              },
+              width: {
+                xs: '100%',
+                md: 'fit-content',
+              },
+            }}
+            onClick={handleBack}
+          >
+            Back
+          </Button>
         </Grid>
 
-        <Grid
-          container
-          alignItems="center"
-          columnGap={1}
-          bgcolor="success.background"
-          p={3}
-          mb={2}
-          display="flex"
-          border="1px solid"
-          borderColor="inputBorderColor.main"
-          borderRadius="5px"
-        >
-          <Grid item sx="auto" display="flex" alignItems="center">
-            <Checkbox
-              sx={{ width: '18px', height: '18px', marginLeft: 1 }}
-              name="HPR"
-              {...register('HPR')}
-              error={errors.HPR?.message}
-            />
-            <Typography component="div" variant="body7">
-              Save my time, share my details with HPR
-            </Typography>
-          </Grid>
-          <Grid item sx="auto" display="flex" alignItems="center">
-            <InfoOutlinedIcon
-              sx={{ height: '14px', width: '14px', color: 'messageBlue.main', mr: 1 }}
-            />
-            <Link
-              href={process.env.REACT_APP_HPR_CONCENT_API}
-              target="_blank"
-              component="a"
-              variant="body8"
-              color="messageBlue.main"
-              fontWeight="500"
-              underline="none"
-            >
-              Know more about HPR
-            </Link>
-          </Grid>
-        </Grid>
-
-        {/* </Box> */}
-        <Grid container mt={3}>
-          <Grid item xs={12} md>
-            <Button
-              variant="contained"
-              color="grey"
-              sx={{
-                margin: {
-                  xs: '5px 0',
-                  md: '0',
-                },
-                width: {
-                  xs: '100%',
-                  md: 'fit-content',
-                },
-              }}
-              onClick={handleBack}
-            >
-              Back
-            </Button>
-          </Grid>
-          {/* <Grid item xs={12} md="auto" display="flex" justifyContent="flex-end">
-            <Button
-              variant="outlined"
-              color="secondary"
-              sx={{
-                margin: {
-                  xs: '5px 0',
-                  md: '0',
-                },
-                width: {
-                  xs: '100%',
-                  md: 'fit-content',
-                },
-              }}
-            >
-              Print & Save as PDF
-            </Button>
-          </Grid> */}
-        </Grid>
         {loggedInUserType !== 'SMC' && (
           <Grid
             item
@@ -401,7 +414,8 @@ const ProfileConsent = ({
             </Button>
           </Grid>
         )}
-        {/* <Grid item xs={12} md="auto" ml={{ xs: 0, md: 1 }} display="flex" justifyContent="flex-end">
+      </Grid>
+      {/* <Grid item xs={12} md="auto" ml={{ xs: 0, md: 1 }} display="flex" justifyContent="flex-end">
           <Button
             color="secondary"
             variant="contained"
@@ -421,7 +435,7 @@ const ProfileConsent = ({
           </Button>
         </Grid> */}
 
-        {/* <div>
+      {/* <div>
           <form
             id="formid"
             target="_blank"
@@ -444,117 +458,116 @@ const ProfileConsent = ({
           </form>
         </div> */}
 
-        <Dialog
-          open={confirmationModal}
-          onClose={() => {
-            setConfirmationModal(false);
-          }}
-        >
-          {loggedInUserType === 'SMC' ? (
+      <Dialog
+        open={confirmationModal}
+        onClose={() => {
+          setConfirmationModal(false);
+        }}
+      >
+        {loggedInUserType === 'SMC' ? (
+          <Box
+            p={2}
+            width="350px"
+            height="320px"
+            sx={{
+              borderRadius: '40px',
+            }}
+          >
             <Box
-              p={2}
-              width="350px"
-              height="320px"
-              sx={{
-                borderRadius: '40px',
-              }}
+              display={'flex'}
+              flexDirection={'column'}
+              justifyContent={'flex-start'}
+              alignItems={'center'}
             >
-              <Box
-                display={'flex'}
-                flexDirection={'column'}
-                justifyContent={'flex-start'}
-                alignItems={'center'}
+              <TaskAltIcon color="success" fontSize="width80" />
+              <Typography color="success.dark" variant="h2" textAlign={'center'}>
+                SUCCESS
+              </Typography>
+              <Typography
+                mt={4}
+                color="textPrimary.main"
+                textAlign={'center'}
+                variant="h2"
+                width="320px"
               >
-                <TaskAltIcon color="success" fontSize="width80" />
-                <Typography color="success.dark" variant="h2" textAlign={'center'}>
-                  SUCCESS!
-                </Typography>
-                <Typography
-                  mt={4}
-                  color="textPrimary.main"
-                  textAlign={'center'}
-                  variant="h2"
-                  width="320px"
-                >
-                  Your Profile has been successfully created.
-                </Typography>
-              </Box>
-              <Box display={'flex'} justifyContent={'center'} mt={4} alignItems={'center'}>
-                <Button
-                  onClick={() => {
-                    setConfirmationModal(false);
-                  }}
-                  color="grey"
-                  variant="contained"
-                  sx={{
-                    margin: '0 4px',
-                  }}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setConfirmationModal(false);
-                    setIsReadMode(true);
-                    resetStep(0);
-                    dispatch(changeUserActiveTab(smcTabs[2].tabName));
-                  }}
-                  color="secondary"
-                  variant="contained"
-                  sx={{
-                    margin: '0 4px',
-                  }}
-                >
-                  Submit
-                </Button>
-              </Box>
+                Your Profile has been successfully created.
+              </Typography>
             </Box>
-          ) : (
-            <Box p={2} width="616px" height="200">
-              <Box display={'flex'} justifyContent={'flex-start'} alignItems={'center'}>
-                <CheckCircleIcon color="success" />
-                <Typography color="textPrimary.main" variant="h3">
-                  Success!
-                </Typography>
-                <CloseIcon onClick={handleClose} />
-              </Box>
-              <Box mt={4}>
-                <Typography color="textPrimary.main">
-                  Your Application has been updated and will be submitted for verification.
-                  <br /> For more details, you will be redirected to Track Application Tab on
-                  clicking<b> Ok</b> button.
-                </Typography>
-              </Box>
-              <Box display={'flex'} justifyContent={'flex-end'} mt={1}>
-                <Button
-                  onClick={() => {
-                    setConfirmationModal(false);
-                  }}
-                  color="grey"
-                  variant="contained"
-                  sx={{
-                    margin: '0 4px',
-                  }}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  onClick={handleYesClick}
-                  color="secondary"
-                  variant="contained"
-                  sx={{
-                    margin: '0 4px',
-                  }}
-                >
-                  Ok
-                </Button>
-              </Box>
+            <Box display={'flex'} justifyContent={'center'} mt={4} alignItems={'center'}>
+              <Button
+                onClick={() => {
+                  setConfirmationModal(false);
+                }}
+                color="grey"
+                variant="contained"
+                sx={{
+                  margin: '0 4px',
+                }}
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setConfirmationModal(false);
+                  setIsReadMode(true);
+                  resetStep(0);
+                  dispatch(changeUserActiveTab(smcTabs[2].tabName));
+                }}
+                color="secondary"
+                variant="contained"
+                sx={{
+                  margin: '0 4px',
+                }}
+              >
+                Submit
+              </Button>
             </Box>
-          )}
-        </Dialog>
-      </Box>
-    </>
+          </Box>
+        ) : (
+          <Box p={2} width="616px" height="200">
+            <Box display={'flex'} justifyContent={'flex-start'} alignItems={'center'}>
+              <CheckCircleIcon color="success" />
+              <Typography color="textPrimary.main" variant="h3">
+                Success
+              </Typography>
+              <CloseIcon onClick={handleClose} />
+            </Box>
+            <Box mt={4}>
+              <Typography color="textPrimary.main">
+                Your Application has been updated and will be submitted for verification.
+                <br /> For more details, you will be redirected to Track Application Tab on clicking
+                <b> Ok</b> button.
+              </Typography>
+            </Box>
+            <Box display={'flex'} justifyContent={'flex-end'} mt={1}>
+              <Button
+                onClick={() => {
+                  setConfirmationModal(false);
+                }}
+                color="grey"
+                variant="contained"
+                sx={{
+                  margin: '0 4px',
+                }}
+              >
+                Cancel
+              </Button>
+              <Button
+                onClick={handleYesClick}
+                color="secondary"
+                variant="contained"
+                sx={{
+                  margin: '0 4px',
+                }}
+              >
+                Ok
+              </Button>
+            </Box>
+          </Box>
+        )}
+      </Dialog>
+    </Box>
   );
 };
 export default ProfileConsent;

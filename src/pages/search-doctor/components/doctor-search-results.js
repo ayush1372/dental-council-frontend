@@ -10,7 +10,7 @@ import {
   searchDoctorDetailsById,
 } from '../../../store/actions/doctor-search-actions';
 import { Button } from '../../../ui/core/button/button';
-import successToast from '../../../ui/core/toaster';
+// import successToast from '../../../ui/core/toaster';
 import DoctorProfileModal from './doctor-profile-modal';
 
 const SearchResults = ({ searchData, scrolldown }) => {
@@ -47,18 +47,17 @@ const SearchResults = ({ searchData, scrolldown }) => {
 
   const handleViewProfile = (id, imagePath) => {
     verboseLog('ID', id);
-    dispatch(searchDoctorDetailsById(id))
-      .then(() => {
-        setConfirmationModal(true);
-      })
-      .catch((error) => {
-        successToast(
-          error?.data?.response?.data?.error,
-          'RegistrationError',
-          'error',
-          'top-center'
-        );
-      });
+    dispatch(searchDoctorDetailsById(id)).then(() => {
+      setConfirmationModal(true);
+    });
+    // .catch((error) => {
+    //   successToast(
+    //     error?.data?.response?.data?.error,
+    //     'RegistrationError',
+    //     'error',
+    //     'top-center'
+    //   );
+    // });
 
     setImagePath(imagePath);
   };
@@ -77,10 +76,12 @@ const SearchResults = ({ searchData, scrolldown }) => {
     >
       <Box>
         <Typography color="primary.main" component="div" variant="h2">
-          Search Results
+          Search Result
         </Typography>
         <Typography color="primary.main" component="div" variant="subtitle2">
-          {`${searchDetails?.data?.data?.count || '0'}  Matching Records Found `}
+          {searchDetails?.data?.data?.count >= 1
+            ? `${searchDetails?.data?.data?.count}  Matching records found `
+            : `No record found `}
         </Typography>
         <Box mt={3}>
           <Box className="search-results" mt={3}>
@@ -123,7 +124,7 @@ const SearchResults = ({ searchData, scrolldown }) => {
                       >
                         <Box>
                           <Typography component="div" variant="body5" color="grey.label">
-                            Registration number
+                            Registration Number
                           </Typography>
                           <Typography component="div" variant="body3" color="primary">
                             {doctor?.registration_number || ''}
@@ -155,23 +156,25 @@ const SearchResults = ({ searchData, scrolldown }) => {
               })}
             </Grid>
           </Box>
-          <Box>
-            <TablePagination
-              rowsPerPageOptions={[]}
-              component="div"
-              count={searchDetails?.data?.data?.count ? searchDetails?.data?.data?.count : 0}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onPageChange={handleChangePage}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                color: 'primary.main',
-                variant: 'body1',
-              }}
-            />
-          </Box>
+          {searchDetails?.data?.data?.results?.length !== 0 && (
+            <Box>
+              <TablePagination
+                rowsPerPageOptions={[]}
+                component="div"
+                count={searchDetails?.data?.data?.count || 0}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  color: 'primary.main',
+                  variant: 'body1',
+                }}
+              />
+            </Box>
+          )}
         </Box>
       </Box>
       {confirmationModal && (

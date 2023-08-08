@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Box, Container, Grid, Typography } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,11 +20,12 @@ import {
   getUniversitiesList,
 } from '../../../store/actions/common-actions';
 import { Button } from '../../../ui/core';
-import successToast from '../../../ui/core/toaster';
+// import successToast from '../../../ui/core/toaster';
 import {
+  AddressLineValidation1,
+  AddressLineValidation2,
   EmailRegexValidation,
   MobileNumberRegexValidation,
-  PostalCodeRegexValidation,
 } from '../../../utilities/common-validations';
 
 function NMCCollegeRegistration() {
@@ -42,6 +43,7 @@ function NMCCollegeRegistration() {
 
   const [successModalPopup, setSuccessModalPopup] = useState(false);
   const [showCollegeName, setShowCollegeName] = useState(false);
+
   // eslint-disable-next-line no-unused-vars
   const [collegeResponse, setCollegeResponse] = useState([]);
 
@@ -63,7 +65,7 @@ function NMCCollegeRegistration() {
     formState: { errors },
     reset,
   } = useForm({
-    mode: 'onSubmit',
+    mode: 'onChange',
     defaultValues: {
       CollegeName: '',
       Name: '',
@@ -87,6 +89,28 @@ function NMCCollegeRegistration() {
       Email: '',
     },
   });
+  const onReset = () => {
+    collegesList = [];
+    setValue('CollegeName', '');
+    setValue('CouncilName', '');
+    setValue('CouncilID', '');
+    setValue('Name', '');
+    setValue('CollegeCode', '');
+    setValue('MobileNumber', '');
+    setValue('Website', '');
+    setValue('AddressLine1', '');
+    setValue('AddressLine2', '');
+    setValue('Pincode', '');
+    setValue('Email', '');
+    setValue('UniversityName', '');
+    setValue('UniversityID', '');
+    setValue('StateName', '');
+    setValue('StateID', '');
+    setValue('District', '');
+    setValue('DistrictID', '');
+    setValue('Town', '');
+    setValue('TownID', '');
+  };
 
   const onsubmit = () => {
     if (showCollegeName === true) {
@@ -110,29 +134,21 @@ function NMCCollegeRegistration() {
         mobile_number: getValues().MobileNumber,
       };
 
-      dispatch(registerCollegeDetail(collegeDetailValues))
-        .then(() => {
-          setSuccessModalPopup(true);
-          setValue('CouncilName', '');
-          setValue('CouncilID', '');
-          setValue('Name', '');
-          setValue('CollegeCode', '');
-          setValue('MobileNumber', '');
-          setValue('Website', '');
-          setValue('AddressLine1', '');
-          setValue('AddressLine2', '');
-          setValue('Pincode', '');
-          setValue('Email', '');
-        })
-        .catch((error) => {
-          successToast(
-            error?.data?.response?.data?.error,
-            'RegistrationError',
-            'error',
-            'top-center'
-          );
-        });
-      reset();
+      dispatch(registerCollegeDetail(collegeDetailValues)).then(() => {
+        setSuccessModalPopup(true);
+        onReset();
+        reset();
+        reset({ UniversityName: '' });
+        reset({ UniversityID: '' });
+      });
+      // .catch((error) => {
+      //   successToast(
+      //     error?.data?.response?.data?.message,
+      //     'RegistrationError',
+      //     'error',
+      //     'top-center'
+      //   );
+      // });
     } else {
       const collegeDetailValues = {
         id: getValues().CollegeNameID,
@@ -154,31 +170,20 @@ function NMCCollegeRegistration() {
         mobile_number: getValues().MobileNumber,
       };
 
-      dispatch(updateCollegeDetail(collegeDetailValues))
-        .then(() => {
-          setSuccessModalPopup(true);
-          reset();
-          setValue('CouncilName', '');
-          setValue('CouncilID', '');
-          setValue('Name', '');
-          setValue('CollegeCode', '');
-          setValue('MobileNumber', '');
-          setValue('Website', '');
-          setValue('AddressLine1', '');
-          setValue('AddressLine2', '');
-          setValue('Pincode', '');
-          setValue('Email', '');
-        })
-        .catch((error) => {
-          successToast(
-            error?.data?.response?.data?.error,
-            'RegistrationError',
-            'error',
-            'top-center'
-          );
-        });
+      dispatch(updateCollegeDetail(collegeDetailValues)).then(() => {
+        setSuccessModalPopup(true);
+        reset();
+        onReset();
+      });
+      // .catch((error) => {
+      //   successToast(
+      //     error?.data?.response?.data?.error,
+      //     'RegistrationError',
+      //     'error',
+      //     'top-center'
+      //   );
+      // });
     }
-    reset();
   };
 
   const handleInput = (e) => {
@@ -187,6 +192,14 @@ function NMCCollegeRegistration() {
       e.target.value = isNaN(e.target.value)
         ? e.target.value.toString().slice(0, -1)
         : Math.max(0, parseInt(e.target.value)).toString().slice(0, 10);
+    }
+  };
+  const handleInputPostalCode = (e) => {
+    e.preventDefault();
+    if (e.target.value.length > 0) {
+      e.target.value = isNaN(e.target.value)
+        ? e.target.value.toString().slice(0, -1)
+        : Math.max(0, parseInt(e.target.value)).toString().slice(0, 6);
     }
   };
 
@@ -208,7 +221,6 @@ function NMCCollegeRegistration() {
   const onNameChange = (currentValue) => {
     if (currentValue?.id === 'other') {
       setShowCollegeName(true);
-      // reset();
     } else {
       setValue('CouncilName', '');
       setValue('CouncilID', '');
@@ -287,11 +299,16 @@ function NMCCollegeRegistration() {
   };
 
   return (
-    <Container sx={{ mt: 5 }}>
-      <Grid container item spacing={2} id="collegeRegistrationId">
+    <Grid p={2}>
+      <Grid item xs={12} sm="auto" sx={{ mr: { xs: 0, sm: 'auto' } }}>
+        <Typography variant="h2" color="textPrimary.main">
+          College Registration
+        </Typography>
+      </Grid>
+      <Grid container item spacing={2} id="collegeRegistrationId" mt={1}>
         <Grid item xs={12} md={6} lg={4}>
           <Typography variant="body3" color="inputTextColor.main">
-            Name
+            College Name
           </Typography>
           <Typography component="span" color="error.main">
             *
@@ -301,11 +318,11 @@ function NMCCollegeRegistration() {
             fullWidth
             name="CollegeName"
             items={createEditFieldData(collegesList)}
-            placeholder="Select College"
+            placeholder="Select college name"
             clearErrors={clearErrors}
             error={errors.CollegeName?.message}
             {...register('CollegeName', {
-              required: 'College name is required',
+              required: 'Please select college name',
             })}
             onChange={(currentValue) => {
               onNameChange(currentValue);
@@ -315,7 +332,7 @@ function NMCCollegeRegistration() {
         {showCollegeName && (
           <Grid item xs={12} md={6} lg={4}>
             <Typography variant="body3" color="inputTextColor.main">
-              College Name
+              College
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -329,7 +346,7 @@ function NMCCollegeRegistration() {
               inputProps={{ maxLength: 300 }}
               error={errors.Name?.message}
               {...register('Name', {
-                required: 'College name is required',
+                required: 'Please enter college name',
               })}
             />
           </Grid>
@@ -343,7 +360,7 @@ function NMCCollegeRegistration() {
           <TextField
             fullWidth
             name="CollegeCode"
-            placeholder={t('Enter College Code')}
+            placeholder={t('Enter college code')}
             inputProps={{ maxLength: 300 }}
             error={errors.CollegeCode?.message}
             {...register('CollegeCode')}
@@ -352,7 +369,7 @@ function NMCCollegeRegistration() {
 
         <Grid item xs={12} md={6} lg={4}>
           <Typography variant="body3" color="inputTextColor.main">
-            Mobile
+            Mobile Number
             <Typography component="span" color="error.main">
               *
             </Typography>
@@ -361,7 +378,7 @@ function NMCCollegeRegistration() {
             fullWidth
             name="MobileNumber"
             required
-            placeholder={t('Enter Mobile Number')}
+            placeholder={t('Enter mobile number')}
             onInput={(e) => handleInput(e)}
             error={errors.MobileNumber?.message}
             {...register('MobileNumber', MobileNumberRegexValidation)}
@@ -369,7 +386,7 @@ function NMCCollegeRegistration() {
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
           <Typography variant="body3" color="textSecondary.main">
-            Select Council
+            Council Name
             <Typography component="span" color="error.main">
               *
             </Typography>
@@ -379,14 +396,14 @@ function NMCCollegeRegistration() {
               fullWidth
               name="CouncilName"
               items={createEditFieldData(councilNames)}
-              placeholder="Select Council"
+              placeholder="Select council name"
               clearErrors={clearErrors}
               error={errors.CouncilName?.message}
               {...register('CouncilName', {
-                required: ' Council name is required',
+                required: 'Please select council name',
               })}
               onChange={(currentValue) => {
-                setValue('CouncilID', currentValue.id);
+                setValue('CouncilID', currentValue?.id);
               }}
             />
           </Box>
@@ -395,7 +412,7 @@ function NMCCollegeRegistration() {
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
           <Typography variant="body3" color="inputTextColor.main">
-            Select University Name
+            University
           </Typography>
           <Typography component="span" color="error.main">
             *
@@ -405,13 +422,13 @@ function NMCCollegeRegistration() {
             name="UniversityName"
             clearErrors={clearErrors}
             items={createEditFieldData(universitiesList.data)}
-            placeholder="Select University"
+            placeholder="Select university"
             error={errors.UniversityName?.message}
             {...register('UniversityName', {
-              required: 'University name is required',
+              required: 'Please select university',
             })}
             onChange={(currentValue) => {
-              setValue('UniversityID', currentValue.id);
+              setValue('UniversityID', currentValue?.id);
             }}
           />
         </Grid>
@@ -424,7 +441,7 @@ function NMCCollegeRegistration() {
           <TextField
             fullWidth
             name={'Website'}
-            placeholder={'Enter College Website'}
+            placeholder={'Enter college website'}
             inputProps={{ maxLength: 300 }}
             {...register('Website', {})}
           />
@@ -442,12 +459,10 @@ function NMCCollegeRegistration() {
             rows={1}
             fullWidth
             name="AddressLine1"
-            placeholder="Enter Address line1"
+            placeholder="Enter address line 1"
             inputProps={{ maxLength: 300 }}
             error={errors.AddressLine1?.message}
-            {...register('AddressLine1', {
-              required: 'Address line1 is required',
-            })}
+            {...register('AddressLine1', AddressLineValidation1)}
           />
         </Grid>
 
@@ -458,9 +473,9 @@ function NMCCollegeRegistration() {
           <TextField
             fullWidth
             name="AddressLine2"
-            placeholder={'Enter Address Line 2'}
+            placeholder={'Enter address line 2'}
             error={errors.AddressLine2?.message}
-            {...register('AddressLine2', {})}
+            {...register('AddressLine2', AddressLineValidation2)}
           />
         </Grid>
 
@@ -477,10 +492,10 @@ function NMCCollegeRegistration() {
             name="StateName"
             items={createEditFieldData(statesList)}
             clearErrors={clearErrors}
-            placeholder={'Select State '}
+            placeholder={'Select state '}
             error={errors.StateName?.message}
             {...register('StateName', {
-              required: 'State name is required',
+              required: 'Please select state',
             })}
             onChange={(currentValue) => {
               onStateChange(currentValue);
@@ -499,11 +514,11 @@ function NMCCollegeRegistration() {
               fullWidth
               name="District"
               items={createEditFieldData(districtsList, 'iso_code')}
-              placeholder="Select  District"
+              placeholder="Select district"
               clearErrors={clearErrors}
               error={errors.District?.message}
               {...register('District', {
-                required: 'District name is required',
+                required: 'Please select district',
               })}
               onChange={(currentValue) => {
                 onDistrictChange(currentValue);
@@ -522,12 +537,12 @@ function NMCCollegeRegistration() {
             name="Town"
             clearErrors={clearErrors}
             items={createEditFieldData(subDistrictList)}
-            placeholder="Select Town "
+            placeholder="Select area"
             error={errors.Town?.message}
             {...register('Town')}
             onChange={(currentValue) => {
               if (currentValue !== null) {
-                setValue('TownID', currentValue.id);
+                setValue('TownID', currentValue?.id);
               }
             }}
           />
@@ -535,24 +550,33 @@ function NMCCollegeRegistration() {
 
         <Grid item xs={12} md={6} lg={4}>
           <Typography variant="body3" color="inputTextColor.main">
-            Postal Code
+            Pincode
           </Typography>
           <Typography component="span" color="error.main">
             *
           </Typography>
           <TextField
             fullWidth
+            id="outlined-basic"
             type="number"
             name="Pincode"
-            required
-            placeholder={'Enter postal code'}
+            required="true"
+            onInput={(e) => handleInputPostalCode(e)}
+            defaultValue={getValues().Pincode}
+            placeholder={'Enter pincode'}
             error={errors.Pincode?.message}
-            {...register('Pincode', PostalCodeRegexValidation)}
+            {...register('Pincode', {
+              required: 'Please enter a valid pincode',
+              pattern: {
+                value: /^(\d{6})$/i,
+                message: 'Should contains only 6 digits',
+              },
+            })}
           />
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
           <Typography variant="body3" color="inputTextColor.main">
-            Email ID
+            Email
             <Typography component="span" color="error.main">
               *
             </Typography>
@@ -566,7 +590,7 @@ function NMCCollegeRegistration() {
             type="text"
             name="Email"
             required
-            placeholder={t('Enter Email ID')}
+            placeholder={t('Enter email')}
             inputProps={{ maxLength: 100 }}
             error={errors.Email?.message}
             {...register('Email', EmailRegexValidation)}
@@ -574,7 +598,10 @@ function NMCCollegeRegistration() {
         </Grid>
       </Grid>
 
-      <Box display="flex" justifyContent="flex-start" mt={3}>
+      <Box display="flex" justifyContent="flex-end" mt={3}>
+        <Button variant="contained" color="grey" sx={{ mr: 2, mb: 6 }} onClick={onReset}>
+          Reset
+        </Button>
         <Button
           variant="contained"
           color="secondary"
@@ -584,15 +611,16 @@ function NMCCollegeRegistration() {
           Submit
         </Button>
       </Box>
+
       {successModalPopup && (
         <SuccessModalPopup
           open={successModalPopup}
           setOpen={() => setSuccessModalPopup(false)}
-          text={'We have shared the password link on given Email ID and Mobile No.'}
+          text={'We have shared the password link with you via email'}
           fromCollegeRegistration={true}
         />
       )}
-    </Container>
+    </Grid>
   );
 }
 

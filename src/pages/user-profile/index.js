@@ -1,15 +1,18 @@
 import { useEffect, useState } from 'react';
 
 import EditIcon from '@mui/icons-material/Edit';
-import { Box, Grid, Typography, useTheme } from '@mui/material';
+import { Box, Dialog, Grid, Typography, useTheme } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
+import { ErrorMessages } from '../../constants/error-messages';
 import { doctorTabs } from '../../helpers/components/sidebar-drawer-list-item';
 import { capitalizeFirstLetter } from '../../helpers/functions/common-functions';
 import useWizard from '../../hooks/use-wizard';
+import ErrorModalPopup from '../../shared/common-modals/error-modal-popup';
 import ReactivateLicencePopup from '../../shared/reactivate-licence-popup/re-activate-licence-popup';
 import SuccessPopup from '../../shared/reactivate-licence-popup/success-popup';
 import {
@@ -21,6 +24,7 @@ import {
   getEsignFormDetails,
   getPersonalDetailsData,
   getRegistrationDetailsData,
+  getWorkProfileDetailsData,
   updateDoctorContactDetails,
 } from '../../store/actions/doctor-user-profile-actions';
 import { changeUserActiveTab } from '../../store/reducers/common-reducers';
@@ -36,19 +40,27 @@ import PersonalDetails from './components/personal-details/personal-details';
 import PreviewProfile from './components/preview-profile/preview-profile';
 import ProfileConsent from './components/profile-consent/profile-consent';
 import RegisterAndAcademicDetails from './components/register-and-academic-details/register-and-academic-details';
+import ConfirmEsignProcess from './e-sign-loader';
 
 const readWizardSteps = ['Personal Details', 'Registration & Academic Details']; //, 'Work Profile'
 
 export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
   const theme = useTheme();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const eSignResponse = useSelector((state) => state?.doctorUserProfileReducer?.esignDetails?.data);
   const { loginData } = useSelector((state) => state?.loginReducer);
+
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
-  const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
+  const { personalDetails, workProfileDetails } = useSelector(
+    (state) => state?.doctorUserProfileReducer
+  );
   const emailNotify = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.email_notification_enabled
+  );
+  const emailVerified = useSelector(
+    (state) => state?.doctorUserProfileReducer?.personalDetails?.email_verified
   );
   const mobileNotify = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.sms_notification_enabled
@@ -75,6 +87,8 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
   const [registrationFile, setRegistrationFile] = useState(false);
   const [degreeCertificate, setDegreeCertificate] = useState(false);
   const [validDetails, setValidDetails] = useState({ mobileNo: false, email: false });
+  const [eSignLoader, setESignLoader] = useState(false);
+  const [rejectPopup, setRejectPopup] = useState(false);
 
   const handleNotification = (eventData, mode) => {
     if (mode === 'email') {
@@ -95,10 +109,17 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
   };
 
   useEffect(() => {
-    if (loginData?.data?.work_flow_status_id === 1) {
+    if (
+      loginData?.data?.work_flow_status_id === 1 ||
+      personalDetails?.work_flow_status_id === 1 ||
+      loginData?.data?.work_flow_status_id === 5 ||
+      personalDetails?.work_flow_status_id === 5 ||
+      loginData?.data?.work_flow_status_id === 6 ||
+      personalDetails?.work_flow_status_id === 6
+    ) {
       setIsApplicationPending(false);
     }
-  }, [loginData?.data?.work_flow_status_id]);
+  }, [loginData?.data?.work_flow_status_id, personalDetails?.work_flow_status_id]);
   const { activeStep, handleNext, handleBack, resetStep, completed, progress, handleStep } =
     useWizard(
       ['Doctor', 'SMC', 'NMC'].includes(loggedInUserType) ? 0 : 1,
@@ -116,18 +137,10 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
     setShowReactivateLicense(false);
   };
   const fetchStates = () => {
-    try {
-      dispatch(getStatesList()).then(() => {});
-    } catch (allFailMsg) {
-      successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-    }
+    dispatch(getStatesList()).then(() => {});
   };
   const fetchCountries = () => {
-    try {
-      dispatch(getCountriesList()).then(() => {});
-    } catch (allFailMsg) {
-      successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-    }
+    dispatch(getCountriesList()).then(() => {});
   };
 
   const openDoctorEditProfile = () => {
@@ -170,20 +183,45 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
           ? selectedRowData?.profileID?.value || selectedRowData?.view?.value
           : loginData?.data?.profile_id
       )
-    )
-      .then()
-      .catch((allFailMsg) => {
-        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-      });
+    );
+  };
+
+  const fetchDoctorUserWorkDetails = () => {
+    dispatch(
+      getWorkProfileDetailsData(
+        showViewProfile && tabName === 'Activate License'
+          ? selectedRowData?.health_professional_id
+          : showViewProfile
+          ? selectedRowData?.profileID?.value || selectedRowData?.view?.value
+          : loginData?.data?.profile_id
+      )
+    ).then();
+    // .catch((error) => {
+    //   successToast(
+    //     `ERR_INT: ${error.data.response.data.error}, 'auth-error', 'error', 'top-center'`
+    //   );
+    // });
   };
 
   useEffect(() => {
     fetchDoctorUserPersonalDetails();
     fetchDoctorUserRegistrationDetails();
-    if (loginData?.data?.work_flow_status_id === 1) {
+    fetchDoctorUserWorkDetails();
+    if (
+      loginData?.data?.work_flow_status_id === 1 ||
+      personalDetails?.work_flow_status_id === 1 ||
+      loginData?.data?.work_flow_status_id === 5 ||
+      personalDetails?.work_flow_status_id === 5 ||
+      loginData?.data?.work_flow_status_id === 6 ||
+      personalDetails?.work_flow_status_id === 6
+    ) {
       setIsApplicationPending(false);
     }
-    if (loginData?.data?.hp_profile_status_id === 7) {
+    if (
+      (loginData?.data?.hp_profile_status_id === 7 &&
+        personalDetails?.hp_profile_status_id === 7) ||
+      (loginData?.data?.work_flow_status_id === 3 && personalDetails?.hp_profile_status_id === 3)
+    ) {
       setIsReadMode(false);
     } else {
       setIsReadMode(true);
@@ -207,6 +245,18 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
   }, []);
 
   useEffect(() => {
+    if (
+      (loginData?.data?.hp_profile_status_id === 7 &&
+        (personalDetails?.isLoading === true || personalDetails?.hp_profile_status_id === 7)) ||
+      (loginData?.data?.work_flow_status_id === 3 && personalDetails?.hp_profile_status_id === 3)
+    ) {
+      setIsReadMode(false);
+    } else {
+      setIsReadMode(true);
+    }
+  }, [personalDetails?.hp_profile_status_id]);
+
+  useEffect(() => {
     fetchDoctorUserPersonalDetails();
   }, [emailNotification, mobileNotification, !isReadMode]);
 
@@ -214,12 +264,19 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
     document.getElementById('formid')?.submit();
   };
 
+  const navigateToProfile = () => {
+    navigate(`/profile`);
+    resetStep(0);
+    setIsReadMode(true);
+  };
+
   function eSignHandler() {
     let data = {
       templateId: 'TEMPLATE_1',
       signingPlace:
         personalDetails?.communication_address?.village?.name ||
-        personalDetails?.communication_address?.district?.name,
+        personalDetails?.communication_address?.district?.name ||
+        personalDetails?.communication_address?.state?.name,
       nmrDetails: {
         nmrPersonalDetail: {
           fullName: personalDetails?.personal_details?.full_name || '',
@@ -292,6 +349,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
           transaction_id: response?.data?.asp_txn_id,
           e_sign_transaction_id: response?.data?.asp_txn_id,
         };
+        eSignStatusHandler();
         dispatch(updateDoctorContactDetails(payload, personalDetails?.hp_profile_id))
           .then(() => {
             document.getElementById('formid')?.submit();
@@ -299,28 +357,52 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
             resetStep(0);
             handleEsign();
             dispatch(getEsignDetails());
-
-            dispatch(changeUserActiveTab(doctorTabs[1].tabName));
           })
-          .catch((error) => {
+          .catch(() => {
             dispatch(getEsignDetails([]));
-            successToast(
-              'ERROR: ' + error.data.response.data.error,
-              'auth-error',
-              'error',
-              'top-center'
-            );
           });
       })
       .catch(() => {
-        successToast('Server Error', 'auth-error', 'error', 'top-center');
+        successToast(ErrorMessages.serverError, 'auth-error', 'error', 'top-center');
       });
   }
+
+  //Helper Function to capture the e-sign status from personal API call within 3.2 mins with interval of 8 times.
+  const eSignStatusHandler = () => {
+    let retry = 0;
+    setESignLoader(true);
+    let interval = setInterval(() => {
+      retry = retry + 1;
+
+      if (retry === 10) {
+        clearInterval(interval);
+        setESignLoader(false);
+        setRejectPopup(true);
+      }
+      dispatch(getPersonalDetailsData(personalDetails?.hp_profile_id))
+        .then((response) => {
+          if (response?.data?.esign_status === 1 || response?.data?.esign_status === 2) {
+            clearInterval(interval);
+            setESignLoader(false);
+            if (response?.data?.esign_status === 1) {
+              dispatch(changeUserActiveTab(doctorTabs[1].tabName));
+            }
+            if (response?.data?.esign_status === 2) {
+              setRejectPopup(true);
+            }
+          }
+        })
+        .catch(() => {
+          setESignLoader(false);
+        });
+    }, 30000);
+  };
+
   return eSignResponse?.asp_txn_id ? (
     <div>
       <form
         id="formid"
-        target="_blank"
+        target="_new"
         method="POST"
         action="https://es-staging.cdac.in/esignlevel2/2.1/form/signdoc"
       >
@@ -352,6 +434,20 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
       )}
       {showSuccessPopup && <SuccessPopup />}
       {personalDetails?.hp_profile_status_id === undefined && <Loader />}
+
+      <Dialog
+        maxWidth="sm"
+        scroll="body"
+        open={eSignLoader}
+        PaperProps={{ sx: { borderRadius: '10px' } }}
+      >
+        <ConfirmEsignProcess
+          handleClose={() => {
+            setESignLoader(false);
+          }}
+        />
+      </Dialog>
+
       {personalDetails?.hp_profile_status_id !== undefined && (
         <Box>
           {!showViewProfile ? (
@@ -373,10 +469,16 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
                   <ProgressBar
                     width="302px"
                     progress={
-                      showStaticFormProgress ||
-                      personalDetails?.nmr_id ||
-                      personalDetails?.work_flow_status_id === 1 ||
-                      personalDetails?.work_flow_status_id === 3
+                      workProfileDetails?.work_details?.is_user_currently_working !== undefined &&
+                      workProfileDetails !== undefined &&
+                      typeof workProfileDetails === 'object' &&
+                      workProfileDetails !== null &&
+                      Object?.keys(workProfileDetails)?.length !== 0
+                        ? 100
+                        : showStaticFormProgress ||
+                          personalDetails?.nmr_id ||
+                          personalDetails?.work_flow_status_id === 1 ||
+                          personalDetails?.work_flow_status_id === 3
                         ? 75
                         : progress
                     }
@@ -386,12 +488,15 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
                 {!isReadMode && (
                   <BreadcrumbContainer
                     primary="My Profile"
-                    primaryLink={'/profile'}
                     secondary={'Edit Profile'}
+                    onClick={navigateToProfile}
                   />
                 )}
               </Grid>
-              {doctorEsignStatus === 1 || loginData?.data?.hp_profile_status_id === 7 ? (
+              {doctorEsignStatus === 1 ||
+              personalDetails?.esign_status === 1 ||
+              (loginData?.data?.hp_profile_status_id === 7 &&
+                personalDetails?.hp_profile_status_id === 7) ? (
                 isReadMode &&
                 isApplicationPending &&
                 !logInDoctorStatus && (
@@ -443,7 +548,6 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
                   </Button>
                 </Grid>
               )}
-
               <Grid item xs={12} lg="auto">
                 {!isReadMode && (
                   <Box
@@ -464,6 +568,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
                         <Switch
                           color="primary"
                           checked={emailNotify}
+                          disabled={!emailVerified}
                           onChange={(e) => {
                             handleNotification(e, 'email');
                           }}
@@ -532,18 +637,6 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
                 selectedDataIndex={selectedRowData?.SNo?.value - 1}
               />
             )}
-            {/* {activeStep === 2 && (
-              <WorkProfile
-                isReadMode={isReadMode}
-                setIsReadMode={setIsReadMode}
-                handleNext={handleNext}
-                handleBack={handleBack}
-                setShowDashboard={setShowDashboard}
-                setShowTable={setShowTable}
-                setShowViewPorfile={setShowViewPorfile}
-                activeStep={activeStep}
-              />
-            )} */}
             {activeStep === 2 && (
               <PreviewProfile
                 isReadMode={isReadMode}
@@ -559,9 +652,21 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
               handleBack={handleBack}
               resetStep={resetStep}
               setIsReadMode={setIsReadMode}
+              setESignLoader={setESignLoader}
+              setRejectPopup={setRejectPopup}
             />
           )}
         </Box>
+      )}
+      {rejectPopup && (
+        <ErrorModalPopup
+          open={setRejectPopup}
+          text={`We are verfying your E-sign details. 
+          Please check your E-sign status after sometime. `}
+          handleClose={() => {
+            setRejectPopup(false);
+          }}
+        />
       )}
     </>
   );

@@ -13,7 +13,8 @@ import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup
 import { getAdminDesignation, getAdminVerifier } from '../../../store/actions/college-actions';
 import { changeUserActiveTab } from '../../../store/reducers/common-reducers';
 import { Button } from '../../../ui/core';
-import successToast from '../../../ui/core/toaster';
+import { EmailRegexValidation } from '../../../utilities/common-validations';
+// import successToast from '../../../ui/core/toaster';
 
 function CollegeVerifier() {
   const { collegeAdminDesignation } = useSelector((state) => state.college);
@@ -56,19 +57,18 @@ function CollegeVerifier() {
       college_id: loginData?.data?.college_id,
     };
 
-    dispatch(getAdminVerifier(collegeDetailValues))
-      .then(() => {
-        setSuccessModalPopup(true);
-        reset();
-      })
-      .catch((error) => {
-        successToast(
-          error?.data?.response?.data?.message,
-          'RegistrationError',
-          'error',
-          'top-center'
-        );
-      });
+    dispatch(getAdminVerifier(collegeDetailValues)).then(() => {
+      setSuccessModalPopup(true);
+      reset();
+    });
+    // .catch((error) => {
+    //   successToast(
+    //     error?.data?.response?.data?.message,
+    //     'RegistrationError',
+    //     'error',
+    //     'top-center'
+    //   );
+    // });
   };
 
   const handleInput = (e) => {
@@ -91,8 +91,15 @@ function CollegeVerifier() {
 
   return (
     <>
-      <Container sx={{ mt: 5 }}>
-        <Grid container item spacing={2}>
+      <Container sx={{ mt: 2 }}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm="auto" sx={{ mr: { xs: 0, sm: 'auto' } }}>
+            <Typography variant="h2" color="textPrimary.main">
+              Create Verifier
+            </Typography>
+          </Grid>
+        </Grid>
+        <Grid container item spacing={2} mt={2}>
           <Grid item xs={12} md={4} lg={4}>
             <Typography variant="body3" color="inputTextColor.main">
               Name
@@ -105,11 +112,16 @@ function CollegeVerifier() {
               fullWidth
               name="Name"
               required
-              placeholder={t('Enter Name')}
+              placeholder={t('Enter name')}
               // onInput={(e) => handleInput(e)}
               error={errors.Name?.message}
               {...register('Name', {
-                required: 'Name is required',
+                required: 'Please enter name',
+
+                pattern: {
+                  value: /^(?!^\s)[a-zA-Z\s']*$(?<!\s$)/,
+                  message: 'Please enter a valid name',
+                },
               })}
             />
           </Grid>
@@ -125,11 +137,11 @@ function CollegeVerifier() {
               fullWidth
               name="Designation"
               items={createEditFieldData(collegeAdminDesignation.data)}
-              placeholder="Select  Designation"
+              placeholder="Select  designation"
               clearErrors={clearErrors}
               error={errors.Designation?.message}
               {...register('Designation', {
-                required: 'Designation is required',
+                required: 'Please select designation',
               })}
               onChange={(currentValue) => {
                 setValue('DesignationID', currentValue.id);
@@ -139,7 +151,7 @@ function CollegeVerifier() {
 
           <Grid item xs={12} md={4} lg={4}>
             <Typography variant="body3" color="inputTextColor.main">
-              Phone Number
+              Mobile Number
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -149,18 +161,18 @@ function CollegeVerifier() {
               fullWidth
               name="Number"
               required
-              placeholder={t('Enter Phone Number')}
+              placeholder={t('Enter mobile number')}
               onInput={(e) => handleInput(e)}
               error={errors.Number?.message}
               {...register('Number', {
-                required: 'Phone Number is required',
+                required: 'Please enter mobile number',
               })}
             />
           </Grid>
 
           <Grid item xs={12} md={4} lg={4}>
             <Typography variant="body3" color="inputTextColor.main">
-              Email Address
+              Email
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -174,21 +186,14 @@ function CollegeVerifier() {
               type="text"
               name="Email"
               required
-              placeholder={t('Enter Email Address')}
+              placeholder={t('Enter email')}
               error={errors.Email?.message}
-              {...register('Email', {
-                required: 'Email Address is required',
-                pattern: {
-                  value:
-                    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-                  message: 'Provide a Valid Email Address',
-                },
-              })}
+              {...register('Email', EmailRegexValidation)}
             />
           </Grid>
         </Grid>
 
-        <Box display="flex" justifyContent="flex-start" mt={3}>
+        <Box display="flex" justifyContent="flex-end" mt={3}>
           <Button
             variant="contained"
             color="secondary"
@@ -208,9 +213,7 @@ function CollegeVerifier() {
         <SuccessModalPopup
           open={successModalPopup}
           setOpen={() => setSuccessModalPopup(false)}
-          text={
-            'Verifier profile has been successfully created. Further details would be sent on verifier registered Email ID'
-          }
+          text={`Verifier profile has been created. Further details would be sent on verifier's registered Email ID`}
           fromCollegeRegistration={true}
         />
       )}

@@ -4,9 +4,8 @@ import { Box, Button, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { ToastContainer } from 'react-toastify';
 
-import { createSelectFieldData } from '../../../../helpers/functions/common-functions';
+import { createSelectFieldData, scrollToTop } from '../../../../helpers/functions/common-functions';
 import {
   getCitiesList,
   getDistrictList,
@@ -21,7 +20,8 @@ import {
 import { getPersonalDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
 import { Checkbox } from '../../../../ui/core';
 import { DatePicker, RadioGroup, Select, TextField } from '../../../../ui/core';
-import successToast from '../../../../ui/core/toaster';
+// import successToast from '../../../../ui/core/toaster';
+import { EmailRegexValidation } from '../../../../utilities/common-validations';
 
 const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValidDetails }) => {
   const { t } = useTranslation();
@@ -29,9 +29,14 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
   const loggedInUserType = useSelector((state) => state?.common?.loggedInUserType);
 
   // eslint-disable-next-line no-unused-vars
-  const { statesList, countriesList, districtsList, subDistrictList, citiesList } = useSelector(
-    (state) => state?.common
-  );
+  const {
+    statesList,
+    countriesList,
+    districtsList,
+    subDistrictList,
+    citiesList,
+    enteredEmailMobileValues,
+  } = useSelector((state) => state?.common);
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { raisedQueryData } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
 
@@ -119,6 +124,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
     register,
     setValue,
     watch,
+    clearErrors,
   } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -230,33 +236,31 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
 
   const fetchDistricts = (stateId) => {
     if (stateId) {
-      dispatch(getDistrictList(stateId))
-        .then((response) => {
-          setDistrictListData(response?.data);
-        })
-        .catch((allFailMsg) => {
-          successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-        });
+      dispatch(getDistrictList(stateId)).then((response) => {
+        setDistrictListData(response?.data);
+      });
+      // .catch((allFailMsg) => {
+      //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      // });
     }
   };
   const fetchSubDistricts = (districtId) => {
     if (districtId) {
-      dispatch(getSubDistrictsList(districtId))
-        .then((response) => {
-          setSubDistrictListData(response?.data);
-        })
-        .catch((allFailMsg) => {
-          successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-        });
+      dispatch(getSubDistrictsList(districtId)).then((response) => {
+        setSubDistrictListData(response?.data);
+      });
+      // .catch((allFailMsg) => {
+      //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      // });
     }
   };
 
   const fetchCities = (subDistrictId) => {
-    try {
-      dispatch(getCitiesList(subDistrictId)).then(() => {});
-    } catch (allFailMsg) {
-      successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-    }
+    // try {
+    dispatch(getCitiesList(subDistrictId)).then(() => {});
+    // } catch (allFailMsg) {
+    //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    // }
   };
 
   const selectedState = watch('State');
@@ -266,6 +270,14 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
   useEffect(() => {
     if (selectedState !== undefined) {
       fetchDistricts(selectedState);
+      if (
+        personalDetails?.kyc_address?.district?.iso_code !== '' ||
+        personalDetails?.kyc_address?.district?.iso_code !== undefined ||
+        personalDetails?.kyc_address?.district?.iso_code !== null ||
+        isSameAddress
+      ) {
+        clearErrors('District', '');
+      }
     }
   }, [selectedState]);
 
@@ -313,38 +325,26 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
       setValue('Locality', personalDetails?.communication_address?.locality);
       setValue('PostalCode', personalDetails?.communication_address?.pincode);
     }
+    clearErrors('House', '');
+    clearErrors('State', '');
+    clearErrors('District', '');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isSameAddress]);
 
-  // useEffect(() => {
-  //   if (getValues().PostalCode?.length === 6) {
-  //     dispatch(getPostalAddress(getValues().PostalCode))
-  //       .then(() => {})
-  //       .catch((allFailMsg) => {
-  //         successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-  //       });
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [getValues().PostalCode]);
-
-  const fetchUpdatedDoctorUserProfileData = (personalDetails) => {
-    dispatch(updateDoctorPersonalDetails(personalDetails, personalDetails?.hp_profile_id))
-      .then(() => {
-        dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id))
-          .then(() => {
+  const fetchUpdatedDoctorUserProfileData = (personalDetails, optionNext) => {
+    dispatch(updateDoctorPersonalDetails(personalDetails, personalDetails?.hp_profile_id)).then(
+      () => {
+        if (optionNext) {
+          dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id)).then(() => {
             handleNext();
-            window.scrollTo({
-              top: 0,
-              behavior: 'smooth',
-            });
-          })
-          .catch((allFailMsg) => {
-            successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
           });
-      })
-      .catch((allFailMsg) => {
-        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-      });
+        }
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth',
+        });
+      }
+    );
   };
 
   const handleBackButton = () => {
@@ -410,15 +410,15 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
   };
 
   async function onHandleSave() {
-    // CS-2173 Commenting for future use
-    // if (!email) {
-    //   setValidDetails({ ...validDetails, email: true });
-    //   window.scrollTo({
-    //     top: 0,
-    //     behavior: 'smooth',
-    //   });
-    //   return;
-    // }
+    if (document?.getElementsByName('email')[0]?.value !== undefined) {
+      if (
+        !EmailRegexValidation?.pattern?.value?.test(document.getElementsByName('email')[0]?.value)
+      ) {
+        setValidDetails({ ...validDetails, email: true });
+        scrollToTop();
+        return;
+      }
+    }
     const {
       MiddleName,
       LastName,
@@ -459,6 +459,11 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
     doctorProfileValues.personal_details.country_nationality =
       nationalities.find((x) => x.id === Nationality) || {};
     doctorProfileValues.personal_details.gender = Gender;
+    doctorProfileValues.personal_details.email = document?.getElementsByName('email')[0]?.value
+      ? document?.getElementsByName('email')[0]?.value
+      : enteredEmailMobileValues?.email
+      ? enteredEmailMobileValues?.email
+      : EmailAddress;
 
     doctorProfileValues.communication_address.pincode = PostalCode;
     doctorProfileValues.communication_address.address_line1 = Address;
@@ -491,18 +496,21 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
     return doctorProfileValues;
   }
   async function onHandleOptionNext() {
-    await onHandleSave()
-      .then((response) => {
-        response && fetchUpdatedDoctorUserProfileData(response);
-      })
-      .catch((allFailMsg) => {
-        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-      });
+    await onHandleSave().then((response) => {
+      response && fetchUpdatedDoctorUserProfileData(response, true);
+    });
+  }
+
+  async function onHandleOptionSave() {
+    await onHandleSave().then((response) => {
+      response && fetchUpdatedDoctorUserProfileData(response, false);
+    });
   }
 
   const handleGender = (event) => {
     setValue(event.target.name, event.target.value, true);
   };
+
   return (
     <Box
       sx={{
@@ -512,7 +520,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
         },
       }}
     >
-      <ToastContainer></ToastContainer>
       <Grid container spacing={2}>
         {/* layer 1 */}
         <Grid container item>
@@ -524,7 +531,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
               color="tabHighlightedBackgroundColor.main"
               variant="h3"
             >
-              Personal Details*
+              Personal Details
             </Typography>
           </Grid>
           {false && (
@@ -548,10 +555,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
             </Grid>
           )}
         </Grid>
-        <Grid container item spacing={2} mt={1}>
+        <Grid container item spacing={2} mt={0.5}>
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
-              Name
+              Full Name
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -559,25 +566,26 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
             <TextField
               variant="outlined"
               name={`Dr. ${'Name'}`}
-              placeholder="First name"
+              placeholder="Enter name"
               fullWidth
               defaultValue={getValues().Name}
               {...register('Name', {
                 pattern: {
                   value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
-                  message: 'Please Enter Valid Name',
+                  message: 'Please enter Name',
                 },
                 maxLength: {
                   value: 100,
                   message: 'Length should be less than 100.',
                 },
               })}
-              sx={{
-                input: {
-                  backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
-                },
-              }}
-              InputProps={{ readOnly: loggedInUserType === 'SMC' ? false : true }}
+              disabled
+              // sx={{
+              //   input: {
+              //     backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main',
+              //   },
+              // }}
+              // InputProps={{ readOnly: loggedInUserType === 'SMC' ? false : true }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -587,13 +595,13 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
             <TextField
               variant="outlined"
               name={'FatherName'}
-              placeholder="Father's name"
+              placeholder="Enter father's name"
               fullWidth
               defaultValue={getValues().FatherName}
               {...register('FatherName', {
                 pattern: {
                   value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
-                  message: 'Please Enter Valid Father Name',
+                  message: `Please enter father's name`,
                 },
                 maxLength: {
                   value: 100,
@@ -601,35 +609,36 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 },
               })}
               error={errors.FatherName?.message}
-              sx={{
-                input: {
-                  backgroundColor:
-                    loggedInUserType === 'SMC'
-                      ? ''
-                      : work_flow_status_id === 3 && getQueryRaised('Fathers Name')
-                      ? 'grey2.main'
-                      : '',
-                },
-              }}
-              InputProps={{
-                readOnly: work_flow_status_id === 3 ? getQueryRaised('Fathers Name') : false,
-              }}
+              disabled={work_flow_status_id === 3 ? getQueryRaised('Fathers Name') : false}
+              // sx={{
+              //   input: {
+              //     backgroundColor:
+              //       loggedInUserType === 'SMC'
+              //         ? ''
+              //         : work_flow_status_id === 3 && getQueryRaised('Fathers Name')
+              //         ? 'grey2.main'
+              //         : '',
+              //   },
+              // }}
+              // InputProps={{
+              //   readOnly: work_flow_status_id === 3 ? getQueryRaised('Fathers Name') : false,
+              // }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
-              Mother&apos;s Name
+              Mother Name
             </Typography>
             <TextField
               variant="outlined"
               name={'MotherName'}
-              placeholder="Mother's name"
+              placeholder="Enter mother name"
               fullWidth
               defaultValue={getValues().MotherName}
               {...register('MotherName', {
                 pattern: {
                   value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
-                  message: 'Please Enter Valid Mother Name',
+                  message: 'Please enter mother name',
                 },
                 maxLength: {
                   value: 100,
@@ -637,23 +646,24 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 },
               })}
               error={errors.MotherName?.message}
-              InputProps={{
-                readOnly: work_flow_status_id === 3 ? getQueryRaised('Mothers Name') : false,
-              }}
-              sx={{
-                input: {
-                  backgroundColor:
-                    loggedInUserType === 'SMC'
-                      ? ''
-                      : work_flow_status_id === 3 && getQueryRaised('Mothers Name')
-                      ? 'grey2.main'
-                      : '',
-                },
-              }}
+              disabled={work_flow_status_id === 3 ? getQueryRaised('Mothers Name') : false}
+              // InputProps={{
+              //   readOnly: work_flow_status_id === 3 ? getQueryRaised('Mothers Name') : false,
+              // }}
+              // sx={{
+              //   input: {
+              //     backgroundColor:
+              //       loggedInUserType === 'SMC'
+              //         ? ''
+              //         : work_flow_status_id === 3 && getQueryRaised('Mothers Name')
+              //         ? 'grey2.main'
+              //         : '',
+              //   },
+              // }}
             />
           </Grid>
         </Grid>
-        <Grid container item spacing={2} mt={1}>
+        <Grid container item spacing={2} mt={0.5}>
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
               Spouse Name
@@ -661,14 +671,14 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
             <TextField
               variant="outlined"
               name={'SpouseName'}
-              placeholder="Spouse name"
+              placeholder="Enter spouse name"
               fullWidth
               defaultValue={getValues().SpouseName}
               {...register('SpouseName', {
                 pattern: {
                   value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
 
-                  message: 'Please Enter Valid Spouse Name',
+                  message: 'Please enter spouse name',
                 },
                 maxLength: {
                   value: 100,
@@ -676,31 +686,32 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 },
               })}
               error={errors.SpouseName?.message}
-              InputProps={{
-                readOnly: work_flow_status_id === 3 ? getQueryRaised('Spouse Name') : false,
-              }}
-              sx={{
-                input: {
-                  backgroundColor:
-                    loggedInUserType === 'SMC'
-                      ? ''
-                      : work_flow_status_id === 3 && getQueryRaised('Spouse Name')
-                      ? 'grey2.main'
-                      : '',
-                },
-              }}
+              disabled={work_flow_status_id === 3 ? getQueryRaised('Spouse Name') : false}
+              // InputProps={{
+              //   readOnly: work_flow_status_id === 3 ? getQueryRaised('Spouse Name') : false,
+              // }}
+              // sx={{
+              //   input: {
+              //     backgroundColor:
+              //       loggedInUserType === 'SMC'
+              //         ? ''
+              //         : work_flow_status_id === 3 && getQueryRaised('Spouse Name')
+              //         ? 'grey2.main'
+              //         : '',
+              //   },
+              // }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography color="inputTextColor.main" variant="body1">
-              Select Nationality
+              Nationality
               <Typography component="span" color="error.main">
                 *
               </Typography>
             </Typography>
             <Select
               fullWidth
-              sx={{ backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main' }}
+              // sx={{ backgroundColor: loggedInUserType === 'SMC' ? '' : 'grey2.main' }}
               error={errors.Nationality?.message}
               name="Nationality"
               defaultValue={getValues().Nationality}
@@ -709,9 +720,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
               {...register('Nationality', {
                 required: 'Nationality is required',
               })}
-              InputProps={{
-                readOnly: loggedInUserType === 'SMC' ? false : true,
-              }}
+              // InputProps={{
+              //   readOnly: loggedInUserType === 'SMC' ? false : true,
+              // }}
               options={createSelectFieldData(nationalities)}
             />
           </Grid>
@@ -749,10 +760,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
             </Grid>
           </Grid>
         </Grid>
-        <Grid container item spacing={2} mt={1}>
+        <Grid container item spacing={2} mt={0.5}>
           <Grid item xs={12} md={4}>
             <Typography variant="body1" color="inputTextColor.main">
-              Date of Birth (DD/MM/YYYY)
+              Date of Birth (DD-MM-YYYY)
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -770,7 +781,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 getValues()?.dateOfBirth ? new Date(getValues()?.dateOfBirth) : undefined
               }
               error={errors.DateOfBirth?.message}
-              backgroundColor={loggedInUserType === 'SMC' ? '' : '#F0F0F0'}
+              // backgroundColor={loggedInUserType === 'SMC' ? '' : '#F0F0F0'}
               disabled={loggedInUserType === 'SMC' ? false : true}
             />
           </Grid>
@@ -780,7 +791,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
             Date:09/03/2023
           <Grid item xs={12} md={4}>
             <Typography variant="body1" color="inputTextColor.main">
-              Language Spoken
+              Language spoken
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -822,7 +833,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
 
         {/*Layer 2*/}
 
-        <Grid container item spacing={2} mt={1}>
+        <Grid container item spacing={2} mt={0.5}>
           <Grid item xs={12}>
             <Typography
               bgcolor="grey1.light"
@@ -857,7 +868,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
               })}
               sx={{
                 input: {
-                  backgroundColor: 'grey2.main',
+                  // backgroundColor: 'grey2.main',
                   whiteSpace: 'nowrap',
                   wordWrap: 'break-word',
                 },
@@ -866,7 +877,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
           </Grid>
 
           {/* layer 3 */}
-          <Grid container item spacing={2} mt={1}>
+          <Grid container item spacing={2} mt={0.5}>
             <Grid item xs={12}>
               <Typography
                 bgcolor="grey1.light"
@@ -875,10 +886,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 color="tabHighlightedBackgroundColor.main"
                 variant="h3"
               >
-                Communication Address*
+                Communication Address
               </Typography>
             </Grid>
-            <Box p={2} display="flex" alignItems="center">
+            <Box p={2} display="flex" justifyContent="center">
               <Checkbox
                 value={isSameAddress}
                 defaultChecked={
@@ -891,7 +902,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 disabled={work_flow_status_id === 3 ? true : false}
               />
               <Typography component="div" mt={1} variant="body7" color="textPrimary.main">
-                Is the communication address same as your address as per your KYC?
+                Click if communication address is same as KYC address
               </Typography>
             </Box>
             <Grid container item columnSpacing={2}>
@@ -908,7 +919,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                   variant="outlined"
                   name={'House'}
                   fullWidth
-                  placeholder="House Address"
+                  placeholder="House"
                   disabled={
                     isSameAddress
                       ? isSameAddress
@@ -916,33 +927,25 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                       ? getQueryRaised('House')
                       : false
                   }
-                  required={isSameAddress ? false : true}
-                  sx={{
-                    input: {
-                      backgroundColor: isSameAddress
-                        ? 'grey2.main'
-                        : work_flow_status_id === 3 && getQueryRaised('House')
-                        ? 'grey2.main'
-                        : '',
-                    },
-                  }}
+                  required={!isSameAddress ? true : false}
                   defaultValue={
                     isSameAddress ? personalDetails?.kyc_address?.house : getValues()?.House
                   }
-                  // value={getValues()?.House}
                   {...register(
                     'House',
-                    isSameAddress
-                      ? ''
-                      : getValues()?.House?.length <= 0 && {
-                          required: 'House is Required',
+                    !isSameAddress
+                      ? {
+                          required: 'House is required',
                           maxLength: {
                             value: 300,
                             message: 'Length should be less than 300.',
                           },
                         }
+                      : {
+                          required: false,
+                        }
                   )}
-                  error={errors.House?.message}
+                  error={!isSameAddress ? errors?.House?.message : ''}
                 />
               </Grid>
               <Grid item xs={12} md={4}>
@@ -961,15 +964,15 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                       : false
                   }
                   fullWidth
-                  sx={{
-                    input: {
-                      backgroundColor: isSameAddress
-                        ? 'grey2.main'
-                        : work_flow_status_id === 3 && getQueryRaised('Street')
-                        ? 'grey2.main'
-                        : '',
-                    },
-                  }}
+                  // sx={{
+                  //   input: {
+                  //     backgroundColor: isSameAddress
+                  //       ? 'grey2.main'
+                  //       : work_flow_status_id === 3 && getQueryRaised('Street')
+                  //       ? 'grey2.main'
+                  //       : '',
+                  //   },
+                  // }}
                   defaultValue={
                     isSameAddress
                       ? personalDetails?.kyc_address?.street
@@ -999,15 +1002,15 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                       ? getQueryRaised('Landmark')
                       : false
                   }
-                  sx={{
-                    input: {
-                      backgroundColor: isSameAddress
-                        ? 'grey2.main'
-                        : work_flow_status_id === 3 && getQueryRaised('Landmark')
-                        ? 'grey2.main'
-                        : '',
-                    },
-                  }}
+                  // sx={{
+                  //   input: {
+                  //     backgroundColor: isSameAddress
+                  //       ? 'grey2.main'
+                  //       : work_flow_status_id === 3 && getQueryRaised('Landmark')
+                  //       ? 'grey2.main'
+                  //       : '',
+                  //   },
+                  // }}
                   required={false}
                   fullWidth
                   defaultValue={
@@ -1045,15 +1048,15 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                     ? getQueryRaised('Locality')
                     : false
                 }
-                sx={{
-                  input: {
-                    backgroundColor: isSameAddress
-                      ? 'grey2.main'
-                      : work_flow_status_id === 3 && getQueryRaised('Locality')
-                      ? 'grey2.main'
-                      : '',
-                  },
-                }}
+                // sx={{
+                //   input: {
+                //     backgroundColor: isSameAddress
+                //       ? 'grey2.main'
+                //       : work_flow_status_id === 3 && getQueryRaised('Locality')
+                //       ? 'grey2.main'
+                //       : '',
+                //   },
+                // }}
                 fullWidth
                 defaultValue={
                   isSameAddress
@@ -1079,21 +1082,21 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                       ? getQueryRaised('Country')
                       : false
                   }
-                  sx={{
-                    input: {
-                      backgroundColor: isSameAddress
-                        ? 'grey2.main'
-                        : work_flow_status_id === 3 && getQueryRaised('Country')
-                        ? 'grey2.main'
-                        : '',
-                    },
-                  }}
+                  // sx={{
+                  //   input: {
+                  //     backgroundColor: isSameAddress
+                  //       ? 'grey2.main'
+                  //       : work_flow_status_id === 3 && getQueryRaised('Country')
+                  //       ? 'grey2.main'
+                  //       : '',
+                  //   },
+                  // }}
                   fullWidth
                   value={'India'}
                 />
               ) : (
                 <Select
-                  style={{ backgroundColor: '#F0F0F0' }}
+                  // style={{ backgroundColor: '#F0F0F0' }}
                   fullWidth
                   error={errors.Country?.message}
                   name="Country"
@@ -1126,11 +1129,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 State/Union Territory
-                {!isSameAddress && (
-                  <Typography component="span" color="error.main">
-                    *
-                  </Typography>
-                )}
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
               </Typography>
               {isSameAddress || (work_flow_status_id === 3 && getQueryRaised('State')) ? (
                 <TextField
@@ -1143,30 +1144,32 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                       ? getQueryRaised('State')
                       : false
                   }
-                  sx={{
-                    input: {
-                      backgroundColor: isSameAddress
-                        ? 'grey2.main'
-                        : work_flow_status_id === 3 && getQueryRaised('State')
-                        ? 'grey2.main'
-                        : '',
-                    },
-                  }}
+                  // sx={{
+                  //   input: {
+                  //     backgroundColor: isSameAddress
+                  //       ? 'grey2.main'
+                  //       : work_flow_status_id === 3 && getQueryRaised('State')
+                  //       ? 'grey2.main'
+                  //       : '',
+                  //   },
+                  // }}
                   fullWidth
+                  error={errors.State?.message}
                   value={getStateData(getValues()?.State)?.name}
                   {...register('State', {
-                    required: 'State is required',
+                    required: 'Please select state',
                   })}
                 />
               ) : (
                 <Select
-                  style={{
-                    backgroundColor: isSameAddress
-                      ? '#F0F0F0'
-                      : work_flow_status_id === 3 && getQueryRaised('State')
-                      ? '#F0F0F0'
-                      : '',
-                  }}
+                  placeholder={'Select state/union territory'}
+                  // style={{
+                  //   backgroundColor: isSameAddress
+                  //     ? '#F0F0F0'
+                  //     : work_flow_status_id === 3 && getQueryRaised('State')
+                  //     ? '#F0F0F0'
+                  //     : '',
+                  // }}
                   fullWidth
                   error={errors.State?.message}
                   name="State"
@@ -1186,11 +1189,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                   }
                   {...register(
                     'State',
-                    !isSameAddress
-                      ? getValues()?.District?.length <= 0 && {
-                          required: 'State/Union territory is required',
-                        }
-                      : ''
+                    !isSameAddress && {
+                      required: 'State/Union territory is required',
+                    }
                   )}
                   options={createSelectFieldData(statesList)}
                   MenuProps={{
@@ -1207,6 +1208,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 District
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
               </Typography>
               {isSameAddress || (work_flow_status_id === 3 && getQueryRaised('District')) ? (
                 <TextField
@@ -1219,30 +1223,33 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                       ? getQueryRaised('District')
                       : false
                   }
-                  sx={{
-                    input: {
-                      backgroundColor: isSameAddress
-                        ? 'grey2.main'
-                        : work_flow_status_id === 3 && getQueryRaised('District')
-                        ? 'grey2.main'
-                        : '',
-                    },
-                  }}
+                  // sx={{
+                  //   input: {
+                  //     backgroundColor: isSameAddress
+                  //       ? 'grey2.main'
+                  //       : work_flow_status_id === 3 && getQueryRaised('District')
+                  //       ? 'grey2.main'
+                  //       : '',
+                  //   },
+                  // }}
+                  required={true}
+                  error={errors.District?.message}
                   fullWidth
                   value={getDistrictData(getValues()?.District)?.name}
                   {...register('District', {
-                    // required: 'District is required',
+                    required: 'Please select district',
                   })}
                 />
               ) : (
                 <Select
-                  style={{
-                    backgroundColor: isSameAddress
-                      ? '#F0F0F0'
-                      : work_flow_status_id === 3 && getQueryRaised('District')
-                      ? '#F0F0F0'
-                      : '',
-                  }}
+                  placeholder={'Select district'}
+                  // style={{
+                  //   backgroundColor: isSameAddress
+                  //     ? '#F0F0F0'
+                  //     : work_flow_status_id === 3 && getQueryRaised('District')
+                  //     ? '#F0F0F0'
+                  //     : '',
+                  // }}
                   fullWidth
                   error={errors.District?.message}
                   name="District"
@@ -1263,7 +1270,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                       ? getQueryRaised('District')
                       : false
                   }
-                  {...register('District')}
+                  required={true}
+                  {...register('District', {
+                    required: 'Please select district',
+                  })}
                   options={createSelectFieldData(districtsList, 'iso_code')}
                   MenuProps={{
                     style: {
@@ -1289,27 +1299,27 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                       ? getQueryRaised('SubDistrict')
                       : false
                   }
-                  sx={{
-                    input: {
-                      backgroundColor: isSameAddress
-                        ? 'grey2.main'
-                        : work_flow_status_id === 3 && getQueryRaised('SubDistrict')
-                        ? 'grey2.main'
-                        : '',
-                    },
-                  }}
+                  // sx={{
+                  //   input: {
+                  //     backgroundColor: isSameAddress
+                  //       ? 'grey2.main'
+                  //       : work_flow_status_id === 3 && getQueryRaised('SubDistrict')
+                  //       ? 'grey2.main'
+                  //       : '',
+                  //   },
+                  // }}
                   fullWidth
                   value={getSubDistrictData(getValues()?.SubDistrict)?.name}
                 />
               ) : (
                 <Select
-                  style={{
-                    backgroundColor: isSameAddress
-                      ? '#F0F0F0'
-                      : work_flow_status_id === 3 && getQueryRaised('Sub District')
-                      ? '#F0F0F0'
-                      : '',
-                  }}
+                  // style={{
+                  //   backgroundColor: isSameAddress
+                  //     ? '#F0F0F0'
+                  //     : work_flow_status_id === 3 && getQueryRaised('Sub District')
+                  //     ? '#F0F0F0'
+                  //     : '',
+                  // }}
                   fullWidth
                   error={errors.SubDistrict?.message}
                   name="SubDistrict"
@@ -1358,27 +1368,28 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                       ? getQueryRaised('City/Town/Village')
                       : false
                   }
-                  sx={{
-                    input: {
-                      backgroundColor: isSameAddress
-                        ? 'grey2.main'
-                        : work_flow_status_id === 3 && getQueryRaised('City/Town/Village')
-                        ? 'grey2.main'
-                        : '',
-                    },
-                  }}
+                  // sx={{
+                  //   input: {
+                  //     backgroundColor: isSameAddress
+                  //       ? 'grey2.main'
+                  //       : work_flow_status_id === 3 && getQueryRaised('City/Town/Village')
+                  //       ? 'grey2.main'
+                  //       : '',
+                  //   },
+                  // }}
                   fullWidth
                   value={getVillageData(getValues()?.Area)?.name}
                 />
               ) : (
                 <Select
-                  style={{
-                    backgroundColor: isSameAddress
-                      ? '#F0F0F0'
-                      : work_flow_status_id === 3 && getQueryRaised('City/Town/Village')
-                      ? '#F0F0F0'
-                      : '',
-                  }}
+                  placeholder={'Please city/town/village'}
+                  // style={{
+                  //   backgroundColor: isSameAddress
+                  //     ? '#F0F0F0'
+                  //     : work_flow_status_id === 3 && getQueryRaised('City/Town/Village')
+                  //     ? '#F0F0F0'
+                  //     : '',
+                  // }}
                   fullWidth
                   name="Area"
                   defaultValue={
@@ -1421,15 +1432,15 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 variant="outlined"
                 name={'PostalCode'}
                 placeholder="Pincode"
-                required={isSameAddress ? false : true}
+                required={!isSameAddress ? false : true}
                 fullWidth
-                style={{
-                  backgroundColor: isSameAddress
-                    ? '#F0F0F0'
-                    : work_flow_status_id === 3 && getQueryRaised('Pincode')
-                    ? '#F0F0F0'
-                    : '',
-                }}
+                // sx={{
+                //   backgroundColor: isSameAddress
+                //     ? 'grey1.main'
+                //     : work_flow_status_id === 3 && getQueryRaised('Pincode')
+                //     ? '#F0F0F0'
+                //     : '',
+                // }}
                 defaultValue={
                   isSameAddress ? personalDetails?.kyc_address?.pincode : getValues()?.PostalCode
                 }
@@ -1450,7 +1461,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                     },
                     minLength: {
                       value: 6,
-                      message: 'Should contains 6 digits',
+                      message: 'Please enter a valid 6 digit pincode',
                     },
                     maxLength: {
                       value: 6,
@@ -1458,7 +1469,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                     },
                   }
                 )}
-                error={errors.PostalCode?.message}
+                error={!isSameAddress ? errors.PostalCode?.message : ''}
               />
             </Grid>
           </Grid>
@@ -1486,7 +1497,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
           </Grid>
           <Grid item xs={12} md="auto" display="flex" ml="auto">
             <Button
-              onClick={handleSubmit(onHandleSave)}
+              onClick={handleSubmit(onHandleOptionSave)}
               variant="outlined"
               color="secondary"
               sx={{

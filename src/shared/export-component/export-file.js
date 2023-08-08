@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
-import { Grid, IconButton } from '@mui/material';
+import { Grid, IconButton, Tooltip } from '@mui/material';
 import Excel from 'exceljs';
 import { saveAs } from 'file-saver';
 import moment from 'moment';
@@ -126,7 +126,7 @@ const ExportFiles = ({ exportData, flag }) => {
           column.header = 'Date of Submission (DD-MM-YYYY HH:MM )';
         }
         if (column.header === 'Pendency') {
-          column.header = 'Pendency (In Days)';
+          column.header = 'Pendency (Days)';
         }
         column.width = column.header.length + 20;
       });
@@ -164,31 +164,45 @@ const ExportFiles = ({ exportData, flag }) => {
 
   return (
     <Grid item md={1} xs={12} data-testid="exportButton">
-      <IconButton
-        data-testid="export_Button"
-        aria-label="fontSize-options"
-        aria-controls="menu-appbar"
-        variant="contained"
-        aria-haspopup="true"
-        sx={{
-          width: 60,
-          height: 60,
-          color: 'blue',
-        }}
-        onClick={(e) => {
-          e.preventDefault();
-          onExportClick('xlsx');
-        }}
-        color="blue"
-      >
-        <FileDownloadOutlinedIcon
+      <Tooltip title={'Export'}>
+        <IconButton
+          disabled={
+            exportData?.length === 0 ||
+            exportData?.data?.dashboard_tolist?.length === 0 ||
+            exportData?.data?.health_professional_details?.length === 0 ||
+            exportData?.data?.college_details?.length === 0 ||
+            exportData?.health_professional_applications?.length === 0
+          }
+          data-testid="export_Button"
+          aria-label="fontSize-options"
+          aria-controls="menu-appbar"
+          variant="contained"
+          aria-haspopup="true"
           sx={{
-            width: 40,
-            height: 40,
-            color: 'blue',
+            width: 60,
+            height: 60,
           }}
-        />
-      </IconButton>
+          onClick={(e) => {
+            e.preventDefault();
+            onExportClick('xlsx');
+          }}
+        >
+          <FileDownloadOutlinedIcon
+            sx={{
+              width: 40,
+              height: 40,
+              color:
+                exportData?.length === 0 ||
+                exportData?.data?.dashboard_tolist?.length === 0 ||
+                exportData?.data?.health_professional_details?.length === 0 ||
+                exportData?.data?.college_details?.length === 0 ||
+                exportData?.health_professional_applications?.length === 0
+                  ? ''
+                  : 'blue',
+            }}
+          />
+        </IconButton>
+      </Tooltip>
     </Grid>
   );
 };

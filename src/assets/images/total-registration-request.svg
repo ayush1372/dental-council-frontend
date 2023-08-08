@@ -1,7 +1,11 @@
-<svg id="Group_70520" data-name="Group 70520" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-  <circle id="Ellipse_87" data-name="Ellipse 87" cx="24" cy="24" r="24" fill="#4870cc" opacity="0.8"/>
-  <g id="ico-arrow-down" transform="translate(12 12)">
-    <path id="Path_26485" data-name="Path 26485" d="M0,0H24V24H0Z" fill="none"/>
-    <path id="Path_26486" data-name="Path 26486" d="M20,12l-1.41-1.41L13,16.17V4H11V16.17L5.42,10.58,4,12l8,8Z" fill="#fff"/>
-  </g>
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_1_13)">
+<path opacity="0.8" d="M24 48C37.2548 48 48 37.2548 48 24C48 10.7452 37.2548 0 24 0C10.7452 0 0 10.7452 0 24C0 37.2548 10.7452 48 24 48Z" fill="#4870CC"/>
+<path d="M31 27.4545V31H17L23.8727 24.1273L17 17H31V20.5455" stroke="white" stroke-width="2"/>
+</g>
+<defs>
+<clipPath id="clip0_1_13">
+<rect width="48" height="48" fill="white"/>
+</clipPath>
+</defs>
 </svg>

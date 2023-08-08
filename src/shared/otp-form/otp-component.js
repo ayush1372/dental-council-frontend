@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core';
 import { Box, Typography, useTheme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 import OtpInput from 'react-otp-input';
-import { ToastContainer } from 'react-toastify';
 
 import { SessionTimer } from '../../constants/session-timer';
 import { Button } from '../../ui/core';
@@ -63,8 +62,8 @@ export const OtpForm = ({
   const theme = useTheme();
   const useStyles = makeStyles(() => ({
     otpInputStyle: {
-      width: '56px !important',
-      height: '56px',
+      width: '48px !important',
+      height: '48px',
       marginRight: '12px',
       fontSize: '18px',
       borderRadius: 5,
@@ -72,8 +71,9 @@ export const OtpForm = ({
       borderColor: theme.palette.otpTextColor.main,
       color: theme.palette.textPrimary.main,
       [theme.breakpoints.down('sm')]: {
-        width: '40px !important',
-        height: '40px',
+        width: '38px !important',
+        height: '38px',
+        marginRight: '8px',
       },
     },
     focusStyle: {
@@ -84,7 +84,6 @@ export const OtpForm = ({
 
   const OtpBox = (
     <Box pt={2}>
-      <ToastContainer></ToastContainer>
       <Box>
         <Box>
           <OtpInput
@@ -109,7 +108,7 @@ export const OtpForm = ({
             <Typography className={styles.invalid}>
               <SvgImageComponent icon="error" height="14px" width="16px" />
               <Typography variant="body2" p="1px 0 0 4px">
-                {'Please Enter a Valid OTP'}
+                {'Please enter a valid OTP'}
               </Typography>
             </Typography>
           )
@@ -141,6 +140,8 @@ export const OtpForm = ({
               textDecoration: 'underline',
               cursor: 'pointer',
               paddingLeft: '10px',
+              paddingTop: '0',
+              paddingBottom: '0',
               '&:hover': {
                 textDecoration: `underline ${theme.palette.secondary.main}`,
                 background: 'none',

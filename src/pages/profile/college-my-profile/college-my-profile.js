@@ -23,6 +23,7 @@ const CollegeMyProfile = () => {
   const { loginData } = useSelector((state) => state.loginReducer);
 
   let userType = loginData?.data?.user_sub_type;
+
   if (userType === 1) {
     userType = 'College Admin';
   }
@@ -31,6 +32,12 @@ const CollegeMyProfile = () => {
   }
   if (userType === 3) {
     userType = 'College Dean';
+  }
+  if (userType === 4) {
+    userType = 'College Principal';
+  }
+  if (userType === 5) {
+    userType = 'College Others';
   }
 
   useEffect(() => {
@@ -43,11 +50,19 @@ const CollegeMyProfile = () => {
         userType = 'College Registrar';
       } else if (userType === 3) {
         userType = 'College Dean';
+      } else if (userType === 4) {
+        userType = 'College Principal';
+      } else if (userType === 5) {
+        userType = 'College Others';
       }
 
       if (userType === 'College Dean') {
         dispatch(collegeProfileData(loginData?.data?.college_id, loginData?.data?.profile_id));
       } else if (userType === 'College Registrar') {
+        dispatch(collegeProfileData(loginData?.data?.college_id, loginData?.data?.profile_id));
+      } else if (userType === 'College Principal') {
+        dispatch(collegeProfileData(loginData?.data?.college_id, loginData?.data?.profile_id));
+      } else if (userType === 'College Others') {
         dispatch(collegeProfileData(loginData?.data?.college_id, loginData?.data?.profile_id));
       } else if (userType === 'College Admin') {
         dispatch(getCollegeData(loginData?.data?.college_id));
@@ -57,7 +72,7 @@ const CollegeMyProfile = () => {
   }, [dispatch, loginData?.data?.profile_id, loginData?.data?.user_group_id]);
 
   return (
-    <Grid boxShadow={2} mt={2} p={3}>
+    <Grid boxShadow={2} p={3}>
       {showPage === 'Profile' && (
         <Grid>
           <Grid container spacing={2}>
@@ -68,6 +83,10 @@ const CollegeMyProfile = () => {
                   ? '(Admin)'
                   : userType === 'College Registrar'
                   ? '(Registrar)'
+                  : userType === 'College Principal'
+                  ? '(Principal)'
+                  : userType === 'College Others'
+                  ? '(Others)'
                   : '(Dean)'}
               </Typography>
             </Grid>
@@ -92,7 +111,7 @@ const CollegeMyProfile = () => {
             {loginData?.data?.user_sub_type === 1 || userData?.name ? (
               <Grid item xs={12} md={4} sm={6}>
                 <Typography variant="body3" color="grey.label">
-                  Name
+                  College Name
                 </Typography>
 
                 <Typography variant="subtitle2" color="inputTextColor.main">
@@ -133,7 +152,7 @@ const CollegeMyProfile = () => {
             {loginData?.data?.user_sub_type === 1 || userData?.mobile_number ? (
               <Grid item xs={12} md={4} sm={6}>
                 <Typography variant="body3" color="grey.label">
-                  Mobile
+                  Mobile Number
                 </Typography>
 
                 <Typography variant="subtitle2" color="inputTextColor.main">
@@ -147,7 +166,7 @@ const CollegeMyProfile = () => {
             {loginData?.data?.user_sub_type === 1 ? (
               <Grid item xs={12} md={4} sm={6}>
                 <Typography variant="body3" color="grey.label">
-                  Council Name
+                  Council
                 </Typography>
 
                 <Typography variant="subtitle2" color="inputTextColor.main">
@@ -161,7 +180,7 @@ const CollegeMyProfile = () => {
             {loginData?.data?.user_sub_type === 1 ? (
               <Grid item xs={12} md={4} sm={6}>
                 <Typography variant="body3" color="grey.label">
-                  Select University Name
+                  University
                 </Typography>
 
                 <Typography variant="subtitle2" color="inputTextColor.main">
@@ -179,7 +198,7 @@ const CollegeMyProfile = () => {
                 </Typography>
 
                 <Typography variant="subtitle2" color="inputTextColor.main">
-                  {getCollegeDetail?.data.website}
+                  {getCollegeDetail?.data?.website ? getCollegeDetail?.data?.website : '-'}
                 </Typography>
               </Grid>
             ) : (
@@ -207,7 +226,9 @@ const CollegeMyProfile = () => {
                 </Typography>
 
                 <Typography variant="subtitle2" color="inputTextColor.main">
-                  {getCollegeDetail?.data.address_line2}
+                  {getCollegeDetail?.data.address_line2
+                    ? getCollegeDetail?.data.address_line2
+                    : '-'}
                 </Typography>
               </Grid>
             ) : (
@@ -217,7 +238,7 @@ const CollegeMyProfile = () => {
             {loginData?.data?.user_sub_type === 1 ? (
               <Grid item xs={12} md={4} sm={6}>
                 <Typography variant="body3" color="grey.label">
-                  State Name
+                  State
                 </Typography>
                 <Typography variant="subtitle2" color="inputTextColor.main">
                   {getCollegeDetail?.data?.state_to?.name}
@@ -256,7 +277,7 @@ const CollegeMyProfile = () => {
             {loginData?.data?.user_sub_type === 1 ? (
               <Grid item xs={12} md={4} sm={6}>
                 <Typography variant="body3" color="grey.label">
-                  Postal Code
+                  Pincode
                 </Typography>
                 <Typography variant="subtitle2" color="inputTextColor.main">
                   {getCollegeDetail?.data.pin_code}
@@ -268,7 +289,7 @@ const CollegeMyProfile = () => {
 
             <Grid item xs={12} md={4} sm={6}>
               <Typography variant="body3" color="grey.label">
-                Email ID
+                Email
               </Typography>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 {userData?.email_id
@@ -318,7 +339,7 @@ const CollegeMyProfile = () => {
             {userData?.pin_code ? (
               <Grid item xs={12} md={4} sm={6}>
                 <Typography variant="body3" color="grey.label">
-                  College PIN Code
+                  College Pincode
                 </Typography>
                 <Typography variant="subtitle2" color="primary.main">
                   {userData.pin_code}
@@ -357,9 +378,21 @@ const CollegeMyProfile = () => {
       {showPage === 'Edit' && userType === 'College Admin' && (
         <CollegeEditProfile setShowpage={setShowpage} />
       )}
+
       {showPage === 'Edit' && userType === 'College Dean' && (
-        <CollegeDean showPage={'edit'} updateShowPage={setShowpage} />
+        <CollegeDean showPage={'edit'} updateShowPage={setShowpage} userType={'College Dean'} />
       )}
+      {showPage === 'Edit' && userType === 'College Principal' && (
+        <CollegeDean
+          showPage={'edit'}
+          updateShowPage={setShowpage}
+          userType={'College Principal'}
+        />
+      )}
+      {showPage === 'Edit' && userType === 'College Others' && (
+        <CollegeDean showPage={'edit'} updateShowPage={setShowpage} userType={'College Others'} />
+      )}
+
       {showPage === 'Edit' && userType === 'College Registrar' && (
         <CollegeRegistrar showPage={'edit'} updateShowPage={setShowpage} />
       )}

@@ -5,10 +5,11 @@ import ErrorIcon from '@mui/icons-material/Error';
 import { Box, Button, Dialog, Grid, TablePagination, Typography } from '@mui/material';
 import { useDispatch } from 'react-redux';
 
+import { capitalizeFirstLetter } from '../../../../helpers/functions/common-functions';
 import SuccessModalPopup from '../../../../shared/common-modals/success-modal-popup';
 import GenericTable from '../../../../shared/generic-component/generic-table';
 import { deleteWorkProfileDetailsData } from '../../../../store/actions/doctor-user-profile-actions';
-import successToast from '../../../../ui/core/toaster';
+// import successToast from '../../../../ui/core/toaster';
 
 function createData(
   name,
@@ -34,7 +35,7 @@ function createData(
   };
 }
 
-function FacilityDetailsTable({ declaredFacilityData, trackStatusData, currentWorkDetails }) {
+function FacilityDetailsTable({ declaredFacilityData }) {
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState({});
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -85,7 +86,12 @@ function FacilityDetailsTable({ declaredFacilityData, trackStatusData, currentWo
     setOrderBy(property);
   };
 
-  const newRowsData = defaultFacilityData?.current_work_details?.map((application) => {
+  //Helper method to remove the empty object from the response.
+  const updatedFacilityData = defaultFacilityData?.current_work_details?.filter(
+    (value) => JSON.stringify(value) !== '{}'
+  );
+
+  const newRowsData = updatedFacilityData?.map((application) => {
     return createData(
       {
         type: 'name',
@@ -97,11 +103,11 @@ function FacilityDetailsTable({ declaredFacilityData, trackStatusData, currentWo
       },
       {
         type: 'state',
-        value: application?.address?.state?.name || '-',
+        value: capitalizeFirstLetter(application?.address?.state?.name) || '-',
       },
       {
         type: 'district',
-        value: application?.address?.district?.name || '-',
+        value: capitalizeFirstLetter(application?.address?.district?.name) || '-',
       },
       {
         type: 'type',
@@ -122,7 +128,7 @@ function FacilityDetailsTable({ declaredFacilityData, trackStatusData, currentWo
 
   const facilityDeLinkHandler = (facilityIndex) => {
     let facilityID = {
-      facility_id: [currentWorkDetails?.[facilityIndex]?.facility_id],
+      facility_id: [updatedFacilityData?.[facilityIndex]?.facility_id],
     };
     dispatch(deleteWorkProfileDetailsData(facilityID))
       .then((response) => {
@@ -133,22 +139,12 @@ function FacilityDetailsTable({ declaredFacilityData, trackStatusData, currentWo
       .then(() => {
         setConfirmationModal(false);
         setSuccessDeLinkModalPopup(true);
-      })
-      .catch((error) => {
-        successToast(
-          error?.data?.response?.data?.error,
-          'RegistrationError',
-          'error',
-          'top-center'
-        );
       });
   };
 
   return (
     <>
       <Grid sx={{ mx: 2 }} p={'0px'}>
-        {/* <TableSearch trackApplication /> */}
-
         <GenericTable
           order={order}
           orderBy={orderBy}
@@ -157,23 +153,24 @@ function FacilityDetailsTable({ declaredFacilityData, trackStatusData, currentWo
           data={newRowsData}
           rowsPerPage={rowsPerPage}
           page={page}
+          noRecordFound={'Place of work not declared'}
         />
-
-        <Box>
-          <TablePagination
-            rowsPerPageOptions={[]}
-            component="div"
-            count={trackStatusData?.total_no_of_records || 0}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            //   onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-            sx={{
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          />
-        </Box>
+        {newRowsData?.length !== 0 && (
+          <Box>
+            <TablePagination
+              rowsPerPageOptions={[]}
+              component="div"
+              count={newRowsData?.length || 0}
+              rowsPerPage={25}
+              page={page}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            />
+          </Box>
+        )}
       </Grid>
       <Dialog
         open={confirmationModal}
@@ -200,10 +197,22 @@ function FacilityDetailsTable({ declaredFacilityData, trackStatusData, currentWo
           </Box>
           <Box mt={2}>
             <Typography color="textPrimary.main">
-              Are you sure you want to delink this facilty?
+              Are you sure you want to delete this facilty?
             </Typography>
           </Box>
           <Box display={'flex'} justifyContent={'flex-end'} mt={1}>
+            <Button
+              onClick={() => {
+                facilityDeLinkHandler(selectedRowIndex);
+              }}
+              color="secondary"
+              variant="contained"
+              sx={{
+                margin: '0 4px',
+              }}
+            >
+              Yes
+            </Button>
             <Button
               onClick={() => {
                 setConfirmationModal(false);
@@ -217,18 +226,6 @@ function FacilityDetailsTable({ declaredFacilityData, trackStatusData, currentWo
             >
               No
             </Button>
-            <Button
-              onClick={() => {
-                facilityDeLinkHandler(selectedRowIndex);
-              }}
-              color="secondary"
-              variant="contained"
-              sx={{
-                margin: '0 4px',
-              }}
-            >
-              Yes
-            </Button>
           </Box>
         </Box>
       </Dialog>
@@ -237,7 +234,7 @@ function FacilityDetailsTable({ declaredFacilityData, trackStatusData, currentWo
           open={successDeLinkModalPopup}
           workDetails={true}
           setOpen={() => setSuccessDeLinkModalPopup(false)}
-          text={'Your Work-Details has been De-Linked successfully.'}
+          text={'Work-details has been de-linked'}
         />
       )}
     </>

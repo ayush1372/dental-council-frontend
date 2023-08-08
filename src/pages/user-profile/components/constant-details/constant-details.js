@@ -1,7 +1,9 @@
-// import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useEffect, useState } from 'react';
 
-import { Box, Dialog, Grid, Link, Typography, useTheme } from '@mui/material';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import SendIcon from '@mui/icons-material/Send';
+import { Box, Dialog, Grid, Link, Tooltip, Typography, useTheme } from '@mui/material';
 import InputBase from '@mui/material/InputBase';
 import Paper from '@mui/material/Paper';
 import { useForm } from 'react-hook-form';
@@ -13,6 +15,7 @@ import {
   getPersonalDetailsData,
   verifyEmail,
 } from '../../../../store/actions/doctor-user-profile-actions';
+import { getEnteredEmailValue } from '../../../../store/reducers/common-reducers';
 import successToast from '../../../../ui/core/toaster';
 import ConfirmOTP from '../../../login-page/components/confirm-otp';
 const ConstantDetails = ({ validDetails, setValidDetails }) => {
@@ -39,6 +42,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
   const mobileNumber = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.personal_details?.mobile
   );
+  const { loginData } = useSelector((state) => state?.loginReducer);
   const [userData, setData] = useState({ contact: '', type: '', page: '' });
   const dispatch = useDispatch();
   const theme = useTheme();
@@ -89,54 +93,53 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
 
   const onSubmit = (type) => {
     const { email, mobileNo } = getValues();
-    if (validDetails.mobileNo === false && validDetails.email === false && email && mobileNo) {
+    dispatch(getEnteredEmailValue(getValues()));
+    if (type === 'sms' && mobileNo && validDetails.mobileNo === false) {
       let otpValue = {};
       otpValue = {
-        contact: type === 'sms' ? getValues().mobileNo : type === 'email' && getValues().email,
-        type: type === 'sms' ? 'sms' : type === 'email' && 'email',
+        contact: getValues().mobileNo,
+        type: 'sms',
         page: 'doctorConstantDetailsPage',
         handleClose: handleClose,
         reSendOTP: onSubmit,
         setMobileNumberChange: setMobileNumberChange,
+      };
+      setData(otpValue);
+      let sendOTPData = {
+        contact: type === 'sms' ? getValues().mobileNo : '',
+        type: type === 'sms' ? 'sms' : '',
+        user_type: loginData?.data?.user_type,
+        is_registration: true,
+      };
+      dispatch(sendNotificationOtp(sendOTPData)).then((response) => {
+        response?.data?.message === 'Success'
+          ? setShowOTPPOPUp(true)
+          : successToast(response?.data?.message, 'auth-error', 'error', 'top-center');
+      });
+    }
+
+    if (type === 'email' && email && validDetails.email === false) {
+      let otpValue = {};
+      otpValue = {
+        contact: getValues().email,
+        type: 'email',
+        page: 'doctorConstantDetailsPage',
+        handleClose: handleClose,
+        reSendOTP: onSubmit,
         setEmailChange: setEmailChange,
       };
       setData(otpValue);
-      if (type === 'email') {
-        let sendOTPData = {
-          email: type === 'email' ? type === 'email' && getValues().email : '',
-        };
-        try {
-          dispatch(verifyEmail(sendOTPData, personalDetails?.hp_profile_id)).then((response) => {
-            if (response?.data?.message === 'Success') {
-              setShowOTPPOPUp(true);
-              setVerifyEmailID(true);
-            } else {
-              successToast(response?.data?.message, 'auth-error', 'error', 'top-center');
-            }
-          });
-        } catch (allFailMsg) {
-          successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      let sendOTPData = {
+        email: type === 'email' ? type === 'email' && getValues().email : '',
+      };
+      dispatch(verifyEmail(sendOTPData, personalDetails?.hp_profile_id)).then((response) => {
+        if (response?.data?.message === 'Success') {
+          setShowOTPPOPUp(true);
+          setVerifyEmailID(true);
+        } else {
+          successToast(response?.data?.message, 'auth-error', 'error', 'top-center');
         }
-      } else {
-        let sendOTPData = {
-          contact: type === 'sms' ? getValues().mobileNo : '',
-          type: type === 'sms' ? 'sms' : '',
-        };
-        dispatch(sendNotificationOtp(sendOTPData))
-          .then((response) => {
-            response?.data?.message === 'Success'
-              ? setShowOTPPOPUp(true)
-              : successToast(response?.data?.message, 'auth-error', 'error', 'top-center');
-          })
-          .catch((allFailMsg) => {
-            successToast(
-              allFailMsg?.data?.response?.data?.message,
-              'auth-error',
-              'error',
-              'top-center'
-            );
-          });
-      }
+      });
     }
   };
 
@@ -144,22 +147,22 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
     let clearTimer = false;
     if (!verifyEmailID) return;
     const timer = setInterval(() => {
-      try {
-        if (clearTimer) {
-          clearInterval(timer);
-          setShowOTPPOPUp(false);
-          setVerifyEmailID(false);
-          setEmailChange(false);
-          return;
-        }
-        dispatch(getPersonalDetailsData(personalDetails?.hp_profile_id)).then((response) => {
-          if (response?.data?.email_verified) {
-            clearTimer = true;
-          }
-        });
-      } catch (allFailMsg) {
-        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      // try {
+      if (clearTimer) {
+        clearInterval(timer);
+        setShowOTPPOPUp(false);
+        setVerifyEmailID(false);
+        // setEmailChange(false); for future changes.
+        return;
       }
+      dispatch(getPersonalDetailsData(personalDetails?.hp_profile_id)).then((response) => {
+        if (response?.data?.email_verified) {
+          clearTimer = true;
+        }
+      });
+      // } catch (allFailMsg) {
+      //   successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+      // }
     }, 6000);
     return () => {
       clearInterval(timer);
@@ -168,7 +171,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
   }, [verifyEmailID]);
 
   return (
-    <Box bgcolor="white.main" py={3} mb={2} boxShadow="1">
+    <Box bgcolor="white.main" py={2} mb={2} boxShadow="1">
       <Grid container>
         <Grid
           borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
@@ -176,36 +179,46 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
           xs={12}
           sm={6}
           lg={3}
-          xl={2}
+          xl={3}
           px={2}
           mb={{ xs: 1, lg: 0 }}
         >
           <Typography variant="body3" color="grey.label">
-            IMR/Registration Number
+            IMR/Registration Numbers
           </Typography>
           <Typography variant="subtitle2" color="textPrimary.main">
             {registration_number ? registration_number : ''}
           </Typography>
         </Grid>
-        {nmrIdData && (
-          <Grid
-            borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
-            item
-            xs={12}
-            sm={6}
-            lg={3}
-            xl={2}
-            px={2}
-            mb={{ xs: 1, lg: 0 }}
-          >
-            <Typography variant="body3" color="grey.label">
+
+        <Grid
+          borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
+          item
+          xs={12}
+          sm={6}
+          lg={2}
+          xl={2}
+          px={2}
+          mb={{ xs: 1, lg: 0 }}
+        >
+          <Box display={'flex'} alignItems={'center'}>
+            <Typography variant="body3" color="grey.label" width={'auto'}>
               NMR ID
             </Typography>
-            <Typography variant="subtitle2" color="textPrimary.main">
-              {nmrIdData ? nmrIdData : ''}
-            </Typography>{' '}
-          </Grid>
-        )}
+            {!nmrIdData ? (
+              <Tooltip
+                title={'NMR ID will be displayed here once your application is approved by NMC'}
+              >
+                <InfoOutlinedIcon color="primary" sx={{ width: '14px', marginLeft: '8px' }} />
+              </Tooltip>
+            ) : (
+              ''
+            )}
+          </Box>
+          <Typography variant="subtitle2" color="textPrimary.main">
+            {nmrIdData ? nmrIdData : '-'}
+          </Typography>{' '}
+        </Grid>
 
         {/* <Grid
           borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
@@ -258,14 +271,15 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
             <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
           </Typography>
         </Grid> */}
+
         <Grid
           borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
           item
           xs={12}
           sm={6}
-          lg={4}
-          pl={2}
-          pr={2}
+          lg={3}
+          xl={3}
+          px={2}
           mb={{ xs: 1, lg: 0 }}
         >
           <Typography variant="body3" color="grey.label">
@@ -282,10 +296,10 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                     placeholder="Enter your mobile number"
                     defaultValue={getValues().mobileNo}
                     {...register('mobileNo', {
-                      required: 'Mobile number is required',
+                      required: 'Please enter the mobile number',
                       pattern: {
                         value: /^\d{10}$/i,
-                        message: 'Please enter a valid 10-digit mobile number',
+                        message: 'Please enter a valid 10 digit mobile number',
                       },
                     })}
                     onKeyDown={(e) => ['e', 'E', '+', '-'].includes(e.key) && e.preventDefault()}
@@ -299,14 +313,14 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                       handleSubmit(onSubmit('sms'));
                     }}
                   >
-                    Get Verified
+                    Verify
                   </Link>
                 </Paper>
 
                 {validDetails?.mobileNo && (
-                  <Typography color="error" mt={1}>
+                  <Typography color="error" mt={1} variant="body2">
                     {' '}
-                    Please enter a valid 10-digit mobile number
+                    Please enter a valid 10 digit mobile number
                   </Typography>
                 )}
               </Box>
@@ -315,26 +329,38 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                 <Typography variant="subtitle2" color="textPrimary.main" width="auto" mr={0.5}>
                   {mobileNumber && mobileNumber}
                 </Typography>
-                <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
-                <Typography
-                  component="span"
-                  variant="body2"
-                  sx={{ cursor: 'pointer' }}
-                  color="primary.main"
-                  ml={0.5}
-                  onClick={() => {
-                    setMobileNumberChange(true);
-                  }}
-                >
-                  Change
-                </Typography>
+                <Box display={'flex'}>
+                  <img width="16px" height="16px" src={IconVerified} alt="verified icon" />
+                  {/* <Typography variant="body2" color="primary.main" ml={0.5}>
+                    <span
+                      style={{ cursor: 'pointer' }}
+                      onClick={() => {
+                        setMobileNumberChange(true);
+                      }}
+                    >
+                      Change
+                    </span>
+                  </Typography> */}
+                  <EditOutlinedIcon
+                    color={'primary'}
+                    fontSize={'inherit'}
+                    sx={{ ml: 0.5, cursor: 'pointer' }}
+                    onClick={() => {
+                      setMobileNumberChange(true);
+                    }}
+                  />
+                </Box>
               </>
             )}
           </Box>
         </Grid>
-        <Grid item xs={12} sm={6} lg={4} mb={{ xs: 1, lg: 0 }} pl={2}>
+
+        <Grid item xs={12} sm={6} lg={2} xl={4} px={2} mb={{ xs: 1, lg: 0 }}>
           <Typography component="div" variant="body3" color="grey.label">
             Email
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
           </Typography>
 
           <Box display="flex" alignItems="center">
@@ -342,16 +368,17 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
               <Box display={'flex'} flexDirection="column">
                 <Paper display={'flex'} alignItems="center" sx={{ p: '2px 4px' }}>
                   <InputBase
+                    required={true}
                     sx={{ ml: 1, flex: 1 }}
-                    placeholder="Enter your email address"
+                    placeholder="Email"
                     name="email"
                     defaultValue={getValues().email}
                     {...register('email', {
-                      required: 'Email id is required',
+                      required: 'Email is required',
                       pattern: {
                         value:
                           /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-                        message: 'Enter Valid Email Address',
+                        message: 'Please enter a valid email',
                       },
                     })}
                     error={errors.email?.message}
@@ -360,19 +387,18 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
 
                   <Link
                     color="primary"
-                    cursor="pointer"
                     sx={{ p: '10px', cursor: 'pointer' }}
                     onClick={() => {
                       handleSubmit(onSubmit('email'));
                     }}
                   >
-                    Get Verified
+                    Verify
                   </Link>
                 </Paper>
                 {validDetails?.email && (
-                  <Typography color="error" mt={1}>
+                  <Typography color="error" mt={1} variant="body2">
                     {''}
-                    Please enter a valid Email ID
+                    Please enter a valid email
                   </Typography>
                 )}
               </Box>
@@ -381,29 +407,50 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                 <Typography variant="subtitle2" color="textPrimary.main" width="auto" mr={0.5}>
                   {emailId ? emailId : ''}
                 </Typography>
-                {emailIdVerify ? (
-                  <img width="13px" height="13px" src={IconVerified} alt="verified icon" />
-                ) : (
-                  ''
-                )}
-                <Typography
-                  sx={{ cursor: 'pointer' }}
-                  component="span"
-                  variant="body2"
-                  color="primary.main"
-                  ml={0.5}
-                  onClick={() => {
-                    emailIdVerify ? setEmailChange(true) : onSubmit('email');
-                  }}
-                >
-                  {emailIdVerify ? 'Change' : 'Get Verified'}
-                </Typography>
+                <Box display={'flex'}>
+                  {emailIdVerify ? (
+                    <img width="16px" height="16px" src={IconVerified} alt="verified icon" />
+                  ) : (
+                    ' '
+                  )}
+                  <Box display={'flex'}>
+                    <Tooltip title="Edit email">
+                      <EditOutlinedIcon
+                        color={'primary'}
+                        fontSize={'inherit'}
+                        sx={{ mr: 0.5, cursor: 'pointer' }}
+                        onClick={() => {
+                          setEmailChange(true);
+                        }}
+                      />
+                    </Tooltip>
+                    {!emailIdVerify ? (
+                      <Tooltip title="Verify email">
+                        <SendIcon
+                          color={'primary'}
+                          fontSize={'inherit'}
+                          sx={{ mr: 0.5, cursor: 'pointer' }}
+                          onClick={() => {
+                            handleSubmit(onSubmit('email'));
+                          }}
+                        />
+                      </Tooltip>
+                    ) : (
+                      ''
+                    )}
+                  </Box>
+                </Box>
               </>
             )}
           </Box>
         </Grid>
       </Grid>
-      <Dialog open={showOTPPOPUp} maxWidth={'600px'}>
+      <Dialog
+        maxWidth="sm"
+        scroll="body"
+        open={showOTPPOPUp}
+        PaperProps={{ sx: { borderRadius: '10px' } }}
+      >
         <ConfirmOTP otpData={userData} />
       </Dialog>
     </Box>

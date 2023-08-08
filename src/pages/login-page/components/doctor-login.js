@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import MobileIcon from '../../../assets/images/mobile-icon.svg';
 import ProfileIcon from '../../../assets/images/profile-icon.svg';
 import { verboseLog } from '../../../config/debug';
+import { ErrorMessages } from '../../../constants/error-messages';
 import { encryptData, usersType } from '../../../helpers/functions/common-functions';
 import CaptchaComponent from '../../../shared/captcha-component/captcha-component';
 import OtpForm from '../../../shared/otp-form/otp-component';
@@ -62,6 +63,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
   const sendNotificationOTPHandler = (enableOTP, OTPType) => {
     OTPType !== undefined && setOtpFormEnable(enableOTP);
     let OTPTypeID;
+    const userTypeId = usersType(loginName);
     switch (OTPType) {
       case 'NMR':
         OTPTypeID = 'nmr_id';
@@ -76,6 +78,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
     let sendOTPData = {
       contact: selectedLoginOption === 'nmrId' ? getValues().nmrID : getValues().mobileNo,
       type: OTPTypeID,
+      user_type: userTypeId,
     };
     otpData({
       ...otpData,
@@ -91,13 +94,13 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
 
         if (response) {
           setTransaction_id(response?.data?.transaction_id);
-          setMaskedMobileNumber(response?.data?.sent_on.replace(/^.{6}/g, 'XXXXXX'));
+          setMaskedMobileNumber(response?.data?.sent_on.replace(/^.{6}/g, '******'));
           setOtpSend(true);
         }
       })
-      .catch((error) => {
+      .catch(() => {
         setOtpFormEnable(false);
-        successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
+        // successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
       });
   };
   const { otpform, otpValue, handleClear } = OtpForm({
@@ -108,7 +111,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
   const handleResponse = (response) => {
     setOtpFormEnable(true);
     setTransaction_id(response?.data?.transaction_id);
-    setMaskedMobileNumber(response?.data?.sent_on.replace(/^.{6}/g, 'XXXXXX'));
+    setMaskedMobileNumber(response?.data?.sent_on.replace(/^.{6}/g, '******'));
     setOtpSend(true);
   };
   const handleLogin = () => {
@@ -135,58 +138,56 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
           transaction_id: generateCaptcha?.transaction_id,
           result: parseInt(captchaAnswer),
         })
-      )
-        .then((response) => {
-          if (response?.data?.validity) {
-            const usertypeId = usersType(loginName);
+      ).then((response) => {
+        if (response?.data?.validity) {
+          const usertypeId = usersType(loginName);
 
-            const requestObj = {
-              username:
-                selectedLoginOption === 'nmrId' ? getValues()?.nmrID : getValues()?.mobileNo,
-              password: encryptData(otpValue, process.env.REACT_APP_PASS_SITE_KEY),
-              user_type: usertypeId,
-              login_type: loginTypeID,
-              captcha_trans_id: generateCaptcha?.transaction_id,
-              otp_trans_id: transaction_id,
-            };
-            dispatch(loginAction(requestObj))
-              .then(() => {
-                dispatch(login());
-                dispatch(userLoggedInType(loginName));
-                dispatch(getRegistrationCouncilList());
-                navigate(`/profile`);
-              })
-              .catch((error) => {
-                dispatch(generateCaptchaImage()).catch((error) => {
-                  successToast(
-                    'ERROR: ' + error?.data?.message,
-                    'auth-error',
-                    'error',
-                    'top-center'
-                  );
-                });
-                successToast(
-                  'ERROR: ' + error?.data?.response?.data?.message,
-                  'auth-error',
-                  'error',
-                  'top-center'
-                );
-              });
-          } else {
-            dispatch(generateCaptchaImage()).catch((error) => {
-              successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+          const requestObj = {
+            username: selectedLoginOption === 'nmrId' ? getValues()?.nmrID : getValues()?.mobileNo,
+            password: encryptData(otpValue, process.env.REACT_APP_PASS_SITE_KEY),
+            user_type: usertypeId,
+            login_type: loginTypeID,
+            captcha_trans_id: generateCaptcha?.transaction_id,
+            otp_trans_id: transaction_id,
+          };
+          dispatch(loginAction(requestObj))
+            .then(() => {
+              dispatch(login());
+              dispatch(userLoggedInType(loginName));
+              dispatch(getRegistrationCouncilList());
+              navigate(`/profile`);
+            })
+            .catch(() => {
+              dispatch(generateCaptchaImage());
+
+              // .catch((error) => {
+              //   successToast(
+              //     'ERROR: ' + error?.data?.message,
+              //     'auth-error',
+              //     'error',
+              //     'top-center'
+              //   );
+              // });
+              // successToast(
+              //   'ERROR: ' + error?.data?.response?.data?.message,
+              //   'auth-error',
+              //   'error',
+              //   'top-center'
+              // );
             });
-            successToast(
-              'ERROR: Invalid captcha, please try with new captcha',
-              'auth-error',
-              'error',
-              'top-center'
-            );
-          }
-        })
-        .catch((error) => {
-          successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-        });
+        } else {
+          dispatch(generateCaptchaImage());
+
+          // .catch(() => {
+          // successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+          // });
+          successToast(ErrorMessages.invalidCaptchaMessage, 'auth-error', 'error', 'top-center');
+        }
+      });
+      // .catch(() => {
+      //   alert(3)
+      // successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+      // });
     } else if (selectedLoginOption === 'userName') {
       verboseLog('Login Data -> ', getValues()?.password);
       verboseLog('Login Data -> ', getValues()?.userID);
@@ -195,55 +196,47 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
           transaction_id: generateCaptcha?.transaction_id,
           result: parseInt(captchaAnswer),
         })
-      )
-        .then((response) => {
-          if (response?.data?.validity) {
-            const usertypeId = usersType(loginName);
-            const requestObj = {
-              username: getValues()?.userID,
-              password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
-              user_type: usertypeId,
-              captcha_trans_id: generateCaptcha?.transaction_id,
-              login_type: loginTypeID,
-            };
-            dispatch(loginAction(requestObj))
-              .then(() => {
-                dispatch(login());
-                dispatch(userLoggedInType(loginName));
-                dispatch(getRegistrationCouncilList());
-                navigate(`/profile`);
-              })
-              .catch((error) => {
-                dispatch(generateCaptchaImage()).catch((error) => {
-                  successToast(
-                    'ERROR: ' + error?.data?.message,
-                    'auth-error',
-                    'error',
-                    'top-center'
-                  );
-                });
-                successToast(
-                  'ERROR: ' + error?.data?.response?.data?.message,
-                  'auth-error',
-                  'error',
-                  'top-center'
-                );
-              });
-          } else {
-            dispatch(generateCaptchaImage()).catch((error) => {
-              successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+      ).then((response) => {
+        if (response?.data?.validity) {
+          const usertypeId = usersType(loginName);
+          const requestObj = {
+            username: getValues()?.userID,
+            password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
+            user_type: usertypeId,
+            captcha_trans_id: generateCaptcha?.transaction_id,
+            login_type: loginTypeID,
+          };
+          dispatch(loginAction(requestObj))
+            .then(() => {
+              dispatch(login());
+              dispatch(userLoggedInType(loginName));
+              dispatch(getRegistrationCouncilList());
+              navigate(`/profile`);
+            })
+            .catch(() => {
+              dispatch(generateCaptchaImage());
+
+              // .catch((error) => {
+              //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+              // });
+              // successToast(
+              //   'ERROR: ' + error?.data?.response?.data?.message,
+              //   'auth-error',
+              //   'error',
+              //   'top-center'
+              // );
             });
-            successToast(
-              'ERROR: Invalid captcha, please try with new captcha',
-              'auth-error',
-              'error',
-              'top-center'
-            );
-          }
-        })
-        .catch((error) => {
-          successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-        });
+        } else {
+          dispatch(generateCaptchaImage());
+          // .catch((error) => {
+          //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+          // });
+          successToast(ErrorMessages.invalidCaptchaMessage, 'auth-error', 'error', 'top-center');
+        }
+      });
+      // .catch((error) => {
+      //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+      // });
     } else {
       successToast('Wrong Login Attempt', 'login-error', 'error', 'top-center');
     }
@@ -264,16 +257,16 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
     handleNext();
   };
   return (
-    <Box p={3} bgcolor="white.main" boxShadow="4">
+    <Box p={3} sx={{ bgcolor:'white.main', boxShadow:'1', borderRadius: '8px' }}>
       <Typography variant="h2" color="textPrimary.main" mb={2}>
         {loginName} Login
       </Typography>
-      <Typography variant="body1" color="textPrimary.main">
+      {/* <Typography variant="body1" color="textPrimary.main">
         Login via
-      </Typography>
+      </Typography> */}
 
       <Grid container xs={12} columnSpacing={1} mt={1}>
-        <Grid item xs={12} sm={4.5}>
+        <Grid item xs={12} sm={4}>
           <Button
             fullWidth
             variant="outlined"
@@ -294,12 +287,12 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
               },
             }}
           >
-            <Typography variant="body1" color="textPrimary.main">
+            <Typography variant="body1" textAlign={'center'} color="textPrimary.main">
               Mobile Number
             </Typography>
           </Button>
         </Grid>
-        <Grid item xs={12} sm={3.5}>
+        <Grid item xs={12} sm={4}>
           <Button
             fullWidth
             variant="outlined"
@@ -320,7 +313,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
               },
             }}
           >
-            <Typography variant="body1" color="textPrimary.main" textAlign={'left'} ml={1}>
+            <Typography variant="body1" color="textPrimary.main" textAlign={'center'} ml={1}>
               Username
             </Typography>
           </Button>
@@ -346,27 +339,27 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
               },
             }}
           >
-            <Typography variant="body1" color="textPrimary.main" textAlign={'left'} ml={1}>
+            <Typography variant="body1" color="textPrimary.main" textAlign={'center'} ml={1}>
               NMR ID
             </Typography>
           </Button>
         </Grid>
       </Grid>
-      <Box my={2}>
+      <Box mt={2} mb={1}>
         {selectedLoginOption === 'nmrId' ? (
           <>
             <TextField
               required
               disabled={otpFormEnabled}
               label={'NMR ID'}
-              placeholder={'Please enter NMR ID'}
+              placeholder={'Enter NMR ID'}
               inputProps={{ maxLength: 12 }}
               name={'nmrID'}
               {...register('nmrID', {
-                required: 'Please Enter an NMR ID',
+                required: 'Please enter a valid NMR ID',
                 pattern: {
                   value: /^\d{12}$/,
-                  message: 'Please Enter a valid NMR ID',
+                  message: 'Please enter a valid NMR ID',
                 },
               })}
               min={12}
@@ -391,8 +384,12 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
                       }}
                       color={'white.main'}
                       onClick={() => {
-                        getValues()?.nmrID?.length === 12 &&
-                          sendNotificationOTPHandler(!otpFormEnabled, 'NMR');
+                        if (!otpFormEnabled) {
+                          getValues()?.nmrID?.length === 12 &&
+                            sendNotificationOTPHandler(!otpFormEnabled, 'NMR');
+                        } else {
+                          setOtpFormEnable(false);
+                        }
                       }}
                     >
                       {otpFormEnabled ? 'Re-Enter' : 'Verify'}
@@ -402,10 +399,9 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
               }}
             />
             {otpFormEnabled && (
-              <Box mt={2}>
+              <Box mt={1}>
                 <Typography variant="body1">
-                  Please enter the OTP sent on your Registered Mobile Number {maskedMobileNumber}{' '}
-                  linked with your NMR ID.
+                  OTP sent to registered mobile number ending with {maskedMobileNumber}
                 </Typography>
                 {otpform}
               </Box>
@@ -418,18 +414,18 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
               required
               fullWidth
               label={'Username'}
-              placeholder={'Please enter username'}
+              placeholder={'Enter username'}
               name={'userID'}
               error={errors.userID?.message}
               {...register('userID', {
-                required: 'Please enter username',
+                required: 'Please enter a username',
                 pattern: {
                   value: /^[\s.]*([^\s.][\s.]*){0,100}$/,
                   message: 'Please enter a valid username',
                 },
                 minLength: {
                   value: 2,
-                  message: 'Enter valid username',
+                  message: 'Please enter a valid username',
                 },
               })}
               inputProps={{
@@ -443,7 +439,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
                 onClick={handleUserForgetUserName}
                 sx={{ cursor: 'pointer', display: 'contents' }}
               >
-                Forgot Username ?
+                Forgot Username?
               </Button>
             </Typography>
             <TextField
@@ -454,7 +450,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
               type="Password"
               name="password"
               required="true"
-              placeholder={'Please enter password'}
+              placeholder={'Enter password'}
               error={errors.password?.message}
               margin="dense"
               inputProps={{
@@ -470,7 +466,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
                 onClick={handleUserForgotPassword}
                 sx={{ cursor: 'pointer', display: 'contents' }}
               >
-                Forgot Password ?
+                Forgot Password?
               </Button>
             </Typography>
           </>
@@ -478,12 +474,12 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
           <>
             <MobileNumber
               showhint={false}
-              placeholder="Enter Mobile Number"
+              placeholder="Enter mobile number"
               required
               register={register}
               getValues={getValues}
               errors={errors}
-              label={'Enter Mobile Number'}
+              label={'Mobile Number'}
               showVerify
               verifyOnClick={sendNotificationOTPHandler}
               otpSend={otpSend}
@@ -491,7 +487,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
             {otpFormEnabled && (
               <Box mt={2}>
                 <Typography variant="body1">
-                  Please enter the OTP sent on your Mobile Number{' '}
+                  Please enter the OTP sent on your mobile number{' '}
                   {getValues().mobileNo.replace(/^.{6}/g, 'XXXXXX')}.
                 </Typography>
                 {otpform}
@@ -502,8 +498,8 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
           'Wrong Option'
         )}
       </Box>
-      <CaptchaComponent captchaResult={captchaResult} />
-      <Box my={4} width={'100%'} display={'flex'} justifyContent={'space-between'}>
+      <CaptchaComponent selectedLoginOption={selectedLoginOption} captchaResult={captchaResult} />
+      <Box mt={4} mb={2} width={'100%'} display={'flex'} justifyContent={'space-between'}>
         <Button
           variant="contained"
           color="secondary"
@@ -540,7 +536,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
             sx={{ cursor: 'pointer' }}
             onClick={() => navigate('/register/doctor-registration')}
           >
-            Register Here
+            Register here
           </Link>
         </Typography>
       </Box>

@@ -4,7 +4,6 @@ import { Box, Container, Typography } from '@mui/material';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { ToastContainer } from 'react-toastify';
 
 import { createEditFieldData } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
@@ -12,13 +11,15 @@ import DatafoundModalPopup from '../../../shared/common-modals/data-found-modal'
 import ErrorModalPopup from '../../../shared/common-modals/error-modal-popup';
 import { getRegistrationCouncilList } from '../../../store/actions/common-actions';
 import { fetchSmcRegistrationDetails } from '../../../store/actions/doctor-registration-actions';
+import { resetDoctorHPName } from '../../../store/reducers/doctor-registration-reducer';
 import { Button, TextField } from '../../../ui/core';
 import FetchDoctorDetails from './fetch-doctor-details';
 const DoctorRegistrationWelcomePage = () => {
+
   const [isNext, setIsNext] = useState(false);
   const [imrDataNotFound, setImrDataNotFound] = useState(false);
   const [rejectPopup, setRejectPopup] = useState(false);
-  const [datafoundModalPopup, setDatafoundModalPopup] = useState(false);
+  // const [datafoundModalPopup, setDatafoundModalPopup] = useState(false);
   const [accountExists, setAccountExists] = useState(false);
   const {
     register,
@@ -42,7 +43,8 @@ const DoctorRegistrationWelcomePage = () => {
   const dispatch = useDispatch();
   const handleAadhaarPage = (data) => {
     setImrDataNotFound(data);
-    setDatafoundModalPopup(false);
+    setRejectPopup(false);
+    // setDatafoundModalPopup(false);
   };
   useEffect(() => {
     dispatch(getRegistrationCouncilList());
@@ -50,6 +52,7 @@ const DoctorRegistrationWelcomePage = () => {
   }, []);
 
   const onSubmit = () => {
+    dispatch(resetDoctorHPName());
     let registrationData = {
       smcId: getValues().RegistrationCouncilId,
       registrationNumber: getValues().RegistrationNumber,
@@ -59,7 +62,8 @@ const DoctorRegistrationWelcomePage = () => {
         if (response?.data?.already_registered_in_nmr) {
           setAccountExists(true);
         } else {
-          setIsNext(true);
+          setRejectPopup(true);
+          // setIsNext(true);
         }
       })
       .catch((err) => {
@@ -77,28 +81,29 @@ const DoctorRegistrationWelcomePage = () => {
   };
   return (
     <>
-      <ToastContainer></ToastContainer>
-
       <Box>
         {isNext === false ? (
-          <Box my={9}>
+          <Box py={4} sx={{ backgroundColor : 'backgroundColor.main'}}>
             <Container
               sx={{
                 boxShadow: '1',
-                pt: 4,
+                pt: 2,
                 width: {
                   xs: '100%',
                   md: '679px',
                 },
+                backgroundColor : 'white.main',
+                borderRadius: '8px'
               }}
             >
               <Box>
-                <Box pt={2} pb={4}>
+                <Box pt={1} pb={1}>
                   <Typography variant="h2" color="textSecondary.main">
                     Register Your Profile
                   </Typography>
                   <Typography variant="body3" color="textSecondary.main">
-                    Select registration council from dropdown and enter registration number
+                    Please choose a registration council from the provided options and enter your
+                    registration number.
                   </Typography>
                 </Box>
 
@@ -113,22 +118,12 @@ const DoctorRegistrationWelcomePage = () => {
                     <SearchableDropdown
                       name="RegistrationCouncil"
                       items={createEditFieldData(councilNames)}
-                      placeholder="Select Registered Council"
+                      placeholder="Select registered council"
                       clearErrors={clearErrors}
                       error={errors.RegistrationCouncil?.message}
                       {...register('RegistrationCouncil', {
-                        required: 'Registration Council is required',
+                        required: 'Please select the registered council',
                       })}
-                      value={{
-                        id:
-                          getValues()?.RegistrationCouncilId !== undefined
-                            ? getValues()?.RegistrationCouncilId
-                            : '',
-                        name:
-                          getValues()?.RegistrationCouncil !== undefined
-                            ? getValues()?.RegistrationCouncil
-                            : '',
-                      }}
                       onChange={(currentValue) => {
                         setValue('RegistrationCouncilId', currentValue?.id);
                         setValue('RegistrationCouncil', currentValue?.name);
@@ -136,7 +131,7 @@ const DoctorRegistrationWelcomePage = () => {
                     />
                   </Box>
                 </Box>
-                <Box pb={5}>
+                <Box pb={4}>
                   <Typography variant="body1" color="textSecondary.main">
                     Registration Number
                     <Typography component="span" color="error.main">
@@ -146,45 +141,34 @@ const DoctorRegistrationWelcomePage = () => {
                   <TextField
                     fullWidth
                     name={'RegistrationNumber'}
-                    placeholder={t('Enter Registration Number')}
+                    placeholder={t('Enter registration number')}
                     defaultValue={getValues().RegistrationNumber}
                     error={errors.RegistrationNumber?.message}
                     {...register('RegistrationNumber', {
-                      required: 'Registration Number is required',
+                      required: 'Please enter the registration number',
                       pattern: {
                         value: /^[A-Za-z0-9_.,?!@#$%^&*():;-]{1,100}$/,
-                        message: 'Enter valid registration number',
+                        message: 'Please enter valid registration number',
                       },
                       minLength: {
                         value: 1,
-                        message: 'Enter valid registration number',
+                        message: 'Please enter the registration number',
                       },
                     })}
                   />
                 </Box>
-                <Box display="flex" pb={6}>
+                <Box display="flex" pb={4}>
                   <Button
                     onClick={handleSubmit(onSubmit)}
                     variant="contained"
+                    color="secondary"
                     sx={{
-                      mr: 3,
-                      width: '105px',
-                      height: '45px',
-                      backgroundColor: 'secondary.main',
+                      mr: 2,
                     }}
                   >
                     Submit
                   </Button>
-                  <Button
-                    onClick={onReset}
-                    variant="outlined"
-                    sx={{
-                      width: '105px',
-                      height: '45px',
-                      backgroundColor: 'grey.main',
-                      color: 'black',
-                    }}
-                  >
+                  <Button onClick={onReset} variant="contained" color="grey">
                     Reset
                   </Button>
                 </Box>
@@ -200,7 +184,8 @@ const DoctorRegistrationWelcomePage = () => {
           />
         )}
       </Box>
-      {rejectPopup && (
+      {/* Commneted by, Ashvini For future use */}
+      {/* {rejectPopup && (
         <ErrorModalPopup
           open={setRejectPopup}
           setOpen={() => {
@@ -213,13 +198,15 @@ const DoctorRegistrationWelcomePage = () => {
           text={` Your data is not found in the NMR.
            Do you want to continue the registration in the NMR ? `}
         />
-      )}
-      {datafoundModalPopup && (
+      )} */}
+      {rejectPopup && (
         <DatafoundModalPopup
           open={setRejectPopup}
-          setOpen={() => setRejectPopup(false)}
+          setOpen={() => {
+            setRejectPopup(true);
+          }}
           handleClose={() => {
-            setDatafoundModalPopup(false);
+            setRejectPopup(false);
           }}
           imrData={true}
           handleAadhaarPage={handleAadhaarPage}
@@ -229,8 +216,7 @@ const DoctorRegistrationWelcomePage = () => {
             smcId: getValues().RegistrationCouncilId,
             registrationNumber: getValues().RegistrationNumber,
           }}
-          text={`We found below details as per provided information. 
-          If the details are correct, click yes to continue registration. `}
+          text={`No data found for the provided details. Do you still want to continue with the registration?`}
         />
       )}
       {accountExists && (
@@ -238,7 +224,7 @@ const DoctorRegistrationWelcomePage = () => {
           open={setAccountExists}
           setOpen={() => setAccountExists(false)}
           accountExist={true}
-          text={`Your account already exists. Please login with your credentails`}
+          text={`Your account already exists. Please login with your credentials.`}
           loginFormName="Doctor"
         />
       )}

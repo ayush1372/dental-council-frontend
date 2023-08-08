@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { makeStyles } from '@material-ui/core';
-import { Box, Container, Grid, Paper, Typography } from '@mui/material';
+import { Box, Grid, Paper, Typography } from '@mui/material';
 import { experimentalStyled as styled } from '@mui/material/styles';
 import { useTheme } from '@mui/material/styles';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,9 +20,18 @@ import {
   suspensionRequestMapper,
   updationRequestMapper,
 } from '../../../../constants/common-data';
+import { userGroupType } from '../../../../helpers/functions/common-functions';
 import ViewProfile from '../../../../shared/view-profile/view-profile';
+import { collegeProfileData } from '../../../../store/actions/college-actions';
+import { getCollegeData } from '../../../../store/actions/common-actions';
 import { getCardCount } from '../../../../store/actions/dashboard-actions';
-import { setBreadcrumbsActivetab } from '../../../../store/reducers/common-reducers';
+import { getNBEProfileData } from '../../../../store/actions/nbe-actions';
+import { getNMCProfileData } from '../../../../store/actions/nmc-actions';
+import { getSMCProfileData } from '../../../../store/actions/smc-actions';
+import {
+  navigateDashboard,
+  setBreadcrumbsActivetab,
+} from '../../../../store/reducers/common-reducers';
 import { Button } from '../../../../ui/core';
 import UserProfile from '../../../user-profile/index';
 import BreadcrumbsCompnent from '../breadcrums';
@@ -39,6 +48,8 @@ export default function Dashboard() {
   const [selectedCardData, setSelectedCardData] = useState();
   const [selectedRowData, setSelectedRowData] = useState();
   const dispatch = useDispatch();
+  const { redirectDashboard } = useSelector((state) => state.common);
+  const { loginData } = useSelector((state) => state.loginReducer);
 
   const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(3),
@@ -83,15 +94,24 @@ export default function Dashboard() {
   );
 
   let dashboard = {
-    'Registration Request': registrationRequestData,
-    'Updation Request': updationRequestData,
+    'Registration Requests': registrationRequestData,
+    'Additional Qualification Requests': updationRequestData,
   };
 
   if (loggedInUserType === 'NMC' || loggedInUserType === 'SMC') {
     dashboard = Object.assign(dashboard, {
-      'Suspension Request': suspensionRequestData,
+      'Suspension Requests': suspensionRequestData,
     });
   }
+  useEffect(() => {
+    if (redirectDashboard) {
+      setShowTable(false);
+      setShowDashboard(true);
+      setShowViewPorfile(false);
+      setSelectedRowData();
+      dispatch(navigateDashboard(false));
+    }
+  }, [redirectDashboard]);
 
   function getDataFromResponse(count, mapper, key) {
     let dataArr = [];
@@ -113,7 +133,6 @@ export default function Dashboard() {
 
     return dataArr;
   }
-
   function handleBreadCrumClick(event) {
     event.preventDefault();
     if (event.target.id === '1') {
@@ -156,14 +175,51 @@ export default function Dashboard() {
     setSelectedRowData(data);
   };
 
+  const getCommonData = () => {
+    const userType = userGroupType(loginData?.data?.user_group_id);
+    let colgUserType = loginData?.data?.user_sub_type;
+
+    if (loginData?.data?.user_group_id === 4) {
+      dispatch(
+        collegeProfileData(
+          loginData?.data?.college_id,
+          loginData?.data?.profile_id,
+          loginData?.data?.user_sub_type
+        )
+      );
+    } else if (userType === 'State Medical Council') {
+      dispatch(getSMCProfileData(loginData?.data?.profile_id));
+    } else if (userType === 'National Medical Council') {
+      dispatch(getNMCProfileData(loginData?.data?.profile_id));
+    } else if (userType === 'NBE') {
+      dispatch(getNBEProfileData(loginData?.data?.profile_id));
+    }
+    if (colgUserType === 1) {
+      colgUserType = 'College Admin';
+    } else if (colgUserType === 2) {
+      colgUserType = 'College Registrar';
+    } else if (colgUserType === 3) {
+      colgUserType = 'College Dean';
+    }
+
+    if (colgUserType === 'College Dean') {
+      dispatch(collegeProfileData(loginData?.data?.college_id, loginData?.data?.profile_id));
+    } else if (colgUserType === 'College Registrar') {
+      dispatch(collegeProfileData(loginData?.data?.college_id, loginData?.data?.profile_id));
+    } else if (colgUserType === 'College Admin') {
+      dispatch(getCollegeData(loginData?.data?.college_id));
+    }
+  };
+
   useEffect(() => {
     dispatch(getCardCount());
+    getCommonData();
   }, []);
 
   const getCardIcons = (item) => {
     if (item?.name?.includes('Pending') || item?.name?.includes('Received')) {
       return PendingApplication;
-    } else if (item?.name === 'College Verified') {
+    } else if (item?.name === 'College/NBE Verified') {
       return PendingApplication;
     } else if (item?.name?.includes('Verified') || item?.name?.includes('Approved')) {
       return ApprovedApplication;
@@ -181,14 +237,14 @@ export default function Dashboard() {
   const getTextLabelIcons = (item) => {
     if (item?.name?.includes('Pending') || item?.name?.includes('Received')) {
       return 'Total number of pending applications';
-    } else if (item?.name === 'College Verified') {
-      return 'Total number of college verified applications';
+    } else if (item?.name === 'College/NBE Verified') {
+      return 'Total number of verified applications by College/NBE';
     } else if (item?.name?.includes('Approved')) {
       return 'Total number of approved applications';
     } else if (item?.name?.includes('Verified') || item?.name?.includes('Approved')) {
       return 'Total number of verified applications';
     } else if (item?.name?.includes('Raised')) {
-      return 'Total number of query raised on applications';
+      return 'Total number of query raised applications';
     } else if (item?.name?.includes('Forwarded')) {
       return 'Total number of forwarded applications';
     } else if (item?.name?.includes('Rejected') || item?.name?.includes('Blacklisted')) {
@@ -215,6 +271,9 @@ export default function Dashboard() {
               showTable={showTable}
               showViewProfile={showViewProfile}
               handleBreadCrumClick={handleBreadCrumClick}
+              levelOneText="Dashboard"
+              levelTwoText={selectedCardData?.name}
+              levelthreeText="View Profile"
             />
           </Grid>
           <Grid item xs={6}>
@@ -239,7 +298,7 @@ export default function Dashboard() {
         </Grid>
       )}
       {showDashboard ? (
-        <Box display="flex" flexWrap="wrap" gap={{ xs: 1, xl: 2 }} p={3} pb={0}>
+        <Box p={3} pb={0}>
           {Object.entries(dashboard).map((element) => {
             return (
               <>
@@ -249,7 +308,7 @@ export default function Dashboard() {
                   component="div"
                   display="flex"
                   alignItems="center"
-                  gap={2}
+                  gap={3}
                   flex="1 0 100%"
                 >
                   <img
@@ -257,7 +316,7 @@ export default function Dashboard() {
                     src={
                       element[0].includes('Registration')
                         ? RegistrationRequest
-                        : element[0].includes('Updation')
+                        : element[0].includes('Additional')
                         ? UpdationRequest
                         : element[0].includes('Suspension')
                         ? SuspensionRequest
@@ -267,47 +326,75 @@ export default function Dashboard() {
                   />
                   {element[0]}
                 </Typography>
-                {element[1].map((item) => {
-                  return (
-                    <Box
-                      mb={{ xs: 2, md: 4 }}
-                      flex={{ xs: '1 0 100%', sm: '1 0 32%', md: '1 0 13%', lg: '1 0 13%' }}
-                      key={item?.name}
+                {(element[0].includes('Registration') || element[0].includes('Additional')) &&
+                loggedInUserType === 'SMC' ? (
+                  <Grid container display="flex" flexWrap="wrap" gap={{ xs: 1, xl: 2 }}>
+                    <Grid
+                      item
+                      textAlign={'center'}
+                      sx={{
+                        marginLeft: '14.28%',
+                        width: '28.05%',
+                        backgroundColor: theme.palette.secondary.pendingBg,
+                        padding: '2px 10px',
+                        borderRadius: '4px 4px 0 0',
+                      }}
                     >
-                      <Item id={item?.id} onClick={() => showTableFun(item)}>
-                        <Box
-                          display="flex"
-                          justifyContent="space-between"
-                          alignItems="center"
-                          mb={2}
-                        >
-                          <Typography color="inputFocusColor.main" variant="h2">
-                            {item.value}
+                      <Typography variant="body1">
+                        Total Pending Requests : {element[1][1]?.value + element[1][2]?.value}
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                ) : (
+                  ''
+                )}
+                <Grid display="flex" flexWrap="wrap" gap={{ xs: 1, xl: 2 }}>
+                  {element[1].map((item) => {
+                    return (
+                      <Box
+                        mb={{ xs: 2, md: 4 }}
+                        flex={{ xs: '1 0 100%', sm: '1 0 32%', md: '1 0 13%', lg: '1 0 13%' }}
+                        key={item?.name}
+                      >
+                        <Item id={item?.id} onClick={() => showTableFun(item)}>
+                          <Box
+                            display="flex"
+                            justifyContent="space-between"
+                            alignItems="center"
+                            mb={2}
+                          >
+                            <Typography color="inputFocusColor.main" sx={{ fontSize: '30px' }}>
+                              {item.value}
+                            </Typography>
+                            <img
+                              className={classes.iconImage}
+                              src={getCardIcons(item)}
+                              alt="icon"
+                              width="36px"
+                            />
+                          </Box>
+                          <Typography
+                            color="primary"
+                            component="div"
+                            fontSize={{ xs: '10px', sm: '12px', md: '12px', lg: '14px' }}
+                            lineHeight={{ xs: '14px', sm: '16px', md: '18px', lg: '18px' }}
+                            mb={1}
+                          >
+                            {item.name}
                           </Typography>
-                          <img className={classes.iconImage} src={getCardIcons(item)} alt="icon" />
-                        </Box>
-                        <Typography
-                          color="primary"
-                          component="div"
-                          fontSize={{ xs: '12px', sm: '12px', md: '14px', lg: '16px' }}
-                          lineHeight={{ xs: '14px', sm: '16px', md: '18px', lg: '24px' }}
-                          mb={1}
-                        >
-                          {item.name}
-                        </Typography>
-                        <Typography
-                          color="primary"
-                          component="div"
-                          fontWeight="400"
-                          fontSize={{ xs: '12px', sm: '12px', md: '12px', lg: '16px' }}
-                          lineHeight={{ xs: '14px', sm: '16px', md: '16px', lg: '24px' }}
-                        >
-                          {getTextLabelIcons(item)}
-                        </Typography>
-                      </Item>
-                    </Box>
-                  );
-                })}
+                          <Typography
+                            component="div"
+                            fontWeight="400"
+                            fontSize={{ xs: '9px', sm: '11px', md: '11px', lg: '12px' }}
+                            lineHeight={{ xs: '14px', sm: '16px', md: '16px', lg: '16px' }}
+                          >
+                            {getTextLabelIcons(item)}
+                          </Typography>
+                        </Item>
+                      </Box>
+                    );
+                  })}
+                </Grid>
               </>
             );
           })}
@@ -322,7 +409,7 @@ export default function Dashboard() {
         />
       ) : showViewProfile ? (
         <Box>
-          <Container sx={{ marginTop: 2 }}>
+          <Grid p={3}>
             <ViewProfile />
             <UserProfile
               setShowDashboard={setShowDashboard}
@@ -331,7 +418,7 @@ export default function Dashboard() {
               showViewProfile={showViewProfile}
               selectedRowData={selectedRowData}
             />
-          </Container>
+          </Grid>
         </Box>
       ) : (
         ''

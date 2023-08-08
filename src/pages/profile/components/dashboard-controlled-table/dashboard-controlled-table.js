@@ -58,39 +58,39 @@ function DashboardControlledTable(props) {
       type: 'string',
     },
     {
-      title: 'IMR ID/ Registration No.',
+      title: 'Registration Number',
       name: 'registrationNo',
       sorting: true,
       type: 'string',
     },
     {
-      title: 'Name of Applicant',
+      title: 'Applicant Name',
       name: 'nameofApplicant',
       sorting: true,
       type: 'string',
     },
-    { title: 'Name of State Council', name: 'nameofStateCouncil', sorting: true, type: 'string' },
+    { title: 'State Medical Council', name: 'nameofStateCouncil', sorting: true, type: 'string' },
     {
-      title: 'Council Verification Status',
+      title: 'Council Status',
       name: 'councilVerificationStatus',
       sorting: true,
       type: 'string',
     },
     {
-      title: 'College/NBE Verification Status',
+      title: 'College/NBE Status',
       name: 'collegeVerificationStatus',
       sorting: true,
       type: 'string',
     },
     {
-      title: 'NMC Verification Status',
+      title: 'NMC Status',
       name: 'NMCVerificationStatus',
       sorting: true,
       type: 'string',
     },
-    { title: 'Date of Submission', name: 'dateofSubmission', sorting: true, type: 'date' },
-    { title: 'Pendency (in days)', name: 'pendency', sorting: true, type: 'string' },
-    { title: 'View', name: 'view', sorting: false, type: 'string' },
+    { title: 'Submission Date', name: 'dateofSubmission', sorting: true, type: 'date' },
+    { title: 'Pendency (Days)', name: 'pendency', sorting: true, type: 'string' },
+    { title: 'Action', name: 'view', sorting: false, type: 'string' },
   ];
 
   const viewCallback = (event, row) => {
@@ -107,12 +107,45 @@ function DashboardControlledTable(props) {
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
+  useEffect(() => {
+    if (
+      orderBy?.name !== undefined &&
+      orderBy?.name !== null &&
+      orderBy?.name !== '' &&
+      order !== undefined &&
+      order !== null &&
+      order !== ''
+    ) {
+      const requestObj = {
+        work_flow_status_id: '',
+        application_type_id: props?.selectedCardData?.applicationTypeID
+          ? props?.selectedCardData?.applicationTypeID.toString()
+          : '',
+        user_group_status: props?.selectedCardData?.responseKey
+          ? props?.selectedCardData?.responseKey
+          : '',
+        smc_id: searchQueryParams ? searchQueryParams?.RegistrationCouncilId : '',
+        name: searchQueryParams ? searchQueryParams?.filterByName : '',
+        nmr_id: searchQueryParams ? searchQueryParams?.filterByRegNo : '',
+        search: searchQueryParams ? searchQueryParams?.search : '',
+        value: searchQueryParams ? searchQueryParams?.value : '',
+        page_no: 1,
+        offset: 10,
+        sortBy: orderBy?.name,
+        sortOrder: order,
+      };
+
+      dispatch(getDashboardTableData(requestObj));
+    }
+  }, [order, orderBy, dispatch]);
 
   const newRowsData = dashboardTableDetails?.data?.dashboard_tolist?.map((application, index) => {
-    const formattedDate = moment(application?.created_at).format('DD-MM-YYYY');
     const capitalize = (str) => {
       if (!str) {
         return '';
+      }
+      if (str === 'College/NBE Verified') {
+        return 'College/NBE verified';
       }
       return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
     };
@@ -121,6 +154,7 @@ function DashboardControlledTable(props) {
       {
         type: 'requestId',
         value: application?.request_id,
+        onClickCallback: viewCallback,
       },
       {
         type: 'registrationNo',
@@ -143,7 +177,7 @@ function DashboardControlledTable(props) {
             : capitalize(application?.college_status),
       },
       { type: 'NMCVerificationStatus', value: capitalize(application?.nmc_status) },
-      { type: 'dateofSubmission', value: formattedDate },
+      { type: 'dateofSubmission', value: moment(application?.created_at).format('DD-MM-YYYY') },
       { type: 'pendency', value: application?.pendency },
       { type: 'view', value: 'View', onClickCallback: viewCallback },
       { type: 'profileID', value: application?.hp_profile_id }
@@ -183,12 +217,12 @@ function DashboardControlledTable(props) {
       value: searchQueryParams ? searchQueryParams?.value : '',
       page_no: pageNo,
       offset: noOfRecords,
-      sort_by: '',
-      sort_order: '',
+      orderBy: '',
+      sortOrder: '',
     };
     dispatch(
       setSelectedAcademicStatus(
-        props?.selectedCardData?.name === 'Update Request Received'
+        props?.selectedCardData?.name === 'Pending'
           ? props?.selectedCardData?.name
           : props?.selectedCardData?.responseKey
       )
@@ -241,21 +275,23 @@ function DashboardControlledTable(props) {
         rowsPerPage={rowsPerPage}
         page={page}
       />
-      <Box>
-        <TablePagination
-          rowsPerPageOptions={[]}
-          component="div"
-          count={dashboardTableDetails?.data?.total_no_of_records}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-          sx={{
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        />
-      </Box>
+      {newRowsData?.length !== 0 && (
+        <Box>
+          <TablePagination
+            rowsPerPageOptions={[]}
+            component="div"
+            count={dashboardTableDetails?.data?.total_no_of_records || 0}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            sx={{
+              display: 'flex',
+              justifyContent: 'center',
+            }}
+          />
+        </Box>
+      )}
     </Grid>
   );
 }

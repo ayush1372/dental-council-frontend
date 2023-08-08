@@ -7,10 +7,10 @@ import { useNavigate } from 'react-router-dom';
 
 import MobileIcon from '../../../assets/images/mobile-icon.svg';
 import ProfileIcon from '../../../assets/images/profile-icon.svg';
-import { encryptData, userGroupType, usersType } from '../../../helpers/functions/common-functions';
+import { ErrorMessages } from '../../../constants/error-messages';
+import { encryptData, usersType } from '../../../helpers/functions/common-functions';
 import CaptchaComponent from '../../../shared/captcha-component/captcha-component';
 import OtpForm from '../../../shared/otp-form/otp-component';
-import { collegeProfileData } from '../../../store/actions/college-actions';
 import {
   getRegistrationCouncilList,
   sendNotificationOtp,
@@ -20,9 +20,6 @@ import {
   loginAction,
   validateCaptchaImage,
 } from '../../../store/actions/login-action';
-import { getNBEProfileData } from '../../../store/actions/nbe-actions';
-import { getNMCProfileData } from '../../../store/actions/nmc-actions';
-import { getSMCProfileData } from '../../../store/actions/smc-actions';
 import { login, userLoggedInType } from '../../../store/reducers/common-reducers';
 import { loginActiveState } from '../../../store/reducers/login-reducer';
 import { Button, TextField } from '../../../ui/core';
@@ -70,24 +67,24 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
   };
   const sendNotificationOTPHandler = () => {
     let OTPTypeID = 'sms';
-
+    const userTypeId = usersType(loginName);
     let sendOTPData = {
       contact: getValues().mobileNo,
       type: OTPTypeID,
+      user_type: userTypeId,
     };
     otpData({ ...otpData, contact: getValues().mobileNo, type: OTPTypeID, page: 'LogInPage' });
 
-    dispatch(sendNotificationOtp(sendOTPData))
-      .then((response) => {
-        if (response) {
-          setTransaction_id(response?.data?.transaction_id);
-          setOtpSend(true);
-          setOtpFormEnable(true);
-        }
-      })
-      .catch((error) => {
-        successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
-      });
+    dispatch(sendNotificationOtp(sendOTPData)).then((response) => {
+      if (response) {
+        setTransaction_id(response?.data?.transaction_id);
+        setOtpSend(true);
+        setOtpFormEnable(true);
+      }
+    });
+    // .catch((error) => {
+    //   successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
+    // });
   };
   const { otpform, otpValue, handleClear } = OtpForm({
     sendOTP: sendNotificationOTPHandler,
@@ -98,20 +95,6 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
     setOtpSend(false);
     setOtpFormEnable(false);
   }, [loginName]);
-
-  const getCommonData = (response) => {
-    const userType = userGroupType(response?.data?.user_group_id);
-
-    if (response?.data?.user_group_id === 4) {
-      dispatch(collegeProfileData(response?.data?.college_id, response?.data?.profile_id));
-    } else if (userType === 'State Medical Council') {
-      dispatch(getSMCProfileData(response?.data?.profile_id));
-    } else if (userType === 'National Medical Council') {
-      dispatch(getNMCProfileData(response?.data?.profile_id));
-    } else if (userType === 'NBE') {
-      dispatch(getNBEProfileData(response?.data?.profile_id));
-    }
-  };
 
   const handleLogin = () => {
     let loginTypeID;
@@ -136,115 +119,100 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
           transaction_id: generateCaptcha?.transaction_id,
           result: parseInt(captchaAnswer),
         })
-      )
-        .then((response) => {
-          if (response?.data?.validity) {
-            const usertypeId = usersType(loginName);
+      ).then((response) => {
+        if (response?.data?.validity) {
+          const usertypeId = usersType(loginName);
 
-            const requestObj = {
-              username: getValues()?.mobileNo,
-              password: encryptData(otpValue, process.env.REACT_APP_PASS_SITE_KEY),
-              user_type: usertypeId,
-              login_type: loginTypeID,
-              captcha_trans_id: generateCaptcha?.transaction_id,
-              otp_trans_id: transaction_id,
-            };
-            dispatch(loginAction(requestObj))
-              .then((resp) => {
-                dispatch(login());
-                dispatch(userLoggedInType(loginName));
-                dispatch(getRegistrationCouncilList());
-                navigate(`/profile`);
-                getCommonData(resp);
-              })
-              .catch((error) => {
-                setOtpFormEnable(false);
-                dispatch(generateCaptchaImage()).catch((error) => {
-                  successToast(
-                    'ERROR: ' + error?.data?.message,
-                    'auth-error',
-                    'error',
-                    'top-center'
-                  );
-                });
-                successToast(
-                  'ERROR: ' + error?.data?.response?.data?.message,
-                  'auth-error',
-                  'error',
-                  'top-center'
-                );
-              });
-          } else {
-            dispatch(generateCaptchaImage()).catch((error) => {
-              successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+          const requestObj = {
+            username: getValues()?.mobileNo,
+            password: encryptData(otpValue, process.env.REACT_APP_PASS_SITE_KEY),
+            user_type: usertypeId,
+            login_type: loginTypeID,
+            captcha_trans_id: generateCaptcha?.transaction_id,
+            otp_trans_id: transaction_id,
+          };
+          dispatch(loginAction(requestObj))
+            .then(() => {
+              dispatch(login());
+              dispatch(userLoggedInType(loginName));
+              dispatch(getRegistrationCouncilList());
+              navigate(`/profile`);
+            })
+            .catch(() => {
+              setOtpFormEnable(false);
+              dispatch(generateCaptchaImage());
+              // .catch((error) => {
+              //   successToast(
+              //     'ERROR: ' + error?.data?.message,
+              //     'auth-error',
+              //     'error',
+              //     'top-center'
+              //   );
+              // });
+              // successToast(
+              //   'ERROR: ' + error?.data?.response?.data?.message,
+              //   'auth-error',
+              //   'error',
+              //   'top-center'
+              // );
             });
-            successToast(
-              'ERROR: Invalid captcha, please try with new captcha',
-              'auth-error',
-              'error',
-              'top-center'
-            );
-          }
-        })
-        .catch((error) => {
-          successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-        });
+        } else {
+          dispatch(generateCaptchaImage());
+          // .catch((error) => {
+          //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+          // });
+          successToast(ErrorMessages.invalidCaptchaMessage, 'auth-error', 'error', 'top-center');
+        }
+      });
+      // .catch((error) => {
+      //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+      // });
     } else if (selectedLoginOption === 'userName') {
       dispatch(
         validateCaptchaImage({
           transaction_id: generateCaptcha?.transaction_id,
           result: parseInt(captchaAnswer),
         })
-      )
-        .then((response) => {
-          if (response?.data?.validity) {
-            const usertypeId = usersType(loginName);
-            const requestObj = {
-              username: getValues()?.userID,
-              password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
-              user_type: usertypeId,
-              captcha_trans_id: generateCaptcha?.transaction_id,
-              login_type: loginTypeID,
-            };
-            dispatch(loginAction(requestObj))
-              .then((resp) => {
-                dispatch(login());
-                dispatch(userLoggedInType(loginName));
-                dispatch(getRegistrationCouncilList());
-                navigate(`/profile`);
-                getCommonData(resp);
-              })
-              .catch((error) => {
-                dispatch(generateCaptchaImage()).catch((error) => {
-                  successToast(
-                    'ERROR: ' + error?.data?.message,
-                    'auth-error',
-                    'error',
-                    'top-center'
-                  );
-                });
-                successToast(
-                  'ERROR: ' + error?.data?.response?.data?.message,
-                  'auth-error',
-                  'error',
-                  'top-center'
-                );
-              });
-          } else {
-            dispatch(generateCaptchaImage()).catch((error) => {
-              successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+      ).then((response) => {
+        if (response?.data?.validity) {
+          const usertypeId = usersType(loginName);
+          const requestObj = {
+            username: getValues()?.userID,
+            password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
+            user_type: usertypeId,
+            captcha_trans_id: generateCaptcha?.transaction_id,
+            login_type: loginTypeID,
+          };
+          dispatch(loginAction(requestObj))
+            .then(() => {
+              dispatch(login());
+              dispatch(userLoggedInType(loginName));
+              dispatch(getRegistrationCouncilList());
+              navigate(`/profile`);
+            })
+            .catch(() => {
+              dispatch(generateCaptchaImage());
+              // .catch((error) => {
+              //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+              // });
+              // successToast(
+              //   'ERROR: ' + error?.data?.response?.data?.message,
+              //   'auth-error',
+              //   'error',
+              //   'top-center'
+              // );
             });
-            successToast(
-              'ERROR: Invalid captcha, please try with new captcha',
-              'auth-error',
-              'error',
-              'top-center'
-            );
-          }
-        })
-        .catch((error) => {
-          successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
-        });
+        } else {
+          dispatch(generateCaptchaImage());
+          // .catch((error) => {
+          //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+          // });
+          successToast(ErrorMessages.invalidCaptchaMessage, 'auth-error', 'error', 'top-center');
+        }
+      });
+      // .catch((error) => {
+      //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
+      // });
     } else {
       successToast('Wrong Login Attempt', 'login-error', 'error', 'top-center');
     }
@@ -261,13 +229,13 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
     setValue('password', '');
   }, [loginName]);
   return (
-    <Box p={4} bgcolor="white.main" boxShadow="4">
-      <Typography variant="h2" color="primary.dark" mb={5}>
+    <Box p={3} sx={{ bgcolor:'white.main', boxShadow:'1', borderRadius: '8px' }}>
+      <Typography variant="h2" color="primary.dark" mb={1}>
         {loginName} Login
       </Typography>
-      <Typography variant="body1" color="textPrimary.main">
+      {/* <Typography variant="body1" color="textPrimary.main">
         Login via
-      </Typography>
+      </Typography> */}
 
       <Grid container xs={12} columnSpacing={1} mt={1}>
         <Grid item xs={12} sm={6}>
@@ -323,27 +291,27 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
           </Button>
         </Grid>
       </Grid>
-      <Box my={4}>
+      <Box my={2}>
         {selectedLoginOption === 'userName' ? (
           <>
             <TextField
-              sx={{ mb: 2 }}
+              sx={{ mb: 1 }}
               required
               fullWidth
               label={'Username'}
-              placeholder={'Please enter username'}
+              placeholder={'Enter username'}
               name={'userID'}
               error={errors.userID?.message}
               {...register('userID', {
-                required: 'Please enter username',
+                required: 'Please enter a username',
                 pattern: {
                   value: /^[\s.]*([^\s.][\s.]*){0,100}$/,
                   message: 'Please enter a valid username',
                 },
-                minLength: {
-                  value: 8,
-                  message: 'Should contains 8 character',
-                },
+                // minLength: {
+                //   value: 8,
+                //   message: 'Should contain 8 character',
+                // },
               })}
               inputProps={{
                 maxLength: 100,
@@ -351,21 +319,22 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
             />
             <Typography display={'flex'} justifyContent="flex-end">
               <Button
+                size="small"
                 color="secondary"
                 onClick={handleUserForgetUserName}
                 sx={{ cursor: 'pointer', display: 'contents' }}
               >
-                Forgot Username ?
+                Forgot Username?
               </Button>
             </Typography>
 
             <TextField
-              sx={{ mb: 2 }}
+              sx={{ mb: 1 }}
               required={true}
               fullWidth
               label={'Password'}
               variant="outlined"
-              placeholder={'Please enter password'}
+              placeholder={'Enter password'}
               type={'Password'}
               inputProps={{ maxLength: 100 }}
               name={'password'}
@@ -375,6 +344,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
             />
             <Typography display={'flex'} justifyContent="flex-end">
               <Button
+                size="small"
                 color="secondary"
                 onClick={() => handleForgotPassword()}
                 sx={{ cursor: 'pointer', display: 'contents' }}
@@ -387,7 +357,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
           <>
             <MobileNumber
               showhint={false}
-              placeholder="Enter Mobile Number"
+              placeholder="Enter mobile number"
               required
               register={register}
               getValues={getValues}
@@ -413,7 +383,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
         )}
       </Box>
       <CaptchaComponent captchaResult={captchaResult} />
-      <Box my={4} width={'100%'} display={'flex'} justifyContent={'space-between'}>
+      <Box my={2} width={'100%'} display={'flex'} justifyContent={'space-between'}>
         <Button
           variant="contained"
           color="secondary"

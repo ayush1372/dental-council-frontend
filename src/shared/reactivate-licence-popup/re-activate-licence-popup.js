@@ -6,10 +6,11 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
 import ReactivationLogo from '../../../src/assets/images/reactivate-license-icon.png';
+import { getDateAndTimeFormat } from '../../helpers/functions/common-functions';
 import { createReActivateLicense } from '../../store/actions/common-actions';
 import { Button, DatePicker, TextField } from '../../ui/core';
 import UploadFile from '../../ui/core/fileupload/fileupload';
-import successToast from '../../ui/core/toaster';
+
 export default function ReactivateLicencePopup(props) {
   const [open, setOpen] = useState(true);
   const [showFromDateError, setShowFromDateError] = useState(false);
@@ -20,19 +21,23 @@ export default function ReactivateLicencePopup(props) {
   const { loginData } = useSelector((state) => state?.loginReducer);
   const dispatch = useDispatch();
 
-  const { register, getValues, setValue } = useForm({
+  const { register, getValues, setError, clearErrors } = useForm({
     mode: 'onChange',
+    defaultValues: {
+      fromDate: getDateAndTimeFormat('dateFormat'),
+    },
   });
 
-  const handleClose = () => {
-    setOpen(false);
-    props.closeReactivateLicense();
-  };
   useEffect(() => {
     if (reActivateFileData?.length > 0 || reActivateFileData === []) {
       setsupportingDocumentError(false);
     }
   }, [reActivateFileData]);
+
+  const handleClose = () => {
+    setOpen(false);
+    props.closeReactivateLicense();
+  };
 
   function handleReactivate() {
     const { fromDate, reason } = getValues();
@@ -67,9 +72,8 @@ export default function ReactivateLicencePopup(props) {
             props.renderSuccess();
           }
         })
-        .catch((error) => {
+        .catch(() => {
           props?.closeReactivateLicense();
-          successToast(error?.data?.response?.data?.message, 'auth-error', 'error', 'top-center');
         });
   }
 
@@ -100,10 +104,12 @@ export default function ReactivateLicencePopup(props) {
                 </Typography>
 
                 <DatePicker
-                  onChangeDate={(newDateValue) => {
-                    setValue('fromDate', new Date(newDateValue)?.toLocaleDateString('en-GB'));
-                    setShowFromDateError(false);
-                  }}
+                  defaultValue={new Date()}
+                  disabled
+                  // onChangeDate={(newDateValue) => {
+                  //   setValue('fromDate', new Date(newDateValue)?.toLocaleDateString('en-GB'));
+                  //   //setShowFromDateError(false);
+                  // }}
                   data-testid="fromDate"
                   id="fromDate"
                   name="fromDate"
@@ -147,7 +153,7 @@ export default function ReactivateLicencePopup(props) {
                   placeholder="Add a reason..."
                   required={true}
                   defaultValue={getValues().reason}
-                  error={showReasonError ? 'Enter Re-activate reason' : false}
+                  error={showReasonError ? 'Enter reason for re-activation' : false}
                   {...register('reason', {
                     required: 'This field is required',
                     onChange: (event) => {
@@ -166,27 +172,21 @@ export default function ReactivateLicencePopup(props) {
           </Box>
           <Box>
             <UploadFile
-              fileID={'registrationFileData'}
+              fileID={'reactivationFileData'}
               uploadFiles="single"
               sizeAllowed={5}
               fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
-              fileMessage={`PDF, PNG,JPG,JPEG file types are supported.
-               Maximum size allowed for the attachment is 5MB.`}
+              fileMessage={`PDF, PNG, JPG, JPEG file types are supported.
+               Maximum size allowed is 5MB.`}
               fileData={reActivateFileData}
+              clearErrors={clearErrors}
+              setError={setError}
+              name={'supportingDocument'}
+              isError={supportingDocumentError ? 'Please upload the supporting document.' : ''}
               setFileData={setReActivateFileData}
               uploadFileLabel="Upload the Supporting Document"
-              borderColor={supportingDocumentError}
+              {...register('supportingDocument')}
             />
-            {supportingDocumentError && (
-              <Typography
-                color="suspendAlert.dark"
-                component="div"
-                display="inline-flex"
-                variant="body2"
-              >
-                Please upload the supporting Document.
-              </Typography>
-            )}
           </Box>
           <Box display="flex" justifyContent="flex-end" mt={2}>
             <Button

@@ -22,6 +22,7 @@ const RadioField = (
     inline,
     defaultValue,
     dataTestid,
+    value,
     ...props
   },
   ref
@@ -43,6 +44,7 @@ const RadioField = (
         name={name}
         defaultValue={defaultValue}
         sx={{ display: inline ? '' : 'block' }}
+        value={value}
       >
         {items.map((o) => (
           <FormControlLabel
@@ -52,24 +54,21 @@ const RadioField = (
             key={o.label}
             control={<Radio data-testid={dataTestid} size={size} />}
             label={o.label}
-            sx={{
-              span: {
-                color: 'inputTextColor.main',
-              },
-            }}
           />
         ))}
       </MuiRadioGroup>
       {error && (
-        <Typography variant="body2" color="error">
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <ErrorOutlineIcon
             color={'error'}
             icon={'helpOutline'}
             fontSize="small"
             sx={{ height: '16px' }}
           />
-          {error}
-        </Typography>
+          <Typography variant="body2" color="error">
+            {error}
+          </Typography>
+        </Box>
       )}
     </FormControl>
   );

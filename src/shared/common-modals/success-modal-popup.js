@@ -1,3 +1,4 @@
+import InfoIcon from '@mui/icons-material/Info';
 import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined';
 import { Box, Container, Modal, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
@@ -20,15 +21,14 @@ import {
 import { setBreadcrumbsActivetab } from '../../store/reducers/common-reducers';
 import { loginActiveState } from '../../store/reducers/login-reducer';
 import { Button } from '../../ui/core';
-import successToast from '../../ui/core/toaster';
 
 export default function SuccessModalPopup({
   open,
   setOpen,
   text,
   loginName,
-  workDetails,
   handleClose,
+  workDetails,
   SuspensionCall,
   isHpIdCreated,
   successRegistration,
@@ -39,6 +39,7 @@ export default function SuccessModalPopup({
   fetchDoctorUserPersonalDetails,
   setChangeUserData,
   PasswordChange,
+  fetchDoctorScreenAlertIcon,
 }) {
   const theme = useTheme();
   const navigate = useNavigate();
@@ -48,10 +49,10 @@ export default function SuccessModalPopup({
   const { loginData } = useSelector((state) => state?.loginReducer);
 
   const handleCloseModal = () => {
-    if (workDetails) {
-      dispatch(changeUserActiveTab(doctorTabs[1].tabName));
-    }
     setOpen(false);
+    if (loggedInUserType === 'Doctor' && workDetails === true) {
+      dispatch(changeUserActiveTab(doctorTabs[0].tabName));
+    }
   };
   const navigateToSetPassword = () => {
     navigate('/reset-password');
@@ -84,6 +85,9 @@ export default function SuccessModalPopup({
         case 'College':
           ActiveTab = colgTabs[0].tabName;
           break;
+        case 'NBE':
+          ActiveTab = nmcTabs[0].tabName;
+          break;
         default:
           ActiveTab = '';
           break;
@@ -98,11 +102,15 @@ export default function SuccessModalPopup({
           behavior: 'smooth',
         });
       } else {
-        dispatch(getPersonalDetailsData(loginData?.data?.profile_id))
-          .then(() => {})
-          .catch((allFailMsg) => {
-            successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-          });
+        if (
+          loggedInUserType !== 'SMC' &&
+          loggedInUserType !== 'NMC' &&
+          loggedInUserType !== 'College' &&
+          loggedInUserType !== 'NBE'
+        ) {
+          dispatch(getPersonalDetailsData(loginData?.data?.profile_id)).then(() => {});
+        }
+
         dispatch(getCardCount());
         dispatch(changeUserActiveTab(ActiveTab));
 
@@ -113,6 +121,7 @@ export default function SuccessModalPopup({
       }
     }
   };
+
   const navigateLogin = () => {
     dispatch(loginActiveState({ activeIndex: 0 }));
     navigate('/login-page', { state: { loginFormname: loginName } });
@@ -137,6 +146,15 @@ export default function SuccessModalPopup({
     });
   };
 
+  const navigateToDoctorRegistartion = () => {
+    setOpen(false);
+    navigate('/register/doctor-registration');
+    window.location.reload();
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
   return (
     <Modal open={open} onClose={handleClose} sx={{ mt: 15 }}>
       <Container
@@ -148,13 +166,17 @@ export default function SuccessModalPopup({
         }}
       >
         <Box mb={1} display="flex" justifyContent="center">
-          <TaskAltOutlinedIcon
-            sx={{
-              color: theme.palette.success.dark,
-              width: '80px',
-              height: '80px',
-            }}
-          />
+          {fetchDoctorScreenAlertIcon ? (
+            <InfoIcon sx={{ color: 'secondary.lightOrange', width: '50px', height: '50px' }} />
+          ) : (
+            <TaskAltOutlinedIcon
+              sx={{
+                color: theme.palette.success.dark,
+                width: '80px',
+                height: '80px',
+              }}
+            />
+          )}
         </Box>
 
         <Box display="flex" flexDirection="column">
@@ -167,7 +189,7 @@ export default function SuccessModalPopup({
             justifyContent="center"
             mt={2}
           >
-            SUCCESS!
+            {fetchDoctorScreenAlertIcon ? 'Alert' : 'SUCCESS'}
           </Typography>
           <Typography
             display="flex"
@@ -183,9 +205,11 @@ export default function SuccessModalPopup({
           <Button
             sx={{ mt: 5 }}
             variant="contained"
-            color="warning"
+            color="secondary"
             onClick={
-              handleClose
+              fetchDoctorScreenAlertIcon
+                ? navigateToDoctorRegistartion
+                : handleClose
                 ? handleCloseModalALL
                 : isHpIdCreated
                 ? navigateToSetPassword
@@ -202,13 +226,15 @@ export default function SuccessModalPopup({
                 : handleCloseModal
             }
           >
-            {successRegistration
-              ? 'Continue to login'
+            {fetchDoctorScreenAlertIcon
+              ? 'Done'
+              : successRegistration
+              ? 'Login'
               : existHprId
-              ? 'Continue to set your password'
+              ? 'Set Password'
               : changeUserData
               ? 'Okay'
-              : 'Ok'}
+              : 'Done'}
           </Button>
         </Box>
       </Container>

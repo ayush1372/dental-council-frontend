@@ -11,6 +11,7 @@ const initialState = {
   mobileNumber: undefined,
   loggedInUserType: '',
   userActiveTab: '',
+  redirectDashboard: false,
   statesList: { data: [], isLoading: Boolean(true), isError: false },
   citiesList: { data: [], isLoading: Boolean(true), isError: false },
   countriesList: { data: [], isLoading: Boolean(true), isError: false },
@@ -35,6 +36,8 @@ const initialState = {
   doctorTrackApplicationTableData: { data: [], isLoading: Boolean(true), isError: false },
   selectedAcademicStatus: '',
   breadcrumbsActivetab: '',
+  ReactivationData: { data: [], isLoading: Boolean(true), isError: false },
+  enteredEmailMobileValues: { data: [], isLoading: Boolean(true), isError: false },
 };
 
 export const CommonActivity = createSlice({
@@ -61,6 +64,9 @@ export const CommonActivity = createSlice({
     },
     changeUserActiveTab: (state, action) => {
       state.userActiveTab = action.payload;
+    },
+    navigateDashboard: (state, action) => {
+      state.redirectDashboard = action.payload;
     },
     getStates: (state, action) => {
       state.statesList = action.payload;
@@ -134,6 +140,12 @@ export const CommonActivity = createSlice({
     setBreadcrumbsActivetab: (state, action) => {
       state.breadcrumbsActivetab = action.payload;
     },
+    getReactivationData: (state, action) => {
+      state.ReactivationData = action.payload;
+    },
+    getEnteredEmailValue: (state, action) => {
+      state.enteredEmailMobileValues = action.payload;
+    },
   },
 });
 
@@ -146,6 +158,7 @@ export const {
   resetCommonReducer,
   setApiLoading,
   changeUserActiveTab,
+  navigateDashboard,
   getStates,
   getCities,
   getCountries,
@@ -165,11 +178,13 @@ export const {
   searchTrackStatusData,
   getInitiateWorkFlow,
   getActivateLicense,
+  getReactivationData,
   updateTrackApplicationTableData,
   setNewPassword,
   setSelectedAcademicStatus,
   setBreadcrumbsActivetab,
   updateDoctorTrackApplication,
+  getEnteredEmailValue,
 } = CommonActivity.actions;
 
 export default CommonActivity.reducer;

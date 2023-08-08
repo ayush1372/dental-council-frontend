@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import SuccessModalPopup from '../../../../shared/common-modals/success-modal-popup';
 import { updateDoctorWorkDetails } from '../../../../store/actions/doctor-user-profile-actions';
 import { Button, Select, TextField } from '../../../../ui/core';
-import successToast from '../../../../ui/core/toaster';
 
 const reasonOptions = [
   {
@@ -40,37 +39,31 @@ const NonWorkDetails = ({
   const reasonWatch = watch('reason');
 
   const [successModalPopup, setSuccessModalPopup] = useState(false);
+
   const { loginData } = useSelector((state) => state?.loginReducer);
   const { work_details } = useSelector(
     (state) => state?.doctorUserProfileReducer?.workProfileDetails
   );
 
+  useEffect(() => {
+    setValue('reason', workingDetails?.reason);
+  }, [workingDetails]);
+
   const handleSave = () => {
     const workDetails = {
+      current_work_details: [],
       work_details: {
         is_user_currently_working: 1,
+        reason: getValues()?.reason || '',
+        remark: getValues()?.otherReason || '',
       },
-      current_work_details: [
-        {
-          reason: getValues()?.reason,
-          remark: getValues()?.otherReason,
-        },
-      ],
       hp_profile_id: loginData.data.profile_id,
     };
 
-    dispatch(updateDoctorWorkDetails(workDetails, loginData.data.profile_id))
-      .then(() => {
-        setSuccessModalPopup(true);
-      })
-      .catch((allFailMsg) => {
-        successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-      });
+    dispatch(updateDoctorWorkDetails(workDetails, loginData.data.profile_id)).then(() => {
+      setSuccessModalPopup(true);
+    });
   };
-
-  useEffect(() => {
-    setValue('reason', workingDetails[0]?.reason);
-  }, [workingDetails]);
 
   return (
     <>
@@ -79,16 +72,13 @@ const NonWorkDetails = ({
           fullWidth
           error={errors.reason?.message}
           name="reason"
-          label="Please select the reason for presently not working"
+          label="Please select the reason"
           defaultValue={work_details?.reason}
           value={getValues()?.reason}
           required={true}
-          {...register(
-            'reason',
-            getValues()?.reason?.length <= 0 && {
-              required: 'This field is required',
-            }
-          )}
+          {...register('reason', {
+            required: 'Reason is required',
+          })}
           options={reasonOptions}
         />
       </Grid>
@@ -100,13 +90,13 @@ const NonWorkDetails = ({
             multiline
             rows={4}
             fullWidth
+            defaultValue={work_details?.remark}
             error={errors.otherReason?.message}
-            {...register('otherReason', {})}
+            {...register('otherReason')}
             placeholder="Write a reason here . . ."
           />
         </Grid>
       )}
-
       <Grid item xs={12} md={8} lg={6}>
         <Button
           onClick={handleSubmit(handleSave)}
@@ -130,8 +120,9 @@ const NonWorkDetails = ({
       {successModalPopup && (
         <SuccessModalPopup
           open={successModalPopup}
+          workDetails={true}
           setOpen={() => setSuccessModalPopup(false)}
-          text={'Your Work Details has been successfully updated'}
+          text={'Work detail have been updated'}
         />
       )}
     </>

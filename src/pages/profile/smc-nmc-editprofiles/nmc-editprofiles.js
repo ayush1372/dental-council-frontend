@@ -9,7 +9,10 @@ import { SearchableDropdown } from '../../../shared/autocomplete/searchable-drop
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import { getUpdatedNmcProfileData } from '../../../store/actions/nmc-actions';
 import { Button, TextField } from '../../../ui/core';
-import { EmailRegexValidation } from '../../../utilities/common-validations';
+import {
+  EmailRegexValidation,
+  MobileNumberRegexValidation,
+} from '../../../utilities/common-validations';
 const NmcEditProfile = (props) => {
   const userData = useSelector((state) => state?.nmc?.nmcProfileData?.data);
   const { councilNames } = useSelector((state) => state.common);
@@ -45,25 +48,34 @@ const NmcEditProfile = (props) => {
     },
   });
 
-  let nmcUpdatedData = {
-    id: userData?.id,
-    user_id: getValues().user_id,
-    first_name: getValues().first_name,
-    last_name: getValues().last_name,
-    middle_name: getValues().middle_name,
-    state_medical_council: {
-      id: getValues().state_medical_council?.id,
-      code: getValues().state_medical_council?.code,
-      name: getValues().state_medical_council?.name,
-    },
-    ndhm_enrollment: getValues().ndhm_enrollment,
-    enrolled_number: getValues().enrolled_number,
-    display_name: getValues().first_name,
-    email_id: getValues().email_id,
-    mobile_no: getValues().mobile_no,
+  const handleInput = (e) => {
+    e.preventDefault();
+    if (e.target.value.length > 0) {
+      e.target.value = isNaN(e.target.value)
+        ? e.target.value.toString().slice(0, -1)
+        : Math.max(0, parseInt(e.target.value)).toString().slice(0, 10);
+    }
   };
+
   const dispatch = useDispatch();
   const onsubmit = () => {
+    let nmcUpdatedData = {
+      id: userData?.id,
+      user_id: getValues().user_id,
+      first_name: getValues().first_name,
+      last_name: getValues().last_name,
+      middle_name: getValues().middle_name,
+      state_medical_council: {
+        id: getValues().state_medical_council?.id,
+        code: getValues().state_medical_council?.code,
+        name: getValues().state_medical_council?.name,
+      },
+      ndhm_enrollment: getValues().ndhm_enrollment,
+      enrolled_number: getValues().enrolled_number,
+      display_name: getValues().first_name,
+      email_id: getValues().email_id,
+      mobile_no: getValues().mobile_no,
+    };
     dispatch(getUpdatedNmcProfileData(nmcUpdatedData)).then((response) => {
       if (response?.data?.email_id.length > 0) {
         setSuccessModalPopup(true);
@@ -96,14 +108,14 @@ const NmcEditProfile = (props) => {
             fullWidth
             required
             name={'first_name'}
-            placeholder={'Enter Name'}
+            placeholder={'Enter name'}
             defaultValue={getValues().first_name}
             error={errors.first_name?.message}
             {...register('first_name', {
-              required: 'Name is required',
+              required: 'Please enter name',
               pattern: {
-                value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
-                message: 'Enter Valid Name',
+                value: /^(?!^\s)[a-zA-Z\s']*$(?<!\s$)/,
+                message: 'Please enter a valid name',
               },
             })}
           />
@@ -174,7 +186,7 @@ const NmcEditProfile = (props) => {
 
         <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
-            Phone number
+            Mobile Number
           </Typography>
           <Typography component="span" color="error.main">
             *
@@ -183,22 +195,17 @@ const NmcEditProfile = (props) => {
             fullWidth
             required
             name={'mobile_no'}
-            placeholder={'Enter phone number '}
+            placeholder={'Enter mobile number '}
             defaultValue={getValues().mobile_no}
+            onInput={(e) => handleInput(e)}
             error={errors.mobile_no?.message}
-            {...register('mobile_no', {
-              required: 'Phone number is required',
-              pattern: {
-                value: /^[0-9]{10}$/i,
-                message: 'Enter valid phone number',
-              },
-            })}
+            {...register('mobile_no', MobileNumberRegexValidation)}
           />
         </Grid>
 
         <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
-            Email ID
+            Email
           </Typography>
           <Typography component="span" color="error.main">
             *
@@ -208,7 +215,7 @@ const NmcEditProfile = (props) => {
             fullWidth
             required
             name={'email_id'}
-            placeholder={'Enter Email ID'}
+            placeholder={'Enter email'}
             defaultValue={getValues().email_id}
             error={errors.email_id?.message}
             {...register('email_id', EmailRegexValidation)}
@@ -232,11 +239,11 @@ const NmcEditProfile = (props) => {
               defaultValue={getValues().user_id}
               error={errors.user_id?.message}
               {...register('user_id', {
-                required: 'User ID is required',
+                required: 'Please enter user ID',
 
                 pattern: {
                   value: /^[a-zA-Z0-9@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
-                  message: 'Provide a Valid User ID',
+                  message: 'Please enter a valid user ID',
                 },
               })}
             />
@@ -253,11 +260,11 @@ const NmcEditProfile = (props) => {
               name="RegistrationCouncil"
               items={createEditFieldData(councilNames)}
               defaultValue={userData?.state_medical_council}
-              placeholder="Select Your Registration Council"
+              placeholder="Select council"
               clearErrors={clearErrors}
               error={errors.RegistrationCouncil?.message}
               {...register('RegistrationCouncil', {
-                required: 'Registration Council is required',
+                required: 'Please select council',
               })}
               onChange={(currentValue) => {
                 setValue('RegistrationCouncilId', currentValue?.name);
@@ -267,7 +274,7 @@ const NmcEditProfile = (props) => {
         </Grid>
       )}
 
-      <Box display="flex" mt={10} md="auto">
+      <Box display="flex" mt={10} md="auto" justifyContent={'flex-end'}>
         <Button
           variant="contained"
           color="secondary"

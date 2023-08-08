@@ -1,14 +1,15 @@
 import { useState } from 'react';
 
 import BlockIcon from '@mui/icons-material/Block';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloseIcon from '@mui/icons-material/Close';
 import ErrorIcon from '@mui/icons-material/Error';
 import HelpIcon from '@mui/icons-material/Help';
 import { Box, Dialog, Grid, Typography } from '@mui/material';
+import moment from 'moment';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { getDateAndTimeFormat } from '../../helpers/functions/common-functions';
 import ErrorModalPopup from '../../shared/common-modals/error-modal-popup';
 import { getInitiateWorkFlow, raiseQuery, suspendDoctor } from '../../store/actions/common-actions';
 import { Button, Checkbox, DatePicker, RadioGroup, TextField } from '../../ui/core';
@@ -25,15 +26,15 @@ export function SuspendLicenseVoluntaryRetirement({
   selectedAcademicStatus,
   setSuccessPopupMessage,
   selectedSuspendLicenseProfile,
+  selectedRowData,
 }) {
   const dispatch = useDispatch();
 
-  const { userActiveTab } = useSelector((state) => state.common);
+  const { userActiveTab, loggedInUserType } = useSelector((state) => state.common);
   const { loginData } = useSelector((state) => state?.loginReducer);
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { queryRaisedFor } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
   const user_group_id = useSelector((state) => state.loginReducer?.loginData?.data);
-
   const [selectedSuspension, setSelectedSuspension] = useState('voluntary-suspension-check');
 
   const [rejectPopup, setRejectPopup] = useState(false);
@@ -41,7 +42,13 @@ export function SuspendLicenseVoluntaryRetirement({
   const [confirmationModal, setConfirmationModal] = useState(false);
   const [queries, setQueries] = useState([]);
   const [showToDateError, setShowToDateError] = useState(false);
-  const [showFromDateError, setShowFromDateError] = useState(false);
+  const [showRemarkError, setShowRemarkError] = useState(false);
+  const [showConsentError, setShowConsentError] = useState(false);
+
+  let updatedDefaultDateValue = {
+    fromDate: moment(selectedRowData?.start_date).format('YYYY-MM-DD'),
+    toDate: moment(selectedRowData?.end_date).format('YYYY-MM-DD'),
+  };
 
   const {
     register,
@@ -54,6 +61,7 @@ export function SuspendLicenseVoluntaryRetirement({
     mode: 'onChange',
     defaultValues: {
       voluntarySuspendLicense: 'voluntary-suspension-check',
+      fromDate: getDateAndTimeFormat('dateFormat'),
     },
   });
   const { activateLicenseList } = useSelector((state) => state?.common);
@@ -65,43 +73,43 @@ export function SuspendLicenseVoluntaryRetirement({
     switch (selectedValue) {
       case 'forward':
         action_id = 2;
-        setSuccessPopupMessage('Forwarded Successfully');
+        setSuccessPopupMessage('Application has been forwarded');
         break;
       case 'raise':
         action_id = 3;
-        setSuccessPopupMessage('Query Raised Successfully');
+        setSuccessPopupMessage('Query has been raised');
         break;
       case 'verify':
         action_id = 4;
         user_group_id === 3
-          ? setSuccessPopupMessage('Verified Successfully')
-          : setSuccessPopupMessage('Approved Successfully');
-        break;
-      case 'reject':
-        action_id = 5;
-        setSuccessPopupMessage('Rejected Successfully');
-        break;
-      case 'suspend':
-        action_id = 7;
-        setSuccessPopupMessage('Voluntary Suspended');
-        break;
-      case 'blacklist':
-        action_id = 6;
-        setSuccessPopupMessage('Permanently Suspended');
+          ? setSuccessPopupMessage('Application has been approved')
+          : setSuccessPopupMessage('Application has been verified');
         break;
       case 'approve':
         action_id = 4;
         user_group_id === 3
-          ? setSuccessPopupMessage('Approved Successfully')
-          : setSuccessPopupMessage('Verified Successfully');
+          ? setSuccessPopupMessage('Application has been approved')
+          : setSuccessPopupMessage('Application has been verified');
+        break;
+      case 'reject':
+        action_id = 5;
+        setSuccessPopupMessage('Application has been rejected');
+        break;
+      case 'blacklist':
+        action_id = 6;
+        setSuccessPopupMessage('Temporarily Suspended');
+        break;
+      case 'suspend':
+        action_id = 7;
+        setSuccessPopupMessage('Permanently Suspended');
         break;
       default:
         action_id = 1;
-        setSuccessPopupMessage('User ID suspended successfully');
+        setSuccessPopupMessage('User has been suspended');
         break;
     }
     let temp_application_type_id;
-    if (userActiveTab === 'track-status') {
+    if (userActiveTab === 'track-status' || userActiveTab === 'dashboard') {
       temp_application_type_id =
         selectedValue === 'suspend' ? 4 : selectedValue === 'blacklist' ? 3 : 1;
     } else {
@@ -144,11 +152,15 @@ export function SuspendLicenseVoluntaryRetirement({
       application_type_id:
         userActiveTab === 'Activate Licence'
           ? 5
-          : personalDetails?.application_type_id
-          ? personalDetails?.application_type_id
+          : selectedRowData?.application_type_id
+          ? selectedRowData?.application_type_id
           : 1,
       actor_id: loginData?.data?.user_group_id,
-      action_id: action_id,
+      action_id:
+        userActiveTab === 'dashboard' &&
+        (selectedValue === 'blacklist' || selectedValue === 'suspend')
+          ? 4
+          : action_id,
       hp_profile_id: personalDetails?.hp_profile_id
         ? personalDetails?.hp_profile_id
         : userActiveTab === 'voluntary-suspend-license'
@@ -182,7 +194,6 @@ export function SuspendLicenseVoluntaryRetirement({
         ? personalDetails?.application_type_id
         : 1,
     };
-
     try {
       if (
         ((confirmationModal && userActiveTab === 'voluntary-suspend-license') ||
@@ -199,21 +210,15 @@ export function SuspendLicenseVoluntaryRetirement({
                 getValues()?.voluntarySuspendLicense === 'permanent-suspension-check' ||
                 selectedValue === 'suspend'
               ) {
-                setSuccessPopupMessage('Permanently Suspended');
+                setSuccessPopupMessage('Applicant has been permanently suspended');
               } else if (getValues()?.voluntarySuspendLicense === 'voluntary-suspension-check') {
-                setSuccessPopupMessage('Temporarily Suspended');
+                setSuccessPopupMessage('Applicant has been temporarily suspended');
               }
               showSuccessPopup(true);
               setConfirmationModal(false);
             }
           })
-          .catch((allFailMsg) => {
-            successToast(
-              allFailMsg?.data?.response?.data?.message,
-              'auth-error',
-              'error',
-              'top-center'
-            );
+          .catch(() => {
             if (userActiveTab === 'voluntary-suspend-license') {
               setConfirmationModal(false);
             }
@@ -267,8 +272,9 @@ export function SuspendLicenseVoluntaryRetirement({
           ) : selectedValue === 'reject' ? (
             <ErrorIcon color="error" sx={{ fontSize: '40px' }} />
           ) : selectedValue === 'verify' || selectedValue === 'approve' ? (
-            <CheckCircleIcon color="success" sx={{ fontSize: '50px' }} />
+            <ErrorIcon color="error" sx={{ fontSize: '40px' }} />
           ) : (
+            //<CheckCircleIcon color="success" sx={{ fontSize: '50px' }} />
             <BlockIcon color="error" fontSize="width40" />
           )}
         </Box>
@@ -293,19 +299,21 @@ export function SuspendLicenseVoluntaryRetirement({
         </Typography>
       )}
 
-      <Typography variant="h2" mt={2} mb={4} color="primary" textAlign={'center'}>
+      <Typography variant="h2" color="primary" textAlign={'center'}>
         {selectedValue === 'verify'
-          ? 'VERIFY!'
+          ? loggedInUserType === 'NMC'
+            ? 'Approve'
+            : 'Verify'
           : selectedValue === 'raise'
-          ? 'Raise a Query for all'
+          ? 'Raise a Query'
           : selectedValue === 'approve'
-          ? 'Reason to Approve Application'
+          ? 'Approve Application'
           : selectedValue === 'reject'
-          ? 'Reason to Reject Application'
+          ? 'Reject Application'
           : selectedValue === 'suspend'
-          ? 'Want to Permanent Suspend?'
+          ? 'Permanently Suspend'
           : selectedValue === 'blacklist'
-          ? 'Request NMC to Temporary Suspend?'
+          ? 'Temporarily Suspend'
           : ''}
       </Typography>
       {selectedValue === 'raise' ||
@@ -317,10 +325,10 @@ export function SuspendLicenseVoluntaryRetirement({
       ) : (
         <Box>
           {tabName === 'voluntary-suspend-license' && (
-            <Grid item xs={12} md={12} mb={2}>
+            <Grid item xs={12} mb={2}>
               <Typography variant="subtitle2" color="textPrimary.main">
                 {'Select Suspension'}
-                <Typography variant="body4" color="error.main">
+                <Typography component="span" color="error.main">
                   *
                 </Typography>
               </Typography>
@@ -349,21 +357,32 @@ export function SuspendLicenseVoluntaryRetirement({
             </Grid>
           )}
 
-          <Typography variant="subtitle2">
-            {'Add Timeline'}
-            <Typography variant="body4" color="error.main">
-              *
-            </Typography>
-          </Typography>
+          <Typography variant="subtitle2">{'Add Timeline'}</Typography>
           <Grid container mt={1} columnSpacing={4}>
             <Grid item xs={12} md={6} lg={6}>
               <Typography component={'p'} variant="body1">
-                Select From Date
-                <Typography variant="body2" color="error">
+                From Date
+                <Typography component="span" color="error">
                   {'*'}
                 </Typography>
               </Typography>
               <DatePicker
+                disabled
+                value={
+                  loggedInUserType === 'NMC'
+                    ? new Date(updatedDefaultDateValue?.fromDate)
+                    : new Date()
+                }
+                minDate={
+                  loggedInUserType === 'NMC'
+                    ? new Date(updatedDefaultDateValue?.fromDate)
+                    : new Date()
+                }
+                maxDate={
+                  loggedInUserType === 'NMC'
+                    ? new Date(updatedDefaultDateValue?.fromDate)
+                    : new Date()
+                }
                 onChangeDate={(newDateValue) => {
                   if (
                     selectedSuspension === 'permanent-suspension-check' ||
@@ -381,19 +400,20 @@ export function SuspendLicenseVoluntaryRetirement({
                           ) + 99
                         )
                     );
-                  } else {
-                    setValue('fromDate', new Date(newDateValue)?.toLocaleDateString('en-GB'));
                   }
+                  //  else {
+                  //   setValue('fromDate', new Date(newDateValue)?.toLocaleDateString('en-GB'));
+                  // }
 
-                  if (getValues().fromDate !== undefined) {
-                    setShowFromDateError(false);
-                  }
+                  // if (getValues().fromDate !== undefined) {
+                  //   setShowFromDateError(false);
+                  // }
                 }}
                 data-testid="fromDate"
                 id="fromDate"
                 name="fromDate"
-                required={true}
-                error={showFromDateError ? 'Enter From Date' : false}
+                required={loggedInUserType === 'NMC' ? false : true}
+                // error={showFromDateError ? 'Enter From Date' : false}
               />
             </Grid>
             <Grid item xs={12} md={6} my={{ xs: 1, md: 0 }}>
@@ -402,8 +422,8 @@ export function SuspendLicenseVoluntaryRetirement({
                 selectedValue === 'blacklist') && (
                 <>
                   <Typography component={'p'} variant="body1">
-                    Select To Date
-                    <Typography variant="body2" color="error">
+                    To Date
+                    <Typography component="span" color="error">
                       {'*'}
                     </Typography>
                   </Typography>
@@ -420,14 +440,27 @@ export function SuspendLicenseVoluntaryRetirement({
                     name="toDate"
                     disabled={
                       selectedSuspension === 'permanent-suspension-check' ||
-                      selectedValue === 'suspend'
+                      selectedValue === 'suspend' ||
+                      (loggedInUserType === 'NMC' && selectedRowData?.end_date)
                         ? true
                         : false
                     }
-                    minDate={getValues()?.fromDate ? new Date(getValues()?.fromDate) : new Date()}
+                    value={
+                      loggedInUserType === 'NMC'
+                        ? new Date(updatedDefaultDateValue?.toDate)
+                        : getValues()?.toDate
+                        ? new Date(getValues()?.toDate)
+                        : undefined
+                    }
+                    minDate={
+                      loggedInUserType === 'NMC'
+                        ? new Date(updatedDefaultDateValue?.toDate)
+                        : new Date()
+                    }
                     required={true}
-                    defaultValue={getValues()?.toDate ? new Date(getValues()?.toDate) : undefined}
-                    error={showToDateError ? 'Enter To Date' : false}
+                    error={
+                      loggedInUserType === 'NMC' ? false : showToDateError ? 'Enter To Date' : false
+                    }
                   />
                 </>
               )}
@@ -446,8 +479,13 @@ export function SuspendLicenseVoluntaryRetirement({
             {selectedValue === 'raise' || selectedValue === 'reject' || selectedValue === 'approve'
               ? 'Add Reason'
               : 'Remarks'}
-            <Typography variant="body4" color="error.main">
-              *
+            <Typography component="span" color="error.main">
+              {tabName === 'voluntary-suspend-license' ||
+              selectedValue === 'approve' ||
+              selectedValue === 'reject' ||
+              selectedValue === 'forward'
+                ? '*'
+                : ''}
             </Typography>
           </Typography>
           <Grid item xs={12}>
@@ -459,7 +497,13 @@ export function SuspendLicenseVoluntaryRetirement({
               multiline
               minRows={4}
               name="remark"
-              required={true}
+              required={
+                tabName === 'voluntary-suspend-license' ||
+                selectedValue === 'approve' ||
+                selectedValue === 'forward'
+                  ? true
+                  : false
+              }
               placeholder={
                 tabName || selectedValue === 'suspend' || selectedValue === 'blacklist'
                   ? 'Add a reason...'
@@ -469,13 +513,45 @@ export function SuspendLicenseVoluntaryRetirement({
                   ? 'Add your reason here . . .'
                   : ''
               }
-              defaultValue={getValues().remark}
-              error={errors.remark?.message}
+              disabled={
+                loggedInUserType === 'NMC' &&
+                selectedRowData?.remark &&
+                (selectedValue === 'suspend' || selectedValue === 'blacklist')
+              }
+              defaultValue={getValues()?.remark || selectedRowData?.remark}
+              error={
+                selectedValue === 'raise' ||
+                selectedValue === 'reject' ||
+                selectedValue === 'suspend' ||
+                selectedValue === 'blacklist'
+                  ? false
+                  : showRemarkError
+                  ? 'Enter Remarks'
+                  : errors?.remark?.message
+              }
               {...register('remark', {
-                required: 'Enter Remarks',
-                pattern: {
-                  value: /^\W*(?:\w+\b\W*){1,300}?$/i,
-                  message: 'Maximum word limit exceeded',
+                required:
+                  tabName === 'voluntary-suspend-license' ||
+                  selectedValue === 'approve' ||
+                  selectedValue === 'forward'
+                    ? 'Enter Remarks'
+                    : false,
+                pattern:
+                  selectedValue === 'approve'
+                    ? {}
+                    : {
+                        value: /^\W*(?:\w+\b\W*){1,300}?$/i,
+                        message: 'Maximum word limit exceeded',
+                      },
+                onChange: (e) => {
+                  if (e.target.value !== '') {
+                    if (
+                      tabName === 'voluntary-suspend-license' ||
+                      selectedValue === 'approve' ||
+                      selectedValue === 'forward'
+                    )
+                      return setShowRemarkError(false);
+                  }
                 },
               })}
             />
@@ -489,21 +565,21 @@ export function SuspendLicenseVoluntaryRetirement({
       )}
       <Box align={selectedValue === 'verify' ? 'center' : ''}>
         <Typography
-          mt={2}
+          mt={1}
           color="grey.context"
           textAlign={selectedValue === 'verify' || selectedValue === 'forward' ? 'center' : ''}
           variant="h3"
         >
           {selectedValue === 'verify' &&
-          (selectedAcademicStatus !== 'Temporary Suspension Requests Received' ||
-            selectedAcademicStatus !== 'Permanent Suspension Requests Received')
-            ? 'Are you sure you want to approve the details of the doctor?'
-            : selectedValue === 'verify' &&
-              (selectedAcademicStatus === 'Temporary Suspension Requests Received' ||
-                selectedAcademicStatus === 'Permanent Suspension Requests Received')
-            ? 'Are you sure you want to approve suspension request of the doctor.'
+          (selectedAcademicStatus === 'Temporary Suspension Requests Received' ||
+            selectedAcademicStatus === 'Permanent Suspension Requests Received')
+            ? 'Are you sure you want to suspend this application?'
+            : selectedValue === 'verify' && user_group_id?.user_group_id !== 3
+            ? 'Are you sure you want to verify this application?'
+            : selectedValue === 'verify' && user_group_id?.user_group_id === 3
+            ? 'Are you sure you want to approve this application?'
             : selectedValue === 'forward'
-            ? 'Are you sure you want to forward the doctor details to College/NBE?'
+            ? 'Are you sure you want to forward this application to College/NBE?'
             : ''}
         </Typography>
       </Box>
@@ -511,26 +587,38 @@ export function SuspendLicenseVoluntaryRetirement({
       {tabName || selectedValue === 'blacklist' || selectedValue === 'suspend' ? (
         <>
           <Typography variant="subtitle2">
-            {'Consent'}
-            <Typography variant="body4" color="error.main">
+            {'Declaration'}
+            <Typography component="span" color="error.main">
               *
             </Typography>
           </Typography>
-          <Box ml={1}>
+          <Box>
             <Checkbox
               name="notification"
               {...register('notification', {
                 required: 'Please indicate that you accept the Terms and Conditions',
+                onChange: (e) => {
+                  if (e.target.checked) {
+                    setShowConsentError(false);
+                  } else {
+                    setShowConsentError(true);
+                  }
+                },
               })}
               sx={{ padding: '0 8px 0 0' }}
+              checked={loggedInUserType === 'NMC' ? true : getValues()?.notification}
               label={
                 tabName
-                  ? 'I understand that during the period of my suspension, I will not be able to practice, and my NMR profile will be deactivated.'
+                  ? 'I understand that during the period of my suspension, I will not be able to practice and my NMR profile will be deactivated.'
                   : selectedValue === 'blacklist' || selectedValue === 'suspend'
                   ? 'Doctor will no longer be able to receive notifications or perform actions on his/her profile.'
                   : ''
               }
-              error={errors.notification?.message}
+              error={
+                showConsentError
+                  ? 'Please indicate that you accept the Terms and Conditions'
+                  : errors.notification?.message
+              }
             />
           </Box>
         </>
@@ -539,7 +627,12 @@ export function SuspendLicenseVoluntaryRetirement({
       )}
       {selectedValue === 'raise' && (
         <Box>
-          <Typography>Raise a Query for the following*</Typography>
+          <Typography>
+            Raise a query for the following
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
+          </Typography>
           <Box display={'flex'}>
             <Box my={4} color="inputTextColor.main">
               {queryRaisedFor?.map((fieldData, index) => {
@@ -564,6 +657,7 @@ export function SuspendLicenseVoluntaryRetirement({
                     }}
                     label={fieldData?.filedName}
                     error={errors.notification?.message}
+                    // defaultChecked={queryRaisedFor?.length !== 0 ? true : false}
                   />
                 );
               })}
@@ -572,26 +666,37 @@ export function SuspendLicenseVoluntaryRetirement({
         </Box>
       )}
       {tabName && (
-        <Box align="left" my={5}>
+        <Box align="left" my={3} mb={0}>
           <Button
             variant="contained"
             color="secondary"
             onClick={() => {
               if (tabName === 'voluntary-suspend-license') {
-                if (personalDetails?.work_flow_status_id === 1) {
-                  setRejectPopup(true);
-                } else {
-                  setConformSuspend(true);
-                  setConfirmationModal(true);
+                if (getValues().toDate === undefined) {
+                  setShowToDateError(true);
+                }
+                if (getValues()?.remark === undefined || getValues()?.remark === '') {
+                  setShowRemarkError(true);
+                }
+                if (getValues().notification === false) {
+                  setShowConsentError(true);
+                }
+                if (
+                  getValues().toDate !== undefined &&
+                  getValues().fromDate !== undefined &&
+                  getValues().notification !== false &&
+                  getValues()?.remark !== undefined &&
+                  getValues()?.remark !== ''
+                ) {
+                  if (personalDetails?.work_flow_status_id === 1) {
+                    setRejectPopup(true);
+                  } else {
+                    setConformSuspend(true);
+                    setConfirmationModal(true);
+                  }
                 }
               } else {
                 handleSubmit(onSubmit);
-              }
-              if (getValues().toDate === undefined) {
-                setShowToDateError(true);
-              }
-              if (getValues().fromDate === undefined) {
-                setShowFromDateError(true);
               }
             }}
             sx={{
@@ -629,7 +734,7 @@ export function SuspendLicenseVoluntaryRetirement({
       {rejectPopup && (
         <ErrorModalPopup
           open={setRejectPopup}
-          text={`Your account data is pending status.
+          text={`Your account data is in pending status.
                   You cannot suspend now. `}
           handleClose={() => {
             setRejectPopup(false);
@@ -684,9 +789,6 @@ export function SuspendLicenseVoluntaryRetirement({
           )}
           {selectedValue === 'verify' || selectedValue === 'forward' ? (
             <Box align="center">
-              <Button color="grey" variant="contained" sx={{ marginLeft: 2 }} onClick={handleClose}>
-                No
-              </Button>
               <Button
                 color="secondary"
                 variant="contained"
@@ -694,6 +796,9 @@ export function SuspendLicenseVoluntaryRetirement({
                 onClick={handleSubmit(onSubmit)}
               >
                 Yes
+              </Button>
+              <Button color="grey" variant="contained" sx={{ marginLeft: 2 }} onClick={handleClose}>
+                No
               </Button>
             </Box>
           ) : (
@@ -737,6 +842,16 @@ export function SuspendLicenseVoluntaryRetirement({
             </Box>
             <Box display={'flex'} justifyContent={'flex-end'} mt={1}>
               <Button
+                onClick={handleSubmit(onSubmit)}
+                color="secondary"
+                variant="contained"
+                sx={{
+                  margin: '0 4px',
+                }}
+              >
+                Yes
+              </Button>
+              <Button
                 onClick={() => {
                   setConformSuspend(false);
                   setConfirmationModal(false);
@@ -749,16 +864,6 @@ export function SuspendLicenseVoluntaryRetirement({
                 }}
               >
                 No
-              </Button>
-              <Button
-                onClick={handleSubmit(onSubmit)}
-                color="secondary"
-                variant="contained"
-                sx={{
-                  margin: '0 4px',
-                }}
-              >
-                Yes
               </Button>
             </Box>
           </Box>

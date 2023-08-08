@@ -11,9 +11,11 @@ import { useSelector } from 'react-redux';
 import AttachmentViewPopup from '../../../../shared/query-modal-popup/attachement-view-popup';
 import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-popup';
 
-const RegistrationDetailsContent = ({ selectedDataIndex }) => {
+const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus }) => {
   const { data } = useSelector((state) => state.loginReducer?.loginData);
-  const { registrationDetails } = useSelector((state) => state.doctorUserProfileReducer);
+  const { registrationDetails, personalDetails } = useSelector(
+    (state) => state.doctorUserProfileReducer
+  );
   const { raisedQueryData } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
 
   const [openModal, setOpenModal] = useState(false);
@@ -28,6 +30,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
     setOpenModal(false);
   };
   const { registration_detail_to } = registrationDetails || {};
+
   const {
     registration_date,
     registration_number,
@@ -51,11 +54,11 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
   };
 
   return (
-    <Grid container spacing={2} mt={2}>
-      <Grid container item spacing={2} mt={1}>
+    <Grid container spacing={1} mt={1}>
+      <Grid container item spacing={1}>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
-            Registered with Council
+            Registered Council Name
             <Typography component="span" color="error.main">
               *
             </Typography>
@@ -72,7 +75,10 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
 
             {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
               data?.user_type === 3) &&
-              dashboardTableDetails !== 'Approved' && (
+              dashboardTableDetails !== 'Approved' &&
+              selectedAcademicStatus === 'Pending' &&
+              personalDetails?.hp_profile_status_id === 1 &&
+              !data?.is_admin && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
                   color="primary"
@@ -103,7 +109,10 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
             </Typography>
             {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
               data?.user_type === 3) &&
-              dashboardTableDetails !== 'Approved' && (
+              dashboardTableDetails !== 'Approved' &&
+              selectedAcademicStatus === 'Pending' &&
+              personalDetails?.hp_profile_status_id === 1 &&
+              !data?.is_admin && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
                   color="primary"
@@ -134,7 +143,10 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
             </Typography>
             {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
               data?.user_type === 3) &&
-              dashboardTableDetails !== 'Approved' && (
+              dashboardTableDetails !== 'Approved' &&
+              selectedAcademicStatus === 'Pending' &&
+              personalDetails?.hp_profile_status_id === 1 &&
+              !data?.is_admin && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
                   color="primary"
@@ -148,10 +160,10 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid container item spacing={2} mt={1}>
+      <Grid container item spacing={1}>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
-            Registration
+            Registration Type
             <Typography component="span" color="error.main">
               *
             </Typography>
@@ -167,7 +179,10 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
             </Typography>
             {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
               data?.user_type === 3) &&
-              dashboardTableDetails !== 'Approved' && (
+              dashboardTableDetails !== 'Approved' &&
+              selectedAcademicStatus === 'Pending' &&
+              personalDetails?.hp_profile_status_id === 1 &&
+              !data?.is_admin && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
                   color="primary"
@@ -193,11 +208,14 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
             <Typography color="textPrimary.main" variant="subtitle2">
               {renewable_registration_date && is_renewable === '1'
                 ? moment(renewable_registration_date).format('DD-MM-YYYY')
-                : ''}
+                : '-'}
             </Typography>
             {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
               data?.user_type === 3) &&
-              dashboardTableDetails !== 'Approved' && (
+              dashboardTableDetails !== 'Approved' &&
+              selectedAcademicStatus === 'Pending' &&
+              personalDetails?.hp_profile_status_id === 1 &&
+              !data?.is_admin && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
                   color="primary"
@@ -212,7 +230,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
         </Grid>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
-            Upload the Registration Certificate
+            Upload Registration Certificate
             <Typography component="span" color="error.main">
               *
             </Typography>
@@ -239,7 +257,10 @@ const RegistrationDetailsContent = ({ selectedDataIndex }) => {
             </Typography>
             {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
               data?.user_type === 3) &&
-              dashboardTableDetails !== 'Approved' && (
+              dashboardTableDetails !== 'Approved' &&
+              selectedAcademicStatus === 'Pending' &&
+              personalDetails?.hp_profile_status_id === 1 &&
+              !data?.is_admin && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
                   color="primary"

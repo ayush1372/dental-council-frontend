@@ -12,7 +12,8 @@ import {
   updateCollegeRegistrarData,
 } from '../../../store/actions/college-actions';
 import { Button, TextField } from '../../../ui/core';
-import successToast from '../../../ui/core/toaster';
+import { EmailRegexValidation } from '../../../utilities/common-validations';
+// import successToast from '../../../ui/core/toaster';
 
 export function CollegeRegistrar({ showPage, updateShowPage }) {
   const { t } = useTranslation();
@@ -39,6 +40,14 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
     },
   });
 
+  const handleInput = (e) => {
+    e.preventDefault();
+    if (e.target.value.length > 0) {
+      e.target.value = isNaN(e.target.value)
+        ? e.target.value.toString().slice(0, -1)
+        : Math.max(0, parseInt(e.target.value)).toString().slice(0, 10);
+    }
+  };
   const onSubmit = (fieldData) => {
     let registrarData = {
       // name: showPage === 'edit' ? fieldData.registrarName : null,
@@ -54,16 +63,17 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
       email_id: showPage === 'edit' ? fieldData?.registrarEmail : null,
     };
     if (showPage === 'edit') {
-      dispatch(updateCollegeRegistrarData(registrarData, userData?.college_id, userData?.id))
-        .then((response) => {
+      dispatch(updateCollegeRegistrarData(registrarData, userData?.college_id, userData?.id)).then(
+        (response) => {
           dispatch(collegeProfileData(userData?.college_id, userData?.id));
           if (response?.isError === false) {
             setSuccessModalPopup(true);
           }
-        })
-        .catch((error) => {
-          successToast(error?.data?.response?.data?.message, 'UpdateError', 'error', 'top-center');
-        });
+        }
+      );
+      // .catch((error) => {
+      //   successToast(error?.data?.response?.data?.message, 'UpdateError', 'error', 'top-center');
+      // });
     } else {
       dispatch(sendRegistrarDetails(registrarData, userData?.id));
     }
@@ -78,10 +88,10 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
             updateShowPage('Profile');
             setSuccessModalPopup(false);
           }}
-          text={'College Registrar Data has been Updated Successfully.'}
+          text={'College Registrar data has been updated.'}
         />
       )}
-      <Grid item xs={12} mt={5}>
+      <Grid item xs={12}>
         <Box>
           <Typography color="textPrimary.main" variant="h2">
             {showPage === 'edit' ? 'Edit College Registrar' : 'College Registrar'}
@@ -103,12 +113,17 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
           type="text"
           name="registrarName"
           required="true"
-          placeholder={t('College Registrar Name')}
+          placeholder={t('Enter name')}
           margin="dense"
           defaultValue={getValues().registrarName}
           error={errors.registrarName?.message}
           {...register('registrarName', {
-            required: 'Enter valid name',
+            required: 'Please enter name',
+
+            pattern: {
+              value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
+              message: 'Please enter a valid name',
+            },
           })}
         />
       </Grid>
@@ -127,7 +142,7 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
           type="text"
           name="designation"
           required="true"
-          placeholder={t('College Registrar')}
+          placeholder={t('Enter designation')}
           margin="dense"
           defaultValue={'College Registrar'}
           value={'College Registrar'}
@@ -136,7 +151,7 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
       </Grid>
       <Grid item xs={12} md={6} sm={6} lg={4}>
         <Typography variant="body1" color="inputTextColor.main">
-          <b>{t(' Phone Number')}</b>
+          <b>{t(' Mobile Number')}</b>
         </Typography>
         <Typography component="span" color="error.main">
           *
@@ -149,22 +164,23 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
           type="text"
           name="registrarPhoneNumber"
           required="true"
-          placeholder={t('College Registrar Phone Number')}
+          placeholder={t('Enter mobile number')}
           margin="dense"
           defaultValue={getValues().registrarPhoneNumber}
+          onInput={(e) => handleInput(e)}
           error={errors.registrarPhoneNumber?.message}
           {...register('registrarPhoneNumber', {
-            required: 'Enter valid phone number',
+            required: 'Please enter mobile number',
             pattern: {
               value: /^(\d{10})$/i,
-              message: 'Enter valid phone number',
+              message: 'Please enter a valid 10 digit mobile number',
             },
           })}
         />
       </Grid>
       <Grid item xs={12} md={6} sm={6} lg={4}>
         <Typography variant="body1" color="inputTextColor.main">
-          <b>{t(' Email Address')}</b>
+          <b>{t(' Email')}</b>
         </Typography>
         <Typography component="span" color="error.main">
           *
@@ -177,18 +193,11 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
           type="email"
           name="registrarEmail"
           required="true"
-          placeholder={t('College Registrar Email Address')}
+          placeholder={t('Enter email')}
           margin="dense"
           defaultValue={getValues().registrarEmail}
           error={errors.registrarEmail?.message}
-          {...register('registrarEmail', {
-            required: 'Enter valid email address',
-            pattern: {
-              value:
-                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3,}))$/,
-              message: 'Enter valid email address',
-            },
-          })}
+          {...register('registrarEmail', EmailRegexValidation)}
         />
       </Grid>
       <Grid container item spacing={2} mt={{ lg: 1 }}>
@@ -213,9 +222,7 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
             <SuccessModalPopup
               open={successModalPopup}
               setOpen={() => setSuccessModalPopup(false)}
-              text={
-                'You have successfully registered your College Registrar. Defined credentials have been sent on the Email ID and Phone number you registered'
-              }
+              text={`Registrar profile has been created. Further details would be sent on registrar's registered Email ID`}
             />
           )}
         </Grid>

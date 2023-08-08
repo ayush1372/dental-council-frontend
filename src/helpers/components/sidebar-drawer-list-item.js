@@ -49,7 +49,7 @@ export const doctorTabs = [
   },
   {
     option: 2,
-    name: 'Voluntary Suspend License',
+    name: 'Voluntary Suspend Licence',
     tabName: 'voluntary-suspend-license',
     icon: <CreditCardOffIcon />,
     element: <VoluntarySuspendLicense tabName={SideDrawerListItem} />,

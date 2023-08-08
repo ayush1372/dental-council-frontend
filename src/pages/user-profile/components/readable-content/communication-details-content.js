@@ -7,27 +7,32 @@ const CommunicationAddress = ({ personalDetails }) => {
   const { country, state, district, sub_district, pincode, village, is_same_address } =
     communication_address || {};
 
-  const countryName = is_same_address
-    ? personalDetails?.kyc_address?.country?.name || ''
-    : country?.name || '';
-  const stateName = is_same_address
-    ? personalDetails?.kyc_address?.state?.name || ''
-    : state?.name || '';
-  const districtName = is_same_address
-    ? personalDetails?.kyc_address?.district?.name || ''
-    : district?.name || '';
-  const subDistrictName = is_same_address
-    ? personalDetails?.kyc_address?.sub_district?.name || ''
-    : sub_district?.name || '';
-  const villageName = is_same_address
-    ? personalDetails?.kyc_address?.village?.name || ''
-    : village?.name || '';
+  const countryName =
+    is_same_address === 'true'
+      ? personalDetails?.kyc_address?.country?.name || ''
+      : country?.name || '';
+  const stateName =
+    is_same_address === 'true'
+      ? personalDetails?.kyc_address?.state?.name || ''
+      : state?.name || '';
+  const districtName =
+    is_same_address === 'true'
+      ? personalDetails?.kyc_address?.district?.name || ''
+      : district?.name || '';
+  const subDistrictName =
+    is_same_address === 'true'
+      ? personalDetails?.kyc_address?.sub_district?.name || ''
+      : sub_district?.name || '';
+  const villageName =
+    is_same_address === 'true'
+      ? personalDetails?.kyc_address?.village?.name || ''
+      : village?.name || '';
 
   return (
-    <Grid container spacing={2} mt={2}>
-      <Grid container item spacing={2}>
+    <Grid container spacing={1} mt={1}>
+      <Grid container item spacing={1}>
         <Grid item xs={12} md={3}>
-          <Typography variant="body5" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             House
             <Typography component="span" color="error.main">
               *
@@ -43,7 +48,7 @@ const CommunicationAddress = ({ personalDetails }) => {
         </Grid>
 
         <Grid item xs={12} md={3}>
-          <Typography variant="body5" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             Street
           </Typography>
 
@@ -56,7 +61,7 @@ const CommunicationAddress = ({ personalDetails }) => {
           </Grid>
         </Grid>
         <Grid item xs={12} md={3}>
-          <Typography variant="body5" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             Landmark
           </Typography>
 
@@ -70,7 +75,7 @@ const CommunicationAddress = ({ personalDetails }) => {
           </Grid>
         </Grid>
         <Grid item xs={12} md={3}>
-          <Typography variant="bod5" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             City/Town/Village
           </Typography>
 
@@ -81,9 +86,9 @@ const CommunicationAddress = ({ personalDetails }) => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid container item spacing={2}>
+      <Grid container item spacing={1}>
         <Grid item xs={12} md={3}>
-          <Typography variant="body5" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             District
             <Typography component="span" color="error.main">
               *
@@ -96,7 +101,7 @@ const CommunicationAddress = ({ personalDetails }) => {
           </Grid>
         </Grid>
         <Grid item xs={12} md={3}>
-          <Typography variant="body5" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             Sub District
           </Typography>
 
@@ -107,7 +112,7 @@ const CommunicationAddress = ({ personalDetails }) => {
           </Grid>
         </Grid>
         <Grid item xs={12} md={3}>
-          <Typography variant="body5" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             State/Union Territory
             <Typography component="span" color="error.main">
               *
@@ -120,7 +125,7 @@ const CommunicationAddress = ({ personalDetails }) => {
           </Grid>
         </Grid>
         <Grid item xs={12} md={3}>
-          <Typography variant="body5" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             Country
             <Typography component="span" color="error.main">
               *
@@ -134,9 +139,9 @@ const CommunicationAddress = ({ personalDetails }) => {
         </Grid>
       </Grid>
 
-      <Grid container item spacing={2}>
+      <Grid container item spacing={1}>
         <Grid item xs={12} md={3}>
-          <Typography variant="body5" color="grey.label">
+          <Typography variant="subtitle2" color="grey.label">
             Pincode
             <Typography component="span" color="error.main">
               *

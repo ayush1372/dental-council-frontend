@@ -7,7 +7,7 @@ import { yearsData } from '../../../constants/common-data';
 import { createSelectFieldData } from '../../../helpers/functions/common-functions';
 import { searchDoctorDetails } from '../../../store/actions/doctor-search-actions';
 import { Button, Select, TextField } from '../../../ui/core';
-import successToast from '../../../ui/core/toaster';
+// import successToast from '../../../ui/core/toaster';
 
 const SuspendedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
   const { councilNames } = useSelector((state) => state.common);
@@ -34,7 +34,7 @@ const SuspendedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
       registrationNumber: getValues().RegistrationNumber,
       registrationYear: getValues().YearofRegistration,
       stateMedicalCouncilId: getValues().RegistrationCouncilId,
-      profileStatusId: 5,
+      profileStatusId: `5,6`,
       page: 0,
       size: 9,
     };
@@ -42,16 +42,15 @@ const SuspendedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
     setDoSearch(true);
     setSearchData(searchValues);
     setScrollDown(true);
-    dispatch(searchDoctorDetails(searchValues))
-      .then(() => {})
-      .catch((error) => {
-        successToast(
-          error?.data?.response?.data?.error,
-          'RegistrationError',
-          'error',
-          'top-center'
-        );
-      });
+    dispatch(searchDoctorDetails(searchValues)).then(() => {});
+    // .catch((error) => {
+    //   successToast(
+    //     error?.data?.response?.data?.error,
+    //     'RegistrationError',
+    //     'error',
+    //     'top-center'
+    //   );
+    // });
   };
   return (
     <Grid container spacing={2} mt={2}>
@@ -83,7 +82,7 @@ const SuspendedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
           variant="outlined"
           name={'DoctorName'}
           placeholder="Enter doctor name"
-          label={'Doctor name'}
+          label={'Doctor Name'}
           fullWidth
           defaultValue={getValues().DoctorName}
           {...register('DoctorName', {
@@ -103,7 +102,7 @@ const SuspendedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
       <Grid item xs={4}>
         <Grid>
           <Typography color="inputTextColor.main">
-            Registration number
+            Registration Number
             {/* <ErrorOutlineIcon
               fontSize="width12"
               sx={{
@@ -137,7 +136,7 @@ const SuspendedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
             fullWidth
             error={errors.YearofRegistration?.message}
             name="YearofRegistration"
-            label=" Year of registration"
+            label=" Year of Registration"
             placeholder="Select year of registration"
             defaultValue={getValues().yearofRegistration}
             {...register('YearofRegistration', {
@@ -154,7 +153,7 @@ const SuspendedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
             fullWidth
             error={errors.Statemedicalcouncil?.message}
             name="Statemedicalcouncil"
-            label=" State medical council"
+            label=" State Medical Council"
             placeholder="Select state medical council"
             defaultValue={getValues().Statemedicalcouncil}
             {...register('Statemedicalcouncil', {

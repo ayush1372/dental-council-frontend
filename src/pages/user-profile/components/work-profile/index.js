@@ -1,24 +1,24 @@
 import { useEffect, useState } from 'react';
 
-import { Container, Grid, Typography } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { ErrorMessages } from '../../../../constants/error-messages';
 import { getWorkProfileDetailsData } from '../../../../store/actions/doctor-user-profile-actions';
 import { RadioGroup } from '../../../../ui/core';
 import successToast from '../../../../ui/core/toaster';
+import FacilityDetailsTable from './facility-details-table';
 import NonWorkDetails from './non-work-details';
 import WorkDetails from './work-details';
 
 const WorkProfile = () => {
   const dispatch = useDispatch();
   const { loginData } = useSelector((state) => state.loginReducer);
+  const { workProfileDetails } = useSelector((state) => state.doctorUserProfileReducer);
 
   const [currentlyWorking, setCurrentlyWorking] = useState('');
-  const [workingDetails, setWorkingDetails] = useState('');
-  const { work_details } = useSelector(
-    (state) => state?.doctorUserProfileReducer?.workProfileDetails
-  );
+  const [defaultFacilityData, setDefaultFacilityData] = useState([]);
 
   useEffect(() => {
     dispatch(getWorkProfileDetailsData(loginData?.data?.profile_id))
@@ -27,16 +27,11 @@ const WorkProfile = () => {
           setCurrentlyWorking(
             response?.data?.work_details?.is_user_currently_working === 1 ? 'no' : 'yes'
           );
-          setWorkingDetails(response?.data?.current_work_details);
+          setDefaultFacilityData(response?.data);
         }
       })
       .catch(() => {
-        successToast(
-          'No matching work profile details found for the given hp_profile_id.',
-          'auth-error',
-          'error',
-          'top-center'
-        );
+        successToast(ErrorMessages.noMatchingWork, 'auth-error', 'error', 'top-center');
       });
   }, []);
 
@@ -47,6 +42,7 @@ const WorkProfile = () => {
     register,
     setValue,
     watch,
+    clearErrors,
   } = useForm({
     mode: 'onChange',
     defaultValues: {},
@@ -73,57 +69,90 @@ const WorkProfile = () => {
   };
 
   return (
-    <Container>
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="inputTextColor.main">
-            Are you currently working
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
+    
+    <Grid container spacing={2} px={3}>
+      <Typography variant={'h2'} color={'primary.main'} px={2} pt={3} pb={0}>Work Details</Typography>
+      <Grid item xs={12} md={4}>
+        <Typography variant="subtitle2" color="inputTextColor.main">
+          Are you Currently Working?
+          <Typography component="span" color="error.main">
+            *
           </Typography>
-          <RadioGroup
-            onChange={handleCurrentWorking}
-            name={'currentWorkingSelection'}
-            size="small"
-            defaultValue={work_details?.is_user_currently_working === 1 ? 'no' : ''}
-            items={[
-              {
-                value: 'yes',
-                label: 'Yes',
-              },
-              {
-                value: 'no',
-                label: 'No',
-              },
-            ]}
-            value={currentlyWorking}
-          />
-        </Grid>
-        {currentlyWorking === 'no' && (
-          <NonWorkDetails
-            errors={errors}
-            getValues={getValues}
-            register={register}
-            setValue={setValue}
-            handleSubmit={handleSubmit}
-            watch={watch}
-            workingDetails={workingDetails}
-          />
-        )}
-        {currentlyWorking === 'yes' && (
-          <WorkDetails
-            currentWorkingSelection={currentlyWorking}
-            errors={errors}
-            getValues={getValues}
-            register={register}
-            setValue={setValue}
-            handleSubmit={handleSubmit}
-            watch={watch}
-          />
-        )}
+        </Typography>
+        <RadioGroup
+          onChange={handleCurrentWorking}
+          name={'currentWorkingSelection'}
+          size="small"
+          items={[
+            {
+              value: 'yes',
+              label: 'Yes',
+            },
+            {
+              value: 'no',
+              label: 'No',
+            },
+          ]}
+          value={currentlyWorking}
+        />
       </Grid>
-    </Container>
+      {currentlyWorking === 'no' && (
+        <NonWorkDetails
+          errors={errors}
+          getValues={getValues}
+          register={register}
+          setValue={setValue}
+          handleSubmit={handleSubmit}
+          watch={watch}
+          workingDetails={workProfileDetails?.work_details}
+        />
+      )}
+      {currentlyWorking === 'yes' && (
+        <WorkDetails
+          currentWorkingSelection={currentlyWorking}
+          errors={errors}
+          getValues={getValues}
+          register={register}
+          setValue={setValue}
+          handleSubmit={handleSubmit}
+          watch={watch}
+          setDefaultFacilityData={setDefaultFacilityData}
+          setCurrentlyWorking={setCurrentlyWorking}
+          clearErrors={clearErrors}
+        />
+      )}
+      {defaultFacilityData?.current_work_details?.length > 0 && (
+        <Grid container>
+          <Grid item xs={12}>
+            <Typography
+              bgcolor="grey1.light"
+              p={1}
+              mx={2}
+              component="div"
+              color="tabHighlightedBackgroundColor.main"
+              variant="h3"
+            >
+              Declared Place Of Work
+            </Typography>
+          </Grid>
+
+          {(workProfileDetails?.work_details?.is_user_currently_working === 1 ||
+            workProfileDetails?.work_details?.is_user_currently_working === '1') && (
+            <Grid item xs={12} padding="10px 0 !important" ml={1}>
+              <Typography p={1} component="div" color="error.main" variant="h3">
+                Currently not working - {'  '} {workProfileDetails?.work_details?.reason}
+              </Typography>
+            </Grid>
+          )}
+          <Grid item xs={12} padding="10px 0 !important">
+            <FacilityDetailsTable
+              declaredFacilityData={defaultFacilityData}
+              currentWorkDetails={workProfileDetails?.current_work_details}
+            />
+          </Grid>
+        </Grid>
+      )}
+    </Grid>
   );
 };
 

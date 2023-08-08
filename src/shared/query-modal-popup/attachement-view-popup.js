@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import CloseIcon from '@mui/icons-material/Close';
-import { Box, Button, Card, Container, Modal, Typography } from '@mui/material';
+import { Box, Card, Container, Modal, Typography } from '@mui/material';
 
 export default function AttachmentViewPopup(props) {
   const [open, setOpen] = useState(true);
@@ -12,10 +12,16 @@ export default function AttachmentViewPopup(props) {
 
   return (
     <Box>
-      <Modal open={open} onClose={handleClose} sx={{ mt: 15 }}>
+      <Modal open={open} onClose={handleClose} sx={{ mt: 1 }}>
         <Container
           maxWidth="sm"
-          sx={{ backgroundColor: 'white.main', borderRadius: '10px', height: '450px' }}
+          sx={{
+            backgroundColor: 'white.main',
+            borderRadius: '10px',
+            minHeight: '450px',
+            maxHeight: '100vh',
+            overflow: 'auto',
+          }}
         >
           <Box py={3}>
             <Box display="flex" justifyContent="flex-end">
@@ -50,21 +56,25 @@ export default function AttachmentViewPopup(props) {
                   title={props?.alt}
                   src={`data:application/pdf;base64,${props?.certificate}`}
                   alt={props?.alt}
-                  width="90%"
-                  height="250px"
-                  sx={{ padding: 0, borderRadius: 0 }}
+                  width="100%"
+                  sx={{ 
+                    padding: 0,
+                    borderRadius: 0,
+                    minHeight: '80vh',
+                    maxHeight: '100vh',
+                  }}
                 />
               ) : (
                 <Box
                   component={'img'}
                   src={`data:image/*;base64,${props?.certificate}`}
                   alt={props?.alt}
-                  width="90%"
-                  height="250px"
+                  width="100%"
+                  // height="450px"
                 />
               )}
             </Box>
-            <Box display="flex" justifyContent="flex-end" mt={1}>
+            {/* <Box display="flex" justifyContent="flex-end" mt={1}>
               <Button
                 size="small"
                 onClick={handleClose}
@@ -76,7 +86,7 @@ export default function AttachmentViewPopup(props) {
               >
                 Close
               </Button>
-            </Box>
+            </Box> */}
           </Box>
         </Container>
       </Modal>
