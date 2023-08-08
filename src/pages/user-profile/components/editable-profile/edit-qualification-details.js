@@ -1051,16 +1051,18 @@ const EditQualificationDetails = ({
         <Grid item xs={12}>
           <UploadFile
             uploadDisabled={
-              getQueryRaised('Upload Qualification Degree') === false
+              getQueryRaised('Upload Qualification Certificate') === false
                 ? false
                 : work_flow_status_id === 3
-                ? getQueryRaised('Upload Qualification Degree')
+                ? getQueryRaised('Upload Qualification Certificate')
                 : isVerified === 1
                 ? true
                 : false
             }
-            queryRaiseIcon={getQueryRaised('Upload Qualification Degree') === false ? true : false}
-            toolTipData={getQueryRaisedComment('Upload Qualification Degree')}
+            queryRaiseIcon={
+              getQueryRaised('Upload Qualification Certificate') === false ? true : false
+            }
+            toolTipData={getQueryRaisedComment('Upload Qualification Certificate')}
             fileID={'qualification'}
             uploadFiles="single"
             sizeAllowed={5}
@@ -1073,14 +1075,14 @@ const EditQualificationDetails = ({
             }}
             fileName={fileName || ''}
             isDigiLockcerVisible={true}
-            uploadFileLabel="Upload Qualification Degree"
+            uploadFileLabel="Upload Qualification Certificate"
             Upload
             Qualification
             fileDisabled={
-              getQueryRaised('Upload Qualification Degree') === false
+              getQueryRaised('Upload Qualification Certificate') === false
                 ? false
                 : work_flow_status_id === 3
-                ? getQueryRaised('Upload Qualification Degree')
+                ? getQueryRaised('Upload Qualification Certificate')
                 : isVerified === 1
                 ? true
                 : false
@@ -1088,7 +1090,7 @@ const EditQualificationDetails = ({
             {...register(
               'qualificationCertificate',
               qualificationFilesData[`qualification.${index}.files`]?.length === 0 && {
-                required: 'Please upload the qualification degree certificate.',
+                required: 'Please upload the qualification certificate.',
               }
             )}
             setError={setError}
