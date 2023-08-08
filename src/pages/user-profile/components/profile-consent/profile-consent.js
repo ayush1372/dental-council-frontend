@@ -310,6 +310,7 @@ const ProfileConsent = ({
             {...register('consent', {
               required: 'Consent is Required',
             })}
+            defaultChecked={personalDetails?.hp_profile_status_id === 3}
           />
           <Typography component="div" variant="body7">
             I, hereby declare that I am voluntarily sharing above mentioned particulars and
@@ -341,6 +342,7 @@ const ProfileConsent = ({
             name="HPR"
             {...register('HPR')}
             error={errors.HPR?.message}
+            defaultChecked={personalDetails?.hpr_consent_status === 1}
           />
           <Typography component="div" variant="body7">
             Save my time and share my details with HPR
