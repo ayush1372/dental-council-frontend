@@ -785,7 +785,7 @@ const AdditionalQualifications = () => {
             clearErrors={clearErrors}
             setError={setError}
             name={'qualificationCertificate'}
-            isError={errors.registrationCertificate?.message}
+            isError={errors.qualificationCertificate?.message}
             setFileData={setQualificationFilesData}
             uploadFileLabel="Upload Registration Certificate"
             toolTipData={
@@ -796,7 +796,10 @@ const AdditionalQualifications = () => {
             }
             {...register(
               'qualificationCertificate',
-              (isEditForm ? deleteUploadedFile : qualificationFilesData[0]?.file?.length === 0) && {
+              (isEditForm
+                ? deleteUploadedFile
+                : qualificationFilesData[0]?.file?.length === 0 ||
+                  qualificationFilesData[0]?.file?.length === undefined) && {
                 required: 'Please upload the degree certificate.',
               }
             )}
