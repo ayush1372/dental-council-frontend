@@ -452,7 +452,6 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
               required="true"
               placeholder={'Enter password'}
               error={errors.password?.message}
-              margin="dense"
               inputProps={{
                 maxLength: 100,
               }}
@@ -499,7 +498,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
         )}
       </Box>
       <CaptchaComponent selectedLoginOption={selectedLoginOption} captchaResult={captchaResult} />
-      <Box mt={4} mb={2} width={'100%'} display={'flex'} justifyContent={'space-between'}>
+      <Box mt={3} mb={2} width={'100%'} display={'flex'} justifyContent={'space-between'}>
         <Button
           variant="contained"
           color="secondary"

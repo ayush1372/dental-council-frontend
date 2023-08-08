@@ -525,15 +525,15 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                   ? { required: 'Please select a valid date' }
                   : { required: false }
               )}
-              disabled={
-                work_flow_status_id === 3
-                  ? getQueryRaised('Registration Date')
-                  : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-                  ? false
-                  : getValues().RegistrationDate === ''
-                  ? false
-                  : true
-              }
+              // disabled={
+              //   work_flow_status_id === 3
+              //     ? getQueryRaised('Registration Date')
+              //     : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+              //     ? false
+              //     : getValues().RegistrationDate === ''
+              //     ? false
+              //     : true
+              // }
               disableFuture
             />
           </Grid>
@@ -568,7 +568,11 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 },
               ]}
               {...register('registration', {})}
-              disabled={work_flow_status_id === 3 ? getQueryRaised('Registration') : false}
+              disabled={
+                work_flow_status_id === 3 || !personalDetails?.personal_details?.is_new
+                  ? getQueryRaised('Registration')
+                  : false
+              }
             />
           </Grid>
           {isRenewable === '1' && (
