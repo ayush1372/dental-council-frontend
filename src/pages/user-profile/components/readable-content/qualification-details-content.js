@@ -15,13 +15,11 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
   const { selectedAcademicStatus } = useSelector((state) => state.common);
 
   const { raisedQueryData } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
-  const { count } = useSelector((state) => state?.dashboard);
+
   const [attachmentViewIndex, setAttachmentViewIndex] = useState();
 
-  const { college_status } = useSelector((state) =>
-    count > 0
-      ? state?.dashboard?.dashboardTableDetails?.data?.dashboard_tolist?.[selectedDataIndex]
-      : ''
+  const { college_status } = useSelector(
+    (state) => state?.dashboard?.dashboardTableDetails?.data?.dashboard_tolist?.[selectedDataIndex]
   );
 
   const [openModal, setOpenModal] = useState(false);
