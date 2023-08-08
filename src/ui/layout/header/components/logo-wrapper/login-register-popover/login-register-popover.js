@@ -207,12 +207,12 @@ export const LoginRegisterPopover = ({
                 </Button>
                 <Button
                   size="small"
-                  variant="outlined"
+                  variant="contained"
                   color="secondary"
                   onClick={() => {
                     onClickLoginHandler();
                   }}
-                  sx={{ paddingTop: '6px', paddingBottom: '6px', }}
+                  sx={{ paddingTop: '6px', paddingBottom: '6px' }}
                 >
                   Login
                 </Button>
