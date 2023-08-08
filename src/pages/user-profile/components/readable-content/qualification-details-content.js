@@ -18,8 +18,10 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
 
   const [attachmentViewIndex, setAttachmentViewIndex] = useState();
 
-  const { college_status } = useSelector(
-    (state) => state?.dashboard?.dashboardTableDetails?.data?.dashboard_tolist?.[selectedDataIndex]
+  const college_status = useSelector(
+    (state) =>
+      state?.dashboard?.dashboardTableDetails?.data?.dashboard_tolist?.[selectedDataIndex]
+        ?.college_status
   );
 
   const [openModal, setOpenModal] = useState(false);
