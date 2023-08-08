@@ -122,7 +122,7 @@ const CollegeMyProfile = () => {
               ''
             )}
 
-            {(loginData?.data?.user_sub_type === 1 || userData?.college_id) &&
+            {/* {(loginData?.data?.user_sub_type === 1 || userData?.college_id) &&
             userType !== 'College Registrar' ? (
               <Grid item xs={12} md={4} sm={6}>
                 <Typography variant="body3" color="grey.label">
@@ -135,16 +135,27 @@ const CollegeMyProfile = () => {
               </Grid>
             ) : (
               ''
-            )}
+            )} */}
 
-            {userType === 'College Registrar' && (
+            {(userType === 'College Registrar' ||
+              userType === 'College Dean' ||
+              userType === 'College Principal' ||
+              userType === 'College Others') && (
               <Grid item xs={12} md={4} sm={6}>
                 <Typography variant="body3" color="grey.label">
                   Designation
                 </Typography>
 
                 <Typography variant="subtitle2" color="inputTextColor.main">
-                  {'College Registrar'}
+                  {userType === 'College Registrar'
+                    ? 'College Registrar'
+                    : userType === 'College Dean'
+                    ? 'College Dean'
+                    : userType === 'College Principal'
+                    ? 'College Principal'
+                    : userType === 'College Others'
+                    ? 'College Others'
+                    : ''}
                 </Typography>
               </Grid>
             )}
