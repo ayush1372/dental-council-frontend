@@ -259,7 +259,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
               },
             }}
           >
-            <Typography variant="body1" color="textPrimary.main" textAlign={'left'} ml={1}>
+            <Typography variant="body1" color="textPrimary.main" textAlign={'center'} ml={1}>
               Mobile Number
             </Typography>
           </Button>
@@ -285,7 +285,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
               },
             }}
           >
-            <Typography variant="body1" color="textPrimary.main" textAlign={'left'} ml={1}>
+            <Typography variant="body1" color="textPrimary.main" textAlign={'center'} ml={1}>
               Username
             </Typography>
           </Button>
@@ -383,7 +383,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
         )}
       </Box>
       <CaptchaComponent captchaResult={captchaResult} />
-      <Box my={2} width={'100%'} display={'flex'} justifyContent={'space-between'}>
+      <Box mt={3} width={'100%'} display={'flex'} justifyContent={'space-between'}>
         <Button
           variant="contained"
           color="secondary"
