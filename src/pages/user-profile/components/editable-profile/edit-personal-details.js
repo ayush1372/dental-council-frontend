@@ -1190,7 +1190,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                   {...register(
                     'State',
                     !isSameAddress && {
-                      required: 'Please select state/union/territory',
+                      required: 'Please select state/union territory',
                     }
                   )}
                   options={createSelectFieldData(statesList)}

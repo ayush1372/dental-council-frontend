@@ -212,7 +212,6 @@ export const LoginRegisterPopover = ({
                   onClick={() => {
                     onClickLoginHandler();
                   }}
-                  sx={{ paddingTop: '6px', paddingBottom: '6px' }}
                 >
                   Login
                 </Button>
