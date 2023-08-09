@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
-import SendIcon from '@mui/icons-material/Send';
+import MarkEmailReadIcon from '@mui/icons-material/MarkEmailRead';
 import { Box, Dialog, Grid, Link, Tooltip, Typography, useTheme } from '@mui/material';
 import InputBase from '@mui/material/InputBase';
 import Paper from '@mui/material/Paper';
@@ -426,7 +426,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                     </Tooltip>
                     {!emailIdVerify ? (
                       <Tooltip title="Verify email">
-                        <SendIcon
+                        <MarkEmailReadIcon
                           color={'primary'}
                           fontSize={'inherit'}
                           sx={{ mr: 0.5, cursor: 'pointer' }}
