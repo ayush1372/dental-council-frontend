@@ -606,7 +606,7 @@ export function SuspendLicenseVoluntaryRetirement({
                 },
               })}
               sx={{ padding: '0 8px 0 0' }}
-              checked={loggedInUserType === 'NMC' ? true : getValues()?.notification}
+              defaultChecked={loggedInUserType === 'NMC' ? true : getValues()?.notification}
               label={
                 tabName
                   ? 'I understand that during the period of my suspension, I will not be able to practice and my NMR profile will be deactivated.'

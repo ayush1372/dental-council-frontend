@@ -15,13 +15,13 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
   const { selectedAcademicStatus } = useSelector((state) => state.common);
 
   const { raisedQueryData } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
-  const { count } = useSelector((state) => state?.dashboard);
+
   const [attachmentViewIndex, setAttachmentViewIndex] = useState();
 
-  const { college_status } = useSelector((state) =>
-    count > 0
-      ? state?.dashboard?.dashboardTableDetails?.data?.dashboard_tolist?.[selectedDataIndex]
-      : ''
+  const college_status = useSelector(
+    (state) =>
+      state?.dashboard?.dashboardTableDetails?.data?.dashboard_tolist?.[selectedDataIndex]
+        ?.college_status
   );
 
   const [openModal, setOpenModal] = useState(false);
@@ -519,14 +519,15 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
           <Grid container item spacing={1} mt={0.5}>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="grey.label">
-                Upload Qualification Degree
+                Upload Qualification Certificate
                 <Typography component="span" color="error.main">
                   *
                 </Typography>
                 {element?.queries?.length > 0 &&
-                  getQueryRaised('Upload Qualification Degree', element?.queries) !== undefined && (
+                  getQueryRaised('Upload Qualification Certificate', element?.queries) !==
+                    undefined && (
                     <Tooltip
-                      title={getQueryRaised('Upload Qualification Degree', element?.queries)}
+                      title={getQueryRaised('Upload Qualification Certificate', element?.queries)}
                     >
                       <ReportIcon color="secondary" ml={2} />
                     </Tooltip>
@@ -561,7 +562,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       color="primary"
                       onClick={() => {
                         setOpenModal(true);
-                        setQueryRaisedField('Upload Qualification Degree');
+                        setQueryRaisedField('Upload Qualification Certificate');
                       }}
                       fontSize="width24"
                     />

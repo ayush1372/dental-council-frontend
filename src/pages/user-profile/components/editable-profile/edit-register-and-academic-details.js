@@ -525,15 +525,15 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                   ? { required: 'Please select a valid date' }
                   : { required: false }
               )}
-              disabled={
-                work_flow_status_id === 3
-                  ? getQueryRaised('Registration Date')
-                  : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-                  ? false
-                  : getValues().RegistrationDate === ''
-                  ? false
-                  : true
-              }
+              // disabled={
+              //   work_flow_status_id === 3
+              //     ? getQueryRaised('Registration Date')
+              //     : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+              //     ? false
+              //     : getValues().RegistrationDate === ''
+              //     ? false
+              //     : true
+              // }
               disableFuture
             />
           </Grid>
@@ -623,8 +623,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                   ? false
                   : work_flow_status_id === 3
                   ? getQueryRaised('Upload the registration certificate')
-                  : !personalDetails?.personal_details?.is_new
-                  ? true
                   : false
               }
               queryRaiseIcon={
