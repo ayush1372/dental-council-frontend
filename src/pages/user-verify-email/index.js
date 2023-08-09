@@ -38,7 +38,7 @@ const UserVerifyUser = () => {
         setEmailLinkErrorText(error?.data?.response?.data?.message);
         setEmailLinkError(true);
       });
-  }, []);
+  }, [params?.id]);
   return emailVerify ? (
     <Container
       maxWidth="xs"
