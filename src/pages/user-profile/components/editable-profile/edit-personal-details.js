@@ -935,7 +935,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                     'House',
                     !isSameAddress
                       ? {
-                          required: 'House is required',
+                          required: 'Please enter house',
                           maxLength: {
                             value: 300,
                             message: 'Length should be less than 300.',
@@ -1105,7 +1105,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                   value={getValues().Country}
                   required={isSameAddress ? false : true}
                   {...register('Country', {
-                    required: 'Country is required',
+                    required: 'Please select country',
                   })}
                   disabled
                   options={
@@ -1190,7 +1190,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                   {...register(
                     'State',
                     !isSameAddress && {
-                      required: 'State/Union territory is required',
+                      required: 'Please select state/union/territory',
                     }
                   )}
                   options={createSelectFieldData(statesList)}
@@ -1454,7 +1454,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 {...register(
                   'PostalCode',
                   !isSameAddress && {
-                    required: 'Pincode is Required',
+                    required: 'Please enter pincode',
                     onChange: (event) => {
                       const pincode = event.target.value.replace(/[^0-9]/g, '');
                       setValue('PostalCode', pincode);
