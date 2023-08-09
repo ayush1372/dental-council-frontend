@@ -5,6 +5,7 @@ import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined';
 import { Box, Container, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import { userVerifyEmail } from '../../store/actions/doctor-user-profile-actions';
 // import successToast from '../../ui/core/toaster';
@@ -15,9 +16,13 @@ const UserVerifyUser = () => {
   // const handleClose = () => setOpen(false);
   const theme = useTheme();
   const dispatch = useDispatch();
+  const params = useParams();
   useEffect(() => {
+    // let userVerifyEmailBody = {
+    //   token: window.location.href.substring(window.location.href.indexOf('email/') + 6),
+    // };
     let userVerifyEmailBody = {
-      token: window.location.href.substring(window.location.href.indexOf('email/') + 6),
+      token: params?.id,
     };
     // try {
     dispatch(userVerifyEmail(userVerifyEmailBody))
