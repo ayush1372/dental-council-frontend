@@ -24,9 +24,7 @@ export const TextField = (palette, appFontType) => ({
       },
     },
   ],
-  defaultProps: {
-    autoFocus: true,
-  },
+
   styleOverrides: {
     root: {
       fontSize: changeAppFontSize(16, appFontType),
