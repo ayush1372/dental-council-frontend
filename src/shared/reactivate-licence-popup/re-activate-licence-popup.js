@@ -21,7 +21,13 @@ export default function ReactivateLicencePopup(props) {
   const { loginData } = useSelector((state) => state?.loginReducer);
   const dispatch = useDispatch();
 
-  const { register, getValues, setError, clearErrors } = useForm({
+  const {
+    register,
+    getValues,
+    setError,
+    clearErrors,
+    // formState: { errors },
+  } = useForm({
     mode: 'onChange',
     defaultValues: {
       fromDate: getDateAndTimeFormat('dateFormat'),
@@ -156,19 +162,26 @@ export default function ReactivateLicencePopup(props) {
                   error={showReasonError ? 'Enter reason for re-activation' : false}
                   {...register('reason', {
                     required: 'This field is required',
+                    pattern: {
+                      value: /^\w+(?:\s+\w+){0,50}$/,
+                      message: 'Maximum word limit exceeded',
+                    },
                     onChange: (event) => {
                       if (event.target.value) {
                         setShowReasonError(false);
                       }
                     },
                   })}
+                  inputProps={{
+                    maxLength: 50,
+                  }}
                 />
               </Box>
             </Grid>
           </Grid>
 
           <Box display="flex" textAlign="right">
-            <Typography color="grey1.main">150 words only</Typography>
+            <Typography color="grey1.main">50 words only</Typography>
           </Box>
           <Box>
             <UploadFile
