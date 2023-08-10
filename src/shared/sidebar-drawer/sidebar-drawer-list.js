@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import ReportOutlinedIcon from '@mui/icons-material/ReportOutlined';
 import {
@@ -19,7 +19,7 @@ import {
   updateDoctorContactDetails,
 } from '../../../src/store/actions/doctor-user-profile-actions';
 import { getActivateLicenseList } from '../../store/actions/common-actions';
-import successToast from '../../ui/core/toaster';
+
 export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOption, open }) {
   const dispatch = useDispatch();
   const theme = useTheme();
@@ -54,20 +54,16 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
     });
   };
 
-  const onActivateLicenceClick = () => {
+  useEffect(() => {
     let ActivateLicenseListbody = {
       pageNo: 1,
       offset: 10,
     };
 
-    try {
-      dispatch(getActivateLicenseList(ActivateLicenseListbody)).then((response) => {
-        setTotalRecordsOfActivateLicense(response?.data?.total_no_of_records);
-      });
-    } catch (allFailMsg) {
-      successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
-    }
-  };
+    dispatch(getActivateLicenseList(ActivateLicenseListbody)).then((response) => {
+      setTotalRecordsOfActivateLicense(response?.data?.total_no_of_records);
+    });
+  }, []);
 
   return (
     <List sx={{ p: 0 }}>
@@ -159,8 +155,6 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
                   !personalDetails?.is_track_application_read_status &&
                   personalDetails?.is_track_application_read_status !== undefined
                     ? onTrackApplicationClick
-                    : item?.tabName === 'Activate Licence'
-                    ? onActivateLicenceClick
                     : ''
                 }
                 display="flex"
