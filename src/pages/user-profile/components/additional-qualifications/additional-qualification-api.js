@@ -11,7 +11,7 @@ export const getAdditionalCollegesList = (selectedState) => async () => {
     useAxiosCall({
       method: GET,
       url: `${API.common.colleges}${path}`,
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         return resolve(response);
@@ -32,7 +32,7 @@ export const getAdditionalUniversitiesList = (selectedCollegeID) => async () => 
     useAxiosCall({
       method: GET,
       url: `${API.common.universities}?${path}`,
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         return resolve(response);

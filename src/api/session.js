@@ -3,9 +3,9 @@ import successToast from '../ui/core/toaster';
 export const expireSession = (msg) => {
   successToast(msg, 'auth-error', 'error', 'top-center');
 
-  const lng = localStorage.getItem('lng');
-  localStorage.clear();
+  const lng = sessionStorage.getItem('lng');
+  sessionStorage.clear();
   if (lng) {
-    localStorage.setItem('lng', lng);
+    sessionStorage.setItem('lng', lng);
   }
 };

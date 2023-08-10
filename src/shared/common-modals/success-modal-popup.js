@@ -93,7 +93,7 @@ export default function SuccessModalPopup({
           break;
       }
       if (loggedInUserType === 'Doctor' && SuspensionCall !== true) {
-        localStorage.clear();
+        sessionStorage.clear();
         dispatch(logout());
         dispatch(resetCommonReducer());
         navigate('/');

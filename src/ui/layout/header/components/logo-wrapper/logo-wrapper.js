@@ -38,7 +38,7 @@ import { MobileDrawer } from './mobile-drawer';
 export const LogoWrapper = ({ menuToggleHandler }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const loggedIn = localStorage.getItem('accesstoken');
+  const loggedIn = sessionStorage.getItem('accesstoken');
 
   const { nbeData } = useSelector((state) => state.nbe);
   const { smcProfileData } = useSelector((state) => state.smc);
@@ -144,7 +144,7 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
       dispatch(logout());
       dispatch(resetCommonReducer());
       dispatch(resetDoctorProfileReducer());
-      localStorage.clear();
+      sessionStorage.clear();
       navigate('/');
       window.scrollTo({
         top: 0,

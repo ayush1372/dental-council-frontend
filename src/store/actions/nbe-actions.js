@@ -8,7 +8,7 @@ export const getNBEProfileData = (id) => async (dispatch) => {
     useAxiosCall({
       method: GET,
       url: API.nbe.getNBEProfileData.replace('{id}', id),
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(getNBEData({ data: response.data, isError: false, isLoading: false }));
@@ -27,7 +27,7 @@ export const getUpdatedNBEProfileData = (data, id) => async (dispatch) => {
       method: PUT,
       url: API.nbe.getNBEProfileData.replace('{id}', id),
       data: data,
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(getNBEData({ data: response.data, isError: false, isLoading: false }));

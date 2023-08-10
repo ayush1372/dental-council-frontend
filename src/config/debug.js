@@ -3,7 +3,7 @@ import debug from 'debug';
 const log = debug('data:application');
 
 function setStorage() {
-  localStorage.setItem('debug', 'data:application');
+  sessionStorage.setItem('debug', 'data:application');
 }
 
 export function verboseLog(componentName, param) {

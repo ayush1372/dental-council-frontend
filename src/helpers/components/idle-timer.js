@@ -25,7 +25,7 @@ export function IdleTimer() {
     // Events will be rebound as long as `stopOnMount` is not set.
     setOpen(true);
 
-    const refreshToken = localStorage.getItem('refreshtoken');
+    const refreshToken = sessionStorage.getItem('refreshtoken');
 
     if (refreshToken) {
       let timer = millisecondToDate(refreshToken) - new Date().getTime();
@@ -52,7 +52,7 @@ export function IdleTimer() {
   };
 
   const logoutUser = () => {
-    localStorage.clear();
+    sessionStorage.clear();
     dispatch(logout());
     dispatch(resetCommonReducer());
     navigate('/');
@@ -69,7 +69,11 @@ export function IdleTimer() {
       handleNoText={'Stay'}
       handleYes={handleLogout}
       handleYesText={'Logout'}
-      text={{ heading: 'Session Idle', message: 'The session has exceeded the time limit of inactivity. Please click "Stay" to resume the session.' }}
+      text={{
+        heading: 'Session Idle',
+        message:
+          'The session has exceeded the time limit of inactivity. Please click "Stay" to resume the session.',
+      }}
     />
   );
 }
