@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import ReportOutlinedIcon from '@mui/icons-material/ReportOutlined';
 import {
   Grid,
@@ -16,9 +18,12 @@ import {
   getPersonalDetailsData,
   updateDoctorContactDetails,
 } from '../../../src/store/actions/doctor-user-profile-actions';
+import { getActivateLicenseList } from '../../store/actions/common-actions';
+import successToast from '../../ui/core/toaster';
 export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOption, open }) {
   const dispatch = useDispatch();
   const theme = useTheme();
+  const [totalRecordsOfActivateLicense, setTotalRecordsOfActivateLicense] = useState(0);
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const { personalDetails, registrationDetails } = useSelector(
     (state) => state?.doctorUserProfileReducer
@@ -47,6 +52,21 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
     dispatch(updateDoctorContactDetails(personalData, personalDetails?.hp_profile_id)).then(() => {
       dispatch(getPersonalDetailsData(personalDetails?.hp_profile_id));
     });
+  };
+
+  const onActivateLicenceClick = () => {
+    let ActivateLicenseListbody = {
+      pageNo: 1,
+      offset: 10,
+    };
+
+    try {
+      dispatch(getActivateLicenseList(ActivateLicenseListbody)).then((response) => {
+        setTotalRecordsOfActivateLicense(response?.data?.total_no_of_records);
+      });
+    } catch (allFailMsg) {
+      successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
+    }
   };
 
   return (
@@ -137,8 +157,11 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
                 onClick={
                   item?.tabName === 'track-application' &&
                   !personalDetails?.is_track_application_read_status &&
-                  personalDetails?.is_track_application_read_status !== undefined &&
-                  onTrackApplicationClick
+                  personalDetails?.is_track_application_read_status !== undefined
+                    ? onTrackApplicationClick
+                    : item?.tabName === 'Activate Licence'
+                    ? onActivateLicenceClick
+                    : ''
                 }
                 display="flex"
                 primary={
@@ -166,6 +189,8 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
                         ''
                       )}
                     </Grid>
+                  ) : item?.tabName === 'Activate Licence' ? (
+                    `${item?.name} (${totalRecordsOfActivateLicense})`
                   ) : (
                     item?.name
                   )
