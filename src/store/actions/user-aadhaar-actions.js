@@ -15,7 +15,7 @@ export const sendAaadharOtp = (aadhaar) => async (dispatch) => {
       method: POST,
       url: API_HPRID.hpId.sendAadhaarOtp,
       data: { aadhaar },
-      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('hpridaccesstoken') },
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('hpridaccesstoken') },
     })
       .then((response) => {
         dispatch(aadhaarNumberData(response));
@@ -34,7 +34,7 @@ export const getDemographicAuthMobile = (data) => async (dispatch) => {
       method: POST,
       url: API_HPRID.hpId.demographicAuthMobile,
       data: data,
-      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('hpridaccesstoken') },
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('hpridaccesstoken') },
     })
       .then((response) => {
         dispatch(demographicAuthMobileDetails(response));
@@ -50,7 +50,7 @@ export const validateOtpAadhaar = (dataValues) => async (dispatch) => {
       method: POST,
       url: API_HPRID.hpId.verifyAadhaarOtp,
       data: dataValues,
-      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('hpridaccesstoken') },
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('hpridaccesstoken') },
     })
       .then((response) => {
         dispatch(aadhaarOtpDetails(response));

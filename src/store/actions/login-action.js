@@ -69,22 +69,22 @@ export const loginAction = (body) => async (dispatch) => {
       .then((response) => {
         dispatch(loginUser(response));
         JSON.stringify(
-          sessionStorage.setItem('accesstoken', response.responseHeader['access-token'])
+          localStorage.setItem('accesstoken', response.responseHeader['access-token'])
         );
         JSON.stringify(
-          sessionStorage.setItem('refreshtoken', response.responseHeader['refresh-token'])
+          localStorage.setItem('refreshtoken', response.responseHeader['refresh-token'])
         );
-        JSON.stringify(sessionStorage.setItem('userSubTypeID', response.data['user_sub_type']));
-        JSON.stringify(sessionStorage.setItem('collegeID', response.data['college_id']));
+        JSON.stringify(localStorage.setItem('userSubTypeID', response.data['user_sub_type']));
+        JSON.stringify(localStorage.setItem('collegeID', response.data['college_id']));
         JSON.stringify(
-          sessionStorage.setItem('HPProfileStatusID', response.data['hp_profile_status_id'])
+          localStorage.setItem('HPProfileStatusID', response.data['hp_profile_status_id'])
         );
         JSON.stringify(
-          sessionStorage.setItem('workProfileStatusID', response.data['work_flow_status_id'])
+          localStorage.setItem('workProfileStatusID', response.data['work_flow_status_id'])
         );
-        JSON.stringify(sessionStorage.setItem('esignStatus', response.data['esign_status']));
-        JSON.stringify(sessionStorage.setItem('blacklistedStatus', response.data['blacklisted']));
-        JSON.stringify(sessionStorage.setItem('userType', response.data['user_type']));
+        JSON.stringify(localStorage.setItem('esignStatus', response.data['esign_status']));
+        JSON.stringify(localStorage.setItem('blacklistedStatus', response.data['blacklisted']));
+        JSON.stringify(localStorage.setItem('userType', response.data['user_type']));
         return resolve(response);
       })
       .catch((error) => {
@@ -98,7 +98,7 @@ export const refreshTokenAction = () => async (dispatch) => {
     useAxiosCall({
       method: POST,
       url: API.login.refreshToken,
-      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('refreshtoken') },
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('refreshtoken') },
     })
       .then((response) => {
         dispatch(refreshTokenApi(response));

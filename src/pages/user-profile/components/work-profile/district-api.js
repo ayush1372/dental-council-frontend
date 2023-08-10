@@ -7,7 +7,7 @@ export const getFacilityDistrictList = (stateId) => async () => {
     useAxiosCall({
       method: GET,
       url: API.common.districts.replace('{state_id}', stateId),
-      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
       .then((response) => {
         return resolve(response);
