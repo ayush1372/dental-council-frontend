@@ -8,7 +8,7 @@ export const getNMCProfileData = (id) => async (dispatch) => {
     useAxiosCall({
       method: GET,
       url: API.nmc.getNMCProfileData.replace('{id}', id),
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(getNMCProfile({ data: response.data, isError: false, isLoading: false }));
@@ -73,7 +73,7 @@ export const getCollegeApprovalData = (data) => async (dispatch) => {
 
       // url:API.nmc.collegeApproval +
       //   `?pageNo=${data.pageNo}&limit=${data.limit}&search=${data.search}&id=${data.id}&name=${data.name}&council=${data.council}`,
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(getCollegeApproval({ data: response.data, isError: false, isLoading: false }));
@@ -91,7 +91,7 @@ export const getUpdatedNmcProfileData = (data) => async (dispatch) => {
       method: PUT,
       url: API.nmc.getNMCProfileData.replace('{id}', data.id),
       data: data,
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(getNMCProfile({ data: response.data, isError: false, isLoading: false }));

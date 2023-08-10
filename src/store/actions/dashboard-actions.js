@@ -8,7 +8,7 @@ export const getCardCount = () => async (dispatch) => {
     useAxiosCall({
       method: GET,
       url: API.dashboard.cardCount,
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(cardCountDetails({ data: response.data, isError: false, isLoading: false }));
@@ -126,7 +126,7 @@ export const getDashboardTableData = (body) => async (dispatch) => {
       method: GET,
       url: `${API.dashboard.cardDetails}?${path}`,
       // url: `${API.dashboard.cardDetails}?workFlowStatusId=${body.work_flow_status_id}&applicationTypeId=${body.application_type_id}&userGroupStatus=${body.user_group_status}&smcId=${body.smc_id}&name=${body.name}&nmrId=${body.nmr_id}&pageNo=${body.page_no}&size=${body.size}&search=${body.search}&sortBy=${body.sort_by}&sortOrder=${body.sort_order}`,
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(dashboardTableData({ data: response.data, isError: false, isLoading: false }));

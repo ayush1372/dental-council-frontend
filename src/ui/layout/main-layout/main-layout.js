@@ -22,23 +22,23 @@ export const MainLayout = () => {
 
   useState(() => {
     if (
-      localStorage.getItem('accesstoken') &&
-      parserJWT(localStorage.getItem('accesstoken'))?.type === 'at'
+      sessionStorage.getItem('accesstoken') &&
+      parserJWT(sessionStorage.getItem('accesstoken'))?.type === 'at'
     ) {
       let dataObj = {
         data: {
-          profile_id: parserJWT(localStorage.getItem('accesstoken')).profile_id,
+          profile_id: parserJWT(sessionStorage.getItem('accesstoken')).profile_id,
 
           user_group_id: userGroupTypeForSession(
-            parserJWT(localStorage.getItem('accesstoken')).authorities[0]
+            parserJWT(sessionStorage.getItem('accesstoken')).authorities[0]
           ),
-          user_sub_type: Number(localStorage.getItem('userSubTypeID')),
-          college_id: Number(localStorage.getItem('collegeID')),
-          hp_profile_status_id: Number(localStorage.getItem('HPProfileStatusID')),
-          work_flow_status_id: Number(localStorage.getItem('workProfileStatusID')),
-          esign_status: Number(localStorage.getItem('esignStatus')),
-          blacklisted: Number(localStorage.getItem('blacklistedStatus')),
-          user_type: Number(localStorage.getItem('userType')),
+          user_sub_type: Number(sessionStorage.getItem('userSubTypeID')),
+          college_id: Number(sessionStorage.getItem('collegeID')),
+          hp_profile_status_id: Number(sessionStorage.getItem('HPProfileStatusID')),
+          work_flow_status_id: Number(sessionStorage.getItem('workProfileStatusID')),
+          esign_status: Number(sessionStorage.getItem('esignStatus')),
+          blacklisted: Number(sessionStorage.getItem('blacklistedStatus')),
+          user_type: Number(sessionStorage.getItem('userType')),
         },
       };
       dispatch(loginUser(dataObj));

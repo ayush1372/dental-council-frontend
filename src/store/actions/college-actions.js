@@ -22,7 +22,7 @@ export const getCollegeAdminProfileData = (id) => async (dispatch) => {
     useAxiosCall({
       method: GET,
       url: API.college.getCollegeProfile.replace('{id}', id),
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(getCollegeAdminData({ data: response.data, isError: false, isLoading: false }));
@@ -41,7 +41,7 @@ export const getCollegeRegistrarProfileData = (parentID, id) => async (dispatch)
     useAxiosCall({
       method: GET,
       url: endpoint.replace('{id}', id),
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(
@@ -62,7 +62,7 @@ export const getCollegeDeanProfileData = (parentID, id) => async (dispatch) => {
     useAxiosCall({
       method: GET,
       url: endpoint.replace('{id}', id),
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(getCollegeDeanData({ data: response.data, isError: false, isLoading: false }));
@@ -80,7 +80,7 @@ export const sendRegistrarDetails = (details, collegeId) => async (dispatch) => 
     useAxiosCall({
       method: POST,
       url: API.college.registrar.replace('{collegeId}', collegeId),
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
       data: details,
     })
       .then((response) => {
@@ -104,7 +104,7 @@ export const sendDeanDetails = (details, collegeID) => async (dispatch) => {
     useAxiosCall({
       method: POST,
       url: API.college.dean.replace('{collegeId}', collegeID),
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
       data: {
         id,
         name,
@@ -130,7 +130,7 @@ export const updateCollegeAdminProfileData = (body) => async () => {
       method: PUT,
       url: API.common.college.replace('{id}', body?.id),
       data: body,
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         return resolve(response);
@@ -149,7 +149,7 @@ export const updateCollegeRegistrarData = (body, collegeId, verifierId) => async
       method: PUT,
       url: endpoint.replace('{verifierId}', verifierId),
       data: body,
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         return resolve(response);
@@ -166,7 +166,7 @@ export const registerCollegeDetails = (collegeDetails) => async (dispatch) => {
       method: POST,
       url: API.college.register,
       data: collegeDetails,
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(collegeRegister(response));
@@ -184,7 +184,7 @@ export const updateCollegeDetail = (collegeDetails) => async (dispatch) => {
       url: API.common.college.replace('{id}', collegeDetails.id),
 
       data: collegeDetails,
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(updateCollege(response));
@@ -201,7 +201,7 @@ export const registerCollegeDetail = (collegeDetails) => async (dispatch) => {
       method: POST,
       url: API.common.allColleges,
       data: collegeDetails,
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(registerCollege(response));
@@ -219,7 +219,7 @@ export const collegeProfileData = (collegeId, verifierId) => async (dispatch) =>
     useAxiosCall({
       method: GET,
       url: endpoint.replace('{verifierId}', verifierId),
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         if (response?.data?.designation === 1) {
@@ -245,7 +245,7 @@ export const initiateCollegeWorkFlow = (body) => async (dispatch) => {
     useAxiosCall({
       method: PATCH,
       url: API.college.initiateCollegeWorkFlow,
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
       data: body,
     })
       .then((response) => {
@@ -266,7 +266,7 @@ export const getAdminDesignation = () => async (dispatch) => {
     useAxiosCall({
       method: GET,
       url: API.college.admindesignation,
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(getCollegeAdminDesignation(response));
@@ -283,7 +283,7 @@ export const getAdminVerifier = (body) => async (dispatch) => {
     useAxiosCall({
       method: POST,
       url: API.college.adminVerifier.replace('{collegeId}', body?.college_id),
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
       data: body,
     })
       .then((response) => {

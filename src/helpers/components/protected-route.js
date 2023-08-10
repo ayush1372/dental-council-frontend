@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
 
 export function ProtectedRoute({ isPrivate, children }) {
-  const isAuthenticated = localStorage.getItem('accesstoken')
+  const isAuthenticated = sessionStorage.getItem('accesstoken')
     ? isPrivate === 'PUBLIC'
       ? true
       : isPrivate

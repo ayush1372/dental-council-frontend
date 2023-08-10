@@ -25,7 +25,7 @@ export const getPersonalDetailsData = (doctor_profile_id) => async (dispatch) =>
         '{healthProfessionalId}',
         doctor_profile_id
       ),
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         if (response?.data?.hp_profile_status_id === 3) {
@@ -47,7 +47,7 @@ export const getRegistrationDetailsData = (doctor_profile_id) => async (dispatch
         '{healthProfessionalId}',
         doctor_profile_id
       ),
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(getRegistrationDetails(response.data));
@@ -66,7 +66,7 @@ export const getWorkProfileDetailsData = (doctor_profile_id) => async (dispatch)
         '{healthProfessionalId}',
         doctor_profile_id
       ),
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(getWorkProfileDetails(response.data));
@@ -84,7 +84,7 @@ export const deleteWorkProfileDetailsData = (facility_id) => async (dispatch) =>
       method: DELETE,
       url: API.DoctorUserProfileData.workProfileDeLink,
       data: facility_id,
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(getWorkProfileDetails(response.data));
@@ -102,7 +102,7 @@ export const getNewDoctorPersonalDetailsData = (body) => async (dispatch) => {
       method: POST,
       url: API.DoctorUserProfileData.createPersonalDetails,
       data: body,
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(getPersonalDetails(response.data));
@@ -123,7 +123,7 @@ export const updateDoctorPersonalDetails = (body, doctor_profile_id) => async (d
         doctor_profile_id
       ),
       data: body,
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(getUpdatedPersonalDetails(response.data));
@@ -145,7 +145,7 @@ export const updateDoctorRegistrationDetails = (body, doctor_profile_id) => asyn
         doctor_profile_id
       ),
       data: body,
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(getUpdatedRegistrationDetails(response.data));
@@ -166,7 +166,7 @@ export const updateDoctorWorkDetails = (body, doctor_profile_id) => async () => 
         doctor_profile_id
       ),
       data: body,
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         return resolve(response);
@@ -184,7 +184,7 @@ export const getFacilitiesData = (facilitiesBody) => async () => {
       url: API.DoctorUserProfileData.searchFacilities,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('accesstoken'),
+        Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken'),
       },
       data: facilitiesBody,
     })
@@ -204,7 +204,7 @@ export const getUserProfileImage = (hp_profile_id, file) => async (dispatch) => 
       url: API.DoctorUserProfileData.profileImage.replace('{healthProfessionalId}', hp_profile_id),
       headers: {
         'Content-Type': 'multipart/form-data',
-        Authorization: 'Bearer ' + localStorage.getItem('accesstoken'),
+        Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken'),
       },
       data: file,
     })
@@ -275,7 +275,7 @@ export const getDoctorTrackApplicationData = (doctor_profile_id, trackData) => a
         '{healthProfessionalId}',
         doctor_profile_id
       )}?${path}`,
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(
@@ -294,7 +294,7 @@ export const getDoctorTrackApplicationStatus = (nmr_id) => async (dispatch) => {
     useAxiosCall({
       method: GET,
       url: `${API.DoctorUserProfileData.trackApplicationStatus.replace('{requestId}', nmr_id)}`,
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     }).then((response) => {
       dispatch(updateDoctorTrackApplication(response));
       return resolve(response);
@@ -310,7 +310,7 @@ export const getEsignFormDetails = (data) => async (dispatch) => {
       method: POST,
       url: API.DoctorUserProfileData.eSign,
       data: data,
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(getEsignDetails(response));
@@ -328,7 +328,7 @@ export const updateProfileConsent = (payload) => async () => {
       url: API.DoctorUserProfileData.profileConsent,
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem('accesstoken'),
+        Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken'),
       },
       data: payload,
     })
@@ -352,7 +352,7 @@ export const additionalQualificationsData =
         ),
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + localStorage.getItem('accesstoken'),
+          Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken'),
         },
         data: formData,
       })
@@ -374,7 +374,7 @@ export const updateDoctorContactDetails = (body, doctor_profile_id) => async () 
         doctor_profile_id
       ),
       data: body,
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         return resolve(response);
@@ -391,7 +391,7 @@ export const userVerifyEmail = (data) => async () => {
       method: POST,
       url: API.DoctorUserProfileData.userVerifyEmail,
       data: data,
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         return resolve(response);
@@ -411,7 +411,7 @@ export const verifyEmail = (data, doctor_profile_id) => async () => {
         doctor_profile_id
       ),
       data: data,
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
     })
       .then((response) => {
         return resolve(response);
