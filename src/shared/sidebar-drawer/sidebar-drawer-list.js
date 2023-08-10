@@ -153,9 +153,8 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
                 onClick={
                   item?.tabName === 'track-application' &&
                   !personalDetails?.is_track_application_read_status &&
-                  personalDetails?.is_track_application_read_status !== undefined
-                    ? onTrackApplicationClick
-                    : ''
+                  personalDetails?.is_track_application_read_status !== undefined &&
+                  onTrackApplicationClick
                 }
                 display="flex"
                 primary={
