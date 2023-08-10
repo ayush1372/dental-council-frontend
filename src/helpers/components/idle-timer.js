@@ -25,7 +25,7 @@ export function IdleTimer() {
     // Events will be rebound as long as `stopOnMount` is not set.
     setOpen(true);
 
-    const refreshToken = sessionStorage.getItem('refreshtoken');
+    const refreshToken = localStorage.getItem('refreshtoken');
 
     if (refreshToken) {
       let timer = millisecondToDate(refreshToken) - new Date().getTime();
@@ -52,7 +52,7 @@ export function IdleTimer() {
   };
 
   const logoutUser = () => {
-    sessionStorage.clear();
+    localStorage.clear();
     dispatch(logout());
     dispatch(resetCommonReducer());
     navigate('/');

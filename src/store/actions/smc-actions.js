@@ -8,7 +8,7 @@ export const getSMCProfileData = (id) => async (dispatch) => {
     useAxiosCall({
       method: GET,
       url: API.smc.getSMCProfileData.replace('{id}', id),
-      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(getSMCProfile({ data: response.data, isError: false, isLoading: false }));
@@ -26,7 +26,7 @@ export const getUpdatedsmcProfileData = (data) => async (dispatch) => {
       method: PUT,
       url: API.smc.getSMCProfileData.replace('{id}', data.id),
       data: data,
-      headers: { Authorization: 'Bearer ' + sessionStorage.getItem('accesstoken') },
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
       .then((response) => {
         dispatch(getSMCProfile({ data: response.data, isError: false, isLoading: false }));

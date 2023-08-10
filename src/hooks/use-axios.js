@@ -23,9 +23,9 @@ axios.interceptors.response.use(
   (error) => {
     // when api getting 401
     if (error.response.status === 401) {
-      // const accessToken = sessionStorage.getItem('userToken');
-      if (sessionStorage.getItem('accesstoken')) {
-        const refreshToken = sessionStorage.getItem('refreshtoken');
+      // const accessToken = localStorage.getItem('userToken');
+      if (localStorage.getItem('accesstoken')) {
+        const refreshToken = localStorage.getItem('refreshtoken');
         //if refresh token expire logout the user, if not check access token
         if (millisecondToDate(refreshToken) > new Date()) {
           //if access token expire logout the user, if not refresh token api
@@ -33,12 +33,12 @@ axios.interceptors.response.use(
           //refresh token api
           return Axios.post(process.env.REACT_APP_V1_API_URL + API.login.refreshToken, '', {
             headers: {
-              Authorization: 'Bearer ' + sessionStorage.getItem('refreshtoken'),
+              Authorization: 'Bearer ' + localStorage.getItem('refreshtoken'),
               apikey: process.env.REACT_APP_API_KEY,
             },
           }).then((response) => {
-            sessionStorage.setItem('accesstoken', response.headers['access-token']);
-            sessionStorage.setItem('refreshtoken', response.headers['refresh-token']);
+            localStorage.setItem('accesstoken', response.headers['access-token']);
+            localStorage.setItem('refreshtoken', response.headers['refresh-token']);
             //passing updated token in headers for authorization
             error.config.headers['Authorization'] = 'Bearer ' + response.headers['access-token'];
             return axios.request(error.response.config);
