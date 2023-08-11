@@ -1089,7 +1089,8 @@ const EditQualificationDetails = ({
             }
             {...register(
               'qualificationCertificate',
-              qualificationFilesData[`qualification.${index}.files`]?.length === 0 && {
+              (qualificationFilesData[`qualification.${index}.files`]?.length === 0 ||
+                qualificationFilesData[`qualification.${index}.files`] === undefined) && {
                 required: 'Please upload the qualification certificate.',
               }
             )}

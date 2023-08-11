@@ -296,6 +296,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
         setRegistrationFileUpdated(false);
       }
     }
+    if (registrationFileData?.length === 0) {
+      setValue('registrationCertificate', []);
+    }
   }, [registrationFileData]);
 
   const CloseAttachmentPopup = () => {
@@ -350,6 +353,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
       } else {
         setQualificationFileUpdated(false);
       }
+    }
+    if (files?.length === 0) {
+      setQualificationFilesData([]);
+      setValue('qualificationCertificate', []);
     }
   };
 
