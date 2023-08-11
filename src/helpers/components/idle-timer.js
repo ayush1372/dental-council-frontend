@@ -44,6 +44,7 @@ export function IdleTimer() {
 
   const handleStillHere = () => {
     setOpen(false);
+    clearTimeout(timerId.current);
   };
 
   const handleLogout = () => {
