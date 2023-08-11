@@ -45,6 +45,7 @@ export const UploadFile = (props) => {
   const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
   const [attachedFileData, setAttachedFileData] = useState('');
   const [viewFileType, setViewFileType] = useState('');
+  const [eventType, setEventType] = useState('');
 
   const { t } = useTranslation();
 
@@ -125,6 +126,7 @@ export const UploadFile = (props) => {
         };
         if (uploadFiles === 'single') {
           setFileData([fileDetails]);
+          setEventType(e);
         } else {
           fileData.push(fileDetails);
           setFileData(fileData);
@@ -295,6 +297,9 @@ export const UploadFile = (props) => {
                                 size={18}
                                 onClick={(e) => {
                                   e.preventDefault();
+                                  if (eventType?.target?.value) {
+                                    eventType.target.value = null;
+                                  }
                                   if (e?.target?.attributes?.id?.value === 'qualification') {
                                     document.getElementById('qualification').value = '';
                                     if (
