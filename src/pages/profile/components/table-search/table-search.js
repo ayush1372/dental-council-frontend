@@ -29,7 +29,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
   const [dashBoardCardId, setDashBoardCardId] = useState();
   const [genderDropdown, setGenderDropdown] = useState(false);
   const [genderId, setGenderId] = useState('');
-  const [enableSearchButton, setEnableSearchButton] = useState(true);
+  const [disableSearchButton, setDisableSearchButton] = useState(true);
 
   const acendingOrderFilter = ActivateLicenceFieldList;
   acendingOrderFilter?.sort((a, b) => {
@@ -209,11 +209,11 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                         setGenderDropdown(true);
                       } else {
                         setGenderDropdown(false);
-                        setEnableSearchButton(true);
+                        setDisableSearchButton(true);
                       }
                       if (currentValue === null) {
                         setValue('ActivateLicenceFilter', null);
-                        setEnableSearchButton(true);
+                        setDisableSearchButton(true);
                       }
                     }}
                   />
@@ -232,11 +232,11 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                         setGenderDropdown(true);
                       } else {
                         setGenderDropdown(false);
-                        setEnableSearchButton(true);
+                        setDisableSearchButton(true);
                       }
                       if (currentValue === null) {
                         setValue('dashBoardCardFilter', null);
-                        setEnableSearchButton(true);
+                        setDisableSearchButton(true);
                       }
                     }}
                   />
@@ -254,6 +254,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                         setValue('collegeApprovalId', currentValue?.id);
                         if (currentValue === null) {
                           setValue('collegeApprovalFilter', null);
+                          setDisableSearchButton(true);
                         }
                       }}
                     />
@@ -275,9 +276,9 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                       onChange={(currentValue) => {
                         setGenderId(currentValue?.id);
                         if (currentValue === null) {
-                          setEnableSearchButton(true);
+                          setDisableSearchButton(true);
                         } else {
-                          setEnableSearchButton(false);
+                          setDisableSearchButton(false);
                         }
                       }}
                     />
@@ -297,9 +298,9 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                       {...register('ActivateLicenceFilter', {
                         onChange: (e) => {
                           if (e?.target?.value === '') {
-                            setEnableSearchButton(true);
+                            setDisableSearchButton(true);
                           } else {
-                            setEnableSearchButton(false);
+                            setDisableSearchButton(false);
                           }
                         },
                       })}
@@ -316,6 +317,11 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                       {...register('dashBoardCardFilterGender')}
                       onChange={(currentValue) => {
                         setGenderId(currentValue?.id);
+                        if (currentValue === null) {
+                          setDisableSearchButton(true);
+                        } else {
+                          setDisableSearchButton(false);
+                        }
                       }}
                     />
                   ) : (
@@ -328,7 +334,15 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                       name={'dashBoardCardFilter'}
                       placeholder={'Enter keywords'}
                       defaultValue={getValues().dashBoardCardFilter}
-                      {...register('dashBoardCardFilter', {})}
+                      {...register('dashBoardCardFilter', {
+                        onChange: (e) => {
+                          if (e?.target?.value === '') {
+                            setDisableSearchButton(true);
+                          } else {
+                            setDisableSearchButton(false);
+                          }
+                        },
+                      })}
                       error={errors.dashBoardCardFilter?.message}
                     />
                   )
@@ -346,7 +360,15 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                       placeholder={'Enter keywords'}
                       defaultValue={getValues().collegeApprovalFilter}
                       error={errors.collegeApprovalFilter?.message}
-                      {...register('collegeApprovalFilter')}
+                      {...register('collegeApprovalFilter', {
+                        onChange: (e) => {
+                          if (e?.target?.value === '') {
+                            setDisableSearchButton(true);
+                          } else {
+                            setDisableSearchButton(false);
+                          }
+                        },
+                      })}
                     />
                   )
                 )}
@@ -369,7 +391,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                   variant="contained"
                   color="secondary"
                   onClick={handleSubmit(onClickSearchButtonHandler)}
-                  disabled={enableSearchButton}
+                  disabled={disableSearchButton}
                 >
                   Search
                 </Button>
