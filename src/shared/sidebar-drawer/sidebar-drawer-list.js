@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 import ReportOutlinedIcon from '@mui/icons-material/ReportOutlined';
 import {
   Grid,
@@ -16,9 +18,12 @@ import {
   getPersonalDetailsData,
   updateDoctorContactDetails,
 } from '../../../src/store/actions/doctor-user-profile-actions';
+import { getActivateLicenseList } from '../../store/actions/common-actions';
+
 export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOption, open }) {
   const dispatch = useDispatch();
   const theme = useTheme();
+  const [totalRecordsOfActivateLicense, setTotalRecordsOfActivateLicense] = useState(0);
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const { personalDetails, registrationDetails } = useSelector(
     (state) => state?.doctorUserProfileReducer
@@ -48,6 +53,17 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
       dispatch(getPersonalDetailsData(personalDetails?.hp_profile_id));
     });
   };
+
+  useEffect(() => {
+    let ActivateLicenseListbody = {
+      pageNo: 1,
+      offset: 10,
+    };
+
+    dispatch(getActivateLicenseList(ActivateLicenseListbody)).then((response) => {
+      setTotalRecordsOfActivateLicense(response?.data?.total_no_of_records);
+    });
+  }, []);
 
   return (
     <List sx={{ p: 0 }}>
@@ -166,6 +182,8 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
                         ''
                       )}
                     </Grid>
+                  ) : item?.tabName === 'Activate Licence' ? (
+                    `${item?.name} (${totalRecordsOfActivateLicense})`
                   ) : (
                     item?.name
                   )

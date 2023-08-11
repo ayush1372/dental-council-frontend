@@ -71,6 +71,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   const [qualificationFilesData, setQualificationFilesData] = useState({
     'qualification.0.files': degree_certificate ? [{ file: degree_certificate }] : [],
   });
+  const [registrationFileUpdated, setRegistrationFileUpdated] = useState(false);
+  const [qualificationFileUpdated, setQualificationFileUpdated] = useState(false);
 
   const [viewCertificate] = useState({
     registration: registration_certificate,
@@ -252,9 +254,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     const qualificationFile = Object.values(qualificationFilesData)[0]?.[0]?.file;
 
     formData.append('data', doctorRegistrationDetailsBlob);
-    formData.append('degreeCertificate', qualificationFile);
 
-    formData.append('registrationCertificate', registrationFile);
+    if (qualificationFileUpdated) formData.append('degreeCertificate', qualificationFile);
+    if (registrationFileUpdated) formData.append('registrationCertificate', registrationFile);
+
     dispatch(
       updateDoctorRegistrationDetails(
         formData,
@@ -287,6 +290,11 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     if (registrationFileData?.length > 0) {
       setValue('registrationCertificate', registrationFileData);
       clearErrors('registrationCertificate', '');
+      if (registrationFileData[0]?.fileName !== undefined) {
+        setRegistrationFileUpdated(true);
+      } else {
+        setRegistrationFileUpdated(false);
+      }
     }
   }, [registrationFileData]);
 
@@ -336,6 +344,13 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   const handleQualificationFilesData = (fileName, files) => {
     qualificationFilesData[fileName] = files;
     setQualificationFilesData({ ...qualificationFilesData });
+    if (files?.length > 0) {
+      if (files[0]?.fileName !== undefined) {
+        setQualificationFileUpdated(true);
+      } else {
+        setQualificationFileUpdated(false);
+      }
+    }
   };
 
   //Helper Method to get the data of the query raised against the field
