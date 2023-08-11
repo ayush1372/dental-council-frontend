@@ -50,7 +50,11 @@ const ReadRegisterAndAcademicDetails = ({
   const { registrationDetails } = useSelector((state) => state?.doctorUserProfileReducer);
   const { trackStatusData, loggedInUserType } = useSelector((state) => state.common);
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
-
+  const collegeStatus = useSelector(
+    (state) =>
+      state?.dashboard?.dashboardTableDetails?.data?.dashboard_tolist?.[selectedDataIndex]
+        ?.college_status
+  );
   const { data } = useSelector((state) => state.loginReducer?.loginData);
 
   const dashboardTableDetailsData = useSelector((state) => state?.dashboard?.dashboardTableDetails);
@@ -413,7 +417,8 @@ const ReadRegisterAndAcademicDetails = ({
                             {selectedAcademicStatus !== 'Temporary Suspension Requests Received' &&
                               selectedAcademicStatus !== 'Permanent Suspension Requests Received' &&
                               !!dashboardTableDetails &&
-                              dashboardTableDetails !== 'Approved' && (
+                              dashboardTableDetails !== 'Approved' &&
+                              collegeStatus !== 'Approved' && (
                                 <MenuItem onClick={selectionChangeHandler} data-my-value={'raise'}>
                                   Raise a Query
                                 </MenuItem>

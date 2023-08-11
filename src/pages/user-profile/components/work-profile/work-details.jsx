@@ -1222,7 +1222,7 @@ const WorkDetails = ({
         my={3}
         ml={3}
       >
-        <Grid item xs={12}>
+        <Grid item xs={12} display="flex" justifyContent="end">
           <Button
             onClick={
               organizationChecked ? handleSubmit(onSubmit) : handleSubmit(workDetailsErrorHandler)
