@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getDateAndTimeFormat } from '../../helpers/functions/common-functions';
-import ErrorModalPopup from '../../shared/common-modals/error-modal-popup';
+// import ErrorModalPopup from '../../shared/common-modals/error-modal-popup';
 import { getInitiateWorkFlow, raiseQuery, suspendDoctor } from '../../store/actions/common-actions';
 import { Button, Checkbox, DatePicker, RadioGroup, TextField } from '../../ui/core';
 import successToast from '../../ui/core/toaster';
@@ -37,7 +37,7 @@ export function SuspendLicenseVoluntaryRetirement({
   const user_group_id = useSelector((state) => state.loginReducer?.loginData?.data);
   const [selectedSuspension, setSelectedSuspension] = useState('voluntary-suspension-check');
 
-  const [rejectPopup, setRejectPopup] = useState(false);
+  // const [rejectPopup, setRejectPopup] = useState(false);
   const [conformSuspend, setConformSuspend] = useState(false);
   const [confirmationModal, setConfirmationModal] = useState(false);
   const [queries, setQueries] = useState([]);
@@ -689,7 +689,7 @@ export function SuspendLicenseVoluntaryRetirement({
                   getValues()?.remark !== ''
                 ) {
                   if (personalDetails?.work_flow_status_id === 1) {
-                    setRejectPopup(true);
+                    // setRejectPopup(true);
                   } else {
                     setConformSuspend(true);
                     setConfirmationModal(true);
@@ -731,7 +731,7 @@ export function SuspendLicenseVoluntaryRetirement({
           </Button>
         </Box>
       )}
-      {rejectPopup && (
+      {/* {rejectPopup && (
         <ErrorModalPopup
           open={setRejectPopup}
           text={`Your account data is in pending status.
@@ -740,7 +740,7 @@ export function SuspendLicenseVoluntaryRetirement({
             setRejectPopup(false);
           }}
         />
-      )}
+      )} */}
       {selectedValue && (
         <Box align="right" my={2}>
           {selectedValue === 'raise' ||
