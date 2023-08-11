@@ -152,7 +152,8 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
         clearInterval(timer);
         setShowOTPPOPUp(false);
         setVerifyEmailID(false);
-        // setEmailChange(false); for future changes.
+        setEmailChange(false);
+        // for future changes.
         return;
       }
       dispatch(getPersonalDetailsData(personalDetails?.hp_profile_id)).then((response) => {
