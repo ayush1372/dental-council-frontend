@@ -40,8 +40,6 @@ import DashboardControlledTable from '../dashboard-controlled-table/dashboard-co
 export default function Dashboard() {
   const theme = useTheme();
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
-  // eslint-disable-next-line no-console
-  console.log('loggedInUserType', loggedInUserType);
   const breadcrumbsActive = useSelector((state) => state.common.breadcrumbsActivetab);
   const { count } = useSelector((state) => state.dashboard);
   const [showDashboard, setShowDashboard] = useState(true);
