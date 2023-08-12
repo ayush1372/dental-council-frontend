@@ -171,7 +171,9 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }
       <Typography variant="h4" component="div" textAlign="center" data-testid="Password">
         {uniqueHpId
           ? `Welcome ${uniqueHpId}`
-          : `Welcome ${verifyNotificationOtpData?.data?.message?.display_name} `}
+          : verifyNotificationOtpData?.data?.message?.display_name !== undefined
+          ? `Welcome ${verifyNotificationOtpData?.data?.message?.display_name} `
+          : 'Welcome'}
       </Typography>
       {/* <Typography variant="body1" component="div" textAlign="center" data-testid="Password">
           {`Please set your password `}
