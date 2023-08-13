@@ -402,7 +402,7 @@ const AdditionalQualifications = () => {
                 error={errors.degree?.message}
                 options={createSelectFieldData(coursesList?.data)}
                 {...register('degree', {
-                  required: 'Please select the degree.',
+                  required: 'Please select the Degree.',
                 })}
                 MenuProps={menuProps}
               />
@@ -422,7 +422,7 @@ const AdditionalQualifications = () => {
                   error={errors?.state?.message}
                   defaultValue={getValues()?.state}
                   {...register('state', {
-                    required: 'Please select the state.',
+                    required: 'Please select the State.',
                   })}
                   options={createSelectFieldData(statesList)}
                   MenuProps={menuProps}
@@ -441,7 +441,7 @@ const AdditionalQualifications = () => {
                   defaultValue={getValues()?.int_countryName}
                   error={errors?.int_countryName?.message}
                   {...register('int_countryName', {
-                    required: 'Please select the country.',
+                    required: 'Please select the Country.',
                   })}
                   options={
                     countriesList?.length > 0 ? createSelectFieldData(countriesList, 'id') : []
@@ -469,7 +469,7 @@ const AdditionalQualifications = () => {
                   defaultValue={getValues()?.collegeName}
                   error={errors?.collegeName?.message}
                   {...register('collegeName', {
-                    required: 'Please select the college.',
+                    required: 'Please select the College.',
                   })}
                   options={createSelectFieldData(collegesData)}
                   MenuProps={menuProps}
@@ -486,7 +486,7 @@ const AdditionalQualifications = () => {
                   toolTipData={isEditForm && getQueryTooltip(field_names.state)}
                   error={errors?.int_state?.message}
                   {...register('int_state', {
-                    required: 'Please enter the state.',
+                    required: 'Please enter the State.',
                   })}
                 />
               )}
@@ -511,7 +511,7 @@ const AdditionalQualifications = () => {
                   defaultValue={getValues()?.university}
                   error={errors?.university?.message}
                   {...register('university', {
-                    required: 'Please select the university.',
+                    required: 'Please select the University.',
                   })}
                   options={createSelectFieldData(universitiesListData, 'id')}
                   MenuProps={menuProps}
@@ -528,7 +528,7 @@ const AdditionalQualifications = () => {
                   toolTipData={isEditForm && getQueryTooltip(field_names.college)}
                   error={errors?.int_collegeName?.message}
                   {...register('int_collegeName', {
-                    required: 'Please enter the college.',
+                    required: 'Please enter the College.',
                   })}
                 />
               )}
@@ -557,7 +557,7 @@ const AdditionalQualifications = () => {
                     defaultValue={getValues()?.month}
                     error={errors?.month?.message}
                     {...register('month', {
-                      required: 'Please select the awarding month.',
+                      required: 'Please select the Awarding month.',
                     })}
                     options={customMonthsData}
                     MenuProps={menuProps}
@@ -576,7 +576,7 @@ const AdditionalQualifications = () => {
                     defaultValue={getValues()?.year}
                     error={errors?.year?.message}
                     {...register('year', {
-                      required: 'Please select the awarding year.',
+                      required: 'Please select the Awarding year.',
                       pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
                     })}
                     MenuProps={menuProps}
@@ -597,7 +597,7 @@ const AdditionalQualifications = () => {
                   toolTipData={isEditForm && getQueryTooltip(field_names.university)}
                   error={getValues().int_university === '' && errors?.int_university?.message}
                   {...register('int_university', {
-                    required: 'Please enter the university.',
+                    required: 'Please enter the University.',
                   })}
                 />
               </Grid>
@@ -625,7 +625,7 @@ const AdditionalQualifications = () => {
                     defaultValue={getValues().int_month}
                     error={errors?.int_month?.message}
                     {...register('int_month', {
-                      required: 'Please select the awarding month.',
+                      required: 'Please select the Awarding month.',
                     })}
                     MenuProps={menuProps}
                     options={monthsData}
@@ -643,7 +643,7 @@ const AdditionalQualifications = () => {
                     defaultValue={getValues()?.int_year}
                     error={errors?.int_year?.message}
                     {...register('int_year', {
-                      required: 'Please select the awarding year.',
+                      required: 'Please select the Awarding year.',
                       pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
                     })}
                     MenuProps={menuProps}
@@ -666,7 +666,7 @@ const AdditionalQualifications = () => {
                   disabled={isEditForm}
                   error={errors?.broadSpeciality?.message}
                   {...register('broadSpeciality', {
-                    required: 'Please select the broad speciality.',
+                    required: 'Please select the Broad Speciality.',
                   })}
                   MenuProps={menuProps}
                   options={createSelectFieldData(specialitiesList?.data)}
@@ -700,7 +700,7 @@ const AdditionalQualifications = () => {
                   // queryRaiseIcon={isEditForm && queryfields.includes(field_names.degree)}
                   error={errors?.int_broadSpeciality?.message}
                   {...register('int_broadSpeciality', {
-                    required: 'Please select the broad speciality.',
+                    required: 'Please select the Broad Speciality.',
                     // pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
                   })}
                   MenuProps={menuProps}
@@ -827,6 +827,20 @@ const AdditionalQualifications = () => {
             >
               Cancel
             </Button>
+            {/* <Button
+              variant={'contained'}
+              sx={{ ml: 2 }}
+              color={'primary'}
+              onClick={() => {
+                verboseLog('Form Values -> ', getValues());
+                verboseLog('Attachment Values -> ', qualificationFilesData);
+                verboseLog('fieldComments', fieldComments);
+                verboseLog('QueryFields', queryfields);
+                verboseLog('QueryFields degree', queryfields.includes(field_names.degree));
+              }}
+            >
+              Form Values
+            </Button> */}
           </Box>
           {successModalPopup && (
             <SuccessModalPopup
