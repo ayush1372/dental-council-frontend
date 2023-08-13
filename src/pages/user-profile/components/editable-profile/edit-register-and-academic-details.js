@@ -133,7 +133,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     name: 'qualification',
   });
 
-  const isRenewable = watch('registration');
+  //const isRenewable = watch('registration');
 
   const getRegistrationCouncilData = (RegisteredWithCouncil) => {
     let councilData = [];
@@ -561,7 +561,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           </Grid>
         </Grid>
         <Grid container item spacing={2} mt={1}>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
               Registration Type
               <Typography component="span" color="error.main">
@@ -604,7 +604,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               // disabled={work_flow_status_id === 3 ? getQueryRaised('Registration') : false}
             />
           </Grid>
-          {isRenewable === '1' && (
+          {is_renewable === '1' && (
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 Due Date of Renewal
@@ -636,7 +636,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 //     ? '#F0F0F0'
                 //     : ''
                 // }
-                value={new Date()}
+                value={
+                  renewable_registration_date? new Date(renewable_registration_date) : new Date()
+                }
                 disabled={
                   getQueryRaised('Due Date of Renewal') === false
                     ? false
