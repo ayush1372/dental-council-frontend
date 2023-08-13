@@ -11,7 +11,7 @@ import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup
 import { createHealthProfessional } from '../../../store/actions/doctor-registration-actions';
 import { forgotPassword, setPassword } from '../../../store/actions/forgot-password-actions';
 import { Button, TextField } from '../../../ui/core';
-// import successToast from '../../../ui/core/toaster';
+import successToast from '../../../ui/core/toaster';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }) => {
@@ -104,9 +104,13 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }
           password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
         };
 
-        dispatch(setPassword(newPasswordData)).then(() => {
-          setCollegeRegisterSuccess(true);
-          setShowSuccess(true);
+        dispatch(setPassword(newPasswordData)).then((response) => {
+          if(response?.data?.message === 'Success'){
+            setCollegeRegisterSuccess(true);
+            setShowSuccess(true);
+          } else{
+            successToast( response?.data?.message, response?.data?.message, 'error', 'top-center');
+          }
         });
         // .catch((error) => {
         //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
