@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 
 import { Box, Grid, TablePagination } from '@mui/material';
-import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 
 import GenericTable from '../../../../shared/generic-component/generic-table';
@@ -177,7 +176,7 @@ function DashboardControlledTable(props) {
             : capitalize(application?.college_status),
       },
       { type: 'NMCVerificationStatus', value: capitalize(application?.nmc_status) },
-      { type: 'dateofSubmission', value: moment(application?.created_at).format('DD-MM-YYYY') },
+      { type: 'dateofSubmission', value: application?.created_at },
       { type: 'pendency', value: application?.pendency },
       { type: 'view', value: 'View', onClickCallback: viewCallback },
       { type: 'profileID', value: application?.hp_profile_id }
