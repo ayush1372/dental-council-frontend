@@ -609,7 +609,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               // disabled={work_flow_status_id === 3 ? getQueryRaised('Registration') : false}
             />
           </Grid>
-          {getValues().registration === '1' && (
+          {getValues().registration === '1' || is_renewable === '1' && (
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 Due Date of Renewal
