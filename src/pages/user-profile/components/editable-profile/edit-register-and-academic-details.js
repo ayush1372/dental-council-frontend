@@ -133,6 +133,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     name: 'qualification',
   });
 
+  watch('registration');
   //const isRenewable = watch('registration');
 
   const getRegistrationCouncilData = (RegisteredWithCouncil) => {
@@ -156,7 +157,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
       RegisteredWithCouncil,
       RegistrationNumber,
       RegistrationDate,
-      //registration,
+      registration,
       RenewalDate,
     } = getValues();
 
@@ -177,7 +178,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
         : RegistrationNumber;
 
     registration_detail.state_medical_council = getRegistrationCouncilData(RegisteredWithCouncil);
-    registration_detail.is_renewable = is_renewable;
+    registration_detail.is_renewable = registration;
     registration_detail.renewable_registration_date = RenewalDate?.split('/')?.reverse()?.join('-');
 
     // this below code is storing qualification details
@@ -312,9 +313,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   const handleBackButton = () => {
     handleBack();
   };
-  const handleRegistration = (event) => {
-    setValue(event.target.name, event.target.value, true);
-  };
+  // const handleRegistration = (event) => {
+  //   setValue(event.target.name, event.target.value, true);
+  // };
   useEffect(() => {
     const details = registrationDetails?.qualification_detail_response_tos?.[0] || {};
     const fmgeDetails = registrationDetails?.nbe_response_to || {};
@@ -575,7 +576,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
             </Typography>
 
             <RadioGroup
-              onChange={handleRegistration}
+              //onChange={handleRegistration}
               name={'registration'}
               size="small"
               defaultValue={is_renewable !== undefined ? is_renewable : '0'}
@@ -589,7 +590,11 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                   label: 'Renewable',
                 },
               ]}
-              {...register('registration', {})}
+              {...register('registration', {
+
+                //onChange: handleRegistration
+
+              })}
               disabled={
                 getQueryRaised('Registration') === false
                   ? false
@@ -604,7 +609,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               // disabled={work_flow_status_id === 3 ? getQueryRaised('Registration') : false}
             />
           </Grid>
-          {is_renewable === '1' && (
+          {getValues().registration === '1' || is_renewable === '1' && (
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 Due Date of Renewal
