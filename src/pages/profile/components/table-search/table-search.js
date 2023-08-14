@@ -164,6 +164,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                       if (currentValue === null) {
                         setValue('Status', '');
                         setValue('StatusId', '');
+                        setDisableSearchButton(true);
                       }
                       onApplicationChange(currentValue);
                     }}
@@ -187,6 +188,11 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                     onChange={(currentValue) => {
                       setValue('StatusId', currentValue?.id);
                       setValue('Status', currentValue?.name);
+                      if (currentValue === null) {
+                        setDisableSearchButton(true);
+                      } else {
+                        setDisableSearchButton(false);
+                      }
                     }}
                     value={{ name: getValues()?.Status || '', id: getValues()?.StatusId || '' }}
                   />
@@ -255,6 +261,8 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                         if (currentValue === null) {
                           setValue('collegeApprovalFilter', null);
                           setDisableSearchButton(true);
+                        } else {
+                          setDisableSearchButton(false);
                         }
                       }}
                     />
