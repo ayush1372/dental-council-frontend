@@ -81,7 +81,7 @@ export function LoginPage() {
     dispatch(loginActiveState({ activeIndex: activeIndex + 1 }));
   };
   return (
-    <Box sx={{ maxWidth: '648px', mx: 'auto'}}>
+    <Box sx={{ maxWidth: '648px', mx: 'auto' }}>
       {(activeIndex === 0 || activeIndex === undefined) &&
       loginFormNames[loginFormname] === 'Doctor' ? (
         <DoctorLogin
@@ -91,7 +91,7 @@ export function LoginPage() {
           userTypeDetails={data}
         />
       ) : (
-        activeIndex === 0 &&
+        (activeIndex === 0 || activeIndex === undefined) &&
         loginFormNames[loginFormname] !== 'Doctor' && (
           <Login
             loginName={loginFormNames[loginFormname]}
