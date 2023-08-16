@@ -23,7 +23,7 @@ export default function ErrorModalPopup({
   const dispatch = useDispatch();
   const handleCloseModal = () => {
     if (accountExist) {
-      dispatch(loginActiveState({ activeIndex: 1 }));
+      dispatch(loginActiveState({ activeIndex: 0 }));
       navigate('/login-page', { state: { loginFormname: loginFormName } });
     }
     setOpen(false);
