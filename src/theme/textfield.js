@@ -5,8 +5,10 @@ export const TextField = (palette, appFontType) => ({
     {
       props: { size: 'large' },
       style: {
-        fontSize: changeAppFontSize(18, appFontType),
-        lineHeight: '28px',
+        input: {
+          padding: '16px',
+          fontSize: changeAppFontSize(18, appFontType),
+        },
       },
     },
     {
@@ -22,9 +24,7 @@ export const TextField = (palette, appFontType) => ({
       },
     },
   ],
-  defaultProps: {
-    autoFocus: false,
-  },
+
   styleOverrides: {
     root: {
       fontSize: changeAppFontSize(16, appFontType),
@@ -56,9 +56,15 @@ export const TextField = (palette, appFontType) => ({
         pointerEvents: 'none',
         backgroundColor: palette.backgroundColor.light,
       },
-      '&.MuiInputBase-adornedEnd': {
-        paddingRight: '0',
+      '.MuiSelect-nativeInput, .MuiOutlinedInput-input': {
+        '&:hover': {
+          border: 'none',
+        },
       },
+    },
+    input: {
+      height: 'auto',
+      padding: '11px 16px',
     },
 
     colorSuccess: {
@@ -76,7 +82,8 @@ export const TextField = (palette, appFontType) => ({
     inputSizeSmall: {
       fontSize: changeAppFontSize(14, appFontType),
       lineHeight: '22px',
-      padding: '9px 16px',
+      padding: '7px 16px',
+      borderRadius: '3px',
     },
     success: {
       color: palette.success.main,
