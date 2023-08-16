@@ -192,7 +192,7 @@ export const LoginRegisterPopover = ({
                   variant="contained"
                   color="secondary"
                   sx={{
-                    mr: 2,
+                    mr: 1,
                   }}
                   className={styles.registerButton}
                   onClick={() => onClickRecruitingAgentHandler()}

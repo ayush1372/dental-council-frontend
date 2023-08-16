@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { Box, Button, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
@@ -24,6 +24,7 @@ import { DatePicker, RadioGroup, Select, TextField } from '../../../../ui/core';
 import { EmailRegexValidation } from '../../../../utilities/common-validations';
 
 const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValidDetails }) => {
+  let btnRef = useRef();
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const loggedInUserType = useSelector((state) => state?.common?.loggedInUserType);
@@ -348,6 +349,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
   };
 
   const handleBackButton = () => {
+    if (btnRef.current) {
+      btnRef.current.setAttribute('disabled', 'disabled');
+    }
     setIsReadMode(true);
     setValidDetails({ ...validDetails, email: false });
   };
@@ -496,6 +500,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
     return doctorProfileValues;
   }
   async function onHandleOptionNext() {
+    if (btnRef.current && (document?.getElementsByName('email')[0]?.value || personalDetails?.email_verified) ) {
+      btnRef.current.setAttribute('disabled', 'disabled');
+    }
     await onHandleSave().then((response) => {
       response && fetchUpdatedDoctorUserProfileData(response, true);
     });
@@ -1478,6 +1485,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
         <Grid item container display="flex" alignItems="center" mt={5}>
           <Grid item xs={12} md="auto">
             <Button
+              ref={btnRef}
               onClick={handleBackButton}
               color="grey"
               variant="contained"
@@ -1517,6 +1525,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
           </Grid>
           <Grid item xs={12} md="auto" display="flex" ml={{ xs: 0, md: 2 }}>
             <Button
+              ref={btnRef}
               size="medium"
               onClick={handleSubmit(onHandleOptionNext)}
               variant="contained"

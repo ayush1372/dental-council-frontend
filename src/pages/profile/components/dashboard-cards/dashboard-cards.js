@@ -23,7 +23,7 @@ import {
 import { userGroupType } from '../../../../helpers/functions/common-functions';
 import ViewProfile from '../../../../shared/view-profile/view-profile';
 import { collegeProfileData } from '../../../../store/actions/college-actions';
-import { getCollegeData } from '../../../../store/actions/common-actions';
+import { getActivateLicenseList, getCollegeData } from '../../../../store/actions/common-actions';
 import { getCardCount } from '../../../../store/actions/dashboard-actions';
 import { getNBEProfileData } from '../../../../store/actions/nbe-actions';
 import { getNMCProfileData } from '../../../../store/actions/nmc-actions';
@@ -260,6 +260,16 @@ export default function Dashboard() {
       dispatch(setBreadcrumbsActivetab(''));
     }
   }, [breadcrumbsActive, dispatch]);
+
+  useEffect(() => {
+    if (loggedInUserType === 'SMC' || loggedInUserType === 'NMC') {
+      let ActivateLicenseListbody = {
+        pageNo: 1,
+        offset: 10,
+      };
+      dispatch(getActivateLicenseList(ActivateLicenseListbody));
+    }
+  }, [loggedInUserType]);
 
   return (
     <>

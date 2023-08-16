@@ -44,6 +44,7 @@ export function IdleTimer() {
 
   const handleStillHere = () => {
     setOpen(false);
+    clearTimeout(timerId.current);
   };
 
   const handleLogout = () => {
@@ -69,7 +70,11 @@ export function IdleTimer() {
       handleNoText={'Stay'}
       handleYes={handleLogout}
       handleYesText={'Logout'}
-      text={{ heading: 'Session Idle', message: 'The session has exceeded the time limit of inactivity. Please click "Stay" to resume the session.' }}
+      text={{
+        heading: 'Session Idle',
+        message:
+          'The session has exceeded the time limit of inactivity. Please click "Stay" to resume the session.',
+      }}
     />
   );
 }
