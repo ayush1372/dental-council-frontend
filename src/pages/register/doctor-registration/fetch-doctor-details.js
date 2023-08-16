@@ -189,6 +189,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
   };
 
   const handleVerifyMobile = () => {
+    handleClear();
     dispatch(storeMobileDetails(getValues().MobileNumber));
     dispatch(
       getDemographicAuthMobile({
