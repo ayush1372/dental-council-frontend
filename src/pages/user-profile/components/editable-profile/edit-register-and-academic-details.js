@@ -48,7 +48,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   const { personalDetails, updatedPersonalDetails } = useSelector(
     (state) => state?.doctorUserProfileReducer
   );
-  const { work_flow_status_id } = personalDetails || {};
+  const { work_flow_status_id, hp_profile_status_id } = personalDetails || {};
   const { raisedQueryData } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
 
   const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
@@ -133,7 +133,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     name: 'qualification',
   });
 
-  const isRenewable = watch('registration');
+  watch('registration');
+  //const isRenewable = watch('registration');
 
   const getRegistrationCouncilData = (RegisteredWithCouncil) => {
     let councilData = [];
@@ -296,6 +297,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
         setRegistrationFileUpdated(false);
       }
     }
+    if (registrationFileData?.length === 0) {
+      setValue('registrationCertificate', []);
+    }
   }, [registrationFileData]);
 
   const CloseAttachmentPopup = () => {
@@ -309,9 +313,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   const handleBackButton = () => {
     handleBack();
   };
-  const handleRegistration = (event) => {
-    setValue(event.target.name, event.target.value, true);
-  };
+  // const handleRegistration = (event) => {
+  //   setValue(event.target.name, event.target.value, true);
+  // };
   useEffect(() => {
     const details = registrationDetails?.qualification_detail_response_tos?.[0] || {};
     const fmgeDetails = registrationDetails?.nbe_response_to || {};
@@ -350,6 +354,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
       } else {
         setQualificationFileUpdated(false);
       }
+    }
+    if (files?.length === 0) {
+      setQualificationFilesData([]);
+      setValue('qualificationCertificate', []);
     }
   };
 
@@ -540,21 +548,21 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                   ? { required: 'Please select a valid date' }
                   : { required: false }
               )}
-              // disabled={
-              //   work_flow_status_id === 3
-              //     ? getQueryRaised('Registration Date')
-              //     : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-              //     ? false
-              //     : getValues().RegistrationDate === ''
-              //     ? false
-              //     : true
-              // }
+              disabled={
+                getQueryRaised('Registration Date') === false
+                  ? false
+                  : hp_profile_status_id === 3
+                  ? getQueryRaised('Registration Date')
+                  : hp_profile_status_id === 2
+                  ? true
+                  : false
+              }
               disableFuture
             />
           </Grid>
         </Grid>
         <Grid container item spacing={2} mt={1}>
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
               Registration Type
               <Typography component="span" color="error.main">
@@ -568,7 +576,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
             </Typography>
 
             <RadioGroup
-              onChange={handleRegistration}
+              //onChange={handleRegistration}
               name={'registration'}
               size="small"
               defaultValue={is_renewable !== undefined ? is_renewable : '0'}
@@ -582,11 +590,26 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                   label: 'Renewable',
                 },
               ]}
-              {...register('registration', {})}
-              disabled={work_flow_status_id === 3 ? getQueryRaised('Registration') : false}
+              {...register('registration', {
+
+                //onChange: handleRegistration
+
+              })}
+              disabled={
+                getQueryRaised('Registration') === false
+                  ? false
+                  : hp_profile_status_id === 3
+                  ? getQueryRaised('Registration')
+                  : hp_profile_status_id === 2
+                  ? true
+                  : !personalDetails?.personal_details?.is_new
+                  ? true
+                  : false
+              }
+              // disabled={work_flow_status_id === 3 ? getQueryRaised('Registration') : false}
             />
           </Grid>
-          {isRenewable === '1' && (
+          {(getValues().registration === '1' || (hp_profile_status_id === 2 && is_renewable === '1')) && (
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 Due Date of Renewal
@@ -618,14 +641,26 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 //     ? '#F0F0F0'
                 //     : ''
                 // }
-                value={new Date()}
+                value={
+                  renewable_registration_date? new Date(renewable_registration_date) : new Date()
+                }
                 disabled={
-                  work_flow_status_id === 3 &&
-                  (getQueryRaised('Due Date of Renewal') === false ||
-                    getQueryRaised('Due Date of Renewal') === undefined)
+                  getQueryRaised('Due Date of Renewal') === false
+                    ? false
+                    : hp_profile_status_id === 3
                     ? getQueryRaised('Due Date of Renewal')
+                    : hp_profile_status_id === 2
+                    ? true
                     : false
                 }
+                // disabled={work_flow_status_id === 3 ? getQueryRaised('Due Date of Renewal') : false}
+                // disabled={
+                //   work_flow_status_id === 3 &&
+                //   (getQueryRaised('Due Date of Renewal') === false ||
+                //     getQueryRaised('Due Date of Renewal') === undefined)
+                //     ? getQueryRaised('Due Date of Renewal')
+                //     : false
+                // }
               />
             </Grid>
           )}
@@ -636,8 +671,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               uploadDisabled={
                 getQueryRaised('Upload the registration certificate') === false
                   ? false
-                  : work_flow_status_id === 3
+                  : hp_profile_status_id === 3
                   ? getQueryRaised('Upload the registration certificate')
+                  : hp_profile_status_id === 2
+                  ? true
                   : false
               }
               queryRaiseIcon={

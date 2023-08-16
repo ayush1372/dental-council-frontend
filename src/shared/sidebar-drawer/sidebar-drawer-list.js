@@ -16,14 +16,16 @@ import {
   getPersonalDetailsData,
   updateDoctorContactDetails,
 } from '../../../src/store/actions/doctor-user-profile-actions';
+
 export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOption, open }) {
   const dispatch = useDispatch();
   const theme = useTheme();
+
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const { personalDetails, registrationDetails } = useSelector(
     (state) => state?.doctorUserProfileReducer
   );
-
+  const { activateLicenseList } = useSelector((state) => state.common);
   const logInDoctorStatus = useSelector(
     (state) => state?.loginReducer?.loginData?.data?.blacklisted
   );
@@ -166,6 +168,12 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
                         ''
                       )}
                     </Grid>
+                  ) : item?.tabName === 'Activate Licence' ? (
+                    `${item?.name} (${
+                      activateLicenseList?.data?.total_no_of_records
+                        ? activateLicenseList?.data?.total_no_of_records
+                        : 0
+                    })`
                   ) : (
                     item?.name
                   )

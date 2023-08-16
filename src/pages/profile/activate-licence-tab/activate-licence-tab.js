@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 
 import { Box, Button, Grid, TablePagination, Typography } from '@mui/material';
-import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { verboseLog } from '../../../config/debug';
@@ -167,7 +166,7 @@ const ActivateLicence = () => {
             },
             {
               type: 'dateOfSubmission',
-              value: moment(application?.submitted_date).format('DD-MM-YYYY'),
+              value: application?.submitted_date,
             },
             {
               type: 'reactivationFromDate',

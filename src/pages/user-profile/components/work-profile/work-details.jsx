@@ -670,6 +670,7 @@ const WorkDetails = ({
                   <Button
                     variant="contained"
                     color="secondary"
+                    sx={{paddingTop: '14px', paddingBottom: '14px'}}
                     onClick={() => {
                       getValues()?.facilityId?.length > 0
                         ? searchFacilitiesHandler()
@@ -679,10 +680,11 @@ const WorkDetails = ({
                     Search
                   </Button>
                 </Box>
-                <Box ml={3}>
+                <Box ml={1}>
                   <Button
                     color="grey"
                     variant="contained"
+                    sx={{paddingTop: '14px', paddingBottom: '14px'}}
                     onClick={() => {
                       setValue('facilityId', '');
                       setFacilityIDError(false);
@@ -792,6 +794,7 @@ const WorkDetails = ({
                   <Button
                     variant="contained"
                     color="secondary"
+                    sx={{paddingTop: '14px', paddingBottom: '14px'}}
                     onClick={() => {
                       if (
                         typeof getValues()?.stateLGDCode === 'number' &&
@@ -826,6 +829,7 @@ const WorkDetails = ({
                   <Button
                     color="grey"
                     variant="contained"
+                    sx={{paddingTop: '14px', paddingBottom: '14px'}}
                     onClick={() => {
                       setValue('stateLGDCode', undefined);
                       setValue('districtLGDCode', undefined);
@@ -1222,27 +1226,29 @@ const WorkDetails = ({
         my={3}
         ml={3}
       >
-        <Grid item xs={12}>
+        <Grid item xs={12} display="flex" pt={2} justifyContent="end" sx={{borderTop: 'solid 1px', borderColor: 'inputBorderColor.main'}}>
           <Button
             onClick={
               organizationChecked ? handleSubmit(onSubmit) : handleSubmit(workDetailsErrorHandler)
             }
             variant="contained"
             color="secondary"
-          >
+            sx={{paddingTop: '14px', paddingBottom: '14px'}}
+            >
             Submit
           </Button>
           <Button
             color="grey"
             variant="contained"
             sx={{
-              marginLeft: '16px',
+              marginLeft: '8px',
+              paddingTop: '14px', paddingBottom: '14px'
             }}
             onClick={(e) => {
               e.preventDefault();
               dispatch(changeUserActiveTab(doctorTabs[0].tabName));
             }}
-          >
+            >
             Cancel
           </Button>
         </Grid>

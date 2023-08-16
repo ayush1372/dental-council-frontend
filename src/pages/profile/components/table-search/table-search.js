@@ -21,13 +21,15 @@ import { Button, TextField } from '../../../../ui/core';
 
 export function TableSearch({ trackApplication, searchParams, exportData, flag }) {
   const profileId = useSelector((state) => state.loginReducer.loginData.data.profile_id);
+  const { userActiveTab } = useSelector((state) => state.common);
+
   const [applicationTypeValue, setApplicationTypeValue] = useState(false);
   const [statusTypeValue, setStatusTypeValue] = useState(false);
   const [filterId, setFilterId] = useState('');
   const [dashBoardCardId, setDashBoardCardId] = useState();
   const [genderDropdown, setGenderDropdown] = useState(false);
   const [genderId, setGenderId] = useState('');
-  const { userActiveTab } = useSelector((state) => state.common);
+  const [disableSearchButton, setDisableSearchButton] = useState(true);
 
   const acendingOrderFilter = ActivateLicenceFieldList;
   acendingOrderFilter?.sort((a, b) => {
@@ -135,6 +137,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
   const onApplicationChange = (currentValue) => {
     if (currentValue !== null && currentValue !== undefined) setFilterId(currentValue.id);
   };
+
   return (
     <Box data-testid="table-search" mb={2}>
       <Grid container>
@@ -161,6 +164,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                       if (currentValue === null) {
                         setValue('Status', '');
                         setValue('StatusId', '');
+                        setDisableSearchButton(true);
                       }
                       onApplicationChange(currentValue);
                     }}
@@ -184,6 +188,11 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                     onChange={(currentValue) => {
                       setValue('StatusId', currentValue?.id);
                       setValue('Status', currentValue?.name);
+                      if (currentValue === null) {
+                        setDisableSearchButton(true);
+                      } else {
+                        setDisableSearchButton(false);
+                      }
                     }}
                     value={{ name: getValues()?.Status || '', id: getValues()?.StatusId || '' }}
                   />
@@ -206,9 +215,11 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                         setGenderDropdown(true);
                       } else {
                         setGenderDropdown(false);
+                        setDisableSearchButton(true);
                       }
                       if (currentValue === null) {
                         setValue('ActivateLicenceFilter', null);
+                        setDisableSearchButton(true);
                       }
                     }}
                   />
@@ -227,9 +238,11 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                         setGenderDropdown(true);
                       } else {
                         setGenderDropdown(false);
+                        setDisableSearchButton(true);
                       }
                       if (currentValue === null) {
                         setValue('dashBoardCardFilter', null);
+                        setDisableSearchButton(true);
                       }
                     }}
                   />
@@ -247,6 +260,9 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                         setValue('collegeApprovalId', currentValue?.id);
                         if (currentValue === null) {
                           setValue('collegeApprovalFilter', null);
+                          setDisableSearchButton(true);
+                        } else {
+                          setDisableSearchButton(false);
                         }
                       }}
                     />
@@ -267,6 +283,11 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                       {...register('ActivateLicenceFilterGender')}
                       onChange={(currentValue) => {
                         setGenderId(currentValue?.id);
+                        if (currentValue === null) {
+                          setDisableSearchButton(true);
+                        } else {
+                          setDisableSearchButton(false);
+                        }
                       }}
                     />
                   ) : (
@@ -282,7 +303,15 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                       placeholder={'Enter keywords'}
                       defaultValue={getValues().ActivateLicenceFilter}
                       error={errors.ActivateLicenceFilter?.message}
-                      {...register('ActivateLicenceFilter')}
+                      {...register('ActivateLicenceFilter', {
+                        onChange: (e) => {
+                          if (e?.target?.value === '') {
+                            setDisableSearchButton(true);
+                          } else {
+                            setDisableSearchButton(false);
+                          }
+                        },
+                      })}
                     />
                   )
                 ) : exportData?.data?.dashboard_tolist ? (
@@ -296,6 +325,11 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                       {...register('dashBoardCardFilterGender')}
                       onChange={(currentValue) => {
                         setGenderId(currentValue?.id);
+                        if (currentValue === null) {
+                          setDisableSearchButton(true);
+                        } else {
+                          setDisableSearchButton(false);
+                        }
                       }}
                     />
                   ) : (
@@ -308,7 +342,15 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                       name={'dashBoardCardFilter'}
                       placeholder={'Enter keywords'}
                       defaultValue={getValues().dashBoardCardFilter}
-                      {...register('dashBoardCardFilter', {})}
+                      {...register('dashBoardCardFilter', {
+                        onChange: (e) => {
+                          if (e?.target?.value === '') {
+                            setDisableSearchButton(true);
+                          } else {
+                            setDisableSearchButton(false);
+                          }
+                        },
+                      })}
                       error={errors.dashBoardCardFilter?.message}
                     />
                   )
@@ -326,7 +368,15 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                       placeholder={'Enter keywords'}
                       defaultValue={getValues().collegeApprovalFilter}
                       error={errors.collegeApprovalFilter?.message}
-                      {...register('collegeApprovalFilter')}
+                      {...register('collegeApprovalFilter', {
+                        onChange: (e) => {
+                          if (e?.target?.value === '') {
+                            setDisableSearchButton(true);
+                          } else {
+                            setDisableSearchButton(false);
+                          }
+                        },
+                      })}
                     />
                   )
                 )}
@@ -349,6 +399,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                   variant="contained"
                   color="secondary"
                   onClick={handleSubmit(onClickSearchButtonHandler)}
+                  disabled={disableSearchButton}
                 >
                   Search
                 </Button>

@@ -22,6 +22,7 @@ export default function TrackStatus() {
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
   const { councilNames, trackStatusData } = useSelector((state) => state.common);
   const [viewExportIcon, setViewExportIcon] = useState(false);
+  const [disableSearchButton, setDisableSearchButton] = useState(true);
 
   const dispatch = useDispatch();
   const {
@@ -66,14 +67,6 @@ export default function TrackStatus() {
       offset: 10,
     };
     dispatch(trackStatus(trackData)).then(() => {});
-    // .catch((error) => {
-    //   successToast(
-    //     error?.data?.response?.data?.error,
-    //     'RegistrationError',
-    //     'error',
-    //     'top-center'
-    //   );
-    // });
 
     setShowTable(true);
     setTrackValues(trackData);
@@ -88,20 +81,10 @@ export default function TrackStatus() {
       </Grid>
       {showHeader && (
         <Box px={3}>
-          {/* <Typography variant="h2" color="textPrimary.main" component="div" mt={8}>
-            Track Status
-          </Typography> */}
           <Grid container spacing={2} mt={1}>
             {loggedInUserType !== 'SMC' && (
               <Grid item xs={12} md={3}>
                 <Box pb={{ xs: 2, md: 4 }}>
-                  {/* <Typography color="inputTextColor.main">
-                  Council Name
-                  <Typography component="span" color="error.main">
-                    *
-                  </Typography>
-                </Typography> */}
-
                   <Tooltip title={getValues().RegistrationCouncil} arrow placeholder="bottom-start">
                     <SearchableDropdown
                       sx={{ mt: 1 }}
@@ -128,12 +111,6 @@ export default function TrackStatus() {
 
             <Grid item xs={12} md={3}>
               <Box pb={{ xs: 2, md: 4 }}>
-                {/* <Typography color="inputTextColor.main">
-                  label
-                  <Typography component="span" color="error.main">
-                    *
-                  </Typography>
-                </Typography> */}
                 <SearchableDropdown
                   sx={{ mt: 1 }}
                   fullWidth
@@ -143,27 +120,24 @@ export default function TrackStatus() {
                   clearErrors={clearErrors}
                   {...register('trackStatus')}
                   onChange={(currentValue) => {
-                    setTrackStatusId(currentValue?.id);
                     if (currentValue?.id === 'gender') {
                       setGenderDropdown(true);
                     } else {
                       setGenderDropdown(false);
+                      setDisableSearchButton(true);
                     }
-                    if (currentValue === null) {
+                    if (currentValue === null || currentValue?.id !== trackStatusId) {
                       setValue('trackStatusFilter', null);
+                      setDisableSearchButton(true);
                     }
+
+                    setTrackStatusId(currentValue?.id);
                   }}
                 />
               </Box>
             </Grid>
             <Grid item xs={12} md={3}>
               <Box pb={{ xs: 2, md: 4 }}>
-                {/* <Typography color="inputTextColor.main">
-                  label
-                  <Typography component="span" color="error.main">
-                    *
-                  </Typography>
-                </Typography> */}
                 {genderDropdown === true ? (
                   <SearchableDropdown
                     sx={{ mt: 1 }}
@@ -175,6 +149,11 @@ export default function TrackStatus() {
                     {...register('trackStatusGender')}
                     onChange={(currentValue) => {
                       setTrackStatusGenderId(currentValue?.id);
+                      if (currentValue === null) {
+                        setDisableSearchButton(true);
+                      } else {
+                        setDisableSearchButton(false);
+                      }
                     }}
                   />
                 ) : (
@@ -188,7 +167,15 @@ export default function TrackStatus() {
                     name={'trackStatusFilter'}
                     placeholder={'Enter keywords'}
                     defaultValue={getValues().trackStatusFilter}
-                    {...register('trackStatusFilter', {})}
+                    {...register('trackStatusFilter', {
+                      onChange: (e) => {
+                        if (e?.target?.value === '') {
+                          setDisableSearchButton(true);
+                        } else {
+                          setDisableSearchButton(false);
+                        }
+                      },
+                    })}
                     error={errors.trackStatusFilter?.message}
                   />
                 )}
@@ -213,6 +200,7 @@ export default function TrackStatus() {
                   onClick={handleSubmit(onSubmit)}
                   color="secondary"
                   size="medium"
+                  disabled={disableSearchButton}
                 >
                   Search
                 </Button>
