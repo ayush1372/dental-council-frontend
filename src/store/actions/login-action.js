@@ -115,7 +115,7 @@ export const logoutAction = () => async () => {
     useAxiosCall({
       method: POST,
       url: API.login.logoutUser,
-      headers: { Authorization: 'Bearer ' + localStorage.getItem('refreshtoken') },
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
     })
       .then((response) => {
         return resolve(response);
