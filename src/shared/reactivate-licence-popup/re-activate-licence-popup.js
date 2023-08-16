@@ -156,12 +156,19 @@ export default function ReactivateLicencePopup(props) {
                   error={showReasonError ? 'Enter reason for re-activation' : false}
                   {...register('reason', {
                     required: 'This field is required',
+                    pattern: {
+                      value: /^\w+(?:\s+\w+){0,150}$/,
+                      message: 'Maximum word limit exceeded',
+                    },
                     onChange: (event) => {
                       if (event.target.value) {
                         setShowReasonError(false);
                       }
                     },
                   })}
+                  inputProps={{
+                    maxLength: 150,
+                  }}
                 />
               </Box>
             </Grid>
