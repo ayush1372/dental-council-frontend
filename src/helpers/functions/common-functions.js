@@ -229,7 +229,7 @@ export const typeOfApplication = (actionType) => {
     5: 'Activate Licence',
     6: 'College Registration',
     7: 'Foreign HP Registration',
-    8: 'Qualification Work flow',
+    8: 'Additional Qualification',
   };
   return actionTypeObj[actionType];
 };
