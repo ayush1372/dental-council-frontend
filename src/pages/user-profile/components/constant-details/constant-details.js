@@ -342,14 +342,16 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                       Change
                     </span>
                   </Typography> */}
-                  <EditOutlinedIcon
-                    color={'primary'}
-                    fontSize={'inherit'}
-                    sx={{ ml: 0.5, cursor: 'pointer' }}
-                    onClick={() => {
-                      setMobileNumberChange(true);
-                    }}
-                  />
+                  <Tooltip title="Edit mobile number">
+                    <EditOutlinedIcon
+                      color={'primary'}
+                      fontSize={'inherit'}
+                      sx={{ ml: 0.5, cursor: 'pointer' }}
+                      onClick={() => {
+                        setMobileNumberChange(true);
+                      }}
+                    />
+                  </Tooltip>
                 </Box>
               </>
             )}
