@@ -500,7 +500,10 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
     return doctorProfileValues;
   }
   async function onHandleOptionNext() {
-    if (btnRef.current && (document?.getElementsByName('email')[0]?.value || personalDetails?.email_verified) ) {
+    if (
+      btnRef.current &&
+      (document?.getElementsByName('email')[0]?.value || personalDetails?.email_verified)
+    ) {
       btnRef.current.setAttribute('disabled', 'disabled');
     }
     await onHandleSave().then((response) => {
@@ -1516,7 +1519,6 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
                 width: {
                   xs: '100%',
                   md: 'fit-content',
-                  height: '52px',
                 },
               }}
             >
