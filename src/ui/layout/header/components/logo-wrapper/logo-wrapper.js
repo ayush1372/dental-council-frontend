@@ -23,6 +23,7 @@ import G20Logo from '../../../../../assets/images/logo-slider/G20.svg';
 import NmcLogo from '../../../../../assets/images/logo-slider/NMC_logo.svg';
 import { IdleTimer } from '../../../../../helpers/components/idle-timer';
 import { colgTabs, doctorTabs } from '../../../../../helpers/components/sidebar-drawer-list-item';
+import { logoutAction } from '../../../../../store/actions/login-action';
 import {
   changeUserActiveTab,
   login,
@@ -141,7 +142,11 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
     handleCloseUserMenu();
 
     if (optionType === 'Logout') {
-      dispatch(logout());
+      dispatch(logoutAction()).then((response) => {
+        if (response) {
+          logout();
+        }
+      });
       dispatch(resetCommonReducer());
       dispatch(resetDoctorProfileReducer());
       localStorage.clear();
