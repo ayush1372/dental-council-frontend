@@ -1,10 +1,13 @@
 import Axios from 'axios';
+import sha256 from 'sha256';
 
 import { API } from '../api/api-endpoints';
 import authInterceptors from '../api/auth-interceptors';
 import { millisecondToDate } from '../helpers/functions/common-functions';
-import { setApiLoading } from '../store/reducers/common-reducers';
+import { logoutAction } from '../store/actions/login-action';
+import { logout, resetCommonReducer, setApiLoading } from '../store/reducers/common-reducers';
 import store from '../store/store';
+import successToast from '../ui/core/toaster';
 
 const axios = Axios.create({
   baseURL: process.env.REACT_APP_V1_API_URL,
@@ -78,12 +81,49 @@ export const useAxiosCall = async (payload = axiosProps) => {
   return await new Promise((resolve, reject) => {
     axios(payload)
       .then((response) => {
-        return resolve({
-          data: response.data,
-          responseHeader: response.headers,
-          isLoading: false,
-          isError: false,
-        });
+        if (
+          process.env.REACT_APP_CHECKSUM_FLAG === 'true' &&
+          response.headers['is-authorized'] !== undefined
+        ) {
+          const key = sha256(process.env.REACT_APP_CHECKSUM_KEY + JSON.stringify(response?.data));
+          if (
+            response?.headers &&
+            response.headers['is-authorized'] !== undefined &&
+            response.headers['is-authorized'] === key
+          ) {
+            return resolve({
+              data: response.data,
+              responseHeader: response.headers,
+              isLoading: false,
+              isError: false,
+            });
+          } else if (response.headers['is-authorized'] !== key) {
+            successToast(
+              'An error occurred while processing your request. Please try again in sometime.',
+              'auth-error-Network',
+              'error',
+              'top-center'
+            );
+            if (localStorage?.getItem('accesstoken')) {
+              localStorage.clear();
+              store.dispatch(logoutAction());
+              store.dispatch(logout());
+              store.dispatch(resetCommonReducer());
+              window.location.reload();
+              window.scrollTo({
+                top: 0,
+                behavior: 'smooth',
+              });
+            }
+          }
+        } else {
+          return resolve({
+            data: response.data,
+            responseHeader: response.headers,
+            isLoading: false,
+            isError: false,
+          });
+        }
       })
       .catch((error) => {
         authInterceptors(error);
