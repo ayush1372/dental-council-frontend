@@ -144,7 +144,7 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
     if (optionType === 'Logout') {
       dispatch(logoutAction()).then((response) => {
         if (response) {
-          logout();
+          dispatch(logout());
         }
       });
       dispatch(resetCommonReducer());
