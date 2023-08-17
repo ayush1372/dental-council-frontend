@@ -107,10 +107,6 @@ export const changeAppFontSize = (size, appFontType) => {
   return `${fontSize}px`;
 };
 export const encryptData = (data, key) => {
-  // var encrypt = new JSEncrypt();
-  // encrypt.setPublicKey(key);
-  // var encryptedPass = encrypt.encrypt(data);
-  // return encryptedPass;
   const publicKey = forge.pki.publicKeyFromPem(key);
   const mdx = forge.md.sha1;
 
