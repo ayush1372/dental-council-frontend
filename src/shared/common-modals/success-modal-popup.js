@@ -13,6 +13,7 @@ import {
 } from '../../helpers/components/sidebar-drawer-list-item';
 import { getCardCount } from '../../store/actions/dashboard-actions';
 import { getPersonalDetailsData } from '../../store/actions/doctor-user-profile-actions';
+import { logoutAction } from '../../store/actions/login-action';
 import {
   changeUserActiveTab,
   logout,
@@ -94,7 +95,12 @@ export default function SuccessModalPopup({
       }
       if (loggedInUserType === 'Doctor' && SuspensionCall !== true) {
         localStorage.clear();
-        dispatch(logout());
+        dispatch(logoutAction()).then((response) => {
+          if (response) {
+            dispatch(logout());
+          }
+        });
+
         dispatch(resetCommonReducer());
         navigate('/');
         window.scrollTo({
