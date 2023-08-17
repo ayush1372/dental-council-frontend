@@ -596,7 +596,7 @@ export function SuspendLicenseVoluntaryRetirement({
             <Checkbox
               name="notification"
               {...register('notification', {
-                required: 'Please indicate that you accept the Terms and Conditions',
+                required: 'Please indicate that you accept the terms and conditions',
                 onChange: (e) => {
                   if (e.target.checked) {
                     setShowConsentError(false);
