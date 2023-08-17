@@ -144,7 +144,7 @@ function CollegeVerifier() {
                 required: 'Please select designation',
               })}
               onChange={(currentValue) => {
-                setValue('DesignationID', currentValue.id);
+                setValue('DesignationID', currentValue?.id);
               }}
             />
           </Grid>

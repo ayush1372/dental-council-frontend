@@ -109,3 +109,19 @@ export const refreshTokenAction = () => async (dispatch) => {
       });
   });
 };
+
+export const logoutAction = () => async () => {
+  return await new Promise((resolve, reject) => {
+    useAxiosCall({
+      method: POST,
+      url: API.login.logoutUser,
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+    })
+      .then((response) => {
+        return resolve(response);
+      })
+      .catch((error) => {
+        return reject(error);
+      });
+  });
+};
