@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { getDateAndTimeFormat } from '../../helpers/functions/common-functions';
-// import ErrorModalPopup from '../../shared/common-modals/error-modal-popup';
+import ErrorModalPopup from '../../shared/common-modals/error-modal-popup';
 import { getInitiateWorkFlow, raiseQuery, suspendDoctor } from '../../store/actions/common-actions';
 import { Button, Checkbox, DatePicker, RadioGroup, TextField } from '../../ui/core';
 import successToast from '../../ui/core/toaster';
@@ -37,7 +37,7 @@ export function SuspendLicenseVoluntaryRetirement({
   const user_group_id = useSelector((state) => state.loginReducer?.loginData?.data);
   const [selectedSuspension, setSelectedSuspension] = useState('voluntary-suspension-check');
 
-  // const [rejectPopup, setRejectPopup] = useState(false);
+  const [rejectPopup, setRejectPopup] = useState(false);
   const [conformSuspend, setConformSuspend] = useState(false);
   const [confirmationModal, setConfirmationModal] = useState(false);
   const [queries, setQueries] = useState([]);
@@ -263,6 +263,19 @@ export function SuspendLicenseVoluntaryRetirement({
     reset({ toDate: '', fromDate: '', remark: '' });
   };
 
+  const compareDates = (userEnteredDateValue, currentDate) => {
+    let date1 = new Date(userEnteredDateValue).getTime();
+    let date2 = new Date(currentDate).getTime();
+
+    if (date1 < date2) {
+      setShowToDateError(true);
+    } else if (date1 > date2) {
+      setShowToDateError(false);
+    } else {
+      setShowToDateError(false);
+    }
+  };
+
   return (
     <Box data-testid="suspend-license-voluntary-retirement" width="100%">
       {!tabName && selectedValue !== 'forward' && (
@@ -434,6 +447,10 @@ export function SuspendLicenseVoluntaryRetirement({
                       if (getValues().toDate !== undefined) {
                         setShowToDateError(false);
                       }
+                      compareDates(
+                        new Date(newDateValue)?.toLocaleDateString('en-GB'),
+                        new Date()?.toLocaleDateString('en-GB')
+                      );
                     }}
                     data-testid="toDate"
                     id="toDate"
@@ -458,9 +475,7 @@ export function SuspendLicenseVoluntaryRetirement({
                         : new Date()
                     }
                     required={true}
-                    error={
-                      loggedInUserType === 'NMC' ? false : showToDateError ? 'Enter To Date' : false
-                    }
+                    error={showToDateError ? 'Enter To Date' : false}
                   />
                 </>
               )}
@@ -519,16 +534,7 @@ export function SuspendLicenseVoluntaryRetirement({
                 (selectedValue === 'suspend' || selectedValue === 'blacklist')
               }
               defaultValue={getValues()?.remark || selectedRowData?.remark}
-              error={
-                selectedValue === 'raise' ||
-                selectedValue === 'reject' ||
-                selectedValue === 'suspend' ||
-                selectedValue === 'blacklist'
-                  ? false
-                  : showRemarkError
-                  ? 'Enter Remarks'
-                  : errors?.remark?.message
-              }
+              error={showRemarkError ? 'Enter Remarks' : errors?.remark?.message}
               {...register('remark', {
                 required:
                   tabName === 'voluntary-suspend-license' ||
@@ -536,13 +542,11 @@ export function SuspendLicenseVoluntaryRetirement({
                   selectedValue === 'forward'
                     ? 'Enter Remarks'
                     : false,
-                pattern:
-                  selectedValue === 'approve'
-                    ? {}
-                    : {
-                        value: /^\W*(?:\w+\b\W*){1,300}?$/i,
-                        message: 'Maximum word limit exceeded',
-                      },
+                pattern: {
+                  value: /^\W*(?:\w+\b\W*){1,3}?$/i,
+                  message: 'Maximum word limit exceeded',
+                },
+
                 onChange: (e) => {
                   if (e.target.value !== '') {
                     if (
@@ -686,10 +690,14 @@ export function SuspendLicenseVoluntaryRetirement({
                   getValues().fromDate !== undefined &&
                   getValues().notification !== false &&
                   getValues()?.remark !== undefined &&
-                  getValues()?.remark !== ''
+                  getValues()?.remark !== '' &&
+                  errors?.remark?.message === undefined
                 ) {
-                  if (personalDetails?.work_flow_status_id === 1) {
-                    // setRejectPopup(true);
+                  if (
+                    personalDetails?.work_flow_status_id === 1 ||
+                    personalDetails?.application_type_id === 3
+                  ) {
+                    setRejectPopup(true);
                   } else {
                     setConformSuspend(true);
                     setConfirmationModal(true);
@@ -731,7 +739,7 @@ export function SuspendLicenseVoluntaryRetirement({
           </Button>
         </Box>
       )}
-      {/* {rejectPopup && (
+      {rejectPopup && (
         <ErrorModalPopup
           open={setRejectPopup}
           text={`Your account data is in pending status.
@@ -740,7 +748,7 @@ export function SuspendLicenseVoluntaryRetirement({
             setRejectPopup(false);
           }}
         />
-      )} */}
+      )}
       {selectedValue && (
         <Box align="right" my={2}>
           {selectedValue === 'raise' ||
