@@ -13,7 +13,7 @@ import { useSpeechSynthesis } from 'react-speech-kit';
 
 import { consentDescription } from '../../../constants/common-data';
 import { validateAadharNumber } from '../../../constants/common-data';
-import { dateFormat, encryptData } from '../../../helpers/functions/common-functions';
+import { dateFormat, encryptHPIDData } from '../../../helpers/functions/common-functions';
 import KycErrorPopup from '../../../shared/common-modals/kyc-error-popup';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import OtpForm from '../../../shared/otp-form/otp-component';
@@ -127,7 +127,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
       clientSecret: process.env.REACT_APP_SESSION_CLIENT_SECRET,
     };
     dispatch(getSessionAccessToken(reqObj)).then(() => {
-      const encryptedAadhaar = encryptData(value, process.env.REACT_APP_HPRID_PUBLICKEY);
+      const encryptedAadhaar = encryptHPIDData(value, process.env.REACT_APP_HPRID_PUBLICKEY);
       dispatch(sendAaadharOtp(encryptedAadhaar)).then(() => {
         setshowOtpAadhar(true);
       });
@@ -143,7 +143,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
       dispatch(
         validateOtpAadhaar({
           txnId: aadhaarTxnId,
-          otp: encryptData(otpValue, process.env.REACT_APP_HPRID_PUBLICKEY),
+          otp: encryptHPIDData(otpValue, process.env.REACT_APP_HPRID_PUBLICKEY),
         })
       ).then((response) => {
         setisOtpValidAadhar(true);
@@ -194,7 +194,10 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
     dispatch(
       getDemographicAuthMobile({
         txnId: aadhaarTxnId,
-        mobileNumber: encryptData(getValues().MobileNumber, process.env.REACT_APP_HPRID_PUBLICKEY),
+        mobileNumber: encryptHPIDData(
+          getValues().MobileNumber,
+          process.env.REACT_APP_HPRID_PUBLICKEY
+        ),
       })
     ).catch(() => {
       let data = {
@@ -227,7 +230,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
   const handleValidateMobile = () => {
     let data = {
       txnId: mobileTxnId,
-      otp: encryptData(otpValue, process.env.REACT_APP_HPRID_PUBLICKEY),
+      otp: encryptHPIDData(otpValue, process.env.REACT_APP_HPRID_PUBLICKEY),
     };
     if (otpValue.length === 6) {
       dispatch(verifyMobileOtp(data)).then(() => {
@@ -242,7 +245,10 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
   const otpResend = () => {
     if (otptype === 'aadhaar') {
       let aadharDataFields = getValues().field_1 + getValues().field_2 + getValues().field_3;
-      const encryptedAadhaar = encryptData(aadharDataFields, process.env.REACT_APP_HPRID_PUBLICKEY);
+      const encryptedAadhaar = encryptHPIDData(
+        aadharDataFields,
+        process.env.REACT_APP_HPRID_PUBLICKEY
+      );
       dispatch(sendAaadharOtp(encryptedAadhaar));
     } else {
       let data = {
