@@ -544,7 +544,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               error={errors?.RegistrationDate?.message}
               {...register(
                 'RegistrationDate',
-                getValues().RegistrationDate === ''
+                getValues().RegistrationDate === undefined ||
+                  getValues().RegistrationDate === 'Invalid Date'
                   ? { required: 'Please select a valid date' }
                   : { required: false }
               )}

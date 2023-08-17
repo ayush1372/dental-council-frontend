@@ -103,7 +103,7 @@ export const AadharRegexValidation = {
 export const QueryRaisedValidation = {
   required: 'This field is required',
   pattern: {
-    value: /^[\s\S]{1,150}$/,
+    value: /^\W*(?:\w+\b\W*){1,300}?$/i,
     message: 'Maximum word limit exceeded',
   },
 };
