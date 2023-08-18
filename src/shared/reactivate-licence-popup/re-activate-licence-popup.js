@@ -132,6 +132,9 @@ export default function ReactivateLicencePopup(props) {
                   required={true}
                   minDate={new Date()}
                   error={showFromDateError ? 'Enter Re-activate from' : false}
+                  onKeyDown={(e) => {
+                    e.preventDefault();
+                  }}
                 />
               </Box>
             </Grid>

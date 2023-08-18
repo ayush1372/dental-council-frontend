@@ -427,6 +427,9 @@ export function SuspendLicenseVoluntaryRetirement({
                 name="fromDate"
                 required={loggedInUserType === 'NMC' ? false : true}
                 // error={showFromDateError ? 'Enter From Date' : false}
+                onKeyDown={(e) => {
+                  e.preventDefault();
+                }}
               />
             </Grid>
             <Grid item xs={12} md={6} my={{ xs: 1, md: 0 }}>
@@ -476,6 +479,9 @@ export function SuspendLicenseVoluntaryRetirement({
                     }
                     required={true}
                     error={showToDateError ? 'Enter To Date' : false}
+                    onKeyDown={(e) => {
+                      e.preventDefault();
+                    }}
                   />
                 </>
               )}

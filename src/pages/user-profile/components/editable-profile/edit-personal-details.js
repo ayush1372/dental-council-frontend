@@ -793,6 +793,9 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
               error={errors.DateOfBirth?.message}
               // backgroundColor={loggedInUserType === 'SMC' ? '' : '#F0F0F0'}
               disabled={loggedInUserType === 'SMC' ? false : true}
+              onKeyDown={(e) => {
+                e.preventDefault();
+              }}
             />
           </Grid>
 
