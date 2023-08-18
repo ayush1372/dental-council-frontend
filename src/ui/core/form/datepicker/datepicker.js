@@ -63,6 +63,7 @@ const InputField = ({
           value={error ? new Date(undefined) : value}
           slotProps={{
             textField: {
+              readOnly: true,
               helperText: error ? (
                 <div
                   className={CN(styles.helperTextMsg, {
