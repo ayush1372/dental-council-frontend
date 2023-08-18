@@ -559,9 +559,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                   : false
               }
               disableFuture
-              onKeyDown={(e) => {
-                e.preventDefault();
-              }}
             />
           </Grid>
         </Grid>
@@ -664,9 +661,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 //     ? getQueryRaised('Due Date of Renewal')
                 //     : false
                 // }
-                onKeyDown={(e) => {
-                  e.preventDefault();
-                }}
               />
             </Grid>
           )}
