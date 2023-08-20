@@ -4,23 +4,29 @@ import { Box, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
+import { logoutUser } from '../../../helpers/functions/common-functions';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import {
   collegeProfileData,
   sendRegistrarDetails,
   updateCollegeRegistrarData,
 } from '../../../store/actions/college-actions';
+import { logoutAction } from '../../../store/actions/login-action';
+import { logout, resetCommonReducer } from '../../../store/reducers/common-reducers';
 import { Button, TextField } from '../../../ui/core';
 import { EmailRegexValidation } from '../../../utilities/common-validations';
-// import successToast from '../../../ui/core/toaster';
 
 export function CollegeRegistrar({ showPage, updateShowPage }) {
   const { t } = useTranslation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { collegeData } = useSelector((state) => state.college);
   const userData = collegeData?.data;
   const [successModalPopup, setSuccessModalPopup] = useState(false);
+  const [emailIDUpdated, setEmailIDUpdated] = useState(false);
 
   const {
     register,
@@ -50,11 +56,6 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
   };
   const onSubmit = (fieldData) => {
     let registrarData = {
-      // name: showPage === 'edit' ? fieldData.registrarName : null,
-      // phone_number: showPage === 'edit' ? fieldData.registrarPhoneNumber : null,
-      // email_id: showPage === 'edit' ? fieldData.registrarPhoneNumber : null,
-      // user_id: showPage === 'edit' ? fieldData?.registrarUserId : null,
-      // password: showPage === 'edit' ? fieldData.registrarPassword : null,
       id: showPage === 'edit' ? userData?.id : null,
       college_id: showPage === 'edit' ? userData?.college_id : null,
       designation: showPage === 'edit' ? userData?.designation : null,
@@ -69,11 +70,11 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
           if (response?.isError === false) {
             setSuccessModalPopup(true);
           }
+          if (fieldData?.registrarEmail !== userData?.email_id) {
+            setEmailIDUpdated(true);
+          }
         }
       );
-      // .catch((error) => {
-      //   successToast(error?.data?.response?.data?.message, 'UpdateError', 'error', 'top-center');
-      // });
     } else {
       dispatch(sendRegistrarDetails(registrarData, userData?.id));
     }
@@ -221,7 +222,18 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
           {successModalPopup && (
             <SuccessModalPopup
               open={successModalPopup}
-              setOpen={() => setSuccessModalPopup(false)}
+              setOpen={() => {
+                setSuccessModalPopup(false);
+                if (emailIDUpdated)
+                  dispatch(logoutAction()).then((response) => {
+                    if (response) {
+                      logoutUser();
+                      dispatch(logout());
+                      dispatch(resetCommonReducer());
+                      navigate('/');
+                    }
+                  });
+              }}
               text={`Registrar profile has been created. Further details would be sent on registrar's registered Email ID`}
             />
           )}

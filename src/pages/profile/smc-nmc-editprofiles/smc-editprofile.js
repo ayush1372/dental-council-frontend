@@ -4,18 +4,25 @@ import { Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-import { createEditFieldData } from '../../../helpers/functions/common-functions';
+import { createEditFieldData, logoutUser } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
+import { logoutAction } from '../../../store/actions/login-action';
 import { getUpdatedsmcProfileData } from '../../../store/actions/smc-actions';
+import { logout, resetCommonReducer } from '../../../store/reducers/common-reducers';
 import { Button, TextField } from '../../../ui/core';
 import { EmailRegexValidation } from '../../../utilities/common-validations';
 
 const SmcEditProfile = (props) => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const userData = useSelector((state) => state?.smc?.smcProfileData?.data);
   const { councilNames } = useSelector((state) => state.common);
 
+  const [emailIDUpdated, setEmailIDUpdated] = useState(false);
   const [successModalPopup, setSuccessModalPopup] = useState(false);
 
   const {
@@ -46,7 +53,6 @@ const SmcEditProfile = (props) => {
       mobile_no: userData?.mobile_no,
     },
   });
-  const dispatch = useDispatch();
 
   const handleInput = (e) => {
     e.preventDefault();
@@ -78,6 +84,9 @@ const SmcEditProfile = (props) => {
     dispatch(getUpdatedsmcProfileData(smcUpdatedData)).then((response) => {
       if (response?.data?.email_id.length > 0) {
         setSuccessModalPopup(true);
+        if (getValues().email_id !== userData?.email_id) {
+          setEmailIDUpdated(true);
+        }
       }
     });
     props?.sentDetails('Profile');
@@ -227,7 +236,18 @@ const SmcEditProfile = (props) => {
         {successModalPopup && (
           <SuccessModalPopup
             open={successModalPopup}
-            setOpen={() => setSuccessModalPopup(false)}
+            setOpen={() => {
+              setSuccessModalPopup(false);
+              if (emailIDUpdated)
+                dispatch(logoutAction()).then((response) => {
+                  if (response) {
+                    logoutUser();
+                    dispatch(logout());
+                    dispatch(resetCommonReducer());
+                    navigate('/');
+                  }
+                });
+            }}
             text={'Your Profile has been successfully updated'}
           />
         )}

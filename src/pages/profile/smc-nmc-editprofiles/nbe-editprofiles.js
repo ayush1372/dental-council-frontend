@@ -4,18 +4,27 @@ import { Box, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
+import { logoutUser } from '../../../helpers/functions/common-functions';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
+import { logoutAction } from '../../../store/actions/login-action';
 import { getUpdatedNBEProfileData } from '../../../store/actions/nbe-actions';
+import { logout, resetCommonReducer } from '../../../store/reducers/common-reducers';
 import { Button, TextField } from '../../../ui/core';
 import { EmailRegexValidation } from '../../../utilities/common-validations';
-// import successToast from '../../../ui/core/toaster';
 
 const NbeEditProfile = (props) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const userData = useSelector((state) => state?.nbe?.nbeData?.data);
+
+  const [emailIDUpdated, setEmailIDUpdated] = useState(false);
+
   const [successModalPopup, setSuccessModalPopup] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -48,7 +57,7 @@ const NbeEditProfile = (props) => {
     email_id: getValues().email_id,
     mobile_no: getValues().mobile_no,
   };
-  const dispatch = useDispatch();
+
   const onsubmit = () => {
     let updatedNbeData = {
       email_id: getValues().email_id,
@@ -59,11 +68,11 @@ const NbeEditProfile = (props) => {
     dispatch(getUpdatedNBEProfileData(updatedNbeData, nbeUpdatedData?.id)).then((response) => {
       if (response?.isError === false) {
         setSuccessModalPopup(true);
+        if (getValues().email_id !== userData?.email_id) {
+          setEmailIDUpdated(true);
+        }
       }
     });
-    // .catch((error) => {
-    //   successToast(error?.data?.response?.data?.message, 'UpdateError', 'error', 'top-center');
-    // });
   };
 
   return (
@@ -74,6 +83,15 @@ const NbeEditProfile = (props) => {
           setOpen={() => {
             props?.sentDetails('Profile');
             setSuccessModalPopup(false);
+            if (emailIDUpdated)
+              dispatch(logoutAction()).then((response) => {
+                if (response) {
+                  logoutUser();
+                  dispatch(logout());
+                  dispatch(resetCommonReducer());
+                  navigate('/');
+                }
+              });
           }}
           text={'NBE profile data has been updated.'}
         />
