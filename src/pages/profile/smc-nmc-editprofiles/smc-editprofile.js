@@ -248,7 +248,7 @@ const SmcEditProfile = (props) => {
                     logoutUser();
                     dispatch(logout());
                     dispatch(resetCommonReducer());
-                    navigate('/');
+                    navigate('/login-page', { state: { loginFormname: 'SMC' } });
                   }
                 });
             }}

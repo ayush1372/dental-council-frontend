@@ -91,7 +91,7 @@ const NbeEditProfile = (props) => {
                   logoutUser();
                   dispatch(logout());
                   dispatch(resetCommonReducer());
-                  navigate('/');
+                  navigate('/login-page', { state: { loginFormname: 'NBE' } });
                 }
               });
             } else {

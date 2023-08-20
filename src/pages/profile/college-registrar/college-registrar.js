@@ -224,7 +224,7 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
                       logoutUser();
                       dispatch(logout());
                       dispatch(resetCommonReducer());
-                      navigate('/');
+                      navigate('/login-page', { state: { loginFormname: 'College' } });
                     }
                   });
                 } else {

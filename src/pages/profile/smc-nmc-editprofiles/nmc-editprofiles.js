@@ -267,7 +267,7 @@ const NmcEditProfile = (props) => {
                   logoutUser();
                   dispatch(logout());
                   dispatch(resetCommonReducer());
-                  navigate('/');
+                  navigate('/login-page', { state: { loginFormname: 'NMC' } });
                 }
               });
           }}
