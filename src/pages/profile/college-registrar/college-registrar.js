@@ -66,7 +66,6 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
     if (showPage === 'edit') {
       dispatch(updateCollegeRegistrarData(registrarData, userData?.college_id, userData?.id)).then(
         (response) => {
-          dispatch(collegeProfileData(userData?.college_id, userData?.id));
           if (response?.isError === false) {
             setSuccessModalPopup(true);
           }
@@ -75,6 +74,8 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
             fieldData?.registrarPhoneNumber !== userData?.mobile_number
           ) {
             setEmailIDUpdated(true);
+          } else {
+            dispatch(collegeProfileData(userData?.college_id, userData?.id));
           }
         }
       );
