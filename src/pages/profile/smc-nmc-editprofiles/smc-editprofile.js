@@ -84,12 +84,16 @@ const SmcEditProfile = (props) => {
     dispatch(getUpdatedsmcProfileData(smcUpdatedData)).then((response) => {
       if (response?.data?.email_id.length > 0) {
         setSuccessModalPopup(true);
-        if (getValues().email_id !== userData?.email_id) {
+        if (
+          getValues().email_id !== userData?.email_id ||
+          getValues().mobile_no !== userData?.mobile_no
+        ) {
           setEmailIDUpdated(true);
+        } else {
+          props?.sentDetails('Profile');
         }
       }
     });
-    props?.sentDetails('Profile');
   };
 
   return (
@@ -248,7 +252,11 @@ const SmcEditProfile = (props) => {
                   }
                 });
             }}
-            text={'Your Profile has been successfully updated'}
+            text={
+              emailIDUpdated
+                ? 'Your profile has been updated. Please login again with updated details.'
+                : 'Your profile has been updated.'
+            }
           />
         )}
       </Box>

@@ -68,7 +68,10 @@ const NbeEditProfile = (props) => {
     dispatch(getUpdatedNBEProfileData(updatedNbeData, nbeUpdatedData?.id)).then((response) => {
       if (response?.isError === false) {
         setSuccessModalPopup(true);
-        if (getValues().email_id !== userData?.email_id) {
+        if (
+          getValues().email_id !== userData?.email_id ||
+          getValues().mobile_no !== userData?.mobile_no
+        ) {
           setEmailIDUpdated(true);
         }
       }
@@ -81,9 +84,8 @@ const NbeEditProfile = (props) => {
         <SuccessModalPopup
           open={successModalPopup}
           setOpen={() => {
-            props?.sentDetails('Profile');
             setSuccessModalPopup(false);
-            if (emailIDUpdated)
+            if (emailIDUpdated) {
               dispatch(logoutAction()).then((response) => {
                 if (response) {
                   logoutUser();
@@ -92,8 +94,15 @@ const NbeEditProfile = (props) => {
                   navigate('/');
                 }
               });
+            } else {
+              props?.sentDetails('Profile');
+            }
           }}
-          text={'NBE profile data has been updated.'}
+          text={
+            emailIDUpdated
+              ? 'Your profile has been updated. Please login again with updated details.'
+              : 'Your profile has been updated.'
+          }
         />
       )}
       <Grid container spacing={2}>

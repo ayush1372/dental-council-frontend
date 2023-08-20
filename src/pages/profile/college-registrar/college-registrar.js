@@ -70,7 +70,10 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
           if (response?.isError === false) {
             setSuccessModalPopup(true);
           }
-          if (fieldData?.registrarEmail !== userData?.email_id) {
+          if (
+            fieldData?.registrarEmail !== userData?.email_id ||
+            fieldData?.registrarPhoneNumber !== userData?.mobile_number
+          ) {
             setEmailIDUpdated(true);
           }
         }
@@ -82,16 +85,6 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
 
   return (
     <Grid container item spacing={2} p={2}>
-      {successModalPopup && (
-        <SuccessModalPopup
-          open={successModalPopup}
-          setOpen={() => {
-            updateShowPage('Profile');
-            setSuccessModalPopup(false);
-          }}
-          text={'College Registrar data has been updated.'}
-        />
-      )}
       <Grid item xs={12}>
         <Box>
           <Typography color="textPrimary.main" variant="h2">
@@ -224,7 +217,7 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
               open={successModalPopup}
               setOpen={() => {
                 setSuccessModalPopup(false);
-                if (emailIDUpdated)
+                if (emailIDUpdated) {
                   dispatch(logoutAction()).then((response) => {
                     if (response) {
                       logoutUser();
@@ -233,8 +226,17 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
                       navigate('/');
                     }
                   });
+                } else {
+                  updateShowPage('Profile');
+                }
               }}
-              text={`Registrar profile has been created. Further details would be sent on registrar's registered Email ID`}
+              text={
+                showPage === 'edit'
+                  ? emailIDUpdated
+                    ? 'Your profile has been updated. Please login again with updated details.'
+                    : 'Your profile has been updated.'
+                  : `Registrar profile has been created. Further details would be sent on registrar's registered Email ID`
+              }
             />
           )}
         </Grid>
