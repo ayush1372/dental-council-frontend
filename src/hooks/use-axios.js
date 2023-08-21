@@ -99,7 +99,7 @@ export const useAxiosCall = async (payload = axiosProps) => {
             });
           } else if (response.headers['is-authorized'] !== key) {
             successToast(
-              'An error occurred while processing your request. Please try again in sometime.',
+              'Authentication failed. You may not have permission to access this profile, please login again.',
               'auth-error-Network',
               'error',
               'top-center'
