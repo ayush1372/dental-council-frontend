@@ -178,7 +178,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
         : RegistrationNumber;
 
     registration_detail.state_medical_council = getRegistrationCouncilData(RegisteredWithCouncil);
-    registration_detail.is_renewable = registration;
+    registration_detail.is_renewable = registration || is_renewable;
     registration_detail.renewable_registration_date = RenewalDate?.split('/')?.reverse()?.join('-');
 
     // this below code is storing qualification details
@@ -591,9 +591,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                   label: 'Renewable',
                 },
               ]}
-              {...register('registration', {
-                //onChange: handleRegistration
-              })}
+              {...register('registration')}
               disabled={
                 getQueryRaised('Registration') === false
                   ? false
