@@ -4,24 +4,29 @@ import { Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
+import { logoutUser } from '../../../helpers/functions/common-functions';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import {
   collegeProfileData,
   sendDeanDetails,
   updateCollegeRegistrarData,
 } from '../../../store/actions/college-actions';
+import { logoutAction } from '../../../store/actions/login-action';
+import { logout, resetCommonReducer } from '../../../store/reducers/common-reducers';
 import { Button, TextField } from '../../../ui/core';
-// import successToast from '../../..//ui/core/toaster';
-// import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 export function CollegeDean({ showPage, updateShowPage, userType }) {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+
   const { collegeData } = useSelector((state) => state.college);
   const userData = collegeData?.data;
-  const [successModalPopup, setSuccessModalPopup] = useState(false);
 
-  const { t } = useTranslation();
+  const [successModalPopup, setSuccessModalPopup] = useState(false);
+  const [emailIDUpdated, setEmailIDUpdated] = useState(false);
 
   const {
     register,
@@ -48,22 +53,24 @@ export function CollegeDean({ showPage, updateShowPage, userType }) {
       name: showPage === 'edit' ? fieldValues?.deanName : null,
       mobile_number: showPage === 'edit' ? fieldValues?.deanPhoneNumber : null,
       email_id: showPage === 'edit' ? fieldValues?.deanEmail : null,
-      // user_id: showPage === 'edit' ? fieldValues?.deanUserId : null,
-      // password: showPage === 'edit' ? fieldValues.deanPassword : null,
     };
 
     if (showPage === 'edit') {
       dispatch(updateCollegeRegistrarData(deanData, userData?.college_id, userData?.id)).then(
         (response) => {
-          dispatch(collegeProfileData(userData?.college_id, userData?.id));
           if (response?.isError === false) {
             setSuccessModalPopup(true);
           }
+          if (
+            fieldValues?.deanEmail !== userData?.email_id ||
+            fieldValues?.deanPhoneNumber !== userData?.mobile_number
+          ) {
+            setEmailIDUpdated(true);
+          } else {
+            dispatch(collegeProfileData(userData?.college_id, userData?.id));
+          }
         }
       );
-      // .catch((error) => {
-      //   successToast(error?.data?.response?.data?.message, 'UpdateError', 'error', 'top-center');
-      // });
     } else {
       dispatch(sendDeanDetails(deanData));
     }
@@ -74,16 +81,25 @@ export function CollegeDean({ showPage, updateShowPage, userType }) {
         <SuccessModalPopup
           open={successModalPopup}
           setOpen={() => {
-            updateShowPage('Profile');
             setSuccessModalPopup(false);
+            if (emailIDUpdated) {
+              dispatch(logoutAction()).then((response) => {
+                if (response) {
+                  logoutUser();
+                  dispatch(logout());
+                  dispatch(resetCommonReducer());
+                  navigate('/login-page', { state: { loginFormname: 'College' } });
+                }
+              });
+            } else {
+              updateShowPage('Profile');
+            }
           }}
-          text={`College ${
-            userType === 'College Dean'
-              ? 'Dean'
-              : userType === 'College Principal'
-              ? 'Principal'
-              : 'Others'
-          }  data has been updated.`}
+          text={
+            emailIDUpdated
+              ? 'Your profile has been updated. Please login again with updated details.'
+              : 'Your profile has been updated.'
+          }
         />
       )}
       <Grid item xs={12} mt={3}>
@@ -180,7 +196,6 @@ export function CollegeDean({ showPage, updateShowPage, userType }) {
       </Grid>
       <Grid item xs={12} md={6} sm={6} lg={4}>
         <Typography variant="body1" color="inputTextColor.main">
-          {/* <b>{t('College Dean Email Address')}</b> */}
           <b>{t(' Email')}</b>
         </Typography>
         <Typography component="span" color="error.main">
@@ -208,53 +223,6 @@ export function CollegeDean({ showPage, updateShowPage, userType }) {
           })}
         />
       </Grid>
-      {/* <Grid item xs={12} md={6} sm={6} lg={4}>
-        <Typography variant="body1" color="inputTextColor.main">
-          <b>{t('College Dean User ID')}</b>
-        </Typography>
-        <Typography component="span" color="error.main">
-          *
-        </Typography>
-        <TextField
-          fullWidth
-          inputProps={{ maxLength: 100 }}
-          id="outlined-basic"
-          variant="outlined"
-          type="text"
-          name="deanUserId"
-           required="true"
-          placeholder={t('College Dean User ID')}
-          margin="dense"
-          defaultValue={getValues().deanUserId}
-          error={errors.deanUserId?.message}
-          {...register('deanUserId', {
-             required: 'Enter valid user ID',
-          })}
-        />
-      </Grid> */}
-      {/* <Grid item xs={12} md={6} sm={6} lg={4}>
-        <Typography variant="body1" color="inputTextColor.main">
-          <b>{t('College Dean Password')}</b>
-        </Typography>
-        <Typography component="span" color="error.main">
-          *
-        </Typography>
-        <TextField
-          fullWidth
-          inputProps={{ maxLength: 100 }}
-          variant="outlined"
-          type="Password"
-          name="deanPassword"
-          required="true"
-          placeholder={t('College Dean Password')}
-          margin="dense"
-          defaultValue={getValues().deanPassword}
-          error={errors.deanPassword?.message}
-          {...register('deanPassword', PasswordRegexValidation, {
-             required: 'Enter valid password',
-          })}
-        />
-      </Grid> */}
       <Grid container item spacing={2} mt={{ lg: 1 }}>
         <Grid item xs={12} sm="auto">
           <Button fullWidth variant="contained" color="secondary" onClick={handleSubmit(onSubmit)}>

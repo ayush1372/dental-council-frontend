@@ -355,10 +355,19 @@ export const dateAndTimeConstant = (format) => {
       return null;
   }
 };
+
 export const getDateAndTimeFormat = (
   dateFormat,
   date = new Date(),
   format = dateAndTimeConstant(dateFormat)
 ) => {
   return moment(date).format(format);
+};
+
+export const logoutUser = () => {
+  localStorage.clear();
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
 };
