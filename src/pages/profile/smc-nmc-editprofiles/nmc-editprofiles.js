@@ -92,8 +92,6 @@ const NmcEditProfile = (props) => {
           getValues().mobile_no !== userData?.mobile_no
         ) {
           setEmailIDUpdated(true);
-        } else {
-          props?.sentDetails('Profile');
         }
       }
     });
@@ -261,7 +259,7 @@ const NmcEditProfile = (props) => {
           open={successModalPopup}
           setOpen={() => {
             setSuccessModalPopup(false);
-            if (emailIDUpdated)
+            if (emailIDUpdated) {
               dispatch(logoutAction()).then((response) => {
                 if (response) {
                   logoutUser();
@@ -270,6 +268,9 @@ const NmcEditProfile = (props) => {
                   navigate('/login-page', { state: { loginFormname: 'NMC' } });
                 }
               });
+            } else {
+              props?.sentDetails('Profile');
+            }
           }}
           text={
             emailIDUpdated
