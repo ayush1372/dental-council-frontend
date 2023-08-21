@@ -316,7 +316,7 @@ export const field_names = {
   marks: 'MARKS OBTAINED',
   result: 'RESULT',
   monthFmge: 'MONTH & YEAR OF FMGE QUALIFIED',
-  qualificationDegree: 'UPLOAD QUALIFICATION DEGREE',
+  qualificationDegree: 'UPLOAD QUALIFICATION CERTIFICATE',
   regCouncil: 'REGISTERED WITH COUNCIL',
   regNumber: 'REGISTRATION NUMBER',
   regDate: 'REGISTRATION DATE',

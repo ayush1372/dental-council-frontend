@@ -747,7 +747,13 @@ const AdditionalQualifications = () => {
                   e.preventDefault();
                   setDeleteUploadedFile(true);
                 }}
-                sx={{ color: theme.palette.primary.main }}
+                sx={{
+                  color: theme.palette.primary.main,
+                  'pointer-events':
+                    queryfields?.includes(field_names?.qualificationDegree) === false
+                      ? 'none'
+                      : 'cursor',
+                }}
               />
               <VisibilityOutlinedIcon
                 fontSize="10px"
@@ -804,6 +810,7 @@ const AdditionalQualifications = () => {
               }
             )}
             fileDisabled={isEditForm && !queryfields.includes(field_names.qualificationDegree)}
+            uploadDisabled={isEditForm && !queryfields.includes(field_names.qualificationDegree)}
           />
           <Box mt={2}>
             <Button
