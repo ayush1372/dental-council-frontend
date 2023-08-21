@@ -125,7 +125,7 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
               <ListItemIcon
                 sx={{
                   minWidth: 0,
-                  mr: open ? 3 : 'auto',
+                  mr: open ? 2 : 'auto',
                   justifyContent: 'center',
                   color:
                     item?.tabName === ActiveOption
