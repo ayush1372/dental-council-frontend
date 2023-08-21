@@ -289,6 +289,7 @@ export default function GenericTable(props) {
                         component="div"
                         variant="subtitle"
                         onClick={() => row[item.name]?.onClickCallback(rowIndex)}
+                        onChange={() => row[item.name]?.onClickCallback(rowIndex)}
                       >
                         {row[item.name]?.value}
                       </Typography>
