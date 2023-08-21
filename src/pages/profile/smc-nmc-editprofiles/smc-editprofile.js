@@ -89,8 +89,6 @@ const SmcEditProfile = (props) => {
           getValues().mobile_no !== userData?.mobile_no
         ) {
           setEmailIDUpdated(true);
-        } else {
-          props?.sentDetails('Profile');
         }
       }
     });
@@ -242,7 +240,7 @@ const SmcEditProfile = (props) => {
             open={successModalPopup}
             setOpen={() => {
               setSuccessModalPopup(false);
-              if (emailIDUpdated)
+              if (emailIDUpdated) {
                 dispatch(logoutAction()).then((response) => {
                   if (response) {
                     logoutUser();
@@ -251,6 +249,9 @@ const SmcEditProfile = (props) => {
                     navigate('/login-page', { state: { loginFormname: 'SMC' } });
                   }
                 });
+              } else {
+                props?.sentDetails('Profile');
+              }
             }}
             text={
               emailIDUpdated
