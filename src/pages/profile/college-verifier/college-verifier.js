@@ -13,7 +13,10 @@ import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup
 import { getAdminDesignation, getAdminVerifier } from '../../../store/actions/college-actions';
 import { changeUserActiveTab } from '../../../store/reducers/common-reducers';
 import { Button } from '../../../ui/core';
-import { EmailRegexValidation } from '../../../utilities/common-validations';
+import {
+  EmailRegexValidation,
+  MobileNumberRegexValidation,
+} from '../../../utilities/common-validations';
 // import successToast from '../../../ui/core/toaster';
 
 function CollegeVerifier() {
@@ -35,7 +38,7 @@ function CollegeVerifier() {
     setValue,
     clearErrors,
     reset,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -164,9 +167,7 @@ function CollegeVerifier() {
               placeholder={t('Enter mobile number')}
               onInput={(e) => handleInput(e)}
               error={errors.Number?.message}
-              {...register('Number', {
-                required: 'Please enter mobile number',
-              })}
+              {...register('Number', MobileNumberRegexValidation)}
             />
           </Grid>
 
@@ -199,7 +200,6 @@ function CollegeVerifier() {
             color="secondary"
             sx={{ mr: 2, mb: 6 }}
             onClick={handleSubmit(onsubmit)}
-            disabled={!isValid}
           >
             Submit
           </Button>
