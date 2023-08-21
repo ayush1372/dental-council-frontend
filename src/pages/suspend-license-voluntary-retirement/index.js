@@ -693,12 +693,8 @@ export function SuspendLicenseVoluntaryRetirement({
                   getValues()?.remark !== '' &&
                   errors?.remark?.message === undefined
                 ) {
-                  if (personalDetails?.work_flow_status_id === 1) {
-                    // setRejectPopup(true);
-                  } else {
-                    setConformSuspend(true);
-                    setConfirmationModal(true);
-                  }
+                  setConformSuspend(true);
+                  setConfirmationModal(true);
                 }
               } else {
                 handleSubmit(onSubmit);
