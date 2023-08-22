@@ -71,14 +71,15 @@ export const MobileDrawer = () => {
                 onClose={toggleDrawer(anchor, false)}
                 disableBackdropTransition={{ xs: true, md: false, lg: false }}
               >
+                {/* commented onClick and onKeyDown as child components are not working/rendering on UI  from left panel for mobile view */}
                 <Box
                   sx={{
                     width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250,
                     display: { md: 'none', lg: 'none' },
                   }}
                   role="presentation"
-                  onClick={toggleDrawer(anchor, false)}
-                  onKeyDown={toggleDrawer(anchor, false)}
+                  // onClick={toggleDrawer(anchor, false)}
+                  // onKeyDown={toggleDrawer(anchor, false)}
                 >
                   <Grid container mb={3}>
                     <ProfileImage
