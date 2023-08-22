@@ -513,8 +513,9 @@ const WorkDetails = ({
           <RemoveCircleOutlineRoundedIcon
             color="primary"
             onClick={() => {
-              setWorkExperianceError(true);
-              setWorkExpierence((exp) => (exp ? exp - 1 : 0));
+              setWorkExpierence((exp) =>
+                exp ? (exp - 1 === 0 ? (setWorkExperianceError(true), exp - 1) : exp - 1) : 0
+              );
             }}
           />
           <Box
@@ -670,7 +671,7 @@ const WorkDetails = ({
                   <Button
                     variant="contained"
                     color="secondary"
-                    sx={{paddingTop: '14px', paddingBottom: '14px'}}
+                    sx={{ paddingTop: '14px', paddingBottom: '14px' }}
                     onClick={() => {
                       getValues()?.facilityId?.length > 0
                         ? searchFacilitiesHandler()
@@ -684,7 +685,7 @@ const WorkDetails = ({
                   <Button
                     color="grey"
                     variant="contained"
-                    sx={{paddingTop: '14px', paddingBottom: '14px'}}
+                    sx={{ paddingTop: '14px', paddingBottom: '14px' }}
                     onClick={() => {
                       setValue('facilityId', '');
                       setFacilityIDError(false);
@@ -794,7 +795,7 @@ const WorkDetails = ({
                   <Button
                     variant="contained"
                     color="secondary"
-                    sx={{paddingTop: '14px', paddingBottom: '14px'}}
+                    sx={{ paddingTop: '14px', paddingBottom: '14px' }}
                     onClick={() => {
                       if (
                         typeof getValues()?.stateLGDCode === 'number' &&
@@ -829,7 +830,7 @@ const WorkDetails = ({
                   <Button
                     color="grey"
                     variant="contained"
-                    sx={{paddingTop: '14px', paddingBottom: '14px'}}
+                    sx={{ paddingTop: '14px', paddingBottom: '14px' }}
                     onClick={() => {
                       setValue('stateLGDCode', undefined);
                       setValue('districtLGDCode', undefined);
@@ -1226,15 +1227,22 @@ const WorkDetails = ({
         my={3}
         ml={3}
       >
-        <Grid item xs={12} display="flex" pt={2} justifyContent="end" sx={{borderTop: 'solid 1px', borderColor: 'inputBorderColor.main'}}>
+        <Grid
+          item
+          xs={12}
+          display="flex"
+          pt={2}
+          justifyContent="end"
+          sx={{ borderTop: 'solid 1px', borderColor: 'inputBorderColor.main' }}
+        >
           <Button
             onClick={
               organizationChecked ? handleSubmit(onSubmit) : handleSubmit(workDetailsErrorHandler)
             }
             variant="contained"
             color="secondary"
-            sx={{paddingTop: '14px', paddingBottom: '14px'}}
-            >
+            sx={{ paddingTop: '14px', paddingBottom: '14px' }}
+          >
             Submit
           </Button>
           <Button
@@ -1242,13 +1250,14 @@ const WorkDetails = ({
             variant="contained"
             sx={{
               marginLeft: '8px',
-              paddingTop: '14px', paddingBottom: '14px'
+              paddingTop: '14px',
+              paddingBottom: '14px',
             }}
             onClick={(e) => {
               e.preventDefault();
               dispatch(changeUserActiveTab(doctorTabs[0].tabName));
             }}
-            >
+          >
             Cancel
           </Button>
         </Grid>
