@@ -57,8 +57,8 @@ const EditQualificationDetails = ({
 
   const [degree] = useState([
     {
-      name: 'MBBS - Bachelor of Medicine and Bachelor of Surgery ',
-      id: 69,
+      name: 'MBBS - Bachelor of Medicine and Bachelor of Surgery',
+      id: 4060,
     },
   ]);
   const { countriesList, coursesList, universitiesList, statesList, specialitiesList } =
@@ -135,7 +135,7 @@ const EditQualificationDetails = ({
         name: 'India',
         nationality: 'Indian',
       });
-      if (!isAdditionalQualification) setValue(`qualification[${index}].qualification`, 69);
+      if (!isAdditionalQualification) setValue(`qualification[${index}].qualification`, 4060);
       setValue(`qualification[${index}].qualificationfrom`, 'India');
     }
     if (qualificationfrom === 'International') {
@@ -1089,7 +1089,8 @@ const EditQualificationDetails = ({
             }
             {...register(
               'qualificationCertificate',
-              qualificationFilesData[`qualification.${index}.files`]?.length === 0 && {
+              (qualificationFilesData[`qualification.${index}.files`]?.length === 0 ||
+                qualificationFilesData[`qualification.${index}.files`] === undefined) && {
                 required: 'Please upload the qualification certificate.',
               }
             )}

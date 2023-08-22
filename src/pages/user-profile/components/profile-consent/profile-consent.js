@@ -308,7 +308,7 @@ const ProfileConsent = ({
             sx={{ width: '18px', height: '18px', marginLeft: 1 }}
             name="consent"
             {...register('consent', {
-              required: 'Consent is Required',
+              required: 'Please indicate that you accept the terms and conditions',
             })}
             defaultChecked={personalDetails?.hp_profile_status_id === 3}
           />

@@ -8,7 +8,6 @@ import {
   Box,
   IconButton,
   InputAdornment,
-  StyledEngineProvider,
   TextField as MuiTextField,
   Tooltip,
   Typography,
@@ -105,7 +104,7 @@ const InputField = (
       />
     ) : null;
   return (
-    <StyledEngineProvider injectFirst>
+    <>
       {label && (
         <Box>
           <Typography
@@ -161,7 +160,7 @@ const InputField = (
         }
       />
       {addon}
-    </StyledEngineProvider>
+    </>
   );
 };
 

@@ -206,7 +206,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
           )}
           <Grid display="flex">
             <Typography color="textPrimary.main" variant="subtitle2">
-              {renewable_registration_date && is_renewable === '1'
+              {is_renewable === '1'
                 ? moment(renewable_registration_date).format('DD-MM-YYYY')
                 : '-'}
             </Typography>

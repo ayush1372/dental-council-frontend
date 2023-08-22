@@ -152,7 +152,8 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
         clearInterval(timer);
         setShowOTPPOPUp(false);
         setVerifyEmailID(false);
-        // setEmailChange(false); for future changes.
+        setEmailChange(false);
+        // for future changes.
         return;
       }
       dispatch(getPersonalDetailsData(personalDetails?.hp_profile_id)).then((response) => {
@@ -341,14 +342,16 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                       Change
                     </span>
                   </Typography> */}
-                  <EditOutlinedIcon
-                    color={'primary'}
-                    fontSize={'inherit'}
-                    sx={{ ml: 0.5, cursor: 'pointer' }}
-                    onClick={() => {
-                      setMobileNumberChange(true);
-                    }}
-                  />
+                  <Tooltip title="Edit mobile number">
+                    <EditOutlinedIcon
+                      color={'primary'}
+                      fontSize={'inherit'}
+                      sx={{ ml: 0.5, cursor: 'pointer' }}
+                      onClick={() => {
+                        setMobileNumberChange(true);
+                      }}
+                    />
+                  </Tooltip>
                 </Box>
               </>
             )}

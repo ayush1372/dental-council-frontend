@@ -4,7 +4,8 @@ export const API = {
     generateCaptcha: 'generate-captcha',
     validateCaptcha: 'verify-captcha',
     loginUser: 'user/login',
-    refreshToken: 'user/refreshToken',
+    refreshToken: '/user/refreshToken',
+    logoutUser: 'user/logout',
   },
   DoctorUserProfileData: {
     personalDetails: 'health-professional/{healthProfessionalId}/personal',

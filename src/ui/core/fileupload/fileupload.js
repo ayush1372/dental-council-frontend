@@ -45,6 +45,7 @@ export const UploadFile = (props) => {
   const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
   const [attachedFileData, setAttachedFileData] = useState('');
   const [viewFileType, setViewFileType] = useState('');
+  const [eventType, setEventType] = useState('');
 
   const { t } = useTranslation();
 
@@ -125,6 +126,7 @@ export const UploadFile = (props) => {
         };
         if (uploadFiles === 'single') {
           setFileData([fileDetails]);
+          setEventType(e);
         } else {
           fileData.push(fileDetails);
           setFileData(fileData);
@@ -246,8 +248,8 @@ export const UploadFile = (props) => {
             )}
             <div className={styles.uploadFileArea}>
               {uploadFiles === 'single' && fileData.length === 1 && (
-                <Typography color="grey1.main" variant="caption">
-                  FILE UPLOADED
+                <Typography color="black.main" variant="caption">
+                  File Uploaded
                 </Typography>
               )}
               {uploadFiles === 'multiple' && fileData?.length > 0 && (
@@ -269,12 +271,16 @@ export const UploadFile = (props) => {
                           />
                           <div className={styles.fileDetailsArea}>
                             <Typography color="inputTextColor.main">
-                              {fileName === 'undefined.undefined' ? '' : fileName}
+                              {file?.fileName
+                                ? file?.fileName
+                                : fileName === 'undefined.undefined'
+                                ? ''
+                                : fileName}
                             </Typography>
                             {fileData.length === 1 || uploadStatus === 'successful' ? (
                               <div className={styles.timeInfo}>
                                 {moment(file.timeInfo).format('DD MMMM, YYYY')} at{' '}
-                                {moment(file.timeInfo).format('HH:mm A')}
+                                {moment(file.timeInfo).format('HH:mm')}
                               </div>
                             ) : uploadStatus === 'failed' ? (
                               <Typography color="error.main" variant="body2">
@@ -295,6 +301,9 @@ export const UploadFile = (props) => {
                                 size={18}
                                 onClick={(e) => {
                                   e.preventDefault();
+                                  if (eventType?.target?.value) {
+                                    eventType.target.value = null;
+                                  }
                                   if (e?.target?.attributes?.id?.value === 'qualification') {
                                     document.getElementById('qualification').value = '';
                                     if (

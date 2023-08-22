@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Box, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
@@ -11,7 +11,7 @@ import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup
 import { createHealthProfessional } from '../../../store/actions/doctor-registration-actions';
 import { forgotPassword, setPassword } from '../../../store/actions/forgot-password-actions';
 import { Button, TextField } from '../../../ui/core';
-// import successToast from '../../../ui/core/toaster';
+import successToast from '../../../ui/core/toaster';
 import { PasswordRegexValidation } from '../../../utilities/common-validations';
 
 const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }) => {
@@ -49,7 +49,9 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }
     (state) => state?.AadhaarTransactionId?.aadhaarOtpDetailsData?.data
   );
   const mobilenumber = useSelector((state) => state?.doctorRegistration?.storeMobileDetailsData);
-  const { sendNotificationOtpData, councilNames } = useSelector((state) => state?.common);
+  const { sendNotificationOtpData, councilNames, verifyNotificationOtpData } = useSelector(
+    (state) => state?.common
+  );
   const {
     register,
     handleSubmit,
@@ -74,7 +76,11 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }
       });
     return councilData[0]?.id;
   };
-
+  useEffect(() => {
+    if (otpData?.page === 'forgotPasswordPage') {
+      setShowSuccessPopUp(false);
+    }
+  }, []);
   const onSubmit = () => {
     if (otpData?.page === 'forgotPasswordPage') {
       const userTypeId = usersType(loginName);
@@ -102,9 +108,13 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }
           password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
         };
 
-        dispatch(setPassword(newPasswordData)).then(() => {
-          setCollegeRegisterSuccess(true);
-          setShowSuccess(true);
+        dispatch(setPassword(newPasswordData)).then((response) => {
+          if (response?.data?.message === 'Success') {
+            setCollegeRegisterSuccess(true);
+            setShowSuccess(true);
+          } else {
+            successToast(response?.data?.message, response?.data?.message, 'error', 'top-center');
+          }
         });
         // .catch((error) => {
         //   successToast('ERROR: ' + error?.data?.message, 'auth-error', 'error', 'top-center');
@@ -162,12 +172,16 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }
   return (
     <Box
       data-testid="new-password-setup"
-      p={3} 
-      sx={{ bgcolor:'white.main', boxShadow:'1', borderRadius: '8px' }}
+      p={3}
+      sx={{ bgcolor: 'white.main', boxShadow: '1', borderRadius: '8px' }}
       width={otpData?.page === 'forgotPasswordPage' ? '100%' : '40%'}
     >
       <Typography variant="h4" component="div" textAlign="center" data-testid="Password">
-        {uniqueHpId ? `Welcome ${uniqueHpId}` : 'Welcome'}
+        {uniqueHpId
+          ? `Welcome ${uniqueHpId}`
+          : verifyNotificationOtpData?.data?.message?.display_name !== undefined
+          ? `Welcome ${verifyNotificationOtpData?.data?.message?.display_name} `
+          : 'Welcome'}
       </Typography>
       {/* <Typography variant="body1" component="div" textAlign="center" data-testid="Password">
           {`Please set your password `}

@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import ConfirmationModal from '../../shared/common-modals/confirmation-modal';
+import { logoutAction } from '../../store/actions/login-action';
 import { logout, resetCommonReducer } from '../../store/reducers/common-reducers';
 import { millisecondToDate } from '../functions/common-functions';
 
@@ -32,7 +33,11 @@ export function IdleTimer() {
 
       // if user is idle till the refresh token expires, then it automatically logout
       timerId.current = setTimeout(() => {
-        handleLogout();
+        dispatch(logoutAction()).then((response) => {
+          if (response) {
+            logoutUser();
+          }
+        });
       }, timer);
     }
   };
@@ -44,11 +49,16 @@ export function IdleTimer() {
 
   const handleStillHere = () => {
     setOpen(false);
+    clearTimeout(timerId.current);
   };
 
   const handleLogout = () => {
     setOpen(false);
-    logoutUser();
+    dispatch(logoutAction()).then((response) => {
+      if (response) {
+        logoutUser();
+      }
+    });
   };
 
   const logoutUser = () => {
@@ -69,7 +79,11 @@ export function IdleTimer() {
       handleNoText={'Stay'}
       handleYes={handleLogout}
       handleYesText={'Logout'}
-      text={{ heading: 'Session Idle', message: 'The session has exceeded the time limit of inactivity. Please click "Stay" to resume the session.' }}
+      text={{
+        heading: 'Session Idle',
+        message:
+          'The session has exceeded the time limit of inactivity. Please click "Stay" to resume the session.',
+      }}
     />
   );
 }
