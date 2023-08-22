@@ -125,7 +125,7 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
               <ListItemIcon
                 sx={{
                   minWidth: 0,
-                  mr: open ? 3 : 'auto',
+                  mr: open ? 2 : 'auto',
                   justifyContent: 'center',
                   color:
                     item?.tabName === ActiveOption
@@ -169,7 +169,11 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
                       )}
                     </Grid>
                   ) : item?.tabName === 'Activate Licence' ? (
-                    `${item?.name} (${activateLicenseList?.data?.total_no_of_records})`
+                    `${item?.name} (${
+                      activateLicenseList?.data?.total_no_of_records
+                        ? activateLicenseList?.data?.total_no_of_records
+                        : 0
+                    })`
                   ) : (
                     item?.name
                   )

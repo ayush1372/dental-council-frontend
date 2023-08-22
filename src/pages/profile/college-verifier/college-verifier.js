@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Box, Container, Grid, Typography } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 import { t } from 'i18next';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,7 +13,10 @@ import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup
 import { getAdminDesignation, getAdminVerifier } from '../../../store/actions/college-actions';
 import { changeUserActiveTab } from '../../../store/reducers/common-reducers';
 import { Button } from '../../../ui/core';
-import { EmailRegexValidation } from '../../../utilities/common-validations';
+import {
+  EmailRegexValidation,
+  MobileNumberRegexValidation,
+} from '../../../utilities/common-validations';
 // import successToast from '../../../ui/core/toaster';
 
 function CollegeVerifier() {
@@ -35,7 +38,7 @@ function CollegeVerifier() {
     setValue,
     clearErrors,
     reset,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -91,123 +94,118 @@ function CollegeVerifier() {
 
   return (
     <>
-      <Container sx={{ mt: 2 }}>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm="auto" sx={{ mr: { xs: 0, sm: 'auto' } }}>
-            <Typography variant="h2" color="textPrimary.main">
-              Create Verifier
-            </Typography>
-          </Grid>
+      <Grid container spacing={2} pl={3} pr={3}>
+        <Grid item xs={12} sm="auto" sx={{ mr: { xs: 0, sm: 'auto' } }}>
+          <Typography variant="h2" color="textPrimary.main">
+            Create Verifier
+          </Typography>
         </Grid>
-        <Grid container item spacing={2} mt={2}>
-          <Grid item xs={12} md={4} lg={4}>
-            <Typography variant="body3" color="inputTextColor.main">
-              Name
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
-            </Typography>
-
-            <TextField
-              fullWidth
-              name="Name"
-              required
-              placeholder={t('Enter name')}
-              // onInput={(e) => handleInput(e)}
-              error={errors.Name?.message}
-              {...register('Name', {
-                required: 'Please enter name',
-
-                pattern: {
-                  value: /^(?!^\s)[a-zA-Z\s']*$(?<!\s$)/,
-                  message: 'Please enter a valid name',
-                },
-              })}
-            />
-          </Grid>
-          <Grid item xs={12} md={4} lg={4}>
-            <Typography variant="body3" color="inputTextColor.main">
-              Designation
-            </Typography>
+      </Grid>
+      <Grid container item spacing={2} mt={2} pl={3} pr={3}>
+        <Grid item xs={12} md={4} lg={4}>
+          <Typography variant="body3" color="inputTextColor.main">
+            Name
             <Typography component="span" color="error.main">
               *
             </Typography>
+          </Typography>
 
-            <SearchableDropdown
-              fullWidth
-              name="Designation"
-              items={createEditFieldData(collegeAdminDesignation.data)}
-              placeholder="Select  designation"
-              clearErrors={clearErrors}
-              error={errors.Designation?.message}
-              {...register('Designation', {
-                required: 'Please select designation',
-              })}
-              onChange={(currentValue) => {
-                setValue('DesignationID', currentValue.id);
-              }}
-            />
-          </Grid>
+          <TextField
+            fullWidth
+            name="Name"
+            required
+            placeholder={t('Enter name')}
+            // onInput={(e) => handleInput(e)}
+            error={errors.Name?.message}
+            {...register('Name', {
+              required: 'Please enter name',
 
-          <Grid item xs={12} md={4} lg={4}>
-            <Typography variant="body3" color="inputTextColor.main">
-              Mobile Number
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
-            </Typography>
+              pattern: {
+                value: /^(?!^\s)[a-zA-Z\s']*$(?<!\s$)/,
+                message: 'Please enter a valid name',
+              },
+            })}
+          />
+        </Grid>
+        <Grid item xs={12} md={4} lg={4}>
+          <Typography variant="body3" color="inputTextColor.main">
+            Designation
+          </Typography>
+          <Typography component="span" color="error.main">
+            *
+          </Typography>
 
-            <TextField
-              fullWidth
-              name="Number"
-              required
-              placeholder={t('Enter mobile number')}
-              onInput={(e) => handleInput(e)}
-              error={errors.Number?.message}
-              {...register('Number', {
-                required: 'Please enter mobile number',
-              })}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={4} lg={4}>
-            <Typography variant="body3" color="inputTextColor.main">
-              Email
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
-            </Typography>
-
-            <TextField
-              sx={{
-                pr: 0,
-              }}
-              fullWidth
-              type="text"
-              name="Email"
-              required
-              placeholder={t('Enter email')}
-              error={errors.Email?.message}
-              {...register('Email', EmailRegexValidation)}
-            />
-          </Grid>
+          <SearchableDropdown
+            fullWidth
+            name="Designation"
+            items={createEditFieldData(collegeAdminDesignation.data)}
+            placeholder="Select  designation"
+            clearErrors={clearErrors}
+            error={errors.Designation?.message}
+            {...register('Designation', {
+              required: 'Please select designation',
+            })}
+            onChange={(currentValue) => {
+              setValue('DesignationID', currentValue?.id);
+            }}
+          />
         </Grid>
 
-        <Box display="flex" justifyContent="flex-end" mt={3}>
-          <Button
-            variant="contained"
-            color="secondary"
-            sx={{ mr: 2, mb: 6 }}
-            onClick={handleSubmit(onsubmit)}
-            disabled={!isValid}
-          >
-            Submit
-          </Button>
-          <Button variant="contained" color="grey" sx={{ mb: 6 }} onClick={onCancel}>
-            Cancel
-          </Button>
-        </Box>
-      </Container>
+        <Grid item xs={12} md={4} lg={4}>
+          <Typography variant="body3" color="inputTextColor.main">
+            Mobile Number
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
+          </Typography>
+
+          <TextField
+            fullWidth
+            name="Number"
+            required
+            placeholder={t('Enter mobile number')}
+            onInput={(e) => handleInput(e)}
+            error={errors.Number?.message}
+            {...register('Number', MobileNumberRegexValidation)}
+          />
+        </Grid>
+
+        <Grid item xs={12} md={4} lg={4}>
+          <Typography variant="body3" color="inputTextColor.main">
+            Email
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
+          </Typography>
+
+          <TextField
+            sx={{
+              pr: 0,
+            }}
+            fullWidth
+            type="text"
+            name="Email"
+            required
+            placeholder={t('Enter email')}
+            error={errors.Email?.message}
+            {...register('Email', EmailRegexValidation)}
+          />
+        </Grid>
+      </Grid>
+
+      <Box display="flex" justifyContent="flex-end" mt={3} pl={3} pr={3}>
+        <Button
+          variant="contained"
+          color="secondary"
+          sx={{ mr: 2, mb: 6 }}
+          onClick={handleSubmit(onsubmit)}
+        >
+          Submit
+        </Button>
+        <Button variant="contained" color="grey" sx={{ mb: 6 }} onClick={onCancel}>
+          Cancel
+        </Button>
+      </Box>
 
       {successModalPopup && (
         <SuccessModalPopup

@@ -127,6 +127,17 @@ const themeWrapper = (mode, appFontType) => {
           tooltip: { borderRadius: '3px' },
         },
       },
+      MuiAutocomplete: {
+        styleOverrides: {
+          root: {
+            '.MuiOutlinedInput-root': {
+              '.MuiAutocomplete-input': {
+                padding: '2px 4px 2px 6px',
+              },
+            },
+          },
+        },
+      },
     },
 
     // STYLE FOR BORDER RADIUS
