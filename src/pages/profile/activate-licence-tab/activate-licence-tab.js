@@ -96,7 +96,7 @@ const ActivateLicence = () => {
       sorting: true,
       type: 'string',
     },
-    { title: 'Attachments', name: 'attachments', sorting: false },
+    { title: 'Attachment', name: 'attachments', sorting: false },
     {
       title: 'Action',
       name: 'Action',
