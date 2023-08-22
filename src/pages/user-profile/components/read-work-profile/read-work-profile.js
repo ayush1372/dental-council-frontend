@@ -207,7 +207,13 @@ const ReadWorkProfile = ({
       >
         <Box
           p={2}
-          width={selected === 'verify' ? '500px' : selected === 'forward' ? '700px' : '630px'}
+          width={
+            selected === 'verify'
+              ? '500px'
+              : selected === 'forward'
+              ? '700px'
+              : { md: '630px', sm: '100%' }
+          }
           height={
             selected === 'reject'
               ? '500px'
