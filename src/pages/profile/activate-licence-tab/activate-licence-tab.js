@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 
-import { Box, Button, Grid, TablePagination, Typography } from '@mui/material';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
+import { Box, Button, Grid, IconButton, TablePagination, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { verboseLog } from '../../../config/debug';
 import { workflowStatusId } from '../../../helpers/functions/common-functions';
 import ApproveLicenseModal from '../../../shared/activate-licence-modals/approve-modal';
 import RejectLicenseModal from '../../../shared/activate-licence-modals/reject-modal';
 import GenericTable from '../../../shared/generic-component/generic-table';
+import AttachmentViewPopup from '../../../shared/query-modal-popup/attachement-view-popup';
 import ViewProfile from '../../../shared/view-profile/view-profile';
 import { getActivateLicenseList } from '../../../store/actions/common-actions';
 import successToast from '../../../ui/core/toaster';
@@ -16,20 +17,23 @@ import BreadcrumbsCompnent from '../components/breadcrums';
 import TableSearch from '../components/table-search/table-search';
 
 const ActivateLicence = () => {
+  const dispatch = useDispatch();
+
   const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+  const { activateLicenseList } = useSelector((state) => state?.common);
+
+  const [page, setPage] = useState(0);
   const [order, setOrder] = useState('asc');
   const [orderBy, setOrderBy] = useState({});
-  const [showViewProfile, setShowViewPorfile] = useState(false);
-  const [isApproveModalOpen, setIsApproveModalOpen] = useState(false);
-  const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [page, setPage] = useState(0);
   const [selectedRowData, setRowData] = useState({});
-  verboseLog(selectedRowData);
-  const { activateLicenseList } = useSelector((state) => state?.common);
-  const dispatch = useDispatch();
+  const [showViewProfile, setShowViewPorfile] = useState(false);
+  const [isRejectModalOpen, setIsRejectModalOpen] = useState(false);
+  const [isApproveModalOpen, setIsApproveModalOpen] = useState(false);
   const [reactiveLicenseRequestHPApplicationData, setReactiveLicenseRequestHPApplicationData] =
     useState();
+  const [attachmentViewIndex, setAttachmentViewIndex] = useState();
+  const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
 
   function createData(
     SNo,
@@ -40,6 +44,7 @@ const ActivateLicence = () => {
     typeOfSuspension,
     Remark,
     RequestId,
+    attachments,
     Action
   ) {
     return {
@@ -51,6 +56,7 @@ const ActivateLicence = () => {
       typeOfSuspension,
       Remark,
       RequestId,
+      attachments,
       Action,
     };
   }
@@ -90,6 +96,7 @@ const ActivateLicence = () => {
       sorting: true,
       type: 'string',
     },
+    { title: 'Attachments', name: 'attachments', sorting: false },
     {
       title: 'Action',
       name: 'Action',
@@ -180,6 +187,25 @@ const ActivateLicence = () => {
             {
               type: 'RequestId',
               value: application?.request_id,
+            },
+            {
+              type: 'attachments',
+              isIcon: true,
+              iconToolTip: 'View Attachment',
+              value: (
+                <Box>
+                  <IconButton>
+                    <AttachFileIcon
+                      fontSize="10px"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setAttachmentViewIndex(index);
+                        setAttachmentViewProfile(true);
+                      }}
+                    />
+                  </IconButton>
+                </Box>
+              ),
             }
           );
         })
@@ -377,6 +403,21 @@ const ActivateLicence = () => {
             setIsRejectModalOpen(false);
           }}
           reactiveLicenseRequestHPApplicationData={reactiveLicenseRequestHPApplicationData}
+        />
+      )}
+      {attachmentViewProfile && (
+        <AttachmentViewPopup
+          certificate={
+            activateLicenseList?.data.health_professional_details[attachmentViewIndex]
+              ?.reactivation_file
+          }
+          closePopup={() => {
+            setAttachmentViewProfile(false);
+          }}
+          alt={'Re-Activation Certificate'}
+          certFileType={
+            activateLicenseList?.data.health_professional_details[attachmentViewIndex]?.file_type
+          }
         />
       )}
     </Grid>
