@@ -44,7 +44,7 @@ function WorkDetailsTable({
   const [rowsPerPage, setRowsPerPage] = useState(10);
   // eslint-disable-next-line no-unused-vars
   const [selectedRowData, setRowData] = useState({});
-  const [currentRowIndex, setCurrentRowIndex] = useState(0);
+  let currentRowIndex;
 
   const dataHeader = [
     {
@@ -85,7 +85,7 @@ function WorkDetailsTable({
   };
 
   const viewCallback = (rowIndex) => {
-    setCurrentRowIndex(rowIndex);
+    currentRowIndex = rowIndex;
   };
 
   const newRowsData = FacilityData?.map((application) => {
@@ -152,7 +152,7 @@ function WorkDetailsTable({
             onChange={(e) => {
               if (e.target.checked) {
                 declaredFacilityData.push(FacilityData[currentRowIndex]);
-                setDeclaredFacilityDistrict([...declaredFacilityData]);
+                setDeclaredFacilityDistrict(declaredFacilityData);
                 setFacilityTableError(false);
               } else {
                 declaredFacilityData.splice(currentRowIndex, 1);

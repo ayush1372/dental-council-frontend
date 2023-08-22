@@ -3,8 +3,9 @@ import { useEffect, useState } from 'react';
 import { Box, Container, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-import { createEditFieldData } from '../../../helpers/functions/common-functions';
+import { createEditFieldData, logoutUser } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import { updateCollegeAdminProfileData } from '../../../store/actions/college-actions';
@@ -14,23 +15,26 @@ import {
   getSubDistrictsList,
   getUniversitiesList,
 } from '../../../store/actions/common-actions';
+import { logoutAction } from '../../../store/actions/login-action';
+import { logout, resetCommonReducer } from '../../../store/reducers/common-reducers';
 import { Button, TextField } from '../../../ui/core';
 import {
   AddressLineValidation1,
   AddressLineValidation2,
 } from '../../../utilities/common-validations';
-// import successToast from '../../../ui/core/toaster';
-
 const CollegeEditProfile = (props) => {
-  const [districtList, setDistrictList] = useState([]);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const { statesList, councilNames, universitiesList, subDistrictList, districtsList } =
     useSelector((state) => state.common);
   const registrationSuccess = useSelector((state) => state.college.collegeRegisterDetails.data);
   const { getCollegeDetail } = useSelector((state) => state.common);
+
+  const [districtList, setDistrictList] = useState([]);
+  const [emailIDUpdated, setEmailIDUpdated] = useState(false);
   const [successModalPopup, setSuccessModalPopup] = useState(false);
   const userData = getCollegeDetail?.data;
-  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getStatesList());
@@ -85,7 +89,7 @@ const CollegeEditProfile = (props) => {
       address_line2: getValues()?.AddressLine2 || '',
       district_to: districtsList?.find((x) => x.id === getValues()?.DistrictID),
       villages_to:
-        subDistrictList?.find((x) => x.name === getValues()?.Area) || userData?.villages_to,
+        subDistrictList?.find((x) => x?.name === getValues()?.Area) || userData?.villages_to,
       pin_code: getValues()?.Pincode,
       state_medical_council_to: councilNames?.find((x) => x.id === getValues()?.CouncilID),
       mobile_number: getValues()?.MobileNumber,
@@ -97,10 +101,13 @@ const CollegeEditProfile = (props) => {
       if (registrationSuccess) {
         setSuccessModalPopup(true);
       }
+      if (
+        getValues()?.CollegeEmailId !== userData?.email_id ||
+        getValues()?.MobileNumber !== userData?.mobile_number
+      ) {
+        setEmailIDUpdated(true);
+      }
     });
-    // .catch((error) => {
-    //   successToast(error?.data?.response?.data?.message, 'OtpError', 'error', 'top-center');
-    // });
   };
 
   const handleInput = (e) => {
@@ -108,7 +115,7 @@ const CollegeEditProfile = (props) => {
     if (e?.target?.value?.length > 0) {
       e.target.value = isNaN(e?.target?.value)
         ? e?.target?.value?.toString()?.slice(0, -1)
-        : Math?.max(0, parseInt(e.target.value))?.toString()?.slice(0, 10);
+        : Math?.max(0, parseInt(e?.target.value))?.toString()?.slice(0, 10);
     }
   };
 
@@ -141,8 +148,26 @@ const CollegeEditProfile = (props) => {
       {successModalPopup && (
         <SuccessModalPopup
           open={successModalPopup}
-          setOpen={() => setSuccessModalPopup(false)}
-          text={'College profile has been updated'}
+          setOpen={() => {
+            setSuccessModalPopup(false);
+            if (emailIDUpdated) {
+              dispatch(logoutAction()).then((response) => {
+                if (response) {
+                  logoutUser();
+                  dispatch(logout());
+                  dispatch(resetCommonReducer());
+                  navigate('/login-page', { state: { loginFormname: 'College' } });
+                }
+              });
+            } else {
+              props?.setShowpage('Profile');
+            }
+          }}
+          text={
+            emailIDUpdated
+              ? 'College profile has been updated. Please login again with updated details.'
+              : 'College profile has been updated'
+          }
         />
       )}
       <Grid container spacing={2} mt={1} ml={1}>

@@ -263,6 +263,19 @@ export function SuspendLicenseVoluntaryRetirement({
     reset({ toDate: '', fromDate: '', remark: '' });
   };
 
+  const compareDates = (userEnteredDateValue, currentDate) => {
+    let date1 = new Date(userEnteredDateValue).getTime();
+    let date2 = new Date(currentDate).getTime();
+
+    if (date1 < date2) {
+      setShowToDateError(true);
+    } else if (date1 > date2) {
+      setShowToDateError(false);
+    } else {
+      setShowToDateError(false);
+    }
+  };
+
   return (
     <Box data-testid="suspend-license-voluntary-retirement" width="100%">
       {!tabName && selectedValue !== 'forward' && (
@@ -434,6 +447,10 @@ export function SuspendLicenseVoluntaryRetirement({
                       if (getValues().toDate !== undefined) {
                         setShowToDateError(false);
                       }
+                      compareDates(
+                        new Date(newDateValue)?.toLocaleDateString('en-GB'),
+                        new Date()?.toLocaleDateString('en-GB')
+                      );
                     }}
                     data-testid="toDate"
                     id="toDate"
@@ -458,9 +475,7 @@ export function SuspendLicenseVoluntaryRetirement({
                         : new Date()
                     }
                     required={true}
-                    error={
-                      loggedInUserType === 'NMC' ? false : showToDateError ? 'Enter To Date' : false
-                    }
+                    error={showToDateError ? 'Enter To Date' : false}
                   />
                 </>
               )}
@@ -519,16 +534,7 @@ export function SuspendLicenseVoluntaryRetirement({
                 (selectedValue === 'suspend' || selectedValue === 'blacklist')
               }
               defaultValue={getValues()?.remark || selectedRowData?.remark}
-              error={
-                selectedValue === 'raise' ||
-                selectedValue === 'reject' ||
-                selectedValue === 'suspend' ||
-                selectedValue === 'blacklist'
-                  ? false
-                  : showRemarkError
-                  ? 'Enter Remarks'
-                  : errors?.remark?.message
-              }
+              error={showRemarkError ? 'Enter Remarks' : errors?.remark?.message}
               {...register('remark', {
                 required:
                   tabName === 'voluntary-suspend-license' ||
@@ -536,13 +542,11 @@ export function SuspendLicenseVoluntaryRetirement({
                   selectedValue === 'forward'
                     ? 'Enter Remarks'
                     : false,
-                pattern:
-                  selectedValue === 'approve'
-                    ? {}
-                    : {
-                        value: /^\W*(?:\w+\b\W*){1,300}?$/i,
-                        message: 'Maximum word limit exceeded',
-                      },
+                pattern: {
+                  value: /^\W*(?:\w+\b\W*){1,300}?$/i,
+                  message: 'Maximum word limit exceeded',
+                },
+
                 onChange: (e) => {
                   if (e.target.value !== '') {
                     if (
@@ -596,7 +600,7 @@ export function SuspendLicenseVoluntaryRetirement({
             <Checkbox
               name="notification"
               {...register('notification', {
-                required: 'Please indicate that you accept the Terms and Conditions',
+                required: 'Please indicate that you accept the terms and conditions',
                 onChange: (e) => {
                   if (e.target.checked) {
                     setShowConsentError(false);
@@ -686,14 +690,11 @@ export function SuspendLicenseVoluntaryRetirement({
                   getValues().fromDate !== undefined &&
                   getValues().notification !== false &&
                   getValues()?.remark !== undefined &&
-                  getValues()?.remark !== ''
+                  getValues()?.remark !== '' &&
+                  errors?.remark?.message === undefined
                 ) {
-                  if (personalDetails?.work_flow_status_id === 1) {
-                    // setRejectPopup(true);
-                  } else {
-                    setConformSuspend(true);
-                    setConfirmationModal(true);
-                  }
+                  setConformSuspend(true);
+                  setConfirmationModal(true);
                 }
               } else {
                 handleSubmit(onSubmit);

@@ -3,21 +3,29 @@ import { useState } from 'react';
 import { Box, Grid, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
-import { createEditFieldData } from '../../../helpers/functions/common-functions';
+import { createEditFieldData, logoutUser } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
+import { logoutAction } from '../../../store/actions/login-action';
 import { getUpdatedNmcProfileData } from '../../../store/actions/nmc-actions';
+import { logout, resetCommonReducer } from '../../../store/reducers/common-reducers';
 import { Button, TextField } from '../../../ui/core';
 import {
   EmailRegexValidation,
   MobileNumberRegexValidation,
 } from '../../../utilities/common-validations';
+
 const NmcEditProfile = (props) => {
-  const userData = useSelector((state) => state?.nmc?.nmcProfileData?.data);
+  const navigate = useNavigate();
+
   const { councilNames } = useSelector((state) => state.common);
-  const [successModalPopup, setSuccessModalPopup] = useState(false);
+  const userData = useSelector((state) => state?.nmc?.nmcProfileData?.data);
   const loggedInUserType = useSelector((state) => state?.common?.loggedInUserType);
+
+  const [emailIDUpdated, setEmailIDUpdated] = useState(false);
+  const [successModalPopup, setSuccessModalPopup] = useState(false);
   const {
     register,
     handleSubmit,
@@ -79,9 +87,14 @@ const NmcEditProfile = (props) => {
     dispatch(getUpdatedNmcProfileData(nmcUpdatedData)).then((response) => {
       if (response?.data?.email_id.length > 0) {
         setSuccessModalPopup(true);
+        if (
+          getValues().email_id !== userData?.email_id ||
+          getValues().mobile_no !== userData?.mobile_no
+        ) {
+          setEmailIDUpdated(true);
+        }
       }
     });
-    props?.sentDetails('Profile');
   };
 
   return (
@@ -114,76 +127,12 @@ const NmcEditProfile = (props) => {
             {...register('first_name', {
               required: 'Please enter name',
               pattern: {
-                value: /^(?!^\s)[a-zA-Z\s']*$(?<!\s$)/,
+                value: /^(?!^\s)[a-zA-Z0-9\s']*$(?<!\s$)/,
                 message: 'Please enter a valid name',
               },
             })}
           />
         </Grid>
-        {/*
-        Commenting the below fields from edit profile Issue ID - CS-2078
-        <Grid item xs={12} md={4}>
-          <Typography variant="body3" color="grey.label">
-            Enrolment number NDHM
-          </Typography>
-          <Typography component="span" color="error.main">
-            *
-          </Typography>
-          <TextField
-            fullWidth
-            required
-            name={'enrol_no_ndhm'}
-            placeholder={'Enter NDHM number'}
-            defaultValue={getValues().ndhm_enrollment}
-            error={errors.ndhm_enrollment?.message}
-            {...register('enrol_no_ndhm', {
-              required: 'NDHM number is required',
-            })}
-          />
-        </Grid>
-
-        <Grid item xs={12} md={4}>
-          <Typography variant="body3" color="grey.label">
-            Enrolment number
-          </Typography>
-          <Typography component="span" color="error.main">
-            *
-          </Typography>
-          <TextField
-            fullWidth
-            required={true}
-            name={'enrol_no'}
-            placeholder={'Enter enrolment number '}
-            defaultValue={getValues().enrolled_number}
-            error={errors.enrolled_number?.message}
-            {...register('enrol_no', {
-              required: 'Enrolment number is required',
-            })}
-          />
-        </Grid> 
-        <Grid item xs={12} md={4}>
-          <Typography variant="body3" color="grey.label">
-            Council
-          </Typography>
-          <Typography component="span" color="error.main">
-            *
-          </Typography>
-          <SearchableDropdown
-            name="RegistrationCouncil"
-            items={createEditFieldData(councilNames)}
-            defaultValue={userData?.state_medical_council}
-            placeholder="Select Your Registration Council"
-            clearErrors={clearErrors}
-            error={errors.RegistrationCouncil?.message}
-            {...register('RegistrationCouncil', {
-              required: 'Registration Council is required',
-            })}
-            onChange={(currentValue) => {
-              setValue('RegistrationCouncilId', currentValue?.name);
-            }}
-          />
-        </Grid> */}
-
         <Grid item xs={12} md={4}>
           <Typography variant="body3" color="grey.label">
             Mobile Number
@@ -308,8 +257,26 @@ const NmcEditProfile = (props) => {
       {successModalPopup && (
         <SuccessModalPopup
           open={successModalPopup}
-          setOpen={() => setSuccessModalPopup(false)}
-          text={'Your NMC Profile has been successfully updated'}
+          setOpen={() => {
+            setSuccessModalPopup(false);
+            if (emailIDUpdated) {
+              dispatch(logoutAction()).then((response) => {
+                if (response) {
+                  logoutUser();
+                  dispatch(logout());
+                  dispatch(resetCommonReducer());
+                  navigate('/login-page', { state: { loginFormname: 'NMC' } });
+                }
+              });
+            } else {
+              props?.sentDetails('Profile');
+            }
+          }}
+          text={
+            emailIDUpdated
+              ? 'Your profile has been updated. Please login again with updated details.'
+              : 'Your profile has been updated.'
+          }
         />
       )}
     </Box>

@@ -242,16 +242,31 @@ export const AdditionalQualificationTable = ({
         isIcon: true,
         iconToolTip: 'View Attachment',
         value: (
-          <IconButton>
-            <AttachFileIcon
-              fontSize="10px"
-              onClick={(e) => {
-                e.preventDefault();
-                setAttachmentIndex(index + 1);
-                setAttachmentFrame(true);
-              }}
-            />
-          </IconButton>
+          <Box>
+            <IconButton>
+              <AttachFileIcon
+                fontSize="10px"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setAttachmentIndex(index + 1);
+                  setAttachmentFrame(true);
+                }}
+              />
+            </IconButton>
+            {data?.queries?.map((item) => {
+              return (
+                item?.field_name?.toUpperCase().toString() === field_names.qualificationDegree && (
+                  <Typography>
+                    <ReportOutlinedIcon
+                      fontSize="inherit"
+                      sx={{ ml: 2, color: theme.palette.secondary.main }}
+                    />
+                  </Typography>
+                  // item?.common_comment
+                )
+              );
+            })}
+          </Box>
         ),
       },
       {

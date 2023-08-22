@@ -1,5 +1,6 @@
 import JSEncrypt from 'jsencrypt';
 import moment from 'moment/moment';
+import forge from 'node-forge';
 
 import {
   colgDeanRegTabs,
@@ -106,6 +107,21 @@ export const changeAppFontSize = (size, appFontType) => {
   return `${fontSize}px`;
 };
 export const encryptData = (data, key) => {
+  const publicKey = forge.pki.publicKeyFromPem(key);
+  const mdx = forge.md.sha1;
+
+  const encrypted = publicKey.encrypt(data, 'RSA-OAEP', {
+    md: mdx.create(),
+
+    mgf1: {
+      md: mdx.create(),
+    },
+  });
+
+  return btoa(encrypted);
+};
+
+export const encryptHPIDData = (data, key) => {
   var encrypt = new JSEncrypt();
   encrypt.setPublicKey(key);
   var encryptedPass = encrypt.encrypt(data);
@@ -339,10 +355,19 @@ export const dateAndTimeConstant = (format) => {
       return null;
   }
 };
+
 export const getDateAndTimeFormat = (
   dateFormat,
   date = new Date(),
   format = dateAndTimeConstant(dateFormat)
 ) => {
   return moment(date).format(format);
+};
+
+export const logoutUser = () => {
+  localStorage.clear();
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
 };
