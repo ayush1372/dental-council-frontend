@@ -481,7 +481,13 @@ const ReadRegisterAndAcademicDetails = ({
       >
         <Box
           p={2}
-          width={selected === 'verify' ? '500px' : selected === 'forward' ? '500px' : '630px'}
+          width={
+            selected === 'verify'
+              ? '500px'
+              : selected === 'forward'
+              ? '500px'
+              : { md: '630px', sm: '100%' }
+          }
           borderRadius={'40px'}
         >
           <Box align="right">
