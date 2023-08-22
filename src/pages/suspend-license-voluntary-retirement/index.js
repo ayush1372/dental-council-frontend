@@ -814,7 +814,7 @@ export function SuspendLicenseVoluntaryRetirement({
             setConfirmationModal(false);
           }}
         >
-          <Box p={2} width="410px" height="200">
+          <Box p={2} width={{ md: '410px', sm: '100%' }} height="200">
             <Box
               display={'flex'}
               justifyContent={'flex-start'}
