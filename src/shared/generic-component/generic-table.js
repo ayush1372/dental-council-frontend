@@ -344,14 +344,21 @@ export default function GenericTable(props) {
                   );
                 } else {
                   return (
-                    <Tooltip key={index} title={row[item.name]?.value}>
+                    <Tooltip
+                      key={index}
+                      title={
+                        item?.name === 'attachments'
+                          ? row[item.name]?.iconToolTip
+                          : row[item.name]?.value
+                      }
+                    >
                       <TableCell
                         key={index}
                         className={row.read?.value === false ? 'style-bold' : ''}
                         sx={{
                           whiteSpace: 'break-spaces',
                         }}
-                        align="left"
+                        align={item?.name === 'attachments' ? 'center' : 'left'}
                       >
                         {row[item.name]?.value}
                       </TableCell>
