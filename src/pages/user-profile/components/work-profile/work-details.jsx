@@ -154,8 +154,8 @@ const WorkDetails = ({
           registration_no: registrationDetails?.registration_detail_to?.registration_number,
           experience_in_years: workExpierence,
           system_of_medicine: elementData?.systemOfMedicine,
-          department: elementData?.department || '',
-          designation: elementData?.designation || '',
+          department: elementData?.department || 'department',
+          designation: elementData?.designation || 'desgination',
         };
         currentWorkDetails?.current_work_details.push(facilityDetailsDeclared);
       });
