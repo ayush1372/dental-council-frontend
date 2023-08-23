@@ -34,6 +34,7 @@ const NAV_META = [
     path: 'register/college-registration',
     title: 'collegeRegistration',
     component: 'register/college-registration/college-registration',
+    isPrivate: true,
   },
   {
     path: 'register/doctor-registration',
