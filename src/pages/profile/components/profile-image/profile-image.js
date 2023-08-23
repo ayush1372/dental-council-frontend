@@ -351,8 +351,10 @@ export default function ProfileImage(props) {
           {personalDetails?.esign_status !== 1 &&
             (doctorEsignStatus === 2 ||
               doctorEsignStatus === 3 ||
+              doctorEsignStatus === 4 ||
               personalDetails?.esign_status === 2 ||
-              personalDetails?.esign_status === 3) &&
+              personalDetails?.esign_status === 3 ||
+              personalDetails?.esign_status === 4) &&
             loginData?.data?.hp_profile_status_id !== 7 && (
               <Grid container mt={1}>
                 <Grid item>
