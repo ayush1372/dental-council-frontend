@@ -156,10 +156,9 @@ const EditQualificationDetails = ({
 
   useEffect(() => {
     fetchColleges(selectedState);
-    if (getQueryRaised('State') !== false) {
-      setValue(`qualification[${index}].university`, null);
-      setValue(`qualification[${index}].college`, null);
-    }
+    setValue(`qualification[${index}].university`, null);
+    setValue(`qualification[${index}].college`, null);
+
     setUniversitiesListData([]);
   }, [selectedState]);
   const getQueryRaisedComment = (fieldName) => {
