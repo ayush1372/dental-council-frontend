@@ -103,14 +103,6 @@ const EditQualificationDetails = ({
   };
 
   useEffect(() => {
-    fetchColleges(selectedState);
-
-    setValue(`qualification[${index}].university`, null);
-    setValue(`qualification[${index}].college`, null);
-    setUniversitiesListData([]);
-  }, [selectedState]);
-
-  useEffect(() => {
     fetchUniversities(watchCollege);
   }, [watchCollege]);
 
@@ -161,6 +153,14 @@ const EditQualificationDetails = ({
     let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
     return query === undefined;
   };
+
+  useEffect(() => {
+    fetchColleges(selectedState);
+    setValue(`qualification[${index}].university`, null);
+    setValue(`qualification[${index}].college`, null);
+
+    setUniversitiesListData([]);
+  }, [selectedState]);
   const getQueryRaisedComment = (fieldName) => {
     let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
     return query?.query_comment;
@@ -741,6 +741,7 @@ const EditQualificationDetails = ({
             />
           )}
         </Grid>
+
         <Grid item xs={12} md={6} lg={4}>
           {qualificationfrom === 'International' ? (
             <TextField

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Box, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
@@ -76,7 +76,11 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }
       });
     return councilData[0]?.id;
   };
-
+  useEffect(() => {
+    if (otpData?.page === 'forgotPasswordPage') {
+      setShowSuccessPopUp(false);
+    }
+  }, []);
   const onSubmit = () => {
     if (otpData?.page === 'forgotPasswordPage') {
       const userTypeId = usersType(loginName);
@@ -105,11 +109,11 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }
         };
 
         dispatch(setPassword(newPasswordData)).then((response) => {
-          if(response?.data?.message === 'Success'){
+          if (response?.data?.message === 'Success') {
             setCollegeRegisterSuccess(true);
             setShowSuccess(true);
-          } else{
-            successToast( response?.data?.message, response?.data?.message, 'error', 'top-center');
+          } else {
+            successToast(response?.data?.message, response?.data?.message, 'error', 'top-center');
           }
         });
         // .catch((error) => {
