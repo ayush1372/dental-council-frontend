@@ -81,11 +81,13 @@ export const useAxiosCall = async (payload = axiosProps) => {
   return await new Promise((resolve, reject) => {
     axios(payload)
       .then((response) => {
+        const typeOFResp =
+          typeof response?.data === 'object' ? JSON.stringify(response?.data) : response?.data;
         if (
           process.env.REACT_APP_CHECKSUM_FLAG === 'true' &&
           response.headers['is-authorized'] !== undefined
         ) {
-          const key = sha256(process.env.REACT_APP_CHECKSUM_KEY + JSON.stringify(response?.data));
+          const key = sha256(process.env.REACT_APP_CHECKSUM_KEY + typeOFResp);
           if (
             response?.headers &&
             response.headers['is-authorized'] !== undefined &&
