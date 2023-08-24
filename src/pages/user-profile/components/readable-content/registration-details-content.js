@@ -198,12 +198,12 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
             Due Date of Renewal
+            {getQueryRaised('Due Date of Renewal') !== undefined && (
+              <Tooltip title={getQueryRaised('Due Date of Renewal')}>
+                <ReportIcon color="secondary" ml={2} />
+              </Tooltip>
+            )}
           </Typography>
-          {getQueryRaised('Due Date of Renewal') !== undefined && (
-            <Tooltip title={getQueryRaised('Due Date of Renewal')}>
-              <ReportIcon color="secondary" ml={2} />
-            </Tooltip>
-          )}
           <Grid display="flex">
             <Typography color="textPrimary.main" variant="subtitle2">
               {is_renewable === '1'
