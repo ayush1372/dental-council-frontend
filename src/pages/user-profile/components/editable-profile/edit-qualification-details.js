@@ -102,11 +102,22 @@ const EditQualificationDetails = ({
     }
   };
 
+  //Helper Method to get the data of the query raised against the field
+  const getQueryRaised = (fieldName) => {
+    let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
+    return query === undefined;
+  };
+  const getQueryRaisedComment = (fieldName) => {
+    let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
+    return query?.query_comment;
+  };
+
   useEffect(() => {
     fetchColleges(selectedState);
-
-    setValue(`qualification[${index}].university`, null);
-    setValue(`qualification[${index}].college`, null);
+    if (getQueryRaised('State') !== false && qualificationfrom === 'International') {
+      setValue(`qualification[${index}].university`, null);
+      setValue(`qualification[${index}].college`, null);
+    }
     setUniversitiesListData([]);
   }, [selectedState]);
 
@@ -156,15 +167,6 @@ const EditQualificationDetails = ({
     return monthsData;
   }, [selectedYear]);
 
-  //Helper Method to get the data of the query raised against the field
-  const getQueryRaised = (fieldName) => {
-    let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
-    return query === undefined;
-  };
-  const getQueryRaisedComment = (fieldName) => {
-    let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
-    return query?.query_comment;
-  };
   const courseData = (courseName) => {
     let degreeName = coursesList.data?.find((x) => x.name === courseName);
     return degreeName?.id;
