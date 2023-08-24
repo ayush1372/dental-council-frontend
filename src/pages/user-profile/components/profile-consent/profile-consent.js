@@ -233,7 +233,11 @@ const ProfileConsent = ({
       }
       dispatch(getPersonalDetailsData(personalDetails?.hp_profile_id))
         .then((response) => {
-          if (response?.data?.esign_status === 1 || response?.data?.esign_status === 2) {
+          if (
+            response?.data?.esign_status === 1 ||
+            response?.data?.esign_status === 2 ||
+            response?.data?.esign_status === 4
+          ) {
             clearInterval(interval);
             setESignLoader(false);
             if (response?.data?.esign_status === 1) {
