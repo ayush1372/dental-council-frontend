@@ -69,13 +69,28 @@ const axiosProps = {
 };
 
 export const useAxiosCall = async (payload = axiosProps) => {
+  // eslint-disable-next-line no-console
+  console.log('payload123 json', JSON.stringify(payload?.data));
+  let reqAuthkey;
+  if (payload?.data) {
+    const typeOFRequest =
+      typeof payload?.data === 'object' ? JSON.stringify(payload?.data) : payload?.data;
+    reqAuthkey = sha256(process.env.REACT_APP_CHECKSUM_KEY + typeOFRequest);
+    // eslint-disable-next-line no-console
+    console.log('payload123 345', reqAuthkey, process.env.REACT_APP_CHECKSUM_KEY + typeOFRequest);
+  }
   if (payload?.url?.includes('/personal')) {
     setLoadingState(false);
   } else {
     setLoadingState(true);
   }
+  const appHeaderISAuth = { 'Is-Authorized': reqAuthkey };
+  // eslint-disable-next-line no-console
+  console.log('payload123 header', payload?.headers, appHeaderISAuth);
   payload.headers =
-    payload.headers !== undefined ? Object.assign(payload.headers, appheader) : appheader;
+    payload.headers !== undefined
+      ? Object.assign(payload.headers, appHeaderISAuth, appheader)
+      : { ...appHeaderISAuth, ...appheader };
   // payload = concatDefaultProps(axiosProps, payload);
 
   return await new Promise((resolve, reject) => {
