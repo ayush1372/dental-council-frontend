@@ -347,6 +347,10 @@ function NMCCollegeRegistration() {
               error={errors.Name?.message}
               {...register('Name', {
                 required: 'Please enter college name',
+                pattern: {
+                  value: /^[A-Za-z0-9()-,.' ]*$/,
+                  message: 'Please enter a valid name',
+                },
               })}
             />
           </Grid>
