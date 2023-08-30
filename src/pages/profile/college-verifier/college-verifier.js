@@ -119,7 +119,6 @@ function CollegeVerifier() {
             error={errors.Name?.message}
             {...register('Name', {
               required: 'Please enter name',
-
               pattern: {
                 value: /^(?!^\s)[a-zA-Z\s']*$(?<!\s$)/,
                 message: 'Please enter a valid name',

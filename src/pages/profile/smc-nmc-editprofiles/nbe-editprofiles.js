@@ -134,7 +134,7 @@ const NbeEditProfile = (props) => {
               required: 'Please enter name',
 
               pattern: {
-                value: /^(?!^\s)[a-zA-Z0-9\s']*$(?<!\s$)/,
+                value: /^[A-Za-z0-9()-,.' ]*$/,
                 message: 'Please enter a valid name',
               },
             })}
