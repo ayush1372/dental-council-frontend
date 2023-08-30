@@ -133,6 +133,10 @@ export function CollegeDean({ showPage, updateShowPage, userType }) {
           error={errors.deanName?.message}
           {...register('deanName', {
             required: 'Please enter a valid name',
+            pattern: {
+              value: /^(?!^\s)[a-zA-Z\s']*$(?<!\s$)/,
+              message: 'Please enter a valid name',
+            },
           })}
         />
       </Grid>

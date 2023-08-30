@@ -116,7 +116,7 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
             required: 'Please enter name',
 
             pattern: {
-              value: /^[A-Z\s@~`!@#$%^&*()_=+\\';:"/?>.<,-]*$/i,
+              value: /^(?!^\s)[a-zA-Z\s']*$(?<!\s$)/,
               message: 'Please enter a valid name',
             },
           })}

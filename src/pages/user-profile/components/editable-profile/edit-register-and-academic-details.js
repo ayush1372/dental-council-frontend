@@ -607,7 +607,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
             />
           </Grid>
           {(getValues().registration === '1' ||
-            (hp_profile_status_id === 2 && is_renewable === '1')) && (
+            hp_profile_status_id === 2 ||
+            is_renewable === '1') && (
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 Due Date of Renewal
@@ -643,7 +644,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                   renewable_registration_date ? new Date(renewable_registration_date) : new Date()
                 }
                 disabled={
-                  getQueryRaised('Due Date of Renewal') === false
+                  getQueryRaised('Registration') === false
+                    ? false
+                    : getQueryRaised('Due Date of Renewal') === false
                     ? false
                     : hp_profile_status_id === 3
                     ? getQueryRaised('Due Date of Renewal')
