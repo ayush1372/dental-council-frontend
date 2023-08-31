@@ -9,8 +9,15 @@ const authInterceptors = (error) => {
   if (error && error?.response) {
     if (error?.response?.status) {
       if (error?.response?.status >= 500) {
-        successToast(allFailMsg, 'auth-error', 'error', 'top-center');
-        return Promise.reject(allFailMsg);
+        successToast(
+          error?.response?.data?.message ? error?.response?.data?.message : allFailMsg,
+          'auth-error',
+          'error',
+          'top-center'
+        );
+        return Promise.reject(
+          error?.response?.data?.message ? error?.response?.data?.message : allFailMsg
+        );
       } else if (error?.response?.status < 500) {
         let data = error?.response?.data;
 
