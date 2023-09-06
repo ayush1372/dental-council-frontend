@@ -80,7 +80,7 @@ export const useAxiosCall = async (payload = axiosProps) => {
   } else {
     setLoadingState(true);
   }
-  const appHeaderISAuth = { 'Is-Authorized': reqAuthkey };
+  const appHeaderISAuth = { 'x-hash': reqAuthkey };
 
   payload.headers =
     payload.headers !== undefined
@@ -95,13 +95,13 @@ export const useAxiosCall = async (payload = axiosProps) => {
           typeof response?.data === 'object' ? JSON.stringify(response?.data) : response?.data;
         if (
           process.env.REACT_APP_CHECKSUM_FLAG === 'true' &&
-          response.headers['is-authorized'] !== undefined
+          response.headers['x-hash'] !== undefined
         ) {
           const key = sha256(process.env.REACT_APP_CHECKSUM_KEY + typeOFResp);
           if (
             response?.headers &&
-            response.headers['is-authorized'] !== undefined &&
-            response.headers['is-authorized'] === key
+            response.headers['x-hash'] !== undefined &&
+            response.headers['x-hash'] === key
           ) {
             return resolve({
               data: response.data,
@@ -109,7 +109,7 @@ export const useAxiosCall = async (payload = axiosProps) => {
               isLoading: false,
               isError: false,
             });
-          } else if (response.headers['is-authorized'] !== key) {
+          } else if (response.headers['x-hash'] !== key) {
             successToast(
               'Authentication failed. You may not have permission to access this profile, please login again.',
               'auth-error-Network',
