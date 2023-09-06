@@ -122,6 +122,12 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup,
             }
           }
         }
+        if (otpData?.page === 'editUserDetails') {
+          if (response?.data?.message?.status === 'Success') {
+            setChangeUserData(true);
+            // otpData?.handleClose();
+          }
+        }
       });
     } catch (allFailMsg) {
       successToast(allFailMsg?.data?.message, 'auth-error', 'error', 'top-center');
@@ -189,7 +195,7 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup,
           {otpData?.page === 'doctorConstantDetailsPage' ? (
             <Typography component={'div'} textAlign="center">
               {otpData.page === 'doctorConstantDetailsPage' && otpData?.type === 'sms'
-                ? `Please enter the OTP sent on your mobile number ******${otpData?.contact.slice(
+                ? `Please enter the OTP sent on your mobile number ******${otpData?.contact?.slice(
                     -4
                   )}.`
                 : otpData.page === 'doctorConstantDetailsPage' &&
@@ -217,6 +223,10 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup,
               {otpData.page === 'forgetUserName' && otpData?.type === 'sms'
                 ? `OTP sent to mobile number ending with ******${otpData?.contact?.slice(-4)}.`
                 : ''}
+            </Typography>
+          ) : otpData?.page === 'editUserDetails' && otpData?.type === 'sms' ? (
+            <Typography variant="body" display={'flex'} justifyContent="center">
+              {`OTP sent to mobile number ending with ******${otpData?.contact?.slice(-4)}.`}
             </Typography>
           ) : (
             <Typography variant="body1">

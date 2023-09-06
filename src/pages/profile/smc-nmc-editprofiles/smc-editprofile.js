@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { Dialog, InputAdornment } from '@mui/material';
 import { Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useForm } from 'react-hook-form';
@@ -9,11 +10,14 @@ import { useNavigate } from 'react-router-dom';
 import { createEditFieldData, logoutUser } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
+import { sendNotificationOtp } from '../../../store/actions/common-actions';
 import { logoutAction } from '../../../store/actions/login-action';
 import { getUpdatedsmcProfileData } from '../../../store/actions/smc-actions';
 import { logout, resetCommonReducer } from '../../../store/reducers/common-reducers';
 import { Button, TextField } from '../../../ui/core';
+import successToast from '../../../ui/core/toaster';
 import { EmailRegexValidation } from '../../../utilities/common-validations';
+import ConfirmOTP from '../../login-page/components/confirm-otp';
 
 const SmcEditProfile = (props) => {
   const navigate = useNavigate();
@@ -21,9 +25,11 @@ const SmcEditProfile = (props) => {
 
   const userData = useSelector((state) => state?.smc?.smcProfileData?.data);
   const { councilNames } = useSelector((state) => state.common);
-
+  const { loginData } = useSelector((state) => state?.loginReducer);
   const [emailIDUpdated, setEmailIDUpdated] = useState(false);
   const [successModalPopup, setSuccessModalPopup] = useState(false);
+  const [showOTPPOPUp, setShowOTPPOPUp] = useState(false);
+  const [userEditData, setData] = useState({ contact: '', type: '', page: '' });
 
   const {
     register,
@@ -94,6 +100,35 @@ const SmcEditProfile = (props) => {
     });
   };
 
+  const handleClose = () => {
+    setShowOTPPOPUp(false);
+  };
+
+  const getOtp = (type) => {
+    if (type === 'sms') {
+      let otpValue = {};
+      otpValue = {
+        contact: getValues().mobile_no,
+        type: 'sms',
+        page: 'editUserDetails',
+        handleClose: handleClose,
+        reSendOTP: getOtp,
+        // setMobileNumberChange: setMobileNumberChange,
+      };
+      setData(otpValue);
+      let sendOTPData = {
+        contact: type === 'sms' ? getValues().mobile_no : '',
+        type: type === 'sms' ? 'sms' : '',
+        user_type: loginData?.data?.user_type,
+        is_registration: true,
+      };
+      dispatch(sendNotificationOtp(sendOTPData)).then((response) => {
+        response?.data?.message === 'Success'
+          ? setShowOTPPOPUp(true)
+          : successToast(response?.data?.message, 'auth-error', 'error', 'top-center');
+      });
+    }
+  };
   return (
     <Grid>
       <Grid container spacing={2} mt={2}>
@@ -151,6 +186,13 @@ const SmcEditProfile = (props) => {
                 message: 'Please enter a valid 10 digit mobile number',
               },
             })}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Button onClick={() => getOtp('sms')}>Verify</Button>
+                </InputAdornment>
+              ),
+            }}
           />
         </Grid>
 
@@ -261,6 +303,14 @@ const SmcEditProfile = (props) => {
           />
         )}
       </Box>
+      <Dialog
+        maxWidth="sm"
+        scroll="body"
+        open={showOTPPOPUp}
+        PaperProps={{ sx: { borderRadius: '10px' } }}
+      >
+        <ConfirmOTP otpData={userEditData} />
+      </Dialog>
     </Grid>
   );
 };
