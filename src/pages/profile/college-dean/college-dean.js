@@ -1,11 +1,12 @@
 import { useState } from 'react';
 
-import { Grid, Typography } from '@mui/material';
+import { Dialog, Grid, InputAdornment, Typography } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import IconVerified from '../../../assets/images/ico-verified.svg';
 import { logoutUser } from '../../../helpers/functions/common-functions';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import {
@@ -13,9 +14,12 @@ import {
   sendDeanDetails,
   updateCollegeRegistrarData,
 } from '../../../store/actions/college-actions';
+import { sendNotificationOtp } from '../../../store/actions/common-actions';
 import { logoutAction } from '../../../store/actions/login-action';
 import { logout, resetCommonReducer } from '../../../store/reducers/common-reducers';
 import { Button, TextField } from '../../../ui/core';
+import successToast from '../../../ui/core/toaster';
+import ConfirmOTP from '../../login-page/components/confirm-otp';
 
 export function CollegeDean({ showPage, updateShowPage, userType }) {
   const dispatch = useDispatch();
@@ -23,10 +27,18 @@ export function CollegeDean({ showPage, updateShowPage, userType }) {
   const navigate = useNavigate();
 
   const { collegeData } = useSelector((state) => state.college);
+  const { loginData } = useSelector((state) => state?.loginReducer);
   const userData = collegeData?.data;
+
+  // eslint-disable-next-line no-console
+  console.log('userData', userData);
 
   const [successModalPopup, setSuccessModalPopup] = useState(false);
   const [emailIDUpdated, setEmailIDUpdated] = useState(false);
+  const [showOTPPOPUp, setShowOTPPOPUp] = useState(false);
+  const [userRequestData, setUserRequestData] = useState();
+  const [mobileValue, setMobileValue] = useState('');
+  const [userEditData, setData] = useState({ contact: '', type: '', page: '' });
 
   const {
     register,
@@ -45,6 +57,17 @@ export function CollegeDean({ showPage, updateShowPage, userType }) {
       deanPassword: '',
     },
   });
+  const handleInput = (e) => {
+    e.preventDefault();
+    setMobileValue(e.target.value);
+    if (e.target.value.length > 0) {
+      e.target.value = isNaN(e.target.value)
+        ? e.target.value.toString().slice(0, -1)
+        : Math.max(0, parseInt(e.target.value)).toString().slice(0, 10);
+    }
+  };
+
+  //  values getting for other and  principle
   const onSubmit = (fieldValues) => {
     let deanData = {
       id: showPage === 'edit' ? userData?.id : null,
@@ -75,6 +98,48 @@ export function CollegeDean({ showPage, updateShowPage, userType }) {
       dispatch(sendDeanDetails(deanData));
     }
   };
+
+  const handleClose = () => {
+    setShowOTPPOPUp(false);
+  };
+
+  const getOtp = (type) => {
+    if (type === 'sms') {
+      let otpValue = {};
+      otpValue = {
+        contact: getValues().deanPhoneNumber,
+        type: 'sms',
+        page: 'editUserDetails',
+        handleClose: handleClose,
+        reSendOTP: getOtp,
+        // setMobileNumberChange: setMobileNumberChange,
+      };
+      setData(otpValue);
+      let sendOTPData = {
+        contact: type === 'sms' ? getValues().deanPhoneNumber : '',
+        type: type === 'sms' ? 'sms' : '',
+        user_type: loginData?.data?.user_type,
+        is_registration: true,
+      };
+      dispatch(sendNotificationOtp(sendOTPData)).then((response) => {
+        if (response?.data?.message === 'Success') {
+          let deanData = {
+            id: showPage === 'edit' ? userData?.id : null,
+            college_id: showPage === 'edit' ? userData?.college_id : null,
+            designation: showPage === 'edit' ? userData?.designation : null,
+            name: showPage === 'edit' ? getValues().deanName : null,
+            mobile_number: showPage === 'edit' ? getValues().deanPhoneNumber : null,
+            email_id: showPage === 'edit' ? getValues().deanEmail : null,
+          };
+          setUserRequestData(deanData);
+          setShowOTPPOPUp(true);
+        } else {
+          successToast(response?.data?.message, 'auth-error', 'error', 'top-center');
+        }
+      });
+    }
+  };
+
   return (
     <Grid container item spacing={2} p={2}>
       {successModalPopup && (
@@ -176,6 +241,12 @@ export function CollegeDean({ showPage, updateShowPage, userType }) {
         </Typography>
         <Typography component="span" color="error.main">
           *
+          {getValues().deanPhoneNumber !== mobileValue ||
+          userData?.mobile_number === mobileValue ? (
+            <img width="16px" height="16px" src={IconVerified} alt="verified icon" />
+          ) : (
+            ' '
+          )}
         </Typography>
         <TextField
           fullWidth
@@ -188,6 +259,7 @@ export function CollegeDean({ showPage, updateShowPage, userType }) {
           placeholder={t('Enter mobile number')}
           margin="dense"
           defaultValue={getValues().deanPhoneNumber}
+          onInput={(e) => handleInput(e)}
           error={errors.deanPhoneNumber?.message}
           {...register('deanPhoneNumber', {
             required: 'Please enter mobile number',
@@ -196,6 +268,24 @@ export function CollegeDean({ showPage, updateShowPage, userType }) {
               message: 'Please enter a valid mobile number',
             },
           })}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <Button
+                  disabled={
+                    getValues().deanPhoneNumber !== mobileValue ||
+                    getValues().deanPhoneNumber.length !== 10 ||
+                    userData?.mobile_number === mobileValue
+                      ? true
+                      : false
+                  }
+                  onClick={() => getOtp('sms')}
+                >
+                  Verify
+                </Button>
+              </InputAdornment>
+            ),
+          }}
         />
       </Grid>
       <Grid item xs={12} md={6} sm={6} lg={4}>
@@ -247,6 +337,14 @@ export function CollegeDean({ showPage, updateShowPage, userType }) {
           </Button>
         </Grid>
       </Grid>
+      <Dialog
+        maxWidth="sm"
+        scroll="body"
+        open={showOTPPOPUp}
+        PaperProps={{ sx: { borderRadius: '10px' } }}
+      >
+        <ConfirmOTP otpData={userEditData} userRequestData={userRequestData} />
+      </Dialog>
     </Grid>
   );
 }

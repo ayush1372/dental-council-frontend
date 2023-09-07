@@ -11,6 +11,7 @@ import {
   nmcTabs,
   smcTabs,
 } from '../../helpers/components/sidebar-drawer-list-item';
+import { scrollToTop } from '../../helpers/functions/common-functions';
 import { getCardCount } from '../../store/actions/dashboard-actions';
 import { getPersonalDetailsData } from '../../store/actions/doctor-user-profile-actions';
 import { logoutAction } from '../../store/actions/login-action';
@@ -41,6 +42,7 @@ export default function SuccessModalPopup({
   setChangeUserData,
   PasswordChange,
   fetchDoctorScreenAlertIcon,
+  userLogout,
 }) {
   const theme = useTheme();
   const navigate = useNavigate();
@@ -161,6 +163,19 @@ export default function SuccessModalPopup({
       behavior: 'smooth',
     });
   };
+
+  const LogoutUser = () => {
+    dispatch(logoutAction()).then((response) => {
+      if (response) {
+        dispatch(logout());
+      }
+    });
+
+    dispatch(resetCommonReducer());
+    localStorage.clear();
+    navigate('/');
+    scrollToTop();
+  };
   return (
     <Modal open={open} onClose={handleClose} sx={{ mt: 15 }}>
       <Container
@@ -213,7 +228,9 @@ export default function SuccessModalPopup({
             variant="contained"
             color="secondary"
             onClick={
-              fetchDoctorScreenAlertIcon
+              userLogout
+                ? LogoutUser
+                : fetchDoctorScreenAlertIcon
                 ? navigateToDoctorRegistartion
                 : handleClose
                 ? handleCloseModalALL

@@ -12,23 +12,38 @@ import { ErrorMessages } from '../../../constants/error-messages';
 import { encryptData, usersType } from '../../../helpers/functions/common-functions';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import { OtpForm } from '../../../shared/otp-form/otp-component';
+import { updateCollegeRegistrarData } from '../../../store/actions/college-actions';
 import { verifyNotificationOtp } from '../../../store/actions/common-actions';
 import {
   getPersonalDetailsData,
   updateDoctorContactDetails,
 } from '../../../store/actions/doctor-user-profile-actions';
 import { retrieveUserName } from '../../../store/actions/forgot-username-actions';
+import { getUpdatedNBEProfileData } from '../../../store/actions/nbe-actions';
+import { getUpdatedNmcProfileData } from '../../../store/actions/nmc-actions';
+import { getUpdatedsmcProfileData } from '../../../store/actions/smc-actions';
 import { loginActiveState } from '../../../store/reducers/login-reducer';
 import { Button } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
-const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup, loginName }) => {
+const ConfirmOTP = ({
+  handleConfirmOTP,
+  otpData,
+  userRequestData,
+  resetStep,
+  handlePasswordSetup,
+  loginName,
+}) => {
   const { t } = useTranslation();
   const [isOtpValid, setIsOtpValid] = useState(false);
   const dispatch = useDispatch();
   const { sendNotificationOtpData } = useSelector((state) => state?.common);
   const [changeUserData, setChangeUserData] = useState(false);
   const { loginData } = useSelector((state) => state?.loginReducer);
+  const userData = useSelector((state) => state?.nbe?.nbeData?.data);
+  const { collegeData } = useSelector((state) => state.college);
+
   const userTypeId = usersType(loginName);
+
   const otpResend = () => {
     successToast(ErrorMessages.otpResend, 'otp-resent', 'success', 'top-center');
   };
@@ -124,7 +139,34 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup,
         }
         if (otpData?.page === 'editUserDetails') {
           if (response?.data?.message?.status === 'Success') {
-            setChangeUserData(true);
+            const requestObj = {
+              ...userRequestData,
+              transaction_id: response?.data?.message?.transaction_id,
+            };
+            // for put api according to userType and its subtype
+            dispatch(
+              loginData?.data?.user_type === 3
+                ? getUpdatedsmcProfileData(requestObj)
+                : loginData?.data?.user_type === 4
+                ? getUpdatedNmcProfileData(requestObj)
+                : loginData?.data?.user_type === 5
+                ? getUpdatedNBEProfileData(requestObj, userData?.id)
+                : loginData?.data?.user_sub_type === 2 ||
+                  loginData?.data?.user_sub_type === 3 ||
+                  loginData?.data?.user_sub_type === 4 ||
+                  loginData?.data?.user_sub_type === 5
+                ? updateCollegeRegistrarData(
+                    requestObj,
+                    collegeData?.data?.college_id,
+                    collegeData?.data?.id
+                  )
+                : ''
+            ).then((response) => {
+              if (response?.data?.email_id.length > 0) {
+                setChangeUserData(true);
+              }
+            });
+
             // otpData?.handleClose();
           }
         }
@@ -305,6 +347,7 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup,
               : otpData?.type === 'email' && 'Email Address'
           } has been successfully changed `}
           changeUserData={changeUserData}
+          userLogout={userRequestData ? true : false}
           fetchDoctorUserPersonalDetails={fetchDoctorUserPersonalDetails}
         />
       )}
