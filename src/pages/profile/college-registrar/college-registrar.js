@@ -28,8 +28,7 @@ export function CollegeRegistrar({ showPage, updateShowPage }) {
   const navigate = useNavigate();
 
   const { collegeData } = useSelector((state) => state.college);
-  // eslint-disable-next-line no-console
-  console.log('collegeData', collegeData);
+
   const { loginData } = useSelector((state) => state?.loginReducer);
   const userData = collegeData?.data;
   const [successModalPopup, setSuccessModalPopup] = useState(false);

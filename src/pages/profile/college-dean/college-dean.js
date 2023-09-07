@@ -30,9 +30,6 @@ export function CollegeDean({ showPage, updateShowPage, userType }) {
   const { loginData } = useSelector((state) => state?.loginReducer);
   const userData = collegeData?.data;
 
-  // eslint-disable-next-line no-console
-  console.log('userData', userData);
-
   const [successModalPopup, setSuccessModalPopup] = useState(false);
   const [emailIDUpdated, setEmailIDUpdated] = useState(false);
   const [showOTPPOPUp, setShowOTPPOPUp] = useState(false);
