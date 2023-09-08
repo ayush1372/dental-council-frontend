@@ -12,23 +12,38 @@ import { ErrorMessages } from '../../../constants/error-messages';
 import { encryptData, usersType } from '../../../helpers/functions/common-functions';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
 import { OtpForm } from '../../../shared/otp-form/otp-component';
+import { updateCollegeRegistrarData } from '../../../store/actions/college-actions';
 import { verifyNotificationOtp } from '../../../store/actions/common-actions';
 import {
   getPersonalDetailsData,
   updateDoctorContactDetails,
 } from '../../../store/actions/doctor-user-profile-actions';
 import { retrieveUserName } from '../../../store/actions/forgot-username-actions';
+import { getUpdatedNBEProfileData } from '../../../store/actions/nbe-actions';
+import { getUpdatedNmcProfileData } from '../../../store/actions/nmc-actions';
+import { getUpdatedsmcProfileData } from '../../../store/actions/smc-actions';
 import { loginActiveState } from '../../../store/reducers/login-reducer';
 import { Button } from '../../../ui/core';
 import successToast from '../../../ui/core/toaster';
-const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup, loginName }) => {
+const ConfirmOTP = ({
+  handleConfirmOTP,
+  otpData,
+  userRequestData,
+  resetStep,
+  handlePasswordSetup,
+  loginName,
+}) => {
   const { t } = useTranslation();
   const [isOtpValid, setIsOtpValid] = useState(false);
   const dispatch = useDispatch();
   const { sendNotificationOtpData } = useSelector((state) => state?.common);
   const [changeUserData, setChangeUserData] = useState(false);
   const { loginData } = useSelector((state) => state?.loginReducer);
+  const userData = useSelector((state) => state?.nbe?.nbeData?.data);
+  const { collegeData } = useSelector((state) => state.college);
+
   const userTypeId = usersType(loginName);
+
   const otpResend = () => {
     successToast(ErrorMessages.otpResend, 'otp-resent', 'success', 'top-center');
   };
@@ -122,6 +137,39 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup,
             }
           }
         }
+        if (otpData?.page === 'editUserDetails') {
+          if (response?.data?.message?.status === 'Success') {
+            const requestObj = {
+              ...userRequestData,
+              transaction_id: response?.data?.message?.transaction_id,
+            };
+            // for put api according to userType and its subtype
+            dispatch(
+              loginData?.data?.user_type === 3
+                ? getUpdatedsmcProfileData(requestObj)
+                : loginData?.data?.user_type === 4
+                ? getUpdatedNmcProfileData(requestObj)
+                : loginData?.data?.user_type === 5
+                ? getUpdatedNBEProfileData(requestObj, userData?.id)
+                : loginData?.data?.user_sub_type === 2 ||
+                  loginData?.data?.user_sub_type === 3 ||
+                  loginData?.data?.user_sub_type === 4 ||
+                  loginData?.data?.user_sub_type === 5
+                ? updateCollegeRegistrarData(
+                    requestObj,
+                    collegeData?.data?.college_id,
+                    collegeData?.data?.id
+                  )
+                : ''
+            ).then((response) => {
+              if (response?.data?.email_id.length > 0) {
+                setChangeUserData(true);
+              }
+            });
+
+            // otpData?.handleClose();
+          }
+        }
       });
     } catch (allFailMsg) {
       successToast(allFailMsg?.data?.message, 'auth-error', 'error', 'top-center');
@@ -189,7 +237,7 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup,
           {otpData?.page === 'doctorConstantDetailsPage' ? (
             <Typography component={'div'} textAlign="center">
               {otpData.page === 'doctorConstantDetailsPage' && otpData?.type === 'sms'
-                ? `Please enter the OTP sent on your mobile number ******${otpData?.contact.slice(
+                ? `Please enter the OTP sent on your mobile number ******${otpData?.contact?.slice(
                     -4
                   )}.`
                 : otpData.page === 'doctorConstantDetailsPage' &&
@@ -217,6 +265,10 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup,
               {otpData.page === 'forgetUserName' && otpData?.type === 'sms'
                 ? `OTP sent to mobile number ending with ******${otpData?.contact?.slice(-4)}.`
                 : ''}
+            </Typography>
+          ) : otpData?.page === 'editUserDetails' && otpData?.type === 'sms' ? (
+            <Typography variant="body" display={'flex'} justifyContent="center">
+              {`OTP sent to mobile number ending with ******${otpData?.contact?.slice(-4)}.`}
             </Typography>
           ) : (
             <Typography variant="body1">
@@ -287,14 +339,19 @@ const ConfirmOTP = ({ handleConfirmOTP, otpData, resetStep, handlePasswordSetup,
         <SuccessModalPopup
           open={changeUserData}
           setOpen={() => setChangeUserData(false)}
-          text={`Your ${
-            otpData?.page === 'forgetUserName'
-              ? `username is "Anand". Please use this username to login.`
-              : otpData?.type === 'sms'
-              ? 'Mobile Number'
-              : otpData?.type === 'email' && 'Email Address'
-          } has been successfully changed `}
+          text={
+            otpData?.page === 'editUserDetails'
+              ? `Your mobile number has been updated. Please login again with updated details.`
+              : `Your ${
+                  otpData?.page === 'forgetUserName'
+                    ? `username is "Anand". Please use this username to login.`
+                    : otpData?.type === 'sms'
+                    ? 'Mobile Number'
+                    : otpData?.type === 'email' && 'Email Address'
+                } has been successfully changed `
+          }
           changeUserData={changeUserData}
+          userLogout={userRequestData ? true : false}
           fetchDoctorUserPersonalDetails={fetchDoctorUserPersonalDetails}
         />
       )}

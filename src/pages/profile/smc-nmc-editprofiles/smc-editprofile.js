@@ -1,19 +1,24 @@
 import { useState } from 'react';
 
+import { Dialog, InputAdornment } from '@mui/material';
 import { Grid, Typography } from '@mui/material';
 import { Box } from '@mui/system';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import IconVerified from '../../../assets/images/ico-verified.svg';
 import { createEditFieldData, logoutUser } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
 import SuccessModalPopup from '../../../shared/common-modals/success-modal-popup';
+import { sendNotificationOtp } from '../../../store/actions/common-actions';
 import { logoutAction } from '../../../store/actions/login-action';
 import { getUpdatedsmcProfileData } from '../../../store/actions/smc-actions';
 import { logout, resetCommonReducer } from '../../../store/reducers/common-reducers';
 import { Button, TextField } from '../../../ui/core';
+import successToast from '../../../ui/core/toaster';
 import { EmailRegexValidation } from '../../../utilities/common-validations';
+import ConfirmOTP from '../../login-page/components/confirm-otp';
 
 const SmcEditProfile = (props) => {
   const navigate = useNavigate();
@@ -21,9 +26,14 @@ const SmcEditProfile = (props) => {
 
   const userData = useSelector((state) => state?.smc?.smcProfileData?.data);
   const { councilNames } = useSelector((state) => state.common);
+  const { loginData } = useSelector((state) => state?.loginReducer);
 
   const [emailIDUpdated, setEmailIDUpdated] = useState(false);
   const [successModalPopup, setSuccessModalPopup] = useState(false);
+  const [showOTPPOPUp, setShowOTPPOPUp] = useState(false);
+  const [userRequestData, setUserRequestData] = useState();
+  const [mobileValue, setMobileValue] = useState('');
+  const [userEditData, setData] = useState({ contact: '', type: '', page: '' });
 
   const {
     register,
@@ -56,6 +66,7 @@ const SmcEditProfile = (props) => {
 
   const handleInput = (e) => {
     e.preventDefault();
+    setMobileValue(e.target.value);
     if (e.target.value.length > 0) {
       e.target.value = isNaN(e.target.value)
         ? e.target.value.toString().slice(0, -1)
@@ -94,6 +105,55 @@ const SmcEditProfile = (props) => {
     });
   };
 
+  const handleClose = () => {
+    setShowOTPPOPUp(false);
+  };
+
+  const getOtp = (type) => {
+    if (type === 'sms') {
+      let otpValue = {};
+      otpValue = {
+        contact: getValues().mobile_no,
+        type: 'sms',
+        page: 'editUserDetails',
+        handleClose: handleClose,
+        reSendOTP: getOtp,
+        // setMobileNumberChange: setMobileNumberChange,
+      };
+      setData(otpValue);
+      let sendOTPData = {
+        contact: type === 'sms' ? getValues().mobile_no : '',
+        type: type === 'sms' ? 'sms' : '',
+        user_type: loginData?.data?.user_type,
+        is_registration: true,
+      };
+      dispatch(sendNotificationOtp(sendOTPData)).then((response) => {
+        if (response?.data?.message === 'Success') {
+          let smcUpdatedData = {
+            id: userData?.id,
+            user_id: getValues().user_id,
+            first_name: getValues().first_name,
+            last_name: getValues().last_name,
+            middle_name: getValues().middle_name,
+            state_medical_council: {
+              id: getValues().RegistrationCouncil?.id,
+              code: getValues().RegistrationCouncil?.code,
+              name: getValues().RegistrationCouncil?.name,
+            },
+            ndhm_enrollment: getValues().ndhm_enrollment,
+            enrolled_number: getValues().enrolled_number,
+            display_name: getValues().first_name,
+            email_id: getValues().email_id,
+            mobile_no: getValues().mobile_no,
+          };
+          setUserRequestData(smcUpdatedData);
+          setShowOTPPOPUp(true);
+        } else {
+          successToast(response?.data?.message, 'auth-error', 'error', 'top-center');
+        }
+      });
+    }
+  };
   return (
     <Grid>
       <Grid container spacing={2} mt={2}>
@@ -135,7 +195,13 @@ const SmcEditProfile = (props) => {
           </Typography>
           <Typography component="span" color="error.main">
             *
+            {getValues().mobile_no !== mobileValue || userData?.mobile_no === mobileValue ? (
+              <img width="16px" height="16px" src={IconVerified} alt="verified icon" />
+            ) : (
+              ' '
+            )}
           </Typography>
+
           <TextField
             fullWidth
             required
@@ -151,6 +217,24 @@ const SmcEditProfile = (props) => {
                 message: 'Please enter a valid 10 digit mobile number',
               },
             })}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <Button
+                    disabled={
+                      getValues().mobile_no !== mobileValue ||
+                      getValues().mobile_no.length !== 10 ||
+                      userData?.mobile_no === mobileValue
+                        ? true
+                        : false
+                    }
+                    onClick={() => getOtp('sms')}
+                  >
+                    Verify
+                  </Button>
+                </InputAdornment>
+              ),
+            }}
           />
         </Grid>
 
@@ -261,6 +345,14 @@ const SmcEditProfile = (props) => {
           />
         )}
       </Box>
+      <Dialog
+        maxWidth="sm"
+        scroll="body"
+        open={showOTPPOPUp}
+        PaperProps={{ sx: { borderRadius: '10px' } }}
+      >
+        <ConfirmOTP otpData={userEditData} userRequestData={userRequestData} />
+      </Dialog>
     </Grid>
   );
 };
