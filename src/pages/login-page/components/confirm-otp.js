@@ -339,13 +339,17 @@ const ConfirmOTP = ({
         <SuccessModalPopup
           open={changeUserData}
           setOpen={() => setChangeUserData(false)}
-          text={`Your ${
-            otpData?.page === 'forgetUserName'
-              ? `username is "Anand". Please use this username to login.`
-              : otpData?.type === 'sms'
-              ? 'Mobile Number'
-              : otpData?.type === 'email' && 'Email Address'
-          } has been successfully changed `}
+          text={
+            otpData?.page === 'editUserDetails'
+              ? `Your mobile number has been updated. Please login again with updated details.`
+              : `Your ${
+                  otpData?.page === 'forgetUserName'
+                    ? `username is "Anand". Please use this username to login.`
+                    : otpData?.type === 'sms'
+                    ? 'Mobile Number'
+                    : otpData?.type === 'email' && 'Email Address'
+                } has been successfully changed `
+          }
           changeUserData={changeUserData}
           userLogout={userRequestData ? true : false}
           fetchDoctorUserPersonalDetails={fetchDoctorUserPersonalDetails}
