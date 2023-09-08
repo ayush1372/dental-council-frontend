@@ -4,5 +4,5 @@ RUN mkdir -p /usr/share/nginx/html/nmr/v3
 COPY dist/council-app  /usr/share/nginx/html/nmr/v3
 COPY nginx-sbx.conf /etc/nginx/conf.d/default.conf
 RUN chmod -R 755 /usr/share/nginx
-RUN rm -rf /usr/share/nginx/html/dr/v3/robots.txt /usr/share/nginx/html/dr/v3/manifest.json
+RUN rm -rf /usr/share/nginx/html/nmr/v3/robots.txt /usr/share/nginx/html/nmr/v3/manifest.json
 EXPOSE 80
