@@ -686,7 +686,12 @@ const AdditionalQualifications = () => {
                   // queryRaiseIcon={isEditForm && queryfields.includes(field_names.degree)}
                   error={errors?.speciality?.message}
                   disabled={isEditForm}
-                  {...register('speciality')}
+                  {...register('speciality', {
+                    pattern: {
+                      value: /^[A-Za-z() ]*$/,
+                      message: 'Please enter a valid super speciality',
+                    },
+                  })}
                 />
               ) : (
                 <Select
@@ -703,7 +708,6 @@ const AdditionalQualifications = () => {
                   error={errors?.int_broadSpeciality?.message}
                   {...register('int_broadSpeciality', {
                     required: 'Please select the broad speciality.',
-                    // pattern: { value: /^(\d{4})$/i, message: 'Only numbers are acceptable' },
                   })}
                   MenuProps={menuProps}
                   // options={dummyOptions}
@@ -720,7 +724,12 @@ const AdditionalQualifications = () => {
                   placeholder={'Enter super speciality'}
                   disabled={isEditForm}
                   // queryRaiseIcon={isEditForm && queryfields.includes(field_names.degree)}
-                  {...register('int_superSpeciality', {})}
+                  {...register('int_superSpeciality', {
+                    pattern: {
+                      value: /^[A-Za-z() ]*$/,
+                      message: 'Please enter a valid super speciality',
+                    },
+                  })}
                 />
               </Grid>
             )}
