@@ -257,7 +257,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
     handleNext();
   };
   return (
-    <Box p={3} sx={{ bgcolor:'white.main', boxShadow:'1', borderRadius: '8px' }}>
+    <Box p={3} sx={{ bgcolor: 'white.main', boxShadow: '1', borderRadius: '8px' }}>
       <Typography variant="h2" color="textPrimary.main" mb={2}>
         {loginName} Login
       </Typography>
@@ -368,16 +368,22 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
                   pointerEvents: 'auto !important',
                 },
                 width: '100%',
+                '& .MuiOutlinedInput-root': {
+                  paddingRight: '0px',
+                },
               }}
               error={errors.nmrID?.message}
               InputProps={{
                 endAdornment: (
-                  <InputAdornment position="start" sx={{ mr: 0 }}>
+                  <InputAdornment
+                    position="start"
+                    sx={{ mr: 0, height: 'unset', maxHeight: 'unset' }}
+                  >
                     <Typography
                       variant="body1"
                       bgcolor={theme.palette.secondary.main}
                       sx={{
-                        p: '16px 32px',
+                        p: '11px 24px',
                         borderTopLeftRadius: 0,
                         borderBottomLeftRadius: 0,
                         cursor: 'pointer',

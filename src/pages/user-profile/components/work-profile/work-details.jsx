@@ -657,13 +657,19 @@ const WorkDetails = ({
                     placeholder="Enter facility ID"
                     defaultValue={getValues()?.facilityId}
                     {...register(`facilityId`, {
-                      required: 'Please enter a valid facility ID',
+                      required: 'Please enter a facility ID',
+                      pattern: {
+                        value: /^(?!^\s)[a-zA-Z0-9-]*$/,
+                        message: 'Please enter the valid facility ID',
+                      },
                     })}
                     onChange={(e) => {
-                      if (e.target.value !== '') {
+                      let pattern = /^(?!^\s)[a-zA-Z0-9-]*$/;
+                      if (e.target.value !== '' && pattern.test(e.target.value)) {
                         setFacilityIDError(false);
                         clearErrors('facilityId', '');
                       }
+                      if (!pattern.test(e.target.value)) setFacilityIDError(true);
                     }}
                   />
                 </Box>
@@ -787,7 +793,13 @@ const WorkDetails = ({
                   fullWidth
                   name={'facilityName'}
                   defaultValue={getValues().facilityName}
-                  {...register('facilityName')}
+                  error={errors.facilityName?.message}
+                  {...register('facilityName', {
+                    pattern: {
+                      value: /^(?!^\s)[a-zA-Z']*$/,
+                      message: 'Please enter the valid facility name',
+                    },
+                  })}
                 />
               </Grid>
               <Grid item xs={12} md={3} lg={3} mt={3} display={'flex'}>
@@ -900,6 +912,10 @@ const WorkDetails = ({
                 defaultValue={getValues().workingOrganizationName}
                 {...register('workingOrganizationName', {
                   required: 'Please enter the organisation name',
+                  pattern: {
+                    value: /^(?!^\s)[a-zA-Z0-9-']*$/,
+                    message: 'Please enter the valid organisation name',
+                  },
                   maxLength: {
                     value: 300,
                     message: 'Length should be less than 300.',
@@ -919,6 +935,10 @@ const WorkDetails = ({
                 fullWidth
                 defaultValue={getValues().organizationType}
                 {...register('organizationType', {
+                  pattern: {
+                    value: /^(?!^\s)[a-zA-Z0-9-']*$/,
+                    message: 'Please enter the valid organisation type',
+                  },
                   maxLength: {
                     value: 100,
                     message: 'Please enter the organisation type.',
@@ -969,6 +989,10 @@ const WorkDetails = ({
                 defaultValue={getValues().Street}
                 {...register('Street', {
                   required: 'Please enter the street name',
+                  pattern: {
+                    value: /^(?!^\s)[a-zA-Z0-9-,']*$/,
+                    message: 'Please enter the valid street name',
+                  },
                   maxLength: {
                     value: 300,
                     message: 'Should be less than 300 characters',
