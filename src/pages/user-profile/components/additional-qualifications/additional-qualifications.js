@@ -35,7 +35,7 @@ import {
   getRegistrationDetailsData,
 } from '../../../../store/actions/doctor-user-profile-actions';
 import { changeUserActiveTab } from '../../../../store/reducers/common-reducers';
-import { Button, Select, TextField, UploadFile } from '../../../../ui/core';
+import { Button, DatePicker, Select, TextField, UploadFile } from '../../../../ui/core';
 import { AdditionalQualificationTable } from './additional-qualification-table';
 
 const AdditionalQualifications = () => {
@@ -46,6 +46,7 @@ const AdditionalQualifications = () => {
     collegesList,
     statesList,
     specialitiesList,
+    councilNames,
   } = useSelector((state) => state?.common);
 
   const dispatch = useDispatch();
@@ -171,6 +172,22 @@ const AdditionalQualifications = () => {
     handleResetForm();
   };
 
+  const getRegistrationCouncilData = (RegisteredWithCouncil) => {
+    let councilData = [];
+    councilNames?.map((elementData) => {
+      if (
+        elementData?.id === RegisteredWithCouncil ||
+        elementData?.id === RegisteredWithCouncil ||
+        RegisteredWithCouncil?.id === elementData?.id ||
+        RegisteredWithCouncil?.name === elementData?.name ||
+        RegisteredWithCouncil === elementData?.name
+      ) {
+        councilData.push(elementData);
+      }
+    });
+    return councilData[0];
+  };
+
   const handleOnSubmit = () => {
     const formData = new FormData();
     let qualification_detail_response_tos = [],
@@ -206,6 +223,9 @@ const AdditionalQualifications = () => {
         ? getValues()?.int_superSpeciality
         : getValues()?.speciality,
       qualification_from: qualificationFrom,
+      registration_date: getValues()?.registrationDate,
+      registration_number: getValues()?.registrationNumber,
+      state_medical_council: getRegistrationCouncilData(getValues()?.RegisteredWithCouncil),
     };
     updatedQualificationDetailsArray.push(updatedQualificationDetails);
 
@@ -388,6 +408,74 @@ const AdditionalQualifications = () => {
               </RadioGroup>
             </FormControl>
           </Box>
+          <Grid container item spacing={2}>
+            <Grid item xs={12} lg={4}>
+              <Select
+                fullWidth
+                label={'Registered Council Name'}
+                name="RegisteredWithCouncil"
+                required={true}
+                disabled={isEditForm && !queryfields.includes(field_names.RegisteredWithCouncil)}
+                placeholder={'Select degree'}
+                {...register('RegisteredWithCouncil')}
+                options={createSelectFieldData(councilNames)}
+                MenuProps={{
+                  style: {
+                    maxHeight: 250,
+                    maxWidth: 130,
+                  },
+                }}
+              />
+            </Grid>
+            <Grid item xs={12} lg={4}>
+              <TextField
+                fullWidth
+                required
+                name="registrationNumber"
+                label="Registration Number"
+                placeholder={'Enter registration number'}
+                queryRaiseIcon={isEditForm && queryfields.includes(field_names.registrationNumber)}
+                disabled={isEditForm && !queryfields.includes(field_names.registrationNumber)}
+                toolTipData={isEditForm && getQueryTooltip(field_names.registrationNumber)}
+                error={errors?.registrationNumber?.message}
+                {...register('registrationNumber', {
+                  required: 'Please enter the registration number.',
+                })}
+              />
+            </Grid>
+            <Grid item xs={12} lg={4}>
+              <Typography variant="subtitle2" color="inputTextColor.main">
+                Registration Date
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
+              </Typography>
+              <DatePicker
+                onChangeDate={(newDateValue) => {
+                  setValue('registrationDate', new Date(newDateValue)?.toLocaleDateString('en-GB'));
+                  clearErrors('registrationDate', '');
+                }}
+                data-testid="RegistrationDate"
+                id="RegistrationDate"
+                name={'RegistrationDate'}
+                required={true}
+                defaultValue={
+                  getValues()?.registrationDate
+                    ? new Date(getValues()?.registrationDate)
+                    : undefined
+                }
+                error={errors?.registrationDate?.message}
+                {...register(
+                  'registrationDate',
+                  getValues().registrationDate === undefined ||
+                    getValues().registrationDate === 'Invalid Date'
+                    ? { required: 'Please select a valid date' }
+                    : { required: false }
+                )}
+                disableFuture
+              />
+            </Grid>
+          </Grid>
           <Grid container spacing={2} mb={2}>
             <Grid item xs={12} lg={4}>
               <Select
