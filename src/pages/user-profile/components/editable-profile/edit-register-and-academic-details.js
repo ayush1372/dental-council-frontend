@@ -76,6 +76,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   const [registrationFileUpdated, setRegistrationFileUpdated] = useState(false);
   const [nameChangeFileUpdated, setNameChangedFileUpdated] = useState(false);
   const [qualificationFileUpdated, setQualificationFileUpdated] = useState(false);
+  const [qualificationFilesNameChangeData, setQualificationFilesNameChangeData] = useState([]);
+  const [qualificationNameChangeFileUpdated, setQualificationNameChangeFileUpdated] =
+    useState(false);
 
   const [viewCertificate] = useState({
     registration: registration_certificate,
@@ -129,7 +132,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           : '',
       registrationCertificate:
         loggedInUserType === 'SMC' ? 'No' : loggedInUserType === 'Doctor' ? is_name_change : '',
-      nameChangeCertificate: '',
+      proofOfRegistrationNameChange: '',
       qualification: [...qualificationObjTemplate],
     },
   });
@@ -268,7 +271,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
     if (qualificationFileUpdated) formData.append('degreeCertificate', qualificationFile);
     if (registrationFileUpdated) formData.append('registrationCertificate', registrationFile);
-    if (nameChangeFileUpdated) formData.append('nameChangeCertificate', nameChangeFile);
+    if (nameChangeFileUpdated) formData.append('proofOfRegistrationNameChange', nameChangeFile);
+    if (qualificationNameChangeFileUpdated)
+      formData.append('proofOfQualificationNameChange', qualificationNameChangeFileUpdated);
 
     dispatch(
       updateDoctorRegistrationDetails(
@@ -315,8 +320,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
   useEffect(() => {
     if (nameChangeFileData?.length > 0) {
-      setValue('registrationCertificate', nameChangeFileData);
-      clearErrors('registrationCertificate', '');
+      setValue('proofOfRegistrationNameChange', nameChangeFileData);
+      clearErrors('proofOfRegistrationNameChange', '');
       if (nameChangeFileData[0]?.fileName !== undefined) {
         setNameChangedFileUpdated(true);
       } else {
@@ -324,7 +329,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
       }
     }
     if (nameChangeFileData?.length === 0) {
-      setValue('registrationCertificate', []);
+      setValue('proofOfRegistrationNameChange', []);
     }
   }, [nameChangeFileData]);
 
@@ -386,10 +391,28 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     if (files?.length === 0) {
       setQualificationFilesData([]);
       setValue('qualificationCertificate', []);
-      setValue('diffaadharCertificate', []);
     }
   };
 
+  const handleQualificationNmeChangeFilesData = (fileName, files) => {
+    // eslint-disable-next-line no-console
+    console.log('fileName 1234', fileName, files);
+    qualificationFilesNameChangeData[fileName] = files;
+    // eslint-disable-next-line no-console
+    console.log('fileName 9876', qualificationFilesNameChangeData);
+    setQualificationFilesNameChangeData(qualificationFilesNameChangeData);
+    if (files?.length > 0) {
+      if (files[0]?.fileName !== undefined) {
+        setQualificationNameChangeFileUpdated(true);
+      } else {
+        setQualificationNameChangeFileUpdated(false);
+      }
+    }
+    if (files?.length === 0) {
+      setQualificationFilesNameChangeData([]);
+      setValue('proofOfQualificationNameChange', []);
+    }
+  };
   //Helper Method to get the data of the query raised against the field
   const getQueryRaised = (fieldName) => {
     let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
@@ -810,8 +833,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 fileData={nameChangeFileData}
                 clearErrors={clearErrors}
                 setError={setError}
-                name={'nameChangeCertificate'}
-                isError={errors.nameChangeCertificate?.message}
+                name={'proofOfRegistrationNameChange'}
+                isError={errors.proofOfRegistrationNameChange?.message}
                 setFileData={setNameChangeFileData}
                 uploadFileLabel="Upload Proof Of Name Change"
                 fileName={file_name + '.' + file_type}
@@ -824,7 +847,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 // }
                 toolTipData={getQueryRaisedComment('Upload the name change certificate')}
                 {...register(
-                  'nameChangeCertificate'
+                  'proofOfRegistrationNameChange'
                   // nameChangeFileData?.length === 0 && {
                   //   required: 'Please upload the name change certificate.',
                   // }
@@ -863,7 +886,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               register={register}
               unregister={unregister}
               qualificationFilesData={qualificationFilesData}
+              qualificationFilesNameChangeData={qualificationFilesNameChangeData}
               handleQualificationFilesData={handleQualificationFilesData}
+              handleQualificationNmeChangeFilesData={handleQualificationNmeChangeFilesData}
               fileName={
                 qualification_detail_response_tos?.[index]?.file_name +
                 '.' +

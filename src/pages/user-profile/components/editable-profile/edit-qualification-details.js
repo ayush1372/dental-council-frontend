@@ -29,8 +29,10 @@ const EditQualificationDetails = ({
   isVerified,
   qualification,
   qualificationFilesData,
+  qualificationFilesNameChangeData,
   isAdditionalQualification,
   handleQualificationFilesData,
+  handleQualificationNmeChangeFilesData,
   showBroadSpeciality = false,
 }) => {
   const dispatch = useDispatch();
@@ -179,12 +181,15 @@ const EditQualificationDetails = ({
     }
   }, [qualificationFilesData[`qualification.${index}.files`]]);
 
-  // useEffect(() => {
-  //   if (NameChangeFilesData[`qualification.${index}.files`]?.length > 0) {
-  //     clearErrors('qualificationCertificate', '');
-  //     setValue('qualificationCertificate', qualificationFilesData[`qualification.${index}.files`]);
-  //   }
-  // }, [qualificationFilesData[`qualification.${index}.files`]]);
+  useEffect(() => {
+    if (qualificationFilesNameChangeData[`qualification.${index}.diffadharfiles`]?.length > 0) {
+      clearErrors('qualificationCertificate', '');
+      setValue(
+        'qualificationCertificate',
+        qualificationFilesNameChangeData[`qualification.${index}.diffadharfiles`]
+      );
+    }
+  }, [qualificationFilesNameChangeData[`qualification.${index}.diffadharfiles`]]);
 
   return (
     <>
@@ -1150,39 +1155,63 @@ const EditQualificationDetails = ({
         <Grid item xs={12}>
           {diffadharcertificate === '0' && (
             <UploadFile
-              // queryRaiseIcon={
-              //   getQueryRaised('Upload the registration certificate') === false ? true : false
+              // uploadDisabled={
+              //   getQueryRaised('Upload Qualification Name Change Certificate') === false
+              //     ? false
+              //     : work_flow_status_id === 3
+              //     ? getQueryRaised('Upload Qualification Name Change Certificate')
+              //     : isVerified === 1
+              //     ? true
+              //     : false
               // }
+              // queryRaiseIcon={
+              //   getQueryRaised('Upload Qualification Name Change Certificate') === false
+              //     ? true
+              //     : false
+              // }
+              toolTipData={getQueryRaisedComment('Upload Qualification Name Change Certificate')}
               fileID={'diffDegreeCertificate'}
               uploadFiles="single"
               sizeAllowed={5}
               fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
               fileMessage={`PDF, PNG, JPG, JPEG file types are supported.
-               Maximum size allowed is 5MB.`}
-              fileData={qualificationFilesData[`qualification.${index}.diffadharfiles`] || []}
-              clearErrors={clearErrors}
-              setError={setError}
-              name={'diffaadharCertificate'}
-              isError={errors.diffaadharCertificate?.message}
-              setFileData={(files) => {
-                handleQualificationFilesData(`qualification.${index}.diffadharfiles`, files);
-              }}
-              uploadFileLabel="Upload Proof Of Name Change"
-              // fileName={file_name + '.' + file_type}
-              fileDisabled={
-                getQueryRaised('Upload the registration certificate') === false
-                  ? false
-                  : work_flow_status_id === 3
-                  ? getQueryRaised('Upload the registration certificate')
-                  : false
+                 Maximum size allowed is 5MB.`}
+              fileData={
+                qualificationFilesNameChangeData[`qualification.${index}.diffadharfiles`] || []
               }
-              toolTipData={getQueryRaisedComment('Upload the registration certificate')}
+              setFileData={(files) => {
+                handleQualificationNmeChangeFilesData(
+                  `qualification.${index}.diffadharfiles`,
+                  files
+                );
+              }}
+              fileName={fileName || ''}
+              isDigiLockcerVisible={true}
+              uploadFileLabel="Upload Qualification Name Change Certificate"
+              Upload
+              Qualification
+              // fileDisabled={
+              //   getQueryRaised('Upload Qualification Certificate') === false
+              //     ? false
+              //     : work_flow_status_id === 3
+              //     ? getQueryRaised('Upload Qualification Certificate')
+              //     : isVerified === 1
+              //     ? true
+              //     : false
+              // }
               {...register(
-                'diffaadharCertificate'
-                //   registrationFileData?.length === 0 && {
-                //   required: 'Please upload the registration certificate.',
+                'proofOfQualificationNameChange'
+                // (qualificationFilesNameChangeData[`qualification.${index}.diffadharfiles`]
+                //   ?.length === 0 ||
+                //   qualificationFilesNameChangeData[`qualification.${index}.diffadharfiles`] ===
+                //     undefined) && {
+                //   required: 'Please upload the qualification certificate.',
                 // }
               )}
+              setError={setError}
+              clearErrors={clearErrors}
+              name={'proofOfQualificationNameChange'}
+              isError={errors.proofOfQualificationNameChange?.message}
             />
           )}
         </Grid>
