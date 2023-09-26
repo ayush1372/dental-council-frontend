@@ -82,6 +82,7 @@ const EditQualificationDetails = ({
   const noPointer = { cursor: 'pointer' };
 
   const qualificationfrom = watch(`qualification[${index}].qualificationfrom`);
+  const diffadharcertificate = watch(`qualification[${index}].diffadharcertificate`);
   const watchCollege = watch(`qualification[${index}].college`);
   const selectedState = watch(`qualification[${index}].state`);
   const selectedYear = watch(`qualification[${index}].year`);
@@ -177,6 +178,13 @@ const EditQualificationDetails = ({
       setValue('qualificationCertificate', qualificationFilesData[`qualification.${index}.files`]);
     }
   }, [qualificationFilesData[`qualification.${index}.files`]]);
+
+  // useEffect(() => {
+  //   if (NameChangeFilesData[`qualification.${index}.files`]?.length > 0) {
+  //     clearErrors('qualificationCertificate', '');
+  //     setValue('qualificationCertificate', qualificationFilesData[`qualification.${index}.files`]);
+  //   }
+  // }, [qualificationFilesData[`qualification.${index}.files`]]);
 
   return (
     <>
@@ -1101,6 +1109,82 @@ const EditQualificationDetails = ({
             name={'qualificationCertificate'}
             isError={errors.qualificationCertificate?.message}
           />
+        </Grid>
+      </Grid>
+      <Grid container item spacing={2} mt={1}>
+        <Grid item xs={12}>
+          <Typography variant="subtitle2" color="inputTextColor.main">
+            Is your name in degree, different from your name in Aadhaar?
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
+            {getQueryRaised('Registration') === false && (
+              <Tooltip title={getQueryRaisedComment('Registration')}>
+                <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
+              </Tooltip>
+            )}
+          </Typography>
+
+          <RadioGroup
+            //onChange={handleRegistration}
+            name={`qualification[${index}].diffadharcertificate`}
+            size="small"
+            // defaultValue={getValues().registrationdegree}
+            items={[
+              {
+                value: '0',
+                label: 'Yes',
+              },
+              {
+                value: '1',
+                label: 'No',
+              },
+            ]}
+            {...register(`qualification[${index}].diffadharcertificate`)}
+
+            // disabled={work_flow_status_id === 3 ? getQueryRaised('Registration') : false}
+          />
+        </Grid>
+      </Grid>
+      <Grid container item spacing={2} mt={1}>
+        <Grid item xs={12}>
+          {diffadharcertificate === '0' && (
+            <UploadFile
+              // queryRaiseIcon={
+              //   getQueryRaised('Upload the registration certificate') === false ? true : false
+              // }
+              fileID={'diffDegreeCertificate'}
+              uploadFiles="single"
+              sizeAllowed={5}
+              fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
+              fileMessage={`PDF, PNG, JPG, JPEG file types are supported.
+               Maximum size allowed is 5MB.`}
+              fileData={qualificationFilesData[`qualification.${index}.diffadharfiles`] || []}
+              clearErrors={clearErrors}
+              setError={setError}
+              name={'diffaadharCertificate'}
+              isError={errors.diffaadharCertificate?.message}
+              setFileData={(files) => {
+                handleQualificationFilesData(`qualification.${index}.diffadharfiles`, files);
+              }}
+              uploadFileLabel="Upload Proof Of Name Change"
+              // fileName={file_name + '.' + file_type}
+              fileDisabled={
+                getQueryRaised('Upload the registration certificate') === false
+                  ? false
+                  : work_flow_status_id === 3
+                  ? getQueryRaised('Upload the registration certificate')
+                  : false
+              }
+              toolTipData={getQueryRaisedComment('Upload the registration certificate')}
+              {...register(
+                'diffaadharCertificate'
+                //   registrationFileData?.length === 0 && {
+                //   required: 'Please upload the registration certificate.',
+                // }
+              )}
+            />
+          )}
         </Grid>
       </Grid>
     </>
