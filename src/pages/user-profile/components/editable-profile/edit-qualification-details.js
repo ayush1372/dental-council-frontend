@@ -81,9 +81,6 @@ const EditQualificationDetails = ({
     dispatch(selectedQualificationType(event.target.value));
   };
   const handleQualificationCertificateFrom = (event) => {
-    // setValue(`qualification`, [...qualificationObjTemplate]);
-    // handleQualificationFilesData(`qualification.${index}.files`, '');
-    // clearErrors(`qualification`);
     setValue(event.target.name, event.target.value);
   };
 
@@ -1134,7 +1131,6 @@ const EditQualificationDetails = ({
           </Typography>
 
           <RadioGroup
-            //onChange={handleRegistration}
             name={`qualification[${index}].diffadharcertificate`}
             size="small"
             defaultValue={
@@ -1142,7 +1138,6 @@ const EditQualificationDetails = ({
                 ? '0'
                 : '1'
             }
-            // defaultValue={diffadharcertificate !== '0' ? '1' : qualification?.diffadharcertificate}
             items={[
               {
                 value: '0',
@@ -1195,7 +1190,6 @@ const EditQualificationDetails = ({
                 );
               }}
               fileName={fileName || ''}
-              // isDigiLockcerVisible={false}
               uploadFileLabel="Upload qualification name change certificate"
               Upload
               Qualification
@@ -1208,15 +1202,7 @@ const EditQualificationDetails = ({
                   ? true
                   : false
               }
-              {...register(
-                'proofOfQualificationNameChange'
-                // (qualificationFilesNameChangeData[`qualification.${index}.diffadharfiles`]
-                //   ?.length === 0 ||
-                //   qualificationFilesNameChangeData[`qualification.${index}.diffadharfiles`] ===
-                //     undefined) && {
-                //   required: 'Please upload the qualification certificate.',
-                // }
-              )}
+              {...register('proofOfQualificationNameChange')}
               setError={setError}
               clearErrors={clearErrors}
               name={'proofOfQualificationNameChange'}
