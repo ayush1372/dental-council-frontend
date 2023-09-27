@@ -34,6 +34,7 @@ const qualificationObjTemplate = [
     FEstate: '',
     FEcollege: '',
     FEuniversity: '',
+    diffadharfiles: '',
   },
 ];
 
@@ -64,15 +65,30 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     file_name,
     file_type,
   } = registration_detail_to || {};
-  const { degree_certificate } = qualification_detail_response_tos?.[0] || {};
+  const { degree_certificate, name_change_proof_attach } =
+    qualification_detail_response_tos?.[0] || {};
+
   const [registrationFileData, setRegistrationFileData] = useState(
     registration_certificate ? [{ file: registration_certificate }] : []
+  );
+  const [nameChangeFileData, setNameChangeFileData] = useState(
+    registration_detail_to?.name_change_proof_attach
+      ? [{ file: registration_detail_to?.name_change_proof_attach }]
+      : []
   );
   const [qualificationFilesData, setQualificationFilesData] = useState({
     'qualification.0.files': degree_certificate ? [{ file: degree_certificate }] : [],
   });
   const [registrationFileUpdated, setRegistrationFileUpdated] = useState(false);
+  const [nameChangeFileUpdated, setNameChangedFileUpdated] = useState(false);
   const [qualificationFileUpdated, setQualificationFileUpdated] = useState(false);
+  const [qualificationFilesNameChangeData, setQualificationFilesNameChangeData] = useState({
+    'qualification.0.diffadharfiles': name_change_proof_attach
+      ? [{ file: name_change_proof_attach }]
+      : [],
+  });
+  const [qualificationNameChangeFileUpdated, setQualificationNameChangeFileUpdated] =
+    useState(false);
 
   const [viewCertificate] = useState({
     registration: registration_certificate,
@@ -117,6 +133,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           : '',
 
       registration: loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? is_renewable : '',
+      registrationname: '1',
       RenewalDate:
         loggedInUserType === 'SMC' || loggedInUserType === 'Doctor'
           ? renewable_registration_date?.length > 10
@@ -125,6 +142,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           : '',
       registrationCertificate:
         loggedInUserType === 'SMC' ? 'No' : loggedInUserType === 'Doctor' ? is_name_change : '',
+      proofOfRegistrationNameChange: '',
       qualification: [...qualificationObjTemplate],
     },
   });
@@ -134,6 +152,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   });
 
   watch('registration');
+  watch('registrationname');
   //const isRenewable = watch('registration');
 
   const getRegistrationCouncilData = (RegisteredWithCouncil) => {
@@ -252,12 +271,20 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     });
 
     const registrationFile = registrationFileData[0]?.file;
+    const nameChangeFile = nameChangeFileData[0]?.file;
+
     const qualificationFile = Object.values(qualificationFilesData)[0]?.[0]?.file;
 
     formData.append('data', doctorRegistrationDetailsBlob);
 
     if (qualificationFileUpdated) formData.append('degreeCertificate', qualificationFile);
     if (registrationFileUpdated) formData.append('registrationCertificate', registrationFile);
+    if (nameChangeFileUpdated) formData.append('proofOfRegistrationNameChange', nameChangeFile);
+    if (qualificationNameChangeFileUpdated)
+      formData.append(
+        'proofOfQualificationNameChange',
+        qualificationFilesNameChangeData[`qualification.${0}.diffadharfiles`]?.[0]?.file
+      );
 
     dispatch(
       updateDoctorRegistrationDetails(
@@ -301,6 +328,21 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
       setValue('registrationCertificate', []);
     }
   }, [registrationFileData]);
+
+  useEffect(() => {
+    if (nameChangeFileData?.length > 0) {
+      setValue('proofOfRegistrationNameChange', nameChangeFileData);
+      clearErrors('proofOfRegistrationNameChange', '');
+      if (nameChangeFileData[0]?.fileName !== undefined) {
+        setNameChangedFileUpdated(true);
+      } else {
+        setNameChangedFileUpdated(false);
+      }
+    }
+    if (nameChangeFileData?.length === 0) {
+      setValue('proofOfRegistrationNameChange', []);
+    }
+  }, [nameChangeFileData]);
 
   const CloseAttachmentPopup = () => {
     setAttachmentViewProfile(false);
@@ -361,6 +403,22 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     }
   };
 
+  const handleQualificationNmeChangeFilesData = (fileName, files) => {
+    if (files?.length > 0) {
+      qualificationFilesNameChangeData[fileName] = files;
+      setQualificationFilesNameChangeData({ ...qualificationFilesNameChangeData });
+
+      if (files[0]?.fileName !== undefined) {
+        setQualificationNameChangeFileUpdated(true);
+      } else {
+        setQualificationNameChangeFileUpdated(false);
+      }
+    }
+    if (files?.length === 0) {
+      setQualificationFilesNameChangeData([]);
+      setValue('proofOfQualificationNameChange', []);
+    }
+  };
   //Helper Method to get the data of the query raised against the field
   const getQueryRaised = (fieldName) => {
     let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
@@ -577,7 +635,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
             </Typography>
 
             <RadioGroup
-              //onChange={handleRegistration}
               name={'registration'}
               size="small"
               defaultValue={is_renewable !== undefined ? is_renewable : '0'}
@@ -714,6 +771,105 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
         </Grid>
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12}>
+            <Typography variant="subtitle2" color="inputTextColor.main">
+              Is your name in registration certificate, different from your name in Aadhaar?
+              {getQueryRaised('Registration') === false && (
+                <Tooltip title={getQueryRaisedComment('Registration')}>
+                  <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
+                </Tooltip>
+              )}
+            </Typography>
+
+            <RadioGroup
+              //onChange={handleRegistration}
+              name={'registrationname'}
+              size="small"
+              defaultValue={
+                registration_detail_to?.name_change_proof_attach
+                  ? '0'
+                  : getValues().registrationname
+              }
+              items={[
+                {
+                  value: '0',
+                  label: 'Yes',
+                },
+                {
+                  value: '1',
+                  label: 'No',
+                },
+              ]}
+              {...register('registrationname')}
+              disabled={
+                getQueryRaised('registrationname') === false
+                  ? false
+                  : hp_profile_status_id === 3
+                  ? getQueryRaised('registrationname')
+                  : hp_profile_status_id === 2
+                  ? true
+                  : !personalDetails?.personal_details?.is_new
+                  ? true
+                  : false
+              }
+              // disabled={work_flow_status_id === 3 ? getQueryRaised('Registration') : false}
+            />
+          </Grid>
+        </Grid>
+        <Grid container item spacing={2} mt={1}>
+          <Grid item xs={12}>
+            {getValues().registrationname === '0' && (
+              <UploadFile
+                uploadDisabled={
+                  getQueryRaised('Upload the registration name change certificate') === false
+                    ? false
+                    : hp_profile_status_id === 3
+                    ? getQueryRaised('Upload the registration name change certificate')
+                    : hp_profile_status_id === 2
+                    ? true
+                    : false
+                }
+                queryRaiseIcon={
+                  getQueryRaised('Upload the registration name change certificate') === false
+                    ? true
+                    : false
+                }
+                fileID={'nameChangeFileData'}
+                uploadFiles="single"
+                sizeAllowed={5}
+                fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
+                fileMessage={`Upload copy of Gazette of India / other legal documents where your name change is reflected.
+                                Max Allowed File Size 5 MB. (Allowed Formats : PDF, PNG, JPEG, JPG)`}
+                fileData={nameChangeFileData}
+                clearErrors={clearErrors}
+                setError={setError}
+                name={'proofOfRegistrationNameChange'}
+                isError={errors.proofOfRegistrationNameChange?.message}
+                setFileData={setNameChangeFileData}
+                uploadFileLabel="Upload Proof Of Name Change"
+                fileName={file_name + '.' + file_type}
+                fileDisabled={
+                  getQueryRaised('Upload the registration name change certificate') === false
+                    ? false
+                    : work_flow_status_id === 3
+                    ? getQueryRaised('Upload the registration name change certificate')
+                    : false
+                }
+                toolTipData={getQueryRaisedComment(
+                  'Upload the registration name change certificate'
+                )}
+                {...register(
+                  'proofOfRegistrationNameChange'
+                  // nameChangeFileData?.length === 0 && {
+                  //   required: 'Please upload the name change certificate.',
+                  // }
+                )}
+              />
+            )}
+          </Grid>
+        </Grid>
+
+        <Grid container item spacing={2} mt={1}>
+          <Grid item xs={12}>
             <Typography
               bgcolor="grey1.light"
               p={1}
@@ -741,7 +897,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               register={register}
               unregister={unregister}
               qualificationFilesData={qualificationFilesData}
+              qualificationFilesNameChangeData={qualificationFilesNameChangeData}
               handleQualificationFilesData={handleQualificationFilesData}
+              handleQualificationNmeChangeFilesData={handleQualificationNmeChangeFilesData}
               fileName={
                 qualification_detail_response_tos?.[index]?.file_name +
                 '.' +

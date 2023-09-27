@@ -29,8 +29,10 @@ const EditQualificationDetails = ({
   isVerified,
   qualification,
   qualificationFilesData,
+  qualificationFilesNameChangeData,
   isAdditionalQualification,
   handleQualificationFilesData,
+  handleQualificationNmeChangeFilesData,
   showBroadSpeciality = false,
 }) => {
   const dispatch = useDispatch();
@@ -78,10 +80,14 @@ const EditQualificationDetails = ({
     setValue(event.target.name, event.target.value);
     dispatch(selectedQualificationType(event.target.value));
   };
+  const handleQualificationCertificateFrom = (event) => {
+    setValue(event.target.name, event.target.value);
+  };
 
   const noPointer = { cursor: 'pointer' };
 
   const qualificationfrom = watch(`qualification[${index}].qualificationfrom`);
+  const diffadharcertificate = watch(`qualification[${index}].diffadharcertificate`);
   const watchCollege = watch(`qualification[${index}].college`);
   const selectedState = watch(`qualification[${index}].state`);
   const selectedYear = watch(`qualification[${index}].year`);
@@ -177,6 +183,16 @@ const EditQualificationDetails = ({
       setValue('qualificationCertificate', qualificationFilesData[`qualification.${index}.files`]);
     }
   }, [qualificationFilesData[`qualification.${index}.files`]]);
+
+  useEffect(() => {
+    if (qualificationFilesNameChangeData[`qualification.${index}.diffadharfiles`]?.length > 0) {
+      clearErrors('qualificationCertificate', '');
+      setValue(
+        'qualificationCertificate',
+        qualificationFilesNameChangeData[`qualification.${index}.diffadharfiles`]
+      );
+    }
+  }, [qualificationFilesNameChangeData[`qualification.${index}.diffadharfiles`]]);
 
   return (
     <>
@@ -1101,6 +1117,98 @@ const EditQualificationDetails = ({
             name={'qualificationCertificate'}
             isError={errors.qualificationCertificate?.message}
           />
+        </Grid>
+      </Grid>
+      <Grid container item spacing={2} mt={1}>
+        <Grid item xs={12}>
+          <Typography variant="subtitle2" color="inputTextColor.main">
+            Is your name in degree, different from your name in Aadhaar?
+            {getQueryRaised('Registration') === false && (
+              <Tooltip title={getQueryRaisedComment('Registration')}>
+                <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
+              </Tooltip>
+            )}
+          </Typography>
+
+          <RadioGroup
+            name={`qualification[${index}].diffadharcertificate`}
+            size="small"
+            defaultValue={
+              qualificationFilesNameChangeData[`qualification.${index}.diffadharfiles`]?.length > 0
+                ? '0'
+                : '1'
+            }
+            items={[
+              {
+                value: '0',
+                label: 'Yes',
+              },
+              {
+                value: '1',
+                label: 'No',
+              },
+            ]}
+            onChange={handleQualificationCertificateFrom}
+            {...register(`qualification[${index}].diffadharcertificate`)}
+
+            // disabled={work_flow_status_id === 3 ? getQueryRaised('Registration') : false}
+          />
+        </Grid>
+      </Grid>
+      <Grid container item spacing={2} mt={1}>
+        <Grid item xs={12}>
+          {diffadharcertificate === '0' && (
+            <UploadFile
+              uploadDisabled={
+                getQueryRaised('Upload qualification name change certificate') === false
+                  ? false
+                  : work_flow_status_id === 3
+                  ? getQueryRaised('Upload qualification name change certificate')
+                  : isVerified === 1
+                  ? true
+                  : false
+              }
+              queryRaiseIcon={
+                getQueryRaised('Upload qualification name change certificate') === false
+                  ? true
+                  : false
+              }
+              toolTipData={getQueryRaisedComment('Upload qualification name change certificate')}
+              fileID={'diffDegreeCertificate'}
+              uploadFiles="single"
+              sizeAllowed={5}
+              fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
+              fileMessage={`PDF, PNG, JPG, JPEG file types are supported.
+                 Maximum size allowed is 5MB.`}
+              fileData={
+                qualificationFilesNameChangeData[`qualification.${index}.diffadharfiles`] || []
+              }
+              setFileData={(files) => {
+                handleQualificationNmeChangeFilesData(
+                  `qualification.${index}.diffadharfiles`,
+                  files
+                );
+              }}
+              fileName={fileName || ''}
+              uploadFileLabel="Upload qualification name change certificate"
+              Upload
+              Qualification
+              fileDisabled={
+                getQueryRaised('Upload qualification name change certificate') === false
+                  ? false
+                  : work_flow_status_id === 3
+                  ? getQueryRaised('Upload qualification name change certificate')
+                  : isVerified === 1
+                  ? true
+                  : false
+              }
+              {...register('proofOfQualificationNameChange')}
+              setError={setError}
+              clearErrors={clearErrors}
+              name={'proofOfQualificationNameChange'}
+              isError={errors.proofOfQualificationNameChange?.message}
+            />
+          )}
         </Grid>
       </Grid>
     </>
