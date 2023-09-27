@@ -188,10 +188,6 @@ const EditQualificationDetails = ({
   }, [qualificationFilesData[`qualification.${index}.files`]]);
 
   useEffect(() => {
-    // eslint-disable-next-line no-console
-    console.log('[qualificationFilesNameChangeData[`qualification.${index}.diffadharfiles`]', [
-      qualificationFilesNameChangeData[`qualification.${index}.diffadharfiles`],
-    ]);
     if (qualificationFilesNameChangeData[`qualification.${index}.diffadharfiles`]?.length > 0) {
       clearErrors('qualificationCertificate', '');
       setValue(

@@ -273,8 +273,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
     const registrationFile = registrationFileData[0]?.file;
     const nameChangeFile = nameChangeFileData[0]?.file;
-    // eslint-disable-next-line no-console
-    console.log('nameChangeFile', nameChangeFile);
+
     const qualificationFile = Object.values(qualificationFilesData)[0]?.[0]?.file;
 
     formData.append('data', doctorRegistrationDetailsBlob);
@@ -391,8 +390,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   }, [registrationDetails]);
 
   const handleQualificationFilesData = (fileName, files) => {
-    // eslint-disable-next-line no-console
-    console.log('fileName,files', fileName, files);
     qualificationFilesData[fileName] = files;
     setQualificationFilesData({ ...qualificationFilesData });
     if (files?.length > 0) {
@@ -409,10 +406,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   };
 
   const handleQualificationNmeChangeFilesData = (fileName, files) => {
-    // eslint-disable-next-line no-console
-    console.log('fileName 1234', fileName, files);
-    // eslint-disable-next-line no-console
-    console.log('fileName 9876', { ...qualificationFilesNameChangeData });
     if (files?.length > 0) {
       qualificationFilesNameChangeData[fileName] = files;
       setQualificationFilesNameChangeData({ ...qualificationFilesNameChangeData });
