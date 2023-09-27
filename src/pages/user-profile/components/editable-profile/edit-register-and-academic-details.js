@@ -65,18 +65,28 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     file_name,
     file_type,
   } = registration_detail_to || {};
-  const { degree_certificate } = qualification_detail_response_tos?.[0] || {};
+  const { degree_certificate, name_change_proof_attach } =
+    qualification_detail_response_tos?.[0] || {};
+
   const [registrationFileData, setRegistrationFileData] = useState(
     registration_certificate ? [{ file: registration_certificate }] : []
   );
-  const [nameChangeFileData, setNameChangeFileData] = useState([]);
+  const [nameChangeFileData, setNameChangeFileData] = useState(
+    registration_detail_to?.name_change_proof_attach
+      ? [{ file: registration_detail_to?.name_change_proof_attach }]
+      : []
+  );
   const [qualificationFilesData, setQualificationFilesData] = useState({
     'qualification.0.files': degree_certificate ? [{ file: degree_certificate }] : [],
   });
   const [registrationFileUpdated, setRegistrationFileUpdated] = useState(false);
   const [nameChangeFileUpdated, setNameChangedFileUpdated] = useState(false);
   const [qualificationFileUpdated, setQualificationFileUpdated] = useState(false);
-  const [qualificationFilesNameChangeData, setQualificationFilesNameChangeData] = useState([]);
+  const [qualificationFilesNameChangeData, setQualificationFilesNameChangeData] = useState({
+    'qualification.0.diffadharfiles': name_change_proof_attach
+      ? [{ file: name_change_proof_attach }]
+      : [],
+  });
   const [qualificationNameChangeFileUpdated, setQualificationNameChangeFileUpdated] =
     useState(false);
 
@@ -787,7 +797,11 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               //onChange={handleRegistration}
               name={'registrationname'}
               size="small"
-              defaultValue={getValues().registrationname}
+              defaultValue={
+                registration_detail_to?.name_change_proof_attach
+                  ? '0'
+                  : getValues().registrationname
+              }
               items={[
                 {
                   value: '0',

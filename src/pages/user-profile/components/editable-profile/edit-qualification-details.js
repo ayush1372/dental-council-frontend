@@ -1144,7 +1144,12 @@ const EditQualificationDetails = ({
             //onChange={handleRegistration}
             name={`qualification[${index}].diffadharcertificate`}
             size="small"
-            defaultValue={diffadharcertificate !== '0' ? '1' : qualification?.diffadharcertificate}
+            defaultValue={
+              qualificationFilesNameChangeData[`qualification.${index}.diffadharfiles`]?.length > 0
+                ? '0'
+                : '1'
+            }
+            // defaultValue={diffadharcertificate !== '0' ? '1' : qualification?.diffadharcertificate}
             items={[
               {
                 value: '0',
