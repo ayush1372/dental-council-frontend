@@ -80,6 +80,12 @@ const EditQualificationDetails = ({
     setValue(event.target.name, event.target.value);
     dispatch(selectedQualificationType(event.target.value));
   };
+  const handleQualificationCertificateFrom = (event) => {
+    // setValue(`qualification`, [...qualificationObjTemplate]);
+    // handleQualificationFilesData(`qualification.${index}.files`, '');
+    // clearErrors(`qualification`);
+    setValue(event.target.name, event.target.value);
+  };
 
   const noPointer = { cursor: 'pointer' };
 
@@ -182,6 +188,10 @@ const EditQualificationDetails = ({
   }, [qualificationFilesData[`qualification.${index}.files`]]);
 
   useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.log('[qualificationFilesNameChangeData[`qualification.${index}.diffadharfiles`]', [
+      qualificationFilesNameChangeData[`qualification.${index}.diffadharfiles`],
+    ]);
     if (qualificationFilesNameChangeData[`qualification.${index}.diffadharfiles`]?.length > 0) {
       clearErrors('qualificationCertificate', '');
       setValue(
@@ -1134,7 +1144,7 @@ const EditQualificationDetails = ({
             //onChange={handleRegistration}
             name={`qualification[${index}].diffadharcertificate`}
             size="small"
-            // defaultValue={getValues().registrationdegree}
+            defaultValue={diffadharcertificate !== '0' ? '1' : qualification?.diffadharcertificate}
             items={[
               {
                 value: '0',
@@ -1145,6 +1155,7 @@ const EditQualificationDetails = ({
                 label: 'No',
               },
             ]}
+            onChange={handleQualificationCertificateFrom}
             {...register(`qualification[${index}].diffadharcertificate`)}
 
             // disabled={work_flow_status_id === 3 ? getQueryRaised('Registration') : false}

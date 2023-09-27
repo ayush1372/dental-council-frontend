@@ -273,7 +273,11 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     if (registrationFileUpdated) formData.append('registrationCertificate', registrationFile);
     if (nameChangeFileUpdated) formData.append('proofOfRegistrationNameChange', nameChangeFile);
     if (qualificationNameChangeFileUpdated)
-      formData.append('proofOfQualificationNameChange', qualificationFilesNameChangeData);
+      // formData.append('proofOfQualificationNameChange', qualificationFilesNameChangeData);
+      formData.append(
+        'proofOfQualificationNameChange',
+        qualificationFilesNameChangeData[`qualification.${0}.diffadharfiles`]?.[0]?.file
+      );
 
     dispatch(
       updateDoctorRegistrationDetails(
@@ -399,12 +403,11 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     console.log('fileName 1234', fileName, files);
     // eslint-disable-next-line no-console
     console.log('fileName 9876', { ...qualificationFilesNameChangeData });
-    if (qualificationFilesNameChangeData[0]?.length > 0) {
+    if (files?.length > 0) {
       qualificationFilesNameChangeData[fileName] = files;
       setQualificationFilesNameChangeData({ ...qualificationFilesNameChangeData });
-    }
 
-    if (files?.length > 0) {
+      // if (files?.length > 0) {
       if (files[0]?.fileName !== undefined) {
         setQualificationNameChangeFileUpdated(true);
       } else {
