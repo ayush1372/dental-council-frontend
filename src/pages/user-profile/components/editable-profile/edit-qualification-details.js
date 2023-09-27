@@ -1171,21 +1171,21 @@ const EditQualificationDetails = ({
         <Grid item xs={12}>
           {diffadharcertificate === '0' && (
             <UploadFile
-              // uploadDisabled={
-              //   getQueryRaised('Upload Qualification Name Change Certificate') === false
-              //     ? false
-              //     : work_flow_status_id === 3
-              //     ? getQueryRaised('Upload Qualification Name Change Certificate')
-              //     : isVerified === 1
-              //     ? true
-              //     : false
-              // }
-              // queryRaiseIcon={
-              //   getQueryRaised('Upload Qualification Name Change Certificate') === false
-              //     ? true
-              //     : false
-              // }
-              toolTipData={getQueryRaisedComment('Upload Qualification Name Change Certificate')}
+              uploadDisabled={
+                getQueryRaised('Upload qualification name change certificate') === false
+                  ? false
+                  : work_flow_status_id === 3
+                  ? getQueryRaised('Upload qualification name change certificate')
+                  : isVerified === 1
+                  ? true
+                  : false
+              }
+              queryRaiseIcon={
+                getQueryRaised('Upload qualification name change certificate') === false
+                  ? true
+                  : false
+              }
+              toolTipData={getQueryRaisedComment('Upload qualification name change certificate')}
               fileID={'diffDegreeCertificate'}
               uploadFiles="single"
               sizeAllowed={5}
@@ -1203,18 +1203,18 @@ const EditQualificationDetails = ({
               }}
               fileName={fileName || ''}
               isDigiLockcerVisible={true}
-              uploadFileLabel="Upload Qualification Name Change Certificate"
+              uploadFileLabel="Upload qualification name change certificate"
               Upload
               Qualification
-              // fileDisabled={
-              //   getQueryRaised('Upload Qualification Certificate') === false
-              //     ? false
-              //     : work_flow_status_id === 3
-              //     ? getQueryRaised('Upload Qualification Certificate')
-              //     : isVerified === 1
-              //     ? true
-              //     : false
-              // }
+              fileDisabled={
+                getQueryRaised('Upload qualification name change certificate') === false
+                  ? false
+                  : work_flow_status_id === 3
+                  ? getQueryRaised('Upload qualification name change certificate')
+                  : isVerified === 1
+                  ? true
+                  : false
+              }
               {...register(
                 'proofOfQualificationNameChange'
                 // (qualificationFilesNameChangeData[`qualification.${index}.diffadharfiles`]

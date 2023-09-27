@@ -832,18 +832,20 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           <Grid item xs={12}>
             {getValues().registrationname === '0' && (
               <UploadFile
-                // uploadDisabled={
-                //   getQueryRaised('Upload the name change certificate') === false
-                //     ? false
-                //     : hp_profile_status_id === 3
-                //     ? getQueryRaised('Upload the name change certificate')
-                //     : hp_profile_status_id === 2
-                //     ? true
-                //     : false
-                // }
-                // queryRaiseIcon={
-                //   getQueryRaised('Upload the name change certificate') === false ? true : false
-                // }
+                uploadDisabled={
+                  getQueryRaised('Upload the registration name change certificate') === false
+                    ? false
+                    : hp_profile_status_id === 3
+                    ? getQueryRaised('Upload the registration name change certificate')
+                    : hp_profile_status_id === 2
+                    ? true
+                    : false
+                }
+                queryRaiseIcon={
+                  getQueryRaised('Upload the registration name change certificate') === false
+                    ? true
+                    : false
+                }
                 fileID={'nameChangeFileData'}
                 uploadFiles="single"
                 sizeAllowed={5}
@@ -858,14 +860,16 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 setFileData={setNameChangeFileData}
                 uploadFileLabel="Upload Proof Of Name Change"
                 fileName={file_name + '.' + file_type}
-                // fileDisabled={
-                //   getQueryRaised('Upload the name change certificate') === false
-                //     ? false
-                //     : work_flow_status_id === 3
-                //     ? getQueryRaised('Upload the name change certificate')
-                //     : false
-                // }
-                toolTipData={getQueryRaisedComment('Upload the name change certificate')}
+                fileDisabled={
+                  getQueryRaised('Upload the registration name change certificate') === false
+                    ? false
+                    : work_flow_status_id === 3
+                    ? getQueryRaised('Upload the registration name change certificate')
+                    : false
+                }
+                toolTipData={getQueryRaisedComment(
+                  'Upload the registration name change certificate'
+                )}
                 {...register(
                   'proofOfRegistrationNameChange'
                   // nameChangeFileData?.length === 0 && {
