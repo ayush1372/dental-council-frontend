@@ -1126,9 +1126,6 @@ const EditQualificationDetails = ({
         <Grid item xs={12}>
           <Typography variant="subtitle2" color="inputTextColor.main">
             Is your name in degree, different from your name in Aadhaar?
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
             {getQueryRaised('Registration') === false && (
               <Tooltip title={getQueryRaisedComment('Registration')}>
                 <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
@@ -1198,7 +1195,7 @@ const EditQualificationDetails = ({
                 );
               }}
               fileName={fileName || ''}
-              isDigiLockcerVisible={true}
+              // isDigiLockcerVisible={false}
               uploadFileLabel="Upload qualification name change certificate"
               Upload
               Qualification

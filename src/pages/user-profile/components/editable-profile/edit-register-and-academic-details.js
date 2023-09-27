@@ -776,9 +776,6 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           <Grid item xs={12}>
             <Typography variant="subtitle2" color="inputTextColor.main">
               Is your name in registration certificate, different from your name in Aadhaar?
-              <Typography component="span" color="error.main">
-                *
-              </Typography>
               {getQueryRaised('Registration') === false && (
                 <Tooltip title={getQueryRaisedComment('Registration')}>
                   <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
