@@ -184,11 +184,7 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
           <Grid container>
             <Grid item xs="auto" mr={2}>
               <Link onClick={() => navigate('/')} sx={{ cursor: 'pointer' }}>
-                <img
-                  src={NmcLogo}
-                  className={classes.logoImage}
-                  alt="NATIONAL MEDICAL COMMISSION"
-                />
+                <img src={NmcLogo} className={classes.logoImage} alt="DENTAL COUNCIL OF INDIA" />
               </Link>
             </Grid>
             <Grid item xs="auto" mr={2}>

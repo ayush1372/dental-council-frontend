@@ -68,7 +68,7 @@ function DashboardControlledTable(props) {
       sorting: true,
       type: 'string',
     },
-    { title: 'State Medical Council', name: 'nameofStateCouncil', sorting: true, type: 'string' },
+    { title: 'State Dental Council', name: 'nameofStateCouncil', sorting: true, type: 'string' },
     {
       title: 'Council Status',
       name: 'councilVerificationStatus',
@@ -81,12 +81,7 @@ function DashboardControlledTable(props) {
       sorting: true,
       type: 'string',
     },
-    {
-      title: 'NMC Status',
-      name: 'NMCVerificationStatus',
-      sorting: true,
-      type: 'string',
-    },
+
     { title: 'Submission Date', name: 'dateofSubmission', sorting: true, type: 'date' },
     { title: 'Pendency (Days)', name: 'pendency', sorting: true, type: 'string' },
     { title: 'Action', name: 'view', sorting: false, type: 'string' },

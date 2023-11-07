@@ -327,7 +327,7 @@ function FetchDoctorDetails({ aadhaarFormValues, imrDataNotFound, setIsNext, onR
           setOpen={() => setKycError(false)}
           setIsNext={setIsNext}
           onReset={onReset}
-          text="Your NMR and Aadhar details doesn't match. Do you want to continue the registration in the NMR?"
+          text="Your DCI and Aadhar details doesn't match. Do you want to continue the registration in the DCI?"
         />
       )}
 

@@ -38,8 +38,8 @@ export function LoginPage() {
     () => ({
       Doctor: 'Doctor',
       College: 'College',
-      SMC: 'SMC',
-      NMC: 'NMC',
+      SMC: 'SDC',
+      NMC: 'DCI',
       NBE: 'NBE',
     }),
     []

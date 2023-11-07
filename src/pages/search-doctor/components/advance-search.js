@@ -146,7 +146,7 @@ const AdvanceSearch = ({ setDoSearch, setSearchData, setScrollDown }) => {
       </Grid>
       <Grid item xs={8}>
         <Typography component="span" color="inputTextColor.main">
-          State Medical Council
+          State Dental Council
         </Typography>
         <Select
           sx={{
@@ -155,7 +155,7 @@ const AdvanceSearch = ({ setDoSearch, setSearchData, setScrollDown }) => {
           fullWidth
           error={errors.Statemedicalcouncil?.message}
           name="Statemedicalcouncil"
-          placeholder="Select state medical council"
+          placeholder="Select state dental council"
           defaultValue={getValues().Statemedicalcouncil}
           {...register('Statemedicalcouncil', {
             // required: 'state medical council is required',

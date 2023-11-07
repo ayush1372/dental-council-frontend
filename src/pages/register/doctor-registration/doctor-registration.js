@@ -15,7 +15,6 @@ import { resetDoctorHPName } from '../../../store/reducers/doctor-registration-r
 import { Button, TextField } from '../../../ui/core';
 import FetchDoctorDetails from './fetch-doctor-details';
 const DoctorRegistrationWelcomePage = () => {
-
   const [isNext, setIsNext] = useState(false);
   const [imrDataNotFound, setImrDataNotFound] = useState(false);
   const [rejectPopup, setRejectPopup] = useState(false);
@@ -83,7 +82,7 @@ const DoctorRegistrationWelcomePage = () => {
     <>
       <Box>
         {isNext === false ? (
-          <Box py={4} sx={{ backgroundColor : 'backgroundColor.main'}}>
+          <Box py={4} sx={{ backgroundColor: 'backgroundColor.main' }}>
             <Container
               sx={{
                 boxShadow: '1',
@@ -92,8 +91,8 @@ const DoctorRegistrationWelcomePage = () => {
                   xs: '100%',
                   md: '679px',
                 },
-                backgroundColor : 'white.main',
-                borderRadius: '8px'
+                backgroundColor: 'white.main',
+                borderRadius: '8px',
               }}
             >
               <Box>
@@ -195,8 +194,8 @@ const DoctorRegistrationWelcomePage = () => {
           imrData={true}
           handleAadhaarPage={handleAadhaarPage}
           onReset={onReset}
-          text={` Your data is not found in the NMR.
-           Do you want to continue the registration in the NMR ? `}
+          text={` Your data is not found in the DCI.
+           Do you want to continue the registration in the DCI ? `}
         />
       )} */}
       {rejectPopup && (

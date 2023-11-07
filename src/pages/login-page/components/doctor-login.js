@@ -340,7 +340,7 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
             }}
           >
             <Typography variant="body1" color="textPrimary.main" textAlign={'center'} ml={1}>
-              NMR ID
+              DCI ID
             </Typography>
           </Button>
         </Grid>
@@ -351,15 +351,15 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
             <TextField
               required
               disabled={otpFormEnabled}
-              label={'NMR ID'}
-              placeholder={'Enter NMR ID'}
+              label={'DCI ID'}
+              placeholder={'Enter DCI ID'}
               inputProps={{ maxLength: 12 }}
               name={'nmrID'}
               {...register('nmrID', {
-                required: 'Please enter a valid NMR ID',
+                required: 'Please enter a valid DCI ID',
                 pattern: {
                   value: /^\d{12}$/,
-                  message: 'Please enter a valid NMR ID',
+                  message: 'Please enter a valid DCI ID',
                 },
               })}
               min={12}

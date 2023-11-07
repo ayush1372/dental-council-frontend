@@ -204,11 +204,11 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
         >
           <Box display={'flex'} alignItems={'center'}>
             <Typography variant="body3" color="grey.label" width={'auto'}>
-              NMR ID
+              DCI ID
             </Typography>
             {!nmrIdData ? (
               <Tooltip
-                title={'NMR ID will be displayed here once your application is approved by NMC'}
+                title={'DCI ID will be displayed here once your application is approved by DCI'}
               >
                 <InfoOutlinedIcon color="primary" sx={{ width: '14px', marginLeft: '8px' }} />
               </Tooltip>

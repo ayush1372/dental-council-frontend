@@ -288,7 +288,7 @@ export default function ProfileImage(props) {
               item
             >
               <Typography variant="subtitle2" color="grey.label" sx={{ mr: '5px' }}>
-                NMR ID:
+                DCI ID:
               </Typography>
               <Typography variant="subtitle2" color="textPrimary.main">
                 {nmrIdData ? nmrIdData : ''}

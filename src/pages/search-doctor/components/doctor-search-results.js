@@ -109,7 +109,7 @@ const SearchResults = ({ searchData, scrolldown }) => {
                             {doctor?.salutation + doctor?.full_name || ''}
                           </Typography>
                           <Typography component="div" variant="body5" color="grey.label" mt={2}>
-                            State Medical Council
+                            State Dental Council
                           </Typography>
                           <Typography component="div" variant="body3" color="primary">
                             {doctor?.state_medical_council || ''}

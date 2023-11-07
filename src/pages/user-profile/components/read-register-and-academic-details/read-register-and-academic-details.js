@@ -191,6 +191,9 @@ const ReadRegisterAndAcademicDetails = ({
     }
   }, []);
 
+  console.log('loggedInUserType');
+
+  console.log(loggedInUserType);
   return (
     <Box>
       <Box>
@@ -279,27 +282,28 @@ const ReadRegisterAndAcademicDetails = ({
                               selectedAcademicStatus !==
                                 'Permanent Suspension Requests Approved' && (
                                 <>
-                                  {selectedAcademicStatus !== 'Forwarded' && (
-                                    <Button
-                                      variant="contained"
-                                      color="secondary"
-                                      {...bindTrigger(popupState)}
-                                      sx={{
-                                        mr: 2,
-                                        mb: {
-                                          xs: 1,
-                                          md: 0,
-                                        },
-                                        width: {
-                                          xs: '100%',
-                                          md: 'fit-content',
-                                        },
-                                      }}
-                                      disabled={actionVerified}
-                                    >
-                                      Action <MoreHorizIcon />
-                                    </Button>
-                                  )}
+                                  {selectedAcademicStatus !== 'Forwarded' &&
+                                    loggedInUserType === 'SMC' && (
+                                      <Button
+                                        variant="contained"
+                                        color="secondary"
+                                        {...bindTrigger(popupState)}
+                                        sx={{
+                                          mr: 2,
+                                          mb: {
+                                            xs: 1,
+                                            md: 0,
+                                          },
+                                          width: {
+                                            xs: '100%',
+                                            md: 'fit-content',
+                                          },
+                                        }}
+                                        disabled={actionVerified}
+                                      >
+                                        Action <MoreHorizIcon />
+                                      </Button>
+                                    )}
                                   {(((selectedAcademicStatus === 'College/NBE Verified' ||
                                     selectedAcademicStatus === 'Forwarded' ||
                                     userActiveTab === 'Activate Licence' ||
@@ -310,7 +314,8 @@ const ReadRegisterAndAcademicDetails = ({
                                       actionButtonHandler() === false) ||
                                     (loggedInUserType !== 'SMC' &&
                                       userActiveTab !== 'Activate Licence' &&
-                                      selectedAcademicStatus !== 'Forwarded')) && (
+                                      selectedAcademicStatus !== 'Forwarded')) &&
+                                  loggedInUserType !== 'NMC' ? (
                                     // eslint-disable-next-line react/jsx-indent
                                     <Button
                                       variant="contained"
@@ -352,7 +357,7 @@ const ReadRegisterAndAcademicDetails = ({
                                         ? 'Suspend'
                                         : 'Approve'}
                                     </Button>
-                                  )}
+                                  ) : null}
                                   {loggedInUserType === 'SMC' &&
                                     userActiveTab !== 'Activate Licence' &&
                                     selectedAcademicStatus !== 'Forwarded' &&

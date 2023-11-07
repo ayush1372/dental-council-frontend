@@ -110,7 +110,7 @@ const DoctorProfileModal = ({ open, setOpen, imagepath }) => {
                 fontWeight="400"
                 color="inputTextColor.main"
               >
-                NMR ID
+                DCI ID
               </Typography>
               <Typography component="div" variant="body1" color="textSecondary.main">
                 {searchDetailsById?.data?.data?.nmr_id || '-'}

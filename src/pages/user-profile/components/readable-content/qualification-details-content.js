@@ -12,6 +12,8 @@ import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-po
 
 const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex }) => {
   const { data } = useSelector((state) => state.loginReducer?.loginData);
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+
   const { selectedAcademicStatus } = useSelector((state) => state.common);
 
   const { raisedQueryData } = useSelector((state) => state?.raiseQuery?.raiseQueryData);
@@ -128,7 +130,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   element.is_verified !== 1 &&
                   selectedAcademicStatus === 'Pending' &&
                   college_status !== 'Approved' &&
-                  !data?.is_admin && (
+                  !data?.is_admin &&
+                  loggedInUserType !== 'NMC' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
                       color="primary"
@@ -165,7 +168,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   element.is_verified !== 1 &&
                   selectedAcademicStatus === 'Pending' &&
                   college_status !== 'Approved' &&
-                  !data?.is_admin && (
+                  !data?.is_admin &&
+                  loggedInUserType !== 'NMC' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
                       color="primary"
@@ -202,7 +206,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   element.is_verified !== 1 &&
                   selectedAcademicStatus === 'Pending' &&
                   college_status !== 'Approved' &&
-                  !data?.is_admin && (
+                  !data?.is_admin &&
+                  loggedInUserType !== 'NMC' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
                       color="primary"
@@ -242,7 +247,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   element.is_verified !== 1 &&
                   selectedAcademicStatus === 'Pending' &&
                   college_status !== 'Approved' &&
-                  !data?.is_admin && (
+                  !data?.is_admin &&
+                  loggedInUserType !== 'NMC' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
                       color="primary"
@@ -279,7 +285,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   element.is_verified !== 1 &&
                   selectedAcademicStatus === 'Pending' &&
                   college_status !== 'Approved' &&
-                  !data?.is_admin && (
+                  !data?.is_admin &&
+                  loggedInUserType !== 'NMC' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
                       color="primary"
@@ -317,7 +324,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   element.is_verified !== 1 &&
                   selectedAcademicStatus === 'Pending' &&
                   college_status !== 'Approved' &&
-                  !data?.is_admin && (
+                  !data?.is_admin &&
+                  loggedInUserType !== 'NMC' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
                       color="primary"
@@ -360,7 +368,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       element.is_verified !== 1 &&
                       selectedAcademicStatus === 'Pending' &&
                       college_status !== 'Approved' &&
-                      !data?.is_admin && (
+                      !data?.is_admin &&
+                      loggedInUserType !== 'NMC' && (
                         <ContactSupportOutlinedIcon
                           cursor="pointer"
                           color="primary"
@@ -394,7 +403,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       element.is_verified !== 1 &&
                       selectedAcademicStatus === 'Pending' &&
                       college_status !== 'Approved' &&
-                      !data?.is_admin && (
+                      !data?.is_admin &&
+                      loggedInUserType !== 'NMC' && (
                         <ContactSupportOutlinedIcon
                           cursor="pointer"
                           color="primary"
@@ -428,7 +438,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       element.is_verified !== 1 &&
                       selectedAcademicStatus === 'Pending' &&
                       college_status !== 'Approved' &&
-                      !data?.is_admin && (
+                      !data?.is_admin &&
+                      loggedInUserType !== 'NMC' && (
                         <ContactSupportOutlinedIcon
                           cursor="pointer"
                           color="primary"
@@ -462,7 +473,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       element.is_verified !== 1 &&
                       selectedAcademicStatus === 'Pending' &&
                       college_status !== 'Approved' &&
-                      !data?.is_admin && (
+                      !data?.is_admin &&
+                      loggedInUserType !== 'NMC' && (
                         <ContactSupportOutlinedIcon
                           cursor="pointer"
                           color="primary"
@@ -500,7 +512,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       element.is_verified !== 1 &&
                       selectedAcademicStatus === 'Pending' &&
                       college_status !== 'Approved' &&
-                      !data?.is_admin && (
+                      !data?.is_admin &&
+                      loggedInUserType !== 'NMC' && (
                         <ContactSupportOutlinedIcon
                           cursor="pointer"
                           color="primary"
@@ -556,7 +569,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   element.is_verified !== 1 &&
                   selectedAcademicStatus === 'Pending' &&
                   college_status !== 'Approved' &&
-                  !data?.is_admin && (
+                  !data?.is_admin &&
+                  loggedInUserType !== 'NMC' && (
                     <ContactSupportOutlinedIcon
                       cursor="pointer"
                       color="primary"

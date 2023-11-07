@@ -138,7 +138,7 @@ export const LoginRegisterPopover = ({
                       inputProps={{ 'aria-label': 'controlled' }}
                     />
                   }
-                  label="SMC"
+                  label="SDC"
                 />
               </Grid>
 
@@ -156,7 +156,7 @@ export const LoginRegisterPopover = ({
                       inputProps={{ 'aria-label': 'controlled' }}
                     />
                   }
-                  label="NMC"
+                  label="DCI"
                 />
               </Grid>
               <Grid item xs={6}>

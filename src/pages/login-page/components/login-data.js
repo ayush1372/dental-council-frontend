@@ -122,7 +122,6 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
       ).then((response) => {
         if (response?.data?.validity) {
           const usertypeId = usersType(loginName);
-
           const requestObj = {
             username: getValues()?.mobileNo,
             password: encryptData(otpValue, process.env.REACT_APP_PASS_SITE_KEY),
@@ -229,7 +228,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
     setValue('password', '');
   }, [loginName]);
   return (
-    <Box p={3} sx={{ bgcolor:'white.main', boxShadow:'1', borderRadius: '8px' }}>
+    <Box p={3} sx={{ bgcolor: 'white.main', boxShadow: '1', borderRadius: '8px' }}>
       <Typography variant="h2" color="primary.dark" mb={1}>
         {loginName} Login
       </Typography>

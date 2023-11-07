@@ -187,7 +187,7 @@ export default function Dashboard() {
           loginData?.data?.user_sub_type
         )
       );
-    } else if (userType === 'State Medical Council') {
+    } else if (userType === 'State Dental Council') {
       dispatch(getSMCProfileData(loginData?.data?.profile_id));
     } else if (userType === 'National Medical Council') {
       dispatch(getNMCProfileData(loginData?.data?.profile_id));

@@ -254,8 +254,8 @@ export const usersType = (userType) => {
   const usersObj = {
     Doctor: 1,
     College: 2,
-    SMC: 3,
-    NMC: 4,
+    SDC: 3,
+    DCI: 4,
     NBE: 5,
   };
   return usersObj[userType];

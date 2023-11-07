@@ -136,24 +136,26 @@ const ReadWorkProfile = ({
               <PopupState>
                 {(popupState) => (
                   <React.Fragment>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      {...bindTrigger(popupState)}
-                      sx={{
-                        mr: 2,
-                        mb: {
-                          xs: 1,
-                          md: 0,
-                        },
-                        width: {
-                          xs: '100%',
-                          md: 'fit-content',
-                        },
-                      }}
-                    >
-                      Action <MoreHorizIcon />
-                    </Button>
+                    {loggedInUserType === 'SMC' ? (
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        {...bindTrigger(popupState)}
+                        sx={{
+                          mr: 2,
+                          mb: {
+                            xs: 1,
+                            md: 0,
+                          },
+                          width: {
+                            xs: '100%',
+                            md: 'fit-content',
+                          },
+                        }}
+                      >
+                        Action <MoreHorizIcon />
+                      </Button>
+                    ) : null}
 
                     <Menu {...bindMenu(popupState)}>
                       {loggedInUserType !== 'NMC' && personalDetails.application_type_id !== 2 && (

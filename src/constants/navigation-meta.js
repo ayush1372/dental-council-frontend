@@ -96,7 +96,7 @@ export const navbar_routes = [
     link: '/',
   },
   {
-    label: 'About NMC',
+    label: 'About DCI',
     link: null,
     tree: [
       {

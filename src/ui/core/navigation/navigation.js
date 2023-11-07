@@ -135,10 +135,10 @@ export const Navbar = () => {
         <Container className={styles.menuBlock}>
           <Box className={styles.menuWrapper}>
             <Menu dropdown={false} url="/">
-              {t('About NMR')}
+              {t('About DCI')}
             </Menu>
             <Menu dropdown={false} url="/">
-              {t('NMR Act')}
+              {t('DCI Act')}
             </Menu>
             <Menu dropdown={false} url="/">
               {t('Rules & Regulations')}

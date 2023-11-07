@@ -203,19 +203,19 @@ export default function VerticalLinearStepper() {
               <Typography component="div" variant="body1" fontWeight="500">
                 {userTrackActionId(label?.action_id) === 'Forwarded' &&
                 userGroupTypeId(label?.group_id) === 'SMC'
-                  ? 'SMC reviewed the application and forwarded to college for further verification'
+                  ? 'SDC reviewed the application and forwarded to college for further verification'
                   : userTrackActionId(label?.action_id) === 'Approve' &&
                     userGroupTypeId(label?.group_id) === 'College'
-                  ? 'College reviewed and verified the application. Application now has been sent to SMC for further verification.'
+                  ? 'College reviewed and verified the application. Application now has been sent to SDC for further verification.'
                   : userTrackActionId(label?.action_id) === 'Rejected' &&
                     userGroupTypeId(label?.group_id) === 'College'
                   ? 'Your application has been rejected by college for following reason'
                   : userTrackActionId(label?.action_id) === 'Approve' &&
                     userGroupTypeId(label?.group_id) === 'SMC'
-                  ? 'SMC reviewed and verified the application. Application now has been sent to NMC for further verification.'
+                  ? 'SDC reviewed and verified the application. Application now has been sent to DCI for further verification.'
                   : userTrackActionId(label?.action_id) === 'Approve' &&
                     userGroupTypeId(label?.group_id) === 'NMC'
-                  ? 'NMC reviewed and approved the application.'
+                  ? 'DCI reviewed and approved the application.'
                   : ''}
               </Typography>
               <Typography component="div" variant="body3" fontWeight="500">

@@ -17,7 +17,6 @@
         "react/prop-types": "off",
         // ------------------------------------------------------------------------------
         "filename-rules/match": [2, "kebabcase"],
-        "no-console": ["error"],
         "lodash/import-scope": [2, "method"],
         "no-self-assign": ["error", { "props": false }],
         "template-curly-spacing": "off",

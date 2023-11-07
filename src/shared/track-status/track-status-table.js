@@ -83,7 +83,7 @@ function TrackStatusTable(props) {
       sorting: true,
       type: 'string',
     },
-    { title: 'State Medical Council', name: 'nameofStateCouncil', sorting: true, type: 'date' },
+    { title: 'State Dental Council', name: 'nameofStateCouncil', sorting: true, type: 'date' },
     {
       title: 'Council Status',
       name: 'councilVerificationStatus',
@@ -96,15 +96,10 @@ function TrackStatusTable(props) {
       sorting: true,
       type: 'string',
     },
-    {
-      title: 'NMC Status',
-      name: 'NMCVerificationStatus',
-      sorting: true,
-      type: 'string',
-    },
+
     { title: 'Submission Date', name: 'dateofSubmission', sorting: true, type: 'string' },
     { title: 'Pendency (Days)', name: 'pendency', sorting: true, type: 'string' },
-    loggedInUserType !== 'College' && {
+    loggedInUserType === 'SMC' && {
       title: 'Action',
       name: 'requestNMC',
       sorting: true,

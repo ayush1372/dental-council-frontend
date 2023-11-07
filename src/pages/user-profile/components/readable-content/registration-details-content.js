@@ -13,6 +13,8 @@ import RaiseQueryPopup from '../../../../shared/query-modal-popup/raise-query-po
 
 const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus }) => {
   const { data } = useSelector((state) => state.loginReducer?.loginData);
+  const loggedInUserType = useSelector((state) => state.common.loggedInUserType);
+
   const { registrationDetails, personalDetails } = useSelector(
     (state) => state.doctorUserProfileReducer
   );
@@ -78,7 +80,8 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
               dashboardTableDetails !== 'Approved' &&
               selectedAcademicStatus === 'Pending' &&
               personalDetails?.hp_profile_status_id === 1 &&
-              !data?.is_admin && (
+              !data?.is_admin &&
+              loggedInUserType !== 'NMC' && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
                   color="primary"
@@ -112,7 +115,8 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
               dashboardTableDetails !== 'Approved' &&
               selectedAcademicStatus === 'Pending' &&
               personalDetails?.hp_profile_status_id === 1 &&
-              !data?.is_admin && (
+              !data?.is_admin &&
+              loggedInUserType !== 'NMC' && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
                   color="primary"
@@ -146,7 +150,8 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
               dashboardTableDetails !== 'Approved' &&
               selectedAcademicStatus === 'Pending' &&
               personalDetails?.hp_profile_status_id === 1 &&
-              !data?.is_admin && (
+              !data?.is_admin &&
+              loggedInUserType !== 'NMC' && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
                   color="primary"
@@ -182,7 +187,8 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
               dashboardTableDetails !== 'Approved' &&
               selectedAcademicStatus === 'Pending' &&
               personalDetails?.hp_profile_status_id === 1 &&
-              !data?.is_admin && (
+              !data?.is_admin &&
+              loggedInUserType !== 'NMC' && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
                   color="primary"
@@ -215,7 +221,8 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
               dashboardTableDetails !== 'Approved' &&
               selectedAcademicStatus === 'Pending' &&
               personalDetails?.hp_profile_status_id === 1 &&
-              !data?.is_admin && (
+              !data?.is_admin &&
+              loggedInUserType !== 'NMC' && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
                   color="primary"
@@ -260,7 +267,8 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
               dashboardTableDetails !== 'Approved' &&
               selectedAcademicStatus === 'Pending' &&
               personalDetails?.hp_profile_status_id === 1 &&
-              !data?.is_admin && (
+              !data?.is_admin &&
+              loggedInUserType !== 'NMC' && (
                 <ContactSupportOutlinedIcon
                   cursor="pointer"
                   color="primary"

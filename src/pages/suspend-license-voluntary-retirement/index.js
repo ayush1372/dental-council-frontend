@@ -613,7 +613,7 @@ export function SuspendLicenseVoluntaryRetirement({
               defaultChecked={loggedInUserType === 'NMC' ? true : getValues()?.notification}
               label={
                 tabName
-                  ? 'I understand that during the period of my suspension, I will not be able to practice and my NMR profile will be deactivated.'
+                  ? 'I understand that during the period of my suspension, I will not be able to practice and my DCI profile will be deactivated.'
                   : selectedValue === 'blacklist' || selectedValue === 'suspend'
                   ? 'Doctor will no longer be able to receive notifications or perform actions on his/her profile.'
                   : ''

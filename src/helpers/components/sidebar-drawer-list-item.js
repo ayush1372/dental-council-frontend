@@ -151,13 +151,13 @@ export const nmcTabs = [
     icon: <BadgeIcon />,
     element: <TrackStatus tabName={SideDrawerListItem} />,
   },
-  {
-    option: 3,
-    name: 'Activate Licence',
-    tabName: 'Activate Licence',
-    icon: <AppRegistrationIcon />,
-    element: <ActivateLicence />,
-  },
+  // {
+  //   option: 3,
+  //   name: 'Activate Licence',
+  //   tabName: 'Activate Licence',
+  //   icon: <AppRegistrationIcon />,
+  //   element: <ActivateLicence />,
+  // },
   // {
   //   option: 4,
   //   name: 'College Approval',
