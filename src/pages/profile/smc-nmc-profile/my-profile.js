@@ -53,7 +53,7 @@ const MyProfile = (props) => {
         );
       } else if (userType === 'State Medical Council') {
         dispatch(getSMCProfileData(loginData?.data?.profile_id));
-      } else if (userType === 'National Medical Council') {
+      } else if (userType === 'Dental Council of India') {
         dispatch(getNMCProfileData(loginData?.data?.profile_id));
       } else if (userType === 'NBE') {
         dispatch(getNBEProfileData(loginData?.data?.profile_id));

@@ -140,24 +140,7 @@ export const Navbar = () => {
             <Menu dropdown={false} url="/">
               {t('DCI Act')}
             </Menu>
-            <Menu dropdown={false} url="/">
-              {t('Rules & Regulations')}
-            </Menu>
-            {/* <Menu dropdown={true} url="" options={aboutUsOptions}>
-              {t('About ABDM')}
-            </Menu> */}
-            <Menu dropdown={false} url="/">
-              {t('Information Desk')}
-            </Menu>
-            <Menu dropdown={false} url="/">
-              {t('Media Room')}
-            </Menu>
-            <Menu dropdown={false} url="/">
-              {t('E-Gazette')}
-            </Menu>
-            <Menu dropdown={false} url="/">
-              {t('Photo Gallery')}
-            </Menu>
+
             <Menu dropdown={false} url="/search-doctor">
               {t('Search Doctor')}
             </Menu>

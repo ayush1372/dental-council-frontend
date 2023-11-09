@@ -20,7 +20,7 @@ import { useNavigate } from 'react-router-dom';
 
 import ABDMLogo from '../../../../../assets/images/logo-slider/ABDM_logo.svg';
 import G20Logo from '../../../../../assets/images/logo-slider/G20.svg';
-import NmcLogo from '../../../../../assets/images/logo-slider/NMC_logo.svg';
+import NmcLogo from '../../../../../assets/images/logo-slider/NMC_logo.png';
 import { IdleTimer } from '../../../../../helpers/components/idle-timer';
 import { colgTabs, doctorTabs } from '../../../../../helpers/components/sidebar-drawer-list-item';
 import { logoutAction } from '../../../../../store/actions/login-action';
@@ -184,7 +184,12 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
           <Grid container>
             <Grid item xs="auto" mr={2}>
               <Link onClick={() => navigate('/')} sx={{ cursor: 'pointer' }}>
-                <img src={NmcLogo} className={classes.logoImage} alt="DENTAL COUNCIL OF INDIA" />
+                <img
+                  src={NmcLogo}
+                  className={classes.logoImage}
+                  style={{ maxWidth: 300 }}
+                  alt="DENTAL COUNCIL OF INDIA"
+                />
               </Link>
             </Grid>
             <Grid item xs="auto" mr={2}>

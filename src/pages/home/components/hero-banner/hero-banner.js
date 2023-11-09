@@ -29,10 +29,9 @@ export function HeroBanner() {
             </Typography>
             <Typography variant="body1" color="textPrimary" component="div" mb={2}>
               {t(
-                `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages.`
+                `Dental Council of India is a Statutory Body incorporated under an Act of Parliament viz. The Dentists Act, 1948 (XVI of 1948) to regulate the Dental Education and the profession of Dentistry throughout India and it is financed by the Govt. of India in the Ministry of Health & Family Welfare (Department of Health) through Grant-in-aid. The General Body of the Dental Council of India representing various State Governments, Universities, Dental Colleges, Central Government, etc.`
               )}
             </Typography>
-            <Typography component="div">(This data is for sample purposes only.)</Typography>
           </Grid>
         </Grid>
       </Container>
