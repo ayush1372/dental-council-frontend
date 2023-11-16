@@ -67,7 +67,12 @@ export const loginAction = (body) => async (dispatch) => {
       data: body,
     })
       .then((response) => {
+        console.info('+++++++++++++++++++++++++++++++++++++++++++++++++++');
+        console.info(response);
+
         dispatch(loginUser(response));
+        console.info('===================================================');
+        console.info(response);
         JSON.stringify(
           localStorage.setItem('accesstoken', response.responseHeader['access-token'])
         );
@@ -88,6 +93,8 @@ export const loginAction = (body) => async (dispatch) => {
         return resolve(response);
       })
       .catch((error) => {
+        console.warn('qqq===================================================');
+        console.warn(error);
         return reject(error);
       });
   });

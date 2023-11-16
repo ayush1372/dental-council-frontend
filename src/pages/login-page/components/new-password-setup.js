@@ -102,6 +102,7 @@ const NewPasswordSetup = ({ otpData, setShowSuccessPopUp, resetStep, loginName }
 
       return;
     } else {
+      console.log('Vuu =', getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY);
       if (params?.request_id) {
         const newPasswordData = {
           token: params?.request_id,

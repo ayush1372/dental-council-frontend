@@ -91,6 +91,9 @@ export const useAxiosCall = async (payload = axiosProps) => {
   return await new Promise((resolve, reject) => {
     axios(payload)
       .then((response) => {
+        console.info(' ooooooooooooooooooooooooooooooooooo');
+        console.info(response);
+
         const typeOFResp =
           typeof response?.data === 'object' ? JSON.stringify(response?.data) : response?.data;
         if (
