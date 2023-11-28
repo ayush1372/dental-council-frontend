@@ -21,9 +21,6 @@ export function HeroBanner() {
             <img className={styles.bannerImage} src={BannerImage} alt="Hero Banner" />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <Typography variant="h2" color="black" mb={2}>
-              {t(`Ayushman Bharat Digital Mission`)}
-            </Typography>
             <Typography variant="h1" color="primary" mb={2}>
               {t('DENTAL COUNCIL OF INDIA (DCI)')}
             </Typography>

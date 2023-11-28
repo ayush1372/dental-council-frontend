@@ -205,7 +205,7 @@ export default function Dashboard() {
           loginData?.data?.user_sub_type
         )
       );
-    } else if (userType === 'State Dental Council') {
+    } else if (userType === 'State Medical Council') {
       dispatch(getSMCProfileData(loginData?.data?.profile_id));
     } else if (userType === 'Dental Council of India') {
       dispatch(getNMCProfileData(loginData?.data?.profile_id));

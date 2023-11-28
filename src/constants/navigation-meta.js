@@ -20,6 +20,13 @@ const NAV_META = [
     title: 'PageNotFound',
     component: 'page-not-found/index.js',
   },
+
+  {
+    path: 'about',
+    title: 'About',
+    component: 'about/index.js',
+    isPrivate: 'PUBLIC',
+  },
   {
     path: 'login',
     title: 'Login',
@@ -97,7 +104,9 @@ export const navbar_routes = [
   },
   {
     label: 'About DCI',
-    link: '/',
+    link: '/about',
+    // tree:null,
+    // search:true
   },
 
   {
