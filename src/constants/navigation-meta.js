@@ -20,6 +20,13 @@ const NAV_META = [
     title: 'PageNotFound',
     component: 'page-not-found/index.js',
   },
+
+  {
+    path: 'about',
+    title: 'About',
+    component: 'about/index.js',
+    isPrivate: 'PUBLIC',
+  },
   {
     path: 'login',
     title: 'Login',
@@ -97,51 +104,11 @@ export const navbar_routes = [
   },
   {
     label: 'About DCI',
-    link: null,
-    tree: [
-      {
-        label: 'Financial',
-        link: '/financial',
-        branches: null,
-      },
-      {
-        label: 'Agro',
-        link: '/agro',
-        branches: null,
-      },
-      {
-        label: 'Pricing',
-        link: '/pricing',
-        branches: null,
-      },
-    ],
+    link: '/about',
+    // tree:null,
+    // search:true
   },
 
-  {
-    label: 'Rules & Regulations',
-    link: '/rules-regulations',
-    tree: null,
-  },
-  {
-    label: 'Information Desk',
-    link: '/information-desk',
-    tree: null,
-  },
-  {
-    label: 'Media Room',
-    link: '/media-room',
-    tree: null,
-  },
-  {
-    label: 'E-Gazette',
-    link: '/e-gazette',
-    tree: null,
-  },
-  {
-    label: 'Photo Gallery',
-    link: '/photo-gallery',
-    tree: null,
-  },
   {
     label: 'Search Doctor',
     link: '/search-doctor',

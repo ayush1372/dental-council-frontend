@@ -132,7 +132,7 @@ export const userGroupType = (userGroupID) => {
   const userGroupTypeObj = {
     1: 'Health Professional',
     2: 'State Medical Council',
-    3: 'National Medical Council',
+    3: 'Dental Council of India',
     4: 'College Dean',
     5: 'College Registrar',
     6: 'College Admin',
@@ -144,7 +144,7 @@ export const userGroupId = (userGroupID) => {
   const userGroupTypeObj = {
     1: 'Health Professional',
     2: 'State Medical Council',
-    3: 'National Medical Council',
+    3: 'Dental Council of India',
     4: 'College',
     7: 'NBE',
   };
@@ -265,7 +265,7 @@ export const sideBarTabs = (userType) => {
   const usersObj = {
     'Health Professional': doctorTabs,
     'State Medical Council': smcTabs,
-    'National Medical Council': nmcTabs,
+    'Dental Council of India': nmcTabs,
     'College Dean': colgDeanRegTabs,
     'College Registrar': colgDeanRegTabs,
     'College Admin': colgTabs,
