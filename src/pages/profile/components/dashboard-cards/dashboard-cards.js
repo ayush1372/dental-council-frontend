@@ -17,6 +17,7 @@ import TotalRegReq from '../../../../assets/images/total-registration-request.sv
 import UpdationRequest from '../../../../assets/images/updation-request.png';
 import {
   registrationRequestMapper,
+  registrationRequestMapper2,
   suspensionRequestMapper,
   updationRequestMapper,
 } from '../../../../constants/common-data';
@@ -82,6 +83,12 @@ export default function Dashboard() {
     'hp_registration_request'
   );
 
+  let registrationRequestData2 = getDataFromResponse(
+    count,
+    registrationRequestMapper2,
+    'hp_registration_request'
+  );
+
   let updationRequestData = getDataFromResponse(
     count,
     updationRequestMapper,
@@ -98,11 +105,22 @@ export default function Dashboard() {
     'Additional Qualification Requests': updationRequestData,
   };
 
-  if (loggedInUserType === 'NMC' || loggedInUserType === 'SMC') {
+  let dashboard_nmc = {
+    'Registration Requests': registrationRequestData2,
+    'Additional Qualification Requests': updationRequestData,
+  };
+
+  if (loggedInUserType === 'SMC') {
     dashboard = Object.assign(dashboard, {
       'Suspension Requests': suspensionRequestData,
     });
   }
+  if (loggedInUserType === 'NMC') {
+    dashboard = Object.assign(dashboard_nmc, {
+      'Suspension Requests': suspensionRequestData,
+    });
+  }
+
   useEffect(() => {
     if (redirectDashboard) {
       setShowTable(false);
@@ -187,9 +205,9 @@ export default function Dashboard() {
           loginData?.data?.user_sub_type
         )
       );
-    } else if (userType === 'State Dental Council') {
+    } else if (userType === 'State Medical Council') {
       dispatch(getSMCProfileData(loginData?.data?.profile_id));
-    } else if (userType === 'National Medical Council') {
+    } else if (userType === 'Dental Council of India') {
       dispatch(getNMCProfileData(loginData?.data?.profile_id));
     } else if (userType === 'NBE') {
       dispatch(getNBEProfileData(loginData?.data?.profile_id));

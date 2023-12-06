@@ -189,72 +189,80 @@ const AdditionalQualifications = () => {
   };
 
   const handleOnSubmit = () => {
-    const formData = new FormData();
-    let qualification_detail_response_tos = [],
-      updatedQualificationDetailsArray = [];
+    try {
+      const formData = new FormData();
+      let qualification_detail_response_tos = [],
+        updatedQualificationDetailsArray = [];
 
-    const isInternationalQualification = qualificationFrom === 'International';
-    const updatedQualificationDetails = {
-      id: isEditForm ? editData?.id : null,
-      country: isInternationalQualification
-        ? countriesList.find((obj) => obj.id === getValues()?.int_countryName)
-        : { id: 356, name: 'India' },
-      state: isInternationalQualification
-        ? { name: getValues()?.int_state }
-        : getStateData(getValues()?.state),
-      college: isInternationalQualification
-        ? { name: getValues()?.int_collegeName }
-        : getCollege(getValues()?.collegeName),
-      university: isInternationalQualification
-        ? { name: getValues()?.int_university }
-        : getUniversity(getValues()?.university),
-      course: getCourseData(getValues()?.degree),
-      qualification_year: getValues()?.year || getValues()?.int_year,
-      qualification_month: isInternationalQualification
-        ? getValues()?.int_month
-        : getValues()?.month,
-      is_name_change: 0,
-      is_verified: 0,
-      request_id: isEditForm && editData?.request_id,
-      broad_speciality_id: isInternationalQualification
-        ? broadSpeciality(getValues()?.int_broadSpeciality)
-        : broadSpeciality(getValues()?.broadSpeciality),
-      super_speciality_name: isInternationalQualification
-        ? getValues()?.int_superSpeciality
-        : getValues()?.speciality,
-      qualification_from: qualificationFrom,
-      registration_date: getValues()?.registrationDate,
-      registration_number: getValues()?.registrationNumber,
-      state_medical_council: getRegistrationCouncilData(getValues()?.RegisteredWithCouncil),
-    };
-    updatedQualificationDetailsArray.push(updatedQualificationDetails);
+      const isInternationalQualification = qualificationFrom === 'International';
+      const updatedQualificationDetails = {
+        id: isEditForm ? editData?.id : null,
+        country: isInternationalQualification
+          ? countriesList.find((obj) => obj.id === getValues()?.int_countryName)
+          : { id: 356, name: 'India' },
+        state: isInternationalQualification
+          ? { name: getValues()?.int_state }
+          : getStateData(getValues()?.state),
+        college: isInternationalQualification
+          ? { name: getValues()?.int_collegeName }
+          : getCollege(getValues()?.collegeName),
+        university: isInternationalQualification
+          ? { name: getValues()?.int_university }
+          : getUniversity(getValues()?.university),
+        course: getCourseData(getValues()?.degree),
+        qualification_year: getValues()?.year || getValues()?.int_year,
+        qualification_month: isInternationalQualification
+          ? getValues()?.int_month
+          : getValues()?.month,
+        is_name_change: 0,
+        is_verified: 0,
+        request_id: isEditForm && editData?.request_id,
+        broad_speciality_id: isInternationalQualification
+          ? broadSpeciality(getValues()?.int_broadSpeciality)
+          : broadSpeciality(getValues()?.broadSpeciality),
+        super_speciality_name: isInternationalQualification
+          ? getValues()?.int_superSpeciality
+          : getValues()?.speciality,
+        qualification_from: qualificationFrom,
+        registration_date: getValues()?.registrationDate,
+        registration_number: getValues()?.registrationNumber,
+        state_medical_council: getRegistrationCouncilData(getValues()?.RegisteredWithCouncil),
+      };
+      updatedQualificationDetailsArray.push(updatedQualificationDetails);
 
-    qualification_detail_response_tos = {
-      qualification_detail_request_tos: updatedQualificationDetailsArray,
-    };
+      qualification_detail_response_tos = {
+        qualification_detail_request_tos: updatedQualificationDetailsArray,
+      };
 
-    const doctorRegistrationDetailsJson = JSON.stringify(qualification_detail_response_tos);
-    const doctorRegistrationDetailsBlob = new Blob([doctorRegistrationDetailsJson], {
-      type: 'application/json',
-    });
-    // const degreeCertificateBlob = new Blob([''], {
-    //   type: 'application/json',
-    // });
-    formData.append('data', doctorRegistrationDetailsBlob);
+      const doctorRegistrationDetailsJson = JSON.stringify(qualification_detail_response_tos);
+      const doctorRegistrationDetailsBlob = new Blob([doctorRegistrationDetailsJson], {
+        type: 'application/json',
+      });
+      // const degreeCertificateBlob = new Blob([''], {
+      //   type: 'application/json',
+      // });
+      formData.append('data', doctorRegistrationDetailsBlob);
 
-    if (qualificationFilesData?.length > 0) {
-      formData.append('degreeCertificates', qualificationFilesData[0]?.file);
+      if (qualificationFilesData?.length > 0) {
+        formData.append('degreeCertificates', qualificationFilesData[0]?.file);
+      }
+      // ?
+      // : formData.append('degreeCertificates', degreeCertificateBlob);
+
+      dispatch(
+        additionalQualificationsData(formData, personalDetails?.hp_profile_id, isEditForm)
+      ).then(() => {
+        setSuccessModalPopup(true);
+        reset();
+      });
+
+      return true;
+    } catch (err) {
+      console.error(err);
+      return false;
     }
     // ?
     // : formData.append('degreeCertificates', degreeCertificateBlob);
-
-    dispatch(
-      additionalQualificationsData(formData, personalDetails?.hp_profile_id, isEditForm)
-    ).then(() => {
-      setSuccessModalPopup(true);
-      reset();
-    });
-    return true;
   };
 
   const handleResetForm = () => {

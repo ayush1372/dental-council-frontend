@@ -134,30 +134,10 @@ export const Navbar = () => {
       >
         <Container className={styles.menuBlock}>
           <Box className={styles.menuWrapper}>
-            <Menu dropdown={false} url="/">
+            <Menu dropdown={false} url="/about">
               {t('About DCI')}
             </Menu>
-            <Menu dropdown={false} url="/">
-              {t('DCI Act')}
-            </Menu>
-            <Menu dropdown={false} url="/">
-              {t('Rules & Regulations')}
-            </Menu>
-            {/* <Menu dropdown={true} url="" options={aboutUsOptions}>
-              {t('About ABDM')}
-            </Menu> */}
-            <Menu dropdown={false} url="/">
-              {t('Information Desk')}
-            </Menu>
-            <Menu dropdown={false} url="/">
-              {t('Media Room')}
-            </Menu>
-            <Menu dropdown={false} url="/">
-              {t('E-Gazette')}
-            </Menu>
-            <Menu dropdown={false} url="/">
-              {t('Photo Gallery')}
-            </Menu>
+
             <Menu dropdown={false} url="/search-doctor">
               {t('Search Doctor')}
             </Menu>

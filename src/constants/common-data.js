@@ -2,8 +2,7 @@ import { get_year_data } from '../helpers/functions/common-functions';
 import { year_data } from '../helpers/functions/common-functions';
 
 export const consentDescription =
-  'I, hereby declare that I am voluntarily sharing my Aadhaar Number and demographic information issued by UIDAI, with National Medical Register (DCI) for the sole purpose of creation of User ID. I understand that my User ID can be used and shared for purposes as may be notified by DCI from time to time. Further, I am aware that my personal identifiable information (Name, Address, Age, Date of Birth, Gender and Photograph) may be made available to the entities working in the National Medical Register Ecosystem which inter alia includes stakeholders and entities such as National Medical Council, State Dental Council, Medical Colleges, National Board of Examination, which are registered with or linked to the National Medical Register, and various processes there under. I authorize DCI to use my Aadhaar number for performing Aadhaar based authentication with UIDAI as per the provisions of the Aadhaar (Targeted Delivery of Financial and other Subsidies, Benefits and Services) Act, 2016 for the aforesaid purpose. I understand that UIDAI will share my e-KYC details, on response of “Yes” with DCI upon successful authentication. I consciously choose to use Aadhaar number for the purpose of availing benefits across the DCI. I am aware that my personal identifiable information excluding Aadhaar number / VID number can be used and shared for purposes as mentioned above. I reserve the right to revoke the given consent at any point of time as per provisions of Aadhaar Act and Regulations.';
-
+  'I, hereby declare that I am voluntarily sharing my Aadhaar Number and demographic information issued by UIDAI, with Dental Council of India (DCI) for the sole purpose of creation of User ID. I understand that my User ID can be used and shared for purposes as may be notified by DCI from time to time. Further, I am aware that my personal identifiable information (Name, Address, Age, Date of Birth, Gender and Photograph) may be made available to the entities working in the Dental Council of India (DCI) Ecosystem which inter alia includes stakeholders and entities such as Dental Council of India, State Dental Council, Medical Colleges, National Board of Examination, which are registered with or linked to the Dental Council of India (DCI), and various processes there under. I authorize DCI to use my Aadhaar number for performing Aadhaar based authentication with UIDAI as per the provisions of the Aadhaar (Targeted Delivery of Financial and other Subsidies, Benefits and Services) Act, 2016 for the aforesaid purpose. I understand that UIDAI will share my e-KYC details, on response of “Yes” with DCI upon successful authentication. I consciously choose to use Aadhaar number for the purpose of availing benefits across the DCI. I am aware that my personal identifiable information excluding Aadhaar number / VID number can be used and shared for purposes as mentioned above. I reserve the right to revoke the given consent at any point of time as per provisions of Aadhaar Act and Regulations.';
 export const UniqueUserNameForDoctor = [
   { id: '1', name: 'aarushi.sharma3' },
   { id: '1', name: 'aarushisharma390' },
@@ -171,6 +170,18 @@ export const registrationRequestMapper = {
   'College/NBE Verified': 'College/NBE Verified',
   Forwarded: 'Forwarded',
 };
+export const registrationRequestMapper2 = {
+  'Total Registration Requests': 'Total Registration Requests',
+  Rejected: 'Rejected by SDC',
+  Approved: 'Approved by SDC',
+  'Query Raised': 'Query Raised by SDC',
+  Suspended: 'Suspended',
+  Blacklisted: 'Blacklisted',
+  Pending: 'Pending by DCI',
+  'College/NBE Verified': 'College/NBE Verified',
+  Forwarded: 'Forwarded',
+};
+
 export const updationRequestMapper = {
   'Total Modification Requests': 'Total Updation Requests',
   Rejected: 'Rejected',
