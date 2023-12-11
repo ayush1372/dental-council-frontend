@@ -41,11 +41,11 @@
   color: map-get(v.$palette, 'secondary') !important;
   background-color: map-get(v.$palette, 'queryraisedBg') !important;
 }
-.blacklisted {
+.Suspended {
   color: map-get(v.$palette, 'error') !important;
   background-color: map-get(v.$palette, 'rejectBg') !important;
 }
-.suspended {
+.Blacklisted {
   color: map-get(v.$palette, 'error') !important;
   background-color: map-get(v.$palette, 'rejectBg') !important;
 }

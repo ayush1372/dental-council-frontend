@@ -54,7 +54,7 @@ export function ViewProfile(props) {
             mb={{ xs: 1, lg: 0 }}
           >
             <Typography variant="body3" color="grey.label">
-              IMR/Registration Number
+              Registration Number
             </Typography>
             <Typography variant="subtitle2" color="textPrimary.main">
               {registration_number ? registration_number : ''}

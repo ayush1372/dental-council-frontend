@@ -207,8 +207,8 @@ export const trackApplicationLabel = (userGroupID) => {
     'Query Raised': 'QUERY RAISED',
     Approve: 'COMPLETED',
     Rejected: 'REJECTED',
-    'Temporarily suspended': 'COMPLETED',
-    'Permanently Suspended': 'COMPLETED',
+    'Temporarily Blacklisted': 'COMPLETED',
+    'Permanently Blacklisted': 'COMPLETED',
   };
   return userGroupTypeObj[userGroupID];
 };
@@ -231,8 +231,8 @@ export const workflowStatusId = (actionType) => {
     2: ' Approved',
     3: ' Query Raised',
     4: ' Rejected',
-    5: ' Suspended',
-    6: ' Blacklisted',
+    5: ' Blacklisted',
+    6: ' Suspended',
   };
   return actionTypeObj[actionType];
 };

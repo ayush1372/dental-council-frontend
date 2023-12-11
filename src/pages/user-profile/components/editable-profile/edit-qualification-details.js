@@ -59,8 +59,8 @@ const EditQualificationDetails = ({
 
   const [degree] = useState([
     {
-      name: 'MBBS - Bachelor of Medicine and Bachelor of Surgery',
-      id: 4060,
+      name: 'BDS - Bachelor of Dental Surgery',
+      id: 777,
     },
   ]);
   const { countriesList, coursesList, universitiesList, statesList, specialitiesList } =
@@ -152,7 +152,7 @@ const EditQualificationDetails = ({
         name: 'India',
         nationality: 'Indian',
       });
-      if (!isAdditionalQualification) setValue(`qualification[${index}].qualification`, 4060);
+      if (!isAdditionalQualification) setValue(`qualification[${index}].qualification`, 777);
       setValue(`qualification[${index}].qualificationfrom`, 'India');
     }
     if (qualificationfrom === 'International') {

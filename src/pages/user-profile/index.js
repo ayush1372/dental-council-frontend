@@ -71,9 +71,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
   const doctorRegDetails = useSelector(
     (state) => state?.doctorUserProfileReducer?.registrationDetails
   );
-  const logInDoctorStatus = useSelector(
-    (state) => state?.loginReducer?.loginData?.data?.blacklisted
-  );
+  const logInDoctorStatus = useSelector((state) => state?.loginReducer?.loginData?.data?.Suspended);
 
   const [isReadMode, setIsReadMode] = useState(true);
   const [emailNotification, setEmailNotification] = useState(emailNotify);
@@ -403,31 +401,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
   };
 
   return eSignResponse?.asp_txn_id ? (
-    <div>
-      <form
-        id="formid"
-        target="_new"
-        method="POST"
-        action="https://es-staging.cdac.in/esignlevel2/2.1/form/signdoc"
-      >
-        <input
-          type="hidden"
-          id="eSignRequest"
-          name="eSignRequest"
-          value={eSignResponse.esp_request}
-        />
-        <input type="hidden" id="aspTxnID" name="aspTxnID" value={eSignResponse.asp_txn_id} />
-        <input
-          type="hidden"
-          id="Content-Type"
-          name="Content-Type"
-          value={eSignResponse.content_type}
-        />
-        <button type="submit" hidden onClick={handleEsign()}>
-          Submit
-        </button>
-      </form>
-    </div>
+    <div></div>
   ) : (
     <>
       {showReactivateLicense && (
@@ -548,7 +522,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
                       width: '100%',
                     }}
                   >
-                    E-sign Profile
+                    Submit
                   </Button>
                 </Grid>
               )}

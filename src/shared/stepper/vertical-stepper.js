@@ -22,8 +22,8 @@ export default function VerticalLinearStepper() {
       3: 'Query Raised',
       4: 'Approve',
       5: 'Rejected',
-      6: 'Temporarily suspended',
-      7: 'Permanently Suspended',
+      6: 'Temporarily Blacklisted',
+      7: 'Permanently Blacklisted',
     };
     return actionTypeObj[actionType];
   };

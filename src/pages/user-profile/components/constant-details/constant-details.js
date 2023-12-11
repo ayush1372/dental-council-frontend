@@ -185,7 +185,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
           mb={{ xs: 1, lg: 0 }}
         >
           <Typography variant="body3" color="grey.label">
-            IMR/Registration Numbers
+            Registration Numbers
           </Typography>
           <Typography variant="subtitle2" color="textPrimary.main">
             {registration_number ? registration_number : ''}
@@ -366,10 +366,10 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
             </Typography>
           </Typography>
 
-          <Box display="flex" alignItems="center">
+          <Box display="flex" alignItems="center" sx={{ display: 'flex' }}>
             {!emailId || emailChange ? (
-              <Box display={'flex'} flexDirection="column">
-                <Paper display={'flex'} alignItems="center" sx={{ p: '2px 4px' }}>
+              <Box display="flex" flexDirection="column">
+                <Paper display="flex" alignItems="center" sx={{ p: '2px 4px', display: 'flex' }}>
                   <InputBase
                     required={true}
                     sx={{ ml: 1, flex: 1 }}
@@ -390,7 +390,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
 
                   <Link
                     color="primary"
-                    sx={{ p: '10px', cursor: 'pointer' }}
+                    sx={{ p: '10px', cursor: 'pointer', 'flex-basis': 'content' }}
                     onClick={() => {
                       handleSubmit(onSubmit('email'));
                     }}

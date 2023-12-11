@@ -190,8 +190,8 @@ function TrackAppicationTable({
               : data?.work_flow_status_id === 4
               ? 'REJECTED'
               : data?.work_flow_status_id === 5
-              ? 'SUSPENDED'
-              : 'SUSPENDED',
+              ? 'Blacklisted'
+              : 'Blacklisted',
         },
 
         {

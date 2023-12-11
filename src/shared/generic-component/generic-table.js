@@ -214,15 +214,14 @@ export default function GenericTable(props) {
                                     }
                                     disabled={
                                       customPopupOptions !== undefined
-                                        ? row['NMCVerificationStatus']?.value === 'Blacklisted' ||
-                                          row['NMCVerificationStatus']?.value === 'Suspended' ||
-                                          row['councilVerificationStatus']?.value ===
-                                            'Blacklisted' ||
+                                        ? row['NMCVerificationStatus']?.value === 'Suspended' ||
+                                          row['NMCVerificationStatus']?.value === 'Blacklisted' ||
+                                          row['councilVerificationStatus']?.value === 'Suspended' ||
                                           (props?.applicationData &&
                                             (props?.applicationData[rowIndex]?.doctor_status ===
-                                              'Blacklisted' ||
+                                              'Suspended' ||
                                               props?.applicationData[rowIndex]?.doctor_status ===
-                                                'Suspended'))
+                                                'Blacklisted'))
                                         : row['NMRID']?.value === '' ||
                                           row['NMRID']?.value === undefined
                                     }
@@ -251,8 +250,8 @@ export default function GenericTable(props) {
                             ? 'reject'
                             : row[item.name]?.value === 'QUERY RAISED'
                             ? 'queryRaised'
-                            : row[item.name]?.value === 'SUSPENDED'
-                            ? 'suspended'
+                            : row[item.name]?.value === 'Blacklisted'
+                            ? 'Blacklisted'
                             : 'approved'
                         }
                         label={row[item.name]?.value}

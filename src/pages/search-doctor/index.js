@@ -5,11 +5,12 @@ import { useDispatch } from 'react-redux';
 
 import { searchDoctor } from '../../store/reducers/doctor-search-reducer';
 import AdvanceSearch from './components/advance-search';
+import BlacklistedDoctor from './components/blacklisted-doctor';
 import SearchResults from './components/doctor-search-results';
 import Name from './components/name';
 import RegistrationNumber from './components/registration-number';
 import StateMedicalCouncil from './components/state-medical-council';
-import SuspendedDoctor from './components/suspended-doctor';
+//import SuspendedDoctor from './components/suspended-doctor';
 import YearOfRegistration from './components/year-of-registraation';
 
 const tabNames = {
@@ -19,8 +20,8 @@ const tabNames = {
   'State medical council': StateMedicalCouncil,
   'Advance search': AdvanceSearch,
 
-  // 'Blacklisted Doctor': BlacklistedDoctor,
-  'Suspended doctor': SuspendedDoctor,
+  // 'Suspended Doctor': SuspendedDoctor,
+  'Blacklisted doctor': BlacklistedDoctor,
 };
 
 const SearchDoctor = () => {

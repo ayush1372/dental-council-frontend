@@ -903,7 +903,7 @@ const EditPersonalDetails = ({ handleNext, setIsReadMode, validDetails, setValid
               <Checkbox
                 value={isSameAddress}
                 defaultChecked={
-                  personalDetails?.communication_address?.is_same_address === 'true' ? true : false
+                  personalDetails?.communication_address?.is_same_address === 'true' ? true : true
                 }
                 checked={isSameAddress}
                 onChange={(e) => {

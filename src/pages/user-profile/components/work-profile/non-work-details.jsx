@@ -17,8 +17,8 @@ const reasonOptions = [
     value: 'optOut',
   },
   {
-    label: 'Suspended',
-    value: 'suspended',
+    label: 'Blacklisted',
+    value: 'Blacklisted',
   },
   {
     label: 'Any Other',

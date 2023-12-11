@@ -164,8 +164,8 @@ export const registrationRequestMapper = {
   Rejected: 'Rejected',
   Approved: 'Approved',
   'Query Raised': 'Query Raised',
-  Suspended: 'Suspended',
   Blacklisted: 'Blacklisted',
+  Suspended: 'Suspended',
   Pending: 'Pending',
   'College/NBE Verified': 'College/NBE Verified',
   Forwarded: 'Forwarded',
@@ -175,9 +175,9 @@ export const registrationRequestMapper2 = {
   Rejected: 'Rejected by SDC',
   Approved: 'Approved by SDC',
   'Query Raised': 'Query Raised by SDC',
-  Suspended: 'Suspended',
   Blacklisted: 'Blacklisted',
-  Pending: 'Pending by DCI',
+  Suspended: 'Suspended',
+  Pending: 'Pending by SDC',
   'College/NBE Verified': 'College/NBE Verified',
   Forwarded: 'Forwarded',
 };
@@ -187,8 +187,8 @@ export const updationRequestMapper = {
   Rejected: 'Rejected',
   Approved: 'Approved',
   'Query Raised': 'Query Raised',
-  Suspended: 'Suspended',
   Blacklisted: 'Blacklisted',
+  Suspended: 'Suspended',
   Pending: 'Pending',
   'College/NBE Verified': 'College/NBE Verified',
   Forwarded: 'Forwarded',
@@ -199,8 +199,8 @@ export const suspensionRequestMapper = {
   'Permanent Suspension Requests Received': 'Permanent Suspension Requests Received',
   'Temporary Suspension Requests Approved': 'Temporary Suspension Requests Approved',
   'Permanent Suspension Requests Approved': 'Permanent Suspension Requests Approved',
-  Suspended: 'Suspended',
   Blacklisted: 'Blacklisted',
+  Suspended: 'Suspended',
   'Temporary Suspension Requests Received': 'Temporary Suspension Requests Received',
 };
 
@@ -264,7 +264,7 @@ export const applicationStatus = [
   { id: 3, name: 'Query Raised' },
   { id: 4, name: 'Rejected' },
   { id: 5, name: 'Suspend' },
-  { id: 6, name: 'Blacklisted' },
+  { id: 6, name: 'Suspended' },
 ];
 export const filterDropDownData = [
   { id: 'applicationTypeId', name: 'Type of Application ' },

@@ -272,9 +272,9 @@ export default function ProfileImage(props) {
                   : userStatus === 4
                   ? 'Rejected'
                   : userStatus === 5
-                  ? 'Suspended'
-                  : userStatus === 6
                   ? 'Blacklisted'
+                  : userStatus === 6
+                  ? 'Suspended'
                   : userStatus === 7
                   ? 'Draft'
                   : 'Draft'}
@@ -308,9 +308,9 @@ export default function ProfileImage(props) {
                   sx={{ whiteSpace: 'break-spaces' }}
                 >
                   {personalDetails?.hp_profile_status_id === 5 &&
-                    `Your profile is suspended and you will not be able to perform any action.`}
+                    `Your profile is Blacklisted and you will not be able to perform any action.`}
                   {personalDetails?.hp_profile_status_id === 6 &&
-                    `Your profile is blacklisted and you will not be able to perform any action.`}
+                    `Your profile is Suspended and you will not be able to perform any action.`}
                 </Typography>
               </Grid>
               <Grid item xs={12} textAlign="center" mt={1} mr={2}>

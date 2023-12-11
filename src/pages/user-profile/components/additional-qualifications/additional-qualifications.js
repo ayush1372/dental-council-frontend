@@ -386,6 +386,8 @@ const AdditionalQualifications = () => {
     }
   }, [clearErrors, qualificationFilesData, setValue]);
 
+  console.log(createSelectFieldData(specialitiesList?.data));
+
   return (
     <Box p={3}>
       {isAddForm || isEditForm ? (
@@ -648,7 +650,7 @@ const AdditionalQualifications = () => {
                   <Select
                     required
                     name="month"
-                    placeholder={'Select month of awarding1'}
+                    placeholder={'Select month of awarding'}
                     queryRaiseIcon={isEditForm && queryfields.includes(field_names.monthAwarded)}
                     disabled={isEditForm && !queryfields.includes(field_names.monthAwarded)}
                     value={getValues()?.month}

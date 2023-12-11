@@ -15,8 +15,8 @@ export const Chip = ({ type, ...prop }) => {
           [styles.reject]: type === 'reject',
           [styles.approved]: type === 'approved',
           [styles.queryRaised]: type === 'queryRaised',
-          [styles.suspended]: type === 'suspended',
-          [styles.blacklisted]: type === 'blacklisted',
+          [styles.Blacklisted]: type === 'Blacklisted',
+          [styles.Suspended]: type === 'Suspended',
         })}
         {...prop}
       ></MuiChip>

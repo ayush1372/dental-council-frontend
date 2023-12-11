@@ -34,12 +34,14 @@ const BlacklistedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
       registrationNumber: getValues().RegistrationNumber,
       registrationYear: getValues().YearofRegistration,
       stateMedicalCouncilId: getValues().RegistrationCouncilId,
-      profileStatusId: 6,
+      profileStatusId: `5,6`,
       page: 0,
       size: 9,
     };
 
     setDoSearch(true);
+    setSearchData(searchValues);
+    setScrollDown(true);
     dispatch(searchDoctorDetails(searchValues)).then(() => {});
     // .catch((error) => {
     //   successToast(
@@ -49,9 +51,6 @@ const BlacklistedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
     //     'top-center'
     //   );
     // });
-
-    setSearchData(searchValues);
-    setScrollDown(true);
   };
   return (
     <Grid container spacing={2} mt={2}>
@@ -63,11 +62,11 @@ const BlacklistedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
           fullWidth
           error={errors.SelectDoctorname?.message}
           name="SelectDoctorname"
-          label=" Doctor Name"
+          label="Doctor Name"
           placeholder="Select Doctor name"
           defaultValue={getValues().SelectDoctorname}
           {...register('SelectDoctorname', {
-            // required: 'Select Doctor name  is required',
+            // required: 'Select Doctor name is required',
           })}
           options={[
             {
@@ -82,7 +81,7 @@ const BlacklistedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
           }}
           variant="outlined"
           name={'DoctorName'}
-          placeholder="Enter Doctor Name"
+          placeholder="Enter doctor name"
           label={'Doctor Name'}
           fullWidth
           defaultValue={getValues().DoctorName}
@@ -103,7 +102,7 @@ const BlacklistedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
       <Grid item xs={4}>
         <Grid>
           <Typography color="inputTextColor.main">
-            Registration Number{' '}
+            Registration Number
             {/* <ErrorOutlineIcon
               fontSize="width12"
               sx={{
@@ -138,8 +137,8 @@ const BlacklistedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
             error={errors.YearofRegistration?.message}
             name="YearofRegistration"
             label=" Year of Registration"
-            placeholder="Select year of Registration"
-            defaultValue={getValues().YearofRegistration}
+            placeholder="Select year of registration"
+            defaultValue={getValues().yearofRegistration}
             {...register('YearofRegistration', {
               // required: 'Year of Registration is required',
             })}
@@ -155,7 +154,7 @@ const BlacklistedDoctor = ({ setDoSearch, setSearchData, setScrollDown }) => {
             error={errors.Statemedicalcouncil?.message}
             name="Statemedicalcouncil"
             label=" State Dental Council"
-            placeholder="Select State Dental Council"
+            placeholder="Select state dental council"
             defaultValue={getValues().Statemedicalcouncil}
             {...register('Statemedicalcouncil', {
               // required: 'state medical council is required',

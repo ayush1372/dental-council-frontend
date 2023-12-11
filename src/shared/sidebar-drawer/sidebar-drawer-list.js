@@ -26,9 +26,7 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
     (state) => state?.doctorUserProfileReducer
   );
   const { activateLicenseList } = useSelector((state) => state.common);
-  const logInDoctorStatus = useSelector(
-    (state) => state?.loginReducer?.loginData?.data?.blacklisted
-  );
+  const logInDoctorStatus = useSelector((state) => state?.loginReducer?.loginData?.data?.Suspended);
   const doctorEsignStatus = useSelector(
     (state) => state?.loginReducer?.loginData?.data?.esign_status
   );

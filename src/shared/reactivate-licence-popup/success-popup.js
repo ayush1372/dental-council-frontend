@@ -17,7 +17,7 @@ export default function SuccessPopup({ fetchDoctorUserPersonalDetails, reactivat
   const [open, setOpen] = useState(true);
 
   // const logInDoctorStatus = useSelector(
-  //   (state) => state?.loginReducer?.loginData?.data?.blacklisted
+  //   (state) => state?.loginReducer?.loginData?.data?.Suspended
   // );
   const { personalDetails } = useSelector((state) => state?.doctorUserProfileReducer);
 

@@ -135,7 +135,7 @@ export default function Dashboard() {
     let dataArr = [];
     if (count?.data[key]?.status_wise_count !== undefined) {
       const newCountArray = count?.data[key]?.status_wise_count?.filter(
-        (item) => item.name !== 'Suspended' && item.name !== 'Blacklisted'
+        (item) => item.name !== 'Blacklisted' && item.name !== 'Suspended'
       );
       newCountArray?.forEach((request) => {
         let currObj;
@@ -243,7 +243,7 @@ export default function Dashboard() {
       return ApprovedApplication;
     } else if (item?.name?.includes('Raised')) {
       return RaisedApplication;
-    } else if (item?.name?.includes('Rejected') || item?.name?.includes('Blacklisted')) {
+    } else if (item?.name?.includes('Rejected') || item?.name?.includes('Suspended')) {
       return RejectedApplication;
     } else if (item?.name?.includes('Forwarded')) {
       return ApplicationForwarded;
@@ -265,7 +265,7 @@ export default function Dashboard() {
       return 'Total number of query raised applications';
     } else if (item?.name?.includes('Forwarded')) {
       return 'Total number of forwarded applications';
-    } else if (item?.name?.includes('Rejected') || item?.name?.includes('Blacklisted')) {
+    } else if (item?.name?.includes('Rejected') || item?.name?.includes('Suspended')) {
       return 'Total number of rejected applications';
     } else if (item?.name?.includes('Total')) {
       return 'Total number of applications';

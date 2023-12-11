@@ -83,7 +83,7 @@ export const loginAction = (body) => async (dispatch) => {
           localStorage.setItem('workProfileStatusID', response.data['work_flow_status_id'])
         );
         JSON.stringify(localStorage.setItem('esignStatus', response.data['esign_status']));
-        JSON.stringify(localStorage.setItem('blacklistedStatus', response.data['blacklisted']));
+        JSON.stringify(localStorage.setItem('SuspendedStatus', response.data['Suspended']));
         JSON.stringify(localStorage.setItem('userType', response.data['user_type']));
         return resolve(response);
       })

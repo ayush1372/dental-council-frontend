@@ -37,7 +37,7 @@ export const MainLayout = () => {
           hp_profile_status_id: Number(localStorage.getItem('HPProfileStatusID')),
           work_flow_status_id: Number(localStorage.getItem('workProfileStatusID')),
           esign_status: Number(localStorage.getItem('esignStatus')),
-          blacklisted: Number(localStorage.getItem('blacklistedStatus')),
+          Suspended: Number(localStorage.getItem('SuspendedStatus')),
           user_type: Number(localStorage.getItem('userType')),
         },
       };

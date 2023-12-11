@@ -97,15 +97,15 @@ export function SuspendLicenseVoluntaryRetirement({
         break;
       case 'blacklist':
         action_id = 6;
-        setSuccessPopupMessage('Temporarily Suspended');
+        setSuccessPopupMessage('Temporarily Blacklisted');
         break;
       case 'suspend':
         action_id = 7;
-        setSuccessPopupMessage('Permanently Suspended');
+        setSuccessPopupMessage('Permanently Blacklisted');
         break;
       default:
         action_id = 1;
-        setSuccessPopupMessage('User has been suspended');
+        setSuccessPopupMessage('User has been Blacklisted');
         break;
     }
     let temp_application_type_id;
@@ -210,9 +210,9 @@ export function SuspendLicenseVoluntaryRetirement({
                 getValues()?.voluntarySuspendLicense === 'permanent-suspension-check' ||
                 selectedValue === 'suspend'
               ) {
-                setSuccessPopupMessage('Applicant has been permanently suspended');
+                setSuccessPopupMessage('Applicant has been permanently Blacklisted');
               } else if (getValues()?.voluntarySuspendLicense === 'voluntary-suspension-check') {
-                setSuccessPopupMessage('Applicant has been temporarily suspended');
+                setSuccessPopupMessage('Applicant has been temporarily Blacklisted');
               }
               showSuccessPopup(true);
               setConfirmationModal(false);
