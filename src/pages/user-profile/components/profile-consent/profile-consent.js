@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CloseIcon from '@mui/icons-material/Close';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+//import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
-import { Box, Dialog, Grid, Link, Typography } from '@mui/material';
+import { Box, Dialog, Grid, Typography } from '@mui/material';
+//import { Box, Dialog, Grid, Link, Typography } from '@mui/material';
 import moment from 'moment';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
@@ -303,7 +304,6 @@ const ProfileConsent = ({
           {errors.consent?.message}
         </Typography>
       </Grid>
-
       <Grid
         container
         alignItems="center"
@@ -315,8 +315,8 @@ const ProfileConsent = ({
         border="1px solid"
         borderColor="inputBorderColor.main"
         borderRadius="5px"
-      >
-        <Grid item sx="auto" display="flex" alignItems="center">
+      />
+      {/* <Grid item sx="auto" display="flex" alignItems="center">
           <Checkbox
             sx={{ width: '18px', height: '18px', marginLeft: 1 }}
             name="HPR"
@@ -327,8 +327,8 @@ const ProfileConsent = ({
           <Typography component="div" variant="body7">
             Save my time and share my details with HPR
           </Typography>
-        </Grid>
-        <Grid item sx="auto" display="flex" alignItems="center">
+         </Grid>
+         <Grid item sx="auto" display="flex" alignItems="center">
           <InfoOutlinedIcon
             sx={{ height: '14px', width: '14px', color: 'messageBlue.main', mr: 1 }}
           />
@@ -343,8 +343,7 @@ const ProfileConsent = ({
           >
             Know more about HPR
           </Link>
-        </Grid>
-      </Grid>
+         </Grid> */}
 
       {/* </Box> */}
       <Grid container mt={3}>

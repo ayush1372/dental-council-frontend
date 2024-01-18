@@ -10,17 +10,17 @@ const ConfirmEsignProcess = ({ handleClose }) => {
           <CloseIcon sx={{ cursor: 'pointer' }} onClick={handleClose} />
         </Box>
         <Box textAlign={'center'}>
-          <Typography variant="h2">E-sign Verification</Typography>
+          <Typography variant="h2">Registering Application</Typography>
         </Box>
       </Grid>
 
       <Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
         <CircularProgress color="primary" />
         <Typography textAlign="center" mt={2}>
-          You have been re-directed to E-sign portal for verification process.
+          Your application is being submitted successfully.
         </Typography>
         <Typography textAlign="center" mt={2}>
-          Awaiting E-sign confirmation
+          Awaiting confirmation.
         </Typography>
       </Box>
     </Box>

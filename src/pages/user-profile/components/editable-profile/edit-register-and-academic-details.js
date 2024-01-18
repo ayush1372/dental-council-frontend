@@ -56,6 +56,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   const { registration_detail_to, qualification_detail_response_tos } = registrationDetails || {};
   const {
     registration_date,
+    neet_registration_number,
     registration_number,
     state_medical_council,
     is_renewable,
@@ -131,7 +132,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
             ? registration_date?.substring(0, 10)
             : registration_date
           : '',
-
+      NeetRegistrationNumber: neet_registration_number,
       registration: loggedInUserType === 'SMC' || loggedInUserType === 'Doctor' ? is_renewable : '',
       registrationname: '1',
       RenewalDate:
@@ -178,6 +179,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
       RegistrationDate,
       registration,
       RenewalDate,
+      NeetRegistrationNumber,
     } = getValues();
 
     const cloneObj = JSON.parse(JSON.stringify(registrationDetails));
@@ -199,7 +201,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     registration_detail.state_medical_council = getRegistrationCouncilData(RegisteredWithCouncil);
     registration_detail.is_renewable = registration || is_renewable;
     registration_detail.renewable_registration_date = RenewalDate?.split('/')?.reverse()?.join('-');
-
+    registration_detail.neet_registration_number = NeetRegistrationNumber;
     // this below code is storing qualification details
     const { qualification } = getValues();
 
@@ -264,7 +266,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
   const fetchUpdateDoctorRegistrationDetails = (finalResult, moveToNext = false) => {
     const formData = new FormData();
-
+    console.log('final result', finalResult);
     const doctorRegistrationDetailsJson = JSON.stringify(finalResult);
     const doctorRegistrationDetailsBlob = new Blob([doctorRegistrationDetailsJson], {
       type: 'application/json',
@@ -577,7 +579,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography variant="subtitle2" color="inputTextColor.main">
-              Registration Date
+              Date of First Registration
               <Typography component="span" color="error.main">
                 *
               </Typography>
@@ -619,6 +621,62 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               disableFuture
             />
           </Grid>
+          {/* neet reg no */}
+          {new Date(getValues()?.RegistrationDate).getFullYear() >= 2019 ? (
+            <Grid item xs={12} md={4}>
+              <Typography variant="subtitle2" color="inputTextColor.main">
+                NEET Registration Number
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
+                {getQueryRaised('NEET Registration Number') === false && (
+                  <Tooltip title={getQueryRaisedComment('NEET Registration Number')}>
+                    <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
+                  </Tooltip>
+                )}
+              </Typography>
+              <TextField
+                variant="outlined"
+                name={'NeetRegistrationNumber'}
+                type="number"
+                required
+                fullWidth
+                defaultValue={getValues().NeetRegistrationNumber}
+                error={errors.NeetRegistrationNumber?.message}
+                {...register('NeetRegistrationNumber', {
+                  required: 'Please enter NEET registration number',
+                  pattern: { message: 'Please Enter Valid NEET Registration number' },
+                })}
+                disabled={
+                  work_flow_status_id === 3
+                    ? getQueryRaised('NEET Registration Number')
+                    : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                    ? false
+                    : true
+                }
+                // sx={{
+                //   input: {
+                //     backgroundColor:
+                //       getQueryRaised('Registration Number') === false
+                //         ? false
+                //         : work_flow_status_id === 3
+                //         ? 'grey2.main'
+                //         : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                //         ? ''
+                //         : 'grey2.main',
+                //   },
+                // }}
+                // InputProps={{
+                //   readOnly:
+                //     work_flow_status_id === 3
+                //       ? getQueryRaised('Registration Number')
+                //       : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                //       ? false
+                //       : true,
+                // }}
+              />
+            </Grid>
+          ) : null}
         </Grid>
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12} md={4}>

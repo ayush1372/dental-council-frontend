@@ -92,6 +92,7 @@ const AdditionalQualifications = () => {
       month: '',
       broadSpeciality: '',
       speciality: '',
+      RegisteredWithCouncil: '',
 
       int_countryName: '',
       int_state: '',
@@ -295,7 +296,7 @@ const AdditionalQualifications = () => {
 
   const setEditFormValues = (editData) => {
     verboseLog('EditData->', editData);
-
+    console.log('ayush', editData?.state_medical_council);
     let fieldData = editData?.queries?.map((item) => {
       return { [item?.field_name]: item?.query_comment };
     });
@@ -315,6 +316,8 @@ const AdditionalQualifications = () => {
       setValue('month', editData?.qualification_month);
       setValue('broadSpeciality', editData?.brod_speciality?.id);
       setValue('speciality', editData?.super_speciality);
+      setValue('registrationNumber', editData?.registration_number);
+      setValue('RegisteredWithCouncil', editData?.state_medical_council?.id);
     } else if (editData?.qualification_from.toUpperCase() === 'INTERNATIONAL') {
       setQualificationFrom('International');
 
@@ -386,8 +389,6 @@ const AdditionalQualifications = () => {
     }
   }, [clearErrors, qualificationFilesData, setValue]);
 
-  console.log(createSelectFieldData(specialitiesList?.data));
-
   return (
     <Box p={3}>
       {isAddForm || isEditForm ? (
@@ -426,7 +427,9 @@ const AdditionalQualifications = () => {
                 name="RegisteredWithCouncil"
                 required={true}
                 disabled={isEditForm && !queryfields.includes(field_names.RegisteredWithCouncil)}
-                placeholder={'Select degree'}
+                placeholder={'Select Council'}
+                value={getValues()?.RegisteredWithCouncil}
+                defaultValue={getValues()?.RegisteredWithCouncil}
                 {...register('RegisteredWithCouncil')}
                 options={createSelectFieldData(councilNames)}
                 MenuProps={{
@@ -774,7 +777,7 @@ const AdditionalQualifications = () => {
               </Grid>
             )}
 
-            <Grid item xs={12} lg={4}>
+            {/* <Grid item xs={12} lg={4}>
               {qualificationFrom === 'India' ? (
                 <TextField
                   fullWidth
@@ -812,7 +815,7 @@ const AdditionalQualifications = () => {
                   options={createSelectFieldData(specialitiesList?.data)}
                 />
               )}
-            </Grid>
+            </Grid> */}
             {qualificationFrom === 'International' && (
               <Grid item xs={12} lg={4}>
                 <TextField

@@ -36,6 +36,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
   const {
     registration_date,
     registration_number,
+    neet_registration_number,
     state_medical_council,
     is_renewable,
     renewable_registration_date,
@@ -54,7 +55,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
     let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
     return query?.query_comment;
   };
-
+  // console.log('ayush raised query data',raisedQueryData)
   return (
     <Grid container spacing={1} mt={1}>
       <Grid container item spacing={1}>
@@ -131,7 +132,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
         </Grid>
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
-            Registration Date
+            Date of First Registration
             <Typography component="span" color="error.main">
               *
             </Typography>
@@ -281,7 +282,46 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
               )}
           </Grid>
         </Grid>
+
+        {/* neet registration data */}
+
+        <Grid item xs={12} md={4}>
+          <Typography variant="subtitle2" color="grey.label">
+            NEET Registration Number
+            <Typography component="span" color="error.main">
+              *
+            </Typography>
+            {getQueryRaised('NEET Registration Number') !== undefined && (
+              <Tooltip title={getQueryRaised('NEET Registration Number')}>
+                <ReportIcon color="secondary" ml={2} />
+              </Tooltip>
+            )}
+          </Typography>
+          <Grid display="flex">
+            <Typography color="textPrimary.main" variant="subtitle2">
+              {neet_registration_number ? neet_registration_number : ''}
+            </Typography>
+            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+              data?.user_type === 3) &&
+              dashboardTableDetails !== 'Approved' &&
+              selectedAcademicStatus === 'Pending' &&
+              personalDetails?.hp_profile_status_id === 1 &&
+              !data?.is_admin &&
+              loggedInUserType !== 'NMC' && (
+                <ContactSupportOutlinedIcon
+                  cursor="pointer"
+                  color="primary"
+                  onClick={() => {
+                    setOpenModal(true);
+                    setQueryRaisedField('NEET Registration Number');
+                  }}
+                  fontSize="width24"
+                />
+              )}
+          </Grid>
+        </Grid>
       </Grid>
+
       {openModal && (
         <RaiseQueryPopup
           ClosePopup={ClosePopup}

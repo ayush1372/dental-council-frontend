@@ -372,7 +372,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
     let interval = setInterval(() => {
       retry = retry + 1;
 
-      if (retry === 10) {
+      if (retry === 4) {
         clearInterval(interval);
         setESignLoader(false);
         setRejectPopup(true);
@@ -397,7 +397,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
         .catch(() => {
           setESignLoader(false);
         });
-    }, 30000);
+    }, 1000);
   };
 
   return eSignResponse?.asp_txn_id ? (
