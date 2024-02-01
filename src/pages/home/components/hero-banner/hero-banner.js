@@ -33,7 +33,7 @@ export function HeroBanner() {
               sx={{ textAlign: 'justify' }}
             >
               {t(
-                `National Dental Register (NDR) is dynamic database of all the dentist in India, which would capture  data of dental professional covering his journey in dentistry. NDR will provide Unique Identifier (DCI ID) to all the dentists practicing in India after verification from respective State Dental Council. Once verified, the professional also gets registered in Healthcare Professional Registry (HPR) and a unique Healthcare Professional Identifier (HPR ID) is generated. It would counter the challenges regarding interstate movement of dentists, duplicate registration across state, complex renewal process etc.`
+                `National Dental Register (NDR) is dynamic database of all the dentists in India, which would capture data of dental professionals covering their journey in dentistry. NDR will provide Unique Identifier to all the dentists practicing in India, after verification from respective State Dental Council. Once verified, the professional also gets registered in Healthcare Professional Registry (HPR) and a unique Healthcare Professional Identifier (HPR ID) is generated. It would counter the challenges regarding interstate movement of dentists, duplicate registration across state, complex renewal process etc.The NDR will also help citizens to identify the Dental Professionals verified by the State Dental Councils and will facilitate the improvement in dentalcare delivery across the country.`
               )}
             </Typography>
           </Grid>
