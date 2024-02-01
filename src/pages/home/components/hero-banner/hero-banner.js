@@ -22,11 +22,11 @@ export function HeroBanner() {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="h1" color="primary" mb={2}>
-              {t('DENTAL COUNCIL OF INDIA (DCI)')}
+              {t('National Dental Register')}
             </Typography>
             <Typography variant="body1" color="textPrimary" component="div" mb={2}>
               {t(
-                `Dental Council of India is a Statutory Body incorporated under an Act of Parliament viz. The Dentists Act, 1948 (XVI of 1948) to regulate the Dental Education and the profession of Dentistry throughout India and it is financed by the Govt. of India in the Ministry of Health & Family Welfare (Department of Health) through Grant-in-aid. The General Body of the Dental Council of India representing various State Governments, Universities, Dental Colleges, Central Government, etc.`
+                `National Dental Register (NDR) is dynamic database of all the dentist in India, which would capture  data of dental professional covering his journey in dentistry. NDR will provide Unique Identifier (DCI ID) to all the dentists practicing in India after verification from respective State Dental Council. Once verified, the professional also gets registered in Healthcare Professional Registry (HPR) and a unique Healthcare Professional Identifier (HPR ID) is generated. It would counter the challenges regarding interstate movement of dentists, duplicate registration across state, complex renewal process etc.`
               )}
             </Typography>
           </Grid>

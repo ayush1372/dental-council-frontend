@@ -79,6 +79,7 @@ export default function VerticalLinearStepper() {
 
   const classes = useStyles(theme);
 
+
   return (
     <>
       {ApplicationStatus?.application_details

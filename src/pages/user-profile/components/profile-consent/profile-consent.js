@@ -6,37 +6,37 @@ import CloseIcon from '@mui/icons-material/Close';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import { Box, Dialog, Grid, Typography } from '@mui/material';
 //import { Box, Dialog, Grid, Link, Typography } from '@mui/material';
-import moment from 'moment';
+// import moment from 'moment';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { ErrorMessages } from '../../../../constants/error-messages';
+// import { ErrorMessages } from '../../../../constants/error-messages';
 import { doctorTabs, smcTabs } from '../../../../helpers/components/sidebar-drawer-list-item';
-import { capitalizeFirstLetter } from '../../../../helpers/functions/common-functions';
+// import { capitalizeFirstLetter } from '../../../../helpers/functions/common-functions';
 import {
-  getEsignFormDetails,
-  getPersonalDetailsData,
+  // getEsignFormDetails,
+  // getPersonalDetailsData,
   getRegistrationDetailsData,
   updateProfileConsent,
 } from '../../../../store/actions/doctor-user-profile-actions';
 import { changeUserActiveTab } from '../../../../store/reducers/common-reducers';
-import { getEsignDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
+// import { getEsignDetails } from '../../../../store/reducers/doctor-user-profile-reducer';
 import { Button, Checkbox } from '../../../../ui/core';
-import successToast from '../../../../ui/core/toaster';
+// import successToast from '../../../../ui/core/toaster';
 
 const ProfileConsent = ({
   handleBack,
   setIsReadMode,
   resetStep,
   loggedInUserType,
-  setRejectPopup,
-  setESignLoader,
+  // setRejectPopup,
+  // setESignLoader,
   setShowStaticFormProgress,
 }) => {
   const dispatch = useDispatch();
   const [degreeCertificate, setDegreeCertificate] = useState(false);
   const [registrationFile, setRegistrationFile] = useState(false);
-
+  console.log(degreeCertificate,registrationFile);
   const doctorRegDetails = useSelector(
     (state) => state?.doctorUserProfileReducer?.registrationDetails
   );
@@ -110,82 +110,9 @@ const ProfileConsent = ({
       });
   };
 
-  function eSignHandler() {
-    let data = {
-      templateId: 'TEMPLATE_1',
-      signingPlace:
-        personalDetails?.communication_address?.village?.name ||
-        personalDetails?.communication_address?.district?.name ||
-        personalDetails?.communication_address?.state?.name,
-      nmrDetails: {
-        nmrPersonalDetail: {
-          fullName: personalDetails?.personal_details?.full_name || '',
-          fatherName: personalDetails?.personal_details?.father_name || '',
-          motherName: personalDetails?.personal_details?.mother_name || '',
-          spouseName: personalDetails?.personal_details?.spouse_name || '',
-          gender: personalDetails?.personal_details?.gender || '',
-          dob: moment(personalDetails?.personal_details?.date_of_birth).format('DD-MM-YYYY') || '',
-          nationality: 'Indian',
-          qualification:
-            doctorRegDetails?.qualification_detail_response_tos[0]?.course.course_name || '',
-          mobileNumber: personalDetails?.personal_details?.mobile || '',
-          emailId: personalDetails?.personal_details?.email || '',
-        },
-        nmrKycAddressTO: {
-          address: personalDetails?.kyc_address?.address_line1 || '',
-        },
-        nmrPersonalCommunication: {
-          house: personalDetails?.communication_address?.house,
-          street: personalDetails?.communication_address?.street,
-          landmark: personalDetails?.communication_address?.landmark,
-          locality: personalDetails?.communication_address?.locality,
-          subDistrict: personalDetails?.communication_address?.sub_district?.name,
-          country: personalDetails?.communication_address?.country?.name || '',
-          state: personalDetails?.communication_address?.state?.name || '',
-          district: personalDetails?.communication_address?.district?.name || '',
-          city: personalDetails?.communication_address?.village?.name || '',
-          postalCode: personalDetails?.communication_address?.pincode || '',
-        },
-        nmrRegistrationDetailsTO: {
-          councilName: doctorRegDetails?.registration_detail_to?.state_medical_council?.name || '',
-          registrationNumber: doctorRegDetails?.registration_detail_to?.registration_number,
-          registrationDate: moment(
-            doctorRegDetails?.registration_detail_to?.registration_date
-          ).format('DD-MM-YYYY'),
-          registrationType:
-            doctorRegDetails?.registration_detail_to?.is_renewable === '0'
-              ? 'Permanent'
-              : 'Renewable',
-          dueDate: moment(
-            doctorRegDetails?.registration_detail_to?.renewable_registration_date
-          ).format('DD-MM-YYYY'),
-        },
-        nmrQualificationDetailsTO: {
-          qualificationFrom:
-            doctorRegDetails?.qualification_detail_response_tos[0]?.qualification_from || '',
-          nameOfDegree:
-            doctorRegDetails?.qualification_detail_response_tos[0]?.course.course_name || '',
-          country: doctorRegDetails?.qualification_detail_response_tos[0]?.country.name || '',
-          state:
-            capitalizeFirstLetter(
-              doctorRegDetails?.qualification_detail_response_tos[0]?.state.name
-            ) || '',
-          college: doctorRegDetails?.qualification_detail_response_tos[0]?.college.name || '',
-          university:
-            doctorRegDetails?.qualification_detail_response_tos[0]?.university?.name || '',
-          monthAndYearOfAwarding:
-            doctorRegDetails?.qualification_detail_response_tos[0]?.qualification_month +
-              ' ' +
-              doctorRegDetails?.qualification_detail_response_tos[0]?.qualification_year || '',
-        },
-        isRegCerAttached: registrationFile ? 'Yes' : 'No',
-        isDegreeCardAttached: degreeCertificate ? 'Yes' : 'No',
-        isOtherDocumentAttached: 'No', //cs-1013:needs to changed when workdetails API integrated*
-      },
-    };
-    dispatch(getEsignFormDetails(data))
-      .then((response) => {
-        const payload = {
+
+  function eSignHandler(){
+    const payload = {
           hp_profile_id: updatedPersonalDetails?.hp_profile_id,
           application_type_id: personalDetails?.nmr_id
             ? 2
@@ -195,65 +122,169 @@ const ProfileConsent = ({
               'International'
             ? 7
             : 1,
-          transaction_id: response?.data?.asp_txn_id,
+          transaction_id: 'transaction_id',
           hpr_share_acknowledgement: getValues()?.HPR ? 1 : 0,
         };
-        eSignStatusHandler();
-        dispatch(updateProfileConsent(payload))
-          .then(() => {
-            document.getElementById('formid')?.submit();
-            setIsReadMode(true);
-            resetStep(0);
-            handleEsign();
-            dispatch(getEsignDetails());
-          })
-          .catch(() => {
-            setConfirmationModal(false);
-            dispatch(getEsignDetails([]));
-          });
-      })
-      .catch(() => {
-        successToast(ErrorMessages.serverError, 'auth-error', 'error', 'top-center');
-      });
-  }
-  const handleEsign = () => {
-    document.getElementById('formid')?.submit();
-  };
 
-  //Helper Function to capture the e-sign status from personal API call within 3.2 mins with interval of 8 times.
-  const eSignStatusHandler = () => {
-    let retry = 0;
-    setESignLoader(true);
-    let interval = setInterval(() => {
-      retry = retry + 1;
-
-      if (retry === 4) {
-        clearInterval(interval);
-        setESignLoader(false);
-        setRejectPopup(true);
-      }
-      dispatch(getPersonalDetailsData(personalDetails?.hp_profile_id))
-        .then((response) => {
-          if (
-            response?.data?.esign_status === 1 ||
-            response?.data?.esign_status === 2 ||
-            response?.data?.esign_status === 4
-          ) {
-            clearInterval(interval);
-            setESignLoader(false);
-            if (response?.data?.esign_status === 1) {
+    dispatch(updateProfileConsent(payload))
+          .then((response) => {
+            if(response.data.status===200||response.data.status===201){
               dispatch(changeUserActiveTab(doctorTabs[1].tabName));
             }
-            if (response?.data?.esign_status === 2) {
-              setRejectPopup(true);
-            }
-          }
-        })
-        .catch(() => {
-          setESignLoader(false);
-        });
-    }, 1000);
-  };
+          });
+  }
+
+  // function eSignHandler() {
+  //   let data = {
+  //     templateId: 'TEMPLATE_1',
+  //     signingPlace:
+  //       personalDetails?.communication_address?.village?.name ||
+  //       personalDetails?.communication_address?.district?.name ||
+  //       personalDetails?.communication_address?.state?.name,
+  //     nmrDetails: {
+  //       nmrPersonalDetail: {
+  //         fullName: personalDetails?.personal_details?.full_name || '',
+  //         fatherName: personalDetails?.personal_details?.father_name || '',
+  //         motherName: personalDetails?.personal_details?.mother_name || '',
+  //         spouseName: personalDetails?.personal_details?.spouse_name || '',
+  //         gender: personalDetails?.personal_details?.gender || '',
+  //         dob: moment(personalDetails?.personal_details?.date_of_birth).format('DD-MM-YYYY') || '',
+  //         nationality: 'Indian',
+  //         qualification:
+  //           doctorRegDetails?.qualification_detail_response_tos[0]?.course.course_name || '',
+  //         mobileNumber: personalDetails?.personal_details?.mobile || '',
+  //         emailId: personalDetails?.personal_details?.email || '',
+  //       },
+  //       nmrKycAddressTO: {
+  //         address: personalDetails?.kyc_address?.address_line1 || '',
+  //       },
+  //       nmrPersonalCommunication: {
+  //         house: personalDetails?.communication_address?.house,
+  //         street: personalDetails?.communication_address?.street,
+  //         landmark: personalDetails?.communication_address?.landmark,
+  //         locality: personalDetails?.communication_address?.locality,
+  //         subDistrict: personalDetails?.communication_address?.sub_district?.name,
+  //         country: personalDetails?.communication_address?.country?.name || '',
+  //         state: personalDetails?.communication_address?.state?.name || '',
+  //         district: personalDetails?.communication_address?.district?.name || '',
+  //         city: personalDetails?.communication_address?.village?.name || '',
+  //         postalCode: personalDetails?.communication_address?.pincode || '',
+  //       },
+  //       nmrRegistrationDetailsTO: {
+  //         councilName: doctorRegDetails?.registration_detail_to?.state_medical_council?.name || '',
+  //         registrationNumber: doctorRegDetails?.registration_detail_to?.registration_number,
+  //         registrationDate: moment(
+  //           doctorRegDetails?.registration_detail_to?.registration_date
+  //         ).format('DD-MM-YYYY'),
+  //         registrationType:
+  //           doctorRegDetails?.registration_detail_to?.is_renewable === '0'
+  //             ? 'Permanent'
+  //             : 'Renewable',
+  //         dueDate: moment(
+  //           doctorRegDetails?.registration_detail_to?.renewable_registration_date
+  //         ).format('DD-MM-YYYY'),
+  //       },
+  //       nmrQualificationDetailsTO: {
+  //         qualificationFrom:
+  //           doctorRegDetails?.qualification_detail_response_tos[0]?.qualification_from || '',
+  //         nameOfDegree:
+  //           doctorRegDetails?.qualification_detail_response_tos[0]?.course.course_name || '',
+  //         country: doctorRegDetails?.qualification_detail_response_tos[0]?.country.name || '',
+  //         state:
+  //           capitalizeFirstLetter(
+  //             doctorRegDetails?.qualification_detail_response_tos[0]?.state.name
+  //           ) || '',
+  //         college: doctorRegDetails?.qualification_detail_response_tos[0]?.college.name || '',
+  //         university:
+  //           doctorRegDetails?.qualification_detail_response_tos[0]?.university?.name || '',
+  //         monthAndYearOfAwarding:
+  //           doctorRegDetails?.qualification_detail_response_tos[0]?.qualification_month +
+  //             ' ' +
+  //             doctorRegDetails?.qualification_detail_response_tos[0]?.qualification_year || '',
+  //       },
+  //       isRegCerAttached: registrationFile ? 'Yes' : 'No',
+  //       isDegreeCardAttached: degreeCertificate ? 'Yes' : 'No',
+  //       isOtherDocumentAttached: 'No', //cs-1013:needs to changed when workdetails API integrated*
+  //     },
+  //   };
+  //   dispatch(getEsignFormDetails(data))
+  //     .then((response) => {
+  //       const payload = {
+  //         hp_profile_id: updatedPersonalDetails?.hp_profile_id,
+  //         application_type_id: personalDetails?.nmr_id
+  //           ? 2
+  //           : selectedQualificationTypeValue === 'International'
+  //           ? 7
+  //           : doctorRegDetails?.qualification_detail_response_tos[0]?.qualification_from ===
+  //             'International'
+  //           ? 7
+  //           : 1,
+  //         transaction_id: response?.data?.asp_txn_id,
+  //         hpr_share_acknowledgement: getValues()?.HPR ? 1 : 0,
+  //       };
+  //       eSignStatusHandler();
+  //       dispatch(updateProfileConsent(payload))
+  //         .then(() => {
+  //           document.getElementById('formid')?.submit();
+  //           setIsReadMode(true);
+  //           resetStep(0);
+  //           handleEsign();
+  //           dispatch(getEsignDetails());
+  //         })
+  //         .catch(() => {
+  //           setConfirmationModal(false);
+  //           dispatch(getEsignDetails([]));
+  //         });
+  //     })
+  //     .catch(() => {
+  //       successToast(ErrorMessages.serverError, 'auth-error', 'error', 'top-center');
+  //     });
+  // }
+
+
+
+  // const handleEsign = () => {
+  //   document.getElementById('formid')?.submit();
+  // };
+
+
+
+
+
+  //Helper Function to capture the e-sign status from personal API call within 3.2 mins with interval of 8 times.
+  // const eSignStatusHandler = () => {
+  //   let retry = 0;
+  //   setESignLoader(true);
+  //   let interval = setInterval(() => {
+  //     retry = retry + 1;
+
+  //     if (retry === 4) {
+  //       clearInterval(interval);
+  //       setESignLoader(false);
+  //       setRejectPopup(true);
+  //     }
+  //     dispatch(getPersonalDetailsData(personalDetails?.hp_profile_id))
+  //       .then((response) => {
+  //         if (
+  //           response?.data?.esign_status === 1 ||
+  //           response?.data?.esign_status === 2 ||
+  //           response?.data?.esign_status === 4
+  //         ) {
+  //           clearInterval(interval);
+  //           setESignLoader(false);
+  //           if (response?.data?.esign_status === 1) {
+  //             dispatch(changeUserActiveTab(doctorTabs[1].tabName));
+  //           }
+  //           if (response?.data?.esign_status === 2) {
+  //             setRejectPopup(true);
+  //           }
+  //         }
+  //       })
+  //       .catch(() => {
+  //         setESignLoader(false);
+  //       });
+  //   }, 1000);
+  // };
 
   useEffect(() => {}, [eSignResponse, getValues().consent, getValues()?.HPR]);
   return eSignResponse?.asp_txn_id ? (

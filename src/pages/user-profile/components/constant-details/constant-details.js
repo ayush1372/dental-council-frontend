@@ -358,7 +358,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
           </Box>
         </Grid>
 
-        <Grid item xs={12} sm={6} lg={2} xl={4} px={2} mb={{ xs: 1, lg: 0 }}>
+        <Grid item xs={12} sm={6} lg={4} xl={4} px={2} mb={{ xs: 1, lg: 0 }}>
           <Typography component="div" variant="body3" color="grey.label">
             Email
             <Typography component="span" color="error.main">
@@ -369,10 +369,11 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
           <Box display="flex" alignItems="center" sx={{ display: 'flex' }}>
             {!emailId || emailChange ? (
               <Box display="flex" flexDirection="column">
-                <Paper display="flex" alignItems="center" sx={{ p: '2px 4px', display: 'flex' }}>
+                <Paper display="flex" alignItems="center" sx={{display: 'flex' }}>
                   <InputBase
                     required={true}
                     sx={{ ml: 1, flex: 1 }}
+                    fullWidth
                     placeholder="Email"
                     name="email"
                     defaultValue={getValues().email}
