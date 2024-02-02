@@ -7,9 +7,9 @@ export function About() {
   const navigate = useNavigate();
   return (
     <Container maxWidth="lg">
-      <Grid container p={8}>
-        <Grid item xs="12">
-          <Box className={styles.main} sx={{ backgroundColor: 'primary.main' }} p={8}>
+      <Grid container sx={{ padding: { xs: 2, sm: 4, md: 6, lg: 8, xl: 10 }, }}>
+        <Grid item xs={12}>
+          <Box className={styles.main} sx={{ backgroundColor: 'primary.main', padding: { xs: 6, lg: 8, xl: 10 } }} >
             <Typography variant="h1" textAlign="left" sx={{ color: 'white.main' }}>
               Introduction
             </Typography>

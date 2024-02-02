@@ -213,7 +213,7 @@ export default function VerticalLinearStepper() {
                   ? 'Your application has been rejected by college for following reason'
                   : userTrackActionId(label?.action_id) === 'Approve' &&
                     userGroupTypeId(label?.group_id) === 'SMC'
-                  ? 'SDC reviewed and verified the application. Application now has been sent to DCI for further verification.'
+                  ? 'SDC reviewed and verified the application.'
                   : userTrackActionId(label?.action_id) === 'Approve' &&
                     userGroupTypeId(label?.group_id) === 'NMC'
                   ? 'DCI reviewed and approved the application.'
