@@ -18,7 +18,10 @@ export function HeroBanner() {
     >
       <Container className={styles.bannerWrapper}>
         <Grid container spacing={3} direction={{ xs: 'column', sm: 'row' }}>
-          <Grid item xs={12} sm={2.7} mt={13}>
+          <Grid item xs={12} sm={2.7} mt={13} sx={{
+            display: "flex",
+            alignItems: "end"
+          }}>
             <img className={styles.bannerImage1} src={BannerImage1} alt="Hero Banner 1" />
           </Grid>
           <Grid item xs={12} sm={5.5} mt={10}>
@@ -38,12 +41,15 @@ export function HeroBanner() {
             </Typography>
           </Grid>
           <Grid item xs={12} sm={0.3}></Grid>
-          <Grid item xs={12} sm={3.15} mt={3}>
+          <Grid item xs={12} sm={3.15} mt={3} sx={{
+            display: "flex",
+            alignItems: "end"
+          }}>
             <img className={styles.bannerImage2} src={BannerImage2} alt="Hero Banner 2" />
           </Grid>
         </Grid>
       </Container>
-    </Box>
+    </Box >
   );
 }
 
