@@ -28,7 +28,7 @@ export const Copyright = () => {
               display={'flex'}
               justifyContent={{ xs: 'flex-start', md: 'flex-end' }}
             >
-              Page last updated on: 29/07/2023
+              Page last updated on: 04/02/2024
             </Typography>
             {/* Commented for future reference */}
             {/* {env?.buildDate && (
