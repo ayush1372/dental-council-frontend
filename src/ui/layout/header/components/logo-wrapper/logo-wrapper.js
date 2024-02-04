@@ -21,7 +21,7 @@ import { useNavigate } from 'react-router-dom';
 import ABDMLogo from '../../../../../assets/images/logo-slider/ABDM_logo.svg';
 import G20Logo from '../../../../../assets/images/logo-slider/G20.svg';
 // import NmcLogo from '../../../../../assets/images/logo-slider/NMC_logo.png';
-import NmcLogo from '../../../../../assets/images/logo-slider/new_dc_logo.jpbeg';
+import NmcLogo from '../../../../../assets/images/logo-slider/new_dc_logo.jpeg';
 import { IdleTimer } from '../../../../../helpers/components/idle-timer';
 import { colgTabs, doctorTabs } from '../../../../../helpers/components/sidebar-drawer-list-item';
 import { logoutAction } from '../../../../../store/actions/login-action';
