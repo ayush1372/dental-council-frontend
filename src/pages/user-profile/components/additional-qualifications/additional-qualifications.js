@@ -58,8 +58,10 @@ const AdditionalQualifications = () => {
   const [universitiesListData, setUniversitiesListData] = useState(universitiesList?.data);
   const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
   const [qualificationFilesData, setQualificationFilesData] = useState([]);
+  const [nameChangeFilesData, setNameChangeFilesData] = useState([]);
   const [deleteUploadedFile, setDeleteUploadedFile] = useState(false);
   const [qualificationFrom, setQualificationFrom] = useState('India');
+  const [degreeNameDiffFromAadhar, setDegreeNameDiffFromAadhar] = useState("0");
   const [successModalPopup, setSuccessModalPopup] = useState(false);
   const [attachmentViewIndex, setAttachmentViewIndex] = useState();
   const [fieldComments, setFieldComments] = useState([]);
@@ -173,6 +175,10 @@ const AdditionalQualifications = () => {
     handleResetForm();
   };
 
+  const handleDegreeNameChange = (event) => {
+    setDegreeNameDiffFromAadhar(event.target.value);
+  };
+
   const getRegistrationCouncilData = (RegisteredWithCouncil) => {
     let councilData = [];
     councilNames?.map((elementData) => {
@@ -215,7 +221,7 @@ const AdditionalQualifications = () => {
         qualification_month: isInternationalQualification
           ? getValues()?.int_month
           : getValues()?.month,
-        is_name_change: 0,
+        is_name_change: degreeNameDiffFromAadhar === "1"? 1 : 0,
         is_verified: 0,
         request_id: isEditForm && editData?.request_id,
         broad_speciality_id: isInternationalQualification
@@ -246,6 +252,9 @@ const AdditionalQualifications = () => {
 
       if (qualificationFilesData?.length > 0) {
         formData.append('degreeCertificates', qualificationFilesData[0]?.file);
+      }
+      if (nameChangeFilesData?.length > 0) {
+        formData.append('proofOfQualificationNameChange', nameChangeFilesData[0]?.file);
       }
       // ?
       // : formData.append('degreeCertificates', degreeCertificateBlob);
@@ -296,7 +305,6 @@ const AdditionalQualifications = () => {
 
   const setEditFormValues = (editData) => {
     verboseLog('EditData->', editData);
-    console.log('ayush', editData?.state_medical_council);
     let fieldData = editData?.queries?.map((item) => {
       return { [item?.field_name]: item?.query_comment };
     });
@@ -388,6 +396,13 @@ const AdditionalQualifications = () => {
       clearErrors('qualificationCertificate', '');
     }
   }, [clearErrors, qualificationFilesData, setValue]);
+
+  useEffect(() => {
+    if (nameChangeFilesData?.length > 0) {
+      setValue('nameChangeCertificate', nameChangeFilesData);
+      clearErrors('nameChangeCertificate', '');
+    }
+  }, [clearErrors, nameChangeFilesData, setValue]);
 
   return (
     <Box p={3}>
@@ -910,20 +925,85 @@ const AdditionalQualifications = () => {
               queryfields.includes(field_names.regCertificate)
                 ? getQueryTooltip(field_names.regCertificate)
                 : queryfields?.includes(field_names.qualificationDegree) &&
-                  getQueryTooltip(field_names.qualificationDegree)
+                getQueryTooltip(field_names.qualificationDegree)
             }
             {...register(
               'qualificationCertificate',
               (isEditForm
                 ? deleteUploadedFile
                 : qualificationFilesData[0]?.file?.length === 0 ||
-                  qualificationFilesData[0]?.file?.length === undefined) && {
+                qualificationFilesData[0]?.file?.length === undefined) && {
                 required: 'Please upload the qualification certificate.',
               }
             )}
             fileDisabled={isEditForm && !queryfields.includes(field_names.qualificationDegree)}
             uploadDisabled={isEditForm && !queryfields.includes(field_names.qualificationDegree)}
           />
+
+          <br />
+          <Typography variant="subtitle2" color="inputTextColor.main">
+            Is your name in degree, different from your name in Aadhaar?
+          </Typography>
+
+          <FormControl>
+            <RadioGroup
+              name="degree_name_diff_from_aadhar_radio"
+              value={degreeNameDiffFromAadhar}
+              onChange={handleDegreeNameChange}
+              row
+            >
+              <FormControlLabel
+                value="1"
+                control={<Radio />}
+                label="Yes"
+              />
+              <FormControlLabel
+                value="0"
+                control={<Radio />}
+                label="No"
+              />
+            </RadioGroup>
+          </FormControl>
+
+          {degreeNameDiffFromAadhar === "1" &&
+            <UploadFile
+              // queryRaiseIcon={
+              //   queryfields.includes(field_names.regCertificate) ||
+              //   queryfields?.includes(field_names.qualificationDegree)
+              // }
+              fileID={'nameChangeFilesData'}
+              uploadFiles="single"
+              sizeAllowed={5}
+              fileTypes={['image/jpg', 'image/jpeg', 'image/png', 'application/pdf']}
+              fileMessage={`PDF, PNG, JPG, JPEG file types are supported.
+               Maximum size allowed is 5MB.`}
+              fileData={nameChangeFilesData}
+              clearErrors={clearErrors}
+              setError={setError}
+              name={'nameChangeCertificate'}
+              isError={errors.qualificationCertificate?.message}
+              setFileData={setNameChangeFilesData}
+              uploadFileLabel="Upload Name Change Certificate"
+              // toolTipData={
+              //   queryfields.includes(field_names.regCertificate)
+              //     ? getQueryTooltip(field_names.regCertificate)
+              //     : queryfields?.includes(field_names.qualificationDegree) &&
+              //     getQueryTooltip(field_names.qualificationDegree)
+              // }
+              {...register(
+                'nameChangeCertificate',
+                (isEditForm
+                  ? deleteUploadedFile
+                  : nameChangeFilesData[0]?.file?.length === 0 ||
+                  nameChangeFilesData[0]?.file?.length === undefined) && {
+                  required: 'Please upload the name change certificate.',
+                }
+              )}
+            // fileDisabled={isEditForm && !queryfields.includes(field_names.qualificationDegree)}
+            // uploadDisabled={isEditForm && !queryfields.includes(field_names.qualificationDegree)}
+            />
+          }
+
           <Box mt={2}>
             <Button
               variant={'contained'}

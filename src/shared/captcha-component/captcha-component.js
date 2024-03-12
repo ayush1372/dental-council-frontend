@@ -63,7 +63,7 @@ const CaptchaComponent = ({ selectedLoginOption, captchaResult }) => {
     captchaValue.length > 2 ? setError('Please enter valid captcha answer') : setError('');
   };
 
-  console.log(generateCaptcha);
+  
   return (
     <Box>
       <Box>

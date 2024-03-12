@@ -52,6 +52,8 @@ const UniqueUserNameForDoctorRegistration = () => {
       // hprId: `${getValues().UniqueUserNameForDoctor}@hpr.abdm`,
       hprId: suggestion,
       notifyUser: false,
+      hpCategoryCode: 1,
+      hpSubCategoryCode: 2,
     };
     dispatch(createUniqueHprId(data)).then(() => {
       navigate(`/reset-password`);

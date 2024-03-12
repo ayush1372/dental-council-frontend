@@ -29,11 +29,13 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
   const [openModal, setOpenModal] = useState(false);
   const [queryRaisedField, setQueryRaisedField] = useState('');
   const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
+  const [attachmentViewNameChange, setAttachmentViewNameChange] = useState(false);
 
   const { qualification_detail_response_tos, nbe_response_to } = registrationDetails || {};
 
   const CloseAttachmentPopup = () => {
     setAttachmentViewProfile(false);
+    setAttachmentViewNameChange(false);
   };
 
   const ClosePopup = () => {
@@ -52,12 +54,24 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
     return query?.query_comment;
   };
 
+  
+
+
+
+
   return attachmentViewProfile ? (
     <AttachmentViewPopup
       certificate={qualification_detail_response_tos[attachmentViewIndex]?.degree_certificate}
       closePopup={CloseAttachmentPopup}
       alt={'Qualification Certificate'}
       certFileType={qualification_detail_response_tos[attachmentViewIndex]?.file_type}
+    />
+  ) : attachmentViewNameChange ? (
+    <AttachmentViewPopup
+      certificate={qualification_detail_response_tos[attachmentViewIndex]?.name_change_proof_attach}
+      closePopup={CloseAttachmentPopup}
+      alt={'Name Change Certificate'}
+      certFileType={qualification_detail_response_tos[attachmentViewIndex]?.name_change_proof_attach_file_name_type}
     />
   ) : qualification_detail_response_tos?.length > 0 ? (
     qualification_detail_response_tos?.map((element, index) => {
@@ -69,13 +83,13 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
           key={index}
           borderBottom={
             qualification_detail_response_tos?.length > 1 &&
-            index < qualification_detail_response_tos?.length - 1
+              index < qualification_detail_response_tos?.length - 1
               ? 1
               : 'none'
           }
           borderColor={
             qualification_detail_response_tos?.length > 1 &&
-            index < qualification_detail_response_tos?.length - 1
+              index < qualification_detail_response_tos?.length - 1
               ? 'grey2.light'
               : 'none'
           }
@@ -189,8 +203,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   *
                 </Typography>
                 {element?.queries?.length > 0 &&
-                  getQueryRaised('State', element?.queries) !== undefined && (
-                    <Tooltip title={getQueryRaised('State', element?.queries)}>
+                  getQueryRaised('State Name', element?.queries) !== undefined && (
+                    <Tooltip title={getQueryRaised('State Name', element?.queries)}>
                       <ReportIcon color="secondary" ml={2} />
                     </Tooltip>
                   )}
@@ -213,7 +227,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       color="primary"
                       onClick={() => {
                         setOpenModal(true);
-                        setQueryRaisedField('State');
+                        setQueryRaisedField('State Name');
                       }}
                       fontSize="width24"
                     />
@@ -268,8 +282,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   *
                 </Typography>
                 {element?.queries?.length > 0 &&
-                  getQueryRaised('University', element?.queries) !== undefined && (
-                    <Tooltip title={getQueryRaised('University', element?.queries)}>
+                  getQueryRaised('University Name', element?.queries) !== undefined && (
+                    <Tooltip title={getQueryRaised('University Name', element?.queries)}>
                       <ReportIcon color="secondary" ml={2} />
                     </Tooltip>
                   )}
@@ -292,7 +306,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       color="primary"
                       onClick={() => {
                         setOpenModal(true);
-                        setQueryRaisedField('University');
+                        setQueryRaisedField('University Name');
                       }}
                       fontSize="width24"
                     />
@@ -304,7 +318,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                 Month & Year of Degree Awarded
                 {element?.queries?.length > 0 &&
                   getQueryRaised('Month & Year of Degree Awarded', element?.queries) !==
-                    undefined && (
+                  undefined && (
                     <Tooltip
                       title={getQueryRaised('Month & Year of Degree Awarded', element?.queries)}
                     >
@@ -493,7 +507,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   </Typography>
                   {element?.queries?.length > 0 &&
                     getQueryRaised('Month & Year of FMGE qualified', element?.queries) !==
-                      undefined && (
+                    undefined && (
                       <Tooltip
                         title={getQueryRaised('Month & Year of FMGE qualified', element?.queries)}
                       >
@@ -532,13 +546,13 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
           <Grid container item spacing={1} mt={0.5}>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="grey.label">
-                Upload Qualification Certificate
+                Uploaded Qualification Certificate
                 <Typography component="span" color="error.main">
                   *
                 </Typography>
                 {element?.queries?.length > 0 &&
                   getQueryRaised('Upload Qualification Certificate', element?.queries) !==
-                    undefined && (
+                  undefined && (
                     <Tooltip
                       title={getQueryRaised('Upload Qualification Certificate', element?.queries)}
                     >
@@ -583,6 +597,63 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   )}
               </Grid>
             </Grid>
+            {
+              qualification_detail_response_tos && qualification_detail_response_tos[0]?.is_name_change ==1 ?
+              (<Grid item xs={12} md={4}>
+                <Typography variant="subtitle2" color="grey.label">
+                  Uploaded Name Change Certificate
+                  <Typography component="span" color="error.main">
+                    *
+                  </Typography>
+                  {element?.queries?.length > 0 &&
+                    getQueryRaised('Upload Qualification Name Change Certificate', element?.queries) !==
+                    undefined && (
+                      <Tooltip
+                      title={getQueryRaised('Upload Qualification Name Change Certificate', element?.queries)}
+                      >
+                        <ReportIcon color="secondary" ml={2} />
+                      </Tooltip>
+                    )}
+                </Typography>
+                <Grid display="flex" alignItems="center">
+                  <Typography
+                    sx={{ cursor: 'pointer' }}
+                    variant="subtitle2"
+                    color="textPrimary.main"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setAttachmentViewIndex(index);
+                      setAttachmentViewNameChange(true);
+                    }}
+                  >
+                    <IconButton>
+                      <AttachFileIcon fontSize="10px" />
+                    </IconButton>
+                    View Attachment
+                  </Typography>
+                  {(data?.user_type === 2 ||
+                    data?.user_type === 3 ||
+                    data?.user_type === 4 ||
+                    data?.user_type === 5) &&
+                    element.is_verified !== 1 &&
+                    selectedAcademicStatus === 'Pending' &&
+                    college_status !== 'Approved' &&
+                    !data?.is_admin &&
+                    loggedInUserType !== 'NMC' && (
+                      <ContactSupportOutlinedIcon
+                        cursor="pointer"
+                        color="primary"
+                        onClick={() => {
+                          setOpenModal(true);
+                          setQueryRaisedField('Upload Qualification Name Change Certificate');
+                        }}
+                        fontSize="width24"
+                      />
+                    )}
+                </Grid>
+              </Grid>):null
+            }
+            
           </Grid>
           {openModal && (
             <RaiseQueryPopup

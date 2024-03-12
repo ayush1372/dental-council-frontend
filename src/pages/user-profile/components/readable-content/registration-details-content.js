@@ -22,6 +22,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
 
   const [openModal, setOpenModal] = useState(false);
   const [attachmentViewProfile, setAttachmentViewProfile] = useState(false);
+  const [attachmentViewNameChange, setAttachmentViewNameChange] = useState(false);
   const [queryRaisedField, setQueryRaisedField] = useState('');
   const dashboardTableDetailsData = useSelector((state) => state?.dashboard?.dashboardTableDetails);
   const { college_status: dashboardTableDetails } =
@@ -42,12 +43,16 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
     renewable_registration_date,
     registration_certificate,
     file_type,
+    is_name_change,
+    name_change_proof_attach,
+    name_change_proof_attach_file_name_type,
   } = registration_detail_to || {};
 
   const smcName = state_medical_council?.name || '';
 
   const CloseAttachmentPopup = () => {
     setAttachmentViewProfile(false);
+    setAttachmentViewNameChange(false);
   };
 
   //Helper Method to get the data of the query raised against the field
@@ -55,7 +60,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
     let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
     return query?.query_comment;
   };
-  // console.log('ayush raised query data',raisedQueryData)
+
   return (
     <Grid container spacing={1} mt={1}>
       <Grid container item spacing={1}>
@@ -173,8 +178,8 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
             <Typography component="span" color="error.main">
               *
             </Typography>
-            {getQueryRaised('Registration') !== undefined && (
-              <Tooltip title={getQueryRaised('Registration')}>
+            {getQueryRaised('Registration Type') !== undefined && (
+              <Tooltip title={getQueryRaised('Registration Type')}>
                 <ReportIcon color="secondary" ml={2} />
               </Tooltip>
             )}
@@ -195,7 +200,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
                   color="primary"
                   onClick={() => {
                     setOpenModal(true);
-                    setQueryRaisedField('Registration');
+                    setQueryRaisedField('Registration Type');
                   }}
                   fontSize="width24"
                 />
@@ -236,14 +241,54 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
               )}
           </Grid>
         </Grid>
+
+        {/* neet registration data */}
+        {new Date(registration_date).getFullYear() >= 2019 &&
+          <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="grey.label">
+              NEET Registration Number
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+              {getQueryRaised('NEET Registration Number') !== undefined && (
+                <Tooltip title={getQueryRaised('NEET Registration Number')}>
+                  <ReportIcon color="secondary" ml={2} />
+                </Tooltip>
+              )}
+            </Typography>
+            <Grid display="flex">
+              <Typography color="textPrimary.main" variant="subtitle2">
+                {neet_registration_number ? neet_registration_number : ''}
+              </Typography>
+              {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+                data?.user_type === 3) &&
+                dashboardTableDetails !== 'Approved' &&
+                selectedAcademicStatus === 'Pending' &&
+                personalDetails?.hp_profile_status_id === 1 &&
+                !data?.is_admin &&
+                loggedInUserType !== 'NMC' && (
+                  <ContactSupportOutlinedIcon
+                    cursor="pointer"
+                    color="primary"
+                    onClick={() => {
+                      setOpenModal(true);
+                      setQueryRaisedField('NEET Registration Number');
+                    }}
+                    fontSize="width24"
+                  />
+                )}
+            </Grid>
+          </Grid>}
+
+          
         <Grid item xs={12} md={4}>
           <Typography variant="subtitle2" color="grey.label">
             Upload Registration Certificate
             <Typography component="span" color="error.main">
               *
             </Typography>
-            {getQueryRaised('Upload the registration certificate') !== undefined && (
-              <Tooltip title={getQueryRaised('Upload the registration certificate')}>
+            {getQueryRaised('Upload registration certificate') !== undefined && (
+              <Tooltip title={getQueryRaised('Upload registration certificate')}>
                 <ReportIcon color="secondary" ml={2} />
               </Tooltip>
             )}
@@ -275,7 +320,7 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
                   color="primary"
                   onClick={() => {
                     setOpenModal(true);
-                    setQueryRaisedField('Upload the registration certificate');
+                    setQueryRaisedField('Upload registration certificate');
                   }}
                   fontSize="width24"
                 />
@@ -283,43 +328,55 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
           </Grid>
         </Grid>
 
-        {/* neet registration data */}
-
-        <Grid item xs={12} md={4}>
-          <Typography variant="subtitle2" color="grey.label">
-            NEET Registration Number
-            <Typography component="span" color="error.main">
-              *
-            </Typography>
-            {getQueryRaised('NEET Registration Number') !== undefined && (
-              <Tooltip title={getQueryRaised('NEET Registration Number')}>
-                <ReportIcon color="secondary" ml={2} />
-              </Tooltip>
-            )}
-          </Typography>
-          <Grid display="flex">
-            <Typography color="textPrimary.main" variant="subtitle2">
-              {neet_registration_number ? neet_registration_number : ''}
-            </Typography>
-            {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
-              data?.user_type === 3) &&
-              dashboardTableDetails !== 'Approved' &&
-              selectedAcademicStatus === 'Pending' &&
-              personalDetails?.hp_profile_status_id === 1 &&
-              !data?.is_admin &&
-              loggedInUserType !== 'NMC' && (
-                <ContactSupportOutlinedIcon
-                  cursor="pointer"
-                  color="primary"
-                  onClick={() => {
-                    setOpenModal(true);
-                    setQueryRaisedField('NEET Registration Number');
-                  }}
-                  fontSize="width24"
-                />
+        {is_name_change === 1 &&
+          <Grid item xs={12} md={4}>
+            <Typography variant="subtitle2" color="grey.label">
+              Upload Name Change Certificate
+              <Typography component="span" color="error.main">
+                *
+              </Typography>
+              {getQueryRaised('Upload name change certificate') !== undefined && (
+                <Tooltip title={getQueryRaised('Upload name change certificate')}>
+                  <ReportIcon color="secondary" ml={2} />
+                </Tooltip>
               )}
+            </Typography>
+            <Grid display="flex" alignItems="center">
+              <Typography
+                sx={{ cursor: 'pointer' }}
+                variant="subtitle2"
+                color="textPrimary.main"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setAttachmentViewNameChange(true);
+                }}
+              >
+                <IconButton>
+                  <AttachFileIcon fontSize="10px" />
+                </IconButton>
+                View attachment
+              </Typography>
+              {((data?.user_type === 4 && (data?.user_sub_type !== 6 || data?.user_sub_type === 7)) ||
+                data?.user_type === 3) &&
+                dashboardTableDetails !== 'Approved' &&
+                selectedAcademicStatus === 'Pending' &&
+                personalDetails?.hp_profile_status_id === 1 &&
+                !data?.is_admin &&
+                loggedInUserType !== 'NMC' && (
+                  <ContactSupportOutlinedIcon
+                    cursor="pointer"
+                    color="primary"
+                    onClick={() => {
+                      setOpenModal(true);
+                      setQueryRaisedField('Upload name change certificate');
+                    }}
+                    fontSize="width24"
+                  />
+                )}
+            </Grid>
           </Grid>
-        </Grid>
+        }
+
       </Grid>
 
       {openModal && (
@@ -336,6 +393,14 @@ const RegistrationDetailsContent = ({ selectedDataIndex, selectedAcademicStatus 
           closePopup={CloseAttachmentPopup}
           alt={'Registration Certificate'}
           certFileType={file_type}
+        />
+      )}
+      {attachmentViewNameChange && (
+        <AttachmentViewPopup
+          certificate={name_change_proof_attach}
+          closePopup={CloseAttachmentPopup}
+          alt={'Name Change Certificate'}
+          certFileType={name_change_proof_attach_file_name_type}
         />
       )}
     </Grid>

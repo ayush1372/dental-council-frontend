@@ -8,6 +8,7 @@ import GenericTable from '../../../../shared/generic-component/generic-table';
 import { TextField } from '../../../../ui/core';
 
 function createData(
+  facilityId,
   name,
   address,
   state,
@@ -19,6 +20,7 @@ function createData(
   select
 ) {
   return {
+    facilityId,
     name,
     address,
     state,
@@ -47,6 +49,11 @@ function WorkDetailsTable({
   let currentRowIndex;
 
   const dataHeader = [
+    {
+      title: 'Facility ID',
+      name: 'facilityId',
+      type: 'string',
+    },
     {
       title: 'Name',
       name: 'name',
@@ -91,6 +98,10 @@ function WorkDetailsTable({
   const newRowsData = FacilityData?.map((application) => {
     return createData(
       {
+        type: 'facilityId',
+        value: application?.id,
+      },
+      {
         type: 'name',
         value: toUpperCase(application?.name),
       },
@@ -108,10 +119,10 @@ function WorkDetailsTable({
       },
       {
         type: 'type',
-        value: application?.facilityType,
+        value: application?.facility_type,
       },
 
-      { type: 'systemOfMedicine', value: application?.systemOfMedicine },
+      { type: 'systemOfMedicine', value: application?.system_of_medicine },
       {
         type: 'department',
         value: (

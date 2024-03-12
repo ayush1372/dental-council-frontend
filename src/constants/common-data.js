@@ -144,15 +144,15 @@ export const natureOfWork = [
 
 export const workStatusOptions = [
   {
-    id: 3,
-    name: 'Government only',
-  },
-  {
-    id: 2,
+    id: 0,
     name: 'Private Practice only',
   },
   {
     id: 1,
+    name: 'Government only',
+  },
+  {
+    id: 2,
     name: 'Both',
   },
 ];

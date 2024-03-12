@@ -137,6 +137,7 @@ export const updateDoctorPersonalDetails = (body, doctor_profile_id) => async (d
 };
 
 export const updateDoctorRegistrationDetails = (body, doctor_profile_id) => async (dispatch) => {
+ 
   return await new Promise((resolve, reject) => {
     useAxiosCall({
       method: PUT,

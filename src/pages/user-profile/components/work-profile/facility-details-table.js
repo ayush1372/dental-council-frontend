@@ -12,6 +12,7 @@ import { deleteWorkProfileDetailsData } from '../../../../store/actions/doctor-u
 // import successToast from '../../../../ui/core/toaster';
 
 function createData(
+  facilityId,
   name,
   address,
   state,
@@ -23,6 +24,7 @@ function createData(
   status
 ) {
   return {
+    facilityId,
     name,
     address,
     state,
@@ -53,6 +55,11 @@ function FacilityDetailsTable({ declaredFacilityData }) {
   };
 
   const dataHeader = [
+    {
+      title: 'Facility ID',
+      name: 'facilityId',
+      type: 'string',
+    },
     {
       title: 'Name',
       name: 'name',
@@ -91,8 +98,14 @@ function FacilityDetailsTable({ declaredFacilityData }) {
     (value) => JSON.stringify(value) !== '{}'
   );
 
+
+
   const newRowsData = updatedFacilityData?.map((application) => {
     return createData(
+      {
+        type: 'facilityId',
+        value: application?.facility_id || '',
+      },
       {
         type: 'name',
         value: application?.work_organization || '-',

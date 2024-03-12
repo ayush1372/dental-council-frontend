@@ -180,10 +180,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
       registration,
       RenewalDate,
       NeetRegistrationNumber,
+      registrationname,
     } = getValues();
 
     const cloneObj = JSON.parse(JSON.stringify(registrationDetails));
-
     let finalResult = {};
     let registration_detail = {};
     let qualification_details = {};
@@ -195,13 +195,14 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           ? RegistrationNumber
           : RegistrationNumber
         : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-        ? RegistrationNumber
-        : RegistrationNumber;
+          ? RegistrationNumber
+          : RegistrationNumber;
 
     registration_detail.state_medical_council = getRegistrationCouncilData(RegisteredWithCouncil);
     registration_detail.is_renewable = registration || is_renewable;
     registration_detail.renewable_registration_date = RenewalDate?.split('/')?.reverse()?.join('-');
     registration_detail.neet_registration_number = NeetRegistrationNumber;
+    registration_detail.is_name_change = registrationname === "0" ? 1 : 0;
     // this below code is storing qualification details
     const { qualification } = getValues();
 
@@ -214,7 +215,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
       updatedObj = qualification?.map((q) => ({
         id:
           qualification_detail_response_tos[0]?.id &&
-          qualification_detail_response_tos[0]?.qualification_from === q?.qualificationfrom
+            qualification_detail_response_tos[0]?.qualification_from === q?.qualificationfrom
             ? qualification_detail_response_tos[0]?.id
             : '',
         country: isInternational
@@ -266,8 +267,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
   const fetchUpdateDoctorRegistrationDetails = (finalResult, moveToNext = false) => {
     const formData = new FormData();
-    console.log('final result', finalResult);
     const doctorRegistrationDetailsJson = JSON.stringify(finalResult);
+
     const doctorRegistrationDetailsBlob = new Blob([doctorRegistrationDetailsJson], {
       type: 'application/json',
     });
@@ -287,7 +288,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
         'proofOfQualificationNameChange',
         qualificationFilesNameChangeData[`qualification.${0}.diffadharfiles`]?.[0]?.file
       );
-
+    console.log('-----------------------------------------', finalResult)
     dispatch(
       updateDoctorRegistrationDetails(
         formData,
@@ -302,6 +303,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
         behavior: 'smooth',
       });
     });
+
   };
 
   useEffect(() => {
@@ -431,6 +433,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     return query?.query_comment;
   };
 
+  console.log(raisedQueryData)
+
   return (
     <Box
       boxShadow={1}
@@ -508,19 +512,19 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                     ? false
                     : true
                 }
-                //   input: {
-                //     backgroundColor:
-                //       loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-                //         ? ''
-                //         : 'grey2.main',
-                //   },
-                // }}
-                // InputProps={{
-                //   readOnly:
-                //     loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-                //       ? false
-                //       : true,
-                // }}
+              //   input: {
+              //     backgroundColor:
+              //       loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+              //         ? ''
+              //         : 'grey2.main',
+              //   },
+              // }}
+              // InputProps={{
+              //   readOnly:
+              //     loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+              //       ? false
+              //       : true,
+              // }}
               />
             )}
           </Grid>
@@ -552,29 +556,29 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 work_flow_status_id === 3
                   ? getQueryRaised('Registration Number')
                   : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-                  ? false
-                  : true
+                    ? false
+                    : true
               }
-              // sx={{
-              //   input: {
-              //     backgroundColor:
-              //       getQueryRaised('Registration Number') === false
-              //         ? false
-              //         : work_flow_status_id === 3
-              //         ? 'grey2.main'
-              //         : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-              //         ? ''
-              //         : 'grey2.main',
-              //   },
-              // }}
-              // InputProps={{
-              //   readOnly:
-              //     work_flow_status_id === 3
-              //       ? getQueryRaised('Registration Number')
-              //       : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-              //       ? false
-              //       : true,
-              // }}
+            // sx={{
+            //   input: {
+            //     backgroundColor:
+            //       getQueryRaised('Registration Number') === false
+            //         ? false
+            //         : work_flow_status_id === 3
+            //         ? 'grey2.main'
+            //         : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+            //         ? ''
+            //         : 'grey2.main',
+            //   },
+            // }}
+            // InputProps={{
+            //   readOnly:
+            //     work_flow_status_id === 3
+            //       ? getQueryRaised('Registration Number')
+            //       : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+            //       ? false
+            //       : true,
+            // }}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -613,10 +617,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 getQueryRaised('Registration Date') === false
                   ? false
                   : hp_profile_status_id === 3
-                  ? getQueryRaised('Registration Date')
-                  : hp_profile_status_id === 2
-                  ? true
-                  : false
+                    ? getQueryRaised('Registration Date')
+                    : hp_profile_status_id === 2
+                      ? true
+                      : false
               }
               disableFuture
             />
@@ -651,29 +655,29 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                   work_flow_status_id === 3
                     ? getQueryRaised('NEET Registration Number')
                     : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-                    ? false
-                    : true
+                      ? false
+                      : true
                 }
-                // sx={{
-                //   input: {
-                //     backgroundColor:
-                //       getQueryRaised('Registration Number') === false
-                //         ? false
-                //         : work_flow_status_id === 3
-                //         ? 'grey2.main'
-                //         : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-                //         ? ''
-                //         : 'grey2.main',
-                //   },
-                // }}
-                // InputProps={{
-                //   readOnly:
-                //     work_flow_status_id === 3
-                //       ? getQueryRaised('Registration Number')
-                //       : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-                //       ? false
-                //       : true,
-                // }}
+              // sx={{
+              //   input: {
+              //     backgroundColor:
+              //       getQueryRaised('Registration Number') === false
+              //         ? false
+              //         : work_flow_status_id === 3
+              //         ? 'grey2.main'
+              //         : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+              //         ? ''
+              //         : 'grey2.main',
+              //   },
+              // }}
+              // InputProps={{
+              //   readOnly:
+              //     work_flow_status_id === 3
+              //       ? getQueryRaised('Registration Number')
+              //       : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+              //       ? false
+              //       : true,
+              // }}
               />
             </Grid>
           ) : null}
@@ -711,64 +715,64 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 getQueryRaised('Registration') === false
                   ? false
                   : hp_profile_status_id === 3
-                  ? getQueryRaised('Registration')
-                  : hp_profile_status_id === 2
-                  ? true
-                  : !personalDetails?.personal_details?.is_new
-                  ? true
-                  : false
+                    ? getQueryRaised('Registration')
+                    : hp_profile_status_id === 2
+                      ? true
+                      : !personalDetails?.personal_details?.is_new
+                        ? true
+                        : false
               }
-              // disabled={work_flow_status_id === 3 ? getQueryRaised('Registration') : false}
+            // disabled={work_flow_status_id === 3 ? getQueryRaised('Registration') : false}
             />
           </Grid>
           {(getValues().registration === '1' ||
             hp_profile_status_id === 2 ||
             is_renewable === '1') && (
-            <Grid item xs={12} md={4}>
-              <Typography variant="subtitle2" color="inputTextColor.main">
-                Due Date of Renewal
-                <Typography component="span" color="error.main">
-                  *
+              <Grid item xs={12} md={4}>
+                <Typography variant="subtitle2" color="inputTextColor.main">
+                  Due Date of Renewal
+                  <Typography component="span" color="error.main">
+                    *
+                  </Typography>
+                  {getQueryRaised('Due Date of Renewal') === false && (
+                    <Tooltip title={getQueryRaisedComment('Due Date of Renewal')}>
+                      <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
+                    </Tooltip>
+                  )}
                 </Typography>
-                {getQueryRaised('Due Date of Renewal') === false && (
-                  <Tooltip title={getQueryRaisedComment('Due Date of Renewal')}>
-                    <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
-                  </Tooltip>
-                )}
-              </Typography>
 
-              <DatePicker
-                onChangeDate={(newDateValue) => {
-                  setValue('RenewalDate', new Date(newDateValue)?.toLocaleDateString('en-GB'));
-                }}
-                data-testid="RenewalDate"
-                id="RenewalDate"
-                name="RenewalDate"
-                required={true}
-                defaultValue={getValues().RenewalDate}
-                minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 5))}
-                maxDate={new Date(new Date().setFullYear(new Date().getFullYear() + 5))}
-                // backgroundColor={
-                //   work_flow_status_id === 3
-                //     ? '#F0F0F0'
-                //     : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-                //     ? '#F0F0F0'
-                //     : ''
-                // }
-                value={
-                  renewable_registration_date ? new Date(renewable_registration_date) : new Date()
-                }
-                disabled={
-                  getQueryRaised('Registration') === false
-                    ? false
-                    : getQueryRaised('Due Date of Renewal') === false
-                    ? false
-                    : hp_profile_status_id === 3
-                    ? getQueryRaised('Due Date of Renewal')
-                    : hp_profile_status_id === 2
-                    ? true
-                    : false
-                }
+                <DatePicker
+                  onChangeDate={(newDateValue) => {
+                    setValue('RenewalDate', new Date(newDateValue)?.toLocaleDateString('en-GB'));
+                  }}
+                  data-testid="RenewalDate"
+                  id="RenewalDate"
+                  name="RenewalDate"
+                  required={true}
+                  defaultValue={getValues().RenewalDate}
+                  minDate={new Date(new Date().setFullYear(new Date().getFullYear() - 5))}
+                  maxDate={new Date(new Date().setFullYear(new Date().getFullYear() + 5))}
+                  // backgroundColor={
+                  //   work_flow_status_id === 3
+                  //     ? '#F0F0F0'
+                  //     : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                  //     ? '#F0F0F0'
+                  //     : ''
+                  // }
+                  value={
+                    renewable_registration_date ? new Date(renewable_registration_date) : new Date()
+                  }
+                  disabled={
+                    getQueryRaised('Registration') === false
+                      ? false
+                      : getQueryRaised('Due Date of Renewal') === false
+                        ? false
+                        : hp_profile_status_id === 3
+                          ? getQueryRaised('Due Date of Renewal')
+                          : hp_profile_status_id === 2
+                            ? true
+                            : false
+                  }
                 // disabled={work_flow_status_id === 3 ? getQueryRaised('Due Date of Renewal') : false}
                 // disabled={
                 //   work_flow_status_id === 3 &&
@@ -777,24 +781,24 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 //     ? getQueryRaised('Due Date of Renewal')
                 //     : false
                 // }
-              />
-            </Grid>
-          )}
+                />
+              </Grid>
+            )}
         </Grid>
         <Grid container item spacing={2} mt={1}>
           <Grid item xs={12}>
             <UploadFile
               uploadDisabled={
-                getQueryRaised('Upload the registration certificate') === false
+                getQueryRaised('Upload registration certificate') === false
                   ? false
                   : hp_profile_status_id === 3
-                  ? getQueryRaised('Upload the registration certificate')
-                  : hp_profile_status_id === 2
-                  ? true
-                  : false
+                    ? getQueryRaised('Upload registration certificate')
+                    : hp_profile_status_id === 2
+                      ? true
+                      : false
               }
               queryRaiseIcon={
-                getQueryRaised('Upload the registration certificate') === false ? true : false
+                getQueryRaised('Upload registration certificate') === false ? true : false
               }
               fileID={'registrationFileData'}
               uploadFiles="single"
@@ -811,13 +815,13 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               uploadFileLabel="Upload Registration Certificate"
               fileName={file_name + '.' + file_type}
               fileDisabled={
-                getQueryRaised('Upload the registration certificate') === false
+                getQueryRaised('Upload registration certificate') === false
                   ? false
                   : work_flow_status_id === 3
-                  ? getQueryRaised('Upload the registration certificate')
-                  : false
+                    ? getQueryRaised('Upload registration certificate')
+                    : false
               }
-              toolTipData={getQueryRaisedComment('Upload the registration certificate')}
+              toolTipData={getQueryRaisedComment('Upload registration certificate')}
               {...register(
                 'registrationCertificate',
                 registrationFileData?.length === 0 && {
@@ -839,7 +843,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
             </Typography>
 
             <RadioGroup
-              //onChange={handleRegistration}
+              // onChange={handleRegistration}
               name={'registrationname'}
               size="small"
               defaultValue={
@@ -858,18 +862,18 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 },
               ]}
               {...register('registrationname')}
-              disabled={
-                getQueryRaised('registrationname') === false
-                  ? false
-                  : hp_profile_status_id === 3
-                  ? getQueryRaised('registrationname')
-                  : hp_profile_status_id === 2
-                  ? true
-                  : !personalDetails?.personal_details?.is_new
-                  ? true
-                  : false
-              }
-              // disabled={work_flow_status_id === 3 ? getQueryRaised('Registration') : false}
+            // disabled={
+            //   getQueryRaised('registrationname') === false
+            //     ? false
+            //     : hp_profile_status_id === 3
+            //       ? getQueryRaised('registrationname')
+            //       : hp_profile_status_id === 2
+            //         ? true
+            //         : !personalDetails?.personal_details?.is_new
+            //           ? true
+            //           : false
+            // }
+            // disabled={work_flow_status_id === 3 ? getQueryRaised('Registration') : false}
             />
           </Grid>
         </Grid>
@@ -878,16 +882,16 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
             {getValues().registrationname === '0' && (
               <UploadFile
                 uploadDisabled={
-                  getQueryRaised('Upload the registration name change certificate') === false
+                  getQueryRaised('Upload name change certificate') === false
                     ? false
                     : hp_profile_status_id === 3
-                    ? getQueryRaised('Upload the registration name change certificate')
-                    : hp_profile_status_id === 2
-                    ? true
-                    : false
+                      ? getQueryRaised('Upload name change certificate')
+                      : hp_profile_status_id === 2
+                        ? true
+                        : false
                 }
                 queryRaiseIcon={
-                  getQueryRaised('Upload the registration name change certificate') === false
+                  getQueryRaised('Upload name change certificate') === false
                     ? true
                     : false
                 }
@@ -906,14 +910,14 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 uploadFileLabel="Upload Proof Of Name Change"
                 fileName={file_name + '.' + file_type}
                 fileDisabled={
-                  getQueryRaised('Upload the registration name change certificate') === false
+                  getQueryRaised('Upload name change certificate') === false
                     ? false
                     : work_flow_status_id === 3
-                    ? getQueryRaised('Upload the registration name change certificate')
-                    : false
+                      ? getQueryRaised('Upload name change certificate')
+                      : false
                 }
                 toolTipData={getQueryRaisedComment(
-                  'Upload the registration name change certificate'
+                  'Upload name change certificate'
                 )}
                 {...register(
                   'proofOfRegistrationNameChange'

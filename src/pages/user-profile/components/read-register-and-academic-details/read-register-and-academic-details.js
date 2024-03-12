@@ -191,9 +191,7 @@ const ReadRegisterAndAcademicDetails = ({
     }
   }, []);
 
-  console.log('loggedInUserType');
 
-  console.log(loggedInUserType);
   return (
     <Box>
       <Box>

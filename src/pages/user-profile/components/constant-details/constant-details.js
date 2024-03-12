@@ -389,7 +389,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                     onInput={(e) => checkEmail(e)}
                   />
 
-                  <Link
+                  {/* <Link
                     color="primary"
                     sx={{ p: '10px', cursor: 'pointer', 'flex-basis': 'content' }}
                     onClick={() => {
@@ -397,7 +397,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                     }}
                   >
                     Verify
-                  </Link>
+                  </Link> */}
                 </Paper>
                 {validDetails?.email && (
                   <Typography color="error" mt={1} variant="body2">
