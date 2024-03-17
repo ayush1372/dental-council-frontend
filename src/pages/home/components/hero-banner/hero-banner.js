@@ -22,7 +22,7 @@ export function HeroBanner() {
             display: "flex",
             alignItems: "end"
           }}>
-            <img className={styles.bannerImage1} src={BannerImage1} alt="Hero Banner 1" />
+            {/* <img className={styles.bannerImage1} src={BannerImage1} alt="Hero Banner 1" /> */}
           </Grid>
           {/* <Grid item xs={12} sm={5.5} mt={10}>
             <Typography variant="h1" color="primary" mb={2}>
@@ -40,8 +40,8 @@ export function HeroBanner() {
               )}
             </Typography>
           </Grid> */}
-          <Grid item xs={12} sm={5.5} mt={10}>
-            <Typography variant="h1" color="primary" mb={2} >
+          <Grid item xs={12} sm={5.5} mt={3}>
+            <Typography variant="h1" color="primary" mb={2} textAlign={'center'}>
               {t('National Dental Register')}
             </Typography>
             <Typography
@@ -65,7 +65,7 @@ export function HeroBanner() {
             display: "flex",
             alignItems: "end"
           }}>
-            <img className={styles.bannerImage2} src={BannerImage2} alt="Hero Banner 2" />
+            {/* <img className={styles.bannerImage2} src={BannerImage2} alt="Hero Banner 2" /> */}
           </Grid>
         </Grid>
       </Container>
