@@ -73,6 +73,7 @@ const WorkDetails = ({
   const [languageError, setLanguageError] = useState(false);
   const [facilityDistrict, setFacilityDistrict] = useState([]);
   const [facilityChecked, setFacilityChecked] = useState(true);
+  const [currentWorkPlace, setCurrentWorkPlace] = useState('facility');
   const [successModalPopup, setSuccessModalPopup] = useState(false);
   const [facilityResponseData, setFacilityResponseData] = useState([]);
   const [workExperianceError, setWorkExperianceError] = useState(false);
@@ -136,6 +137,7 @@ const WorkDetails = ({
           ? getLanguageData(languages)
           : getLanguageData(getValues().LanguageSpoken),
     };
+    console.log(declaredFacilityData)
     if (declaredFacilityData?.length > 0) {
       declaredFacilityData?.map((elementData, index) => {
         fetchDistricts(declaredFacilityData[index]?.state_lgdcode, true);
@@ -150,9 +152,16 @@ const WorkDetails = ({
               id: 386,
               name: 'india',
             },
-            // state: getStateData(elementData?.address?.state, true),
-            state: elementData?.address?.state_to,
-            district: elementData?.address?.district_to,
+            state: {
+              id: elementData?.state_id,
+              name: elementData?.state_name,
+              iso_code: elementData?.state_lgdcode,
+            },
+            district: {
+              id: elementData?.district_id,
+              name: elementData?.district_name,
+              iso_code: elementData?.district_lgdcode,
+            },
             village: {
               iso_code: elementData?.villageCityTownLGDCode,
               name: elementData?.villageCityTownName,
@@ -177,6 +186,7 @@ const WorkDetails = ({
     if (!organizationChecked) {
       currentWorkDetails?.current_work_details.splice(0, 1);
     }
+    console.log('------------------------', currentWorkDetails)
     if (facilityChecked) {
       if (declaredFacilityData?.length > 0 || organizationChecked) {
         updateWorkStatus(currentWorkDetails);
@@ -204,6 +214,19 @@ const WorkDetails = ({
   const handleWorkStatus = (event) => {
     setValue(event.target.name, event.target.value);
   };
+
+  const handleWorkPlaceChange = (event) => {
+    const workPlace = event.target.value;
+    if (workPlace === 'facility') {
+      setFacilityChecked(true);
+      setOrganizationChecked(false);
+    }
+    else {
+      setOrganizationChecked(true);
+      setFacilityChecked(false);
+    }
+    setCurrentWorkPlace(workPlace);
+  }
 
   const handleLanguageSpokenChange = (key, value) => {
     setValue(key, value);
@@ -247,10 +270,10 @@ const WorkDetails = ({
       values?.workStatus === '3'
         ? 'G'
         : values?.workStatus === '2'
-        ? 'P'
-        : values?.workStatus === '1'
-        ? 'PP'
-        : '';
+          ? 'P'
+          : values?.workStatus === '1'
+            ? 'PP'
+            : '';
 
     const searchFacilities = {
       page: page || 0,
@@ -608,7 +631,7 @@ const WorkDetails = ({
         </Typography>
       </Grid>
       <Grid item xs={12} ml={2} display="flex">
-        <Box>
+        {/* <Box>
           <Checkbox
             sx={{ padding: '0 8px 0 0' }}
             value={facilityChecked}
@@ -628,7 +651,26 @@ const WorkDetails = ({
             }}
             label="Organization"
           />
-        </Box>
+        </Box> */}
+
+        <RadioGroup
+          size="small"
+          value={currentWorkPlace}
+          onChange={handleWorkPlaceChange}
+          required={true}
+          items={[
+            {
+              value: 'facility',
+              label: 'Facility',
+            },
+            {
+              value: 'org',
+              label: 'Organization',
+            },
+          ]}
+
+        />
+
       </Grid>
       {facilityChecked && (
         <Grid container item spacing={2}>
@@ -1194,8 +1236,8 @@ const WorkDetails = ({
                 {...register('SubDistrict', {
                   required:
                     subDistrictList?.length > 0 &&
-                    districtsList?.length > 0 &&
-                    statesList?.length > 0
+                      districtsList?.length > 0 &&
+                      statesList?.length > 0
                       ? 'Please select sub district'
                       : '',
                 })}
@@ -1232,8 +1274,8 @@ const WorkDetails = ({
                 {...register('Area', {
                   required:
                     subDistrictList?.length > 0 &&
-                    districtsList?.length > 0 &&
-                    statesList?.length > 0
+                      districtsList?.length > 0 &&
+                      statesList?.length > 0
                       ? ' Please select a City/Town/Village'
                       : '',
                 })}
