@@ -86,7 +86,11 @@ const WorkDetails = ({
   const [facilityDeclarationError, setFacilityDeclarationError] = useState(false);
 
   const onSubmit = () => {
-    if ((getValues().workStatus !== "0") && (declaredFacilityData?.length === 0) && !organizationChecked) {
+    if (
+      getValues().workStatus !== '0' &&
+      declaredFacilityData?.length === 0 &&
+      !organizationChecked
+    ) {
       setFacilityDeclarationError(true);
       return;
     } else {
@@ -243,10 +247,10 @@ const WorkDetails = ({
       values?.workStatus === '3'
         ? 'G'
         : values?.workStatus === '2'
-          ? 'P'
-          : values?.workStatus === '1'
-            ? 'PP'
-            : '';
+        ? 'P'
+        : values?.workStatus === '1'
+        ? 'PP'
+        : '';
 
     const searchFacilities = {
       page: page || 0,
@@ -693,7 +697,7 @@ const WorkDetails = ({
                     color="secondary"
                     sx={{ paddingTop: '14px', paddingBottom: '14px' }}
                     onClick={() => {
-                      setFacilityDeclarationError(false)
+                      setFacilityDeclarationError(false);
                       getValues()?.facilityId?.length > 0
                         ? searchFacilitiesHandler()
                         : setFacilityIDError(true);
@@ -709,7 +713,7 @@ const WorkDetails = ({
                     sx={{ paddingTop: '14px', paddingBottom: '14px' }}
                     onClick={() => {
                       setValue('facilityId', '');
-                      setFacilityDeclarationError(false)
+                      setFacilityDeclarationError(false);
                       setFacilityIDError(false);
                       setShowTable(false);
                     }}
@@ -780,9 +784,10 @@ const WorkDetails = ({
                   fullWidth
                   name={'districtLGDCode'}
                   error={
-                    (facilityDistrictError || errors?.districtLGDCode?.message) && 'Please select district'
+                    (facilityDistrictError || errors?.districtLGDCode?.message) &&
+                    'Please select district'
                   }
-                  {...register('districtLGDCode',)}
+                  {...register('districtLGDCode')}
                   options={createSelectFieldData(facilityDistrict)}
                   placeholder={'Select District'}
                   onChange={(e) => {
@@ -806,7 +811,10 @@ const WorkDetails = ({
                   fullWidth
                   name={'facilityName'}
                   defaultValue={getValues().facilityName}
-                  error={(facilityNameError || errors.facilityName?.message) && 'Please enter facility Name'}
+                  error={
+                    (facilityNameError || errors.facilityName?.message) &&
+                    'Please enter facility Name'
+                  }
                   {...register('facilityName', {
                     required: 'Please enter the facility name',
                     pattern: {
@@ -835,7 +843,7 @@ const WorkDetails = ({
                     color="secondary"
                     sx={{ paddingTop: '14px', paddingBottom: '14px' }}
                     onClick={() => {
-                      setFacilityDeclarationError(true)
+                      setFacilityDeclarationError(true);
                       if (
                         (getValues()?.stateLGDCode !== undefined ||
                           getValues()?.stateLGDCode !== '') &&
@@ -883,12 +891,12 @@ const WorkDetails = ({
                     onClick={() => {
                       setValue('stateLGDCode', undefined);
                       setValue('districtLGDCode', undefined);
-                      setValue('facilityName', undefined)
+                      setValue('facilityName', undefined);
                       setFacilityStateError(false);
                       setFacilityDistrictError(false);
                       setFacilityNameError(false);
                       setShowTable(false);
-                      setFacilityDeclarationError(false)
+                      setFacilityDeclarationError(false);
                     }}
                   >
                     Reset
@@ -1186,8 +1194,8 @@ const WorkDetails = ({
                 {...register('SubDistrict', {
                   required:
                     subDistrictList?.length > 0 &&
-                      districtsList?.length > 0 &&
-                      statesList?.length > 0
+                    districtsList?.length > 0 &&
+                    statesList?.length > 0
                       ? 'Please select sub district'
                       : '',
                 })}
@@ -1224,8 +1232,8 @@ const WorkDetails = ({
                 {...register('Area', {
                   required:
                     subDistrictList?.length > 0 &&
-                      districtsList?.length > 0 &&
-                      statesList?.length > 0
+                    districtsList?.length > 0 &&
+                    statesList?.length > 0
                       ? ' Please select a City/Town/Village'
                       : '',
                 })}

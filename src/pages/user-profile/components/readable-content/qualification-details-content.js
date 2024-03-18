@@ -54,11 +54,6 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
     return query?.query_comment;
   };
 
-  
-
-
-
-
   return attachmentViewProfile ? (
     <AttachmentViewPopup
       certificate={qualification_detail_response_tos[attachmentViewIndex]?.degree_certificate}
@@ -71,7 +66,10 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
       certificate={qualification_detail_response_tos[attachmentViewIndex]?.name_change_proof_attach}
       closePopup={CloseAttachmentPopup}
       alt={'Name Change Certificate'}
-      certFileType={qualification_detail_response_tos[attachmentViewIndex]?.name_change_proof_attach_file_name_type}
+      certFileType={
+        qualification_detail_response_tos[attachmentViewIndex]
+          ?.name_change_proof_attach_file_name_type
+      }
     />
   ) : qualification_detail_response_tos?.length > 0 ? (
     qualification_detail_response_tos?.map((element, index) => {
@@ -83,13 +81,13 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
           key={index}
           borderBottom={
             qualification_detail_response_tos?.length > 1 &&
-              index < qualification_detail_response_tos?.length - 1
+            index < qualification_detail_response_tos?.length - 1
               ? 1
               : 'none'
           }
           borderColor={
             qualification_detail_response_tos?.length > 1 &&
-              index < qualification_detail_response_tos?.length - 1
+            index < qualification_detail_response_tos?.length - 1
               ? 'grey2.light'
               : 'none'
           }
@@ -318,7 +316,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                 Month & Year of Degree Awarded
                 {element?.queries?.length > 0 &&
                   getQueryRaised('Month & Year of Degree Awarded', element?.queries) !==
-                  undefined && (
+                    undefined && (
                     <Tooltip
                       title={getQueryRaised('Month & Year of Degree Awarded', element?.queries)}
                     >
@@ -507,7 +505,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   </Typography>
                   {element?.queries?.length > 0 &&
                     getQueryRaised('Month & Year of FMGE qualified', element?.queries) !==
-                    undefined && (
+                      undefined && (
                       <Tooltip
                         title={getQueryRaised('Month & Year of FMGE qualified', element?.queries)}
                       >
@@ -552,7 +550,7 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                 </Typography>
                 {element?.queries?.length > 0 &&
                   getQueryRaised('Upload Qualification Certificate', element?.queries) !==
-                  undefined && (
+                    undefined && (
                     <Tooltip
                       title={getQueryRaised('Upload Qualification Certificate', element?.queries)}
                     >
@@ -597,19 +595,24 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                   )}
               </Grid>
             </Grid>
-            {
-              qualification_detail_response_tos && qualification_detail_response_tos[0]?.is_name_change ==1 ?
-              (<Grid item xs={12} md={4}>
+            {qualification_detail_response_tos &&
+            qualification_detail_response_tos[0]?.is_name_change === 1 ? (
+              <Grid item xs={12} md={4}>
                 <Typography variant="subtitle2" color="grey.label">
                   Uploaded Name Change Certificate
                   <Typography component="span" color="error.main">
                     *
                   </Typography>
                   {element?.queries?.length > 0 &&
-                    getQueryRaised('Upload Qualification Name Change Certificate', element?.queries) !==
-                    undefined && (
+                    getQueryRaised(
+                      'Upload Qualification Name Change Certificate',
+                      element?.queries
+                    ) !== undefined && (
                       <Tooltip
-                      title={getQueryRaised('Upload Qualification Name Change Certificate', element?.queries)}
+                        title={getQueryRaised(
+                          'Upload Qualification Name Change Certificate',
+                          element?.queries
+                        )}
                       >
                         <ReportIcon color="secondary" ml={2} />
                       </Tooltip>
@@ -651,9 +654,8 @@ const QualificationDetailsContent = ({ registrationDetails, selectedDataIndex })
                       />
                     )}
                 </Grid>
-              </Grid>):null
-            }
-            
+              </Grid>
+            ) : null}
           </Grid>
           {openModal && (
             <RaiseQueryPopup
