@@ -116,18 +116,18 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
     if (selectedLoginOption === 'mobileNumber') {
       dispatch(
         validateCaptchaImage({
-          transaction_id: generateCaptcha?.transaction_id,
+          transaction_id: generateCaptcha?.result,
           result: parseInt(captchaAnswer),
         })
       ).then((response) => {
-        if (response?.data?.validity) {
+        if (response) {
           const usertypeId = usersType(loginName);
           const requestObj = {
             username: getValues()?.mobileNo,
             password: encryptData(otpValue, process.env.REACT_APP_PASS_SITE_KEY),
             user_type: usertypeId,
             login_type: loginTypeID,
-            captcha_trans_id: generateCaptcha?.transaction_id,
+            captcha_trans_id: generateCaptcha?.result,
             otp_trans_id: transaction_id,
           };
           dispatch(loginAction(requestObj))
@@ -169,17 +169,17 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
     } else if (selectedLoginOption === 'userName') {
       dispatch(
         validateCaptchaImage({
-          transaction_id: generateCaptcha?.transaction_id,
+          transaction_id: generateCaptcha?.result,
           result: parseInt(captchaAnswer),
         })
       ).then((response) => {
-        if (response?.data?.validity) {
+        if (response) {
           const usertypeId = usersType(loginName);
           const requestObj = {
             username: getValues()?.userID,
             password: encryptData(getValues()?.password, process.env.REACT_APP_PASS_SITE_KEY),
             user_type: usertypeId,
-            captcha_trans_id: generateCaptcha?.transaction_id,
+            captcha_trans_id: generateCaptcha?.result,
             login_type: loginTypeID,
           };
           dispatch(loginAction(requestObj))
@@ -252,7 +252,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
                 selectedLoginOption === 'mobileNumber'
                   ? theme.palette.secondary.main
                   : theme.palette.grey.main
-              }`,
+                }`,
               '&:hover': {
                 backgroundColor: 'transparent !important',
               },
@@ -278,7 +278,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
                 selectedLoginOption === 'userName'
                   ? theme.palette.secondary.main
                   : theme.palette.grey.main
-              }`,
+                }`,
               '&:hover': {
                 backgroundColor: 'transparent !important',
               },
@@ -393,10 +393,10 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
             selectedLoginOption === 'nmrId' || selectedLoginOption === 'mobileNumber'
               ? !otpFormEnabled || !captchaAnswer || otpValue.length < 6
               : errors.userID?.message ||
-                errors.password?.message ||
-                !captchaAnswer ||
-                getValues()?.password?.length < 1 ||
-                getValues()?.userID?.length < 1
+              errors.password?.message ||
+              !captchaAnswer ||
+              getValues()?.password?.length < 1 ||
+              getValues()?.userID?.length < 1
           }
         >
           Login

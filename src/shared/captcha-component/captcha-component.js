@@ -58,12 +58,12 @@ const CaptchaComponent = ({ selectedLoginOption, captchaResult }) => {
   const handleChange = (event) => {
     const captchaValue = event.target.value.replace(/[^0-9]/g, '');
     setValue('anwser', captchaValue);
-    setAnwser(captchaValue);
     captchaResult(captchaValue);
+    setAnwser(captchaValue);
     captchaValue.length > 2 ? setError('Please enter valid captcha answer') : setError('');
   };
 
-  
+  // console.log('captcha', generateCaptcha)
   return (
     <Box>
       <Box>
@@ -83,11 +83,20 @@ const CaptchaComponent = ({ selectedLoginOption, captchaResult }) => {
               display="flex"
               justifyContent="center"
             >
-              <img
+              {/* <img
                 src={`data:image/png;base64,${generateCaptcha?.image}`}
                 alt="captcha"
                 width="100"
-              />
+              /> */}
+              <span
+                style={{
+                  fontWeight: 'bold',
+                  fontSize: '1.5rem',
+                  padding: '0',
+                }}
+              >
+                {generateCaptcha?.expression}
+              </span>
             </Grid>
             <Grid item xs={2} alignItems="center" display="flex" justifyContent="center">
               <RefreshIcon color="primary.dark" onClick={reloadCaptcha} cursor="pointer" />

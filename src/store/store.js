@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import logger from 'redux-logger';
+// import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 
 import appFontSizeActivity from './reducers/app-font-size';
@@ -40,7 +40,8 @@ const store = configureStore({
     forgotUserName: forgotUserName,
     searchDoctor: searchDoctorReducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware(thunk).concat(logger),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware(thunk),
+  // .concat(logger),
   devTools: true,
 });
 

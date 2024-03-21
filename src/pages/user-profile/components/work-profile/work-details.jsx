@@ -137,7 +137,6 @@ const WorkDetails = ({
           ? getLanguageData(languages)
           : getLanguageData(getValues().LanguageSpoken),
     };
-    console.log(declaredFacilityData)
     if (declaredFacilityData?.length > 0) {
       declaredFacilityData?.map((elementData, index) => {
         fetchDistricts(declaredFacilityData[index]?.state_lgdcode, true);
@@ -186,7 +185,7 @@ const WorkDetails = ({
     if (!organizationChecked) {
       currentWorkDetails?.current_work_details.splice(0, 1);
     }
-    console.log('------------------------', currentWorkDetails)
+    console.log('------------------------', currentWorkDetails);
     if (facilityChecked) {
       if (declaredFacilityData?.length > 0 || organizationChecked) {
         updateWorkStatus(currentWorkDetails);
@@ -220,22 +219,40 @@ const WorkDetails = ({
     if (workPlace === 'facility') {
       setFacilityChecked(true);
       setOrganizationChecked(false);
-    }
-    else {
+    } else {
       setOrganizationChecked(true);
       setFacilityChecked(false);
     }
     setCurrentWorkPlace(workPlace);
-  }
+  };
 
   const handleLanguageSpokenChange = (key, value) => {
     setValue(key, value);
     setLanguages(value);
   };
 
-  const handleTabChange = (_, value) => {
-    handleFacilityError();
+  const handleResetFacilityNameSearch = () => {
+    setValue('stateLGDCode', undefined);
+    setValue('districtLGDCode', undefined);
+    setValue('facilityName', undefined);
+    setFacilityStateError(false);
+    setFacilityDistrictError(false);
+    setFacilityNameError(false);
+    setShowTable(false);
+    setFacilityDeclarationError(false);
+  };
 
+  const handleResetFacilityIdSearch = () => {
+    setValue('facilityId', '');
+    setFacilityDeclarationError(false);
+    setFacilityIDError(false);
+    setShowTable(false);
+  };
+
+  const handleTabChange = (_, value) => {
+    handleResetFacilityIdSearch();
+    handleResetFacilityNameSearch();
+    handleFacilityError();
     setFacilityResponseData([]);
     setDeclaredFacilityDistrict([]);
     setShowTable(false);
@@ -270,10 +287,10 @@ const WorkDetails = ({
       values?.workStatus === '3'
         ? 'G'
         : values?.workStatus === '2'
-          ? 'P'
-          : values?.workStatus === '1'
-            ? 'PP'
-            : '';
+        ? 'P'
+        : values?.workStatus === '1'
+        ? 'PP'
+        : '';
 
     const searchFacilities = {
       page: page || 0,
@@ -469,9 +486,9 @@ const WorkDetails = ({
         if (getValues()?.stateLGDCode === undefined || getValues()?.stateLGDCode === '') {
           setFacilityStateError(true);
         }
-        if (getValues()?.districtLGDCode === undefined || getValues()?.districtLGDCode === '') {
-          setFacilityDistrictError(true);
-        }
+        // if (getValues()?.districtLGDCode === undefined || getValues()?.districtLGDCode === '') {
+        //   setFacilityDistrictError(true);
+        // }
         if (getValues()?.facilityName === undefined || getValues()?.facilityName === '') {
           setFacilityNameError(true);
         }
@@ -668,9 +685,7 @@ const WorkDetails = ({
               label: 'Organization',
             },
           ]}
-
         />
-
       </Grid>
       {facilityChecked && (
         <Grid container item spacing={2}>
@@ -753,12 +768,7 @@ const WorkDetails = ({
                     color="grey"
                     variant="contained"
                     sx={{ paddingTop: '14px', paddingBottom: '14px' }}
-                    onClick={() => {
-                      setValue('facilityId', '');
-                      setFacilityDeclarationError(false);
-                      setFacilityIDError(false);
-                      setShowTable(false);
-                    }}
+                    onClick={handleResetFacilityIdSearch}
                   >
                     Reset
                   </Button>
@@ -767,7 +777,7 @@ const WorkDetails = ({
               {facilityTableError && (
                 <Grid item xs={12} padding="10px 0 !important" ml={1}>
                   <Typography p={1} component="div" color="error.main" variant="h3">
-                    Please choose Facility details.
+                    Please Declare Facility details.
                   </Typography>
                 </Grid>
               )}
@@ -885,14 +895,14 @@ const WorkDetails = ({
                     color="secondary"
                     sx={{ paddingTop: '14px', paddingBottom: '14px' }}
                     onClick={() => {
-                      setFacilityDeclarationError(true);
+                      // setFacilityDeclarationError(true);
                       if (
-                        (getValues()?.stateLGDCode !== undefined ||
-                          getValues()?.stateLGDCode !== '') &&
-                        (getValues()?.districtLGDCode !== undefined ||
-                          getValues()?.districtLGDCode !== '') &&
-                        (getValues()?.facilityName !== undefined ||
-                          getValues()?.facilityName !== '')
+                        getValues()?.stateLGDCode !== undefined &&
+                        getValues()?.stateLGDCode !== '' &&
+                        getValues()?.districtLGDCode !== undefined &&
+                        getValues()?.districtLGDCode !== '' &&
+                        getValues()?.facilityName !== undefined &&
+                        getValues()?.facilityName !== ''
                       ) {
                         searchFacilitiesHandler();
                       } else {
@@ -902,12 +912,12 @@ const WorkDetails = ({
                         ) {
                           setFacilityStateError(true);
                         }
-                        if (
-                          getValues()?.districtLGDCode === undefined ||
-                          getValues()?.districtLGDCode === ''
-                        ) {
-                          setFacilityDistrictError(true);
-                        }
+                        // if (
+                        //   getValues()?.districtLGDCode === undefined ||
+                        //   getValues()?.districtLGDCode === ''
+                        // ) {
+                        //   setFacilityDistrictError(true);
+                        // }
                         if (
                           getValues()?.facilityName === undefined ||
                           getValues()?.facilityName === ''
@@ -930,16 +940,7 @@ const WorkDetails = ({
                     color="grey"
                     variant="contained"
                     sx={{ paddingTop: '14px', paddingBottom: '14px' }}
-                    onClick={() => {
-                      setValue('stateLGDCode', undefined);
-                      setValue('districtLGDCode', undefined);
-                      setValue('facilityName', undefined);
-                      setFacilityStateError(false);
-                      setFacilityDistrictError(false);
-                      setFacilityNameError(false);
-                      setShowTable(false);
-                      setFacilityDeclarationError(false);
-                    }}
+                    onClick={handleResetFacilityNameSearch}
                   >
                     Reset
                   </Button>
@@ -1236,8 +1237,8 @@ const WorkDetails = ({
                 {...register('SubDistrict', {
                   required:
                     subDistrictList?.length > 0 &&
-                      districtsList?.length > 0 &&
-                      statesList?.length > 0
+                    districtsList?.length > 0 &&
+                    statesList?.length > 0
                       ? 'Please select sub district'
                       : '',
                 })}
@@ -1274,8 +1275,8 @@ const WorkDetails = ({
                 {...register('Area', {
                   required:
                     subDistrictList?.length > 0 &&
-                      districtsList?.length > 0 &&
-                      statesList?.length > 0
+                    districtsList?.length > 0 &&
+                    statesList?.length > 0
                       ? ' Please select a City/Town/Village'
                       : '',
                 })}

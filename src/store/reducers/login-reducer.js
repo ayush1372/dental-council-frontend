@@ -3,8 +3,8 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   captchaEnabledFlag: { data: false, isLoading: Boolean(true), isError: false },
   generateCaptcha: {
-    transaction_id: '',
-    image: '',
+    expression: '',
+    result: '',
   },
   validateCaptchaFlag: {},
   loginData: {

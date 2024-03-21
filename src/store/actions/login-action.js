@@ -9,6 +9,37 @@ import {
   validateCaptcha,
 } from '../reducers/login-reducer';
 
+const captchaGenerator = () => {
+  var num1 = Math.floor(Math.random() * 9) + 1;
+  var num2 = Math.floor(Math.random() * 9) + 1;
+
+  var operations = ['+', '-', '*'];
+  var operation = operations[Math.floor(Math.random() * operations.length)];
+  if (operation === '-' && num1 < num2) {
+    var temp = num1;
+    num1 = num2;
+    num2 = temp;
+  }
+
+  var result;
+  switch (operation) {
+    case '+':
+      result = num1 + num2;
+      break;
+    case '-':
+      result = num1 - num2;
+      break;
+    case '*':
+      result = num1 * num2;
+      break;
+  }
+
+  return {
+    expression: num1 + ' ' + operation + ' ' + num2,
+    result: result,
+  };
+};
+
 export const getCaptchaEnabledFlagValue = () => async (dispatch) => {
   return await new Promise((resolve, reject) => {
     useAxiosCall({
@@ -27,37 +58,52 @@ export const getCaptchaEnabledFlagValue = () => async (dispatch) => {
 };
 
 export const generateCaptchaImage = () => async (dispatch) => {
-  return await new Promise((resolve, reject) => {
-    useAxiosCall({
-      method: GET,
-      url: API.login.generateCaptcha,
-    })
-      .then((response) => {
-        dispatch(generateCaptcha(response.data));
-        return resolve(response);
-      })
-      .catch((error) => {
-        return reject(error);
-      });
-  });
+  try {
+    const captcha = captchaGenerator();
+    dispatch(generateCaptcha(captcha));
+    return captcha;
+  } catch (error) {
+    console.error('Error generating captcha:', error);
+    throw error;
+  }
 };
 
 export const validateCaptchaImage = (body) => async (dispatch) => {
-  return await new Promise((resolve, reject) => {
-    useAxiosCall({
-      method: POST,
-      url: API.login.validateCaptcha,
-      data: body,
-    })
-      .then((response) => {
-        dispatch(validateCaptcha(response.data));
-        return resolve(response);
-      })
-      .catch((error) => {
-        return reject(error);
-      });
-  });
+  return body?.transaction_id === body?.result;
 };
+
+// export const generateCaptchaImage2 = () => async (dispatch) => {
+//   return await new Promise((resolve, reject) => {
+//     useAxiosCall({
+//       method: GET,
+//       url: API.login.generateCaptcha,
+//     })
+//       .then((response) => {
+//         dispatch(generateCaptcha(response.data));
+//         return resolve(response);
+//       })
+//       .catch((error) => {
+//         return reject(error);
+//       });
+//   });
+// };
+
+// export const validateCaptchaImage2 = (body) => async (dispatch) => {
+//   return await new Promise((resolve, reject) => {
+//     useAxiosCall({
+//       method: POST,
+//       url: API.login.validateCaptcha,
+//       data: body,
+//     })
+//       .then((response) => {
+//         dispatch(validateCaptcha(response.data));
+//         return resolve(response);
+//       })
+//       .catch((error) => {
+//         return reject(error);
+//       });
+//   });
+// };
 
 export const loginAction = (body) => async (dispatch) => {
   return await new Promise((resolve, reject) => {
