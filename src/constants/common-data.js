@@ -11,7 +11,7 @@ export const UniqueUserNameForDoctor = [
 ];
 
 export const getSMCProfileDetails = (details) => [
-  { label: 'Name', value: details?.first_name, id: '1' },
+  { label: 'Name', value: details?.first_name +' '+details?.last_name, id: '1' },
   // Commenting the below fields from edit profile Issue ID - CS-2078
   // { label: 'Enrolment Number NDHM', value: details?.ndhm_enrollment, id: '2' },
   // { label: 'Enrolment Number', value: details?.enrolled_number, id: '5' },

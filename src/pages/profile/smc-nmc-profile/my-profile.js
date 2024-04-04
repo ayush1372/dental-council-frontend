@@ -31,8 +31,8 @@ const MyProfile = (props) => {
     props.userType === 'SMC'
       ? getSMCProfileDetails(smcProfileData?.data)
       : props.userType === 'NBE'
-      ? getNBEProfileDetails(nbeData?.data)
-      : getNMCProfileDetails(nmcProfileData?.data);
+        ? getNBEProfileDetails(nbeData?.data)
+        : getNMCProfileDetails(nmcProfileData?.data);
 
   const sentDetails = (value) => {
     setShowpage(value);
@@ -65,8 +65,8 @@ const MyProfile = (props) => {
   return (
     <>
       {(props.userType === 'SMC' && smcProfileData?.isLoading) ||
-      (props.userType === 'NMC' && nmcProfileData?.isLoading) ||
-      (props.userType === 'NBE' && nbeData?.isLoading) ? (
+        (props.userType === 'NMC' && nmcProfileData?.isLoading) ||
+        (props.userType === 'NBE' && nbeData?.isLoading) ? (
         <Box alignItems={'center'}>
           <CircularLoader />
         </Box>
