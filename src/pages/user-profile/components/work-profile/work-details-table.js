@@ -46,6 +46,7 @@ function WorkDetailsTable({
   const [rowsPerPage, setRowsPerPage] = useState(10);
   // eslint-disable-next-line no-unused-vars
   const [selectedRowData, setRowData] = useState({});
+  const [checked, setChecked] = useState(false);
   let currentRowIndex;
 
   const dataHeader = [
@@ -126,32 +127,38 @@ function WorkDetailsTable({
       {
         type: 'department',
         value: (
-          <TextField
-            variant="outlined"
-            name={'department'}
-            fullWidth
-            defaultValue={''}
-            onChange={(e) => {
-              FacilityData[currentRowIndex].department = e.target.value;
-              setFacilityResponseData([...FacilityData]);
-            }}
-          />
+          <>
+            <TextField
+              variant="outlined"
+              name={'department'}
+              fullWidth
+              defaultValue={''}
+              placeholder="Required"
+              onChange={(e) => {
+                FacilityData[currentRowIndex].department = e.target.value;
+                setFacilityResponseData([...FacilityData]);
+              }}
+            />
+          </>
         ),
         onClickCallback: viewCallback,
       },
       {
         type: 'designation',
         value: (
-          <TextField
-            variant="outlined"
-            name={'designation'}
-            fullWidth
-            defaultValue={''}
-            onChange={(e) => {
-              FacilityData[currentRowIndex].designation = e.target.value;
-              setFacilityResponseData([...FacilityData]);
-            }}
-          />
+          <>
+            <TextField
+              variant="outlined"
+              name={'designation'}
+              fullWidth
+              defaultValue={''}
+              placeholder="Required"
+              onChange={(e) => {
+                FacilityData[currentRowIndex].designation = e.target.value;
+                setFacilityResponseData([...FacilityData]);
+              }}
+            />
+          </>
         ),
         onClickCallback: viewCallback,
       },
@@ -159,15 +166,21 @@ function WorkDetailsTable({
         type: 'select',
         value: (
           <Checkbox
-            defaultChecked={false}
+            checked={checked}
             onChange={(e) => {
-              if (e.target.checked) {
-                declaredFacilityData.push(FacilityData[currentRowIndex]);
-                setDeclaredFacilityDistrict(declaredFacilityData);
-                setFacilityTableError(false);
+              if (!FacilityData[currentRowIndex]?.department || !FacilityData[currentRowIndex]?.designation) {
+                setChecked(false);
               } else {
-                declaredFacilityData.splice(currentRowIndex, 1);
-                setDeclaredFacilityDistrict([...declaredFacilityData]);
+                if (e.target.checked) {
+                  setChecked(true)
+                  declaredFacilityData.push(FacilityData[currentRowIndex]);
+                  setDeclaredFacilityDistrict(declaredFacilityData);
+                  setFacilityTableError(false);
+                } else {
+                  setChecked(false);
+                  declaredFacilityData.splice(currentRowIndex, 1);
+                  setDeclaredFacilityDistrict([...declaredFacilityData]);
+                }
               }
             }}
           />

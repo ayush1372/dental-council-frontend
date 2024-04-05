@@ -215,15 +215,15 @@ export default function GenericTable(props) {
                                     disabled={
                                       customPopupOptions !== undefined
                                         ? row['NMCVerificationStatus']?.value === 'Suspended' ||
-                                          row['NMCVerificationStatus']?.value === 'Blacklisted' ||
-                                          row['councilVerificationStatus']?.value === 'Suspended' ||
-                                          (props?.applicationData &&
-                                            (props?.applicationData[rowIndex]?.doctor_status ===
-                                              'Suspended' ||
-                                              props?.applicationData[rowIndex]?.doctor_status ===
-                                                'Blacklisted'))
+                                        row['NMCVerificationStatus']?.value === 'Blacklisted' ||
+                                        row['councilVerificationStatus']?.value === 'Suspended' ||
+                                        (props?.applicationData &&
+                                          (props?.applicationData[rowIndex]?.doctor_status ===
+                                            'Suspended' ||
+                                            props?.applicationData[rowIndex]?.doctor_status ===
+                                            'Blacklisted'))
                                         : row['NMRID']?.value === '' ||
-                                          row['NMRID']?.value === undefined
+                                        row['NMRID']?.value === undefined
                                     }
                                   >
                                     {option.keyName}
@@ -245,14 +245,14 @@ export default function GenericTable(props) {
                           row[item.name]?.value === 'Submitted'
                             ? 'submitted'
                             : row[item.name]?.value === 'PENDING'
-                            ? 'pending'
-                            : row[item.name]?.value === 'REJECTED'
-                            ? 'reject'
-                            : row[item.name]?.value === 'QUERY RAISED'
-                            ? 'queryRaised'
-                            : row[item.name]?.value === 'Blacklisted'
-                            ? 'Blacklisted'
-                            : 'approved'
+                              ? 'pending'
+                              : row[item.name]?.value === 'REJECTED'
+                                ? 'reject'
+                                : row[item.name]?.value === 'QUERY RAISED'
+                                  ? 'queryRaised'
+                                  : row[item.name]?.value === 'Blacklisted'
+                                    ? 'Blacklisted'
+                                    : 'approved'
                         }
                         label={row[item.name]?.value}
                       />
@@ -289,6 +289,9 @@ export default function GenericTable(props) {
                         variant="subtitle"
                         onClick={() => row[item.name]?.onClickCallback(rowIndex)}
                         onChange={() => row[item.name]?.onClickCallback(rowIndex)}
+                        sx={{
+                          width: item.title !== 'Select' ? '200px' : 'auto'
+                        }}
                       >
                         {row[item.name]?.value}
                       </Typography>

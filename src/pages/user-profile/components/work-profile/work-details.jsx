@@ -176,8 +176,8 @@ const WorkDetails = ({
           registration_no: registrationDetails?.registration_detail_to?.registration_number,
           experience_in_years: workExpierence,
           system_of_medicine: elementData?.system_of_medicine,
-          department: elementData?.department || 'department',
-          designation: elementData?.designation || 'desgination',
+          department: elementData?.department,
+          designation: elementData?.designation,
         };
         currentWorkDetails?.current_work_details.push(facilityDetailsDeclared);
       });
@@ -284,13 +284,13 @@ const WorkDetails = ({
     const values = getValues();
     let facilityResponse;
     let ownerCode =
-      values?.workStatus === '3'
+      values?.workStatus === '0'
         ? 'G'
-        : values?.workStatus === '2'
-        ? 'P'
         : values?.workStatus === '1'
-        ? 'PP'
-        : '';
+          ? 'P'
+          : values?.workStatus === '2'
+            ? 'PP'
+            : '';
 
     const searchFacilities = {
       page: page || 0,
@@ -777,7 +777,7 @@ const WorkDetails = ({
               {facilityTableError && (
                 <Grid item xs={12} padding="10px 0 !important" ml={1}>
                   <Typography p={1} component="div" color="error.main" variant="h3">
-                    Please Declare Facility details.
+                    Please declare facility details
                   </Typography>
                 </Grid>
               )}
@@ -1038,32 +1038,6 @@ const WorkDetails = ({
                 error={errors.organizationType?.message}
               />
             </Grid>
-          </Grid>
-          <Grid container item spacing={2} mt={1}>
-            <Grid item xs={12} md={8}>
-              <Typography variant="subtitle2" color="inputTextColor.main">
-                Address
-                <Typography component="span" color="error.main">
-                  *
-                </Typography>
-              </Typography>
-              <TextField
-                variant="outlined"
-                name={'Address'}
-                required={true}
-                fullWidth
-                placeholder="Enter address"
-                defaultValue={getValues().Address}
-                {...register('Address', {
-                  required: 'Please enter the address',
-                  maxLength: {
-                    value: 300,
-                    message: 'Should be less than 300 characters',
-                  },
-                })}
-                error={errors.Address?.message}
-              />
-            </Grid>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 Street Name
@@ -1093,8 +1067,31 @@ const WorkDetails = ({
               />
             </Grid>
           </Grid>
-
           <Grid container item spacing={2} mt={1}>
+            <Grid item xs={12} md={8}>
+              <Typography variant="subtitle2" color="inputTextColor.main">
+                Address
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
+              </Typography>
+              <TextField
+                variant="outlined"
+                name={'Address'}
+                required={true}
+                fullWidth
+                placeholder="Enter address"
+                defaultValue={getValues().Address}
+                {...register('Address', {
+                  required: 'Please enter the address',
+                  maxLength: {
+                    value: 300,
+                    message: 'Should be less than 300 characters',
+                  },
+                })}
+                error={errors.Address?.message}
+              />
+            </Grid>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 Landmark
@@ -1119,6 +1116,10 @@ const WorkDetails = ({
                 error={errors.Landmark?.message}
               />
             </Grid>
+          </Grid>
+
+          <Grid container item spacing={2} mt={1}>
+
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 Locality
@@ -1169,8 +1170,6 @@ const WorkDetails = ({
                 }}
               />
             </Grid>
-          </Grid>
-          <Grid container item spacing={2} mt={1}>
             <Grid item xs={12} md={4} lg={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 State
@@ -1192,6 +1191,9 @@ const WorkDetails = ({
                 options={createSelectFieldData(statesList)}
               />
             </Grid>
+          </Grid>
+          <Grid container item spacing={2} mt={1}>
+
             <Grid item xs={12} md={4} lg={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 District
@@ -1237,8 +1239,8 @@ const WorkDetails = ({
                 {...register('SubDistrict', {
                   required:
                     subDistrictList?.length > 0 &&
-                    districtsList?.length > 0 &&
-                    statesList?.length > 0
+                      districtsList?.length > 0 &&
+                      statesList?.length > 0
                       ? 'Please select sub district'
                       : '',
                 })}
@@ -1251,8 +1253,6 @@ const WorkDetails = ({
                 }}
               />
             </Grid>
-          </Grid>
-          <Grid container item spacing={2} mt={1}>
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 City/Town/Village
@@ -1275,8 +1275,8 @@ const WorkDetails = ({
                 {...register('Area', {
                   required:
                     subDistrictList?.length > 0 &&
-                    districtsList?.length > 0 &&
-                    statesList?.length > 0
+                      districtsList?.length > 0 &&
+                      statesList?.length > 0
                       ? ' Please select a City/Town/Village'
                       : '',
                 })}
@@ -1287,6 +1287,64 @@ const WorkDetails = ({
                     maxWidth: 130,
                   },
                 }}
+              />
+            </Grid>
+          </Grid>
+          <Grid container item spacing={2} mt={1}>
+            <Grid item xs={12} md={4}>
+              <Typography variant="subtitle2" color="inputTextColor.main">
+                Department
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
+              </Typography>
+              <TextField
+                variant="outlined"
+                name={'Street'}
+                required={true}
+                fullWidth
+                placeholder="Enter department"
+                defaultValue={getValues().Street}
+                {...register('Street', {
+                  required: 'Please enter the street name',
+                  pattern: {
+                    value: /^(?!^\s)[a-zA-Z0-9-,']*$/,
+                    message: 'Please enter the valid street name',
+                  },
+                  maxLength: {
+                    value: 300,
+                    message: 'Should be less than 300 characters',
+                  },
+                })}
+                error={errors.Street?.message}
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Typography variant="subtitle2" color="inputTextColor.main">
+                Designation
+                <Typography component="span" color="error.main">
+                  *
+                </Typography>
+              </Typography>
+              <TextField
+                variant="outlined"
+                name={'Street'}
+                required={true}
+                fullWidth
+                placeholder="Enter designation"
+                defaultValue={getValues().Street}
+                {...register('Street', {
+                  required: 'Please enter the street name',
+                  pattern: {
+                    value: /^(?!^\s)[a-zA-Z0-9-,']*$/,
+                    message: 'Please enter the valid street name',
+                  },
+                  maxLength: {
+                    value: 300,
+                    message: 'Should be less than 300 characters',
+                  },
+                })}
+                error={errors.Street?.message}
               />
             </Grid>
             <Grid item xs={12} md={3}>
