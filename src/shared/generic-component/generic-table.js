@@ -18,6 +18,7 @@ import { useSelector } from 'react-redux';
 
 import SuspendValuntaryPopup from '../../pages/suspend-valuntary-popup';
 import { Button, Chip } from '../../ui/core';
+import Checkbox from '@mui/material/Checkbox';
 
 GenericTable.propTypes = {
   tableHeader: propTypes.array.isRequired,
@@ -39,6 +40,31 @@ export default function GenericTable(props) {
   const [selected, setSelected] = useState('');
   const [confirmationModal, setConfirmationModal] = useState(false);
   const [selectedSuspendLicenseProfile, setSelectedSuspendLicenseProfile] = useState();
+  const [selectedRows, setSelectedRows] = useState([]);
+
+  const handleRowCheckboxClick = (event, row) => {
+    const checked = event.target.checked;
+    let newselectedRows = [...selectedRows];
+    if (checked) {
+      if (props.FacilityData[row].department && props.FacilityData[row].designation) {
+        if (!newselectedRows.some((selectedRow) => selectedRow === row)) {
+          newselectedRows.push(row);
+          props.declaredFacilityData.push(props.FacilityData[row]);
+          props.setDeclaredFacilityDistrict(props.declaredFacilityData);
+          props.setFacilityTableError(false);
+        }
+      } else {
+        props.setFacilityTableError(true);
+      }
+    } else {
+      newselectedRows = newselectedRows.filter(
+        (selectedRow) => selectedRow !== row
+      );
+      props.declaredFacilityData.splice(row, 1);
+      props.setDeclaredFacilityDistrict([...props.declaredFacilityData]);
+    }
+    setSelectedRows(newselectedRows);
+  };
 
   const selectionChangeHandler = (event, row) => {
     const { myValue } = event.currentTarget.dataset;
@@ -278,8 +304,8 @@ export default function GenericTable(props) {
                   );
                 } else if (
                   (item.title === 'Department' && item.flag !== 'declareFacility') ||
-                  (item.title === 'Designation' && item.flag !== 'declareFacility') ||
-                  item.title === 'Select'
+                  (item.title === 'Designation' && item.flag !== 'declareFacility')
+
                 ) {
                   return (
                     <TableCell maxWidth={`${tableCellWidth}%`} key={index} align="left">
@@ -344,7 +370,25 @@ export default function GenericTable(props) {
                       {row[item.name]?.value}
                     </TableCell>
                   );
-                } else {
+                } else if (item.title === 'Select') {
+                  return (
+                    <TableCell
+                      key={index}
+                      align="center"
+                    >
+                      <Checkbox
+                        checked={selectedRows.some(
+                          (selectedRow) => selectedRow === rowIndex
+                        )}
+                        onChange={(event) => {
+                          handleRowCheckboxClick(event, rowIndex)
+                        }
+                        }
+                      />
+                    </TableCell>
+                  )
+                }
+                else {
                   return (
                     <Tooltip
                       key={index}

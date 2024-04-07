@@ -129,6 +129,10 @@ const WorkDetails = ({
           },
 
           registration_no: registrationDetails?.registration_detail_to?.registration_number,
+          ...(organizationChecked && {
+            department: getValues().department,
+            designation: getValues().designation,
+          }),
         },
       ],
       hp_profile_id: loginData?.data?.profile_id,
@@ -899,8 +903,8 @@ const WorkDetails = ({
                       if (
                         getValues()?.stateLGDCode !== undefined &&
                         getValues()?.stateLGDCode !== '' &&
-                        getValues()?.districtLGDCode !== undefined &&
-                        getValues()?.districtLGDCode !== '' &&
+                        // getValues()?.districtLGDCode !== undefined &&
+                        // getValues()?.districtLGDCode !== '' &&
                         getValues()?.facilityName !== undefined &&
                         getValues()?.facilityName !== ''
                       ) {
@@ -949,7 +953,7 @@ const WorkDetails = ({
               {facilityTableError && (
                 <Grid item xs={12} padding="10px 0 !important" ml={1}>
                   <Typography p={1} component="div" color="error.main" variant="h3">
-                    Please choose Facility details.
+                    Please declare complete Facility details.
                   </Typography>
                 </Grid>
               )}
@@ -1004,7 +1008,7 @@ const WorkDetails = ({
                 {...register('workingOrganizationName', {
                   required: 'Please enter the organisation name',
                   pattern: {
-                    value: /^(?!^\s)[a-zA-Z0-9-']*$/,
+                    value: /^(?!^\s)[a-zA-Z0-9 -']*$/,
                     message: 'Please enter the valid organisation name',
                   },
                   maxLength: {
@@ -1027,7 +1031,7 @@ const WorkDetails = ({
                 defaultValue={getValues().organizationType}
                 {...register('organizationType', {
                   pattern: {
-                    value: /^(?!^\s)[a-zA-Z0-9-']*$/,
+                    value: /^(?!^\s)[a-zA-Z0-9 -']*$/,
                     message: 'Please enter the valid organisation type',
                   },
                   maxLength: {
@@ -1055,7 +1059,7 @@ const WorkDetails = ({
                 {...register('Street', {
                   required: 'Please enter the street name',
                   pattern: {
-                    value: /^(?!^\s)[a-zA-Z0-9-,']*$/,
+                    value: /^(?!^\s)[a-zA-Z0-9 -']*$/,
                     message: 'Please enter the valid street name',
                   },
                   maxLength: {
@@ -1085,7 +1089,7 @@ const WorkDetails = ({
                 {...register('Address', {
                   required: 'Please enter the address',
                   maxLength: {
-                    value: 300,
+                    value: 400,
                     message: 'Should be less than 300 characters',
                   },
                 })}
@@ -1119,7 +1123,6 @@ const WorkDetails = ({
           </Grid>
 
           <Grid container item spacing={2} mt={1}>
-
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 Locality
@@ -1193,7 +1196,6 @@ const WorkDetails = ({
             </Grid>
           </Grid>
           <Grid container item spacing={2} mt={1}>
-
             <Grid item xs={12} md={4} lg={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 District
@@ -1300,23 +1302,15 @@ const WorkDetails = ({
               </Typography>
               <TextField
                 variant="outlined"
-                name={'Street'}
+                name={'department'}
                 required={true}
                 fullWidth
                 placeholder="Enter department"
-                defaultValue={getValues().Street}
-                {...register('Street', {
-                  required: 'Please enter the street name',
-                  pattern: {
-                    value: /^(?!^\s)[a-zA-Z0-9-,']*$/,
-                    message: 'Please enter the valid street name',
-                  },
-                  maxLength: {
-                    value: 300,
-                    message: 'Should be less than 300 characters',
-                  },
+                defaultValue={getValues().department}
+                {...register('department', {
+                  required: 'Please enter your department',
                 })}
-                error={errors.Street?.message}
+                error={errors.department?.message}
               />
             </Grid>
             <Grid item xs={12} md={4}>
@@ -1328,23 +1322,15 @@ const WorkDetails = ({
               </Typography>
               <TextField
                 variant="outlined"
-                name={'Street'}
+                name={'designation'}
                 required={true}
                 fullWidth
                 placeholder="Enter designation"
-                defaultValue={getValues().Street}
-                {...register('Street', {
-                  required: 'Please enter the street name',
-                  pattern: {
-                    value: /^(?!^\s)[a-zA-Z0-9-,']*$/,
-                    message: 'Please enter the valid street name',
-                  },
-                  maxLength: {
-                    value: 300,
-                    message: 'Should be less than 300 characters',
-                  },
+                defaultValue={getValues().designation}
+                {...register('designation', {
+                  required: 'Please enter your designation',
                 })}
-                error={errors.Street?.message}
+                error={errors.designation?.message}
               />
             </Grid>
             <Grid item xs={12} md={3}>

@@ -165,25 +165,26 @@ function WorkDetailsTable({
       {
         type: 'select',
         value: (
-          <Checkbox
-            checked={checked}
-            onChange={(e) => {
-              if (!FacilityData[currentRowIndex]?.department || !FacilityData[currentRowIndex]?.designation) {
-                setChecked(false);
-              } else {
-                if (e.target.checked) {
-                  setChecked(true)
-                  declaredFacilityData.push(FacilityData[currentRowIndex]);
-                  setDeclaredFacilityDistrict(declaredFacilityData);
-                  setFacilityTableError(false);
-                } else {
-                  setChecked(false);
-                  declaredFacilityData.splice(currentRowIndex, 1);
-                  setDeclaredFacilityDistrict([...declaredFacilityData]);
-                }
-              }
-            }}
-          />
+          'dkd'
+          // <Checkbox
+          //   checked={checked||false}
+          //   onChange={(e) => {
+          //     if (!FacilityData[currentRowIndex]?.department || !FacilityData[currentRowIndex]?.designation) {
+          //       setChecked(false);
+          //     } else {
+          //       if (e.target.checked) {
+          //         setChecked(true)
+          //         declaredFacilityData.push(FacilityData[currentRowIndex]);
+          //         setDeclaredFacilityDistrict(declaredFacilityData);
+          //         setFacilityTableError(false);
+          //       } else {
+          //         setChecked(false);
+          //         declaredFacilityData.splice(currentRowIndex, 1);
+          //         setDeclaredFacilityDistrict([...declaredFacilityData]);
+          //       }
+          //     }
+          //   }}
+          // />
         ),
         onClickCallback: viewCallback,
       }
@@ -199,6 +200,10 @@ function WorkDetailsTable({
     <Grid p={'0px'}>
       <GenericTable
         order={order}
+        FacilityData={FacilityData}
+        declaredFacilityData={declaredFacilityData}
+        setDeclaredFacilityDistrict={setDeclaredFacilityDistrict}
+        setFacilityTableError={setFacilityTableError}
         orderBy={orderBy}
         onRequestSort={handleRequestSort}
         tableHeader={dataHeader}
@@ -206,9 +211,6 @@ function WorkDetailsTable({
         handleRowClick={handleDataRowClick}
         rowsPerPage={rowsPerPage}
         page={page}
-        sx={{
-          bgcolor: 'red',
-        }}
       />
       {newRowsData?.length !== 0 && (
         <Box>
