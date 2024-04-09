@@ -1258,9 +1258,9 @@ const WorkDetails = ({
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 City/Town/Village
-                <Typography component="span" color="error.main">
+                {/* <Typography component="span" color="error.main">
                   *
-                </Typography>
+                </Typography> */}
               </Typography>
 
               <Select
@@ -1275,12 +1275,12 @@ const WorkDetails = ({
                     : false
                 }
                 {...register('Area', {
-                  required:
-                    subDistrictList?.length > 0 &&
-                      districtsList?.length > 0 &&
-                      statesList?.length > 0
-                      ? ' Please select a City/Town/Village'
-                      : '',
+                  // required:
+                  //   subDistrictList?.length > 0 &&
+                  //     districtsList?.length > 0 &&
+                  //     statesList?.length > 0
+                  //     ? ' Please select a City/Town/Village'
+                  //     : '',
                 })}
                 options={createSelectFieldData(citiesList)}
                 MenuProps={{
