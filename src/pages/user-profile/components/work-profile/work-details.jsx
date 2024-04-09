@@ -1222,9 +1222,9 @@ const WorkDetails = ({
             <Grid item xs={12} md={4}>
               <Typography variant="subtitle2" color="inputTextColor.main">
                 Sub District
-                <Typography component="span" color="error.main">
+                {/* <Typography component="span" color="error.main">
                   *
-                </Typography>
+                </Typography> */}
               </Typography>
 
               <Select
@@ -1239,12 +1239,12 @@ const WorkDetails = ({
                 }
                 defaultValue={getValues().SubDistrict}
                 {...register('SubDistrict', {
-                  required:
-                    subDistrictList?.length > 0 &&
-                      districtsList?.length > 0 &&
-                      statesList?.length > 0
-                      ? 'Please select sub district'
-                      : '',
+                  // required:
+                  //   subDistrictList?.length > 0 &&
+                  //     districtsList?.length > 0 &&
+                  //     statesList?.length > 0
+                  //     ? 'Please select sub district'
+                  //     : '',
                 })}
                 options={createSelectFieldData(subDistrictList, 'iso_code')}
                 MenuProps={{
