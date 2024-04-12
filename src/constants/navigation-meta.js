@@ -109,7 +109,7 @@ export const navbar_routes = [
   },
   {
     label: 'User Manual',
-    link: 'https://drive.google.com/file/d/1Qu5Ady_-LQREMx0QaEE3pqQO7oq2pmEs/view?usp=sharing',
+    link: 'https://ndr.abdm.gov.in/api/v1/abdm/nmr/userManual',
   },
 
   {
