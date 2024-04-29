@@ -688,8 +688,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               <Typography component="span" color="error.main">
                 *
               </Typography>
-              {getQueryRaised('Registration') === false && (
-                <Tooltip title={getQueryRaisedComment('Registration')}>
+              {getQueryRaised('Registration Type') === false && (
+                <Tooltip title={getQueryRaisedComment('Registration Type')}>
                   <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
                 </Tooltip>
               )}
@@ -711,10 +711,10 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               ]}
               {...register('registration')}
               disabled={
-                getQueryRaised('Registration') === false
+                getQueryRaised('Registration Type') === false
                   ? false
                   : hp_profile_status_id === 3
-                  ? getQueryRaised('Registration')
+                  ? getQueryRaised('Registration Type')
                   : hp_profile_status_id === 2
                   ? true
                   : !personalDetails?.personal_details?.is_new
@@ -762,7 +762,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                   renewable_registration_date ? new Date(renewable_registration_date) : new Date()
                 }
                 disabled={
-                  getQueryRaised('Registration') === false
+                  getQueryRaised('Registration Type') === false
                     ? false
                     : getQueryRaised('Due Date of Renewal') === false
                     ? false
