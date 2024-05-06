@@ -47,6 +47,10 @@ export default function ProfileImage(props) {
     (state) => state?.doctorUserProfileReducer?.personalDetails?.nmr_id
   );
 
+  const hpr_id = useSelector(
+    (state) => state?.doctorUserProfileReducer?.personalDetails?.hpr_id_number
+  );
+
   const userStatus = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.hp_profile_status_id
   );
@@ -74,7 +78,7 @@ export default function ProfileImage(props) {
   }));
   const classes = useStyles(theme);
 
-  useEffect(() => {}, [profileImage, imageChanged]);
+  useEffect(() => { }, [profileImage, imageChanged]);
 
   const changeImage = (e) => {
     const requestObjNew = new FormData();
@@ -122,7 +126,7 @@ export default function ProfileImage(props) {
   };
 
   const fetchDoctorUserPersonalDetails = () => {
-    dispatch(getPersonalDetailsData(loginData?.data?.profile_id)).then(() => {});
+    dispatch(getPersonalDetailsData(loginData?.data?.profile_id)).then(() => { });
   };
 
   // const getIconAndText = (currentStatus) => {
@@ -213,8 +217,8 @@ export default function ProfileImage(props) {
             {imageTypeError === true && imageErrorMessage === false
               ? 'JPG/JPEG/PNG file format allowed.'
               : imageTypeError === false && imageErrorMessage === true
-              ? 'File size should be less than 5MB.'
-              : ''}
+                ? 'File size should be less than 5MB.'
+                : ''}
           </Typography>
         </Box>
       )}
@@ -255,29 +259,29 @@ export default function ProfileImage(props) {
                   userStatus === 1 || userStatus === 7
                     ? 'primary.main'
                     : userStatus === 2
-                    ? 'success.main'
-                    : userStatus === 3
-                    ? 'secondary.main'
-                    : userStatus === 4 || userStatus === 5 || userStatus === 6
-                    ? 'error.main'
-                    : ''
+                      ? 'success.main'
+                      : userStatus === 3
+                        ? 'secondary.main'
+                        : userStatus === 4 || userStatus === 5 || userStatus === 6
+                          ? 'error.main'
+                          : ''
                 }
               >
                 {userStatus === 1
                   ? 'Pending'
                   : userStatus === 2
-                  ? 'Approved'
-                  : userStatus === 3
-                  ? 'Query Raised'
-                  : userStatus === 4
-                  ? 'Rejected'
-                  : userStatus === 5
-                  ? 'Blacklisted'
-                  : userStatus === 6
-                  ? 'Suspended'
-                  : userStatus === 7
-                  ? 'Draft'
-                  : 'Draft'}
+                    ? 'Approved'
+                    : userStatus === 3
+                      ? 'Query Raised'
+                      : userStatus === 4
+                        ? 'Rejected'
+                        : userStatus === 5
+                          ? 'Blacklisted'
+                          : userStatus === 6
+                            ? 'Suspended'
+                            : userStatus === 7
+                              ? 'Draft'
+                              : 'Draft'}
               </Typography>
             </Grid>
           )}
@@ -295,59 +299,73 @@ export default function ProfileImage(props) {
               </Typography>{' '}
             </Grid>
           )}
-          {(personalDetails?.hp_profile_status_id === 5 ||
-            personalDetails?.hp_profile_status_id === 6) && (
-            <Grid container mt={1}>
-              <Grid item xs={12}>
-                <Typography
-                  color="suspendAlert.dark"
-                  component="div"
-                  textAlign="center"
-                  display="inline-flex"
-                  variant="body2"
-                  sx={{ whiteSpace: 'break-spaces' }}
-                >
-                  {personalDetails?.hp_profile_status_id === 5 &&
-                    `Your profile is Blacklisted and you will not be able to perform any action.`}
-                  {personalDetails?.hp_profile_status_id === 6 &&
-                    `Your profile is Suspended and you will not be able to perform any action.`}
-                </Typography>
-              </Grid>
-              <Grid item xs={12} textAlign="center" mt={1} mr={2}>
-                <img
-                  src={ReactivationLogo}
-                  alt="Reactivation license logo"
-                  width="15px"
-                  height="15px"
-                />
-                <Link
-                  sx={{
-                    cursor: 'pointer',
-                    'pointer-events':
-                      (personalDetails?.hp_profile_status_id === 5 ||
-                        personalDetails?.hp_profile_status_id === 6) &&
-                      personalDetails?.work_flow_status_id === 1
-                        ? 'none'
-                        : 'unset',
-                    opacity:
-                      (personalDetails?.hp_profile_status_id === 5 ||
-                        personalDetails?.hp_profile_status_id === 6) &&
-                      personalDetails?.work_flow_status_id === 1
-                        ? 0.5
-                        : 'unset',
-                  }}
-                  ml={1}
-                  variant="subtitle2"
-                  onClick={() => {
-                    setShowReactivateLicense(true);
-                    setShowSuccessPopup(false);
-                  }}
-                >
-                  Reactivate Licence
-                </Link>
-              </Grid>
+          {hpr_id && (
+            <Grid
+              display="flex"
+              // borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
+              item
+            >
+              <Typography variant="subtitle2" color="grey.label" sx={{ mr: '5px' }}>
+                HPR ID:
+              </Typography>
+              <Typography variant="subtitle2" color="textPrimary.main">
+                {hpr_id ? hpr_id : ''}
+              </Typography>{' '}
             </Grid>
           )}
+          {(personalDetails?.hp_profile_status_id === 5 ||
+            personalDetails?.hp_profile_status_id === 6) && (
+              <Grid container mt={1}>
+                <Grid item xs={12}>
+                  <Typography
+                    color="suspendAlert.dark"
+                    component="div"
+                    textAlign="center"
+                    display="inline-flex"
+                    variant="body2"
+                    sx={{ whiteSpace: 'break-spaces' }}
+                  >
+                    {personalDetails?.hp_profile_status_id === 5 &&
+                      `Your profile is Blacklisted and you will not be able to perform any action.`}
+                    {personalDetails?.hp_profile_status_id === 6 &&
+                      `Your profile is Suspended and you will not be able to perform any action.`}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} textAlign="center" mt={1} mr={2}>
+                  <img
+                    src={ReactivationLogo}
+                    alt="Reactivation license logo"
+                    width="15px"
+                    height="15px"
+                  />
+                  <Link
+                    sx={{
+                      cursor: 'pointer',
+                      'pointer-events':
+                        (personalDetails?.hp_profile_status_id === 5 ||
+                          personalDetails?.hp_profile_status_id === 6) &&
+                          personalDetails?.work_flow_status_id === 1
+                          ? 'none'
+                          : 'unset',
+                      opacity:
+                        (personalDetails?.hp_profile_status_id === 5 ||
+                          personalDetails?.hp_profile_status_id === 6) &&
+                          personalDetails?.work_flow_status_id === 1
+                          ? 0.5
+                          : 'unset',
+                    }}
+                    ml={1}
+                    variant="subtitle2"
+                    onClick={() => {
+                      setShowReactivateLicense(true);
+                      setShowSuccessPopup(false);
+                    }}
+                  >
+                    Reactivate Licence
+                  </Link>
+                </Grid>
+              </Grid>
+            )}
           {personalDetails?.esign_status !== 1 &&
             (doctorEsignStatus === 2 ||
               doctorEsignStatus === 3 ||
