@@ -166,14 +166,14 @@ export const nmcTabs = [
   //   element: <CollegeApproval />,
   // },
   {
-    option: 4,
+    option: 3,
     name: 'College Registration',
     tabName: 'college-registration',
     icon: <AppRegistrationIcon />,
     element: <NMCCollegeRegistration />,
   },
   {
-    option: 5,
+    option: 4,
     name: 'Change Password',
     tabName: 'change-password',
     icon: <PasswordIcon />,
