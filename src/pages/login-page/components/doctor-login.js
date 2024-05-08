@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Box, Grid, InputAdornment, Link, Typography, useTheme } from '@mui/material';
+import { Box, Grid, InputAdornment, Link, Tooltip, Typography, useTheme } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -278,8 +278,8 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
             }}
             sx={{
               border: `2px solid ${selectedLoginOption === 'mobileNumber'
-                  ? theme.palette.secondary.main
-                  : theme.palette.grey.main
+                ? theme.palette.secondary.main
+                : theme.palette.grey.main
                 }`,
               '&:hover': {
                 backgroundColor: 'transparent !important',
@@ -303,8 +303,8 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
             }}
             sx={{
               border: `2px solid ${selectedLoginOption === 'userName'
-                  ? theme.palette.secondary.main
-                  : theme.palette.grey.main
+                ? theme.palette.secondary.main
+                : theme.palette.grey.main
                 }`,
               '&:hover': {
                 backgroundColor: 'transparent !important',
@@ -328,8 +328,8 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
             }}
             sx={{
               border: `2px solid ${selectedLoginOption === 'nmrId'
-                  ? theme.palette.secondary.main
-                  : theme.palette.grey.main
+                ? theme.palette.secondary.main
+                : theme.palette.grey.main
                 }`,
               '&:hover': {
                 backgroundColor: 'transparent !important',
@@ -412,29 +412,31 @@ export const DoctorLogin = ({ loginName = 'Doctor', handleNext, otpData, userTyp
           </>
         ) : selectedLoginOption === 'userName' ? (
           <>
-            <TextField
-              sx={{ mb: 1 }}
-              required
-              fullWidth
-              label={'Username'}
-              placeholder={'Enter username'}
-              name={'userID'}
-              error={errors.userID?.message}
-              {...register('userID', {
-                required: 'Please enter a username',
-                pattern: {
-                  value: /^[\s.]*([^\s.][\s.]*){0,100}$/,
-                  message: 'Please enter a valid username',
-                },
-                minLength: {
-                  value: 2,
-                  message: 'Please enter a valid username',
-                },
-              })}
-              inputProps={{
-                maxLength: 100,
-              }}
-            />
+            <Tooltip title={'This is a case sensitive field'} placement='top'>
+              <TextField
+                sx={{ mb: 1 }}
+                required
+                fullWidth
+                label={'Username'}
+                placeholder={'Enter username'}
+                name={'userID'}
+                error={errors.userID?.message}
+                {...register('userID', {
+                  required: 'Please enter a username',
+                  pattern: {
+                    value: /^[\s.]*([^\s.][\s.]*){0,100}$/,
+                    message: 'Please enter a valid username',
+                  },
+                  minLength: {
+                    value: 2,
+                    message: 'Please enter a valid username',
+                  },
+                })}
+                inputProps={{
+                  maxLength: 100,
+                }}
+              />
+            </Tooltip>
             <Typography display={'flex'} justifyContent="flex-end">
               <Button
                 size="small"

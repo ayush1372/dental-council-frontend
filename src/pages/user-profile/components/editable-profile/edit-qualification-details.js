@@ -340,7 +340,7 @@ const EditQualificationDetails = ({
               name="MarksObtained"
               label="Marks obtained"
               placeholder="Enter marks obtained"
-              // required={true}
+              required={true}
               type="number"
               fullWidth
               error={errors?.qualification?.[index]?.marksobtained?.message}
@@ -689,7 +689,7 @@ const EditQualificationDetails = ({
                 errors?.qualification?.[index]?.state?.message
               }
               name="state"
-              label="State (in which college is located)"
+              label="State/Province/Region"
               placeholder={'Enter state'}
               defaultValue={fields[index].state}
               required={true}

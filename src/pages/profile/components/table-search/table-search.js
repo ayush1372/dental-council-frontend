@@ -414,7 +414,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
           md="auto"
           mt={userActiveTab === 'Activate Licence' ? 2 : 0}
         >
-          <ExportFiles exportData={exportData} flag={flag} />
+          {/* <ExportFiles exportData={exportData} flag={flag} /> */}
         </Grid>
       </Grid>
     </Box>

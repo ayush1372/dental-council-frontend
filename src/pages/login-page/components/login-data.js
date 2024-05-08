@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Box, Grid, Typography, useTheme } from '@mui/material';
+import { Box, Grid, Tooltip, Typography, useTheme } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -248,8 +248,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
               setOtpFormEnable(false);
             }}
             sx={{
-              border: `2px solid ${
-                selectedLoginOption === 'mobileNumber'
+              border: `2px solid ${selectedLoginOption === 'mobileNumber'
                   ? theme.palette.secondary.main
                   : theme.palette.grey.main
                 }`,
@@ -274,8 +273,7 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
               setOtpFormEnable(false);
             }}
             sx={{
-              border: `2px solid ${
-                selectedLoginOption === 'userName'
+              border: `2px solid ${selectedLoginOption === 'userName'
                   ? theme.palette.secondary.main
                   : theme.palette.grey.main
                 }`,
@@ -293,29 +291,31 @@ export const Login = ({ loginName, handleForgotPassword, otpData, userTypeDetail
       <Box my={2}>
         {selectedLoginOption === 'userName' ? (
           <>
-            <TextField
-              sx={{ mb: 1 }}
-              required
-              fullWidth
-              label={'Username'}
-              placeholder={'Enter username'}
-              name={'userID'}
-              error={errors.userID?.message}
-              {...register('userID', {
-                required: 'Please enter a username',
-                pattern: {
-                  value: /^[\s.]*([^\s.][\s.]*){0,100}$/,
-                  message: 'Please enter a valid username',
-                },
-                // minLength: {
-                //   value: 8,
-                //   message: 'Should contain 8 character',
-                // },
-              })}
-              inputProps={{
-                maxLength: 100,
-              }}
-            />
+            <Tooltip title={'This is a case sensitive field'} placement='top'>
+              <TextField
+                sx={{ mb: 1 }}
+                required
+                fullWidth
+                label={'Username'}
+                placeholder={'Enter username'}
+                name={'userID'}
+                error={errors.userID?.message}
+                {...register('userID', {
+                  required: 'Please enter a username',
+                  pattern: {
+                    value: /^[\s.]*([^\s.][\s.]*){0,100}$/,
+                    message: 'Please enter a valid username',
+                  },
+                  // minLength: {
+                  //   value: 8,
+                  //   message: 'Should contain 8 character',
+                  // },
+                })}
+                inputProps={{
+                  maxLength: 100,
+                }}
+              />
+            </Tooltip>
             <Typography display={'flex'} justifyContent="flex-end">
               <Button
                 size="small"
