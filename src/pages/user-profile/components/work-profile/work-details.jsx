@@ -189,7 +189,7 @@ const WorkDetails = ({
     if (!organizationChecked) {
       currentWorkDetails?.current_work_details.splice(0, 1);
     }
-    console.log('------------------------', currentWorkDetails);
+    // console.log('------------------------', currentWorkDetails);
     if (facilityChecked) {
       if (declaredFacilityData?.length > 0 || organizationChecked) {
         updateWorkStatus(currentWorkDetails);

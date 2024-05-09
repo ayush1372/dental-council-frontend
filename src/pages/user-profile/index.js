@@ -135,10 +135,10 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
     setShowReactivateLicense(false);
   };
   const fetchStates = () => {
-    dispatch(getStatesList()).then(() => {});
+    dispatch(getStatesList()).then(() => { });
   };
   const fetchCountries = () => {
-    dispatch(getCountriesList()).then(() => {});
+    dispatch(getCountriesList()).then(() => { });
   };
 
   const openDoctorEditProfile = () => {
@@ -162,11 +162,11 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
         showViewProfile && tabName === 'Activate License'
           ? selectedRowData?.health_professional_id
           : showViewProfile
-          ? selectedRowData?.profileID?.value || selectedRowData?.view?.value
-          : loginData?.data?.profile_id
+            ? selectedRowData?.profileID?.value || selectedRowData?.view?.value
+            : loginData?.data?.profile_id
       )
     )
-      .then(() => {})
+      .then(() => { })
       .catch((allFailMsg) => {
         successToast('ERR_INT: ' + allFailMsg, 'auth-error', 'error', 'top-center');
       });
@@ -178,8 +178,8 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
         showViewProfile && tabName === 'Activate License'
           ? selectedRowData?.health_professional_id
           : showViewProfile
-          ? selectedRowData?.profileID?.value || selectedRowData?.view?.value
-          : loginData?.data?.profile_id
+            ? selectedRowData?.profileID?.value || selectedRowData?.view?.value
+            : loginData?.data?.profile_id
       )
     );
   };
@@ -190,8 +190,8 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
         showViewProfile && tabName === 'Activate License'
           ? selectedRowData?.health_professional_id
           : showViewProfile
-          ? selectedRowData?.profileID?.value || selectedRowData?.view?.value
-          : loginData?.data?.profile_id
+            ? selectedRowData?.profileID?.value || selectedRowData?.view?.value
+            : loginData?.data?.profile_id
       )
     ).then();
     // .catch((error) => {
@@ -215,15 +215,16 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
     ) {
       setIsApplicationPending(false);
     }
-    if (
-      (loginData?.data?.hp_profile_status_id === 7 &&
-        personalDetails?.hp_profile_status_id === 7) ||
-      (loginData?.data?.work_flow_status_id === 3 && personalDetails?.hp_profile_status_id === 3)
-    ) {
-      setIsReadMode(false);
-    } else {
-      setIsReadMode(true);
-    }
+    // console.log('checking', loginData?.data?.work_flow_status_id === 3 && personalDetails?.work_flow_status_id === 3)
+    // if (
+    //   (loginData?.data?.hp_profile_status_id === 7 &&
+    //     personalDetails?.hp_profile_status_id === 7) ||
+    //   (loginData?.data?.work_flow_status_id === 3 && personalDetails?.work_flow_status_id === 3)
+    // ) {
+    //   setIsReadMode(false);
+    // } else {
+    //   setIsReadMode(true);
+    // }
     if (personalDetails?.hp_profile_id !== undefined) {
       dispatch(getRegistrationDetailsData(personalDetails?.hp_profile_id)).then((response) => {
         if (response?.data?.registration_detail_to?.registration_certificate) {
@@ -333,8 +334,8 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
             doctorRegDetails?.qualification_detail_response_tos[0]?.university?.name || '',
           monthAndYearOfAwarding:
             doctorRegDetails?.qualification_detail_response_tos[0]?.qualification_month +
-              ' ' +
-              doctorRegDetails?.qualification_detail_response_tos[0]?.qualification_year || '',
+            ' ' +
+            doctorRegDetails?.qualification_detail_response_tos[0]?.qualification_year || '',
         },
         isRegCerAttached: registrationFile ? 'Yes' : 'No',
         isDegreeCardAttached: degreeCertificate ? 'Yes' : 'No',
@@ -400,6 +401,14 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
     }, 1000);
   };
 
+  console.log(loggedInUserType)
+
+  // personalDetails?.esign_status === 1 ||
+  // (loginData?.data?.hp_profile_status_id === 7 &&
+  //   personalDetails?.hp_profile_status_id === 7) ? (
+  // isReadMode &&
+  // isApplicationPending &&
+  // !logInDoctorStatus)
   return eSignResponse?.asp_txn_id ? (
     <div></div>
   ) : (
@@ -448,17 +457,17 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
                     width="302px"
                     progress={
                       workProfileDetails?.work_details?.is_user_currently_working !== undefined &&
-                      workProfileDetails !== undefined &&
-                      typeof workProfileDetails === 'object' &&
-                      workProfileDetails !== null &&
-                      Object?.keys(workProfileDetails)?.length !== 0
+                        workProfileDetails !== undefined &&
+                        typeof workProfileDetails === 'object' &&
+                        workProfileDetails !== null &&
+                        Object?.keys(workProfileDetails)?.length !== 0
                         ? 100
                         : showStaticFormProgress ||
                           personalDetails?.nmr_id ||
                           personalDetails?.work_flow_status_id === 1 ||
                           personalDetails?.work_flow_status_id === 3
-                        ? 75
-                        : progress
+                          ? 75
+                          : progress
                     }
                     completed={completed}
                   />
@@ -472,9 +481,9 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
                 )}
               </Grid>
               {doctorEsignStatus === 1 ||
-              personalDetails?.esign_status === 1 ||
-              (loginData?.data?.hp_profile_status_id === 7 &&
-                personalDetails?.hp_profile_status_id === 7) ? (
+                personalDetails?.esign_status === 1 ||
+                (loginData?.data?.hp_profile_status_id === 7 &&
+                  personalDetails?.hp_profile_status_id === 7) ? (
                 isReadMode &&
                 isApplicationPending &&
                 !logInDoctorStatus && (
@@ -589,7 +598,7 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
             handleNext={handleNext}
             steps={wizardSteps}
             progress={false}
-            isStepClickEnable={['SMC', 'NMC', 'College'].includes(loggedInUserType)}
+            isStepClickEnable={['SMC', 'NMC', 'College', 'Doctor'].includes(loggedInUserType)}
             showCheckCirlce={loggedInUserType === 'Doctor'}
             handleStep={handleStep}
           ></Wizard>
