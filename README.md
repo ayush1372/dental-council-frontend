@@ -1,12 +1,5 @@
 ---
-title: 'React JS application for council software'
-author:
-  - name: 'Sneha Gosewade'
----
-
-## Author
-
-- Sneha Gosewade
+title: 'React JS application for National Dental Register'
 
 ## Stack
 
