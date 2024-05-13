@@ -1,8 +1,4 @@
 ---
-title: 'React JS application for National Dental Register'
-
-## Stack
-
 This project is made on base of
 
 - [React v17](https://reactjs.org/docs/getting-started.html)
