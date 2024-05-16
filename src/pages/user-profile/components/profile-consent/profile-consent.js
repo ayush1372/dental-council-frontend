@@ -36,7 +36,6 @@ const ProfileConsent = ({
   const dispatch = useDispatch();
   const [degreeCertificate, setDegreeCertificate] = useState(false);
   const [registrationFile, setRegistrationFile] = useState(false);
-  console.log(degreeCertificate,registrationFile);
   const doctorRegDetails = useSelector(
     (state) => state?.doctorUserProfileReducer?.registrationDetails
   );

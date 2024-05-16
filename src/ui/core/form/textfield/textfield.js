@@ -137,6 +137,11 @@ const InputField = (
             ? 'date'
             : 'text'
         }
+        sx={{
+          "& .MuiInputBase-input.Mui-disabled": {
+            WebkitTextFillColor: "Black",
+          },
+        }}
         autoComplete={'off'}
         ref={ref}
         error={error ? true : false}
