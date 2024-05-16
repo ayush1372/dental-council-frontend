@@ -3,10 +3,14 @@ import HeroBanner from './components/hero-banner/hero-banner';
 import WarningDialog from './components/warning-dialog/warning-dialog';
 
 export function Home() {
+  const currentEnv = process.env.REACT_APP_V1_API_URL
 
   return (
     <div data-testid="homepage">
-      <WarningDialog />
+      {(currentEnv && currentEnv.includes("sbx")) &&
+        <WarningDialog />
+      }
+
       <HeroBanner />
       <LogoSlider />
     </div>
