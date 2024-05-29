@@ -51,6 +51,10 @@ export default function ProfileImage(props) {
     (state) => state?.doctorUserProfileReducer?.personalDetails?.hpr_id_number
   );
 
+  const user_name = useSelector(
+    (state) => state?.doctorUserProfileReducer?.personalDetails?.user_name
+  );
+
   const userStatus = useSelector(
     (state) => state?.doctorUserProfileReducer?.personalDetails?.hp_profile_status_id
   );
@@ -242,8 +246,23 @@ export default function ProfileImage(props) {
           </Typography>
         </Grid>
       </Grid>
+
       {loggedInUserType === 'Doctor' && (
         <>
+          {user_name && (
+            <Grid
+              display="flex"
+              // borderRight={`1px solid ${theme.palette.inputBorderColor.main}`}
+              item
+            >
+              <Typography variant="subtitle2" color="grey.label" sx={{ mr: '5px' }}>
+                User ID:
+              </Typography>
+              <Typography variant="subtitle2" color="textPrimary.main">
+                {user_name ? user_name : ''}
+              </Typography>{' '}
+            </Grid>
+          )}
           {userStatus && (
             <Grid
               display="flex"

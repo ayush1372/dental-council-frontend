@@ -401,7 +401,6 @@ export const UserProfile = ({ showViewProfile, selectedRowData, tabName }) => {
     }, 1000);
   };
 
-  console.log(loggedInUserType)
 
   // personalDetails?.esign_status === 1 ||
   // (loginData?.data?.hp_profile_status_id === 7 &&
