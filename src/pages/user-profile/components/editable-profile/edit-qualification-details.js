@@ -194,6 +194,10 @@ const EditQualificationDetails = ({
     }
   }, [qualificationFilesNameChangeData[`qualification.${index}.diffadharfiles`]]);
 
+
+  console.log('comment', getQueryRaisedComment('State Name'))
+  console.log('query', getQueryRaised('State Name'))
+
   return (
     <>
       {showDeleteIcon && (
@@ -716,8 +720,8 @@ const EditQualificationDetails = ({
             />
           ) : (
             <Select
-              queryRaiseIcon={getQueryRaised('State') === false ? true : false}
-              toolTipData={getQueryRaisedComment('State')}
+              queryRaiseIcon={getQueryRaised('State Name') === false ? true : false}
+              toolTipData={getQueryRaisedComment('State Name')}
               fullWidth
               error={
                 getValues().qualification[index].state === '' &&
@@ -745,7 +749,7 @@ const EditQualificationDetails = ({
               // }}
               disabled={
                 work_flow_status_id === 3
-                  ? getQueryRaised('State')
+                  ? getQueryRaised('State Name')
                   : isVerified === 1
                   ? true
                   : false
@@ -819,7 +823,7 @@ const EditQualificationDetails = ({
               //       : '',
               // }}
               disabled={
-                getQueryRaised('State') === false
+                getQueryRaised('State Name') === false
                   ? false
                   : work_flow_status_id === 3
                   ? getQueryRaised('Name of the College')
@@ -896,7 +900,7 @@ const EditQualificationDetails = ({
               //       : '',
               // }}
               disabled={
-                getQueryRaised('Name of the College') === false || getQueryRaised('State') === false
+                getQueryRaised('Name of the College') === false || getQueryRaised('State Name') === false
                   ? false
                   : work_flow_status_id === 3
                   ? getQueryRaised('University')

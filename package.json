@@ -64,7 +64,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "GENERATE_SOURCEMAP=false react-scripts build",
+    "build": "react-scripts build",
     "build:env": "sh -ac '. .env.${REACT_APP_ENV}; react-scripts build'",
     "build:development": "env-cmd -f .env.development npm run build",
     "build:sandbox": "env-cmd -f .env.sandbox npm run build",
