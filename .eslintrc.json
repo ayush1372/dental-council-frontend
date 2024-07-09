@@ -2,7 +2,7 @@
   "plugins": ["filename-rules", "lodash", "simple-import-sort"],
   "extends": [
     "react-app",
-    // "react-app/jest",
+    "react-app/jest",
     "plugin:react/recommended",
     "eslint:recommended",
     "plugin:react/jsx-runtime",

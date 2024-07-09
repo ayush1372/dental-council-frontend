@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 
-import { Box, Grid, TablePagination } from '@mui/material';
+import { Box, Button, Grid, TablePagination, Dialog, DialogContent, CircularProgress } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
+import { Download } from '@mui/icons-material';
 
 import GenericTable from '../../../../shared/generic-component/generic-table';
 import { getDashboardTableData } from '../../../../store/actions/dashboard-actions';
@@ -42,11 +43,68 @@ function DashboardControlledTable(props) {
   const [orderBy, setOrderBy] = React.useState({});
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [page, setPage] = React.useState(0);
+  const [open, setOpen] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   // const [selectedRowData, setRowData] = React.useState({});
   const dispatch = useDispatch();
   const [searchQueryParams, setSearchQueryParams] = React.useState();
-
   const { dashboardTableDetails } = useSelector((state) => state.dashboard);
+  const smcProfile = useSelector((state) => state?.smc?.smcProfileData?.data?.state_medical_council);
+
+  const downloadButtonClickHandler = () => {
+    setOpen(true);
+    setLoading(true);
+    const workFlowStatusId = props?.selectedCardData?.name;
+    const applicationTypeId = props?.selectedCardData?.applicationTypeID;
+
+    // console.log(workFlowStatusId, applicationTypeId, smcProfileId);
+
+    const baseUrl = process.env.REACT_APP_V1_API_URL;
+    const endpoint = baseUrl
+      + `/csv/download?applicationTypeId=${applicationTypeId}&userGroupStatus=${workFlowStatusId}&stateId=${smcProfile?.id}`;
+
+    const url = new URL(endpoint);
+
+    fetch(url, {
+      method: 'GET',
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Failed to get Response ' + response.statusText);
+        }
+        return response.blob();
+      })
+      .then(blob => {
+        // Create a link element
+        const link = document.createElement('a');
+
+        // Set the download attribute with a filename
+        link.download = `${smcProfile?.name} ${workFlowStatusId}.csv`;
+
+        // Create a URL for the blob and set it as the href attribute
+        link.href = window.URL.createObjectURL(blob);
+
+        // Append the link to the body
+        document.body.appendChild(link);
+
+        // Programmatically click the link to trigger the download
+        link.click();
+
+        // Remove the link from the document
+        link.remove();
+
+        // Stop loaders
+        setLoading(false);
+        setOpen(false);
+      })
+      .catch(error => {
+        console.error('There has been a problem with your fetch operation:', error);
+
+        setLoading(false);
+        setOpen(false);
+      });
+  };
+
 
   const dataHeader = [
     { title: 'S.No.', name: 'SNo', sorting: true, type: 'string' },
@@ -86,6 +144,7 @@ function DashboardControlledTable(props) {
     { title: 'Pendency (Days)', name: 'pendency', sorting: true, type: 'string' },
     { title: 'Action', name: 'view', sorting: false, type: 'string' },
   ];
+
 
   const viewCallback = (event, row) => {
     event.preventDefault();
@@ -254,12 +313,33 @@ function DashboardControlledTable(props) {
   };
   return (
     <Grid sx={{ m: 2 }}>
-      <TableSearch
-        searchParams={searchParams}
-        exportData={dashboardTableDetails}
-        flag={'dashboardTableDetails'}
-        value={props?.selectedCardData?.value}
-      />
+      <Grid container>
+        <Grid item xs={12} sm={12} md={11} lg={11}>
+          <TableSearch
+            searchParams={searchParams}
+            exportData={dashboardTableDetails}
+            flag={'dashboardTableDetails'}
+            value={props?.selectedCardData?.value}
+          />
+        </Grid>
+        <Grid item lg={1}
+          sx={{ display: 'flex', justifyContent: 'right', alignItems: 'start' }} >
+          <Button onClick={downloadButtonClickHandler}
+            variant="contained"
+            color="secondary"
+          >
+            <Download sx={{ fontSize: "1.5em" }} />
+          </Button>
+        </Grid>
+      </Grid>
+      <Dialog open={open}>
+        <DialogContent sx={{ textAlign: "center" }}>
+          <Box>
+            {loading && <CircularProgress size={90} />}
+          </Box>
+          <h4 style={{ margin: '0' }}>Generating csv... Please Wait.</h4>
+        </DialogContent>
+      </Dialog>
       <GenericTable
         order={order}
         orderBy={orderBy}
