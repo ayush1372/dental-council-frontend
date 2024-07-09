@@ -54,55 +54,40 @@ function DashboardControlledTable(props) {
   const downloadButtonClickHandler = () => {
     setOpen(true);
     setLoading(true);
-    const workFlowStatusId = props?.selectedCardData?.name;
+    const workFlowStatus = props?.selectedCardData?.name;
     const applicationTypeId = props?.selectedCardData?.applicationTypeID;
 
     // console.log(workFlowStatusId, applicationTypeId, smcProfileId);
 
     const baseUrl = process.env.REACT_APP_V1_API_URL;
     const endpoint = baseUrl
-      + `/csv/download?applicationTypeId=${applicationTypeId}&userGroupStatus=${workFlowStatusId}&stateId=${smcProfile?.id}`;
+      + `/csv/download?applicationTypeId=${applicationTypeId}&userGroupStatus=${workFlowStatus}&stateId=${smcProfile?.id}`;
 
     const url = new URL(endpoint);
 
     fetch(url, {
-      method: 'GET',
+      method: 'GET', 
     })
       .then(response => {
         if (!response.ok) {
-          throw new Error('Failed to get Response ' + response.statusText);
+          throw new Error('Network response was not ok ' + response.statusText);
         }
+
         return response.blob();
       })
       .then(blob => {
-        // Create a link element
         const link = document.createElement('a');
-
-        // Set the download attribute with a filename
-        link.download = `${smcProfile?.name} ${workFlowStatusId}.csv`;
-
-        // Create a URL for the blob and set it as the href attribute
+        link.download = `${applicationTypeId=='8'?'Additional Qualification':'Basic Qualification'} ${workFlowStatus}.csv`;
         link.href = window.URL.createObjectURL(blob);
-
-        // Append the link to the body
         document.body.appendChild(link);
-
-        // Programmatically click the link to trigger the download
         link.click();
-
-        // Remove the link from the document
         link.remove();
-
-        // Stop loaders
-        setLoading(false);
-        setOpen(false);
       })
       .catch(error => {
         console.error('There has been a problem with your fetch operation:', error);
-
-        setLoading(false);
-        setOpen(false);
       });
+    setLoading(false);
+    setOpen(false);
   };
 
 
