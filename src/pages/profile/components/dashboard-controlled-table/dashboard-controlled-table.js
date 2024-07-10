@@ -45,28 +45,44 @@ function DashboardControlledTable(props) {
   const [page, setPage] = React.useState(0);
   const [open, setOpen] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [workFlowStatus, setWorkFlowStatus] = React.useState(props?.selectedCardData?.name)
   // const [selectedRowData, setRowData] = React.useState({});
   const dispatch = useDispatch();
   const [searchQueryParams, setSearchQueryParams] = React.useState();
   const { dashboardTableDetails } = useSelector((state) => state.dashboard);
   const smcProfile = useSelector((state) => state?.smc?.smcProfileData?.data?.state_medical_council);
+  const nmcProfile = useSelector((state) => state?.nmc?.nmcProfileData?.data?.state_medical_council);
+  const userProfile = useSelector((state) => state?.loginReducer?.loginData?.data?.user_type)
+ 
+  if (workFlowStatus == 'Pending by SDC') {
+    setWorkFlowStatus('Pending');
+  }
+  if (workFlowStatus == 'Approved by SDC') {
+    setWorkFlowStatus('Approved');
+  }
+  if (workFlowStatus == 'Query Raised by SDC') {
+    setWorkFlowStatus('Query Raised');
+  }
+  if (workFlowStatus == 'Rejected by SDC') {
+    setWorkFlowStatus('Rejected');
+  }
+  
 
   const downloadButtonClickHandler = () => {
     setOpen(true);
     setLoading(true);
-    const workFlowStatus = props?.selectedCardData?.name;
     const applicationTypeId = props?.selectedCardData?.applicationTypeID;
-
-    // console.log(workFlowStatusId, applicationTypeId, smcProfileId);
+    const state_id = userProfile == 4 ?
+      nmcProfile?.id : smcProfile?.id    
 
     const baseUrl = process.env.REACT_APP_V1_API_URL;
     const endpoint = baseUrl
-      + `/csv/download?applicationTypeId=${applicationTypeId}&userGroupStatus=${workFlowStatus}&stateId=${smcProfile?.id}`;
+      + `/csv/download?applicationTypeId=${applicationTypeId}&userGroupStatus=${workFlowStatus}&stateId=${state_id}`;
 
     const url = new URL(endpoint);
 
     fetch(url, {
-      method: 'GET', 
+      method: 'GET',
     })
       .then(response => {
         if (!response.ok) {
@@ -77,7 +93,7 @@ function DashboardControlledTable(props) {
       })
       .then(blob => {
         const link = document.createElement('a');
-        link.download = `${applicationTypeId=='8'?'Additional Qualification':'Basic Qualification'} ${workFlowStatus}.csv`;
+        link.download = `${applicationTypeId == '8' ? 'Additional Qualification' : 'Basic Qualification'} ${workFlowStatus}.csv`;
         link.href = window.URL.createObjectURL(blob);
         document.body.appendChild(link);
         link.click();
