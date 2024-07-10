@@ -875,8 +875,8 @@ const EditQualificationDetails = ({
             />
           ) : (
             <Select
-              queryRaiseIcon={getQueryRaised('University') === false ? true : false}
-              toolTipData={getQueryRaisedComment('University')}
+              queryRaiseIcon={getQueryRaised('University Name') === false ? true : false}
+              toolTipData={getQueryRaisedComment('University Name')}
               fullWidth
               error={errors?.qualification?.[index]?.university?.message}
               placeholder={'Select university'}
@@ -903,7 +903,7 @@ const EditQualificationDetails = ({
                 getQueryRaised('Name of the College') === false || getQueryRaised('State Name') === false
                   ? false
                   : work_flow_status_id === 3
-                  ? getQueryRaised('University')
+                  ? getQueryRaised('University Name')
                   : isVerified === 1
                   ? true
                   : false
