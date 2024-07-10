@@ -102,10 +102,11 @@ function DashboardControlledTable(props) {
       .catch(error => {
         console.error('There has been a problem with your fetch operation:', error);
       });
-    setTimeout(() => {
-      setLoading(false);
-      setOpen(false);
-    },5000)
+
+
+    setLoading(false);
+    setOpen(false);
+
 
 
   };
