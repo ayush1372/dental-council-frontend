@@ -328,7 +328,7 @@ export const councilList = [
     { id: 100, name: "Goa State Dental Council" },
     { id: 8, name: "Gujarat State Dental Council" },
     { id: 9, name: "Haryana State Dental Council" },
-    { id: 10, name: "Himanchal Pradesh State Dental Council" },
+    { id: 10, name: "Himachal Pradesh State Dental Council" },
     { id: 12, name: "Jammu and Kashmir State Dental Council" },
     { id: 13, name: "Jharkhand State Dental Council" },
     { id: 14, name: "Karnataka State Dental Council" },
