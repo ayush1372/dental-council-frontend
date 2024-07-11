@@ -52,6 +52,10 @@ export default function Dashboard() {
   const { redirectDashboard } = useSelector((state) => state.common);
   const { loginData } = useSelector((state) => state.loginReducer);
 
+  const draft_application = useSelector((state) => state?.dashboard?.count?.data?.hp_registration_request?.draft_application)
+
+  console.log(useSelector((state) => state))
+
   const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(3),
     borderRadius: '5px !important',
@@ -82,6 +86,7 @@ export default function Dashboard() {
     registrationRequestMapper,
     'hp_registration_request'
   );
+
 
   let registrationRequestData2 = getDataFromResponse(
     count,
@@ -289,6 +294,8 @@ export default function Dashboard() {
     }
   }, [loggedInUserType]);
 
+  console.log(draft_application);
+
   return (
     <>
       {!showDashboard && (
@@ -336,6 +343,7 @@ export default function Dashboard() {
                   component="div"
                   display="flex"
                   alignItems="center"
+                  width="100%"
                   gap={3}
                   flex="1 0 100%"
                 >
@@ -345,17 +353,21 @@ export default function Dashboard() {
                       element[0].includes('Registration')
                         ? RegistrationRequest
                         : element[0].includes('Additional')
-                        ? UpdationRequest
-                        : element[0].includes('Suspension')
-                        ? SuspensionRequest
-                        : ''
+                          ? UpdationRequest
+                          : element[0].includes('Suspension')
+                            ? SuspensionRequest
+                            : ''
                     }
                     alt="requestIcon"
                   />
                   {element[0]}
+                  {element[0].includes('Registration') && draft_application &&
+                    <>  (Draft Application: <>{draft_application}</>)</>
+                  }
                 </Typography>
+
                 {(element[0].includes('Registration') || element[0].includes('Additional')) &&
-                loggedInUserType === 'SMC' ? (
+                  loggedInUserType === 'SMC' ? (
                   <Grid container display="flex" flexWrap="wrap" gap={{ xs: 1, xl: 2 }}>
                     <Grid
                       item
