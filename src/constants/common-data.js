@@ -11,7 +11,7 @@ export const UniqueUserNameForDoctor = [
 ];
 
 export const getSMCProfileDetails = (details) => [
-  { label: 'Name', value: details?.first_name +' '+details?.last_name, id: '1' },
+  { label: 'Name', value: details?.first_name + ' ' + details?.last_name, id: '1' },
   // Commenting the below fields from edit profile Issue ID - CS-2078
   // { label: 'Enrolment Number NDHM', value: details?.ndhm_enrollment, id: '2' },
   // { label: 'Enrolment Number', value: details?.enrolled_number, id: '5' },
@@ -315,6 +315,44 @@ export const GenderList = [
   { id: 'f', name: 'Female' },
   { id: 'o', name: 'Others' },
 ];
+
+
+export const councilList = [
+    { id: 1, name: "Andhra Pradesh State Dental Council" },
+    { id: 2, name: "Arunachal Pradesh State Dental Council" },
+    { id: 3, name: "Assam State Dental Council" },
+    { id: 4, name: "Bihar State Dental Council" },
+    { id: 5, name: "Chhattisgarh State Dental Council" },
+    { id: 7, name: "Delhi State Dental Council" },
+    { id: 6, name: "Dental Council of Chandigarh" },
+    { id: 100, name: "Goa State Dental Council" },
+    { id: 8, name: "Gujarat State Dental Council" },
+    { id: 9, name: "Haryana State Dental Council" },
+    { id: 10, name: "Himanchal Pradesh State Dental Council" },
+    { id: 12, name: "Jammu and Kashmir State Dental Council" },
+    { id: 13, name: "Jharkhand State Dental Council" },
+    { id: 14, name: "Karnataka State Dental Council" },
+    { id: 15, name: "Kerala State Dental Council" },
+    { id: 16, name: "Madhya Pradesh State Dental Council" },
+    { id: 17, name: "Maharashtra State Dental Council" },
+    { id: 19, name: "Manipur State Dental Council" },
+    { id: 18, name: "Meghalaya State Dental Council" },
+    { id: 20, name: "Mizoram State Registration Tribunal" },
+    { id: 21, name: "Nagaland State Dental Council" },
+    { id: 22, name: "Orissa State Dental Council" },
+    { id: 23, name: "Punjab State Dental Council" },
+    { id: 24, name: "Rajasthan State Dental Council" },
+    { id: 26, name: "Sikkim Dental Registration Tribunal" },
+    { id: 25, name: "State Dental Council, Puducherry" },
+    { id: 27, name: "Tamil Nadu State Dental Council" },
+    { id: 28, name: "Telangana State State Dental Council" },
+    { id: 29, name: "Tripura State State Dental Council" },
+    { id: 30, name: "Uttarakhand Dentists Registration Tribunals" },
+    { id: 31, name: "Uttar Pradesh State Dental Council" },
+    { id: 32, name: "West Bengal State Dental Council" },
+];
+
+
 export const field_names = {
   degree: 'NAME OF THE DEGREE OBTAINED',
   university: 'UNIVERSITY',

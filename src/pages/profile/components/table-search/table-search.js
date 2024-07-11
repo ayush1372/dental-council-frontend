@@ -9,6 +9,7 @@ import {
   applicationStatus,
   applicationType,
   CollegeApprovalFieldList,
+  councilList,
   DashBoardCardsFieldList,
   emptyData,
   filterDropDownData,
@@ -19,7 +20,7 @@ import { SearchableDropdown } from '../../../../shared/autocomplete/searchable-d
 import ExportFiles from '../../../../shared/export-component/export-file';
 import { Button, TextField } from '../../../../ui/core';
 
-export function TableSearch({ trackApplication, searchParams, exportData, flag }) {
+export function TableSearch({ trackApplication, searchParams, exportData, flag, setStateId }) {
   const profileId = useSelector((state) => state.loginReducer.loginData.data.profile_id);
   const { userActiveTab } = useSelector((state) => state.common);
 
@@ -28,6 +29,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
   const [filterId, setFilterId] = useState('');
   const [dashBoardCardId, setDashBoardCardId] = useState();
   const [genderDropdown, setGenderDropdown] = useState(false);
+  const [councilDropdown, setCouncilDropdown] = useState(false);
   const [genderId, setGenderId] = useState('');
   const [disableSearchButton, setDisableSearchButton] = useState(true);
 
@@ -138,6 +140,7 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
     if (currentValue !== null && currentValue !== undefined) setFilterId(currentValue.id);
   };
 
+
   return (
     <Box data-testid="table-search" mb={2}>
       <Grid container>
@@ -179,8 +182,8 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                       applicationTypeValue
                         ? createEditFieldData(applicationType)
                         : statusTypeValue
-                        ? createEditFieldData(applicationStatus)
-                        : createEditFieldData(emptyData)
+                          ? createEditFieldData(applicationStatus)
+                          : createEditFieldData(emptyData)
                     }
                     placeholder="Select"
                     clearErrors={clearErrors}
@@ -234,6 +237,12 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                     {...register('dashBoardCard')}
                     onChange={(currentValue) => {
                       setDashBoardCardId(currentValue?.id);
+                      if (currentValue?.id === 'councilName') {
+                        setCouncilDropdown(true)
+                      } else {
+                        setCouncilDropdown(false);
+                        setDisableSearchButton(true);
+                      }
                       if (currentValue?.id === 'gender') {
                         setGenderDropdown(true);
                       } else {
@@ -333,26 +342,45 @@ export function TableSearch({ trackApplication, searchParams, exportData, flag }
                       }}
                     />
                   ) : (
-                    <TextField
-                      data-testid="filter_By_RegNo"
-                      inputProps={{ maxLength: 100 }}
-                      fullWidth
-                      id="outlined-basic"
-                      variant="outlined"
-                      name={'dashBoardCardFilter'}
-                      placeholder={'Enter keywords'}
-                      defaultValue={getValues().dashBoardCardFilter}
-                      {...register('dashBoardCardFilter', {
-                        onChange: (e) => {
-                          if (e?.target?.value === '') {
+                    councilDropdown === true ? (
+                      <SearchableDropdown
+                        fullWidth
+                        name="dashBoardCardFilterCouncilName"
+                        items={createEditFieldData(councilList)}
+                        placeholder="Select Council"
+                        clearErrors={clearErrors}
+                        {...register('dashBoardCardFilter')}
+                        onChange={(currentValue) => {
+                          setGenderId(currentValue?.id);
+                          if (currentValue === null) {
                             setDisableSearchButton(true);
                           } else {
                             setDisableSearchButton(false);
+                            setStateId(currentValue?.id)
                           }
-                        },
-                      })}
-                      error={errors.dashBoardCardFilter?.message}
-                    />
+                        }}
+                      />
+                    ) :
+                      <TextField
+                        data-testid="filter_By_RegNo"
+                        inputProps={{ maxLength: 100 }}
+                        fullWidth
+                        id="outlined-basic"
+                        variant="outlined"
+                        name={'dashBoardCardFilter'}
+                        placeholder={'Enter keywords'}
+                        defaultValue={getValues().dashBoardCardFilter}
+                        {...register('dashBoardCardFilter', {
+                          onChange: (e) => {
+                            if (e?.target?.value === '') {
+                              setDisableSearchButton(true);
+                            } else {
+                              setDisableSearchButton(false);
+                            }
+                          },
+                        })}
+                        error={errors.dashBoardCardFilter?.message}
+                      />
                   )
                 ) : (
                   exportData?.data?.college_details && (

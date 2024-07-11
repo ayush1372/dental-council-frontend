@@ -54,6 +54,9 @@ function DashboardControlledTable(props) {
   const nmcProfile = useSelector((state) => state?.nmc?.nmcProfileData?.data?.state_medical_council);
   const userProfile = useSelector((state) => state?.loginReducer?.loginData?.data?.user_type)
 
+  const [stateId, setStateId] = React.useState(userProfile == 4 ?
+    nmcProfile?.id : smcProfile?.id)
+
   if (workFlowStatus == 'Pending by SDC') {
     setWorkFlowStatus('Pending');
   }
@@ -72,12 +75,9 @@ function DashboardControlledTable(props) {
     setOpen(true);
     setLoading(true);
     const applicationTypeId = props?.selectedCardData?.applicationTypeID;
-    const state_id = userProfile == 4 ?
-      nmcProfile?.id : smcProfile?.id
-
     const baseUrl = process.env.REACT_APP_V1_API_URL;
     const endpoint = baseUrl
-      + `/csv/download?applicationTypeId=${applicationTypeId}&userGroupStatus=${workFlowStatus}&stateId=${state_id}`;
+      + `/csv/download?applicationTypeId=${applicationTypeId}&userGroupStatus=${workFlowStatus}&stateId=${stateId}`;
 
     const url = new URL(endpoint);
 
@@ -102,12 +102,11 @@ function DashboardControlledTable(props) {
       .catch(error => {
         console.error('There has been a problem with your fetch operation:', error);
       });
+      
     setTimeout(() => {
       setLoading(false);
       setOpen(false);
-    },5000)
-
-
+    }, 5000)
   };
 
 
@@ -325,6 +324,7 @@ function DashboardControlledTable(props) {
             exportData={dashboardTableDetails}
             flag={'dashboardTableDetails'}
             value={props?.selectedCardData?.value}
+            setStateId={setStateId}
           />
         </Grid>
         <Grid item lg={1}
