@@ -428,7 +428,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                         }}
                       />
                     </Tooltip>
-                    {!emailIdVerify ? (
+                    {/* {!emailIdVerify ? (
                       <Tooltip title="Verify email">
                         <MarkEmailReadIcon
                           color={'primary'}
@@ -441,7 +441,7 @@ const ConstantDetails = ({ validDetails, setValidDetails }) => {
                       </Tooltip>
                     ) : (
                       ''
-                    )}
+                    )} */}
                   </Box>
                 </Box>
               </>

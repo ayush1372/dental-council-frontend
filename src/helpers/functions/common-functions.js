@@ -167,8 +167,8 @@ export const userGroupTypeForSession = (userGroupID) => {
 export const userGroupTypeId = (userGroupID) => {
   const userGroupTypeObj = {
     1: 'Doctor',
-    2: 'SMC',
-    3: 'NMC',
+    2: 'SDC',
+    3: 'DCI',
     4: 'College',
     5: 'College',
     6: 'College',

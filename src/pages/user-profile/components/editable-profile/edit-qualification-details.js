@@ -195,9 +195,6 @@ const EditQualificationDetails = ({
   }, [qualificationFilesNameChangeData[`qualification.${index}.diffadharfiles`]]);
 
 
-  console.log('comment', getQueryRaisedComment('State Name'))
-  console.log('query', getQueryRaised('State Name'))
-
   return (
     <>
       {showDeleteIcon && (

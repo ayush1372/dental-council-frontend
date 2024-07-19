@@ -25,7 +25,8 @@ import AdditionalQualifications from '../../pages/user-profile/components/additi
 import WorkProfile from '../../pages/user-profile/components/work-profile';
 import TrackStatus from '../../shared/track-status';
 import { getDoctorTrackApplicationData } from '../../store/actions/doctor-user-profile-actions';
-
+import AdminUserManagement from '../../pages/profile/admin-user-management/admin-user-management';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 function SideDrawerListItem() {
   const { userActiveTab } = useSelector((state) => state.common);
 
@@ -165,15 +166,22 @@ export const nmcTabs = [
   //   icon: <AppRegistrationIcon />,
   //   element: <CollegeApproval />,
   // },
+  // {
+  //   option: 3,
+  //   name: 'Admin User Management',
+  //   tabname: 'admin-user-management',
+  //   icon: <ManageAccountsIcon />,
+  //   element: <AdminUserManagement />,
+  // },
   {
-    option: 3,
+    option: 4,
     name: 'College Registration',
     tabName: 'college-registration',
     icon: <AppRegistrationIcon />,
     element: <NMCCollegeRegistration />,
   },
   {
-    option: 4,
+    option: 5,
     name: 'Change Password',
     tabName: 'change-password',
     icon: <PasswordIcon />,

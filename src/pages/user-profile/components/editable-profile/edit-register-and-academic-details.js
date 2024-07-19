@@ -351,6 +351,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
   };
 
   const onHandleOptionNext = () => {
+    console.log('got here')
     onHandleSave(true);
   };
 
@@ -1021,9 +1022,12 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
             </Button>
           </Grid>
           <Grid item xs={12} md="auto" display="flex" ml={{ xs: 0, md: 2 }}>
-            <Button
+            {/* <Button
               size="medium"
-              onClick={handleSubmit(onHandleOptionNext)}
+              // onClick={handleSubmit(onHandleOptionNext)}
+              onClick = {()=>{console.log(
+                'got here'
+              )}}
               variant="contained"
               color="secondary"
               sx={{
@@ -1038,7 +1042,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               }}
             >
               {t('Save & Next')}
-            </Button>
+            </Button> */}
           </Grid>
         </Grid>
       </Grid>

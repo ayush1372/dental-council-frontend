@@ -54,8 +54,6 @@ export default function Dashboard() {
 
   const draft_application = useSelector((state) => state?.dashboard?.count?.data?.hp_registration_request?.draft_application)
 
-  console.log(useSelector((state) => state))
-
   const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(3),
     borderRadius: '5px !important',
@@ -294,7 +292,6 @@ export default function Dashboard() {
     }
   }, [loggedInUserType]);
 
-  console.log(draft_application);
 
   return (
     <>
