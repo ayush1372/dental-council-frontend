@@ -427,11 +427,16 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
     let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
     return query === undefined;
   };
+
+  const checkDoubleClickError = () => {
+    let query = raisedQueryData?.find((obj) => (obj.id === 100));
+    return query !== undefined;
+  }
+
   const getQueryRaisedComment = (fieldName) => {
     let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
-    return query?.query_comment;
+    return query !== undefined;
   };
-
 
   return (
     <Box
@@ -461,11 +466,11 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               Registered Council Name
               <Typography component="span" color="error.main">
                 *
-                {getQueryRaised('Registered with council') === false && (
+                {/* {getQueryRaised('Registered with council') === false && (
                   <Tooltip title={getQueryRaisedComment('Registered with council')}>
                     <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
                   </Tooltip>
-                )}
+                )} */}
               </Typography>
             </Typography>
             {personalDetails?.personal_details?.is_new ? (
@@ -477,7 +482,8 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 disabled={
                   loggedInUserType === 'SMC' ||
                   !personalDetails?.personal_details?.is_new ||
-                  (work_flow_status_id === 3 && getQueryRaised('Registered with council'))
+                  (work_flow_status_id === 3)
+                  // && getQueryRaised('Registered with council'))
                 }
                 // style={{
                 //   backgroundColor:
@@ -532,7 +538,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               <Typography component="span" color="error.main">
                 *
               </Typography>
-              {getQueryRaised('Registration Number') === false && (
+              {(checkDoubleClickError() || getQueryRaised('Registration Number') === false) && (
                 <Tooltip title={getQueryRaisedComment('Registration Number')}>
                   <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
                 </Tooltip>
@@ -551,11 +557,13 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 pattern: { message: 'Please Enter Valid Registration number' },
               })}
               disabled={
-                work_flow_status_id === 3
-                  ? getQueryRaised('Registration Number')
-                  : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-                    ? false
-                    : true
+                checkDoubleClickError() === true
+                  ? false
+                  : work_flow_status_id === 3
+                    ? getQueryRaised('Registration Number') == false ? false : true
+                    : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                      ? false
+                      : true
               }
             // sx={{
             //   input: {
@@ -585,7 +593,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               <Typography component="span" color="error.main">
                 *
               </Typography>
-              {getQueryRaised('Registration Date') === false && (
+              {(checkDoubleClickError() === true || getQueryRaised('Registration Date') === false) && (
                 <Tooltip title={getQueryRaisedComment('Registration Date')}>
                   <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
                 </Tooltip>
@@ -612,13 +620,15 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                   : { required: false }
               )}
               disabled={
-                getQueryRaised('Registration Date') === false
-                  ? false
-                  : hp_profile_status_id === 3
-                    ? getQueryRaised('Registration Date')
-                    : hp_profile_status_id === 2
-                      ? true
-                      : false
+                checkDoubleClickError() === true
+                  ? false :
+                  getQueryRaised('Registration Date') === false
+                    ? false
+                    : hp_profile_status_id === 3
+                      ? getQueryRaised('Registration Date')
+                      : hp_profile_status_id === 2
+                        ? true
+                        : false
               }
               disableFuture
             />
@@ -631,7 +641,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 <Typography component="span" color="error.main">
                   *
                 </Typography>
-                {getQueryRaised('NEET Registration Number') === false && (
+                {(getQueryRaised('NEET Registration Number') === false) && (
                   <Tooltip title={getQueryRaisedComment('NEET Registration Number')}>
                     <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
                   </Tooltip>
@@ -650,11 +660,14 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                   pattern: { message: 'Please Enter Valid NEET Registration number' },
                 })}
                 disabled={
-                  work_flow_status_id === 3
-                    ? getQueryRaised('NEET Registration Number')
-                    : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
-                      ? false
-                      : true
+                  checkDoubleClickError() === true
+                    ? false :
+                    work_flow_status_id === 3
+                      ? getQueryRaised('NEET Registration Number') :
+                      new Date(getValues()?.RegistrationDate).getFullYear() >= 2019 ? false
+                        : loggedInUserType === 'SMC' || personalDetails?.personal_details?.is_new
+                          ? false
+                          : true
                 }
               // sx={{
               //   input: {
@@ -687,7 +700,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               <Typography component="span" color="error.main">
                 *
               </Typography>
-              {getQueryRaised('Registration Type') === false && (
+              {(checkDoubleClickError() === true || getQueryRaised('Registration Type') === false) && (
                 <Tooltip title={getQueryRaisedComment('Registration Type')}>
                   <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
                 </Tooltip>
@@ -710,33 +723,36 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               ]}
               {...register('registration')}
               disabled={
-                getQueryRaised('Registration Type') === false
-                  ? false
-                  : hp_profile_status_id === 3
-                    ? getQueryRaised('Registration Type')
-                    : hp_profile_status_id === 2
-                      ? true
-                      : !personalDetails?.personal_details?.is_new
+                checkDoubleClickError() === true
+                  ? false :
+                  getQueryRaised('Registration Type') === false
+                    ? false
+                    : hp_profile_status_id === 3
+                      ? getQueryRaised('Registration Type')
+                      : hp_profile_status_id === 2
                         ? true
-                        : false
+                        : !personalDetails?.personal_details?.is_new
+                          ? true
+                          : false
               }
             // disabled={work_flow_status_id === 3 ? getQueryRaised('Registration') : false}
             />
           </Grid>
           {(getValues().registration === '1' ||
             hp_profile_status_id === 2 ||
-            is_renewable === '1') && (
+            (is_renewable === '1' && getValues().registration == '1')) && (
               <Grid item xs={12} md={4}>
                 <Typography variant="subtitle2" color="inputTextColor.main">
                   Due Date of Renewal
                   <Typography component="span" color="error.main">
                     *
                   </Typography>
-                  {getQueryRaised('Due Date of Renewal') === false && (
-                    <Tooltip title={getQueryRaisedComment('Due Date of Renewal')}>
-                      <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
-                    </Tooltip>
-                  )}
+                  {((checkDoubleClickError() === true && getValues().registration === '1') ||
+                    getQueryRaised('Due Date of Renewal') === false) && (
+                      <Tooltip title={getQueryRaisedComment('Due Date of Renewal')}>
+                        <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
+                      </Tooltip>
+                    )}
                 </Typography>
 
                 <DatePicker
@@ -761,15 +777,17 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                     renewable_registration_date ? new Date(renewable_registration_date) : new Date()
                   }
                   disabled={
-                    getQueryRaised('Registration Type') === false
-                      ? false
-                      : getQueryRaised('Due Date of Renewal') === false
+                    checkDoubleClickError() === true
+                      ? false :
+                      getQueryRaised('Registration Type') === false
                         ? false
-                        : hp_profile_status_id === 3
-                          ? getQueryRaised('Due Date of Renewal')
-                          : hp_profile_status_id === 2
-                            ? true
-                            : false
+                        : getQueryRaised('Due Date of Renewal') === false
+                          ? false
+                          : hp_profile_status_id === 3
+                            ? getQueryRaised('Due Date of Renewal')
+                            : hp_profile_status_id === 2
+                              ? true
+                              : false
                   }
                 // disabled={work_flow_status_id === 3 ? getQueryRaised('Due Date of Renewal') : false}
                 // disabled={
@@ -787,16 +805,20 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           <Grid item xs={12}>
             <UploadFile
               uploadDisabled={
-                getQueryRaised('Upload registration certificate') === false
-                  ? false
-                  : hp_profile_status_id === 3
-                    ? getQueryRaised('Upload registration certificate')
-                    : hp_profile_status_id === 2
-                      ? true
-                      : false
+                checkDoubleClickError() === true
+                  ? false :
+                  getQueryRaised('Upload registration certificate') === false
+                    ? false
+                    : hp_profile_status_id === 3
+                      ? getQueryRaised('Upload registration certificate')
+                      : hp_profile_status_id === 2
+                        ? true
+                        : false
               }
               queryRaiseIcon={
-                getQueryRaised('Upload registration certificate') === false ? true : false
+                checkDoubleClickError() === true ?
+                  true :
+                  getQueryRaised('Upload registration certificate') === false ? true : false
               }
               fileID={'registrationFileData'}
               uploadFiles="single"
@@ -813,11 +835,13 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               uploadFileLabel="Upload Registration Certificate"
               fileName={file_name + '.' + file_type}
               fileDisabled={
-                getQueryRaised('Upload registration certificate') === false
-                  ? false
-                  : work_flow_status_id === 3
-                    ? getQueryRaised('Upload registration certificate')
-                    : false
+                checkDoubleClickError() === true
+                  ? false :
+                  getQueryRaised('Upload registration certificate') === false
+                    ? false
+                    : work_flow_status_id === 3
+                      ? getQueryRaised('Upload registration certificate')
+                      : false
               }
               toolTipData={getQueryRaisedComment('Upload registration certificate')}
               {...register(
@@ -833,7 +857,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
           <Grid item xs={12}>
             <Typography variant="subtitle2" color="inputTextColor.main">
               Is your name in registration certificate, different from your name in Aadhaar?
-              {getQueryRaised('Registration') === false && (
+              {(checkDoubleClickError(100) === true || getQueryRaised('Registration') === false) && (
                 <Tooltip title={getQueryRaisedComment('Registration')}>
                   <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
                 </Tooltip>
@@ -880,16 +904,20 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
             {getValues().registrationname === '0' && (
               <UploadFile
                 uploadDisabled={
-                  getQueryRaised('Upload name change certificate') === false
-                    ? false
-                    : hp_profile_status_id === 3
-                      ? getQueryRaised('Upload name change certificate')
-                      : hp_profile_status_id === 2
-                        ? true
-                        : false
+                  checkDoubleClickError() === true
+                    ? false :
+                    getQueryRaised('Upload name change certificate') === false
+                      ? false
+                      : hp_profile_status_id === 3
+                        ? getQueryRaised('Upload name change certificate')
+                        : hp_profile_status_id === 2
+                          ? true
+                          : false
                 }
                 queryRaiseIcon={
-                  getQueryRaised('Upload name change certificate') === false ? true : false
+                  checkDoubleClickError()
+                    ? true :
+                    getQueryRaised('Upload name change certificate') === false ? true : false
                 }
                 fileID={'nameChangeFileData'}
                 uploadFiles="single"
@@ -906,11 +934,13 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 uploadFileLabel="Upload Proof Of Name Change"
                 fileName={file_name + '.' + file_type}
                 fileDisabled={
-                  getQueryRaised('Upload name change certificate') === false
-                    ? false
-                    : work_flow_status_id === 3
-                      ? getQueryRaised('Upload name change certificate')
-                      : false
+                  checkDoubleClickError()
+                    ? false :
+                    getQueryRaised('Upload name change certificate') === false
+                      ? false
+                      : work_flow_status_id === 3
+                        ? getQueryRaised('Upload name change certificate')
+                        : false
                 }
                 toolTipData={getQueryRaisedComment('Upload name change certificate')}
                 {...register(
@@ -1022,12 +1052,9 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
             </Button>
           </Grid>
           <Grid item xs={12} md="auto" display="flex" ml={{ xs: 0, md: 2 }}>
-            {/* <Button
+            <Button
               size="medium"
-              // onClick={handleSubmit(onHandleOptionNext)}
-              onClick = {()=>{console.log(
-                'got here'
-              )}}
+              onClick={handleSubmit(onHandleOptionNext)}
               variant="contained"
               color="secondary"
               sx={{
@@ -1042,7 +1069,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               }}
             >
               {t('Save & Next')}
-            </Button> */}
+            </Button>
           </Grid>
         </Grid>
       </Grid>
