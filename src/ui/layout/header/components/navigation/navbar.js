@@ -11,6 +11,7 @@ import { NavLink } from 'react-router-dom';
 import { navbar_routes } from '../../../../../constants/navigation-meta';
 import { menuToggle } from '../../../../../store/reducers/nav-menu-reducer';
 import Dropdown from './dropdown';
+import _ from 'lodash';
 const Nav = ({ menuToggleHandler }) => {
   const [openDropdown, setOpenDropdown] = useState(null);
 
@@ -126,12 +127,15 @@ const Nav = ({ menuToggleHandler }) => {
                   [classes.search]: search,
                 })}
                 to={link}
+                
+                target={link?.includes('google.com')?'_blank':'_self'}
                 onClick={() => {
                   dispatch(menuToggle(!menuOpen));
                 }}
               >
                 {search ? <SearchOutlinedIcon fontSize="small" sx={{ marginRight: 1 }} /> : ''}
                 <Typography variant="body3">{label}</Typography>
+                
               </NavLink>
             ) : (
               <Box
