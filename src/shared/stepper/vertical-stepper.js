@@ -12,6 +12,7 @@ import {
   trackApplicationLabel,
   trackApplicationStatusColor,
   userGroupTypeId,
+  userGroupTypeLabel,
 } from '../../helpers/functions/common-functions';
 import { Chip } from '../../ui/core';
 export default function VerticalLinearStepper() {
@@ -144,7 +145,7 @@ export default function VerticalLinearStepper() {
                           ? userTrackActionId(label?.action_id) + 'd'
                           : 'Verified'
                         : userTrackActionId(label?.action_id) + 'd'
-                    } by ${userGroupTypeId(label?.group_id)}`
+                  } by ${userGroupTypeLabel(label?.group_id)}`
                   : (ApplicationStatus?.application_type === 3 ||
                       ApplicationStatus?.application_type === 4 ||
                       ApplicationStatus?.application_type === 5) &&
@@ -153,7 +154,7 @@ export default function VerticalLinearStepper() {
                       label?.workflow_status_id === 6) &&
                     label?.action_id === 1
                   ? `Application Submitted and Auto Approved`
-                  : `Application ${userTrackActionId(label?.action_id)} by ${userGroupTypeId(
+                  : `Application  ${userTrackActionId(label?.action_id)} by ${userGroupTypeLabel(
                       label?.group_id
                     )}`}
               </Typography>

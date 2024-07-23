@@ -178,6 +178,20 @@ export const userGroupTypeId = (userGroupID) => {
   return userGroupTypeObj[userGroupID];
 };
 
+export const userGroupTypeLabel = (userGroupId) =>{
+  const userGroupTypeLabelObj = {
+    1: 'Doctor',
+    2: 'SDC',
+    3: 'NMC',
+    4: 'College',
+    5: 'College',
+    6: 'College',
+    7: 'NBE',
+    8: 'System',
+  };
+  return userGroupTypeLabelObj[userGroupId];
+}
+
 export const userActionType = (actionType) => {
   const actionTypeObj = {
     Submitted: 1,
