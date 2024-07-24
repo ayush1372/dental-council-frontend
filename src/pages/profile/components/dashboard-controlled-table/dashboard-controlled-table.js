@@ -102,7 +102,7 @@ function DashboardControlledTable(props) {
       .catch(error => {
         console.error('There has been a problem with your fetch operation:', error);
       });
-      
+
     setTimeout(() => {
       setLoading(false);
       setOpen(false);
@@ -235,7 +235,7 @@ function DashboardControlledTable(props) {
       },
       { type: 'NMCVerificationStatus', value: capitalize(application?.nmc_status) },
       { type: 'dateofSubmission', value: application?.created_at },
-      { type: 'pendency', value: application?.pendency },
+      { type: 'pendency', value: application?.pendency === -1 ? "N/A" : application?.pendency },
       { type: 'view', value: 'View', onClickCallback: viewCallback },
       { type: 'profileID', value: application?.hp_profile_id }
     );
