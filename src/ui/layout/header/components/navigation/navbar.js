@@ -2,6 +2,7 @@ import { Fragment, useState } from 'react';
 
 import { makeStyles } from '@material-ui/core';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
+import KeyboardArrowUpOutlinedIcon from '@mui/icons-material/KeyboardArrowUpOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import { Box, Typography, useTheme } from '@mui/material';
 import clsx from 'clsx';
@@ -87,7 +88,6 @@ const Nav = ({ menuToggleHandler }) => {
 
   const hoverEffect = (label) => {
     if (window.innerWidth >= 1023) {
-      if (label === openDropdown) return setOpenDropdown(null);
       setOpenDropdown(label);
     }
   };
@@ -117,25 +117,26 @@ const Nav = ({ menuToggleHandler }) => {
       position="relative"
       px={{ xs: 0, md: 3 }}
     >
-      {navbar_routes.map(({ label, link, tree, search }) => {
+      {navbar_routes.map(({ label, link, tree, search, isDropdown }) => {
         const isOpen = openDropdown === label;
         return (
           <Fragment key={label}>
+
             {link ? (
               <NavLink
                 className={clsx(classes.navMenu, {
                   [classes.search]: search,
                 })}
                 to={link}
-                
-                target={link?.includes('google.com')?'_blank':'_self'}
+
+                target={link?.includes('google.com') ? '_blank' : '_self'}
                 onClick={() => {
                   dispatch(menuToggle(!menuOpen));
                 }}
               >
                 {search ? <SearchOutlinedIcon fontSize="small" sx={{ marginRight: 1 }} /> : ''}
                 <Typography variant="body3">{label}</Typography>
-                
+
               </NavLink>
             ) : (
               <Box
@@ -157,7 +158,9 @@ const Nav = ({ menuToggleHandler }) => {
                   <Typography component="a" variant="body3">
                     {label}
                   </Typography>
-                  <KeyboardArrowDownOutlinedIcon color="white" sx={{ fontSize: '16px' }} />
+                  {isOpen ?
+                    <KeyboardArrowUpOutlinedIcon color="white" sx={{ fontSize: '16px' }} /> :
+                    <KeyboardArrowDownOutlinedIcon color="white" sx={{ fontSize: '16px' }} />}
                 </Box>
                 {/* </NavLink> */}
                 {isOpen && <Dropdown tree={tree} onSelectCallback={onSelectCallback} />}

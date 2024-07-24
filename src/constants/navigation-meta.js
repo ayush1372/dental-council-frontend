@@ -108,16 +108,21 @@ export const navbar_routes = [
     link: '/about',
   },
   {
-    label: `User Manual (Professional)`,
-    link: 'https://drive.google.com/file/d/1Qu5Ady_-LQREMx0QaEE3pqQO7oq2pmEs/view?usp=sharing',
+    label: `User Manual`,
+    tree: [
+      {
+        label: `Professional`,
+        link: 'https://drive.google.com/uc?export=download&id=1Qu5Ady_-LQREMx0QaEE3pqQO7oq2pmEs',
+      },
+      {
+        label: `Verifier`,
+        link: 'https://drive.google.com/uc?export=download&id=1HXfxtg7R_noW70MauyI8Tts4STRew6O8',
+      }
+    ]
   },
   {
-    label:'User Manual (Verifier)',
-    link: 'https://docs.google.com/presentation/d/1HXfxtg7R_noW70MauyI8Tts4STRew6O8/preview?usp=sharing&ouid=105697581498433703055&rtpof=true&sd=true',
-  },
-  {
-    label:'Verifier Template',
-    link: 'https://docs.google.com/spreadsheets/d/1xgCf1sQqSNwfGHbnbY_TAwxBtN06UzAM/view?usp=sharing&ouid=105697581498433703055&rtpof=true&sd=true',
+    label: 'Verifier Template',
+    link: 'https://drive.google.com/uc?export=download&id=1xgCf1sQqSNwfGHbnbY_TAwxBtN06UzAM',
   },
   {
     label: 'Search Doctor',

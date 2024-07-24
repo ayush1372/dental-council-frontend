@@ -2,7 +2,7 @@ import { Fragment, useState } from 'react';
 
 import { makeStyles } from '@material-ui/core';
 import KeyboardArrowDownOutlinedIcon from '@mui/icons-material/KeyboardArrowDownOutlined';
-import { Box, Typography, useTheme } from '@mui/material';
+import { Box, Typography, useTheme,Link } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 
 const TreeItem = ({ onSelectCallback, label, children, link }) => {
@@ -43,7 +43,7 @@ const TreeItem = ({ onSelectCallback, label, children, link }) => {
             },
           }}
         >
-          <NavLink to={link} onClick={onSelectCallback} className={classes.submenu}>
+          <NavLink to={link} onClick={onSelectCallback} target='_next' className={classes.submenu}>
             {label}
           </NavLink>
         </Box>
@@ -73,7 +73,7 @@ const Dropdown = ({ tree, onSelectCallback }) => {
   const createTree = (branch) => (
     <TreeItem onSelectCallback={onSelectCallback} label={branch.label} link={branch.link}>
       {branch?.branches?.map((branch, index) => (
-        <Fragment key={index}>{createTree(branch)}</Fragment>
+        <Link key={index}>{createTree(branch)}</Link>
       ))}
     </TreeItem>
   );
@@ -85,12 +85,13 @@ const Dropdown = ({ tree, onSelectCallback }) => {
       top="100%"
       left="0"
       bgcolor="primary.main"
-      width={{ xs: '100%', md: '200px' }}
+      width={{ xs: '100%'}}
       boxShadow="1"
       zIndex="999999"
+      padding="0"
     >
       {tree.map((branch, index) => (
-        <Typography key={index}> {createTree(branch)}</Typography>
+        <Typography key={index} variant='body3'> {createTree(branch)}</Typography>
       ))}
     </Box>
   );
