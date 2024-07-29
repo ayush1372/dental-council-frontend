@@ -166,13 +166,13 @@ export const nmcTabs = [
   //   icon: <AppRegistrationIcon />,
   //   element: <CollegeApproval />,
   // },
-  // {
-  //   option: 3,
-  //   name: 'Admin User Management',
-  //   tabname: 'admin-user-management',
-  //   icon: <ManageAccountsIcon />,
-  //   element: <AdminUserManagement />,
-  // },
+  {
+    option: 3,
+    name: 'Admin User Management',
+    tabname: 'admin-user-management',
+    icon: <ManageAccountsIcon />,
+    element: <AdminUserManagement/>,
+  },
   {
     option: 4,
     name: 'College Registration',

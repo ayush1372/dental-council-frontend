@@ -14,8 +14,11 @@ import {
     styled
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 import { tableCellClasses } from '@mui/material/TableCell';
+import EditProfile from './edit-profile';
+import CreateUser from './create-user';
 
 const StyledTableCell = styled(TableCell)(() => ({
     [`&.${tableCellClasses.head}`]: {
@@ -29,7 +32,10 @@ const StyledTableCell = styled(TableCell)(() => ({
 
 const AdminUserManagement = () => {
     const [loading, setLoading] = useState(false);
+    const [showTable, setShowTable] = useState(true);
+    const [editProfile, setEditProfile] = useState(false);
     const [sdcProfileList, setSdcProfileList] = useState([]);
+    const [currentProfile, setCurrentProfile] = useState(null);
     const baseUrl = process.env.REACT_APP_V1_API_URL;
 
     const getSdcProfileList = async () => {
@@ -49,8 +55,29 @@ const AdminUserManagement = () => {
         }
     }
 
+    const handleAddUserButtonClick = () => {
+        setShowTable(!showTable);
+        setEditProfile(false);
+        setCurrentProfile(null);
+    }
+
+    const handleClose = () => {
+        setShowTable(!showTable);
+        setEditProfile(false);
+        setCurrentProfile(null);
+    }
+    const editProfileDetails = (profile) => {
+
+        setEditProfile(true);
+        setCurrentProfile(profile);
+        setShowTable(false);
+    }
+
     useEffect(() => {
         getSdcProfileList();
+        setCurrentProfile(null);
+        setShowTable(true);
+        setEditProfile(false);
     }, []);
 
     return (
@@ -64,31 +91,36 @@ const AdminUserManagement = () => {
                         alignItems: 'center',
                     }}>
                     <h1 style={{
-                        fontSize: '2em',
+                        fontSize: '1.8em',
                         marginTop: 0,
                         marginBottom: 0
-                    }}>
-                        Admin User Management
+                    }}> {
+                            showTable ? "Admin User Management" : editProfile ? "Edit Profile" : "Add new user"
+                        }
                     </h1>
                 </Grid>
 
                 <Grid item xs={12} sm="auto">
-                    <Button
-                        fullWidth
-                        size="medium"
-                        variant="contained"
-                        color="secondary"
-                    >
-                        Add New User
-                    </Button>
+                    {showTable &&
+                        <Button
+                            fullWidth
+                            size='small'
+                            variant="contained"
+                            color="secondary"
+                            justifyContent="center"
+                            onClick={handleAddUserButtonClick}
+                        >
+                            <PersonAddIcon sx={{ mr: '5px' }} />
+                            New User
+                        </Button>}
                 </Grid>
             </Grid>
             {loading ? (
                 <Typography variant="h6" color="textSecondary">
                     Loading...
                 </Typography>
-            ) : (
-                <Paper sx={{ width: '100%', overflow: 'hidden', marginTop: '1rem' }}>
+            ) : showTable ?
+                (<Paper sx={{ width: '100%', overflow: 'hidden', marginTop: '1rem' }}>
                     <TableContainer sx={{ maxHeight: 520 }}>
                         <Table stickyHeader aria-label="sticky table">
                             <TableHead>
@@ -100,7 +132,7 @@ const AdminUserManagement = () => {
                                     <StyledTableCell sx={{ minWidth: '200px' }} align='center'>Email ID</StyledTableCell>
                                     <StyledTableCell sx={{ minWidth: '150px' }} align='center'>Mobile No</StyledTableCell>
                                     <StyledTableCell sx={{ minWidth: '100px' }} align='center'>Status</StyledTableCell>
-                                    <StyledTableCell sx={{ minWidth: '300px' }} align='center'>Actions</StyledTableCell>
+                                    <StyledTableCell sx={{ minWidth: '200px' }} align='center'>Actions</StyledTableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -112,7 +144,7 @@ const AdminUserManagement = () => {
                                         <TableCell sx={{ textAlign: 'center' }}>{profile.display_name}</TableCell>
                                         <TableCell sx={{ textAlign: 'center' }}>{profile.email_id}</TableCell>
                                         <TableCell sx={{ textAlign: 'center' }}>{profile.mobile_no}</TableCell>
-                                        <TableCell sx={{ textAlign: 'center' }}>{profile.state_medical_council_id > 5 ? "Active" : "Inactive"}</TableCell>
+                                        <TableCell sx={{ textAlign: 'center' }}>{profile.delete_status ? "Inactive" : "Active"}</TableCell>
                                         <TableCell sx={{
                                             textAlign: 'center',
                                             display: 'flex',
@@ -125,10 +157,12 @@ const AdminUserManagement = () => {
                                                 variant="contained"
                                                 size='small'
                                                 color="secondary"
-                                                startIcon={<EditIcon sx={{ mr: 1 }} />}>
+                                                startIcon={<EditIcon sx={{ mr: 1 }} />}
+                                                onClick={() => editProfileDetails(profile)}
+                                            >
                                                 Edit
                                             </Button>
-                                            {profile.state_medical_council_id > 5 ?
+                                            {profile.delete_status === false ?
                                                 <Button variant="outlined"
                                                     size='small'
                                                     color="error">
@@ -147,9 +181,15 @@ const AdminUserManagement = () => {
                         </Table>
                     </TableContainer>
                 </Paper>
-            )}
+                ) : editProfile ?
+                    (
+                        <EditProfile profile={currentProfile} handleClose={handleClose} />
+                    ) : (
+                        <CreateUser handleClose={handleClose} />
+                    )
+            }
         </Box>
-    );
+    )
 }
 
 export default AdminUserManagement;
