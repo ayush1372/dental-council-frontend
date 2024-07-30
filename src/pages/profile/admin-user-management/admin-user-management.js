@@ -11,7 +11,8 @@ import {
     Button,
     Box,
     Grid,
-    styled
+    styled,
+    CircularProgress
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
@@ -19,6 +20,7 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import { tableCellClasses } from '@mui/material/TableCell';
 import EditProfile from './edit-profile';
 import CreateUser from './create-user';
+import { POST } from '../../../constants/requests';
 
 const StyledTableCell = styled(TableCell)(() => ({
     [`&.${tableCellClasses.head}`]: {
@@ -32,6 +34,7 @@ const StyledTableCell = styled(TableCell)(() => ({
 
 const AdminUserManagement = () => {
     const [loading, setLoading] = useState(false);
+    const [statusChangeLoading, setStatusChangeLoading] = useState(false);
     const [showTable, setShowTable] = useState(true);
     const [editProfile, setEditProfile] = useState(false);
     const [sdcProfileList, setSdcProfileList] = useState([]);
@@ -55,6 +58,26 @@ const AdminUserManagement = () => {
         }
     }
 
+    const handleChangeProfileStatus = async (user_id, status) => {
+        setStatusChangeLoading(true)
+        try {
+            const resp = await fetch(`${baseUrl}/user/${user_id}/activate/${status}`, {
+                method: POST,
+                headers: { Authorization: 'Bearer ' + localStorage.getItem('accesstoken') },
+            });
+
+            if (resp.ok) {
+                const data = await resp.json();
+            } else {
+                console.error('Failed to deactivate user:', resp.statusText);
+            }
+        } catch (error) {
+            console.error('Failed to deactivate user:', error);
+        } finally {
+            setStatusChangeLoading(false);
+        }
+    }
+
     const handleAddUserButtonClick = () => {
         setShowTable(!showTable);
         setEditProfile(false);
@@ -72,6 +95,11 @@ const AdminUserManagement = () => {
         setCurrentProfile(profile);
         setShowTable(false);
     }
+
+    useEffect(() => {
+        if (statusChangeLoading === false)
+            getSdcProfileList();
+    }, [statusChangeLoading]);
 
     useEffect(() => {
         getSdcProfileList();
@@ -115,10 +143,18 @@ const AdminUserManagement = () => {
                         </Button>}
                 </Grid>
             </Grid>
-            {loading ? (
-                <Typography variant="h6" color="textSecondary">
-                    Loading...
-                </Typography>
+            {loading || statusChangeLoading ? (
+                <Box sx={{
+                    display: 'flex', flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    minHeight: '200px',
+                }}>
+                    <CircularProgress size="5rem" />
+                    <Typography variant="h2" color="textSecondary" textAlign='center'>
+                        Loading... Please Wait
+                    </Typography>
+                </Box>
             ) : showTable ?
                 (<Paper sx={{ width: '100%', overflow: 'hidden', marginTop: '1rem' }}>
                     <TableContainer sx={{ maxHeight: 520 }}>
@@ -154,6 +190,7 @@ const AdminUserManagement = () => {
                                             gap: '8px'
                                         }}>
                                             <Button
+                                                disabled={profile?.delete_status}
                                                 variant="contained"
                                                 size='small'
                                                 color="secondary"
@@ -165,13 +202,15 @@ const AdminUserManagement = () => {
                                             {profile.delete_status === false ?
                                                 <Button variant="outlined"
                                                     size='small'
-                                                    color="error">
+                                                    color="error"
+                                                    onClick={() => handleChangeProfileStatus(profile?.user_id, 0)}>
                                                     Deactivate
                                                 </Button> :
                                                 <Button
                                                     variant="outlined"
                                                     size='small'
-                                                    color="success">
+                                                    color="success"
+                                                    onClick={() => handleChangeProfileStatus(profile?.user_id, 1)}>
                                                     Activate
                                                 </Button>}
                                         </TableCell>
