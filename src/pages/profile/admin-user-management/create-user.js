@@ -5,15 +5,21 @@ import { councilList } from '../../../constants/common-data';
 import { useForm } from 'react-hook-form';
 import { createEditFieldData } from '../../../helpers/functions/common-functions';
 import { SearchableDropdown } from '../../../shared/autocomplete/searchable-dropdown';
+import { toast } from 'react-toastify';
+import { POST } from '../../../constants/requests';
 
 
-const CreateUser = ({ handleClose, }) => {
+const CreateUser = ({ handleClose, handlegetSdcProfileList }) => {
+
+    const baseUrl = process.env.REACT_APP_V1_API_URL;
     const [smcId, setSmcId] = useState(undefined);
+    const [apiloading, setApiLoading] = useState(false);
     const {
         register,
         handleSubmit,
         clearErrors,
         setValue,
+        reset,
         getValues,
         formState: { errors },
     } = useForm({
@@ -29,14 +35,47 @@ const CreateUser = ({ handleClose, }) => {
         },
     });
 
-    const onsubmit = () => {
-        console.log(smcId)
-        console.log(getValues()?.first_name);
-        console.log(getValues()?.last_name);
-        console.log(getValues()?.display_name);
-        console.log(getValues()?.mobile_no);
-        console.log(getValues()?.email_id);
-        // handleClose();
+    const onsubmit = async () => {
+        const body_data =
+        {
+            state_medical_council_id: smcId,
+            first_name: getValues()?.first_name,
+            last_name: getValues()?.last_name,
+            middle_name: "",
+            display_name: getValues()?.display_name,
+            email_id: getValues()?.email_id,
+            mobile_no: getValues()?.mobile_no,
+        }
+        try {
+            const resp = await fetch(`${baseUrl}/addSdcVerifier`, {
+                method: POST, 
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('accesstoken'),
+                    'Content-Type': 'application/json' 
+                },
+                body: JSON.stringify(body_data), 
+            });
+
+            if (resp.ok) {
+                toast.success('User Created Successfully!')
+                reset();
+                setSmcId(undefined);
+                handlegetSdcProfileList();
+                handleClose();
+            } else {
+                toast.error('Failed to Create User:', resp.statusText)
+                console.error('Failed to Create user:', resp.statusText);
+            }
+        } catch (error) {
+            toast.error('Failed to Create User:', error)
+            console.error('Failed to create user:', error);
+        } finally {
+            reset();
+            setSmcId(undefined)
+        }
+
+
+
     }
     return (
         <Box>

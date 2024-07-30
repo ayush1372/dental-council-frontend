@@ -21,6 +21,8 @@ import { tableCellClasses } from '@mui/material/TableCell';
 import EditProfile from './edit-profile';
 import CreateUser from './create-user';
 import { POST } from '../../../constants/requests';
+import { toast } from 'react-toastify';
+import { councilList } from '../../../constants/common-data';
 
 const StyledTableCell = styled(TableCell)(() => ({
     [`&.${tableCellClasses.head}`]: {
@@ -67,12 +69,20 @@ const AdminUserManagement = () => {
             });
 
             if (resp.ok) {
-                const data = await resp.json();
+                if (status === 1)
+                    toast.success("User Activation Successful!");
+                else toast.success("User Deactivation Successful!")
             } else {
-                console.error('Failed to deactivate user:', resp.statusText);
+                if (status === 1)
+                    toast.error("User Activation Failed!");
+                else toast.error("User Deactivation Failed!")
+                console.error('Failed to change user status:');
             }
         } catch (error) {
-            console.error('Failed to deactivate user:', error);
+            if (status === 1)
+                toast.error("User Activation Failed!");
+            else toast.error("User Deactivation Failed!")
+            console.error('Failed to change user user status:', error);
         } finally {
             setStatusChangeLoading(false);
         }
@@ -161,10 +171,10 @@ const AdminUserManagement = () => {
                         <Table stickyHeader aria-label="sticky table">
                             <TableHead>
                                 <TableRow>
-                                    <StyledTableCell sx={{ minWidth: '50px' }} align='center'>ID</StyledTableCell>
-                                    <StyledTableCell sx={{ minWidth: '100px' }} align='center'>SMC ID</StyledTableCell>
+                                    <StyledTableCell sx={{ minWidth: '50px' }} align='center'>SL No</StyledTableCell>
                                     <StyledTableCell sx={{ minWidth: '150px' }} align='center'>Name</StyledTableCell>
                                     <StyledTableCell sx={{ minWidth: '200px' }} align='center'>Display Name</StyledTableCell>
+                                    <StyledTableCell sx={{ minWidth: '200px' }} align='center'>SDC</StyledTableCell>
                                     <StyledTableCell sx={{ minWidth: '200px' }} align='center'>Email ID</StyledTableCell>
                                     <StyledTableCell sx={{ minWidth: '150px' }} align='center'>Mobile No</StyledTableCell>
                                     <StyledTableCell sx={{ minWidth: '100px' }} align='center'>Status</StyledTableCell>
@@ -172,12 +182,15 @@ const AdminUserManagement = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {sdcProfileList.map((profile) => (
+                                {sdcProfileList.map((profile, ind) => (
                                     <TableRow key={profile.id}>
-                                        <TableCell sx={{ textAlign: 'center' }}>{profile.id}</TableCell>
-                                        <TableCell sx={{ textAlign: 'center' }}>{profile.state_medical_council_id}</TableCell>
+                                        <TableCell sx={{ textAlign: 'center' }}>{ind + 1}</TableCell>
+
                                         <TableCell sx={{ textAlign: 'center' }}>{profile.first_name} {profile.last_name}</TableCell>
                                         <TableCell sx={{ textAlign: 'center' }}>{profile.display_name}</TableCell>
+                                        <TableCell sx={{ textAlign: 'center' }}>
+                                            {councilList?.find(item => profile.state_medical_council_id === item.id)?.name}
+                                        </TableCell>
                                         <TableCell sx={{ textAlign: 'center' }}>{profile.email_id}</TableCell>
                                         <TableCell sx={{ textAlign: 'center' }}>{profile.mobile_no}</TableCell>
                                         <TableCell sx={{ textAlign: 'center' }}>{profile.delete_status ? "Inactive" : "Active"}</TableCell>
@@ -222,9 +235,14 @@ const AdminUserManagement = () => {
                 </Paper>
                 ) : editProfile ?
                     (
-                        <EditProfile profile={currentProfile} handleClose={handleClose} />
+                        <EditProfile profile={currentProfile}
+                            handleClose={handleClose}
+                            handlegetSdcProfileList={getSdcProfileList}
+                        />
                     ) : (
-                        <CreateUser handleClose={handleClose} />
+                        <CreateUser handleClose={handleClose}
+                            handlegetSdcProfileList={getSdcProfileList}
+                        />
                     )
             }
         </Box>
