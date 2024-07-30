@@ -3,8 +3,11 @@ import { Box, Grid, Typography } from '@mui/material';
 import React from 'react'
 import { councilList } from '../../../constants/common-data';
 import { useForm } from 'react-hook-form';
+import { POST } from '../../../constants/requests';
+import { toast } from 'react-toastify';
 
-const EditProfile = ({ profile, handleClose }) => {
+const EditProfile = ({ profile, handleClose, handlegetSdcProfileList }) => {
+    const baseUrl = process.env.REACT_APP_V1_API_URL;
     const {
         register,
         handleSubmit,
@@ -25,14 +28,45 @@ const EditProfile = ({ profile, handleClose }) => {
         },
     });
 
-    const onsubmit = () => {
-        console.log(getValues()?.user_id);
-        console.log(getValues()?.state_medical_council_id);
-        console.log(getValues()?.first_name);
-        console.log(getValues()?.last_name);
-        console.log(getValues()?.display_name);
-        console.log(getValues()?.mobile_no);
-        console.log(getValues()?.email_id);
+    const onsubmit = async () => {
+        const body_data =
+        {
+            state_medical_council_id: getValues()?.state_medical_council_id,
+            first_name: getValues()?.first_name,
+            last_name: getValues()?.last_name,
+            user_id: getValues()?.user_id,
+            middle_name: "",
+            display_name: getValues()?.display_name,
+            email_id: getValues()?.email_id,
+            mobile_no: getValues()?.mobile_no,
+        }
+        
+        try {
+            const resp = await fetch(`${baseUrl}/updateSdcVerifier`, {
+                method: POST,
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('accesstoken'),
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body_data),
+            });
+
+            if (resp.ok) {
+                toast.success('User Updated Successfully!')
+                handlegetSdcProfileList();
+                handleClose();
+            } else {
+                toast.error('Failed to update User:', resp.statusText)
+                console.error('Failed to update user:', resp.statusText);
+            }
+        } catch (error) {
+            toast.error('Failed to update User:', error)
+            console.error('Failed to update user:', error);
+        } finally {
+            console.log('done')
+        }
+
+
         // handleClose();
     }
     return (
