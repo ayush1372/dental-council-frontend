@@ -48,6 +48,18 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
       dispatch(getPersonalDetailsData(personalDetails?.hp_profile_id));
     });
   };
+
+  console.log('nmr', personalDetails?.nmr_id)
+  console.log('doctor E sign status', doctorEsignStatus)
+  console.log('E sign status', personalDetails?.esign_status)
+
+  console.log(((!personalDetails?.nmr_id) ||
+    doctorEsignStatus === 3 ||
+    doctorEsignStatus === 2 ||
+    personalDetails?.esign_status === 2 ||
+    personalDetails?.esign_status === 3 ||
+    personalDetails?.hp_profile_status_id === 5 ||
+    personalDetails?.hp_profile_status_id === 6))
   return (
     <List sx={{ p: 0 }}>
       {DrawerOptions?.map((item, index) => (
@@ -89,10 +101,10 @@ export default function SideDrawerList({ handleSwitch, DrawerOptions, ActiveOpti
               disabled={
                 loggedInUserType === 'Doctor' &&
                   (!personalDetails?.nmr_id ||
-                    doctorEsignStatus === 3 ||
-                    doctorEsignStatus === 2 ||
-                    personalDetails?.esign_status === 2 ||
-                    personalDetails?.esign_status === 3 ||
+                    // doctorEsignStatus === 3 ||
+                    // doctorEsignStatus === 2 ||
+                    // personalDetails?.esign_status === 2 ||
+                    // personalDetails?.esign_status === 3 ||
                     personalDetails?.hp_profile_status_id === 5 ||
                     personalDetails?.hp_profile_status_id === 6) &&
                   (item?.tabName === 'voluntary-suspend-license' ||
