@@ -27,6 +27,10 @@ import TrackStatus from '../../shared/track-status';
 import { getDoctorTrackApplicationData } from '../../store/actions/doctor-user-profile-actions';
 import AdminUserManagement from '../../pages/profile/admin-user-management/admin-user-management';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import StateWiseReport from '../../pages/profile/state-wise-report/state-wise-report';
+
+
 function SideDrawerListItem() {
   const { userActiveTab } = useSelector((state) => state.common);
 
@@ -167,11 +171,18 @@ export const nmcTabs = [
   //   element: <CollegeApproval />,
   // },
   {
+    option: 6,
+    name: 'State Wise Report',
+    tabName: 'state-wise-report',
+    icon: <AssignmentIcon />,
+    element: < StateWiseReport />,
+  },
+  {
     option: 3,
     name: 'Admin User Management',
     tabname: 'admin-user-management',
     icon: <ManageAccountsIcon />,
-    element: <AdminUserManagement/>,
+    element: <AdminUserManagement />,
   },
   {
     option: 4,
@@ -187,6 +198,7 @@ export const nmcTabs = [
     icon: <PasswordIcon />,
     element: <ChangePassword tabName={SideDrawerListItem} />,
   },
+
 ];
 
 export const colgTabs = [

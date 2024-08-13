@@ -199,9 +199,9 @@ export const LogoWrapper = ({ menuToggleHandler }) => {
               </Link>
             </Grid>
             <Grid item xs="auto">
-              <Link onClick={() => navigate('/')} sx={{ cursor: 'pointer' }}>
+              {/* <Link onClick={() => navigate('/')} sx={{ cursor: 'pointer' }}>
                 <img className={classes.logoImage} src={G20Logo} alt="G20 logo" />
-              </Link>
+              </Link> */}
             </Grid>
           </Grid>
         </Grid>
