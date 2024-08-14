@@ -435,7 +435,7 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
 
   const getQueryRaisedComment = (fieldName) => {
     let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
-    return query !== undefined;
+    return query?.query_comment;
   };
 
   return (
