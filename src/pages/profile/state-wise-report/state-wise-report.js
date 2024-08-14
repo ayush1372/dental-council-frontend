@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Grid, Button } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Grid, Button, Dialog, DialogContent, CircularProgress, Box } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import tableCellClasses from '@mui/material/TableCell/tableCellClasses';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
@@ -9,9 +9,14 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
         backgroundColor: '#224468',
         color: 'white',
+        textAlign: 'center', // Center the text in header cells
+        position: 'sticky',
+        top: 0,
+        zIndex: theme.zIndex.appBar,
     },
     [`&.${tableCellClasses.body}`]: {
         fontSize: 15,
+        textAlign: 'center',
     },
 }));
 
@@ -19,6 +24,7 @@ const baseUrl = process.env.REACT_APP_V1_API_URL;
 
 const StateWiseReport = () => {
     const [loading, setLoading] = useState(false);
+    const [downloadLoading, setDownloadLoading] = useState(false);
     const [stateWiseData, setStateWiseData] = useState([])
 
     const handleGetStateWiseReport = async () => {
@@ -45,6 +51,7 @@ const StateWiseReport = () => {
     }
 
     const handleCsvDownload = async () => {
+        setDownloadLoading(true)
         try {
             const resp = await fetch(`${baseUrl}/dashboards/statusWiseReport?excel=true`, {
                 method: 'GET',
@@ -63,7 +70,7 @@ const StateWiseReport = () => {
             const lines = textData.split('\n');
             const originalHeaders = lines[0];
             const dataRows = lines.slice(1);
-            const newHeaders = 'State Dental Council,Draft,Pending,Approved,Query Raised,Rejected';
+            const newHeaders = 'State Dental Council,Draft,Pending with SDC,Forwarded to College,Approved,Query Raised,Rejected';
 
             const modifiedCsvContent = [newHeaders, ...dataRows].join('\n');
 
@@ -78,10 +85,11 @@ const StateWiseReport = () => {
 
             link.parentNode.removeChild(link);
             window.URL.revokeObjectURL(url);
-            toast.success("File downloaded successfully");
         } catch (error) {
             console.error('Failed to download CSV:', error);
             toast.error("Failed to download CSV");
+        } finally {
+            setDownloadLoading(false);
         }
     };
 
@@ -93,6 +101,15 @@ const StateWiseReport = () => {
 
     return (
         <Paper sx={{ padding: '1rem 1rem 0' }}>
+            {downloadLoading &&
+                <Dialog open={true}>
+                    <DialogContent sx={{ textAlign: "center" }}>
+                        <Box>
+                            {downloadLoading && <CircularProgress size={90} />}
+                        </Box>
+                        <h4 style={{ margin: '0' }}>Generating csv... Please Wait.</h4>
+                    </DialogContent>
+                </Dialog>}
             <Grid container spacing={2} >
                 <Grid item xs={12} sm="auto"
                     sx={{
@@ -124,23 +141,30 @@ const StateWiseReport = () => {
                     </Button>
                 </Grid>
             </Grid>
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper} sx={{ maxHeight: '510px' }}>
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <StyledTableCell>S. No.</StyledTableCell>
-                            <StyledTableCell>State Dental Council</StyledTableCell>
-                            <StyledTableCell width="100px">Draft</StyledTableCell>
-                            <StyledTableCell>Pending</StyledTableCell>
-                            <StyledTableCell>Approved</StyledTableCell>
-                            <StyledTableCell>Query Raised</StyledTableCell>
-                            <StyledTableCell>Rejected</StyledTableCell>
+                            <StyledTableCell rowSpan={2} width='70px'>S. No.</StyledTableCell>
+                            <StyledTableCell rowSpan={2}>State Dental Council</StyledTableCell>
+                            <StyledTableCell rowSpan={2} width="100px">Draft</StyledTableCell>
+                            <StyledTableCell colSpan={2}>Pending</StyledTableCell>
+                            <StyledTableCell rowSpan={2}>Approved</StyledTableCell>
+                            <StyledTableCell rowSpan={2} width="100px">Query Raised</StyledTableCell>
+                            <StyledTableCell rowSpan={2}>Rejected</StyledTableCell>
+                        </TableRow>
+                        <TableRow sx={{
+                            position: 'sticky',
+                            top: '57px',
+                        }}>
+                            <StyledTableCell >With SDC</StyledTableCell>
+                            <StyledTableCell >Forwarded to College </StyledTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {loading ?
                             (
-                                <StyledTableCell colSpan={6} align='center'
+                                <StyledTableCell colSpan={8} align='center'
                                 >Loading...</StyledTableCell>
                             ) :
                             stateWiseData?.map((row, index) => (
@@ -152,6 +176,7 @@ const StateWiseReport = () => {
                                     <StyledTableCell>{row[3]}</StyledTableCell>
                                     <StyledTableCell>{row[4]}</StyledTableCell>
                                     <StyledTableCell>{row[5]}</StyledTableCell>
+                                    <StyledTableCell>{row[6]}</StyledTableCell>
                                 </TableRow>
                             ))}
                     </TableBody>
