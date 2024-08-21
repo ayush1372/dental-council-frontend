@@ -111,6 +111,8 @@ const EditQualificationDetails = ({
   //Helper Method to get the data of the query raised against the field
   const getQueryRaised = (fieldName) => {
     let query = raisedQueryData?.find((obj) => obj.field_name === fieldName);
+    console.log("--------------------------------------------------------------------------")
+    console.log(fieldName, " ", query)
     return query === undefined;
   };
 
@@ -797,7 +799,8 @@ const EditQualificationDetails = ({
                 checkDoubleClickError() === true
                   ? false :
                   work_flow_status_id === 3
-                    ? getQueryRaised('State Name')
+                    // ? getQueryRaised('State Name')
+                    ? false
                     : isVerified === 1
                       ? true
                       : false
@@ -879,14 +882,15 @@ const EditQualificationDetails = ({
               // }}
               disabled={
                 checkDoubleClickError()
-                  ? false :
-                  getQueryRaised('State Name') === false
+                  ? false
+                  // : getQueryRaised('State Name') === false
+                  //   ? false
+                  : work_flow_status_id === 3
+                    // ? getQueryRaised('Name of the College')
                     ? false
-                    : work_flow_status_id === 3
-                      ? getQueryRaised('Name of the College')
-                      : isVerified === 1
-                        ? true
-                        : false
+                    : isVerified === 1
+                      ? true
+                      : false
               }
               MenuProps={{
                 style: {
@@ -963,14 +967,15 @@ const EditQualificationDetails = ({
               // }}
               disabled={
                 checkDoubleClickError()
-                  ? false :
-                  getQueryRaised('Name of the College') === false || getQueryRaised('State Name') === false
+                  ? false
+                  // : getQueryRaised('Name of the College') === false || getQueryRaised('State Name') === false
+                  //   ? false
+                  : work_flow_status_id === 3
+                    // ? getQueryRaised('University Name')
                     ? false
-                    : work_flow_status_id === 3
-                      ? getQueryRaised('University Name')
-                      : isVerified === 1
-                        ? true
-                        : false
+                    : isVerified === 1
+                      ? true
+                      : false
               }
               MenuProps={{
                 style: {
@@ -1025,7 +1030,8 @@ const EditQualificationDetails = ({
                 checkDoubleClickError()
                   ? false :
                   work_flow_status_id === 3
-                    ? getQueryRaised('Month & Year of Degree Awarded')
+                    // ? getQueryRaised('Month & Year of Degree Awarded')
+                    ? false
                     : isVerified === 1
                       ? true
                       : false
@@ -1084,7 +1090,8 @@ const EditQualificationDetails = ({
                 checkDoubleClickError()
                   ? false :
                   work_flow_status_id === 3
-                    ? getQueryRaised('Month & Year of Degree Awarded')
+                    // ? getQueryRaised('Month & Year of Degree Awarded')
+                    ? false
                     : isVerified === 1
                       ? true
                       : false
@@ -1146,14 +1153,15 @@ const EditQualificationDetails = ({
           <UploadFile
             uploadDisabled={
               checkDoubleClickError()
-                ? false :
-                getQueryRaised('Upload Qualification Certificate') === false
+                ? false
+                // : getQueryRaised('Upload Qualification Certificate') === false
+                //   ? false
+                : work_flow_status_id === 3
+                  // ? getQueryRaised('Upload Qualification Certificate')
                   ? false
-                  : work_flow_status_id === 3
-                    ? getQueryRaised('Upload Qualification Certificate')
-                    : isVerified === 1
-                      ? true
-                      : false
+                  : isVerified === 1
+                    ? true
+                    : false
             }
             queryRaiseIcon={
               checkDoubleClickError()
@@ -1178,14 +1186,15 @@ const EditQualificationDetails = ({
             Qualification
             fileDisabled={
               checkDoubleClickError()
-                ? false :
-                getQueryRaised('Upload Qualification Certificate') === false
+                ? false
+                // :getQueryRaised('Upload Qualification Certificate') === false
+                //   ? false
+                : work_flow_status_id === 3
+                  // ? getQueryRaised('Upload Qualification Certificate')
                   ? false
-                  : work_flow_status_id === 3
-                    ? getQueryRaised('Upload Qualification Certificate')
-                    : isVerified === 1
-                      ? true
-                      : false
+                  : isVerified === 1
+                    ? true
+                    : false
             }
             {...register(
               'qualificationCertificate',
@@ -1205,8 +1214,8 @@ const EditQualificationDetails = ({
         <Grid item xs={12}>
           <Typography variant="subtitle2" color="inputTextColor.main">
             Is your name in degree, different from your name in Aadhaar?
-            {(checkDoubleClickError() || getQueryRaised('Registration') === false) && (
-              <Tooltip title={getQueryRaisedComment('Registration')}>
+            {(checkDoubleClickError() || getQueryRaised('Upload Qualification Name Change Certificate') === false) && (
+              <Tooltip title={getQueryRaisedComment('Upload Qualification Name Change Certificate')}>
                 <ReportIcon color="secondary" ml={2} sx={{ fontSize: 'large' }} />
               </Tooltip>
             )}
@@ -1233,7 +1242,7 @@ const EditQualificationDetails = ({
             onChange={handleQualificationCertificateFrom}
             {...register(`qualification[${index}].diffadharcertificate`)}
 
-          // disabled={work_flow_status_id === 3 ? getQueryRaised('Registration') : false}
+            disabled={work_flow_status_id !== 3}
           />
         </Grid>
       </Grid>
@@ -1243,23 +1252,24 @@ const EditQualificationDetails = ({
             <UploadFile
               uploadDisabled={
                 checkDoubleClickError()
-                  ? false :
-                  getQueryRaised('Upload qualification name change certificate') === false
+                  ? false
+                  // : getQueryRaised('Upload qualification name change certificate') === false
+                  //   ? false
+                  : work_flow_status_id === 3
+                    // ? getQueryRaised('Upload qualification name change certificate')
                     ? false
-                    : work_flow_status_id === 3
-                      ? getQueryRaised('Upload qualification name change certificate')
-                      : isVerified === 1
-                        ? true
-                        : false
+                    : isVerified === 1
+                      ? true
+                      : false
               }
               queryRaiseIcon={
                 checkDoubleClickError()
                   ? true :
-                  getQueryRaised('Upload qualification name change certificate') === false
+                  getQueryRaised('Upload Qualification Name Change Certificate') === false
                     ? true
                     : false
               }
-              toolTipData={getQueryRaisedComment('Upload qualification name change certificate')}
+              toolTipData={getQueryRaisedComment('Upload Qualification Name Change Certificate')}
               fileID={'diffDegreeCertificate'}
               uploadFiles="single"
               sizeAllowed={5}
@@ -1281,14 +1291,15 @@ const EditQualificationDetails = ({
               Qualification
               fileDisabled={
                 checkDoubleClickError()
-                  ? false :
-                  getQueryRaised('Upload qualification name change certificate') === false
+                  ? false
+                  // : getQueryRaised('Upload qualification name change certificate') === false
+                  //   ? false
+                  : work_flow_status_id === 3
+                    // ? getQueryRaised('Upload qualification name change certificate')
                     ? false
-                    : work_flow_status_id === 3
-                      ? getQueryRaised('Upload qualification name change certificate')
-                      : isVerified === 1
-                        ? true
-                        : false
+                    : isVerified === 1
+                      ? true
+                      : false
               }
               {...register('proofOfQualificationNameChange')}
               setError={setError}

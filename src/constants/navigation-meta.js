@@ -112,7 +112,7 @@ export const navbar_routes = [
     tree: [
       {
         label: `Professional`,
-        link: 'https://drive.google.com/uc?export=download&id=1Qu5Ady_-LQREMx0QaEE3pqQO7oq2pmEs',
+        link: 'https://drive.google.com/uc?export=download&id=1thbnBbr9_zjEySms-vCqnceczFNuXDY5',
       },
       {
         label: `Verifier`,
