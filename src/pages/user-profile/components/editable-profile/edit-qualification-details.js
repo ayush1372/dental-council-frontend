@@ -1242,7 +1242,16 @@ const EditQualificationDetails = ({
             onChange={handleQualificationCertificateFrom}
             {...register(`qualification[${index}].diffadharcertificate`)}
 
-            disabled={work_flow_status_id !== 3}
+            disabled={checkDoubleClickError()
+              ? false
+              // :getQueryRaised('Upload Qualification Name Change Certificate') === false
+              //   ? false
+              : work_flow_status_id === 3
+                // ? getQueryRaised('Upload Qualification Name Change Certificate')
+                ? false
+                : isVerified === 1
+                  ? true
+                  : false}
           />
         </Grid>
       </Grid>

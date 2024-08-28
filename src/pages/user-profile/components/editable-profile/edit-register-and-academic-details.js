@@ -624,20 +624,17 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                   ? { required: 'Please select a valid date' }
                   : { required: false }
               )}
-              // disabled={
-              //   (checkDoubleClickError() === true)
-              //     ? false :
-              //     getQueryRaised('Registration Date')
-              //       ? false
-              //       : hp_profile_status_id === 3
-              //         ? getQueryRaised('Registration Date')
-              //         : hp_profile_status_id === 2
-              //           ? true
-              //           : false
-              // }
               disabled={
-                checkDoubleClickError() === true ? false :
-                  (work_flow_status_id !== 3)
+                (checkDoubleClickError() === true)
+                  ? false :
+                  getQueryRaised('Registration Date')
+                    ? false
+                    : hp_profile_status_id === 3
+                      // ? getQueryRaised('Registration Date')
+                      ? false
+                      : hp_profile_status_id === 2
+                        ? true
+                        : false
               }
               disableFuture
             />
@@ -850,13 +847,16 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
               fileDisabled={
                 checkDoubleClickError() === true
                   ? false
-                  // :getQueryRaised('Upload registration certificate')
+                  // : getQueryRaised('Upload registration certificate')
                   //   ? false
-                  : work_flow_status_id !== 3
-                // ? getQueryRaised('Upload registration certificate')
-                // : false
+                  : hp_profile_status_id === 3
+                    // ? getQueryRaised('Upload registration certificate')
+                    ? false
+                    : hp_profile_status_id === 2
+                      ? true
+                      : false
               }
-              toolTipData={getQueryRaisedComment('Upload registration certificate')}
+              toolTipData={getQueryRaisedComment('Upload registration certificate')}  
               {...register(
                 'registrationCertificate',
                 registrationFileData?.length === 0 && {
@@ -951,13 +951,16 @@ const EditRegisterAndAcademicDetails = ({ handleNext, handleBack }) => {
                 uploadFileLabel="Upload Proof Of Name Change"
                 fileName={file_name + '.' + file_type}
                 fileDisabled={
-                  checkDoubleClickError()
+                  checkDoubleClickError() === true
                     ? false
-                    // :getQueryRaised('Upload name change certificate')
+                    // : getQueryRaised('Upload name change certificate')
                     //   ? false
-                    : work_flow_status_id !== 3
-                  // ? getQueryRaised('Upload name change certificate')
-                  // : false
+                    : hp_profile_status_id === 3
+                      // ? getQueryRaised('Upload name change certificatee')
+                      ? false
+                      : hp_profile_status_id === 2
+                        ? true
+                        : false
                 }
                 toolTipData={getQueryRaisedComment('Upload name change certificate')}
                 {...register(
