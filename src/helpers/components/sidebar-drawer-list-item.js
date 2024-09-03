@@ -29,6 +29,7 @@ import AdminUserManagement from '../../pages/profile/admin-user-management/admin
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import StateWiseReport from '../../pages/profile/state-wise-report/state-wise-report';
+import CollegeVerifierManagement from '../../pages/profile/college-verifier-management/college-verifier-management';
 
 
 function SideDrawerListItem() {
@@ -111,6 +112,13 @@ export const smcTabs = [
   //   icon: <AppRegistrationIcon />,
   //   element: <NewDoctorRegistration userType={'SMC'} />,
   // },
+  {
+    option: 5,
+    name: 'Admin User Management',
+    tabname: 'admin-user-management',
+    icon: <ManageAccountsIcon />,
+    element: <CollegeVerifierManagement />,
+  },
   {
     option: 3,
     name: 'Activate Licence',
