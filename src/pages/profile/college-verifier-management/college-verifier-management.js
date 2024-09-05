@@ -25,6 +25,7 @@ import { toast } from 'react-toastify';
 import { councilList } from '../../../constants/common-data';
 import { useSelector } from 'react-redux';
 import CreateCollegeVerifier from './create-college-verifier';
+import EditCollegeVerifierProfile from './edit-college-verifier';
 
 const StyledTableCell = styled(TableCell)(() => ({
     [`&.${tableCellClasses.head}`]: {
@@ -51,7 +52,7 @@ const CollegeVerifierManagement = () => {
     const getCollegeVerifierList = async () => {
         setLoading(true);
         try {
-            const resp = await fetch(`${baseUrl}/collegeVerifierList/2`);
+            const resp = await fetch(`${baseUrl}/collegeVerifierList/${smcProfile?.id}`);
             if (resp.ok) {
                 const data = await resp.json();
                 setSdcProfileList(data);
@@ -68,7 +69,7 @@ const CollegeVerifierManagement = () => {
     const getCollegeList = async () => {
         setLoading(true);
         try {
-            const resp = await fetch(`${baseUrl}/stateCollegeList/2`);
+            const resp = await fetch(`${baseUrl}/stateCollegeList/${smcProfile?.id}`);
             if (resp.ok) {
                 const data = await resp.json();
                 setCollegeList(data);
@@ -259,7 +260,7 @@ const CollegeVerifierManagement = () => {
                 </Paper>
                 ) : editProfile ?
                     (
-                        <EditProfile profile={currentProfile}
+                        <EditCollegeVerifierProfile profile={currentProfile}
                             handleClose={handleClose}
                             handleGetCollegeVerifierList={getCollegeVerifierList}
                         />
